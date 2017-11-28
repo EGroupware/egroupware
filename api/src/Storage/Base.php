@@ -781,12 +781,27 @@ class Base
 					$keys[$db_col] = $col;
 				}
 			}
+			// keep sql fragments (with integer key)
+			foreach($data as $key => $val)
+			{
+				if (is_int($key))
+				{
+					$keys[] = $val;
+				}
+			}
 		}
 		$data = $this->data2db($data);
 
 		foreach($keys as $db_col => $col)
 		{
-			$query[$db_col] = $data[$col];
+			if (is_int($db_col))
+			{
+				$query[] = $col;
+			}
+			else
+			{
+				$query[$db_col] = $data[$col];
+			}
 		}
 		if ($only_return_query) return $query;
 

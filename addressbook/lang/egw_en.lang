@@ -274,6 +274,7 @@ grant addressbook access	common	en	Grant address book access
 group %1	addressbook	en	Group %1
 h	addressbook	en	h
 hide accounts from addressbook	addressbook	en	Hide user accounts
+hide all accounts	addressbook	en	Hide all accounts
 hides accounts completly from the adressbook.	addressbook	en	Hide user accounts completely from the address book.
 history logging	admin	en	History logging
 home address	addressbook	en	Home address
@@ -441,6 +442,8 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	en	Set only full name
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	en	Are photo and home address always displayed, even if columns are empty.
 show	addressbook	en	Show
+show active accounts	addressbook	en	Show active accounts
+show all accounts	addressbook	en	Show all accounts
 show birthday reminders on main screen	addressbook	en	Birthday reminders
 show infolog entries for this organisation	addressbook	en	Show InfoLog entries for this organisation
 show the contacts of this organisation	addressbook	en	Show contacts of this organisation

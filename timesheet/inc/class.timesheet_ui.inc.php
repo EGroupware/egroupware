@@ -187,13 +187,13 @@ class timesheet_ui extends timesheet_bo
 				case 'save':
 				case 'save_new':
 				case 'apply':
-					if ((!$this->data['ts_quantity'] || $this->ts_viewtype == 'short') && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
+					if (($this->data['ts_quantity'] === '' || $this->ts_viewtype == 'short') && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
 					{
 						// We need to keep the actual value of ts_quantity when we are storing it, as it is used in price calculation
 						// and rounding it causes miscalculation on prices
 						$this->data['ts_quantity'] = $this->data['ts_duration'] / 60.0;
 					}
-					if (!$this->data['ts_quantity'])
+					if ($this->data['ts_quantity'] === '')
 					{
 						$etpl->set_validation_error('ts_quantity',lang('Field must not be empty !!!'));
 					}
@@ -433,8 +433,9 @@ class timesheet_ui extends timesheet_bo
 		{
 			$readonlys['ts_owner'] = true;
 		}
-		// in view mode, we need to add the owner, if it does not exist, otherwise it's displayed empty
-		if ($view && $content['ts_owner'] && !isset($edit_grants[$content['ts_owner']]))
+		// in view mode or when editing existing entries, we need to add the owner
+		// if it does not exist, otherwise it's displayed empty or missing
+		if (($view || $content['ts_id']) && $content['ts_owner'] && !isset($edit_grants[$content['ts_owner']]))
 		{
 			$edit_grants[$content['ts_owner']] = Api\Accounts::username($content['ts_owner']);
 		}
@@ -822,7 +823,14 @@ class timesheet_ui extends timesheet_bo
 		$rows['no_cat_id'] = (!$have_cats || $query['cat_id']);
 		if ($query['col_filter']['ts_owner']) $rows['ownerClass'] = 'noPrint';
 		$rows['no_owner_col'] = $query['no_owner_col'];
-		if (!$rows['no_owner_col'] && $query['selectcols'] && !strpos($query['selectcols'],'ts_owner')) $rows['no_owner_col'] = 1;
+		if(is_string($query['selectcols']))
+		{
+			$query['selectcols'] = explode(',', $query['selectcols']);
+		}
+		if (!$rows['no_owner_col'] && $query['selectcols'] && !in_array('ts_owner', $query['selectcols']))
+		{
+			$rows['no_owner_col'] = 1;
+		}
 
 		$rows += $this->summary;
 

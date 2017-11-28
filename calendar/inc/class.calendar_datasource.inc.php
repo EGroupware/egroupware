@@ -10,6 +10,7 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
 use EGroupware\Api\Link;
 use EGroupware\Api\Acl;
 

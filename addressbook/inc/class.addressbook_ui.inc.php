@@ -243,6 +243,7 @@ class addressbook_ui extends addressbook_bo
 				/* old negative list
 				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list,contact_id,owner,room',*/
 				'filter2_onchange' => "return app.addressbook.filter2_onchange();",
+				'filter2_tags'	=> true,
 				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
 				'row_id'         => 'id',
@@ -861,7 +862,7 @@ class addressbook_ui extends addressbook_bo
 		unset($query['col_filter']['org_name']);
 		unset($query['col_filter']['org_unit']);
 		unset($query['col_filter']['adr_one_locality']);
-		foreach(static::$duplicate_fields as $field => $label)
+		foreach(array_keys(static::$duplicate_fields) as $field)
 		{
 			unset($query['col_filter'][$field]);
 		}
@@ -1429,7 +1430,7 @@ window.egw_LAB.wait(function() {
 	 * Used for action on organisation and duplicate views
 	 * @param string/int $action 'delete', 'vcard', 'csv' or nummerical account_id to move contacts to that addessbook
 	 * @param array $checked contact id's to use if !$use_all
-	 * @param boolean $use_all if true use all contacts of the current selection (in the session)
+	 * @param boolean $use_all if true use all contacts of the current selection in the session (NOT used!)
 	 * @param int &$success number of succeded actions
 	 * @param int &$failed number of failed actions (not enought permissions)
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 contacts 'deleted'
@@ -1439,6 +1440,7 @@ window.egw_LAB.wait(function() {
 	 */
 	protected function find_grouped_ids($action,&$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
 	{
+		unset($use_all);
 		$grouped_contacts = array();
 		foreach((array)$checked as $n => $id)
 		{
@@ -1631,10 +1633,15 @@ window.egw_LAB.wait(function() {
 		{
 			unset($query['col_filter']['list']);
 		}
-		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1')
 		{
 			$query['col_filter']['account_id'] = null;
 		}
+		else
+		{
+			unset($query['col_filter']['account_id']);
+		}
+
 		// all backends allow now at least to use groups as distribution lists
 		$query['no_filter2'] = false;
 
@@ -1843,6 +1850,11 @@ window.egw_LAB.wait(function() {
 				{
 					$row['tel_prefered'] = $row[$row['tel_prefer']].$prefer_marker;
 				}
+				// Show nice name as status text
+				if($row['tel_prefer'])
+				{
+					$row['tel_prefer_label'] = $this->contact_fields[$row['tel_prefer']];
+				}
 				if (!$row['owner'] && $row['account_id'] > 0)
 				{
 					$row['class'] .= 'rowAccount rowNoDelete ';
@@ -2014,10 +2026,13 @@ window.egw_LAB.wait(function() {
 						// unset the duplicate_filed after submit because we don't need to warn user for second time about contact duplication
 						unset($content['presets_fields']);
 					}
+					$content['photo_unchanged'] = true;	// hint no need to store photo
+					/* seems not to be used any more in favor or ajax_update_photo
 					if ($content['delete_photo'])
 					{
 						$content['jpegphoto'] = null;
 						unset($content['delete_photo']);
+						$content['photo_unchanged'] = false;
 					}
 					if (is_array($content['upload_photo']) && !empty($content['upload_photo']['tmp_name']) &&
 						$content['upload_photo']['tmp_name'] != 'none' &&
@@ -2026,7 +2041,8 @@ window.egw_LAB.wait(function() {
 						$content['jpegphoto'] = $this->resize_photo($f);
 						fclose($f);
 						unset($content['upload_photo']);
-					}
+						$content['photo_unchanged'] = false;
+					}*/
 					$links = false;
 					if (!$content['id'] && is_array($content['link_to']['to_id']))
 					{
@@ -2345,7 +2361,7 @@ window.egw_LAB.wait(function() {
 
 		// Registry has view_id as contact_id, so set it (custom fields uses it)
 		$content['contact_id'] = $content['id'];
-		
+
 		// Avoid ID conflict with tree & selectboxes
 		$content['cat_id_tree'] = $content['cat_id'];
 
@@ -2358,7 +2374,7 @@ window.egw_LAB.wait(function() {
 				$content['private_cfs']['#'.$name] = $content['#'.$name];
 			}
 		}
-		
+
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
@@ -3076,8 +3092,21 @@ window.egw_LAB.wait(function() {
 	}
 
 	/**
-	 * Ajax method to update edited avatar photo via
-	 * avatar widget.
+	 * Check if there's a photo for given contact id. This is used for avatar widget
+	 * to set or unset delete button. If there's no uploaded photo it responses true.
+	 *
+	 * @param type $contact_id
+	 */
+	function ajax_noPhotoExists ($contact_id)
+	{
+		$response = Api\Json\Response::get();
+		$response->data((!($contact = $this->read($contact_id)) ||
+			empty($contact['jpegphoto']) &&	!(($contact['files'] & Api\Contacts::FILES_BIT_PHOTO) &&
+				($size = filesize($url=Api\Link::vfs_path('addressbook', $contact_id, Api\Contacts::FILES_PHOTO))))));
+	}
+
+	/**
+	 * Ajax method to update edited avatar photo via avatar widget
 	 *
 	 * @param int $contact_id
 	 * @param file string $file = null null means to delete
@@ -3088,19 +3117,51 @@ window.egw_LAB.wait(function() {
 		$contact = $this->read($contact_id);
 		if ($file)
 		{
-			$filteredFile=substr($file, strpos($file, ",")+1);
-			$decoded = base64_decode($filteredFile);
+			$filteredFile = substr($file, strpos($file, ",")+1);
+			// resize photo if wider then default width of 240pixel (keeping aspect ratio)
+			$decoded = $this->resize_photo(base64_decode($filteredFile));
 		}
-		$contact ['jpegphoto'] = is_null($file)? $file: $decoded;
+		$contact['jpegphoto'] = is_null($file) ? $file : $decoded;
+		$contact['photo_unchanged'] = false;	// hint photo is changed
 
 		$success = $this->save($contact);
 		if (!$success)
 		{
-			$response->alert($message);
+			$response->alert($this->error);
 		}
 		else
 		{
 			$response->data(true);
+		}
+	}
+
+	/**
+	 * Callback for vfs-upload widgets for PGP and S/Mime pubkey
+	 *
+	 * @param array $file
+	 * @param string $widget_id
+	 * @param Api\Etemplate\Request $request eT2 request eg. to access attribute $content
+	 * @param Api\Json\Response $response
+	 */
+	public function pubkey_uploaded(array $file, $widget_id, Api\Etemplate\Request $request, Api\Json\Response $response)
+	{
+		//error_log(__METHOD__."(".array2string($file).", ...) widget_id=$widget_id, id=".$request->content['id'].", files=".$request->content['files']);
+		unset($file, $response);	// not used, but required by function signature
+		list(,,$path) = explode(':', $widget_id);
+		$bit = $path === Api\Contacts::FILES_PGP_PUBKEY ? Api\Contacts::FILES_BIT_PGP_PUBKEY : Api\Contacts::FILES_BIT_SMIME_PUBKEY;
+		if (!($request->content['files'] & $bit) && $this->check_perms(Acl::EDIT, $request->content))
+		{
+			$content = $request->content;
+			$content['files'] |= $bit;
+			$content['photo_unchanged'] = true;	// hint no need to store photo
+			if ($this->save($content))
+			{
+				$changed = array_diff_assoc($content, $request->content);
+				//error_log(__METHOD__."() changed=".array2string($changed));
+				$request->content = $content;
+				// need to update preserv, as edit stores content there too and we would get eg. an contact modified error when trying to store
+				$request->preserv = array_merge($request->preserv, $changed);
+			}
 		}
 	}
 
@@ -3117,12 +3178,15 @@ window.egw_LAB.wait(function() {
 		{
 			$contact_id = $GLOBALS['egw']->accounts->id2name(substr($contact_id,8),'person_id');
 		}
-		if (!($contact = $this->read($contact_id)) || !$contact['jpegphoto'])
+		if (!($contact = $this->read($contact_id)) ||
+			empty($contact['jpegphoto']) &&                           // LDAP/AD (not updated SQL)
+			!(($contact['files'] & Api\Contacts::FILES_BIT_PHOTO) && // new SQL in VFS
+				($size = filesize($url=Api\Link::vfs_path('addressbook', $contact_id, Api\Contacts::FILES_PHOTO)))))
 		{
 			Egw::redirect(Api\Image::find('addressbook','photo'));
 		}
 		// use an etag over the image mapp
-		$etag = '"'.$contact['id'].':'.$contact['etag'].'"';
+		$etag = '"'.$contact_id.':'.$contact['etag'].'"';
 		if (!ob_get_contents())
 		{
 			header('Content-type: image/jpeg');
@@ -3138,10 +3202,15 @@ window.egw_LAB.wait(function() {
 			{
 				header("HTTP/1.1 304 Not Modified");
 			}
-			else
+			elseif(!empty($contact['jpegphoto']))
 			{
 				header('Content-length: '.bytes($contact['jpegphoto']));
 				echo $contact['jpegphoto'];
+			}
+			else
+			{
+				header('Content-length: '.$size);
+				readfile($url);
 			}
 			exit();
 		}

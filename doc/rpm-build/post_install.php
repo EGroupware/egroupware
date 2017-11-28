@@ -590,7 +590,7 @@ function usage($error=null)
 }
 
 /**
- * fix egw_cache perms evtl. created by root, stoping webserver from accessing it
+ * fix egw_cache and files_dir perms evtl. created by root, stoping webserver from accessing it
  */
 function fix_perms()
 {
@@ -600,6 +600,11 @@ function fix_perms()
 	{
 		system('/bin/chown -R '.$config['webserver_user'].' /tmp/egw_cache');
 		system('/bin/chmod 700 /tmp/egw_cache');
+	}
+	// in case update changes something in filesystem
+	if (file_exists($config['data_dir']) && !empty($config['webserver_user']))
+	{
+		system('/bin/chown -R '.$config['webserver_user'].' '.$config['data_dir']);
 	}
 }
 
@@ -790,12 +795,13 @@ function check_fix_php_apc_ini()
 
 /**
  * Convert a size with unit eg. 32M to a number
- * @param int $size
+ * @param int|string $_size
  * @return int
  */
-function _size_with_unit($size)
+function _size_with_unit($_size)
 {
-	switch(strtoupper(substr($size, -1)))
+	$size = (int)$_size;
+	switch(strtoupper(substr($_size, -1)))
 	{
 		case 'G':
 			$size *= 1024;

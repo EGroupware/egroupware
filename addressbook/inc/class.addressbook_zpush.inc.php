@@ -372,6 +372,10 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 					break;
 
 				case 'jpegphoto':
+					if (empty($contact[$attr]) && ($contact['files'] & Api\Contacts::FILES_BIT_PHOTO))
+					{
+						$contact[$attr] = file_get_contents(Api\Link::vfs_path('addressbook', $contact['id'], Api\Contacts::FILES_PHOTO));
+					}
 					if (!empty($contact[$attr])) $message->$key = base64_encode($contact[$attr]);
 					break;
 

@@ -170,6 +170,14 @@ class Customfields extends Transformer
 			{
 				unset($fields[$key]);
 			}
+
+			// Rmove fields for none private cutomfields when name refers to a single custom field
+			$matches = null;
+			if (($pos=strpos($form_name,self::$prefix)) !== false &&
+			preg_match($preg = '/'.self::$prefix.'([^\]]+)/',$form_name,$matches) && !isset($fields[$name=$matches[1]]))
+			{
+				unset($fields[$key]);
+			}
 		}
 		// check if name refers to a single custom field --> show only that
 		$matches = null;
@@ -290,7 +298,14 @@ class Customfields extends Transformer
 		{
 			case 'date':
 			case 'date-time':
-				$widget->attrs['dataformat'] = $type == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s';
+				if (!empty($field['values']['format']))
+				{
+					$widget->attrs['dataformat'] = $field['values']['format'];
+				}
+				else
+				{
+					$widget->attrs['dataformat'] = $type == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s';
+				}
 				if($field['values']['min']) $widget->attrs['min'] = $field['values']['min'];
 				if($field['values']['max']) $widget->attrs['min'] = $field['values']['max'];
 				break;

@@ -1,4 +1,4 @@
-/**
+	/**
  * EGroupware eTemplate2 - JS Link object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -183,40 +183,41 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 		var select_attrs = {
 			button_label: egw.lang('Link'),
 			button_caption: '',
-			readonly: this.options.readonly
+			readonly: this.options.readonly,
+			dialog_title: egw.lang('Link'),
+			onchange: function() {
+				var values = true;
+				// If entry not yet saved, store for linking on server
+				if(!self.options.value.to_id || typeof self.options.value.to_id == 'object')
+				{
+					values = self.options.value.to_id || {};
+					var files = self.vfs_select.getValue();
+					if(typeof files !== 'undefined')
+					{
+						for(var i = 0; i < files.length; i++)
+						{
+							values['link:'+files[i]] = {
+								app: 'link',
+								id: files[i],
+								type: 'unknown',
+								icon: 'link',
+								remark: '',
+								title: files[i]
+							};
+						}
+					}
+				}
+				self._link_result(values);
+			}
 		};
 		// only set server-side callback, if we have a real application-id (not null or array)
 		// otherwise it only gives an error on server-side
 		if (self.options.value && self.options.value.to_id && typeof self.options.value.to_id != 'object') {
-			select_attrs.method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::link_existing';
+			select_attrs.method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
 			select_attrs.method_id = self.options.value.to_app + ':' + self.options.value.to_id;
 		}
 		this.vfs_select = et2_createWidget("vfs-select", select_attrs,this);
 		this.vfs_select.set_readonly(this.options.readonly);
-		jQuery(this.vfs_select.getDOMNode()).change( function() {
-			var values = true;
-			// If entry not yet saved, store for linking on server
-			if(!self.options.value.to_id || typeof self.options.value.to_id == 'object')
-			{
-				values = self.options.value.to_id || {};
-				var files = self.vfs_select.getValue();
-				if(typeof files !== 'undefined')
-				{
-					for(var i = 0; i < files.length; i++)
-					{
-						values['link:'+files[i]] = {
-							app: 'link',
-							id: files[i],
-							type: 'unknown',
-							icon: 'link',
-							remark: '',
-							title: files[i]
-						};
-					}
-				}
-			}
-			self._link_result(values);
-		});
 
 		// File upload
 		var file_attrs = {
@@ -531,6 +532,12 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 			"default": "",
 			"description": "Limit to the listed applications (comma seperated)"
 		},
+		"app_icons": {
+			"name": "Application icons",
+			"type": "boolean",
+			"default": false,
+			"description": "Show application icons instead of names"
+		},
 		"blur": {
 			"name": "Placeholder",
 			"type": "string",
@@ -601,6 +608,57 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 		this.div = jQuery(document.createElement("div")).addClass("et2_link_entry");
 
 		// Application selection
+		jQuery.widget( "custom.iconselectmenu", jQuery.ui.selectmenu, {
+			_setText: function(element, value){
+				if(element === this.buttonText){
+					this._setButtonText(value);
+				} else {
+					this._superApply(element, value);
+				}
+			},
+
+			_setButtonText: function( value ) {
+
+				var _value = this.focusIndex;
+
+				if(typeof this.focusIndex === 'undefined')
+				{
+					_value = this.element.find( "option:selected" ).val();
+				}
+				else
+				{
+					var selected = this.items[_value] || {};
+					_value = selected.value;
+				}
+				var url = self.egw().image('navbar', _value);
+				var buttonItem = jQuery( "<span>", {
+					"class": "ui-selectmenu-text",
+					title: value
+				});
+
+				jQuery('.ui-selectmenu-text', this.button).replaceWith(buttonItem);
+				buttonItem.css('background-image', 'url('+url+')');
+			},
+			_renderItem: function( ul, item ) {
+				var li = jQuery( "<li>", {class:"et2_link_entry_app_option"}),
+					wrapper = jQuery( "<div>", {text: item.label} );
+
+				if ( item.disabled ) {
+					li.addClass( "ui-state-disabled" );
+				}
+				ul.addClass(self.div.class);
+				var url = self.egw().image('navbar', item.value);
+				jQuery( "<span>", {
+					style: 'background-image: url("'+url+'");',
+					"class": "ui-icon " + item.element.attr( "data-class" ),
+					title: item.label
+				})
+					.appendTo( wrapper );
+
+				return li.append( wrapper ).appendTo( ul );
+			}
+		});
+
 		this.app_select = jQuery(document.createElement("select")).appendTo(this.div)
 			.change(function(e) {
 				// Clear cache when app changes
@@ -624,12 +682,20 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			this.app_select.val(this.options.only_app);
 			this.app_select.hide();
+			if(this.options.app_icons && this.app_select.iconselectmenu('instance'))
+			{
+				this.app_select.iconselectmenu('widget').hide();
+			}
 			this.div.addClass("no_app");
 		}
 		else
 		{
 			// Now that options are in, set to last used app
 			this.app_select.val(this.options.value.app||'');
+			if(this.app_select.iconselectmenu('instance'))
+			{
+				this.app_select.iconselectmenu('update');
+			}
 		}
 
 		// Search input
@@ -637,8 +703,32 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 			// .attr("type", "search") // Fake it for all browsers below
 			.focus(function(){if(!self.options.only_app) {
 				// Adjust width, leave room for app select & link button
-				self.div.removeClass("no_app");self.app_select.show();
+				self.div.removeClass("no_app");
+				if(self.options.app_icons)
+				{
+					self.app_select.iconselectmenu('widget').show();
+				}
+				else
+				{
+					self.app_select.show();
+				}
 			}})
+			.blur(function(e) {
+				if(self.div.has(e.relatedTarget).length) return;
+				if(self.options.app_icons)
+				{
+					// Adjust width, leave room for app select & link button
+					self.div.addClass("no_app");
+					self.app_select.iconselectmenu('widget').hide();
+				}
+				else if (self.search.val())
+				{
+					if(self.options.only_app) {
+						// Adjust width, leave room for app select & link button
+						self.div.addClass("no_app");
+					}
+				}
+			})
 			.appendTo(this.div);
 
 		this.set_blur(this.options.blur ? this.options.blur : this.egw().lang("search"), this.search);
@@ -697,7 +787,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 			// Normal stuff
 			li.append(jQuery( "<a></a>" ).text( item.label ))
 				.appendTo(ul);
-			window.setTimeout(function(){ul.css('max-width', jQuery('.et2_container').width()-ul.offset().left)}, 300);
+			window.setTimeout(function(){ul.css('max-width', jQuery('.et2_container').width()-ul.offset().left);}, 300);
 			return li;
 		};
 
@@ -795,6 +885,23 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 			}
 			this.app_select.val(this.options.value.app);
 		}
+
+		if(this.options.app_icons)
+		{
+			var self = this;
+			this.div.addClass('app_icons');
+			this.app_select.iconselectmenu({
+					width:  50,
+					change: function() {
+						window.setTimeout(function()
+						{
+							self.app_select.trigger("change");
+						}, 0);
+					}
+				})
+				.iconselectmenu( "menuWidget" );
+			this.app_select.iconselectmenu('widget').hide();
+		}
 		return this._super.apply(this,arguments);
 	},
 
@@ -875,6 +982,10 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		jQuery("option[value='"+_value.app+"']",this.app_select).prop("selected",true);
 		this.app_select.hide();
+		if(this.options.app_icons && this.app_select.iconselectmenu('instance'))
+		{
+			this.app_select.iconselectmenu('widget').hide();
+		}
 		this.div.addClass("no_app");
 	},
 
@@ -1099,6 +1210,12 @@ var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		},
 		"needed": {
 			"ignore": true
+		},
+		"link_hook": {
+			"name": "Type",
+			"type": "string",
+			"default": "view",
+			"description": "Hook used for displaying link (view/edit/add)"
 		}
 	},
 	legacyOptions: ["only_app"],
@@ -1171,7 +1288,7 @@ var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		{
 			this.link.addClass("et2_link");
 			this.link.click( function(e){
-				self.egw().open(_value, "", "view",null,_value.app,_value.app);
+				self.egw().open(_value, "", self.options.link_hook,null,_value.app,_value.app);
 				e.stopImmediatePropagation();
 			});
 		}
@@ -1405,10 +1522,18 @@ var et2_link_string = (function(){ "use strict"; return expose(et2_valueWidget.e
 			.appendTo(this.list)
 			.addClass("et2_link loading")
 			.click( function(e){
+				var fe = egw.link_get_registry('filemanager-editor');
 				if (self.options.expose_view && typeof _link_data.type !='undefined'
 					&& _link_data.type.match(self.mime_regexp,'ig'))
 				{
 					self._init_blueimp_gallery(e, _link_data);
+				}
+				else if(typeof _link_data.type !='undefined' && fe && fe.mime && fe.mime[_link_data.type])
+				{
+					egw.open_link(egw.link('/index.php', {
+						menuaction: fe.edit.menuaction,
+						path: egw().mime_open(_link_data).url.replace('/webdav.php','')
+					}), '', fe.edit_popup);
 				}
 				else
 				{
@@ -1788,8 +1913,10 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 			if (_link_data && (typeof _link_data.download_url != 'undefined' || _link_data.app !='egw-data'))
 			{
 				$td.click( function(){
+					var fe_mime = egw.link_get_registry('filemanager-editor','mime');
 					// Check if the link entry is mime with media type, in order to open it in expose view
-					if (typeof _link_data.type != 'undefined' && _link_data.type.match(self.mime_regexp,'ig'))
+					if (typeof _link_data.type != 'undefined' &&
+							(_link_data.type.match(self.mime_regexp,'ig') || (fe_mime && fe_mime[_link_data.type])))
 					{
 						var $vfs_img_node = jQuery(this).parent().find('.vfsMimeIcon');
 						if ($vfs_img_node.length > 0) $vfs_img_node.click();

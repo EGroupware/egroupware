@@ -94,6 +94,8 @@ app.classes.admin = AppJS.extend(
 			case 'admin.index':
 				var iframe = this.iframe = this.et2.getWidgetById('iframe');
 				this.nm = this.et2.getWidgetById('nm');
+				this.groups = this.et2.getWidgetById('groups');
+				this.groups.set_disabled(true);
 				this.ajax_target = this.et2.getWidgetById('ajax_target');
 				if (iframe)
 				{
@@ -184,6 +186,7 @@ app.classes.admin = AppJS.extend(
 		}
 		this.iframe.set_disabled(!_url || ajax);
 		this.nm.set_disabled(!!_url || ajax);
+		this.groups.set_disabled(true);
 		this.ajax_target.set_disabled(!ajax);
 	},
 
@@ -351,11 +354,19 @@ app.classes.admin = AppJS.extend(
 	{
 		var link = _widget.getUserData(_id, 'link');
 
+		this.groups.set_disabled(true);
+		this.nm.set_disabled(false);
+
 		if (_id == '/accounts' || _id.substr(0, 8) == '/groups/')
 		{
 			this.load();
 			var parts = _id.split('/');
 			this.et2.getWidgetById('nm').applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
+		}
+		else if (_id === '/groups')
+		{
+			this.load();
+			this.group_list();
 		}
 		else if (typeof link == 'undefined')
 		{
@@ -373,6 +384,16 @@ app.classes.admin = AppJS.extend(
 	},
 
 	/**
+	 * Show the group list in the main window
+	 */
+	group_list: function group_list()
+	{
+		this.nm.set_disabled(true);
+		this.groups.set_disabled(false);
+	},
+
+
+	/**
 	 * View, edit or delete a group callback for tree
 	 *
 	 * @param {object} _action egwAction
@@ -380,14 +401,17 @@ app.classes.admin = AppJS.extend(
 	 */
 	group: function(_action, _senders)
 	{
+		// Tree IDs look like /groups/ID, nm uses admin::ID
+		var from_nm = _senders[0].id.indexOf('::') > 0;
+		var account_id = _senders[0].id.split(from_nm ? '::' : '/')[from_nm ? 1 : 2];
+
 		switch(_action.id)
 		{
 			case 'view':
-				this.run(_senders[0].id, this.et2.getWidgetById('tree'));
+				this.run(from_nm ? '/groups/'+account_id : _senders[0].id, this.et2.getWidgetById('tree'));
 				break;
 
 			case 'delete':
-				var account_id = _senders[0].id.split('/')[2];
 				this.egw.json('admin_account::ajax_delete_group', [account_id]).sendRequest();
 				break;
 
@@ -397,14 +421,14 @@ app.classes.admin = AppJS.extend(
 					alert('Missing url in action '+_action.id+'!');
 					break;
 				}
-				var url = _action.data.url.replace('$id', _senders[0].id.split('/')[2]);
+				var url = unescape(_action.data.url).replace('$id', account_id);
 				if (url[0] != '/' && url.substr(0, 4) != 'http')
 				{
 					url = this.egw.link('/index.php', url);
 				}
-				if (_action.data.popup)
+				if (_action.data.popup || _action.data.width && _action.data.height)
 				{
-					this.egw.open_link(url, '_blank', _action.data.popup);
+					this.egw.open_link(url, '_blank', _action.data.popup ? _action.data.popup : _action.data.width + 'x' + _action.data.height);
 				}
 				else
 				{
@@ -1169,6 +1193,95 @@ app.classes.admin = AppJS.extend(
 		}, this));
 	},
 
+	/**
+	 * Export content of given field into relevant file
+	 */
+	smime_exportCert: function ()
+	{
+		var $a = jQuery(document.createElement('a')).appendTo('body').hide();
+		var acc_id = this.et2.getArrayMgr("content").getEntry('acc_id');
+		var url = window.egw_webserverUrl+'/index.php?';
+			url += 'menuaction=mail.mail_ui.smimeExportCert';
+			url += '&acc_id='+acc_id;
+		$a.prop('href',url);
+		$a.prop('download',"");
+		$a[0].click();
+		$a.remove();
+	},
+
+	/**
+	 * Create certificate generator dialog
+	 */
+	smime_genCertificate: function ()
+	{
+		var self = this;
+		et2_createWidget("dialog",
+		{
+			callback: function(_button_id, _value)
+			{
+				if (_button_id == 'create' && _value)
+				{
+					var isValid = true;
+					var required = ['countryName', 'emailAddress'];
+					var widget = {};
+					// check the required fields
+					for (var i=0;i<required.length;i++)
+					{
+						if (_value[required[i]]) continue;
+						widget = this.template.widgetContainer.getWidgetById(required[i]);
+						widget.set_validation_error('This field is required!');
+						isValid = false;
+					}
+					// check mismatch passphrase
+					if (_value.passphrase && _value.passphrase !== _value.passphraseConf)
+					{
+						var passphraseConf = this.template.widgetContainer.getWidgetById('passphrase');
+						passphraseConf.set_validation_error('Confirm passphrase is not match!');
+						isValid = false;
+					}
+
+					if (isValid)
+					{
+						egw.json('mail.mail_ui.ajax_smimeGenCertificate', _value, function(_cert){
+							if (_cert)
+							{
+								for (var key in _cert)
+								{
+									if (!_cert[key]) continue;
+									switch (key)
+									{
+										case 'cert':
+											self.et2.getWidgetById('smime_cert').set_value(_cert[key]);
+											break;
+										case 'privkey':
+											self.et2.getWidgetById('acc_smime_password').set_value(_cert[key]);
+											break;
+									}
+								}
+								self.egw.message('New certificate information has been generated, please save your account if you want to store it.');
+							}
+						}).sendRequest(true);
+					}
+					else
+					{
+						return false;
+					}
+				}
+			},
+			title: egw.lang('Generate Certificate'),
+			buttons: [
+				{text: this.egw.lang("Create"), id: "create", "class": "ui-priority-primary", "default": true},
+				{text: this.egw.lang("Cancel"), id:"cancel"}
+			],
+			value:{
+				content:{
+					value: ''
+			}},
+			template: egw.webserverUrl+'/mail/templates/default/smimeCertGen.xet',
+			resizable: false,
+			position: 'left top'
+		}, et2_dialog._create_parent('mail'));
+	},
     /**
      * Switch EWS Type
      *

@@ -48,7 +48,7 @@ var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 	 *
 	 * Same preg is in Etemplate\Widget\Url PHP class!
 	 */
-	EMAIL_PREG: new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|"(?:[^"\\]|\\.)*")\s?<)?[^\x00-\x20()<>@,;:\042\[\]\x80-\xff]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/i),
+	EMAIL_PREG: new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|"(?:[^"\\]|\\.)*")\s?<)?[^\x00-\x20()<>@,;:\042\[\]\x80-\xff]+[^.\s]@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/i),
 	/**
 	 * @memberOf et2_url
 	 */
@@ -167,7 +167,9 @@ var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 				else if (this.egw().config("call_link"))
 				{
 					var link = this.egw().config("call_link")
-						.replace("%1", encodeURIComponent(value))
+						// tel: links use no URL encoding according to rfc3966 section-5.1.4
+						.replace("%1", this.egw().config("call_link").substr(0, 4) == 'tel:' ?
+							value : encodeURIComponent(value))
 						.replace("%u",this.egw().user('account_lid'))
 						.replace("%t",this.egw().user('account_phone'));
 					var popup = this.egw().config("call_popup");
@@ -398,7 +400,7 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
-		_attrs.push("value", "class");
+		_attrs.push("value", "class", "statustext");
 	},
 
 	getDetachedNodes: function()
@@ -418,10 +420,9 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 		{
 			_nodes[0].setAttribute("class", _values["class"]);
 		}
-		if(this.options.statustext)
-		{
-			this.span.attr('title',this.options.statustext);
-		}
+
+		// Set to original status text if not set for this row
+		this.span.attr('title',_values.statustext ? _values.statustext : this.options.statustext);
 	}
 });}).call(this);
 et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);

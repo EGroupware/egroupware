@@ -167,9 +167,10 @@ app.classes.mail = AppJS.extend(
 				});
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
-				var previewPane = this.egw.preference('previewPane', 'mail');
-				this.mail_disablePreviewArea(previewPane !== 'fixed' && previewPane !== 'vertical');
-				if (previewPane == 'vertical') nm.header.right_div.addClass('vertical_splitter');
+
+				// Set preview pane state
+				this.mail_disablePreviewArea(!this.getPreviewPaneState());
+
 				//Get initial folder status
 				this.mail_refreshFolderStatus(undefined,undefined,false);
 
@@ -227,15 +228,16 @@ app.classes.mail = AppJS.extend(
 				// removed once the issue is solved.
 				var password = this.et2.getWidgetById('password');
 				if (password) password.set_value('');
-
-				if (this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp') &&
-					this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').checked ||
+				var composeToolbar = this.et2.getWidgetById('composeToolbar');
+				if (composeToolbar._actionManager.getActionById('pgp') &&
+					composeToolbar._actionManager.getActionById('pgp').checked ||
 					this.et2.getArrayMgr('content').data.mail_plaintext &&
 						this.et2.getArrayMgr('content').data.mail_plaintext.indexOf(this.begin_pgp_message) != -1)
 				{
 					this.mailvelopeAvailable(this.mailvelopeCompose);
 				}
 				var that = this;
+				var plainText = this.et2.getWidgetById('mail_plaintext');
 				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_init();
@@ -280,6 +282,8 @@ app.classes.mail = AppJS.extend(
 					}
 					that.compose_resizeHandler();
 				});
+				// Init key handler
+				this.init_keyHandler();
 
 				//Call drag_n_drop initialization for emails on compose
 				this.init_dndCompose();
@@ -287,16 +291,15 @@ app.classes.mail = AppJS.extend(
 				// Set focus on To/body field
 				// depending on To field value
 				var to = this.et2.getWidgetById('to');
+				var content = this.et2.getArrayMgr('content').data;
 				if (to && to.get_value() && to.get_value() != '')
 				{
-					var content = this.et2.getArrayMgr('content').data;
 					if (content.is_plain)
 					{
-						var plainText = this.et2.getWidgetById('mail_plaintext');
 						// focus
 						jQuery(plainText.node).focus();
 						// get the cursor to the top of the textarea
-						if (typeof plainText.node.setSelectionRange !='undefined') plainText.node.setSelectionRange(0,0);
+						if (typeof plainText.node.setSelectionRange !='undefined' && !jQuery(plainText.node).is(":hidden")) plainText.node.setSelectionRange(0,0);
 					}
 					else
 					{
@@ -308,6 +311,21 @@ app.classes.mail = AppJS.extend(
 				else if(to)
 				{
 					jQuery('input',to.node).focus();
+					// set cursor to the begining of the textarea only for first focus
+					if (content.is_plain
+						&& typeof plainText.node.setSelectionRange !='undefined')
+					{
+						plainText.node.setSelectionRange(0,0);
+					}
+				}
+				var smime_sign = this.et2.getWidgetById('smime_sign');
+				var smime_encrypt = this.et2.getWidgetById('smime_encrypt');
+
+				if (composeToolbar._actionManager.getActionById('smime_sign') &&
+						composeToolbar._actionManager.getActionById('smime_encrypt'))
+				{
+					if (smime_sign.getValue() == 'on') composeToolbar.checkbox('smime_sign', true);
+					if (smime_encrypt.getValue() == 'on') composeToolbar.checkbox('smime_encrypt', true);
 				}
 				break;
 			case 'mail.subscribe':
@@ -595,7 +613,8 @@ app.classes.mail = AppJS.extend(
 
 		// We only handle one for everything but forward
 		settings.id = (typeof _elems == 'undefined'?'':_elems[0].id);
-
+		var content = egw.dataGetUIDdata(settings.id);
+		if (content) settings.smime_type = content.data['smime'];
 		switch(_action.id)
 		{
 			case 'compose':
@@ -932,7 +951,7 @@ app.classes.mail = AppJS.extend(
 				$preview_iframe.css ('top', $preview_iframe.position().top - offset + 10);
 			}, 50);
 		};
-		var previewPane = this.egw.preference('previewPane', 'mail');
+
 		// Show / hide 'Select something' in preview
 		var blank = this.et2.getWidgetById('blank');
 		if(blank)
@@ -944,7 +963,7 @@ app.classes.mail = AppJS.extend(
 			// If there is content to show recalculate the size
 			set_prev_iframe_top();
 		}
-		else if (previewPane == 'fixed' || previewPane == 'vertical')
+		else if (this.getPreviewPaneState())
 		{
 			if(blank)
 			{
@@ -995,10 +1014,10 @@ app.classes.mail = AppJS.extend(
 				switch (smime_widgets[i])
 				{
 					case 'smime_signature':
-						widget.set_disabled(!(dataElem.data.smime == 'smimeSignature'));
+						widget.set_disabled(!(dataElem.data.smime == 'smime_sign'));
 						break;
 					case 'smime_encryption':
-						widget.set_disabled(!(dataElem.data.smime == 'smimeEncryption'));
+						widget.set_disabled(!(dataElem.data.smime == 'smime_encrypt'));
 						break;
 					default:
 						widget.set_disabled(true);
@@ -1042,9 +1061,9 @@ app.classes.mail = AppJS.extend(
 			jQuery(IframeHandle.getDOMNode()).on('load', function(e){
 				self.resolveExternalImages (this.contentWindow.document);
 			});
-			if (dataElem.data['smime']) this.smimeAttachmentsCheckerInterval();
-		}
 
+		}
+		if (dataElem.data['smime']) this.smimeAttachmentsCheckerInterval();
 		var messages = {};
 		messages['msg'] = [_id];
 
@@ -2185,9 +2204,9 @@ app.classes.mail = AppJS.extend(
 		this.mail_refreshFolderStatus(_folder,'forced',false,false);
 		this.mail_refreshQuotaDisplay(server[0]);
 		this.mail_preview();
+		this.mail_callRefreshVacationNotice(server[0]);
 		if (server[0]!=previousServer[0])
 		{
-			this.mail_callRefreshVacationNotice(server[0]);
 			egw.jsonq('mail.mail_ui.ajax_refreshFilters',[server[0]]);
 		}
 	},
@@ -2922,116 +2941,79 @@ app.classes.mail = AppJS.extend(
 		egw.openPopup(egw.link('/index.php', get_param), width, height, windowName);
 	},
 
-	saveAttachment: function(tag_info, widget)
+	/**
+	 * Callback function to handle vfsSave response messages
+	 *
+	 * @param {type} _data
+	 */
+	vfsSaveCallback: function (_data)
 	{
-		var mailid;
-		var attgrid;
-		if (this.mail_isMainWindow)
-		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-			var p = widget.getParent();
-			var cont = p.getArrayMgr("content").data;
-			attgrid = cont[widget.id.replace(/\[save\]/,'')];
-		}
-		else
-		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
-		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_ui.getAttachment';	// todo compose for Draft folder
-		url += '&mode=save';
-		url += '&id='+mailid;
-		url += '&part='+attgrid.partID;
-		url += '&is_winmail='+attgrid.winmailFlag;
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
-		this.et2._inst.download(url);
+		egw.message(_data.msg, _data.success ? "success": "error");
 	},
 
-	saveAllAttachmentsToZip: function(tag_info, widget)
+	/**
+	 * A handler for saving to VFS/downloading attachments
+	 *
+	 * @param {type} widget
+	 * @param {type} action
+	 * @param {type} row_id
+	 */
+	saveAttachmentHandler: function (widget, action, row_id)
 	{
-		var mailid;
-		var attgrid;
-		if (this.mail_isMainWindow)
-		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-			var p = widget.getParent();
-			var cont = p.getArrayMgr("content").data;
-			attgrid = cont[widget.id.replace(/\[save_zip\]/,'')];
-		}
-		else
-		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save_zip\]/,'')];
-		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_ui.download_zip';	// todo compose for Draft folder
-		url += '&mode=save';
-		url += '&id='+mailid;
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
-		this.et2._inst.download(url);
-	},
+		var mail_id, attachments;
 
-	saveAttachmentToVFS: function(tag_info, widget)
-	{
-		var mailid;
-		var attgrid;
 		if (this.mail_isMainWindow)
 		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
+			mail_id = this.mail_currentlyFocussed;
 			var p = widget.getParent();
-			var cont = p.getArrayMgr("content").data;
-			attgrid = cont[widget.id.replace(/\[saveAsVFS\]/,'')];
+			attachments = p.getArrayMgr("content").data;
 		}
 		else
 		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[saveAsVFS\]/,'')];
+			mail_id = this.et2.getArrayMgr("content").getEntry('mail_id');
+			attachments = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		var width=640;
-		var height=570;
-		var windowName ='mail';
-		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
-		url += '&mode=saveas';
-		url += '&id='+mailid+'::'+attgrid.partID+'::'+attgrid.winmailFlag;
-		url += '&name='+attgrid.filename;
-		url += '&type='+attgrid.type.toLowerCase();
-		url += '&method=mail.mail_ui.vfsSaveAttachment';
-		url += '&label='+egw.lang('Save');
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
-		egw_openWindowCentered(url,windowName,width,height);
-	},
 
-	saveAllAttachmentsToVFS: function(tag_info, widget)
-	{
-		var mailid;
-		var attgrid;
-		if (this.mail_isMainWindow)
+		switch (action)
 		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-			var p = widget.getParent();
-			attgrid = p.getArrayMgr("content").data;
+			case 'saveOneToVfs':
+			case 'saveAllToVfs':
+				var ids = [];
+				attachments = action === 'saveOneToVfs' ? [attachments[row_id]] : attachments;
+				for (var i=0;i<attachments.length;i++)
+				{
+					if (attachments[i] != null)
+					{
+						ids.push(mail_id+'::'+attachments[i].partID+'::'+attachments[i].winmailFlag+'::'+attachments[i].filename);
+					}
+				}
+				var vfs_select = et2_createWidget('vfs-select', {
+					mode: action === 'saveOneToVfs' ? 'saveas' : 'select-dir',
+					method: 'mail.mail_ui.ajax_vfsSave',
+					button_label: egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
+					dialog_title: egw.lang(action === 'saveOneToVfs' ? 'Save attchment' : 'Save attchments'),
+					method_id: ids.length > 1 ?	{ids:ids, action:'attachment'} : {ids: ids[0], action: 'attachment'},
+					name: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
+				});
+				vfs_select.click();
+				break;
+
+			case 'downloadOneAsFile':
+			case 'downloadAllToZip':
+				var attachment = attachments[row_id];
+				var url = window.egw_webserverUrl+'/index.php?';
+				url += jQuery.param({
+					menuaction: action === 'downloadOneAsFile' ?
+						'mail.mail_ui.getAttachment' : 'mail.mail_ui.download_zip',
+					mode: 'save',
+					id: mail_id,
+					part: attachment.partID,
+					is_winmail: attachment.winmailFlag,
+					smime_type: (attachment.smime_type ? attachment.smime_type : '')
+				});
+				this.et2._inst.download(url);
+				break;
 		}
-		else
-		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
-		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		var width=640;
-		var height=570;
-		var windowName ='mail';
-		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
-		url += '&mode=select-dir';
-		url += '&method=mail.mail_ui.vfsSaveAttachment';
-		url += '&label='+egw.lang('Save all');
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
-		for (var i=0;i<attgrid.length;i++)
-		{
-			if (attgrid[i] != null) url += '&id['+i+']='+mailid+'::'+attgrid[i].partID+'::'+attgrid[i].winmailFlag+'::'+attgrid[i].filename;
-		}
-		egw_openWindowCentered(url,windowName,width,height);
 	},
 
 	/**
@@ -3058,32 +3040,26 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
-		url += '&mode='+ (_elems.length>1?'select-dir':'saveas');
-		url += '&mime=message'+encodeURIComponent('/')+'rfc822';
-		url += '&method=mail.mail_ui.vfsSaveMessage';
-		url += '&label='+(_elems.length>1?egw.lang('Save all'):egw.lang('save'));
-
+		var ids = [], names = [];
 		for (var i in _elems)
 		{
 			var _id = _elems[i].id;
 			var dataElem = egw.dataGetUIDdata(_id);
 			var subject = dataElem? dataElem.data.subject: _elems[i].subject;
 			var filename = subject.replace(/[\f\n\t\v]/g,"_")|| 'unknown';
-			if (_elems.length>1)
-			{
-				url += '&id['+i+']='+_id;
-				url += '&name['+i+']='+encodeURIComponent(filename+'.eml');
-			}
-			else
-			{
-				url += '&id='+_id;
-				url += '&name='+encodeURIComponent(filename+'.eml');
-			}
-
+			ids.push(_id);
+			names.push(filename+'.eml');
 		}
-		egw.openPopup(url,'680','400','vfs_save_messages', 'filemanager');
+		var vfs_select = et2_createWidget('vfs-select', {
+			mode: _elems.length > 1 ? 'select-dir' : 'saveas',
+			mime: 'message/rfc822',
+			method: 'mail.mail_ui.ajax_vfsSave',
+			button_label: _elems.length>1 ? egw.lang('Save all') : egw.lang('save'),
+			dialog_title: "Save email",
+			method_id: _elems.length > 1 ? {ids:ids, action:'message'}: {ids: ids[0], action: 'message'},
+			name: _elems.length > 1 ? names : names[0],
+		});
+		vfs_select.click();
 	},
 
 	/**
@@ -3125,8 +3101,9 @@ app.classes.mail = AppJS.extend(
 		if (mail_import_hook && typeof mail_import_hook.app_entry_method != 'undefined')
 		{
 			var data = egw.dataGetUIDdata(_elems[0].id);
+			var title = egw.lang('Select') + ' ' + egw.lang(app) + ' ' + (egw.link_get_registry(app, 'entry') ? egw.link_get_registry(app, 'entry') : egw.lang('entry'));
 			var subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
-			this.integrate_checkAppEntry('Select '+ app + ' entry', app, subject, url,  mail_import_hook.app_entry_method, function (args){
+			this.integrate_checkAppEntry(title, app, subject, url,  mail_import_hook.app_entry_method, function (args){
 				egw_openWindowCentered(args.url+ (args.entryid ?'&entry_id=' + args.entryid: ''),'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 			});
 		}
@@ -3160,9 +3137,9 @@ app.classes.mail = AppJS.extend(
 		   if (!_entryId)
 		   {
 			   var buttons = [
-				   {text: 'Append', id: 'append', image: 'check', default:true},
-				   {text: 'Add as new', id: 'new', image: 'check'},
-				   {text: 'Cancel', id: 'cancel', image: 'check'}
+				   {text: app.mail.egw.lang('Append'), id: 'append', image: 'check', default:true},
+				   {text: app.mail.egw.lang('Add as new'), id: 'new', image: 'check'},
+				   {text: app.mail.egw.lang('Cancel'), id: 'cancel', image: 'check'}
 			   ];
 			   et2_createWidget("dialog",
 			   {
@@ -3721,51 +3698,75 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @param {egwAction} _egw_action
 	 * @param {array|string} _action string "autosaving", if that triggered the action
+	 *
+	 * @return Promise
 	 */
 	saveAsDraft: function(_egw_action, _action)
 	{
-		//this.et2_obj.submit();
-		var content = this.et2.getArrayMgr('content').data;
-		var action = _action;
-		if (_egw_action && _action !== 'autosaving')
-		{
-			action = _egw_action.id;
-		}
-
-		var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount',
-			'mail_htmltext', 'mail_plaintext', 'lastDrafted', 'filemode', 'expiration', 'password'];
-		var widget = {};
-		for (var index in widgets)
-		{
-			widget = this.et2.getWidgetById(widgets[index]);
-			if (widget)
-			{
-				content[widgets[index]] = widget.get_value();
-			}
-		}
 		var self = this;
-		if (content)
-		{
-			// if we compose an encrypted message, we have to get the encrypted content
-			if (this.mailvelope_editor)
+		return new Promise(function(_resolve, _reject){
+			var content = self.et2.getArrayMgr('content').data;
+			var action = _action;
+			if (_egw_action && _action !== 'autosaving')
 			{
-				this.mailvelope_editor.encrypt([]).then(function(_armored)
-				{
-					content['mail_plaintext'] = _armored;
-					self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
-						self.savingDraft_response(_data,action);
-					}).sendRequest(true);
-				}, function(_err)
-				{
-					self.egw.message(_err.message, 'error');
-				});
-				return false;
+				action = _egw_action.id;
 			}
 
-			this.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
-				self.savingDraft_response(_data,action);
-			}).sendRequest(true);
-		}
+			var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount',
+				'mail_htmltext', 'mail_plaintext', 'lastDrafted', 'filemode', 'expiration', 'password'];
+			var widget = {};
+			for (var index in widgets)
+			{
+				widget = self.et2.getWidgetById(widgets[index]);
+				if (widget)
+				{
+					content[widgets[index]] = widget.get_value();
+				}
+			}
+
+			if (content)
+			{
+				// if we compose an encrypted message, we have to get the encrypted content
+				if (self.mailvelope_editor)
+				{
+					self.mailvelope_editor.encrypt([]).then(function(_armored)
+					{
+						content['mail_plaintext'] = _armored;
+						self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
+							var res = self.savingDraft_response(_data,action);
+							if (res)
+							{
+								_resolve();
+							}
+							else
+							{
+								_reject();
+							}
+						}).sendRequest(true);
+					}, function(_err)
+					{
+						self.egw.message(_err.message, 'error');
+						_reject();
+					});
+					return false;
+				}
+				else
+				{
+
+					self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
+						var res = self.savingDraft_response(_data,action);
+						if (res)
+						{
+							_resolve();
+						}
+						else
+						{
+							_reject();
+						}
+					}).sendRequest(true);
+				}
+			}
+		});
 	},
 
 	/**
@@ -3783,6 +3784,8 @@ app.classes.mail = AppJS.extend(
 	 *  -button[saveAsDraft]
 	 *  -button[saveAsDraftAndPrint]
 	 *  -autosaving
+	 *
+	 *  @return boolean return true if successful otherwise false
 	 */
 	savingDraft_response: function(_responseData, _action)
 	{
@@ -3829,10 +3832,12 @@ app.classes.mail = AppJS.extend(
 						this.egw.message(_responseData.message);
 				}
 			}
+			return true;
 		}
 		else
 		{
 			this.egw.message(_responseData.message, 'error');
+			return false;
 		}
 	},
 
@@ -4638,7 +4643,9 @@ app.classes.mail = AppJS.extend(
 
 		if ($mainIframe)
 		{
-			tmpPrintDiv[0].innerHTML = $mainIframe.contents().find('body').html();
+			window.setTimeout(function(){
+				tmpPrintDiv[0].innerHTML = $mainIframe.contents().find('body').html();
+			}, 600);
 		}
 		// Attach the element to the DOM after maniupulation
 		if (notAttached) $mainIframe.after(tmpPrintDiv);
@@ -4656,7 +4663,7 @@ app.classes.mail = AppJS.extend(
 		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
 		setTimeout(function(){
 			egw(window).window.print();
-		},100);
+		},1000);
 	},
 
 	/**
@@ -4772,6 +4779,31 @@ app.classes.mail = AppJS.extend(
 			},100);
 		}
 
+	},
+
+	/**
+	 * Keyhandler for compose window
+	 * Use this one so we can handle keys even on inputs
+	 */
+	init_keyHandler: function()
+	{
+		jQuery(document).on('keydown', function(e) {
+			// Translate the given key code and make it valid
+			var keyCode = e.which;
+			keyCode = egw_keycode_translation_function(keyCode);
+			keyCode = egw_keycode_makeValid(keyCode);
+
+			// Only go on if this is a valid key code - call the key handler
+			if (keyCode != -1)
+			{
+				if (egw_keyHandler(keyCode, e.shiftKey, e.ctrlKey || e.metaKey, e.altKey))
+				{
+					// If the key handler successfully passed the key event to some
+					// sub component, prevent the default action
+					e.preventDefault();
+				}
+			}
+		});
 	},
 
 	/**
@@ -5291,7 +5323,8 @@ app.classes.mail = AppJS.extend(
 			var mail_import_hook = toolbar.options.actions[integApps[index]]['mail_import']['app_entry_method'];
 			if (integWidget.get_value() == 'on')
 			{
-				this.integrate_checkAppEntry(egw.lang('Select %1 entry',integApps[index]), integApps[index].substr(3), subject.get_value(), '', mail_import_hook , function (args){
+				var title = egw.lang('Select') + ' ' + egw.lang(integApps[index]) + ' ' + (egw.link_get_registry(integApps[index], 'entry') ? egw.link_get_registry(integApps[index], 'entry') : egw.lang('entry'));
+				this.integrate_checkAppEntry(title, integApps[index].substr(3), subject.get_value(), '', mail_import_hook , function (args){
 					var value = {};
 					value[integApps[index]] = args.entryid;
 					var oldValue = to_integrate_ids.get_value()[0];
@@ -5371,15 +5404,20 @@ app.classes.mail = AppJS.extend(
 		var content = this.et2.getArrayMgr('content').data;
 		var subject = this.et2.getWidgetById('subject');
 		var elem = {0:{id:"", subject:""}};
+		var self = this;
 		if (typeof content != 'undefined' && content.lastDrafted && subject)
 		{
 			elem[0].id = content.lastDrafted;
 			elem[0].subject = subject.get_value();
 			this.mail_save2fm(_action, elem);
 		}
-		else
+		else // need to save as draft first
 		{
-			et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save to filemanager','info');
+			this.saveAsDraft(null, 'autosaving').then(function(){
+				self.compose_saveDraft2fm(_action);
+			}, function(){
+				et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save to filemanager','info');
+			});
 		}
 	},
 
@@ -5739,10 +5777,12 @@ app.classes.mail = AppJS.extend(
 					self.resolveExternalImages(this.contentWindow.document);
 					// Use prepare print function to copy iframe content into div
 					// as we don't want to show content in iframe (scrolling problem).
-					self.mail_prepare_print(jQuery(this));
+					if (jQuery(this.contentWindow.document.body).find('#smimePasswordRequest').length == 0)
+					{
+						iframe.set_disabled(true);
+						self.mail_prepare_print(jQuery(this));
+					}
 				}
-
-
 			});
 		});
 	},
@@ -5777,6 +5817,7 @@ app.classes.mail = AppJS.extend(
 	smimePassDialog: function (_msg)
 	{
 		var self = this;
+		var pass_exp = egw.preference('smime_pass_exp', 'mail');
 		et2_createWidget("dialog",
 		{
 			callback: function(_button_id, _value)
@@ -5787,6 +5828,7 @@ app.classes.mail = AppJS.extend(
 					pass.set_value(_value.value);
 					var toolbar = self.et2.getWidgetById('composeToolbar');
 					toolbar.value = 'send';
+					egw.set_preference('mail', 'smime_pass_exp', _value.pass_exp);
 					self.compose_submitAction(false);
 				}
 			},
@@ -5798,11 +5840,27 @@ app.classes.mail = AppJS.extend(
 			value:{
 				content:{
 					value: '',
-					message: _msg
+					message: _msg,
+					'exp_min': pass_exp
 			}},
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false
 		}, et2_dialog._create_parent('mail'));
+	},
+
+	/**
+	 * set attachments of smime message for mobile view
+	 * @param {type} _attachments
+	 */
+	set_smimeAttachmentsMobile: function (_attachments)
+	{
+		var attachmentsBlock = this.et2_view.widgetContainer.getWidgetById('attachmentsBlock');
+		var $attachment = jQuery('.et2_details.attachments');
+		if (attachmentsBlock && _attachments.length > 0)
+		{
+			attachmentsBlock.set_value({content:_attachments});
+			$attachment.show();
+		}
 	},
 
 	/**
@@ -5812,11 +5870,17 @@ app.classes.mail = AppJS.extend(
 	 */
 	set_smimeAttachments:function (_attachments)
 	{
+		if (egwIsMobile())
+		{
+			this.set_smimeAttachmentsMobile(_attachments);
+			return;
+		}
 		var attachmentArea = this.et2.getWidgetById(egw(window).is_popup()?'mail_displayattachments':'previewAttachmentArea');
 		var content = this.et2.getArrayMgr('content');
 		var mailPreview = this.et2.getWidgetById('mailPreviewContainer');
 		if (attachmentArea && _attachments && _attachments.length > 0)
 		{
+			attachmentArea.getParent().set_disabled(false);
 			content.data[attachmentArea.id] = _attachments;
 			this.et2.setArrayMgr('contnet', content);
 			attachmentArea.getDOMNode().classList.remove('loading');
@@ -5831,6 +5895,10 @@ app.classes.mail = AppJS.extend(
 					m_node.style.setProperty('top', m_node.offsetTop + offset+"px");
 				}
 			}
+		}
+		else
+		{
+			attachmentArea.getParent().set_disabled(true);
 		}
 	},
 	/**
@@ -5860,46 +5928,156 @@ app.classes.mail = AppJS.extend(
 	set_smimeFlags: function (_data)
 	{
 		if (!_data) return;
-		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
+		var self = this;
+		var et2_object = egwIsMobile()? this.et2_view.widgetContainer: this.et2;
+		var data = _data;
+		var attachmentArea = et2_object.getWidgetById('previewAttachmentArea');
 		if (attachmentArea) attachmentArea.getDOMNode().classList.remove('loading');
-		var smime_signature = this.et2.getWidgetById('smime_signature');
-		var smime_encryption = this.et2.getWidgetById('smime_encryption');
-		var $mail_container = egw(window).is_popup() ?
-								jQuery('.mailDisplayContainer'):
-								jQuery(this.et2.getWidgetById('mailPreviewContainer').getDOMNode());
-
-		smime_signature.set_disabled(!_data.signed);
-		smime_encryption.set_disabled(!_data.encrypted);
-		if (!_data.signed)
+		var smime_signature = et2_object.getWidgetById('smime_signature');
+		var smime_encryption = et2_object.getWidgetById('smime_encryption');
+		var $mail_container = egwIsMobile()? jQuery('.mail-d-h1').next() :
+				egw(window).is_popup() ? jQuery('.mailDisplayContainer'):
+				jQuery(et2_object.getWidgetById('mailPreviewContainer').getDOMNode());
+		smime_signature.set_disabled(!data.signed);
+		smime_encryption.set_disabled(!data.encrypted);
+		if (!data.signed)
 		{
 			this.smime_clear_flags([$mail_container]);
+			return;
 		}
-		else if (_data.verify)
+		else if (data.verify)
 		{
-			$mail_container.addClass('smime_cert_verified');
-			smime_signature.set_class('smime_cert_verified');
+			$mail_container.addClass((data.class='smime_cert_verified'));
+			smime_signature.set_class(data.class);
+			smime_signature.set_statustext(data.msg);
 		}
-		else if (!_data.verify && _data.cert)
+		else if (!data.verify && data.cert)
 		{
-			$mail_container.addClass('smime_cert_notverified');
-			smime_signature.set_class('smime_cert_notverified');
-			smime_signature.set_statustext(_data.msg);
+			$mail_container.addClass((data.class='smime_cert_notverified'));
+			smime_signature.set_class(data.class);
+			smime_signature.set_statustext(data.msg);
 		}
-		else if (!_data.verify && !_data.cert)
+		else if (!data.verify && !data.cert)
 		{
-			$mail_container.addClass('smime_cert_notvalid');
-			smime_signature.set_class('smime_cert_notvalid');
-			smime_signature.set_statustext(_data.msg);
+			$mail_container.addClass((data.class='smime_cert_notvalid'));
+			smime_signature.set_class(data.class);
+			smime_signature.set_statustext(data.msg);
 		}
+		if (data.unknownemail)
+		{
+			$mail_container.addClass((data.class='smime_cert_unknownemail'));
+			smime_signature.set_class(data.class);
+		}
+		jQuery(smime_signature.getDOMNode(), smime_encryption.getDOMNode()).on('click',function(){
+			self.smime_certAddToContact(data,true);
+		}).addClass('et2_clickable');
+		jQuery(smime_encryption.getDOMNode()).on('click',function(){
+			self.smime_certAddToContact(data, true);
+		}).addClass('et2_clickable');
 	},
 
+	/**
+	 * Reset flags classes and click handler
+	 *
+	 * @param {jQuery Object} _nodes
+	 */
 	smime_clear_flags: function (_nodes)
 	{
 		for(var i=0;i<_nodes.length;i++)
 		{
-			var smime_classes = 'smime_cert_verified smime_cert_notverified smime_cert_notvalid';
+			var smime_classes = 'smime_cert_verified smime_cert_notverified smime_cert_notvalid smime_cert_unknownemail';
 			_nodes[i].removeClass(smime_classes);
+			_nodes[i].off('click');
 		}
+	},
 
+	/**
+	 * Inform user about sender's certificate and offers to add it into
+	 * relevant contact in addressbook.
+	 *
+	 * @param {type} _metadata
+	 * @param {boolean} _display if set to true will only show close button
+	 */
+	smime_certAddToContact: function (_metadata, _display)
+	{
+		if (!_metadata || _metadata.length < 1) return;
+		var self = this;
+		var content = jQuery.extend(true, {message:_metadata.msg}, _metadata);
+		var buttons = [
+
+			{text: this.egw.lang("Close"), id:"close"}
+		];
+		if (!_display)
+		{
+			buttons[1] = {
+				text: this.egw.lang("Add this certificate into contact"),
+				id: "contact",
+				image:"add",
+				"class": "ui-priority-primary",
+				"default": true
+			};
+			content.message2 = egw.lang('You may add this certificate into your contact, if you trust this signature.');
+		}
+		var extra = {
+			'presets[email]': _metadata.email,
+			'presets[n_given]': _metadata.certDetails.subject.commonName,
+			'presets[pubkey]': _metadata.cert,
+			'presets[org_name]': _metadata.certDetails.subject.organizationName,
+			'presets[org_unit]': _metadata.certDetails.subject.organizationUnitName
+		};
+		et2_createWidget("dialog",
+		{
+			callback: function(_button_id, _value)
+			{
+				if (_button_id == 'contact' && _value)
+				{
+					self.egw.json('mail.mail_ui.ajax_smimeAddCertToContact',
+					_metadata,function(_result){
+						if (!_result)
+						{
+							egw.open('','addressbook','add',extra);
+						}
+						egw.message(_result);
+					}).sendRequest(true);
+				}
+			},
+			title: egw.lang('Certificate info for email %1', _metadata.email),
+			buttons: buttons,
+			minWidth: 500,
+			minHeight: 500,
+			value:{content:content},
+			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
+			resizable: false
+		}, et2_dialog._create_parent('mail'));
+	},
+
+	/**
+	 * get preview pane state base on selected preference.
+	 *
+	 * It also set a right css class for vertical state.
+	 *
+	 * @returns {Boolean} returns true for visible Pane and false for hiding
+	 */
+	getPreviewPaneState: function ()
+	{
+		var previewPane = this.egw.preference('previewPane', 'mail');
+		var nm = this.et2.getWidgetById(this.nm_index);
+		var state = false;
+		switch (previewPane)
+		{
+			case true:
+			case '1':
+			case 'hide':
+			case 'expand':
+				state = false;
+				break;
+			case 'fixed':
+				state = true;
+				break;
+			default: // default is vertical
+				state = true;
+				nm.header.right_div.addClass('vertical_splitter');
+		}
+		return state;
 	}
 });

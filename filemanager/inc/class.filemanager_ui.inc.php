@@ -116,6 +116,24 @@ class filemanager_ui
 	}
 
 	/**
+	 * Method to build select options out of actions
+	 * @param type $actions
+	 * @return type
+	 */
+	public static function convertActionsToselOptions ($actions)
+	{
+		$sel_options = array ();
+		foreach ($actions as $action => $value)
+		{
+			$sel_options[$action] = array (
+				'label' => $value['caption'],
+				'icon'	=> $value['icon']
+			);
+		}
+		return $sel_options;
+	}
+
+	/**
 	 * Context menu
 	 *
 	 * @return array
@@ -131,39 +149,25 @@ class filemanager_ui
 				'onExecute' => 'javaScript:app.filemanager.open',
 				'default' => true
 			),
-			'modify' => array(
-				'caption' => lang('Edit'),
-				'group' => $group,
-				'icon' => 'edit',
-				'onExecute' => 'javaScript:app.filemanager.open',
-				'enabled' => 'javaScript:app.filemanager.isEditable',
-			),
 			'new' => array(
 				'caption' => 'New',
 				'group' => $group,
+				'disableClass' => 'noEdit',
 				'children' => array (
 					'document' => array (
 						'caption' => 'Document',
 						'icon' => 'new',
-						'onExecute' => 'javaScript:app.filemanager.editor_new',
+						'onExecute' => 'javaScript:app.filemanager.create_new',
 					)
 				)
 			),
-			'saveas' => array(
-				'caption' => lang('Save as'),
+			'mkdir' => array(
+				'caption' => lang('Create directory'),
+				'icon' => 'filemanager/button_createdir',
 				'group' => $group,
-				'allowOnMultiple' => true,
-				'icon' => 'filesave',
-				'onExecute' => 'javaScript:app.filemanager.force_download',
-				'disableClass' => 'isDir',
-				'enabled' => 'javaScript:app.filemanager.is_multiple_allowed'
-			),
-			'saveaszip' => array(
-				'caption' => lang('Save as ZIP'),
-				'group' => $group,
-				'allowOnMultiple' => true,
-				'icon' => 'save_zip',
-				'postSubmit' => true
+				'allowOnMultiple' => false,
+				'disableClass' => 'noEdit',
+				'onExecute' => 'javaScript:app.filemanager.createdir'
 			),
 			'edit' => array(
 				'caption' => lang('Edit settings'),
@@ -172,18 +176,46 @@ class filemanager_ui
 				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.filemanager.viewEntry':'javaScript:app.filemanager.editprefs',
 				'mobileViewTemplate' => 'file?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/filemanager/templates/mobile/file.xet'))
 			),
-			'mkdir' => array(
-				'caption' => lang('Create directory'),
-				'icon' => 'filemanager/button_createdir',
-				'group' => $group,
-				'allowOnMultiple' => false,
-				'onExecute' => 'javaScript:app.filemanager.createdir'
-			),
 			'mail' => array(
 				'caption' => lang('Share files'),
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
-				'children' => array(),
+				'children' => array(
+					'shareReadonlyLink' => array(
+						'caption' => lang('Readonly Share link'),
+						'group' => 1,
+						'icon' => 'share',
+						'allowOnMultiple' => false,
+						'order' => 11,
+						'onExecute' => 'javaScript:app.filemanager.share_link'
+					),
+					'shareWritableLink' => array(
+						'caption' => lang('Writable Share link'),
+						'group' => 1,
+						'icon' => 'share',
+						'allowOnMultiple' => false,
+						'enableClass' => 'isDir',
+						'order' => 11,
+						'onExecute' => 'javaScript:app.filemanager.share_link'
+					)),
+			),
+			'saveas' => array(
+				'caption' => lang('Save as'),
+				'group' => $group,
+				'allowOnMultiple' => true,
+				'icon' => 'filesave',
+				'onExecute' => 'javaScript:app.filemanager.force_download',
+				'disableClass' => 'isDir',
+				'enabled' => 'javaScript:app.filemanager.is_multiple_allowed',
+				'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 83, 'caption' => 'Ctrl + Shift + S'),
+			),
+			'saveaszip' => array(
+				'caption' => lang('Save as ZIP'),
+				'group' => $group,
+				'allowOnMultiple' => true,
+				'icon' => 'save_zip',
+				'postSubmit' => true,
+				'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 90, 'caption' => 'Ctrl + Shift + Z'),
 			),
 			'egw_paste' => array(
 				'enabled' => false,
@@ -216,6 +248,7 @@ class filemanager_ui
 				'group' => ++$group,
 				'confirm' => 'Delete these files or directories?',
 				'onExecute' => 'javaScript:app.filemanager.action',
+				'disableClass' => 'noDelete'
 			),
 			// DRAG and DROP events
 			'file_drag' => array(
@@ -263,6 +296,7 @@ class filemanager_ui
 				$actions['mail']['children']['mail_'.$mode] = array(
 					'caption' => $data['label'],
 					'hint' => $data['title'],
+					'group' => 2,
 					'onExecute' => 'javaScript:app.filemanager.mail',
 				);
 				if ($mode == Vfs\Sharing::ATTACH || $mode == Vfs\Sharing::LINK)
@@ -544,6 +578,9 @@ class filemanager_ui
 			'5' => 'Files from links',
 			'0'  => 'Files from subdirectories',
 		);
+
+		$sel_options['new'] = self::convertActionsToselOptions($content['nm']['actions']['new']['children']);
+
 		// sharing has no divAppbox, we need to set popupMainDiv instead, to be able to drop files everywhere
 		if (substr($_SERVER['SCRIPT_FILENAME'], -10) == '/share.php')
 		{
@@ -616,7 +653,7 @@ class filemanager_ui
 					if (strpos($path, 'mail::') === 0 && $path = substr($path, 6))
 					{
 						// Support for dropping mail in filemanager - Pass mail back to mail app
-						if(ExecMethod2('mail.mail_ui.vfsSaveMessage', $path, $dir, false))
+						if(ExecMethod2('mail.mail_ui.vfsSaveMessages', $path, $dir))
 						{
 							++$files;
 						}
@@ -930,13 +967,15 @@ class filemanager_ui
 				{
 					$dir_is_writable[$path] = Vfs::is_writable($path);
 				}
-				if(!$dir_is_writable[$path])
-				{
-					$row['class'] .= 'noEdit ';
-				}
+
 				$row['class'] .= 'isDir ';
 				$row['is_dir'] = 1;
 			}
+			if(!$dir_is_writable[$path])
+			{
+				$row['class'] .= 'noEdit ';
+			}
+			$row['class'] .= !$dir_is_writable[$dir] ? 'noDelete' : '';
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
 
@@ -1241,7 +1280,8 @@ class filemanager_ui
 		if (($readonlys['uid'] = !Vfs::$is_root) && !$content['uid']) $content['ro_uid_root'] = 'root';
 		// only owner can change group & perms
 		if (($readonlys['gid'] = !$content['is_owner'] ||
-			Vfs::parse_url(Vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs'))	// no uid, gid or perms in oldvfs
+			Vfs::parse_url(Vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs') ||// no uid, gid or perms in oldvfs
+				 !Vfs::is_writable($path))
 		{
 			if (!$content['gid']) $content['ro_gid_root'] = 'root';
 			foreach($content['perms'] as $name => $value)
@@ -1249,6 +1289,7 @@ class filemanager_ui
 				$readonlys['perms['.$name.']'] = true;
 			}
 		}
+		$readonlys['gid'] = $readonlys['gid'] || !Vfs::is_writable($path);
 		$readonlys['name'] = $path == '/' || !($dir = Vfs::dirname($path)) || !Vfs::is_writable($dir);
 		$readonlys['comment'] = !Vfs::is_writable($path);
 		$readonlys['tabs']['filemanager.file.preview'] = $readonlys['tabs']['filemanager.file.perms'] = $content['is_link'];
@@ -1276,7 +1317,8 @@ class filemanager_ui
 				5 => lang('Display of content'),
 				0 => lang('No access'),
 			);
-			if(($content['eacl'] = Vfs::get_eacl($content['path'])) !== false)	// backend supports eacl
+			if(($content['eacl'] = Vfs::get_eacl($content['path'])) !== false &&	// backend supports eacl
+				$GLOBALS['egw_info']['user']['account_id'] == Vfs::$user)	// leave eACL tab disabled for sharing
 			{
 				unset($readonlys['tabs']['filemanager.file.eacl']);	// --> switch the tab on again
 				foreach($content['eacl'] as &$eacl)
@@ -1354,6 +1396,11 @@ class filemanager_ui
 			$tpl->setElementAttribute('sudouser', 'help','Enter setup user and password to get root rights');
 			$tpl->setElementAttribute('sudouser', 'onclick','app.filemanager.set_sudoButton(widget,"logout")');
 		}
+		else if (self::is_anonymous($GLOBALS['egw_info']['user']['account_id']))
+		{
+			// Just hide sudo for anonymous users
+			$readonlys['sudouser'] = true;
+		}
 		if (($extra_tabs = Vfs::getExtraInfo($path,$content)))
 		{
 			// add to existing tabs in template
@@ -1386,6 +1433,17 @@ class filemanager_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.Vfs::decodePath($path);
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
+	}
+
+	/**
+	 * Check if the user is anonymous user
+	 * @param integer $account_id
+	 */
+	protected static function is_anonymous($account_id)
+	{
+		$acl = new Api\Acl($account_id);
+		$acl->read_repository();
+		return $acl->check('anonymous', 1, 'phpgwapi');
 	}
 
 	/**
@@ -1475,6 +1533,30 @@ class filemanager_ui
 				$arr['path'] = $dir;
 				$arr['props'] = $props;
 				break;
+			case 'shareWritableLink':
+			case 'shareReadonlyLink':
+				if ($action === 'shareWritableLink')
+				{
+					$share = Vfs\Sharing::create(
+						$selected,
+						Vfs\Sharing::WRITABLE,
+						basename($selected),
+						array(),
+						array('share_writable' => true)
+					);
+				}
+				else
+				{
+					$share = Vfs\Sharing::create(
+						$selected,
+						Vfs\Sharing::READONLY,
+						basename($selected),
+						array()
+					);
+				}
+				$arr["share_link"] = $link = Vfs\Sharing::share2link($share);
+				$arr["template"] = Api\Etemplate\Widget\Template::rel2url('/filemanager/templates/default/share_dialog.xet');
+				break;
 
 			// Upload, then link
 			case 'link':
@@ -1531,8 +1613,17 @@ class filemanager_ui
 	function editor($content=null)
 	{
 		$tmpl = new Etemplate('filemanager.editor');
-		$file_path = $_GET['path'];
-		$paths = explode('/webdav.php', $file_path);
+		$path = $_GET['path'];
+		if (!preg_match("/\/webdav.php\//", $path))
+		{
+			$download_url = Vfs::download_url($path);
+		}
+		else
+		{
+			$download_url = $path;
+			$paths = explode('/webdav.php', $path);
+			$path = $paths[1];
+		}
 		// Include css files used by wodocollabeditor
 		Api\Framework::includeCSS('/api/js/webodf/collab/app/resources/app.css');
 		Api\Framework::includeCSS('/api/js/webodf/collab/wodocollabpane.css');
@@ -1541,10 +1632,10 @@ class filemanager_ui
 
 		if (!$content)
 		{
-			if ($file_path)
+			if ($download_url)
 			{
-				$content['es_id'] = md5 ($file_path);
-				$content['file_path'] = $paths[1];
+				$content['es_id'] = md5 ($download_url);
+				$content['file_path'] = $path;
 			}
 			else
 			{
@@ -1553,7 +1644,7 @@ class filemanager_ui
 		}
 
 		$actions = self::getActions_edit();
-		if (!Api\Vfs::check_access($paths[1], Api\Vfs::WRITABLE))
+		if (!Api\Vfs::check_access($path, Api\Vfs::WRITABLE))
 		{
 			unset ($actions['save']);
 			unset ($actions['discard']);
@@ -1585,7 +1676,7 @@ class filemanager_ui
 				'caption' => 'New',
 				'icon' => 'add',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.filemanager.editor_new',
+				'onExecute' => 'javaScript:app.filemanager.create_new',
 				'allowOnMultiple' => false,
 				'toolbarDefault' => true
 			),

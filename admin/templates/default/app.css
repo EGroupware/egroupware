@@ -26,6 +26,14 @@ body {
 	background-color: white;
 }
 
+/** Group list */
+@media screen {
+	#admin-index_groups div.innerContainer {
+		overflow: auto;
+		max-height: 7em;
+	}
+}
+
 tr.adminAccountInactive .adminStatus {
 	color: red;
 }

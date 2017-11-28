@@ -35,7 +35,7 @@ class addressbook_bo extends Api\Contacts
 	 */
 	public function get_pgp_keys($recipients)
 	{
-		return $this->get_keys($recipients, self::$pgp_key_regexp, '%-----BEGIN PGP PUBLIC KEY BLOCK-----%');
+		return $this->get_keys($recipients, true);
 	}
 
 	/**
@@ -106,7 +106,7 @@ class addressbook_bo extends Api\Contacts
 	 */
 	public function ajax_set_pgp_keys($keys, $allow_user_updates=null)
 	{
-		$message = $this->set_keys($keys, self::$pgp_key_regexp, $allow_user_updates);
+		$message = $this->set_keys($keys, true, $allow_user_updates);
 		// add all keys to public keyserver too
 		$message .= "\n".lang('%1 key(s) added to public keyserver "%2".',
 			self::set_pgp_keyserver($keys), PARSE_URL(self::KEYSERVER_ADD, PHP_URL_HOST));
@@ -155,15 +155,27 @@ class addressbook_bo extends Api\Contacts
 	}
 
 	/**
+	 * Where to store public key delpending on type and storage backend
+	 *
+	 * @param boolean $pgp true: PGP, false: S/Mime
+	 * @param array $contact =null contact array to pass to get_backend()
+	 * @return boolean true: store as file, false: store with contact
+	 */
+	public function pubkey_use_file($pgp, array $contact=null)
+	{
+		return $pgp || empty($contact) || get_class($this->get_backend($contact)) == 'EGroupware\\Api\\Contacts\\Sql';
+	}
+
+	/**
 	 * Set keys for given email or account_id and key type based on regexp (SMIME or PGP), if user has necessary rights
 	 *
 	 * @param array $keys email|account_id => public key pairs to store
-	 * @param string $key_regexp regular expresion for key type indication (SMIME|PGP)
+	 * @param boolean $pgp true: PGP, false: S/Mime
 	 * @param boolean $allow_user_updates = null for admins, set config to allow regular users to store their key
 	 *
 	 * @return string message of the update operation result
 	 */
-	public function set_keys ($keys, $key_regexp, $allow_user_updates = null)
+	public function set_keys ($keys, $pgp, $allow_user_updates = null)
 	{
 		if (isset($allow_user_updates) && isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
@@ -183,10 +195,17 @@ class addressbook_bo extends Api\Contacts
 				Config::save_value('own_account_acl', $this->own_account_acl, 'phpgwapi');
 			}
 		}
+
+		$key_regexp = $pgp ? self::$pgp_key_regexp : Api\Mail\Smime::$certificate_regexp;
+		$file = $pgp ? Api\Contacts::FILES_PGP_PUBKEY : Api\Contacts::FILES_SMIME_PUBKEY;
+
 		$criteria = array();
 		foreach($keys as $recipient => $key)
 		{
-			if (!preg_match($key_regexp, $key)) continue;
+			if (!preg_match($key_regexp, $key))
+			{
+				return lang('File is not a %1 public key!', $pgp ? lang('PGP') : lang('S/MIME'));
+			}
 
 			if (is_numeric($recipient))
 			{
@@ -210,7 +229,21 @@ class addressbook_bo extends Api\Contacts
 			{
 				$key = $keys[$contact['email']];
 			}
-			if (empty($contact['pubkey']) || !preg_match($key_regexp, $contact['pubkey']))
+
+			// key is stored in file for sql backend or allways for pgp key
+			$path = null;
+			if ($contact['id'] && $this->pubkey_use_file($pgp, $contact))
+			{
+				$path =  Api\Link::vfs_path('addressbook', $contact['id'], $file);
+				$contact['files'] |= $pgp ? self::FILES_BIT_PGP_PUBKEY : self::FILES_BIT_SMIME_PUBKEY;
+				// remove evtl. existing old pubkey
+				if (preg_match($key_regexp, $contact['pubkey']))
+				{
+					$contact['pubkey'] = preg_replace($key_regexp, '', $contact['pubkey']);
+				}
+				$updated++;
+			}
+			elseif (empty($contact['pubkey']) || !preg_match($key_regexp, $contact['pubkey']))
 			{
 				$contact['pubkey'] .= $key;
 			}
@@ -218,9 +251,20 @@ class addressbook_bo extends Api\Contacts
 			{
 				$contact['pubkey'] = preg_replace($key_regexp, $key, $contact['pubkey']);
 			}
+			$contact['photo_unchanged'] = true;	// otherwise photo will be lost, because $contact['jpegphoto'] is not set
 			if ($this->check_perms(Acl::EDIT, $contact) && $this->save($contact))
 			{
-				++$updated;
+				if ($path)
+				{
+					// check_perms && save check ACL, in case of access only via own-account we have to use root to allow the update
+					$backup = Api\Vfs::$is_root; Api\Vfs::$is_root = true;
+					if (file_put_contents($path, $key)) ++$updated;
+					Api\Vfs::$is_root = $backup;
+				}
+				else
+				{
+					++$updated;
+				}
 			}
 		}
 		if ($criteria == array('egw.addressbook.account_id' => array((int)$GLOBALS['egw_info']['user']['account_id'])))
@@ -230,7 +274,7 @@ class addressbook_bo extends Api\Contacts
 		}
 		else
 		{
-			$message = lang('%1 public keys added.', $updated);
+			$message = !$updated ? false: lang('%1 public keys added.', $updated);
 		}
 		return $message;
 	}
@@ -240,13 +284,11 @@ class addressbook_bo extends Api\Contacts
 	 *
 	 * EMail addresses are lowercased to make search case-insensitive
 	 *
-	 * @param string|int|array $recipients (array of) email addresses or numeric account-ids
-	 * @param string $key_regexp
-	 * @param string $criteria_filter
-	 *
+	 * @param string|int|array $recipients (array of) email addresses or numeric account-ids or "contact:$id" for contacts by id
+	 * @param boolean $pgp true: PGP, false: S/Mime public keys
 	 * @return array email|account_id => key pairs
 	 */
-	public function get_keys ($recipients, $key_regexp, $criteria_filter)
+	protected function get_keys ($recipients, $pgp)
 	{
 		if (!$recipients) return array();
 
@@ -264,24 +306,53 @@ class addressbook_bo extends Api\Contacts
 				$criteria['contact_email'][] = $recipient = strtolower($recipient);
 			}
 		}
-		foreach($this->search($criteria, array('account_id', 'contact_email', 'contact_pubkey'), '', '', '', false, 'OR', false,
-			"contact_pubkey LIKE '". $criteria_filter ."'" ) as $contact)
+		foreach($this->search($criteria, array('account_id', 'contact_email', 'contact_pubkey', 'contact_id'),
+			'', '', '', false, 'OR', false, null) as $contact)
 		{
-			$matches = null;
-			if (preg_match($key_regexp, $contact['pubkey'], $matches))
+			// first check for file and second for pubkey field (LDAP, AD or old SQL)
+			if (($content = $this->get_key($contact, $pgp)))
 			{
 				$contact['email'] = strtolower($contact['email']);
 				if (empty($criteria['account_id']) || in_array($contact['email'], $recipients))
 				{
-					$result[$contact['email']] = $matches[0];
+					$result[$contact['email']] = $content;
 				}
 				else
 				{
-					$result[$contact['account_id']] = $matches[0];
+					$result[$contact['account_id']] = $content;
 				}
 			}
 		}
 		return $result;
+	}
+
+	/**
+	 * Extract PGP or S/Mime pubkey from contact array
+	 *
+	 * @param array $contact
+	 * @param boolean $pgp
+	 * @return string pubkey or NULL
+	 */
+	function get_key(array $contact, $pgp)
+	{
+		if ($pgp)
+		{
+			$key_regexp = self::$pgp_key_regexp;
+			$file = Api\Contacts::FILES_PGP_PUBKEY;
+		}
+		else
+		{
+			$key_regexp = Api\Mail\Smime::$certificate_regexp;
+			$file = Api\Contacts::FILES_SMIME_PUBKEY;
+		}
+		$matches = null;
+		if (($content = @file_get_contents(Api\Link::vfs_path('addressbook', $contact['id'], $file))) &&
+			preg_match($key_regexp, $content, $matches) ||
+			preg_match($key_regexp, $contact['pubkey'], $matches))
+		{
+			return $matches[0];
+		}
+		return null;
 	}
 
 	/**
@@ -294,7 +365,7 @@ class addressbook_bo extends Api\Contacts
 	 */
 	public function get_smime_keys($recipients)
 	{
-		return $this->get_keys($recipients, Api\Mail\Smime::$certificate_regexp, '%-----BEGIN CERTIFICATE-----%');
+		return $this->get_keys($recipients, false);
 	}
 
 	/**
@@ -307,6 +378,6 @@ class addressbook_bo extends Api\Contacts
 	 */
 	public function set_smime_keys($keys, $allow_user_updates=null)
 	{
-		return $this->set_keys($keys, Api\Mail\Smime::$certificate_regexp, $allow_user_updates);
+		return $this->set_keys($keys, false, $allow_user_updates);
 	}
 }

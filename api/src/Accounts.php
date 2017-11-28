@@ -199,7 +199,9 @@ class Accounts
 
 		// Check for lang(Group) in search - if there, we search all groups
 		$group_index = array_search(strtolower(lang('Group')), array_map('strtolower', $query = explode(' ',$param['query'])));
-		if($group_index !== FALSE)
+		if($group_index !== FALSE && !(
+				in_array($param['type'], array('accounts', 'groupmembers')) || is_int($param['type'])
+		))
 		{
 			// do not return any groups for account-selection == "none"
 			if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] === 'none' &&

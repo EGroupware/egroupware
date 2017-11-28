@@ -106,8 +106,9 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * Creates the tooltip_div with the given text.
 	 *
 	 * @param {string} _html
+	 * @param {boolean} _isHtml if set to true content gets appended as html
 	 */
-	function prepare(_html)
+	function prepare(_html, _isHtml)
 	{
 		// Free and null the old tooltip_div
 		hide();
@@ -115,7 +116,14 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		//Generate the tooltip div, set it's text and append it to the body tag
 		tooltip_div = jQuery(_wnd.document.createElement('div'));
 		tooltip_div.hide();
-		tooltip_div.append(_html);
+		if (_isHtml)
+		{
+			tooltip_div.append(_html);
+		}
+		else
+		{
+			tooltip_div.text(_html)
+		}
 		tooltip_div.addClass("egw_tooltip");
 		jQuery(_wnd.document.body).append(tooltip_div);
 
@@ -156,14 +164,14 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * 	has to be a jQuery node.
 		 * @param _html is the html code which should be shown as tooltip.
 		 */
-		tooltipBind: function(_elem, _html) {
+		tooltipBind: function(_elem, _html, _isHtml) {
 			if (_html != '')
 			{
 				_elem.bind('mouseenter.tooltip', function(e) {
 					if (_elem != current_elem)
 					{
 						//Prepare the tooltip
-						prepare(_html);
+						prepare(_html, _isHtml);
 
 						// Set the current element the mouse is over and
 						// initialize the position variables

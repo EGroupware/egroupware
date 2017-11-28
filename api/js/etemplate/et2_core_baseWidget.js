@@ -32,6 +32,12 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 			"description": "Tooltip which is shown for this element",
 			"translate": true
 		},
+		"statustext_html": {
+			"name": "Tooltip is html",
+			"type": "boolean",
+			"description": "Flag to allow html content in tooltip",
+			"default": false
+		},
 		"align": {
 			"name": "Align",
 			"type": "string",
@@ -253,6 +259,8 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 	},
 
 	set_statustext: function(_value) {
+		// Tooltip should not be shown in mobile view
+		if (egwIsMobile()) return;
 		// Don't execute the code below, if no tooltip will be attached/detached
 		if (_value == "" && !this._tooltipElem)
 		{
@@ -275,7 +283,7 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 
 			if (_value && _value != '')
 			{
-				this.egw().tooltipBind(elem, _value);
+				this.egw().tooltipBind(elem, _value, this.options.statustext_html);
 				this._tooltipElem = elem;
 			}
 		}

@@ -118,6 +118,7 @@ class calendar_hooks
 		);
 		$list_views = array(
 			0 => lang('None'),
+			'month' => lang('Monthview'),
 			'weekN' => lang('Multiple week view'),
 			'week' => lang('Weekview'),
 			'day4' => lang('Four days view'),
@@ -353,7 +354,7 @@ class calendar_hooks
 				'help'   => 'For which views should calendar just a list of events instead of distinct lines with a fixed time interval.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default' => ['weekN'],
+				'default' => ['weekN', 'month'],
 			),
 			'link_title' => array(
 				'type'   => 'multiselect',
@@ -449,6 +450,15 @@ class calendar_hooks
 				'help'   => 'Select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.',
 				'values' => $reset_stati_on_shifts,
 				'default' => 'no',
+				'xmlrpc' => True,
+				'admin'  => False,
+			),
+			'no_category_custom_color' => array(
+				'type' => 'color',
+				'label' => 'Custom event color',
+				'no_lang' => true,
+				'name' => 'no_category_custom_color',
+				'help' => lang('Custom color for events without category color'),
 				'xmlrpc' => True,
 				'admin'  => False,
 			),

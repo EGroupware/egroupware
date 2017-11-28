@@ -152,7 +152,7 @@ class CssIncludes
 		$matches = null;
 
 		list($file) = explode('?',$path,2);
-		if (($to_check = file_get_contents (EGW_SERVER_ROOT.$file, false, null, -1, 1024)) &&
+		if (($to_check = file_get_contents (EGW_SERVER_ROOT.$file, false, null, 0, 1024)) &&
 			stripos($to_check, '/*@import') !== false && preg_match_all('|/\*@import url\("([^"]+)"|i', $to_check, $matches))
 		{
 			foreach($matches[1] as $import_path)

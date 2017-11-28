@@ -32,7 +32,7 @@
 			<rows>
 				<row>
 					<description value="Project"/>
-					<link-entry id="pm_id" only_app='projectmanager' onchange="app.infolog.submit_if_not_empty" blur="None" class="infolog_projectName"/>
+					<link-entry id="pm_id" only_app='projectmanager' onchange="app.infolog.submit_if_not_empty" blur="None" class="infolog_projectName" width="99%"/>
 				</row>
 				<row>
 					<description value="Price"/>
@@ -115,12 +115,6 @@
 				<row>
 					<description value="Contact" for="info_from"/>
 					<textbox blur="@blur_title" class="et2_fullWidth" statustext="Custom contact-information, leave emtpy to use information from most recent link" id="info_from" size="60" maxlength="255"/>
-				</row>
-				<row>
-					<description value="Phone/Email" for="info_addr"/>
-					<hbox>
-							<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="60" maxlength="255" class="et2_fullWidth _inputFullWidth"/>
-					</hbox>
 				</row>
 			</rows>
 		</grid>

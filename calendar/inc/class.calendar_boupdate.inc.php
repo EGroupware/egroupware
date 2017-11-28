@@ -99,7 +99,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param boolean $ignore_conflicts =false just ignore conflicts or do a conflict check and return the conflicting events
 	 * @param boolean $touch_modified =true NOT USED ANYMORE (was only used in old csv-import), modified&modifier is always updated!
 	 * @param boolean $ignore_acl =false should we ignore the acl
-	 * @param boolean $updateTS =true update the content history of the event
+	 * @param boolean $updateTS =true update the content history of the event (ignored, as updating timestamps is required for sync!)
 	 * @param array &$messages=null messages about because of missing ACL removed participants or categories
 	 * @param boolean $skip_notification =false true: send NO notifications, default false = send them
 	 * @return mixed on success: int $cal_id > 0, on error false or array with conflicting events (only if $check_conflicts)
@@ -118,6 +118,7 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true,&$messages=null, $skip_notification=false)
 	{
+		unset($updateTS);	// ignored, as updating timestamps is required for sync!
 		//error_log(__METHOD__."(".array2string($event).",$ignore_conflicts,$touch_modified,$ignore_acl)");
 		if (!is_array($messages)) $messages = $messages ? (array)$messages : array();
 
@@ -310,9 +311,9 @@ class calendar_boupdate extends calendar_bo
 		$quantity = $users = array();
 		foreach($event['participants'] as $uid => $status)
 		{
-			$q = $r = null;
-			calendar_so::split_status($status,$q,$r);
-			if ($status[0] == 'R') continue;	// ignore rejected participants
+			$q = $role = null;
+			calendar_so::split_status($status, $q, $role);
+			if ($status == 'R' || $role == 'NON-PARTICIPANT') continue;	// ignore rejected or non-participants
 
 			if ($uid < 0)	// group, check it's members too
 			{
@@ -396,8 +397,8 @@ class calendar_boupdate extends calendar_bo
 				foreach($common_parts as $n => $uid)
 				{
 					$status = $overlap['participants'][$uid];
-					calendar_so::split_status($status, $q, $r);
-					if ($status == 'R')
+					calendar_so::split_status($status, $q, $role);
+					if ($status == 'R' || $role == 'NON-PARTICIPANT')
 					{
 						unset($common_parts[$n]);
 						continue;
@@ -1070,7 +1071,7 @@ class calendar_boupdate extends calendar_bo
 								)
 							));
 						}
-						$notification->set_popupmessage($response."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");
+						$notification->set_popupmessage($subject."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");
 						$notification->set_popuplinks(array($details['link_arr']+array('app'=>'calendar')));
 
 						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
@@ -1206,7 +1207,7 @@ class calendar_boupdate extends calendar_bo
 		if (!isset($event['whole_day'])) $event['whole_day'] = $this->isWholeDay($event);
 
 		// set recur-enddate/range-end to real end-date of last recurrence
-		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'])
+		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'] && $event['start'])
 		{
 			$event['recur_enddate'] = new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
 			$event['recur_enddate']->setTime(23,59,59);
@@ -1265,7 +1266,7 @@ class calendar_boupdate extends calendar_bo
 
 				//$time->setServer();
 				$time->setTime(23, 59, 59);
-				
+
 				$event['recur_enddate'] = $save_event['recur_enddate'] = $time;
 			}
 			$timestamps = array('modified','created');
@@ -1317,7 +1318,7 @@ class calendar_boupdate extends calendar_bo
 					{
 						unset($event['alarm'][$id]);
 						$this->so->delete_alarm($id);
-						error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
+						//error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
 					}
 				}
 			}
@@ -1337,12 +1338,12 @@ class calendar_boupdate extends calendar_bo
 					if (!$alarm['owner'] || isset($status) && calendar_so::split_status($status) !== 'R')
 					{
 						$this->so->save_alarm($event['id'], $alarm);
-						error_log(__LINE__.': '.__METHOD__."() so->save_alarm($event[id], ".array2string($alarm).")");
+						//error_log(__LINE__.': '.__METHOD__."() so->save_alarm($event[id], ".array2string($alarm).")");
 					}
 					else
 					{
 						$this->so->delete_alarm($id);
-						error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
+						//error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
 					}
 				}
 			}
@@ -1360,7 +1361,7 @@ class calendar_boupdate extends calendar_bo
 			$event['created'] = $this->now;
 			$event['creator'] = $this->user;
 		}
-		$set_recurrences = $old_event ? $event['recur_enddate'] != $old_event['recur_enddate']+1 : false;
+		$set_recurrences = $old_event ? abs($event['recur_enddate'] - $old_event['recur_enddate']) > 1 : false;
 		$set_recurrences_start = 0;
 		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
@@ -1613,6 +1614,9 @@ class calendar_boupdate extends calendar_bo
 				'A' => MSG_ACCEPTED,
 				'D' => MSG_DELEGATED,
 			);
+			// Reset cached event
+			static::$cached_event = array();
+			
 			if (isset($status2msg[$status]) && !$skip_notification)
 			{
 				if (!is_array($event)) $event = $this->read($cal_id);
@@ -1825,6 +1829,7 @@ class calendar_boupdate extends calendar_bo
 		$link_arr['view'] = array(	'menuaction' => 'calendar.calendar_uiforms.edit',
 									'cal_id' => $event['id'],
 									'date' => $eventStart_arr['full'],
+									'ajax' => true
 									);
 		$link_arr['popup'] = '750x400';
 		$details['link_arr'] = $link_arr;

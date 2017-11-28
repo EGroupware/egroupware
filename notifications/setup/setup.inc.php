@@ -6,7 +6,6 @@
  * @package notifications
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
- * @version $Id$
  */
 
 if (!defined('NOTIFICATION_APP'))
@@ -22,8 +21,8 @@ $setup_info[NOTIFICATION_APP]['enable']    = 2;
 
 $setup_info[NOTIFICATION_APP]['author'] = 'Cornelius Weiss';
 $setup_info[NOTIFICATION_APP]['maintainer'] = array(
-	'name'  => 'eGroupware coreteam',
-	'email' => 'egroupware-developers@lists.sf.net'
+	'name'  => 'EGroupware GmbH',
+	'email' => 'info@egroupware.org'
 );
 $setup_info[NOTIFICATION_APP]['license']  = 'GPL';
 $setup_info[NOTIFICATION_APP]['description'] =
@@ -38,5 +37,5 @@ $setup_info[NOTIFICATION_APP]['hooks']['deleteaccount'] = 'notifications.notific
 /* Dependencies for this app to work */
 $setup_info[NOTIFICATION_APP]['depends'][] = array(
 	 'appname' => 'api',
-	 'versions' => Array('16.1')
+	 'versions' => Array('17.1')
 );

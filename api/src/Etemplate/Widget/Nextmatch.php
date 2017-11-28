@@ -848,7 +848,17 @@ class Nextmatch extends Etemplate\Widget
 				//echo "*** Inserting id=$prefix$id"; _debug_array($action);
 				// we break at end of foreach loop, as rest of actions is already dealt with
 				// by putting them as children
-			}
+				
+				// sets the default attributes to every children dataset 
+				if (is_array($action['children'])) {
+					foreach ($action['children'] as $key => $children) {
+						// checks if children is a valid array and if the "$default_attrs" variable exists
+ 						if (is_array($action['children'][$key]) && $default_attrs) {
+							$action['children'][$key] += $default_attrs;
+						}
+					}
+				}	
+			}	
 
 			// add all first level popup actions plus ones with enabled = 'javaScript:...' to action_links
 			if ((!isset($action['type']) || in_array($action['type'],array('popup','drag','drop'))) &&	// popup is the default

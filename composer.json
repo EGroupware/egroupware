@@ -36,7 +36,7 @@
 		"npm-asset/as-jqplot" : "1.0.*",
 		"npm-asset/gridster":"0.5.*",
 		"adldap2/adldap2": "=4.0.4",
-		"egroupware/ckeditor": "^4.5",
+		"egroupware/ckeditor": "^4",
 		"php-ews/php-ews": "dev-composer"
 	},
 	"require-dev": {

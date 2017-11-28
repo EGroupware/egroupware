@@ -8,7 +8,6 @@
  * @package api
  * @subpackage setup
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -236,7 +235,180 @@ function api_upgrade16_9_001()
 }
 
 
+/**
+ * Add contact_files bit-field and strip jpeg photo, PGP & S/Mime pubkeys from table
+ *
+ * @return string
+ */
 function api_upgrade16_9_002()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook','contact_files',array(
+		'type' => 'int',
+		'precision' => '1',
+		'default' => '0',
+		'comment' => '&1: photo, &2: pgp, &4: smime'
+	));
+
+	$junk_size = 100;
+	$total = 0;
+	Api\Vfs::$is_root = true;
+	do {
+		$n = 0;
+		foreach($GLOBALS['egw_setup']->db->query("SELECT contact_id,contact_jpegphoto,contact_pubkey
+FROM egw_addressbook
+WHERE contact_jpegphoto != '' OR contact_pubkey IS NOT NULL AND contact_pubkey LIKE '%-----%'",
+			__LINE__, __FILE__, 0, $junk_size, false, Api\Db::FETCH_ASSOC) as $row)
+		{
+			$files = 0;
+			$contact_id = $row['contact_id'];
+			unset($row['contact_id']);
+			if ($row['contact_jpegphoto'] && ($fp = Api\Vfs::string_stream($row['contact_jpegphoto'])))
+			{
+				if (Api\Link::attach_file('addressbook', $contact_id, array(
+					'name' => Api\Contacts::FILES_PHOTO,
+					'type' => 'image/jpeg',
+					'tmp_name' => $fp,
+				)))
+				{
+					$files |= Api\Contacts::FILES_BIT_PHOTO;
+					$row['contact_jpegphoto'] = null;
+				}
+				fclose($fp);
+			}
+			foreach(array(
+				array(addressbook_bo::$pgp_key_regexp, Api\Contacts::FILES_PGP_PUBKEY, Api\Contacts::FILES_BIT_PGP_PUBKEY, 'application/pgp-keys'),
+				array(Api\Mail\Smime::$certificate_regexp, Api\Contacts::FILES_SMIME_PUBKEY, Api\Contacts::FILES_BIT_SMIME_PUBKEY, 'application/x-pem-file'),
+			) as $data)
+			{
+				list($regexp, $file, $bit, $mime) = $data;
+				$matches = null;
+				if ($row['contact_pubkey'] && preg_match($regexp, $row['contact_pubkey'], $matches) &&
+					($fp = Api\Vfs::string_stream($matches[0])))
+				{
+					if (Api\Link::attach_file('addressbook', $contact_id, array(
+						'name' => $file,
+						'type' => $mime,
+						'tmp_name' => $fp,
+					)))
+					{
+						$files |= $bit;
+						$row['contact_pubkey'] = str_replace($matches[0], '', $row['contact_pubkey']);
+					}
+					fclose($fp);
+				}
+			}
+			if (!trim($row['contact_pubkey'])) $row['contact_pubkey'] = null;
+
+			if ($files)
+			{
+				$GLOBALS['egw_setup']->db->query('UPDATE egw_addressbook SET '.
+					$GLOBALS['egw_setup']->db->column_data_implode(',', $row, true).
+					',contact_files='.$files.' WHERE contact_id='.$contact_id, __LINE__, __FILE__);
+				$total++;
+			}
+			$n++;
+		}
+	}
+	while($n == $junk_size);
+	Api\Vfs::$is_root = false;
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.003';
+}
+
+/**
+ * Drop contact_jpegphoto column
+ *
+ * @return string
+ */
+function api_upgrade16_9_003()
+{
+	$GLOBALS['egw_setup']->oProc->DropColumn('egw_addressbook',array(
+		'fd' => array(
+			'contact_id' => array('type' => 'auto','nullable' => False),
+			'contact_tid' => array('type' => 'char','precision' => '1','default' => 'n'),
+			'contact_owner' => array('type' => 'int','meta' => 'account','precision' => '8','nullable' => False,'comment' => 'account or group id of the adressbook'),
+			'contact_private' => array('type' => 'int','precision' => '1','default' => '0','comment' => 'privat or personal'),
+			'cat_id' => array('type' => 'ascii','meta' => 'category','precision' => '255','comment' => 'Category(s)'),
+			'n_family' => array('type' => 'varchar','precision' => '64','comment' => 'Family name'),
+			'n_given' => array('type' => 'varchar','precision' => '64','comment' => 'Given Name'),
+			'n_middle' => array('type' => 'varchar','precision' => '64'),
+			'n_prefix' => array('type' => 'varchar','precision' => '64','comment' => 'Prefix'),
+			'n_suffix' => array('type' => 'varchar','precision' => '64','comment' => 'Suffix'),
+			'n_fn' => array('type' => 'varchar','precision' => '128','comment' => 'Full name'),
+			'n_fileas' => array('type' => 'varchar','precision' => '255','comment' => 'sort as'),
+			'contact_bday' => array('type' => 'varchar','precision' => '12','comment' => 'Birtday'),
+			'org_name' => array('type' => 'varchar','precision' => '128','comment' => 'Organisation'),
+			'org_unit' => array('type' => 'varchar','precision' => '64','comment' => 'Department'),
+			'contact_title' => array('type' => 'varchar','precision' => '64','comment' => 'jobtittle'),
+			'contact_role' => array('type' => 'varchar','precision' => '64','comment' => 'role'),
+			'contact_assistent' => array('type' => 'varchar','precision' => '64','comment' => 'Name of the Assistent (for phone number)'),
+			'contact_room' => array('type' => 'varchar','precision' => '64','comment' => 'room'),
+			'adr_one_street' => array('type' => 'varchar','precision' => '64','comment' => 'street (business)'),
+			'adr_one_street2' => array('type' => 'varchar','precision' => '64','comment' => 'street (business) - 2. line'),
+			'adr_one_locality' => array('type' => 'varchar','precision' => '64','comment' => 'city (business)'),
+			'adr_one_region' => array('type' => 'varchar','precision' => '64','comment' => 'region (business)'),
+			'adr_one_postalcode' => array('type' => 'varchar','precision' => '64','comment' => 'postalcode (business)'),
+			'adr_one_countryname' => array('type' => 'varchar','precision' => '64','comment' => 'countryname (business)'),
+			'contact_label' => array('type' => 'text','comment' => 'currently not used'),
+			'adr_two_street' => array('type' => 'varchar','precision' => '64','comment' => 'street (private)'),
+			'adr_two_street2' => array('type' => 'varchar','precision' => '64','comment' => 'street (private) - 2. line'),
+			'adr_two_locality' => array('type' => 'varchar','precision' => '64','comment' => 'city (private)'),
+			'adr_two_region' => array('type' => 'varchar','precision' => '64','comment' => 'region (private)'),
+			'adr_two_postalcode' => array('type' => 'varchar','precision' => '64','comment' => 'postalcode (private)'),
+			'adr_two_countryname' => array('type' => 'varchar','precision' => '64','comment' => 'countryname (private)'),
+			'tel_work' => array('type' => 'varchar','precision' => '40','comment' => 'phone-number (business)'),
+			'tel_cell' => array('type' => 'varchar','precision' => '40','comment' => 'mobil phone (business)'),
+			'tel_fax' => array('type' => 'varchar','precision' => '40','comment' => 'fax-number (business)'),
+			'tel_assistent' => array('type' => 'varchar','precision' => '40','comment' => 'phone-number assistent'),
+			'tel_car' => array('type' => 'varchar','precision' => '40'),
+			'tel_pager' => array('type' => 'varchar','precision' => '40','comment' => 'pager'),
+			'tel_home' => array('type' => 'varchar','precision' => '40','comment' => 'phone-number (private)'),
+			'tel_fax_home' => array('type' => 'varchar','precision' => '40','comment' => 'fax-number (private)'),
+			'tel_cell_private' => array('type' => 'varchar','precision' => '40','comment' => 'mobil phone (private)'),
+			'tel_other' => array('type' => 'varchar','precision' => '40','comment' => 'other phone'),
+			'tel_prefer' => array('type' => 'varchar','precision' => '32','comment' => 'prefered phone-number'),
+			'contact_email' => array('type' => 'varchar','precision' => '128','comment' => 'email address (business)'),
+			'contact_email_home' => array('type' => 'varchar','precision' => '128','comment' => 'email address (private)'),
+			'contact_url' => array('type' => 'varchar','precision' => '128','comment' => 'website (business)'),
+			'contact_url_home' => array('type' => 'varchar','precision' => '128','comment' => 'website (private)'),
+			'contact_freebusy_uri' => array('type' => 'ascii','precision' => '128','comment' => 'freebusy-url for calendar of the contact'),
+			'contact_calendar_uri' => array('type' => 'ascii','precision' => '128','comment' => 'url for users calendar - currently not used'),
+			'contact_note' => array('type' => 'varchar','precision' => '8192','comment' => 'notes field'),
+			'contact_tz' => array('type' => 'varchar','precision' => '8','comment' => 'timezone difference'),
+			'contact_geo' => array('type' => 'ascii','precision' => '32','comment' => 'currently not used'),
+			'contact_pubkey' => array('type' => 'ascii','precision' => '16384','comment' => 'public key'),
+			'contact_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'timestamp of the creation'),
+			'contact_creator' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'account id of the creator'),
+			'contact_modified' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'timestamp of the last modified'),
+			'contact_modifier' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'account id of the last modified'),
+			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'account id'),
+			'contact_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag of the changes'),
+			'contact_uid' => array('type' => 'ascii','precision' => '128','comment' => 'unique id of the contact'),
+			'adr_one_countrycode' => array('type' => 'ascii','precision' => '2','comment' => 'countrycode (business)'),
+			'adr_two_countrycode' => array('type' => 'ascii','precision' => '2','comment' => 'countrycode (private)'),
+			'carddav_name' => array('type' => 'ascii','precision' => '128','comment' => 'name part of CardDAV URL, if specified by client'),
+			'contact_files' => array('type' => 'int','precision' => '1','default' => '0','comment' => '&1: photo, &2: pgp, &4: smime')
+		),
+		'pk' => array('contact_id'),
+		'fk' => array(),
+		'ix' => array('contact_owner','cat_id','n_fileas','contact_modified','contact_uid','carddav_name',array('n_family','n_given'),array('n_given','n_family'),array('org_name','n_family','n_given')),
+		'uc' => array('account_id')
+	),'contact_jpegphoto');
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.004';
+}
+
+/**
+ * Bump version to 17.1
+ *
+ * @return string
+ */
+function api_upgrade16_9_004()
+{
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1';
+}
+
+function api_upgrade17_1()
 {
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_ews_type',array(
 		'type' => 'varchar',
@@ -245,20 +417,12 @@ function api_upgrade16_9_002()
 		'comment' => 'inbox/public_folders'
 	));
 
-	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.003';
-}
-
-
-function api_upgrade16_9_003()
 {
 	$GLOBALS['egw_setup']->oProc->CreateTable('egw_ea_ews',array(
 		'fd' => array(
 			'ews_profile' => array('type' => 'int','precision' => '11','nullable' => False,'comment' => 'ewg_ea_account, acc_id'),
 			'ews_folder' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'Exchange Folder ID'),
 			'ews_name' => array('type' => 'varchar','precision' => '100','nullable' => False,'comment' => 'Exchange Folder Name'),
-			'ews_read_permission' => array('type' => 'bool','comment' => 'Permission to read folder'),
-			'ews_write_permission' => array('type' => 'bool','comment' => 'Permission to write to folder'),
-			'ews_delete_permission' => array('type' => 'bool','comment' => 'Permission to delete from folder'),
 			'ews_is_default' => array('type' => 'bool','comment' => 'Default folder'),
 			'ews_order' => array('type' => 'int','precision' => '5','comment' => 'Order to display in tree'),
 			'ews_move_anywhere' => array('type' => 'bool','comment' => 'Permission to move emails between folders'),
@@ -270,96 +434,22 @@ function api_upgrade16_9_003()
 		'uc' => array()
 	));
 
-	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.004';
-}
-
-
-function api_upgrade16_9_004()
-{
-	$GLOBALS['egw_setup']->oProc->DropColumn('egw_ea_ews',array(
-		'fd' => array(
-			'ews_profile' => array('type' => 'int','precision' => '11','nullable' => False,'comment' => 'ewg_ea_account, acc_id'),
-			'ews_folder' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'Exchange Folder ID'),
-			'ews_name' => array('type' => 'varchar','precision' => '100','nullable' => False,'comment' => 'Exchange Folder Name'),
-			'ews_write_permission' => array('type' => 'bool','comment' => 'Permission to write to folder'),
-			'ews_delete_permission' => array('type' => 'bool','comment' => 'Permission to delete from folder'),
-			'ews_is_default' => array('type' => 'bool','comment' => 'Default folder'),
-			'ews_order' => array('type' => 'int','precision' => '5','comment' => 'Order to display in tree'),
-			'ews_move_anywhere' => array('type' => 'bool','comment' => 'Permission to move emails between folders'),
-			'ews_move_to' => array('type' => 'text','comment' => 'Array with only folders allowed to move emails to')
-		),
-		'pk' => array('ews_profile','ews_folder'),
-		'fk' => array('ews_profile' => 'egw_ea_account.acc_id'),
-		'ix' => array(),
-		'uc' => array()
-	),'ews_read_permission');
-	$GLOBALS['egw_setup']->oProc->DropColumn('egw_ea_ews',array(
-		'fd' => array(
-			'ews_profile' => array('type' => 'int','precision' => '11','nullable' => False,'comment' => 'ewg_ea_account, acc_id'),
-			'ews_folder' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'Exchange Folder ID'),
-			'ews_name' => array('type' => 'varchar','precision' => '100','nullable' => False,'comment' => 'Exchange Folder Name'),
-			'ews_delete_permission' => array('type' => 'bool','comment' => 'Permission to delete from folder'),
-			'ews_is_default' => array('type' => 'bool','comment' => 'Default folder'),
-			'ews_order' => array('type' => 'int','precision' => '5','comment' => 'Order to display in tree'),
-			'ews_move_anywhere' => array('type' => 'bool','comment' => 'Permission to move emails between folders'),
-			'ews_move_to' => array('type' => 'text','comment' => 'Array with only folders allowed to move emails to')
-		),
-		'pk' => array('ews_profile','ews_folder'),
-		'fk' => array('ews_profile' => 'egw_ea_account.acc_id'),
-		'ix' => array(),
-		'uc' => array()
-	),'ews_write_permission');
-	$GLOBALS['egw_setup']->oProc->DropColumn('egw_ea_ews',array(
-		'fd' => array(
-			'ews_profile' => array('type' => 'int','precision' => '11','nullable' => False,'comment' => 'ewg_ea_account, acc_id'),
-			'ews_folder' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'Exchange Folder ID'),
-			'ews_name' => array('type' => 'varchar','precision' => '100','nullable' => False,'comment' => 'Exchange Folder Name'),
-			'ews_is_default' => array('type' => 'bool','comment' => 'Default folder'),
-			'ews_order' => array('type' => 'int','precision' => '5','comment' => 'Order to display in tree'),
-			'ews_move_anywhere' => array('type' => 'bool','comment' => 'Permission to move emails between folders'),
-			'ews_move_to' => array('type' => 'text','comment' => 'Array with only folders allowed to move emails to')
-		),
-		'pk' => array('ews_profile','ews_folder'),
-		'fk' => array('ews_profile' => 'egw_ea_account.acc_id'),
-		'ix' => array(),
-		'uc' => array()
-	),'ews_delete_permission');
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_ews','ews_permissions',array(
 		'type' => 'text',
 		'comment' => 'Array with folder permissions'
 	));
 
-	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.005';
-}
-
-
-function api_upgrade16_9_005()
-{
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_ews','ews_apply_permissions',array(
 		'type' => 'bool',
 		'comment' => 'Whether to apply extra permissions or not'
 	));
 
-	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.006';
-}
-
-
-function api_upgrade16_9_006()
-{
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_ews_apply_permissions',array(
 		'type' => 'bool',
 		'comment' => 'Always apply permissions '
 	));
 
-	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.007';
-}
-
-function api_upgrade16_9_007()
-{
-    // Modify column 'ews_folder' to be utf8_bin because we need it to be case sensitive
-    // TODO Check if this works for databases other than MySQL
 	$GLOBALS['egw_setup']->db->query( 'alter table egw_ea_ews modify ews_folder varchar(255) collate utf8_bin' );
 
-	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.008';
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.001';
 }
-

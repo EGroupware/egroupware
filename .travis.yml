@@ -1,15 +1,16 @@
 language: php
 php:
-  - 5.4
-  - 5.5
   - 5.6
-  - 7
-  - hhvm
+  - 7.0
+  - 7.1
+  - 7.2
+  - master
 
 matrix:
   fast_finish: true
   allow_failures:
-    - php: hhvm
+    - php: 7.2
+    - php: master
 
 services:
   - memcached
@@ -20,45 +21,31 @@ addons:
   mariadb: '10.0'
 
 sudo: required
-dist: trusty
-# this fixes hhvm builds according to https://docs.travis-ci.com/user/languages/php#HHVM-versions-on-Trusty
-group: edge
 
 before_script:
   - sudo apt-get update -qq
   - sudo apt-get install -y myrepos libpcre3-dev
   - case $(phpenv version-name) in
-    "5.4")
-       php -m;
+    "5.6")
        yes "" | pecl install memcache;
        yes "" | pecl install apcu-4.0.11;
        yes "" | pecl install igbinary;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
-       php -m;
+       composer require 'phpunit/phpunit:~5.7';
        ;;
-    "5.5"|"5.6")
-       yes "" | pecl install memcache;
-       yes "" | pecl install apcu-4.0.11;
-       yes "" | pecl install igbinary;
-       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
-       phpenv config-rm xdebug.ini;
-       ;;
-    "7")
+    "7"|"7.0"|"7.1"|"7.2"|"7.3")
        yes "" | pecl install apcu;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
-       ;;
-    "hhvm")
-       ;;
+       composer require 'phpunit/phpunit:~6.3';
+      ;;
     esac
   #- php -m
-  #- curl https://svn.stylite.de/fix_mrconfig 2>/dev/null | php
+  - php -i
   - sed 's/^update = git stash -q/update = \#git stash -q/g' .mrconfig
   - mr --trust-all --stats up
   - (cd activesync; mr --trust-all --stats up)
-  # installing phpunit in version suitable for used PHP version
-  - composer require 'phpunit/phpunit:~4.8|~5.4'
   # create data directory
   - sudo mkdir /var/lib/egroupware
   - sudo chown travis /var/lib/egroupware
@@ -66,9 +53,10 @@ before_script:
 
 script:
   # install egroupware using MariaDB as domain "default"
-  # disable MariaDB install as it fails after some changes in Travis environment
-  #- php doc/rpm-build/post_install.php --domain default
-  #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  # and add an admin user "demo" with password "guest"
+  - php doc/rpm-build/post_install.php --domain default
+    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+    --admin_user demo --admin_passwd guest --admin_email noreply@example.com
   # disable PostgreSQL install as it fails in Travis with Fatal error: Call to unimplemented native function pg_set_client_encoding
   # install egroupware using PostgreSQL as domain "pgsql", need some specific handling we can not create users via sql
   #- psql -U postgres -c 'create database egroupware';
@@ -81,7 +69,7 @@ script:
   #  --account-auth ldap --ldap_suffix dc=local --ldap_admin 'cn=admin,$suffix' --ldap_admin_pw secret
   #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
-  - phpunit -c doc -dapc.enable_cli=1
+  - vendor/bin/phpunit -c doc -dapc.enable_cli=1
   # do not run syntax check for hhvm, as it always fails / get terminated after 10m
   - test $(phpenv version-name) = 'hhvm' || ./doc/php_syntax_check.sh
 

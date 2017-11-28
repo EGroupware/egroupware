@@ -857,10 +857,22 @@ abstract class Ajax extends Api\Framework
 
 		// check if user called a specific url --> open it as active tab
 		$last_direct_url =& Api\Cache::getSession(__CLASS__, 'last_direct_url');
-		if ($url !== $last_direct_url)
+		if ($last_direct_url)
 		{
-			$active_tab = $url_tab = self::app_from_url($url);
+			$url = $last_direct_url;
+			$active_tab = self::app_from_url($last_direct_url);
+		}
+		else if (strpos($url, 'menuaction') > 0)
+		{
+			// Coming in with a specific URL, save it and redirect to index.php
+			// so reloads work nicely
 			$last_direct_url = $url;
+			Api\Framework::redirect_link('/index.php?cd=yes');
+		}
+		else
+		{
+			$active_tab = $GLOBALS['egw_info']['user']['preferences']['common']['active_tab'];
+			if (!$active_tab) $active_tab = $default_app;
 		}
 
 		//self::app_from_url might return an application the user has no rights
@@ -873,14 +885,13 @@ abstract class Ajax extends Api\Framework
 			{
 				$url = preg_replace('/[&?]cd=yes/','',$url);
 			}
-			$apps[$active_tab]['openOnce'] = $url;
+			if($last_direct_url)
+			{
+				$apps[$active_tab]['openOnce'] = $url;
+			}
 			$store_prefs = true;
 		}
-		else
-		{
-			$active_tab = $GLOBALS['egw_info']['user']['preferences']['common']['active_tab'];
-			if (!$active_tab) $active_tab = $default_app;
-		}
+		$last_direct_url = null;
 		// if we have the open tabs in the session, use it instead the maybe forced common prefs open_tabs
 		if (!($open_tabs = Api\Cache::getSession(__CLASS__, 'open_tabs')))
 		{

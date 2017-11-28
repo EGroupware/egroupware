@@ -160,6 +160,21 @@ class Storage
 	var $content_types = array();
 
 	/**
+	 * Directory to store striped photo or public keys in VFS directory of entry
+	 */
+	const FILES_DIRECTORY = '.files';
+	const FILES_PHOTO = '.files/photo.jpeg';
+	const FILES_PGP_PUBKEY = '.files/pgp-pubkey.asc';
+	const FILES_SMIME_PUBKEY =  '.files/smime-pubkey.crt';
+
+	/**
+	 * Constant for bit-field "contact_files" storing what files are available
+	 */
+	const FILES_BIT_PHOTO = 1;
+	const FILES_BIT_PGP_PUBKEY = 2;
+	const FILES_BIT_SMIME_PUBKEY = 4;
+
+	/**
 	 * These fields are options for checking for duplicate contacts
 	 *
 	 * @var array
@@ -816,7 +831,7 @@ class Storage
 
 	/**
 	 * Find contacts that appear to be duplicates
-	 * 
+	 *
 	 * @param Array $param
 	 * @param string $param[org_view] 'org_name', 'org_name,adr_one_location', 'org_name,org_unit' how to group
 	 * @param int $param[owner] addressbook to search
@@ -825,7 +840,7 @@ class Storage
 	 * @param int $param[start]
 	 * @param int $param[num_rows]
 	 * @param string $param[sort] ASC or DESC
-	 * 
+	 *
 	 * @return array of arrays
 	 */
 	public function duplicates($param)
@@ -886,7 +901,7 @@ class Storage
 		foreach($rows as $n => $row)
 		{
 			$rows[$n]['id'] = 'duplicate:';
-			foreach(static::$duplicate_fields as $by => $by_label)
+			foreach(array_keys(static::$duplicate_fields) as $by)
 			{
 				if (strpos($row[$by],'&')!==false) $row[$by] = str_replace('&','*AND*',$row[$by]);
 				if($row[$by])
@@ -1005,14 +1020,22 @@ class Storage
 	 *  - "accounts" accounts to ldap
 	 *  - "accounts-back" accounts back to sql (for sql-ldap!)
 	 *  - "sql" contacts and accounts to sql
+	 *  - "accounts-back-ads" accounts back from ads to sql
 	 */
 	function migrate2ldap($type)
 	{
 		//error_log(__METHOD__."(".array2string($type).")");
 		$sql_contacts  = new Sql();
-		// we need an admin connection
-		$ds = $GLOBALS['egw']->ldap->ldapConnect();
-		$ldap_contacts = new Ldap(null, $ds);
+		if ($type == 'accounts-back-ads')
+		{
+			$ldap_contacts = new Ads();
+		}
+		else
+		{
+			// we need an admin connection
+			$ds = $GLOBALS['egw']->ldap->ldapConnect();
+			$ldap_contacts = new Ldap(null, $ds);
+		}
 
 		if (!is_array($type)) $type = explode(',', $type);
 

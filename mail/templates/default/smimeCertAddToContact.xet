@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.smimeCertAddToContact" template="" lang="" group="0" version="17.1">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="300"/>
+				<column width="20"/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<description span="2" id="message"/>
+					<image src="smime_sign" class="@class"/>
+				</row>
+				<row>
+					<description id="message2"/>
+				</row>
+				<row>
+					<description value="Signed by" label="%s:"/>
+					<description id="certDetails[subject][commonName]"/>
+				</row>
+				<row>
+					<description value="Email address" label="%s:"/>
+					<description id="certDetails[subject][emailAddress]"/>
+				</row>
+				<row>
+					<description value="Country" label="%s:"/>
+					<description id="certDetails[subject][countryName]"/>
+				</row>
+				<row>
+					<description value="Certificate issued by" label="%s:"/>
+					<description id="certDetails[issuer][commonName]"/>
+				</row>
+				<row>
+					<tabbox id="tabs" class="et2_nowrap" tab_height="250" width="100%" align_tabs="h">
+						<tabs>
+							<tab id="details" label="Certificate Details"/>
+							<tab id="certificate" label="Certificate in text"/>
+						</tabs>
+						<tabpanels>
+							<html multiline="true" id="certHtml" readonly="true"/>
+							<textbox id="cert" readonly="true" multiline="true" class="et2_fullWidth" />
+						</tabpanels>
+					</tabbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

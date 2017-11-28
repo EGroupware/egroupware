@@ -46,6 +46,10 @@ checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed '
 # projectmanagement and Ganttcharts
 checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/projectmanager.git
 
+[collabora]
+# Collabora Libre Office Online integration
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/collabora.git
+
 #[bookmarks]
 # record and share bookmarks
 #checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/bookmarks.git
@@ -61,6 +65,10 @@ checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed '
 #[archive]
 # allows to integrate a Benno mail-archive into EGroupware
 #checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/archive.git
+
+#[wiki]
+# wiki application
+#checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/wiki.git
 
 ###
 ### Older apps requiring to install phpgwapi and etemplate!
@@ -81,10 +89,6 @@ checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed '
 # knowledge base
 #checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/phpbrain.git
 
-#[wiki]
-# wiki application
-#checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/wiki.git
-
 #[sambaadmin]
 # keeps passwords in sync with Samba3 using same LDAP as EGroupware (for Samba4 use Active Directory)
 #checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/sambaadmin.git
@@ -94,7 +98,7 @@ checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed '
 #checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/sitemgr.git
 
 #[phpfreechat]
-# chat application
+# chat application requiring PHP 5.x, no PHP 7.x support!
 #checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/phpfreechat.git
 #chain = true
 

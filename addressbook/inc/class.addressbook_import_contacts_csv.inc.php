@@ -64,9 +64,28 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 			$this->lookups['tid'][$tid] = $data['name'];
 		}
 
+		// Try and set a default type, for use if file does not specify
+		if(!$this->lookups['tid'][Api\Contacts\Storage::DELETED_TYPE] && count($this->lookups['tid']) == 1 ||
+			$this->lookups['tid'][Api\Contacts\Storage::DELETED_TYPE] && count($this->lookups['tid']) == 2)
+		{
+			reset($this->lookups['tid']);
+			$this->default_type = key($this->lookups['tid']);
+		}
+
+
 		// set contact owner
 		$contact_owner = isset( $_definition->plugin_options['contact_owner'] ) ?
 			$_definition->plugin_options['contact_owner'] : $this->user;
+
+		// Check to make sure target addressbook is valid
+		if(!in_array($contact_owner, array_keys($this->bocontacts->get_addressbooks(Api\Acl::ADD))))
+		{
+			$this->warnings[0] = lang("Unable to import into %1, using %2",
+				$contact_owner . ' ('.Api\Accounts::username($record->owner) . ')',
+				Api\Accounts::username($this->user)
+			);
+			$contact_owner = 'personal';
+		}
 
 		// Import into importer's personal addressbook
 		if($contact_owner == 'personal')
@@ -130,12 +149,12 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 		if(!$record->tid || !$this->lookups['tid'][$record->tid])
 		{
 			// Avoid lots of warnings about type (2 types are contact and deleted)
-			if(!$this->type_warned || count($this->lookups['tid']) == 2 )
+			if($record->tid && !$this->type_warned[$record->tid] && !$this->lookups['tid'][$record->tid] )
 			{
 				$this->warnings[$import_csv->get_current_position()] = lang('Unknown type %1, imported as %2',$record->tid,lang($this->lookups['tid']['n']));
-				$this->type_warned = true;
+				$this->type_warned[$record->tid] = true;
 			}
-			$record->tid = 'n';
+			$record->tid = $this->default_type;
 		}
 
 		// Also handle categories in their own field

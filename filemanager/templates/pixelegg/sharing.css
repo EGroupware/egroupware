@@ -18,10 +18,12 @@ div#popupMainDiv {
  */
 div#filemanager-index_buttons img,
 div#filemanager-index_favorite_wrapper,
-div.header_row_right,
 span.header_count,
+#filemanager-index_button\[edit\],
+#filemanager-index_button\[symlink\],
 select#filemanager-index_filter,
-span.selectcols {
+span.selectcols,
+#filemanager-index_filemanager-index-header_right > button:last-child {
   display: none !important;
 }
 div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
@@ -49,9 +51,25 @@ div#filemanager-index_buttons div.et2_file {
 div.et2_nextmatch div.nextmatch_header_row {
   padding-bottom: 0px;
 }
+div.et2_nextmatch thead {
+  display: none;
+}
 div.nextmatch_header {
-  padding-bottom: 0 !important;
+  padding-bottom: 10px !important;
   padding-top: 10px !important;
+}
+div.search {
+  position: relative;
+  width: 35%;
+  right: 6px;
+  max-width: 98%;
+  top: 0;
+  float: right !important;
+}
+div.search .et2_searchbox .flex {
+  width: 100%;
+  float: right;
+  padding-right: 0;
 }
 /**
  * EGroupware - CSS Styles used by sharing GUI
@@ -63,20 +81,34 @@ div.nextmatch_header {
  * @copyright (c) 2014/15 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
-div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
-  right: 418px;
-  top: 10px;
-}
-div.filemanager_navigation {
-  margin: 0px !important;
-}
-div.search {
-  top: 8px;
-  right: 215px;
-}
 div#filemanager-index_buttons div.et2_file {
   margin-top: 6px;
 }
-div.filemanager_navigation > label {
-  right: 485px !important;
+div#popupMainDiv:before {
+  content: ' ';
+  width: 100%;
+  background-image: url(../../../api/templates/default/images/logo64x64.png);
+  background-repeat: no-repeat;
+  background-position: 15px;
+  background-size: 40px;
+  height: 45px;
+  background-color: #0c5da5;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+form#filemanager-index {
+  margin-left: 200px !important;
+  margin-right: 200px !important;
+}
+form#filemanager-index:after {
+  content: ' ';
+  width: 100%;
+  height: 45px;
+  background: #0c5da5;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }

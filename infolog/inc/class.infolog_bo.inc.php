@@ -6,9 +6,8 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package infolog
- * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -460,21 +459,41 @@ class infolog_bo
 			{
 				$info['old_pm_id'] = $info['pm_id'] = $id;
 			}
-			$info['info_link'] = array(
+			else
+			{
+				// Link might be contact, check others
+				$this->get_pm_id($info);
+			}
+			$info['info_link'] = $info['info_contact'] = array(
 				'app'   => $app,
 				'id'    => $id,
 				'title' => (!empty($info['info_from']) ? $info['info_from'] : $title),
 			);
-			$info['info_contact'] = $app.':'.$id;
 
 			//echo " title='$title'</p>\n";
 			return $info['blur_title'] = $title;
 		}
-		$info['info_link'] = array('title' => $info['info_from']);
+
+		// Set ID to 'none' instead of unset to make it seem like there's a value
+		$info['info_link'] = $info['info_contact'] = $info['info_from'] ? array('id' => 'none', 'title' => $info['info_from']) : null;
 		$info['info_link_id'] = 0;	// link might have been deleted
 		$info['info_custom_from'] = (int)!!$info['info_from'];
 
 		return False;
+	}
+
+	/**
+	 * Find projectmanager ID from linked project(s)
+	 *
+	 * @param Array $info
+	 */
+	public function get_pm_id(&$info)
+	{
+		$pm_links = Link::get_links('infolog',$info['info_id'],'projectmanager');
+
+		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $info['old_pm_id'];
+		if (!isset($info['pm_id']) && $old_pm_id) $info['pm_id'] = $old_pm_id;
+		return $old_pm_id;
 	}
 
 	/**
@@ -825,8 +844,8 @@ class infolog_bo
 			{
 				$values['info_percent'] = 0;
 			}
-			else if (
-				($values['info_status'] != 'archive' && $values['info_status'] != 'cancelled' && in_array($values['info_status'], $this->stock_status[$values['info_type']])) &&
+			else if (($values['info_status'] != 'archive' && $values['info_status'] != 'cancelled' &&
+				isset($this->stock_status[$values['info_type']]) && in_array($values['info_status'], $this->stock_status[$values['info_type']])) &&
 				((int)$values['info_percent'] == 100 || $values['info_percent'] == 0))
 			{
 				// We change percent to match status, not status to match percent
@@ -966,8 +985,10 @@ class infolog_bo
 				$this->so->write($to_write);
 				$values['info_link_id'] = $to_write['info_link_id'];
 				$values['info_contact'] = $to_write['info_contact'];
+				$values['info_from'] = $to_write['info_from'];
 				$this->link_id2from($values);
 			}
+			$values['pm_id'] = $to_write['pm_id'];
 
 			if (($info_from_set = ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from']))))
 			{
@@ -1033,7 +1054,7 @@ class infolog_bo
 			// Update modified timestamp of parent
 			if($values['info_id_parent'] && $touch_modified)
 			{
-				$parent = $this->read($values['info_id_parent'], false, 'server', true);
+				$parent = $this->read($values['info_id_parent'], true, 'server', true);
 				$this->write($parent, false, true, false, true, false, null, $ignore_acl);
 			}
 		}
@@ -1051,13 +1072,21 @@ class infolog_bo
 	protected function write_check_links(&$values)
 	{
 		$old_link_id = (int)$values['info_link_id'];
-		if($values['info_contact'])
+		$from = $values['info_from'];
+
+		if($values['info_contact'] && !(
+				is_array($values['info_contact']) && $values['info_contact']['id'] == 'none'
+			) || (
+				is_array($values['info_contact']) && $values['info_contact']['id'] == 'none' &&
+				array_key_exists('search', $values['info_contact'])
+		))
 		{
 			if(is_array($values['info_contact']))
 			{
 				// eTemplate2 returns the array all ready
 				$app = $values['info_contact']['app'];
-				$id = $values['info_contact']['id'];
+				$id = (int)$values['info_contact']['id'];
+				$from = $values['info_contact']['search'];
 			}
 			else if ($values['info_contact'])
 			{
@@ -1068,7 +1097,7 @@ class infolog_bo
 			{
 				unset($values['info_link_id'], $id, $values['info_contact']);
 			}
-			elseif ($app && $id)
+			else if ($app && $id)
 			{
 				if(!is_array($values['link_to']))
 				{
@@ -1079,10 +1108,16 @@ class infolog_bo
 						$values['info_id'],
 						$app,$id
 				));
+				$values['info_from'] = Link::title($app, $id);
+			}
+			else if ($from)
+			{
+				$values['info_from'] = $from;
 			}
 			else
 			{
 				unset($values['info_link_id']);
+				$values['info_from'] = null;
 			}
 		}
 		else if ($values['pm_id'] && $values['info_id'] && !$values['old_pm_id'])
@@ -1099,6 +1134,26 @@ class infolog_bo
 		else
 		{
 			unset($values['info_link_id']);
+			unset($values['info_contact']);
+			$values['info_from'] = $from ? $from : null;
+		}
+		if($values['info_id'] && $values['old_pm_id'] !== $values['pm_id'])
+		{
+			Link::unlink(0,'infolog',$values['info_id'],0,'projectmanager',$values['old_pm_id']);
+			// Project has changed, but link is not to project
+			if($values['pm_id'])
+			{
+				$link_id = Link::link('infolog', $values['info_id'], 'projectmanager', $values['pm_id']);
+				if(!$values['info_link_id'])
+				{
+					$values['info_link_id'] = $link_id;
+				}
+			}
+			else
+			{
+				// Project removed, but primary link is not to project
+				$values['pm_id'] = null;
+			}
 		}
 		if ($old_link_id && $old_link_id != $values['info_link_id'])
 		{
@@ -1269,8 +1324,7 @@ class infolog_bo
 		$info = array(
 			'info_id' => 0,
 			'info_type' => $type,
-			'info_from' => implode(', ',$names),
-			'info_addr' => implode(', ',$emails),
+			'info_from' => implode(', ',$names) . implode(', ', $emails),
 			'info_subject' => $_subject,
 			'info_des' => $_message,
 			'info_startdate' => Api\DateTime::server2user($_date),
@@ -1297,7 +1351,7 @@ class infolog_bo
 		}
 		if (!$contacts || !is_array($contacts) || !is_array($contacts[0]))
 		{
-			$info['msg'] = lang('Attention: No Contact with address %1 found.',$info['info_addr']);
+			$info['msg'] = lang('Attention: No Contact with address %1 found.',$info['info_from']);
 			$info['info_custom_from'] = true;	// show the info_from line and NOT only the link
 		}
 		else

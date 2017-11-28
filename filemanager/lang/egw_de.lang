@@ -141,7 +141,7 @@ file successful uploaded.	filemanager	de	Datei erfolgreich hochgeladen
 filemanager	common	de	Dateimanager
 filemanager configuration	admin	de	Konfiguration Dateimanager
 filemanager fields:	filemanager	de	Dateimanager Felder:
-filename must not be empty!	filemanager	de	Dateinamen darf nicht leer sein!
+filename must not be empty!	filemanager	de	Dateiname darf nicht leer sein!
 files	common	de	Dateien
 files from links	filemanager	de	Zeige Dateien aus verknüpften Einträgen
 files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
@@ -237,8 +237,8 @@ saving setting for document merge failed!	filemanager	de	Speichern der Einstellu
 search for '%1'	filemanager	de	nach %1 suchen
 searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...
-select file to upload in current directory	filemanager	de	Datei(n) zum hochladen in das aktuelle Verzeichnis auswählen
-select file(s) from vfs	common	de	Dateie(n) aus dem Egroupware Dateimanager auswählen
+select file to upload in current directory	filemanager	de	Datei(en) zum hochladen in das aktuelle Verzeichnis auswählen
+select file(s) from vfs	common	de	Datei(en) aus dem EGroupware Dateimanager auswählen
 setting for document merge saved.	filemanager	de	Einstellungen für Serienbriefe gespeichert
 shared files	filemanager	de	Freigegebene Dateien
 shared with	filemanager	de	Geteilt mit

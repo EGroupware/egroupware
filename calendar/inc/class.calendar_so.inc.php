@@ -733,24 +733,27 @@ class calendar_so
 			$cols = "$this->repeats_table.recur_type,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,range_end - 1 AS recur_enddate,".implode(',',$all_cols).",cal_start,cal_end,$this->user_table.cal_recur_date";
 		}
 		$where = array();
+		$join = '';
 		if (is_array($params['query']))
 		{
 			$where = $params['query'];
 		}
 		elseif ($params['query'])
 		{
-			if(is_numeric($params['query']))
+			$columns = array('cal_title','cal_description','cal_location');
+
+			$wildcard = $op = null;
+			if(!is_null($params['cfs']))
 			{
-				$where[] = $this->cal_table.'.cal_id = ' . (int)$params['query'];
-			}
-			else
-			{
-				foreach(array('cal_title','cal_description','cal_location') as $col)
+				$custom = Api\Storage\Customfields::get('calendar');
+				if($custom)
 				{
-					$to_or[] = $col.' '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%'.$params['query'].'%');
+					$columns[] = 'cal_extra_value';
+					$join .= " LEFT JOIN {$this->extra_table} ON {$this->extra_table}.cal_id = {$this->cal_table}.cal_id ";
 				}
-				$where[] = '('.implode(' OR ',$to_or).')';
 			}
+			$so_sql = new Api\Storage\Base('calendar', $this->cal_table, $this->db);
+			$where = $so_sql->search2criteria($params['query'], $wildcard, $op, null, $columns);
 
 			// Searching - restrict private to own or private grant
 			if (!isset($params['private_grants']))
@@ -881,15 +884,19 @@ class calendar_so
 		$cal_table = $this->cal_range_view($start, $end, null, $filter == 'everything' ? null : $filter != 'deleted');
 		$cal_table_def = $this->db->get_table_definitions('calendar', $this->cal_table);
 
-		$join = "JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id ".
+		$u_join = "JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id ".
 			"LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id ".
 			$rejected_by_user_join;
 		// dates table join only needed to enum recuring events, we use a time-range limited view here too
 		if ($params['enum_recuring'])
 		{
-			$join = "JOIN ".$this->dates_table.	// using dates_table direct seems quicker then an other view
+			$join .= "JOIN ".$this->dates_table.	// using dates_table direct seems quicker then an other view
 				//$this->dates_range_view($start, $end, null, $filter == 'everything' ? null : $filter == 'deleted').
-				" ON $this->cal_table.cal_id=$this->dates_table.cal_id ".$join;
+				" ON $this->cal_table.cal_id=$this->dates_table.cal_id ".$u_join;
+		}
+		else
+		{
+			$join .= $u_join;
 		}
 
 		// Check for some special sorting, used by planner views
@@ -1369,11 +1376,11 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
-		foreach($event as $col => $val)
+		foreach(array_keys($event) as $col)
 		{
 			if ($col[0] != '#' && substr($col,0,6) != 'recur_' && substr($col,0,6) != 'range_' && $col != 'alarm' && $col != 'tz_id' && $col != 'caldav_name')
 			{
-				$event['cal_'.$col] = $val;
+				$event['cal_'.$col] = $event[$col];
 				unset($event[$col]);
 			}
 		}
@@ -1419,7 +1426,7 @@ ORDER BY cal_user_type, cal_usre_id
 			if (!is_null($etag)) $where['cal_etag'] = $etag;
 
 			unset($event['cal_etag']);
-			$event[] = 'cal_etag=cal_etag+1';	// always update the etag, even if none given to check
+			$event[] = 'cal_etag=COALESCE(cal_etag,0)+1';	// always update the etag, even if none given to check
 
 			$this->db->update($this->cal_table,$event,$where,__LINE__,__FILE__,'calendar');
 
@@ -1436,12 +1443,12 @@ ORDER BY cal_user_type, cal_usre_id
 
 			if (!$event['cal_id'] && !isset($event['cal_uid'])) $event['cal_uid'] = '';	// uid is NOT NULL!
 
+			$event['cal_etag'] = $etag = 0;
 			$this->db->insert($this->cal_table,$event,false,__LINE__,__FILE__,'calendar');
 			if (!($cal_id = $this->db->get_last_insert_id($this->cal_table,'cal_id')))
 			{
 				return false;
 			}
-			$etag = 0;
 		}
 		$update = array();
 		// event without uid or not strong enough uid

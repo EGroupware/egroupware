@@ -2,14 +2,15 @@
 | Branch | Status | Composer |
 | ------ | ------ | -------- |
 | master | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=master)](https://travis-ci.org/EGroupware/egroupware) | [![Dependency Status](https://www.versioneye.com/user/projects/57527deb7757a00041b3a25e/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57527deb7757a00041b3a25e) |
+| 17.1 | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=17.1)](https://travis-ci.org/EGroupware/egroupware) | [![Dependency Status](https://www.versioneye.com/user/projects/57527deb7757a00041b3a25e/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57527deb7757a00041b3a25e) |
 | 16.1 | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=16.1)](https://travis-ci.org/EGroupware/egroupware) | [![Dependency Status](https://www.versioneye.com/user/projects/57527e0c7757a0003bd4aecb/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57527deb7757a00041b3a25e) |
-| 14.2 | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=14.2)](https://travis-ci.org/EGroupware/egroupware) | [![Dependency Status](https://www.versioneye.com/user/projects/57527e0c7757a0003bd4aecb/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57527e0c7757a0003bd4aecb) |
+
 ### Default and prefered installation method for EGroupware is via your package manager:
 
   https://software.opensuse.org/download.html?project=server%3AeGroupWare&package=egroupware-epl
 
-### Installing EGroupware 16.1 from github:
-[switch to 16.1 branch](https://github.com/EGroupware/egroupware/tree/16.1) and follow instructions there
+### Installing EGroupware 17.1 from github:
+[switch to 17.1 branch](https://github.com/EGroupware/egroupware/tree/17.1) and follow instructions there
 
 ### Installing EGroupware development version:
 * cd /path/to/your/docroot
@@ -17,7 +18,7 @@
 * cd egroupware
 * install composer.phar from https://getcomposer.org/download/
 * install myrepos (mr) from https://myrepos.branchable.com/ or your distribution package manager
-* add a line /path/to/egroupware/.mrconfig to your ~/.mrtrust, to allow running composer.phar and git clone -b 16.1
+* add a line /path/to/egroupware/.mrconfig to your ~/.mrtrust, to allow running composer.phar and git clone
 * mr up
 * enable further / non-default EGroupware apps by uncommenting them in .mrconfig and run mr up
 * continue installation at http://localhost/egroupware/setup/

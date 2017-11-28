@@ -280,6 +280,33 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="admin.mailaccount.encryption" template="" lang="" group="0" version="17.1">
+		<grid width="100%" resize_ratio="0">
+			<columns>
+				<column width="120"/>
+				<column width="500"/>
+			</columns>
+			<rows>
+				<row>
+					<description value="SMIME"/>
+				</row>
+				<row disabled="@hide_smime_upload">
+					<description value="Upload your certificate .p12/.pfx file"/>
+					<vbox>
+						<file id="smimeKeyUpload" accept=".p12,.pfx"/>
+						<passwd id="smime_pkcs12_password" size="32" maxlength="128"  blur="Password to unlock encrypted p12" autocomplete="off"/>
+					</vbox>
+				</row>
+				<row disabled="!@hide_smime_upload">
+					<description value="Current certificate"/>
+					<hbox>
+						<buttononly id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" background_image="1"/>
+						<buttononly id="smime_delete_p12" label="Delete certificate" onclick="app.admin.change_account" image="delete" background_image="1"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="admin.mailaccount" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
@@ -289,11 +316,11 @@
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
 					<hbox span="all">
-						<button label="Save" id="button[save]"/>
-						<button label="Apply" id="button[apply]" />
-						<button statustext="Use wizard to detect or verify configuration" label="Wizard" id="button[wizard]" image="magicwand" background_image="1"/>
-						<button align="right" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')"/>
-						<button align="right" label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')"  image="delete" background_image="1"/>
+						<button id="button[save]"/>
+						<button id="button[apply]" />
+						<button statustext="Use wizard to detect or verify configuration" id="button[wizard]" image="magicwand" background_image="1"/>
+						<button id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')"/>
+						<button label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')"  image="delete" background_image="1"/>
 					</hbox>
 				</row>
 				<row disabled="!@accounts" class="dialogHeader">
@@ -332,6 +359,7 @@
 							<tab id="admin.mailaccount.sieve" label="Sieve" statustext="serverside filtering"/>
 							<tab id="admin.mailaccount.smtp" label="SMTP" statustext="outgoing mail"/>
 							<tab id="admin.mailaccount.aliases" label="Aliases+Forwards" statustext="Aliases, Forwarding, Quota, ..."/>
+							<tab id="admin.mailaccount.encryption" label="Encryption" statustext="Encryption settings"/>
 						</tabs>
 						<tabpanels>
 							<template id="admin.mailaccount.identity"/>
@@ -340,6 +368,7 @@
 							<template id="admin.mailaccount.sieve"/>
 							<template id="admin.mailaccount.smtp"/>
 							<template id="admin.mailaccount.aliases"/>
+							<template id="admin.mailaccount.encryption"/>
 						</tabpanels>
 					</tabbox>
 				</row>

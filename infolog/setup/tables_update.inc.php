@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -932,3 +932,155 @@ function infolog_upgrade16_1_002()
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '16.1.003';
 }
 
+/**
+ * Copy info_addr contents into info_from, contatinating if there is anything there
+ * already, then drop the info_addr column.
+ * @return string
+ */
+function infolog_upgrade16_1_003()
+{
+	// copy full info_addr to info_des, if length(info_from)+length(info_addr)+2 > 255 and then shorten it to fit
+	$GLOBALS['egw_setup']->db->query("UPDATE egw_infolog SET info_des=".
+		$GLOBALS['egw_setup']->db->concat('info_addr', "\n\n", 'info_des').
+		" WHERE LENGTH(info_from)+LENGTH(info_addr > 253", __LINE__, __FILE__);
+
+	$GLOBALS['egw_setup']->db->query("UPDATE egw_infolog SET info_from = CASE WHEN info_from != '' THEN SUBSTRING(".
+		$GLOBALS['egw_setup']->db->concat('info_from', "', '", 'info_addr')." FROM 1 FOR 255) ELSE info_addr END".
+		" WHERE info_addr != ''", __LINE__, __FILE__);
+
+	$GLOBALS['egw_setup']->oProc->DropColumn('egw_infolog',array(
+		'fd' => array(
+			'info_id' => array('type' => 'auto','nullable' => False,'comment' => 'id of the infolog-entry'),
+			'info_type' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => 'task','comment' => 'infolog-type e.g. task, phone, email or note'),
+			'info_from' => array('type' => 'varchar','precision' => '255','comment' => 'text of the primary link'),
+			'info_subject' => array('type' => 'varchar','precision' => '255','comment' => 'title of the infolog-entry'),
+			'info_des' => array('type' => 'longtext','comment' => 'desciption of the infolog-entry'),
+			'info_owner' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False,'comment' => 'owner of the entry, can be account or group'),
+			'info_access' => array('type' => 'ascii','precision' => '10','default' => 'public','comment' => 'public or privat'),
+			'info_cat' => array('type' => 'int','meta' => 'category','precision' => '4','nullable' => False,'default' => '0','comment' => 'category id'),
+			'info_datemodified' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'timestamp of the last mofification'),
+			'info_startdate' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'default' => '0','comment' => 'timestamp of the startdate'),
+			'info_enddate' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'default' => '0','comment' => 'timestamp of the enddate'),
+			'info_id_parent' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'id of the parent infolog'),
+			'info_planned_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'pm-field: planned time'),
+			'info_replanned_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'pm-field: replanned time'),
+			'info_used_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'pm-field: used time'),
+			'info_status' => array('type' => 'varchar','precision' => '40','default' => 'done','comment' => 'status e.g. ongoing, done ...'),
+			'info_confirm' => array('type' => 'ascii','precision' => '10','default' => 'not'),
+			'info_modifier' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'default' => '0','comment' => 'account id of the last modifier'),
+			'info_link_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'id of the primary link'),
+			'info_priority' => array('type' => 'int','precision' => '2','default' => '1','comment' => '0=Low, 1=Normal, 2=High, 3=Urgent'),
+			'pl_id' => array('type' => 'int','precision' => '4','comment' => 'pm-field: id of the pricelist'),
+			'info_price' => array('type' => 'float','precision' => '8','comment' => 'pm-field: price-field'),
+			'info_percent' => array('type' => 'int','meta' => 'percent','precision' => '2','default' => '0','comment' => 'percentage of completion'),
+			'info_datecompleted' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'timestamp of completion'),
+			'info_location' => array('type' => 'varchar','precision' => '255','comment' => 'textfield location'),
+			'info_custom_from' => array('type' => 'int','precision' => '1','comment' => 'tick-box to show infolog_from'),
+			'info_uid' => array('type' => 'ascii','precision' => '128','comment' => 'unique id of the infolog-entry'),
+			'info_cc' => array('type' => 'varchar','precision' => '255','comment' => 'textfield for email-adress to be notified via email of changes'),
+			'caldav_name' => array('type' => 'ascii','precision' => '128','comment' => 'name part of CalDAV URL, if specified by client'),
+			'info_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag, not yet used'),
+			'info_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'timestamp of the creation date'),
+			'info_creator' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'account id of the creator')
+		),
+		'pk' => array('info_id'),
+		'fk' => array(),
+		'ix' => array('caldav_name','info_owner','info_datemodified','info_id_parent'),
+		'uc' => array()
+	),'info_addr');
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '16.1.004';
+}
+
+/**
+ * Move comma-separated info_cc (CC email addresses) to egw_info_users and drop info_cc column
+ *
+ * @return string
+ */
+function infolog_upgrade16_1_004()
+{
+	// make account_id column ascii(32) to store either numeric account_id or md5 of email
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog_users', 'account_id', array(
+		'type' => 'ascii',
+		'precision' => '32',
+		'nullable' => false,
+	));
+
+	$n = 0;
+	$chunk_size = 500;
+	do
+	{
+		$i = 0;
+		foreach($GLOBALS['egw_setup']->db->select('egw_infolog', 'info_id,info_cc',
+			"info_cc <> ''", __LINE__, __FILE__,
+			$n*$chunk_size, 'ORDER BY info_id', 'infolog', $chunk_size) as $row)
+		{
+			foreach(array_unique(explode(',', $row['info_cc'])) as $email)
+			{
+				if ($email)
+				{
+					$email = trim($email);
+					$matches = null;
+					if (preg_match('/<([^>]+@[^>])>$/', $email, $matches))
+					{
+						$hash = md5(strtolower($matches[1]));
+					}
+					else
+					{
+						$hash = md5(strtolower($email));
+					}
+					$GLOBALS['egw_setup']->db->insert('egw_infolog_users', array(
+						'info_id' => $row['info_id'],
+						'account_id' => $hash,
+						'info_res_attendee' => $email,
+					), false, __LINE__, __FILE__, 'infolog');
+				}
+			}
+			++$i;
+		}
+		++$n;
+	}
+	while ($i == $chunk_size);
+
+	$GLOBALS['egw_setup']->oProc->DropColumn('egw_infolog',array(
+		'fd' => array(
+			'info_id' => array('type' => 'auto','nullable' => False,'comment' => 'id of the infolog-entry'),
+			'info_type' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => 'task','comment' => 'infolog-type e.g. task, phone, email or note'),
+			'info_from' => array('type' => 'varchar','precision' => '255','comment' => 'text of the primary link'),
+			'info_subject' => array('type' => 'varchar','precision' => '255','comment' => 'title of the infolog-entry'),
+			'info_des' => array('type' => 'longtext','comment' => 'desciption of the infolog-entry'),
+			'info_owner' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False,'comment' => 'owner of the entry, can be account or group'),
+			'info_access' => array('type' => 'ascii','precision' => '10','default' => 'public','comment' => 'public or privat'),
+			'info_cat' => array('type' => 'int','meta' => 'category','precision' => '4','nullable' => False,'default' => '0','comment' => 'category id'),
+			'info_datemodified' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'timestamp of the last mofification'),
+			'info_startdate' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'default' => '0','comment' => 'timestamp of the startdate'),
+			'info_enddate' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'default' => '0','comment' => 'timestamp of the enddate'),
+			'info_id_parent' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'id of the parent infolog'),
+			'info_planned_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'pm-field: planned time'),
+			'info_replanned_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'pm-field: replanned time'),
+			'info_used_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'pm-field: used time'),
+			'info_status' => array('type' => 'varchar','precision' => '40','default' => 'done','comment' => 'status e.g. ongoing, done ...'),
+			'info_confirm' => array('type' => 'ascii','precision' => '10','default' => 'not'),
+			'info_modifier' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'default' => '0','comment' => 'account id of the last modifier'),
+			'info_link_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'id of the primary link'),
+			'info_priority' => array('type' => 'int','precision' => '2','default' => '1','comment' => '0=Low, 1=Normal, 2=High, 3=Urgent'),
+			'pl_id' => array('type' => 'int','precision' => '4','comment' => 'pm-field: id of the pricelist'),
+			'info_price' => array('type' => 'float','precision' => '8','comment' => 'pm-field: price-field'),
+			'info_percent' => array('type' => 'int','meta' => 'percent','precision' => '2','default' => '0','comment' => 'percentage of completion'),
+			'info_datecompleted' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'timestamp of completion'),
+			'info_location' => array('type' => 'varchar','precision' => '255','comment' => 'textfield location'),
+			'info_custom_from' => array('type' => 'int','precision' => '1','comment' => 'tick-box to show infolog_from'),
+			'info_uid' => array('type' => 'ascii','precision' => '128','comment' => 'unique id of the infolog-entry'),
+			'caldav_name' => array('type' => 'ascii','precision' => '128','comment' => 'name part of CalDAV URL, if specified by client'),
+			'info_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag, not yet used'),
+			'info_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'timestamp of the creation date'),
+			'info_creator' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'account id of the creator')
+		),
+		'pk' => array('info_id'),
+		'fk' => array(),
+		'ix' => array('caldav_name','info_owner','info_datemodified','info_id_parent'),
+		'uc' => array()
+	),'info_cc');
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '17.1';
+}

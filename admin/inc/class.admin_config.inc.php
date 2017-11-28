@@ -87,7 +87,7 @@ class admin_config
 			case 'phpgwapi':
 			case '':
 				/* This keeps the admin from getting into what is a setup-only config */
-				Api\Framework::redirect_link('/admin/index.php');
+				Api\Framework::redirect_link('/admin/index.php?ajax=true');
 				break;
 			default:
 				$appname = $_appname;
@@ -110,7 +110,7 @@ class admin_config
 			/* Load hook file with functions to validate each config (one/none/all) */
 			Api\Hooks::single(array(
 				'location' => 'config_validate',
-			)+$_content['newsettings'], $appname);
+			)+(array)$_content['newsettings'], $appname);
 
 			foreach($_content['newsettings'] as $key => $config)
 			{

@@ -11,7 +11,7 @@
 				<row>
 					<radio label="Use all" id="selection" options="all"/>
 				</row>
-				<row>
+				<row disabled="@no_search">
 					<radio label="Use search results" id="selection" options="search"/>
 				</row>
 				<row disabled="@no_filter">

@@ -6,7 +6,6 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -2731,4 +2730,27 @@ function calendar_upgrade16_1_001()
 	Api\Preferences::change_preference('calendar', 'defaultresource_sel', 'resources', 'addressbook', 'default');
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '16.1.002';
+}
+
+function calendar_upgrade16_1_002()
+{
+	// Explicitly add months as showing list of events, no times
+	$change = function($attr, $old_value, $owner) {
+		if($owner == Api\Preferences::FORCED_ID) return;
+		if(is_array($old_value) && !in_array('month', $old_value))
+		{
+			$old_value[] = 'month';
+		}
+		else if (strpos($old_value, 'month') === FALSE)
+		{
+			return $old_value ? $old_value.',month' : 'month';
+		}
+	};
+	Api\Preferences::change_preference('calendar', 'use_time_grid', $change);
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '16.1.003';
+}
+
+function calendar_upgrade16_1_003()
+{
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '17.1';
 }

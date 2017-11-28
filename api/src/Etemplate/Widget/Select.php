@@ -129,6 +129,7 @@ class Select extends Etemplate\Widget
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$widget_type = $this->attrs['type'] ? $this->attrs['type'] : $this->type;
+		$multiple = $this->attrs['multiple'] || $this->getElementAttribute($form_name, 'rows') > 1;
 
 		$ok = true;
 		if (!$this->is_readonly($cname, $form_name))
@@ -147,7 +148,7 @@ class Select extends Etemplate\Widget
 				if ($child->type == 'option') $allowed[] = (string)$child->attrs['value'];
 			}
 
-			if (!$this->attrs['multiple'] || !($this->attrs['options'] > 1)) $allowed[] = '';
+			if (!$multiple ) $allowed[] = '';
 
 			foreach((array) $value as $val)
 			{
@@ -197,6 +198,10 @@ class Select extends Etemplate\Widget
 			if ($ok && $value === '' && $this->attrs['needed'])
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
+			}
+			if (!$multiple && is_array($value) && count($value) > 1)
+			{
+				$value = array_shift($value);
 			}
 			// some widgets sub-types need some post-processing
 			// ToDo: move it together with preprocessing to clientside

@@ -102,6 +102,13 @@ app.classes.filemanager = AppJS.extend(
 			this.set_readonly.apply(this, this.readonly);
 			delete this.readonly;
 		}
+
+		if (name == 'filemanager.index')
+		{
+			var new_options = this.et2.getArrayMgr('sel_options').getEntry('new');
+			var new_widget =  this.et2.getWidgetById('new');
+			new_widget.set_select_options(new_options);
+		}
 	},
 
 	/**
@@ -298,6 +305,10 @@ app.classes.filemanager = AppJS.extend(
 			widget.set_value('');
 		}
 	},
+
+
+
+
 
 	/**
 	 * Finish callback for file a file dialog, to get the overwrite / rename prompt
@@ -767,7 +778,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 			mime_dom.click();
 		}
-		else if (_action.id == 'modify' && mime && data.data.mime.match(mime.mime_odf_regex))
+		else if (mime && this.isEditable(_action, _senders))
 		{
 			egw.open_link(egw.link('/index.php', {
 				menuaction: 'filemanager.filemanager_ui.editor',
@@ -922,7 +933,7 @@ app.classes.filemanager = AppJS.extend(
 		// Target will be missing ID if directory is empty
 		// so start with the current directory
 		var parent = _action;
-		var nm = _target.manager.data.nextmatch;
+		var nm = _target ? _target.manager.data.nextmatch : null;
 		while(!nm && parent.parent)
 		{
 			parent = parent.parent;
@@ -1023,7 +1034,7 @@ app.classes.filemanager = AppJS.extend(
 
 			if (_path == path)
 			{
-				var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload'];
+				var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload', 'new'];
 				for(var i=0; i < ids.length; ++i)
 				{
 					var widget = etemplate2.getById(id).widgetContainer.getWidgetById(ids[i]);
@@ -1140,6 +1151,56 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
+	 * create a share-link for the given file or directory
+	 * @param {object} _action egw actions
+	 * @param {object} _senders selected nm row
+	 * @returns {Boolean} returns false if not successful
+	 */
+	share_link: function(_action, _senders){
+		var path = this.id2path(_senders[0].id);
+		egw.json('filemanager_ui::ajax_action', [_action.id, path],
+			this._share_link_callback, this, true, this).sendRequest();
+		return true;
+	},
+
+	/**
+	 * Share-link callback
+	 * @param {object} _data
+	 */
+	_share_link_callback: function(_data) {
+		if (_data.msg || _data.share_link) window.egw_refresh(_data.msg, this.appname);
+		console.log("_data", _data);
+
+		var copy_link_to_clipboard = null;
+
+		var copy_link_to_clipboard = function(evt){
+			var $target = jQuery(evt.target);
+			$target.select();
+			try {
+				var successful = document.execCommand('copy');
+				if (successful)
+				{
+					egw.message('Share link copied into clipboard');
+					return true;
+				}
+			}
+			catch (e) {}
+			egw.message('Failed to copy the link!');
+		};
+		jQuery("body").on("click", "[name=share_link]", copy_link_to_clipboard);
+		et2_createWidget("dialog", {
+			callback: function( button_id, value) {
+				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
+				return true;
+			},
+			title: egw.lang("%1 Share Link", _data.action ==='shareWritableLink'? "Writable": "Readonly"),
+			template: _data.template,
+			width: 450,
+			value: {content:{ "share_link": _data.share_link }}
+		});
+	},
+
+	/**
 	 * This function copies the selected file/folder entry as webdav link into clipboard
 	 *
 	 * @param {object} _action egw actions
@@ -1199,15 +1260,6 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
-	 * Method to create a new document
-	 */
-	editor_new: function () {
-		egw.open_link(egw.link('/index.php', {
-			menuaction: 'filemanager.filemanager_ui.editor'
-		}), '', egw.link_get_registry('filemanager','view_popup'));
-	},
-
-	/**
 	 * Function to check wheter selected file is editable. ATM only .odt is supported.
 	 *
 	 * @param {object} _egwAction egw action object
@@ -1221,5 +1273,19 @@ app.classes.filemanager = AppJS.extend(
 			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 
 		return data.data.mime.match(mime.mime_odf_regex)?true:false;
+	},
+
+	/**
+	 * Method to create a new document
+	 * @param {object} _action either action or node
+	 * @param {object} _selected either widget or selected row
+	 *
+	 * @return {boolean} returns true
+	 */
+	create_new: function (_action, _selected) {
+		egw.open_link(egw.link('/index.php', {
+			menuaction: 'filemanager.filemanager_ui.editor'
+		}), '', egw.link_get_registry('filemanager','view_popup'));
+		return true;
 	}
 });

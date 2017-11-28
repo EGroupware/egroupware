@@ -175,6 +175,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_widget_htmlarea.js",
 						"api/js/etemplate/et2_widget_tabs.js",
 						"api/js/etemplate/et2_widget_toolbar.js",
+						"api/js/etemplate/et2_widget_timestamper.js",
 						"api/js/etemplate/et2_widget_tree.js",
 						"api/js/etemplate/et2_widget_historylog.js",
 						"api/js/etemplate/et2_widget_hrule.js",
@@ -194,7 +195,8 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_widget_itempicker.js",
 						"api/js/etemplate/et2_widget_script.js",
 						"api/js/etemplate/et2_core_legacyJSFunctions.js",
-						"api/js/etemplate/etemplate2.js"
+						"api/js/etemplate/etemplate2.js",
+						"api/js/etemplate/vfsSelectUI.js"
 					]
 				}
 			},
@@ -288,6 +290,7 @@ module.exports = function (grunt) {
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
+						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/etemplate2.css",
 						"pixelegg/css/pixelegg.css",
 						"api/templates/default/print.css",
@@ -303,6 +306,7 @@ module.exports = function (grunt) {
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
+						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/etemplate2.css",
 						"pixelegg/css/mobile.css",
 						"api/templates/default/print.css",
@@ -386,6 +390,7 @@ module.exports = function (grunt) {
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
+						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/etemplate2.css",
 						"api/templates/default/def_tutorials.css",
 						"api/templates/default/default.css",
@@ -405,6 +410,7 @@ module.exports = function (grunt) {
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
+						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/etemplate2.css",
 						"api/templates/default/def_tutorials.css",
 						"api/templates/default/default.css",
@@ -423,6 +429,7 @@ module.exports = function (grunt) {
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
+						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/etemplate2.css",
 						"api/templates/default/def_tutorials.css",
 						"api/templates/default/default.css",

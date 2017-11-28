@@ -15,7 +15,30 @@
 (function()
 {
 	var notifymessages = {};
-	var EGW_BROWSER_NOTIFY_ALLOWED = 0;
+
+	/**
+	 * time range label today
+	 * @type Number
+	 */
+	const TIME_LABEL_TODAY = 0;
+
+	/**
+	 * time range label yesterday
+	 * @type Number
+	 */
+	const TIME_LABEL_YESTERDAY = 1;
+
+	/**
+	 * time range label this month
+	 * @type Number
+	 */
+	const TIME_LABEL_THIS_MONTH = 2;
+
+	/**
+	 * time range label last month
+	 * @type Number
+	 */
+	const TIME_LABEL_LAST_MONTH = 3;
 
 	/**
 	 * Constructor inits polling and installs handlers, polling frequence is passed via data-poll-interval of script tag
@@ -60,38 +83,153 @@
 	};
 
 	/**
+	 * This function gets created time and current time then finds out if
+	 * the time range of the event.
+	 *
+	 * @param {type} _created
+	 * @param {type} _current
+	 *
+	 * @returns {int} returns type of range
+	 */
+	notifications.prototype.getTimeLabel = function (_created, _current) {
+		var created = typeof _created == 'string'? new Date(_created): _created;
+		var current = new Date(_current.date);
+		var time_diff = (current - created) / 1000;
+		var result = '';
+		if (time_diff < current.getHours() * 3600)
+		{
+			result = TIME_LABEL_TODAY;
+		}
+		else if ((time_diff > current.getHours() * 3600) &&
+				(time_diff < (current.getHours() * 3600 + 86400)))
+		{
+			result = TIME_LABEL_YESTERDAY;
+		}
+		else if (current.getFullYear() == created.getFullYear() &&
+				(current.getMonth() - created.getMonth()) == 0 &&
+				time_diff > (current.getHours() * 3600 + 86400))
+		{
+			result = TIME_LABEL_THIS_MONTH;
+		}
+		else if (current.getFullYear() == created.getFullYear() &&
+				(current.getMonth() - created.getMonth()) == 1)
+		{
+			result = TIME_LABEL_LAST_MONTH;
+		}
+
+		return result;
+	};
+
+	/**
 	 * Display notifications window
 	 */
 	notifications.prototype.display = function() {
-		var $egwpopup,$egwpopup_list,$message,$mark,$delete,$delete_all,$mark_all;
-		$egwpopup_list = jQuery("#egwpopup_list");
+		// list container
+		var $egwpopup_list = jQuery("#egwpopup_list");
 
-		for(var show in notifymessages)
+		// Preserve already poped notifications
+		var poped = [];
+		$egwpopup_list.find('.egwpopup_expanded').each(function(index, item){
+			// store messages ids of poped messages
+			poped.push(item.id.replace('egwpopup_message_', ''));
+		});
+		// clear the list
+		$egwpopup_list.empty();
+		// define time label deviders
+		var $today = jQuery(document.createElement('div'))
+					.addClass('egwpopup_time_label')
+					.text(egw.lang('today'))
+			, $yesterday = jQuery(document.createElement('div'))
+					.addClass('egwpopup_time_label')
+					.text(egw.lang('yesterday'))
+			, $this_month = jQuery(document.createElement('div'))
+					.addClass('egwpopup_time_label')
+					.text('this month')
+			, $last_month = jQuery(document.createElement('div'))
+					.addClass('egwpopup_time_label')
+					.text('last month');
+		// reverse indexes to get the latest messages at the top
+		var indexes = Object.keys(notifymessages).reverse()
+		for(var index in indexes)
 		{
-			var message_id = 'egwpopup_message_'+show;
+			var id = indexes[index];
+			var $message, $mark, $delete, $inner_container,
+				$more_info, $top_toolbar, $open_entry, $date, $collapse;
+			var message_id = 'egwpopup_message_'+id;
+			var time_label = this.getTimeLabel(notifymessages[id]['created'], notifymessages[id]['current']);
 			if (jQuery('#'+message_id,$egwpopup_list).length > 0)
 			{
-				this.update_message_status(show, notifymessages[show]['status']);
+				this.update_message_status(id, notifymessages[id]['status']);
 				continue;
 			}
+			// set the time labels on
+			switch (time_label)
+			{
+				case TIME_LABEL_TODAY:
+					if (!$egwpopup_list.has($today).length) $today.appendTo($egwpopup_list);
+					break;
+				case TIME_LABEL_YESTERDAY:
+					if (!$egwpopup_list.has($yesterday).length) $yesterday.appendTo($egwpopup_list);
+					break;
+				case TIME_LABEL_THIS_MONTH:
+					if (!$egwpopup_list.has($this_month).length) $this_month.appendTo($egwpopup_list);
+					break;
+				case TIME_LABEL_LAST_MONTH:
+					if (!$egwpopup_list.has($last_month).length) $last_month.appendTo($egwpopup_list);
+					break;
+			}
+
+			// message container
 			$message = jQuery(document.createElement('div'))
 					.addClass('egwpopup_message')
 					.attr('id', message_id);
-			$message[0].innerHTML = notifymessages[show]['message'];
+			// wrapper for message content
+			$inner_container =  jQuery(document.createElement('div'))
+					.addClass('egwpopup_message_inner_container')
+					.appendTo($message);
+			$inner_container[0].innerHTML = notifymessages[id]['message'];
+
+			$more_info = jQuery(document.createElement('div'))
+					.addClass('egwpopup_message_more_info')
+					.text(egw.lang('More info')+'...')
+					.appendTo($message);
+			// top toolbar NODE
+			$top_toolbar = jQuery(document.createElement('div'))
+					.addClass('egwpopup_message_top_toolbar');
+			// Date indicator NODE
+			$date = jQuery(document.createElement('span'))
+					.addClass('egwpopup_message_date')
+					.prependTo($top_toolbar)
+					.text(notifymessages[id]['created']);
+			// OPEN entry button
+			$open_entry = jQuery(document.createElement('span'))
+					.addClass('egwpopup_message_open')
+					.attr('title',egw.lang('open notified entry'))
+					.click(jQuery.proxy(this.open_entry, this,[$message]))
+					.prependTo($top_toolbar);
+			// Delete button
 			$delete = jQuery(document.createElement('span'))
 					.addClass('egwpopup_delete')
 					.attr('title',egw.lang('delete this message'))
 					.click(jQuery.proxy(this.button_delete, this,[$message]))
-					.prependTo($message);
+					.prependTo($top_toolbar);
+			// Mark as read button
 			$mark = jQuery(document.createElement('span'))
 					.addClass('egwpopup_mark')
-					.prependTo($message);
-			if (notifymessages[show]['status'] != 'SEEN')
+					.prependTo($top_toolbar);
+			// Collapse button (close icon)
+			$collapse = jQuery(document.createElement('span'))
+					.addClass('egwpopup_collapse')
+					.click(jQuery.proxy(this.collapseMessage, this, [$message]))
+					.prependTo($top_toolbar);
+
+			if (notifymessages[id]['status'] != 'SEEN')
 			{
 
 				$mark.click(jQuery.proxy(this.message_seen, this,[$message]))
 					.attr('title',egw.lang('mark as read'));
 			}
+
 			// Activate links
 			jQuery('div[data-id],div[data-url]', $message).on('click',
 				function() {
@@ -105,47 +243,48 @@
 					}
 				}
 			).addClass('et2_link');
-			if (notifymessages[show]['data'] && notifymessages[show]['data']['actions'])
+			if (notifymessages[id]['data'] && notifymessages[id]['data']['actions'])
 			{
 				var $actions_container = jQuery(document.createElement('div')).addClass('egwpopup_actions_container');
-				for(var action in notifymessages[show].data.actions)
+				for(var action in notifymessages[id].data.actions)
 				{
-					var func = new Function(notifymessages[show].data.actions[action].onExecute);
+					var func = new Function(notifymessages[id].data.actions[action].onExecute);
 					jQuery(document.createElement('button'))
 							.addClass('et2_button')
-							.css({'background-image':'url('+egw.image(notifymessages[show].data.actions[action].icon,notifymessages[show].data.app)+')'})
-							.text(notifymessages[show].data.actions[action].caption)
+							.css({'background-image':'url('+egw.image(notifymessages[id].data.actions[action].icon,notifymessages[id].data.app)+')'})
+							.text(notifymessages[id].data.actions[action].caption)
 							.click(jQuery.proxy(func,this))
 							.prependTo($actions_container);
 				}
-				$actions_container.prependTo($message);
+				$actions_container.appendTo($message);
 			}
+			$top_toolbar.prependTo($message);
 			$egwpopup_list.append($message);
 			// bind click handler after the message container is attached
 			$message.click(jQuery.proxy(this.clickOnMessage, this,[$message]));
-			this.update_message_status(show, notifymessages[show]['status']);
+			this.update_message_status(id, notifymessages[id]['status']);
+		}
+
+		if (poped.length > 0)
+		{
+			for (var key in poped)
+			{
+				// pop again those where opened before refresh
+				$egwpopup_list.find('#egwpopup_message_'+poped[key]).trigger('click');
+			}
 		}
 		this.counterUpdate();
-		if(window.webkitNotifications && window.webkitNotifications.checkPermission() != EGW_BROWSER_NOTIFY_ALLOWED &&
-			jQuery('#desktop_perms').length == 0)
-		{
-			var label = 'Desktop notifications';
-			try {
-				if(egw) label = egw.lang(label);
-			} catch(err) {}
-			var desktop_button = jQuery('<button id="desktop_perms">' + label + '</button>')
-				.click(function() {
-					window.webkitNotifications.requestPermission();
-					jQuery(this).hide();
-				});
-			desktop_button.appendTo(jQuery(egwpopup_ok_button).parent());
-		}
 	};
 
-	notifications.prototype.clickOnMessage = function (_node, _event){
+	/**
+	 * Opens the relavant entry from clicked message
+	 *
+	 * @param {jquery object} _node
+	 * @param {object} _event
+	 */
+	notifications.prototype.open_entry = function (_node, _event){
 		_event.stopPropagation();
 		this.message_seen(_node, _event);
-		if (_node[0][0] !=_event.target) return;
 		var egwpopup_message = _node[0];
 		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
 		if (notifymessages[id]['data'])
@@ -159,6 +298,41 @@
 				egw.open_link(notifymessages[id]['data']['url'],'_blank',notifymessages[id]['data']['popup']);
 			}
 		}
+	};
+
+	/**
+	 * Reposition the expanded message back in the list & removes the clone node
+	 * @param {jquery object} _node
+	 */
+	notifications.prototype.collapseMessage = function (_node, _event){
+		_event.stopPropagation();
+		var cloned = _node[0].prev();
+		if (cloned.length > 0 && cloned[0].id == _node[0].attr('id')+'_expanded')
+			cloned.remove();
+		_node[0].removeClass('egwpopup_expanded');
+		_node[0].css('z-index', 0);
+	};
+
+	/**
+	 * Expand a clicked message into bigger view
+	 * @param {jquery object} _node
+	 * @param {object} _event
+	 *
+	 * @return undefined
+	 */
+	notifications.prototype.clickOnMessage = function (_node, _event){
+		// Do not run the click handler if it's been already expanded
+		if (_node[0].hasClass('egwpopup_expanded')) return;
+		this.message_seen(_node, _event);
+		var $node = jQuery(_node[0][0].cloneNode());
+		if ($node)
+		{
+			$node.attr('id', _node[0].attr('id')+'_expanded')
+					.addClass('egwpopup_message_clone')
+					.insertBefore(_node[0]);
+		}
+		var zindex = jQuery('.egwpopup_expanded').length;
+		_node[0].addClass('egwpopup_expanded').css('z-index', zindex++);
 	};
 
 	/**
@@ -224,7 +398,7 @@
 	notifications.prototype.delete_all = function () {
 		if (!notifymessages || Object.entries(notifymessages).length == 0) return false;
 		egw.json("notifications.notifications_ajax.delete_message", [Object.keys(notifymessages)]).sendRequest(true);
-		delete(notifymessages);
+		notifymessages = {};
 		jQuery("#egwpopup_list").empty();
 		this.counterUpdate();
 	};
@@ -239,6 +413,8 @@
 		var request = egw.json("notifications.notifications_ajax.delete_message", [id]);
 		request.sendRequest(true);
 		delete (notifymessages[id]);
+		// try to close the dialog if expanded before hidding it
+		this.collapseMessage(_node, _event);
 		egwpopup_message.hide();
 		this.bell("inactive");
 		this.counterUpdate();
@@ -250,17 +426,22 @@
 	 * @param _id
 	 * @param _message
 	 * @param _browser_notify
+	 * @param {string} _status
+	 * @param {string} _created
+	 *
+	 * @return undefined
 	 */
-	notifications.prototype.append = function(_id, _message, _browser_notify, _status) {
-		if(!this.check_browser_notify() || typeof notifymessages[_id] != 'undefined')
-		{
-			notifymessages[_id] = {message:_message, status:_status};
-			return;
-		}
-
+	notifications.prototype.append = function(_id, _message, _browser_notify,
+	_status, _created, _current) {
 		var data = this.getData(_message);
 		// Prevent the same thing popping up multiple times
-		notifymessages[_id] = {message:_message, data: data, status: _status};
+		notifymessages[_id] = {
+			message:_message,
+			data: data,
+			status: _status,
+			created: _created,
+			current: _current
+		};
 		// Notification API
 		if(_browser_notify && !_status)
 		{
@@ -365,7 +546,15 @@
 		// toggle notifications bar
 		jQuery('.egwpopup_toggle').click(function(){window.app.notifications.toggle();});
 		jQuery('#egwpopup_fw_notifications').click(function(){window.app.notifications.toggle();});
-		jQuery(".egwpopup_deleteall", '#egwpopup').click(function(){window.app.notifications.delete_all()});
+		jQuery(".egwpopup_deleteall", '#egwpopup').click(function(){
+			et2_dialog.show_dialog( function(_button){
+					if (_button == 2) window.app.notifications.delete_all();
+				},
+				egw.lang('Are you sure you want to delete all notifications?'),
+				egw.lang('Delete notifications'),
+				null, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw
+			);
+		});
 		jQuery(".egwpopup_seenall", '#egwpopup').click(function(){window.app.notifications.mark_all_seen()});
 	});
 })();

@@ -160,7 +160,7 @@ class Sharing
 		self::$db = $GLOBALS['egw']->db;
 
 		$token = static::get_token();
-		
+
 		// are we called from header include, because session did not verify
 		// --> check if it verifys for our token
 		if ($token && !$keep_session)
@@ -254,6 +254,8 @@ class Sharing
 		}
 		Vfs::$is_root = false;
 		Vfs::clearstatcache();
+		// clear link-cache and load link registry without permission check to access /apps
+		Api\Link::init_static(true);
 
 		// update accessed timestamp
 		self::$db->update(self::TABLE, array(
@@ -284,6 +286,12 @@ class Sharing
 			$GLOBALS['egw_info']['user']['apps'] = array(
 				'filemanager' => $GLOBALS['egw_info']['apps']['filemanager']
 			);
+			// check if sharee has Collabora run rights --> give is to share too
+			$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
+			if (!empty($apps['collabora']))
+			{
+				$GLOBALS['egw_info']['user']['apps']['collabora'] = $GLOBALS['egw_info']['apps']['collabora'];
+			}
 		}
 		// we have a session we want to keep, but share owner is different from current user and we dont need filemanager UI
 		// --> we dont need session and close it, to not modifiy it
@@ -335,6 +343,15 @@ class Sharing
 
 			return $GLOBALS['egw']->sharing->ServeRequest();
 		}
+
+		// No extended ACL for readonly shares, disable eacl by setting session cache
+		if(!$this->share['share_writable'])
+		{
+			Api\Cache::setSession(Api\Vfs\Sqlfs\StreamWrapper::EACL_APPNAME, 'extended_acl', array(
+				'/' => 1,
+				$this->share['share_path'] => 1
+			));
+		}
 		// use pure WebDAV for everything but GET requests to directories
 		if (!$this->use_filemanager())
 		{
@@ -371,7 +388,7 @@ class Sharing
 				base64_encode(openssl_random_pseudo_bytes(3*self::TOKEN_LENGTH/4)) :
 				Api\Auth::randomstring(self::TOKEN_LENGTH);
 			// base64 can contain chars not allowed in our vfs-urls eg. / or #
-		} while ($token != Vfs::encodePathComponent($token));
+		} while ($token != urlencode($token));
 
 		return $token;
 	}
@@ -410,8 +427,11 @@ class Sharing
 			{
 				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
 			}
-			$vfs_path = Vfs::parse_url($path, PHP_URL_PATH);
-			$exists = Vfs::file_exists($vfs_path) && Vfs::is_readable($vfs_path);
+
+			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
+			{
+				$vfs_path = Vfs::parse_url($stat['url'], PHP_URL_PATH);
+			}
 		}
 		// check if file exists and is readable
 		if (!$exists)
@@ -422,7 +442,7 @@ class Sharing
 		if (($mode != self::LINK || isset($path2tmp[$path])) &&
 			($share = self::$db->select(self::TABLE, '*', $extra+array(
 				'share_path' => $mode == 'link' ? $path2tmp[$path] : $vfs_path,
-				'share_owner' => $GLOBALS['egw_info']['user']['account_id'],
+				'share_owner' => Vfs::$user,
 				'share_expires' => null,
 				'share_passwd'  => null,
 				'share_writable'=> false,
@@ -498,8 +518,8 @@ class Sharing
 				try {
 					self::$db->insert(self::TABLE, $share = array(
 						'share_token' => self::token(),
-						'share_path' => Vfs::parse_url($path, PHP_URL_PATH),
-						'share_owner' => $GLOBALS['egw_info']['user']['account_id'],
+						'share_path' => $vfs_path,
+						'share_owner' => Vfs::$user,
 						'share_with' => implode(',', (array)$recipients),
 						'share_created' => time(),
 					)+$extra, false, __LINE__, __FILE__);
@@ -679,6 +699,39 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 		static function get_home_dir()
 		{
 			return $GLOBALS['egw']->sharing->get_root();
+		}
+
+		/**
+		 * Context menu
+		 *
+		 * @return array
+		 */
+		public static function get_actions()
+		{
+			$actions = parent::get_actions();
+			$group = 1;
+			if(Vfs::is_writable($GLOBALS['egw']->sharing->get_root()))
+			{
+				return $actions;
+			}
+			$actions+= array(
+				'egw_copy' => array(
+					'enabled' => false,
+					'group' => $group + 0.5,
+					'hideOnDisabled' => true
+				),
+				'egw_copy_add' => array(
+					'enabled' => false,
+					'group' => $group + 0.5,
+					'hideOnDisabled' => true
+				),
+				'paste' => array(
+					'enabled' => false,
+					'group' => $group + 0.5,
+					'hideOnDisabled' => true
+				),
+			);
+			return $actions;
 		}
 	}
 }

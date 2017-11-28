@@ -6,7 +6,7 @@
 		<grid width="100%" class="prefTable egwGridView_grid">
 			<columns>
 				<column width="50%"/>
-				<column/>
+				<column width="50%"/>
 			</columns>
 			<rows>
 				<row class="prefRow">
@@ -35,7 +35,7 @@
 						<button  id="button[apply]"/>
 						<button  id="button[cancel]" onclick="window.close();"/>
 					</hbox>
-					
+
 				</row>
 				<row>
 					<hbox width="100%">
@@ -59,8 +59,8 @@
 				</row>
 			</rows>
 		</grid>
-				
-		
-		
+
+
+
 	</template>
 </overlay>

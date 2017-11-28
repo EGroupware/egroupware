@@ -153,6 +153,8 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 			.addClass("ui-widget ui-corner-right").removeClass("ui-corner-all")
 			.attr("type", "button")
 			.click(function() {
+				// ignore click on readonly button
+				if (self.options.readonly) return false;
 				// Clicking it again hides menu
 				if(self.menu.is(":visible"))
 				{
@@ -277,18 +279,15 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 	 * @returns {Boolean}
 	 */
 	click: function(_ev) {
+		// ignore click on readonly button
+		if (this.options.readonly) return false;
+
 		this.clicked = true;
 
 		if (!this._super.apply(this, arguments))
 		{
 			this.clicked = false;
 			return false;
-		}
-
-		// Submit the form
-		if (this._type != "buttononly")
-		{
-			this.getInstanceManager().submit(this); //TODO: this only needs to be passed if it's in a datagrid
 		}
 		this.clicked = false;
 		return true;
@@ -304,7 +303,7 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 
 		// Move the parent's handler to the button, or we can't tell the difference between the clicks
 		jQuery(this.node).unbind("click.et2_baseWidget");
-		this.button.bind("click.et2_baseWidget", this, function(e) {
+		this.button.off().bind("click.et2_baseWidget", this, function(e) {
 			return e.data.click.call(e.data, this);
 		});
 	},
@@ -357,7 +356,7 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 					if(item && options[key].icon)
 					{
 						// we supply a applicable class for item images
-						jQuery('a',item).prepend('<img class="et2_button_icon" src="' + options[key].icon +'"/>');
+						jQuery('a',item).prepend('<img class="et2_button_icon" src="' + egw.image(options[key].icon) +'"/>');
 					}
 				}
 			}
@@ -395,6 +394,28 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 
 	getValue: function() {
 		return this.value;
+	},
+
+	/**
+	 * Set options.readonly
+	 *
+	 * @param {boolean} _ro
+	 */
+	set_readonly: function(_ro)
+	{
+		if (_ro != this.options.readonly)
+		{
+			this.options.readonly = _ro;
+
+			// don't make readonly dropdown buttons clickable
+			if (this.buttons)
+			{
+				this.buttons.find('button')
+					.toggleClass('et2_clickable', !_ro)
+					.toggleClass('et2_button_ro', _ro)
+					.css('cursor', _ro ? 'default' : 'pointer');
+			}
+		}
 	}
 });}).call(this);
 et2_register_widget(et2_dropdown_button, ["dropdown_button"]);

@@ -180,7 +180,7 @@ class calendar_bo
 	protected static $cached_event = array();
 	protected static $cached_event_date_format = false;
 	protected static $cached_event_date = 0;
-	
+
 	/**
 	 * Instance of the socal class
 	 *
@@ -377,7 +377,7 @@ class calendar_bo
 	{
 		$contact_list = array();
 		$contacts = new Api\Contacts();
-		if($contacts->check_list((int)substr($id,1), ACL::READ))
+		if($contacts->check_list((int)substr($id,1), ACL::READ) || (int)substr($id,1) < 0)
 		{
 			$options = array('list' => substr($id,1));
 			$lists = $contacts->search('',true,'','','',false,'AND',false,$options);
@@ -555,6 +555,8 @@ class calendar_bo
 	 *		otherwise the original recuring event (with the first start- + enddate) is returned
 	 *  num_rows int number of entries to return, default or if 0, max_entries from the prefs
 	 *  order column-names plus optional DESC|ASC separted by comma
+	 *  private_allowed array Array of user IDs that are allowed when clearing private
+	 *		info, defaults to users
 	 *  ignore_acl if set and true no check_perms for a general Acl::READ grants is performed
 	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
 	 *  cols string|array columns to select, if set an iterator will be returned
@@ -664,7 +666,7 @@ class calendar_bo
 			}
 			if (!$params['ignore_acl'] && ($is_private || (!$event['public'] && $filter == 'hideprivate')))
 			{
-				$this->clear_private_infos($events[$id],$users);
+				$this->clear_private_infos($events[$id],$params['private_allowed'] ? $params['private_allowed'] : $users);
 			}
 		}
 
@@ -897,6 +899,7 @@ class calendar_bo
 		if (!$start) $start = $event['start'];
 
 		$events = array();
+
 		$this->insert_all_recurrences($event,$start,$this->date2usertime($this->config['horizont']),$events);
 
 		$exceptions = array();
@@ -1122,6 +1125,7 @@ class calendar_bo
 		$event['recur_enddate'] = is_a($event['recur_enddate'],'DateTime') ?
 				$event['recur_enddate'] :
 				new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
+
 		// unset exceptions, as we need to add them as recurrence too, but marked as exception
 		unset($event['recur_exception']);
 		// loop over all recurrences and insert them, if they are after $start

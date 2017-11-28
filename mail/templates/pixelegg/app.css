@@ -890,22 +890,32 @@ div.mailComposeHeaderSection > table {
   margin-right: 0;
 }
 div.smime_cert_notverified {
-  border-top: 4px solid lightgreen !important;
+  border-top: 4px solid #8dff95 !important;
 }
 img.smime_cert_notverified {
-  background: lightgreen;
+  background: #8dff95;
 }
 div.smime_cert_verified {
-  border-top: 4px solid green !important;
+  border-top: 4px solid #1ab82c !important;
+}
+div.smime_cert_unknownemail {
+  border-top: 4px solid #a28cff !important;
 }
 img.smime_cert_verified {
-  background: green;
+  background: #1ab82c;
 }
 div.smime_cert_notvalid {
-  border-top: 4px solid red !important;
+  border-top: 4px solid #e90052 !important;
 }
 img.smime_cert_notvalid {
-  background: red;
+  background: #e90052;
+}
+img.smime_cert_unknownemail {
+  background: #a28cff;
+}
+.smimeIcons {
+  position: absolute;
+  right: 10px;
 }
 #popupMainDiv {
   padding: 5px;
@@ -2325,6 +2335,7 @@ div.mailPreviewHeaders div.mail_extraEmails {
   max-width: 50%;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
   width: 24px;

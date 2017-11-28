@@ -1497,7 +1497,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			{
 				self::$extended_acl = null;	// force new read of eACL, as there could be multiple eACL for that path
 			}
-			$ret = $GLOBALS['egw']->acl->delete_repository(self::EACL_APPNAME,$fs_id,(int)$owner);
+			$ret = $GLOBALS['egw']->acl->delete_repository(self::EACL_APPNAME, $fs_id, (int)$owner, false);
 		}
 		else
 		{
@@ -1507,7 +1507,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 				// set rights for this class, if applicable
 				self::$extended_acl[$path] |= $rights;
 			}
-			$ret = $GLOBALS['egw']->acl->add_repository(self::EACL_APPNAME,$fs_id,$owner,$rights);
+			$ret = $GLOBALS['egw']->acl->add_repository(self::EACL_APPNAME, $fs_id, $owner, $rights, false);
 		}
 		if ($ret)
 		{
@@ -1553,6 +1553,36 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		});
 		//error_log(__METHOD__."('$_path') returning ".array2string($eacls));
 		return $eacls;
+	}
+
+	/**
+	 * Get the lowest file id (fs_id) for a given path
+	 *
+	 * @param string $path
+	 * @return integer
+	 */
+	static function get_minimum_file_id($path)
+	{
+		$vfs = new self();
+		$stat = $vfs->url_stat($path,0);
+		$fs_id = (int)$stat['ino'];
+
+		$query = 'SELECT MIN(B.fs_id)
+FROM '.self::TABLE.' as A
+JOIN '.self::TABLE.' AS B ON
+	A.fs_name = B.fs_name AND A.fs_dir = B.fs_dir AND A.fs_active = 1 && B.fs_active = 0
+WHERE A.fs_id=?
+GROUP BY A.fs_id';
+		if (self::LOG_LEVEL > 2)
+		{
+			$query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
+		}
+		$stmt = self::$pdo->prepare($query);
+
+		$stmt->execute(array($fs_id));
+		$min = $stmt->fetchColumn();
+
+		return $min ? $min : $fs_id;
 	}
 
 	/**

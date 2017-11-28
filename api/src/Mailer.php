@@ -23,7 +23,9 @@ use Horde_Text_Flowed;
 use Horde_Stream;
 use Horde_Stream_Wrapper_Combine;
 use Horde_Mime_Headers;
-
+use Horde_Mime_Headers_UserAgent;
+use Horde_Mime_Headers_Date;
+use Horde_Mime_Translation;
 /**
  * Sending mail via Horde_Mime_Mail
  *
@@ -494,11 +496,22 @@ class Mailer extends Horde_Mime_Mail
      * @param boolean $flowed =null send message in flowed text format,
 	 *		default null used flowed by default for everything but multipart/encrypted,
 	 *		unless disabled in site configuration ("disable_rfc3676_flowed")
-	 *
+	 * * @param array $opts                   Additional options:
+     * <pre>
+     *   - broken_rfc2231: (boolean) Attempt to work around non-RFC
+     *                     2231-compliant MUAs by generating both a RFC
+     *                     2047-like parameter name and also the correct RFC
+     *                     2231 parameter (@since 2.5.0).
+     *                     DEFAULT: false
+     *   - encode: (integer) The encoding to use. A mask of self::ENCODE_*
+     *             values.
+     *             DEFAULT: Auto-determined based on transport driver.
+     * </pre>
+     *
 	 * @throws Exception\NotFound for no smtp account available
 	 * @throws Horde_Mime_Exception
 	 */
-	function send(Horde_Mail_Transport $transport=null, $resend=true, $flowed=null)
+	function send(Horde_Mail_Transport $transport=null, $resend=true, $flowed=null, array $opts = array())
 	{
 		unset($resend);	// parameter is not used, but required by function signature
 
@@ -509,6 +522,9 @@ class Mailer extends Horde_Mime_Mail
 			$this->addHeader('Message-ID', $message_id);
 		}
 		$body_sha1 = null;	// skip sha1, it requires whole mail in memory, which we traing to avoid now
+
+		// Smime sign needs to be 7bit encoded to avoid any changes during the transportation
+		if ($this->_base && $this->_base->getMetadata('X-EGroupware-Smime-signed')) $opts['encode'] = Horde_Mime_Part::ENCODE_7BIT;
 
 		$mail_id = Hooks::process(array(
 			'location' => 'send_mail',
@@ -581,7 +597,7 @@ class Mailer extends Horde_Mime_Mail
 				$this->_body = $body;
 				$flowed = false;
 			}
-			parent::send($transport ? $transport : $this->account->smtpTransport(), true,	$flowed);	// true: keep Message-ID
+			$this->_send($transport ? $transport : $this->account->smtpTransport(), true, $flowed, $opts);	// true: keep Message-ID
 		}
 		catch (\Exception $e) {
 			// in case of errors/exceptions call hook again with previous returned mail_id and error-message to log
@@ -628,6 +644,108 @@ class Mailer extends Horde_Mime_Mail
 		if (isset($e)) throw $e;
 	}
 
+	/**
+     * Sends this message.
+     *
+     * @param Mail $mailer     A Mail object.
+     * @param boolean $resend  If true, the message id and date are re-used;
+     *                         If false, they will be updated.
+     * @param boolean $flowed  Send message in flowed text format.
+	 * * @param array $opts                   Additional options:
+     * <pre>
+     *   - broken_rfc2231: (boolean) Attempt to work around non-RFC
+     *                     2231-compliant MUAs by generating both a RFC
+     *                     2047-like parameter name and also the correct RFC
+     *                     2231 parameter (@since 2.5.0).
+     *                     DEFAULT: false
+     *   - encode: (integer) The encoding to use. A mask of self::ENCODE_*
+     *             values.
+     *             DEFAULT: Auto-determined based on transport driver.
+     * </pre>
+     *
+     *
+     * @throws Horde_Mime_Exception
+     */
+    public function _send($mailer, $resend = false, $flowed = true, array $opts = array())
+    {
+		/* Add mandatory headers if missing. */
+		if (!$resend || !isset($this->_headers['Message-ID'])) {
+			$this->_headers->addHeaderOb(
+                Horde_Mime_Headers_MessageId::create()
+			);
+		}
+		if (!isset($this->_headers['User-Agent'])) {
+			$this->_headers->addHeaderOb(
+                Horde_Mime_Headers_UserAgent::create()
+			);
+		}
+		if (!$resend || !isset($this->_headers['Date'])) {
+            $this->_headers->addHeaderOb(Horde_Mime_Headers_Date::create());
+		}
+
+		if (isset($this->_base)) {
+			$basepart = $this->_base;
+		} else {
+			/* Send in flowed format. */
+			if ($flowed && !empty($this->_body)) {
+				$flowed = new Horde_Text_Flowed($this->_body->getContents(), $this->_body->getCharset());
+				$flowed->setDelSp(true);
+				$this->_body->setContentTypeParameter('format', 'flowed');
+				$this->_body->setContentTypeParameter('DelSp', 'Yes');
+				$this->_body->setContents($flowed->toFlowed());
+			}
+
+			/* Build mime message. */
+			$body = new Horde_Mime_Part();
+			if (!empty($this->_body) && !empty($this->_htmlBody)) {
+				$body->setType('multipart/alternative');
+                $this->_body->setDescription(Horde_Mime_Translation::t("Plaintext Version of Message"));
+				$body[] = $this->_body;
+                $this->_htmlBody->setDescription(Horde_Mime_Translation::t("HTML Version of Message"));
+				$body[] = $this->_htmlBody;
+			} elseif (!empty($this->_htmlBody)) {
+				$body = $this->_htmlBody;
+			} elseif (!empty($this->_body)) {
+				$body = $this->_body;
+			}
+			if (count($this->_parts)) {
+				$basepart = new Horde_Mime_Part();
+				$basepart->setType('multipart/mixed');
+				$basepart->isBasePart(true);
+				if ($body) {
+					$basepart[] = $body;
+				}
+				foreach ($this->_parts as $mime_part) {
+					$basepart[] = $mime_part;
+				}
+			} else {
+				$basepart = $body;
+				$basepart->isBasePart(true);
+			}
+		}
+		$basepart->setHeaderCharset($this->_charset);
+
+		/* Build recipients. */
+		$recipients = clone $this->_recipients;
+		foreach (array('to', 'cc') as $header) {
+			if ($h = $this->_headers[$header]) {
+				$recipients->add($h->getAddressList());
+			}
+		}
+		if ($this->_bcc) {
+			$recipients->add($this->_bcc);
+		}
+
+		/* Trick Horde_Mime_Part into re-generating the message headers. */
+		$this->_headers->removeHeader('MIME-Version');
+
+		/* Send message. */
+		$recipients->unique();
+		$basepart->send($recipients->writeAddress(), $this->_headers, $mailer, $opts);
+
+		/* Remember the basepart */
+		$this->_base = $basepart;
+    }
 
 	/**
 	 * Reset all Settings to send multiple Messages
@@ -671,12 +789,16 @@ class Mailer extends Horde_Mime_Mail
 		// code copied from Horde_Mime_Mail::getRaw(), as there is no way to inject charset in
 		// _headers->toString(), which is required to encode headers containing non-ascii chars correct
         if ($stream) {
+			// Smime sign needs to be 7bit encoded to avoid any changes
+			$encode = $this->_base && $this->_base->getMetadata('X-EGroupware-Smime-signed')?
+					Horde_Mime_Part::ENCODE_7BIT :
+					(Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY);
             $hdr = new Horde_Stream();
             $hdr->add($this->_headers->toString(array('charset' => 'utf-8', 'canonical' => true)), true);
             return Horde_Stream_Wrapper_Combine::getStream(
                 array($hdr->stream,
                       $this->getBasePart()->toString(
-                        array('stream' => true, 'canonical' => true, 'encode' => Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY))
+                        array('stream' => true, 'canonical' => true, 'encode' => $encode))
                 )
             );
         }
@@ -701,7 +823,7 @@ class Mailer extends Horde_Mime_Mail
 		$base = Horde_Mime_Part::parseMessage($message);
 		foreach($headers->toArray(array('nowrap' => true)) as $header => $value)
 		{
-			foreach((array)$value as $n => $val)
+			foreach((array)$value as $val)
 			{
 				switch($header)
 				{
@@ -999,7 +1121,7 @@ class Mailer extends Horde_Mime_Mail
 	 *				recipientsCerts	=> // Recipients Certificates
 	 *			)
 	 * @return boolean returns true if successful and false if passphrase required
-	 * @throws Api\Exception\WrongUserinput if no certificate found
+	 * @throws Exception\WrongUserinput if no certificate found
 	 */
 	function smimeEncrypt($type, $params)
 	{
@@ -1018,16 +1140,16 @@ class Mailer extends Horde_Mime_Mail
 		//horde setHeaderOb would not replace it with correct one if
 		//there's something set.
 		$this->removeHeader('content-type');
-		
+
 		$smime = new Mail\Smime();
 
 		if ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT)
 		{
 			if (!isset($params['senderPubKey']))
 			{
-				throw new Api\Exception\WrongUserinput('no certificate found to sign the messase');
+				throw new Exception\WrongUserinput('no certificate found to sign the messase');
 			}
-
+			if (Cache::getSession('mail', 'smime_passphrase')) $params['passphrase'] = Cache::getSession('mail', 'smime_passphrase');
 			if (!$smime->verifyPassphrase($params['senderPrivKey'], $params['passphrase']))
 			{
 				return false;
@@ -1036,7 +1158,7 @@ class Mailer extends Horde_Mime_Mail
 
 		if (!isset($params['recipientsCerts']) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
 		{
-			throw new Api\Exception\WrongUserinput('no certificate found from the recipients to sign/encrypt the messase');
+			throw new Exception\WrongUserinput('no certificate found from the recipients to sign/encrypt the messase');
 		}
 
 		// parameters to pass on for sign mime part
@@ -1046,17 +1168,21 @@ class Mailer extends Horde_Mime_Mail
 			'privkey'	=> $params['senderPrivKey'],
 			'passphrase'=> $params['passphrase'],
 			'sigtype'	=> 'detach',
-			'certs'		=> ''
+			'certs'		=> $params['extracerts']
 		);
 		// parameters to pass on for encrypt mime part
 		$encrypt_params = array(
 			'type'		=> 'message',
-			'pubkey'	=> $params['recipientsCerts']
+			'pubkey'	=> array_merge(
+				$params['recipientsCerts'],
+				array($this->account->acc_smime_username => $params['senderPubKey'])
+			)
 		);
 		switch ($type)
 		{
 			case Mail\Smime::TYPE_SIGN:
 				$this->_base = $smime->signMIMEPart($this->_base, $sign_params);
+				$this->_base->setMetadata('X-EGroupware-Smime-signed', true);
 				break;
 			case Mail\Smime::TYPE_ENCRYPT:
 				$this->_base = $smime->encryptMIMEPart($this->_base, $encrypt_params);

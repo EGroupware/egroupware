@@ -1997,7 +1997,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 	},
 
 	getDOMNode: function(_sender) {
-		if (_sender == this)
+		if (_sender == this || typeof _sender === 'undefined')
 		{
 			return this.div[0];
 		}
@@ -2487,7 +2487,12 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 		// Add category
 		if(!settings.no_cat) {
 			if (typeof settings.cat_id_label == 'undefined') settings.cat_id_label = '';
-			this.category = this._build_select('cat_id', settings.cat_is_select ? 'select' : 'select-cat', settings.cat_id, settings.cat_is_select !== true);
+			this.category = this._build_select('cat_id', settings.cat_is_select ?
+			'select' : 'select-cat', settings.cat_id, settings.cat_is_select !== true, {
+				multiple: false,
+				tags: true,
+				class: "select-cat"
+			});
 		}
 
 		// Filter 1
@@ -2497,7 +2502,12 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 
 		// Filter 2
 		if(!settings.no_filter2) {
-			this.filter2 = this._build_select('filter2', 'select', settings.filter2, settings.filter2_no_lang);
+			this.filter2 = this._build_select('filter2', 'select', settings.filter2,
+			settings.filter2_no_lang, {
+				multiple: false,
+				tags: settings.filter2_tags,
+				class: "select-cat"
+			});
 		}
 
 		// Other stuff
@@ -2639,14 +2649,15 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 	 * @param {string} type
 	 * @param {string} value
 	 * @param {string} lang
+	 * @param {object} extra
 	 */
-	_build_select: function(name, type, value, lang) {
-		var widget_options = {
+	_build_select: function(name, type, value, lang, extra) {
+		var widget_options = jQuery.extend({
 			"id": name,
 			"label": this.nextmatch.options.settings[name+"_label"],
 			"no_lang": lang,
 			"disabled": this.nextmatch.options['no_'+name]
-		};
+		}, extra);
 
 		// Set select options
 		// Check in content for options-<name>
@@ -2680,14 +2691,6 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 			{
 				this.egw().debug('warn', 'Nextmatch filter options in a weird place - "%s".  Should be in sel_options[%s].',row_id,name);
 			}
-		}
-		if (name == 'cat_id')
-		{
-			jQuery.extend(widget_options, {
-				multiple: false,
-				tags: true,
-				class: "select-cat"
-			});
 		}
 		// Legacy: Add in 'All' option for cat_id, if not provided.
 		if(name == 'cat_id' && options != null && (typeof options[''] == 'undefined' && typeof options[0] != 'undefined' && options[0].value != ''))

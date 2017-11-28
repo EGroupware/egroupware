@@ -123,6 +123,7 @@ class mail_compose
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose_submitAction',
 				'hint' => 'Send',
+				'shortcut' => array('ctrl' => true, 'keyCode' => 83, 'caption' => 'Ctrl + S'),
 				'toolbarDefault' => true
 			),
 			'pgp' => array(
@@ -215,13 +216,13 @@ class mail_compose
 			),
 
 		);
-		$credentials = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-		if ($credentials['acc_smime_password'])
+		$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
+		if ($acc_smime['acc_smime_password'])
 		{
 			$actions = array_merge($actions, array(
 				'smime_sign' => array (
 					'caption' => 'SMIME Sign',
-					'icon' => 'smimeSignature',
+					'icon' => 'smime_sign',
 					'group' => ++$group,
 					'onExecute' => 'javaScript:app.mail.compose_setToggle',
 					'checkbox' => true,
@@ -229,7 +230,7 @@ class mail_compose
 				),
 				'smime_encrypt' => array (
 					'caption' => 'SMIME Encryption',
-					'icon' => 'smimeEncryption',
+					'icon' => 'smime_encrypt',
 					'group' => ++$group,
 					'onExecute' => 'javaScript:app.mail.compose_setToggle',
 					'checkbox' => true,
@@ -324,6 +325,16 @@ class mail_compose
 				// Additionally may be changed
 				$_focusElement, $suppressSigOnTop, $isReply
 			));
+			if (Mail\Smime::get_acc_smime($this->mail_bo->profileID))
+			{
+				if (isset($_GET['smime_type'])) $smime_type = $_GET['smime_type'];
+				// pre set smime_sign and smime_encrypt actions if the original
+				// message is smime.
+				$_content['smime_sign'] = $smime_type == (Mail\Smime::TYPE_SIGN ||
+					$smime_type == Mail\Smime::TYPE_SIGN_ENCRYPT) ? 'on' : 'off';
+				$_content['smime_encrypt'] = ($smime_type == Mail\Smime::TYPE_ENCRYPT) ? 'on' : 'off';
+			}
+
 			$actionToProcess = $_GET['from'];
 			unset($_GET['from']);
 			unset($_GET['reply_id']);
@@ -540,7 +551,7 @@ class mail_compose
 					// we need a message only, when account ids (composeProfile vs. activeProfile) differ
 					$response->call('opener.egw_message',lang('Message send successfully.'));
 				}
-				elseif ($activeProfile == $composeProfile && ($workingFolder==$activeFolder && $mode != 'compose') || ($this->mail_bo->isSentFolder($workingFolder)||$this->mail_bo->isDraftFolder($workingFolder)))
+				elseif ($activeProfile == $composeProfile && ($workingFolder==$activeFolder['mailbox'] && $mode != 'compose') || ($this->mail_bo->isSentFolder($workingFolder)||$this->mail_bo->isDraftFolder($workingFolder)))
 				{
 					if ($this->mail_bo->isSentFolder($workingFolder)||$this->mail_bo->isDraftFolder($workingFolder))
 					{
@@ -1148,7 +1159,9 @@ class mail_compose
 		}
 		if ((isset($this->mailPreferences['disableRulerForSignatureSeparation']) &&
 			$this->mailPreferences['disableRulerForSignatureSeparation']) ||
-			empty($signature['ident_signature']) || trim($this->convertHTMLToText($signature['ident_signature'],true,true)) =='')
+			empty($signature['ident_signature']) ||
+			trim($this->convertHTMLToText($signature['ident_signature'],true,true)) =='' ||
+			$this->mailPreferences['insertSignatureAtTopOfMessage'] == '1')
 		{
 			$disableRuler = true;
 		}
@@ -2234,12 +2247,19 @@ class mail_compose
 				#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$newBody = mail_ui::resolve_inline_images($newBody2, $_folder, $_uid, $_partID, 'plain');
 				$this->sessionData['body'] .= "\r\n";
+				$hasSignature = false;
 				// create body new, with good line breaks and indention
 				foreach(explode("\n",$newBody) as $value) {
 					// the explode is removing the character
-					if (trim($value) != '') {
-						#if ($value != "\r") $value .= "\n";
+					//$value .= 'ee';
+
+					// Try to remove signatures from qouted parts to avoid multiple
+					// signatures problem in reply (rfc3676#section-4.3).
+					if ($hasSignature || ($hasSignature = preg_match("/\G--(\s|\s[\r\n])$/",$value)))
+					{
+						continue;
 					}
+
 					$numberOfChars = strspn(trim($value), ">");
 					$appendString = str_repeat('>', $numberOfChars + 1);
 
@@ -3013,6 +3033,14 @@ class mail_compose
 			try	{
 				if ($_formData['smime_sign'] == 'on')
 				{
+					if ($_formData['smime_passphrase'] != '') {
+						Api\Cache::setSession(
+							'mail',
+							'smime_passphrase',
+							$_formData['smime_passphrase'],
+							$GLOBALS['egw_info']['user']['preferences']['mail']['smime_pass_exp'] * 60
+						);
+					}
 					$smime_success = $this->_encrypt(
 						$mail,
 						$_formData['smime_encrypt'] == 'on'? Mail\Smime::TYPE_SIGN_ENCRYPT: Mail\Smime::TYPE_SIGN,
@@ -3669,23 +3697,19 @@ class mail_compose
 	protected function _encrypt($mail, $type, $recipients, $sender, $passphrase='')
 	{
 		$AB = new addressbook_bo();
-		$params = array (
-			'senderPubKey'		=> '',			// Sender Public key
-			'passphrase'		=> $passphrase, // passphrase of sender private key
-			'senderPrivKey'		=> '',			// sender private key
-			'recipientsCerts'	=> array()		// Recipients Certificates
-		);
+		 // passphrase of sender private key
+		$params['passphrase'] = $passphrase;
 
 		try
 		{
 			if (isset($sender) && ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
 			{
 				$sender_cert = $AB->get_smime_keys($sender);
-				if (!$sender_cert)	throw new Exception("Encryption failed because no certificate has been found for sender address: " . $sender);
+				if (!$sender_cert)	throw new Exception("S/MIME Encryption failed because no certificate has been found for sender address: " . $sender);
 				$params['senderPubKey'] = $sender_cert[$sender];
-
-				$credents = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-				$params['senderPrivKey'] = $credents['acc_smime_password'];
+				$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID, $params['passphrase']);
+				$params['senderPrivKey'] = $acc_smime['pkey'];
+				$params['extracerts'] = $acc_smime['extracerts'];
 			}
 
 			if (isset($recipients) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
@@ -3695,7 +3719,7 @@ class mail_compose
 				{
 					if (!$params['recipientsCerts'][$recipient]) $missingCerts []= $recipient;
 				}
-				if (is_array($missingCerts)) throw new Exception ('Encryption failed because no certificate has been found for following addresses: '. implode ('|', $missingCerts));
+				if (is_array($missingCerts)) throw new Exception ('S/MIME Encryption failed because no certificate has been found for following addresses: '. implode ('|', $missingCerts));
 			}
 
 			return $mail->smimeEncrypt($type, $params);

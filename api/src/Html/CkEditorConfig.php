@@ -61,6 +61,15 @@ class CkEditorConfig
 	);
 
 	/**
+	 * Functions that can be called via menuaction
+	 *
+	 * @var array
+	 */
+	var $public_functions = array(
+		'vfsSelectHelper'	=> true,
+	);
+
+	/**
 	 * Get available CKEditor Skins
 	 *
 	 * Only return skins existing in filesystem, as we disable / remove them if not compatible with supported browsers.
@@ -249,8 +258,10 @@ class CkEditorConfig
 	 */
 	private static function get_filebrowserBrowseUrl($start_path = '')
 	{
-		return $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=filemanager.filemanager_select.select&mode=open&method=ckeditor_return'
-		.($start_path != '' ? '&path='.$start_path : '');
+		return \EGroupware\Api\Egw::link('/index.php',array(
+			'menuaction' => 'api.EGroupware\\Api\\Html\\CkEditorConfig.vfsSelectHelper',
+			'path' => $start_path
+		));
 	}
 
 	/**
@@ -494,18 +505,24 @@ class CkEditorConfig
 	 */
 	public static function set_csp_script_src_attrs()
 	{
-		$attrs = array('unsafe-eval', 'unsafe-inline');
-		$url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').self::WEBSPELLCHECK_HOST;
-
-		// if webspellchecker is enabled in EGroupware config, allow access to it's url
-		if (in_array($GLOBALS['egw_info']['server']['enabled_spellcheck'], array('True', 'YesUseWebSpellCheck')))
-		{
-			$attrs[] = $url;
-
-			ContentSecurityPolicy::add('style-src', $url);
-		}
-		//error_log(__METHOD__."() egw_info[server][enabled_spellcheck]='{$GLOBALS['egw_info']['server']['enabled_spellcheck']}' --> attrs=".array2string($attrs));
 		// tell framework CK Editor needs eval and inline javascript :(
-		ContentSecurityPolicy::add('script-src', $attrs);
+		ContentSecurityPolicy::add('script-src', 'unsafe-inline');
+	}
+
+	/**
+	 * It helps to get CKEditor Browse server button to open VfsSelect widget
+	 * in client side.
+	 * @todo Once the ckeditor allows to overrride the Browse Server button handler
+	 * we should remove this function and handle everything in htmlarea widget in
+	 * client side.
+	 */
+	public function vfsSelectHelper()
+	{
+		$tmp = new \EGroupware\Api\Etemplate('api.vfsSelectUI');
+		$response = \EGroupware\Api\Json\Response::get();
+		$response->call('window.opener.et2_htmlarea.buildVfsSelectForCKEditor',
+				array('funcNum' => $_GET['CKEditorFuncNum']));
+		$response->call('window.close');
+		$tmp->exec('',array());
 	}
 }

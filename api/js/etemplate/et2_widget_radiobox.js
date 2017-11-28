@@ -62,11 +62,20 @@ var et2_radiobox = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		this.createInputWidget();
 	},
+	transformAttributes: function(_attrs) {
+		this._super.apply(this, arguments);
+		var readonly = this.getArrayMgr('readonlys').getEntry(this.id);
+		if(readonly && readonly.hasOwnProperty(_attrs.set_value))
+		{
+			_attrs.readonly = readonly[_attrs.set_value];
+		}
+	},
 
 	createInputWidget: function() {
 		this.input = jQuery(document.createElement("input"))
 			.val(this.options.set_value)
-			.attr("type", "radio");
+			.attr("type", "radio")
+			.attr("disabled", this.options.readonly);
 
 		this.input.addClass("et2_radiobox");
 

@@ -24,6 +24,7 @@ add "%1" into whiltelisted domains	mail	en	Add "%1" into whiltelisted domains
 add "%1" into whitelisted emails	mail	en	Add "%1" into whitelisted emails
 add a new folder to %1:	mail	en	Add a new Folder to %1:
 add all my aliases	mail	en	Add all my aliases
+add as new	mail	en	Add as new
 add folder	mail	en	Add Folder
 add to addressbook	mail	en	add to addressbook
 add your domain as "%1" in options to list of email providers and enable api.	mail	en	Add your domain as "%1" in options to list of email providers and enable API.
@@ -127,7 +128,7 @@ discard	mail	en	discard
 discard message	mail	en	Discard message
 display messages in multiple windows	mail	en	display messages in multiple windows
 display of html emails	mail	en	display of html emails
-display of identities	admin	en	display of identities
+display of identities	admin	en	display identities
 display only when no plain text is available	mail	en	display only when no plain text is available
 displaying html messages is disabled	mail	en	displaying html messages is disabled
 displaying plain messages is disabled	mail	en	displaying plain messages is disabled
@@ -566,7 +567,7 @@ vacation messages with start and end date require an admin account to be set!	ma
 vacation notice	mail	en	Vacation notice
 vacation notice is active	mail	en	Vacation notice is active
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	en	Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)
-vacation notice sucessfully updated.	mail	en	Vacation notice sucessfully updated.
+vacation notice sucessfully updated.	mail	en	Vacation notice successfully updated.
 vacation notice update failed	mail	en	Vacation notice update failed
 vacation start-date must be before the end-date!	mail	en	Vacation start-date must be BEFORE the end-date!
 vacation update failed	mail	en	vacation update failed

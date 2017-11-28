@@ -902,22 +902,32 @@ div.mailComposeHeaderSection > table {
   margin-right: 0;
 }
 div.smime_cert_notverified {
-  border-top: 4px solid lightgreen !important;
+  border-top: 4px solid #8dff95 !important;
 }
 img.smime_cert_notverified {
-  background: lightgreen;
+  background: #8dff95;
 }
 div.smime_cert_verified {
-  border-top: 4px solid green !important;
+  border-top: 4px solid #1ab82c !important;
+}
+div.smime_cert_unknownemail {
+  border-top: 4px solid #a28cff !important;
 }
 img.smime_cert_verified {
-  background: green;
+  background: #1ab82c;
 }
 div.smime_cert_notvalid {
-  border-top: 4px solid red !important;
+  border-top: 4px solid #e90052 !important;
 }
 img.smime_cert_notvalid {
-  background: red;
+  background: #e90052;
+}
+img.smime_cert_unknownemail {
+  background: #a28cff;
+}
+.smimeIcons {
+  position: absolute;
+  right: 10px;
 }
 #popupMainDiv {
   padding: 5px;
@@ -2510,6 +2520,7 @@ div.mailComposeHeaderSection > table {
     background-color: none;
   }
   body #popupMainDiv .mail-d-h1 {
+    position: relative;
     padding-bottom: 15px;
     border-bottom: 1px solid silver;
     font-size: 12pt;
@@ -2563,9 +2574,6 @@ div.mailComposeHeaderSection > table {
     position: initial;
     margin-top: 20px;
   }
-  body #popupMainDiv #mail-view_iframe {
-    display: none;
-  }
   body #popupMainDiv div#mail-view > div {
     height: 100%;
   }
@@ -2574,6 +2582,7 @@ div.mailComposeHeaderSection > table {
   }
   body #popupMainDiv #mail-view_toaddressdetails {
     color: #26537c;
+    float: right;
   }
   body #popupMainDiv #tempPrintDiv {
     display: block;

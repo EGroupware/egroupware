@@ -65,13 +65,13 @@ class setup
 	 *
 	 * @var float
 	 */
-	var $required_php_version = 5.4;
+	var $required_php_version = 5.6;
 	/**
 	 * PHP Version recommended for eGroupware
 	 *
 	 * @var string
 	 */
-	var $recommended_php_version = '5.6';
+	var $recommended_php_version = '7.0';
 
 	function __construct($html=False, $translation=False)
 	{
@@ -960,24 +960,26 @@ class setup
 	/**
 	 * add an user account or a user group
 	 *
-	 * if the $username already exists, only the id is returned, no new user / group gets created
+	 * If the $username already exists, only the id is returned, no new user / group gets created,
+	 * but if a non-empty password is given it will be changed to that.
 	 *
 	 * @param string $username alphanumerical username or groupname (account_lid)
 	 * @param string $first first name
 	 * @param string $last last name
-	 * @param $passwd string cleartext pw
+	 * @param string $_passwd cleartext pw or empty or '*unchanged*', to not change pw for existing users
 	 * @param string/boolean $primary_group Groupname for users primary group or False for a group, default 'Default'
 	 * @param boolean $changepw user has right to change pw, default False = Pw change NOT allowed
 	 * @param string $email
 	 * @param string &$anonpw=null on return password for anonymous user
 	 * @return int the numerical user-id
 	 */
-	function add_account($username,$first,$last,$passwd,$primary_group='Default',$changepw=False,$email='',&$anonpw=null)
+	function add_account($username,$first,$last,$_passwd,$primary_group='Default',$changepw=False,$email='',&$anonpw=null)
 	{
 		$this->setup_account_object();
 
 		$primary_group_id = $primary_group ? $this->accounts->name2id($primary_group) : False;
 
+		$passwd = $_passwd;
 		if ($username == 'anonymous')
 		{
 			if (!isset($this->anonpw)) $this->anonpw = Api\Auth::randomstring(16);
@@ -1005,7 +1007,7 @@ class setup
 			}
 		}
 		// set password for existing account, if given and not '*unchanged*'
-		elseif($passwd && $passwd != '*unchanged*')
+		elseif($_passwd && $_passwd != '*unchanged*')
 		{
 			try {
 				$auth = new Api\Auth;

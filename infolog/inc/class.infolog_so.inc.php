@@ -5,9 +5,8 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -417,7 +416,9 @@ class infolog_so
 
 		if (!$where ||
 			!($this->data = $this->db->select($this->info_table,
-			'*,'.$this->db->group_concat('account_id').' AS info_responsible,'.$this->info_table.'.info_id AS info_id',
+			'*,'.$this->db->group_concat('account_id').' AS info_responsible,'.
+			$this->db->group_concat('info_res_attendee').' AS info_cc,'.
+			$this->info_table.'.info_id AS info_id',
 			$where, __LINE__, __FILE__, false, "GROUP BY $this->info_table.info_id", 'infolog', 1,
 			"LEFT JOIN $this->users_table ON $this->info_table.info_id=$this->users_table.info_id AND $this->users_table.info_res_deleted IS NULL")->fetch()))
 		{
@@ -436,6 +437,11 @@ class infolog_so
 		if (!is_array($this->data['info_responsible']))
 		{
 			$this->data['info_responsible'] = $this->data['info_responsible'] ? explode(',',$this->data['info_responsible']) : array();
+			foreach($this->data['info_responsible'] as $k => $v)
+			{
+				if (!is_numeric($v)) unset($this->data['info_responsible'][$k]);
+			}
+			$this->data['info_responsible'] = array_values($this->data['info_responsible']);
 		}
 		// Cast back to integer
 		$this->data['info_id_parent'] = (int)$this->data['info_id_parent'];
@@ -529,18 +535,13 @@ class infolog_so
 		if ($args['new_owner'])
 		{
 			// we cant just set the new owner, as he might be already set and we have a unique index
-			Api\Db::$table_aliases[$this->users_table] = $this->users_table.
+			$this->db->query('UPDATE '.$this->users_table.
 				" LEFT JOIN $this->users_table new_owner ON new_owner.info_id=$this->users_table.info_id".
-				" AND new_owner.account_id=".$this->db->quote($args['new_owner'], 'int');
-
-			$this->db->update($this->users_table, array(
-				'account_id' => $args['new_owner'],
-			), array(
-				'account_id' => $args['account_id'],
-				'new_owner.account_id IS NULL',
-			), __LINE__, __FILE__, 'infolog');
-
-			unset(Api\Db::$table_aliases[$this->users_table]);
+					" AND new_owner.account_id=".$this->db->quote($args['new_owner'], 'int').
+				' SET '.$this->users_table.'.account_id='.$this->db->quote($args['new_owner'], 'int').
+				' WHERE '.$this->users_table.'.account_id='.$this->db->quote($args['account_id'], 'int').
+					' AND new_owner.account_id IS NULL',
+				__LINE__, __FILE__);
 		}
 		$this->db->delete($this->users_table, array('account_id' => $args['account_id']), __LINE__, __FILE__, 'infolog');
 	}
@@ -668,8 +669,26 @@ class infolog_so
 		//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning id=".$this->data['info_id']);
 
 		// update attendees/delegates
-		if (array_key_exists('info_responsible', $values))
+		if (array_key_exists('info_responsible', $values) || array_key_exists('info_cc', $values))
 		{
+			$users = empty($values['info_responsible']) ? array() :
+				array_combine($values['info_responsible'], array_fill(0, count($values['info_responsible']), null));
+
+			foreach(!empty($values['info_cc']) ? explode(',', $values['info_cc']) : array() as $email)
+			{
+				$email = trim($email);
+				$matches = null;
+				if (preg_match('/<[^>]+@[^>]+>$/', $email, $matches))
+				{
+					$hash = md5(strtolower($matches[1]));
+				}
+				else
+				{
+					$hash = md5(strtolower($email));
+				}
+				$users[$hash] = $email;
+			}
+
 			// mark removed attendees as deleted
 			$this->db->update($this->users_table, array(
 				'info_res_deleted' => true,
@@ -678,25 +697,26 @@ class infolog_so
 				'info_id' => $this->data['info_id'],
 				'info_res_deleted IS NULL',
 			)+(!$values['info_responsible'] ? array() :
-				array(1=>'account_id NOT IN ('.implode(',', array_map('intval', $values['info_responsible'])).')')),
+				array(1=>'account_id NOT IN ('.implode(',', array_map(array($this->db, 'quote'), array_keys($users))).')')),
 				__LINE__, __FILE__, 'infolog');
 
 			// add newly added attendees
-			if ($values['info_responsible'])
+			if ($users)
 			{
-				$old_responsible = array();
-				foreach($this->db->select($this->users_table,'account_id',array(
+				$old_users = array();
+				foreach($this->db->select($this->users_table,'account_id,info_res_attendee',array(
 					'info_id' => $this->data['info_id'],
 					'info_res_deleted IS NULL',
 				), __LINE__, __FILE__, false, '', 'infolog') as $row)
 				{
-					$old_responsible[] = $row['account_id'];
+					$old_users[] = $row['account_id'];
 				}
-				foreach(array_diff($values['info_responsible'], $old_responsible) as $account_id)
+				foreach(array_diff(array_keys($users), $old_users) as $account_id)
 				{
 					$this->db->insert($this->users_table, array(
 						'info_res_modifier' => $this->user,
 						'info_res_status' => 'NEEDS-ACTION',
+						'info_res_attendee' => $users[$account_id],
 						'info_res_deleted' => null,
 					), array(
 						'info_id' => $this->data['info_id'],
@@ -884,7 +904,7 @@ class infolog_so
 		if ($query['query']) $query['search'] = $query['query'];	// allow both names
 		if ($query['search'])			  // we search in _from, _subject, _des and _extra_value for $query
 		{
-			$columns = array('info_from','info_addr','info_location','info_subject','info_extra_value');
+			$columns = array('info_from','info_location','info_subject','info_extra_value');
 			// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
 			if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
 
@@ -965,6 +985,7 @@ class infolog_so
 				$cols = isset($query['cols']) ? $query['cols'] : 'main.*';
 				if (is_array($cols)) $cols = implode(',',$cols);
 				$cols .= ','.$this->db->group_concat('attendees.account_id').' AS info_responsible';
+				$cols .= ','.$this->db->group_concat('attendees.info_res_attendee').' AS info_cc';
 				$rs = $this->db->query($sql='SELECT '.$mysql_calc_rows.' '.$distinct.' '.$cols.' '.$info_customfield.' '.$sql_query.
 					$query['append'].$ordermethod,__LINE__,__FILE__,
 					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1,false,Api\Db::FETCH_ASSOC);
@@ -985,6 +1006,11 @@ class infolog_so
 			foreach($rs as $info)
 			{
 				$info['info_responsible'] = $info['info_responsible'] ? array_unique(explode(',',$info['info_responsible'])) : array();
+				foreach($info['info_responsible'] as $k => $v)
+				{
+					if (!is_numeric($v)) unset($info['info_responsible'][$k]);
+				}
+				$info['info_responsible'] = array_values($info['info_responsible']);
 
 				$ids[$info['info_id']] = $info;
 			}

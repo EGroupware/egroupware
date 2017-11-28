@@ -9,7 +9,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package admin
  * @subpackage setup
- * @version $Id$
  */
 
 function admin_upgrade1_2()
@@ -177,4 +176,9 @@ function admin_upgrade14_3()
 function admin_upgrade14_3_001()
 {
 	return $GLOBALS['setup_info']['admin']['currentver'] = '16.1';
+}
+
+function admin_upgrade16_1()
+{
+	return $GLOBALS['setup_info']['admin']['currentver'] = '17.1';
 }

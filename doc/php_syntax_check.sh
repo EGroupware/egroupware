@@ -27,4 +27,6 @@ find ${@-.} -name '*.php' -exec php -l {} \; 2>&1 | \
 	grep -v 'vendor/phpspec/prophecy' | \
 	# phpFreeChat does not work with PHP7
 	grep -v 'phpfreechat/phpfreechat/' | \
+	# not used part of ADOdb give PHP Fatal error: Cannot unset $this
+	grep -v 'adodb-xmlschema' | \
 	perl -pe 'END { exit $status } $status=1 if /^(PHP Fatal|(PHP )?Parse error)/;'  > /dev/null

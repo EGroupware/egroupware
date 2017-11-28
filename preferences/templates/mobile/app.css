@@ -1,0 +1,126 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * PREFERENCES
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package preferences
+ * @version $Id$
+ */
+/**
+ * EGroupware - CSS Styles used by preferences app
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package preferences
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id$
+ */
+table.prefTable {
+  width: 100%;
+}
+table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
+  background-image: url(../../../api/templates/default/images/hint.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 99%;
+}
+tr.prefRow:hover {
+  background-color: #f0f0ff;
+}
+td.prefName {
+  width: 50%;
+}
+tr.prefRow > td {
+  vertical-align: bottom;
+  /* otherwise help will cover bigger prefValue */
+}
+/*.prefValueColumn {border-right:none !important;}*/
+.prefHelpColumn {
+  border: none !important;
+  padding: 0 !important;
+}
+.prefHelp {
+  position: absolute;
+  display: none;
+  width: 255px;
+  max-height: 99%;
+  height: calc(-51%);
+  background-color: #f0f0ff;
+  padding: 5px;
+  top: 80px;
+  overflow-y: auto;
+  z-index: 1;
+}
+tr.prefRow:hover .prefHelp {
+  display: block;
+  z-index: 10;
+  /* FF: displays it under next prefName without */
+}
+.prefDefault,
+.prefValue {
+  float: left;
+  display: inline-block;
+}
+.prefValue {
+  margin-right: 5px;
+  width: 49%;
+}
+.prefDefault {
+  float: right;
+  width: 48%;
+}
+.prefValue textarea,
+textarea.prefValue {
+  width: 99%;
+  height: 5em;
+}
+.prefType,
+.prefApp {
+  font-size: 150%;
+  margin-top: 10px;
+  margin-right: 5px;
+}
+.prefType {
+  width: 49%;
+}
+.prefApp {
+  width: 49.50%;
+}
+#preferences-password .dialogHeader td {
+  text-align: center;
+}
+/* arrange readonly selectbox background icon*/
+.et2_selectbox.readonly.prefType {
+  padding-right: 50px;
+}
+.prefValueColumn select.prefValue {
+  white-space: pre-line;
+}
+.prefHelp {
+  width: 100%;
+  height: 60px;
+  bottom: 0;
+  top: auto;
+  position: fixed;
+}
+table.prefTable {
+  width: 100%;
+}
+td.prefName {
+  width: 50%;
+}
+tr.prefRow > td {
+  vertical-align: bottom;
+  /* otherwise help will cover bigger prefValue */
+}
+tr.prefRow > td textarea.prefValue {
+  height: 90px !important;
+}
+div#preferences-settings_tabs {
+  margin-bottom: 65px;
+}

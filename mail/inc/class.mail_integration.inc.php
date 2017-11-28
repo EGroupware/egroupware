@@ -37,6 +37,12 @@ class mail_integration {
 	const MAX_LINE_CHARS = 40;
 
 	/**
+	 * Used to flag inline images so they can be found & urls fixed when in their
+	 * final destination.
+	 */
+	const INLINE_PREFIX = 'mail-';
+
+	/**
 	 * Gets requested mail information and sets them as data link
 	 * -Execute registered hook method from the requested app for integration
 	 * -with provided content from mail:
@@ -82,6 +88,7 @@ class mail_integration {
 		}
 
 		$data = static::get_integrate_data($_GET['rowid'], $_to_emailAddress, $_subject, $_body, $_attachments, $_date, $_rawMail, $_icServerID);
+		$data['entry_id'] = $app_entry_id;
 
 		// Check if the hook is registered
 		if (Api\Hooks::exists('mail_import',$app) == 0)
@@ -100,7 +107,7 @@ class mail_integration {
 		// Execute import mail with provided content
 		ExecMethod($hook['menuaction'],$data);
 	}
-	
+
 	/**
 	 * Gets requested mail information and sets them as data link
 	 * -with provided content from mail:
@@ -116,8 +123,7 @@ class mail_integration {
 	 *					'tmp_name' => string),	// tmp dir path
 	 *			'message' => string,
 	 *			'date' => string,
-	 *			'subject' => string,
-	 *			'entry_id => string				// Id of the app entry which mail content will append to
+	 *			'subject' => string
 	 *	)
 	 *
 	 * @param string $_rowid
@@ -287,7 +293,7 @@ class mail_integration {
 				$mo	= mail_bo::getInstance(true,$icServerID);
 				$mo->openConnection();
 				$mo->reopen($mailbox);
-				$mailcontent = mail_bo::get_mailcontent($mo,$uid,'',$mailbox,false,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
+				$mailcontent = mail_bo::get_mailcontent($mo,$uid,'',$mailbox,null,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
 				// this one adds the mail itself (as message/rfc822 (.eml) file) to the app as additional attachment
 				// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
 				if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
@@ -350,6 +356,26 @@ class mail_integration {
 						'EGroupware\\Api\\Mail::getAttachmentAccount',array($icServerID, $mailbox, $uid, $attachment['partID'], $is_winmail, true),true);
 				}
 				unset($mailcontent['attachments'][$key]['add_raw']);
+
+				// Fix inline images
+				if($mailcontent['html_message'] && $attachment['cid'] && $data_attachments[$key]['egw_data'])
+				{
+					$link_callback = function($cid) use($data_attachments, $key)
+					{
+						return self::INLINE_PREFIX.$data_attachments[$key]['egw_data'].'" title="['.$data_attachments[$key]['name'].']';
+					};
+					foreach(array('src','url','background') as $type)
+					{
+						$mailcontent['html_message'] = mail_ui::resolve_inline_image_byType(
+								$mailcontent['html_message'],
+								$mailbox,
+								$attachment['uid'],
+								$attachment['partID'],
+								$type,
+								$link_callback
+						);
+					}
+				}
 			}
 		}
 
@@ -357,10 +383,30 @@ class mail_integration {
 			'addresses' => $data_addresses,
 			'attachments' => $data_attachments,
 			'message' => $data_message,
+			'html_message' => $mailcontent['html_message'],
 			'date' => $mailcontent['date'],
 			'subject' => $mailcontent['subject'],
 			'entry_id' => $app_entry_id
 		);
+	}
+
+	public static function fix_inline_images($app, $id, array $links, &$html)
+	{
+		$replace = array();
+		foreach($links as $link)
+		{
+			$matches = null;
+			if (is_array($link) && $link['id']['egw_data'] && strpos($html, self::INLINE_PREFIX . $link['id']['egw_data']) !== false)
+			{
+				$replace[self::INLINE_PREFIX. $link['id']['egw_data']] =
+					Api\Egw::link(Api\Vfs::download_url(Api\Link::vfs_path($app, $id, Api\Vfs::basename($link['id']['name']))));
+			}
+		}
+		if ($replace)
+		{
+			$html = strtr($old = $html, $replace);
+		}
+		return isset($old) && $old != $html;
 	}
 }
 

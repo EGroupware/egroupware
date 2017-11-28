@@ -194,6 +194,28 @@
 								</hbox>
 							</vbox>
 						</box>
+						<box id="startdate_popup" class="action_popup prompt">
+							<vbox>
+								<description value="Start date" class="promptheader"/>
+								<description id="startdate_action[title]"/>
+								<date-time id="startdate" class="action_popup-content"/>
+								<hbox>
+									<button label="Ok" id="startdate_action[ok]" onclick="nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'link_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
+						<box id="enddate_popup" class="action_popup prompt">
+							<vbox>
+								<description value="Due date" class="promptheader"/>
+								<description id="enddate_action[title]"/>
+								<date-time id="enddate" class="action_popup-content"/>
+								<hbox>
+									<button label="Ok" id="enddate_action[ok]" onclick="nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'link_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
 					</hbox>
 					<description/>
 				</row>

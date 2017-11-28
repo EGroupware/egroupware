@@ -1383,7 +1383,9 @@ class Vfs
 			$vfs = new Vfs\StreamWrapper();
 			$stat = $vfs->url_stat($path,0);
 		}
-		return $stat['uid'] == self::$user ||	// user is the owner
+		return $stat['uid'] == self::$user &&	// (current) user is the owner
+				// in sharing current user != self::$user and should NOT have owner rights
+				$GLOBALS['egw_info']['user']['account_id'] == self::$user ||
 			self::$is_root ||					// class runs with root rights
 			!$stat['uid'] && $stat['gid'] && self::$is_admin;	// group directory and user is an eGW admin
 	}
@@ -1974,6 +1976,11 @@ class Vfs
 	 */
 	static public function get_home_dir()
 	{
+		// with sharing active we have no home, use /
+		if ($GLOBALS['egw_info']['user']['account_id'] != self::$user)
+		{
+			return '/';
+		}
 		$start = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
 
 		// check if user specified a valid startpath in his prefs --> use it
@@ -2533,6 +2540,50 @@ class Vfs
 	static function load_wrapper($scheme)
 	{
 		return Vfs\StreamWrapper::load_wrapper($scheme);
+	}
+
+	/**
+	 * Return stream with given string as content
+	 *
+	 * @param string $string
+	 * @return boolean|resource stream or false on error
+	 */
+	static function string_stream($string)
+	{
+		if (!($fp = fopen('php://temp', 'rw')))
+		{
+			return false;
+		}
+		$pos = 0;
+		$len = strlen($string);
+		do {
+			if (!($written = fwrite($fp, substr($string, $pos))))
+			{
+				return false;
+			}
+			$pos += $written;
+		}
+		while ($len < $pos);
+
+		rewind($fp);
+
+		return $fp;
+	}
+
+	/**
+	 * Get the lowest fs_id for a given path
+	 *
+	 * @param string $path
+	 *
+	 * @return integer|boolean Lowest fs_id for that path, or false
+	 */
+	static function get_minimum_file_id($path)
+	{
+		if(!self::file_exists($path))
+		{
+			return false;
+		}
+		return self::_call_on_backend('get_minimum_file_id', array($path));
 	}
 }
 

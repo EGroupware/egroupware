@@ -50,12 +50,13 @@ class mail_ui
 		'download_zip'		=> True,
 		'saveMessage'	=> True,
 		'vfsSaveAttachment' => True,
-		'vfsSaveMessage' => True,
+		'vfsSaveMessages' => True,
 		'loadEmailBody'	=> True,
 		'importMessage'	=> True,
 		'importMessageFromVFS2DraftAndDisplay'=>True,
 		'subscription'	=> True,
 		'folderManagement' => true,
+		'smimeExportCert' => true,
 		'moveEWS' => true,
 	);
 
@@ -487,22 +488,7 @@ class mail_ui
 					$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
 					$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
 				}
-				// call gatherVacation asynchronously in getRows by initiating a client Server roundtrip
-				$vacation = false;//$this->gatherVacation();
-				//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
-				if($vacation) {
-					if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date' && $vacation['end_date'] > time()))
-					{
-						$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']/*.' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i')*/;
-						$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = lang('Vacation notice is active');
-						$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = ($vacation['status']=='by_date'? Api\DateTime::server2user($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.Api\DateTime::server2user($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):'');
-					}
-				}
-				if ($vacation==false)
-				{
-					$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = '';
-					$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = '';
-				}
+
 				//$zstarttime = microtime (true);
 				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 				//$zendtime = microtime(true) - $zstarttime;
@@ -603,6 +589,8 @@ class mail_ui
 			case "fixed":
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'h');
 				break;
+			default:
+				$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
 		}
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -1128,6 +1116,7 @@ class mail_ui
 				'group' => $group,
 				'onExecute' => 'javaScript:app.mail.mail_compose',
 				'allowOnMultiple' => false,
+				'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 65, 'caption' => 'Ctrl + Shift + A'),
 			),
 			'forward' => array(
 				'caption' => 'Forward',
@@ -1141,6 +1130,7 @@ class mail_ui
 						'hint' => 'forward inline',
 						'onExecute' => 'javaScript:app.mail.mail_compose',
 						'allowOnMultiple' => false,
+						'shortcut' => array('ctrl' => true, 'keyCode' => 70, 'caption' => 'Ctrl + F'),
 						'toolbarDefault' => true
 					),
 					'forwardasattach' => array(
@@ -1866,6 +1856,18 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$data['uid'] = $message_uid;
 			$data['row_id']=$this->createRowID($_folderName,$message_uid);
 
+			if (is_array($header['attachments']))
+			{
+				foreach ($header['attachments'] as $attch)
+				{
+					if (Mail\Smime::isSmime($attch['mimeType']))
+					{
+						$data['smime'] = Mail\Smime::isSmimeSignatureOnly($attch['mimeType'])?
+								Mail\Smime::TYPE_SIGN : Mail\Smime::TYPE_ENCRYPT;
+					}
+				}
+			}
+
 			$flags = "";
 			if(!empty($header['recent'])) $flags .= "R";
 			if(!empty($header['flagged'])) $flags .= "F";
@@ -2059,16 +2061,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (in_array("bodypreview", $cols)&&$header['bodypreview'])
 			{
 				$data["bodypreview"] = $header['bodypreview'];
-			}
-			if (is_array($data['attachmentsBlock']))
-			{
-				foreach ($data['attachmentsBlock'] as &$attch)
-				{
-					if (Mail\Smime::isSmime($attch['type']))
-					{
-						$data['smime'] = Mail\Smime::isSmimeSignatureOnly($attch['type']) ? 'smimeSignature' : 'smimeEncryption';
-					}
-				}
 			}
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($data));
@@ -2277,6 +2269,53 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
+	 * Adds certificate to relevant contact
+	 * @param array $_metadata data of sender's certificate
+	 */
+	function ajax_smimeAddCertToContact ($_metadata)
+	{
+		$response = Api\Json\Response::get();
+		$ab = new addressbook_bo();
+		$response->data($ab->set_smime_keys(array($_metadata['email'] => $_metadata['cert'])));
+	}
+
+	/**
+	 * Generates certificate base on given data and send
+	 * private key, pubkey and certificate back to client callback.
+	 *
+	 * @param array $_data
+	 */
+	function ajax_smimeGenCertificate ($_data)
+	{
+		$smime = new Mail\Smime();
+		$response = Api\Json\Response::get();
+		// fields need to be excluded from data
+		$discards = array ('passphrase', 'passphraseConf', 'ca');
+		$ca = $_data['ca'];
+		$passphrase = $_data['passphrase'];
+		foreach ($_data as $key => $val)
+		{
+			if (empty($_data[$key]) || in_array($key, $discards)) unset($_data[$key]);
+		}
+		$response->data($smime->generate_certificate($_data, $ca, null, $passphrase));
+	}
+
+	/**
+	 * Export stored smime certificate in database
+	 * @return boolean return false if not successful
+	 */
+	function smimeExportCert()
+	{
+		if (empty($_GET['acc_id'])) return false;
+		$acc_smime = Mail\Smime::get_acc_smime($_GET['acc_id']);
+		$length = 0;
+		$mime = 'application/x-pkcs12';
+		Api\Header\Content::safe($acc_smime['acc_smime_password'], "certificate.p12", $mime, $length, true, true);
+		echo $acc_smime['acc_smime_password'];
+		exit();
+	}
+
+	/**
 	 * Build actions for display toolbar
 	 */
 	function getDisplayToolbarActions ()
@@ -2372,11 +2411,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 
 		if (is_array($attachments) && count($attachments) > 0) {
-			$url_img_vfs = Api\Html::image('filemanager','navbar', lang('Filemanager'), ' height="16"');
-			$url_img_vfs_save_all = Api\Html::image('mail','save_all', lang('Save all'));
-
 			foreach ($attachments as $key => $value)
 			{
+				if (Mail\Smime::isSmime($value['mimeType'])) continue;
 				$attachmentHTML[$key]['filename']= ($value['name'] ? ( $value['filename'] ? $value['filename'] : $value['name'] ) : lang('(no subject)'));
 				$attachmentHTML[$key]['filename'] = Api\Translation::convert_jsonsafe($attachmentHTML[$key]['filename'],'utf-8');
 				//error_log(array2string($value));
@@ -2508,38 +2545,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'smime_type' => $value['smime_type']
 				);
 				$attachmentHTML[$key]['link_save'] ="<a href='".Egw::link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".Api\Html::image('mail','fileexport')."</a>";
-
-				if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
+				// add save-all and download zip icon for first attachment only
+				// if more than one attachments.
+				if ($key == 0 && count($attachments) > 1)
 				{
-					$link_vfs_save = Egw::link('/index.php',array(
-						'menuaction' => 'filemanager.filemanager_select.select',
-						'mode' => 'saveas',
-						'name' => $value['name'],
-						'mime' => strtolower($value['mimeType']),
-						'method' => 'mail.mail_ui.vfsSaveAttachment',
-						'id' => $rowID.'::'.$value['partID'].'::'.$value['is_winmail'],
-						'label' => lang('Save'),
-					));
-					$vfs_save = "<a href='#' onclick=\"egw_openWindowCentered('$link_vfs_save','vfs_save_attachment','640','570',window.outerWidth/2,window.outerHeight/2); return false;\">$url_img_vfs</a>";
-					// add save-all icon for first attachment
-					if (!$key && count($attachments) > 1)
-					{
-						$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "";
-						foreach ($attachments as $ikey => $value)
-						{
-							//$rowID
-							$ids["id[$ikey]"] = $rowID.'::'.$value['partID'].'::'.$value['is_winmail'].'::'.$value['name'];
-						}
-						$link_vfs_save = Egw::link('/index.php',array(
-							'menuaction' => 'filemanager.filemanager_select.select',
-							'mode' => 'select-dir',
-							'method' => 'mail.mail_ui.vfsSaveAttachment',
-							'label' => lang('Save all'),
-						)+$ids);
-						$vfs_save .= "<a href='#' onclick=\"egw_openWindowCentered('$link_vfs_save','vfs_save_attachment','640','530',window.outerWidth/2,window.outerHeight/2); return false;\">$url_img_vfs_save_all</a>";
-					}
-					$attachmentHTML[$key]['link_save'] .= $vfs_save;
-					//error_log(__METHOD__.__LINE__.$attachmentHTML[$key]['link_save']);
+					$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "";
 				}
 			}
 			$attachmentHTMLBlock="<table width='100%'>";
@@ -2831,24 +2841,62 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
-	 * Save an Message in the vfs
+	 * Ajax function to save message(s)/attachment(s) in the vfs
+	 *
+	 * @param array $params array of mail ids and action name
+	 *			params = array (
+	 *				ids => array of string
+	 *				action => string
+	 *			)
+	 * @param string $path path to save the emails
+	 */
+	function ajax_vfsSave ($params,$path)
+	{
+		$response = Api\Json\Response::get();
+
+		switch ($params['action'])
+		{
+			case 'message':
+				$result = $this->vfsSaveMessages($params['ids'], $path);
+				break;
+			case 'attachment':
+				$result = $this->vfsSaveAttachments($params['ids'], $path);
+				break;
+		}
+		$response->call('app.mail.vfsSaveCallback', $result);
+	}
+
+	/**
+	 * Save Message(s) in the vfs
 	 *
 	 * @param string|array $ids use splitRowID, to separate values
 	 * @param string $path path in vfs (no Vfs::PREFIX!), only directory for multiple id's ($ids is an array)
-	 * @param boolean $close Return javascript to close the window
-	 * @return string|boolean javascript eg. to close the selector window if $close is true, or success/fail if $close is false
+	 *
+	 * @return array returns an array including message and success result
+	 *		array (
+	 *			'msg' => STRING,
+	 *			'success' => BOOLEAN
+	 *		)
 	 */
-	function vfsSaveMessage($ids,$path, $close = true)
+	function vfsSaveMessages($ids,$path)
 	{
-		//error_log(__METHOD__.' IDs:'.array2string($ids).' SaveToPath:'.$path);
-
-		if (is_array($ids) && !Vfs::is_writable($path) || !is_array($ids) && !Vfs::is_writable(dirname($path)))
-		{
-			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); Egw(window).close();';
-		}
+		// add mail translation
 		Api\Translation::add_app('mail');
+		$res = array ();
 
-		$rememberServerID = $this->mail_bo->profileID;
+		// extract dir from the path
+		$dir = Vfs::is_dir($path) ? $path : Vfs::dirname($path);
+
+		// exit if user has no right to the dir
+		if (!Vfs::is_writable($dir))
+		{
+			return array (
+				'msg' => lang('%1 is NOT writable by you!',$path),
+				'success' => false
+			);
+		}
+
+		$preservedServerID = $this->mail_bo->profileID;
 		foreach((array)$ids as $id)
 		{
 			$hA = self::splitRowID($id);
@@ -2857,31 +2905,44 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$icServerID = $hA['profileID'];
 			if ($icServerID && $icServerID != $this->mail_bo->profileID)
 			{
-				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
 				$this->changeProfile($icServerID);
 			}
 			$message = $this->mail_bo->getMessageRawBody($uid, $partID='', $mailbox);
-			$err=null;
-			if(Vfs::is_dir($path))
+
+			// is multiple messages
+			if (Vfs::is_dir($path))
 			{
 				$headers = $this->mail_bo->getMessageHeader($uid,$partID,true,false,$mailbox);
-				$file = $path . '/'.preg_replace('/[\f\n\t\v\\:*#?<>\|]/',"_",$headers['SUBJECT']).'.eml';
+				$file = $dir . '/'.preg_replace('/[\f\n\t\v\\:*#?<>\|]/',"_",$headers['SUBJECT']).'.eml';
 			}
 			else
 			{
 				$file = $path;
 			}
+
+			// Check if file already exists, then try to assign a none existance filename
+			$counter = 1;
+			$tmp_file = $file;
+			while (Vfs::file_exists($tmp_file))
+			{
+				$tmp_file = $file;
+				$pathinfo = pathinfo(Vfs::basename($tmp_file));
+				$tmp_file = $dir . '/' . $pathinfo['filename'] . '(' . $counter . ')' . '.' . $pathinfo['extension'];
+				$counter++;
+			}
+			$file = $tmp_file;
+
 			if (!($fp = Vfs::fopen($file,'wb')) || !fwrite($fp,$message))
 			{
-				$err .= lang('Error saving %1!',$file);
-				$succeeded = false;
+				$res['msg'] = lang('Error saving %1!',$file);
+				$res['success'] = false;
 			}
 			else
 			{
-				$succeeded = true;
+				$res['success'] = true;
 			}
 			if ($fp) fclose($fp);
-			if ($succeeded)
+			if ($res['success'])
 			{
 				unset($headers['SUBJECT']);//already in filename
 				$infoSection = Mail::createHeaderInfoSection($headers, 'SUPPRESS', false);
@@ -2889,40 +2950,44 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				Vfs::proppatch($file,$props);
 			}
 		}
-		if ($rememberServerID != $this->mail_bo->profileID)
+		if ($preservedServerID != $this->mail_bo->profileID)
 		{
-			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
-			$this->changeProfile($rememberServerID);
+			//change Profile back to where we came from
+			$this->changeProfile($preservedServerID);
 		}
-
-		if($close)
-		{
-			Framework::window_close(($err?$err:null));
-		}
-		else
-		{
-			return $succeeded;
-		}
+		return $res;
 	}
 
 	/**
-	 * Save an attachment in the vfs
+	 * Save attachment(s) in the vfs
 	 *
 	 * @param string|array $ids '::' delimited mailbox::uid::part-id::is_winmail::name (::name for multiple id's)
 	 * @param string $path path in vfs (no Vfs::PREFIX!), only directory for multiple id's ($ids is an array)
-	 * @return string javascript eg. to close the selector window
+	 *
+	 * @return array returns an array including message and success result
+	 *		array (
+	 *			'msg' => STRING,
+	 *			'success' => BOOLEAN
+	 *		)
 	 */
-	function vfsSaveAttachment($ids,$path)
+	function vfsSaveAttachments($ids,$path)
 	{
-		//error_log(__METHOD__.__LINE__.'("'.array2string($ids).'","'.$path."\")');");
+		$res = array (
+			'msg' => 'Attachment has been saved successfully.',
+			'success' => true
+		);
 
-		if (is_array($ids) && !Vfs::is_writable($path) || !is_array($ids) && !Vfs::is_writable(dirname($path)))
+		$dir = Vfs::is_dir($path) ? $path : Vfs::dirname($path);
+
+		if (!Vfs::is_writable($dir))
 		{
-			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); Egw(window).close();';
+			return array (
+				'msg' => lang('%1 is NOT writable by you!',$path),
+				'success' => false
+			);
 		}
-		$err=null;
-		$dupe_count = array();
-		$rememberServerID = $this->mail_bo->profileID;
+
+		$preservedServerID = $this->mail_bo->profileID;
 
 		/**
 		 * Extract all parameteres from the given id
@@ -2947,7 +3012,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 		//Examine the first attachment to see if attachment
 		//is winmail.dat embedded attachments.
-		$isMultipleDownload=is_array($ids);
 		$p = $getParams((is_array($ids)?$ids[0]:$ids));
 		if ($p['is_winmail'])
 		{
@@ -2965,21 +3029,27 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		foreach((array)$ids as $id)
 		{
 			$params = $getParams($id);
-			// when downloading a single file, name is not set
-			if (!$params['name']&&isset($_GET['name'])&&!$isMultipleDownload) $params['name'] = $_GET['name'];
+
 			if ($params['icServer'] && $params['icServer'] != $this->mail_bo->profileID)
 			{
-				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
 				$this->changeProfile($params['icServer']);
 			}
-			//error_log(__METHOD__.__LINE__.array2string($hA));
 			$this->mail_bo->reopen($params['mailbox']);
-			if ($params['is_winmail'])
+
+			// is multiple attachments
+			if (Vfs::is_dir($path) || $params['is_winmail'])
 			{
-				// Try to find the right content for file id
-				foreach ($attachments as $key => $val)
+				if ($params['is_winmail'])
 				{
-					if ($key == $params['is_winmail']) $attachment = $val;
+					// Try to find the right content for file id
+					foreach ($attachments as $key => $val)
+					{
+						if ($key == $params['is_winmail']) $attachment = $val;
+					}
+				}
+				else
+				{
+					$attachment = $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
 				}
 			}
 			else
@@ -2987,35 +3057,39 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachment = $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
 			}
 
-			$file = $params['name'];
-			// when $isMultipleDownload the path holds no filename
-			while(Vfs::file_exists($path.($file && $isMultipleDownload ? '/'.$file : '')))
+			$file = $dir. '/' . $attachment['filename'];
+
+			$counter = 1;
+			$tmp_file = $file;
+			while (Vfs::file_exists($tmp_file))
 			{
-				$dupe_count[$params['name']]++;
-				$file = pathinfo($params['name'], PATHINFO_FILENAME) .
-					' ('.($dupe_count[$params['name']] + 1).')' . '.' .
-					pathinfo($params['name'], PATHINFO_EXTENSION);
+				$tmp_file = $file;
+				$pathinfo = pathinfo(Vfs::basename($tmp_file));
+				$tmp_file = $dir . '/' . $pathinfo['filename'] . '(' . $counter . ')' . '.' . $pathinfo['extension'];
+				$counter++;
 			}
-			$params['name'] = $file;
-			//error_log(__METHOD__.__LINE__.array2string($attachment));
-			// when $isMultipleDownload the path holds no filename
-			if (!($fp = Vfs::fopen($file=$path.($params['name'] && $isMultipleDownload ? '/'.$params['name'] : ''),'wb')) ||
+			$file = $tmp_file;
+
+			if (!($fp = Vfs::fopen($file,'wb')) ||
 				!fwrite($fp,$attachment['attachment']))
 			{
-				$err .= lang('Error saving %1!',$file);
+				$res['msg'] = lang('Error saving %1!',$file);
+				$res['success'] = false;
 			}
 			if ($fp)
 			{
 				fclose($fp);
 			}
 		}
+
 		$this->mail_bo->closeConnection();
-		if ($rememberServerID != $this->mail_bo->profileID)
+
+		if ($preservedServerID != $this->mail_bo->profileID)
 		{
-			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
-			$this->changeProfile($rememberServerID);
+			//change Profile back to where we came from
+			$this->changeProfile($preservedServerID);
 		}
-		Framework::window_close(($err?$err:null));
+		return $res;
 	}
 
 	/**
@@ -3148,9 +3222,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$structure = $this->mail_bo->getStructure($uid, $partID, $mailbox, false);
 			if (($smime = $structure->getMetadata('X-EGroupware-Smime')))
 			{
-
 				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,true,false,true, $mailbox);
-				$push = new Api\Json\Push();
+				$push = new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']);
+				if (!empty($smime['addtocontact'])) $push->call('app.mail.smime_certAddToContact', $smime);
 				if (is_array($attachments))
 				{
 					$push->call('app.mail.set_smimeAttachments', $this->createAttachmentBlock($attachments, $_GET['_messageID'], $uid, $mailbox));
@@ -3160,10 +3234,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		catch(Mail\Smime\PassphraseMissing $e)
 		{
-			$credentials = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-			if (empty($credentials['acc_smime_password']))
+			$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
+			if (empty($acc_smime))
 			{
-				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME private key in Encryption tab located at Edit Account dialog.'));
+				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.'));
 			}
 			Framework::message($e->getMessage());
 			// do NOT include any default CSS
@@ -3174,9 +3248,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'<div>'.
 						'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
 						'<input type="submit" value="'.lang("submit").'"/>'.
-					'</div>'.
-					'<div style="top:47%;margin-left:-15px;">'.
-						lang("Remember the password for ").'<input name="smime_pass_exp" type="number" max="60" min="1" placeholder="10" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
+						'<div style="margin-top:10px;position:relative;text-align:center;margin-left:-15px;">'.
+							lang("Remember the password for ").'<input name="smime_pass_exp" type="number" max="60" min="1" placeholder="10" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
+						'</div>'.
 					'</div>'.
 			'</form>';
 			return $smimeHtml;
@@ -3477,10 +3551,30 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * @param type $_partID part id
 	 * @param type $_type = 'src' type of inline image that needs to be resolved and replaced
 	 *	- types: {plain|src|url|background}
+	 * @param callback $_link_callback Function to generate the link to the image.  If
+	 *	not provided, a default (using mail) will be used.
 	 * @return string returns body content including all CID replacements
 	 */
-	public static function resolve_inline_image_byType ($_body,$_mailbox, $_uid, $_partID, $_type ='src')
+	public static function resolve_inline_image_byType ($_body,$_mailbox, $_uid, $_partID, $_type ='src', callable $_link_callback = null)
 	{
+		/**
+		 * Callback to generate the link
+		 */
+		if(is_null($_link_callback))
+		{
+			$_link_callback = function($_cid) use ($_mailbox, $_uid, $_partID)
+			{
+				$linkData = array (
+					'menuaction'    => 'mail.mail_ui.displayImage',
+					'uid'		=> $_uid,
+					'mailbox'	=> base64_encode($_mailbox),
+					'cid'		=> base64_encode($_cid),
+					'partID'	=> $_partID,
+				);
+				return Egw::link('/index.php', $linkData);
+			};
+		}
+
 		/**
 		 * Callback for preg_replace_callback function
 		 * returns matched CID replacement string based on given type
@@ -3491,7 +3585,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		 * @param string $_type
 		 * @return string|boolean returns the replace
 		*/
-		$replace_callback = function ($matches) use ($_mailbox,$_uid, $_partID,  $_type)
+		$replace_callback = function ($matches) use ($_mailbox,$_uid, $_partID,  $_type, $_link_callback)
 		{
 			if (!$_type)	return false;
 			$CID = '';
@@ -3517,14 +3611,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 			if (is_array($matches) && $CID)
 			{
-				$linkData = array (
-					'menuaction'    => 'mail.mail_ui.displayImage',
-					'uid'		=> $_uid,
-					'mailbox'	=> base64_encode($_mailbox),
-					'cid'		=> base64_encode($CID),
-					'partID'	=> $_partID,
-				);
-				$imageURL = Egw::link('/index.php', $linkData);
+				$imageURL = call_user_func($_link_callback, $CID);
 				// to test without data uris, comment the if close incl. it's body
 				if (Api\Header\UserAgent::type() != 'msie' || Api\Header\UserAgent::version() >= 8)
 				{

@@ -27,6 +27,8 @@ use Horde_Mime_Magic;
 use Horde_Mail_Rfc822;
 use Horde_Mail_Rfc822_List;
 use Horde_Mime_Mdn;
+use Horde_Translation;
+use Horde_Translation_Handler_Gettext;
 use EGroupware\Api;
 
 use tidy;
@@ -5619,12 +5621,13 @@ class Mail
 			if (is_object($mail))
 			{
 				$structure = $mail->getStructure();
-				$isSmime = Mail\Smime::isSmime($structure->getType()) || Mail\Smime::isSmimeSignatureOnly($structure->getType());
+				$isSmime = Mail\Smime::isSmime(($mimeType = $structure->getType())) || Mail\Smime::isSmimeSignatureOnly(($protocol=$structure->getContentTypeParameter('protocol')));
 				if ($isSmime)
 				{
 					return $this->resolveSmimeMessage($structure, array(
 						'uid' => $_uid,
-						'mailbox' => $_folder
+						'mailbox' => $_folder,
+						'mimeType' => Mail\Smime::isSmime($protocol) ? $protocol: $mimeType
 					));
 				}
 				return $mail->getStructure();
@@ -5935,11 +5938,14 @@ class Mail
 				if ($_partID != '')
 				{
 					$mailStructureObject = $_headerObject->getStructure();
-					if (Mail\Smime::isSmime(($smime_type = $mailStructureObject->getType())))
+					if (Mail\Smime::isSmime(($mimeType = $mailStructureObject->getType())) ||
+							Mail\Smime::isSmimeSignatureOnly(($protocol=$mailStructureObject->getContentTypeParameter('protocol'))))
 					{
 						$mailStructureObject = $this->resolveSmimeMessage($mailStructureObject, array(
 							'uid' => $_uid,
-							'mailbox' => $_folder
+							'mailbox' => $_folder,
+							'mimeType' => Mail\Smime::isSmime($protocol) ? $protocol : $mimeType
+
 						));
 					}
 					$mailStructureObject->contentTypeMap();
@@ -6205,7 +6211,7 @@ class Mail
 	 * @param uid the uid of the email to be processed
 	 * @param partid the partid of the email
 	 * @param mailbox the mailbox, that holds the message
-	 * @param preserveHTML flag to pass through to getdisplayableBody
+	 * @param preserveHTML flag to pass through to getdisplayableBody, null for both text and HTML
 	 * @param addHeaderSection flag to be able to supress headersection
 	 * @param includeAttachments flag to be able to supress possible attachments
 	 * @return array/bool with 'mailaddress'=>$mailaddress,
@@ -6221,6 +6227,15 @@ class Mail
 			if (empty($headers)) return false;
 			// dont force retrieval of the textpart, let mailClass preferences decide
 			$bodyParts = $mailClass->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid,null,false,$mailbox);
+			if(is_null($preserveHTML))
+			{
+				$html = static::getdisplayablebody(
+						$mailClass,
+						$mailClass->getMessageBody($uid,'always_display',$partid,null,false,$mailbox),
+						true
+				);
+
+			}
 			// if we do not want HTML but there is no TextRepresentation with the message itself, try converting
 			if ( !$preserveHTML && $bodyParts[0]['mimeType']=='text/html')
 			{
@@ -6318,13 +6333,19 @@ class Mail
 				}
 				if (is_array($attachedMessages)) $attachments = array_merge($attachments,$attachedMessages);
 			}
-			return array(
+			$return = array(
 					'mailaddress'=>$mailaddress,
 					'subject'=>$subject,
 					'message'=>$message,
 					'attachments'=>$attachments,
 					'headers'=>$headers,
-					);
+			);
+			if($html)
+			{
+				$return['html_message'] = $html;
+			}
+
+			return $return;
 	}
 
 	/**
@@ -6959,40 +6980,43 @@ class Mail
 					}
 					if ($sendOK || $openAsDraft)
 					{
-						if ($this->folderExists($_folder,true))
+						if ($openAsDraft)
 						{
-						    if($this->isSentFolder($_folder))
+							if($this->folderExists($_folder,true))
 							{
-						        $flags = '\\Seen';
-						    } elseif($this->isDraftFolder($_folder)) {
-						        $flags = '\\Draft';
-						    } else {
-						        $flags = '';
-						    }
-							$savefailed = false;
-							try
-							{
-								$messageUid =$this->appendMessage($_folder,
-									$mailObject->getRaw(),
-									null,
-									$flags);
+								if($this->isSentFolder($_folder))
+								{
+									$flags = '\\Seen';
+								} elseif($this->isDraftFolder($_folder)) {
+									$flags = '\\Draft';
+								} else {
+									$flags = '';
+								}
+								$savefailed = false;
+								try
+								{
+									$messageUid =$this->appendMessage($_folder,
+										$mailObject->getRaw(),
+										null,
+										$flags);
+								}
+								catch (\Exception\WrongUserinput $e)
+								{
+									$savefailed = true;
+									$alert_msg .= lang("Save of message %1 failed. Could not save message to folder %2 due to: %3",$Subject,$_folder,$e->getMessage());
+								}
+								// no send, save successful, and message_uid present
+								if ($savefailed===false && $messageUid && is_null($sendOK))
+								{
+									$importID = $messageUid;
+									$openComposeWindow = true;
+								}
 							}
-							catch (\Exception\WrongUserinput $e)
+							else
 							{
 								$savefailed = true;
-								$alert_msg .= lang("Save of message %1 failed. Could not save message to folder %2 due to: %3",$Subject,$_folder,$e->getMessage());
+								$alert_msg .= lang("Saving of message %1 failed. Destination Folder %2 does not exist.",$Subject,$_folder);
 							}
-							// no send, save successful, and message_uid present
-							if ($savefailed===false && $messageUid && is_null($sendOK))
-							{
-								$importID = $messageUid;
-								$openComposeWindow = true;
-							}
-						}
-						else
-						{
-							$savefailed = true;
-							$alert_msg .= lang("Saving of message %1 failed. Destination Folder %2 does not exist.",$Subject,$_folder);
 						}
 						if ($sendOK)
 						{
@@ -7252,6 +7276,10 @@ class Mail
 		if (self::$debug) error_log(__METHOD__.__LINE__.array2string($identity));
 		$headers = $this->getMessageHeader($uid, '', 'object', true, $_folder);
 
+		// Override Horde's translation with our own
+		Horde_Translation::setHandler('Horde_Mime', new Horde_Translation_Handler_Gettext('Horde_Mime', EGW_SERVER_ROOT.'/api/lang/locale'));
+		Preferences::setlocale();
+
 		$mdn = new Horde_Mime_Mdn($headers);
 		$mdn->generate(true, true, 'displayed', php_uname('n'), $acc->smtpTransport(), array(
 			'charset' => 'utf-8',
@@ -7346,12 +7374,11 @@ class Mail
 	{
 		// default params
 		$params = array_merge(array(
- 			'passphrase'	=> '',
-			'mimeType'		=> $_mime_part->getType()
+ 			'passphrase'	=> ''
 		), $_params);
 
 		$metadata = array (
-			 'mimeType' => $params['mimeType']
+			 'mimeType' => $params['mimeType']?$params['mimeType']:$_mime_part->getType()
 		);
 		$this->smime = new Mail\Smime;
 		$message = $this->getMessageRawBody($params['uid'], null, $params['mailbox']);
@@ -7363,7 +7390,9 @@ class Mail
 			}
 			catch(\Horde_Crypt_Exception $e)
 			{
-				throw new Mail\Smime\PassphraseMissing(lang('Could not decrypt S/MIME data. This message may not be encrypted by your public key.'));
+				throw new Mail\Smime\PassphraseMissing(lang('Could not decrypt '.
+						'S/MIME data. This message may not be encrypted by your '.
+						'public key and not being able to find corresponding private key.'));
 			}
 			$metadata['encrypted'] = true;
 		}
@@ -7389,14 +7418,27 @@ class Mail
 
 		if ($cert) // signed message, it might be encrypted too
 		{
+			$envelope = $this->getMessageEnvelope($params['uid'], '', false, $params['mailbox']);
+			$from = $this->stripRFC822Addresses($envelope['FROM']);
 			$message_parts = $this->smime->extractSignedContents($message);
+			//$f = $message_parts->_headers->getHeader('from');
 			$metadata = array_merge ($metadata, array (
 				'verify'		=> $cert->verify,
 				'cert'			=> $cert->cert,
+				'certDetails'	=> $this->smime->parseCert($cert->cert),
 				'msg'			=> $cert->msg,
 				'certHtml'		=> $this->smime->certToHTML($cert->cert),
-				'signed'		=> true,
+				'email'			=> $cert->email,
+				'signed'		=> true
 			));
+			// check for email address if both signer email address and
+			// email address of sender are the same.
+			if (is_array($from) && $from[0] != $cert->email)
+			{
+				$metadata['unknownemail'] = true;
+				$metadata['msg'] .= ' '.lang('Email address of signer is different from the email address of sender!');
+			}
+
 			$AB_bo   = new \addressbook_bo();
 			$certkey = $AB_bo->get_smime_keys($cert->email);
 			if (!is_array($certkey) || $certkey[$cert->email] != $cert->cert) $metadata['addtocontact'] = true;
@@ -7420,9 +7462,9 @@ class Mail
 	private function _decryptSmimeBody ($_message, $_passphrase = '')
 	{
 		$AB_bo   = new \addressbook_bo();
-		$credents = Mail\Credentials::read($this->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-		$certkey = $AB_bo->get_smime_keys($GLOBALS['egw_info']['user']['account_email']);
-		if (!$this->smime->verifyPassphrase($credents['acc_smime_password'], $_passphrase))
+		$acc_smime = Mail\Smime::get_acc_smime($this->profileID, $_passphrase);
+		$certkey = $AB_bo->get_smime_keys($acc_smime['acc_smime_username']);
+		if (!$this->smime->verifyPassphrase($acc_smime['pkey'], $_passphrase))
 		{
 			return array (
 				'password_required' => true,
@@ -7432,8 +7474,8 @@ class Mail
 
 		$params  = array (
 			'type'      => 'message',
-			'pubkey'    => $certkey[$GLOBALS['egw_info']['user']['account_email']],
-			'privkey'   => $credents['acc_smime_password'],
+			'pubkey'    => $certkey[$acc_smime['acc_smime_username']],
+			'privkey'   => $acc_smime['pkey'],
 			'passphrase'=> $_passphrase
 		);
 		return $this->smime->decrypt($_message, $params);

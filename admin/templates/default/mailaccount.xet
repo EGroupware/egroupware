@@ -289,27 +289,35 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.mailaccount.encryption" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
+	<template id="admin.mailaccount.encryption" template="" lang="" group="0" version="17.1">
+		<grid width="100%" resize_ratio="0">
 			<columns>
-				<column width="115"/>
-				<column/>
+				<column width="120"/>
+				<column width="500"/>
 			</columns>
 			<rows>
 				<row>
 					<description value="SMIME"/>
 				</row>
 				<row>
-					<description value="Paste your private key as text here or upload your .key/.p12 file"/>
-					<textbox multiline="true" id="acc_smime_password" height="150" width="70%"/>
+					<description value="Certificate"/>
+					<hbox>
+						<buttononly label="Generate Certificate" onclick="app.admin.smime_genCertificate" image="add" background_image="1"/>
+					</hbox>
 				</row>
-				<row>
-					<description/>
-					<file id="smimeKeyUpload" accept=".key,.p12"/>
+				<row disabled="@hide_smime_upload">
+					<description value="Upload your certificate .p12/.pfx file"/>
+					<vbox>
+						<file id="smimeKeyUpload" accept=".p12,.pfx"/>
+						<passwd id="smime_pkcs12_password" size="32" maxlength="128"  blur="Password to unlock encrypted p12" autocomplete="off"/>
+					</vbox>
 				</row>
-				<row>
-					<description for="smime_pkcs12_password" value="Password to unlock encrypted p12"/>
-					<passwd id="smime_pkcs12_password" size="32" maxlength="128" autocomplete="off"/>s
+				<row disabled="!@hide_smime_upload">
+					<description value="Current certificate"/>
+					<hbox>
+						<buttononly id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" background_image="1"/>
+						<buttononly id="smime_delete_p12" label="Delete certificate" onclick="app.admin.change_account" image="delete" background_image="1"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>

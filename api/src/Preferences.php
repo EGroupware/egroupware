@@ -991,7 +991,8 @@ class Preferences
 			'C',
 		) as $local)
 		{
-			if (($ret = setlocale($category,$local.'@'.$charset)) ||
+			if (($ret = setlocale($category,$local.'.'.$charset)) ||
+				($ret = setlocale($category,$local.'@'.$charset)) ||
 				($ret = setlocale($category,$local)))
 			{
 				//error_log(__METHOD__."($category,$charset) lang=$lang, country=$country, country_from_lang=$country_from_lang: returning '$ret'");

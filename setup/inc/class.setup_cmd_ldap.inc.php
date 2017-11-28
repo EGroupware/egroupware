@@ -442,12 +442,12 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			$msg[] = $this->create();
 		}
-		else
+		elseif ($this->account_repository !== 'ads')
 		{
 			$msg[] = $this->connect();
 		}
 		// read accounts from old store
-		$accounts = $this->accounts($to == 'sql' ? 'ldap' : 'sql', $passwords2sql ? 'accounts' : 'both');
+		$accounts = $this->accounts($to == 'sql' ? $this->account_repository : 'sql', $passwords2sql ? 'accounts' : 'both');
 
 		// clean up SQL before migration
 		if ($to == 'sql' && $this->truncate_egw_accounts)
@@ -543,7 +543,7 @@ class setup_cmd_ldap extends setup_cmd
 				$accounts_created++;
 
 				// check if we need to migrate mail-account
-				if (!isset($ldap_class))
+				if (!isset($ldap_class) && $this->account_repository !== 'ads')
 				{
 					$ldap_class = false;
 					$ldap = Api\Ldap::factory(false);
@@ -666,7 +666,8 @@ class setup_cmd_ldap extends setup_cmd
 			}
 		}
 		ob_start();
-		$addressbook->migrate2ldap($to != 'sql' ? 'accounts' : 'accounts-back');
+		$addressbook->migrate2ldap($to != 'sql' ? 'accounts' : 'accounts-back'.
+			($this->account_repository == 'ads' ? '-ads' : ''));
 		$msgs = array_merge($msg, explode("\n", strip_tags(ob_get_clean())));
 
 		$this->restore_db();
@@ -775,7 +776,7 @@ class setup_cmd_ldap extends setup_cmd
 			parent::_setup_enviroment($this->domain);
 			$enviroment_setup = true;
 		}
-		if ($type != 'sql') $this->connect();	// throws exception, if it can NOT connect
+		if ($type != 'sql' && $type != 'ads') $this->connect();	// throws exception, if it can NOT connect
 
 		// otherwise search does NOT work, as accounts_sql uses addressbook_bo for it
 		$GLOBALS['egw_info']['server']['account_repository'] = $type;

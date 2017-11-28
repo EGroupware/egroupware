@@ -354,6 +354,9 @@
     background-color: transparent;
     left: 0px;
   }
+  .et2_link_to .et2_link_entry .ui-icon-triangle-1-s {
+    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+  }
   .et2_link_to .et2_file span {
     background-position: center;
     background-size: 16px 16px;
@@ -361,6 +364,10 @@
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+  }
+  .et2_link_entry .ui-icon-triangle-1-s {
+    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+    background-size: contain;
   }
   .et2_link {
     color: #0C5DA5;
@@ -1136,6 +1143,10 @@ option:checked {
   background: #189800;
   background-image: none;
   color: #FFFFFF;
+  font-weight: normal;
+}
+.ui-state-focus.ui-menu-item a {
+  color: #E6E6E6;
 }
 .ui-state-hover,
 .ui-widget-content .ui-state-hover,
@@ -1330,8 +1341,30 @@ span.ui-icon-search {
 }
 /*###########################################*/
 /*Dialog: edit row*/
+.ui-widget-overlay {
+  background: #CDCDCD;
+}
+.ui-dialog {
+  box-shadow: -2px 1px 9px 3px #B4B4B4;
+}
+.ui-dialog .ui-dialog-buttonpane {
+  padding-left: .8em;
+  padding-right: .8em;
+  padding-top: 0.7em;
+}
+.ui-dialog .ui-dialog-titlebar {
+  padding-left: .8em;
+  padding-right: .8em;
+  font-size: 12pt;
+  border: none;
+  font-weight: normal;
+  background: white;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+  right: .8em;
+}
 .ui-widget-content {
-  border: 1px solid #0C5DA5;
+  border: 1px solid #B4B4B4;
 }
 .ui-widget-content .et2_selectbox button.et2_button_text,
 .ui-widget-content .et2_selectbox select.et2_selectbox {
@@ -1343,6 +1376,43 @@ span.ui-icon-search {
 .ui-widget-content .et2_selectbox div.ui-widget-header ul li label.ui-state-hover {
   background-color: #189800;
   font-weight: normal;
+}
+button.ui-button {
+  /*.border_normal;*/
+  /*.box_shadow_standard_light;*/
+  /*.rounded (3px);*/
+  color: #000000;
+  -webkit-appearance: none;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+  transition-timing-function: linear;
+  background-color: #E6E6E6;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
+  border-color: #B4B4B4;
+  outline: none;
+}
+button.ui-button:hover {
+  background-color: #B4B4B4;
+  color: #1E1E1E;
+}
+button.ui-button .ui-button-icon-primary:hover {
+  background-color: #B4B4B4;
+  color: #1E1E1E;
+  box-shadow: none;
 }
 /*###########################################*/
 /*Dialog: calendar edit series*/
@@ -1827,6 +1897,7 @@ body {
   border: none;
   border-bottom: 1px solid silver;
   border-radius: 0px;
+  background-color: transparent;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select[name="remember_me"] {
   text-indent: 120px;
@@ -1844,6 +1915,7 @@ body {
   border: none;
   border-bottom: 1px solid silver;
   padding-left: 25px;
+  background-color: transparent;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input:focus {
   outline: none;
@@ -3534,6 +3606,16 @@ td.lettersearch {
   overflow-y: auto;
   height: calc(100% - 52px);
 }
+#egwpopup #egwpopup_list .egwpopup_time_label {
+  width: 100%;
+  color: #fafafa;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.5;
+  font-size: 10pt;
+  background: #255ea5;
+  font-weight: bold;
+}
 #egwpopup #egwpopup_list span.egwpopup_delete {
   display: inline-block;
   float: right;
@@ -3557,6 +3639,8 @@ td.lettersearch {
   cursor: pointer;
 }
 #egwpopup #egwpopup_list .egwpopup_message {
+  height: 140px;
+  overflow: hidden;
   padding: 10px;
   background-color: #fafafa;
   border-radius: 3px;
@@ -3564,6 +3648,32 @@ td.lettersearch {
 }
 #egwpopup #egwpopup_list .egwpopup_message:hover {
   background-color: rgba(103, 159, 210, 0.2);
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container {
+  height: 63px;
+  overflow: hidden;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar {
+  display: inline-block;
+  width: 100%;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_message_date {
+  float: left;
+  color: #767676;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_message_open {
+  display: inline-block;
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../images/search.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+  cursor: pointer;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_collapse {
+  display: none;
 }
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_actions_container {
   border-bottom: 1px solid silver;
@@ -3580,10 +3690,49 @@ td.lettersearch {
   background-repeat: no-repeat;
   padding-left: 26px;
 }
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_more_info {
+  color: #767676;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded {
+  position: fixed;
+  top: 4vh;
+  height: 90vh;
+  left: 20vw;
+  width: 60vw;
+  box-shadow: 0 0 40px #666;
+  overflow: auto;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded:hover {
+  background-color: #fafafa;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_message_inner_container {
+  height: auto;
+  overflow: auto;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_collapse {
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../images/close.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+  cursor: pointer;
+  display: inline-block;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_message_more_info {
+  display: none;
+}
 #egwpopup #egwpopup_list .egwpopup_message_seen .egwpopup_mark {
   cursor: auto;
   background: none;
   border-color: #666c6e;
+}
+#egwpopup #egwpopup_list .egwpopup_message_clone {
+  border: 2px dashed silver;
+  opacity: 0.3;
 }
 #egwpopup div#egwpopup_header {
   font-size: 16px;

@@ -290,16 +290,17 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			// new file
 			else
 			{
-				// create file selector
-				var vfs_select = et2_createWidget('vfs-select', {
+
+				var vfs_attrs = {
 					id:'savefile',
 					mode: 'saveas',
 					button_caption:"",
 					button_label:_egwAction.id == 'saveas'?"save as":"save",
 					value: "doc.odt"
-				}, this.et2);
+				};
+				// create file selector
+				var vfs_select = et2_createWidget('vfs-select', vfs_attrs, this.et2);
 
-				// bind change handler for setting the selected path and calling save
 				jQuery(vfs_select.getDOMNode()).on('change', function (){
 					file_path = vfs_select.get_value();
 					if (vfs_select.get_value())
@@ -316,7 +317,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 					}
 				});
 				// start the file selector dialog
-				jQuery(vfs_select.getDOMNode()).click();
+				vfs_select.click();
 			}
 		}
 	},

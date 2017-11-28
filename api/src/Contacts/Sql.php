@@ -32,7 +32,7 @@ class Sql extends Api\Storage
 	/**
 	 * join to show only active account (and not already expired ones)
 	 */
-	const ACCOUNT_ACTIVE_JOIN = ' LEFT JOIN egw_accounts ON egw_addressbook.account_id=egw_accounts.account_id';
+	const ACCOUNT_ACTIVE_JOIN = ' LEFT JOIN egw_accounts ON egw_addressbook.account_id=egw_accounts.account_id ';
 	/**
 	 * filter to show only active account (and not already expired or deactived ones)
 	 * UNIX_TIMESTAMP(NOW()) gets replaced with value of time() in the code!
@@ -110,6 +110,7 @@ class Sql extends Api\Storage
 	function organisations($param)
 	{
 		$filter = is_array($param['col_filter']) ? $param['col_filter'] : array();
+		$join = '';
 		$op = 'OR';
 		if (isset($param['op']) && !empty($param['op'])) $op = $param['op'];
 		$advanced_search = false;
@@ -147,6 +148,18 @@ class Sql extends Api\Storage
 				$filter[] = "(".$this->table_name.".contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 					" OR contact_private=0 AND ".$this->table_name.".contact_owner IN (".
 					implode(',',array_keys($this->grants))."))";
+			}
+			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== 'none')
+			{
+				$join .= self::ACCOUNT_ACTIVE_JOIN;
+				if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
+				{
+					$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
+				}
+				else
+				{
+					$filter[] = 'egw_accounts.account_id IS NULL';
+				}
 			}
 		}
 		if ($param['searchletter'])
@@ -194,7 +207,7 @@ class Sql extends Api\Storage
 			$append = "ORDER BY org_name $sort,is_main DESC,$by $sort";
 		}
 		$rows = parent::search($param['search'],array('org_name'),$append,$extra,$wildcard,false,$op/*'OR'*/,
-			array($param['start'],$param['num_rows']),$filter);
+			array($param['start'],$param['num_rows']),$filter,$join);
 
 		if (!$rows) return false;
 
@@ -216,7 +229,7 @@ class Sql extends Api\Storage
 		{
 			foreach((array) parent::search(null, array('org_name','org_unit','adr_one_locality'),
 				'GROUP BY org_name,org_unit,adr_one_locality',
-				'',$wildcard,false,$op/*'AND'*/,false,$filter) as $row)
+				'',$wildcard,false,$op/*'AND'*/,false,$filter,$join) as $row)
 			{
 				$org_key = $row['org_name'].($by ? '|||'.$row[$by] : '');
 				if ($orgs[$org_key]['org_unit_count'] == 1)
@@ -250,7 +263,7 @@ class Sql extends Api\Storage
 	 * We join egw_addressbook to itself, and count how many fields match.  If
 	 * enough of the fields we care about match, we count those two records as
 	 * duplicates.
-	 * 
+	 *
 	 * @var array $param
 	 * @var string $param[grouped_view] 'duplicate', 'duplicate,adr_one_location', 'duplicate,org_name' how to group
 	 * @var int $param[owner] addressbook to search
@@ -351,7 +364,20 @@ class Sql extends Api\Storage
 			implode('+', $extra) . ' AS match_count'
 		);
 		$join .= $this->db->column_data_implode(' OR ',$join_fields) . ')';
-
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== 'none')
+		{
+			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
+			{
+				$join .=' LEFT JOIN egw_accounts AS account_1 ON egw_addressbook.account_id=account_1.account_id ';
+				$join .=' LEFT JOIN egw_accounts AS account_2 ON egw_addressbook.account_id=account_2.account_id ';
+				$filter[] = str_replace(array('UNIX_TIMESTAMP(NOW())', 'account_'),array(time(),'account_1.account_'),self::ACOUNT_ACTIVE_FILTER);
+				$filter[] = str_replace(array('UNIX_TIMESTAMP(NOW())', 'account_'),array(time(),'account_2.account_'),self::ACOUNT_ACTIVE_FILTER);
+			}
+			else
+			{
+				$filter[] = 'egw_addressbook.account_id IS NULL and a2.account_id IS NULL';
+			}
+		}
 		$append = " HAVING match_count >= $match_count ORDER BY {$order} $sort, $this->table_name.contact_id";
 		$columns[] = $this->table_name.'.contact_id AS contact_id';
 
@@ -368,7 +394,7 @@ class Sql extends Api\Storage
 		}
 		$query = $this->parse_search(array_merge($criteria, $filter), $wildcard, false, ' AND ');
 
-		$sub_query = $this->db->select($this->table_name, 
+		$sub_query = $this->db->select($this->table_name,
 			'DISTINCT ' . implode(', ',array_merge($columns, $extra)),
 			$query,
 			False, False, 0, $append, False, -1,
@@ -380,7 +406,7 @@ class Sql extends Api\Storage
 		{
 			$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
 		}
-		
+
 		$rows = $this->db->query(
 				"SELECT $mysql_calc_rows " . $columns. ', COUNT(contact_id) AS group_count' .
 				' FROM (' . $sub_query . ') AS matches GROUP BY ' . implode(',',$group) .
@@ -396,7 +422,7 @@ class Sql extends Api\Storage
 			$row['email_home'] = $row['contact_email_home'];
 			$dupes[] = $this->db2data($row);
 		}
-		
+
 		if ($mysql_calc_rows)
 		{
 			$this->total = $this->db->query('SELECT FOUND_ROWS()')->fetchColumn();
@@ -526,10 +552,18 @@ class Sql extends Api\Storage
 		}
 		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
 		if ((is_array($owner) ? in_array(0, $owner) : !$owner) && substr($this->account_repository,0,3) == 'sql' &&
-			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter))
+			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter) &&
+			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== 'none')
 		{
 			$join .= self::ACCOUNT_ACTIVE_JOIN;
-			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
+			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
+			{
+				$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
+			}
+			else
+			{
+				$filter[] = 'egw_accounts.account_id IS NULL';
+			}
 		}
 		if ($join || ($criteria && is_string($criteria)) || ($criteria && is_array($criteria) && $order_by))	// search also adds a join for custom fields!
 		{
@@ -1021,6 +1055,30 @@ class Sql extends Api\Storage
 		if (empty($this->data['carddav_name']))
 		{
 			$update['carddav_name'] = $this->data['id'].'.vcf';
+		}
+		// update photo in entry-directory, unless hinted it is unchanged
+		if (!$err && $this->data['photo_unchanged'] !== true)
+		{
+			// in case files bit-field is not available read it from DB
+			if (!isset($this->data['files']))
+			{
+				$this->data['files'] = (int)$this->db->select($this->table_name, 'contact_files', array(
+					'contact_id' => $this->data['id'],
+				), __LINE__, __FILE__)->fetchColumn();
+			}
+			$path =  Api\Link::vfs_path('addressbook', $this->data['id'], Api\Contacts::FILES_PHOTO);
+			$backup = Api\Vfs::$is_root; Api\Vfs::$is_root = true;
+			if (empty($this->data['jpegphoto']))
+			{
+				unlink($path);
+				$update['files'] = $this->data['files'] & ~Api\Contacts::FILES_BIT_PHOTO;
+			}
+			else
+			{
+				file_put_contents($path, $this->data['jpegphoto']);
+				$update['files'] = $this->data['files'] | Api\Contacts::FILES_BIT_PHOTO;
+			}
+			Api\Vfs::$is_root = $backup;
 		}
 		if (!$err && $update)
 		{

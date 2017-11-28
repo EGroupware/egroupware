@@ -269,21 +269,23 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		loading_prompt: function(_id,_stat,_msg,_node, _mode)
 		{
 			var $container = '';
-			var id = 'egw-loadin-prompt_'+_id || 'egw-loading-prompt_1';
+			var jQuery = _wnd.jQuery;
+
+			var id = _id? 'egw-loadin-prompt_'+_id: 'egw-loading-prompt_1';
 			var mode = _mode || 'spinner';
 			if (_stat)
 			{
-				var $node = jQuery(_node) || jQuery ('body');
+				var $node = _node? jQuery(_node): jQuery('body');
 
-				var $container = jQuery(document.createElement('div'))
+				var $container = jQuery(_wnd.document.createElement('div'))
 						.attr('id', id)
 						.addClass('egw-loading-prompt-container ui-front');
 
-				var $text = jQuery(document.createElement('span'))
+				var $text = jQuery(_wnd.document.createElement('span'))
 						.addClass('egw-loading-prompt-'+mode+'-msg')
 						.text(_msg)
 						.appendTo($container);
-				var $animator = jQuery(document.createElement('div'))
+				var $animator = jQuery(_wnd.document.createElement('div'))
 						.addClass('egw-loading-prompt-'+mode+'-animator')
 						.appendTo($container);
 				$container.insertBefore($node);

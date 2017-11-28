@@ -136,8 +136,6 @@
 						</hbox>
 						<textbox size="36" maxlength="255" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title" class="$cont[hide_from_css]" readonly="true"/>
 					</vbox>
-					<description options=",,,info_addr" value="Phone/Email"/>
-					<textbox size="30" maxlength="255" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link" class="inputFullWidth" readonly="true"/>
 				</row>
 				<row class="row">
 					<description value="Subject" options=",,,info_subject"/>

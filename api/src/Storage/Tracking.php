@@ -130,6 +130,15 @@ abstract class Tracking
 	var $notify_current_user = false;
 
 	/**
+	 * Class to use for generating the notifications.
+	 * Normally, just the notification class but for testing we pass in a mocked
+	 * class
+	 *
+	 * @var notification_class
+	 */
+	protected $notification_class = notifications::class;
+
+	/**
 	 * Array with error-messages if track($data,$old) returns false
 	 *
 	 * @var array
@@ -190,7 +199,7 @@ abstract class Tracking
 	 * @param string $cf_app = null if set, custom field names get added to $field2history
 	 * @return bo_tracking
 	 */
-	function __construct($cf_app = null)
+	function __construct($cf_app = null, $notification_class=false)
 	{
 		if ($cf_app)
 		{
@@ -204,6 +213,10 @@ abstract class Tracking
 					$this->cf_link_fields['#'.$cf_name] = $cf_data['type'] == 'link-entry' ? '' : $cf_data['type'];
 				}
 			}
+		}
+		if($notification_class)
+		{
+			$this->notification_class = $notification_class;
 		}
 	}
 
@@ -766,10 +779,11 @@ abstract class Tracking
 		{
 			// send via notification_app
 			try {
-				$notification = new notifications();
+				$class = $this->notification_class;
+				$notification = new $class();
 				$notification->set_receivers(array($receiver));
-				$notification->set_message($body_cache['text']);
-				$notification->set_message($body_cache['html']);
+				$notification->set_message($body_cache['text'], 'plain');
+				$notification->set_message($body_cache['html'], 'html');
 				$notification->set_sender($sender);
 				$notification->set_subject($subject);
 				$notification->set_links(array($link));

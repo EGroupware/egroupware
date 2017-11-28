@@ -971,35 +971,6 @@ class admin_mail
 		$tpl->disableElement('notify_save_default', !$is_multiple || !$edit_access);
 		$tpl->disableElement('notify_use_default', !$is_multiple);
 
-		if (isset($content['smimeKeyUpload'])
-				&& ($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])))
-		{
-			$smime = new Mail\Smime;
-			switch($content['smimeKeyUpload']['type'])
-			{
-				case 'application/x-pkcs12':
-					$cert_info = $smime->extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
-					if (is_array($cert_info))
-					{
-						$content['acc_smime_password'] = $cert_info['pkey'];
-						if ($cert_info['cert'])
-						{
-							$AB_bo = new addressbook_bo();
-							$AB_bo->set_smime_keys(array(
-								$content['ident_email'] => $cert_info['cert']
-							));
-						}
-					}
-					else
-					{
-						$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
-					}
-					break;
-				case 'application/x-iwork-keynote-sffkey':
-					$content['acc_smime_password'] = $pkcs12;
-					break;
-			}
-		}
 		if (isset($content['button']))
 		{
 			list($button) = each($content['button']);
@@ -1074,6 +1045,35 @@ class admin_mail
 							{
 								$content['notify_account_id'] = $content['called_for'] ?
 									$content['called_for'] : $GLOBALS['egw_info']['user']['account_id'];
+							}
+							// SMIME SAVE
+							if (isset($content['smimeKeyUpload']))
+							{
+								$smime = new Mail\Smime;
+								$content['acc_smime_username'] = $smime->getEmailFromKey($content['smime_cert']);
+								$AB_bo = new addressbook_bo();
+								if (($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])) &&
+										$content['smimeKeyUpload']['type'] == 'application/x-pkcs12')
+								{
+									$cert_info = Mail\Smime::extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
+									if (is_array($cert_info))
+									{
+										$content['acc_smime_password'] = $pkcs12;
+										$content['smime_cert'] = $cert_info['cert'];
+										if ($content['smime_cert'])
+										{
+											$content['acc_smime_username'] = $smime->getEmailFromKey($content['smime_cert']);
+											$AB_bo = new addressbook_bo();
+											$AB_bo->set_smime_keys(array(
+												$content['acc_smime_username'] => $content['smime_cert']
+											));
+										}
+									}
+									else
+									{
+										$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
+									}
+								}
 							}
 							self::fix_account_id_0($content['account_id'], true);
 							$content = Mail\Account::write($content, $content['called_for'] || !$this->is_admin ?
@@ -1191,6 +1191,25 @@ class admin_mail
 					}
 			}
 		}
+		// SMIME UPLOAD/DELETE/EXPORT control
+		$content['hide_smime_upload'] = false;
+		if (!empty($content['acc_smime_password']))
+		{
+			if (!empty($content['smime_delete_p12']) &&
+					Mail\Credentials::delete (
+						$content['acc_id'],
+						$content['called_for'] ? $content['called_for'] : $GLOBALS['egw_info']['user']['account_id'],
+						Mail\Credentials::SMIME
+				))
+			{
+				unset($content['acc_smime_password'], $content['smimeKeyUpload'], $content['smime_delete_p12']);
+				$content['hide_smime_upload'] = false;
+			}
+			else
+			{
+				$content['hide_smime_upload'] = true;
+			}
+		}
 
 		// disable delete button for new, not yet saved entries, if no delete rights or a non-standard identity selected
 		$readonlys['button[delete]'] = empty($content['acc_id']) ||
@@ -1210,7 +1229,8 @@ class admin_mail
 			$readonlys['button[cancel]'] = false;
 			// allow to edit notification-folders
 			$readonlys['button[save]'] = $readonlys['button[apply]'] =
-				$readonlys['notify_folders'] = $readonlys['notify_use_default'] = false;
+			$readonlys['notify_folders'] = $readonlys['notify_use_default'] =
+			$readonlys['smimeKeyUpload'] = $readonlys['smime_pkcs12_password']= false;
 		}
 
 		$sel_options['acc_imap_ssl'] = $sel_options['acc_sieve_ssl'] =
@@ -1250,6 +1270,11 @@ class admin_mail
 					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
 					$sel_options['notify_folders'] = $sel_options['acc_folder_ham'] =
 						self::mailboxes(self::imap_client ($content));
+				// Allow folder notification on INBOX for popup_only
+				if ($GLOBALS['egw_info']['user']['preferences']['notifications']['notification_chain'] == 'popup_only')
+				{
+					$sel_options['notify_folders']['INBOX'] = lang('INBOX');
+				}
 			}
 			catch(Exception $e) {
 				if (self::$debug) _egw_log_exception($e);

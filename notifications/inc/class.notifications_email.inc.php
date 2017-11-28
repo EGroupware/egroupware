@@ -104,6 +104,11 @@ class notifications_email implements notifications_iface {
 		$this->mail->setFrom($this->sender->account_email, $this->sender->account_fullname);
 
 		$this->mail->addHeader('Subject', trim($_subject)); // trim the subject to avoid strange wrong encoding problem
+		if ($_messages['html'])
+		{
+			// embed images as inline
+			\EGroupware\Api\Mail::processURL2InlineImages($this->mail, $body_html, null);
+		}
 		$this->mail->setHtmlBody($body_html, null, false);	// no automatic alternativ
 		$this->mail->setBody($body_plain);
 

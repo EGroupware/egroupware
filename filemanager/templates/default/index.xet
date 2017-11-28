@@ -54,7 +54,7 @@
 		<buttononly statustext="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" image="list_tile" background_image="true"/>
 	</template>
 	<template id="filemanager.index.header_right" template="" lang="" group="0" version="1.9.003">
-		<buttononly statustext="Create new open document file" id="button[new_doc]" onclick="app.filemanager.editor_new();" image="new" background_image="true"/>
+		<dropdown_button id="new" onchange="app.filemanager.create_new" label="New" onclick="app.filemanager.create_new"/>
 		<buttononly statustext="Rename, change permissions or ownership" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" background_image="true"/>
 		<buttononly statustext="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" ro_image="createdir_disabled" background_image="true"/>
 		<buttononly statustext="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" image="link" ro_image="link_disabled" background_image="true"/>

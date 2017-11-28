@@ -677,6 +677,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				if (isset($expand['end'])) $expand['end'] = $this->vCalendar->_parseDateTime($expand['end']);
 			}
 			$events =& self::get_series($event['uid'], $this->bo, $expand, $user);
+			// as alarm is now only on next recurrence, set alarm from original event on master
+			if ($event['alarm']) $events[0]['alarm'] = $event['alarm'];
 		}
 		elseif(!$this->client_shared_uid_exceptions && $event['reference'])
 		{
@@ -733,6 +735,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		foreach($events as $k => &$recurrence)
 		{
 			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($uid)[$k]:" . array2string($recurrence));
+			if ($master && $recurrence['reference'] != $master['id'])
+			{
+				unset($events[$k]);
+				continue;	// same uid, but references a different event or is own master
+			}
 			if (!$master || $recurrence['id'] != $master['id'])	// real exception
 			{
 				// user is NOT participating in this exception

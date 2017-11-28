@@ -95,7 +95,7 @@ class infolog_ui
 	 *
 	 * @return infolog_ui
 	 */
-	function __construct()
+	function __construct(Etemplate $etemplate = null)
 	{
 		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'infolog') Api\Translation::add_app('infolog');
 
@@ -107,7 +107,11 @@ class infolog_ui
 
 		$this->bo = new infolog_bo();
 
-		$this->tmpl = new Etemplate();
+		if($etemplate === null)
+		{
+			$etemplate = new Etemplate();
+		}
+		$this->tmpl = $etemplate;
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
@@ -480,7 +484,6 @@ class infolog_ui
 		// Check to see if we need to remove description
 		foreach($infos as $id => $info)
 		{
-			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
 			if (!$query['csv_export'] || !is_array($query['csv_export']))
 			{
 				$info['links'] =& $links[$id];
@@ -765,7 +768,7 @@ class infolog_ui
 				// Some processing to add values in for links and cats
 				$multi_action = $values['nm']['multi_action'];
 				// Action has an additional action - add / delete, etc.  Buttons named <multi-action>_action[action_name]
-				if(in_array($multi_action, array('link', 'responsible')))
+				if(in_array($multi_action, array('link', 'responsible', 'startdate', 'enddate')))
 				{
 					// eTemplate ignores the _popup namespace, but et2 doesn't
 					if($values[$multi_action.'_popup'])
@@ -1178,6 +1181,16 @@ class infolog_ui
 					'cat' =>  Etemplate\Widget\Nextmatch::category_action(
 						'infolog',$group,'Change category','cat_'
 					),
+					'startdate' => array(
+						'caption' => 'Start date',
+						'group' => $group,
+						'nm_action' => 'open_popup',
+					),
+					'enddate' => array(
+						'caption' => 'Due date',
+						'group' => $group,
+						'nm_action' => 'open_popup',
+					),
 					'responsible' => array(
 						'caption' => 'Delegation',
 						'group' => $group,
@@ -1564,6 +1577,21 @@ class infolog_ui
 						$failed++;
 					}
 					break;
+				case 'startdate':
+				case 'enddate':
+					$field = $action == 'startdate' ? 'info_startdate' : 'info_enddate';
+					list($ok, $date) = explode('_', $settings, 2);
+					$entry[$field] = $date ? Api\DateTime::to($date, 'ts') : null;
+					$action_msg = lang('changed');
+					if($this->bo->write($entry, true,true,true,$skip_notifications))
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
+					break;
 			}
 		}
 		return $failed == 0;
@@ -1765,14 +1793,6 @@ class infolog_ui
 					{
 						$content['info_link_id'] = 0;	// as field has to be int
 					}
-					if (is_array($content['info_contact']) && $content['info_contact']['id'])
-					{
-						$content['info_contact'] = $content['info_contact']['app'] . ':' . $content['info_contact']['id'];
-					}
-					else
-					{
-						$content['info_contact'] = false;
-					}
 					$active_tab = $content['tabs'];
 					if (!($info_id = $this->bo->write($content, true, true, true, $content['no_notifications'])))
 					{
@@ -1796,32 +1816,9 @@ class infolog_ui
 						Framework::refresh_opener($content['msg'],'infolog',$info_id,$operation);
 					}
 					$content['tabs'] = $active_tab;
-					//try to keep the project manager link if the intenstion is only to remove contact
-					if ($old['info_link']['app'] == 'projectmanager' && $old['info_link']['id'] = $content['pm_id'])
-					{
-						Link::link('infolog',$content['link_to']['to_id'],'projectmanager',$content['pm_id']);
-					}
-					if ((int) $content['pm_id'] != (int) $content['old_pm_id'])
-					{
-						//echo "<p>pm_id changed: $content[old_pm_id] -> $content[pm_id]</p>\n";
-						// update links accordingly, if selected project changed
-						if ($content['pm_id'])
-						{
-							//echo "<p>this->link->link('infolog',{$content['link_to']['to_id']},'projectmanager',{$content['pm_id']});</p>";
-							Link::link('infolog',$info_id,'projectmanager',$content['pm_id']);
-							// making the project the selected link, if no other link selected
-							if (!$info_link_id || $info_link_id == 'projectmanager:'.$content['old_pm_id'])
-							{
-								$info_link_id = 'projectmanager:'.$content['pm_id'];
-							}
-						}
-						if ($content['old_pm_id'])
-						{
-							//echo "<p>this->link->unlink2(0,infolog,{$content['link_to']['to_id']},0,'projectmanager',{$content['old_pm_id']});</p>\n";
-							Link::unlink2(0,infolog,$content['link_to']['to_id'],0,'projectmanager',$content['old_pm_id']);
-						}
-						$content['old_pm_id'] = $content['pm_id'];
-					}
+
+					$pm_links = Link::get_links('infolog',$content['info_id'],'projectmanager');
+
 					$content['link_to']['to_app'] = 'infolog';
 					$content['link_to']['to_id'] = $info_id;
 
@@ -1921,7 +1918,6 @@ class infolog_ui
 			{
 				Framework::window_close(lang('Permission denied!'));
 			}
-			if (!(strpos($content['info_addr'],',')===false) && strpos($content['info_addr'],', ')===false) $content['info_addr'] = str_replace(',',', ',$content['info_addr']);
 			foreach(array('info_subject', 'info_des') as $key)
 			{
 				if(!isset($content[$key]) || strlen($content[$key]) < 75)
@@ -2041,7 +2037,7 @@ class infolog_ui
 					$action_ids = explode(',',$action_id);
 					if(count($action_ids) == 1)
 					{
-						$content['info_contact'] = $action.':'.$action_id;
+						$content['info_contact'] = array('app' => $action, 'id' => $action_id);
 					}
 					foreach ($action_ids as $n => $id)
 					{
@@ -2192,7 +2188,7 @@ class infolog_ui
 		$content['info_anz_subs'] = (int)$content['info_anz_subs'];	// gives javascript error if empty!
 
 		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
-		if (!isset($content['pm_id']) && $old_pm_id) $content['pm_id'] = $old_pm_id;
+		unset($content['old_pm_id']);
 
 		if ($info_id && $this->bo->history)
 		{
@@ -2266,14 +2262,15 @@ class infolog_ui
 		//echo "<p>infolog_ui.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
 		//$content['info_cc'] is expected (by the widget) to be an array of emailaddresses, but is stored as comma separated string
 		if (!empty($content['info_cc'])&&!is_array($content['info_cc']))$content['info_cc'] = explode(',',$content['info_cc']);
-		$this->tmpl->exec('infolog.infolog_ui.edit',$content,$sel_options,$readonlys,$preserv+array(	// preserved values
+		$preserve = array_merge( $preserv, array(	// preserved values
 			'info_id'       => $info_id,
 			'action'        => $action,
 			'action_id'     => $action_id,
 			'referer'       => $referer,
 			'no_popup'      => $no_popup,
 			'old_pm_id'     => $old_pm_id,
-		),$no_popup ? 0 : 2);
+		));
+		$this->tmpl->exec('infolog.infolog_ui.edit',$content,$sel_options,$readonlys,$preserve,$no_popup ? 0 : 2);
 	}
 
 	/**
@@ -2357,8 +2354,13 @@ class infolog_ui
 			if (!isset($content['info_contact']) || empty($content['info_contact']) || $content['info_contact'] === 'copy:')
 			{
 				$linkinfos = Link::get_link($info_link_id);
-				$content['info_contact'] = $linkinfos['link_app1']=='infolog'? $linkinfos['link_app2'].':'.$linkinfos['link_id2']:$linkinfos['link_app1'].':'.$linkinfos['link_id1'];
-				if (stripos($content['info_contact'],'projectmanager')!==false) $content['pm_id'] = $linkinfos['link_app1']=='projectmanager'? $linkinfos['link_id1']:$linkinfos['link_id2'];
+				$content['info_contact'] = $linkinfos['link_app1']=='infolog'?
+						array('app' => $linkinfos['link_app2'], 'id' => $linkinfos['link_id2']):
+						array('app' => $linkinfos['link_app1'], 'id' => $linkinfos['link_id1']);
+				if ($content['info_contact']['app'] == 'projectmanager')
+				{
+					$content['pm_id'] = $linkinfos['link_app1']=='projectmanager'? $linkinfos['link_id1']:$linkinfos['link_id2'];
+				}
 			}
 			unset($content['info_link_id']);
 		}
@@ -2412,7 +2414,6 @@ class infolog_ui
 		$fields = array(
 			'info_cat'      => 'Category',
 			'info_from'     => 'Contact',
-			'info_addr'     => 'Phone/Email',
 			'info_subject'  => 'Subject',
 			'info_des'      => 'Description',
 			'link_to'       => 'Links',
@@ -2424,7 +2425,6 @@ class infolog_ui
 		$excludefields = array(
 			'info_cat'      => 'Category',
 			'info_from'     => 'Contact',
-			'info_addr'     => 'Phone/Email',
 			'info_subject'  => 'Subject',
 			'info_des'      => 'Description',
 			'link_to'       => 'Links',
@@ -2633,7 +2633,6 @@ class infolog_ui
 		$fields = array(
 			'info_type'          => lang('Type'),
 			'info_from'          => lang('Contact'),
-			'info_addr'          => lang('Phone/Email'),
 //			'info_link_id'       => lang('primary link'),
 			'info_cat'           => array('label' => lang('Category'),'type' => 'select-cat'),
 			'info_priority'      => lang('Priority'),

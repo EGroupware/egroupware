@@ -379,7 +379,7 @@ class Contacts extends Contacts\Storage
 			$addressbooks += $to_sort;
 		}
 		if ($required != Acl::ADD &&	// do NOT allow to set accounts as default addressbook (AB can add accounts)
-			!$preferences['addressbook']['hide_accounts'] && (
+			$preferences['addressbook']['hide_accounts'] !== '1' && (
 				($grants[0] & $required) == $required ||
 				$preferences['common']['account_selection'] == 'groupmembers' &&
 				$this->account_repository != 'ldap' && ($required & Acl::READ)))
@@ -734,7 +734,7 @@ class Contacts extends Contacts\Storage
 				$data[$name] = DateTime::server2user($data[$name], $date_format);
 			}
 		}
-		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto'],'',$data['etag']);
+		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto'] || ($data['files'] & self::FILES_BIT_PHOTO), '', $data['etag']);
 
 		// set freebusy_uri for accounts
 		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'] && !is_object($GLOBALS['egw_setup']))
@@ -1054,13 +1054,15 @@ class Contacts extends Contacts\Storage
 	}
 
 	/**
-	 * Resizes photo to 60*80 pixel and returns it
+	 * Resize photo down to 240pixel width and returns it
+	 *
+	 * Also makes sures photo is a JPEG.
 	 *
 	 * @param string|FILE $photo string with image or open filedescribtor
 	 * @param int $dst_w =240 max width to resize to
 	 * @return string with resized jpeg photo, null on error
 	 */
-	public static function resize_photo($photo,$dst_w=240)
+	public static function resize_photo($photo, $dst_w=240)
 	{
 		if (is_resource($photo))
 		{
@@ -1711,8 +1713,7 @@ class Contacts extends Contacts\Storage
 	 */
 	public function read_birthdays($addressbook, $year)
 	{
-		$birthdays = Cache::getInstance(__CLASS__,"birthday-$year-$addressbook");
-		if($birthdays !== null)
+		if (($birthdays = Cache::getInstance(__CLASS__,"birthday-$year-$addressbook")) !== null)
 		{
 			return $birthdays;
 		}
@@ -1724,7 +1725,7 @@ class Contacts extends Contacts\Storage
 			'bday' => "!''",
 		);
 		$bdays =& $this->search('',array('id','n_family','n_given','n_prefix','n_middle','bday'),
-			'contact_bday ASC',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter);
+			'contact_bday ASC', '', '', false, 'AND', false, $filter);
 
 		if ($bdays)
 		{
@@ -1889,6 +1890,13 @@ class Contacts extends Contacts\Storage
 						break;
 				}
 			}
+
+			// Merge distribution lists
+			$lists = $this->read_distributionlist(array($contact['id']));
+			foreach($lists[$contact['id']] as $list_id => $list_name)
+			{
+				parent::add2list($target['id'], $list_id);
+			}
 		}
 		if (!$this->save($target)) return 0;
 
@@ -1920,9 +1928,40 @@ class Contacts extends Contacts\Storage
 					unset($newlinkID);
 				}
 			}
+			// Update calendar
+			$this->merge_calendar('c'.$contact['id'], $target['account_id'] ? 'u'.$target['account_id'] : 'c'.$target['id']);
+
 			if ($this->delete($contact['id'])) $success++;
 		}
 		return $success;
+	}
+
+	/**
+	 * Change the contact ID in any calendar events from the old contact ID
+	 * to the new merged ID
+	 *
+	 * @param int $old_id
+	 * @param int $new_id
+	 */
+	protected function merge_calendar($old_id, $new_id)
+	{
+		static $bo;
+		if(!is_object($bo))
+		{
+			$bo = new \calendar_boupdate();
+		}
+
+		// Find all events with this contact
+		$events = $bo->search(array('users' => $old_id, 'ignore_acl' => true));
+
+		foreach($events as $event)
+		{
+			$event['participants'][$new_id] = $event['participants'][$old_id];
+			unset($event['participants'][$old_id]);
+
+			// Quietly update, ignoring ACL & no notifications
+			$bo->update($event, true, true, true, true, $messages, true);
+		}
 	}
 
 	/**

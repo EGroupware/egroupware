@@ -50,7 +50,6 @@ class infolog_tracking extends Api\Storage\Tracking
 	var $field2history = array(
 		'info_type'          => 'Ty',
 		'info_from'          => 'Fr',
-		'info_addr'          => 'Ad',
 		'info_link_id'       => 'Li',
 		'info_id_parent'     => 'parent',
 		'info_cat'           => 'Ca',
@@ -88,7 +87,6 @@ class infolog_tracking extends Api\Storage\Tracking
 		'info_from'      => 'Contact',
 		'info_subject'   => 'Subject',
 		'info_des'       => 'Description',
-		'info_addr'      => 'Phone/Email',
 		'info_link_id'   => 'primary link',
 		'info_id_parent' => 'Parent',
 		'info_cat'       => 'Category',
@@ -218,7 +216,6 @@ class infolog_tracking extends Api\Storage\Tracking
 		foreach(array(
 			'info_type'      => lang($this->infolog->enums['type'][$data['info_type']]).$id,
 			'info_from'      => $data['info_from'],
-			'info_addr'      => $data['info_addr'],
 			'info_cat'       => $data['info_cat'] ? $GLOBALS['egw']->categories->id2name($data['info_cat']) : '',
 			'info_priority'  => lang($this->infolog->enums['priority'][$data['info_priority']]),
 			'info_owner'     => Api\Accounts::username($data['info_owner']),

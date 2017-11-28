@@ -79,6 +79,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				// Tooltip
 				if(!event._tooltipElem)
 				{
+					event.options.statustext_html = true;
 					event.set_statustext(event._tooltip());
 					return event.div.trigger('mouseenter');
 				}
@@ -209,7 +210,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			{
 				parent._out_of_view();
 			}
-			
+
 			// This should now cease to exist, as new events have been created
 			this.free();
 			return;
@@ -332,7 +333,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		if(jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div,'background-color').toRgbaString())
 		{
 			// Most statuses use colored borders
-			this.div.css('border-color',status_class === 'calendar_calEventAllAccepted' ? this.div.css('background-color') : '');
+			this.div.css('border-color',this.div.css('background-color') );
 		}
 
 		this.icons.appendTo(this.title)
@@ -521,7 +522,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				'<span class="calendar_calEventTitle">'+egw.htmlspecialchars(this.options.value.title)+'</span><br>'+
 				egw.htmlspecialchars(this.options.value.description)+'</p>'+
 				'<p style="margin: 2px 0px;">'+times+'</p>'+
-				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' + 
+				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' +
 				egw.htmlspecialchars(this.options.value.location)+'</p>' : '')+
 				(cat_label ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Category') + '</span>:' + cat_label +'</p>' : '')+
 				'<p><span class="calendar_calEventLabel">'+this.egw().lang('Participants')+'</span>:<br />'+
@@ -541,7 +542,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		{
 			return '';
 		}
-		
+
 		var participant_status = {A: 0, R: 0, T: 0, U: 0, D: 0};
 		var status_label = {A: 'accepted', R: 'rejected', T: 'tentative', U: 'unknown', D: 'delegated'};
 		var participant_summary = Object.keys(this.options.value.participants).length + ' ' + this.egw().lang('Participants')+': ';
@@ -914,7 +915,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			}
 		}
 	},
-	
+
 	/**
 	 * Link the actions to the DOM nodes / widget bits.
 	 *

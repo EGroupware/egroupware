@@ -668,10 +668,11 @@ class HTTP_WebDAV_Server
         }
 
         // analyze request payload
-        $propinfo = new _parse_propfind("php://input", $this->store_request);
+        $propinfo = new _parse_propfind("php://input", $this->store_request, $handler);
         if ($this->store_request) $this->request = $propinfo->request;
-        if (!$propinfo->success) {
-            $this->http_status("400 Error");
+        if ($propinfo->error) {
+            $this->http_status("400 Bad Request");
+			if (method_exists($this, 'log')) $this->log('Error parsing propfind: '.$propinfo->error);
             return;
         }
 		$options['root'] = $propinfo->root;
@@ -1002,7 +1003,7 @@ class HTTP_WebDAV_Server
                             } elseif (isset($prop['raw'])) {
                             	$val = $this->_prop_encode('<![CDATA['.$prop['val'].']]>');
                             } else {
-	                    		$val = $this->_prop_encode(htmlspecialchars($prop['val'], ENT_NOQUOTES, 'utf-8'));
+	                    		$val = $this->_prop_encode(htmlspecialchars($prop['val'], ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8'));
                             }
 	                        echo '     <'.($this->crrnd?'':'D:')."$prop[name]$ns_defs>$val".
 	                        	'</'.($this->crrnd?'':'D:')."$prop[name]>\n";
@@ -1048,7 +1049,7 @@ class HTTP_WebDAV_Server
 	                    			{
 			                    		foreach($subprop['val'] as $attr => $val)
 										{
-				                    		$vals .= ' '.$attr.'="'.htmlspecialchars($val, ENT_NOQUOTES, 'utf-8').'"';
+				                    		$vals .= ' '.$attr.'="'.htmlspecialchars($val, ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8').'"';
 										}
 			                    		$vals .= '/>';
 	                    			}
@@ -1060,7 +1061,7 @@ class HTTP_WebDAV_Server
 	                    				$vals .= '<![CDATA['.$subprop['val'].']]>';
 	                    			} else {
 	                    				if($subprop['name'] == 'href') $subprop['val'] = $this->_urlencode($subprop['val']);
-		                    			$vals .= htmlspecialchars($subprop['val'], ENT_NOQUOTES, 'utf-8');
+		                    			$vals .= htmlspecialchars($subprop['val'], ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8');
 	                    			}
 	                    			$vals .= "</$ns_name$subprop[name]>";
 	                    		}
@@ -1071,7 +1072,7 @@ class HTTP_WebDAV_Server
                         	{
                         		$val = '<![CDATA['.$prop['val'].']]>';
                         	} else {
-                        		$val = htmlspecialchars($prop['val'], ENT_NOQUOTES, 'utf-8');
+                        		$val = htmlspecialchars($prop['val'], ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8');
                         	}
                         	$val = $this->_prop_encode($val);
 	                        // properties from namespaces != "DAV:" or without any namespace
@@ -1198,7 +1199,7 @@ class HTTP_WebDAV_Server
 
             if ($responsedescr) {
                 echo '  <'.($this->crrnd?'':'D:')."responsedescription>".
-                    $this->_prop_encode(htmlspecialchars($responsedescr, ENT_NOQUOTES, 'utf-8')).
+                    $this->_prop_encode(htmlspecialchars($responsedescr, ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8')).
                     '</'.($this->crrnd?'':'D:')."responsedescription>\n";
             }
 
@@ -1310,13 +1311,13 @@ class HTTP_WebDAV_Server
                             if (isset($range['start'])) {
                                 fseek($options['stream'], $range['start'], SEEK_SET);
                                 if (feof($options['stream'])) {
-                                    $this->http_status("416 Requested range not satisfiable");
+                                    $this->http_status($status = "416 Requested range not satisfiable");
                                     return;
                                 }
 
                                 if (!empty($range['end'])) {
                                     $size = $range['end']-$range['start']+1;
-                                    $this->http_status("206 Partial content");
+                                    $this->http_status($status = "206 Partial content");
                                     if (!self::use_compression()) header("Content-Length: $size");
                                     header("Content-Range: bytes $range[start]-$range[end]/"
                                            . (isset($options['size']) ? $options['size'] : "*"));
@@ -1326,7 +1327,7 @@ class HTTP_WebDAV_Server
                                         echo $buffer;
                                     }
                                 } else {
-                                    $this->http_status("206 Partial content");
+                                    $this->http_status($status = "206 Partial content");
                                     if (isset($options['size'])) {
                                         if (!self::use_compression()) header("Content-Length: ".($options['size'] - $range['start']));
                                         header("Content-Range: bytes ".$range['start']."-".
@@ -2793,7 +2794,7 @@ class HTTP_WebDAV_Server
 
 			    	foreach($subprop as $attr => $val)
 					{
-				    	$vals .= ' '.$attr.'="'.htmlspecialchars($val, ENT_NOQUOTES, 'utf-8').'"';
+				    	$vals .= ' '.$attr.'="'.htmlspecialchars($val, ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8').'"';
 					}
 
 		             $ret .= '<'.($prop['ns'] == $ns ? ($this->crrnd ? '' : $ns_hash[$ns].':') : $ns_hash[$prop['ns']].':').$prop['name'].

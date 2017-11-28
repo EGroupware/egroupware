@@ -38,6 +38,7 @@
 	et2_widget_htmlarea;
 	et2_widget_tabs;
 	et2_widget_taglist;
+	et2_widget_timestamper;
 	et2_widget_toolbar;
 	et2_widget_tree;
 	et2_widget_historylog;
@@ -994,6 +995,10 @@ etemplate2.prototype.print = function()
 	this.widgetContainer.iterateOver(function(_widget) {
 		// Skip widgets from a different etemplate (home)
 		if(_widget.getInstanceManager() != this) return;
+		
+		// Skip hidden widgets
+		if(jQuery(_widget.getDOMNode()).filter(':visible').length === 0) return;
+
 		var result = _widget.beforePrint();
 		if (typeof result == "object" && result.done)
 		{
