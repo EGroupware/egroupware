@@ -18,7 +18,6 @@ use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Vfs;
 use EGroupware\Api\Mail;
-use EGroupware\Api\Mail\EWS\Lib;
 
 /**
  * Mail interface class for compose mails in popup
@@ -611,16 +610,6 @@ class mail_compose
 				$content = array_merge( $content, $hook_content );
 				$preserv = array_merge( $preserv, $hook_preserve );
 			}
-		}
-		// mimeType is now a checkbox; convert it here to match expectations
-		// ToDo: match Code to meet checkbox value
-		if ($content['mimeType']==1)
-		{
-			$_content['mimeType'] = $content['mimeType']='html';
-		}
-		elseif ($content['mimeType']===0)
-		{
-			$_content['mimeType'] = $content['mimeType']='plain';
 		}
 		// user might have switched desired mimetype, so we should convert
 		if ($content['is_html'] && $content['mimeType']=='plain')
