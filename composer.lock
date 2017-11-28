@@ -248,11 +248,7 @@
             ],
             "description": "Compiled version of CKEditor customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/ckeditor",
-<<<<<<< HEAD
-            "time": "2016-10-07T08:47:41+00:00"
-=======
             "time": "2017-10-30T17:59:45+00:00"
->>>>>>> master
         },
         {
             "name": "fxp/composer-asset-plugin",
@@ -1615,12 +1611,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-<<<<<<< HEAD
         "php": 15,
         "php-ews/php-ews": 20
-=======
-        "php": 15
->>>>>>> master
     },
     "prefer-stable": false,
     "prefer-lowest": false,
