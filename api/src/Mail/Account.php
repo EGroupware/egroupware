@@ -1108,18 +1108,18 @@ class Account implements \ArrayAccess
 			else
 			{
 				/* static requires PHP5.6+ */ $old2new_smtp = array(
-					'defaultsmtp'				 => __NAMESPACE__.'\\Smtp',
-					'emailadmin_smtp'			 => __NAMESPACE__.'\\Smtp',
-					'emailadmin_smtp_sql'		 => __NAMESPACE__.'\\Smtp\\Sql',
-					'emailadmin_smtp_ldap'		 => __NAMESPACE__.'\\Smtp\\Ldap',
-					'postfixinetorgperson'		 => __NAMESPACE__.'\\Smtp\\Ldap',
-					'emailadmin_smtp_ads'		 => __NAMESPACE__.'\\Smtp\\Ads',
-					'emailadmin_smtp_mandriva'	 => __NAMESPACE__.'\\Smtp\\Mandriva',
-					'emailadmin_smtp_qmail'		 => __NAMESPACE__.'\\Smtp\\Qmail',
-					'postfixldap'				 => __NAMESPACE__.'\\Smtp\\Oldqmailuser',
-					'emailadmin_smtp_suse'		 => __NAMESPACE__.'\\Smtp\\Suse',
+					'defaultsmtp'                => __NAMESPACE__.'\\Smtp',
+					'emailadmin_smtp'            => __NAMESPACE__.'\\Smtp',
+					'emailadmin_smtp_sql'        => __NAMESPACE__.'\\Smtp\\Sql',
+					'emailadmin_smtp_ldap'       => __NAMESPACE__.'\\Smtp\\Ldap',
+					'postfixinetorgperson'       => __NAMESPACE__.'\\Smtp\\Ldap',
+					'emailadmin_smtp_ads'        => __NAMESPACE__.'\\Smtp\\Ads',
+					'emailadmin_smtp_mandriva'   => __NAMESPACE__.'\\Smtp\\Mandriva',
+					'emailadmin_smtp_qmail'      => __NAMESPACE__.'\\Smtp\\Qmail',
+					'postfixldap'                => __NAMESPACE__.'\\Smtp\\Oldqmailuser',
+					'emailadmin_smtp_suse'       => __NAMESPACE__.'\\Smtp\\Suse',
 					'emailadmin_smtp_univention' => __NAMESPACE__.'\\Smtp\\Univention',
-					'postfixdbmailuser'			 => __NAMESPACE__.'\\Smtp\\Dbmailuser',
+					'postfixdbmailuser'          => __NAMESPACE__.'\\Smtp\\Dbmailuser',
 				);
 
 				// convert smtp-class to new name
@@ -1144,14 +1144,14 @@ class Account implements \ArrayAccess
 	public static function getIcClass($imap_type)
 	{
 		/* static requires PHP5.6+ */ $old2new_imap = array(
-			'defaultimap'			  => __NAMESPACE__.'\\Imap',
-			'emailadmin_imap'		  => __NAMESPACE__.'\\Imap',
-			'cyrusimap'				  => __NAMESPACE__.'\\Imap\\Cyrus',
+			'defaultimap'             => __NAMESPACE__.'\\Imap',
+			'emailadmin_imap'         => __NAMESPACE__.'\\Imap',
+			'cyrusimap'               => __NAMESPACE__.'\\Imap\\Cyrus',
 			'emailadmin_imap_cyrus'   => __NAMESPACE__.'\\Imap\\Cyrus',
-			'emailadmin_dovecot'	  => __NAMESPACE__.'\\Imap\\Dovecot',
+			'emailadmin_dovecot'      => __NAMESPACE__.'\\Imap\\Dovecot',
 			'emailadmin_imap_dovecot' => __NAMESPACE__.'\\Imap\\Dovecot',
-			'dbmaildbmailuser'		  => __NAMESPACE__.'\\Imap\\Dbmailuser',
-			'dbmailqmailuser'		  => __NAMESPACE__.'\\Imap\\Dbmailqmailuser',
+			'dbmaildbmailuser'        => __NAMESPACE__.'\\Imap\\Dbmailuser',
+			'dbmailqmailuser'         => __NAMESPACE__.'\\Imap\\Dbmailqmailuser',
 		);
 
 		// convert icClass to new name
@@ -1287,8 +1287,8 @@ class Account implements \ArrayAccess
 		//Store or delete smime private key
 		if ($data['acc_smime_password'])
 		{
-			Credentials::write($data['acc_id'], $data['acc_smime_username'],
-			$data['acc_smime_password'], Credentials::SMIME, $valid_for,
+			Credentials::write($data['acc_id'], $data['acc_imap_username'],
+			$data['acc_smime_password'], Credentials::SMIME, $data['account_id'][0],
 			$data['acc_smime_cred_id']);
 		}
 		else

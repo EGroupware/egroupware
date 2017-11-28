@@ -27,16 +27,14 @@ use Horde_Mime_Magic;
 use Horde_Mail_Rfc822;
 use Horde_Mail_Rfc822_List;
 use Horde_Mime_Mdn;
-use Horde_Translation;
-use Horde_Translation_Handler_Gettext;
 use EGroupware\Api;
 
 use tidy;
 
 /**
  * Mail worker class
- *	-provides backend functionality for all classes in Mail
- *	-provides classes that may be used by other apps too
+ *  -provides backend functionality for all classes in Mail
+ *  -provides classes that may be used by other apps too
  *
  * @link https://github.com/horde/horde/blob/master/imp/lib/Contents.php
  */
@@ -169,7 +167,7 @@ class Mail
 	 * foldernames are subject to translation, keep that in mind too, if you change names here.
 	 * lang('Drafts'), lang('Templates'), lang('Sent'), lang('Trash'), lang('Junk'), lang('Outbox')
 	 * ActiveSync:
-	 *	Outbox is needed by Nokia Clients to be able to send Mails
+	 *  Outbox is needed by Nokia Clients to be able to send Mails
 	 * @var array
 	 */
 	static $autoFolders = array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
@@ -194,7 +192,7 @@ class Mail
 	 * @param boolean $_restoreSession = true
 	 * @param int $_profileID = 0
 	 * @param boolean $_validate = true - flag wether the profileid should be validated or not, if validation is true, you may receive a profile
-	 *									not matching the input profileID, if we can not find a profile matching the given ID
+	 *                                  not matching the input profileID, if we can not find a profile matching the given ID
 	 * @param mixed boolean/object $_icServerObject - if object, return instance with object set as icServer
 	 *												  immediately, if boolean === true use oldImapServer in constructor
 	 * @param boolean $_reuseCache = null if null it is set to the value of $_restoreSession
@@ -221,7 +219,7 @@ class Mail
 			self::$instances[$_profileID]->accountid= $_oldImapServerObject->ImapServerId;
 			self::$instances[$_profileID]->profileID= $_oldImapServerObject->ImapServerId;
 			self::$instances[$_profileID]->mailPreferences = $GLOBALS['egw_info']['user']['preferences']['mail'];
-			self::$instances[$_profileID]->htmlOptions	= self::$instances[$_profileID]->mailPreferences['htmlOptions'];
+			self::$instances[$_profileID]->htmlOptions  = self::$instances[$_profileID]->mailPreferences['htmlOptions'];
 			return self::$instances[$_profileID];
 		}
 		if ($_profileID == 0)
@@ -264,8 +262,8 @@ class Mail
 		if ($_profileID && (!isset(self::$instances[$_profileID]) || $_restoreSession===false))
 		{
 			$account = Mail\Account::read($_profileID);
-			if ( $account->is_ews() )
-				self::$instances[$_profileID] = new Mail_EWS('utf-8',$_restoreSession,$_profileID,false,$_reuseCache);
+			if ($account->is_ews())
+				self::$instances[$_profileID] = new Mail_EWS('utf-8', $_restoreSession, $_profileID, false, $_reuseCache);
 			else
 				self::$instances[$_profileID] = new Mail('utf-8',$_restoreSession,$_profileID,false,$_reuseCache);
 		}
@@ -278,7 +276,7 @@ class Mail
 				self::$instances[$_profileID]->ogServer = Mail\Account::read($_profileID)->smtpServer();
 				// TODO: merge mailprefs into userprefs, for easy treatment
 				self::$instances[$_profileID]->mailPreferences = $GLOBALS['egw_info']['user']['preferences']['mail'];
-				self::$instances[$_profileID]->htmlOptions	= self::$instances[$_profileID]->mailPreferences['htmlOptions'];
+				self::$instances[$_profileID]->htmlOptions  = self::$instances[$_profileID]->mailPreferences['htmlOptions'];
 			} catch (\Exception $e)
 			{
 				$newprofileID = Mail\Account::get_default_acc_id();
@@ -446,7 +444,7 @@ class Mail
 		$this->ogServer = $acc->smtpServer();
 		// TODO: merge mailprefs into userprefs, for easy treatment
 		$this->mailPreferences = $GLOBALS['egw_info']['user']['preferences']['mail'];
-		$this->htmlOptions	= $this->mailPreferences['htmlOptions'];
+		$this->htmlOptions  = $this->mailPreferences['htmlOptions'];
 		if (isset($this->icServer->ImapServerId) && !empty($this->icServer->ImapServerId))
 		{
 			$_profileID = $this->profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->icServer->ImapServerId;
@@ -804,7 +802,8 @@ class Mail
 		}
 	}
 
-	function getDefaultFolder() {
+	function getDefaultFolder()
+	{
 		return $this->profileID . self::DELIMITER . 'INBOX';
 	}
 
@@ -1444,7 +1443,7 @@ class Mail
 			#_debug_array(array_slice($sortResult, -5, -2));
 			//error_log("REVERSE: $reverse");
 			if($reverse === true) {
-				if	($_startMessage<=$total)
+				if  ($_startMessage<=$total)
 				{
 					$startMessage = $_startMessage-1;
 				}
@@ -1737,7 +1736,7 @@ class Mail
 				//error_log(__METHOD__.' ('.__LINE__.') '.' '.$this->decode_subject($headerObject['SUBJECT']).'->'.$headerObject['DATE']);
 				if (isset($headerObject['ATTACHMENTS']) && count($headerObject['ATTACHMENTS'])) foreach ($headerObject['ATTACHMENTS'] as &$a) { $retValue['header'][$sortOrder[$uid]]['attachments'][]=$a;}
 				$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
-				$retValue['header'][$sortOrder[$uid]]['size']		= $headerObject['SIZE'];
+				$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
 				$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime(($headerObject['DATE']&&!($headerObject['DATE']=='NIL')?$headerObject['DATE']:$headerObject['INTERNALDATE']),'ts',true);
 				$retValue['header'][$sortOrder[$uid]]['internaldate']= self::_strtotime($headerObject['INTERNALDATE'],'ts',true);
 				$retValue['header'][$sortOrder[$uid]]['mimetype']	= $messageMimeType;
@@ -1808,9 +1807,9 @@ class Mail
 		} else {
 			if ($headersNew == null && empty($_thisUIDOnly)) error_log(__METHOD__." -> retrieval of Message Details to Query $queryString failed: ".print_r($headersNew,TRUE));
 			$retValue = array();
-			$retValue['info']['total']	= 0;
-			$retValue['info']['first']	= 0;
-			$retValue['info']['last']	= 0;
+			$retValue['info']['total']  = 0;
+			$retValue['info']['first']  = 0;
+			$retValue['info']['last']   = 0;
 			return $retValue;
 		}
 	}
@@ -1828,7 +1827,7 @@ class Mail
 		$retValue['recent']		= in_array('\\recent', $headerFlags);
 		$retValue['flagged']	= in_array('\\flagged', $headerFlags);
 		$retValue['answered']	= in_array('\\answered', $headerFlags);
-		$retValue['forwarded']	 = in_array('$forwarded', $headerFlags);
+		$retValue['forwarded']   = in_array('$forwarded', $headerFlags);
 		$retValue['deleted']	= in_array('\\deleted', $headerFlags);
 		$retValue['seen']		= in_array('\\seen', $headerFlags);
 		$retValue['draft']		= in_array('\\draft', $headerFlags);
@@ -1853,7 +1852,7 @@ class Mail
 	 * @param bool $_reverse sort the messages ascending or descending
 	 * @param array $_filter the search filter
 	 * @param bool $resultByUid if set to true, the result is to be returned by uid, if the server does not reply
-	 *			on a query for uids, the result may be returned by IDs only, this will be indicated by this param
+	 * 			on a query for uids, the result may be returned by IDs only, this will be indicated by this param
 	 * @param bool $setSession if set to true the session will be populated with the result of the query
 	 * @return mixed bool/array false or array of ids
 	 */
@@ -2124,9 +2123,9 @@ class Mail
 					$queryValid = $statusQueryValid =true;
 					break;
 // operate only on system flags
-//		  $systemflags = array(
-//			  'ANSWERED', 'DELETED', 'DRAFT', 'FLAGGED', 'RECENT', 'SEEN'
-//		  );
+//        $systemflags = array(
+//            'ANSWERED', 'DELETED', 'DRAFT', 'FLAGGED', 'RECENT', 'SEEN'
+//        );
 				case 'UNANSWERED':
 					$imapStatusFilter->flag('ANSWERED', $set=false);
 					$queryValid = $statusQueryValid =true;
@@ -2583,8 +2582,8 @@ class Mail
 	 * array is indexed using the foldername. Use cachedObjects when retrieving subscribedFolders
 	 *
 	 * @param boolean _subscribedOnly  get subscribed or all folders
-	 * @param boolean _getCounters	 get get messages counters
-	 * @param boolean _alwaysGetDefaultFolders	this triggers to ignore the possible notavailableautofolders - preference
+	 * @param boolean _getCounters   get get messages counters
+	 * @param boolean _alwaysGetDefaultFolders  this triggers to ignore the possible notavailableautofolders - preference
 	 *			as activeSync needs all folders like sent, trash, drafts, templates and outbox - if not present devices may crash
 	 *			-> autoFolders should be created if needed / accessed (if possible and configured)
 	 * @param boolean _useCacheIfPossible  - if set to false cache will be ignored and reinitialized
@@ -2624,10 +2623,10 @@ class Mail
 		$delimiter = $this->getHierarchyDelimiter();
 
 		$inboxData = new \stdClass;
-		$inboxData->name		= 'INBOX';
+		$inboxData->name 		= 'INBOX';
 		$inboxData->folderName		= 'INBOX';
 		$inboxData->displayName		= lang('INBOX');
-		$inboxData->delimiter		= $delimiter;
+		$inboxData->delimiter 		= $delimiter;
 		$inboxData->shortFolderName	= 'INBOX';
 		$inboxData->shortDisplayName	= lang('INBOX');
 		$inboxData->subscribed = true;
@@ -2884,7 +2883,7 @@ class Mail
 	 *			will be return and nodePath would be ignored
 	 * @param int $_search = 2 search restriction in given mailbox
 	 *	0:All folders recursively from the $_nodePath
-	 *	1:Only folder of specified $_nodePath
+	 *  1:Only folder of specified $_nodePath
 	 *	2:All folders of $_nodePath in the same heirachy level
 	 *
 	 * @param boolean $_subscribedOnly = false Command to fetch only the subscribed folders
@@ -3358,11 +3357,11 @@ class Mail
 		if(is_array($folderStatus)) {
 			if ($_returnObject===false) return $folderStatus;
 			$status =  new \stdClass;
-			$status->messages	= $folderStatus['MESSAGES'];
-			$status->unseen		= $folderStatus['UNSEEN'];
-			$status->recent		= $folderStatus['RECENT'];
-			$status->uidnext		= $folderStatus['UIDNEXT'];
-			$status->uidvalidity	= $folderStatus['UIDVALIDITY'];
+			$status->messages   = $folderStatus['MESSAGES'];
+			$status->unseen     = $folderStatus['UNSEEN'];
+			$status->recent     = $folderStatus['RECENT'];
+			$status->uidnext        = $folderStatus['UIDNEXT'];
+			$status->uidvalidity    = $folderStatus['UIDVALIDITY'];
 
 			return $status;
 		}
@@ -3435,10 +3434,10 @@ class Mail
 			'Drafts'   => array('profileKey'=>'acc_folder_draft','autoFolderName'=>'Drafts'),
 			'Template' => array('profileKey'=>'acc_folder_template','autoFolderName'=>'Templates'),
 			'Trash'    => array('profileKey'=>'acc_folder_trash','autoFolderName'=>'Trash'),
-			'Sent'	   => array('profileKey'=>'acc_folder_sent','autoFolderName'=>'Sent'),
-			'Junk'	   => array('profileKey'=>'acc_folder_junk','autoFolderName'=>'Junk'),
+			'Sent'     => array('profileKey'=>'acc_folder_sent','autoFolderName'=>'Sent'),
+			'Junk'     => array('profileKey'=>'acc_folder_junk','autoFolderName'=>'Junk'),
 			'Outbox'   => array('profileKey'=>'acc_folder_outbox','autoFolderName'=>'Outbox'),
-			'Archive'	=> array('profileKey'=>'acc_folder_archive','autoFolderName'=>'Archive'),
+			'Archive'   => array('profileKey'=>'acc_folder_archive','autoFolderName'=>'Archive'),
 		);
 		if ($_type == 'Templates') $_type = 'Template';	// for some reason self::$autofolders uses 'Templates'!
 		$created = false;
@@ -3791,7 +3790,7 @@ class Mail
 		}
 		// when check is not enforced , we assume a folder represented as Horde_Imap_Client_Mailbox as existing folder
 		if (is_a($_folder,"Horde_Imap_Client_Mailbox")&&$_forceCheck===false) return true;
-		if (is_a($_folder,"Horde_Imap_Client_Mailbox")) $_folder =	$_folder->utf8;
+		if (is_a($_folder,"Horde_Imap_Client_Mailbox")) $_folder =  $_folder->utf8;
 		// reduce traffic within the Instance per User; Expire every 5 hours
 		//error_log(__METHOD__.' ('.__LINE__.') '.' Called with Folder:'.$_folder.function_backtrace());
 		if (is_null($folderInfo)) $folderInfo = Cache::getCache(Cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*5);
@@ -3893,7 +3892,7 @@ class Mail
 		$deleteOptions = $_forceDeleteMethod; // use forceDeleteMethod if not "no", or unknown method
 		if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"mark_as_deleted","remove_immediately"))) $deleteOptions  = ($this->mailPreferences['deleteOptions']?$this->mailPreferences['deleteOptions']:"mark_as_deleted");
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->'.array2string($_messageUID).','.$_folder.'/'.$this->sessionData['mailbox'].' Option:'.$deleteOptions);
-		$trashFolder	= $this->getTrashFolder();
+		$trashFolder    = $this->getTrashFolder();
 		$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['draftFolder'];
 		$templateFolder = $this->getTemplateFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['templateFolder'];
 		if((strtolower($_folder) == strtolower($trashFolder) && $deleteOptions == "move_to_trash") ||
@@ -4020,7 +4019,7 @@ class Mail
 		if (self::$debug) error_log(__METHOD__.$_messageUID.' Flags:'.array2string($flags));
 		try
 		{
-			if($flags===null) $flags =	$this->getFlags($_messageUID);
+			if($flags===null) $flags =  $this->getFlags($_messageUID);
 		}
 		catch (\Exception $e)
 		{
@@ -4243,7 +4242,7 @@ class Mail
 					$c++;
 					$flags = $_headerObject->getFlags(); //unseen status seems to be lost when retrieving the full message
 					$date = $_headerObject->getImapDate();
-					$currentDate =	new Horde_Imap_Client_DateTime();
+					$currentDate =  new Horde_Imap_Client_DateTime();
 					// if the internal Date of the message equals the current date; try using the header date
 					if ($date==$currentDate)
 					{
@@ -4377,7 +4376,7 @@ class Mail
 		//error_log(__METHOD__.__LINE__.':'.$_html);
 		//repair doubleencoded ampersands, and some stuff htmLawed stumbles upon with balancing switched on
 		$_html = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>','</td></font>','<br><td>','<tr></tr>','<o:p></o:p>','<o:p>','</o:p>'),
-							 array('&amp;',    '<BR>',			 '<BR>',			 '<BR>',			 '</font></td>','<td>',    '',		   '',			 '',  ''),$_html);
+							 array('&amp;',    '<BR>',           '<BR>',             '<BR>',             '</font></td>','<td>',    '',         '',           '',  ''),$_html);
 		//$_html = str_replace(array('&amp;amp;'),array('&amp;'),$_html);
 		if (stripos($_html,'style')!==false) Mail\Html::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
 		if (stripos($_html,'head')!==false) Mail\Html::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
@@ -4406,7 +4405,7 @@ class Mail
 		// clean out comments , should not be needed as purify should do the job.
 		$search = array(
 			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
-			'@<!--[\s\S]*?[ \t\n\r]*-->@',		   // Strip multi-line comments including CDATA
+			'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA
 		);
 		$_html = preg_replace($search,"",$_html);
 		// remove non printable chars
@@ -4518,11 +4517,11 @@ class Mail
 							break;
 
 						case 'html':
-							if ($mimePart->getBytes() > 0)	$partHTML = $mimePart;
+							if ($mimePart->getBytes() > 0)  $partHTML = $mimePart;
 							break;
 
 						case 'calendar':
-							if ($mimePart->getBytes() > 0)	$partCalendar = $mimePart;
+							if ($mimePart->getBytes() > 0)  $partCalendar = $mimePart;
 							break;
 					}
 					break;
@@ -4675,7 +4674,7 @@ class Mail
 									'body'		=> $part->getContents(array(
 										'stream' => false,
 									)),
-									'mimeType'	=> 'text/plain',
+									'mimeType'  => 'text/plain',
 									'charSet'	=> $_structure->getCharset(),
 								);
 							}
@@ -4829,9 +4828,9 @@ class Mail
 		{
 			$bodyPart = array(
 				'error'		=> 1,
-				'body'		=> lang("displaying plain messages is disabled"),
-				'mimeType'	=> 'text/plain', // make sure we do not return mimeType text/html
-				'charSet'	=> self::$displayCharset,
+				'body'      => lang("displaying plain messages is disabled"),
+				'mimeType'  => 'text/plain', // make sure we do not return mimeType text/html
+				'charSet'   => self::$displayCharset,
 			);
 		}
 		else
@@ -4846,7 +4845,7 @@ class Mail
 				'body'		=> $_structure->getContents(array(
 					'stream' => $_stream,
 				)),
-				'mimeType'	=> $_structure->getType() == 'text/html' ? 'text/html' : 'text/plain',
+				'mimeType'  => $_structure->getType() == 'text/html' ? 'text/html' : 'text/plain',
 				'charSet'	=> $_structure->getCharset(),
 			);
 		}
@@ -4940,8 +4939,8 @@ class Mail
 			case 'image': // they are displayed as Attachment NOT INLINE
 				return array(
 					array(
-						'body'		=> '',
-						'mimeType'	=> $_structure->getSubType(),
+						'body'      => '',
+						'mimeType'  => $_structure->getSubType(),
 					),
 				);
 
@@ -5018,9 +5017,9 @@ class Mail
 	/**
 	 * getdisplayableBody - creates the bodypart of the email as textual representation
 	 * @param object $mailClass the mailClass object to be used
-	 * @param array $bodyParts	with the bodyparts
+	 * @param array $bodyParts  with the bodyparts
 	 * @param boolean $preserveHTML  switch to preserve HTML
-	 * @param boolean $useTidy	switch to use tidy
+	 * @param boolean $useTidy  switch to use tidy
 	 * @return string a preformatted string with the mails converted to text
 	 */
 	static function &getdisplayableBody(&$mailClass, $bodyParts, $preserveHTML = false,  $useTidy = true)
@@ -5147,7 +5146,7 @@ class Mail
 		foreach($lines as $line)
 		{
 			// replace tabs by 8 space chars, or any tab only counts one char
-			//$line = str_replace("\t","		",$line);
+			//$line = str_replace("\t","        ",$line);
 			//$newStr .= wordwrap($line, $cols, $cut);
 			$allowedLength = $cols-strlen($cut);
 			//dont try to break lines with links, chance is we mess up the text is way too big
@@ -5483,7 +5482,7 @@ class Mail
 			);
 			$ct = 0;
 			$newStyle=array();
-			if (stripos($singleBodyPart['body'],'<style')!==false)	$ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle);
+			if (stripos($singleBodyPart['body'],'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle);
 			if ($ct>0)
 			{
 				//error_log(__METHOD__.' ('.__LINE__.') '.'#'.$ct.'#'.array2string($newStyle));
@@ -5507,8 +5506,8 @@ class Mail
 		// clean out comments and stuff
 		$search = array(
 			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
-//			'@<!--[\s\S]*?[ \t\n\r]*-->@',	 // Strip multi-line comments including CDATA
-//			'@<!--[\s\S]*?[ \t\n\r]*--@',	 // Strip broken multi-line comments including CDATA
+//			'@<!--[\s\S]*?[ \t\n\r]*-->@',   // Strip multi-line comments including CDATA
+//			'@<!--[\s\S]*?[ \t\n\r]*--@',    // Strip broken multi-line comments including CDATA
 		);
 		$style = preg_replace($search,"",$style);
 
@@ -5621,13 +5620,12 @@ class Mail
 			if (is_object($mail))
 			{
 				$structure = $mail->getStructure();
-				$isSmime = Mail\Smime::isSmime(($mimeType = $structure->getType())) || Mail\Smime::isSmimeSignatureOnly(($protocol=$structure->getContentTypeParameter('protocol')));
+				$isSmime = Mail\Smime::isSmime($structure->getType()) || Mail\Smime::isSmimeSignatureOnly($structure->getType());
 				if ($isSmime)
 				{
 					return $this->resolveSmimeMessage($structure, array(
 						'uid' => $_uid,
-						'mailbox' => $_folder,
-						'mimeType' => Mail\Smime::isSmime($protocol) ? $protocol: $mimeType
+						'mailbox' => $_folder
 					));
 				}
 				return $mail->getStructure();
@@ -5938,14 +5936,11 @@ class Mail
 				if ($_partID != '')
 				{
 					$mailStructureObject = $_headerObject->getStructure();
-					if (Mail\Smime::isSmime(($mimeType = $mailStructureObject->getType())) ||
-							Mail\Smime::isSmimeSignatureOnly(($protocol=$mailStructureObject->getContentTypeParameter('protocol'))))
+					if (Mail\Smime::isSmime(($smime_type = $mailStructureObject->getType())))
 					{
 						$mailStructureObject = $this->resolveSmimeMessage($mailStructureObject, array(
 							'uid' => $_uid,
-							'mailbox' => $_folder,
-							'mimeType' => Mail\Smime::isSmime($protocol) ? $protocol : $mimeType
-
+							'mailbox' => $_folder
 						));
 					}
 					$mailStructureObject->contentTypeMap();
@@ -6025,8 +6020,8 @@ class Mail
 				$ext = MimeMagic::mime2ext($wmattach['mimeType']);
 				if ($ext && stripos($wmattach['filename'],'.')===false && stripos($wmattach['filename'],$ext)===false) $wmattach['filename'] = trim($wmattach['filename']).'.'.$ext;
 				$attachmentData = array(
-					'type'		 => $wmattach['mimeType'],
-					'filename'	 => $wmattach['filename'],
+					'type'       => $wmattach['mimeType'],
+					'filename'   => $wmattach['filename'],
 					'attachment' => $wmattach['attachment'],
 				);
 			}
@@ -6211,7 +6206,7 @@ class Mail
 	 * @param uid the uid of the email to be processed
 	 * @param partid the partid of the email
 	 * @param mailbox the mailbox, that holds the message
-	 * @param preserveHTML flag to pass through to getdisplayableBody, null for both text and HTML
+	 * @param preserveHTML flag to pass through to getdisplayableBody
 	 * @param addHeaderSection flag to be able to supress headersection
 	 * @param includeAttachments flag to be able to supress possible attachments
 	 * @return array/bool with 'mailaddress'=>$mailaddress,
@@ -6227,15 +6222,6 @@ class Mail
 			if (empty($headers)) return false;
 			// dont force retrieval of the textpart, let mailClass preferences decide
 			$bodyParts = $mailClass->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid,null,false,$mailbox);
-			if(is_null($preserveHTML))
-			{
-				$html = static::getdisplayablebody(
-						$mailClass,
-						$mailClass->getMessageBody($uid,'always_display',$partid,null,false,$mailbox),
-						true
-				);
-
-			}
 			// if we do not want HTML but there is no TextRepresentation with the message itself, try converting
 			if ( !$preserveHTML && $bodyParts[0]['mimeType']=='text/html')
 			{
@@ -6333,19 +6319,13 @@ class Mail
 				}
 				if (is_array($attachedMessages)) $attachments = array_merge($attachments,$attachedMessages);
 			}
-			$return = array(
+			return array(
 					'mailaddress'=>$mailaddress,
 					'subject'=>$subject,
 					'message'=>$message,
 					'attachments'=>$attachments,
 					'headers'=>$headers,
-			);
-			if($html)
-			{
-				$return['html_message'] = $html;
-			}
-
-			return $return;
+					);
 	}
 
 	/**
@@ -6899,7 +6879,7 @@ class Mail
 							}
 						}
 
-						// No addresses from placeholders?	Treat it as just a contact ID
+						// No addresses from placeholders?  Treat it as just a contact ID
 						if (!$email)
 						{
 							$contact = $bo_merge->contacts->read($val);
@@ -6958,7 +6938,7 @@ class Mail
 							$mailObject->addAddress(trim($merged,'"'),'',$type);
 						}
 
-						// No addresses from placeholders?	Treat it as just a contact ID
+						// No addresses from placeholders?  Treat it as just a contact ID
 						if (count($mailObject->getAddresses('to',true)) == 0 &&
 							is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val)) // do the merge
 						{
@@ -6980,43 +6960,40 @@ class Mail
 					}
 					if ($sendOK || $openAsDraft)
 					{
-						if ($openAsDraft)
+						if ($this->folderExists($_folder,true))
 						{
-							if($this->folderExists($_folder,true))
+							if($this->isSentFolder($_folder))
 							{
-								if($this->isSentFolder($_folder))
-								{
-									$flags = '\\Seen';
-								} elseif($this->isDraftFolder($_folder)) {
-									$flags = '\\Draft';
-								} else {
-									$flags = '';
-								}
-								$savefailed = false;
-								try
-								{
-									$messageUid =$this->appendMessage($_folder,
-										$mailObject->getRaw(),
-										null,
-										$flags);
-								}
-								catch (\Exception\WrongUserinput $e)
-								{
-									$savefailed = true;
-									$alert_msg .= lang("Save of message %1 failed. Could not save message to folder %2 due to: %3",$Subject,$_folder,$e->getMessage());
-								}
-								// no send, save successful, and message_uid present
-								if ($savefailed===false && $messageUid && is_null($sendOK))
-								{
-									$importID = $messageUid;
-									$openComposeWindow = true;
-								}
+								$flags = '\\Seen';
+							} elseif($this->isDraftFolder($_folder)) {
+								$flags = '\\Draft';
+							} else {
+								$flags = '';
 							}
-							else
+							$savefailed = false;
+							try
+							{
+								$messageUid =$this->appendMessage($_folder,
+									$mailObject->getRaw(),
+									null,
+									$flags);
+							}
+							catch (\Exception\WrongUserinput $e)
 							{
 								$savefailed = true;
-								$alert_msg .= lang("Saving of message %1 failed. Destination Folder %2 does not exist.",$Subject,$_folder);
+								$alert_msg .= lang("Save of message %1 failed. Could not save message to folder %2 due to: %3",$Subject,$_folder,$e->getMessage());
 							}
+							// no send, save successful, and message_uid present
+							if ($savefailed===false && $messageUid && is_null($sendOK))
+							{
+								$importID = $messageUid;
+								$openComposeWindow = true;
+							}
+						}
+						else
+						{
+							$savefailed = true;
+							$alert_msg .= lang("Saving of message %1 failed. Destination Folder %2 does not exist.",$Subject,$_folder);
 						}
 						if ($sendOK)
 						{
@@ -7276,10 +7253,6 @@ class Mail
 		if (self::$debug) error_log(__METHOD__.__LINE__.array2string($identity));
 		$headers = $this->getMessageHeader($uid, '', 'object', true, $_folder);
 
-		// Override Horde's translation with our own
-		Horde_Translation::setHandler('Horde_Mime', new Horde_Translation_Handler_Gettext('Horde_Mime', EGW_SERVER_ROOT.'/api/lang/locale'));
-		Preferences::setlocale();
-
 		$mdn = new Horde_Mime_Mdn($headers);
 		$mdn->generate(true, true, 'displayed', php_uname('n'), $acc->smtpTransport(), array(
 			'charset' => 'utf-8',
@@ -7374,11 +7347,12 @@ class Mail
 	{
 		// default params
 		$params = array_merge(array(
-			'passphrase'	=> ''
+ 			'passphrase'	=> '',
+			'mimeType'		=> $_mime_part->getType()
 		), $_params);
 
 		$metadata = array (
-			 'mimeType' => $params['mimeType']?$params['mimeType']:$_mime_part->getType()
+			 'mimeType' => $params['mimeType']
 		);
 		$this->smime = new Mail\Smime;
 		$message = $this->getMessageRawBody($params['uid'], null, $params['mailbox']);
@@ -7390,9 +7364,7 @@ class Mail
 			}
 			catch(\Horde_Crypt_Exception $e)
 			{
-				throw new Mail\Smime\PassphraseMissing(lang('Could not decrypt '.
-						'S/MIME data. This message may not be encrypted by your '.
-						'public key and not being able to find corresponding private key.'));
+				throw new Mail\Smime\PassphraseMissing(lang('Could not decrypt S/MIME data. This message may not be encrypted by your public key.'));
 			}
 			$metadata['encrypted'] = true;
 		}
@@ -7418,28 +7390,15 @@ class Mail
 
 		if ($cert) // signed message, it might be encrypted too
 		{
-			$envelope = $this->getMessageEnvelope($params['uid'], '', false, $params['mailbox']);
-			$from = $this->stripRFC822Addresses($envelope['FROM']);
 			$message_parts = $this->smime->extractSignedContents($message);
-			//$f = $message_parts->_headers->getHeader('from');
 			$metadata = array_merge ($metadata, array (
 				'verify'		=> $cert->verify,
 				'cert'			=> $cert->cert,
-				'certDetails'	=> $this->smime->parseCert($cert->cert),
 				'msg'			=> $cert->msg,
 				'certHtml'		=> $this->smime->certToHTML($cert->cert),
-				'email'			=> $cert->email,
-				'signed'		=> true
+				'signed'		=> true,
 			));
-			// check for email address if both signer email address and
-			// email address of sender are the same.
-			if (is_array($from) && $from[0] != $cert->email)
-			{
-				$metadata['unknownemail'] = true;
-				$metadata['msg'] .= ' '.lang('Email address of signer is different from the email address of sender!');
-			}
-
-			$AB_bo	 = new \addressbook_bo();
+			$AB_bo   = new \addressbook_bo();
 			$certkey = $AB_bo->get_smime_keys($cert->email);
 			if (!is_array($certkey) || $certkey[$cert->email] != $cert->cert) $metadata['addtocontact'] = true;
 		}
@@ -7461,10 +7420,10 @@ class Mail
 	 */
 	private function _decryptSmimeBody ($_message, $_passphrase = '')
 	{
-		$AB_bo	 = new \addressbook_bo();
-		$acc_smime = Mail\Smime::get_acc_smime($this->profileID, $_passphrase);
-		$certkey = $AB_bo->get_smime_keys($acc_smime['acc_smime_username']);
-		if (!$this->smime->verifyPassphrase($acc_smime['pkey'], $_passphrase))
+		$AB_bo   = new \addressbook_bo();
+		$credents = Mail\Credentials::read($this->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
+		$certkey = $AB_bo->get_smime_keys($GLOBALS['egw_info']['user']['account_email']);
+		if (!$this->smime->verifyPassphrase($credents['acc_smime_password'], $_passphrase))
 		{
 			return array (
 				'password_required' => true,
@@ -7473,9 +7432,9 @@ class Mail
 		}
 
 		$params  = array (
-			'type'		=> 'message',
-			'pubkey'	=> $certkey[$acc_smime['acc_smime_username']],
-			'privkey'	=> $acc_smime['pkey'],
+			'type'      => 'message',
+			'pubkey'    => $certkey[$GLOBALS['egw_info']['user']['account_email']],
+			'privkey'   => $credents['acc_smime_password'],
 			'passphrase'=> $_passphrase
 		);
 		return $this->smime->decrypt($_message, $params);
