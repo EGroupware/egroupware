@@ -1303,6 +1303,9 @@ class admin_mail
 			'public_folders' => 'Public Folders'
 		);
 
+		// Disable permissions if inbox
+		$content['isInbox'] = ( $content['acc_ews_type'] == 'inbox' );
+
 		// user is allowed to create or edit further identities
 		if ($edit_access || $content['acc_further_identities'])
 		{

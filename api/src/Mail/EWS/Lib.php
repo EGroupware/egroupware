@@ -1009,6 +1009,10 @@ class Lib
 	}
 	static function getWriteFolders( $profile, $from ) {
 		$db = clone( $GLOBALS['egw']->db );
+		$account = Mail\Account::read( $profile );
+
+		if ( $account->params['acc_ews_type'] == 'inbox' ) 
+			return self::getFolders( $profile );
 
 		// Can move FROM folder
 		$sql = "SELECT ifnull(ews_move_to,0) as ews_move_to, ews_move_anywhere FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$from'";
@@ -1046,6 +1050,9 @@ class Lib
 	}
 	static function is_allowed( $profile, $folder, $action ) {
 		$allowed = false;
+		$account = Mail\Account::read( $profile );
+
+        if ( $account->params['acc_ews_type'] == 'inbox' ) return true;
 
 		$db = clone($GLOBALS['egw']->db);
 		$sql = "SELECT ews_apply_permissions, ews_permissions FROM egw_ea_ews WHERE ews_profile=$profile AND ews_folder='$folder' ORDER BY ews_order,ews_name";

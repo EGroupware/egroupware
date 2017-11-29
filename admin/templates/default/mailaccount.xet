@@ -336,11 +336,11 @@
 						<menupopup id="acc_ews_type" class="et2_fullWidth" onchange="app.admin.ews_switch_type" />
 					</menulist>
 				</row>
-				<row>
+                <row disabled="@isInbox">
 					<description value="Always Apply Custom Permissions"/>
 					<checkbox id="acc_ews_apply_permissions" />
 				</row>
-				<row>
+                <row disabled="@isInbox">
 					<button label="Edit Custom Permissions" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_mail.ews_custom_permissions&amp;acc_id=$cont[acc_id]'),'roles','dependent=yes,width=900,height=600,scrollbars=no,status=yes'); return false;" />
 				</row>
 				<row>
