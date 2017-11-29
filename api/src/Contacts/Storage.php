@@ -575,6 +575,7 @@ class Storage
 				$contact['id'] = $this->somain->data['id'];
 				$contact['uid'] = $this->somain->data['uid'];
 				$contact['etag'] = $this->somain->data['etag'];
+				$contact['files'] = $this->somain->data['files'];
 
 				if ($this->contact_repository == 'sql-ldap')
 				{

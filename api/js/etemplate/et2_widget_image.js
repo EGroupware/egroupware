@@ -429,7 +429,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 	/**
 	 * Build Editable Mask Layer (EML) in order to show edit/delete actions
 	 * on top of profile picture.
-	 * @param {boolean} disable delete button in initialization
+	 * @param {boolean} _noDelete disable delete button in initialization
 	 */
 	_buildEditableLayer: function (_noDelete)
 	{
@@ -457,13 +457,16 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 								{
 									var canvas = jQuery('#_cropper_image').cropper('getCroppedCanvas');
 									self.image.attr('src', canvas.toDataURL("image/jpeg", 1.0));
-									egw.json('addressbook.addressbook_ui.ajax_update_photo', [self.options.contact_id, canvas.toDataURL('image/jpeg',1.0)], function(res){
-										if (res)
+									self.egw().json('addressbook.addressbook_ui.ajax_update_photo',
+										[self.options.contact_id, canvas.toDataURL('image/jpeg',1.0), self.getInstanceManager().etemplate_exec_id],
+										function(res)
 										{
-											del.show();
-											egw.refresh('Avatar updated.', egw.app_name());
-										}
-									}).sendRequest();
+											if (res)
+											{
+												del.show();
+												self.egw().refresh('Avatar updated.', egw.app_name());
+											}
+										}).sendRequest();
 								}
 							},
 							title: _title||egw.lang('Input required'),
@@ -490,14 +493,17 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 					et2_dialog.show_dialog(function(_btn){
 						if (_btn == et2_dialog.YES_BUTTON)
 						{
-							egw.json('addressbook.addressbook_ui.ajax_update_photo', [self.options.contact_id, null], function(res){
-								if (res)
+							self.egw().json('addressbook.addressbook_ui.ajax_update_photo',
+								[self.options.contact_id, null, self.getInstanceManager().etemplate_exec_id],
+								function(res)
 								{
-									self.image.attr('src','');
-									del.hide();
+									if (res)
+									{
+										self.image.attr('src','');
+										del.hide();
 									egw.refresh('Avatar Deleted.', egw.app_name());
-								}
-							}).sendRequest();
+									}
+								}).sendRequest();
 						}
 					}, egw.lang('Delete this photo?'), 'Delete', null, et2_dialog.BUTTONS_YES_NO);
 				})

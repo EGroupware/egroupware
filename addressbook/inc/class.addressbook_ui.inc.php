@@ -3109,10 +3109,12 @@ window.egw_LAB.wait(function() {
 	 * Ajax method to update edited avatar photo via avatar widget
 	 *
 	 * @param int $contact_id
-	 * @param file string $file = null null means to delete
+	 * @param file string $file null means to delete
+	 * @param string $etemplate_exec_id to update id, files, etag, ...
 	 */
-	function ajax_update_photo ($contact_id, $file= null)
+	function ajax_update_photo ($contact_id, $file, $etemplate_exec_id)
 	{
+		$et_request = Api\Etemplate\Request::read($etemplate_exec_id);
 		$response = Api\Json\Response::get();
 		$contact = $this->read($contact_id);
 		if ($file)
@@ -3132,6 +3134,9 @@ window.egw_LAB.wait(function() {
 		else
 		{
 			$response->data(true);
+			// merge changes (files, id, ...) into current eT request
+			unset($contact['jpegphoto'], $contact['photo_unchanged']);
+			$et_request->preserv = array_merge($et_request->preserv, $contact);
 		}
 	}
 
