@@ -185,6 +185,10 @@ class Contacts extends Contacts\Storage
 		$this->now_su = DateTime::to('now','ts');
 
 		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
+		if(!isset($this->prefs['hide_accounts']))
+		{
+			$this->prefs['hide_accounts'] = '0';
+		}
 		// get the default addressbook from the users prefs
 		$this->default_addressbook = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] ?
 			(int)$GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] : $this->user;

@@ -194,7 +194,7 @@ class Sql extends Api\Storage
 				'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
 				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
-			),$wildcard,false,$op/*'OR'*/,'UNION',$filter);
+			),$wildcard,false,$op/*'OR'*/,'UNION',$filter,$join);
 			// org by location
 			parent::search($param['search'],array('org_name'),
 				"GROUP BY org_name,$by ORDER BY org_name $sort,$by $sort", array(
@@ -203,7 +203,7 @@ class Sql extends Api\Storage
 				'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
 				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
-			),$wildcard,false,$op/*'OR'*/,'UNION',$filter);
+			),$wildcard,false,$op/*'OR'*/,'UNION',$filter,$join);
 			$append = "ORDER BY org_name $sort,is_main DESC,$by $sort";
 		}
 		$rows = parent::search($param['search'],array('org_name'),$append,$extra,$wildcard,false,$op/*'OR'*/,
