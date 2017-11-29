@@ -2026,23 +2026,11 @@ window.egw_LAB.wait(function() {
 						// unset the duplicate_filed after submit because we don't need to warn user for second time about contact duplication
 						unset($content['presets_fields']);
 					}
-					$content['photo_unchanged'] = true;	// hint no need to store photo
-					/* seems not to be used any more in favor or ajax_update_photo
-					if ($content['delete_photo'])
+					// photo might be changed by ajax_upload_photo
+					if (!array_key_exists('jpegphoto', $content))
 					{
-						$content['jpegphoto'] = null;
-						unset($content['delete_photo']);
-						$content['photo_unchanged'] = false;
+						$content['photo_unchanged'] = true;	// hint no need to store photo
 					}
-					if (is_array($content['upload_photo']) && !empty($content['upload_photo']['tmp_name']) &&
-						$content['upload_photo']['tmp_name'] != 'none' &&
-						($f = fopen($content['upload_photo']['tmp_name'],'r')))
-					{
-						$content['jpegphoto'] = $this->resize_photo($f);
-						fclose($f);
-						unset($content['upload_photo']);
-						$content['photo_unchanged'] = false;
-					}*/
 					$links = false;
 					if (!$content['id'] && is_array($content['link_to']['to_id']))
 					{
@@ -2090,6 +2078,8 @@ window.egw_LAB.wait(function() {
 					elseif ($this->save($content))
 					{
 						$content['msg'] .= ($content['msg'] ? ', ' : '').lang('Contact saved');
+
+						unset($content['jpegphoto'], $content['photo_unchanged']);
 
 						foreach((array)$content['post_save_callbacks'] as $callback)
 						{
@@ -3108,36 +3098,25 @@ window.egw_LAB.wait(function() {
 	/**
 	 * Ajax method to update edited avatar photo via avatar widget
 	 *
-	 * @param int $contact_id
-	 * @param file string $file null means to delete
 	 * @param string $etemplate_exec_id to update id, files, etag, ...
+	 * @param file string $file null means to delete
 	 */
-	function ajax_update_photo ($contact_id, $file, $etemplate_exec_id)
+	function ajax_update_photo ($etemplate_exec_id, $file)
 	{
 		$et_request = Api\Etemplate\Request::read($etemplate_exec_id);
 		$response = Api\Json\Response::get();
-		$contact = $this->read($contact_id);
 		if ($file)
 		{
 			$filteredFile = substr($file, strpos($file, ",")+1);
 			// resize photo if wider then default width of 240pixel (keeping aspect ratio)
 			$decoded = $this->resize_photo(base64_decode($filteredFile));
 		}
-		$contact['jpegphoto'] = is_null($file) ? $file : $decoded;
-		$contact['photo_unchanged'] = false;	// hint photo is changed
-
-		$success = $this->save($contact);
-		if (!$success)
-		{
-			$response->alert($this->error);
-		}
-		else
-		{
-			$response->data(true);
-			// merge changes (files, id, ...) into current eT request
-			unset($contact['jpegphoto'], $contact['photo_unchanged']);
-			$et_request->preserv = array_merge($et_request->preserv, $contact);
-		}
+		$response->data(true);
+		// add photo into current eT2 request
+		$et_request->preserv = array_merge($et_request->preserv, array(
+			'jpegphoto' => is_null($file) ? $file : $decoded,
+			'photo_unchanged' => false,	// hint photo is changed
+		));
 	}
 
 	/**
