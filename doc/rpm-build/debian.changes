@@ -1,3 +1,20 @@
+egroupware-epl (17.1.20171129) hardy; urgency=low
+
+  * Addressbook: fix lost picture in upload
+  * Admin: fix ACL levels not updated when changing app or user
+  * Api: make favorites available as an individual button in VFS (File system) save/open dialog
+  * Calendar: add a line to the top of events so consecutive events are better separated
+  * Calendar: translate day of week in app header
+  * Calendar: now uses standard search (quotes, +/-) including custom fields
+  * Infolog: fix new entry with project already set missed it on project tab
+  * InfoLog: fix SQL error on update for to long from and addr
+  * InfoLog/Admin: fix error deleting user "access to undeclared static property"
+  * Mail: fix inline images not being displayed in html mail
+  * Mobile temeplate: lots of fixes for mobile template including issues with notifications popup
+  * Notifications: fix broken links in notifications popup
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 29 Nov 2017 12:08:10 +0100
+
 egroupware-epl (17.1.20171115) hardy; urgency=low
 
   * Final 17.1 release: see previous changlog for major features
