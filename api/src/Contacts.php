@@ -994,6 +994,7 @@ class Contacts extends Contacts\Storage
 			$contact['id'] = $to_write['id'];
 			$contact['uid'] = $to_write['uid'];
 			$contact['etag'] = $to_write['etag'];
+			$contact['files'] = $to_write['files'];
 
 			// Clear any files saved with new entries
 			// They've been dealt with already and they cause errors with linking
