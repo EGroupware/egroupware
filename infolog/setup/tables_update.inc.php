@@ -941,8 +941,8 @@ function infolog_upgrade16_1_003()
 {
 	// copy full info_addr to info_des, if length(info_from)+length(info_addr)+2 > 255 and then shorten it to fit
 	$GLOBALS['egw_setup']->db->query("UPDATE egw_infolog SET info_des=".
-		$GLOBALS['egw_setup']->db->concat('info_addr', "'\n\n'", 'info_des').
-		" WHERE LENGTH(info_from)+LENGTH(info_addr > 253", __LINE__, __FILE__);
+		$GLOBALS['egw_setup']->db->concat('info_addr', '"\n\n"', 'info_des').
+		" WHERE LENGTH(info_from)+LENGTH(info_addr > 253)", __LINE__, __FILE__);
 
 	$GLOBALS['egw_setup']->db->query("UPDATE egw_infolog SET info_from = CASE WHEN info_from != '' THEN SUBSTRING(".
 		$GLOBALS['egw_setup']->db->concat('info_from', "', '", 'info_addr')." FROM 1 FOR 255) ELSE info_addr END".
