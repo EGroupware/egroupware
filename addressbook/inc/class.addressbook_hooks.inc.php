@@ -148,6 +148,7 @@ class addressbook_hooks
 			'help'   => 'Hides accounts completly from the adressbook.',
 			'xmlrpc' => True,
 			'admin'  => false,
+			'default'=> '0'
 		);
 		$contacts = new Api\Contacts();
 		$fileas_options = $contacts->fileas_options();
