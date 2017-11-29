@@ -458,13 +458,12 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 									var canvas = jQuery('#_cropper_image').cropper('getCroppedCanvas');
 									self.image.attr('src', canvas.toDataURL("image/jpeg", 1.0));
 									self.egw().json('addressbook.addressbook_ui.ajax_update_photo',
-										[self.options.contact_id, canvas.toDataURL('image/jpeg',1.0), self.getInstanceManager().etemplate_exec_id],
+										[self.getInstanceManager().etemplate_exec_id, canvas.toDataURL('image/jpeg',1.0)],
 										function(res)
 										{
 											if (res)
 											{
 												del.show();
-												self.egw().refresh('Avatar updated.', egw.app_name());
 											}
 										}).sendRequest();
 								}
@@ -494,7 +493,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 						if (_btn == et2_dialog.YES_BUTTON)
 						{
 							self.egw().json('addressbook.addressbook_ui.ajax_update_photo',
-								[self.options.contact_id, null, self.getInstanceManager().etemplate_exec_id],
+								[self.getInstanceManager().etemplate_exec_id, null],
 								function(res)
 								{
 									if (res)
