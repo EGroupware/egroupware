@@ -444,8 +444,8 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 				.addClass('emlEdit')
 				.click(function(){
 					var buttons = [
-						{"button_id": 1,"text": 'save', id: 'save', image: 'check', "default":true},
-						{"button_id": 0,"text": 'cancel', id: 'cancel', image: 'cancelled'}
+						{"button_id": 1,"text": self.egw().lang('save'), id: 'save', image: 'check', "default":true},
+						{"button_id": 0,"text": self.egw().lang('cancel'), id: 'cancel', image: 'cancelled'}
 					];
 					var dialog = function(_title, _value, _buttons, _egw_or_appname)
 					{

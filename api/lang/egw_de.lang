@@ -430,6 +430,7 @@ eastern european	common	de	Osteuropäische
 ecuador	common	de	EQUADOR
 edit	common	de	Bearbeiten
 edit %1 category for	common	de	%1 Kategorie editieren für
+edit avatar	common	de	Avatar bearbeiten
 edit categories	common	de	Kategorien editieren
 edit category	common	de	Kategorie editieren
 edit embeded css styles or of the applications app.css file	common	de	bearbeitet die eingebetteten CSS Stile oder die app.css Datei der Anwendung
@@ -1075,6 +1076,8 @@ returns struct of users application access	common	de	Liefert eine Struktur mit B
 reunion	common	de	REUNION
 right	common	de	Rechts
 romania	common	de	RUMÄNIEN
+rotate left	common	de	Links drehen
+rotate right	common	de	Rechts drehen
 row...	common	de	Zeile...
 russian	common	de	Russisch
 russian federation	common	de	RUSSISCHE FÖDERATION
@@ -1358,6 +1361,7 @@ update the clock per minute or per second	common	de	Uhr pro Minute oder pro Seku
 upload	common	de	Hochladen
 upload directory does not exist, or is not writeable by webserver	common	de	Das Verzeichnis zum Hochladen existiert nicht oder der Webserver hat dort keine Schreibrechte.
 upload file(s) from filemanager...	common	de	Dateien aus dem Dateimanager hochladen..
+upload new photo	common	de	Neues Foto hochladen
 upload requires the directory to be writable by the webserver!	common	de	Der Upload verlangt, dass der Webserver Schreibrechte auf diesem Verzeichnis hat!
 uppercase letters	common	de	Grossbuchstaben
 url	common	de	Webseite

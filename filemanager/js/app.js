@@ -1246,7 +1246,7 @@ app.classes.filemanager = AppJS.extend(
 				successful = document.execCommand('copy');
 				if (successful)
 				{
-					egw.message('WebDav link copied into clipboard');
+					egw.message(this.egw.lang('WebDav link copied into clipboard'));
 					window.getSelection().removeAllRanges();
 
 					return true;
