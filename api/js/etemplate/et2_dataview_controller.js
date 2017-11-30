@@ -935,7 +935,8 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 				  "no_data": true },
 				function (_response) {
 					_callback.call(_context, _response.order);
-				}
+				},
+				_context
 		);
 	},
 
