@@ -76,7 +76,7 @@ class notifications_jdesk_ajax {
 	 */
 	public function __construct()
 	{
-		$this->response = new Api\Json\Response();
+		$this->response = Api\Json\Response::get();
 
 		$this->recipient = (object)$GLOBALS['egw']->accounts->read($GLOBALS['egw_info']['user']['account_id']);
 
