@@ -1,3 +1,10 @@
+egroupware-epl (17.1.20171130) hardy; urgency=low
+
+  * InfoLog/Setup: fix SQL error on update from 16.1 (Truncated incorrect double value)
+  * Addressbook: fix SQL error with accounts hidden + Organisation by location / department
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 30 Nov 2017 10:21:56 +0100
+
 egroupware-epl (17.1.20171129) hardy; urgency=low
 
   * Addressbook: fix lost picture in upload
