@@ -429,8 +429,9 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 	/**
 	 * Build Editable Mask Layer (EML) in order to show edit/delete actions
 	 * on top of profile picture.
+	 * @param {boolean} _noDelete disable delete button in initialization
 	 */
-	_buildEditableLayer: function ()
+	_buildEditableLayer: function (_noDelete)
 	{
 		var self = this;
 		// editable mask layer (eml)
@@ -443,8 +444,8 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 				.addClass('emlEdit')
 				.click(function(){
 					var buttons = [
-						{"button_id": 1,"text": 'save', id: 'save', image: 'check', "default":true},
-						{"button_id": 0,"text": 'cancel', id: 'cancel', image: 'cancelled'}
+						{"button_id": 1,"text": self.egw().lang('save'), id: 'save', image: 'check', "default":true},
+						{"button_id": 0,"text": self.egw().lang('cancel'), id: 'cancel', image: 'cancelled'}
 					];
 					var dialog = function(_title, _value, _buttons, _egw_or_appname)
 					{
@@ -456,9 +457,15 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 								{
 									var canvas = jQuery('#_cropper_image').cropper('getCroppedCanvas');
 									self.image.attr('src', canvas.toDataURL("image/jpeg", 1.0));
-									egw.json('addressbook.addressbook_ui.ajax_update_photo', [self.options.contact_id, canvas.toDataURL('image/jpeg',1.0)], function(res){
-										if (res) egw.refresh('Avatar updated.', egw.app_name());
-									}).sendRequest();
+									self.egw().json('addressbook.addressbook_ui.ajax_update_photo',
+										[self.getInstanceManager().etemplate_exec_id, canvas.toDataURL('image/jpeg',1.0)],
+										function(res)
+										{
+											if (res)
+											{
+												del.show();
+											}
+										}).sendRequest();
 								}
 							},
 							title: _title||egw.lang('Input required'),
@@ -485,17 +492,22 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 					et2_dialog.show_dialog(function(_btn){
 						if (_btn == et2_dialog.YES_BUTTON)
 						{
-							egw.json('addressbook.addressbook_ui.ajax_update_photo', [self.options.contact_id, null], function(res){
-								if (res)
+							self.egw().json('addressbook.addressbook_ui.ajax_update_photo',
+								[self.getInstanceManager().etemplate_exec_id, null],
+								function(res)
 								{
-									self.image.attr('src','');
+									if (res)
+									{
+										self.image.attr('src','');
+										del.hide();
 									egw.refresh('Avatar Deleted.', egw.app_name());
-								}
-							}).sendRequest();
+									}
+								}).sendRequest();
 						}
 					}, egw.lang('Delete this photo?'), 'Delete', null, et2_dialog.BUTTONS_YES_NO);
 				})
 				.appendTo(eml);
+		if (_noDelete) del.hide();
 		// invisible the mask
 		eml.css('opacity','0');
 
@@ -514,9 +526,18 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 	doLoadingFinished: function ()
 	{
 		this._super.apply(this,arguments);
+		var self = this;
 		if (this.options.editable)
 		{
-			this._buildEditableLayer();
+			egw(window).json(
+				'addressbook.addressbook_ui.ajax_noPhotoExists',
+				[this.options.contact_id],
+				function(noPhotoExists)
+				{
+					if (noPhotoExists) self.image.attr('src','');
+					self._buildEditableLayer(noPhotoExists);
+				}
+			).sendRequest(true);
 		}
 		if (this.options.crop)
 		{

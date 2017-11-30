@@ -437,6 +437,26 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->checkElements(0);
 	}
 
+	public function testSetProjectViaURL()
+	{
+		// Mock the etemplate call to check the results
+		$this->ui->tmpl->expects($this->once())
+				->method('exec')
+				->with($this->stringContains('infolog.infolog_ui.edit'),
+					$this->callback(function($info) {
+						$this->assertEquals($this->pm_id, $info['pm_id']);
+						return $info['pm_id'] == $this->pm_id;
+					})
+				);
+
+		// Set up the test - set pm_id vi URL
+		$_REQUEST['action'] = 'projectmanager';
+		$_REQUEST['action_id'] = $this->pm_id;
+
+		// Make a call to edit, looks like pm_id was set, this is initial load
+		$this->ui->edit();
+	}
+
 	/**
 	 * If the contact is set to a project, and the contact is cleared, that
 	 * will also clear the project
@@ -481,7 +501,10 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$info = $this->bo->read($this->info_id);
 
 		// Check contact was cleared
-		$this->assertNull($info['info_contact'], 'Contact was not cleared');
+		$this->assertTrue(is_null($info['info_contact']) || (
+				$info['info_contact']['id'] == 'none' && !$info['info_contact']['search']),
+				'Contact was not cleared'
+		);
 
 		// Check pm_id is gone
 		$this->assertNull($info['pm_id'], 'Project was not removed');

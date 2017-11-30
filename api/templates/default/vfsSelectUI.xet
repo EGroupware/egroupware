@@ -15,6 +15,7 @@
 					<box class="et2_toolbar et2_fullWidth">
 						<buttononly statustext="Go to your home directory" id="home" onclick="app.vfsSelectUI.do_action('home', widget)" image="gohome" background_image="1"/>
 						<buttononly statustext="Up" id="up" onclick="app.vfsSelectUI.change_dir('..', widget);" image="goup" background_image="1"/>
+						<buttononly statustext="Favorites" id="favorites" onclick="app.vfsSelectUI.change_dir('/apps/favorites', widget);" image="fav_filter" background_image="1"/>
 						<select width="175" id="app" empty_label="Applications" no_lang="1" onchange="app.vfsSelectUI.do_action('app', widget)"/>
 						<buttononly statustext="Create directory" id="createdir" class="createDir" onclick="app.vfsSelectUI.createdir" image="button_createdir" ro_image="createdir_disabled" background_image="1"/>
 						<file id='upload_file' statustext="upload file" progress_dropdownlist = "true" multiple="true" onFinish="app.vfsSelectUI.storeFile"/>

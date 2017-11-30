@@ -121,6 +121,15 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		// Scroll
 		jQuery(jQuery.proxy(this._scroll,this));
 		jQuery.extend(this.state, this.egw.preference('saved_states','calendar'));
+
+		// Set custom color for events without category
+		if(this.egw.preference('no_category_custom_color','calendar'))
+		{
+			this.egw.css(
+				'.calendar_calEvent:not([class*="cat_"])',
+				'background-color: '+this.egw.preference('no_category_custom_color','calendar')+' !important'
+			);
+		}
 	},
 
 	/**
@@ -3884,7 +3893,9 @@ jQuery.extend(app.classes.calendar,{
 	views: {
 		day: app.classes.calendar.prototype.View.extend({
 			header: function(state) {
-				return app.calendar.View.header.call(this, state);
+				var formatDate = new Date(state.date);
+				formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
+				return date('l, ',formatDate) + app.calendar.View.header.call(this, state);
 			},
 			etemplates: ['calendar.view','calendar.todo'],
 			start_date: function(state) {

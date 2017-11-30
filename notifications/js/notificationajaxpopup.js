@@ -126,6 +126,13 @@
 	notifications.prototype.display = function() {
 		// list container
 		var $egwpopup_list = jQuery("#egwpopup_list");
+
+		// Preserve already poped notifications
+		var poped = [];
+		$egwpopup_list.find('.egwpopup_expanded').each(function(index, item){
+			// store messages ids of poped messages
+			poped.push(item.id.replace('egwpopup_message_', ''));
+		});
 		// clear the list
 		$egwpopup_list.empty();
 		// define time label deviders
@@ -256,6 +263,15 @@
 			// bind click handler after the message container is attached
 			$message.click(jQuery.proxy(this.clickOnMessage, this,[$message]));
 			this.update_message_status(id, notifymessages[id]['status']);
+		}
+
+		if (poped.length > 0)
+		{
+			for (var key in poped)
+			{
+				// pop again those where opened before refresh
+				$egwpopup_list.find('#egwpopup_message_'+poped[key]).trigger('click');
+			}
 		}
 		this.counterUpdate();
 	};
@@ -417,17 +433,6 @@
 	 */
 	notifications.prototype.append = function(_id, _message, _browser_notify,
 	_status, _created, _current) {
-		if(!this.check_browser_notify() || typeof notifymessages[_id] != 'undefined')
-		{
-			notifymessages[_id] = {
-				message:_message,
-				status:_status,
-				created:_created,
-				current: _current
-			};
-			return;
-		}
-
 		var data = this.getData(_message);
 		// Prevent the same thing popping up multiple times
 		notifymessages[_id] = {

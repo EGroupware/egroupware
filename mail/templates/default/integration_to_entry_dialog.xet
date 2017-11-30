@@ -8,5 +8,8 @@
 			<description/>
 			<link-entry id="id" only_app="@appName" class="et2_fullWidth"/>
 		</vbox>
+		<styles>
+			#_id {width: 100%;}
+		</styles>
 	</template>
 </overlay>

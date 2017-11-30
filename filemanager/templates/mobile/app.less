@@ -54,7 +54,7 @@
 			}
 			height: auto;
 		}
-
+		#filemanager-index_filemanager-index-header_right {width:100%;}
 		#filemanager-index_tarp {display: none !important;}
 		#filemanager-index_filemanager-index-header_left {height:auto;}
 		.nextmatch_header.nm_header_hide {
@@ -76,6 +76,24 @@
 				#filemanager-index_up {width:24px;height: 100%;margin-left:22px;margin-right:22px;}
 			}
 			div.filtersContainer {margin-top:0px;border-bottom: 1px solid silver;}
+			#filemanager-index_new_wrapper {
+				float: none;
+				width: 100%;
+				margin:0;
+				padding-top: 5px;
+				.et2_dropdown {
+					float: none;
+					width: 100%;
+					button {
+						width:50px;
+						margin: 0;
+						border-radius: 0;
+						div {float:none;}
+					}
+					#filemanager-index_new {width:~"calc(100% - 50px)"}
+				}
+			}
+
 		}
 		select#filemanager-index_filter {width:100%;}
 		.nextmatch_header_row div.header_row_right {height:auto;position: relative !important;}

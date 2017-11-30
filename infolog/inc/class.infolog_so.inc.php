@@ -535,18 +535,13 @@ class infolog_so
 		if ($args['new_owner'])
 		{
 			// we cant just set the new owner, as he might be already set and we have a unique index
-			Api\Db::$table_aliases[$this->users_table] = $this->users_table.
+			$this->db->query('UPDATE '.$this->users_table.
 				" LEFT JOIN $this->users_table new_owner ON new_owner.info_id=$this->users_table.info_id".
-				" AND new_owner.account_id=".$this->db->quote($args['new_owner'], 'int');
-
-			$this->db->update($this->users_table, array(
-				'account_id' => $args['new_owner'],
-			), array(
-				'account_id' => $args['account_id'],
-				'new_owner.account_id IS NULL',
-			), __LINE__, __FILE__, 'infolog');
-
-			unset(Api\Db::$table_aliases[$this->users_table]);
+					" AND new_owner.account_id=".$this->db->quote($args['new_owner'], 'int').
+				' SET '.$this->users_table.'.account_id='.$this->db->quote($args['new_owner'], 'int').
+				' WHERE '.$this->users_table.'.account_id='.$this->db->quote($args['account_id'], 'int').
+					' AND new_owner.account_id IS NULL',
+				__LINE__, __FILE__);
 		}
 		$this->db->delete($this->users_table, array('account_id' => $args['account_id']), __LINE__, __FILE__, 'infolog');
 	}

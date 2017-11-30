@@ -69,15 +69,6 @@ class infolog_merge extends Api\Storage\Merge
 		{
 			return false;
 		}
-		if (!(strpos($content,'$$info_contact/') === false))
-		{
-			// Check to see if it's actually a contact, then load
-			if(is_array($replacements['$$info_link$$']) && $replacements['$$info_link$$']['app'] == 'addressbook')
-			{
-				$replacements += $this->contact_replacements($replacements['$$info_link$$']['id'],'info_contact');
-			}
-			if(is_array($replacements['$$info_link$$'])) unset($replacements['$$info_link$$']);
-		}
 		return $replacements;
 	}
 
@@ -108,7 +99,7 @@ class infolog_merge extends Api\Storage\Merge
 		}
 
 		importexport_export_csv::convert($record, $types, 'infolog', $selects);
-		
+
 		$array = $record->get_record_array();
 		if($record->info_contact)
 		{
@@ -154,12 +145,18 @@ class infolog_merge extends Api\Storage\Merge
 			$pm_merge = new projectmanager_merge($array['pm_id']);
 			$info += $pm_merge->projectmanager_replacements($array['pm_id'],'project',$content);
 		}
-		
+
 		// Add markers
 		foreach($array as $key => &$value)
 		{
 			if(!$value) $value = '';
 			$info['$$'.($prefix ? $prefix.'/':'').$key.'$$'] = $value;
+		}
+
+		// Add contact fields
+		if($array['info_link']['app'] && $array['info_link']['id'])
+		{
+			$info+=$this->get_app_replacements($array['info_link']['app'], $array['info_link']['id'], $content, 'info_contact');
 		}
 
 		// Add parent

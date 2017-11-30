@@ -42,9 +42,11 @@ class ContactTest extends \EGroupware\Api\AppTest
 	public function tearDown()
 	{
 		// Double delete to make sure it's gone, not preserved due to history setting
-		$this->bo->delete($this->info_id);
-		$this->bo->delete($this->info_id);
-
+		if($this->info_id)
+		{
+			$this->bo->delete($this->info_id);
+			$this->bo->delete($this->info_id);
+		}
 		$this->bo = null;
 	}
 
@@ -153,6 +155,71 @@ class ContactTest extends \EGroupware\Api\AppTest
 		// Make a call to edit, looks like initial load
 		$_REQUEST['info_id'] = $this->info_id;
 		$this->ui->edit();
+		unset($_REQUEST['info_id']);
+	}
+
+	/**
+	 * Test that creating a sub-infolog keeps info_contact on the parent
+	 *
+	 * @ticket 24920
+	 */
+	public function testSubEntry()
+	{
+		// Parent needs a project & contact for this
+		$content = array(
+			'contact' => array(
+				'app'   =>	'addressbook',
+				'id'    =>	Null,
+				'search'=>	'Free text'
+			)
+		);
+		$parent = $this->getTestInfolog($content);
+
+		// Skipping notifications - save initial state
+		$parent_id = $this->bo->write($parent, true, true, true, true);
+
+		// Mock the etemplate call to check sub gets parent's contact
+		$sub = array();
+		$this->ui->tmpl->expects($this->once())
+			->method('exec')
+			->will(
+				$this->returnCallback(function($method, $info) use($parent, &$sub) {
+					$this->assertNull($info['info_id']);
+					$this->assertEquals($parent['info_id'], $info['info_id_parent']);
+					$this->assertEquals($parent['info_contact']['id'], $info['info_contact']['id']);
+					$this->assertEquals($parent['info_contact']['app'], $info['info_contact']['app']);
+					$this->assertEquals($parent['info_from'], $info['info_from']);
+					$sub = $info;
+					return true;
+				})
+			);
+
+		// Make a sub-entry
+		$_REQUEST['action'] = 'sp';
+		$_REQUEST['action_id'] = $parent['info_id'];
+		$this->ui->edit();
+
+		// Skipping notifications - save initial state
+		$this->info_id = $this->bo->write($sub, true, true, true, true);
+
+		// Read it back to check
+		$saved = $this->bo->read($this->info_id);
+
+		$this->assertEquals($parent['pm_id'], $saved['pm_id']);
+		$this->assertEquals($parent['info_from'], $saved['info_from']);
+		$this->assertEquals(json_encode($parent['info_contact']), json_encode($saved['info_contact']));
+		$this->assertEquals($parent_id, $saved['info_id_parent']);
+
+		// Check parent
+		$parent_reload = $this->bo->read($parent_id);
+
+		$this->assertEquals($parent['pm_id'], $parent_reload['pm_id']);
+		$this->assertEquals($parent['info_from'], $parent_reload['info_from']);
+		$this->assertEquals($parent['info_contact'], $parent_reload['info_contact']);
+
+		// Remove parent (twice, for history preservation)
+		$this->bo->delete($parent_id);
+		$this->bo->delete($parent_id);
 	}
 
 	/**

@@ -248,6 +248,7 @@ class filemanager_ui
 				'group' => ++$group,
 				'confirm' => 'Delete these files or directories?',
 				'onExecute' => 'javaScript:app.filemanager.action',
+				'disableClass' => 'noDelete'
 			),
 			// DRAG and DROP events
 			'file_drag' => array(
@@ -316,12 +317,6 @@ class filemanager_ui
 				}
 				$actions['paste']['children']["{$action_id}_paste"] = $action;
 			}
-		}
-
-		// Anonymous users have limited actions
-		if(self::is_anonymous($GLOBALS['egw_info']['user']['account_id']))
-		{
-			self::restrict_anonymous_actions($actions);
 		}
 		return $actions;
 	}
@@ -658,7 +653,7 @@ class filemanager_ui
 					if (strpos($path, 'mail::') === 0 && $path = substr($path, 6))
 					{
 						// Support for dropping mail in filemanager - Pass mail back to mail app
-						if(ExecMethod2('mail.mail_ui.vfsSaveMessage', $path, $dir))
+						if(ExecMethod2('mail.mail_ui.vfsSaveMessages', $path, $dir))
 						{
 							++$files;
 						}
@@ -980,6 +975,7 @@ class filemanager_ui
 			{
 				$row['class'] .= 'noEdit ';
 			}
+			$row['class'] .= !$dir_is_writable[$dir] ? 'noDelete' : '';
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
 
@@ -1451,21 +1447,6 @@ class filemanager_ui
 	}
 
 	/**
-	 * Remove some more dangerous actions
-	 * @param Array $actions
-	 */
-	protected static function restrict_anonymous_actions(&$actions)
-	{
-		$remove = array(
-			'delete'
-		);
-		foreach($remove as $key)
-		{
-			unset($actions[$key]);
-		}
-	}
-
-	/**
 	 * Run given action on given path(es) and return array/object with values for keys 'msg', 'errs', 'dirs', 'files'
 	 *
 	 * @param string $action eg. 'delete', ...
@@ -1632,8 +1613,17 @@ class filemanager_ui
 	function editor($content=null)
 	{
 		$tmpl = new Etemplate('filemanager.editor');
-		$file_path = $_GET['path'];
-		$paths = explode('/webdav.php', $file_path);
+		$path = $_GET['path'];
+		if (!preg_match("/\/webdav.php\//", $path))
+		{
+			$download_url = Vfs::download_url($path);
+		}
+		else
+		{
+			$download_url = $path;
+			$paths = explode('/webdav.php', $path);
+			$path = $paths[1];
+		}
 		// Include css files used by wodocollabeditor
 		Api\Framework::includeCSS('/api/js/webodf/collab/app/resources/app.css');
 		Api\Framework::includeCSS('/api/js/webodf/collab/wodocollabpane.css');
@@ -1642,10 +1632,10 @@ class filemanager_ui
 
 		if (!$content)
 		{
-			if ($file_path)
+			if ($download_url)
 			{
-				$content['es_id'] = md5 ($file_path);
-				$content['file_path'] = $paths[1];
+				$content['es_id'] = md5 ($download_url);
+				$content['file_path'] = $path;
 			}
 			else
 			{
@@ -1654,7 +1644,7 @@ class filemanager_ui
 		}
 
 		$actions = self::getActions_edit();
-		if (!Api\Vfs::check_access($paths[1], Api\Vfs::WRITABLE))
+		if (!Api\Vfs::check_access($path, Api\Vfs::WRITABLE))
 		{
 			unset ($actions['save']);
 			unset ($actions['discard']);

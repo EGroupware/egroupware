@@ -575,6 +575,7 @@ class Storage
 				$contact['id'] = $this->somain->data['id'];
 				$contact['uid'] = $this->somain->data['uid'];
 				$contact['etag'] = $this->somain->data['etag'];
+				$contact['files'] = $this->somain->data['files'];
 
 				if ($this->contact_repository == 'sql-ldap')
 				{
@@ -1020,14 +1021,22 @@ class Storage
 	 *  - "accounts" accounts to ldap
 	 *  - "accounts-back" accounts back to sql (for sql-ldap!)
 	 *  - "sql" contacts and accounts to sql
+	 *  - "accounts-back-ads" accounts back from ads to sql
 	 */
 	function migrate2ldap($type)
 	{
 		//error_log(__METHOD__."(".array2string($type).")");
 		$sql_contacts  = new Sql();
-		// we need an admin connection
-		$ds = $GLOBALS['egw']->ldap->ldapConnect();
-		$ldap_contacts = new Ldap(null, $ds);
+		if ($type == 'accounts-back-ads')
+		{
+			$ldap_contacts = new Ads();
+		}
+		else
+		{
+			// we need an admin connection
+			$ds = $GLOBALS['egw']->ldap->ldapConnect();
+			$ldap_contacts = new Ldap(null, $ds);
+		}
 
 		if (!is_array($type)) $type = explode(',', $type);
 

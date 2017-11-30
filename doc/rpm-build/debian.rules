@@ -39,9 +39,13 @@ install: build
 	# apply the patch
 	cat ./doc/rpm-build/asyncservice.patch | patch -p1
 
-	# customize apache config
+	# customize webserver config
 	mkdir -p $(CURDIR)/debian/egroupware-epl-core/etc/egroupware
 	cp $(CURDIR)/doc/rpm-build/apache.conf $(CURDIR)/debian/egroupware-epl-core/etc/egroupware/apache.conf
+	# Univention needs access to /usr/sbin/univention-directory-manager symlinked to /usr/share/univention-directory-manager-tools/directory-manager-cli
+	sed 's|\(open_basedir .*\)|\1:/usr/sbin/univention-directory-manager:/usr/share/univention-directory-manager-tools/directory-manager-cli|' \
+	  $(CURDIR)/doc/rpm-build/apache.conf > $(CURDIR)/debian/egroupware-epl-core/etc/egroupware/apache-univention.conf
+	cp $(CURDIR)/doc/rpm-build/nginx.conf $(CURDIR)/debian/egroupware-epl-core/etc/egroupware/nginx.conf
 
 	# install core modules
 

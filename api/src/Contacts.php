@@ -185,6 +185,10 @@ class Contacts extends Contacts\Storage
 		$this->now_su = DateTime::to('now','ts');
 
 		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
+		if(!isset($this->prefs['hide_accounts']))
+		{
+			$this->prefs['hide_accounts'] = '0';
+		}
 		// get the default addressbook from the users prefs
 		$this->default_addressbook = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] ?
 			(int)$GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] : $this->user;
@@ -379,7 +383,7 @@ class Contacts extends Contacts\Storage
 			$addressbooks += $to_sort;
 		}
 		if ($required != Acl::ADD &&	// do NOT allow to set accounts as default addressbook (AB can add accounts)
-			!$preferences['addressbook']['hide_accounts'] && (
+			$preferences['addressbook']['hide_accounts'] !== '1' && (
 				($grants[0] & $required) == $required ||
 				$preferences['common']['account_selection'] == 'groupmembers' &&
 				$this->account_repository != 'ldap' && ($required & Acl::READ)))
@@ -994,6 +998,7 @@ class Contacts extends Contacts\Storage
 			$contact['id'] = $to_write['id'];
 			$contact['uid'] = $to_write['uid'];
 			$contact['etag'] = $to_write['etag'];
+			$contact['files'] = $to_write['files'];
 
 			// Clear any files saved with new entries
 			// They've been dealt with already and they cause errors with linking

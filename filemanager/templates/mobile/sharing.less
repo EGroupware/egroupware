@@ -1,0 +1,47 @@
+/**
+ * EGroupware - CSS Styles used by sharing GUI for mobile template
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Hadi Nategh <hn@egroupware.org>
+ * @copyright (c) 2017 by Hadi Nategh <hn@egroupware.org>
+ * @version $Id$
+ */
+
+/*IMPORTANT NOTE: DO NOT IMPORT default sharing.css WITHIN THIS CLASS!*/
+body {
+
+	div#popupMainDiv {
+		/**
+		 * simplify NM UI for sharing
+		 */
+		div#filemanager-index_buttons img, div#filemanager-index_favorite_wrapper,
+		#filemanager-index_filter, span.selectcols, #filemanager-index_button\[edit\],
+		#filemanager-index_button\[symlink\], #filemanager-index_button\[paste\],
+		#filemanager-index_button\[linkpaste\], #filemanager-index_button\[mailpaste\]
+		{
+			display: none !important;
+		}
+		&:before {
+			content: '';
+			width: 50px;
+			height: 50px;
+			background: blue;
+			display: inline-block;
+			position: fixed;
+			z-index: 10;
+			background-color: transparent;
+			background-image: url(../../../api/templates/default/images/logo64x64.png);
+			background-size: 30px;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+		padding-top: 0px !important;
+		height: 99%;
+		#filemanager-index_nm {
+			height: 99%;
+		}
+		.et2_searchbox.expanded  input {height:50px;}
+	}
+}

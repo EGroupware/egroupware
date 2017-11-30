@@ -209,10 +209,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			};
 
 			editor.on( 'contentDom', function() {
-				// For Firefox
 				editor.document.on('drop', chkImg);
-				// For IE
-				editor.document.getBody().on('drop', chkImg);
 			});
 		}
 

@@ -107,7 +107,7 @@ class Date extends Transformer
 	{
 		if (!$value) return $value;	// otherwise we will get current date or 1970-01-01 instead of an empty value
 
-		if ($this->attrs['dataformat'] && !is_numeric($value))
+		if ($this->attrs['dataformat'])
 		{
 			$date = Api\DateTime::createFromFormat($this->attrs['dataformat'], $value, Api\DateTime::$user_timezone);
 		}
@@ -115,7 +115,7 @@ class Date extends Transformer
 		{
 			$date = new Api\DateTime($value);
 		}
-		if($this->type == 'date-timeonly')
+		if($this->type == 'date-timeonly' && $date)
 		{
 			$date->setDate(1970, 1, 1);
 		}
@@ -158,6 +158,7 @@ class Date extends Transformer
 				}
 				catch(\Exception $e)
 				{
+					unset($e);
 					$date = null;
 					$value = '';
 					// this is not really a user error, but one of the clientside engine
@@ -177,7 +178,7 @@ class Date extends Transformer
 			{
 				$valid = (string)$value === '' ? '' : (int)$value;
 			}
-			
+
 			if (!empty($this->attrs['min']))
 			{
 				if(is_numeric($this->attrs['min']))

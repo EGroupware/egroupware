@@ -30,6 +30,12 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 			default: et2_no_init,
 			description: "Which field to place the timestamp in"
 		},
+		format: {
+			name: "Time format",
+			type: "string",
+			default: et2_no_init,
+			description: "Format for the timestamp.  User is always after."
+		},
 		image: {
 			default: "timestamp"
 		},
@@ -65,7 +71,11 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 	_insert_text: function() {
 		var text = "";
 		var now = new Date();
-		text += date(egw.preference('dateformat') + ' ' + (egw.preference("timeformat") === "12" ? "h:ia" : "H:i")+' ',now);
+		var format = (this.options.format ?
+			this.options.format :
+			egw.preference('dateformat') + ' ' + (egw.preference("timeformat") === "12" ? "h:ia" : "H:i"))+' ';
+
+		text += date(format, now);
 
 		// Get properly formatted user name
 		var user = parseInt(egw.user('account_id'));
@@ -80,7 +90,13 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 		}
 		text += ': ';
 
-		var input = this._get_input(this.target);
+		var widget = this._get_input(this.target);
+		var input = widget.input ? widget.input : widget.getDOMNode();
+		if(input.context)
+		{
+			input = input.get(0);
+		}
+
 		var scrollPos = input.scrollTop;
 		var browser = ((input.selectionStart || input.selectionStart == "0") ?
 			"standards" : (document.selection ? "ie" : false ) );
@@ -132,29 +148,37 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 				input.focus();
 			}
 			input.scrollTop = scrollPos;
-				input.focus();
+			input.focus();
 		}
+		// If on a tab, switch to that tab so user can see it
+		var tab = widget;
+		while(tab._parent && tab._type != 'tabbox')
+		{
+			tab = tab._parent;
+		}
+		if (tab._type == 'tabbox') tab.activateTab(widget);
 	},
 
 	_get_input: function _get_input(target)
 	{
 		var input = null;
 		var widget = null;
-		if(jQuery('#'+this.target).is('input'))
+
+		if (typeof target == 'string')
 		{
-			input = this.target;
-		}
-		else if (typeof target == 'string')
-		{
-			var widget = this.getRoot().getWidgetById(target);
+			widget = this.getRoot().getWidgetById(target);
 		}
 		else if (target.instanceOf && target.instanceOf(et2_IInput))
 		{
 			widget = target;
 		}
+		else if(typeof target == 'string' && target.indexOf('#') < 0 && jQuery('#'+this.target).is('input'))
+		{
+			input = this.target;
+		}
 		if(widget)
 		{
-			input = widget.input ? widget.input : widget.getDOMNode();
+			return widget;
 		}
 		if(input.context)
 		{

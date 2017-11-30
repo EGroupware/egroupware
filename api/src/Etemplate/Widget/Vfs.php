@@ -448,12 +448,14 @@ class Vfs extends File
 		{
 			$content['path'] = \EGroupware\Api\Vfs::get_home_dir();
 		}
-		elseif ($favorites_flag)
+
+		if ($favorites_flag)
 		{
 			// Display favorites as if they were folders
 			$files = array();
 			$favorites = \EGroupware\Api\Framework\Favorites::get_favorites('filemanager');
 			$n = 0;
+			$content['dir'] = array();
 			foreach($favorites as $favorite)
 			{
 				$path = $favorite['state']['path'];
@@ -517,6 +519,7 @@ class Vfs extends File
 			'createdir' => !\EGroupware\Api\Vfs::is_writable($content['path']),
 			'upload_file' => !\EGroupware\Api\Vfs::is_writable($content['path']) ||
 			!in_array($content['mode'],array('open', 'open-multiple')),
+			'favorites' => !isset($GLOBALS['egw_info']['apps']['stylite'])
 		));
 
 		$sel_options = array_merge($sel_options, array(
@@ -529,7 +532,7 @@ class Vfs extends File
 			if ($download_baseUrl[0] == '/') $download_baseUrl = \EGroupware\Api\Egw::link($download_baseUrl);
 			$content['download_baseUrl'] = $download_baseUrl;
 		}
-		
+
 		Api\Cache::setSession('filemanger', 'select_path', $content['path']);
 		// Response
 		$response->data(array(
@@ -650,8 +653,7 @@ class Vfs extends File
 	 */
 	static function get_apps()
 	{
-		$apps = array(false);	// index starting from 1
-		if (isset($GLOBALS['egw_info']['apps']['stylite'])) $apps = array('favorites' => lang('Favorites'));
+		$apps = array();
 		$apps += \EGroupware\Api\Link::app_list('query');
 		// they do NOT support adding files to VFS
 		unset($apps['addressbook-email'], $apps['mydms'], $apps['wiki'],

@@ -420,44 +420,45 @@ function nm_open_popup(_action, _selected)
 			var d_buttons = [];
 			var action = _action;
 			popup.show();
-			var buttons = jQuery('button:visible',popup).each(function(index) {
+			jQuery('button:visible',popup).each(function(index) {
 				var but = jQuery(this);
-				but.hide();
 				if(but.attr("id"))
 				{
 					// Find the associated widget
 					var widget_id = but.attr("id").replace(_action.data.nextmatch.getInstanceManager().uniqueId+'_', '');
 					var button = nm_popup_action.data.nextmatch.getRoot().getWidgetById(widget_id);
 				}
-				d_buttons.push({
+				var button_data = {
 					text: but.text(),
+					id: widget_id,
 					click: button && button.onclick ? function(e) {
-						dialog.dialog("close");
+						jQuery(this).dialog("close");
 						nm_popup_action = action;
 						button.onclick.apply(button, e.currentTarget);
 					} : function(e) {
-						dialog.dialog("close");
+						jQuery(this).dialog("close");
 						nm_popup_action = null;
 					}
-				});
-			});
-			// Need to get the dialog width before make it hidden
-			var dialog_width = dialog.outerWidth(true);
-			popup.hide();
-			dialog.dialog({
-				title: jQuery('.promptheader',popup).text(),
-				modal: true,
-				buttons: d_buttons,
-				minWidth: dialog_width,
-				close: function(event, ui) {
-					// Need to destroy the dialog, etemplate widget needs divs back where they were
-					dialog.dialog("destroy");
-
-					// Put it back where it came from, or et2 will error when clear() is called
-					dialog.appendTo(dialog_parent);
-					buttons.show();
+				};
+				if(button && button.options && button.options.image)
+				{
+					button_data.image = button.options.image;
 				}
+				d_buttons.push(button_data);
 			});
+
+			popup.hide();
+			var _dialog = et2_dialog.show_dialog(function() {
+					dialog_parent.append(dialog);
+				},
+				'',
+				jQuery('.promptheader',popup).text(),
+				{},
+				d_buttons
+			);
+			_dialog.set_dialog_type('');
+			_dialog.div.append(dialog)
+					.css('overflow', 'initial');
 		}
 
 		// Reset global variables

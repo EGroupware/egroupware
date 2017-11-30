@@ -6203,7 +6203,7 @@ class Mail
 	 * @param uid the uid of the email to be processed
 	 * @param partid the partid of the email
 	 * @param mailbox the mailbox, that holds the message
-	 * @param preserveHTML flag to pass through to getdisplayableBody
+	 * @param preserveHTML flag to pass through to getdisplayableBody, null for both text and HTML
 	 * @param addHeaderSection flag to be able to supress headersection
 	 * @param includeAttachments flag to be able to supress possible attachments
 	 * @return array/bool with 'mailaddress'=>$mailaddress,
@@ -6219,6 +6219,15 @@ class Mail
 			if (empty($headers)) return false;
 			// dont force retrieval of the textpart, let mailClass preferences decide
 			$bodyParts = $mailClass->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid,null,false,$mailbox);
+			if(is_null($preserveHTML))
+			{
+				$html = static::getdisplayablebody(
+						$mailClass,
+						$mailClass->getMessageBody($uid,'always_display',$partid,null,false,$mailbox),
+						true
+				);
+
+			}
 			// if we do not want HTML but there is no TextRepresentation with the message itself, try converting
 			if ( !$preserveHTML && $bodyParts[0]['mimeType']=='text/html')
 			{
@@ -6316,13 +6325,19 @@ class Mail
 				}
 				if (is_array($attachedMessages)) $attachments = array_merge($attachments,$attachedMessages);
 			}
-			return array(
+			$return = array(
 					'mailaddress'=>$mailaddress,
 					'subject'=>$subject,
 					'message'=>$message,
 					'attachments'=>$attachments,
 					'headers'=>$headers,
-					);
+			);
+			if($html)
+			{
+				$return['html_message'] = $html;
+			}
+
+			return $return;
 	}
 
 	/**
@@ -6957,40 +6972,43 @@ class Mail
 					}
 					if ($sendOK || $openAsDraft)
 					{
-						if ($this->folderExists($_folder,true))
+						if ($openAsDraft)
 						{
-						    if($this->isSentFolder($_folder))
+							if($this->folderExists($_folder,true))
 							{
-						        $flags = '\\Seen';
-						    } elseif($this->isDraftFolder($_folder)) {
-						        $flags = '\\Draft';
-						    } else {
-						        $flags = '';
-						    }
-							$savefailed = false;
-							try
-							{
-								$messageUid =$this->appendMessage($_folder,
-									$mailObject->getRaw(),
-									null,
-									$flags);
+								if($this->isSentFolder($_folder))
+								{
+									$flags = '\\Seen';
+								} elseif($this->isDraftFolder($_folder)) {
+									$flags = '\\Draft';
+								} else {
+									$flags = '';
+								}
+								$savefailed = false;
+								try
+								{
+									$messageUid =$this->appendMessage($_folder,
+										$mailObject->getRaw(),
+										null,
+										$flags);
+								}
+								catch (\Exception\WrongUserinput $e)
+								{
+									$savefailed = true;
+									$alert_msg .= lang("Save of message %1 failed. Could not save message to folder %2 due to: %3",$Subject,$_folder,$e->getMessage());
+								}
+								// no send, save successful, and message_uid present
+								if ($savefailed===false && $messageUid && is_null($sendOK))
+								{
+									$importID = $messageUid;
+									$openComposeWindow = true;
+								}
 							}
-							catch (\Exception\WrongUserinput $e)
+							else
 							{
 								$savefailed = true;
-								$alert_msg .= lang("Save of message %1 failed. Could not save message to folder %2 due to: %3",$Subject,$_folder,$e->getMessage());
+								$alert_msg .= lang("Saving of message %1 failed. Destination Folder %2 does not exist.",$Subject,$_folder);
 							}
-							// no send, save successful, and message_uid present
-							if ($savefailed===false && $messageUid && is_null($sendOK))
-							{
-								$importID = $messageUid;
-								$openComposeWindow = true;
-							}
-						}
-						else
-						{
-							$savefailed = true;
-							$alert_msg .= lang("Saving of message %1 failed. Destination Folder %2 does not exist.",$Subject,$_folder);
 						}
 						if ($sendOK)
 						{

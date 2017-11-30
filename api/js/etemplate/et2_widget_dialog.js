@@ -490,6 +490,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			},
 			close: jQuery.proxy(function() {this.destroy();},this),
 			beforeClose: this.options.beforeClose,
+			closeText: this.egw().lang('close'),
 			position: {my:this.options.position, at:this.options.position, of:window}
 		});
 	}

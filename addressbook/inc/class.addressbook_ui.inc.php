@@ -1633,10 +1633,15 @@ window.egw_LAB.wait(function() {
 		{
 			unset($query['col_filter']['list']);
 		}
-		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1')
 		{
 			$query['col_filter']['account_id'] = null;
 		}
+		else
+		{
+			unset($query['col_filter']['account_id']);
+		}
+
 		// all backends allow now at least to use groups as distribution lists
 		$query['no_filter2'] = false;
 
@@ -2021,23 +2026,11 @@ window.egw_LAB.wait(function() {
 						// unset the duplicate_filed after submit because we don't need to warn user for second time about contact duplication
 						unset($content['presets_fields']);
 					}
-					$content['photo_unchanged'] = true;	// hint no need to store photo
-					/* seems not to be used any more in favor or ajax_update_photo
-					if ($content['delete_photo'])
+					// photo might be changed by ajax_upload_photo
+					if (!array_key_exists('jpegphoto', $content))
 					{
-						$content['jpegphoto'] = null;
-						unset($content['delete_photo']);
-						$content['photo_unchanged'] = false;
+						$content['photo_unchanged'] = true;	// hint no need to store photo
 					}
-					if (is_array($content['upload_photo']) && !empty($content['upload_photo']['tmp_name']) &&
-						$content['upload_photo']['tmp_name'] != 'none' &&
-						($f = fopen($content['upload_photo']['tmp_name'],'r')))
-					{
-						$content['jpegphoto'] = $this->resize_photo($f);
-						fclose($f);
-						unset($content['upload_photo']);
-						$content['photo_unchanged'] = false;
-					}*/
 					$links = false;
 					if (!$content['id'] && is_array($content['link_to']['to_id']))
 					{
@@ -2085,6 +2078,8 @@ window.egw_LAB.wait(function() {
 					elseif ($this->save($content))
 					{
 						$content['msg'] .= ($content['msg'] ? ', ' : '').lang('Contact saved');
+
+						unset($content['jpegphoto'], $content['photo_unchanged']);
 
 						foreach((array)$content['post_save_callbacks'] as $callback)
 						{
@@ -3087,33 +3082,41 @@ window.egw_LAB.wait(function() {
 	}
 
 	/**
-	 * Ajax method to update edited avatar photo via avatar widget
+	 * Check if there's a photo for given contact id. This is used for avatar widget
+	 * to set or unset delete button. If there's no uploaded photo it responses true.
 	 *
-	 * @param int $contact_id
-	 * @param file string $file = null null means to delete
+	 * @param type $contact_id
 	 */
-	function ajax_update_photo ($contact_id, $file= null)
+	function ajax_noPhotoExists ($contact_id)
 	{
 		$response = Api\Json\Response::get();
-		$contact = $this->read($contact_id);
+		$response->data((!($contact = $this->read($contact_id)) ||
+			empty($contact['jpegphoto']) &&	!(($contact['files'] & Api\Contacts::FILES_BIT_PHOTO) &&
+				($size = filesize($url=Api\Link::vfs_path('addressbook', $contact_id, Api\Contacts::FILES_PHOTO))))));
+	}
+
+	/**
+	 * Ajax method to update edited avatar photo via avatar widget
+	 *
+	 * @param string $etemplate_exec_id to update id, files, etag, ...
+	 * @param file string $file null means to delete
+	 */
+	function ajax_update_photo ($etemplate_exec_id, $file)
+	{
+		$et_request = Api\Etemplate\Request::read($etemplate_exec_id);
+		$response = Api\Json\Response::get();
 		if ($file)
 		{
 			$filteredFile = substr($file, strpos($file, ",")+1);
 			// resize photo if wider then default width of 240pixel (keeping aspect ratio)
 			$decoded = $this->resize_photo(base64_decode($filteredFile));
 		}
-		$contact['jpegphoto'] = is_null($file) ? $file : $decoded;
-		$contact['photo_unchanged'] = false;	// hint photo is changed
-
-		$success = $this->save($contact);
-		if (!$success)
-		{
-			$response->alert($this->error);
-		}
-		else
-		{
-			$response->data(true);
-		}
+		$response->data(true);
+		// add photo into current eT2 request
+		$et_request->preserv = array_merge($et_request->preserv, array(
+			'jpegphoto' => is_null($file) ? $file : $decoded,
+			'photo_unchanged' => false,	// hint photo is changed
+		));
 	}
 
 	/**

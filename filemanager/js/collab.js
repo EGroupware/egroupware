@@ -296,25 +296,26 @@ app.classes.filemanager = app.classes.filemanager.extend({
 					mode: 'saveas',
 					button_caption:"",
 					button_label:_egwAction.id == 'saveas'?"save as":"save",
-					value: "doc.odt",
-					onchange: function (){
-						file_path = vfs_select.get_value();
-						if (vfs_select.get_value())
-						{
-							// Add odt extension if not exist
-							if (!file_path.match(/\.odt$/,'ig')) file_path += '.odt';
-							widgetFilePath.set_value(file_path);
-							self.editor.getDocumentAsByteArray(saveByteArrayLocally);
-							self.editor_leaveSession(function(){
-								var path = window.location.href.split('&path=');
-								window.location.href = path[0]+'&path='+self.editor_getFilePath();
-							});
-							egw.refresh('','filemanager');
-						}
-					}
+					value: "doc.odt"
 				};
 				// create file selector
 				var vfs_select = et2_createWidget('vfs-select', vfs_attrs, this.et2);
+
+				jQuery(vfs_select.getDOMNode()).on('change', function (){
+					file_path = vfs_select.get_value();
+					if (vfs_select.get_value())
+					{
+						// Add odt extension if not exist
+						if (!file_path.match(/\.odt$/,'ig')) file_path += '.odt';
+						widgetFilePath.set_value(file_path);
+						self.editor.getDocumentAsByteArray(saveByteArrayLocally);
+						self.editor_leaveSession(function(){
+							var path = window.location.href.split('&path=');
+							window.location.href = path[0]+'&path='+self.editor_getFilePath();
+						});
+						egw.refresh('','filemanager');
+					}
+				});
 				// start the file selector dialog
 				vfs_select.click();
 			}

@@ -256,7 +256,7 @@ function api_upgrade16_9_002()
 		$n = 0;
 		foreach($GLOBALS['egw_setup']->db->query("SELECT contact_id,contact_jpegphoto,contact_pubkey
 FROM egw_addressbook
-WHERE contact_jpegphoto IS NOT NULL OR contact_pubkey IS NOT NULL AND contact_pubkey LIKE '%-----%'",
+WHERE contact_jpegphoto != '' OR contact_pubkey IS NOT NULL AND contact_pubkey LIKE '%-----%'",
 			__LINE__, __FILE__, 0, $junk_size, false, Api\Db::FETCH_ASSOC) as $row)
 		{
 			$files = 0;

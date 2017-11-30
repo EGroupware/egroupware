@@ -775,7 +775,7 @@ class mail_compose
 			}
 		}
 		/*run the purify on compose body unconditional*/
-		$content['body'] = str_replace(array("\r", "\t", "<br />\n", ": "), array("", "", "<br />", ":"),
+		$content['body'] = str_replace(array("\r", "\t", "<br />\n"), array("", "", "<br />"),
 		$_currentMode == 'html' ? Api\Html::purify($content['body'], Mail::$htmLawed_config, array(), true) : $content['body']);
 
 		// do not double insert a signature on a server roundtrip

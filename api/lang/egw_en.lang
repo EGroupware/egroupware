@@ -430,6 +430,7 @@ eastern european	common	en	Eastern european
 ecuador	common	en	ECUADOR
 edit	common	en	Edit
 edit %1 category for	common	en	Edit %1 category for
+edit avatar	common	en	Edit avatar
 edit categories	common	en	Edit categories
 edit category	common	en	Edit category
 edit embeded css styles or of the applications app.css file	common	en	Edit embedded CSS styles or of the applications app.css file
@@ -1075,6 +1076,8 @@ returns struct of users application access	common	en	Returns struct of users app
 reunion	common	en	REUNION
 right	common	en	Right
 romania	common	en	ROMANIA
+rotate left	common	en	Rotate left
+rotate right	common	en	Rotate right
 row...	common	en	Row...
 russian	common	en	Russian
 russian federation	common	en	RUSSIAN FEDERATION
@@ -1358,6 +1361,7 @@ update the clock per minute or per second	common	en	Update the clock per minute 
 upload	common	en	Upload
 upload directory does not exist, or is not writeable by webserver	common	en	Upload directory does not exist, or is not writable by web server.
 upload file(s) from filemanager...	common	en	Upload file(s) from Filemanager...
+upload new photo	common	en	Upload new photo
 upload requires the directory to be writable by the webserver!	common	en	Upload requires the directory to be writable by the web server!
 uppercase letters	common	en	uppercase letters
 url	common	en	URL

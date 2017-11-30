@@ -12,7 +12,7 @@
 				<row>
 					<description value="Project" for="ts_project"/>
 					<hbox disabled="@pm_integration=none">
-						<link-entry id="pm_id" onchange="app.timesheet.pm_id_changed" only_app='projectmanager' blur='None' class="et2_fullWidth"/>
+						<link-entry id="pm_id" onchange="app.timesheet.pm_id_changed" only_app='projectmanager' blur='None' class="et2_fullWidth" width="99%"/>
 					</hbox>
 					<hbox disabled="@pm_integration=full" span="all">
 						<textbox blur="@ts_project_blur" id="ts_project" size="65" maxlength="80" class="et2_fullWidth"/>

@@ -453,6 +453,15 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 			),
+			'no_category_custom_color' => array(
+				'type' => 'color',
+				'label' => 'Custom event color',
+				'no_lang' => true,
+				'name' => 'no_category_custom_color',
+				'help' => lang('Custom color for events without category color'),
+				'xmlrpc' => True,
+				'admin'  => False,
+			),
 			'3.section' => array(
 				'type'  => 'section',
 				'title' => lang('notification settings'),

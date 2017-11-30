@@ -154,7 +154,7 @@ div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,
 }
 
 /*Center box in login page*/
-#loginMainDiv div#centerBox {
+#loginMainDiv div#centerBox form{
 	background-color: $loginbox_color;
 }
 

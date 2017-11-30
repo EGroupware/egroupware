@@ -1210,6 +1210,12 @@ var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		},
 		"needed": {
 			"ignore": true
+		},
+		"link_hook": {
+			"name": "Type",
+			"type": "string",
+			"default": "view",
+			"description": "Hook used for displaying link (view/edit/add)"
 		}
 	},
 	legacyOptions: ["only_app"],
@@ -1282,7 +1288,7 @@ var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		{
 			this.link.addClass("et2_link");
 			this.link.click( function(e){
-				self.egw().open(_value, "", "view",null,_value.app,_value.app);
+				self.egw().open(_value, "", self.options.link_hook,null,_value.app,_value.app);
 				e.stopImmediatePropagation();
 			});
 		}

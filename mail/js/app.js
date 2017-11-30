@@ -167,9 +167,10 @@ app.classes.mail = AppJS.extend(
 				});
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
-				var previewPane = this.egw.preference('previewPane', 'mail');
-				this.mail_disablePreviewArea(previewPane !== 'fixed' && previewPane !== 'vertical' && previewPane == true);
-				if (previewPane == 'vertical' || previewPane != true) nm.header.right_div.addClass('vertical_splitter');
+
+				// Set preview pane state
+				this.mail_disablePreviewArea(!this.getPreviewPaneState());
+
 				//Get initial folder status
 				this.mail_refreshFolderStatus(undefined,undefined,false);
 
@@ -298,7 +299,7 @@ app.classes.mail = AppJS.extend(
 						// focus
 						jQuery(plainText.node).focus();
 						// get the cursor to the top of the textarea
-						if (typeof plainText.node.setSelectionRange !='undefined' && !plainText.node.is(":hidden")) plainText.node.setSelectionRange(0,0);
+						if (typeof plainText.node.setSelectionRange !='undefined' && !jQuery(plainText.node).is(":hidden")) plainText.node.setSelectionRange(0,0);
 					}
 					else
 					{
@@ -945,7 +946,7 @@ app.classes.mail = AppJS.extend(
 				$preview_iframe.css ('top', $preview_iframe.position().top - offset + 10);
 			}, 50);
 		};
-		var previewPane = this.egw.preference('previewPane', 'mail');
+
 		// Show / hide 'Select something' in preview
 		var blank = this.et2.getWidgetById('blank');
 		if(blank)
@@ -957,7 +958,7 @@ app.classes.mail = AppJS.extend(
 			// If there is content to show recalculate the size
 			set_prev_iframe_top();
 		}
-		else if (previewPane == 'fixed' || previewPane == 'vertical' || previewPane != true)
+		else if (this.getPreviewPaneState())
 		{
 			if(blank)
 			{
@@ -1073,8 +1074,8 @@ app.classes.mail = AppJS.extend(
 				typeof dataElem.data.flags.mdnsent == 'undefined' && typeof dataElem.data.flags.mdnnotsent == 'undefined')
 			{
 				var buttons = [
-					{text: this.egw.lang("Yes"), id: "mdnsent"},
-					{text: this.egw.lang("No"), id:"mdnnotsent"}
+					{text: this.egw.lang("Yes"), id: "mdnsent", image: "check"},
+					{text: this.egw.lang("No"), id:"mdnnotsent", image: "cancelled"}
 				];
 				et2_dialog.show_dialog(function(_button_id, _value) {
 					switch (_button_id)
@@ -2893,113 +2894,79 @@ app.classes.mail = AppJS.extend(
 		egw.openPopup(egw.link('/index.php', get_param), width, height, windowName);
 	},
 
-	saveAttachment: function(tag_info, widget)
+	/**
+	 * Callback function to handle vfsSave response messages
+	 *
+	 * @param {type} _data
+	 */
+	vfsSaveCallback: function (_data)
 	{
-		var mailid;
-		var attgrid;
-		if (this.mail_isMainWindow)
-		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-			var p = widget.getParent();
-			var cont = p.getArrayMgr("content").data;
-			attgrid = cont[widget.id.replace(/\[save\]/,'')];
-		}
-		else
-		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
-		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_ui.getAttachment';	// todo compose for Draft folder
-		url += '&mode=save';
-		url += '&id='+mailid;
-		url += '&part='+attgrid.partID;
-		url += '&is_winmail='+attgrid.winmailFlag;
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
-		this.et2._inst.download(url);
+		egw.message(_data.msg, _data.success ? "success": "error");
 	},
 
-	saveAllAttachmentsToZip: function(tag_info, widget)
+	/**
+	 * A handler for saving to VFS/downloading attachments
+	 *
+	 * @param {type} widget
+	 * @param {type} action
+	 * @param {type} row_id
+	 */
+	saveAttachmentHandler: function (widget, action, row_id)
 	{
-		var mailid;
-		var attgrid;
+		var mail_id, attachments;
+
 		if (this.mail_isMainWindow)
 		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
+			mail_id = this.mail_currentlyFocussed;
 			var p = widget.getParent();
-			var cont = p.getArrayMgr("content").data;
-			attgrid = cont[widget.id.replace(/\[save_zip\]/,'')];
+			attachments = p.getArrayMgr("content").data;
 		}
 		else
 		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
-		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_ui.download_zip';	// todo compose for Draft folder
-		url += '&mode=save';
-		url += '&id='+mailid;
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
-		this.et2._inst.download(url);
-	},
-
-	saveAttachmentToVFS: function(tag_info, widget)
-	{
-		var mailid;
-		var attgrid;
-		if (this.mail_isMainWindow)
-		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-			var p = widget.getParent();
-			var cont = p.getArrayMgr("content").data;
-			attgrid = cont[widget.id.replace(/\[saveAsVFS\]/,'')];
-		}
-		else
-		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[saveAsVFS\]/,'')];
-		}
-		var vfs_select = et2_createWidget('vfs-select', {
-			mode: 'saveas',
-			method: 'mail.mail_ui.ajax_vfsSaveAttachment',
-			button_label: egw.lang('Save'),
-			dialog_title: "Save attchment",
-			method_id: mailid+'::'+attgrid.partID+'::'+attgrid.winmailFlag,
-			name: attgrid.filename
-		});
-		vfs_select.click();
-	},
-
-	saveAllAttachmentsToVFS: function(tag_info, widget)
-	{
-		var mailid;
-		var attgrid;
-		if (this.mail_isMainWindow)
-		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-			var p = widget.getParent();
-			attgrid = p.getArrayMgr("content").data;
-		}
-		else
-		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
+			mail_id = this.et2.getArrayMgr("content").getEntry('mail_id');
+			attachments = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
 		}
 
-		var ids = [];
-		for (var i=0;i<attgrid.length;i++)
+		switch (action)
 		{
-			if (attgrid[i] != null) ids.push(mailid+'::'+attgrid[i].partID+'::'+attgrid[i].winmailFlag+'::'+attgrid[i].filename);
-		}
+			case 'saveOneToVfs':
+			case 'saveAllToVfs':
+				var ids = [];
+				attachments = action === 'saveOneToVfs' ? [attachments[row_id]] : attachments;
+				for (var i=0;i<attachments.length;i++)
+				{
+					if (attachments[i] != null)
+					{
+						ids.push(mail_id+'::'+attachments[i].partID+'::'+attachments[i].winmailFlag+'::'+attachments[i].filename);
+					}
+				}
+				var vfs_select = et2_createWidget('vfs-select', {
+					mode: action === 'saveOneToVfs' ? 'saveas' : 'select-dir',
+					method: 'mail.mail_ui.ajax_vfsSave',
+					button_label: egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
+					dialog_title: egw.lang(action === 'saveOneToVfs' ? 'Save attchment' : 'Save attchments'),
+					method_id: ids.length > 1 ?	{ids:ids, action:'attachment'} : {ids: ids[0], action: 'attachment'},
+					name: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
+				});
+				vfs_select.click();
+				break;
 
-		var vfs_select = et2_createWidget('vfs-select', {
-			mode: 'select-dir',
-			method: 'mail.mail_ui.ajax_vfsSaveAttachment',
-			button_label: egw.lang('Save all'),
-			dialog_title: "Save attchments",
-			method_id: ids.length > 1 ? ids: ids[0]
-		});
-		vfs_select.click();
+			case 'downloadOneAsFile':
+			case 'downloadAllToZip':
+				var attachment = attachments[row_id];
+				var url = window.egw_webserverUrl+'/index.php?';
+				url += jQuery.param({
+					menuaction: action === 'downloadOneAsFile' ?
+						'mail.mail_ui.getAttachment' : 'mail.mail_ui.download_zip',
+					mode: 'save',
+					id: mail_id,
+					part: attachment.partID,
+					is_winmail: attachment.winmailFlag,
+					smime_type: (attachment.smime_type ? attachment.smime_type : '')
+				});
+				this.et2._inst.download(url);
+				break;
+		}
 	},
 
 	/**
@@ -3039,10 +3006,10 @@ app.classes.mail = AppJS.extend(
 		var vfs_select = et2_createWidget('vfs-select', {
 			mode: _elems.length > 1 ? 'select-dir' : 'saveas',
 			mime: 'message/rfc822',
-			method: 'mail.mail_ui.ajax_vfsSaveMessage',
+			method: 'mail.mail_ui.ajax_vfsSave',
 			button_label: _elems.length>1 ? egw.lang('Save all') : egw.lang('save'),
 			dialog_title: "Save email",
-			method_id: _elems.length > 1 ? ids: ids[0],
+			method_id: _elems.length > 1 ? {ids:ids, action:'message'}: {ids: ids[0], action: 'message'},
 			name: _elems.length > 1 ? names : names[0],
 		});
 		vfs_select.click();
@@ -3087,8 +3054,9 @@ app.classes.mail = AppJS.extend(
 		if (mail_import_hook && typeof mail_import_hook.app_entry_method != 'undefined')
 		{
 			var data = egw.dataGetUIDdata(_elems[0].id);
+			var title = egw.lang('Select') + ' ' + egw.lang(app) + ' ' + (egw.link_get_registry(app, 'entry') ? egw.link_get_registry(app, 'entry') : egw.lang('entry'));
 			var subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
-			this.integrate_checkAppEntry('Select '+ app + ' entry', app, subject, url,  mail_import_hook.app_entry_method, function (args){
+			this.integrate_checkAppEntry(title, app, subject, url,  mail_import_hook.app_entry_method, function (args){
 				egw_openWindowCentered(args.url+ (args.entryid ?'&entry_id=' + args.entryid: ''),'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 			});
 		}
@@ -3122,9 +3090,9 @@ app.classes.mail = AppJS.extend(
 		   if (!_entryId)
 		   {
 			   var buttons = [
-				   {text: 'Append', id: 'append', image: 'check', default:true},
-				   {text: 'Add as new', id: 'new', image: 'check'},
-				   {text: 'Cancel', id: 'cancel', image: 'check'}
+				   {text: app.mail.egw.lang('Append'), id: 'append', image: 'check', default:true},
+				   {text: app.mail.egw.lang('Add as new'), id: 'new', image: 'check'},
+				   {text: app.mail.egw.lang('Cancel'), id: 'cancel', image: 'check'}
 			   ];
 			   et2_createWidget("dialog",
 			   {
@@ -5308,7 +5276,8 @@ app.classes.mail = AppJS.extend(
 			var mail_import_hook = toolbar.options.actions[integApps[index]]['mail_import']['app_entry_method'];
 			if (integWidget.get_value() == 'on')
 			{
-				this.integrate_checkAppEntry(egw.lang('Select %1 entry',integApps[index]), integApps[index].substr(3), subject.get_value(), '', mail_import_hook , function (args){
+				var title = egw.lang('Select') + ' ' + egw.lang(integApps[index]) + ' ' + (egw.link_get_registry(integApps[index], 'entry') ? egw.link_get_registry(integApps[index], 'entry') : egw.lang('entry'));
+				this.integrate_checkAppEntry(title, integApps[index].substr(3), subject.get_value(), '', mail_import_hook , function (args){
 					var value = {};
 					value[integApps[index]] = args.entryid;
 					var oldValue = to_integrate_ids.get_value()[0];
@@ -6033,5 +6002,35 @@ app.classes.mail = AppJS.extend(
 			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
 			resizable: false
 		}, et2_dialog._create_parent('mail'));
+	},
+
+	/**
+	 * get preview pane state base on selected preference.
+	 *
+	 * It also set a right css class for vertical state.
+	 *
+	 * @returns {Boolean} returns true for visible Pane and false for hiding
+	 */
+	getPreviewPaneState: function ()
+	{
+		var previewPane = this.egw.preference('previewPane', 'mail');
+		var nm = this.et2.getWidgetById(this.nm_index);
+		var state = false;
+		switch (previewPane)
+		{
+			case true:
+			case '1':
+			case 'hide':
+			case 'expand':
+				state = false;
+				break;
+			case 'fixed':
+				state = true;
+				break;
+			default: // default is vertical
+				state = true;
+				nm.header.right_div.addClass('vertical_splitter');
+		}
+		return state;
 	}
 });
