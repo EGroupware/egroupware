@@ -983,7 +983,7 @@ class Principals extends Handler
 			// CardDAV
 			'addressbook-home-set' => Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'addressbook-home-set',$addressbooks),
 			'principal-address' => Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'principal-address',
-				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] ? '' : array(
+				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1' ? '' : array(
 				Api\CalDAV::mkprop('href',$this->base_uri.'/addressbook-accounts/'.$account['person_id'].'.vcf'))),
 			// CardDAV directory
 			'directory-gateway' => Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'directory-gateway',array(

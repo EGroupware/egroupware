@@ -123,7 +123,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			$filter['owner'] = $user;
 		}
 		// should we hide the accounts addressbook
-		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1') $filter['account_id'] = null;
 
 		// process REPORT filters or multiget href's
 		$nresults = null;
@@ -1076,7 +1076,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		}
 		foreach(array_keys($this->bo->get_addressbooks(Acl::READ)) as $id)
 		{
-			if (($id || !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) &&
+			if (($id || $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1') &&
 				$GLOBALS['egw_info']['user']['account_id'] != $id &&	// no current user and no accounts, if disabled in ab prefs
 				(in_array('A',$this->home_set_pref) || in_array((string)$id,$this->home_set_pref)) &&
 				is_numeric($id) && ($owner = $id ? $this->accounts->id2name($id) : 'accounts'))
@@ -1101,7 +1101,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			Api\CalDAV::mkprop('href',$data['caldav']->base_uri.'/'.$GLOBALS['egw_info']['user']['account_lid'].'/')));
 
 		$data['props']['principal-address'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'principal-address',
-				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] ? '' : array(
+				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1' ? '' : array(
 				Api\CalDAV::mkprop('href',$data['caldav']->base_uri.'/addressbook-accounts/'.$GLOBALS['egw_info']['user']['person_id'].'.vcf')));
 
 		$data['props']['directory-gateway'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'directory-gateway', array(
@@ -1141,7 +1141,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
 		// not removing it for default or forced prefs based on current users pref
 		if (!isset($addressbooks[0]) && (in_array($hook_data['type'], array('user', 'group')) ||
-			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']))
+			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1'))
 		{
 			unset($addressbooks['U']);
 		}

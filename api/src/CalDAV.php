@@ -675,7 +675,7 @@ class CalDAV extends HTTP_WebDAV_Server
 
 				// only add global /addressbook-accounts/ as the one in home-set is added (and controled) by add_shared
 				if ($path == '/' && $app == 'addressbook' &&
-					!$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+					$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1')
 				{
 					$file = $this->add_app($app,false,0,$path.$app.'-accounts/');
 					$file['props']['resourcetype']['val'][] = self::mkprop(self::CALENDARSERVER,'shared','');
@@ -851,7 +851,7 @@ class CalDAV extends HTTP_WebDAV_Server
 					$props['displayname'] = lang('All addressbooks');
 					break;
 				}
-				elseif(!$user && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+				elseif(!$user && $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1')
 				{
 					unset($props['owner']);
 					$props['displayname'] = lang($app).' '.lang('Accounts');
@@ -1972,7 +1972,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			$user_prefix = '/'.$GLOBALS['egw_info']['user']['account_lid'].'/'.$app;
 			list($app, $username) = explode('-', $app, 2);
-			if ($username == 'accounts' && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+			if ($username == 'accounts' && $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1')
 			{
 				$account_id = 0;
 			}

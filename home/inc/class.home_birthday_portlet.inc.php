@@ -92,7 +92,7 @@ use EGroupware\Api\Etemplate;
 		$bdays =& $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),'n_given,n_family','','%');
 		// search accounts too, if not stored in accounts repository
 		$extra_accounts_search = $contacts->account_repository == 'ldap' && !is_null($contacts->so_accounts) &&
-			!$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'];
+			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1';
 		if ($extra_accounts_search && ($bdays2 = $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),
 			'n_given,n_family','','%',false,'AND',false,array('owner' => 0))))
 		{

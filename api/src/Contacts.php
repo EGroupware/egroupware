@@ -1550,7 +1550,7 @@ class Contacts extends Contacts\Storage
 			$limit = array($options['start'], $options['num_rows']);
 		}
 		$filter = (array)$options['filter'];
-		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1') $filter['account_id'] = null;
 		if (($contacts =& parent::search($criteria,false,'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR', $limit, $filter)))
 		{
 			$ids = array();
@@ -2508,7 +2508,7 @@ class Contacts extends Contacts\Storage
 		if (!is_null($owner)) $filter['owner'] = $owner;
 
 		// should we hide the accounts addressbook
-		if (!$owner && $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		if (!$owner && $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1')
 		{
 			$filter['account_id'] = null;
 		}
