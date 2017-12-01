@@ -385,7 +385,7 @@ class calendar_uilist extends calendar_ui
 		}
 		// Allow private to stay for all viewed owners, even if in separate calendars
 		$search_params['private_allowed'] = (array)$params['selected_owners'] + (array)$search_params['users'];
-		
+
 		if ($params['col_filter'])
 		{
 			$col_filter = array();
@@ -401,7 +401,7 @@ class calendar_uilist extends calendar_ui
 
 		// App header is mostly taken care of on the client side, but here we update
 		// it to match changing list filters
-		if($params['view'] && $params['view'] == 'listview')
+		if($params['view'] && $params['view'] == 'listview' && Api\Json\Response::isJSONResponse())
 		{
 			Api\Json\Response::get()->call('app.calendar.set_app_header',
 				(count($search_params['users']) == 1 ? $this->bo->participant_name($search_params['users'][0]).': ' : '') .
