@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="filemanager.select" template="" lang="" group="0" version="1.9.002">
+		<grid width="100%" resize_ratio="1">
+			<columns>
+				<column width="32"/>
+				<column />
+			</columns>
+			<rows>
+				<row valign="top">
+					<grid id="apps" resize_ratio="1">
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row disabled="!@0">
+								<button align="center" label="Favorites" id="favorites" image="favorites"/>
+							</row>
+							<row height="40">
+								<button align="center" label="$row_cont" id="${row}" image="$row_cont/navbar"/>
+							</row>
+						</rows>
+					</grid>
+					<grid width="100%" resize_ratio="1">
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row class="dialogHeader">
+								<hbox>
+									<html id="js"/>
+									<button label="Up" id="button[up]" onclick="app.filemanager.change_dir('..');" image="goup"/>
+									<button label="Go to your home directory" id="button[home]" image="gohome"/>
+									<box class="selectPathContainer">
+										<vfs-name id="path" class="selectPath" onchange="1"/>
+									</box>
+									<button label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir" image="button_createdir" ro_image="createdir_disabled" class="createDir"/>
+								</hbox>
+							</row>
+							<row class="selectFiles file_dir_height" resize_ratio="1">
+								<grid width="100%"  id="dir" resize_ratio="1" >
+									<columns>
+										<column width="20"/>
+										<column/>
+										<column width="1%" disabled="!@mode=open-multiple"/>
+									</columns>
+									<rows>
+										<row class="row">
+											<vfs-mime align="center" id="$row" options="16" class="selectIcon"/>
+											<vfs id="$row" onclick="app.filemanager.select_clicked"/>
+											<checkbox align="right" id="selected[]" options="&quot;$row_cont[name]&quot;"/>
+										</row>
+									</rows>
+								</grid>
+							</row>
+							<row disabled="@mode=/(open-multiple|select-dir)/">
+								<textbox id="name" class="selectName"/>
+							</row>
+							<row disabled="!@options-mime">
+								<menulist class="selectMime">
+									<menupopup id="mime" onchange="1" options="All files"/>
+								</menulist>
+							</row>
+							<row disabled="@no_upload">
+								<groupbox>
+									<caption label="File upload"/>
+									<description value="Choose a file for uploading"/>
+									<file id="file_upload"/>
+								</groupbox>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row class="dialogFooterToolbar">
+					<hbox align="right">
+						<button label="@label" id="button[ok]" image="save" background_image="1"/>
+						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
