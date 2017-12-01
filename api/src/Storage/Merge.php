@@ -2137,7 +2137,8 @@ abstract class Merge
 				'menuaction' => 'collabora.EGroupware\\collabora\\Ui.merge_edit',
 				'document'   => $file['path'],
 				'merge'      => get_called_class(),
-				'id'         => '$id'
+				'id'         => '$id',
+				'select_all' => '$select_all'
 		)));
 		$action['target'] = '_blank';
 	}
