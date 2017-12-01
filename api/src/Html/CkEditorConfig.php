@@ -258,6 +258,14 @@ class CkEditorConfig
 	 */
 	private static function get_filebrowserBrowseUrl($start_path = '')
 	{
+		// Still need to treat old etemplate app to use filemanager_select.
+		// @TODO: this should be removed when we don't have any old etemplate app anymore.
+		if (in_array($GLOBALS['app'], array('phpbrain', 'sitemgr')))
+		{
+			return $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=filemanager.filemanager_select.select&mode=open&method=ckeditor_return'
+			.($start_path != '' ? '&path='.$start_path : '');
+		}
+
 		return \EGroupware\Api\Egw::link('/index.php',array(
 			'menuaction' => 'api.EGroupware\\Api\\Html\\CkEditorConfig.vfsSelectHelper',
 			'path' => $start_path
