@@ -35,6 +35,11 @@ use EGroupware\Api\Etemplate;
  * After the user selected one or more files (depending on the mode parameter), the "method" callback gets
  * called on server (!) side. Parameters are the id plus the selected files as 1. and 2. parameter.
  * The callback returns javascript to eg. update it's UI AND (!) to close the current popup ("window.close();").
+ *
+ * @deprecated This class is deprecated in favor of et2_vfsSelect widget. Please
+ * use et2_vfsSelect widget if you are not running old etemplate.
+ *
+ * @todo this class should be removed once we have all applications ported in et2
  */
 class filemanager_select
 {
@@ -64,6 +69,8 @@ class filemanager_select
 	 * File selector
 	 *
 	 * @param array $content
+	 *
+	 * @deprecated Please use et2_vfsSelect widget in client side instead
 	 */
 	function select(array $content=null)
 	{
