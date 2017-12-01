@@ -51,7 +51,7 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 			$this->uicontacts->get_rows($query,$this->selection,$readonlys, true);	// only return the ids
 		}
 		elseif ( $options['selection'] == 'all' ) {
-			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) {
+			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1') {
 				$col_filter['account_id'] = null;
 			}
 			$this->selection = ExecMethod2('addressbook.addressbook_bo.search', array(), true, '', '','',false,'AND',false,$col_filter);

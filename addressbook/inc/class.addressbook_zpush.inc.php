@@ -869,7 +869,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
 		// not removing it for default or forced prefs based on current users pref
 		if (!isset($addressbooks[0]) && (in_array($hook_data['type'], array('user', 'group')) ||
-			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']))
+			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1'))
 		{
 			unset($addressbooks['U']);
 		}

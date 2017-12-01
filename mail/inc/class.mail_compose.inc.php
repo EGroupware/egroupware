@@ -883,7 +883,7 @@ class mail_compose
 							{
 								$_searchCond = array('contact_id'=>$addressArray);
 								//error_log(__METHOD__.__LINE__.$_searchString);
-								if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
+								$showAccounts= $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1';
 								$filter = ($showAccounts?array():array('account_id' => null));
 								$filter['cols_to_search']=array('n_fn','email','email_home');
 								$contacts = $contacts_obj->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
@@ -3483,7 +3483,7 @@ class mail_compose
 		if ($GLOBALS['egw_info']['user']['apps']['addressbook'] && strlen($_searchString)>=$_searchStringLength)
 		{
 			//error_log(__METHOD__.__LINE__.array2string($_searchString));
-			$showAccounts = empty($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']);
+			$showAccounts = $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1';
 			$search = explode(' ', $_searchString);
 			foreach ($search as $k => $v)
 			{
