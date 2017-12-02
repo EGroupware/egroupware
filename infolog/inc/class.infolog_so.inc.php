@@ -192,7 +192,7 @@ class infolog_so
 		{
 			$responsible = array_unique($responsible);
 		}
-		$sql = "$this->users_table.account_id IN (".implode(',', $responsible).')';
+		$sql = "$this->users_table.account_id IN (".implode(',', array_map(array($this->db, 'quote'), $responsible)).')';
 
 		if (!$deleted_too)
 		{
@@ -537,9 +537,9 @@ class infolog_so
 			// we cant just set the new owner, as he might be already set and we have a unique index
 			$this->db->query('UPDATE '.$this->users_table.
 				" LEFT JOIN $this->users_table new_owner ON new_owner.info_id=$this->users_table.info_id".
-					" AND new_owner.account_id=".$this->db->quote($args['new_owner'], 'int').
-				' SET '.$this->users_table.'.account_id='.$this->db->quote($args['new_owner'], 'int').
-				' WHERE '.$this->users_table.'.account_id='.$this->db->quote($args['account_id'], 'int').
+					" AND new_owner.account_id=".$this->db->quote($args['new_owner']).
+				' SET '.$this->users_table.'.account_id='.$this->db->quote($args['new_owner']).
+				' WHERE '.$this->users_table.'.account_id='.$this->db->quote($args['account_id']).
 					' AND new_owner.account_id IS NULL',
 				__LINE__, __FILE__);
 		}
