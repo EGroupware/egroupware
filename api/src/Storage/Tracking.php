@@ -56,6 +56,7 @@ use notifications;
  * $content['history'] = array(
  * 	'id' => 123,
  *  'app' => 'calendar',
+ *  'num_rows' => 50, // optional, defaults to 50
  *  'status-widgets' => array(
  * 		'title' => 'label',	// no need to set, as default is label
  * 		'date'  => 'datetime',

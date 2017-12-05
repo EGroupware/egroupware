@@ -420,6 +420,10 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 		// Skip getting data if there's no ID
 		if(!this.value.id) return;
 
+		// Set num_rows to fetch via nextmatch
+		if ( this.options.value['num_rows'] )
+			_queriedRange['num_rows'] = this.options.value['num_rows'];
+
 		// Pass the fetch call to the API
 		this.egw().dataFetch(
 			this.getInstanceManager().etemplate_exec_id,
