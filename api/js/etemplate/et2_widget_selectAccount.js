@@ -71,8 +71,11 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 		// Holder for search jQuery nodes
 		this.search = null;
 
-		// Reference to object with dialog
+		// Reference to dialog
 		this.dialog = null;
+
+		// Reference to widget within dialog
+		this.widgets = null;
 
 		this._super.call(this, _parent, _attrs);
 
@@ -365,12 +368,10 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 
 		// Selecting a single user closes the dialog, this only used if user cleared
 		var ok_click = function() {
-			jQuery(this).dialog("close");
 			widget.set_value([]);
 			// Fire change event
 			if(widget.input) widget.input.trigger("change");
-			// Free it up, it will be re-created, if ever needed again
-			jQuery(this).dialog("destroy");
+			jQuery(this).dialog("close");
 		};
 		widget._create_dialog(search, ok_click);
 	},
@@ -416,9 +417,6 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 
 			widget.set_value(ids);
 
-			// Free it up, it will be re-created, if ever needed again
-			jQuery(this).dialog("destroy");
-
 			// Fire change event
 			if(widget.input) widget.input.trigger("change");
 		};
@@ -434,8 +432,8 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 	 * @param {function} update_function
 	 */
 	_create_dialog: function(widgets, update_function) {
-		this.dialog = widgets;
-		var dialog = et2_dialog.show_dialog(false,
+		this.widgets = widgets;
+		this.dialog = et2_dialog.show_dialog(false,
 			'',
 			this.options.label ? this.options.label : this.egw().lang('Select'),
 			{},
@@ -448,11 +446,11 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 				image: 'cancel'
 			}]
 		);
-		dialog.set_dialog_type('');
+		this.dialog.set_dialog_type('');
 		// Static size for easier layout
-		dialog.div.dialog({width: "500", height: "370"});
+		this.dialog.div.dialog({width: "500", height: "370"});
 
-		dialog.div.append(widgets.width('100%'));
+		this.dialog.div.append(widgets.width('100%'));
 		return widgets;
 	},
 
@@ -495,8 +493,7 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 					self.set_value(selected.item.value);
 					if(self.dialog)
 					{
-						self.dialog.dialog("close");
-						self.dialog.dialog("destroy");
+						self.dialog.div.dialog("close");
 					}
 					// Fire change event
 					if(self.input) self.input.trigger("change");
@@ -548,7 +545,7 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 		if(item.value) item.value = parseInt(item.value);
 
 		// (containter of) Currently selected users / groups
-		var selected = jQuery('#'+this.getInstanceManager().uniqueId + "_selected", this.dialog);
+		var selected = jQuery('#'+this.getInstanceManager().uniqueId + "_selected", this.widgets);
 
 		// Group
 		if(item.value && item.value < 0)
