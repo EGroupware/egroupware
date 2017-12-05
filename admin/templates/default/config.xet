@@ -178,11 +178,11 @@
 					<textbox id="newsettings[num_unsuccessful_id]" size="5"/>
 				</row>
 				<row>
-					<description value="After how many unsuccessful attempts to login, an IP should be blocked (default 3) ?" label="%s:"/>
+					<description value="After how many unsuccessful attempts to login, an IP should be blocked (default 15) ?" label="%s:"/>
 					<textbox id="newsettings[num_unsuccessful_ip]" size="5"/>
 				</row>
 				<row>
-					<description value="How many minutes should an account or IP be blocked (default 30) ?" label="%s:"/>
+					<description value="How many minutes should an account or IP be blocked (default 1) ?" label="%s:"/>
 					<textbox id="newsettings[block_time]" size="5"/>
 				</row>
 				<row>
