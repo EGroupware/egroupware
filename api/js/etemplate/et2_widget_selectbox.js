@@ -753,22 +753,17 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				// Initialize the single row class
 				$chosen_div.toggleClass('et2_selectbox_single_row', true);
 
-				// bind hover actions
-				$chosen_div
-					.off()
-					.hover(
-						//mouseIn
-						function(e){
-							jQuery(this).toggleClass('et2_selectbox_multi_row', true);
-							jQuery(this).toggleClass('et2_selectbox_single_row', false);
-						},
-						//mouseOut
-						function(e){
-							jQuery(this).toggleClass('et2_selectbox_multi_row', false);
-							jQuery(this).toggleClass('et2_selectbox_single_row', true);
-							_update_item_counter();
-						}
-				);
+				// bind mouse handlers
+				$chosen_div.on('mouseleave mouseup', function(e){
+					jQuery(this).toggleClass('et2_selectbox_multi_row', false);
+					jQuery(this).toggleClass('et2_selectbox_single_row', true);
+					_update_item_counter();
+				});
+
+				$chosen_div.on('mouseenter', function(e){
+					jQuery(this).toggleClass('et2_selectbox_multi_row', true);
+					jQuery(this).toggleClass('et2_selectbox_single_row', false);
+				});
 			}
 		}
 	},
