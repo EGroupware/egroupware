@@ -103,11 +103,6 @@ class notifications_popup implements notifications_iface {
 	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false)
 	{
 		unset($_attachments);	// not used
-		// Check access log to see if user is still logged in
-		if ( !Api\Session::notifications_active($this->recipient->account_id) )
-		{
-			throw new Exception("User {$this->recipient->account_lid} isn't online. Can't send notification via popup");
-		}
 
 		$message = 	$this->render_infos($_subject)
 					.Api\Html::hr()
