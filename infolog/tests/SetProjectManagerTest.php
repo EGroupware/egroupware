@@ -6,6 +6,7 @@ namespace EGroupware\Infolog;
 require_once realpath(__DIR__.'/../../api/tests/AppTest.php');	// Application test base
 
 use Egroupware\Api;
+use Egroupware\Api\Link;
 use Egroupware\Api\Etemplate;
 
 /**
@@ -134,6 +135,55 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 		// Set project by pm_id
 		$info['pm_id'] = $this->pm_id;
+		$this->bo->write($info);
+
+		// Now load it again
+		$info = $this->bo->read($this->info_id);
+
+		// Check pm_id is there
+		$this->assertNotNull($info['pm_id'], 'Project was not set');
+
+		// Force links to run notification now so we get valid testing - it
+		// usually waits until Egw::on_shutdown();
+		Api\Link::run_notifies();
+
+		// Check project
+		$this->checkElements();
+	}
+
+	/**
+	 * Add a project by only adding it as a link.  First linked project gets
+	 * taken as _the_ project.
+	 */
+	public function testAddProjectViaLink()
+	{
+		// Saving the infolog should try to send a notification
+		$this->bo->tracking->expects($this->exactly(2))
+                ->method('track')
+				->withConsecutive(
+					// First call - creation
+					[$this->callback(function($subject) { return is_null($subject['pm_status']);})],
+					// Second call - after setting project
+					[$this->callback(function($subject) { return $subject['pm_id'] == $this->pm_id;})]
+				);
+
+		$info = $this->getTestInfolog();
+
+		$this->info_id = $this->bo->write($info);
+		$this->assertInternalType('integer', $this->info_id);
+		$this->assertGreaterThan(0, $this->info_id);
+
+		// Force links to run notification now so we get valid testing - it
+		// usually waits until Egw::on_shutdown();
+		Api\Link::run_notifies();
+
+		// Now load it again
+		$info = $this->bo->read($this->info_id);
+
+		// Set project by link
+		Link::link('infolog', $this->info_id, 'projectmanager', $this->pm_id);
+		Api\Link::run_notifies();
+
 		$this->bo->write($info);
 
 		// Now load it again
