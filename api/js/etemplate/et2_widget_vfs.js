@@ -1002,7 +1002,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			{text: egw.lang(_data.content.label), id:"submit"},
 			{text: egw.lang("Close"), id:"close"}
 		];
-		var data = jQuery.extend(_data, {'currentapp': egw.app_name()});
+		var data = jQuery.extend(_data, {'currentapp': egw(window).app_name()});
 
 		// define a mini app object for vfs select UI
 		app.vfsSelectUI = new app.classes.vfsSelectUI;
