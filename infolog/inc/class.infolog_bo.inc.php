@@ -479,6 +479,8 @@ class infolog_bo
 		$info['info_link_id'] = 0;	// link might have been deleted
 		$info['info_custom_from'] = (int)!!$info['info_from'];
 
+		$this->get_pm_id($info);
+
 		return False;
 	}
 
@@ -1165,10 +1167,11 @@ class infolog_bo
 			}
 			Link::unlink($old_link_id);
 		}
-		// if added link is a project and no other project selected, also add as project
-		if ($app == 'projectmanager' && $id && !$values['pm_id'])
+		// if linked to a project and no other project selected, also add as project
+		$links = Link::get_links('infolog', $values['info_id'], 'projectmanager');
+		if (!$values['pm_id'] && count($links))
 		{
-			$values['old_pm_id'] = $values['pm_id'] = $id;
+			$values['old_pm_id'] = $values['pm_id'] = array_pop($links);
 		}
 	}
 
