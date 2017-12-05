@@ -279,10 +279,7 @@ class History
 			}
 			$rows[] = Api\Db::strip_array_keys($row,'history_');
 		}
-		if ($mysql_calc_rows)
-		{
-			$total = $GLOBALS['egw']->db->query('SELECT FOUND_ROWS()')->fetchColumn();
-		}
+		$total = $GLOBALS['egw']->db->union($_query,__LINE__,__FILE__)->NumRows();
 
 		return $total;
 	}
