@@ -259,8 +259,9 @@ class CkEditorConfig
 	private static function get_filebrowserBrowseUrl($start_path = '')
 	{
 		// Still need to treat old etemplate app to use filemanager_select.
+		// *Admin: admin app also still have some old etmplate apps like login_message.
 		// @TODO: this should be removed when we don't have any old etemplate app anymore.
-		if (in_array($GLOBALS['app'], array('phpbrain', 'sitemgr')))
+		if (in_array($GLOBALS['app'], array('phpbrain', 'sitemgr', 'admin')))
 		{
 			return $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=filemanager.filemanager_select.select&mode=open&method=ckeditor_return'
 			.($start_path != '' ? '&path='.$start_path : '');

@@ -318,7 +318,20 @@ jQuery.extend(et2_htmlarea,
 	buildVfsSelectForCKEditor: function(_data)
 	{
 		if (!_data) return;
-		var et2 = app[egw(window).app_name()].et2;
+
+		// Don't rely only on app_name to fetch et2 object as app_name may not
+		// always represent current app of the window, e.g.: mail admin account.
+		// Try to fetch et2 from its template name.
+		var etemplate = jQuery('form').data('etemplate');
+		var et2 = {};
+		if (etemplate && etemplate.name && !app[egw(window).app_name()])
+		{
+			et2 = etemplate2.getByTemplate(etemplate.name)[0]['widgetContainer'];
+		}
+		else
+		{
+			et2 = app[egw(window).app_name()].et2;
+		}
 
 		var vfsSelect = et2_createWidget('vfs-select', {
 			id:'upload',

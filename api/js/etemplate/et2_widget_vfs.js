@@ -1064,10 +1064,25 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			resizable: false
 		}, et2_dialog._create_parent('api'));
 		this.dialog.template.uniqueId = 'api.vfsSelectUI';
+
+		// Don't rely only on app_name to fetch et2 object as app_name may not
+		// always represent current app of the window, e.g.: mail admin account.
+		// Try to fetch et2 from its template name.
+		var etemplate = jQuery('form').data('etemplate');
+		var et2 = {};
+		if (etemplate && etemplate.name && !app[egw(window).app_name()])
+		{
+			et2 = etemplate2.getByTemplate(etemplate.name)[0]
+		}
+		else
+		{
+			et2 = etemplate2.getByApplication(egw(window).app_name())[0];
+		}
 		// we need an etemplate_exec_id for better handling serverside parts of
 		// widgets and since we can not have a etemplate_exec_id specifically
 		// for dialog template our best shot is to inherit its parent etemplate_exec_id.
-		this.dialog.template.etemplate_exec_id = etemplate2.getByApplication(egw(window).app_name())[0].etemplate_exec_id;
+		this.dialog.template.etemplate_exec_id = et2.etemplate_exec_id;
+
 		app.vfsSelectUI.et2 = this.dialog.template.widgetContainer;
 		// Keep the dialog always at the top, seems CKEDITOR dialogs have very
 		// high z-index set.
