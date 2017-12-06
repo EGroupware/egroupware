@@ -416,7 +416,7 @@ class infolog_so
 
 		if (!$where ||
 			!($this->data = $this->db->select($this->info_table,
-			'*,'.$this->db->group_concat('account_id').' AS info_responsible,'.
+			$this->info_table.'.*,'.$this->db->group_concat('account_id').' AS info_responsible,'.
 			$this->db->group_concat('info_res_attendee').' AS info_cc,'.
 			$this->info_table.'.info_id AS info_id',
 			$where, __LINE__, __FILE__, false, "GROUP BY $this->info_table.info_id", 'infolog', 1,
