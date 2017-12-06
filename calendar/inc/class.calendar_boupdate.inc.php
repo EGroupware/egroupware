@@ -1322,6 +1322,10 @@ class calendar_boupdate extends calendar_bo
 					}
 				}
 			}
+			foreach($event['alarm'] as $id => &$alarm)
+			{
+				$alarm['time'] = $this->date2ts($alarm['time'],true);	// user to server-time
+			}
 		}
 
 		// you should always update modification time (ctag depends on it!)
@@ -1591,7 +1595,7 @@ class calendar_boupdate extends calendar_bo
 			);
 			// Reset cached event
 			static::$cached_event = array();
-			
+
 			if (isset($status2msg[$status]) && !$skip_notification)
 			{
 				if (!is_array($event)) $event = $this->read($cal_id);
