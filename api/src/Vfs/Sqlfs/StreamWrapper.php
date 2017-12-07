@@ -1565,12 +1565,12 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	{
 		$vfs = new self();
 		$stat = $vfs->url_stat($path,0);
-		$fs_id = (int)$stat['ino'];
+		$fs_id = $stat['ino'];
 
 		$query = 'SELECT MIN(B.fs_id)
 FROM '.self::TABLE.' as A
-JOIN '.self::TABLE.' AS B ON
-	A.fs_name = B.fs_name AND A.fs_dir = B.fs_dir AND A.fs_active = 1 && B.fs_active = 0
+JOIN '.self::TABLE.' AS B ON A.fs_name = B.fs_name AND A.fs_dir = B.fs_dir AND A.fs_active = '.
+			self::_pdo_boolean(true).' && B.fs_active = '.self::_pdo_boolean(false).'
 WHERE A.fs_id=?
 GROUP BY A.fs_id';
 		if (self::LOG_LEVEL > 2)
