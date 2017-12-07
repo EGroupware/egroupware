@@ -281,6 +281,30 @@ class StreamWrapper extends LinksParent
 	}
 
 	/**
+	 * This method is called in response to rmdir() calls on URL paths associated with the wrapper.
+	 *
+	 * Reimplemented to do nothing (specially not complain), if an entry directory does not exist,
+	 * as we always report them as existing!
+	 *
+	 * @param string $url
+	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
+	 * @return boolean TRUE on success or FALSE on failure.
+	 */
+	function rmdir ( $url, $options )
+	{
+		$path = $url != '/' ? Vfs::parse_url($url,PHP_URL_PATH) : $url;
+
+		list(,/*$apps*/,/*$app*/,/*$id*/,$rest) = explode('/',$path);
+
+		// never delete entry-dir, as it makes attic inaccessible
+		if (empty($rest))
+		{
+			return true;
+		}
+		return parent::rmdir( $path, $options );
+	}
+
+	/**
 	 * This method is called immediately after your stream object is created.
 	 *
 	 * Reimplemented from sqlfs to ensure $this->url_stat is called, to fill sqlfs stat cache with our eacl!
