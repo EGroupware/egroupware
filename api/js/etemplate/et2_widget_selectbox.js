@@ -860,6 +860,16 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				this._appendOptionElement(key, _options[key]);
 			}
 		}
+		// add an empty option for single select tags with empty_label in order
+		// to make allow_single_deselect option to work.
+		if (this.options.empty_label && this.options.tags
+				&& this.options.allow_single_deselect && !this.options.multiple)
+		{
+			var empty_option = jQuery(document.createElement("option"))
+			.attr("value", '');
+			empty_option.prependTo(this.input);
+		}
+
 		this.options.select_options = _options;
 
 		if(this.options.tags || this.options.search)

@@ -2761,6 +2761,26 @@ tr.dialogHeader2 td {padding-top:15px;}
 }
 .nextmatch_header_row .et2_selectbox.select-cat.chzn-container .chzn-results {max-height: 340px;}
 
+.et2_nextmatch .egwGridView_outer .et2_selectbox.chzn-container-single {
+	width: auto !important;
+	background: white;
+	position: inherit;
+	margin-bottom: 3px;
+}
+.et2_nextmatch .egwGridView_outer .et2_selectbox.chzn-container-single a.chzn-single{
+	border:none;
+	border-radius: 0;
+	background: white;
+}
+.et2_nextmatch .egwGridView_outer .et2_selectbox.chzn-container-single.chzn-container-active.chzn-with-drop .chzn-drop{
+	top:auto;
+	z-index: 10000;
+	left:auto;
+
+}
+.et2_nextmatch .egwGridView_outer .et2_selectbox.chzn-container-single.chzn-container-active.chzn-with-drop {
+	position: static;
+}
 /* Implementation for et2_selectbox mulit tags with single row*/
 .et2_selectbox_multi_row ul.chzn-choices {
 	height: auto;
