@@ -2978,13 +2978,6 @@ div#popupMainDiv > * {
 form.et2_container {
   padding: 0;
 }
-form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget select,
-form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
-  padding-right: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  font-size: 0.95em;
-}
 form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
   margin: 4px 5px 4px 0;
   -webkit-border-top-right-radius: 3px;
