@@ -415,17 +415,6 @@ class Script
 			if (($vacation['status'] == 'on' && strlen(trim($vacation['text']))>0)|| $vacation['status'] == 'by_date' &&
 				$vacation['start_date'] <= time() && time() < $vacation['end_date']+24*3600)	// +24*3600 to include the end_date day
 			{
-				if (trim($vacation['forwards'])) {
-					$if = array();
-					foreach($vacation['addresses'] as $addr) {
-						$if[] = 'address :contains ["To","TO","Cc","CC"] "'.trim($addr).'"';
-					}
-					$newscriptbody .= 'if anyof ('.implode(', ',$if).") {\n";
-					foreach(preg_split('/, ?/',$vacation['forwards']) as $addr) {
-						$newscriptbody .= "\tredirect \"".trim($addr)."\";\n";
-					}
-					$newscriptbody .= "\tkeep;\n}\n";
-				}
 				$vacation_active = true;
 				if ($vacation['text'])
 				{
@@ -441,6 +430,17 @@ class Script
 						// TODO: refine rule without using regex
 						$newscriptbody .= "if header :contains ".'"X-Spam-Status" '.'"YES"'."{\n\tstop;\n}\n"; //stop vacation reply if it is spam
 					}
+				}
+				if (trim($vacation['forwards'])) {
+					$if = array();
+					foreach($vacation['addresses'] as $addr) {
+						$if[] = 'address :contains ["To","TO","Cc","CC"] "'.trim($addr).'"';
+					}
+					$newscriptbody .= 'if anyof ('.implode(', ',$if).") {\n";
+					foreach(preg_split('/, ?/',$vacation['forwards']) as $addr) {
+						$newscriptbody .= "\tredirect \"".trim($addr)."\";\n";
+					}
+					$newscriptbody .= "\tkeep;\n}\n";
 				}
 				$newscriptbody .= "vacation :days " . $vacation['days'];
 				$first = 1;
