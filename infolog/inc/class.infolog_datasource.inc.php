@@ -133,7 +133,7 @@ class infolog_datasource extends datasource
 			'real_start' => 'info_startdate',
 			'real_end' => 'info_datecompleted'
 		);
-		
+
 		$startdate_original = $info['info_startdate'];
 		foreach($map as $offset_field => $info_field)
 		{
@@ -158,12 +158,13 @@ class infolog_datasource extends datasource
 		{
 			unset($info['info_datecompleted']);
 		}
-		
+
 		if(!($info['info_id'] = $this->infolog_bo->write($info))) return false;
 
 		// link the new infolog against the project and setting info_link_id and evtl. info_from
 		$old_link = $info['info_link_id'] ? Link::get_link($info['info_link_id']) : $info['info_link'];
 		$info['info_link_id'] = Link::link('projectmanager',$target,'infolog',$info['info_id'],$element['pe_remark'],0,0,1);
+		$info['pm_id'] = $target;
 		if (!$info['info_from'] || $old_link && $info['info_from'] == $old_link['title'])
 		{
 			$info['info_from'] = Link::title('projectmanager',$target);
@@ -173,7 +174,7 @@ class infolog_datasource extends datasource
 			$info['info_status'] = $this->infolog_bo->activate($info);
 		}
 		$this->infolog_bo->write($info);
-
+		
 		// creating again all links, beside the one to the source-project
 		foreach(Link::get_links('infolog',$element['pe_app_id']) as $link)
 		{
