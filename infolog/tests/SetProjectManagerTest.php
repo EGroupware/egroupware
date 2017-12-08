@@ -322,6 +322,10 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->checkElements();
 	}
 
+	/**
+	 * Test that loading a project set in the contact gets loaded with pm_id
+	 * set.
+	 */
 	public function testLoadWithProject()
 	{
 		// Saving the infolog should try to send a notification
@@ -359,7 +363,11 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->checkElements();
 	}
 
-	public function testChangeProject()
+	/**
+	 * Test that you can change from one project to another without overwriting
+	 * the set info_contact.
+	 */
+	public function testChangeProjectWithContactSet()
 	{
 		// Saving the infolog should try to send a notification
 		$this->bo->tracking->expects($this->exactly(2))
@@ -435,6 +443,71 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 			// Reset for cleanup
 			$this->pm_id = $first_pm_id;
 		}
+	}
+
+	/**
+	 * Test free text in the contact field
+	 */
+	public function testChangeContactWithProjectStillSet()
+	{
+		$info = $this->getTestInfolog();
+
+		// Set up the test - just set info_contact to the project
+		$info['info_contact'] = array(
+			'app'     =>	'projectmanager',
+			'id'      =>	$this->pm_id
+		);
+
+		$this->info_id = $this->bo->write($info);
+		$this->assertArrayHasKey('info_id', $info, 'Could not make test infolog');
+		$this->assertThat($this->info_id,
+			$this->logicalAnd(
+				$this->isType('integer'),
+				$this->greaterThan(0)
+			)
+		);
+
+		// Check infolog has pm_id properly set
+		$this->assertEquals($this->pm_id, $info['pm_id']);
+
+		// Force links to run notification now so we get valid testing - it
+		// usually waits until Egw::on_shutdown();
+		Api\Link::run_notifies();
+
+		$info = $this->bo->read($this->info_id);
+		// Check project
+		$this->checkElements();
+
+		// Now set info_contact to be a contact
+		$info['info_contact'] = array(
+			'app'    =>	'addressbook',
+			// Linking to current user's contact
+			'id'     =>	$GLOBALS['egw_info']['user']['person_id'],
+		);
+		$this->bo->write($info);
+
+		// Force links to run notification now so we get valid testing - it
+		// usually waits until Egw::on_shutdown();
+		Api\Link::run_notifies();
+
+		// Now load it again
+		$info = $this->bo->read($this->info_id);
+
+		// Check infolog still has pm_id properly set
+		$this->assertNotNull($info['pm_id'], 'Project got lost');
+		$this->assertEquals($this->pm_id, $info['pm_id'], 'Project got changed');
+
+		// Check project
+		$this->checkElements();
+
+		// Check pm links (should be only 1)
+		$pm_links = Api\Link::get_links('infolog',$this->info_id,'projectmanager');
+		$this->assertEquals(1, count($pm_links));
+
+		// Check all links (should be contact & project)
+		$links = Api\Link::get_links('infolog',$this->info_id);
+		$this->assertEquals(2, count($links));
+
 	}
 
 	public function testClearProject()

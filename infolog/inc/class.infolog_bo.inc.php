@@ -1111,6 +1111,11 @@ class infolog_bo
 						$app,$id
 				));
 				$values['info_from'] = Link::title($app, $id);
+				if($values['pm_id'])
+				{
+					// They just changed the contact, don't clear the project
+					unset($old_link_id);
+				}
 			}
 			else if ($from)
 			{
