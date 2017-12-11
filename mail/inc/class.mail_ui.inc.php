@@ -2844,7 +2844,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (Vfs::is_dir($path))
 			{
 				$headers = $this->mail_bo->getMessageHeader($uid,$partID,true,false,$mailbox);
-				$file = $dir . '/'.preg_replace('/[\f\n\t\v\\:*#?<>\|]/',"_",$headers['SUBJECT']).'.eml';
+				$file = $dir . '/'.preg_replace('$[\f\n\t\v\\:*#?<>\|/]$',"_",$headers['SUBJECT']).'.eml';
 			}
 			else
 			{
@@ -2988,7 +2988,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachment = $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
 			}
 
-			$file = $dir. '/' . $attachment['filename'];
+			$file = $dir. '/' . preg_replace('$[\f\n\t\v\\:*#?<>\|/]$',"_",$attachment['filename']);
 
 			$counter = 1;
 			$tmp_file = $file;
