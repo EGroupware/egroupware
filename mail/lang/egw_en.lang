@@ -298,7 +298,7 @@ mail settings	mail	en	Mail settings
 mail source	mail	en	Mail Source
 mail-address	mail	en	Mail-Address
 mailaccount	mail	en	Mail account
-mailinglist	mail	en	Mailinglist
+mailinglist	mail	en	Mailing list
 mails	common	en	Mails
 mails can be copied to that folder via context menu, if folder is configured.	mail	en	Mails can be copied to that folder via context menu, if folder is configured.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	Mailserver reported:\n%1 \nDo you want to proceed by deleting the selected messages immediately (click ok)?\nIf not, please try to empty your trashfolder before continuing. (click cancel)
@@ -335,7 +335,7 @@ no (valid) send folder set in preferences	mail	en	No (valid) Send Folder set in 
 no access	mail	en	no access
 no action defined!	mail	en	No action defined!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	en	No Address TO/CC/BCC supplied, and no folder to save message to provided.
-no adress, to send this mail to, supplied	mail	en	no adress, to send this mail to, supplied
+no adress, to send this mail to, supplied	mail	en	no address was supplied to whom to send this mail
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	en	No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.
 no folders	mail	en	no folders
 no message body supplied	mail	en	no message body supplied
