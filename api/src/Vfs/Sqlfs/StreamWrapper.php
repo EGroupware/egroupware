@@ -1565,6 +1565,10 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	{
 		$vfs = new self();
 		$stat = $vfs->url_stat($path,0);
+		if ($stat['readlink'])
+		{
+			$stat = $vfs->url_stat($stat['readlink'], 0);
+		}
 		$fs_id = $stat['ino'];
 
 		$query = 'SELECT MIN(B.fs_id)
