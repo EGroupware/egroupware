@@ -699,7 +699,7 @@ class timesheet_ui extends timesheet_bo
 			}
 		}
 		// Update start / end dates for custom
-		if($query_in['filter'] != 'custom')
+		if($query_in['filter'] != 'custom' && Api\Json\Response::isJSONResponse())
 		{
 			Api\Json\Response::get()->call(
 				'app.timesheet.update_timespan',
