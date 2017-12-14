@@ -3719,7 +3719,7 @@ td.lettersearch {
   background-color: #fafafa;
 }
 #egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_message_inner_container {
-  height: auto;
+  height: calc(100% - 62px);
   overflow: auto;
 }
 #egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_collapse {
