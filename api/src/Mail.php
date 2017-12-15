@@ -3953,8 +3953,9 @@ class Mail
 						$this->flagMessages('delete', $uid, $_folder);
 					}
 				}
-				// delete the messages finaly
-				$this->icServer->expunge($_folder);
+				$examineMailbox = $this->icServer->examineMailbox($_folder);
+				// examine the folder and if there are messages then try to delete the messages finaly
+				if (is_array($examineMailbox) && $examineMailbox['MESSAGES'] > 0) $this->icServer->expunge($_folder);
 				break;
 		}
 		if($oldMailbox != '') {
