@@ -484,7 +484,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		{
 			return_value = [];
 		}
-		
+
 		// Turn on local filtering, or trust server to do it
 		cfg.mode = typeof return_value === 'string' ? 'remote' : 'local';
 
@@ -572,9 +572,9 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 	 */
 	set_autocomplete_params: function(_params)
 	{
-		if (this.options.autocomplate_params != _params)
+		if (this.options.autocomplete_params != _params)
 		{
-			this.options.autocomplate_params = _params;
+			this.options.autocomplete_params = _params;
 
 			if (this.taglist) this.taglist.setDataUrlParams(_params);
 		}
