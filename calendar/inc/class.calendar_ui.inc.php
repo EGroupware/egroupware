@@ -550,8 +550,11 @@ class calendar_ui
 			}
 
 			$_GET['merge'] = $content['merge'];
-			$this->merge();
-			return;
+			if($this->merge())
+			{
+				Framework::redirect('/index.php');//, array('menuaction' => 'calendar.calendar_uiviews.index'));
+				return false;
+			}
 		}
 		Etemplate::reset_request();
 		$sidebox = new Etemplate('calendar.sidebox');
@@ -586,9 +589,24 @@ class calendar_ui
 		}
 
 		// Merge print
+		try {
+			if (class_exists('EGroupware\\collabora\\Bo') &&
+					$GLOBALS['egw_info']['user']['apps']['collabora'] &&
+					$discovery = \EGroupware\collabora\Bo::discover()
+			)
+			{
+				$cont['collabora_enabled'] = true;
+			}
+		}
+		catch (\Exception $e)
+		{
+			// ignore failed discovery
+			unset($e);
+		}
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
 		{
 			$sel_options['merge'] = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', null,'calendar');
+
 		}
 		else
 		{
@@ -788,6 +806,8 @@ class calendar_ui
 	 * If timespan is not provided, we try to guess based on the document name.
 	 *
 	 * @param Array $timespan
+	 *
+	 * @return boolean stop execution
 	 */
 	public function merge($timespan = array())
 	{
@@ -836,9 +856,21 @@ class calendar_ui
 						));
 				}
 			}
+			$document = $_GET['merge'];
 			$merge = new calendar_merge();
-			//error_log($_GET['merge'] . ' Timespan: ');foreach($timespan as $t) error_log(Api\DateTime::to($t['start']) . ' - ' . Api\DateTime::to($t['end']));
-			$error = $merge->download($_GET['merge'], $timespan, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
+			if($error = $merge->check_document($document, $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']))
+			{
+				return $error;
+			}
+			if(!$error && $this->merge_collabora($document, $timespan))
+			{
+				return false;
+			}
+			else if (!$error)
+			{
+				//error_log($_GET['merge'] . ' Timespan: ');foreach($timespan as $t) error_log(Api\DateTime::to($t['start']) . ' - ' . Api\DateTime::to($t['end']));
+				$error = $merge->download($document, $timespan, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
+			}
 			// Here?  Doesn't actually give the message
 			Framework::refresh_opener($error, 'calendar');
 		}
@@ -851,5 +883,44 @@ class calendar_ui
 				'cd' => 'yes'
 			));
 		}
+	}
+
+	protected function merge_collabora($document, $timespan)
+	{
+		$file = Api\Vfs::stat($document);
+		if(!$file['mime'])
+		{
+			$file['mime'] = Api\Vfs::mime_content_type($document);
+		}
+
+		$editable_mimes = array();
+		try
+		{
+			if (class_exists('EGroupware\\collabora\\Bo') &&
+					$GLOBALS['egw_info']['user']['apps']['collabora'] &&
+					$discovery = \EGroupware\collabora\Bo::discover()
+			)
+			{
+				$editable_mimes = $discovery;
+			}
+		}
+		catch (\Exception $e)
+		{
+			return false;
+		}
+		$timespan = json_encode($timespan);
+
+		if ($editable_mimes[$file['mime']])
+		{
+			Framework::popup(Framework::link('/index.php', array(
+				'menuaction' => 'collabora.EGroupware\\collabora\\Ui.merge_edit',
+				'document'   => $document,
+				'merge'      => 'calendar_merge',
+				'id'         => $timespan
+			)),'_blank',false);
+			return true;
+		}
+
+		return false;
 	}
 }

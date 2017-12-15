@@ -1802,9 +1802,16 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// Set the hidden inputs to the current time span & submit
 			widget.getRoot().getWidgetById('first').set_value(app.calendar.state.first);
 			widget.getRoot().getWidgetById('last').set_value(app.calendar.state.last);
-			widget.getInstanceManager().postSubmit();
+			if(widget.getRoot().getArrayMgr('content').getEntry('collabora_enabled'))
+			{
+				widget.getInstanceManager().submit();
+			}
+			else
+			{
+				widget.getInstanceManager().postSubmit();
+				window.setTimeout(function() {widget.set_value('');},100);
+			}
 		}
-		window.setTimeout(function() {widget.set_value('');},100);
 
 		return false;
 	},
