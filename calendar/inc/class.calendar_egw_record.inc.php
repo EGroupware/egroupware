@@ -39,11 +39,11 @@ class calendar_egw_record implements importexport_iface_egw_record
 	 */
 	public function __construct( $_identifier='' ){
 		$this->identifier = $_identifier;
-		if(!is_object($this->bo)) {
-			$this->bo = new calendar_bo();
+		if(!is_object(self::$bo)) {
+			self::$bo = new calendar_bo();
 		}
 		if($this->identifier) {
-			$this->record = $this->bo->read($this->identifier);
+			$this->record = self::$bo->read($this->identifier);
 		}
 	}
 

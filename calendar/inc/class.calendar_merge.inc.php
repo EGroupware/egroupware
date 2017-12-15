@@ -241,6 +241,12 @@ class calendar_merge extends Api\Storage\Merge
 	{
 		$replacements = array();
 		if(!is_array($id) || !$id['start']) {
+			if(strpos($id, ':'))
+			{
+				$_id = $id;
+				$id = array();
+				list($id['id'], $id['recur_date']) = explode(':',$_id);
+			}
 			$event = $this->bo->read(is_array($id) ? $id['id'] : $id, is_array($id) ? $id['recur_date'] : null);
 		} else {
 			$event = $id;
