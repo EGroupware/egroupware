@@ -300,6 +300,13 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 			jQuery.extend(arrMgrs.content.data, arrMgrs.modifications.data);
 			this.et2.setArrayMgrs(arrMgrs);
 		}
+
+		// preserve value of the name
+		if (arrMgrs && this.et2.getWidgetById('name'))
+		{
+			arrMgrs.content.data['name'] = this.et2.getWidgetById('name').get_value();
+		}
+
 		this.vfsSelectWidget._content(arrMgrs.content.data, _callback);
 	}
 });}).call(this);
