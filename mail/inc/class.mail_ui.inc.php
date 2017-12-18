@@ -2909,7 +2909,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			'success' => true
 		);
 
-		$dir = Vfs::is_dir($path) ? $path : Vfs::dirname($path);
+		if (Vfs::is_dir($path))
+		{
+			$dir = $path;
+		}
+		else
+		{
+			$dir = Vfs::dirname($path);
+			$filename = Vfs::basename($path);
+		}
 
 		if (!Vfs::is_writable($dir))
 		{
@@ -2989,7 +2997,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachment = $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
 			}
 
-			$file = $dir. '/' . preg_replace('$[\f\n\t\v\\:*#?<>\|/]$',"_",$attachment['filename']);
+			$file = $dir. '/' . ($filename ? $filename : preg_replace('$[\f\n\t\v\\:*#?<>\|/]$',"_",$attachment['filename']));
 
 			$counter = 1;
 			$tmp_file = $file;
