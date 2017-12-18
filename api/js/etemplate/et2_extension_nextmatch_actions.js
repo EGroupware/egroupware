@@ -420,6 +420,10 @@ function nm_open_popup(_action, _selected)
 			var d_buttons = [];
 			var action = _action;
 			popup.show();
+			var close_function = function()
+			{
+				dialog_parent.append(dialog);
+			};
 			jQuery('button:visible',popup).each(function(index) {
 				var but = jQuery(this);
 				if(but.attr("id"))
@@ -435,9 +439,11 @@ function nm_open_popup(_action, _selected)
 						jQuery(this).dialog("close");
 						nm_popup_action = action;
 						button.onclick.apply(button, e.currentTarget);
+						close_function();
 					} : function(e) {
 						jQuery(this).dialog("close");
 						nm_popup_action = null;
+						close_function();
 					}
 				};
 				if(button && button.options && button.options.image)
@@ -448,9 +454,8 @@ function nm_open_popup(_action, _selected)
 			});
 
 			popup.hide();
-			var _dialog = et2_dialog.show_dialog(function() {
-					dialog_parent.append(dialog);
-				},
+			var _dialog = et2_dialog.show_dialog(
+				close_function,
 				'',
 				jQuery('.promptheader',popup).text(),
 				{},
