@@ -62,6 +62,8 @@ class calendar_merge extends Api\Storage\Merge
 
 	/**
 	 * Stored IDs, if user passed in ID / events instead of date range
+	 * We keep the IDs then filter the events in the range to only the selected
+	 * IDs
 	 */
 	protected $ids = array();
 
@@ -119,45 +121,7 @@ class calendar_merge extends Api\Storage\Merge
 	 */
 	function merge_string($content,$ids,$err,$mimetype,$fix)
 	{
-		//error_log(__METHOD__ . ' IDs: ' . array2string($ids));
-		// Handle merging a list of events into a document with range instead of pagerepeat
-		if((strpos($content, '$$range') !== false || strpos($content, '{{range') !== false) && is_array($ids))
-		{
-			//error_log(__METHOD__ . ' Got list of events(?), no pagerepeat tag');
-			// Merging more than one something will fail without pagerepeat
-			if (is_array($ids) && $ids[0]['id'])
-			{
-				// Passed an array of events, to be handled like a date range
-				$events = $ids;
-				$ids = array('start' => PHP_INT_MAX, 'end' => 0);
-				$this->ids = array();
-				foreach($events as $event) {
-					if($event['start'] && Api\DateTime::to($event['start'],'ts') < $ids['start']) $ids['start'] = Api\DateTime::to($event['start'],'ts');
-					if($event['end'] && Api\DateTime::to($event['end'],'ts') > $ids['end']) $ids['end'] = Api\DateTime::to($event['end'],'ts');
-					// Keep ids for future use
-					$this->ids[] = $event['id'];
-				}
-				$ids = array($ids);
-			}
-		}
-		// Handle merging a range of events into a document with pagerepeat instead of range
-		else if ((strpos($content, '$$pagerepeat') !== false || strpos($content, '{{pagerepeat') !== false)
-			&& ((strpos($content, '$$range') === false && strpos($content, '{{range') === false))
-			&& is_array($ids) && $ids[0] && !$ids[0]['id'])
-		{
-			//error_log(__METHOD__ . ' Got range(?), but pagerepeat instead of range tag');
-			// Passed a range, needs to be expanded
-			$events = $this->bo->search($this->query + $ids[0] + array(
-				'offset' => 0,
-				'enum_recuring' => true,
-				'order' => 'cal_start',
-				'cfs' => strpos($content, '#') !== false ? array_keys(Api\Storage\Customfields::get('calendar')) : null
-			));
-			$ids = array();
-			foreach($events as $event) {
-				$ids[] = $event;
-			}
-		}
+		$ids = $this->validate_ids($ids, $content);
 
 		return parent::merge_string($content, $ids, $err, $mimetype,$fix);
 	}
@@ -190,20 +154,11 @@ class calendar_merge extends Api\Storage\Merge
 		{
 			// Passed an array of events, to be handled like a date range
 			$events = $id;
-			$id = array('start' => PHP_INT_MAX, 'end' => 0);
-			$this->ids = array();
-			foreach($events as $event) {
-				if($event['start'] && $event['start'] < $id['start']) $id['start'] = $event['start'];
-				if($event['end'] && $event['end'] > $id['end']) $id['end'] = $event['end'];
-				// Keep ids for future use
-				$this->ids[]  = $event['id'];
-			}
-			$id = array($id);
+			$id = array($this->events_to_range($id));
 		}
 		else
 		{
 			$events = array($id);
-			$this->ids = $events;
 		}
 		// as this function allows to pass query- parameters, we need to check the result of the query against export_limit restrictions
 		if (Api\Storage\Merge::hasExportLimit($this->export_limit) && !Api\Storage\Merge::is_export_limit_excepted() && count($events) > (int)$this->export_limit)
@@ -215,6 +170,8 @@ class calendar_merge extends Api\Storage\Merge
 		$n = 0;
 		foreach($events as $event)
 		{
+			$event_id = $event['id'] . ($event['recur_date'] ? ':'.$event['recur_date'] : '');
+			if($this->ids && !in_array($event_id, $this->ids)) continue;
 			$values = $this->calendar_replacements($event,sprintf($prefix,++$n), $content);
 			if(is_array($id) && $id['start'])
 			{
@@ -241,7 +198,7 @@ class calendar_merge extends Api\Storage\Merge
 	{
 		$replacements = array();
 		if(!is_array($id) || !$id['start']) {
-			if(strpos($id, ':'))
+			if(is_string($id) && strpos($id, ':'))
 			{
 				$_id = $id;
 				$id = array();
@@ -385,7 +342,8 @@ class calendar_merge extends Api\Storage\Merge
 		{
 			foreach($list as $event)
 			{
-				if($this->ids && !in_array($event['id'], $this->ids)) continue;
+				$event_id = $event['id'] . ($event['recur_date'] ? ':'.$event['recur_date'] : '');
+				if($this->ids && !in_array($event_id, $this->ids)) continue;
 				$start = Api\DateTime::to($event['start'], 'array');
 				$end = Api\DateTime::to($event['end'], 'array');
 				$replacements = $this->calendar_replacements($event);
@@ -443,15 +401,6 @@ class calendar_merge extends Api\Storage\Merge
 		list($type, $which) = explode('_',$plugin);
 		if($type == 'day' && $which)
 		{
-			if($id[0]['start'])
-			{
-				$dates = array('start' => PHP_INT_MAX, 'end' => 0);
-				foreach($id as $event) {
-					if($event['start'] && $event['start'] < $dates['start']) $dates['start'] = $event['start'];
-					if($event['end'] && $event['end'] > $dates['end']) $dates['end'] = $event['end'];
-				}
-				$id = $dates;
-			}
 			$arr = $this->bo->date2array($id['start']);
 			$arr['day'] = $which;
 			$date = $this->bo->date2ts($arr);
@@ -493,7 +442,8 @@ class calendar_merge extends Api\Storage\Merge
 		{
 			foreach($list as $event)
 			{
-				if($this->ids && !in_array($event['id'], $this->ids)) continue;
+				$event_id = $event['id'] . ($event['recur_date'] ? ':'.$event['recur_date'] : '');
+				if($this->ids && !in_array($event_id, $this->ids)) continue;
 				$start = Api\DateTime::to($event['start'], 'array');
 				$end = Api\DateTime::to($event['end'], 'array');
 				$replacements = $this->calendar_replacements($event);
@@ -629,6 +579,151 @@ class calendar_merge extends Api\Storage\Merge
 			$birthdays += $contacts->read_birthdays($owner, substr($day, 0, 4));
 		}
 		return $birthdays[$day] ? implode(', ', array_column($birthdays[$day], 'name')) : '';
+	}
+
+	/**
+	 * Validate and properly format a list of 'ID's into either a list of ranges
+	 * or a list of IDs, depending on what the template needs.  Templates using
+	 * the range placeholder need a list of date ranges, templates using pagerepeat
+	 * need a list of individual events.
+	 *
+	 * @param Array[]|String[] $ids List of IDs, which can be a list of individual
+	 *	event IDs, entire events, a date range (start & end) or a list of date ranges.
+	 * @param String $content Template content, used to determine what style of
+	 *	ID is needed.
+	 */
+	protected function validate_ids(Array $ids, $content)
+	{
+		$validated_ids = array();
+		if((strpos($content, '$$range') !== false || strpos($content, '{{range') !== false) && is_array($ids))
+		{
+			// Merging into a template that uses range - need ranges, got events
+			if (is_array($ids) && ($ids[0]['id'] || is_string($ids[0])))
+			{
+				// Passed an array of events, to be handled like a date range
+				$events = $ids;
+				$validated_ids = (array)$this->events_to_range($ids);
+			}
+			else if (is_array($ids) && $ids[0]['start'])
+			{
+				// Got a list of ranges
+				$validated_ids = $ids;
+			}
+		}
+		// Handle merging a range of events into a document with pagerepeat instead of range
+		else if ((strpos($content, '$$pagerepeat') !== false || strpos($content, '{{pagerepeat') !== false)
+			&& ((strpos($content, '$$range') === false && strpos($content, '{{range') === false)))
+		{
+			if(is_array($ids) && $ids[0] && !$ids[0]['id'])
+			{
+				foreach($ids as $range)
+				{
+					// Passed a range, needs to be expanded into list of events
+					$events = $this->bo->search($this->query + $range + array(
+						'offset' => 0,
+						'enum_recuring' => true,
+						'order' => 'cal_start',
+						'cfs' => strpos($content, '#') !== false ? array_keys(Api\Storage\Customfields::get('calendar')) : null
+					));
+					foreach($events as $event) {
+						$validated_ids[] = $event;
+					}
+				}
+			}
+			else
+			{
+				foreach($ids as $id)
+				{
+					$validated_ids[] = $this->normalize_event_id($id);
+				}
+			}
+		}
+
+		return $validated_ids;
+	}
+
+	/**
+	 * Convert a list of event IDs into a range
+	 *
+	 * @param String[]|Array[] $ids Some event identifier, in either string or array form
+	 */
+	protected function events_to_range($ids)
+	{
+		$limits = array('start' => PHP_INT_MAX, 'end' => 0);
+		$this->ids = array();
+		foreach($ids as $event) {
+			$event = $this->normalize_event_id($event);
+
+			if($event['start'] && Api\DateTime::to($event['start'],'ts') < $limits['start']) $limits['start'] = Api\DateTime::to($event['start'],'ts');
+			if($event['end'] && Api\DateTime::to($event['end'],'ts') > $limits['end']) $limits['end'] = Api\DateTime::to($event['end'],'ts');
+			// Keep ids for future use
+			if($event['id'])
+			{
+				$this->ids[] = $event['id'] . ($event['recur_date'] ? ':'.$event['recur_date'] : '');
+			}
+		}
+		// Check a start was found
+		if($limits['start'] == PHP_INT_MAX)
+		{
+			// Start of today
+			$limits['start'] = mktime(0, 0, 0);
+		}
+		// Check an end was found
+		if($limits['end'] == 0)
+		{
+			// End of today
+			$limits['end'] = mktime(25, 59, 59);
+		}
+		$limits['start'] = new Api\DateTime($limits['start']);
+		$limits['end'] = new Api\DateTime($limits['end']);
+
+		// Align with user's week
+		$limits['start']->setTime(0,0);
+		$limits['start']->setWeekstart();
+
+		// Ranges should be at most a week, since that's what our templates expect
+		$rrule = new calendar_rrule($limits['start'], calendar_rrule::WEEKLY, 1, $limits['end']);
+		$rrule->rewind();
+		do
+		{
+			$current = $rrule->current();
+			$rrule->next_no_exception();
+			$validated_ids[] = array(
+				'start' => Api\DateTime::to($current, 'ts'),
+				'end' =>  Api\DateTime::to($rrule->current(), 'ts') - 1
+			);
+		} while ($rrule->valid());
+
+		return $validated_ids;
+	}
+
+	/**
+	 * Normalize a calendar event ID into a standard array.
+	 *
+	 * Depending on where they come from, IDs can be passed in as colon separated,
+	 * an array with ID & recur_date, or be a full event.  They can also be a
+	 * date range with start and end, rather than a single event.
+	 *
+	 * @param String|Array $id Some record identifier, in either string or array form
+	 *
+	 * @param Array If an id for a single event is passed in, an array with id & recur_date,
+	 *	otherwise a range with start & end.
+	 */
+	protected function normalize_event_id($id)
+	{
+		if(is_string($id) || is_array($id) && $id['id'] && !$id['start']) {
+			if(strpos($id, ':'))
+			{
+				$_id = $id;
+				$id = array();
+				list($id['id'], $id['recur_date']) = explode(':',$_id);
+			}
+			$event = $this->bo->read(is_array($id) ? $id['id'] : $id, is_array($id) ? $id['recur_date'] : null);
+		} else {
+			$event = $id;
+		}
+
+		return $event;
 	}
 
 	/**

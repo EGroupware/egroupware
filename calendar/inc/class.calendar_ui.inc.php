@@ -537,7 +537,7 @@ class calendar_ui
 		if($content['merge'])
 		{
 			// View from sidebox is JSON encoded
-			$this->manage_states(array_merge($content,json_decode($content['view'],true)));
+			$this->manage_states(array_merge($content,(array)json_decode($content['view'],true)));
 			if($content['first'])
 			{
 				$this->first = Api\DateTime::to($content['first'],'ts');
