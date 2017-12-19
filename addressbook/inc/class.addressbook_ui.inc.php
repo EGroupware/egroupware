@@ -2236,7 +2236,9 @@ window.egw_LAB.wait(function() {
 					$content['owner'] = (string)$state['filter'];
 				}
 				$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
-				if ($content['owner'] === '' || !($this->grants[$content['owner'] = (string) (int) $content['owner']] & Acl::ADD))
+				if ($content['owner'] === '' || !($this->grants[$content['owner'] = (string) (int) $content['owner']] & Acl::ADD) ||
+						$content['owner'] == '0' // Accounts not allowed, can't create users this way
+				)
 				{
 					$content['owner'] = $this->default_addressbook;
 					$content['private'] = (int)$this->default_private;
