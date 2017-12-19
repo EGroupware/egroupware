@@ -608,7 +608,7 @@ class addressbook_ui extends addressbook_bo
 						'caption' => lang('View linked InfoLog entries'),
 						'icon' => 'infolog/navbar',
 						'onExecute' => 'javaScript:app.addressbook.view_infolog',
-						'enableClass' => 'contact_contact',
+						'disableClass' => 'contact_duplicate',
 						'allowOnMultiple' => true,
 						'hideOnDisabled' => true,
 					),
