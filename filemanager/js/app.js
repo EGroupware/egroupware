@@ -780,10 +780,11 @@ app.classes.filemanager = AppJS.extend(
 		}
 		else if (mime && this.isEditable(_action, _senders))
 		{
+			var fe = egw.link_get_registry('filemanager-editor');
 			egw.open_link(egw.link('/index.php', {
-				menuaction: 'filemanager.filemanager_ui.editor',
+				menuaction: fe.edit.menuaction,
 				path: decodeURIComponent(data.data.download_url)
-			}), '', egw.link_get_registry('filemanager','view_popup'));
+			}), '', fe.edit_popup);
 		}
 		else
 		{

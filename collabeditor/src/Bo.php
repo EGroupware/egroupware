@@ -1,27 +1,23 @@
 <?php
 /**
- * EGroupware - Filemanager Collab
+ * Collabeditor Bo Class
  *
  * @link http://www.egroupware.org
- * @package filemanager
- * @author Hadi Nategh <hn-AT-stylite.de>
- * @copyright (c) 2016 by Stylite AG
+ * @package collabeditor
+ * @author Hadi Nategh <hn-AT-egroupware.de>
+ * @copyright (c) 2016 by Hadi Nategh <hn-AT-egroupware.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+namespace EGroupware\Collabeditor;
 
 use EGroupware\Api;
+use EGroupware\Api\Vfs;
 
-class filemanager_collab extends filemanager_collab_bo {
-
-	/**
-	 * Methods callable via menuaction
-	 *
-	 * @var array
-	 */
-	var $public_functions = array(
-		'poll' => true
-	);
+/**
+ * Business Object of the Collabeditor
+ */
+class Bo extends So {
 
 	/**
 	 * session identification for an empty new file
@@ -38,7 +34,7 @@ class filemanager_collab extends filemanager_collab_bo {
 	}
 
 	/**
-	 * Join session, initialises edit session for opened file by user
+	 * Join session, initializes edit session for opened file by user
 	 *
 	 * @param type $es_id session id, 'new' session id means it's an empty
 	 * template opened as new file, and should not be store in DB.
@@ -87,7 +83,7 @@ class filemanager_collab extends filemanager_collab_bo {
 	}
 
 	/**
-	 * Polling mechanisim to sysncronise data
+	 * Polling mechanism to synchronize data
 	 *
 	 * @throws Exception
 	 */
@@ -245,37 +241,73 @@ class filemanager_collab extends filemanager_collab_bo {
 	}
 
 	/**
-	 * Ajax function to handle actions called by client-side
-	 * types: save, delete, discard
+	 * Save session for es_id
 	 *
-	 * @param array $params
-	 * @param string $action
+	 * @param type $es_id
+	 * @param type $file_path
+	 * @return boolean returns true if successful, false in failure
 	 */
-	function ajax_actions ($params, $action)
+	function save ($es_id, $file_path)
 	{
-		$response = Api\Json\Response::get();
-		switch ($action)
-		{
-			case 'save':
-				$this->SESSION_Save($params['es_id']);
-				//update genesis file after save happened
-				if ($params['file_path']) self::generateGenesis ($params['file_path'], $params['es_id']);
-				break;
-			case 'delete':
-				$this->SESSION_cleanup($params['es_id']);
-				break;
-			case 'discard':
-				$this->OP_Discard($params['es_id']);
-				break;
-			case 'checkLastMember':
-				$activeMembers = $this->MEMBER_getActiveMembers($params['es_id']);
-				$response->data(is_array($activeMembers) && count($activeMembers) > 1?false:true);
-				break;
-			default:
-				//
+		try{
+			$this->SESSION_Save($es_id);
+			//update genesis file after save happened
+			if ($file_path) self::generateGenesis ($file_path, $es_id);
+			return true;
+		} catch (Exception $ex) {
+			error_log(__METHOD__.'()'.$ex->getMessage());
+			return false;
 		}
 	}
 
+	/**
+	 * delete an es_id from session
+	 * @param type $es_id
+	 * @return boolean returns true if successful, false in failure
+	 */
+	function delete ($es_id)
+	{
+		try{
+			$this->SESSION_cleanup($es_id);
+			return true;
+		} catch (Exception $ex) {
+			error_log(__METHOD__.'()'.$ex->getMessage());
+			return false;
+		}
+	}
+
+	/**
+	 * Discard changes to a session
+	 *
+	 * @param type $es_id
+	 * @return boolean returns true if successful, false in failure
+	 */
+	function discard ($es_id)
+	{
+		try{
+			$this->OP_Discard($es_id);
+			return true;
+		} catch (Exception $ex) {
+			error_log(__METHOD__.'()'.$ex->getMessage());
+			return false;
+		}
+	}
+
+	/**
+	 * Check last active member in a session
+	 *
+	 * @param type $es_id
+	 * @return array|boolean returns an array of active members, false in failure 
+	 */
+	function checkLastMember ($es_id)
+	{
+		try{
+			return $activeMembers = $this->MEMBER_getActiveMembers($es_id);
+		} catch (Exception $ex) {
+			error_log(__METHOD__.'()'.$ex->getMessage());
+			return false;
+		}
+	}
 
 	/**
 	 * Check if the collaboration is allowed for given file path
@@ -288,8 +320,8 @@ class filemanager_collab extends filemanager_collab_bo {
 	function is_collabAllowed ($file_path, $_right=null)
 	{
 		$paths = explode('/webdav.php', $file_path);
-		$right = $_right ? $_right : Api\Vfs::WRITABLE;
-		$allowed =	Api\Vfs::check_access($paths[1], $right) &&
+		$right = $_right ? $_right : Vfs::WRITABLE;
+		$allowed =	Vfs::check_access($paths[1], $right) &&
 					!preg_match('/\/api\/js\/webodf\/template.odf$/', $file_path);
 		return $allowed;
 	}
@@ -323,39 +355,43 @@ class filemanager_collab extends filemanager_collab_bo {
 
 	/**
 	 * Function to get genesis url by generating a temp genesis temp file
-	 * out of given path, and returnig es_id md5 hash and genesis url to
+	 * out of given path, and returning es_id md5 hash and genesis url to
 	 * client.
 	 *
 	 * @param type $file_path file path
 	 * @param boolean $_isNew true means this is an empty doc opened as new file
 	 * in client-side and not stored yet therefore no genesis file should get generated for it.
+	 * @return array returns array of data
+	 *		array(
+	 *			'es_id',
+	 *			'denesis_url'
+	 *		)
 	 */
-	function ajax_getGenesisUrl ($file_path, $_isNew)
+	function getGenesisUrl ($file_path, $_isNew)
 	{
 		$result = array();
 		$es_id = md5($file_path);
-		$response = Api\Json\Response::get();
+
 		// handle new empty file
 		if ($_isNew)
 		{
-			$response->data(array (
+			return array (
 				'es_id' => self::NEW_FILE_ES_ID,
 				'genesis_url' => $GLOBALS['egw_info']['server']['webserver_url'].'/api/js/webodf/template.odt'
-			));
-			return;
+			);
 		}
 		$session = $this->SESSION_Get($es_id);
 
 		if ($session && $session['genesis_url'] !== '')
 		{
 			$gen_file = explode('/webdav.php',$session['genesis_url']);
-			if (!Api\Vfs::file_exists($gen_file[1])) self::generateGenesis ($file_path, $es_id);
+			if (!Vfs::file_exists($gen_file[1])) self::generateGenesis ($file_path, $es_id);
 			$result = array (
 				'es_id' => $session['es_id'],
 				'genesis_url' => $session['genesis_url']
 			);
 		}
-		else if ($this->is_collabAllowed($file_path, Api\Vfs::WRITABLE))
+		else if ($this->is_collabAllowed($file_path, Vfs::WRITABLE))
 		{
 			$result = array (
 				'es_id' => $es_id,
@@ -363,7 +399,7 @@ class filemanager_collab extends filemanager_collab_bo {
 			);
 			$this->SESSION_add2Db($es_id, $result['genesis_url']);
 		}
-		$response->data($result);
+		return $result;
 	}
 
 	/**
@@ -382,7 +418,7 @@ class filemanager_collab extends filemanager_collab_bo {
 		$dir = join('/', $dir_parts);
 		$genesis_file = $dir.'/.'.$es_id.'.webodf.odt';
 		$genesis_url = $paths[0].'/webdav.php'.$genesis_file;
-		Api\Vfs::copy($paths[1], $genesis_file);
+		Vfs::copy($paths[1], $genesis_file);
 		return $genesis_url;
 	}
 }

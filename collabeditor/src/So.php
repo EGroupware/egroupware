@@ -1,21 +1,22 @@
 <?php
 /**
- * Filemanager collab session Class
+ * Collabeditor So Class
  *
  * @link http://www.egroupware.org
- * @package filemanager
- * @author Hadi Nategh <hn-AT-stylite.de>
- * @copyright (c) 2016 by Stylite AG
+ * @package collabeditor
+ * @author Hadi Nategh <hn-AT-egroupware.de>
+ * @copyright (c) 2016 by Hadi Nategh <hn-AT-egroupware.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+namespace EGroupware\Collabeditor;
 
 use EGroupware\Api;
 
 /**
- * Storage Object of the filemanager
+ * Storage Object of the Collabeditor
  */
-class filemanager_collab_bo
+class So
 {
 
 	/**
@@ -553,7 +554,7 @@ class filemanager_collab_bo
 	 */
 	static function getTimeStamp ()
 	{
-		$date = new DateTime();
+		$date = new Api\DateTime();
 		return $date->getTimestamp();
 	}
 }

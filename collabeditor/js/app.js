@@ -1,28 +1,48 @@
 /**
- * EGroupware - Filemanager - Collab editor application object
+ * EGroupware - Collabeditor application object
  *
  * @link http://www.egroupware.org
- * @package filemanager
- * @author Hadi Nategh <hn-AT-stylite.de>
- * @copyright (c) 2016 Stylite AG
+ * @package Collabeditor
+ * @author Hadi Nategh <hn-AT-egroupware.de>
+ * @copyright (c) 2016 by Hadi Nategh <hn-AT-egroupware.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
 /*egw:uses
-	/filemanager/js/collab_config.js;
-	/api/js/webodf/collab/dojo-amalgamation.js;
-	/api/js/webodf/collab/webodf.js;
-	/api/js/webodf/collab/wodocollabtexteditor.js;
+	/collabeditor/js/collab_config.js;
+	/collabeditor/js/webodf/collab/dojo-amalgamation.js;
+	/collabeditor/js/webodf/collab/webodf.js;
+	/collabeditor/js/webodf/collab/wodocollabtexteditor.js;
 	/filemanager/js/app.js;
 */
 
+app.classes.filemanager = app.classes.filemanager.extend(
+{
+
+	/**
+	 * Function to check wheter selected file is editable. ATM only .odt is supported.
+	 *
+	 * @param {object} _egwAction egw action object
+	 * @param {object} _senders object of selected row
+	 *
+	 * @returns {boolean} returns true if is editable otherwise false
+	 */
+	isEditable: function (_egwAction, _senders) {
+		if (_senders.length>1) return false;
+		var data = egw.dataGetUIDdata(_senders[0].id),
+			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
+
+		return data.data.mime.match(mime.mime_odf_regex)?true:false;
+	}
+});
+
 /**
- * UI for filemanager collab
+ * UI for collabeditor
  *
  * @augments AppJS
  */
-app.classes.filemanager = app.classes.filemanager.extend({
+app.classes.collabeditor = AppJS.extend({
 	/*
 	 * @var editor odf editor object
 	 */
@@ -63,7 +83,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 		// call parent
 		this._super.apply(this, arguments);
 
-		if (name == "filemanager.editor")
+		if (name == "collabeditor.editor")
 		{
 			// need to make body rock solid to avoid extra scrollbars
 			jQuery('body').css({overflow:'hidden'});
@@ -103,11 +123,11 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	{
 		var	self = this,
 			isNew = window.location.href.search(/&path=/) == -1?true:false;
-		egw.json('filemanager.filemanager_collab.ajax_getGenesisUrl',[this.editor_getFilePath(), isNew], function (_data){
+		egw.json('collabeditor.EGroupware\\collabeditor\\Ui.ajax_getGenesisUrl',[this.editor_getFilePath(), isNew], function (_data){
 			var serverOptions = {
 				serverParams: {
 						url:egw.link('/index.php?', {
-							menuaction: 'filemanager.filemanager_collab.poll'
+							menuaction: 'collabeditor.EGroupware\\collabeditor\\Ui.poll'
 						}),
 						genesisUrl:_data.genesis_url
 					},
@@ -161,7 +181,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 		{
 			leave();
 		}
-		egw.json('filemanager.filemanager_collab.ajax_actions',[{'es_id':this.collab_server.es_id, 'member_id':this.collab_server.memberid},'checkLastMember'], function(_isLastMember){
+		egw.json('collabeditor.EGroupware\\collabeditor\\Ui.ajax_actions',[{'es_id':this.collab_server.es_id, 'member_id':this.collab_server.memberid},'checkLastMember'], function(_isLastMember){
 			if (_isLastMember)
 			{
 				var buttons = [
@@ -273,7 +293,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 							egw(window).message(egw.lang('Document %1 has been saved successfully.', file_path));
 							self.editor.setDocumentModified(false);
 							if (_egwAction.id == 'saveas') return;
-							egw.json('filemanager.filemanager_collab.ajax_actions',[{'es_id':self.collab_server.es_id, 'file_path': egw.webserverUrl+'/webdav.php'+file_path}, 'save'], function(){
+							egw.json('collabeditor.EGroupware\\collabeditor\\Ui.ajax_actions',[{'es_id':self.collab_server.es_id, 'file_path': egw.webserverUrl+'/webdav.php'+file_path}, 'save'], function(){
 								afterSaveCallback.call(self,{});
 							}).sendRequest();
 						},
@@ -507,7 +527,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 				self.collab_server = {server:server, memberid: memberId, es_id: sid};
 
 				if (Object.keys(self.editor).length == 0) {
-					Wodo.createCollabTextEditor('filemanager-editor_odfEditor', editorOptions, onEditorCreated);
+					Wodo.createCollabTextEditor('collabeditor-editor_odfEditor', editorOptions, onEditorCreated);
 				} else {
 					self.editor.joinSession(serverFactory.createSessionBackend(sid, _memberId, server), onEditing);
 				}
@@ -542,7 +562,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 		switch(_data.action)
 		{
 			case 'delete':
-				if (!_data.errs) egw.json('filemanager.filemanager_collab.ajax_actions', [{'es_id':this.collab_server.es_id}, 'delete'], function(){window.close();}).sendRequest();
+				if (!_data.errs) egw.json('collabeditor.EGroupware\\collabeditor\\Ui.ajax_actions', [{'es_id':this.collab_server.es_id}, 'delete'], function(){window.close();}).sendRequest();
 		}
 	},
 
@@ -567,7 +587,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			{
 				if (_btn == 'discard')
 				{
-					egw.json('filemanager.filemanager_collab.ajax_actions',[{'es_id': self.collab_server.es_id}, 'discard'], function(){
+					egw.json('collabeditor.EGroupware\\collabeditor\\Ui.ajax_actions',[{'es_id': self.collab_server.es_id}, 'discard'], function(){
 						self.collab_server.close = true;
 						window.location.reload();
 					}).sendRequest();
