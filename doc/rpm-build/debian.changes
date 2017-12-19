@@ -1,3 +1,33 @@
+egroupware-epl (17.1.20171218) hardy; urgency=low
+
+  * Addressbook: fix bug setting Hide User Account in preferences into Show all accounts breaks show accounts
+  * Admin: update config to show correct default values
+  * All apps/PostgreSQL: fix SQL error when deleting an entry without attachments
+  * Api: fix merge all check causing extra records
+  * Api: fix nested custom field merging
+  * Calendar: fix merge from list loaded endlessly instead of generating document
+  * Calendar: fix alarms set in different timezone from server moved when saving event
+  * Collabora: handle 'select all' flag
+  * Collabora: fix unable to open certain mounted documents on the first try
+  * Etemplate: fix bug preventing Shift + Select until you refresh the app
+  * Filemanager/PostgreSQL: cant open file in Collabora because of SQL error
+  * Infolog: fix creating projects from template lost infologs
+  * InfoLog/PostgreSQL: fix SQL error "column egw_infolog_users.info_res_id must appear ..."
+  * InfoLog/PostgreSQL: fix SQL error "No operator matches ..." in list
+  * Infolog: fix project got lost on reload if set via link
+  * Mail/Admin: fix upload picture into mail signature from editor image browser does not work.
+  * Mail: fix rename of an attachment and saving it into Filemanager always keep the original name of attachment with no respect to the given new name.
+  * Mail: fix empty trash/empty junk causes error in some mail servers, e.g. Cyrus.
+  * Mail: fix vacation notice still sending out notification mail even if the original mail is a spam.
+  * Mail: do not popup smime certificate dialog if the smime is not configured
+  * Notifications: do not error sending popup if user is not online, just save it anyway
+  * Projectmanager: add ACL check on timesheet before offering it as an action
+  * Tracker: fix broken tracker queue selectbox filter
+  * Tracker: fix default category selectbox for new tickets from email
+  * Tracker: fix false error saving message shown even though the entry was saved
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 19 Dec 2017 10:20:51 +0100
+
 egroupware-epl (17.1.20171130) hardy; urgency=low
 
   * InfoLog/Setup: fix SQL error on update from 16.1 (Truncated incorrect double value)
