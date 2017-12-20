@@ -2233,7 +2233,7 @@ window.egw_LAB.wait(function() {
 				}
 				else
 				{
-					$content['owner'] = (string)$state['filter'];
+					$content['owner'] = (string)($state['filter'] == 0 ? '' : $state['filter']);
 				}
 				$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 				if ($content['owner'] === '' || !($this->grants[$content['owner'] = (string) (int) $content['owner']] & Acl::ADD))
