@@ -298,28 +298,14 @@ class filemanager_hooks
 	static function getEditorLink()
 	{
 		$implemented = Api\Hooks::implemented('filemanager-editor-link');
-		// default is CollabEditor
-		// TODO: CollabEditor needs to be migrated into an individual app, so its link
-		$link = array (
-			'edit' => array(
-				'menuaction' => 'filemanager.filemanager_ui.editor',
-			),
-			'edit_popup' => '980x750',
-			'mime' => array (
-				'application/vnd.oasis.opendocument.text' => array (
-					'mime_popup' => '' // try to avoid mime_open exception
-				),
-			)
-		);
 		foreach ($implemented as $app)
 		{
-
-			if ( \EGroupware\Api\Vfs\Links\StreamWrapper::check_app_rights($app) &&
+			if (($access = \EGroupware\Api\Vfs\Links\StreamWrapper::check_app_rights($app)) &&
 					($l = Api\Hooks::process('filemanager-editor-link',$app, true)) && $l[$app])
 			{
 				$link = $l[$app];
 			}
-			if ($app == 'collabora') break; // collabora is default
+			if ($app == 'collabora' && $access) break; // collabora is default
 		}
 		return $link;
 	}

@@ -156,7 +156,7 @@ class Ui {
 				'caption' => 'Save',
 				'icon' => 'apply',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.filemanager.editor_save',
+				'onExecute' => 'javaScript:app.collabeditor.editor_save',
 				'allowOnMultiple' => false,
 				'toolbarDefault' => true
 			),
@@ -164,7 +164,7 @@ class Ui {
 				'caption' => 'New',
 				'icon' => 'add',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.filemanager.create_new',
+				'onExecute' => 'javaScript:app.collabeditor.create_new',
 				'allowOnMultiple' => false,
 				'toolbarDefault' => true
 			),
@@ -172,7 +172,7 @@ class Ui {
 				'caption' => 'Close',
 				'icon' => 'close',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.filemanager.editor_close',
+				'onExecute' => 'javaScript:app.collabeditor.editor_close',
 				'allowOnMultiple' => false,
 				'toolbarDefault' => true
 			),
@@ -180,7 +180,7 @@ class Ui {
 				'caption' => 'Save As',
 				'icon' => 'save_all',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.filemanager.editor_save',
+				'onExecute' => 'javaScript:app.collabeditor.editor_save',
 				'allowOnMultiple' => false,
 				'toolbarDefault' => true
 			),
@@ -188,7 +188,7 @@ class Ui {
 				'caption' => 'Delete',
 				'icon' => 'delete',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.filemanager.editor_delete',
+				'onExecute' => 'javaScript:app.collabeditor.editor_delete',
 				'allowOnMultiple' => false,
 				'toolbarDefault' => false
 			),
@@ -196,7 +196,7 @@ class Ui {
 				'caption' => 'Discard',
 				'icon' => 'discard',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.filemanager.editor_discard',
+				'onExecute' => 'javaScript:app.collabeditor.editor_discard',
 				'allowOnMultiple' => false,
 				'toolbarDefault' => false
 			)

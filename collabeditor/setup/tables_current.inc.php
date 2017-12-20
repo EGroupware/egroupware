@@ -1,20 +1,17 @@
 <?php
 /**
- * EGroupware - Filemanager - setup
+ * EGroupware - Collabeditor - Setup
  *
  * @link http://www.egroupware.org
- * @package filemanager
+ * @package collabeditor
+ * @author Hadi Nategh <hn-AT-egroupware.de>
+ * @copyright (c) 2016 by Hadi Nategh <hn-AT-egroupware.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
  */
 
-/**
- * Creating colaboration tables
- *
- * @return string
- */
-function filemanager_upgrade16_1()
-{
-	$GLOBALS['egw_setup']->oProc->CreateTable('egw_collab_member', array(
+$phpgw_baseline = array(
+	'egw_collab_member' => array(
 		'fd' => array(
 			'collab_member_id' => array('type' => 'auto','nullable' => False, 'comment' => 'Unique per user and session'),
 			'collab_es_id' => array('type' => 'varchar','precision' => '64','nullable' => False, 'comment' => 'Related editing session id'),
@@ -29,9 +26,8 @@ function filemanager_upgrade16_1()
 		'fk' => array(),
 		'ix' => array(),
 		'uc' => array()
-	));
-
-	$GLOBALS['egw_setup']->oProc->CreateTable('egw_collab_op', array(
+	),
+	'egw_collab_op' => array(
 		'fd' => array(
 			'collab_seq' => array('type' => 'auto','nullable' => False, 'comment' => 'Sequence number'),
 			'collab_es_id' => array('type' => 'varchar','precision' => '64','nullable' => False, 'comment' => 'Editing session id'),
@@ -43,9 +39,8 @@ function filemanager_upgrade16_1()
 		'fk' => array(),
 		'ix' => array(),
 		'uc' => array()
-	));
-
-	$GLOBALS['egw_setup']->oProc->CreateTable('egw_collab_session', array(
+	),
+	'egw_collab_session' => array(
 		'fd' => array(
 			'collab_es_id' => array('type' => 'varchar','precision' => '64','nullable' => False, 'comment' => 'Editing session id'),
 			'collab_genesis_url' => array('type' => 'varchar','precision' => '512', 'comment' => 'Relative to owner documents storage /template.odt'),
@@ -56,12 +51,5 @@ function filemanager_upgrade16_1()
 		'fk' => array(),
 		'ix' => array(),
 		'uc' => array()
-	));
-
-	return $GLOBALS['setup_info']['filemanager']['currentver'] = '16.2';
-}
-
-function filemanager_upgrade16_2()
-{
-	return $GLOBALS['setup_info']['filemanager']['currentver'] = '17.1';
-}
+	)
+);

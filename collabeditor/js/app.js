@@ -160,6 +160,24 @@ app.classes.collabeditor = AppJS.extend({
 	},
 
 	/**
+	 * Method to create a new document
+	 * @param {object} _action either action or node
+	 * @param {object} _selected either widget or selected row
+	 *
+	 * @return {boolean} returns true
+	 */
+	create_new: function (_action, _selected) {
+		var fe = egw.link_get_registry('filemanager-editor');
+		if (fe && fe.edit)
+		{
+			egw.open_link(egw.link('/index.php', {
+				menuaction: fe.edit.menuaction
+			}), '', fe.popup_edit);
+		}
+		return true;
+	},
+	
+	/**
 	 * Function to leave the current editing session
 	 * and as result it will call client-side and server leave session.
 	 *

@@ -13,6 +13,8 @@ $setup_info['collabeditor']['app_order'] = 1;
 $setup_info['collabeditor']['enable']  = 2;
 $setup_info['collabeditor']['autoinstall'] = false;
 
+$setup_info['collabeditor']['tables'] = array('egw_collab_member', 'egw_collab_op', 'egw_collab_session');
+
 $setup_info['collabeditor']['author'] = 'Hadi Nategh';
 $setup_info['collabeditor']['maintainer'] = array(
 	'name'  => 'EGroupware GmbH',

@@ -297,7 +297,7 @@ class Bo extends So {
 	 * Check last active member in a session
 	 *
 	 * @param type $es_id
-	 * @return array|boolean returns an array of active members, false in failure 
+	 * @return array|boolean returns an array of active members, false in failure
 	 */
 	function checkLastMember ($es_id)
 	{
@@ -322,7 +322,7 @@ class Bo extends So {
 		$paths = explode('/webdav.php', $file_path);
 		$right = $_right ? $_right : Vfs::WRITABLE;
 		$allowed =	Vfs::check_access($paths[1], $right) &&
-					!preg_match('/\/api\/js\/webodf\/template.odf$/', $file_path);
+					!preg_match('/\/collabeditor\/assets\/template.odt$/', $file_path);
 		return $allowed;
 	}
 
@@ -377,7 +377,7 @@ class Bo extends So {
 		{
 			return array (
 				'es_id' => self::NEW_FILE_ES_ID,
-				'genesis_url' => $GLOBALS['egw_info']['server']['webserver_url'].'/api/js/webodf/template.odt'
+				'genesis_url' => $GLOBALS['egw_info']['server']['webserver_url'].'/collabeditor/assets/template.odt'
 			);
 		}
 		$session = $this->SESSION_Get($es_id);

@@ -50,6 +50,11 @@ class So
 	const EXCEPTION_MESSAGE_NO_OPS = 'ops need to be an array of op data, none array given!';
 
 	/**
+	 * Application name
+	 */
+	const APP_NAME = 'collabeditor';
+
+	/**
 	 * Database object
 	 * @var Api\Db
 	 */
@@ -109,7 +114,7 @@ class So
 				'account_id' => $GLOBALS['egw_info']['user']['account_id']
 			);
 
-			$this->db->insert(self::SESSION_TABLE, $data,false,__LINE__, __FILE__,'filemanager');
+			$this->db->insert(self::SESSION_TABLE, $data,false,__LINE__, __FILE__,self::APP_NAME);
 		}
 		return $data;
 	}
@@ -162,7 +167,7 @@ class So
 				array('collab_es_id' => $es_id),
 				__LINE__,
 				__FILE__,
-				'filemanager');
+				self::APP_NAME);
 		$where_query = 'collab_es_id ="'.$es_id.'" AND collab_optype != "AddMember" AND'.
 				' collab_optype != "RemoveMember" AND collab_optype !="AddCursor" AND'.
 				' collab_optype !="RemoveCursor"';
@@ -172,7 +177,7 @@ class So
 				$where_query,
 				__LINE__,
 				__FILE__,
-				'filemanager'
+				self::APP_NAME
 		);
 		return !$query? false: true;
 	}
@@ -255,14 +260,14 @@ class So
 				array('collab_es_id' => $es_id),
 				__LINE__,
 				__FILE__,
-				'filemanager'
+				self::APP_NAME
 		);
 		$this->db->delete(
 				self::OP_TABLE,
 				array('collab_es_id' => $es_id),
 				__LINE__,
 				__FILE__,
-				'filemanager'
+				self::APP_NAME
 		);
 		$this->db->delete(
 				self::SESSION_TABLE,
@@ -310,7 +315,7 @@ class So
 				__FILE__,
 				FALSE,
 				'ORDER BY collab_seq DESC LIMIT 1',
-				'filemanager'
+				self::APP_NAME
 		);
 		$head_seq = $query->fetchRow();
 		return is_array($head_seq)? $head_seq['collab_seq']: '';
@@ -337,7 +342,7 @@ class So
 				'collab_es_id ="'. $es_id.'" AND collab_seq >'.$seq_head,
 				__LINE__,
 				__FILE__,
-				false, 'ORDER BY collab_seq ASC','filemanager');
+				false, 'ORDER BY collab_seq ASC', self::APP_NAME);
 
 		foreach ($query as $spec)
 		{
@@ -380,7 +385,7 @@ class So
 			'collab_optype' => $op['optype'],
 			'collab_opspec' => json_encode($op)
 		);
-		return $this->db->insert(self::OP_TABLE, $data,false,__LINE__, __FILE__,'filemanager');
+		return $this->db->insert(self::OP_TABLE, $data,false,__LINE__, __FILE__, self::APP_NAME);
 	}
 
 	/**
@@ -398,7 +403,7 @@ class So
 			'collab_color' => $color,
 			'collab_is_active' => 1
 		);
-		$this->db->insert(self::MEMBER_TABLE, $data,false,__LINE__, __FILE__,'filemanager');
+		$this->db->insert(self::MEMBER_TABLE, $data,false,__LINE__, __FILE__, self::APP_NAME);
 	}
 
 	/**
@@ -419,7 +424,7 @@ class So
 				'collab_es_id ="'.$es_id.'" AND collab_member_id="'.$member_id.'"',
 				__LINE__,
 				__FILE__,
-				'filemanager'
+				self::APP_NAME
 		);
 	}
 
@@ -440,7 +445,7 @@ class So
 				array('collab_es_id' => $es_id, 'collab_is_active' => 1),
 				__LINE__,
 				__FILE__,
-				'filemanager'
+				self::APP_NAME
 		);
 		$members = $query->getRows();
 		return is_array($members)?self::db2id($members):true;

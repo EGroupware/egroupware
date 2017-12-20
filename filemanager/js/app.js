@@ -105,9 +105,17 @@ app.classes.filemanager = AppJS.extend(
 
 		if (name == 'filemanager.index')
 		{
-			var new_options = this.et2.getArrayMgr('sel_options').getEntry('new');
+			var fe = egw.link_get_registry('filemanager-editor');
 			var new_widget =  this.et2.getWidgetById('new');
-			new_widget.set_select_options(new_options);
+			if (fe && fe.edit)
+			{
+				var new_options = this.et2.getArrayMgr('sel_options').getEntry('new');
+				new_widget.set_select_options(new_options);
+			}
+			else
+			{
+				new_widget.set_disabled(true);
+			}
 		}
 	},
 
@@ -768,6 +776,7 @@ app.classes.filemanager = AppJS.extend(
 		var mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 		// try to get mime widget DOM node out of the row DOM
 		var mime_dom = jQuery(_senders[0].iface.getDOMNode()).find("span#filemanager-index_\\$row");
+		var fe = egw.link_get_registry('filemanager-editor');
 
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
 		if (data.data.mime == 'httpd/unix-directory' || data.data['class'] && data.data['class'].split(/ +/).indexOf('isDir') != -1)
@@ -778,9 +787,9 @@ app.classes.filemanager = AppJS.extend(
 		{
 			mime_dom.click();
 		}
-		else if (mime && this.isEditable(_action, _senders))
+		else if (mime && this.isEditable(_action, _senders) && fe && fe.edit)
 		{
-			var fe = egw.link_get_registry('filemanager-editor');
+
 			egw.open_link(egw.link('/index.php', {
 				menuaction: fe.edit.menuaction,
 				path: decodeURIComponent(data.data.download_url)
@@ -1284,9 +1293,13 @@ app.classes.filemanager = AppJS.extend(
 	 * @return {boolean} returns true
 	 */
 	create_new: function (_action, _selected) {
-		egw.open_link(egw.link('/index.php', {
-			menuaction: 'filemanager.filemanager_ui.editor'
-		}), '', egw.link_get_registry('filemanager','view_popup'));
+		var fe = egw.link_get_registry('filemanager-editor');
+		if (fe && fe.edit)
+		{
+			egw.open_link(egw.link('/index.php', {
+				menuaction: fe.edit.menuaction
+			}), '', fe.popup_edit);
+		}
 		return true;
 	}
 });
