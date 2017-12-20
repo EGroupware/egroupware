@@ -314,7 +314,7 @@ class calendar_ical extends calendar_boupdate
 				}
 				catch (Exception $e) {
 					// log unknown timezones
-					if (!empty($event['tzid'])) __egw_log_exception($e);
+					if (!empty($event['tzid'])) _egw_log_exception($e);
 					// default for no timezone and unkown to user timezone
 					self::$tz_cache[$event['tzid']] = Api\DateTime::$user_timezone;
 				}
