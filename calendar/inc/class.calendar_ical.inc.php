@@ -309,7 +309,15 @@ class calendar_ical extends calendar_boupdate
 
 			if (!isset(self::$tz_cache[$event['tzid']]))
 			{
+				try {
 				self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
+			}
+				catch (Exception $e) {
+					// log unknown timezones
+					if (!empty($event['tzid'])) _egw_log_exception($e);
+					// default for no timezone and unkown to user timezone
+					self::$tz_cache[$event['tzid']] = Api\DateTime::$user_timezone;
+				}
 			}
 
 			if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
