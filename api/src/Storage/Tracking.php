@@ -255,6 +255,10 @@ abstract class Tracking
 			{
 				if (in_array($field['type'], Customfields::$non_printable_fields)) continue;
 
+				// Sometimes cached customfields let private fields the user can access
+				// leak through.  Make sure we don't expose them.
+				if ($field['private']) continue;
+
 				if (!$header_done)
 				{
 					$details['custom'] = array(
