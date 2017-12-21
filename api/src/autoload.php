@@ -54,7 +54,7 @@ spl_autoload_register(function($class)
 	{
 		require_once($al);
 
-		if (class_exists($partclass = implode('\\', $parts), true))
+		if (class_exists($partclass = implode('\\', $parts), true) || interface_exists($partclass, true))
 		{
 			class_alias($partclass, $class);
 		}
