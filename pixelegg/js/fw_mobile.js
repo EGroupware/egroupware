@@ -351,24 +351,31 @@
 
 				var egw_script = document.getElementById('egw_script_id');
 				var apps = egw_script ? JSON.parse(egw_script.getAttribute('data-navbar-apps')) : null;
-				var mobile_app_list =  egw.config('fw_mobile_app_list') || this.DEFAULT_MOBILE_APP;
 
-				// Check if the given app is on mobile_app_list
-				var is_default_app = function(_app){
-					for (var j=0;j< mobile_app_list.length;j++ )
-					{
-						if (_app == mobile_app_list[j]) return true;
-					}
-					return false;
-				};
-
-				var default_apps = [];
-				for (var i=0;i <= apps.length;i++)
+				// fw_mobile_app_list should only be considered for mobile dvices
+				// therefore, compact theme still would show all available apps.
+				if (egwIsMobile())
 				{
-					if (apps[i] && is_default_app(apps[i]['name'])) default_apps.push(apps[i]);
+					var mobile_app_list =  egw.config('fw_mobile_app_list') || this.DEFAULT_MOBILE_APP;
+
+					// Check if the given app is on mobile_app_list
+					var is_default_app = function(_app){
+						for (var j=0;j< mobile_app_list.length;j++ )
+						{
+							if (_app == mobile_app_list[j]) return true;
+						}
+						return false;
+					};
+
+					var default_apps = [];
+					for (var i=0;i <= apps.length;i++)
+					{
+						if (apps[i] && is_default_app(apps[i]['name'])) default_apps.push(apps[i]);
+					}
+
+					apps = default_apps;
 				}
 
-				apps = default_apps;
 				this.loadApplications(apps);
 			}
 
