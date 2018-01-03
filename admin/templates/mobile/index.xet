@@ -13,7 +13,7 @@
 			</columns>
 			<rows>
 				<row>
-					
+
 				</row>
 				<row class="$row_cont[status_class]">
 					<vbox>
@@ -39,10 +39,38 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="admin.index.group" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="90%"/>
+				<column width="130"/>
+			</columns>
+			<rows>
+				<row>
+
+				</row>
+				<row class="$row_cont[status_class]">
+					<vbox>
+						<description id="${row}[account_lid]" no_lang="1"/>
+						<hbox>
+							<description id="${row}[account_description]" no_lang="1"/>
+						</hbox>
+						<url-email id="${row}[account_email]" readonly="true" no_lang="1" class="adminOverflowEllipsis"/>
+					</vbox>
+					<vbox class="adminCol2">
+						<date id="${row}[account_created]" readonly="true"/>
+						<date id="${row}[account_modified]" readonly="true"/>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
 		<tree autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet"/>
 		<description id="plus_button_container"/>
 		<nextmatch id="nm" template="admin.index.rows" header_right="admin.index.add"/>
+		<nextmatch id="groups" template="admin.index.group"/>
 		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
+		<box id="ajax_target" height="99%" disabled="true"/>
 	</template>
 </overlay>
