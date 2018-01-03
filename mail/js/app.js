@@ -5561,11 +5561,11 @@ app.classes.mail = AppJS.extend(
 		var id,fromaddress,domain, email = '';
 		var data = {};
 		var items = [];
+		var nm = this.et2.getWidgetById(this.nm_index);
 
 		// called action for a single row from toolbar
 		if (_senders.length == 0)
 		{
-			var nm = this.et2.getWidgetById(this.nm_index);
 			_senders = [{id:nm.getSelection().ids[0]}];
 		}
 
@@ -5590,6 +5590,7 @@ app.classes.mail = AppJS.extend(
 			if (_data[1] && _data[1].length > 0)
 			{
 				egw.refresh(_data[0],'mail',_data[1],'delete');
+				nm.controller._selectionMgr.resetSelection();
 			}
 			else
 			{
