@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.site-config" template="" lang="" group="0" version="16.1">
+		<grid border="1" width="100%">
+			<columns>
+				<column width = "120"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="dialogHeadbar" >
+					<hbox span="all" width="100%">
+						<button id="save"/>
+						<button id="cancel" />
+					</hbox>
+				</row>
+				<row>
+					<template template="@template" width="100%"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
