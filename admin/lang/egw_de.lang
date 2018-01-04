@@ -167,6 +167,7 @@ category %1 has been saved !	admin	de	Kategorie %1 wurde gespeichert
 category deleted.	admin	de	Kategorie gelöscht
 category list	admin	de	Kategorieliste
 category saved.	admin	de	Kategorie gespeichert
+certificate	admin	en	Zertifikat
 change account_id	admin	de	Änderung der account_id
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
@@ -602,6 +603,7 @@ own install id:	admin	de	eigene Install-ID
 owner "%1" removed, please select group-owner	admin	de	Besitzer "%1" entfernt, bitte einen Gruppenbesitzer auswählen.
 passthrough	admin	de	durchgehend
 password for smtp-authentication	admin	de	Passwort für SMTP Authentifizierung
+password to unlock encrypted p12	admin	en	Passwort zum Entsperren von verschlüsseltem p12
 password updated	admin	de	Passwort aktualisiert
 passwords and/or attributes of %1 accounts changed	admin	de	Passwörter und/oder Attribute von %1 Benutzern geändert
 passwords require a minimum number of characters	admin	de	Passworte benötigen diese Mindestanzahl Zeichen
@@ -819,6 +821,7 @@ up	admin	de	hoch
 update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse
 updated	admin	de	aktualisiert
 upload your background image or enter the url	admin	de	Laden Sei ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
+upload your certificate .p12/.pfx file	admin	de	Zertifikat hochlade(.p12/.pfx-Datei)
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein
 upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Sie eine URL dafür ein
 uppercase, lowercase, number, special char	admin	de	Großbuchstaben, kleine Buchstaben, Zahlen, Sonderzeichen

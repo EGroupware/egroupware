@@ -67,7 +67,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 .mail_externalImagesMsg {
 	display: block;
     position: fixed;
-    height: 30px;
+    height: auto;
     width: 100%;
     top: 0px;
     left: 0px;

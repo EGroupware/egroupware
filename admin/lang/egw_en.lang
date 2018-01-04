@@ -167,6 +167,7 @@ category %1 has been saved !	admin	en	Category %1 has been saved!
 category deleted.	admin	en	Category deleted.
 category list	admin	en	Category list
 category saved.	admin	en	Category saved.
+certificate	admin	en	Certificate
 change account_id	admin	en	Change account ID
 change acl rights	admin	en	Change ACL rights
 change config settings	admin	en	Change config settings
@@ -602,6 +603,7 @@ own install id:	admin	en	Own install ID:
 owner "%1" removed, please select group-owner	admin	en	Owner "%1" removed, please select group owner
 passthrough	admin	en	Passthrough
 password for smtp-authentication	admin	en	Password for SMTP authentication
+password to unlock encrypted p12	admin	en	Password to unlock encrypted p12
 password updated	admin	en	Password updated.
 passwords and/or attributes of %1 accounts changed	admin	en	Passwords and/or attributes of %1 accounts changed
 passwords require a minimum number of characters	admin	en	Passwords require a minimum number of characters
@@ -819,6 +821,7 @@ up	admin	en	Up
 update current email address:	admin	en	Update current email address:
 updated	admin	en	Updated
 upload your background image or enter the URL	admin	en	Upload your background image or enter the URL
+upload your certificate .p12/.pfx file	admin	en	Upload your certificate .p12/.pfx file
 upload your favicon or enter the URL	admin	en	Upload your favicon or enter the URL
 upload your logo or enter the URL	admin	en	Upload your logo or enter the URL
 uppercase, lowercase, number, special char	admin	en	Uppercase, lowercase, number, special char

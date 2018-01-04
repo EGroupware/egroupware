@@ -1156,7 +1156,7 @@ app.classes.mail = AppJS.extend(
 			}
 
 			jQuery(document.createElement('p'))
-					.text(egw.lang('In order to protect your privacy all external sources within this email are blocked.'))
+					.text(this.egw.lang('In order to protect your privacy all external sources within this email are blocked.'))
 					.appendTo(container);
 			jQuery(document.createElement('button'))
 					.addClass ('closeBtn')
@@ -1165,16 +1165,16 @@ app.classes.mail = AppJS.extend(
 					})
 					.appendTo(container);
 			jQuery(document.createElement('button'))
-					.text(egw.lang('Allow'))
-					.attr ('title', egw.lang('Always allow external sources from %1', host.domain))
+					.text(this.egw.lang('Allow'))
+					.attr ('title', this.egw.lang('Always allow external sources from %1', host.domain))
 					.click (function (){
 						showImages(external_images, true);
 						container.remove();
 					})
 					.appendTo(container);
 			jQuery(document.createElement('button'))
-					.text(egw.lang('Show'))
-					.attr ('title', egw.lang('Show them this time only'))
+					.text(this.egw.lang('Show'))
+					.attr ('title', this.egw.lang('Show them this time only'))
 					.click(function(){
 						showImages(external_images);
 						container.remove();
@@ -2944,7 +2944,7 @@ app.classes.mail = AppJS.extend(
 					mode: action === 'saveOneToVfs' ? 'saveas' : 'select-dir',
 					method: 'mail.mail_ui.ajax_vfsSave',
 					button_label: egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
-					dialog_title: egw.lang(action === 'saveOneToVfs' ? 'Save attchment' : 'Save attchments'),
+					dialog_title: egw.lang(action === 'saveOneToVfs' ? 'Save attachment' : 'Save attachments'),
 					method_id: ids.length > 1 ?	{ids:ids, action:'attachment'} : {ids: ids[0], action: 'attachment'},
 					name: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
 				});

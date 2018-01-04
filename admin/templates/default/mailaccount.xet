@@ -297,7 +297,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="SMIME"/>
+					<description value="S/MIME"/>
 				</row>
 				<row>
 					<description value="Certificate"/>
