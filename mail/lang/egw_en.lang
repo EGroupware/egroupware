@@ -1,8 +1,8 @@
 %1 attachments	mail	en	%1 attachments
-%1 has been added to blacklisted email addresses	mail	de	%1 has been added to blacklisted email addresses
-%1 has been added to whiltelisted email addresses	mail	de	%1 has been added to whiltelisted email addresses
-%1 has been removed from blacklisted email addresses	mail	de	%1 has been removed from blacklisted email addresses
-%1 has been removed from whiltelisted email addresses	mail	de	%1 has been removed from whiltelisted email addresses
+%1 has been added to blacklisted email addresses	mail	en	%1 has been added to blacklisted email addresses
+%1 has been added to whiltelisted email addresses	mail	en	%1 has been added to whiltelisted email addresses
+%1 has been removed from blacklisted email addresses	mail	en	%1 has been removed from blacklisted email addresses
+%1 has been removed from whiltelisted email addresses	mail	en	%1 has been removed from whiltelisted email addresses
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
 %1 mails selected	mail	en	%1 Mails selected
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	en	(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail Servers the limit is 4 by default, please contact your mail server administrator for further info.
@@ -28,8 +28,8 @@ add as new	mail	en	Add as new
 add folder	mail	en	Add Folder
 add to addressbook	mail	en	add to addressbook
 add your domain as "%1" in options to list of email providers and enable api.	mail	en	Add your domain as "%1" in options to list of email providers and enable API.
-adding %1 to blacklisted email addresses failed because of %2	mail	de	Adding %1 to blacklisted email addresses failed because of %2
-adding %1 to whiltelisted email addresses failed because of %2	mail	de	Adding %1 to whiltelisted email addresses failed because of %2
+adding %1 to blacklisted email addresses failed because of %2	mail	en	Adding %1 to blacklisted email addresses failed because of %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	en	Adding %1 to whiltelisted email addresses failed because of %2
 after reply, visible during compose	mail	en	After reply, visible during compose
 aliases+forwards	mail	en	Aliases+Forwards
 all	mail	en	all
@@ -40,6 +40,7 @@ all messages in the folder will be lost	mail	en	All messages in the folder will 
 all my email addresses	mail	en	all my email addresses
 all of	mail	en	all of
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	en	All subfolders will be deleted too, and all messages in all affected folders will be lost
+allow	mail	en	Allow
 allow external images	mail	en	Allow external images
 allow external images from listed domains	mail	en	Allow external images from listed domains
 allow images from external sources in html emails	mail	en	allow images from external sources in html emails
@@ -288,8 +289,8 @@ junk folder	mail	en	Junk folder
 keep a copy of the message in your inbox	mail	en	Keep a copy of the message in your inbox
 kilobytes	mail	en	kilobytes
 later	mail	en	later
-learning as ham (not spam) failed because of %1	mail	de	Learning as ham (not spam) failed because of %1
-learning as spam failed because of %1	mail	de	Learning as spam failed because of %1
+learning as ham (not spam) failed because of %1	mail	en	Learning as ham (not spam) failed because of %1
+learning as spam failed because of %1	mail	en	Learning as spam failed because of %1
 less than	mail	en	less than
 mail	common	en	Mail
 mail acl	mail	en	Mail ACL
@@ -298,7 +299,7 @@ mail settings	mail	en	Mail settings
 mail source	mail	en	Mail Source
 mail-address	mail	en	Mail-Address
 mailaccount	mail	en	Mail account
-mailinglist	mail	en	Mailing list
+mailinglist	mail	en	Mailinglist
 mails	common	en	Mails
 mails can be copied to that folder via context menu, if folder is configured.	mail	en	Mails can be copied to that folder via context menu, if folder is configured.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	Mailserver reported:\n%1 \nDo you want to proceed by deleting the selected messages immediately (click ok)?\nIf not, please try to empty your trashfolder before continuing. (click cancel)
@@ -310,8 +311,8 @@ matches	mail	en	matches
 matches regexp	mail	en	matches regexp
 mbstring.func_overload=0 is required for correct mail processing!	mail	en	mbstring.func_overload=0 is required for correct mail processing!
 message body	mail	en	message body
-message learned as ham (not spam) and moved back to inbox	mail	de	Message learned as ham (not spam) and moved back to inbox
-message learned as spam and moved to spam folder	mail	de	Message learned as spam and moved to spam folder
+message learned as ham (not spam) and moved back to inbox	mail	en	Message learned as ham (not spam) and moved back to inbox
+message learned as spam and moved to spam folder	mail	en	Message learned as spam and moved to spam folder
 message preview area	mail	en	Message preview area
 message saved successfully.	mail	en	Message saved successfully.
 message send failed: %1	mail	en	Message send failed: %1
@@ -400,8 +401,6 @@ refused to delete folder with subfolders	mail	en	refused to delete folder with s
 reject with	mail	en	reject with
 reloaded account %1	mail	en	Reloaded Account %1
 reloaded folder %1	mail	en	Reloaded Folder %1
-removing %1 from blacklisted email addresses failed because of %2	mail	de	Removing %1 from blacklisted email addresses failed because of %2
-removing %1 from whiltelisted email addresses failed because of %2	mail	de	Removing %1 from whiltelisted email addresses failed because of %2
 remove "%1" from blacklisted domains	mail	en	Remove "%1" from blacklisted domains
 remove "%1" from blacklisted emails	mail	en	Remove "%1" from blacklisted emails
 remove "%1" from whiltelisted domains	mail	en	Remove "%1" from whiltelisted domains
@@ -409,6 +408,8 @@ remove "%1" from whiltelisted emails	mail	en	Remove "%1" from whiltelisted email
 remove all	mail	en	Remove All
 remove immediately	mail	en	remove immediately
 removed folder %1	mail	en	Removed Folder %1
+removing %1 from blacklisted email addresses failed because of %2	mail	en	Removing %1 from blacklisted email addresses failed because of %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	en	Removing %1 from whiltelisted email addresses failed because of %2
 rename folder	mail	en	Rename Folder
 rename folder %1 ?	mail	en	Rename Folder %1 ?
 rename folder %1 to:	mail	en	Rename Folder %1 to:
@@ -453,6 +454,7 @@ saves this rule	mail	en	Save this rule
 saving of message %1 failed. destination folder %2 does not exist.	mail	en	Saving of message %1 failed. Destination Folder %2 does not exist.
 saving of message %1 succeeded. check folder %2.	mail	en	Saving of message %1 succeeded. Check Folder %2.
 saving the rule failed:	mail	en	Saving the rule failed:
+security	mail	de	Security
 see attachments for content of the orignial mail	mail	en	See Attachments for Content of the Orignial Mail
 select all	mail	en	Select all
 select an existing entry in order to append mail content to it	mail	en	Select an existing entry in order to append mail content to it
@@ -488,6 +490,7 @@ show horizontal, hide if none selected	mail	en	show horizontal, hide if none sel
 show new messages on home page	mail	en	show new messages on home page
 show test connection section and control the level of info displayed?	mail	en	Show Test Connection section and control the level of info displayed?
 show test connection section and control the level of info displayed??	mail	en	Show Test Connection section and control the level of info displayed??
+show them this time only	mail	en	Show them this time only
 show vertical	mail	en	show vertical
 show/hide preview pane in mail list view	mail	en	Show/Hide preview pane in mail list view
 sieve	mail	en	Sieve
@@ -535,6 +538,7 @@ text mode	mail	en	Text mode
 text/plain	mail	en	text/plain
 the %1 's acl removed from the %2	mail	en	The %1 's acl removed from the %2
 the %1 's acl, including its subfolders, removed from the %2	mail	en	The %1 's acl, including its subfolders, removed from the %2
+the entered passphrase is not correct! please try again.	mail	en	The entered passphrase is not correct! Please try again.
 the folder %1 's acls saved	mail	en	The Folder %1 's ACLs saved
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	en	The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
@@ -542,6 +546,7 @@ the mimeparser can not parse this message.	mail	en	The mimeparser can not parse 
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
 then	mail	en	THEN
 there is no imap server configured.	mail	en	There is no IMAP Server configured.
+this message is smime encrypted and password protected.	mail	en	This message is smime encrypted and password protected.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
 to do	mail	en	to do
 toggle all folders view for %1	mail	en	Toggle all Folders view for %1
@@ -602,6 +607,8 @@ yes, show all debug information available for the user	mail	en	yes, show all deb
 yes, show basic info only	mail	en	yes, show basic info only
 you can either choose to save as infolog or tracker, not both.	mail	en	You can either choose to save as infolog OR tracker, not both.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
+you may add this certificate into your contact, if you trust this signature.	mail	en	You may add this certificate into your contact, if you trust this signature.
+you need to enter your s/mime passphrase to send this message.	mail	en	You need to enter your S/MIME passphrase to send this message.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	en	You need to install Mailvelope plugin available for Chrome and Firefox from %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	en	You need to save the message as draft first before to be able to save it into VFS
 you will loose current message body, unless you save it to your clipboard!	mail	en	You will loose current message body, unless you save it to your clipboard!

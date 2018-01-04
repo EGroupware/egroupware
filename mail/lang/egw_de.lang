@@ -40,6 +40,7 @@ all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewä
 all my email addresses	mail	de	alle meine E-Mail-Adressen
 all of	mail	de	alle
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	de	Alle Unterordner und Nachrichten in den betroffenen Ordnern werden unwiederruflich gelöscht.
+allow	mail	de	Erlauben
 allow external images	mail	de	Erlaube Bilder von externen Bildquellen
 allow external images from listed domains	mail	de	Erlaube Bilder der folgenden Domains
 allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Bildquellen in HTML-E-Mails
@@ -53,7 +54,7 @@ an error happend while trying to remove acl rights from the account %1!	mail	de	
 and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Priorität %1 hat jetzt die Priorität %2
 any of	mail	de	mit einem
 any status	mail	de	Alle Status
-append	mail	de	Hinzufügen
+append	mail	de	hinzufügen
 appended after reply before sending	mail	de	Einfügen nach dem zitierten Text im Zuge des Versendens
 application mail expected but got: %1	mail	de	Anwendung Mail erwarted, aber %1 erhalten!
 archive folder	mail	de	Archivordner
@@ -277,7 +278,7 @@ import of message %1 failed. no contacts to merge and send to specified.	mail	de
 importance	mail	de	Wichtigkeit
 important	mail	de	wichtig
 in mailbox: %1, with id: %2, and partid: %3	mail	de	Im Mailordner: %1, mit der ID: %2 und der PartID: %3
-in order to protect your privacy all external sources within this email are blocked.	mail	de	Um Ihre Privatspäre zu schützen, werden alle externen Bildquellen blockiert.
+in order to protect your privacy all external sources within this email are blocked.	mail	de	Um Ihre Privatsphäre zu schützen, werden alle externen Inhalte in dieser E-Mail blockiert.
 inbox	mail	de	Posteingang
 initialization of mail failed. please use the wizard to cope with the problem.	mail	de	Die Initializierung des Mail-Moduls ist fehlgeschlagen. Bitte benutzen Sie den Konfigurationshilfeassistenten um die Situation zu bereinigen.
 inline	mail	de	Weiterleiten Inline
@@ -453,6 +454,7 @@ saves this rule	mail	de	Filter-Regel speichern
 saving of message %1 failed. destination folder %2 does not exist.	mail	de	Speichern der Nachricht %1 ist fehlgeschlagen. Ziel Ordner %2 existiert nicht.
 saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht %1 war erfolgreich. Prüfen Sie den Ziel Ordner %2
 saving the rule failed:	mail	de	Speichern der Regel ist fehlgeschlagen:
+security	mail	de	Sicherheit
 see attachments for content of the orignial mail	mail	de	Die Original Nachricht wurde als Anhang an diese e-Mail angehängt
 select all	mail	de	Alle Auswählen
 select an existing entry in order to append mail content to it	mail	de	Bestehendes Ticket auswählen, zu dem die Mail als Kommentar hinzugefügt werden soll.
@@ -488,6 +490,7 @@ show horizontal, hide if none selected	mail	de	Horizontal anzeigen, ausblenden w
 show new messages on home page	mail	de	Anzeigen von neuen E-Mails auf der Startseite
 show test connection section and control the level of info displayed?	mail	de	Zeige Verbindungstest Link an und spezifiziere das Ausmaß der angezeigten Information?
 show test connection section and control the level of info displayed??	mail	de	Soll der Verbindungstest und die dazugehörigen Informationen angezeigt werden?
+show them this time only	mail	de	Einmalig anzeigen
 show vertical	mail	de	Vertikal anzeigen
 show/hide preview pane in mail list view	mail	de	Mailvorschau anzeigen oder ausblenden
 sieve	mail	de	Sieve
@@ -587,7 +590,7 @@ when sending messages	mail	de	Wenn Nachrichten versendet werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	de	Welche E-Mailordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse).
 which folders - in general - should not be automatically created, if not existing	mail	de	Welche E-Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen.
 which method to use when forwarding a message	mail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten.
-whitelisted mails are not marked as spam	mail	de	E-Mailadressen aus der Domain-Whitekliste, werden nicht als Spam markiert
+whitelisted mails are not marked as spam	mail	de	E-Mail-Adressen aus der Domain-Whiteliste, werden nicht als Spam markiert
 whole message	mail	de	gesamte Nachricht
 with message:	mail	de	mit folgender Nachricht:
 wizard	mail	de	Assistent
