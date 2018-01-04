@@ -999,7 +999,11 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		}
 		var self = this;
 		var buttons = [
-			{text: egw.lang(_data.content.label), id:"submit"},
+			{
+				text: egw.lang(_data.content.label),
+				id:"submit",
+				image:_data.content.mode.match(/saveas|select-dir/) ? "save" : "check"
+			},
 			{text: egw.lang("Close"), id:"close"}
 		];
 		var data = jQuery.extend(_data, {'currentapp': egw(window).app_name()});
