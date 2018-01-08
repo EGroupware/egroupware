@@ -692,6 +692,13 @@ app.classes.filemanager = AppJS.extend(
 		for(var etemplate_name in this.path_widget) break;
 		if (widget) etemplate_name = widget.getInstanceManager().uniqueId;
 
+		// Make sure everything is in place for changing directory
+		if(!this.et2 || typeof etemplate_name !== 'string' ||
+				typeof this.path_widget[etemplate_name] === 'undefined')
+		{
+			return false;
+		}
+
 		switch (_dir)
 		{
 			case '..':
