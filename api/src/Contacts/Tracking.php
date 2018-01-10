@@ -227,8 +227,6 @@ class Tracking extends Api\Storage\Tracking
 	 */
 	function get_details($data,$receiver=null)
 	{
-		unset($receiver);	// not used, but required by function signature
-
 		foreach($this->contacts->contact_fields as $name => $label)
 		{
 			if (!$data[$name] && $name != 'owner') continue;
@@ -288,7 +286,7 @@ class Tracking extends Api\Storage\Tracking
 			}
 		}
 		// add custom fields for given type
-		$details += $this->get_customfields($data, $data['tid']);
+		$details += $this->get_customfields($data, $data['tid'], $receiver);
 
 		return $details;
 	}
