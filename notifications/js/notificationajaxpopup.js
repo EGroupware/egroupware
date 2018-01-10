@@ -504,10 +504,28 @@
 	 */
 	notifications.prototype.toggle = function ()
 	{
+		var $egwpopup = jQuery('#egwpopup');
+		var $body = jQuery('body');
+		var $counter = jQuery('#egwpopup_fw_notifications');
+
+		if (!$egwpopup.is(":visible"))
+		{
+			$body.on('click', function(e){
+				if (!$counter.is(e.target) && e.originalEvent.target.className !== 'popup_note' &&
+						!$egwpopup.is(e.target) && $egwpopup.has(e.target).length == 0)
+				{
+					jQuery(this).off(e);
+					$egwpopup.slideToggle('fast');
+				}
+			});
+		}
+		else
+		{
+			$body.off('click');
+		}
 		// Remove popup_note as soon as message list is toggled
 		jQuery('.popup_note', '#egwpopup_fw_notifications').remove();
 
-		var $egwpopup = jQuery('#egwpopup');
 		if ($egwpopup.length>0) $egwpopup.slideToggle('fast');
 	};
 
