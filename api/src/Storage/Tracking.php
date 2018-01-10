@@ -241,13 +241,20 @@ abstract class Tracking
 	 *
 	 * @param array|object $data
 	 * @param string $only_type2 = null if given only return fields of type2 == $only_type2
+	 * @param int $user = false Use this user for custom field permissions, or false
+	 *	to strip all private custom fields
+	 *
 	 * @return array of details as array with values for keys 'label','value','type'
 	 */
-	function get_customfields($data, $only_type2=null)
+	function get_customfields($data, $only_type2=null, $user = false)
 	{
 		$details = array();
+		if(!is_numeric($user))
+		{
+			$user = false;
+		}
 
-		if (($cfs = Customfields::get($this->app, $all_private_too=false, $only_type2)))
+		if (($cfs = Customfields::get($this->app, $user, $only_type2)))
 		{
 			$header_done = false;
 			foreach($cfs as $name => $field)
@@ -255,8 +262,8 @@ abstract class Tracking
 				if (in_array($field['type'], Customfields::$non_printable_fields)) continue;
 
 				// Sometimes cached customfields let private fields the user can access
-				// leak through.  Make sure we don't expose them.
-				if ($field['private']) continue;
+				// leak through.  If no specific user provided, make sure we don't expose them.
+				if ($user === false && $field['private']) continue;
 
 				if (!$header_done)
 				{
@@ -700,6 +707,7 @@ abstract class Tracking
 
 		$save_user = $GLOBALS['egw_info']['user'];
 		$do_notify = true;
+		$can_cache = false;
 
 		if (is_numeric($user_or_lang))	// user --> read everything from his prefs
 		{
@@ -716,6 +724,7 @@ abstract class Tracking
 			{
 				$do_notify = false;	// no notification requested / necessary
 			}
+			$can_cache = (Customfields::get($this->app, true) == Customfields::get($this->app, $user_or_lang));
 		}
 		else
 		{
@@ -740,8 +749,11 @@ abstract class Tracking
 			$date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] .
 				$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'];
 
-			// Cache text body
-			$body_cache =& $this->body_cache[$data[$this->id_field]][$lang][$date_format];
+			// Cache text body, if there's no private custom fields we might reveal
+			if($can_cache)
+			{
+				$body_cache =& $this->body_cache[$data[$this->id_field]][$lang][$date_format];
+			}
 			if(empty($data[$this->id_field]) || !isset($body_cache['text']))
 			{
 				$body_cache['text'] = $this->get_body(false,$data,$old,false,$receiver);
@@ -1014,7 +1026,7 @@ abstract class Tracking
 		$body = '';
 		if($this->get_config(self::CUSTOM_NOTIFICATION, $data, $old))
 		{
-			$body = $this->get_custom_message($data,$old);
+			$body = $this->get_custom_message($data,$old,null,$receiver);
 			if(($sig = $this->get_signature($data,$old,$receiver)))
 			{
 				$body .= ($html_email ? '<br />':'') . "\n$sig";
@@ -1200,13 +1212,16 @@ abstract class Tracking
 	 * Get a custom notification message to be used instead of the standard one.
 	 * It can use merge print placeholders to include data.
 	 */
-	protected function get_custom_message($data, $old, $merge_class = null)
+	protected function get_custom_message($data, $old, $merge_class = null, $receiver = false)
 	{
 		$message = $this->get_config(self::CUSTOM_NOTIFICATION, $data, $old);
 		if(!$message)
 		{
 			return '';
 		}
+
+		// Check if there's any custom field privacy issues, and try to remove them
+		$message = $this->sanitize_custom_message($message, $receiver);
 
 		// Automatically set merge class from naming conventions
 		if($merge_class == null)
@@ -1234,5 +1249,42 @@ abstract class Tracking
 		{
 			throw new Api\Exception\WrongParameter("Invalid merge class '$merge_class' for {$this->app} custom notification");
 		}
+	}
+
+	/**
+	 * Check to see if the message would expose any custom fields that are
+	 * not visible to the receiver, and try to remove them from the message.
+	 *
+	 * @param string $message
+	 * @param string|int $receiver Account ID or email address
+	 */
+	protected function sanitize_custom_message($message, $receiver)
+	{
+		if(!is_numeric($receiver))
+		{
+			$receiver = false;
+		}
+
+		$cfs = Customfields::get($this->app, $receiver);
+		$all_cfs = Customfields::get($this->app, true);
+
+		// If we have a specific user and they're the same then there are
+		// no private fields so nothing needs to be done
+		if($receiver && $all_cfs == $cfs)
+		{
+			return $message;
+		}
+
+		// Replace any placeholders that use the private field, or any sub-keys
+		// of the field
+		foreach($all_cfs as $name => $field)
+		{
+			if ($receiver === false && $field['private'] || !$cfs[$name])
+			{
+				// {{field}} or {{field/subfield}} or $$field$$ or $$field/subfield$$
+				$message = preg_replace('/(\{\{|\$\$)#'.$name.'(\/[^\}\$]+)?(\}\}|\$\$)/', '', $message);
+			}
+		}
+		return $message;
 	}
 }

@@ -38,11 +38,11 @@ class Customfields implements \IteratorAggregate
 	protected $app;
 
 	/**
-	 * should all the private fields be returned too, default no
+	 * User account to filter custom field private
 	 *
-	 * @var boolean
+	 * @var int
 	 */
-	protected $all_private_too=false;
+	protected $account=false;
 
 	/**
 	 * Iterator initialised for custom fields
@@ -55,25 +55,29 @@ class Customfields implements \IteratorAggregate
 	 * Constructor
 	 *
 	 * @param string $app
-	 * @param boolean $all_private_too =false should all the private fields be returned too, default no
+	 * @param int|boolean $account =false Filter private for given account_id,
+	 *	false for current user or true for all the private fields be returned too, default current user
 	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
 	 * @param int $start =0
 	 * @param int $num_rows =null
 	 * @param Api\Db $db =null reference to database instance to use
 	 * @return array with customfields
 	 */
-	function __construct($app, $all_private_too=false, $only_type2=null, $start=0, $num_rows=null, Api\Db $db=null)
+	function __construct($app, $account=false, $only_type2=null, $start=0, $num_rows=null, Api\Db $db=null)
 	{
 		$this->app = $app;
-		$this->all_private_too = $all_private_too;
+
+		// If $account is true, no filtering otherwise use current user
+		$this->account = $account === true ? false :
+				is_numeric($account) ? (int)$account : $GLOBALS['egw_info']['user']['account_id'];
 
 		$query = array(
 			'cf_app' => $app,
 		);
-		if (!$all_private_too)
+		if ($this->account)
 		{
-			$memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true);
-			$memberships[] = $GLOBALS['egw_info']['user']['account_id'];
+			$memberships = $GLOBALS['egw']->accounts->memberships($this->account, true);
+			$memberships[] = $this->account;
 			$query[] = $this->commasep_match('cf_private', $memberships);
 		}
 		if ($only_type2)
@@ -127,19 +131,24 @@ class Customfields implements \IteratorAggregate
 	 * Get customfield array of an application
 	 *
 	 * @param string $app
-	 * @param boolean $all_private_too =false should all the private fields be returned too, default no
+	 * @param int|boolean $account =false Filter private for given account_id,
+	 *	false for current user or true for all the private fields be returned too, default current user
 	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
 	 * @param Api\Db $db =null reference to database to use
 	 * @return array with customfields
 	 */
-	public static function get($app, $all_private_too=false, $only_type2=null, Api\Db $db=null)
+	public static function get($app, $account=false, $only_type2=null, Api\Db $db=null)
 	{
-		$cache_key = $app.':'.($all_private_too?'all':$GLOBALS['egw_info']['user']['account_id']).':'.$only_type2;
+		$account = $account === true ? 'all' :
+				$account === false ? $GLOBALS['egw_info']['user']['account_id'] :
+				(int)$account;
+
+		$cache_key = $app.':'.$account.':'.$only_type2;
 		$cfs = Api\Cache::getInstance(__CLASS__, $cache_key);
 
 		if (!isset($cfs))
 		{
-			$cfs = iterator_to_array(new Customfields($app, $all_private_too, $only_type2, 0, null, $db));
+			$cfs = iterator_to_array(new Customfields($app, $account, $only_type2, 0, null, $db));
 
 			Api\Cache::setInstance(__CLASS__, $cache_key, $cfs);
 			$cached = Api\Cache::getInstance(__CLASS__, $app);
@@ -149,7 +158,7 @@ class Customfields implements \IteratorAggregate
 				Api\Cache::setInstance(__CLASS__, $app, $cached);
 			}
 		}
-		//error_log(__METHOD__."('$app', $all_private_too, '$only_type2') returning fields: ".implode(', ', array_keys($cfs)));
+		//error_log(__METHOD__."('$app', $account, '$only_type2') returning fields: ".implode(', ', array_keys($cfs)));
 		return $cfs;
 	}
 
@@ -157,13 +166,14 @@ class Customfields implements \IteratorAggregate
 	 * Check if any customfield uses html (type == 'htmlarea')
 	 *
 	 * @param string $app
-	 * @param boolean $all_private_too =false should all the private fields be returned too, default no
+	 * @param int|boolean $account =false Filter private for given account_id,
+	 *	false for current user or true for all the private fields be returned too, default current user
 	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
 	 * @return boolen true: if there is a custom field useing html, false if not
 	 */
-	public static function use_html($app, $all_private_too=false, $only_type2=null)
+	public static function use_html($app, $account=false, $only_type2=null)
 	{
-		foreach(self::get($app, $all_private_too, $only_type2) as $data)
+		foreach(self::get($app, $account, $only_type2) as $data)
 		{
 			if ($data['type'] == 'htmlarea') return true;
 		}
@@ -544,7 +554,7 @@ class Customfields implements \IteratorAggregate
 			self::$db = $GLOBALS['egw_setup']->db;
 		}
 	}
-	
+
 	/**
 	 * Handle any uploaded files that weren't dealt with immediately when uploaded.
 	 * This usually happens for new entries, where we don't have the entry's ID

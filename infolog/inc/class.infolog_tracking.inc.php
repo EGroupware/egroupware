@@ -199,7 +199,6 @@ class infolog_tracking extends Api\Storage\Tracking
 	 */
 	function get_details($data,$receiver=null)
 	{
-		unset($receiver);	// not used, but required function signature
 		//error_log(__METHOD__.__LINE__.' Data:'.array2string($data));
 		$responsible = array();
 		if ($data['info_responsible'])
@@ -257,7 +256,7 @@ class infolog_tracking extends Api\Storage\Tracking
 			'type'  => 'multiline',
 		);
 		// add custom fields for given type
-		$details += $this->get_customfields($data, $data['info_type']);
+		$details += $this->get_customfields($data, $data['info_type'], $receiver);
 
 		return $details;
 	}
