@@ -1,6 +1,7 @@
 (update in sec. %s)	notifications	en	(Update in sec. %s)
 account:	notifications	en	Account:
 all possible notification backends	notifications	en	All possible notification backends
+are you sure you want to delete all notifications?	notifications	en	Are you sure you want to delete all notifications?
 browser	notifications	en	Browser
 browser is starting.	notifications	en	Browser is starting.
 cancal settings?	notifications	en	Cancal settings?
@@ -14,6 +15,9 @@ connection error.	notifications	en	Connection error.
 connection error. please check connection to server.	notifications	en	Connection error. Please check connection to server.
 continue to connect?	notifications	en	Continue to connect?
 cookies are required to login to this site.	notifications	en	Cookies are required to login to this site.
+delete all messages	notifications	en	delete all messages
+delete notifications	notifications	en	Delete notifications
+delete this message	notifications	en	delete this message
 disabled chains	notifications	en	Disabled chains
 do not notify me at all	notifications	en	Do not notify me at all
 domain not found, please check serveraddress.	notifications	en	Domain not found, please check Serveraddress.
@@ -50,11 +54,15 @@ linked entries:	common	en	Linked entries:
 login aborted, application exit?	notifications	en	Login aborted, application exit?
 login in egroupware:	notifications	en	login in EGroupware:
 mail backend	admin	en	Mail backend
+mark all as read	notifications	en	mark all as read
+mark as read	notifications	en	mark as read
 message from	notifications	en	Message from
 minutes	notifications	en	Minutes
+more info	notifications	en	More info
 notification	common	en	Notification
 notifier	notifications	en	Notifier
 notify me by	notifications	en	Notify me by
+open notified entry	notifications	en	open notified entry
 optimize e-mails for external mail client	notifications	en	Optimize emails for external email client
 page not found, please check serveraddress.	notifications	en	Page not found, please check Serveraddress.
 password:	notifications	en	Password:
