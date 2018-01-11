@@ -52,6 +52,7 @@ check all	filemanager	de	Alle auswählen
 check virtual filesystem	common	de	Virtuelles Dateisystem überprüfen
 clear search	filemanager	de	Suchfelder zurücksetzen
 clipboard is empty!	filemanager	de	Zwischenablage ist leer!
+collab editor settings	filemanager	de	Collabora Office Einstellungen
 comment	filemanager	de	Kommentar
 configuration changed.	filemanager	de	Konfiguration geändert
 confirm final delete	filemanager	de	Endgültiges Löschen bestätigen
@@ -173,7 +174,6 @@ link %1: %2	filemanager	de	%1. Verknüpfung: %2
 link into folder	filemanager	de	Verknüpfung in ein Verzeichnis
 link target	filemanager	de	Ziel der Verknüpfung
 link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
-list view	filemanager	de	Listenansicht
 location	filemanager	de	Ort
 log out as superuser	filemanager	de	Superuser abmelden
 mail files	filemanager	de	Dateien per E-Mail versenden
@@ -216,6 +216,7 @@ properties saved.	filemanager	de	Eigenschaften gespeichert
 quick jump to	filemanager	de	Springe zu
 read & write access	filemanager	de	Lese- und Schreibzugriff
 read access only	filemanager	de	Nur Lesezugriff
+readonly share link	filemanager	de	Nur lesende Freigabe - Link
 reload	filemanager	de	Aktualisieren
 rename of %1 to %2 failed!	filemanager	de	Umbenennung von %1 nach %2 schlug fehl!
 rename, change permissions or ownership	filemanager	de	Umbennen, Zugriffsrechte oder Besitzer ändern
@@ -240,6 +241,7 @@ select action...	filemanager	de	Befehl auswählen...
 select file to upload in current directory	filemanager	de	Datei(en) zum hochladen in das aktuelle Verzeichnis auswählen
 select file(s) from vfs	common	de	Datei(en) aus dem EGroupware Dateimanager auswählen
 setting for document merge saved.	filemanager	de	Einstellungen für Serienbriefe gespeichert
+share files	filemanager	de	Dateien freigeben
 shared files	filemanager	de	Freigegebene Dateien
 shared with	filemanager	de	Geteilt mit
 show	filemanager	de	Zeige
@@ -278,11 +280,13 @@ upload fields	filemanager	de	Dateien hochladen
 upload files	filemanager	de	Dateien hochladen
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	de	Benutzen Sie dieses Symbol für Adressetiketten. Stellen Sie den Inhalt der wiederholt werden soll zwischen 2 Symbole.
 used space	filemanager	de	Benutzter Platz
+user color indicator	filemanager	de	Benutzer-Farbe
 users and groups	filemanager	de	Benutzer und Gruppen
 versioning	filemanager	de	Versionierung
 vfs mounts and versioning	common	de	VFS einhängen und versionieren
 webdav link copied into clipboard	filemanager	de	WebDAV-Link in die Zwischenablage kopiert
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	de	Wer soll gelöschte Dateien oder ältere Versionen endgültig löschen dürfen:
+writable share link	filemanager	de	Beschreibbare Freigabe - Link
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
 you are not allowed to finally delete older versions and deleted files!	filemanager	de	Sie haben nicht die Berechtigung ältere Versionen oder gelöschte Dateien endgültig zu löschen!
 you are not allowed to upload a script!	filemanager	de	Sie dürfen KEINE Skripte hochladen!

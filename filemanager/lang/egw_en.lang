@@ -52,6 +52,7 @@ check all	filemanager	en	Check all
 check virtual filesystem	common	en	Check virtual filesystem
 clear search	filemanager	en	Clear search
 clipboard is empty!	filemanager	en	Clipboard is empty!
+collab editor settings	filemanager	en	Collab Editor settings
 comment	filemanager	en	Comment
 configuration changed.	filemanager	en	Configuration changed.
 confirm final delete	filemanager	en	Confirm final delete
@@ -215,6 +216,7 @@ properties saved.	filemanager	en	Properties saved.
 quick jump to	filemanager	en	Quick jump to
 read & write access	filemanager	en	Read & write access
 read access only	filemanager	en	Read access only
+readonly share link	filemanager	en	Readonly Share link
 reload	filemanager	en	Reload
 rename of %1 to %2 failed!	filemanager	en	Rename of %1 to %2 failed!
 rename, change permissions or ownership	filemanager	en	Rename, change permissions or ownership
@@ -239,6 +241,7 @@ select action...	filemanager	en	Select action...
 select file to upload in current directory	filemanager	en	Select file to upload in current directory
 select file(s) from vfs	common	en	Select file(s) from VFS
 setting for document merge saved.	filemanager	en	Setting for document merge saved.
+share files	filemanager	en	Share files
 shared files	filemanager	en	Shared files
 shared with	filemanager	en	Shared with
 show	filemanager	en	Show
@@ -277,11 +280,13 @@ upload fields	filemanager	en	Upload fields
 upload files	filemanager	en	Upload files
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
 used space	filemanager	en	Used space
+user color indicator	filemanager	en	User color indicator
 users and groups	filemanager	en	Users and groups
 versioning	filemanager	en	Versioning
 vfs mounts and versioning	common	en	VFS mounts and versioning
 webdav link copied into clipboard	filemanager	en	WebDAV link copied into clipboard
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	en	Who should be allowed to finally delete deleted files or old versions of a file:
+writable share link	filemanager	en	Writable Share link
 wrong username or password!	filemanager	en	Wrong username or password!
 you are not allowed to finally delete older versions and deleted files!	filemanager	en	You are NOT allowed to finally delete older versions and deleted files!
 you are not allowed to upload a script!	filemanager	en	You are NOT allowed to upload a script!
