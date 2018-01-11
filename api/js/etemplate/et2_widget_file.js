@@ -306,17 +306,22 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			return;
 		}
 
+		var addFile = jQuery.proxy(function(i, file) {
+			this.resumable.addFile(file,event);
+		}, this);
 		if(typeof value == 'object' && value.length && typeof value[0] == 'object' && value[0].name)
 		{
 			try
 			{
 				this.input[0].files = value;
+
+				jQuery.each(value, addFile);
 			}
 			catch (e)
 			{
 				var self = this;
 				var args = arguments;
-				jQuery.each(value, function(i,file) {self.resumable.addFile(this,event);});
+				jQuery.each(value, addFile);
 			}
 		}
 	},
