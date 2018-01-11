@@ -14,6 +14,8 @@ connection error.	notifications	de	Verbindungsfehler.
 connection error. please check connection to server.	notifications	de	Verbindungsfehler. Bitte überprüfen Sie die Verbindung zum Server.
 continue to connect?	notifications	de	Weiter versuche zu Verbinden?
 cookies are required to login to this site.	notifications	de	Cookies werden zum Login auf diese Seite benötigt.
+delete all messages	notifications	de	Alle Benachrichtigungen löschen
+delete this message	notifications	de	Diese Benachrichtigung löschen
 disabled chains	notifications	de	Deaktivierte Ketten
 do not notify me at all	notifications	de	benachrichtige mich niemals
 domain not found, please check serveraddress.	notifications	de	Domain nicht gefunden, bitte Serveradresse überprüfen.
@@ -50,11 +52,14 @@ linked entries:	common	de	Verknüpfte Einträge:
 login aborted, application exit?	notifications	de	Login abgebrochen, Anwendung beenden?
 login in egroupware:	notifications	de	Login in EGroupware
 mail backend	admin	de	E-Mail Schnittstelle
+mark all as read	notifications	de	Alle als gelesen markieren
+mark as read	notifications	de	Als gelesen markieren
 message from	notifications	de	Nachricht von
 minutes	notifications	de	Minuten
 notification	common	de	Benachrichtigung
 notifier	notifications	de	Benachrichtiger
 notify me by	notifications	de	Benachrichtige mich per
+open notified entry	notifications	de	Eintrag öffnen
 optimize e-mails for external mail client	notifications	de	Optimiere E-Mails für externe Mailclients
 page not found, please check serveraddress.	notifications	de	Seite nicht gefunden, bitte überprüfen Sie die Serveradresse
 password:	notifications	de	Passwort:
