@@ -591,6 +591,10 @@ class calendar_bo
 		// resolve users to add memberships for users and members for groups
 		// for search, do NOT use freebusy rights, as it would allow to probe the content of event entries
 		$users = $this->resolve_users($params['users'], $params['filter'] == 'no-enum-groups', $params['ignore_acl'], empty($params['query']));
+		if($params['private_allowed'])
+		{
+			$params['private_allowed'] = $this->resolve_users($params['private_allowed'],$params['filter'] == 'no-enum-groups',$params['ignore_acl'], empty($params['query']));
+		}
 
 		// supply so with private_grants, to not query them again from the database
 		if (!empty($params['query']))
