@@ -19,9 +19,16 @@ if ($GLOBALS['egw_info']['user']['apps']['notifications'])
 {
 	$notification_config = Api\Config::read('notifications');
 	Api\Translation::add_app('notifications');
+	$langRequire = array (
+		'app'	=> 'notifications',
+		'lang'	=> Api\Translation::$userlang,
+		'etag'	=> Api\Translation::etag('notifications', Api\Translation::$userlang)
+	);
 	$popup_poll_interval = empty($notification_config['popup_poll_interval']) ? 60 : $notification_config['popup_poll_interval'];
 	echo '<script src="'. $GLOBALS['egw_info']['server']['webserver_url']. '/notifications/js/notificationajaxpopup.js?'.
-		filemtime(EGW_SERVER_ROOT.'/notifications/js/notificationajaxpopup.js'). '" type="text/javascript" id="notifications_script_id" data-poll-interval="'.$popup_poll_interval.'"></script>';
+		filemtime(EGW_SERVER_ROOT.'/notifications/js/notificationajaxpopup.js').
+		'" type="text/javascript" id="notifications_script_id" data-poll-interval="'.$popup_poll_interval.
+		'" data-langRequire="'. htmlspecialchars(json_encode($langRequire)).'"></script>';
 	echo '
 		<div id="egwpopup" style="display: none; z-index: 999;">
 			<div id="egwpopup_header">'.lang('Notifications').
