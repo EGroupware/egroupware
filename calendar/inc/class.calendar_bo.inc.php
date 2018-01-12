@@ -1895,7 +1895,17 @@ class calendar_bo
 			$contacts = new Api\Contacts();
 			foreach($contacts->get_addressbooks() as $owner => $name)
 			{
-				$holidays += $contacts->read_birthdays($owner, $year);
+				$birthdays = $contacts->read_birthdays($owner, $year);
+
+				// Add them in, being careful not to override any existing
+				foreach($birthdays as $date => $bdays)
+				{
+					if(!array_key_exists($date, $holidays))
+					{
+						$holidays[$date] = array();
+					}
+					$holidays[$date] = array_merge($holidays[$date], $bdays);
+				}
 			}
 		}
 
