@@ -96,6 +96,7 @@ windows-popup and e-mail	notifications	en	Windows popup and email
 windows-popup backend	admin	en	Windows popup back end
 windows-popup first, if that fails notify me by e-mail	notifications	en	Windows popup first, if that fails notify me by email
 windows-popup only	notifications	en	Windows popup only
+yesterday	notifications	en	yesterday
 you can also use	admin	en	You can also use
 you have been successfully logged out	notifications	en	You have been successfully logged out
 you've got new mail	notifications	en	You've got a new mail
