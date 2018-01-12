@@ -69,7 +69,7 @@ class Customfields implements \IteratorAggregate
 
 		// If $account is true, no filtering otherwise use current user
 		$this->account = $account === true ? false :
-				is_numeric($account) ? (int)$account : $GLOBALS['egw_info']['user']['account_id'];
+				(is_numeric($account) ? (int)$account : $GLOBALS['egw_info']['user']['account_id']);
 
 		$query = array(
 			'cf_app' => $app,
@@ -139,11 +139,11 @@ class Customfields implements \IteratorAggregate
 	 */
 	public static function get($app, $account=false, $only_type2=null, Api\Db $db=null)
 	{
-		$account = $account === true ? 'all' :
-				$account === false ? $GLOBALS['egw_info']['user']['account_id'] :
-				(int)$account;
+		$account_key = $account === true ? 'all' :
+				($account === false ? $GLOBALS['egw_info']['user']['account_id'] :
+				(int)$account);
 
-		$cache_key = $app.':'.$account.':'.$only_type2;
+		$cache_key = $app.':'.$account_key.':'.$only_type2;
 		$cfs = Api\Cache::getInstance(__CLASS__, $cache_key);
 
 		if (!isset($cfs))

@@ -72,7 +72,107 @@ class CustomfieldsTest extends LoggedInTest
 	/**
 	 * Test the access control on private custom fields
 	 */
-	public function testPrivate()
+	public function testPrivateCannotBeReadWithoutPermission()
+	{
+		$field = $this->create_private_field();
+
+		// Get another user
+		$other_account = $this->get_another_user();
+
+		// Try to read - should not be there
+		$fields = Customfields::get(self::APP,$other_account);
+		$this->assertArrayNotHasKey($field['name'], $fields);
+
+		// Switch the users
+		$field['private'] = array($other_account);
+		Customfields::update($field);
+
+		// Try to read - should not be there
+		$fields = Customfields::get(self::APP,false);
+		$this->assertArrayNotHasKey($field['name'], $fields);
+
+		// Clean up
+		unset($fields[$field['name']]);
+		Customfields::save(self::APP, $fields);
+	}
+
+	/**
+	 * Test that giving access allows access
+	 */
+	public function testGivingAccess()
+	{
+		$field = $this->create_private_field();
+
+		$fields = Customfields::get(self::APP);
+
+		// Get another user
+		$other_account = $this->get_another_user();
+
+		// Give access & check
+		$field['private'][] = $other_account;
+		Customfields::update($field);
+
+		$fields = Customfields::get(self::APP,$other_account);
+		$this->assertArrayHasKey($field['name'], $fields);
+
+		// Clean up
+		unset($fields[$field['name']]);
+		Customfields::save(self::APP, $fields);
+	}
+
+	/**
+	 * Test that removing access disallows access
+	 */
+	public function testRemovingAccess()
+	{
+		$field = $this->create_private_field();
+
+		$fields = Customfields::get(self::APP);
+
+		// Get another user
+		$other_account = $this->get_another_user();
+
+		// Give access
+		$field['private'][] = $other_account;
+		Customfields::update($field);
+		$fields = Customfields::get(self::APP,$other_account);
+		$this->assertArrayHasKey($field['name'], $fields);
+
+		// Remove access, check its gone
+		$field['private'] = array($GLOBALS['egw_info']['user']['account_id']);
+		Customfields::update($field);
+		$fields = Customfields::get(self::APP,$other_account);
+		$this->assertArrayNotHasKey($field['name'], $fields);
+
+		// Clean up
+		unset($fields[$field['name']]);
+		Customfields::save(self::APP, $fields);
+	}
+
+	/**
+	 * Test getting all fields ignores any access restrictions
+	 */
+	public function testGetAllFields()
+	{
+		$field = $this->create_private_field();
+
+		// Get another user
+		$other_account = $this->get_another_user();
+
+		// Change access so current user can't read it
+		$field['private'] = array($other_account);
+		Customfields::update($field);
+
+		$fields = Customfields::get(self::APP,true);
+		$this->assertEquals(1, count($fields));
+		$this->assertArrayHasKey($field['name'], $fields);
+
+		// Clean up
+		unset($fields[$field['name']]);
+		Customfields::save(self::APP, $fields);
+	}
+
+	protected function create_private_field()
 	{
 		// Create field
 		$field = array_merge(
@@ -81,11 +181,16 @@ class CustomfieldsTest extends LoggedInTest
 				'private' => array($GLOBALS['egw_info']['user']['account_id'])
 			)
 		);
-
 		Customfields::update($field);
-		$fields = Customfields::get(self::APP);
 
-		// Get another user
+		return $field;
+	}
+
+	/**
+	 * Get another user that we can use to test
+	 */
+	protected function get_another_user()
+	{
 		$accounts = $GLOBALS['egw']->accounts->search(array(
 			'type'    => 'accounts'
 		));
@@ -96,26 +201,10 @@ class CustomfieldsTest extends LoggedInTest
 		}
 		$other_account = key($accounts);
 
-		// Try to read - should not be there
-		$fields = Customfields::get(self::APP,$other_account);
-		$this->assertArrayNotHasKey($field['name'], $fields);
-
-		// Give access & check again
-		$field['private'][] = $other_account;
-		Customfields::update($field);
-
-		$fields = Customfields::get(self::APP,$other_account);
-		$this->assertArrayHasKey($field['name'], $fields);
-
-		// Remove access, check its gone
-		$field['private'] = array($GLOBALS['egw_info']['user']['account_id']);
-		Customfields::update($field);
-
-		$fields = Customfields::get(self::APP,$other_account);
-		$this->assertArrayNotHasKey($field['name'], $fields);
-
-		// Clean up
-		unset($fields[$field['name']]);
-		Customfields::save(self::APP, $fields);
+		if(!$other_account)
+		{
+			$this->markTestSkipped('Need more than one user to check private');
+		}
+		return $other_account;
 	}
 }
