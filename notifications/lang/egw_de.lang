@@ -93,6 +93,7 @@ windows-popup and e-mail	notifications	de	Windows-Popup und E-Mail
 windows-popup backend	admin	de	Windows-Popup Schnittstelle
 windows-popup first, if that fails notify me by e-mail	notifications	de	Zuerst Windows-Popup. Wenn dies fehl schlägt, benachrichtige mich per E-Mail.
 windows-popup only	notifications	de	nur Windows-Popup
+yesterday	notifications	de	Gestern
 you can also use	admin	de	Sie können ebenso folgendes verwenden:
 you have been successfully logged out	notifications	de	Sie wurde erfolgreich abgemeldet
 you've got new mail	notifications	de	Sie haben neue E-Mails
