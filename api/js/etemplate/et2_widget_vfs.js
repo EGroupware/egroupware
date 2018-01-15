@@ -200,7 +200,13 @@ var et2_vfsName = (function(){ "use strict"; return et2_textbox.extend(
 		{
 			_value = _value.path;
 		}
-		_value = egw.decodePath(_value);
+		try
+		{
+			_value = egw.decodePath(_value);
+		} catch (e)
+		{
+			_value = 'Error! ' + _value;
+		}
 		this._super.apply(this,[_value]);
 	},
 	getValue: function() {
@@ -230,7 +236,13 @@ var et2_vfsName_ro = (function(){ "use strict"; return et2_textbox_ro.extend(
 		{
 			_value = _value.path;
 		}
-		_value = egw.decodePath(_value);
+		try
+		{
+			_value = egw.decodePath(_value);
+		} catch (e)
+		{
+			_value = 'Error! ' + _value;
+		}
 		this._super.apply(this,[_value]);
 	},
 	getValue: function() {
