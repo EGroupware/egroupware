@@ -2999,7 +2999,8 @@ app.classes.mail = AppJS.extend(
 			var _id = _elems[i].id;
 			var dataElem = egw.dataGetUIDdata(_id);
 			var subject = dataElem? dataElem.data.subject: _elems[i].subject;
-			var filename = subject.replace(/[\f\n\t\v]/g,"_")|| 'unknown';
+			// Replace these now, they really cause problems later
+			var filename = subject.replace(/[\f\n\t\v\/\\\?]/g,"_")|| 'unknown';
 			ids.push(_id);
 			names.push(filename+'.eml');
 		}
