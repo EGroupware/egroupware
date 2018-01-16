@@ -164,15 +164,23 @@ class infolog_datasource extends datasource
 		// link the new infolog against the project and setting info_link_id and evtl. info_from
 		$old_link = $info['info_link_id'] ? Link::get_link($info['info_link_id']) : $info['info_link'];
 		$info['info_link_id'] = Link::link('projectmanager',$target,'infolog',$info['info_id'],$element['pe_remark'],0,0,1);
-		$info['pm_id'] = $target;
-		if (!$info['info_from'] || $old_link && (int)$old_link['id'] && $info['info_from'] == $old_link['title'])
+		unset($info['info_contact']);
+
+		// If info_from missing or matches project title, update it
+		if (!$info['info_from'] || $info['info_from'] == Link::title('projectmanager', $info['pm_id']))
 		{
 			$info['info_from'] = Link::title('projectmanager',$target);
+			unset($info['info_custom_from']);
 		}
 		if ($info['info_status'] == 'template')
 		{
 			$info['info_status'] = $this->infolog_bo->activate($info);
 		}
+
+		$info['pm_id'] = $target;
+		if(!($info['info_id'] = $this->infolog_bo->write($info))) return false;
+		$this->infolog_bo->link_id2from($info);
+
 		$this->infolog_bo->write($info);
 
 		// creating again all links, beside the one to the source-project
