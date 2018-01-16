@@ -2563,15 +2563,30 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 			var tbody = jQuery(document.createElement("tbody")).appendTo(this.lettersearch);
 			var row = jQuery(document.createElement("tr")).appendTo(tbody);
 
-			// Capitals, A-Z
-			for(var i = 65; i <= 90; i++) {
-				var button = jQuery(document.createElement("td"))
-					.addClass("lettersearch")
-					.appendTo(row)
-					.attr("id", String.fromCharCode(i))
-					.text(String.fromCharCode(i));
-				if(String.fromCharCode(i) == current_letter) button.addClass("lettersearch_active");
+			// Use custom lettersearch if available
+			if ( this.nextmatch.options.settings.custom_lettersearch ) {
+				var letters = this.nextmatch.options.settings.custom_lettersearch.split(',');
+				for(var i = 0; i < letters.length; i++) {
+					var button = jQuery(document.createElement("td"))
+						.addClass("lettersearch")
+						.appendTo(row)
+						.attr("id", letters[i])
+						.text(letters[i]);
+					if(letters[i] == current_letter) button.addClass("lettersearch_active");
+				}
 			}
+			else {
+				// Capitals, A-Z
+				for(var i = 65; i <= 90; i++) {
+					var button = jQuery(document.createElement("td"))
+						.addClass("lettersearch")
+						.appendTo(row)
+						.attr("id", String.fromCharCode(i))
+						.text(String.fromCharCode(i));
+					if(String.fromCharCode(i) == current_letter) button.addClass("lettersearch_active");
+				}
+			}
+
 			button = jQuery(document.createElement("td"))
 				.addClass("lettersearch")
 				.appendTo(row)

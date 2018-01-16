@@ -36,6 +36,7 @@ use EGroupware\Api;
  * 	'bottom_too'     => True// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
  *	'never_hide'     => True// I  never hide the nextmatch-line if less then maxmatch entries
  *	'lettersearch'   => True// I  show a lettersearch
+ *	'custom_lettersearch'   => // I  Comma-separated string of letters that will be displayed as lettersearch. Useful for other languages
  *	'searchletter'   =>     // IO active letter of the lettersearch or false for [all]
  * 	'start'          =>		// IO position in list
  *	'num_rows'       =>     // IO number of rows to show, defaults to maxmatches from the general prefs
