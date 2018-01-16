@@ -1,3 +1,19 @@
+egroupware-epl (16.1.20180116) hardy; urgency=low
+
+  * Admin: ACL dialog - fix ACL levels not updated when changing app or user
+  * Calendar: Add preference to set color of events without category color
+  * Calendar: Fix alarms set in different timezone from server moved when saving event - now fixed default alarm too
+  * Calendar: Fix alarms set in different timezone from server moved when saving event
+  * CalDAV/CardDAV: Fix encoding of control chars stalling iOS sync
+  * Infolog: Add context menu actions to set start & end date
+  * Mail: Fix empty trash/empty junk actions causes error in some mail servers, e.g. Cyrus.
+  * Mail: Fix vacation notice still sending out notification mail even if the original mail is a spam.
+  * Tracker: Fix broken tracker queue selectbox filter
+  * Tracker: Fix mailhandling forward action not working
+  * Tracker: Fix mailhandling wrongly includes original message in reply
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 16 Jan 2018 15:56:15 +0100
+
 egroupware-epl (16.1.20171106) hardy; urgency=low
 
   * SECURITY RELEASE: everyone should update to this or 17.1.20171106 ASAP
