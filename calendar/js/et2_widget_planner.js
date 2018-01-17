@@ -145,7 +145,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 		this.cache = {};
 		this._deferred_row_updates = {};
-		
+
 		/**
 		 * If user puts the mouse over an event, then we'll set up resizing so
 		 * they can adjust the length.  Should be a little better on resources
@@ -752,11 +752,11 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 							break;
 						}
 					}
-					if(typeof rows[label_index] === 'undefined')
+					if(label_index && typeof rows[label_index] === 'undefined')
 					{
 						rows[label_index] = [];
 					}
-					if(rows[label_index].indexOf(event) === -1)
+					if(label_index && rows[label_index].indexOf(event) === -1)
 					{
 						rows[label_index].push(event);
 					}
@@ -1309,7 +1309,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		/**
 		 * Determine if we allow a dropped event to use the invite/change actions,
 		 * and enable or disable them appropriately
-		 * 
+		 *
 		 * @param {egwAction} action
 		 * @param {et2_calendar_event} event The event widget being dragged
 		 * @param {egwActionObject} target Planner action object
@@ -1443,7 +1443,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	_init_links_dnd: function(mgr,actionLinks) {
 
 		if (this.options.readonly) return;
-		
+
 		var self = this;
 
 		var drop_action = mgr.getActionById('egw_link_drop');
@@ -1593,7 +1593,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		}
 		actionLinks.push(drop_invite.id);
 		actionLinks.push(drop_change_participant.id);
-		
+
 		// Accept other links, and files dragged from the filemanager
 		// This does not handle files dragged from the desktop.  They are
 		// handled by et2_nextmatch, since it needs DOM stuff
@@ -1820,7 +1820,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					labels = this.grouper.row_labels.call(this);
 					invalidate = false;
 				}
-				
+
 				var im = this.getInstanceManager();
 				for(var i = 0; i < data.length; i++)
 				{
@@ -1882,7 +1882,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				}
 			}
 		}, this, this.getInstanceManager().execId,this.id);
-		
+
 		return value;
 	},
 
@@ -1901,7 +1901,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		if(!this.doInvalidate) return;
 
 		this.grid.height(0);
-		
+
 		var id_list = typeof id === 'undefined' ? Object.keys(this.cache) : [id];
 		for(var i = 0; i < id_list.length; i++)
 		{
@@ -1926,7 +1926,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		// Add 1 to keep the scrollbar, otherwise we need to recalculate the
 		// header widths too.
 		this.grid.height(this.rows[0].scrollHeight+1);
-		
+
 		// Adjust header if there's a scrollbar - Firefox needs this re-calculated,
 		// otherwise the header will be missing the margin space for the scrollbar
 		// in some cases
@@ -2005,7 +2005,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		this.options.group_by = ''+group_by;
 
 		this.grouper = this.groupers[isNaN(this.options.group_by) ? this.options.group_by : 'category'];
-		
+
 		if(old !== this.options.group_by && this.isAttached())
 		{
 			this.invalidate(true);
@@ -2111,7 +2111,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 		// Drag to create in progress
 		if(this.drag_create.start !== null) return;
-		
+
 		// Is this click in the event stuff, or in the header?
 		if(!this.options.readonly && this.gridHeader.has(_ev.target).length === 0 && !jQuery(_ev.target).hasClass('calendar_plannerRowHeader'))
 		{
@@ -2199,7 +2199,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 		x = Math.round(x);
 		y = Math.round(y);
-		
+
 		// Round to user's preferred event interval
 		var interval = egw.preference('interval','calendar') || 30;
 
@@ -2259,7 +2259,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				}
 			} while(row && row.nodeName !== 'BODY');
 			if(!row) return false;
-			
+
 			// Restore hidden nodes
 			for(var i = 0; i < hidden_nodes.length; i++)
 			{
@@ -2308,10 +2308,10 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	{
 		// Only left mouse button
 		if(event.which !== 1) return;
-		
+
 		// Ignore headers
 		if(this.headers.has(event.target).length !== 0) return false;
-		
+
 		// Get time at mouse
 		if(this.options.group_by === 'month')
 		{
@@ -2401,7 +2401,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		this.div.css('height', this.options.height);
 		// Set height for rows
 		this.rows.height(this.div.height() - this.headers.outerHeight());
-		
+
 		this.grid.height(this.rows[0].scrollHeight);
 	},
 
