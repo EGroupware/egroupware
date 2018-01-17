@@ -97,7 +97,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 		{
 			$record->owner = $options['owner'];
 		}
-		
+
 		// Handle errors in length or start/end date
 		if($record->start > $record->end)
 		{
@@ -107,76 +107,12 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 
 		// Parse particpants
 		if ($record->participants && !is_array($record->participants)) {
-			// Importing participants in human friendly format:
-			// Name (quantity)? (status) Role[, Name (quantity)? (status) Role]+
-			preg_match_all('/(([^(]+?)(?: \(([\d]+)\))? \(([^,)]+)\)(?: ([^ ,]+))?)(?:, )?/',$record->participants,$participants);
-			$p_participants = array();
-			$missing = array();
-			list($lines, $p, $names, $quantity, $status, $role) = $participants;
-			foreach($names as $key => $name) {
-				//error_log("Name: $name Quantity: {$quantity[$key]} Status: {$status[$key]} Role: {$role[$key]}");
-
-				// Search for direct account name, then user in accounts first
-				$search = "\"$name\"";
-				$id = importexport_helper_functions::account_name2id($name);
-
-				// If not found, or not an exact match to a user (account_name2id is pretty generous)
-				if(!$id || $names[$key] !== $this->bo->participant_name($id)) {
-					$contacts = ExecMethod2('addressbook.addressbook_bo.search', $search,array('contact_id','account_id'),'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR',array(0,1));
-					if($contacts) $id = $contacts[0]['account_id'] ? $contacts[0]['account_id'] : 'c'.$contacts[0]['contact_id'];
-				}
-				if(!$id)
-				{
-					// Use calendar's registered resources to find participant
-					foreach($this->bo->resources as $resource)
-					{
-						// Can't search for email
-						if($resource['app'] == 'email') continue;
-						// Special resource search, since it does special stuff in link_query
-						if($resource['app'] == 'resources')
-						{
-							if(!$this->resource_so)
-							{
-								$this->resource_so = new resources_so();
-							}
-							$result = $this->resource_so->search($search,'res_id');
-							if(count($result) >= 1) {
-								$id = $resource['type'].$result[0]['res_id'];
-								break;
-							}
-						}
-						else
-						{
-							// Search app via link query
-							$link_options = array();
-							$result = Link::query($resource['app'], $search, $link_options);
-
-							if($result)
-							{
-								$id = $resource['type'] . key($result);
-								break;
-							}
-						}
-					}
-				}
-				if($id) {
-					$p_participants[$id] = calendar_so::combine_status(
-						$this->status_map[lang($status[$key])] ? $this->status_map[lang($status[$key])] : $status[$key][0],
-						$quantity[$key] ? $quantity[$key] : 1,
-						$this->role_map[lang($role[$key])] ? $this->role_map[lang($role[$key])] : $role[$key]
-					);
-				}
-				else
-				{
-					$missing[] = $name;
-				}
-				if(count($missing) > 0)
-				{
-					$this->warnings[$import_csv->get_current_position()] = $record->title . ' ' . lang('participants') . ': ' .
-						lang('Contact not found!') . '<br />'.implode(", ",$missing);
-				}
+			$warning = '';
+			$record->participants = $this->parse_participants($record, $warning);
+			if($warning)
+			{
+				$this->warnings[$import_csv->get_current_position()] = $warning;
 			}
-			$record->participants = $p_participants;
 		}
 
 		if($record->recurrence)
@@ -241,6 +177,90 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 		}
 
 		return $success;
+	}
+
+	/**
+	 * Parse participants field into calendar resources
+	 *
+	 * @param string $participants
+	 *
+	 * @return array
+	 */
+	protected function parse_participants($record, &$warnings)
+	{
+		// Importing participants in human friendly format:
+		// Name (quantity)? (status) Role[, Name (quantity)? (status) Role]+
+		$statuses = implode('|', array_keys($this->status_map));
+		//echo ('/((?<name>.+?)(?: \((?<quantity>[\d]+)\))? \((?<status>'.$statuses.')\)(?: (?<role>[^ ,]+))?)(?:, )?/');
+		preg_match_all('/((?<name>.+?)(?: \((?<quantity>[\d]+)\))? \((?<status>'.$statuses.')\)(?: (?<role>[^ ,]+))?)(?:, )?/i',$record->participants,$participants);
+		$p_participants = array();
+		$missing = array();
+
+		list($lines, $p, $names, $quantity, $status, $role) = $participants;
+		foreach($names as $key => $name) {
+			//echo (__METHOD__ ." Name: $name Quantity: {$quantity[$key]} Status: {$status[$key]} Role: {$role[$key]}");
+
+			// Search for direct account name, then user in accounts first
+			$search = "\"$name\"";
+			$id = importexport_helper_functions::account_name2id($name);
+
+			// If not found, or not an exact match to a user (account_name2id is pretty generous)
+			if(!$id || $names[$key] !== $this->bo->participant_name($id)) {
+				$contacts = ExecMethod2('addressbook.addressbook_bo.search', $search,array('contact_id','account_id'),'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR',array(0,1));
+				if($contacts) $id = $contacts[0]['account_id'] ? $contacts[0]['account_id'] : 'c'.$contacts[0]['contact_id'];
+			}
+			if(!$id)
+			{
+				// Use calendar's registered resources to find participant
+				foreach($this->bo->resources as $resource)
+				{
+					// Can't search for email
+					if($resource['app'] == 'email') continue;
+					// Special resource search, since it does special stuff in link_query
+					if($resource['app'] == 'resources')
+					{
+						if(!$this->resource_so)
+						{
+							$this->resource_so = new resources_so();
+						}
+						$result = $this->resource_so->search($search,'res_id');
+						if(count($result) >= 1) {
+							$id = $resource['type'].$result[0]['res_id'];
+							break;
+						}
+					}
+					else
+					{
+						// Search app via link query
+						$link_options = array();
+						$result = Link::query($resource['app'], $search, $link_options);
+
+						if($result)
+						{
+							$id = $resource['type'] . key($result);
+							break;
+						}
+					}
+				}
+			}
+			if($id) {
+				$p_participants[$id] = calendar_so::combine_status(
+					$this->status_map[lang($status[$key])] ? $this->status_map[lang($status[$key])] : $status[$key][0],
+					$quantity[$key] ? $quantity[$key] : 1,
+					$this->role_map[lang($role[$key])] ? $this->role_map[lang($role[$key])] : $role[$key]
+				);
+			}
+			else
+			{
+				$missing[] = $name;
+			}
+			if(count($missing) > 0)
+			{
+				$warnings = $record->title . ' ' . lang('participants') . ': ' .
+					lang('Contact not found!') . '<br />'.implode(", ",$missing);
+			}
+		}
+		return $p_participants;
 	}
 
 	/**
@@ -328,7 +348,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 					return true;
 				} else {
 					$messages = null;
-					$result = $this->bo->update( $_data, 
+					$result = $this->bo->update( $_data,
 						!$this->definition->plugin_options['skip_conflicts'],
 						true, $this->is_admin, true, $messages,
 						$this->definition->plugin_options['no_notification']
@@ -357,10 +377,10 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 
 		}
 	}
-	
+
 	/**
 	 * Add a warning message about conflicting events
-	 * 
+	 *
 	 * @param int $record_num Current record index
 	 * @param Array $conflicts List of found conflicting events
 	 */
