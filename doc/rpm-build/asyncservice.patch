@@ -46,7 +46,7 @@ diff --git egroupware/api/src/Egw.php egroupware/api/src/Egw.php
 index eb71811464..d4d142cf95 100644
 --- egroupware/api/src/Egw.php
 +++ egroupware/api/src/Egw.php
-@@ -604,12 +604,14 @@ class Egw extends Egw\Base
+@@ -608,12 +608,14 @@ class Egw extends Egw\Base
  					_egw_log_exception($ex);
  				}
  			}
