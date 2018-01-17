@@ -502,7 +502,7 @@ class Sharing
 				// store temp. path in session, to be able to add more recipients
 				$path2tmp[$path] = $tmp_file;
 
-				$path = $tmp_file;
+				$vfs_path = $tmp_file;
 
 				// if not already installed, install periodic cleanup of tmp files
 				$async = new Api\Asyncservice();
