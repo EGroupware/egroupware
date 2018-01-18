@@ -1,3 +1,23 @@
+egroupware-epl (17.1.20180118) hardy; urgency=low
+
+  * SECURITY AND MAINTENANCE RELEASE: PLEASE UPDATE IMMEDIATELY
+  * Filemanager/Sharing: Fix a security issue when sharing of attached files as download links in compose dialog exposes all folders as readonly shares
+  * Api: Make sure private custom fields are not accidentally included in notification due to being cached
+  * Api: Allow private custom fields in notifications, with filtering according to set permissions.  Private custom fields are removed from notifications to non-users.
+  * Admin: Fix site-config not working in mobile template
+  * Addressbook: Enable viewing infolog entries of organisations
+  * Addressbook: Fix adding contact while looking at accounts would try to add a new user
+  * Calendar: Fix bug hiding a user's visible private events when just the group was selected
+  * Calendar: Fix bug where account birthdays were not shown if there was a contact with a birthday on the same day
+  * Filemanager: Fix unable to change directory after returning from shared files list
+  * Tracker: Only allow change group context action if user has permission
+  * Tracker: Fix missing content or doubled buttons in context menu action popups
+  * Tracker: Fix mailhandling forward action not working
+  * Tracker: Add start & due date fields to import
+  * Tracker: Fix mailhandling wrongly includes original message in reply
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 18 Jan 2018 10:06:55 +0100
+
 egroupware-epl (17.1.20171218) hardy; urgency=low
 
   * Addressbook: fix bug setting Hide User Account in preferences into Show all accounts breaks show accounts
