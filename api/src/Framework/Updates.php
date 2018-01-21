@@ -8,7 +8,6 @@
  * @package api
  * @subpackage framework
  * @access public
- * @version $Id$
  */
 
 namespace EGroupware\Api\Framework;
@@ -19,13 +18,21 @@ use EGroupware\Api;
 
 /**
  * Check for updates
+ *
+ * https://www.egroupware.org/currentversion
+ *
+ * Contains multiple lines with version numbers:
+ * 1. current stable version      eg. 17.1.20180118
+ * 2. last stable security update eg. 17.1.20180118
+ * 3. last old-stable security up.eg. 16.1.20171106 (only if that is still secure!)
+ * 4. further old secure versions, if available
  */
 class Updates
 {
 	/**
 	 * URL to check for security or maintenance updates
 	 */
-	const CURRENT_VERSION_URL = 'http://www.egroupware.org/currentversion';
+	const CURRENT_VERSION_URL = 'https://www.egroupware.org/currentversion';
 	/**
 	 * How long to cache (in secs) / often to check for updates
 	 */
@@ -33,23 +40,30 @@ class Updates
 	/**
 	 * After how many days of not applied security updates, start warning non-admins too
 	 */
-	const WARN_USERS_DAYS = 3;
+	const WARN_USERS_DAYS = 5;
 
 	/**
 	 * Get versions of available updates
 	 *
+	 * @param string $api =null major api version to return security for, default latest
 	 * @return array verions for keys "current" and "security"
 	 */
-	public static function available()
+	public static function available($api=null)
 	{
-		$versions = Cache::getTree(__CLASS__, 'versions', function()
+		$versions = Cache::getTree(__CLASS__, 'versions', function() use ($api)
 		{
 			$versions = array();
 			$security = null;
 			if (($remote = file_get_contents(self::CURRENT_VERSION_URL, false, Api\Framework::proxy_context())))
 			{
-				list($current, $security) = explode("\n", $remote);
-				if (empty($security)) $security = $current;
+				$all_versions = explode("\n", $remote);
+				$current = array_shift($all_versions);
+				if (empty($all_versions)) $all_versions = array($current);
+				// find latest security release for optional API version
+				foreach(array_reverse($all_versions) as $security)
+				{
+					if (isset($api) && $api === substr($security, 0, strlen($api))) break;
+				}
 				$versions = array(
 					'current'  => $current,		// last maintenance update
 					'security' => $security,	// last security update
@@ -58,6 +72,7 @@ class Updates
 			return $versions;
 		}, array(), self::VERSIONS_CACHE_TIMEOUT);
 
+		//error_log(__METHOD__."($api) returning ".array2string($versions));
 		return $versions;
 	}
 
@@ -69,9 +84,14 @@ class Updates
 	 */
 	public static function notification()
 	{
-		$versions = self::available();
-
 		$api = self::api_version();
+		$api_major = $matches = null;
+		if (preg_match('/^(\d+\.\d+)\./', $api, $matches))
+		{
+			$api_major = $matches[1];
+		}
+
+		$versions = self::available($api_major);
 
 		if ($versions)
 		{
@@ -86,7 +106,10 @@ class Updates
 			}
 			if ($GLOBALS['egw_info']['user']['apps']['admin'] && version_compare($api, $versions['current'], '<'))
 			{
-				return Html::a_href(Html::image('api', 'update', lang('EGroupware maintenance update %1 available', $versions['current'])),
+				$msg = substr($versions['current'], 0, strlen($api_major)) == $api_major ?
+					lang('EGroupware maintenance update %1 available', $versions['current']) :
+					lang('New EGroupware release %1 available', $versions['current']);
+				return Html::a_href(Html::image('api', 'update', $msg),
 					'http://www.egroupware.org/changelog', null, ' target="_blank"');
 			}
 		}
@@ -98,7 +121,7 @@ class Updates
 				$error .= "\n".lang('%1 setting "%2" = %3 disallows access via http!',
 					'php.ini', 'allow_url_fopen', array2string(ini_get('allow_url_fopen')));
 			}
-			return Html::a_href(Html::image('phpgwapi', 'update', $error),
+			return Html::a_href(Html::image('api', 'update', $error),
 				'http://www.egroupware.org/changelog', null, ' target="_blank" data-api-version="'.$api.'"');
 		}
 		return null;
