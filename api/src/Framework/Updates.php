@@ -164,7 +164,8 @@ class Updates
 				$GLOBALS['egw_info']['server']['versions'] += $setup_info['api']['versions'];
 				unset($setup_info);
 			}
-			if (version_compare($version, $GLOBALS['egw_info']['server']['versions']['maintenance_release'], '<'))
+			// hack to fix 16.1 wired api version of 16.9, which is bigger then maintenance_release 16.1
+			if (true)//version_compare($version, $GLOBALS['egw_info']['server']['versions']['maintenance_release'], '<'))
 			{
 				$version = $GLOBALS['egw_info']['server']['versions']['maintenance_release'];
 			}
