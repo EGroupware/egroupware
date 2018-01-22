@@ -166,7 +166,7 @@ class mail_integration {
 						// instead of fetching only the attachments attached files (as we did previously)
 						$message = $mo->getMessageRawBody($attachment['uid'],$attachment['partID'],($attachment['folder']?$attachment['folder']:$mailbox));
 						$headers = $mo->getMessageHeader($attachment['uid'],$attachment['partID'],true,false,($attachment['folder']?$attachment['folder']:$mailbox));
-						$subject = mail_bo::adaptSubjectForImport($headers['SUBJECT']);
+						$subject = mail_bo::clean_subject_for_filename($headers['SUBJECT']);
 						$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 						$tmpfile = fopen($attachment_file,'w');
 						fwrite($tmpfile,$message);
@@ -238,7 +238,7 @@ class mail_integration {
 			if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw' &&
 				$_rawMail && file_exists($_rawMail))
 			{
-				$subject = mail_bo::adaptSubjectForImport($_subject);
+				$subject = mail_bo::clean_subject_for_filename($_subject);
 				$attachments[] = array(
 						'name' => trim($subject).'.eml',
 						'mimeType' => 'message/rfc822',
@@ -300,14 +300,13 @@ class mail_integration {
 				{
 					$message = $mo->getMessageRawBody($uid, '',$mailbox);
 					$headers = $mo->getMessageHeader($uid, '',true,false,$mailbox);
-					$subject = mail_bo::adaptSubjectForImport($headers['SUBJECT']);
 					$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."mail_integrate");
 					$tmpfile = fopen($attachment_file,'w');
 					fwrite($tmpfile,$message);
 					fclose($tmpfile);
 					$size = filesize($attachment_file);
 					$mailcontent['attachments'][] = array(
-							'name' => Api\Vfs::encodePathComponent(trim($subject)).'.eml',
+							'name' => mail_bo::clean_subject_for_filename($headers['SUBJECT']).'.eml',
 							'mimeType' => 'message/rfc822',
 							'type' => 'message/rfc822',
 							'tmp_name' => $attachment_file,

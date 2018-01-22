@@ -2761,13 +2761,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			$headers = Horde_Mime_Headers::parseHeaders($message);
 			$subject = str_replace('$$','__',Mail::decode_header($headers['SUBJECT']));
-			$subject = $this->clean_subject_for_filename($subject);
+			$subject = mail_bo::clean_subject_for_filename($subject);
 			Api\Header\Content::safe($message, $subject.".eml", $mime='message/rfc822', $size=0, true, true);
 			echo $message;
 		}
 		else
 		{
-			$subject = $this->clean_subject_for_filename($subject);
+			$subject = mail_bo::clean_subject_for_filename($subject);
 			Api\Header\Content::safe($message, $subject.".eml", $mime='text/html', $size=0, true, false);
 			print '<pre>'. htmlspecialchars($message, ENT_NOQUOTES|ENT_SUBSTITUTE, 'utf-8') .'</pre>';
 		}
@@ -2846,11 +2846,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (Vfs::is_dir($path))
 			{
 				$headers = $this->mail_bo->getMessageHeader($uid,$partID,true,false,$mailbox);
-				$file = $dir . '/'.$this->clean_subject_for_filename($headers['SUBJECT']).'.eml';
+				$file = $dir . '/'.mail_bo::clean_subject_for_filename($headers['SUBJECT']).'.eml';
 			}
 			else
 			{
-				$file = $dir . '/' . $this->clean_subject_for_filename(str_replace($dir.'/', '', $path));
+				$file = $dir . '/' . mail_bo::clean_subject_for_filename(str_replace($dir.'/', '', $path));
 			}
 
 			// Check if file already exists, then try to assign a none existance filename
@@ -2918,7 +2918,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			$dir = Vfs::dirname($path);
 			// Need to deal with any ? here, or basename will truncate
-			$filename = $this->clean_subject_for_filename(str_replace('?','_',Vfs::basename($path)));
+			$filename = mail_bo::clean_subject_for_filename(str_replace('?','_',Vfs::basename($path)));
 		}
 
 		if (!Vfs::is_writable($dir))
@@ -2999,7 +2999,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachment = $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
 			}
 
-			$file = $dir. '/' . ($filename ? $filename : $this->clean_subject_for_filename($attachment['filename']));
+			$file = $dir. '/' . ($filename ? $filename : mail_bo::clean_subject_for_filename($attachment['filename']));
 
 			$counter = 1;
 			$tmp_file = $file;
@@ -3032,25 +3032,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$this->changeProfile($preservedServerID);
 		}
 		return $res;
-	}
-
-	/**
-	 * Make the provided filename safe to store in the VFS
-	 *
-	 * Some characters found in subjects that cause problems if we try to put
-	 * them as filenames (Windows) so we remove any characters that might result
-	 * in additional directories, or issues on Windows.
-	 *
-	 * Under Windows the characters < > ? " : | \ / * are not allowed.
-	 * % causes problems with VFS UI
-	 *
-	 * @param string $filename
-	 * @return Cleaned filename, with problematic characters replaced with '_'.
-	 */
-	protected function clean_subject_for_filename($filename)
-	{
-		static $filter_pattern = '$[\f\n\t\v\\:*#?<>%"\|/\\\?]$';
-		return preg_replace($filter_pattern, "_", $filename);
 	}
 
 	/**
@@ -3092,7 +3073,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 		// Add subject to path, so it gets used as the file name, replacing ':'
 		// as it seems to cause an error
-		$path = $temp_path . '/' . ($header['SUBJECT'] ? Vfs::encodePathComponent($this->clean_subject_for_filename(str_replace(':','-', $header['SUBJECT']))) : lang('mail')) .'/';
+		$path = $temp_path . '/' . ($header['SUBJECT'] ? Vfs::encodePathComponent(mail_bo::clean_subject_for_filename(str_replace(':','-', $header['SUBJECT']))) : lang('mail')) .'/';
 		if(!Vfs::mkdir($path, 0700, true))
 		{
 			echo "Unable to open temp directory $path";
@@ -3131,7 +3112,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					pathinfo($file['filename'], PATHINFO_EXTENSION);
 			}
 			// Strip special characters to make sure the files are visible for all OS (windows has issues)
-			$target_name = $this->clean_subject_for_filename(iconv($file['charset'] ? $file['charset'] : $GLOBALS['egw_info']['server']['system_charset'], 'ASCII//IGNORE', $file['filename']));
+			$target_name = mail_bo::clean_subject_for_filename(iconv($file['charset'] ? $file['charset'] : $GLOBALS['egw_info']['server']['system_charset'], 'ASCII//IGNORE', $file['filename']));
 
 			if (!($fp = Vfs::fopen($path.$target_name,'wb')) ||
 				!(!fseek($attachment['attachment'], 0, SEEK_SET) && stream_copy_to_stream($attachment['attachment'], $fp)))

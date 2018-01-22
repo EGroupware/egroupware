@@ -19,10 +19,6 @@ use Egroupware\Api;
 
 class SaveToVfsTest extends \EGroupware\Api\AppTest
 {
-
-	// Mail object under test
-	protected $ui = null;
-
 	/**
 	 * Create a custom status we can use to test
 	 */
@@ -40,12 +36,10 @@ class SaveToVfsTest extends \EGroupware\Api\AppTest
 
 	public function setUp()
 	{
-		$this->ui = new VfsTestMailUi(false);
 	}
 
 	public function tearDown()
 	{
-		$this->ui = null;
 	}
 
 	/**
@@ -59,7 +53,7 @@ class SaveToVfsTest extends \EGroupware\Api\AppTest
 	 */
 	public function testVfsFilename($filename, $replacements)
 	{
-		$cleaned = $this->ui->clean_subject_for_filename($filename);
+		$cleaned = VfsTestMail::clean_subject_for_filename($filename);
 
 		$this->assertNotContains('<', $cleaned);
 		$this->assertNotContains('>', $cleaned);
@@ -73,7 +67,7 @@ class SaveToVfsTest extends \EGroupware\Api\AppTest
 		$this->assertNotContains('?', $cleaned);
 
 		// Length should stay the same
-		$this->assertEquals(strlen($filename), strlen($cleaned));
+		$this->assertEquals(strlen($filename), strlen($cleaned), 'Length changed');
 
 		if(!$replacements)
 		{
@@ -95,7 +89,7 @@ class SaveToVfsTest extends \EGroupware\Api\AppTest
 			array('Contains a #', true),
 			array('Contains a :', true),
 			array('Contains a |', true),
-			array('Contains a \ ', true),
+			array('Contains a \\', true),
 			array('Contains a *', true),
 			array('Contains a /', true),
 			array('Contains a ?', true),
@@ -106,10 +100,10 @@ class SaveToVfsTest extends \EGroupware\Api\AppTest
 }
 
 
-class VfsTestMailUi extends \mail_ui
+class VfsTestMail extends \mail_bo
 {
 	// Expose for testing
-	public function clean_subject_for_filename($filename)
+	public static function clean_subject_for_filename($filename)
 	{
 		return parent::clean_subject_for_filename($filename);
 	}
