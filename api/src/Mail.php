@@ -6395,6 +6395,25 @@ class Mail
 	}
 
 	/**
+	 * Make the provided filename safe to store in the VFS
+	 *
+	 * Some characters found in subjects that cause problems if we try to put
+	 * them as filenames (Windows) so we remove any characters that might result
+	 * in additional directories, or issues on Windows.
+	 *
+	 * Under Windows the characters < > ? " : | \ / * are not allowed.
+	 * % causes problems with VFS UI
+	 *
+	 * @param string $filename
+	 * @return Cleaned filename, with problematic characters replaced with '_'.
+	 */
+	protected static function clean_subject_for_filename($filename)
+	{
+		static $filter_pattern = '$[\f\n\t\v\\:*#?<>%"\|/\\\?]$';
+		return preg_replace($filter_pattern, "_", trim($filename));
+	}
+
+	/**
 	 * adaptSubjectForImport - strips subject from unwanted Characters, and does some normalization
 	 * to meet expectations
 	 * @param string $subject string to process
