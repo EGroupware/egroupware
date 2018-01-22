@@ -271,8 +271,8 @@ description can not exceed 255 characters in length !	admin	en	Description can n
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	en	Destination account #%1 does exist and is NOT renamed itself! Can not merge accounts, it will violate unique contains. Delete with transfer of data instead.
 determines the order the fields are displayed	admin	en	Determines the order the fields are displayed
 disable	admin	en	Disable
-disable all	admin	en	Disable all
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
+disable all	admin	en	Disable all
 disable minifying of javascript and css files	admin	en	Disable minifying of javascript and CSS files
 disable wysiwyg-editor	admin	en	Disable WYSIWYG-editor
 disabled (not recomended)	admin	en	Disabled (not recommended)
@@ -660,6 +660,7 @@ remove	admin	en	Remove
 remove all users from this group	admin	en	Remove all users from this group
 remove all users from this group ?	admin	en	Remove all users from this group?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	en	Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:
+renaming user 'anonymous' will break file sharing and collabora online office!	admin	en	Renaming user 'anonymous' will break file sharing and Collabora Online Office!
 requested	admin	en	Requested
 required pear class mail/mimedecode.php not found.	admin	en	Required PEAR class Mail/mimeDecode.php not found.
 reset filter	admin	en	Reset filter
@@ -820,10 +821,10 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	en	Up
 update current email address:	admin	en	Update current email address:
 updated	admin	en	Updated
-upload your background image or enter the URL	admin	en	Upload your background image or enter the URL
+upload your background image or enter the url	admin	en	Upload your background image or enter the URL
 upload your certificate .p12/.pfx file	admin	en	Upload your certificate .p12/.pfx file
-upload your favicon or enter the URL	admin	en	Upload your favicon or enter the URL
-upload your logo or enter the URL	admin	en	Upload your logo or enter the URL
+upload your favicon or enter the url	admin	en	Upload your favicon or enter the URL
+upload your logo or enter the url	admin	en	Upload your logo or enter the URL
 uppercase, lowercase, number, special char	admin	en	Uppercase, lowercase, number, special char
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the EGroupware installation, e.g. http://domain.com/egroupware
 usage	admin	en	Usage

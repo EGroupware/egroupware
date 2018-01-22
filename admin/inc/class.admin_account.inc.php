@@ -265,6 +265,13 @@ class admin_account
 	 */
 	public static function ajax_check(array $data, $changed)
 	{
+		// warn if anonymous user is renamed, as it breaks eg. sharing and Collabora
+		if ($changed == 'account_lid' && Api\Accounts::id2name($data['account_id']) === 'anonymous' && $data['account_lid'] !== 'anonymous')
+		{
+			Api\Json\Response::get()->data(lang("Renaming user 'anonymous' will break file sharing and Collabora Online Office!"));
+			return;
+		}
+
 		// for 1. password field just check password complexity
 		if ($changed == 'account_passwd')
 		{

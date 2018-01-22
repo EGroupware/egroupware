@@ -167,7 +167,7 @@ category %1 has been saved !	admin	de	Kategorie %1 wurde gespeichert
 category deleted.	admin	de	Kategorie gelöscht
 category list	admin	de	Kategorieliste
 category saved.	admin	de	Kategorie gespeichert
-certificate	admin	en	Zertifikat
+certificate	admin	de	Zertifikat
 change account_id	admin	de	Änderung der account_id
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
@@ -603,7 +603,7 @@ own install id:	admin	de	eigene Install-ID
 owner "%1" removed, please select group-owner	admin	de	Besitzer "%1" entfernt, bitte einen Gruppenbesitzer auswählen.
 passthrough	admin	de	durchgehend
 password for smtp-authentication	admin	de	Passwort für SMTP Authentifizierung
-password to unlock encrypted p12	admin	en	Passwort zum Entsperren von verschlüsseltem p12
+password to unlock encrypted p12	admin	de	Passwort zum Entsperren von verschlüsseltem p12
 password updated	admin	de	Passwort aktualisiert
 passwords and/or attributes of %1 accounts changed	admin	de	Passwörter und/oder Attribute von %1 Benutzern geändert
 passwords require a minimum number of characters	admin	de	Passworte benötigen diese Mindestanzahl Zeichen
@@ -660,6 +660,7 @@ remove	admin	de	Entfernen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe.
 remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	de	Sind Sie sicher? Den Zugriff für Gruppen zu nehmen kann zu Problemen mit den Daten dieser Kategorie führen. Benutzer dieser Gruppen haben möglicherweise keinen Zugriff mehr:
+renaming user 'anonymous' will break file sharing and collabora online office!	admin	de	Umbenennen des Benutzers 'anonymous' verhindert das Sharen von Dateien und die Benutzung von Collabora Online Office!
 requested	admin	de	angefordert
 required pear class mail/mimedecode.php not found.	admin	de	Die benötigte Classe PEAR  (Mail/mimeDecode.php) wurde nicht gefunden.
 reset filter	admin	de	Filter zurücksetzen
