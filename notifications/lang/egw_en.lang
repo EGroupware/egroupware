@@ -50,6 +50,7 @@ if set, embedded links get rendered special for external clients	notifications	e
 info on load config file: create config file.	notifications	en	Info on load config file: create config file.
 issuer dn:	notifications	en	Issuer DN:
 java desktop notification app	preferences	en	Java desktop notification app
+last month	notifications	en	Last month
 linked entries:	common	en	Linked entries:
 login aborted, application exit?	notifications	en	Login aborted, application exit?
 login in egroupware:	notifications	en	login in EGroupware:
@@ -90,6 +91,8 @@ subject dn:	notifications	en	Subject DN:
 the server certificate is not a valid trust center certificate!	notifications	en	The server certificate is not a valid trust center certificate!
 this egroupware notification has been sent to you by mail because your	notifications	en	This EGroupware notification has been sent to you by mail because your
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	en	This EGroupware notification has been sent to you by mail because your chosen notification chain has been disabled by the administrator. Please choose another notification chain in your preferences!
+this month	notifications	en	This month
+you have %1 unread notifications	notifications	en	You have %1 unread notifications
 user:	notifications	en	User:
 warning	notifications	en	Warning
 windows-popup and e-mail	notifications	en	Windows popup and email

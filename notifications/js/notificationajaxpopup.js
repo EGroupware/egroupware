@@ -144,10 +144,10 @@
 					.text(egw.lang('yesterday'))
 			, $this_month = jQuery(document.createElement('div'))
 					.addClass('egwpopup_time_label')
-					.text('this month')
+					.text(egw.lang('this month'))
 			, $last_month = jQuery(document.createElement('div'))
 					.addClass('egwpopup_time_label')
-					.text('last month');
+					.text(egw.lang('last month'));
 		// reverse indexes to get the latest messages at the top
 		var indexes = Object.keys(notifymessages).reverse()
 		for(var index in indexes)
@@ -545,7 +545,7 @@
 			$egwpopup_fw_notifications.addClass('egwpopup_notify');
 			$egwpopup_fw_notifications.text(counter);
 			$egwpopup_fw_notifications.append($popup_note);
-			$popup_note.text(egw.lang('You have '+counter+' unread notifications'));
+			$popup_note.text(egw.lang('You have %1 unread notifications', counter));
 			setTimeout(function (){$popup_note.remove();}, 5000);
 		}
 		else
