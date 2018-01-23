@@ -40,9 +40,9 @@ all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewä
 all my email addresses	mail	de	alle meine E-Mail-Adressen
 all of	mail	de	alle
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	de	Alle Unterordner und Nachrichten in den betroffenen Ordnern werden unwiederruflich gelöscht.
-allow	mail	de	Erlauben
-allow external images	mail	de	Erlaube Bilder von externen Bildquellen
-allow external images from listed domains	mail	de	Erlaube Bilder der folgenden Domains
+allow	mail	de	erlauben
+allow external images	mail	de	Erlaube Inhalte von
+allow external images from listed domains	mail	de	Erlaube externe Inhalte der folgenden Domains
 allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Bildquellen in HTML-E-Mails
 allow images from listed domains in html emails	mail	de	Erlaube Bilder von externen Bildquellen der folgenden Domains in HTML-E-Mails
 allow users to create further identities	mail	de	Anwender dürfen weitere Identitäten anlegen
@@ -490,8 +490,8 @@ show horizontal, hide if none selected	mail	de	Horizontal anzeigen, ausblenden w
 show new messages on home page	mail	de	Anzeigen von neuen E-Mails auf der Startseite
 show test connection section and control the level of info displayed?	mail	de	Zeige Verbindungstest Link an und spezifiziere das Ausmaß der angezeigten Information?
 show test connection section and control the level of info displayed??	mail	de	Soll der Verbindungstest und die dazugehörigen Informationen angezeigt werden?
-show them this time only	mail	de	Einmalig anzeigen
-show vertical	mail	de	Vertikal anzeigen
+show them this time only	mail	de	Einmalig externe Inhalte anzeigen
+show vertical	mail	de	Vertikal anzeigen (3-Spalten-Ansicht)
 show/hide preview pane in mail list view	mail	de	Mailvorschau anzeigen oder ausblenden
 sieve	mail	de	Sieve
 sieve connection status	mail	de	Sieve Verbindungsstatus
@@ -538,6 +538,7 @@ text mode	mail	de	Text Modus
 text/plain	mail	de	text/plain
 the %1 's acl removed from the %2	mail	de	Die Zugriffskontrollrechte von %1 wurden von %2 entfernt
 the %1 's acl, including its subfolders, removed from the %2	mail	de	Die Zugriffskontrollrechte inkl. Unterordner von %1 wurden von %2 entfernt
+the entered passphrase is not correct! please try again.	mail	de	Das eingegebene Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.
 the folder %1 's acls saved	mail	de	Die Zugriffskontrollrechte des Ordners %1 wurden gespeichert
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	de	Der Ordner <b>%1</b> wird verwendet, wenn hier nichts gesetzt ist und kein gültiger Vorgabewert eingetragen ist.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicherzustellen, dass Sie diese E-Mail gelesen haben. Möchten Sie eine Empfangsbestätigung senden?
@@ -545,12 +546,13 @@ the mimeparser can not parse this message.	mail	de	Der MIME Parser versteht dies
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
 then	mail	de	dann
 there is no imap server configured.	mail	de	Es ist kein IMAP Server Konfiguriert
+this message is smime encrypted and password protected.	mail	de	Diese Nachricht ist S/MIME-Verschlüsselt und mit Passwort geschützt.
 timeout on connections to your imap server	mail	de	Stellen Sie hier das Verbindungstimeout für IMAP Verbindungen ein.
 to do	mail	de	zu erledigen
 toggle all folders view for %1	mail	de	Umschaltung der Alle-Ordner-anzeigen Ansicht für %1
 trash	mail	de	Papierkorb
 trash folder	mail	de	Ordner für gelöschte Nachrichten
-trust servers seen / unseen info	mail	de	Abruf des Ungelesen/gelesen Status des Mailservers
+trust servers seen / unseen info	mail	de	Abruf des ungelesen/gelesen Status des Mailservers
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	de	EGroupware verwendet die Statusinformationen Ihres E-Mail Servers. Wählen Sie hier nur "Nein", wenn die Anzahl der ungelesenen E-Mails nicht stimmt. Die Eigenermittlung der Anzahl der ungelesenen E-Mails wirkt sich negativ auf die Performance des E-Mail-Moduls aus.
 trying to recover from session data	mail	de	Versuch der Wiederherstellung aus den gespeicherten Session-Daten.
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	de	Deaktivieren Sie die horizontale Trennlinie zwischen dem Text Ihrer E-Mail und der Signatur.
@@ -605,6 +607,8 @@ yes, show all debug information available for the user	mail	de	Ja, zeige alle de
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
 you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht beides gleichzeitig.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
+you may add this certificate into your contact, if you trust this signature.	mail	de	Sie können dieses Zertifikat in Ihren Kontakt speichern, wenn dieser Signatur trauen.
+you need to enter your s/mime passphrase to send this message.	mail	de	Sie müssen Ihr S/MIME-Passwort eingeben um diese Nachricht zu senden.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	de	Sie müssen das Mailvelope Plugin für Chrome oder Firefox von %1 installieren.
 you need to save the message as draft first before to be able to save it into vfs	mail	de	Sie müssen die E-Mail zuerst als Entwurf speichern, bevor Sie die Mail im EGroupware Dateimanager speichern können.
 you will loose current message body, unless you save it to your clipboard!	mail	de	Sie werden Ihren aktuellen Nachrichtentext verlieren, sofern Sie ihn nicht in der Zwischenablage speichern!
