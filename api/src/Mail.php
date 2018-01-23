@@ -1369,6 +1369,34 @@ class Mail
 	}
 
 	/**
+	 * Convert Horde_Mime_Headers object to an associative array like Horde_Mime_Array::toArray()
+	 *
+	 * Catches Horde_Idna_Exception and returns raw header instead eg. for invalid domains like "test@-domain.com".
+	 *
+	 * @param Horde_Mime_Headers $headers
+	 * @return array
+	 */
+	protected static function headers2array(Horde_Mime_Headers $headers)
+	{
+		try {
+			$arr = $headers->toArray();
+		}
+		catch(\Horde_Idna_Exception $e) {
+			$arr = array();
+			foreach($headers as $header)
+			{
+				try {
+					$val = $header->sendEncode();
+				} catch (\Horde_Idna_Exception $e) {
+					$val = (array)$header->value;
+				}
+				$arr[$header->name] = count($val) == 1 ? reset($val) : $val;
+			}
+		}
+		return $arr;
+	}
+
+	/**
 	 * getHeaders
 	 *
 	 * this function is a wrapper function for getSortedList and populates the resultList thereof with headerdata
@@ -1546,10 +1574,10 @@ class Mail
 				$headerObject['SIZE'] = $_headerObject->getSize();
 				$headerObject['INTERNALDATE'] = $_headerObject->getImapDate();
 
-				// Get already cached headers, 'fetchHeaders' is a label matchimg above
-				$headerForPrio = $_headerObject->getHeaders('fetchHeaders',Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray();
+					// Get already cached headers, 'fetchHeaders' is a label matchimg above
+				$headerForPrio = self::headers2array($_headerObject->getHeaders('fetchHeaders',Horde_Imap_Client_Data_Fetch::HEADER_PARSE));
 				// Try to fetch header with key='' as some servers might have no fetchHeaders index. e.g. yandex.com
-				if (empty($headerForPrio)) $headerForPrio = $_headerObject->getHeaders('',Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray();
+				if (empty($headerForPrio)) $headerForPrio = self::headers2array($_headerObject->getHeaders('',Horde_Imap_Client_Data_Fetch::HEADER_PARSE));
 				//fetch the fullMsg part if all conditions match to be available in case $_headerObject->getHeaders returns
 				//nothing worthwhile (as it does for googlemail accounts, when preview is switched on
 				if ($_fetchPreviews)
@@ -1561,7 +1589,7 @@ class Mail
 					{
 						$length = strpos($bodyPreview, Horde_Mime_Part::RFC_EOL.Horde_Mime_Part::RFC_EOL);
 						if ($length===false) $length = strlen($bodyPreview);
-						$headerForPrio =  Horde_Mime_Headers::parseHeaders(substr($bodyPreview, 0,$length))->toArray();
+						$headerForPrio = self::headers2array(Horde_Mime_Headers::parseHeaders(substr($bodyPreview, 0,$length)));
 					}
 				}
 				$headerForPrio = array_change_key_case($headerForPrio, CASE_UPPER);
@@ -2316,7 +2344,7 @@ class Mail
 	 * decode header (or envelope information)
 	 * if array given, note that only values will be converted
 	 * @param  mixed $_string input to be converted, if array call decode_header recursively on each value
-	 * @param  mixed/boolean $_tryIDNConversion (true/false AND FORCE): try IDN Conversion on domainparts of emailADRESSES
+	 * @param  boolean|string $_tryIDNConversion (true/false AND 'FORCE'): try IDN Conversion on domainparts of emailADRESSES
 	 * @return mixed - based on the input type
 	 */
 	static function decode_header($_string, $_tryIDNConversion=false)
@@ -2354,7 +2382,6 @@ class Mail
 			{
 				$rfcAddr = self::parseAddressList($_string);
 				$stringA = array();
-				//$_string = str_replace($rfcAddr[0]->host,Horde_Idna::decode($rfcAddr[0]->host),$_string);
 				foreach ($rfcAddr as $_rfcAddr)
 				{
 					if (!$_rfcAddr->valid)
@@ -2362,7 +2389,14 @@ class Mail
 						$stringA = array();
 						break; // skip idna conversion if we encounter an error here
 					}
-					$stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox,Horde_Idna::decode($_rfcAddr->host),$_rfcAddr->personal);
+					try {
+						$stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox,Horde_Idna::decode($_rfcAddr->host),$_rfcAddr->personal);
+					}
+					// if Idna conversation fails, leave address unchanged
+					catch(\Exception $e) {
+						unset($e);
+						$stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox, $_rfcAddr->host, $_rfcAddr->personal);
+					}
 				}
 				if (!empty($stringA)) $_string = implode(',',$stringA);
 			}
@@ -6462,10 +6496,16 @@ class Mail
 				//$p = (string)$addressObject->personal;
 				$returnAddr .= (strlen($returnAddr)>0?',':'');
 				//error_log(__METHOD__.' ('.__LINE__.') '.$p.' <'.$mb.'@'.$h.'>');
-				$buff = imap_rfc822_write_address($addressObject->mailbox, Horde_Idna::decode($addressObject->host), $addressObject->personal);
-				$buff = str_replace(array('<','>','"\'','\'"'),array('[',']','"','"'),$buff);
+				try {
+					$buff = imap_rfc822_write_address($addressObject->mailbox, Horde_Idna::decode($addressObject->host), $addressObject->personal);
+				}
+				// if Idna conversation fails, leave address unchanged
+				catch (\Exception $e) {
+					unset($e);
+					$buff = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
+				}
+				$returnAddr .= str_replace(array('<','>','"\'','\'"'),array('[',']','"','"'),$buff);
 				//error_log(__METHOD__.' ('.__LINE__.') '.' Address: '.$returnAddr);
-				$returnAddr .= $buff;
 			}
 		}
 		else
