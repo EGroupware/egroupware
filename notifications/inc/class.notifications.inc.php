@@ -471,6 +471,8 @@ class notifications {
 			throw new Exception('Error: cannot send notifications. No valid messages supplied');
 		}
 
+		Api\Translation::add_app('notifications');
+
 		$available_chains = $this->get_available_chains('routing');
 
 		foreach ($this->receivers as $receiver) {
