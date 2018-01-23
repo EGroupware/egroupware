@@ -113,6 +113,9 @@ class infolog_datasource extends datasource
 
 		if (!is_array($info)) return false;
 
+		$info_contact = $info['info_contact'];
+		$info_from = $info['info_from'];
+
 		// unsetting info_link_id and evtl. info_from
 		if ($info['info_link_id'])
 		{
@@ -120,7 +123,8 @@ class infolog_datasource extends datasource
 			unset($info['info_link_id']);
 			unset($info['info_contact']);
 		}
-		// we need to unset a view fields, to get a new entry
+
+		// we need to unset a few fields to get a new entry
 		foreach(array('info_id','info_owner','info_modified','info_modifierer') as $key)
 		{
 			unset($info[$key]);
@@ -159,13 +163,6 @@ class infolog_datasource extends datasource
 			unset($info['info_datecompleted']);
 		}
 
-		if(!($info['info_id'] = $this->infolog_bo->write($info))) return false;
-
-		// link the new infolog against the project and setting info_link_id and evtl. info_from
-		$old_link = $info['info_link_id'] ? Link::get_link($info['info_link_id']) : $info['info_link'];
-		$info['info_link_id'] = Link::link('projectmanager',$target,'infolog',$info['info_id'],$element['pe_remark'],0,0,1);
-		unset($info['info_contact']);
-
 		// If info_from missing or matches project title, update it
 		if (!$info['info_from'] || $info['info_from'] == Link::title('projectmanager', $info['pm_id']))
 		{
@@ -181,8 +178,6 @@ class infolog_datasource extends datasource
 		if(!($info['info_id'] = $this->infolog_bo->write($info))) return false;
 		$this->infolog_bo->link_id2from($info);
 
-		$this->infolog_bo->write($info);
-
 		// creating again all links, beside the one to the source-project
 		foreach(Link::get_links('infolog',$element['pe_app_id']) as $link)
 		{
@@ -193,13 +188,16 @@ class infolog_datasource extends datasource
 			}
 			Link::link('infolog',$info['info_id'],$link['app'],$link['id'],$link['remark']);
 		}
+		$this->infolog_bo->write($info);
 		$ret = array($info['info_id'],$info['info_link_id']);
 
-		// if we have a parent set, return our callback to modify the parent id, after all entries are copied
-		if ($info['info_id_parent'])
+		// if we have a parent set, return our callback to modify the parent id,
+		// or we have a contact or custom info_from and need to re-set it after
+		// all entries are copied
+		if ($info['info_id_parent'] || $info_contact)
 		{
 			$ret[] = array($this,'copy_callback');	// callback
-			$ret[] = array($info['info_id'],$info['info_id_parent']);	// $param
+			$ret[] = array($info['info_id'],$info['info_id_parent'], $info_contact, $info_from);	// $param
 		}
 		return $ret;
 	}
@@ -207,6 +205,8 @@ class infolog_datasource extends datasource
 	/**
 	 * Callback called after copying of all datasource, used to:
 	 * - fix parent id's
+	 * - reset contact if it was a link to another entry (not the project)
+	 * - fix info_from
 	 *
 	 * @param array $param array($info_id,$info_id_parent)
 	 * @param array $apps_copied array('infolog' => array($old_info_id => $new_info_id))
@@ -214,10 +214,20 @@ class infolog_datasource extends datasource
 	public function copy_callback(array $param, array $apps_copied)
 	{
 		//error_log(__METHOD__."(".array2string($param).', '.array2string($apps_copied).')');
-		list($info_id,$parent_id) = $param;
-		if (isset($apps_copied['infolog'][$parent_id]) && ($info = $this->infolog_bo->read($info_id)))
+		list($info_id,$parent_id, $contact, $from) = $param;
+		if ($parent_id && isset($apps_copied['infolog'][$parent_id]) && ($info = $this->infolog_bo->read($info_id)))
 		{
 			$info['info_id_parent'] = $apps_copied['infolog'][$parent_id];
+			$this->infolog_bo->write($info,false,true,true,true);	// no default and no notification
+		}
+		if($contact && $contact['app'] != 'projectmanager' && ($info = $this->infolog_bo->read($info_id)))
+		{
+			$info['info_contact'] = $contact;
+			$this->infolog_bo->write($info,false,true,true,true);	// no default and no notification
+		}
+		if($from && ($info = $this->infolog_bo->read($info_id)))
+		{
+			$info['info_from'] = $from;
 			$this->infolog_bo->write($info,false,true,true,true);	// no default and no notification
 		}
 	}
