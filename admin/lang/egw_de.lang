@@ -660,7 +660,6 @@ remove	admin	de	Entfernen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe.
 remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	de	Sind Sie sicher? Den Zugriff für Gruppen zu nehmen kann zu Problemen mit den Daten dieser Kategorie führen. Benutzer dieser Gruppen haben möglicherweise keinen Zugriff mehr:
-renaming user 'anonymous' will break file sharing and collabora online office!	admin	de	Umbenennen des Benutzers 'anonymous' verhindert das Sharen von Dateien und die Benutzung von Collabora Online Office!
 requested	admin	de	angefordert
 required pear class mail/mimedecode.php not found.	admin	de	Die benötigte Classe PEAR  (Mail/mimeDecode.php) wurde nicht gefunden.
 reset filter	admin	de	Filter zurücksetzen
@@ -822,7 +821,7 @@ up	admin	de	hoch
 update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse
 updated	admin	de	aktualisiert
 upload your background image or enter the url	admin	de	Laden Sei ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
-upload your certificate .p12/.pfx file	admin	de	Zertifikat hochlade(.p12/.pfx-Datei)
+upload your certificate .p12/.pfx file	admin	de	Zertifikat hochladen (.p12/.pfx-Datei)
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein
 upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Sie eine URL dafür ein
 uppercase, lowercase, number, special char	admin	de	Großbuchstaben, kleine Buchstaben, Zahlen, Sonderzeichen
