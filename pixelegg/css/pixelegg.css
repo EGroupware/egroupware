@@ -3814,9 +3814,9 @@ td.lettersearch {
 }
 #egwpopup_fw_notifications .popup_note {
   position: absolute;
-  width: 260px;
+  width: 280px;
   height: 30px;
-  left: -273px;
+  left: -293px;
   top: -8px;
   border: 1px solid silver;
   background: #ffffff;
@@ -3824,6 +3824,7 @@ td.lettersearch {
   font-size: 10pt;
   line-height: 22pt;
   color: #b9436c;
+  white-space: nowrap;
 }
 #egwpopup_fw_notifications .popup_note:before {
   content: '';
