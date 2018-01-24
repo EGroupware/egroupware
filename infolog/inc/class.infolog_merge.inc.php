@@ -154,7 +154,7 @@ class infolog_merge extends Api\Storage\Merge
 		}
 
 		// Add contact fields
-		if($array['info_link']['app'] && $array['info_link']['id'])
+		if($array['info_link'] && $array['info_link']['app'] && $array['info_link']['id'])
 		{
 			$info+=$this->get_app_replacements($array['info_link']['app'], $array['info_link']['id'], $content, 'info_contact');
 		}
