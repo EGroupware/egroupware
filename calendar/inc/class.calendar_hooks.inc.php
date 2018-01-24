@@ -864,6 +864,37 @@ END:VALARM';
 			'popup' => Link::get_registry('calendar', 'edit_popup')
 		);
 	}
+
+	/**
+	 * Method to construct notifications actions
+	 *
+	 * @param type $params
+	 * @return type
+	 */
+	public static function notifications_actions ($params)
+	{
+		Api\Translation::add_app('calendar');
+		return array(
+			array(
+				'id' => 'A',
+				'caption' => lang('Accept'),
+				'icon' => 'accepted',
+				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"A"'.']).sendRequest(true);'
+			),
+			array(
+				'id' => 'R',
+				'caption' => lang('Reject'),
+				'icon' => 'rejected',
+				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"R"'.']).sendRequest(true);'
+			),
+			array(
+				'id' => 'T',
+				'caption' => lang('Tentative'),
+				'icon' => 'tentative',
+				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"T"'.']).sendRequest(true);'
+			)
+		);
+	}
 }
 
 // Not part of the class, since config hooks are still using the old style

@@ -101,10 +101,11 @@ class notifications_winpopup implements notifications_iface {
 	 * @param string $_subject
 	 * @param array $_links
 	 * @param array $_attachments
+	 * @param array $_data
 	 */
-	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false)
+	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false, $_data = false)
 	{
-		unset($_links, $_attachments);	// not used
+		unset($_links, $_attachments, $_data);	// not used
 
 		$user_sessions = array();
 		foreach (Api\Session::session_list(0, 'asc', 'session_dla', true) as $session) {

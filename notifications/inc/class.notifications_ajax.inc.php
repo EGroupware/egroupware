@@ -185,6 +185,15 @@ class notifications_ajax {
 		if ($rs->NumRows() > 0)	{
 			foreach ($rs as $notification) {
 				$message = null;
+				$data = json_decode($notification['notify_data'], true);
+				if ($data['appname'])
+				{
+					$_actions = Api\Hooks::process (array(
+						'location' => 'notifications_actions',
+						'data' => $data['data']
+						), $data['appname'], true);
+					$actions = $_actions[$data['appname']];
+				}
 				if($browserNotify)
 				{
 					$message = $notification['notify_message'];
@@ -204,7 +213,8 @@ class notifications_ajax {
 					$message3,
 					$notification['notify_status'],
 					$notification['notify_created'],
-					new DateTime())
+					new DateTime(),
+					is_array($actions)?$actions:NULL)
 				);
 			}
 
