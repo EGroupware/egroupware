@@ -48,6 +48,7 @@
 80 (http)	admin	de	80 (http)
 a pattern to be searched for	common	de	ein Muster nach dem gesucht werden soll
 a request to the egroupware server returned with an error	common	de	Eine Anfrage an den EGroupware Server ergab einen Fehler
+abcdefghijklmnopqrstuvwxyz	common	de	ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abort	common	de	Abbrechen
 about	common	de	Über
 about %1	common	de	Über %1
@@ -110,7 +111,6 @@ all operations save the template!	common	de	alle Operation speichern das Templat
 all users	common	de	Alle Benutzer
 allowed file type: %1	common	de	Erlaubter Dateityp: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	de	Erlaubt verantwortliche Benutzer durch setzen einer E-Mail Adresse als Kategorie zu ändern, von Geräten die keine verantwortlichen Benutzer unterstützen.
-alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
 alt	common	de	Alt
 alternate style-sheet:	common	de	Alternatives Style-sheet
 am	common	de	Vormittag
