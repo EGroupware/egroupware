@@ -48,6 +48,7 @@
 80 (http)	admin	en	80 (http)
 a pattern to be searched for	common	en	Pattern to be searched for
 a request to the egroupware server returned with an error	common	en	A request to the EGroupware server returned with an error
+abcdefghijklmnopqrstuvwxyz	common	en	ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abort	common	en	Abort
 about	common	en	About
 about %1	common	en	About %1
@@ -110,7 +111,6 @@ all operations save the template!	common	en	All operations save the template!
 all users	common	en	All users
 allowed file type: %1	common	en	Allowed file type: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	en	Allows to modify responsible users from devices not supporting them, by setting EMail address of a user as category.
-alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alt	common	en	Alt
 alternate style-sheet:	common	en	Alternate style sheet:
 am	common	en	am
