@@ -172,7 +172,7 @@ class notifications_popup implements notifications_iface {
 
 		}
 		if(count($rendered_links) > 0) {
-			return Api\Html::hr().Api\Html::bold(lang('Linked entries:')).$newline.implode($newline,$rendered_links);
+			return Api\Html::hr().Api\Html::bold(Api\Translation::translate_as($this->recipient->account_id,'Linked entries:')).$newline.implode($newline,$rendered_links);
 		}
 	}
 
@@ -210,7 +210,7 @@ class notifications_popup implements notifications_iface {
 		$newline = "<br />";
 
 		$sender = $this->sender->account_fullname ? $this->sender->account_fullname : $this->sender_account_email;
-		$infos[] = lang('Message from').': '.$sender;
+		$infos[] = Api\Translation::translate_as($this->recipient->account_id, 'Message from').': '.$sender;
 		if(!empty($_subject)) { $infos[] = Api\Html::bold($_subject); }
 		return implode($newline,$infos);
 	}

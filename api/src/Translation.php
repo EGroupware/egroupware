@@ -259,6 +259,41 @@ class Translation
 	}
 
 	/**
+	 * Translates a phrase according to the given user's language preference,
+	 * which may be different from the current user.  
+	 *
+	 * @param int $account_id
+	 * @param string $message
+	 * @param array $vars =null vars to replace the placeholders, or null for none
+	 */
+	static function translate_as($account_id, $message, $vars=null)
+	{
+		if(!is_numeric($account_id))
+		{
+			return static::translate($message, $vars);
+		}
+
+		$preferences = new Preferences($account_id);
+		$prefs = $preferences->read();
+		if($prefs['common']['lang'] != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
+		{
+			$old_lang = self::$userlang;
+			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $prefs['common']['lang'];
+			$apps = array_keys(self::$loaded_apps);
+			self::init(true);
+			self::add_app($apps);
+		}
+		$phrase = static::translate($message, $vars);
+		if($old_lang)
+		{
+			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $old_lang;
+			self::init(true);
+			self::add_app($apps);
+		}
+		return $phrase;
+	}
+
+	/**
 	 * Adds translations for (multiple) application(s)
 	 *
 	 * By default the translations are read from the tree-wide cache
