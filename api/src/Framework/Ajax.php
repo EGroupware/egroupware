@@ -552,7 +552,7 @@ abstract class Ajax extends Api\Framework
 				$link = preg_replace("/^(javascript:egw_link_handler\(')(.*)menuaction=([^&]+)(.*)(','[^']+'\))$/",
 					'$1$2menuaction=admin.admin_ui.index&load=$3$4&ajax=' . ($ajax[1] ? $ajax[1] : 'true') .'\',\'admin\')', $file_was=$link);
 			}
-			 
+
 		}
 
 		$this->sideboxes[$appname][$menu_title] = $file;
@@ -865,8 +865,8 @@ abstract class Ajax extends Api\Framework
 		else if (strpos($url, 'menuaction') > 0)
 		{
 			// Coming in with a specific URL, save it and redirect to index.php
-			// so reloads work nicely
-			$last_direct_url = $url;
+			// so reloads work nicely, but strip cd=yes or we'll get the framework again
+			$last_direct_url = preg_replace('/[&?]cd=yes/','',$url);
 			Api\Framework::redirect_link('/index.php?cd=yes');
 		}
 		else
