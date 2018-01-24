@@ -211,7 +211,7 @@ class addressbook_hooks
 			'values'	=> $duplicate_options,
 			'help'		=> 'Fields to consider when looking for duplicate contacts.',
 			'admin'		=> false,
-			'default'	=> 'n_family, org_name, contact_email'
+			'default'	=> 'n_family,org_name,contact_email'
 		);
 		$settings['duplicate_threshold'] = array(
 			'type'   => 'input',

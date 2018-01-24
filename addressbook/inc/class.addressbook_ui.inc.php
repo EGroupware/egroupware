@@ -2626,7 +2626,7 @@ window.egw_LAB.wait(function() {
 			$specified_count = 0;
 			foreach($fields as $field)
 			{
-				if($values[$field])
+				if($values[trim($field)])
 				{
 					$specified_count++;
 				}
