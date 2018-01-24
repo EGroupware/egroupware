@@ -99,8 +99,9 @@ class notifications_popup implements notifications_iface {
 	 * @param string $_subject
 	 * @param array $_links
 	 * @param array $_attachments
+	 * @param array $_data
 	 */
-	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false)
+	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false, $_data = false)
 	{
 		unset($_attachments);	// not used
 
@@ -109,7 +110,7 @@ class notifications_popup implements notifications_iface {
 					.(isset($_messages['popup'])&&!empty($_messages['popup'])?$_messages['popup']:$_messages['html'])
 					.$this->render_links($_links);
 
-		$this->save( $message );
+		$this->save($message, $_data);
 	}
 
 	/**
@@ -117,12 +118,14 @@ class notifications_popup implements notifications_iface {
 	 *
 	 * @param string $_message
 	 * @param array $_user_sessions
+	 * @param array $_data
 	 */
-	private function save( $_message ) {
+	private function save($_message, $_data) {
 		$result = $this->db->insert( self::_notification_table, array(
 			'account_id'     => $this->recipient->account_id,
 			'notify_message' => $_message,
-			'notify_type'	 => self::_type
+			'notify_type'	 => self::_type,
+			'notify_data' => is_array($_data) ? json_encode($_data) : NULL
 			), false,__LINE__,__FILE__,self::_appname);
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
 	}

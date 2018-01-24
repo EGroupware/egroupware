@@ -86,9 +86,12 @@ class notifications_email implements notifications_iface {
 	 * @param string $_subject
 	 * @param array $_links
 	 * @param array $_attachments
+	 * @param array $_data
 	 */
-	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false)
+	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false, $_data = false)
 	{
+		unset ($_data);
+
 		$body_plain = $_messages['plain'].$this->render_links($_links, false, $this->preferences->external_mailclient);
 		$body_html = "<html><body>\n".$_messages['html'].$this->render_links($_links, true, $this->preferences->external_mailclient)."</body>\n</html>\n";
 

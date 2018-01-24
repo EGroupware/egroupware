@@ -17,7 +17,8 @@ $phpgw_baseline = array(
 			'notify_message' => array('type' => 'varchar','precision' => '16384','comment' => 'notification message'),
 			'notify_created' => array('type' => 'timestamp','meta' => 'timestamp','default' => 'current_timestamp','comment' => 'creation time of notification'),
 			'notify_type' => array('type' => 'ascii','precision' => '32','comment' => 'notification type'),
-			'notify_status' => array('type' => 'varchar','precision' => '32','comment' => 'notification status')
+			'notify_status' => array('type' => 'varchar','precision' => '32','comment' => 'notification status'),
+			'notify_data' => array('type' => 'varchar','precision' => '4096','comment' => 'notification data')
 		),
 		'pk' => array('notify_id'),
 		'fk' => array(),

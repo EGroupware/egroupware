@@ -33,6 +33,7 @@ interface notifications_iface {
 	 * @param string $_subject
 	 * @param array $_links
 	 * @param array $_attachments
+	 * @param array $_data
 	 */
-	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false);
+	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false, $_data = false);
 }

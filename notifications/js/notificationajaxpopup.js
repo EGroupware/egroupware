@@ -243,7 +243,7 @@
 					}
 				}
 			).addClass('et2_link');
-			if (notifymessages[id]['data'] && notifymessages[id]['data']['actions'])
+			if (notifymessages[id]['data'] && notifymessages[id]['data']['actions'] && notifymessages[id]['data']['actions'].length > 0)
 			{
 				var $actions_container = jQuery(document.createElement('div')).addClass('egwpopup_actions_container');
 				for(var action in notifymessages[id].data.actions)
@@ -322,7 +322,7 @@
 	 */
 	notifications.prototype.clickOnMessage = function (_node, _event){
 		// Do not run the click handler if it's been already expanded
-		if (_node[0].hasClass('egwpopup_expanded')) return;
+		if (_node[0].hasClass('egwpopup_expanded') || jQuery(_event.target).hasClass('et2_button')) return;
 		this.message_seen(_node, _event);
 		var $node = jQuery(_node[0][0].cloneNode());
 		if ($node)
@@ -432,7 +432,7 @@
 	 * @return undefined
 	 */
 	notifications.prototype.append = function(_id, _message, _browser_notify,
-	_status, _created, _current) {
+	_status, _created, _current, _actions) {
 		var data = this.getData(_message);
 		// Prevent the same thing popping up multiple times
 		notifymessages[_id] = {
@@ -442,6 +442,7 @@
 			created: _created,
 			current: _current
 		};
+		if (_actions && _actions.length > 0) notifymessages[_id]['data']['actions'] = _actions;
 		// Notification API
 		if(_browser_notify && !_status)
 		{
@@ -488,14 +489,12 @@
 	notifications.prototype.getData = function (_message) {
 		var dom = jQuery(document.createElement('div')).html(_message);;
 		var link = dom.find('div[data-id],div[data-url]');
-		var actions = dom.find('div[data-actions]');
 		var data = {
 			message: dom.text(),
 			title: link.text(),
 			icon: link.find('img').attr('src')
 		};
 		jQuery.extend(data,link.data());
-		if (actions.data()) jQuery.extend(data,actions.data());
 		return typeof data == 'object'? data: {};
 	};
 

@@ -46,6 +46,7 @@ $setup_info['calendar']['hooks']['export_limit'] = 'calendar_hooks::getAppExport
 $setup_info['calendar']['hooks']['acl_rights'] = 'calendar_hooks::acl_rights';
 $setup_info['calendar']['hooks']['categories'] = 'calendar_hooks::categories';
 $setup_info['calendar']['hooks']['mail_import'] = 'calendar_hooks::mail_import';
+$setup_info['calendar']['hooks']['notifications_actions'] = 'calendar_hooks::notifications_actions';
 
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(

@@ -155,10 +155,10 @@ class notifications {
 	protected $popup_links = array();
 
 	/**
-	 * array with objects of actions
+	 * array with objects of data
 	 * @var array
 	 */
-	protected $popup_actions = array();
+	protected $popup_data = array();
 
 	/**
 	 * array with objects of attachments
@@ -327,7 +327,6 @@ class notifications {
 	public function set_popupmessage($_message) {
 		//popup requires html
 		if(strlen($_message) == strlen(strip_tags($_message))) $_message = self::plain2html($_message);
-		if ($this->popup_actions) $_message .= '<div data-actions='. json_encode($this->popup_actions).'></div>';
 		$this->message_popup = $_message;
 		return true;
 	}
@@ -548,8 +547,9 @@ class notifications {
 						{
 							if (!empty($this->popupsubject)) $lsubject = $this->popupsubject;
 							if ($this->popup_links) $llinks = $this->popup_links;
+							if (is_array($this->popup_data)) $popup_data = $this->popup_data;
 						}
-						$obj->send($this->prepend_message($messages, $prepend_message), $lsubject, $llinks, $this->attachments);
+						$obj->send($this->prepend_message($messages, $prepend_message), $lsubject, $llinks, $this->attachments, $popup_data);
 					}
 					catch (Exception $exception) {
 						$backend_errors[] = $notification_backend.' failed: '.$exception->getMessage();
@@ -784,31 +784,20 @@ class notifications {
 		}
 	}
 
-	/**
-	 * Add action button to popup message
-	 * @param array $_action
-	 *
-	 * @return boolean
-	 */
-	public function add_popupaction($_action) {
-		if(!is_array($_action)) { return false; }
-		$this->popup_actions[] = (object)$_action;
-		return true;
-	}
 
 	/**
-	 * Set popup actions
+	 * Set popup data
 	 *
-	 * @param array $_actions
+	 * @param string $_appname
+	 * @param array $_data
 	 * @return boolean
 	 */
-	public function set_popupactions($_actions) {
-		$this->popup_actions = array();
-		foreach($_actions as $action) {
-			if(is_array($action)) {
-				$this->add_popupaction($action);
-			}
-		}
+	public function set_popupdata($_appname, $_data) {
+		$this->popup_data = array(
+			'appname' => $_appname,
+			'data' => $_data
+		);
+		
 		return true;
 	}
 }
