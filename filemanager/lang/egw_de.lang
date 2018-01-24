@@ -174,6 +174,7 @@ link %1: %2	filemanager	de	%1. Verknüpfung: %2
 link into folder	filemanager	de	Verknüpfung in ein Verzeichnis
 link target	filemanager	de	Ziel der Verknüpfung
 link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
+list view	filemanager	de	Listenansicht
 location	filemanager	de	Ort
 log out as superuser	filemanager	de	Superuser abmelden
 mail files	filemanager	de	Dateien per E-Mail versenden
