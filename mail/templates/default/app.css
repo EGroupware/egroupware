@@ -939,3 +939,18 @@ img.smime_cert_unknownemail {
 	background: #a28cff;
 }
 .smimeIcons {position: absolute;right: 10px;}
+
+#mail-compose tr.mailComposeHeaders {
+  border-bottom: 1px solid silver;
+}
+#mail-compose tr.mailComposeHeaders .et2_selectbox,
+#mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn,
+#mail-compose tr.mailComposeHeaders .et2_taglist .ms-sel-ctn input,
+#mail-compose tr.mailComposeHeaders input {
+  border: none;
+  outline: none;
+}
+#mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn-focus {
+  border: none;
+  box-shadow: none;
+}
