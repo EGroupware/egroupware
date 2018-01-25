@@ -929,6 +929,20 @@ img.smime_cert_unknownemail {
   position: absolute;
   right: 10px;
 }
+#mail-compose tr.mailComposeHeaders {
+  border-bottom: 1px solid silver;
+}
+#mail-compose tr.mailComposeHeaders .et2_selectbox,
+#mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn,
+#mail-compose tr.mailComposeHeaders .et2_taglist .ms-sel-ctn input,
+#mail-compose tr.mailComposeHeaders input {
+  border: none;
+  outline: none;
+}
+#mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn-focus {
+  border: none;
+  box-shadow: none;
+}
 #popupMainDiv {
   padding: 5px;
 }
@@ -1120,6 +1134,9 @@ body {
 }
 #mail-compose table.et2_grid {
   display: inline-block;
+}
+#mail-compose tr.mailComposeHeaders {
+  border-bottom: 1px solid #c1c1c0;
 }
 #mail-compose .mailComposeHeaders,
 #mail-compose .mailComposeHeadersSection {
@@ -2347,6 +2364,7 @@ div.mailPreviewHeaders div.mail_extraEmails {
   max-width: 50%;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
   width: 24px;
