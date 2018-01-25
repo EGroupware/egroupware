@@ -176,7 +176,6 @@ class notifications_ajax {
 	 * @return boolean true or false
 	 */
 	private function get_egwpopup($browserNotify = false) {
-		$message = '';
 		$rs = $this->db->select(self::_notification_table, '*', array(
 				'account_id' => $this->recipient->account_id,
 				'notify_type' => self::_type
@@ -184,7 +183,7 @@ class notifications_ajax {
 			__LINE__,__FILE__,false,'',self::_appname);
 		if ($rs->NumRows() > 0)	{
 			foreach ($rs as $notification) {
-				$message = null;
+				$actions = null;
 				$data = json_decode($notification['notify_data'], true);
 				if ($data['appname'])
 				{
@@ -194,23 +193,10 @@ class notifications_ajax {
 						), $data['appname'], true);
 					$actions = $_actions[$data['appname']];
 				}
-				if($browserNotify)
-				{
-					$message = $notification['notify_message'];
-
-					// Check for a link - doesn't work in notification
-					if(strpos($message, lang('Linked entries:')))
-					{
-						$message = substr_replace($message, '', strpos($message, lang('Linked entries:')));
-					}
-					$message2 = preg_replace('#</?a[^>]*>#is','',$message);
-
-					$message3 = 'data:text/html;charset=' . Api\Translation::charset() .';base64,'.base64_encode($message2);
-				}
 				$this->response->apply('app.notifications.append',array(
 					$notification['notify_id'],
 					$notification['notify_message'],
-					$message3,
+					$browserNotify,
 					$notification['notify_status'],
 					$notification['notify_created'],
 					new DateTime(),
