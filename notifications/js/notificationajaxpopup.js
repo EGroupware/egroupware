@@ -561,11 +561,23 @@
 		var langRequire = jQuery('#notifications_script_id').attr('data-langRequire');
 		egw.langRequire(window, [JSON.parse(langRequire)], function()
 		{
+			var $egwpopup_fw = jQuery('#egwpopup_fw_notifications');
+			switch (egw.preference('notification_chain','notifications'))
+			{
+				case 'popup_only':
+				case 'popup_and_email':
+				case 'popup_or_email':
+				case 'all':
+					break;
+				default:
+					$egwpopup_fw.hide();
+					return;
+			}
 			if (typeof window.app == 'undefined') window.app = {};
 			window.app.notifications = new self();
 			// toggle notifications bar
 			jQuery('.egwpopup_toggle').click(function(){window.app.notifications.toggle();});
-			jQuery('#egwpopup_fw_notifications').click(function(){window.app.notifications.toggle();});
+			$egwpopup_fw.click(function(){window.app.notifications.toggle();});
 			jQuery(".egwpopup_deleteall", '#egwpopup').click(function(){
 				et2_dialog.show_dialog( function(_button){
 						if (_button == 2) window.app.notifications.delete_all();
