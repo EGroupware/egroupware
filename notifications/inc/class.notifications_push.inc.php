@@ -81,15 +81,13 @@ class notifications_push implements Json\PushBackend
 	 * @param int $account_id account_id to push message too
 	 * @param string $key
 	 * @param mixed $data
-	 * @throws egw_json_push_exception_not_online if $account_id is not online
+	 *
+	 * This function doesn't throw exception regarding if user availability anymore,
+	 * if you need to check if user is online or not please use this function
+	 * Api\Session::notifications_active($account_id) in a clause.
 	 */
 	public function addGeneric($account_id, $key, $data)
 	{
-		// todo: check $account_id is online
-		if ($account_id > 0 && !Api\Session::notifications_active($account_id))
-		{
-			throw new Json\Exception\NotOnline();
-		}
 		self::$db->insert(self::TABLE, array(
 			'account_id'  => $account_id,
 			'notify_type' => self::TYPE,
