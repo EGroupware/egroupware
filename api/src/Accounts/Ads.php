@@ -943,6 +943,10 @@ class Ads
 			// sort the array
 			$this->_callback_sort = strtoupper($param['sort']);
 			$this->_callback_order = empty($param['order']) ? array('account_lid') : explode(',',$param['order']);
+			foreach($this->_callback_order as &$col)
+			{
+				if (substr($col, 0, 8) !== 'account_') $col = 'account_'.$col;
+			}
 			$sortedAccounts = $accounts;
 			uasort($sortedAccounts,array($this,'_sort_callback'));
 			$account_search[$unl_serial]['data'] = $sortedAccounts;
