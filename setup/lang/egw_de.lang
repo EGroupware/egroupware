@@ -157,6 +157,8 @@ click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.p
 click here	setup	de	Hier klicken
 click here to re-run the installation tests	setup	de	zum Wiederholen der Installationstests hier klicken
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	de	Komma getrennte IP-Adressen oder Hostnamen, Vorgabe Zugriff von überall
+commercial support	setup	de	Kommerzieller Support
+community forum	setup	de	Community Forum
 complete path to aspell program	setup	de	Vollständiger Pfad zum Programm ASPELL
 completed	setup	de	Abgeschlossen
 config password	setup	de	Konfigurationspasswort
@@ -234,6 +236,7 @@ developers' table schema toy	setup	de	Entwickler Tabellen Schema "Spielzeug"
 did not find any valid db support!	setup	de	Konnte keine gültige Datenbankunterstützung finden!
 do you want persistent connections (higher performance, but consumes more resources)	setup	de	Wollen Sie eine permanente Datenbankverbindung (höhere Performance, braucht aber mehr Ressourcen)
 do you want to manage homedirectory and loginshell attributes?	setup	de	Wollen Sie Benutzerverzeichnisse und Login-Shell Attribute verwalten?
+documentation	setup	de	Dokumentation
 does not exist	setup	de	existiert nicht
 domain	setup	de	Domain
 domain '%1' does not exist !!!	setup	de	Domain '%1' existiert NICHT !!!
@@ -316,6 +319,7 @@ header password	setup	de	Passwort Headerverwaltung
 header username	setup	de	Benutzer Headerverwaltung
 header-password[,header-user(admin)]	setup	de	Passwort Headerverwaltung[,Benutzer Headerverwaltung(admin)]
 header.inc.php successful written.	setup	de	header.inc.php erfolgreich geschrieben.
+help and support	setup	de	Hilfe und Support
 historylog removed	setup	de	Historylog gelöscht
 hooks deregistered	setup	de	Haken nicht mehr aktiv
 hooks registered	setup	de	Haken registriert

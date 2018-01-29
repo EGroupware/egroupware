@@ -157,6 +157,8 @@ click <a href="index.php">here</a> to return to setup.	setup	en	Click <a href="i
 click here	setup	en	Click here
 click here to re-run the installation tests	setup	en	Click here to re-run the installation tests
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	en	Comma separated IP addresses or host names, default access to setup from everywhere
+commercial support	setup	en	Commercial support
+community forum	setup	en	Community forum
 complete path to aspell program	setup	en	Complete path to aspell program
 completed	setup	en	Completed
 config password	setup	en	Config password
@@ -234,6 +236,7 @@ developers' table schema toy	setup	en	Developers' Table Schema Toy
 did not find any valid db support!	setup	en	Did not find any valid DB support!
 do you want persistent connections (higher performance, but consumes more resources)	setup	en	Do you want persistent connections (higher performance, but consumes more resources)
 do you want to manage homedirectory and loginshell attributes?	setup	en	Do you want to manage home directory and login shell attributes?
+documentation	setup	en	Documentation
 does not exist	setup	en	Does not exist
 domain	setup	en	Domain
 domain '%1' does not exist !!!	setup	en	Domain '%1' does NOT exist !!!
@@ -316,6 +319,7 @@ header password	setup	en	Header password
 header username	setup	en	Header user name
 header-password[,header-user(admin)]	setup	en	header-password[,header-user(admin)]
 header.inc.php successful written.	setup	en	header.inc.php successful written.
+help and support	setup	en	Help and support
 historylog removed	setup	en	History log removed
 hooks deregistered	setup	en	Hooks deregistered.
 hooks registered	setup	en	Hooks registered.
