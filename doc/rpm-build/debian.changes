@@ -1,3 +1,9 @@
+egroupware-epl (16.1.20180130) hardy; urgency=low
+
+  * Setup/Admin: fix wrong security update warning
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 29 Jan 2018 22:38:38 +0100
+
 egroupware-epl (16.1.20180116) hardy; urgency=low
 
   * Admin: ACL dialog - fix ACL levels not updated when changing app or user
