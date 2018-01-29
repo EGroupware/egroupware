@@ -35,6 +35,7 @@ actions	filemanager	en	Actions
 add to clipboard	filemanager	en	Add to clipboard
 administrators	filemanager	en	Administrators
 all files	filemanager	en	All files
+all subdirectories	filemanager	en	All subdirectories
 all types	filemanager	en	All types
 allow a maximum of the above configured folderlinks to be configured in settings	admin	en	Maximum number of folder links to be configured in preferences.
 and all it's childeren	filemanager	en	and all it's children

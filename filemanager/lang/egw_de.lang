@@ -35,6 +35,7 @@ actions	filemanager	de	Befehle
 add to clipboard	filemanager	de	In die Zwischenablage hinzufügen
 administrators	filemanager	de	Administratoren
 all files	filemanager	de	Alle Dateien
+all subdirectories	filemanager	de	Alle Unterverzeichnisse
 all types	filemanager	de	Alle Typen
 allow a maximum of the above configured folderlinks to be configured in settings	admin	de	Erlaube das oben eingestellte Maximum an Einstellungen für Verzeichnisverweise
 and all it's childeren	filemanager	de	und alle seine Kinderelemente
