@@ -195,9 +195,10 @@ class setup
 	/**
 	 * Get configuration language from $_POST or $_SESSION and validate it
 	 *
+	 * @param boolean $use_accept_language =false true: use Accept-Language header as fallback
 	 * @return string
 	 */
-	static function get_lang()
+	static function get_lang($use_accept_language=false)
 	{
 		if (isset($_POST['ConfigLang']))
 		{
@@ -208,11 +209,25 @@ class setup
 			if (!isset($_SESSION)) self::session_start();
 			$ConfigLang = $_SESSION['ConfigLang'];
 		}
+		$matches = null;
+		if ($use_accept_language && empty($ConfigLang) &&
+			preg_match_all('/(^|,)([a-z-]+)/', strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE']), $matches))
+		{
+			$available = Api\Translation::get_available_langs(false);
+			foreach($matches[2] as $lang)
+			{
+				if (isset($available[$lang]))
+				{
+					$ConfigLang = $lang;
+					break;
+				}
+			}
+		}
 		if (!preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$ConfigLang))
 		{
 			$ConfigLang = null;	// not returning 'en', as it suppresses the language selection in check_install and manageheader
 		}
-		//error_log(__METHOD__."() \$_POST['ConfigLang']=".array2string($_POST['ConfigLang']).", \$_SESSION['ConfigLang']=".array2string($_SESSION['ConfigLang'])." returning ".array2string($ConfigLang));
+		//error_log(__METHOD__."() \$_POST['ConfigLang']=".array2string($_POST['ConfigLang']).", \$_SESSION['ConfigLang']=".array2string($_SESSION['ConfigLang']).", HTTP_ACCEPT_LANGUAGE=$_SERVER[HTTP_ACCEPT_LANGUAGE] --> returning ".array2string($ConfigLang));
 		return $ConfigLang;
 	}
 
