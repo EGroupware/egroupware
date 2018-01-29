@@ -17,7 +17,7 @@ require_once realpath(__DIR__.'/Etemplate/WidgetBaseTest.php');
 /**
  * Test the main class of Etemplate
  *
- * Etemplate Widget base classscans the apps for widgets, which needs the app
+ * Etemplate Widget base class scans the apps for widgets, which needs the app
  * list, pulled from the database, so we need to log in.
  */
 class EtemplateTest extends Etemplate\WidgetBaseTest {
