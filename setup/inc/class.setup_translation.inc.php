@@ -43,7 +43,7 @@ class setup_translation
 	 */
 	function __construct()
 	{
-		$ConfigLang = setup::get_lang();
+		$ConfigLang = setup::get_lang(true);
 
 		if(!$ConfigLang)
 		{

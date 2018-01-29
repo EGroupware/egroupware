@@ -294,8 +294,7 @@ class setup_html
 	{
 		if (empty($ConfigLang))
 		{
-			$ConfigLang = setup::get_lang();
-			if (empty($ConfigLang)) $ConfigLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
+			$ConfigLang = setup::get_lang(true);	// true use Accept-Language header
 		}
 		return Api\Html::select('ConfigLang', $ConfigLang, Api\Translation::get_available_langs(false), true,
 			$onChange ? ' onchange="this.form.submit();"' : '');
