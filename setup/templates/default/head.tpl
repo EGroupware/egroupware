@@ -76,8 +76,22 @@
 								<tr class="divSideboxEntry">
 									<td colspan="2" class="textSidebox">&nbsp;</td>
 								</tr>
+							</table>
+						</div>
+						<div class="divSideboxHeader"><span>{help_menu}</span></div>
+						<div>
+							<table width="100%" cellspacing="0" cellpadding="0">
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{manual}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td>
+									<td class="textSidebox"><a href="https://github.com/EGroupware/egroupware/wiki" target="_blank">{documentation}</a></td>
+								</tr>
+								<tr class="divSideboxEntry">
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td>
+									<td class="textSidebox"><a href="https://www.egroupware.org/egroupware-support/" target="_blank">{commercial_support}</a></td>
+								</tr>
+								<tr class="divSideboxEntry">
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td>
+									<td class="textSidebox"><a href="https://help.egroupware.org/" target="_blank">{community_forum}</a></td>
 								</tr>
 							</table>
 						</div>

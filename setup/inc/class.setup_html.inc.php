@@ -174,22 +174,14 @@ class setup_html
 			'check_install' => $check_install,
 			'register_hooks'=> $register_hooks,
 			'main_menu'     => lang('Setup Main Menu'),
-			'user_login'    => lang('Back to user login')
+			'user_login'    => lang('Back to user login'),
+			'help_menu'     => lang('Help and support'),
+			'documentation' => lang('Documentation'),
+			'commercial_support' => lang('Commercial support'),
+			'community_forum' => lang('Community forum'),
 		));
 
-		// manual / help link to the install manual on egroupware.org
-		$manual_remote_egw_url = 'http://manual.egroupware.org/egroupware';
-		$url_parts = explode('/',$_SERVER['PHP_SELF']);
-		$script = array_pop($url_parts);
-		$lang = setup::get_lang();
-		$url = $manual_remote_egw_url.'/manual/index.php?referer='.urlencode($manual_remote_egw_url.'/setup/'.$script).
-			($lang ? '&lang='.urlencode($lang) : '');
-		$GLOBALS['setup_tpl']->set_var('manual','<a href="'.$url.'" target="manual" onclick="'.
-			"window.open('$url','manual','width=800,height=600,scrollbars=yes,resizable=yes'); return false;".'">'.
-			htmlspecialchars(lang('Manual / help')).'</a>');
-
 		$GLOBALS['setup_tpl']->pparse('out','T_head');
-		/* $setup_tpl->set_var('T_head',''); */
 	}
 
 	static function show_footer()
