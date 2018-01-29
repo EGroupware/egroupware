@@ -843,8 +843,8 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 				// We don't use ui-icon because it assigns a bg image
 				.addClass("delete icon")
 				.bind( 'click', function() {
-					et2_dialog.show_dialog(
-						function(button) {
+					et2_createWidget("dialog", {
+						callback: function(button) {
 							if(button == et2_dialog.YES_BUTTON)
 							{
 								egw.json("filemanager_ui::ajax_action", [
@@ -861,8 +861,12 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 								).sendRequest();
 							}
 						},
-						egw.lang('Delete file?')
-					);
+						message: self.egw().lang('Delete file')+'?',
+						title: self.egw().lang('Confirmation required'),
+						buttons: et2_dialog.BUTTONS_YES_NO,
+						dialog_type: et2_dialog.QUESTION_MESSAGE,
+						width: 250
+					}, self);
 				});
 		}
 	}
