@@ -414,6 +414,7 @@ region	addressbook	en	Region
 remove from distribution list	addressbook	en	Remove from distribution list
 remove selected contacts from distribution list	addressbook	en	Remove selected contacts from distribution list.
 removed from distribution list	addressbook	en	Removed from distribution list.
+rename list	addressbook	en	Rename list
 rename selected distribution list	addressbook	en	Rename selected distribution list
 repetition	addressbook	en	Repetition
 replacements for inserting contacts into documents	addressbook	en	Replacements for inserting contacts into documents

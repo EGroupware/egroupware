@@ -212,7 +212,7 @@ creates / updates user accounts from csv file	admin	en	Creates / updates user ac
 creates / updates user groups from csv file	admin	en	Creates / updates user groups from CSV file
 creates a new field	admin	en	Creates a new field
 crontab only (recomended)	admin	en	Crontab only (recommended)
-current hash	admin	en	Current hash
+current hash	admin	en	Current hash:
 custom fields	admin	en	Custom fields
 custom translation	admin	en	Custom translation
 cyrus imap server	admin	en	Cyrus IMAP server
@@ -480,6 +480,8 @@ ip	admin	en	IP
 jobs	admin	en	Jobs
 kill	admin	en	Kill
 kill session	admin	en	Kill session
+kill these sessions	admin	en	Kill these sessions
+kill this session	admin	en	Kill this session
 languages	admin	en	Languages
 last %1 logins	admin	en	Last %1 logins
 last %1 logins for %2	admin	en	Last %1 logins for %2

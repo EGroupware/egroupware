@@ -212,7 +212,7 @@ creates / updates user accounts from csv file	admin	de	Erstellt / aktualisiert B
 creates / updates user groups from csv file	admin	de	Erstellt / aktualisiert Benutzergruppen durch Import von Daten aus einer CSV Datei
 creates a new field	admin	de	erstellt ein neues Feld
 crontab only (recomended)	admin	de	nur Crontab (empfohlen)
-current hash	admin	de	Aktuelle Verschlüsselung
+current hash	admin	de	Aktuelle Verschlüsselung:
 custom fields	admin	de	Benutzerdefinierte Felder
 custom translation	admin	de	Eigene Übersetzung
 cyrus imap server	admin	de	Cyrus IMAP-Server
@@ -480,6 +480,7 @@ ip	admin	de	IP
 jobs	admin	de	Jobs
 kill	admin	de	Beenden
 kill session	admin	de	Sitzung beenden
+kill this session	admin	de	Sitzung beenden
 languages	admin	de	Sprachen
 last %1 logins	admin	de	Letzte %1 Logins
 last %1 logins for %2	admin	de	Letzte %1 Logins für %2
