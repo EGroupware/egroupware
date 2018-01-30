@@ -1,2 +1,4 @@
 /var/lib/egroupware/header.inc.php
 /etc/egroupware/apache.conf
+/etc/egroupware/apache-univention.conf
+/etc/egroupware/nginx.conf
