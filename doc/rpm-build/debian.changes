@@ -1,3 +1,19 @@
+egroupware-epl (17.1.20180130) hardy; urgency=low
+
+  * SECURITY AND MAINTENANCE RELEASE: PLEASE UPDATE IMMEDIATELY
+  * Filemanager: fix "open as new" action is disabled on selected file context menu
+  * Mail/SMime: include CA-bundle directories in open_basedir of Apache config of packages
+  * Mail: fix mail with S/MIME signature fails if user has no rights to notifications
+  * Mail: fix invalid domain name in headers stall whole mailbox
+  * Mail: filter / and ? from filenames when saving to VFS or disk
+  * Infolog: entries in a projectmanager template keep their contact / from when a new project is created from the template
+  * Infolog: fix copying from project template did not update the contact field
+  * LDAP/ActiveDirectory: fix sorting accounts by anything other then account-name fails
+  * Addressbook: fix duplicate detection when editing contact
+  * Calendar: avoid hanging in planner if event has an invalid category
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 30 Jan 2018 15:32:03 +0100
+
 egroupware-epl (17.1.20180118) hardy; urgency=low
 
   * SECURITY AND MAINTENANCE RELEASE: PLEASE UPDATE IMMEDIATELY
