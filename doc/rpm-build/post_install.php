@@ -65,6 +65,7 @@ $config = array(
 	'folder'        => '',
 	'install-update-app' => '',	// install or update a single (non-default) app
 	'webserver_user'=> 'apache',	// required to fix permissions
+	'apache_config'   => '/etc/httpd/conf.d/egroupware.conf',
 	'php5enmod'     => '',
 );
 
@@ -112,6 +113,7 @@ function set_distro_defaults($distro=null)
 			$config['ldap_context'] = 'ou=people,$base';
 			$config['ldap_group_context'] = 'ou=group,$base';
 			$config['webserver_user'] = 'wwwrun';
+			$config['apache_config'] = '/etc/apache2/conf.d/egroupware.conf';
 			break;
 		case 'debian':
 			// service not in Debian5, only newer Ubuntu, which complains about /etc/init.d/xx
@@ -128,6 +130,7 @@ function set_distro_defaults($distro=null)
 			$config['autostart_db'] = '/usr/sbin/update-rc.d mysql defaults';
 			$config['autostart_webserver'] = '/usr/sbin/update-rc.d apache2 defaults';
 			$config['webserver_user'] = 'www-data';
+			$config['apache_config'] = '/etc/egroupware/apache.conf';
 			break;
 		case 'mandriva':
 			$config['ldap_suffix'] = 'dc=site';
@@ -136,6 +139,7 @@ function set_distro_defaults($distro=null)
 			$config['ldap_base'] = '$suffix';
 			$config['ldap_context'] = 'ou=People,$base';
 			$config['ldap_group_context'] = 'ou=Group,$base';
+			$config['apache_config'] = '/etc/apache2/conf.d/egroupware.conf';
 			break;
 		case 'univention':
 			set_univention_defaults();
@@ -705,9 +709,7 @@ function set_univention_defaults()
 			// set an email address for sysop user so mail works right away
 			$config['admin_email'] = '$admin_user@'.$domain;
 		}
-		# add directory of univention-directory-manager and it's sysmlink target to open_basedir
-		system("/bin/sed -i 's|/usr/bin|/usr/bin:/usr/sbin:/usr/share/univention-directory-manager-tools|' /etc/egroupware/apache.conf");
-
+		$config['apache_config'] = '/etc/egroupware/apache-univention.conf';
 	}
 }
 
@@ -788,6 +790,61 @@ function check_fix_php_apc_ini()
 					file_put_contents($path, $apc_ini."\napc.shm_size=$new_shm_size\n");
 				}
 				echo "Fix APC(u) configuration, set apc.shm_size=$new_shm_size in $path\n";
+			}
+		}
+	}
+}
+
+/**
+ * Check if CA certificates are added to open_basedir to be accessible
+ *
+ * Different distros use different CA directories:
+ * - Debian/Ubuntu: /usr/lib/ssl/certs with files symlinked from /usr/share/ca-certificates
+ * - RHEL/CentOS: /etc/pki/tls/certs with files symlinks from /etc/pki/ca-trust
+ * - openSUSE/SLES: /var/lib/ca-certificates/openssl
+ */
+function check_fix_open_basedir_certs()
+{
+	global $config;
+
+	if (extension_loaded('openssl') && function_exists('openssl_get_cert_locations') &&
+		($locations = openssl_get_cert_locations()) &&
+		file_exists($default_cert_dir = $locations['default_cert_dir']))
+	{
+		$check_dirs = array($default_cert_dir);
+		foreach(scandir($default_cert_dir) as $cert)
+		{
+			$cert = $default_cert_dir.'/'.$cert;
+			if (is_link($cert) && ($link = readlink($cert)) &&
+				dirname($link) != '.' && !in_array(dirname($link), $check_dirs))
+			{
+				$check_dirs[] = dirname($link);
+			}
+		}
+		//echo "Checking if OpenSSL CA dirs are included in open_basedir: ".implode(', ', $check_dirs)."\n";
+		$matches = null;
+		if (($content = file_get_contents($config['apache_config'])) &&
+			preg_match('/^\s*php_admin_value\s+open_basedir\s+(.*)$/m', $content, $matches))
+		{
+			//echo "$config[apache_config] contains open_basedir $matches[1]\n";
+			$open_basedirs = explode(':', $matches[1]);
+			$need_adding = array();
+			foreach($check_dirs as $dir)
+			{
+				if (!in_array($dir, $open_basedirs)) $need_adding[] = $dir;
+			}
+			if ($need_adding)
+			{
+				$content = preg_replace('/^\s*php_admin_value\s+open_basedir\s+(.*)$/m',
+					'\\0:'.implode(':', $need_adding), $content);
+				if (file_put_contents($config['apache_config'], $content))
+				{
+					echo "Added OpenSSL CA directories ".implode(', ', $need_adding)." to Apache config $config[apache_config].\n";
+				}
+				else
+				{
+					echo "Failed to add OpenSSL CA directories ".implode(', ', $need_adding)." to Apache config $config[apache_config]!\n";
+				}
 			}
 		}
 	}
