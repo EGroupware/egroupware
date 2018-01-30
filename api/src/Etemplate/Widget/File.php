@@ -147,10 +147,15 @@ class File extends Etemplate\Widget
 		}
 
 		if ($file['error'] == UPLOAD_ERR_OK && trim($file['name']) != '' && $file['size'] > 0 && is_uploaded_file($file['tmp_name'])) {
+			// Don't trust what the browser tells us for mime
+			if(function_exists('mime_content_type'))
+			{
+				$file['type'] = $type = mime_content_type($file['tmp_name']);
+			}
+			
 			// Mime check
 			if($mime)
 			{
-				$type = $file['type'];
 				$is_preg = $mime[0] == '/';
 				if (!$is_preg && strcasecmp($mime,$type) ||
 					$is_preg && !preg_match($mime,$type))
