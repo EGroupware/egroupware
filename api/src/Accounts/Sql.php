@@ -412,7 +412,8 @@ class Sql
 				Api\Accounts::format_username('account_lid','account_firstname','account_lastname'))), $param['order']);
 		}
 		$order = str_replace(array_keys($order2contact),array_values($order2contact),$param['order']);
-		// allways add 'account_lid', as it is only valid one for groups
+
+		// allways add 'account_lid'
 		if (strpos($order, 'account_lid') === false)
 		{
 			$order .= ($order?',':'').'account_lid';
