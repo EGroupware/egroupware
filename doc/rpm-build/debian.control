@@ -57,7 +57,7 @@ Depends: apache2 | nginx,
  ${misc:Depends}
 Recommends: mariadb-server | mysql-server, php-opcache | php-apc, php-apcu, php5-pecl-smb, php5-tidy | php-tidy, php5-zip | php-zip,
  mariadb-client | mysql-client | postgresql-client, php5-bcmath | php-bcmath,
- php5-ldap | php-ldap, php-mbstring, php5-mhash | php-mhash, php-xml
+ php5-ldap | php-ldap, php-mbstring, php5-mhash | php-mhash, php-xml, ca-certificates
 Suggests: egroupware-epl
 Provides: egroupware-epl-addressbook, egroupware-epl-pear
 Replaces: egroupware-core, egroupware-addressbook, egroupware-epl-addressbook,

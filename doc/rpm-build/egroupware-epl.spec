@@ -574,6 +574,11 @@ echo "post_install: %{post_install}"
 mkdir -p $RPM_BUILD_ROOT%{egwdir}
 mkdir -p $RPM_BUILD_ROOT%{httpdconfd}
 cp egroupware/doc/rpm-build/apache.conf $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
+%if 0%{?suse_version}
+# RHEL/CentOS needs open_basedir to include /etc/pki/tls/certs:/etc/pki/ca-trust
+# SUSE uses /var/lib/ca-certificates/openssl instead for trusted OpenSSL CA
+    sed -i '' 's|/etc/pki/tls/certs:/etc/pki/ca-trust|/var/lib/ca-certificates/openssl|g' $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
+%endif
 mkdir -p $RPM_BUILD_ROOT/etc/cron.d
 sed 's/apache/%{apache_user}/' egroupware/doc/rpm-build/egroupware.cron > $RPM_BUILD_ROOT/etc/cron.d/egroupware
 mkdir -p $RPM_BUILD_ROOT%{egwdatadir}/default/files
