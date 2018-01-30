@@ -970,11 +970,16 @@ class filemanager_ui
 
 				$row['class'] .= 'isDir ';
 				$row['is_dir'] = 1;
+				if(!$dir_is_writable[$path])
+				{
+					$row['class'] .= 'noEdit ';
+				}
 			}
-			if(!$dir_is_writable[$path])
+			elseif (!$dir_is_writable[Vfs::dirname($path)])
 			{
 				$row['class'] .= 'noEdit ';
 			}
+			
 			$row['class'] .= !$dir_is_writable[$dir] ? 'noDelete' : '';
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
