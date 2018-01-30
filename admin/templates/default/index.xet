@@ -53,7 +53,6 @@
 				<column width="15%"/>
 				<column width="25%"/>
 				<column width="25%"/>
-				<column width="120"/>
 			</columns>
 			<rows>
 				<row>
@@ -61,13 +60,9 @@
 						<nextmatch-sortheader label="Group name" id="account_lid"/>
 						<nextmatch-sortheader label="Description" id="account_description"/>
 					</vbox>
-					<nextmatch-sortheader label="EMail" id="account_email"/>
-					<nextmatch-sortheader label="Members" id="account_members"/>
-					<nextmatch-sortheader label="Applications" id="apps"/>
-					<vbox>
-						<nextmatch-sortheader label="Created" id="account_created"/>
-						<nextmatch-sortheader label="Modified" id="account_modified"/>
-					</vbox>
+					<nextmatch-sortheader label="EMail" id="email"/>
+					<nextmatch-header label="Members" id="account_members"/>
+					<nextmatch-header label="Applications" id="apps"/>
 				</row>
 				<row class="$row_cont[status_class]">
 					<vbox>
@@ -77,10 +72,6 @@
 					<url-email id="${row}[account_email]" readonly="true" no_lang="1" class="adminOverflowEllipsis"/>
 					<select-account id="${row}[members]" no_lang="1" readonly="true"/>
 					<select-app id="${row}[apps]" tags="true" readonly="true"/>
-					<vbox>
-						<date id="${row}[account_created]" readonly="true"/>
-						<date id="${row}[account_modified]" readonly="true"/>
-					</vbox>
 				</row>
 			</rows>
 		</grid>

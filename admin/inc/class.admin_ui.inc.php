@@ -355,6 +355,7 @@ class admin_ui
 	{
 		$groups = $GLOBALS['egw']->accounts->search(array(
 				'type'  => 'groups',
+				'query' => $query['search'],
 				'order' => $query['order'],
 				'sort'  => $query['sort'],
 				'start' => (int)$query['start'],
