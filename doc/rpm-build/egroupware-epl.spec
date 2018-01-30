@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 17.1.20171115
+Version: 17.1.20180118
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -577,7 +577,7 @@ cp egroupware/doc/rpm-build/apache.conf $RPM_BUILD_ROOT%{httpdconfd}/egroupware.
 %if 0%{?suse_version}
 # RHEL/CentOS needs open_basedir to include /etc/pki/tls/certs:/etc/pki/ca-trust
 # SUSE uses /var/lib/ca-certificates/openssl instead for trusted OpenSSL CA
-    sed -i '' 's|/etc/pki/tls/certs:/etc/pki/ca-trust|/var/lib/ca-certificates/openssl|g' $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
+    sed -i 's|/etc/pki/tls/certs:/etc/pki/ca-trust|/var/lib/ca-certificates/openssl|g' $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
 %endif
 mkdir -p $RPM_BUILD_ROOT/etc/cron.d
 sed 's/apache/%{apache_user}/' egroupware/doc/rpm-build/egroupware.cron > $RPM_BUILD_ROOT/etc/cron.d/egroupware
