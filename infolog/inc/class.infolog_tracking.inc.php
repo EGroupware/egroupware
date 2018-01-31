@@ -230,6 +230,7 @@ class infolog_tracking extends Api\Storage\Tracking
 		{
 			//error_log(__METHOD__.__LINE__.' Key:'.$name.' val:'.array2string($value));
 			if ($name=='info_from' && empty($value))
+			{
 				if(!empty($data['info_contact']) && is_array($data['link_to']['to_id']))
 				{
 					$lkeys = array_keys($data['link_to']['to_id']);
@@ -242,9 +243,9 @@ class infolog_tracking extends Api\Storage\Tracking
 				else if ($data['info_link_id'])
 				{
 					$this->infolog->link_id2from($data);
-					list($app,$id) = explode(':',$data['info_contact']);
-					if (!empty($app)&&!empty($id)) $value = Link::title($app,$id);
+					if (is_array($data['info_contact'])) $value = $data['info_contact']['title'];
 				}
+			}
 			$details[$name] = array(
 				'label' => lang($this->field2label[$name]),
 				'value' => $value,
@@ -257,7 +258,7 @@ class infolog_tracking extends Api\Storage\Tracking
 		);
 		// add custom fields for given type
 		$details += $this->get_customfields($data, $data['info_type'], $receiver);
-
+		error_log(__METHOD__."(".array2string($data).", $receiver) returning ".array2string($details));
 		return $details;
 	}
 
