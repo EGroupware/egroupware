@@ -864,6 +864,10 @@ class Contacts extends Contacts\Storage
 	*/
 	function save(&$contact, $ignore_acl=false, $touch_modified=true)
 	{
+		// Make sure photo remains unchanged unless its purposely set to be false
+		// which means photo has changed.
+		if (!array_key_exists('photo_unchanged',$contact)) $contact['photo_unchanged'] = true;
+
 		// remember if we add or update a entry
 		if (($isUpdate = $contact['id']))
 		{
