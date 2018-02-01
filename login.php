@@ -305,6 +305,11 @@ else
 						$remember_time = 2147483647;
 						break;
 				}
+				
+				// Please take security measures by removing this code below.
+				// It is served unencrypted and saved as a cookie, which is not recommended
+				// !!!!! Never Never save credentials into cookies !!!!!
+				// Implement only sessions instead
 				$GLOBALS['egw']->session->egw_setcookie('eGW_remember',implode('::::',array(
 					'login' => $login,
 					'passwd' => $passwd,
