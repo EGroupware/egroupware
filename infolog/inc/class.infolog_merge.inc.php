@@ -114,7 +114,7 @@ class infolog_merge extends Api\Storage\Merge
 				$array['#'.$name] = '';
 			}
 			// Format date cfs per user Api\Preferences
-			if($field['type'] == 'date' || $field['type'] == 'date-time')
+			if($array['#'.$name] && ($field['type'] == 'date' || $field['type'] == 'date-time'))
 			{
 				$this->date_fields[] = '#'.$name;
 				$array['#'.$name] = Api\DateTime::to($array['#'.$name], $field['type'] == 'date' ? true : '');
