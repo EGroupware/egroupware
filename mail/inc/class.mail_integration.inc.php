@@ -90,6 +90,8 @@ class mail_integration {
 		$data = static::get_integrate_data($_GET['rowid'], $_to_emailAddress, $_subject, $_body, $_attachments, $_date, $_rawMail, $_icServerID);
 		$data['entry_id'] = $app_entry_id;
 
+		$data['entry_id'] = $app_entry_id;
+
 		// Check if the hook is registered
 		if (Api\Hooks::exists('mail_import',$app) == 0)
 		{
@@ -384,8 +386,7 @@ class mail_integration {
 			'message' => $data_message,
 			'html_message' => $mailcontent['html_message'],
 			'date' => $mailcontent['date'],
-			'subject' => $mailcontent['subject'],
-			'entry_id' => $app_entry_id
+			'subject' => $mailcontent['subject']
 		);
 	}
 
