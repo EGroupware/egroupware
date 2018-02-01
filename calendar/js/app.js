@@ -1406,18 +1406,39 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	/**
 	 * Application links from non-list events
 	 *
+	 * The ID looks like calendar::<id> or calendar::<id>:<recurrence_date>
+	 * For processing the links:
+	 *	'$app' gets replaced with 'calendar'
+	 *	'$id' gets replaced with <id>
+	 *	'$app_id gets replaced with <id>:<recurrence_date>
+	 *
+	 * Use either $id or $app_id depending on if you want the series [beginning]
+	 * or a particular date.
+	 *
 	 * @param {egwAction} _action
 	 * @param {egwActionObject[]} _events
 	 */
 	action_open: function(_action, _events)
 	{
 		var id = _events[0].id.split('::');
+		var app = id[0];
+		var app_id = id[1];
+		if(app_id.indexOf(':'))
+		{
+			var split = id[1].split(':');
+			id = split[0];
+		}
+		else
+		{
+			id = app_id;
+		}
 		if(_action.data.open)
 		{
 			var open = JSON.parse(_action.data.open) || {};
 			var extra = open.extra || '';
 
-			extra = extra.replace(/(\$|%24)app/,id[0]).replace(/(\$|%24)id/,id[1]);
+			extra = extra.replace(/(\$|%24)app/,app).replace(/(\$|%24)app_id/,app_id)
+					.replace(/(\$|%24)id/,id);
 
 			// Get a little smarter with the context
 			if(!extra)
@@ -1463,7 +1484,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		else if (_action.data.url)
 		{
 			var url = _action.data.url;
-			url = url.replace(/(\$|%24)app/,id[0]).replace(/(\$|%24)id/,id[1]);
+			url = url.replace(/(\$|%24)app/,app).replace(/(\$|%24)app_id/,app_id)
+					.replace(/(\$|%24)id/,id);
 			this.egw.open_link(url);
 		}
 	},
