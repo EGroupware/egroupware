@@ -804,7 +804,10 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'ATTACH':
-						Api\CalDAV::add_attach('calendar', $event['id'], $attributes, $parameters);
+						if (!empty($event['id']))
+						{
+							Api\CalDAV::add_attach('calendar', $event['id'], $attributes, $parameters);
+						}
 						break;
 
 					default:
