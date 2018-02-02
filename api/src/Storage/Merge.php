@@ -1287,34 +1287,7 @@ abstract class Merge
 			$field = preg_quote($field, '/');
 			if($values[$key])
 			{
-				if(!is_numeric($values[$key]))
-				{
-					// Try the different formats, stop when one works
-					foreach($formats as $f)
-					{
-						try {
-							$date = Api\DateTime::createFromFormat(
-								$f,
-								$values[$key],
-								Api\DateTime::$user_timezone
-							);
-							if($date) break;
-						} catch (\Exception $e) {
-
-						}
-					}
-					if(!$date)
-					{
-						// Couldn't get a date out of it... skip it
-						trigger_error("Unable to parse date $key = '{$values[$key]}' - left as text", E_USER_NOTICE);
-						unset($names[$idx]);
-						continue;
-					}
-				}
-				else
-				{
-					$date = new Api\DateTime($values[$key]);
-				}
+				$date = Api\DateTime::createFromUserFormat($values[$key]);
 				if($mimetype == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
 					$mimetype == 'application/vnd.ms-excel.sheet.macroenabled.12')//Excel WTF
 				{
