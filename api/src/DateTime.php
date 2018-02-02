@@ -467,7 +467,8 @@ class DateTime extends \DateTime
 		{
 			try
 			{
-				$time = new DateTime($time);
+				// Try user format first
+				$time = static::createFromUserFormat($time);
 			}
 			catch(\Exception $e)
 			{
@@ -476,6 +477,56 @@ class DateTime extends \DateTime
 			}
 		}
 		return $time->format($type);
+	}
+
+	/**
+	 * Some user formats are conflicting and cannot be reliably parsed by the
+	 * normal means.  Here we agressively try various date formats (based on
+	 * user's date preference) to coerce a troublesome date into a DateTime.
+	 *
+	 * ex: 07/08/2018 could be DD/MM/YYYY or MM/DD/YYYY
+	 *
+	 * Rather than trust DateTime to guess right based on its settings, we use
+	 * the user's date preference to resolve the ambiguity.
+	 *
+	 * @param string $time
+	 * @return DateTime or null
+	 */
+	public static function createFromUserFormat($time)
+	{
+		$date = null;
+
+		// If numeric, just let normal constructor do it
+		if(is_numeric($time))
+		{
+			return new DateTime($time);
+		}
+
+		// Various date formats in decreasing preference
+		$formats = array(
+			'!'.static::$user_dateformat . ' ' .static::$user_timeformat.':s',
+			'!'.static::$user_dateformat . '*' .static::$user_timeformat.':s',
+			'!'.static::$user_dateformat . '* ' .static::$user_timeformat,
+			'!'.static::$user_dateformat . '*',
+			'!'.static::$user_dateformat,
+			'!Y-m-d\TH:i:s'
+		);
+		// Try the different formats, stop when one works
+		foreach($formats as $f)
+		{
+			try {
+				$date = static::createFromFormat(
+					$f,
+					$time,
+					static::$user_timezone
+				);
+				if($date) break;
+			} catch (\Exception $e) {
+
+			}
+		}
+		// Need correct class, createFromFormat() gives parent
+		return new DateTime($date ? $date : $time);
 	}
 
 	/**
