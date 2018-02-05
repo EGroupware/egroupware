@@ -5239,14 +5239,14 @@ app.classes.mail = AppJS.extend(
 				self.et2.getWidgetById('mimeType').set_value(false);
 				self.et2.getWidgetById('mail_plaintext').set_disabled(false);
 				self.et2.getWidgetById('mail_plaintext').set_value(_armored);
-				self.et2._inst.submit(null,null,true);
+				self.et2._inst.submit();
 			}).catch(function(_err)
 			{
 				self.egw.message(_err.message, 'error');
 			});
 			return false;
 		}
-		this.et2._inst.submit(null,null,true);
+		this.et2._inst.submit();
 	},
 
 	/**
