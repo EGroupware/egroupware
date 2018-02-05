@@ -46,9 +46,13 @@ var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 	 *
 	 * Using \042 instead of " to NOT stall minifyer!
 	 *
-	 * Same preg is in Etemplate\Widget\Url PHP class!
+	 * Similar, but not identical, preg is in Etemplate\Widget\Url PHP class!
+	 * We can not use "(?<![.\s])", used to check that name-part does not end in
+	 * a dot or white-space. The expression is valid in recent Chrome, but fails
+	 * eg. in Safari 11.0 or node.js 4.8.3 and therefore grunt uglify!
+	 * Server-side will fail in that case because it uses the full regexp.
 	 */
-	EMAIL_PREG: new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|"(?:[^"\\]|\\.)*")\s?<)?[^\x00-\x20()<>@,;:\042\[\]\x80-\xff]+(?<![.\s])@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/i),
+	EMAIL_PREG: new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|"(?:[^"\\]|\\.)*")\s?<)?[^\x00-\x20()<>@,;:\042\[\]\x80-\xff]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/i),
 	/**
 	 * @memberOf et2_url
 	 */
