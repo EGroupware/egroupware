@@ -67,7 +67,8 @@ class UrlEmailTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 			array('_______@domain.com'),                // Underscore in the address field is valid
 			array('email@domain.name'),                 // .name is valid Top Level Domain name
 			array('email@domain.co.jp'),                // Dot in Top Level Domain name also considered valid (use co.jp as example here)
-			array('firstname-lastname@domain.com'), 	// Dash in address field is valid
+			array('firstname-lastname@domain.com'),     // Dash in address field is valid
+			array('x@egroupware.org'),                  // one letter name-part is valid, but failed validation before
 
 			// Supposedly valid, but we don't
 		//	array('"email"@domain.com'),                // Quotes around email is considered valid
