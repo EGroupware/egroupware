@@ -1425,7 +1425,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		var id = _events[0].id.split('::');
 		var app = id[0];
 		var app_id = id[1];
-		if(app_id.indexOf(':'))
+		if(app_id && app_id.indexOf(':'))
 		{
 			var split = id[1].split(':');
 			id = split[0];
