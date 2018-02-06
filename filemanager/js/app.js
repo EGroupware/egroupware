@@ -783,7 +783,7 @@ app.classes.filemanager = AppJS.extend(
 		var mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 		// try to get mime widget DOM node out of the row DOM
 		var mime_dom = jQuery(_senders[0].iface.getDOMNode()).find("span#filemanager-index_\\$row");
-		var fe = egw.link_get_registry('filemanager-editor');
+		var fe = egw_get_file_editor_prefered_mimes();
 
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
 		if (data.data.mime == 'httpd/unix-directory' || data.data['class'] && data.data['class'].split(/ +/).indexOf('isDir') != -1)
@@ -1288,7 +1288,8 @@ app.classes.filemanager = AppJS.extend(
 		if (_senders.length>1) return false;
 		var data = egw.dataGetUIDdata(_senders[0].id),
 			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
-
+		var fe = egw_get_file_editor_prefered_mimes();
+		if (fe && fe.mime && !fe.mime[mime]) return false;
 		return data.data.mime.match(mime.mime_odf_regex)?true:false;
 	},
 

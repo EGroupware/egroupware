@@ -60,7 +60,7 @@ if (typeof window.console == 'undefined')
 
 /**
  * Seperates all script tags from the given html code and returns the seperately
- * 
+ *
  * @param object _html object that the html code
  *  from which the script should be seperated
  *	The html code has to be stored in _html.html,
@@ -756,6 +756,24 @@ function addOption(id,label,value,do_onchange)
 		selectBox.options[selectBox.length] = new Option(label,value,false,true);
 	}
 	if (selectBox.onchange && do_onchange) selectBox.onchange();
+}
+
+function egw_get_file_editor_prefered_mimes(_data, _params)
+{
+	var fe = egw.link_get_registry('filemanager-editor');
+	var ex_mimes = egw.preference('collab_excluded_mimes', 'filemanager');
+	if (fe && fe.mime && ex_mimes)
+	{
+		ex_mimes = ex_mimes.split(',');
+		for (var mime in fe.mime)
+		{
+			for (var i in ex_mimes)
+			{
+				if (ex_mimes[i] == mime) delete(fe.mime[mime]);
+			}
+		}
+	}
+	return fe && fe.mime?fe:null;
 }
 /**
  * Install click handlers for popup and multiple triggers of uiaccountselection
