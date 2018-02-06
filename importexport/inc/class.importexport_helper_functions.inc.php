@@ -157,11 +157,19 @@ class importexport_helper_functions {
 
 			// Handle users listed as Lastname, Firstname instead of login ID
 			// Do this first, in case their first name matches a username
-			if ( $account_lids[$key+1][0] == ' ' && $account_id = $GLOBALS['egw']->accounts->name2id( trim($account_lids[$key+1]).' ' .$account_lid, 'account_fullname')) {
-				$account_ids[] = $account_id;
-				unset($account_lids[$key]);
-				$skip = true; // Skip the next one, it's the first name
-				continue ;
+			if ( $account_lids[$key+1][0] == ' ')
+			{
+				$query = array('type' => 'accounts', 'query_type' => 'exact');
+				$given = $GLOBALS['egw']->accounts->search($query + array('query' => trim($account_lids[$key+1])));
+				$family = $GLOBALS['egw']->accounts->search($query + array('query' => trim($account_lid)));
+				$ids = array_intersect_key($family, $given);
+				if($ids)
+				{
+					$account_ids[] = key($ids);
+					unset($account_lids[$key]);
+					$skip = true; // Skip the next one, it's the first name
+					continue ;
+				}
 			}
 
 			// Deal with groups listed as <name> Group, remove the Group
