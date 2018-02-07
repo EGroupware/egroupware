@@ -255,12 +255,20 @@ class filemanager_hooks
 			),
 			'collab_excluded_mimes' => array(
 				'type'   => 'taglist',
-				'label'  => 'Excludes selected mime types',
-				'help'   => 'Excludes selected mime types from being opened by editor',
+				'label'  => lang('Excludes selected mime types'),
+				'help'   => lang('Excludes selected mime types from being opened by editor'),
 				'name'   => 'collab_excluded_mimes',
 				'values' => array_combine(array_keys($editorLink['mime']), array_keys($editorLink['mime'])),
 				'default' => '',
 			),
+			'merge_open_handler' => array(
+				'type'   => 'select',
+				'label'  => lang('Merge print open handler'),
+				'help'   => lang('Defines how to open a merge print documents'),
+				'name'   => 'merge_open_handler',
+				'values' => array ('download' => lang('download'), 'collabora' => 'Collabora'),
+				'default' => 'collabora',
+			)
 		);
 
 		return $settings;

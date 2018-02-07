@@ -1875,7 +1875,8 @@ abstract class Merge
 		try {
 			if (class_exists('EGroupware\\collabora\\Bo') &&
 					$GLOBALS['egw_info']['user']['apps']['collabora'] &&
-					$discovery = \EGroupware\collabora\Bo::discover()
+					($discovery = \EGroupware\collabora\Bo::discover()) &&
+					$GLOBALS['egw_info']['user']['preferences']['filemanager']['merge_open_handler'] != 'download'
 			)
 			{
 				$editable_mimes = $discovery;
