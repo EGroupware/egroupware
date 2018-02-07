@@ -73,8 +73,8 @@ class About
 <p><b>EGroupware is an enterprise ready multilingual groupware solution</b> for your team.
 It enables you to manage and share your e-mail, contacts, appointments, tasks
 and files within your organisation.</p>
-<p>The <b>native web-interface</b> for EGroupware allowes to access your data from any platform wherever you are.
-Chrome, Firefox and Safari are prefered internet browsers for best EGroupware expierience.</p>
+<p>The <b>native web-interface</b> for EGroupware allows to access your data from any platform wherever you are.
+Chrome, Firefox and Safari are preferred internet browsers for best EGroupware experience.</p>
 <p><EGroupware is platform independent. The server runs on Linux, Mac, Windows and many more other operating systems.
 EGroupware can be integrated easily into existing authentication solutions such as LDAP or Active Directory.</p>
 <p>EGroupware offers CalDAV, CardDAV, WebDAV and Active Sync for synchronising data to your smartphone or desktop client.</p>
