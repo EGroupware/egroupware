@@ -2599,6 +2599,7 @@ window.egw_LAB.wait(function() {
 	{
 		$matches = null;
 		$fields = explode(',',$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields']);
+		$threshold = (int)$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'];
 
 		if (preg_match('/^exec\[([^\]]+)\]$/', $name, $matches)) $name = $matches[1];	// remove exec[ ]
 
@@ -2631,7 +2632,7 @@ window.egw_LAB.wait(function() {
 					$specified_count++;
 				}
 			}
-			if (in_array($name,$fields) && $specified_count >= 2)
+			if (in_array($name,$fields) && $specified_count >= $threshold)
 			{
 				$filter = array();
 				foreach($fields as $n)	// use email too, to exclude obvious false positives
