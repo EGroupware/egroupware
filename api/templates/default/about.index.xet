@@ -29,7 +29,7 @@
 			</columns>
 			<rows>
 				<row>
-					<html value="&lt;strong&gt;This is a list of your available applications.&lt;/strong&gt;&lt;br /&gt;For a complete list of applications available for eGroupWare visit &lt;a href=&quot;http://www.egroupware.org/applications&quot; target=&quot;_blank&quot;&gt;www.egroupware.org/applications&lt;/a&gt;"/>
+					<html value="&lt;strong&gt;This is a list of your available applications.&lt;/strong&gt;&lt;br /&gt;For a complete list of applications available for EGroupware visit &lt;a href=&quot;http://www.egroupware.org/applications&quot; target=&quot;_blank&quot;&gt;www.egroupware.org/applications&lt;/a&gt;"/>
 				</row>
 				<row>
 					<grid id="applications" class="egwGridView_grid">
