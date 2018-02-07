@@ -108,7 +108,7 @@ abstract class LoggedInTest extends TestCase
 	* @param string $passwd
 	* @param string $domain
 	*/
-	public static function load_egw($user,$passwd,$domain='default')
+	public static function load_egw($user,$passwd,$domain='default',$info=array())
 	{
 		$_REQUEST['domain'] = $domain;
 		$GLOBALS['egw_login_data'] = array(
@@ -122,15 +122,19 @@ abstract class LoggedInTest extends TestCase
 			ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
 		}
 
-		$GLOBALS['egw_info'] = array(
-			'flags' => array(
-				'currentapp' => 'api',
-				'noheader' => true,
-				'autocreate_session_callback' => __CLASS__ .'::create_session',
-				'no_exception_handler' => 'cli',
-				'noapi' => false,
-			)
-		);
+		if(!$info)
+		{
+			$info = array(
+				'flags' => array(
+					'currentapp' => 'api',
+					'noheader' => true,
+					'autocreate_session_callback' => __CLASS__ .'::create_session',
+					'no_exception_handler' => 'cli',
+					'noapi' => false,
+				)
+			);
+		}
+		$GLOBALS['egw_info'] = $info;
 
 		try
 		{
