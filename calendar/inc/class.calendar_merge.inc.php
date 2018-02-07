@@ -585,7 +585,8 @@ class calendar_merge extends Api\Storage\Merge
 	 * Validate and properly format a list of 'ID's into either a list of ranges
 	 * or a list of IDs, depending on what the template needs.  Templates using
 	 * the range placeholder need a list of date ranges, templates using pagerepeat
-	 * need a list of individual events.
+	 * need a list of individual events.  Templates using neither get just the
+	 * first ID
 	 *
 	 * @param Array[]|String[] $ids List of IDs, which can be a list of individual
 	 *	event IDs, entire events, a date range (start & end) or a list of date ranges.
@@ -637,6 +638,10 @@ class calendar_merge extends Api\Storage\Merge
 					$validated_ids[] = $this->normalize_event_id($id);
 				}
 			}
+		}
+		else
+		{
+			$validated_ids[] = $this->normalize_event_id(array_shift($ids));
 		}
 
 		return $validated_ids;
