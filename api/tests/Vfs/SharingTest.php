@@ -79,8 +79,11 @@ class SharingTest extends LoggedInTest
 		LoggedInTest::setupBeforeClass();
 	}
 
-	public function _testHomeReadonly()
+	public function testHomeReadonly()
 	{
+		$this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
 		$this->readableLink('/home/'.$GLOBALS['egw_info']['user']['account_lid'], Sharing::READONLY);
 	}
 
