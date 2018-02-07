@@ -760,7 +760,7 @@ function addOption(id,label,value,do_onchange)
 
 function egw_get_file_editor_prefered_mimes(_data, _params)
 {
-	var fe = egw.link_get_registry('filemanager-editor');
+	var fe = jQuery.extend(true, {},egw.link_get_registry('filemanager-editor'));
 	var ex_mimes = egw.preference('collab_excluded_mimes', 'filemanager');
 	if (fe && fe.mime && ex_mimes)
 	{
