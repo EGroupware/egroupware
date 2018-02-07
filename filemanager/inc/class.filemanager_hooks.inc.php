@@ -264,7 +264,7 @@ class filemanager_hooks
 			'merge_open_handler' => array(
 				'type'   => 'select',
 				'label'  => lang('Merge print open handler'),
-				'help'   => lang('Defines how to open a merge print documents'),
+				'help'   => lang('Defines how to open a merge print document'),
 				'name'   => 'merge_open_handler',
 				'values' => array ('download' => lang('download'), 'collabora' => 'Collabora'),
 				'default' => 'collabora',

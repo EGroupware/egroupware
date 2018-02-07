@@ -82,6 +82,7 @@ cut	filemanager	en	Cut
 cut to clipboard	filemanager	en	Cut to clipboard
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default = No. The link will not be shown, but you are still able to navigate to this location, or configure this particular location as start folder or folder link.
 default document to insert entries	filemanager	en	Default document to insert entries
+defines how to open a merge print document	filemanager	en	Defines how to open a merge print document
 delete all older versions and deleted files older then %s days	filemanager	en	Delete all older versions and deleted files older than %s days
 delete these files or directories?	filemanager	en	Delete these files or directories?
 delete these shares?	filemanager	en	Delete these shares?
@@ -123,6 +124,8 @@ example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", fo
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	en	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
+excludes selected mime types	filemanager	en	Excludes selected mime types
+excludes selected mime types from being opened by editor	filemanager	en	Excludes selected mime types from being opened by editor
 executable	filemanager	en	Executable
 expires	filemanager	en	Expires
 export definition to use for nextmatch export	filemanager	en	Export definition to use for nextmatch export
@@ -181,6 +184,7 @@ log out as superuser	filemanager	en	Log out as super user
 mail files	filemanager	en	Mail files
 mail paste	filemanager	en	Mail paste
 max folderlinks	admin	en	Max folder links
+merge print open handler	filemanager	en	Merge print open handler
 mime type	filemanager	en	Mime type
 modified	filemanager	en	Modified
 modified between	filemanager	en	Modified between

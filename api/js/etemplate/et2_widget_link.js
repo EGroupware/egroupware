@@ -1913,10 +1913,10 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 			if (_link_data && (typeof _link_data.download_url != 'undefined' || _link_data.app !='egw-data'))
 			{
 				$td.click( function(){
-					var fe_mime = egw.link_get_registry('filemanager-editor','mime');
+					var fe_mime = egw_get_file_editor_prefered_mimes();
 					// Check if the link entry is mime with media type, in order to open it in expose view
 					if (typeof _link_data.type != 'undefined' &&
-							(_link_data.type.match(self.mime_regexp,'ig') || (fe_mime && fe_mime[_link_data.type])))
+							(_link_data.type.match(self.mime_regexp,'ig') || (fe_mime && fe_mime.mime[_link_data.type])))
 					{
 						var $vfs_img_node = jQuery(this).parent().find('.vfsMimeIcon');
 						if ($vfs_img_node.length > 0) $vfs_img_node.click();
