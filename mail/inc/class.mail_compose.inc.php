@@ -1813,18 +1813,30 @@ class mail_compose
 			unset($this->sessionData['in-reply-to']);
 			unset($this->sessionData['to']);
 			unset($this->sessionData['cc']);
-			if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID,null,true,false,false))) {
-				//error_log(__METHOD__.__LINE__.':'.array2string($attachments));
-				foreach($attachments as $attachment) {
-					if (!($attachment['cid'] && preg_match("/image\//",$attachment['mimeType'])) || $attachment['disposition'] == 'attachment')
-					{
-						$this->addMessageAttachment($_uid, $attachment['partID'],
-							$_folder,
-							$attachment['name'],
-							$attachment['mimeType'],
-							$attachment['size']);
+			try
+			{
+				if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID,null,true,false,false))) {
+					//error_log(__METHOD__.__LINE__.':'.array2string($attachments));
+					foreach($attachments as $attachment) {
+						if (!($attachment['cid'] && preg_match("/image\//",$attachment['mimeType'])) || $attachment['disposition'] == 'attachment')
+						{
+							$this->addMessageAttachment($_uid, $attachment['partID'],
+								$_folder,
+								$attachment['name'],
+								$attachment['mimeType'],
+								$attachment['size']);
+						}
 					}
 				}
+			}
+			catch (Mail\Smime\PassphraseMissing $e)
+			{
+				error_log(__METHOD__.'() Failed to forward because of smime '.$e->getMessage());
+				Framework::message(lang('Forwarding of this message failed'.
+						' because the content of this message seems to be encrypted'.
+						' and can not be decrypted properly. If you still wish to'.
+						' forward content of this encrypted message, you may try'.
+						' to use forward as attachment instead.'),'error');
 			}
 		}
 		$mail_bo->closeConnection();
@@ -2150,7 +2162,19 @@ class mail_compose
 
 		//_debug_array($headers);
 		//error_log(__METHOD__.__LINE__.'->'.array2string($this->mailPreferences['htmlOptions']));
-		$bodyParts = $mail_bo->getMessageBody($_uid, ($this->mailPreferences['htmlOptions']?$this->mailPreferences['htmlOptions']:''), $_partID);
+		try {
+			$bodyParts = $mail_bo->getMessageBody($_uid, ($this->mailPreferences['htmlOptions']?$this->mailPreferences['htmlOptions']:''), $_partID);
+		}
+		catch (Mail\Smime\PassphraseMissing $e)
+		{
+			$bodyParts = '';
+			error_log(__METHOD__.'() Failed to reply because of smime '.$e->getMessage());
+			Framework::message(lang('Replying to this message failed'.
+				' because the content of this message seems to be encrypted'.
+				' and can not be decrypted properly. If you still wish to include'.
+				' content of this encrypted message, you may try to use forward as'.
+				' attachment instead.'),'error');
+		}
 		//_debug_array($bodyParts);
 		$styles = Mail::getStyles($bodyParts);
 
