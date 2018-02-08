@@ -234,6 +234,7 @@ class filemanager_hooks
 				'admin'  => False,
 			);
 		}
+		$editorLink = self::getEditorLink();
 
 		$settings += array (
 			'sections.2' => array(
@@ -251,7 +252,15 @@ class filemanager_hooks
 				'no_lang'=> true,
 				'xmlrpc' => True,
 				'admin'  => False,
-			)
+			),
+			'collab_excluded_mimes' => array(
+				'type'   => 'taglist',
+				'label'  => 'Excludes selected mime types',
+				'help'   => 'Excludes selected mime types from being opened by editor',
+				'name'   => 'collab_excluded_mimes',
+				'values' => array_combine(array_keys($editorLink['mime']), array_keys($editorLink['mime'])),
+				'default' => '',
+			),
 		);
 
 		return $settings;

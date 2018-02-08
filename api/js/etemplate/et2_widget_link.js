@@ -1522,7 +1522,7 @@ var et2_link_string = (function(){ "use strict"; return expose(et2_valueWidget.e
 			.appendTo(this.list)
 			.addClass("et2_link loading")
 			.click( function(e){
-				var fe = egw.link_get_registry('filemanager-editor');
+				var fe = egw_get_file_editor_prefered_mimes();
 				if (self.options.expose_view && typeof _link_data.type !='undefined'
 					&& _link_data.type.match(self.mime_regexp,'ig'))
 				{

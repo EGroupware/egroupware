@@ -393,7 +393,7 @@ function expose (widget)
 					return;
 				}
 
-				var fe = egw.link_get_registry('filemanager-editor');
+				var fe = egw_get_file_editor_prefered_mimes();
 				var self=this;
 				// If the media type is not supported do not bind the click handler
 				if (!_value || typeof _value.mime != 'string' || (!_value.mime.match(mime_regex,'ig')
