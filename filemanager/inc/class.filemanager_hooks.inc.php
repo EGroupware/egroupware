@@ -261,6 +261,14 @@ class filemanager_hooks
 				'values' => array_combine(array_keys($editorLink['mime']), array_keys($editorLink['mime'])),
 				'default' => '',
 			),
+			'merge_open_handler' => array(
+				'type'   => 'select',
+				'label'  => lang('Merge print open handler'),
+				'help'   => lang('Defines how to open a merge print documents'),
+				'name'   => 'merge_open_handler',
+				'values' => array ('download' => lang('download'), 'collabora' => 'Collabora'),
+				'default' => 'collabora',
+			)
 		);
 
 		return $settings;
