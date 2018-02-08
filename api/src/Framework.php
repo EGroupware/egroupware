@@ -841,6 +841,7 @@ abstract class Framework extends Framework\Extra
 			$themes_to_check = array();
 			if (Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile')
 			{
+				$themes_to_check[] = $this->template_dir.'/mobile/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
 				$themes_to_check[] = $this->template_dir.'/mobile/fw_mobile.css';
 			}
 			$themes_to_check[] = $this->template_dir.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
