@@ -1288,7 +1288,7 @@ app.classes.filemanager = AppJS.extend(
 		var data = egw.dataGetUIDdata(_senders[0].id),
 			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 		var fe = egw_get_file_editor_prefered_mimes();
-		if (fe && fe.mime && !fe.mime[mime]) return false;
+		if (fe && fe.mime && !fe.mime[data.data.mime]) return false;
 		return data.data.mime.match(mime.mime_odf_regex)?true:false;
 	},
 
