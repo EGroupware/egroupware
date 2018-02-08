@@ -128,4 +128,16 @@ class Url extends Etemplate\Widget
 			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value));
 		}
 	}
+
+	/**
+	 * Handle ajax searches for existing contact based on email
+	 *
+	 * @return boolean email exists or not
+	 */
+	public static function ajax_contact($email)
+	{
+		$result = $GLOBALS['egw']->contacts->search($email);
+
+		\EGroupware\Api\Json\Response::data($result ? true : false);
+	}
 }
