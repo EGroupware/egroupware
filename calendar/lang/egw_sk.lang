@@ -131,6 +131,8 @@ csv	calendar	sk	CSV
 csv-fieldname	calendar	sk	Pole v CSV
 csv-filename	calendar	sk	CSV súbor
 custom	calendar	sk	Vlastné
+custom color for events without category color	calendar	sk	Vlastná farba pre udalosti bez farby kategórie
+custom event color	calendar	sk	Vlastná farba pre udalosti
 custom fields	common	sk	Vlastné polia
 custom url for ical with holidays for all users	calendar	sk	Vlastný URL pre iCal obsahujúci sviatky pre všetkých používateľov
 custom_2	common	sk	zaneprázdnenosť
@@ -177,6 +179,7 @@ display in header	calendar	sk	Zobraziť v hlavičke
 display status of events	calendar	sk	Zobraziť stav udalostí
 displayed view	calendar	sk	zobrazený pohľad
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	sk	Zobraziť tento pohľad kalendára na domovskej stránke - tej, ktorá sa zobrazí keď otvoríte EGroupware alebo kliknete na ikonu Domov?
+distribution list	calendar	sk	Distribučný zoznam
 do not include events of group members	calendar	sk	Nezahrnúť udalosti členov skupiny
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	sk	Naozaj si želáte zmeniť začiatok tejto série? Ak to urobíte, pôvodná séria bude %1 ukončená a bude vytvorená nová séria pre budúcnosť, v ktorej budú zohľadnené vaše zmeny.
 do you want a weekview with or without weekend?	calendar	sk	Želáte si týždenný pohľad s víkendom alebo bez?
@@ -264,6 +267,7 @@ four days view	calendar	sk	Štvordenný pohľad
 freebusy	common	sk	Zaneprázdnenosť
 freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	sk	Zaneprázdnenosť: Neznámy používateľ '%1', alebo nedostupné pre neoverených používateľov!
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	sk	Zaneprázdnenosť: Neznámy používateľ '%1', chybné heslo alebo funkcia nedostupná pre neprihlásených používateľov!
+freetime	calendar	sk	Voľný čas
 freetime search	calendar	sk	Vyhľadanie voľného času
 fri	calendar	sk	Pi
 full description	calendar	sk	Opis
@@ -343,7 +347,7 @@ limit number of description lines in list view (default 5, 0 for no limit)	calen
 limit number of lines for all day events	calendar	sk	Obmedziť počet riadkov celodenných udalostí
 limit search for conflicts in recurrences to given number of recurrences	calendar	sk	Obmedziť vyhľadávanie konfliktov v opakovaniach na daný počet opakovaní
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	sk	Obmedziť vyhľadávanie konfliktov v opakovaniach na daný čas v sekundách (predvolené: 3)
-link	calendar	sk	odkaz
+link title for events to show	calendar	sk	Titulok odkazu pre zobrazenie k udalosti
 link to view the event	calendar	sk	Odkaz na zobrazenie udalosti
 links	calendar	sk	Odkazy
 links and attached files	calendar	sk	Odkazy a priložené súbory
@@ -452,6 +456,7 @@ permission denied	calendar	sk	Prístup bol odmietnutý
 permission denied!	calendar	sk	Prístup bol odmietnutý!
 planner by category	calendar	sk	Plánovač - podľa kategórie
 planner by user	calendar	sk	Plánovač - podľa používateľa
+please first select participants on the left and then use plus button to add them	calendar	sk	Prosím, najprv vyberte účastníkov vľavo a potom ich pridajte tlačítkom plus
 please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	sk	Upozornenie: zisťovanie konfliktov sa nikdy nerobí do minulosti a vždy je obmedzené vyššieuvedeným horizontom opakovaní.
 please note: you can configure the field assignments after you uploaded the file.	calendar	sk	Upozornenie: až keď odovzdáte súbor, môžete nastaviť priradenia polí.
 please wait...	calendar	sk	prosím čakajte...
@@ -556,6 +561,7 @@ show only tentative accepted events	calendar	sk	Zobraziť iba predbežne prijat�
 show only the date, not the year	admin	sk	Zobraziť iba dátum, nie rok
 show this month	calendar	sk	Ukáž tento mesiac
 show this week	calendar	sk	Ukáž tento týždeň
+show year and age	calendar	sk	Ukázať rok a vek
 single event	calendar	sk	Samostatná udalosť
 site configuration	calendar	sk	Nastavenia stránky
 specify where url of the day links to	calendar	sk	Vyberte, kam odkazuje URL daného dňa
