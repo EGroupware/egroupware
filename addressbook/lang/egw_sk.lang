@@ -78,6 +78,7 @@ assistent phone	addressbook	sk	Telefón asistenta
 birthday	common	sk	Narodeniny
 birthdays	common	sk	Narodeniny
 blank	addressbook	sk	Prázdne
+browser location	addressbook	sk	Umiestnenie prehliadača
 business	common	sk	Zamestnanie
 business address	addressbook	sk	Zamestnanie - Adresa
 business address line 2	addressbook	sk	Zamestnanie - Adresa, riadok 2
@@ -170,6 +171,7 @@ default document to insert contacts	addressbook	sk	Predvolený dokument pre vlo�
 default file as format	addressbook	sk	Predvolený formát pre súbor ako
 default filter	addressbook	sk	Predvolený filter
 default format for fileas, eg. for new entries.	addressbook	sk	Predvolený formát pre súbor ako, napríklad pre nové položky
+default geolocation source address	addressbook	sk	Predvolená zdrojová adresa GeoLokácie
 default is to open email addresses in egroupware email application, if user has access to it.	addressbook	sk	Predvoleným správaním je otvoriť e-mailové adresy v emailovej aplikácii EGroupware, ak k nej má používateľ prístup.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	sk	Definuje, ktorá E-mailová adresa (pracovná alebo domáca) sa má používať ako predvolená v distribučnom zozname Emailu.
 delete a single entry by passing the id.	addressbook	sk	Odstráni záznam podľa zadaného id.
@@ -186,6 +188,7 @@ displays a remider for birthdays on the startpage (page you get when you enter e
 distribution list deleted	addressbook	sk	Distribučný zoznam bol odstránený
 distribution list renamed	addressbook	sk	Distribučný zoznam bol premenovaný
 distribution lists	addressbook	sk	Distribučné zoznamy
+distribution lists as groups	addressbook	sk	Distribučné zoznamy ako skupiny
 distribution lists, ...	addressbook	sk	Distribučné zoznamy, ...
 do you really want to delete this contact?	addressbook	sk	Naozaj chcete odstrániť nto kontakt?
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	sk	Chcete súkromný adresár, ktorý nemôžu prezerať ostatní používatelia? Prístupové oprávnenia ku svojmu osobnému Adresáru prideľujete vy.
@@ -196,6 +199,9 @@ don't hide empty columns	addressbook	sk	Neskrývať prázdne stĺpce
 download	addressbook	sk	Stiahnutie
 download export file (uncheck to debug output in browser)	addressbook	sk	Uložiť exportovaný súbor (Nechajte prázdne ak chcete zobraziť výsledek v prehliadači)
 download this contact as vcard file	addressbook	sk	Stiahnuť tento kontakt ak súbor vCard
+duplicate threshold	addressbook	sk	Prah duplikátu
+duplicate warning	addressbook	sk	Varovanie duplikátu
+duplicates	addressbook	sk	Duplikáty
 duration	addressbook	sk	Trvanie
 each category in its own field	addressbook	sk	Každú kategóriu v samostatnom poli
 each option in its own field	addressbook	sk	Každú možnosť v samostatnom poli
@@ -249,6 +255,8 @@ field %1 has been updated !	addressbook	sk	Pole %1 bolo aktualizované
 field name	addressbook	sk	Názov poľa
 fields for the csv export	addressbook	sk	Polia pre CSV export
 fields the user is allowed to edit himself	admin	sk	Polia, ktoré smie používateľ upravovať
+fields to check for duplicates	addressbook	sk	Polia ktoré sa majú skontrolovať na duplikáty
+fields to consider when looking for duplicate contacts.	addressbook	sk	Polia ktoré sa majú skontrolovať pri hľadaní duplicitných kontaktov
 fields to copy when copying an address?	admin	sk	Ktoré polia kopírovať pri kopírovaní adresy?
 fields to show in address list	addressbook	sk	Viditeľné polia v zozname
 fieldseparator	addressbook	sk	Oddeľovač polí
@@ -260,12 +268,14 @@ general	admin	sk	Všeobecné
 general fields:	addressbook	sk	Všeobecné polia:
 general settings	addressbook	sk	Všeobecné nastavenia
 geo	addressbook	sk	GEO
+geolocation	addressbook	sk	GeoLokácia
 geolocation integration	admin	sk	Integrácia Geolokácie
 global categories	addressbook	sk	Globálne kategórie
 grant addressbook access	common	sk	Deleguj práva pre prístup k Adresáru
 group %1	addressbook	sk	Skupina %1
 h	addressbook	sk	h
 hide accounts from addressbook	addressbook	sk	Skryť účty z Adresára
+hide all accounts	addressbook	sk	Skryť všetky účty
 hides accounts completly from the adressbook.	addressbook	sk	Úplne skryje účty z Adresára.
 history logging	admin	sk	Zaznamenávanie histórie
 home address	addressbook	sk	Domov - Adresa
@@ -279,6 +289,7 @@ home state	addressbook	sk	Domov - Štát
 home street	addressbook	sk	Domov - Ulica
 home zip code	addressbook	sk	Domov - PSČ
 how many contacts should non-admins be able to export	admin	sk	Koľko kontaktov smú ne-administrátori exportovať?
+how many fields must match for the record to be considered a duplicate.	addressbook	sk	Koľko položiek sa musí zhodovať, aby sa záznam považoval za duplikát.
 html link to the current record	addressbook	sk	HTML odkaz na aktuálny záznam
 icon	addressbook	sk	Ikona
 if accounts are already in ldap	admin	sk	ak sú účty už v LDAP
@@ -331,6 +342,7 @@ main categories in their own field	addressbook	sk	Hlavné kategórie v samostatn
 manage mapping	addressbook	sk	Správa mapovania
 mark records as private	addressbook	sk	Označiť záznamy ako súkromé
 merge contacts	addressbook	sk	Zlúčiť kontakty
+merge duplicates	addressbook	sk	Zlúčiť duplikáty
 merge into first or account, deletes all other!	addressbook	sk	Zlúčiť do prvého účtu, odstránia sa všetky ostatné!
 merged	addressbook	sk	Zlúčené
 message after submitting the form	addressbook	sk	Textová správa po odoslaní formuláru
@@ -388,6 +400,7 @@ preferred phone	addressbook	sk	Uprednostňovaný telefón
 preferred type of email address to add for distribution lists	addressbook	sk	Predvolený typ E-mailovej adresy pridaný pre distribučné zoznamy
 prefix	addressbook	sk	Titul
 prevent deleting of contacts	admin	sk	Zabrániť odstráneniu kontaktu
+private address	addressbook	sk	Súkromná adresa
 private custom fields	addressbook	sk	Súkromné užívateľské polia
 public key	addressbook	sk	Verejný kľúč
 publish into groups:	addressbook	sk	Publikovať do skupín:
@@ -402,6 +415,8 @@ region	addressbook	sk	Región
 remove from distribution list	addressbook	sk	Odstrániť z distribučného zoznamu
 remove selected contacts from distribution list	addressbook	sk	Odstrániť vybrané kontakty z distribučného zoznamu
 removed from distribution list	addressbook	sk	Odstránené z distribučného zoznamu
+rename list	addressbook	sk	Premenovať zoznam
+rename selected distribution list	addressbook	sk	Premenovať vybraný distribučný zoznam
 repetition	addressbook	sk	Opakovanie
 replacements for inserting contacts into documents	addressbook	sk	Náhrady pre vkladanie kontaktov do dokumentov
 required fields *	addressbook	sk	Požadované polia *
@@ -429,6 +444,8 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	sk	Nastaviť len plné meno
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	sk	Majú sa stĺpce pre fotku a adresu domov zobrazovať vždy, aj keď sú prázdne?
 show	addressbook	sk	Ukázať
+show active accounts	addressbook	sk	Ukázať aktívne účty
+show all accounts	addressbook	sk	Ukázať všetky účty
 show birthday reminders on main screen	addressbook	sk	Pripomínať narodeniny na hlavnej stránke
 show infolog entries for this organisation	addressbook	sk	Zobraziť položky Záznamníka pre túto organizáciu
 show the contacts of this organisation	addressbook	sk	Zobraziť kontakty v tejto organizácii
