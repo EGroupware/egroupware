@@ -485,6 +485,9 @@ app.classes.infolog = AppJS.extend(
 					}
 					egw_open(id,'infolog','edit',{print:1});
 					break;
+				case 'ical':
+					template.postSubmit();
+					break;
 				default:
 					template.submit();
 			}
