@@ -235,7 +235,11 @@ class filemanager_hooks
 			);
 		}
 		$editorLink = self::getEditorLink();
-
+		$mimes = array();
+		foreach ($editorLink['mime'] as $mime => $value)
+		{
+			$mimes[$mime] = $value['ext'];
+		}
 		$settings += array (
 			'sections.2' => array(
 				'type'  => 'section',
@@ -258,7 +262,7 @@ class filemanager_hooks
 				'label'  => 'Excludes selected mime types',
 				'help'   => 'Excludes selected mime types from being opened by editor',
 				'name'   => 'collab_excluded_mimes',
-				'values' => array_combine(array_keys($editorLink['mime']), array_keys($editorLink['mime'])),
+				'values' => $mimes,
 				'default' => '',
 			),
 			'merge_open_handler' => array(
