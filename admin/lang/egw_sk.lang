@@ -100,6 +100,7 @@ all users	admin	sk	Všetci používatelia
 allow anonymous access to this app	admin	sk	Povoliť anonymnému používateľovi prístup k tejto aplikácii
 allow remote administration from following install id's (comma separated)	admin	sk	Povoliť vzdialenú správu z nasledovných ID inštalácie (oddelené čiarkou)
 allow users to change forwards	admin	sk	Povoliť používateľom zmeniť preposielania
+allow users to create identities for aliases	admin	sk	Povoliť používateľom vytvárať identity pre aliasy
 alternate email address	admin	sk	Alternatívna E-mailová adresa
 and logged in	admin	sk	a prihlásený
 anonymous user	admin	sk	Anonymný používateľ
@@ -166,6 +167,7 @@ category %1 has been saved !	admin	sk	Kategória %1 bola uložená !
 category deleted.	admin	sk	Kategória odstránená.
 category list	admin	sk	Zoznam kategórií
 category saved.	admin	sk	Kategória uložená.
+certificate	admin	sk	Certifikát
 change account_id	admin	sk	Zmeniť ID účtu
 change acl rights	admin	sk	Zmeniť prístupové práva (ACL)
 change config settings	admin	sk	Zmeniť voľby nastanení
@@ -232,6 +234,7 @@ delete application	admin	sk	Odstrániť aplikáciu
 delete category	admin	sk	Odstrániť kategóriu
 delete group	admin	sk	Odstrániť skupinu
 delete identity	admin	sk	Odstrániť identitu
+delete including sub-entries	admin	sk	Odstrániť vrátane pod-položiek
 delete peer server	admin	sk	Odstrániť peer server
 delete selected entries	admin	sk	Odstrániť označené položky
 delete the category	admin	sk	odstráň kategóriu
@@ -268,6 +271,7 @@ destination account #%1 does exist and is not renamed itself! can not merge acco
 determines the order the fields are displayed	admin	sk	určuje poradie, v akom sa položky zobrazujú
 disable	admin	sk	Vypnúť
 disable "auto completion" of the login form	admin	sk	Vypnúť automatické dopĺňanie v prihlasovacej stránke
+disable all	admin	sk	Vypnúť všetko
 disable wysiwyg-editor	admin	sk	vypnúť WYSIWYG-editor
 disabled (not recomended)	admin	sk	vypnuté (neodporúča sa)
 display	admin	sk	Zobraziť
@@ -392,6 +396,7 @@ filtered by group	admin	sk	Filtrované podľa Skupiny
 folder acl	admin	sk	ACL priečinka
 for the times above	admin	sk	pre vyššieuvedené časy
 for the times below (empty values count as '*', all empty = every minute)	admin	sk	pre nižšieuvedené časy (prázdne hodnoty sa berú ako '*', všetky prázdne = každú minútu)
+forbid users to create identities	admin	sk	Zakázať používateľom vytváranie identít
 force selectbox	admin	sk	Vynútiť ponuku pre výber
 force users to change their password regularily?(empty for no,number for after that number of days	admin	sk	Vynútiť pravidelnú obmenu hesla? (prázdne=nie, číslo určuje po koľkých dňoch)
 forward also to	admin	sk	Tiež preposlať (komu)
@@ -475,6 +480,8 @@ ip	admin	sk	IP
 jobs	admin	sk	Úlohy
 kill	admin	sk	Ukončiť
 kill session	admin	sk	Ukončiť reláciu
+kill these sessions	admin	sk	Ukončiť tieto relácie
+kill this session	admin	sk	Ukončiť túto reláciu
 languages	admin	sk	Jazyky
 last %1 logins	admin	sk	Ostatné %1 prihlásenia
 last %1 logins for %2	admin	sk	Ostatné %1 prihlásenia pre %2
@@ -531,6 +538,7 @@ manager	admin	sk	Správca
 manual entry	admin	sk	Ručná položka
 maximum account id (e.g. 65535 or 1000000)	admin	sk	Maximálne ID účtu (napr. 65535 alebo 1000000)
 maximum entries in click path history	admin	sk	Maximálny počet záznamov v histórii kliknutí
+mb used	admin	sk	Použitých MB
 members	admin	sk	Členovia
 message has been updated	admin	sk	správa bola upravená
 method	admin	sk	Metóda
@@ -595,6 +603,7 @@ own install id:	admin	sk	Vlastné ID inštalácie:
 owner "%1" removed, please select group-owner	admin	sk	Používateľ "%1" bol odstránený, prosím vyberte skupinového vlastníka
 passthrough	admin	sk	prechádzajúce
 password for smtp-authentication	admin	sk	Heslo pre SMTP overovanie
+password to unlock encrypted p12	admin	sk	Heslo pre odomknutie šifrované p12
 password updated	admin	sk	Heslo bolo zmenené
 passwords and/or attributes of %1 accounts changed	admin	sk	Heslá a/alebo atribúty účtu %1 zmenené
 passwords require a minimum number of characters	admin	sk	Heslá vyžadujú aspoň minimálny počet znakov
@@ -651,6 +660,7 @@ remove	admin	sk	Odstrániť
 remove all users from this group	admin	sk	Odstrániť všetkých používateľov z tejto skupiny
 remove all users from this group ?	admin	sk	Odstrániť všetkých používateľov z tejto skupiny ?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	sk	Odstránenie prístupu pre skupiny môže spôsobiť problémy pre údaje v tejto kategórii. Ste si istí? Používatelia v týchto skupinách môžu stratiť prístup:
+renaming user 'anonymous' will break file sharing and collabora online office!	admin	sk	Premenovanie používateľa 'anonymous' naruší zdieľanie súborov a Collabora Online Office!
 requested	admin	sk	Vyžiadané
 required pear class mail/mimedecode.php not found.	admin	sk	Nenašla sa požadovaná trieda PEAR Mail / mimeDecode.php
 reset filter	admin	sk	Vynulovať filter
@@ -810,6 +820,10 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	sk	Hore
 update current email address:	admin	sk	Aktualizovať súčasnú E-mailovú adresu:
 updated	admin	sk	aktualizované
+upload your background image or enter the url	admin	sk	Nahrať svoj obrázok pozadia alebo zadať URL
+upload your certificate .p12/.pfx file	admin	sk	Nahrať svoj súbor certifikátu .p12/.pfx
+upload your favicon or enter the url	admin	sk	Nahrať svoju ikonu stránky (favicon) alebo zadať URL
+upload your logo or enter the url	admin	sk	Nahrať svoje logo alebo zadať URL
 uppercase, lowercase, number, special char	admin	sk	Veľké a malé písmená, čísla, špeciálne znaky
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	sk	URL inštalácie EGroupware, napríklad http://domain.com/egroupware
 usage	admin	sk	Využitie

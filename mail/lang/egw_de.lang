@@ -26,6 +26,7 @@ add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter:  %1
 add all my aliases	mail	de	Alle Alias Adressen hinzufügen
 add as new	mail	de	Neues Ticket erstellen
 add folder	mail	de	Ordner hinzufügen
+add this certificate into contact	mail	de	Dieses Zertifikat dem Kontakt hinzufügen
 add to addressbook	mail	de	zum Adressbuch hinzufügen
 add your domain as "%1" in options to list of email providers and enable api.	mail	de	Fügen Sie Ihre Domain als "%1" in Optionen zu der Liste der E-Mail-Anbieter hinzu und schalten sie API ein.
 adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mailadresse zur Blackliste ist fehlgeschlagen, da %2
@@ -75,6 +76,7 @@ by date	mail	de	nach Datum
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
 can not resolve the winmail.dat attachment!	mail	de	Der winmail.dat Anhang kann nicht geöffnet weden!
 canceled deletion due to user interaction	mail	de	Löschen durch Benutzer abgebrochen
+certificate info for email %1	mail	de	Zertifikat-Info für E-Mail %1
 change editor type	mail	de	Als HTML-Mail verfassen
 changed profile	mail	de	Profil geändert
 check message against next rule also	mail	de	Nachricht auch gegen nächste Regel prüfen
@@ -180,6 +182,7 @@ empty trash and junk	mail	de	Papierkorb und Spam-Ordner leeren
 enable	mail	de	aktivieren
 enabled!	mail	de	aktiviert!
 encrypt	mail	de	Verschlüsseln
+encryption	mail	de	Verschlüsselung
 enter the name for the new folder:	mail	de	Tragen Sie hier den Namen für den neuen Ordner ein:
 error saving %1!	mail	de	Fehler beim Speichern von %1!
 error while setting acl for folder %1!	mail	de	Fehler beim Speichern von Zugriffsrechten für den Ordner %1!
@@ -215,6 +218,7 @@ flagged %1 messages as flagged in %2	mail	de	%1 Nachricht(en) markiert in %2
 flagged %1 messages as unflagged in %2	mail	de	Bei %1 Nachricht(en) wurde die Markierung in %2 entfernt
 flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ordner
+folder %1 %2 failed because of %3!	mail	de	Ordner %1 %2 fehlgeschlagen, da %3!
 folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
 folder %1 is moving to folder %2	mail	de	Ordner %1 wird in den Ordner %2 verschoben
 folder management	mail	de	Ordner-Verwaltung
@@ -231,6 +235,7 @@ forward messages to:	mail	de	Nachricht weiterleiten an:
 forward messages:	mail	de	Nachricht weiterleiten an (mehrere Adressen durch Komma trennen):
 forward to	mail	de	weiterleiten an
 forward to address (*):	mail	de	weiterleiten an Adresse (*):
+forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	de	Die Weiterleitung dieser Nachricht ist fehlgeschlagen, weil der Inhalt dieser Nachricht verschlüsselt zu sein scheint und nicht richtig entschlüsselt werden kann. Wenn Sie dennoch den Inhalt dieser verschlüsselten Nachricht weiterleiten möchten, können Sie versuchen, statt dessen Weiterleitung als Anhang zu verwenden.
 forwards	mail	de	weiterleiten an
 from	mail	de	Von
 from(a->z)	mail	de	Von (A->Z)
@@ -242,6 +247,7 @@ greater than	mail	de	größer als
 ham folder	mail	de	Ordner für nicht Spam-Nachrichten
 header	mail	de	Kopfzeilen
 header lines	mail	de	Kopfzeilen anzeigen
+high	mail	de	hoch
 hold %1 to drag files to your computer	mail	de	%1 halten um Dateien auf Ihren Computer zu ziehen
 home page folders	mail	de	Darstellung von E-Mails auf der Startseite
 hostname or ip	mail	de	Hostname oder IP
@@ -370,8 +376,10 @@ outbox	mail	de	Postausgang
 password protect	mail	de	Passwort geschützt
 permission denied	mail	de	Zugriff verweigert
 please configure access to an existing individual imap account.	mail	de	Konfigurieren Sie hier den Zugang zu einem existierenden IMAP-Postfach.
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	de	Bitte konfigurieren Sie Ihr S/MIME-Zertifikat auf der Registerkarte "Verschlüsselung" im Dialogfeld "Konto bearbeiten".
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie Ihren Administrator um sicherzustellen dass ihr Server serverseitige Filterregeln unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie Ihren Administrator um sicherzustellen dass ihr Server serverseitige Abwesenheitsnachricht unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.
+please enter password	mail	de	Bitte geben Sie ein Passwort ein
 please select a address	mail	de	Bitte wählen Sie eine Adresse
 please select the number of days to wait between responses	mail	de	Bitte wählen wie viele Tage zwischen den Antworten gewartet werden soll.
 please supply the message to send with auto-responses	mail	de	Bitte geben Sie eine Nachricht ein, die mit der automatischen Antwort gesendet werden soll
@@ -401,6 +409,7 @@ refused to delete folder with subfolders	mail	de	Die Löschung eines Ordners mit
 reject with	mail	de	zurückweisen mit
 reloaded account %1	mail	de	Lade das Konto %1 neu
 reloaded folder %1	mail	de	Ordner %1 neu geladen
+remember the password for	mail	de	Passwort merken für
 remove "%1" from blacklisted domains	mail	de	Lösche "%1" aus der Blacklist Domainliste
 remove "%1" from blacklisted emails	mail	de	Lösche "%1" aus der E-Mail Blackliste
 remove "%1" from whiltelisted domains	mail	de	Lösche "%1" aus der Whitelist Domainliste
@@ -419,6 +428,7 @@ reply	mail	de	antworten
 reply all	mail	de	Allen Antworten
 reply message type	mail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten
 reply to	mail	de	Antworten an
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	de	Die Antwort auf diese Nachricht ist fehlgeschlagen, weil der Inhalt dieser Nachricht verschlüsselt zu sein scheint und nicht richtig entschlüsselt werden kann. Wenn Sie dennoch den Inhalt dieser verschlüsselten Nachricht einbinden möchten, können Sie versuchen, statt dessen Weiterleiten als Anhang zu verwenden.
 replyto	mail	de	Antwort an
 report as ham	mail	de	Als "gute E-Mail" kennzeichnen
 report as spam	mail	de	Als Spam kennzeichnen
