@@ -317,7 +317,7 @@ class mail_integration {
 					}
 					$mailcontent['date'] = strtotime($mailcontent['headers']['DATE']);
 				}
-				catch (Exception $ex) {
+				catch (Mail\Smime\PassphraseMissing $ex) {
 					EGroupware\Api\Framework::message(lang('Fetching content of this message failed'.
 						' because the content of this message seems to be encrypted'.
 						' and can not be decrypted properly.'),'error');
