@@ -293,28 +293,35 @@ class mail_integration {
 				$mo	= mail_bo::getInstance(true,$icServerID);
 				$mo->openConnection();
 				$mo->reopen($mailbox);
-				$mailcontent = mail_bo::get_mailcontent($mo,$uid,'',$mailbox,null,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
-				// this one adds the mail itself (as message/rfc822 (.eml) file) to the app as additional attachment
-				// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
-				if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
-				{
-					$message = $mo->getMessageRawBody($uid, '',$mailbox);
-					$headers = $mo->getMessageHeader($uid, '',true,false,$mailbox);
-					$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."mail_integrate");
-					$tmpfile = fopen($attachment_file,'w');
-					fwrite($tmpfile,$message);
-					fclose($tmpfile);
-					$size = filesize($attachment_file);
-					$mailcontent['attachments'][] = array(
-							'name' => mail_bo::clean_subject_for_filename($headers['SUBJECT']).'.eml',
-							'mimeType' => 'message/rfc822',
-							'type' => 'message/rfc822',
-							'tmp_name' => $attachment_file,
-							'size' => $size,
-							'add_raw' => true
-					);
+				try {
+					$mailcontent = mail_bo::get_mailcontent($mo,$uid,'',$mailbox,null,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
+					// this one adds the mail itself (as message/rfc822 (.eml) file) to the app as additional attachment
+					// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
+					if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
+					{
+						$message = $mo->getMessageRawBody($uid, '',$mailbox);
+						$headers = $mo->getMessageHeader($uid, '',true,false,$mailbox);
+						$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."mail_integrate");
+						$tmpfile = fopen($attachment_file,'w');
+						fwrite($tmpfile,$message);
+						fclose($tmpfile);
+						$size = filesize($attachment_file);
+						$mailcontent['attachments'][] = array(
+								'name' => mail_bo::clean_subject_for_filename($headers['SUBJECT']).'.eml',
+								'mimeType' => 'message/rfc822',
+								'type' => 'message/rfc822',
+								'tmp_name' => $attachment_file,
+								'size' => $size,
+								'add_raw' => true
+						);
+					}
+					$mailcontent['date'] = strtotime($mailcontent['headers']['DATE']);
 				}
-				$mailcontent['date'] = strtotime($mailcontent['headers']['DATE']);
+				catch (Exception $ex) {
+					EGroupware\Api\Framework::message(lang('Fetching content of this message failed'.
+						' because the content of this message seems to be encrypted'.
+						' and can not be decrypted properly.'),'error');
+				}
 			}
 		}
 
