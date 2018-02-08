@@ -354,47 +354,67 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 					if(!egw.app('addressbook')) return;
 
 					// Bind onmouseenter event on <a> tag in order to add contact plus
-					this.span.on ({
-						mouseenter: function (event)
+					this.span.on ('mouseenter', jQuery.proxy(function (event) {
+						event.stopImmediatePropagation();
+						if(typeof et2_url_ro.email_cache[this.value] === 'undefined')
 						{
-							event.stopImmediatePropagation();
-							var self = this;
-							jQuery(this).tooltip({
-								items: 'a.et2_email',
-								position: {my:"right top", at:"left top", collision:"flipfit"},
-								tooltipClass: "et2_email_popup",
-								content: function()
-								{
-									// Here we could do all sorts of things
-									var extra = {
-										'presets[email]': jQuery(this).attr('title') ? jQuery(this).attr('title') : jQuery(this).text()
-									};
-
-									return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="'+egw.lang('Add a new contact')+'"><img src="'
-											+egw.image("new") +'"/></a>')
-										.on('click', function() {
-											egw.open('','addressbook','add',extra);
-										});
-								},
-								close: function( event, ui )
-								{
-									ui.tooltip.hover(
-										function () {
-											jQuery(this).stop(true).fadeTo(400, 1);
-											//.fadeIn("slow"); // doesn't work because of stop()
-										},
-										function () {
-											jQuery(this).fadeOut("400", function(){	jQuery(this).remove();});
-										}
-									);
-								}
-							})
-							.tooltip("open");
+							// Ask server if we know this email
+							this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact',
+								this.value, this._add_contact_tooltip, this
+							);
 						}
-					});
+						else
+						{
+							this._add_contact_tooltip(et2_url_ro.email_cache[this.value]);
+						}
+					},this));
 				}
 				break;
 		}
+	},
+
+	/**
+	 * Add a button to add the email address as a contact
+	 *
+	 * @param {boolean} email_exists True, or else nothing happens
+	 */
+	_add_contact_tooltip: function(email_exists)
+	{
+		et2_url_ro.email_cache[this.value] = email_exists;
+
+		if(email_exists) return;
+
+		this.span.tooltip({
+			items: 'a.et2_email',
+			position: {my:"right top", at:"left top", collision:"flipfit"},
+			tooltipClass: "et2_email_popup",
+			content: function()
+			{
+				// Here we could do all sorts of things
+				var extra = {
+					'presets[email]': jQuery(this).attr('title') ? jQuery(this).attr('title') : jQuery(this).text()
+				};
+
+				return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="'+egw.lang('Add a new contact')+'"><img src="'
+						+egw.image("new") +'"/></a>')
+					.on('click', function() {
+						egw.open('','addressbook','add',extra);
+					});
+			},
+			close: function( event, ui )
+			{
+				ui.tooltip.hover(
+					function () {
+						jQuery(this).stop(true).fadeTo(400, 1);
+						//.fadeIn("slow"); // doesn't work because of stop()
+					},
+					function () {
+						jQuery(this).fadeOut("400", function(){	jQuery(this).remove();});
+					}
+				);
+			}
+		})
+		.tooltip("open");
 	},
 
 	/**
@@ -429,4 +449,5 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 		this.span.attr('title',_values.statustext ? _values.statustext : this.options.statustext);
 	}
 });}).call(this);
+et2_url_ro.email_cache = [];
 et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);
