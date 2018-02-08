@@ -328,7 +328,8 @@ class filemanager_hooks
 			'edit_popup' => '980x750',
 			'mime' => array (
 				'application/vnd.oasis.opendocument.text' => array (
-					'mime_popup' => '' // try to avoid mime_open exception
+					'mime_popup' => '', // try to avoid mime_open exception
+					'ext' => 'odt'
 				),
 			)
 		);
