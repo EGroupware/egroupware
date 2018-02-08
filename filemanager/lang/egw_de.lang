@@ -82,6 +82,7 @@ cut	filemanager	de	Ausschneiden
 cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Verzeichnis navigieren, Sie können aber das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis konfigurieren.
 default document to insert entries	filemanager	de	Standarddokument zum Einfügen von Daten
+defines how to open a merge print document	filemanager	de	Definiert, wie ein Seriendruckdokument geöffnet wird.
 delete all older versions and deleted files older then %s days	filemanager	de	Lösche alle alten Versionen und gelösche Dateien älter als %s Tage
 delete these files or directories?	filemanager	de	Diese Dateien oder Verzeichnisse löschen?
 delete these shares?	filemanager	de	Diese Freigaben löschen?
@@ -123,6 +124,8 @@ example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", fo
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	de	Beispiel: {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. Hans Müller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	de	Beispiel: {{NELF role}} - Wenn das Feld "role" nicht leer ist, dann wird der Inhalt des Feldes "role" in eine neue Zeile geschrieben.
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	de	Beispiel: {{nenvlf role}} - Wenn das Feld "role" nicht leer ist, dann wird eine neue Zeile angelegt ohne den Inhalt des Feldes "role" einzufügen.
+excludes selected mime types	filemanager	de	Schließt ausgewählte Mime-Typen aus
+excludes selected mime types from being opened by editor	filemanager	de	Schließt ausgewählte Mime-Typen vom Öffnen durch den Editor aus. Diese Dokument-Typen werden entweder im Browser geöffnet oder bzw. heruntergeladen.
 executable	filemanager	de	Ausführbar
 expires	filemanager	de	Läuft ab
 export definition to use for nextmatch export	filemanager	de	Exportdefinition für den nextmatch Export
@@ -181,6 +184,7 @@ log out as superuser	filemanager	de	Superuser abmelden
 mail files	filemanager	de	Dateien per E-Mail versenden
 mail paste	filemanager	de	per E-Mail versenden
 max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
+merge print open handler	filemanager	de	Handler für einfügen in Dokument
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	verändert
 modified between	filemanager	de	verändert zwischen
