@@ -106,6 +106,7 @@ convert to a ticket	infolog	sk	Konvertovať na tiket
 copy of:	infolog	sk	Kópia z:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	sk	Skopírujte zmeny do schránky, %1znovunačítajte záznam%2 a zlúčte ich.
 create new links	infolog	sk	Vytvoriť nové odkazy
+created	infolog	sk	Vytvorené
 creates a new field	infolog	sk	Vytvorí nové pole
 creates a new status with the given values	infolog	sk	Vytvorí nový stav so zadanými hodnotami
 creates a new typ with the given name	infolog	sk	Vytvorí nový typ podľa zadaného mena
@@ -175,6 +176,7 @@ edit status	infolog	sk	Upraviť stav
 edit the entry	infolog	sk	Upraviť záznam
 edit this entry	infolog	sk	Uprav tento záznam
 empty for all	infolog	sk	Prázdne znamená všetko
+encrypt description	infolog	sk	Šifrovať popis
 end	infolog	sk	Koniec
 enddate	infolog	sk	Termín splnenia
 enddate can not be before startdate	infolog	sk	Termín splnenia nemôže byť pred dátumom začatia
@@ -239,7 +241,6 @@ infolog - import csv-file	infolog	sk	Záznamník - Importovať súbor CSV
 infolog - new	infolog	sk	Záznamník - Nové
 infolog - new subproject	infolog	sk	Záznamník - Nový podprojekt
 infolog - subprojects from	infolog	sk	Záznamník - Podprojekty od
-infolog copied - the copy can now be edited	infolog	sk	Záznamník skopírovaný - kópia sa už môže upravovať
 infolog csv export	infolog	sk	CSV export Záznamníka
 infolog csv import	infolog	sk	CSV import Záznamníka
 infolog entry deleted	infolog	sk	Záznam bol odstránený
@@ -254,6 +255,7 @@ infolog preferences	common	sk	Predvoľby Záznamníka
 infolog-fieldname	infolog	sk	Záznamník - Názov poľa
 insert	infolog	sk	Vložiť
 insert in document	infolog	sk	Vložiť do dokumentu
+insert timestamp into description field	infolog	sk	Vložiť časovú pečiatku do poľa popisu
 invalid filename	infolog	sk	Chybný názov súboru
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	sk	Chybné ID používateľa: %1. Použil som radšej %2.
 invalid status for entry type %1.	infolog	sk	Chybný stav pre položku typu %1.
@@ -355,6 +357,7 @@ prefix for sub-entries (default: re:)	infolog	sk	Predpona pre pod-položky (pred
 price	infolog	sk	Cena
 pricelist	infolog	sk	Cenník
 primary link	infolog	sk	Primárny odkaz
+printing...	infolog	sk	Tlačí sa...
 priority	infolog	sk	Priorita
 private	infolog	sk	Súkromné
 project	infolog	sk	Projekt

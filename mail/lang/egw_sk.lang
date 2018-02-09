@@ -1,4 +1,8 @@
 %1 attachments	mail	sk	%1 príloh
+%1 has been added to blacklisted email addresses	mail	sk	E-mailová adresa %1 bola pridaná na čiernu listinu
+%1 has been added to whiltelisted email addresses	mail	sk	E-mailová adresa %1 bola pridaná na bielu listinu
+%1 has been removed from blacklisted email addresses	mail	sk	E-mailová adresa %1 bola vyňatá z čiernej listiny
+%1 has been removed from whiltelisted email addresses	mail	sk	E-mailová adresa %1 bola vyňatá z bielej listiny
 %1 is not writable by you!	mail	sk	na %1 NEmáte právo zápisu!
 %1 mails selected	mail	sk	%1 správ označených
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	sk	Prosím, zvážte to. Preposlanie správy na mnoho adries nebude fungovať ak počet adries presiahne určený limit. Pre väčšinu poštových serverov je maximum 4 adresy. Informácie o vašom limite si vyžiadajte od správcu vášho poštového servera.
@@ -14,11 +18,19 @@ acl rights retrieve failed, seems there are no rights set!	mail	sk	Zlyhalo prevz
 acl rights retrieved successfully	mail	sk	ACL práva boli úspešne prevzaté
 action	mail	sk	Akcia
 activating by date requires a start- and end-date!	mail	sk	Aktivácia dátumom vyžaduje dátum začiatku AJ konca!
+add "%1" into blacklisted domains	mail	sk	Pridať doménu "%1" na čiernu listinu
+add "%1" into blacklisted emails	mail	sk	Pridať e-mail "%1" na čiernu listinu
+add "%1" into whiltelisted domains	mail	sk	Pridať doménu "%1" na bielu listinu
+add "%1" into whitelisted emails	mail	sk	Pridať e-mail "%1" na bielu listinu
 add a new folder to %1:	mail	sk	Pridať nový priečinok do %1:
 add all my aliases	mail	sk	Pridať všetky moje aliasy
+add as new	mail	sk	Pridať ako nové
 add folder	mail	sk	Pridať priečinok
+add this certificate into contact	mail	sk	Pridať tento certifikát do kontaktu
 add to addressbook	mail	sk	Pridať do adresára
 add your domain as "%1" in options to list of email providers and enable api.	mail	sk	Pridajte vašu doménu v predvoľbách ako "%1" pre zoznam poskytovateľov e-mailu a povoľte API.
+adding %1 to blacklisted email addresses failed because of %2	mail	sk	Pridanie e-mailu %1 na čiernu listinu zlyhalo z dôvodu: %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	sk	Pridanie e-mailu %1 na bielu listinu zlyhalo z dôvodu: %2
 after reply, visible during compose	mail	sk	Za odpoveďou, viditeľne počas písania
 aliases+forwards	mail	sk	Aliasy+Odoslané ďalej
 all	mail	sk	Všetko
@@ -29,10 +41,15 @@ all messages in the folder will be lost	mail	sk	Všetky správy v priečinku sa 
 all my email addresses	mail	sk	všetky moje e-mailové adresy
 all of	mail	sk	Všetko z
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	sk	Odstránia sa aj všetky podpriečinky, a všetky správy vo všetkých zasiahnutých priečinkoch sa stratia
+allow	mail	sk	Povoliť
 allow external images	mail	sk	Povoliť externé obrázky
+allow external images from listed domains	mail	sk	Povoliť externé obrázky z domén na zozname
 allow images from external sources in html emails	mail	sk	Povoliť v HTML E-mailoch obrázky z externých zdrojov
+allow images from listed domains in html emails	mail	sk	Povoliť pre html e-maily obrázky z domén na zozname
 allow users to create further identities	mail	sk	Povoliť používateľom vytváranie ďalších identít
 allways a new window	mail	sk	Vždy nové okno
+always	mail	sk	Vždy
+always allow external sources from %1	mail	sk	Vždy povoliť externé zdroje od %1
 always show html emails	mail	sk	Vždy zobraziť HTML správy
 an error happend while trying to remove acl rights from the account %1!	mail	sk	Nastala nejaká chyba pri pokuse odstrániť ACL práva z účtu %1!
 and the rule with priority %1, now got the priority %2	mail	sk	a pravidlo priority %1 má teraz prioritu %2
@@ -45,6 +62,7 @@ archive folder	mail	sk	Archívny priečinok
 are you sure you want to delete all selected folders?	mail	sk	Ste si istí že chcete odstrániť všetky označené priečinky?
 are you sure you want to move folder %1 to folder %2?	mail	sk	Ste si istí že chcete presunúť priečinok %1 do priečinka %2?
 arrival	mail	sk	Prijaté
+ask for permission	mail	sk	Požiadať o povolenie
 attach users vcard at compose to every new mail	mail	sk	Priložiť používateľovu vizitku VCard pri tvorbe každej novej správy
 attach vcard	mail	sk	Priložiť vCard
 attachment	mail	sk	Poslať v prílohe
@@ -52,10 +70,13 @@ attachments	mail	sk	Prílohy
 authentication	mail	sk	Overenie
 available personal email-accounts/profiles	mail	sk	Dostupné osobné e-mailové účty/profily
 before reply, visible during compose	mail	sk	Pred odpoveď, viditeľné počas písania
+blacklisted mails are marked as spam	mail	sk	E-maily na čiernej listine sa označia ako Spam
 but check shared folders	mail	sk	ale skontrolovať zdieľané priečinky
 by date	mail	sk	podľa dátumu
 can not open imap connection	mail	sk	Nedá sa otvoriť spojenie IMAP
+can not resolve the winmail.dat attachment!	mail	sk	Neviem spracovať prílohu winmail.dat!
 canceled deletion due to user interaction	mail	sk	odstraňovanie zrušené kvôli aktivite používateľa
+certificate info for email %1	mail	sk	Informácia o certifikáte pre správu %1
 change editor type	mail	sk	prepnúť editor do režimu HTML
 changed profile	mail	sk	zmenený profil
 check message against next rule also	mail	sk	skontrolovať správu aj voči ďalšiemu pravidlu
@@ -94,6 +115,7 @@ default sorting order	mail	sk	Predvolené triedenie
 default your name and email	common	sk	Predvolené: vaše meno a e-mailová adresa
 delete folder	mail	sk	Odstrániť priečinok
 delete folder %1 ?	mail	sk	ODSTRÁNIŤ Priečinok %1 ?
+delete this acl	mail	sk	Odstrániť tento ACL
 deleted	mail	sk	Odstránené
 deleted %1 messages in %2	mail	sk	odstránených %1 správ z %2
 deleted!	mail	sk	odstránené!
@@ -152,11 +174,15 @@ email notification update failed	mail	sk	Aktualizácia potvrdenia e-mailu zlyhal
 email notification update failed! you need to set an email address!	mail	sk	Aktualizácia potvrdenia e-mailu zlyhala! Musíte zadať e-mailovú adresu!
 emailaddress	admin	sk	E-mailová adresa
 emailadmin: profilemanagement	mail	sk	eMailAdmin: Správa profilu
+emails in blacklisted domains are marked as spam	mail	sk	E-maily z čiernej listiny domén sa označia ako Spam
+emails in whitelisted domains are not marked as spam	mail	sk	E-maily z bielej listiny domén sa NEoznačia ako Spam
 empty junk	mail	sk	Vyprázdniť priečinok SPAM
 empty trash	mail	sk	Vyprázdniť Odpadkový kôš
+empty trash and junk	mail	sk	Vyprázdniť Odpadkový kôš a Spam
 enable	mail	sk	Zapnúť
 enabled!	mail	sk	zapnuté!
 encrypt	mail	sk	Šifrovať
+encryption	mail	sk	Šifrovanie
 enter the name for the new folder:	mail	sk	Zadajte názov nového priečinka:
 error saving %1!	mail	sk	Chyba počas ukladania %1!
 error while setting acl for folder %1!	mail	sk	Chyba počas nastavenia ACL pre priečinok %1!
@@ -192,8 +218,10 @@ flagged %1 messages as flagged in %2	mail	sk	Označkovaných %1 správ ako ozna�
 flagged %1 messages as unflagged in %2	mail	sk	Označkovaných %1 správ ako neoznačkované %2
 flagged / unflagged	mail	sk	Označkované/Odznačkované
 folder	mail	sk	Priečinok
+folder %1 %2 failed because of %3!	mail	sk	Priečinok %1 %2 zlyhal kvôli %3
 folder %1 %2 failed!	mail	sk	Priečinok %1 %2 zlyhal!
 folder %1 is moving to folder %2	mail	sk	Priečinok %1 sa presúva do priečinka %2
+folder management	mail	sk	Správa priečinkov
 folder management ...	mail	sk	Správa priečinkov...
 folder settings	mail	sk	Nastavenia priečinku
 for e.g.: mpeg	mail	sk	napr. pre: mpeg
@@ -207,6 +235,7 @@ forward messages to:	mail	sk	Odoslať spávy sem:
 forward messages:	mail	sk	Odoslať spávy:
 forward to	mail	sk	Odoslať ďalej (komu)
 forward to address (*):	mail	sk	Odoslať ďalej na adresu (*):
+forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	sk	Odoslanie tejto správy ďalej zlyhalo, pretože obsah správy je asi šifrovaný a nedá sa správne dešifrovať. Ak napriek tomu chcete správu odoslať ďalej, skúste ju "Odoslať ako prílohu".
 forwards	mail	sk	Odoslané ďalej
 from	mail	sk	Od
 from(a->z)	mail	sk	Od (A->Z)
@@ -215,9 +244,9 @@ general	admin	sk	Všeobecné
 general settings	mail	sk	Všeobecné nastavenia
 get acl rights failed from imap server!	mail	sk	Získanie ACL práv zlyalo pre IMAP server!
 greater than	mail	sk	väčšie než
+ham folder	mail	sk	Priečinok dobrých správ
 header	mail	sk	Hlavička
 header lines	mail	sk	Riadky hlavičky
-hide	mail	sk	skryť
 hold %1 to drag files to your computer	mail	sk	Podržte %1 a presuňte súbory do počítača
 home page folders	mail	sk	Priečinky domovskej stránky
 hostname or ip	mail	sk	Názov stroja alebo IP
@@ -254,6 +283,7 @@ import of message %1 failed. no contacts to merge and send to specified.	mail	sk
 importance	mail	sk	Dôležitosť
 important	mail	sk	Dôležité
 in mailbox: %1, with id: %2, and partid: %3	mail	sk	V poštovom priečinku: %1, ID: %2, PertID: %3
+in order to protect your privacy all external sources within this email are blocked.	mail	sk	V záujme ochrany Vášho súkromia, všetky externé zdroje v tejto správe boli zablokované.
 inbox	mail	sk	Doručená pošta
 initialization of mail failed. please use the wizard to cope with the problem.	mail	sk	Inicializácia mailu zlyhala. Prosím použite Sprievodcu na vyriešenie tohto problému.
 inline	mail	sk	Odoslať ďalej
@@ -264,6 +294,8 @@ junk folder	mail	sk	Priečinok Spam
 keep a copy of the message in your inbox	mail	sk	Ponechať kópiu správy v priečinku Doručenej pošty
 kilobytes	mail	sk	kilobajtov
 later	mail	sk	Neskôr
+learning as ham (not spam) failed because of %1	mail	sk	Zapamätanie ako NIE nevyžiadanej správy zlyhalo z dôvodu: %1
+learning as spam failed because of %1	mail	sk	Zapamätanie ako nevyžiadanej správy zlyhalo z dôvodu: %1
 less than	mail	sk	menej než
 mail	common	sk	E-mail
 mail acl	mail	sk	ACL pre Mail
@@ -273,6 +305,7 @@ mail source	mail	sk	Zdroj správy
 mail-address	mail	sk	Mail-Adresa
 mailaccount	mail	sk	Mailový účet
 mails	common	sk	Správy
+mails can be copied to that folder via context menu, if folder is configured.	mail	sk	Správy sa dajú kopírovať do toho priečinku cez kontextovú ponuku, ak je nastavený priečinok.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sk	Poštový server oznámil :\n%1 \nChcete pokračovať v odstraňovaní vybraných správ (v tom prípade kliknite na OK)?\nAk nie, prosím skúste vyprázdniť Odpadkový kôš pred vykonaním ďalších krokov. (v tom prípade kliknite na Cancel)
 mark all as read	mail	sk	Označiť všetko za prečítané
 mark all messages in folder as read	mail	sk	Označiť všetky správy v priečinku ako prečítané
@@ -282,6 +315,8 @@ matches	mail	sk	zhody
 matches regexp	mail	sk	spĺňa regulérny výraz
 mbstring.func_overload=0 is required for correct mail processing!	mail	sk	mbstring.func_overload=0 sa vyžaduje pre správnu prácu s e-mailom!
 message body	mail	sk	telo správy
+message learned as ham (not spam) and moved back to inbox	mail	sk	Správa bola zapamätaná ako dobrá (NIE nevyžiadaná) a presunutá naspäť do Doručenej pošty
+message learned as spam and moved to spam folder	mail	sk	Správa bola zapamätaná ako nevyžiadaná) a presunutá naspäť do priečinku Spam
 message preview area	mail	sk	Oblasť náhľadu správy
 message saved successfully.	mail	sk	Správa bola úspešne uložená.
 message send failed: %1	mail	sk	Odoslanie správy zlyhalo: %1
@@ -298,6 +333,7 @@ moved %1 message(s) from %2 to %3	mail	sk	%1 správ bolo presunutých z %2 do %3
 moving folders from one mailaccount to another is not supported	mail	sk	Presúvanie priečinkov z jedného poštového účtu do druhého nie je podporované.
 name of account	mail	sk	Názov účtu
 never display html emails	mail	sk	Nezobrazovať HTML správy
+never show	mail	sk	Nikdy nezobrazovať
 new mail notification	mail	sk	Nová e-mailová pripomienka
 new message type	mail	sk	Nový typ správy
 no (valid) send folder set in preferences	mail	sk	V predvoľbách nie je nastavený platný priečinok pre odoslanú poštu
@@ -312,11 +348,13 @@ no plain text part found	mail	sk	Nebola nájdená žiadna čisto textová časť
 no recipient address given!	mail	sk	Nebol zadaný adresát!
 no send folder set in preferences	mail	sk	V predvoľbách nebol nastavený priečinok odoslanej pošty
 no signature	mail	sk	Žiadny podpis!
+no sneak preview in list	mail	sk	Bez náhľadu v zozname
 no subject given!	mail	sk	Nebol zadaný predmet správy!
 no subject supplied	mail	sk	Nebol zadaný predmet správy
 no text body supplied, check attachments for message text	mail	sk	Správa nemá telo textu, skontrolujte prílohy či neobsahujú text správy
 no vacation notice text provided. please enter a message.	mail	sk	Nebol zadaný text upozornenia na dovolenku. Prosím zadajte ho.
 no valid %1 folder configured!	mail	sk	Nebol nastavený platný priečinok %1!
+non	mail	sk	Nie
 none, create all	mail	sk	žiadne, vytvoriť všetko
 nothing to change.	mail	sk	Niet čo zmeniť.
 notify about new mail in this folders	mail	sk	Upozorniť na nové správy v týchto priečinkoch
@@ -336,8 +374,10 @@ outbox	mail	sk	Odoslané správy
 password protect	mail	sk	chrániť heslom
 permission denied	mail	sk	Prístup bol odmietnutý
 please configure access to an existing individual imap account.	mail	sk	Prosím nakonfigurujte prístup k existujúcemu osobnému IMAP účtu.
+please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sk	Prosím nastavte si svoj S/MIME certifikát v karte Šifrovanie v okne Upraviť účet.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sk	Prosím opýtajte sa svojho administrátora, či váš server podporuje filtrovanie na strane servera, a ako ich zapnúť v EGroupware pre váš aktívny účet (%1) s ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sk	Prosím opýtajte sa svojho administrátora, či váš server podporuje správy o neprítomnosti na strane servera, a ako ich zapnúť v EGroupware pre váš aktívny účet (%1) s ID: %2.
+please enter password	mail	sk	Prosím zadajte heslo
 please select a address	mail	sk	Prosím vyberte adresu
 please select the number of days to wait between responses	mail	sk	Prosím vyberte počet dní, koľko čakať medzi odpoveďami
 please supply the message to send with auto-responses	mail	sk	Prosím zadajte správu, ktorá sa má posielať v rámci automatickej odpovede
@@ -351,6 +391,7 @@ printview	mail	sk	Náhľad pre tlač
 processing of file %1 failed. failed to meet basic restrictions.	mail	sk	Spracovanie súboru %1 zlyhalo. Nesplnil základné obmedzenia.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	sk	Zadajte predvolený text pre neprítomnosť (používa sa pre nové odpovede počas neprítomnosti keď predtým nebola nastavená žiadna správa)
 quicksearch	mail	sk	Rýchle hľadanie
+quicksearch (with cc)	mail	sk	Rýchle hľadanie (vrátane kópie)
 quota not provided by server	mail	sk	Server neposkytuje kvóty
 quota: %1	mail	sk	Kvóta: %1
 read	mail	sk	prečítané
@@ -365,9 +406,16 @@ refused to delete folder with subfolders	mail	sk	Odmietol odstrániť priečinok
 reject with	mail	sk	Odmietnuť ako
 reloaded account %1	mail	sk	Zanovu načítaný účet %1
 reloaded folder %1	mail	sk	Zanovu načítaný priečinok %1
+remember the password for	mail	sk	Zapamätať heslo pre
+remove "%1" from blacklisted domains	mail	sk	Vyňať doménu "%1" z čiernej listiny
+remove "%1" from blacklisted emails	mail	sk	Vyňať e-mail "%1" z čiernej listiny
+remove "%1" from whiltelisted domains	mail	sk	Vyňať doménu "%1" z bielej listiny
+remove "%1" from whiltelisted emails	mail	sk	Vyňať e-mail "%1" z bielej listiny
 remove all	mail	sk	Odstrániť všetko
 remove immediately	mail	sk	Odstrániť ihneď
 removed folder %1	mail	sk	Priečinok %1 odstránený
+removing %1 from blacklisted email addresses failed because of %2	mail	sk	Odstraňovanie e-mailu %1 z čiernej listiny zlyhalo z dôvodu: %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	sk	Odstraňovanie e-mailu %1 z bielej listiny zlyhalo z dôvodu: %2
 rename folder	mail	sk	Premenovať priečinok
 rename folder %1 ?	mail	sk	Premenovať priečinok %1 ?
 rename folder %1 to:	mail	sk	Premenovať priečinok %1 na:
@@ -377,7 +425,12 @@ reply	mail	sk	Odpoveď
 reply all	mail	sk	Odpoveď všetkým
 reply message type	mail	sk	Typ odpovede
 reply to	mail	sk	Odpovedať na
+replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	sk	Odpoveď na túto správu zlyhala, pretože obsah správy je asi šifrovaný a nedá sa správne dešifrovať. Ak napriek tomu chcete správu odoslať ďalej, skúste ju "Odoslať ako prílohu".
 replyto	mail	sk	Odpovedať na
+report as ham	mail	sk	Označiť ako NIE nevyžiadanú
+report as spam	mail	sk	Označiť ako nevyžiadanú
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	sk	Označiť správu ako dobrú (NIE nevyžiadanú) - filtre ako napr. spamTitan sa podľa toho učia rozpoznávať dobré správy
+report this email content as spam - spam solutions like spamtitan will learn	mail	sk	Označiť správu ako nevyžiadanú) - filtre ako napr. spamTitan sa podľa toho učia rozpoznávať Spam
 required pear class mail/mimedecode.php not found.	mail	sk	Nenašla sa požadovaná trieda PEAR Mail / mimeDecode.php
 resend after how many days?	mail	sk	Po koľkých dňoch znovu odoslať?
 respond to mail sent to:	mail	sk	Odpovedať na správu odoslanú na adresu:
@@ -402,16 +455,22 @@ save the drafted message as eml file into vfs	mail	sk	Uložiť návrh správy na
 save to disk	mail	sk	Uložiť na disk
 save to filemanager	mail	sk	Uložiť do Správcu súborov
 save:	mail	sk	Uložiť:
+saves subscription changes	mail	sk	Uložiť zmeny odoberania
+saves this acl	mail	sk	Uložiť tento ACL
+saves this rule	mail	sk	Uložiť toto pravidlo
 saving of message %1 failed. destination folder %2 does not exist.	mail	sk	Ukladanie správy %1 zlyhalo. Cieľový priečinok %2 neexistuje.
 saving of message %1 succeeded. check folder %2.	mail	sk	Ukladanie správy %1 sa podarilo. Pozrite priečinok %2.
 saving the rule failed:	mail	sk	Ukladanie pravidla zlyhalo:
+security	mail	sk	Bezpečnosť
 see attachments for content of the orignial mail	mail	sk	Pre obsah pôvodnej správy pozrite prílohy
 select all	mail	sk	Označiť všetko
 select an existing entry in order to append mail content to it	mail	sk	Vyberte existujúcu položku ku ktorej sa pripojí obsah správy
+select an item to read	mail	sk	Vyberte položku na čítanie
 select file to attach to message	mail	sk	Vyberte súbor ktorý sa pripojí v prílohe správy
 select file to import into folder	mail	sk	Vyberte súvor ktorý sa naimportuje do priečinka
 select file(s) from vfs	mail	sk	Vyberte súbor(y) z VFS
 select files to upload	mail	sk	Vyberte súbory ktoré sa priložia k správe
+select multiple	mail	sk	Vyberte viacero
 selected	mail	sk	vybrané
 selected date range (with quicksearch)	mail	sk	Vybraný rozsah dátumov (pomocou rýchleho vyhľadania)
 send a reject message:	mail	sk	Poslať správu o odmietnutí:
@@ -429,11 +488,18 @@ set it as default:	mail	sk	nastaviť to ako predvolené:
 should new messages show up on the home page	mail	sk	Chcete, aby sa nové správy zobrazovali na domovskej stránke?
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	sk	Umiestňovať podpis za (bežné) alebo pred odpoveď alebo preposlanú správu? A má sa podpis zobraziť už počas úprav textu, vrátane možnosti úpravy podpisu?
 show	mail	sk	Zobraziť
+show all addresses	mail	sk	Zobraziť všetky adresy
+show all attachments	mail	sk	Zobraziť všetky prílohy
 show all folders	mail	sk	Zobraziť všetky priečinky
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	sk	Zobraziť všetky priečinky, (prihlásené AJ odhlásené) v paneli priečinkov hlavnej obrazovky
+show horizontal	mail	sk	Zobraziť vodorovne
+show horizontal, hide if none selected	mail	sk	Zobraziť vodorovne, skryť ak nie je nič vybrané
 show new messages on home page	mail	sk	zobraziť noé správy na domovskej stránke
 show test connection section and control the level of info displayed?	mail	sk	Zobraziť sekciu Test pripojenia a ovládanie úrovne zobrazovaných informácií?
 show test connection section and control the level of info displayed??	mail	sk	Zobraziť sekciu Test pripojenia a ovládanie úrovne zobrazovaných informácií??
+show them this time only	mail	sk	Zobraziť ich len v tomto prípade
+show vertical	mail	sk	Zobraziť zvisle
+show/hide preview pane in mail list view	mail	sk	Zobraziť/Skryť náhľad pri zobrazení zoznamu správ
 sieve	mail	sk	Sieve
 sieve connection status	mail	sk	Stav spojenia Sieve
 sieve not activated	mail	sk	Sieve nie je zapnutý
@@ -450,6 +516,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	s
 sort order	mail	sk	Usporiadať podľa
 source	mail	sk	Zdroj
 sources	mail	sk	Zdroje
+spamtitian api url	mail	sk	SpamTitan API URL
+spamtitian integration requires epl version	mail	sk	Integrácia so SpamTitan vyžaduje verziu EPL
 start new messages with mime type plain/text or html?	mail	sk	Vytvárať nové správy pomocou mime typu čistý text, alebo HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	sk	Začínať odpovedacie správy mime typom čistý text alebo html alebo skúsiť použiť zobrazený formát (predvolené)?
 step 1: imap - incoming mail	mail	sk	Krok 1: IMAP - prijatá pošta
@@ -476,6 +544,7 @@ text mode	mail	sk	Textový režim
 text/plain	mail	sk	Čistý text
 the %1 's acl removed from the %2	mail	sk	ACL pre %1 bolo odstránené z %2
 the %1 's acl, including its subfolders, removed from the %2	mail	sk	ACL pre %1 vrátane podpriečinkov bolo odstránené z %2
+the entered passphrase is not correct! please try again.	mail	sk	Zadané heslo je nesprávne! Prosím skúste to znovu.
 the folder %1 's acls saved	mail	sk	ACL priečinku %1 bolo uložené
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	sk	Ak tu nie je nič nastavené a nie je ani preddefinovaná hodnota, použije sa priečinok  <b>%1</b>
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	sk	Odosielateľ správy si vyžiadal potvrdenie o tom, že ste si jeho správu už prečítali. Chcete, aby sa mu toto potvrdenie odoslalo?
@@ -483,6 +552,7 @@ the mimeparser can not parse this message.	mail	sk	Analyzátor MIME nedokázal s
 the rule with priority %1 successfully saved!	mail	sk	Toto pravidlo s prioritou %1 bolo úspešne uložené!
 then	mail	sk	TAK
 there is no imap server configured.	mail	sk	Nie je nastavený žiadny IMAP server.
+this message is smime encrypted and password protected.	mail	sk	Táto správa je šifrovaná pomocou SMIME a chránená heslom.
 timeout on connections to your imap server	mail	sk	Pripojenie na IMAP server - čas požiadavky vypršal.
 to do	mail	sk	Vybaviť
 toggle all folders view for %1	mail	sk	Prepnúť zobrazenie všetkých priečinkov pre %1
@@ -503,6 +573,7 @@ use default timeout (20 seconds)	mail	sk	Použiť predvolený čas požiadavky (
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	sk	Použiť regulérne výrazy (viac informácií o POSIX regulérnych výrazoch nájdete napr. na wikipedii)
 use source as displayed, if applicable	mail	sk	Ak sa dá, použiť zdroj tak je zobrazený
 use username+password from current user	mail	sk	Použiť meno a heslo aktuálneho používateľa
+use wizard to detect or verify configuration	mail	sk	Použiť sprievodcu na zistenie nastavenia alebo jeho zmenu
 vacation messages with start and end date require an admin account to be set!	mail	sk	Správy o neprítomnosti s dátumom začiatku a konca vyžadujú nastavenie hesla správcu!
 vacation notice	mail	sk	Správa o neprítomnosti
 vacation notice is active	mail	sk	Správa o neprítomnosti je aktívna
@@ -527,8 +598,10 @@ when sending messages	mail	sk	Pri posielaní správ
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	sk	Ktoré priečinky (popri priečinku Odoslané) sa majú zobrazovať pomocou schémy Zobrazenie Priečinka Odoslaných správ
 which folders - in general - should not be automatically created, if not existing	mail	sk	Ktoré priečinky - vo všeobecnosti - sa NEMAJÚ vytvárať automaticky, keď neexistujú
 which method to use when forwarding a message	mail	sk	Aká metóda sa má použiť pre preposielaní správy
+whitelisted mails are not marked as spam	mail	sk	E-mail z bielej listiny nebude označený ako Spam
 whole message	mail	sk	Celá správa
 with message:	mail	sk	So správou:
+wizard	mail	sk	Sprievodca
 writable sharing requires epl version!	mail	sk	Zapisovateľné zdieľanie vyžaduje verziu EPL!
 write	mail	sk	Zapísať
 wrote	mail	sk	Zapísal
@@ -540,7 +613,10 @@ yes, show all debug information available for the user	mail	sk	áno, zobraziť v
 yes, show basic info only	mail	sk	áno, zobraziť len základné informácie
 you can either choose to save as infolog or tracker, not both.	mail	sk	Môžete si vybrať buď ukladanie do Záznamníka alebo Sledovača, ale nie oboje naraz.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sk	Pre dátum začiatku môžete použiť $$start$$ a pre dátum ukončenia $$end$$.
+you may add this certificate into your contact, if you trust this signature.	mail	sk	Môžete pridať tento certifikát do vášho kontaktu, ak dôverujete tomuto podpisu.
+you need to enter your s/mime passphrase to send this message.	mail	sk	Ak chcete odoslať túto správu, zadajte vaše S/MIME heslo.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	sk	Potrebujete nainštalovať zásuvný modul Maildevelope ktorý je dostupný pre Chrome a Firefox od %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	sk	Najpr musíte správu uložiť ako návrh, až potom ju môžete uložiť do VFS
 you will loose current message body, unless you save it to your clipboard!	mail	sk	Stratíte celé telo správy, ledaže by ste si ho uložili do schránky!
 you've got new mail	mail	sk	Máte novú správu
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sk	Váš zostávajúci priestor v rámci kvóty %1 je príliš malý, nemusí sa Vám podariť odoslať alebo prijať ďalšie správy.\n Skúste použiť funkciu Vyprázdniť odpadkový kôš a Vyprázdniť priečinok Spam, možno získate nejaký priestor.\n Ak to nepomôže, skúste požiadať správcu o pridelenie väčšej kvóty.

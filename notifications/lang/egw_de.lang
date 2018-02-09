@@ -1,6 +1,7 @@
 (update in sec. %s)	notifications	de	(Aktualisierung in sec. %s)
 account:	notifications	de	Benutzername:
 all possible notification backends	notifications	de	alle verfügbaren Benachrichtigungs-Schnittstellen
+are you sure you want to delete all notifications?	notifications	de	Sind Sie sicher, dass Sie alle Benachrichtigungen löschen möchten?
 browser	notifications	de	Browser
 browser is starting.	notifications	de	Browser ist am starten.
 cancal settings?	notifications	de	Einstellungen abbrechen?
@@ -15,6 +16,7 @@ connection error. please check connection to server.	notifications	de	Verbindung
 continue to connect?	notifications	de	Weiter versuche zu Verbinden?
 cookies are required to login to this site.	notifications	de	Cookies werden zum Login auf diese Seite benötigt.
 delete all messages	notifications	de	Alle Benachrichtigungen löschen
+delete notifications	notifications	de	Benachrichtigungen löschen
 delete this message	notifications	de	Diese Benachrichtigung löschen
 disabled chains	notifications	de	Deaktivierte Ketten
 do not notify me at all	notifications	de	benachrichtige mich niemals
@@ -48,6 +50,7 @@ if set, embedded links get rendered special for external clients	notifications	d
 info on load config file: create config file.	notifications	de	Information zum Laden der Konfigurationsdatei: Datei wird angelegt.
 issuer dn:	notifications	de	Herausgeber:
 java desktop notification app	preferences	de	Java Anwendung für Desktop Benachrichtigungen
+last month	notifications	de	letzter Monat
 linked entries:	common	de	Verknüpfte Einträge:
 login aborted, application exit?	notifications	de	Login abgebrochen, Anwendung beenden?
 login in egroupware:	notifications	de	Login in EGroupware
@@ -89,7 +92,6 @@ the server certificate is not a valid trust center certificate!	notifications	de
 this egroupware notification has been sent to you by mail because your	notifications	de	Diese EGroupware Benachrichtigung wurde Ihnen per E-Mail zugestellt.
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	de	Diese EGroupware-Benachrichtigung wurde Ihnen per Mail zugesandt, da Ihre gewählte Benachrichtigungskette vom Administrator deaktiviert wurde. Bitte wählen Sie eine andere Benachrichtigungskette in Ihren Einstellungen!
 this month	notifications	de	diesen Monat
-you have %1 unread notifications	notifications	de	Sie haben %1 ungelesene Nachrichten
 user:	notifications	de	Benutzer:
 warning	notifications	de	Warnung
 windows-popup and e-mail	notifications	de	Windows-Popup und E-Mail
@@ -98,6 +100,7 @@ windows-popup first, if that fails notify me by e-mail	notifications	de	Zuerst W
 windows-popup only	notifications	de	nur Windows-Popup
 yesterday	notifications	de	Gestern
 you can also use	admin	de	Sie können ebenso folgendes verwenden:
+you have %1 unread notifications	notifications	de	Sie haben %1 ungelesene Nachrichten
 you have been successfully logged out	notifications	de	Sie wurde erfolgreich abgemeldet
 you've got new mail	notifications	de	Sie haben neue E-Mails
 your session could not be verified.	notifications	de	Ihre Sitzung konnte nicht verifiziert werden.
