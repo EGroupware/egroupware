@@ -1,3 +1,19 @@
+egroupware-epl (17.1.20180209) hardy; urgency=low
+
+  * Filemanager: Add an user preference for being able to chose whether opening a merge print document should download it or open it with collabora editor
+  * Filemanager: Add new user preference in order to be able to exclude specific file extensions from being opened by document editor (eg. Collabora)
+  * Calendar: Allow templates without pagerepeat or range tags to work using only the first ID
+  * Calendar: Improve parsing of users when importing to be able to handle parentheses in names
+  * Calendar: Fix right click -> add gave error instead of popup
+  * Calendar: Fix Filemanager, Infolog & Timesheet context menu actions
+  * Infolog: Fix merging empty custom date fields filled them with current date
+  * InfoLog: fix not working iCal export in edit window
+  * Addressbook: Fix avatar photo gets removed when adding category to contact via contextmenu
+  * Tracker: Put ticket status from closed to open on comment
+  * Api: Fix some spelling errors, reported by Stefan Unverricht
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 09 Feb 2018 10:38:52 +0100
+
 egroupware-epl (17.1.20180130) hardy; urgency=low
 
   * SECURITY AND MAINTENANCE RELEASE: PLEASE UPDATE IMMEDIATELY
