@@ -2601,12 +2601,10 @@ window.egw_LAB.wait(function() {
 		$fields = explode(',',$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields']);
 		$threshold = (int)$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'];
 
-		if (preg_match('/^exec\[([^\]]+)\]$/', $name, $matches)) $name = $matches[1];	// remove exec[ ]
-
 		$ret = array('doublicates' => array(), 'msg' => null);
 
 		// if email changed, check for doublicates
-		if (in_array($name, array('email', 'email_home')) && in_array($name, $fields))
+		if (in_array($name, array('email', 'email_home')) && in_array('contact_'.$name, $fields))
 		{
 			if (preg_match(Etemplate\Widget\Url::EMAIL_PREG, $values[$name]))	// only search for real email addresses, to not return to many contacts
 			{
