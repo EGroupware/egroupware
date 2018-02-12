@@ -354,20 +354,21 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 					if(!egw.app('addressbook')) return;
 
 					// Bind onmouseenter event on <a> tag in order to add contact plus
+					// Need to keep span & value so it works inside nextmatch
 					this.span.on ('mouseenter', jQuery.proxy(function (event) {
 						event.stopImmediatePropagation();
 						if(typeof et2_url_ro.email_cache[this.value] === 'undefined')
 						{
 							// Ask server if we know this email
-							this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact',
-								this.value, this._add_contact_tooltip, this
+							this.widget.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact',
+								this.value, this.widget._add_contact_tooltip, this
 							);
 						}
 						else
 						{
-							this._add_contact_tooltip(et2_url_ro.email_cache[this.value]);
+							this.widget._add_contact_tooltip.call(this, et2_url_ro.email_cache[this.value]);
 						}
-					},this));
+					},{widget: this, span: this.span, value: this.value}));
 				}
 				break;
 		}
@@ -380,10 +381,17 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 	 */
 	_add_contact_tooltip: function(email_exists)
 	{
-		et2_url_ro.email_cache[this.value] = email_exists;
+		var value = this.value || this.widget.value || null;
+		et2_url_ro.email_cache[value] = email_exists;
 
 		if(email_exists) return;
 
+		// Close all the others
+		jQuery('.et2_email').each(function() {
+			if(jQuery(this).tooltip('instance')) {
+				jQuery(this).tooltip('close');
+			}
+		});
 		this.span.tooltip({
 			items: 'a.et2_email',
 			position: {my:"right top", at:"left top", collision:"flipfit"},
