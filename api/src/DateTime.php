@@ -497,7 +497,7 @@ class DateTime extends \DateTime
 		$date = null;
 
 		// If numeric, just let normal constructor do it
-		if(is_numeric($time))
+		if(is_numeric($time) || is_array($time))
 		{
 			return new DateTime($time);
 		}
