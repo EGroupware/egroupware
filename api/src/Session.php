@@ -965,7 +965,7 @@ class Session
 			// session only stores app-names, restore apps from egw_info[apps]
 			if (!is_array($GLOBALS['egw_info']['user']['apps']['api']))
 			{
-				$GLOBALS['egw_info']['user']['apps'] = array_intersect_key($GLOBALS['egw_info']['apps'], array_flip($GLOBALS['egw_info']['user']['apps']));
+				$GLOBALS['egw_info']['user']['apps'] = array_intersect_key($GLOBALS['egw_info']['apps'], $GLOBALS['egw_info']['user']['apps']);
 			}
 
 			// set prefs, they are no longer stored in session
