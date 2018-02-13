@@ -430,7 +430,7 @@ class Sharing
 
 			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
 			{
-				$vfs_path = Vfs::parse_url($stat['url'], PHP_URL_PATH);
+				$vfs_path = Vfs::parse_url($path, PHP_URL_PATH);
 			}
 		}
 		// check if file exists and is readable
