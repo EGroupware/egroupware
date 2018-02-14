@@ -965,7 +965,25 @@ class Session
 			// session only stores app-names, restore apps from egw_info[apps]
 			if (isset($GLOBALS['egw_info']['user']['apps'][0]))
 			{
-				$GLOBALS['egw_info']['user']['apps'] = array_intersect_key($GLOBALS['egw_info']['apps'], array_flip($GLOBALS['egw_info']['user']['apps']));
+
+				// HOTFIX: handle GLOBALS.egw_info_user.apps properly.
+				//         when a non-egw user opens a series of share-urls 
+				//         the original array_flip()-code nukes
+                                $tmp_apps = [];
+                                if (isset($GLOBALS['egw_info']['user']['apps'][0])){
+                                        $app_keys = $GLOBALS['egw_info']['user']['apps'];
+                                } else {
+                                        $app_keys =  array_keys($GLOBALS['egw_info']['user']['apps']);
+                                }
+                                
+                                foreach( $app_keys as $idx=>$app_key){
+                                        if (isset($GLOBALS['egw_info']['apps'][$app_key])) {
+                                                $tmp_apps[$app_key] = $GLOBALS['egw_info']['apps'][$app_key];
+                                        }
+                                }
+                                
+                                $GLOBALS['egw_info']['user']['apps'] = $tmp_apps;
+
 			}
 
 			// set prefs, they are no longer stored in session
