@@ -963,7 +963,7 @@ class Session
 			$GLOBALS['egw']->applications->read_installed_apps();
 
 			// session only stores app-names, restore apps from egw_info[apps]
-			if (!is_array($GLOBALS['egw_info']['user']['apps']['api']))
+			if (isset($GLOBALS['egw_info']['user']['apps'][0]))
 			{
 				$GLOBALS['egw_info']['user']['apps'] = array_intersect_key($GLOBALS['egw_info']['apps'], array_flip($GLOBALS['egw_info']['user']['apps']));
 			}
