@@ -121,7 +121,7 @@ class calendar_merge extends Api\Storage\Merge
 	 */
 	function merge_string($content,$ids,$err,$mimetype,$fix)
 	{
-		$ids = $this->validate_ids($ids, $content);
+		$ids = $this->validate_ids((array)$ids, $content);
 
 		return parent::merge_string($content, $ids, $err, $mimetype,$fix);
 	}
