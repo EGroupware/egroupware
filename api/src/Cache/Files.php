@@ -207,7 +207,7 @@ class Files extends Base implements Provider
 	 */
 	function filename(array $keys,$mkdir=false)
 	{
-		$fname = $this->base_path.'/'.str_replace(array(':','*'),'-',implode('/',$keys));
+		$fname = $this->base_path.'/'.str_replace(array(':','*','\\'),'-',implode('/',$keys));
 
 		if ($mkdir && !file_exists($dirname=dirname($fname)))
 		{
