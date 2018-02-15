@@ -150,9 +150,9 @@ class File extends Etemplate\Widget
 			// Don't trust what the browser tells us for mime
 			if(function_exists('mime_content_type'))
 			{
-				$file['type'] = $type = mime_content_type($file['tmp_name']);
+				$file['type'] = $type = Api\MimeMagic::analyze_file($file['tmp_name']);
 			}
-			
+
 			// Mime check
 			if($mime)
 			{
