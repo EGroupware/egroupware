@@ -169,7 +169,7 @@ class Sharing
 			if (!isset($_SERVER['PHP_AUTH_PW'])) $_SERVER['PHP_AUTH_PW'] = '';
 
 			unset($GLOBALS['egw_info']['flags']['autocreate_session_callback']);
-			if ($GLOBALS['egw']->session->verify() && isset($GLOBALS['egw']->sharing) &&
+			if (isset($GLOBALS['egw']->sharing) && $GLOBALS['egw']->session->verify() &&
 				$GLOBALS['egw']->sharing->share['share_token'] === $token)
 			{
 				return $GLOBALS['egw']->session->sessionid;
