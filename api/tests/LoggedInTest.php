@@ -54,6 +54,7 @@ abstract class LoggedInTest extends TestCase
 
 			// Re-init config, since it doesn't get handled by loading Egw
 			Api\Config::init_static();
+			Api\Vfs::init_static();
 		}
 		catch(Exception $e)
 		{
@@ -96,6 +97,9 @@ abstract class LoggedInTest extends TestCase
 			}
 			unset($GLOBALS['egw']);
 		}
+
+		Api\Session::egw_setcookie('sessionid');
+		Api\Session::egw_setcookie('kp3');
 		unset($GLOBALS['egw_info']);
 		unset($GLOBALS['_SESSION']);
 		$_SESSION = array();
@@ -136,6 +140,7 @@ abstract class LoggedInTest extends TestCase
 		}
 		$GLOBALS['egw_info'] = $info;
 
+		$ob_level = ob_get_level();
 		try
 		{
 			include(realpath(__DIR__ . '/../../header.inc.php'));
@@ -171,6 +176,11 @@ abstract class LoggedInTest extends TestCase
 
 		// Disable asyc while we test
 		$GLOBALS['egw_info']['server']['asyncservice'] = 'off';
+
+		while(ob_get_level() > $ob_level)
+		{
+			ob_end_clean();
+		}
 	}
 
 
