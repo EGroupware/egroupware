@@ -716,7 +716,8 @@ var et2_tree = (function(){ "use strict"; return et2_inputWidget.extend(
 	 */
 	setLabel: function(_id, _label, _tooltip) {
 		if(this.input == null) return null;
-		var tooltip = _tooltip || this.getNode(_id).tooltip;
+		var tooltip = _tooltip || (this.getNode(_id) && this.getNode(_id).tooltip ?
+			this.getNode(_id).tooltip : "");
 		this.input.setItemText(_id, this._htmlencode(_label), tooltip);
 	},
 
