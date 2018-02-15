@@ -249,6 +249,12 @@ class calendar_merge extends Api\Storage\Merge
 				$replacements['$$'.($prefix ? $prefix . '/' : '') . "calendar_participants/{$t_id}$$"] = implode(', ',$type);
 			}
 		}
+		// Participant email list (not declined)
+		$this->participant_emails($replacements, $record, $prefix, $content);
+
+		// Add participant summary
+		$this->participant_summary($replacements, $record, $prefix, $content);
+
 		if(!$replacements['$$'.($prefix ? $prefix . '/' : '') . 'calendar_recur_type$$'])
 		{
 			// Need to set it to '' if not set or previous record may be used
@@ -286,6 +292,88 @@ class calendar_merge extends Api\Storage\Merge
 		$replacements += $this->get_all_links('calendar', $event['id'], $prefix, $content);
 
 		return $replacements;
+	}
+
+	/**
+	 * Generate placeholder(s) for email addresses of all participants who have
+	 * them.
+	 *
+	 * @param Array $replacements Array of replacements
+	 * @param calendar_egw_record $record Event record
+	 * @param string $prefix Prefix of placeholder
+	 * @param string $content Content with placeholders in it
+	 */
+	public function participant_emails(&$replacements, &$record, $prefix, &$content)
+	{
+		// Early exit if the placeholder is not used
+		if(strpos($content, '$$'.($prefix?$prefix.'/':'').'participant_emails$$') === FALSE)
+		{
+			return false;
+		}
+
+		$emails = array();
+		foreach($record->participants as $uid => $status)
+		{
+			// Skip rejected
+			if (in_array(substr($status, 0, 1), array('R')))
+			{
+				continue;
+			}
+
+			$info = $this->bo->resource_info($uid);
+			if($info['email'])
+			{
+				$emails[] = $info['email'];
+			}
+		}
+		$replacements['$$'.($prefix?$prefix.'/':'').'participant_emails$$'] = implode(', ', $emails);
+	}
+
+	/**
+	 * Generate placeholder for a summary of participant status:
+	 * 3 Participants: 1 Accepted, 2 Unknown
+	 *
+	 * Blank if only one participant, matches what's shown in UI event hover
+	 *
+	 * @param Array $replacements Array of replacements
+	 * @param calendar_egw_record $record Event record
+	 * @param string $prefix Prefix of placeholder
+	 * @param string $content Content with placeholders in it
+	 */
+	public function participant_summary(&$replacements, &$record, $prefix, &$content)
+	{
+		// Early exit if the placeholder is not used
+		if(strpos($content, '$$'.($prefix?$prefix.'/':'').'participant_summary$$') === FALSE)
+		{
+			return false;
+		}
+
+		$placeholder = '$$'.($prefix?$prefix.'/':'').'participant_summary$$';
+
+		// No summary for 1 participant
+		if(count($record->participants) < 2)
+		{
+			$replacements[$placeholder] = '';
+		}
+
+		$participant_status = array('A' => 0, 'R' => 0, 'T' => 0, 'U' => 0, 'D' => 0);
+		$status_label = array('A' => 'accepted', 'R' => 'rejected', 'T' => 'tentative', 'U' => 'unknown', 'D' => 'delegated');
+		$participant_summary = count($record->participants) . ' ' . lang('Participants').': ';
+		$status_totals = [];
+
+		foreach($record->participants as $uid => $status)
+		{
+			$participant_status[substr($status,0,1)]++;
+		}
+		foreach($participant_status as $status => $count)
+		{
+			if($count > 0)
+			{
+				$status_totals[] = $count . ' ' . lang($status_label[$status]);
+			}
+		}
+		$summary = $participant_summary . join(', ',$status_totals);
+		$replacements[$placeholder] = $summary;
 	}
 
 	/**
@@ -795,6 +883,9 @@ class calendar_merge extends Api\Storage\Merge
 
 
 		echo '<tr><td colspan="4"><h3>'.lang('Participants').":</h3></td></tr>";
+		echo '<tr><td>{{participant_emails}}</td><td colspan="3">'.lang('A list of email addresses of all participants who have not declined')."</td></tr>\n";
+		echo '<tr><td>{{participant_summary}}</td><td colspan="3">'.lang('Summary of participant status: 3 Participants: 1 Accepted, 2 Unknown')."</td></tr>\n";
+		echo '<tr><td colspan="4">'.lang('Participant names by type').'</td></tr>';
 		echo '<tr><td>{{calendar_participants/account}}</td><td colspan="3">'.lang('Accounts')."</td></tr>\n";
 		echo '<tr><td>{{calendar_participants/group}}</td><td colspan="3">'.lang('Groups')."</td></tr>\n";
 		foreach($this->bo->resources as $resource)

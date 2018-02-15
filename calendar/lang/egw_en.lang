@@ -15,6 +15,7 @@
 (without a custom url we use nation of user preference to load holidays from %s)	calendar	en	(Without a custom URL we use nation of user preference to load holidays from %s)
 , exceptions preserved	calendar	en	, exceptions preserved
 , stati of participants reset	calendar	en	, status of participants reset
+a list of email addresses of all participants who have not declined	calendar	en	A list of email addresses of all participants who have not declined
 a non blocking event will not conflict with other events	calendar	en	A non blocking event will not conflict with other events
 accept	calendar	en	Accept
 accept or reject an invitation	calendar	en	Accept or reject an invitation
@@ -401,6 +402,7 @@ open todo's:	calendar	en	Open ToDo's:
 optional	calendar	en	Optional
 overlap holiday	calendar	en	Overlap holiday
 owner too	calendar	en	Owner too
+participant names by type	calendar	en	Participant names by type
 participant table	calendar	en	Participant table
 participants	calendar	en	Participants
 participants disinvited from an event	calendar	en	Participants disinvited from an event
@@ -524,6 +526,7 @@ status for all future scheduled days changed	calendar	en	Status for all future s
 status for this particular day changed	calendar	en	Status for this particular day changed.
 status of participants set to unknown because of missing category rights	calendar	en	Status of participants set to unknown because of missing category rights.
 submit to repository	calendar	en	Submit to repository
+summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	en	Summary of participant status: 3 Participants: 1 Accepted, 2 Unknown
 sun	calendar	en	Sun
 tag to mark positions for address labels	calendar	en	Tag to mark positions for address labels
 tentative	calendar	en	Tentative
