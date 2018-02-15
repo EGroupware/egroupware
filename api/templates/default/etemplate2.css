@@ -1925,6 +1925,9 @@ div.ui-dialog div.ui-dialog-content > div[id] {
 	margin: 0 !important;
 	padding: 0 !important;
 }
+.et2_toolbar .et2_toolbar_actionlist span[data-group]:not(:first-child) > button.et2_button:first-child {
+	margin-left: 7px;
+}
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image, .nextmatch_header_row .et2_button {
 	width: 24px;
 	background-position: center;
