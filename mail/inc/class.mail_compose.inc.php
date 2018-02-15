@@ -125,15 +125,6 @@ class mail_compose
 				'shortcut' => array('ctrl' => true, 'keyCode' => 83, 'caption' => 'Ctrl + S'),
 				'toolbarDefault' => true
 			),
-			'pgp' => array(
-				'caption' => 'Encrypt',
-				'icon' => 'lock',
-				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.togglePgpEncrypt',
-				'hint' => 'Send message PGP encrypted: requires keys from all recipients!',
-				'checkbox' => true,
-				'toolbarDefault' => true
-			),
 			'button[saveAsDraft]' => array(
 				'caption' => 'Save',
 				'icon' => 'save',
@@ -145,9 +136,16 @@ class mail_compose
 			'button[saveAsDraftAndPrint]' => array(
 				'caption' => 'Print',
 				'icon' => 'print',
-				'group' => ++$group,
+				'group' => $group,
 				'onExecute' => 'javaScript:app.mail.saveAsDraft',
 				'hint' => 'Save as Draft and Print'
+			),
+			'save2vfs' => array (
+				'caption' => 'Save to filemanager',
+				'icon' => 'filesave',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.mail.compose_saveDraft2fm',
+				'hint' => 'Save the drafted message as eml file into VFS'
 			),
 			'selectFromVFSForCompose' => array(
 				'caption' => 'VFS',
@@ -160,7 +158,7 @@ class mail_compose
 			'uploadForCompose' => array(
 				'caption' => 'Upload files...',
 				'icon' => 'attach',
-				'group' => ++$group,
+				'group' => $group,
 				'onExecute' => 'javaScript:app.mail.compose_triggerWidget',
 				'hint' => 'Select files to upload',
 				'toolbarDefault' => true
@@ -201,17 +199,19 @@ class mail_compose
 			),
 			'prty' => array(
 				'caption' => 'Priority',
-				'group' => ++$group,
+				'group' => $group,
 				'icon' => 'priority',
 				'children' => array(),
 				'hint' => 'Select the message priority tag',
 			),
-			'save2vfs' => array (
-				'caption' => 'Save to filemanager',
-				'icon' => 'filesave',
+			'pgp' => array(
+				'caption' => 'Encrypt',
+				'icon' => 'lock',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.compose_saveDraft2fm',
-				'hint' => 'Save the drafted message as eml file into VFS'
+				'onExecute' => 'javaScript:app.mail.togglePgpEncrypt',
+				'hint' => 'Send message PGP encrypted: requires keys from all recipients!',
+				'checkbox' => true,
+				'toolbarDefault' => true
 			),
 
 		);
@@ -230,7 +230,7 @@ class mail_compose
 				'smime_encrypt' => array (
 					'caption' => 'SMIME Encryption',
 					'icon' => 'smime_encrypt',
-					'group' => ++$group,
+					'group' => $group,
 					'onExecute' => 'javaScript:app.mail.compose_setToggle',
 					'checkbox' => true,
 					'hint' => 'Encrypt your message with smime certificate'
