@@ -1034,8 +1034,7 @@ class admin_mail
 								$smime = new Mail\Smime;
 								$content['acc_smime_username'] = $smime->getEmailFromKey($content['smime_cert']);
 								$AB_bo = new addressbook_bo();
-								if (($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])) &&
-										$content['smimeKeyUpload']['type'] == 'application/x-pkcs12')
+								if (($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])))
 								{
 									$cert_info = Mail\Smime::extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
 									if (is_array($cert_info))
