@@ -1908,7 +1908,12 @@ class calendar_bo
 					{
 						$holidays[$date] = array();
 					}
-					$holidays[$date] = array_merge($holidays[$date], $bdays);
+					foreach($bdays as $birthday)
+					{
+						// Skip if name / date are already there - duplicate contacts
+						if(in_array($birthday['name'], array_column($holidays[$date], 'name'))) continue;
+						$holidays[$date][] = $birthday;
+					}
 				}
 			}
 		}
