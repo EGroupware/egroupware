@@ -1072,6 +1072,14 @@ ul.et2_link_string {
   background-repeat: no-repeat;
   font-weight: bold;
 }
+.et2_taglist .ms-res-item[data-json*='more_results']:after {
+	content:'…';
+	display: block;
+    font-size: 200%;
+	padding: 5px;
+    padding-left: 3ex;
+	margin-top: -1ex;
+}
 /* min-height to fix calculations done while hidden */
 .et2_taglist, .et2_taglist > div.ms-ctn  {
 	min-height: 23px;

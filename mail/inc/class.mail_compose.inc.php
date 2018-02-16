@@ -3456,28 +3456,10 @@ class mail_compose
 		$contacts_obj = new Api\Contacts();
 		$results = array();
 
-		// Add up to 5 matching mailing lists
+		// Add up to 10 matching mailing lists, and 10 groups
 		if($include_lists)
 		{
-			$lists = array_filter(
-				$contacts_obj->get_lists(Acl::READ),
-				function($element) use($_searchString) {
-					return (stripos($element, $_searchString) !== false);
-				}
-			);
-			$list_count = 0;
-			foreach($lists as $key => $list_name)
-			{
-				$results[] = array(
-					'id'	=> $key,
-					'name'	=> $list_name,
-					'label'	=> $list_name,
-					'class' => 'mailinglist',
-					'title' => lang('Mailinglist'),
-					'data'	=> $key
-				);
-				if($list_count++ > 5) break;
-			}
+			$results += static::get_lists($_searchString, $contacts_obj);
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['addressbook'] && strlen($_searchString)>=$_searchStringLength)
@@ -3586,6 +3568,48 @@ class mail_compose
 		exit();
 	}
 
+	/**
+	 * Get list of matching distribution lists when searching for email addresses
+	 *
+	 * The results are limited to 10 each of group lists and normal lists
+	 * 
+	 * @param String $_searchString
+	 * @param Contacts $contacts_obj
+	 * @return array
+	 */
+	protected static function get_lists($_searchString, &$contacts_obj)
+	{
+		$group_lists = array();
+		$manual_lists = array();
+		$lists = array_filter(
+			$contacts_obj->get_lists(Acl::READ),
+			function($element) use($_searchString) {
+				return (stripos($element, $_searchString) !== false);
+			}
+		);
+
+		foreach($lists as $key => $list_name)
+		{
+			$type = $key > 0 ? 'manual' : 'group';
+			$list = array(
+				'id'	=> $key,
+				'name'	=> $list_name,
+				'label'	=> $list_name,
+				'class' => 'mailinglist ' . "{$type}_list",
+				'title' => lang('Mailinglist'),
+				'data'	=> $key
+			);
+			${"${type}_lists"}[] = $list;
+		}
+		$trim = function($list) {
+			$limit = 10;
+			if(count($list) <= $limit) return $list;
+			$list[$limit-1]['class'].= ' more_results';
+			$list[$limit-1]['title'] .= '  (' . lang('%1 more', count($list) - $limit) . ')';
+			return array_slice($list, 0, $limit);
+		};
+		return array_merge($trim($group_lists), $trim($manual_lists));
+	}
 	/**
 	 * Merge the selected contact ID into the document given in $_REQUEST['document']
 	 * and send it.
