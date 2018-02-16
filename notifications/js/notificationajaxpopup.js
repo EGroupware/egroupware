@@ -201,12 +201,14 @@
 					.addClass('egwpopup_message_date')
 					.prependTo($top_toolbar)
 					.text(notifymessages[id]['created']);
-			// OPEN entry button
-			$open_entry = jQuery(document.createElement('span'))
-					.addClass('egwpopup_message_open')
-					.attr('title',egw.lang('open notified entry'))
-					.click(jQuery.proxy(this.open_entry, this,[$message]))
-					.prependTo($top_toolbar);
+			if (notifymessages[id]['data']['id'] || notifymessages[id]['data']['url']) {
+				// OPEN entry button
+				$open_entry = jQuery(document.createElement('span'))
+						.addClass('egwpopup_message_open')
+						.attr('title',egw.lang('open notified entry'))
+						.click(jQuery.proxy(this.open_entry, this,[$message]))
+						.prependTo($top_toolbar);
+			}
 			// Delete button
 			$delete = jQuery(document.createElement('span'))
 					.addClass('egwpopup_delete')
