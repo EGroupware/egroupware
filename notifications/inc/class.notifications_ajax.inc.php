@@ -198,7 +198,7 @@ class notifications_ajax {
 					$notification['notify_message'],
 					$browserNotify,
 					$notification['notify_status'],
-					$notification['notify_created'],
+					Api\DateTime::to($notification['notify_created']),
 					new DateTime(),
 					is_array($actions)?$actions:NULL)
 				);
