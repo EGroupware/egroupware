@@ -28,6 +28,8 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 	// Notification permission, the default value is 'default' which is equivalent to 'denied'
 	var permission = 'default';
+	// Keeps alive notifications
+	var alive_notifications = [];
 
 	if (typeof Notification != 'undefined')
 	{
@@ -80,6 +82,10 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			// Create an  instance of Notification object
 			var notification = new Notification(_title, inst_options);
 
+			//set timer to close shown notification in 10 s, some browsers do not
+			//close it automatically.
+			setTimeout(notification.close.bind(notification), 10000);
+
 			// Callback function dispatches on click on notification message
 			notification.onclick = options.onclick || '';
 			// Callback function dispatches when notification is shown
@@ -89,6 +95,9 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			// Callback function dispatches on error
 			notification.onerror = options.onerror || function (e) {egw.debug('Notification failed because of ' + e);};
 
+			// Collect all running notifications in case if want to close them all,
+			// for instance on logout action.
+			alive_notifications.push(notification);
 		},
 
 		/**
@@ -104,7 +113,22 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				});
 			}
 			return (Notification && Notification.requestPermission && permission == 'granted');
-		}
+		},
 
+		/**
+		 * Check if there's any runnig notifications and will close them all
+		 *
+		 */
+		killAliveNotifications: function ()
+		{
+			if (alive_notifications && alive_notifications.length > 0)
+			{
+				for (var i=0; i<alive_notifications.length;i++)
+				{
+					if (typeof alive_notifications[i].close == 'function') alive_notifications[i].close();
+				}
+				alive_notifications = [];
+			}
+		}
 	};
 });

@@ -576,6 +576,11 @@
 					return;
 			}
 			if (typeof window.app == 'undefined') window.app = {};
+
+			window.onbeforeunload = function()
+			{
+				if (typeof egw.killAliveNotifications =='function') egw.killAliveNotifications();
+			};
 			window.app.notifications = new self();
 			// toggle notifications bar
 			jQuery('.egwpopup_toggle').click(function(){window.app.notifications.toggle();});
