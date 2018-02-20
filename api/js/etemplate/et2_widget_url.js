@@ -356,19 +356,16 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 					// Bind onmouseenter event on <a> tag in order to add contact plus
 					// Need to keep span & value so it works inside nextmatch
 					this.span.on ('mouseenter', jQuery.proxy(function (event) {
-						event.stopImmediatePropagation();
-						if(typeof et2_url_ro.email_cache[this.value] === 'undefined')
-						{
-							// Ask server if we know this email
-							this.widget.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact',
-								this.value, this.widget._add_contact_tooltip, this
-							);
-						}
-						else
-						{
+							event.stopImmediatePropagation();
 							this.widget._add_contact_tooltip.call(this, et2_url_ro.email_cache[this.value]);
-						}
-					},{widget: this, span: this.span, value: this.value}));
+							if(typeof et2_url_ro.email_cache[this.value] === 'undefined')
+							{
+								// Ask server if we know this email
+								this.widget.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact',
+									this.value, this.widget._add_contact_tooltip, this
+								);
+							}
+						},{widget: this, span: this.span, value: this.value}));
 				}
 				break;
 		}
@@ -384,14 +381,15 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 		var value = this.value || this.widget.value || null;
 		et2_url_ro.email_cache[value] = email_exists;
 
-		if(email_exists) return;
-
 		// Close all the others
 		jQuery('.et2_email').each(function() {
 			if(jQuery(this).tooltip('instance')) {
 				jQuery(this).tooltip('close');
 			}
 		});
+
+		if(email_exists || !this.span.is(':hover')) return;
+
 		this.span.tooltip({
 			items: 'a.et2_email',
 			position: {my:"right top", at:"left top", collision:"flipfit"},
@@ -404,7 +402,7 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 				};
 
 				return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="'+egw.lang('Add a new contact')+'"><img src="'
-						+egw.image("new") +'"/></a>')
+						+ (typeof email_exists === 'undefined' ? egw.image("loading") : egw.image("new")) +'"/></a>')
 					.on('click', function() {
 						egw.open('','addressbook','add',extra);
 					});
@@ -423,6 +421,14 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 			}
 		})
 		.tooltip("open");
+
+		jQuery('.egwGridView_scrollarea').one('scroll', jQuery.proxy(function() {
+			if(this.tooltip("instance"))
+			{
+				this.tooltip('destroy');
+			}
+		}, this.span));
+
 	},
 
 	/**
