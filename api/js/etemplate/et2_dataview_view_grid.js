@@ -1357,17 +1357,17 @@ var et2_dataview_grid = (function(){ "use strict"; return et2_dataview_container
 
 						// Set a new timeout which calls the setViewArea
 						// function
-						e.data._scrollTimeout = window.setTimeout(function() {
+						e.data._scrollTimeout = window.setTimeout(jQuery.proxy(function() {
 							var newRange = et2_range(
-								e.data.scrollarea.scrollTop() - ET2_GRID_VIEW_EXT,
-								e.data._scrollHeight + ET2_GRID_VIEW_EXT * 2
+								this.scrollarea.scrollTop() - ET2_GRID_VIEW_EXT,
+								this._scrollHeight + ET2_GRID_VIEW_EXT * 2
 							);
 
-							if (!et2_rangeEqual(newRange, e.data._viewRange))
+							if (!et2_rangeEqual(newRange, this._viewRange))
 							{
-								e.data.setViewRange(newRange);
+								this.setViewRange(newRange);
 							}
-						}, ET2_GRID_SCROLL_TIMEOUT);
+						},e.data), ET2_GRID_SCROLL_TIMEOUT);
 					})
 				.height(this._scrollHeight)
 				.appendTo(this.outerCell);
