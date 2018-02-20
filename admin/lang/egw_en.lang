@@ -281,6 +281,7 @@ displayed length of input field (set rows=1 to limit length)	admin	en	displayed 
 displaying html messages is disabled	admin	en	displaying html messages is disabled
 displaying plain messages is disabled	admin	en	displaying plain messages is disabled
 do not delete the category and return back to the list	admin	en	Do NOT delete the category and return back to the list
+do not generate email addresses	admin	en	Do not generate EMail addresses
 do not offer introduction video	admin	en	Do not offer introduction video
 do not validate certificate	admin	en	Do not validate certificate
 do you also want to delete all global subcategories ?	admin	en	Do you also want to delete all global sub categories?
@@ -530,6 +531,7 @@ login-status	admin	en	Login status
 loginid	admin	en	Login ID
 logintime	admin	en	Login time
 logoutime	admin	en	Logout time
+lowercase email addresses	admin	en	Lowercase EMail addresses
 mail account	admin	en	Mail account
 mail settings	admin	en	Mail settings
 main email-address	admin	en	Main email address

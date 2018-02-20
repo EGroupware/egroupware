@@ -531,6 +531,10 @@ class Accounts
 	 */
 	static function email($first,$last,$account,$domain=null)
 	{
+		if ($GLOBALS['egw_info']['server']['email_address_format'] === 'none')
+		{
+			return null;
+		}
 		foreach (array('first','last','account') as $name)
 		{
 			$$name = Translation::to_ascii($$name);
@@ -557,6 +561,11 @@ class Accounts
 			array($first,$last,substr($first,0,1),$account,$dot,$underscore,''),
 			$GLOBALS['egw_info']['server']['email_address_format'] ? $GLOBALS['egw_info']['server']['email_address_format'] : 'first-dot-last').
 			($domain ? '@'.$domain : '');
+
+		if (!empty($GLOBALS['egw_info']['server']['email_address_lowercase']))
+		{
+			$email = strtolower($email);
+		}
 		//echo " = '$email'</p>\n";
 		return $email;
 	}
