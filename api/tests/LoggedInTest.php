@@ -174,6 +174,9 @@ abstract class LoggedInTest extends TestCase
 			$GLOBALS['egw'] = new Api\Egw(array_keys($GLOBALS['egw_domain']));
 		}
 
+		// Make sure user is properly set
+		$GLOBALS['egw_info']['user'] = $GLOBALS['egw']->session->read_repositories();
+
 		// Disable asyc while we test
 		$GLOBALS['egw_info']['server']['asyncservice'] = 'off';
 
