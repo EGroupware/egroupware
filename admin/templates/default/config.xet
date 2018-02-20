@@ -18,19 +18,23 @@
 				</row>
 				<row>
 					<description value="How should EMail addresses for new users be constructed?" label="%s:"/>
+					<vbox>
 					<select id="newsettings[email_address_format]">
-						<option value="first-dot-last">{Firstname}.{Lastname}@domain.com</option>
-						<option value="first-last">{Firstname}{Lastname}@domain.com</option>
-						<option value="first-underscore-last">{Firstname}_{Lastname}@domain.com</option>
-						<option value="initial-last">{Initial}{Lastname}@domain.com</option>
-						<option value="initial-dot-last">{Initial}.{Lastname}@domain.com</option>
-						<option value="last-dot-first">{Lastname}.{Firstname}@domain.com</option>
-						<option value="last-first">{Lastname}{Firstname}@domain.com</option>
-						<option value="last-underscore-first">{Lastname}_{Firstname}@domain.com</option>
-						<option value="last">{Lastname}@domain.com</option>
-						<option value="first">{Firstname}@domain.com</option>
-						<option value="account">{Username}@domain.com</option>
-					</select>
+							<option value="first-dot-last">{Firstname}.{Lastname}@domain.com</option>
+							<option value="first-last">{Firstname}{Lastname}@domain.com</option>
+							<option value="first-underscore-last">{Firstname}_{Lastname}@domain.com</option>
+							<option value="initial-last">{Initial}{Lastname}@domain.com</option>
+							<option value="initial-dot-last">{Initial}.{Lastname}@domain.com</option>
+							<option value="last-dot-first">{Lastname}.{Firstname}@domain.com</option>
+							<option value="last-first">{Lastname}{Firstname}@domain.com</option>
+							<option value="last-underscore-first">{Lastname}_{Firstname}@domain.com</option>
+							<option value="last">{Lastname}@domain.com</option>
+							<option value="first">{Firstname}@domain.com</option>
+							<option value="account">{Username}@domain.com</option>
+							<option value="none">Do not generate EMail addresses</option>
+						</select>
+						<checkbox label="Lowercase EMail addresses" id="newsettings[email_address_lowercase]" value="true"/>
+					</vbox>
 				</row>
 				<row>
 					<description value="Enter the VFS-Path where additional images, icons or logos can be placed (and found by EGroupwares applications). The path MUST start with /,and be readable by all users" label="%s:"/>

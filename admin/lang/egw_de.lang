@@ -281,6 +281,7 @@ displayed length of input field (set rows=1 to limit length)	admin	de	angezeigte
 displaying html messages is disabled	admin	de	Das Anzeigen von HTML Nachrichten ist deaktiviert
 displaying plain messages is disabled	admin	de	Das Anzeigen von Text Nachrichten ist deaktiviert
 do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
+do not generate email addresses	admin	de	Keine EMail Adressen erzeugen
 do not offer introduction video	admin	de	Einführungsvideo nicht anbieten
 do not validate certificate	admin	de	Zertifikat nicht überprüfen
 do you also want to delete all global subcategories ?	admin	de	Wollen Sie auch alle globalen Unterkategorien löschen?
@@ -529,6 +530,7 @@ login-status	admin	de	Angemeldet-Status
 loginid	admin	de	Login-ID
 logintime	admin	de	Anmeldezeit
 logoutime	admin	de	Abmeldezeit
+lowercase email addresses	admin	de	EMail Adressen mit Kleinbuchstaben
 mail account	admin	de	E-Mail Konto
 mail settings	admin	de	E-Mail-Einstellungen
 main email-address	admin	de	Stamm-E-Mail-Adresse
