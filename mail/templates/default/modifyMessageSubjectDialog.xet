@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.modifyMessageSubjectDialog" template="" lang="" group="0" version="17.1">
+		<hbox class="et2_prompt">
+			<grid>
+				<columns>
+					<column width="120"/>
+					<column width="400"/>
+				</columns>
+				<rows>
+					<row>
+						<description label= "%s:" value="Current subject"/>
+						<description value="@value"/>
+					</row>
+					<row>
+						<description label= "%s:" value="New subject"/>
+						<textbox multiline="true" id="value" width="400"/>
+					</row>
+				</rows>
+			</grid>
+		</hbox>
+	</template>
+</overlay>

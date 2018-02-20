@@ -1148,6 +1148,14 @@ class mail_ui
 				'group' => $group,
 				'onExecute' => 'javaScript:app.mail.mail_compose',
 				'allowOnMultiple' => false,
+			),
+			'modifysubject' => array(
+				'caption' => 'Modify Subject',
+				'icon' => 'edit',
+				'hint' => 'Modify subject of this message',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.mail.modifyMessageSubjectDialog',
+				'allowOnMultiple' => false,
 			)
 		);
 		$macounter=0;

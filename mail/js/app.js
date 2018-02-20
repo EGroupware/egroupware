@@ -6034,5 +6034,48 @@ app.classes.mail = AppJS.extend(
 				nm.header.right_div.addClass('vertical_splitter');
 		}
 		return state;
+	},
+
+	/**
+	 * Creates a dialog for changing meesage subject
+	 *
+	 * @param {type} _action
+	 * @param {type} _sender
+	 */
+	modifyMessageSubjectDialog: function (_action, _sender)
+	{
+		var id = _sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
+		var data = egw.dataGetUIDdata(id);
+		var subject = data && data.data? data.data.subject : "";
+
+		var buttons = [
+			{text: this.egw.lang("Save"), id: "save", "class": "ui-priority-primary", "default": true},
+			{text: this.egw.lang("Cancel"), id:"cancel"}
+		];
+
+		et2_createWidget("dialog",
+		{
+			callback: function(_button_id, _value) {
+				var newSubject = null;
+				if (_value.length>0) newSubject = _value;
+
+				if (newSubject && newSubject.length>0)
+				{
+					switch (_button_id)
+					{
+						case "save":
+							egw.json('mail.mail_ui.ajax_saveModifiedMessageSubject',[_sender[0].id, newSubject])
+								.sendRequest(true);
+							return;
+						case "cancel":
+					}
+				}
+			},
+			title: this.egw.lang("Modify subject"),
+			buttons: buttons,
+			value:{content:{value:subject}},
+			template: egw.webserverUrl+'/mail/templates/default/modifyMessageSubjectDialog.xet?1',
+			resizable: false
+		}, et2_dialog._create_parent('mail'));
 	}
 });
