@@ -426,10 +426,10 @@ class admin_categories
 					$row['class'] .= ' rowNoDelete';
 				}
 			}
-			// Can only edit (via context menu) Categories for the selected app (backend restriction)
+			// Can only edit or delete (via context menu) Categories for the selected app (backend restriction)
 			if($row['appname'] != $query['appname'])
 			{
-				$row['class'] .= ' rowNoEdit ';
+				$row['class'] .= ' rowNoEdit rowNoDelete ';
 			}
 			$readonlys['nm']["edit[$row[id]]"]   = !self::$acl_edit;
 			$readonlys['nm']["add[$row[id]]"]    = !self::$acl_add_sub;
