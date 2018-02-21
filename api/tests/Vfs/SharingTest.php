@@ -63,6 +63,10 @@ class SharingTest extends LoggedInTest
 	 */
 	public function testHomeReadonly()
 	{
+		$this->markTestIncomplete(
+          'This test has not been implemented yet.'
+		);
+		return;
 		$dir = Vfs::get_home_dir().'/test_subdir/';
 		Vfs::mkdir($dir);
 
