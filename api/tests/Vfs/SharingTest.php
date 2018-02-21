@@ -24,6 +24,7 @@ class SharingTest extends LoggedInTest
 
 	// Keep some server stuff to reset when done
 	protected $original_server;
+	protected $original_user;
 
 	public function setUp()
 	{
@@ -31,13 +32,20 @@ class SharingTest extends LoggedInTest
 			'REQUEST_URI' => $_SERVER['REQUEST_URI'],
 			'SCRIPT_NAME' => $_SERVER['SCRIPT_NAME']
 		);
+		$this->original_user = $GLOBALS['egw_info']['user'];
 	}
 	public function tearDown()
 	{
+		//echo "\n\nEnding " . $this->getName() . "\n";
 		$_SERVER += $this->original_server;
+		$GLOBALS['egw_info']['user'] = $this->original_user;
+
 		$GLOBALS['egw']->session->destroy($GLOBALS['egw']->session->sessionid, $GLOBALS['egw']->session->kp3);
-		
+
+		// This resets the VFS, but logs in anonymous
 		LoggedInTest::setupBeforeClass();
+		$GLOBALS['egw_info']['user'] = $this->original_user;
+		Vfs::$user = $GLOBALS['egw_info']['user']['account_id'];
 
 		// Need to ask about mounts, or other tests fail
 		Vfs::mount();
@@ -55,8 +63,10 @@ class SharingTest extends LoggedInTest
 	 */
 	public function testHomeReadonly()
 	{
-		$dir = Vfs::get_home_dir();
+		$dir = Vfs::get_home_dir().'/test_subdir/';
+		Vfs::mkdir($dir);
 
+		//var_dump(Vfs::find('/',array('maxdepth' => 1)));
 		$logged_in_files = array_map(
 				function($path) use ($dir) {return str_replace($dir, '/', $path);},
 				Vfs::find($dir)
@@ -65,6 +75,7 @@ class SharingTest extends LoggedInTest
 
 		$files = Vfs::find(Vfs::get_home_dir());
 
+		//var_dump(Vfs::find('/test_subdir',array('maxdepth' => 1)));
 		// Make sure files are the same
 		$this->assertEquals($logged_in_files, $files);
 
@@ -85,16 +96,19 @@ class SharingTest extends LoggedInTest
           'This test has not been implemented yet.'
 		);
 		return;
-		// trearDown still not completely cleaning up, vfs fstab stays
+		// Still have problems finding the files
 
-		$dir = Vfs::get_home_dir();
-var_dump(Vfs::mount());
+		var_dump(Vfs::find('/',array('maxdepth' => 1)));
+		$dir = Vfs::get_home_dir().'/test_subdir/';
+
 		$logged_in_files = array_map(
 				function($path) use ($dir) {return str_replace($dir, '/', $path);},
 				Vfs::find($dir)
 		);
+		var_dump($logged_in_files);
 		$this->shareLink($dir, Sharing::WRITABLE);
-		$files = Vfs::find(Vfs::get_home_dir());
+		var_dump(Vfs::find('/',array('maxdepth' => 1)));
+		$files = Vfs::find(Vfs::get_home_dir().'/test_subdir');
 
 		// Make sure files are the same
 		$this->assertEquals($logged_in_files, $files);
@@ -102,6 +116,7 @@ var_dump(Vfs::mount());
 		// Make sure all are writable
 		foreach($files as $file)
 		{
+			echo "\t".$file . "\n";
 			$this->assertTrue(Vfs::is_writable($file), $file . ' was not writable');
 		}
 	}
@@ -132,6 +147,7 @@ var_dump(Vfs::mount());
 	 */
 	public function shareLink($path, $mode)
 	{
+		echo __METHOD__ . "('$path',$mode)\n";
 		// Setup - create path and share
 		$share = $this->createShare($path, $mode);
 		$link = Vfs\Sharing::share2link($share);
@@ -204,6 +220,8 @@ var_dump(Vfs::mount());
 			)
 		);
 
+		ob_start();
 		static::load_egw('anonymous','','',$GLOBALS['egw_info']);
+		ob_end_clean();
 	}
 }
