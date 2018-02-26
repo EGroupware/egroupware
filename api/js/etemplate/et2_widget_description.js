@@ -93,7 +93,14 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 			type: "string",
 			default: '',
 			description: "hash for data stored on service-side with egw_link::(get|set)_data()"
+		},
+		hover_action: {
+			"name": "hover action",
+			"type": "js",
+			"default": et2_no_init,
+			"description": "JS code which is executed when clicking on action button. This action is explicitly for attached nodes, like in nm."
 		}
+
 	},
 
 	legacyOptions: ["font_style", "href", "activate_links", "for",
@@ -300,7 +307,7 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 		return [this.span[0]];
 	},
 
-	setDetachedAttributes: function(_nodes, _values)
+	setDetachedAttributes: function(_nodes, _values, _data)
 	{
 		// Update the properties
 		var updateLink = false;
@@ -319,6 +326,42 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 		if (typeof _values["class"] != "undefined")
 		{
 			_nodes[0].setAttribute("class", _values["class"]);
+		}
+
+		// Add hover action button (Edit)
+		if (this.options.hover_action)
+		{
+			var content = _data.content;
+			var widget = this;
+			this.span.on('mouseenter', jQuery.proxy(function(event) {
+					event.stopImmediatePropagation();
+					var self = this;
+					this.span.tooltip({
+						items: 'span.et2_label',
+						position: {my:"right top", at:"left top", collision:"flipfit"},
+						tooltipClass: "et2_email_popup",
+						content: function()
+						{
+							return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="'+egw.lang('Edit')+'"><img src="'
+									+egw.image("edit") +'"/></a>')
+								.on('click', function() {
+									widget.options.hover_action.call(self, self.widget, content);
+								});
+						},
+						close: function( event, ui )
+						{
+							ui.tooltip.hover(
+								function () {
+									jQuery(this).stop(true).fadeTo(400, 1);
+								},
+								function () {
+									jQuery(this).fadeOut("400", function(){	jQuery(this).remove();});
+								}
+							);
+						}
+					})
+					.tooltip("open");
+				}, {widget: this, span: this.span}));
 		}
 	}
 }));}).call(this);

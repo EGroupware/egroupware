@@ -164,7 +164,7 @@ var et2_nextmatch_rowProvider = (function(){ "use strict"; return ClassWithAttri
 			entry.widget.transformAttributes.call(entry.widget,data);
 
 			// Call the setDetachedAttributes function
-			entry.widget.setDetachedAttributes(nodes, data);
+			entry.widget.setDetachedAttributes(nodes, data, _data);
 		}
 
 		// Insert the row into the tr
