@@ -193,6 +193,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	_UID_callback: function _UID_callback(event) {
 		// Copy to avoid changes, which may cause nm problems
 		var value = event === null ? null : jQuery.extend({},event);
+		var parent = this._parent;
 
 		// Make sure id is a string, check values
 		if(value)
@@ -204,8 +205,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		if(!this._sameday_check(value))
 		{
 			// May need to update parent to remove out-of-view events
-			var parent = this._parent;
-			this._parent.removeChild(this);
+			parent.removeChild(this);
 			if(event === null && parent && parent._out_of_view)
 			{
 				parent._out_of_view();
@@ -824,7 +824,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			{
 				new_daywise.push(event.row_id);
 			}
-			if(new_daywise.data !== null)
+			if(egw.dataHasUID(new_cache_id))
 			{
 				egw.dataStoreUID(new_cache_id,new_daywise);
 			}
