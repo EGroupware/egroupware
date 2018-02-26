@@ -111,7 +111,7 @@
 					<description span="1" class="status_img"/>
 					<html id="${row}[attachments]"/>
 					<vbox>
-						<description id="${row}[subject]" no_lang="1"/>
+						<description id="${row}[subject]" no_lang="1" hover_action="app.mail.modifyMessageSubjectDialog"/>
 						<description id="${row}[bodypreview]" no_lang="1" class='et2_label bodypreview'/>
 					</vbox>
 					<hbox>

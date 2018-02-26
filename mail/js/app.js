@@ -6039,13 +6039,14 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Creates a dialog for changing meesage subject
 	 *
-	 * @param {type} _action
-	 * @param {type} _sender
+	 * @param {object} _action|_widget
+	 * @param {object} _sender|_content
 	 */
 	modifyMessageSubjectDialog: function (_action, _sender)
 	{
-		var id = _sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
-		var data = egw.dataGetUIDdata(id);
+		var id = (_sender && _sender.uid) ? _sender.row_id:
+			_sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
+		var data = (_sender && _sender.uid) ? {data:_sender} : egw.dataGetUIDdata(id);
 		var subject = data && data.data? data.data.subject : "";
 
 		var buttons = [
@@ -6064,7 +6065,7 @@ app.classes.mail = AppJS.extend(
 					switch (_button_id)
 					{
 						case "save":
-							egw.json('mail.mail_ui.ajax_saveModifiedMessageSubject',[_sender[0].id, newSubject], function(_data){
+							egw.json('mail.mail_ui.ajax_saveModifiedMessageSubject',[id, newSubject], function(_data){
 								if (_data && !_data.success)
 								{
 									egw.message(_data.msg, "error");
