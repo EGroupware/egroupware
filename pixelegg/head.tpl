@@ -6,9 +6,9 @@
 		<meta name="keywords" content="EGroupware" />
 		<meta name="description" content="EGroupware" />
 		<meta name="keywords" content="EGroupware" />
-		<meta name="copyright" content="Stylite AG 2013, see http://www.stylite.de/EPL" />
+		<meta name="copyright" content="EGroupware GmbH http://www.egroupware.org (c) 2018" />
 		<meta name="language" content="{lang_code}" />
-		<meta name="author" content="Stylite AG www.stylite.de" />
+		<meta name="author" content="EGroupware GmbH http://www.egroupware.org" />
 		{pngfix}
 		{meta_robots}
 		<link rel="icon" href="{img_icon}" type="image/x-ico" />
