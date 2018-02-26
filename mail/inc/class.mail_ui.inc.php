@@ -1156,6 +1156,7 @@ class mail_ui
 				'group' => $group,
 				'onExecute' => 'javaScript:app.mail.modifyMessageSubjectDialog',
 				'allowOnMultiple' => false,
+				'shortcut' =>  array('ctrl' => true, 'keyCode' => 77, 'caption' => 'Ctrl + M'),
 			)
 		);
 		$macounter=0;
@@ -3620,6 +3621,54 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			case "background":
 				return preg_replace_callback("/background=(\"|\')cid:(.*)(\"|\')/iU",$replace_callback,$_body);
 		}
+	}
+
+	/**
+	 * Create a new message from modified message then sends the original one to
+	 * the trash.
+	 *
+	 * @param string $_rowID row id
+	 * @param string $_subject subject to be replaced with old subject
+	 *
+	 * Sends json response to client with following data:
+	 *		array (
+	 *			success => boolean
+	 *			msg => string
+	 *		)
+	 */
+	function ajax_saveModifiedMessageSubject ($_rowID, $_subject)
+	{
+		$response = Api\Json\Response::get();
+		$idData = self::splitRowID($_rowID);
+		$folder = $idData['folder'];
+		try {
+			$raw = $this->mail_bo->getMessageRawBody($idData['msgUID'],'', $folder);
+			$result = array ('success' => true, 'msg' =>'');
+			if ($raw && $_subject)
+			{
+				$mailer = new Api\Mailer();
+				$this->mail_bo->parseRawMessageIntoMailObject($mailer, $raw);
+				$mailer->removeHeader('subject');
+				$mailer->addHeader('subject', $_subject);
+				$this->mail_bo->openConnection();
+				$delimiter = $this->mail_bo->getHierarchyDelimiter();
+				if($folder == 'INBOX'.$delimiter) $folder='INBOX';
+				if ($this->mail_bo->folderExists($folder,true))
+				{
+					$this->mail_bo->appendMessage($folder, $mailer->getRaw(), null,'\\Seen');
+					$this->mail_bo->deleteMessages($idData['msgUID'], $folder);
+				}
+				else
+				{
+					$result['success'] = false;
+					$result['msg'] = lang('Changing subject failed folder %1 does not exist', $folder);
+				}
+			}
+		} catch (Exception $e) {
+			$result['success'] = false;
+			$result['msg'] = lang('Changing subject failed because of %1 ', $e->getMessage());
+		}
+		$response->data($result);
 	}
 
 	/**

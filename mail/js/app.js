@@ -6057,15 +6057,23 @@ app.classes.mail = AppJS.extend(
 		{
 			callback: function(_button_id, _value) {
 				var newSubject = null;
-				if (_value.length>0) newSubject = _value;
+				if (_value && _value.value) newSubject = _value.value;
 
 				if (newSubject && newSubject.length>0)
 				{
 					switch (_button_id)
 					{
 						case "save":
-							egw.json('mail.mail_ui.ajax_saveModifiedMessageSubject',[_sender[0].id, newSubject])
-								.sendRequest(true);
+							egw.json('mail.mail_ui.ajax_saveModifiedMessageSubject',[_sender[0].id, newSubject], function(_data){
+								if (_data && !_data.success)
+								{
+									egw.message(_data.msg, "error");
+									return;
+								}
+								var nm = app.mail.et2.getWidgetById('nm');
+								if (nm)	{nm.applyFilters();}
+
+							}).sendRequest(true);
 							return;
 						case "cancel":
 					}
