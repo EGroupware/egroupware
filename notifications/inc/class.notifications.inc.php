@@ -90,7 +90,7 @@ class notifications {
 		'email_only' 			=> 'E-Mail only',
 		'all' 					=> 'all possible notification backends',
 		'popup_only' 			=> 'eGroupWare-Popup only',
-		'popup_or_email' 		=> 'eGroupWare-Popup first, if that fails notify me by E-Mail',
+		'popup_or_email' 		=> 'Email notifications only, if user is not logged in',
 		'popup_and_email' 		=> 'eGroupWare-Popup and E-Mail',
 		'popup_and_winpopup'	=> 'eGroupWare-Popup and Windows-Popup',
 		'winpopup_only' 		=> 'Windows-Popup only',
@@ -552,6 +552,14 @@ class notifications {
 							if (is_array($this->popup_data)) $popup_data = $this->popup_data;
 						}
 						$obj->send($this->prepend_message($messages, $prepend_message), $lsubject, $llinks, $this->attachments, $popup_data);
+
+						// This is to make popup_or_email option sensfull since
+						// we save popup notifications in database anyway, email
+						// notifications should be based on user availability.
+						if ($backend == 'popup' && $action== 'fail' && !Api\Session::notifications_active($receiver->account_id))
+						{
+							throw new Exception();
+						}
 					}
 					catch (Exception $exception) {
 						$backend_errors[] = $notification_backend.' failed: '.$exception->getMessage();
@@ -799,7 +807,7 @@ class notifications {
 			'appname' => $_appname,
 			'data' => $_data
 		);
-		
+
 		return true;
 	}
 }
