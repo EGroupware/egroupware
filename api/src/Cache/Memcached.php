@@ -43,6 +43,17 @@ class Memcached extends Base implements ProviderMultiple
 	private $timeout = 20;
 
 	/**
+	 * Use Libketama consistent hashing
+	 *
+	 * Off by default as for just 2 Memcached servers it creates an extrem
+	 * unbalanced distribution favoring the 2. server and has no benefits
+	 * as requests to the failed node can only go to the other one anyway.
+	 *
+	 * @var boolean
+	 */
+	private $consistent = false;
+
+	/**
 	 * Retry on node failure: 0: no retry, 1: retry on set/add/delete, 2: allways retry
 	 *
 	 * @var retry
@@ -55,7 +66,7 @@ class Memcached extends Base implements ProviderMultiple
 	 * @throws Exception if connection to backend could not be established
 	 * @param array $params eg. array('localhost'[,'localhost:11211',...])
 	 *	"timeout" in ms, "retry" on node failure 0: no retry (default), 1: retry on set/add/delete, 2: allways retry
-	 *  "prefix" prefix for keys
+	 *  "prefix" prefix for keys and "consistent=1" to enable (by default disabled) consistent caching
 	 */
 	function __construct(array $params=null)
 	{
@@ -76,6 +87,10 @@ class Memcached extends Base implements ProviderMultiple
 			$prefix = $params['prefix'];
 			unset($params['prefix']);
 		}
+		if (isset($params['consistent']))
+		{
+			$this->consistent = !empty($params['consistent']);
+		}
 
 		check_load_extension('memcached',true);
 		// using a persitent connection for identical $params
@@ -86,10 +101,10 @@ class Memcached extends Base implements ProviderMultiple
 			\Memcached::OPT_CONNECT_TIMEOUT => $this->timeout,
 			\Memcached::OPT_SEND_TIMEOUT => $this->timeout,
 			\Memcached::OPT_RECV_TIMEOUT => $this->timeout,
-			// use more effician binary protocol (also required for consistent hashing
+			// use more efficient binary protocol (also required for consistent hashing)
 			\Memcached::OPT_BINARY_PROTOCOL => true,
-			// enable Libketama compatible consistent hashing
-			\Memcached::OPT_LIBKETAMA_COMPATIBLE => true,
+			// Libketama compatible consistent hashing
+			\Memcached::OPT_LIBKETAMA_COMPATIBLE => $this->consistent,
 			// automatic failover and disabling of failed nodes
 			\Memcached::OPT_SERVER_FAILURE_LIMIT => 2,
 			// setting a prefix for all keys
