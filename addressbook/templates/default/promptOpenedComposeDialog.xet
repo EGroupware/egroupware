@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.promptOpenedComposeDialog" template="" lang="" group="0" version="17.1">
+		<grid id="grid">
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<radio id="compose" options="$row_cont[compose]" />
+					<description id="${row}[label]"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

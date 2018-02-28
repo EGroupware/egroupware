@@ -713,7 +713,7 @@ app.classes.addressbook = AppJS.extend(
 			// Don't get rows here, let applyFilters() do it
 			return false;
 		}
-		
+
 		return true;
 	},
 
@@ -771,6 +771,11 @@ app.classes.addressbook = AppJS.extend(
 	{
 		var app_registry = egw.link_get_registry('mail');
 		var link = egw().link("/index.php","menuaction="+app_registry['add']['menuaction']);
+		var content = {vcard:{file:[], type:[]}};
+
+		// Get open compose windows
+		var compose = egw.getOpenWindows("mail", "(^compose_)|(^mail.compose)");
+
 		for (var i = 0; i < _elems.length; i++)
 		{
 			var idToUse = _elems[i].id;
@@ -778,8 +783,52 @@ app.classes.addressbook = AppJS.extend(
 			idToUse = idToUseArray[1];
 			link += "&preset[type][]="+encodeURIComponent("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
 			link += "&preset[file][]="+encodeURIComponent("vfs://default/apps/addressbook/"+idToUse+"/.entry");
+			content.vcard.file.push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
+			content.vcard.type.push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
 		}
-		if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
+
+		if(compose.length == 1)
+		{
+			var popup = egw.open_link('',compose[0],'100x100','mail');
+			popup.app.mail.setCompose(compose[0], content);
+		}
+		else if (compose.length > 1)
+		{
+			var buttons = [
+				{text: this.egw.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
+				{text: this.egw.lang("Cancel"), id:"cancel"}
+			];
+			var c = [];
+			for(var i = 0; i < compose.length; i++)
+			{
+				var w = window.open('',compose[i],'100x100');
+				if(w.closed) continue;
+				w.blur();
+				c.push({label:w.document.title || egw.lang("compose"), compose:compose[i]});
+			}
+			et2_createWidget("dialog",
+			{
+				callback: function(_button_id, _value) {
+					if (_value && _value.grid)
+					{
+						switch (_button_id)
+						{
+							case "add":
+								var w = egw.open_link('', _value.grid.compose,'100x100','mail');
+								w.app.mail.setCompose(w.name, content);
+								return;
+							case "cancel":
+						}
+					}
+				},
+				title: this.egw.lang("Select an opened compose dialog"),
+				buttons: buttons,
+				value:{content:{grid:c}},
+				template: egw.webserverUrl+'/addressbook/templates/default/promptOpenedComposeDialog.xet?1',
+				resizable: false
+			}, et2_dialog._create_parent('addressbook'));
+		}
+		else if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
 		{
 			var w_h =app_registry['view_popup'].split('x');
 			if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
@@ -1007,7 +1056,7 @@ app.classes.addressbook = AppJS.extend(
 				}
 
 				// Check to see if it's not there
-				if(options && (options.find && 
+				if(options && (options.find &&
 					!options.find(function(e) {console.log(e); return e.value === state.state.grouped_view;}) ||
 					typeof options.find === 'undefined' && !options[state.state.grouped_view]
 				))

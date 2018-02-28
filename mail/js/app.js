@@ -686,6 +686,13 @@ app.classes.mail = AppJS.extend(
 		{
 			try
 			{
+				if (field == 'vcard')
+				{
+					var vcard_from_ab = compose_et2[0].widgetContainer.getWidgetById('vcard_from_ab');
+					vcard_from_ab.set_value(JSON.stringify(content.vcard));
+					return compose_et2[0].widgetContainer._inst.submit();
+				}
+
 				var widget = compose_et2[0].widgetContainer.getWidgetById(field);
 
 				// Merge array values, replace strings

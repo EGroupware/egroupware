@@ -14,6 +14,7 @@
 				<checkbox statustext="check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)" id="disposition" options="on,off"/>
 				<checkbox statustext="check to sign the message on send" id="smime_sign" options="on,off"/>
 				<checkbox statustext="check to encrypt the message on send" id="smime_encrypt" options="on,off"/>
+				<textbox id="vcard_from_ab"/>
 				<passwd id="smime_passphrase"/>
 				<taglist id="to_integrate_ids"/>
 				<menulist>
