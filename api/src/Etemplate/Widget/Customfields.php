@@ -319,7 +319,7 @@ class Customfields extends Transformer
 				if (substr($type, 0, 7) !== 'select-' && $type != 'ajax_select') break;
 				// fall-through for all select-* widgets
 			case 'select':
-				$this->attrs['multiple'] = $field['rows'] > 1;
+				$widget->attrs['multiple'] = $field['rows'] > 1;
 				// fall through
 			case 'radio':
 				if (count($field['values']) == 1 && isset($field['values']['@']))
@@ -382,7 +382,7 @@ class Customfields extends Transformer
 		$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
 		if(is_array($value_in))
 		{
-			foreach($value_in as $field => $value)
+			foreach(array_keys($value_in) as $field)
 			{
 				$field_settings = $customfields[$fname=substr($field,1)];
 
