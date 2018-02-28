@@ -671,6 +671,12 @@ class Session
 	const ACCESS_LOG_TABLE = 'egw_access_log';
 
 	/**
+	 * Prefix used to log unsucessful login attempts in cache, if DB is unavailable
+	 */
+	const FALSE_IP_CACHE_PREFIX = 'false_ip-';
+	const FALSE_ID_CACHE_PREFIX = 'false_id-';
+
+	/**
     * Write or update (for logout) the access_log
 	*
 	* @param string|int $sessionid nummeric or PHP session id or 0 for unsuccessful logins
@@ -697,6 +703,18 @@ class Session
 			),false,__LINE__,__FILE__);
 
 			$ret = $GLOBALS['egw']->db->get_last_insert_id(self::ACCESS_LOG_TABLE,'sessionid');
+
+			// if we can not store failed login attempts in database, store it in cache
+			if (!$ret && !$account_id)
+			{
+				Cache::setInstance(__CLASS__, self::FALSE_IP_CACHE_PREFIX.$user_ip,
+					1+Cache::getInstance(__CLASS__, self::FALSE_IP_CACHE_PREFIX.$user_ip),
+					$GLOBALS['egw_info']['server']['block_time'] * 60);
+
+				Cache::setInstance(__CLASS__, self::FALSE_ID_CACHE_PREFIX.$login,
+					1+Cache::getInstance(__CLASS__, self::FALSE_ID_CACHE_PREFIX.$login),
+					$GLOBALS['egw_info']['server']['block_time'] * 60);
+			}
 		}
 		else
 		{
@@ -768,6 +786,11 @@ class Session
 		{
 			${$row['name']} += $row['num'];
 		}
+
+		// check cache too, in case DB is readonly
+		$false_ip += Cache::getInstance(__CLASS__, self::FALSE_IP_CACHE_PREFIX.$ip);
+		$false_id += Cache::getInstance(__CLASS__, self::FALSE_ID_CACHE_PREFIX.$login);
+
 		$blocked = $false_ip > $GLOBALS['egw_info']['server']['num_unsuccessful_ip'] ||
 			$false_id > $GLOBALS['egw_info']['server']['num_unsuccessful_id'];
 		//error_log(__METHOD__."('$login', '$ip') false_ip=$false_ip, false_id=$false_id --> blocked=".array2string($blocked));
@@ -787,7 +810,7 @@ class Session
 				}
 				$mailer->send();
 			}
-			catch(Exception $e) {
+			catch(\Exception $e) {
 				// ignore exception, but log it, to block the account and give a correct error-message to user
 				error_log(__METHOD__."('$login', '$ip') ".$e->getMessage());
 			}
