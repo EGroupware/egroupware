@@ -262,7 +262,7 @@ class Response extends Msg
 	}
 
 	/**
-	 * Set everything in $var to null, that does not json_encode, eg. because no valid utf-8
+	 * Replace everything in $var which is not utf-8, that does not json_encode, eg. because no valid utf-8
 	 *
 	 * @param midex $var
 	 * @param string $prefix =''
@@ -274,8 +274,8 @@ class Response extends Msg
 
 		if (is_scalar($var))
 		{
-			error_log(__METHOD__."() json_encode($prefix='$var') === false --> setting it to null");
-			$var = null;
+			error_log(__METHOD__."() json_encode($prefix='$var') === false --> replacing it");
+			$var = self::cleanUtf8($var);
 		}
 		else
 		{
@@ -285,6 +285,29 @@ class Response extends Msg
 			}
 		}
 		return $var;
+	}
+
+	const UTF8_REPLACEMENT_CHAR = "\xEF\xBF\xBD";
+
+	/**
+	 * Replace non-utf8 chars in a string with a valid replacement char
+	 *
+	 * @param string $_str
+	 * @return string
+	 */
+	public static function cleanUtf8($_str)
+	{
+		//reject overly long 2 byte sequences, as well as characters above U+10000 and replace with ?
+		$string = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.
+			'|[\x00-\x7F][\x80-\xBF]+'.
+			'|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'.
+			'|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.
+			'|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
+			self::UTF8_REPLACEMENT_CHAR, $_str);
+
+		//reject overly long 3 byte sequences and UTF-16 surrogates and replace with ?
+		return preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]'.
+			'|\xED[\xA0-\xBF][\x80-\xBF]/S', self::UTF8_REPLACEMENT_CHAR, $string );
 	}
 
 	/**
