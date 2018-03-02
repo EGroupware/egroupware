@@ -6443,7 +6443,7 @@ class Mail
 	 */
 	static function clean_subject_for_filename($filename)
 	{
-		static $filter_pattern = '$[\f\n\t\v\\:*#?<>%"\|/\\\?]$';
+		static $filter_pattern = '$[\f\n\t\x0b\:*#?<>%"\|/\\\?]$';
 		return preg_replace($filter_pattern, "_", trim($filename));
 	}
 
