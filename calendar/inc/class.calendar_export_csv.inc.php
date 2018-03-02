@@ -84,7 +84,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				if($states['view'] == 'listview')
 				{
 					$ui->get_rows($query, $events, $unused);
-				} 
+				}
 				else
 				{
 					$query['filter'] = 'custom';
@@ -147,7 +147,15 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			// Add in participants
 			if($options['mapping']['participants'])
 			{
-				$event['participants'] = implode(", ",$this->bo->participants($event,true));
+				if(is_array($event['participants']))
+				{
+					$event['participants'] = implode(", ",$this->bo->participants($event,true));
+				}
+				else
+				{
+					// Getting results from list already has participants formatted
+					$event['participants'] = str_replace("\n", ' ', $event['participants']);
+				}
 			}
 			if (is_array($event))
 			{
@@ -229,10 +237,10 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	{
 		$states = $this->bo->cal_prefs['saved_states'];
 		$list = Api\Cache::getSession('calendar', 'calendar_list');
-		
+
 		$start= new Api\DateTime($list['startdate']);
 		$end = new Api\DateTime($list['enddate']);
-		
+
 		if ($states['view'] == 'listview')
 		{
 			$list = Api\Cache::getSession('calendar', 'calendar_list');
