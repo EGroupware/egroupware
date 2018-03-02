@@ -1021,7 +1021,7 @@ class Contacts extends Contacts\Storage
 				// invalidate the cache of the accounts class
 				$GLOBALS['egw']->accounts->cache_invalidate($contact['account_id']);
 				// call edit-accout hook, to let other apps know about changed account (names or email)
-				$GLOBALS['hook_values'] = $GLOBALS['egw']->accounts->read($contact['account_id']);
+				$GLOBALS['hook_values'] = (array)$GLOBALS['egw']->accounts->read($contact['account_id']);
 				Hooks::process($GLOBALS['hook_values']+array(
 					'location' => 'editaccount',
 				),False,True);	// called for every app now, not only enabled ones)
