@@ -620,10 +620,6 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				*/
 			}
 
-			if(this.options.value.non_blocking)
-			{
-				icons.push('<img src="'+this.egw().image('nonblocking','calendar')+'" title="'+this.egw().lang('non blocking')+'"/>');
-			}
 			if(this.options.value.alarm && !jQuery.isEmptyObject(this.options.value.alarm) && !this.options.value.is_private)
 			{
 				icons.push('<img src="'+this.egw().image('alarm','calendar')+'" title="'+this.egw().lang('alarm')+'"/>');
@@ -632,6 +628,12 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			{
 				icons.push('<img src="'+this.egw().image('needs-action','calendar')+'" title="'+this.egw().lang('Needs action')+'"/>');
 			}
+		}
+
+		// Always include non-blocking, regardless of privacy
+		if(this.options.value.non_blocking)
+		{
+			icons.push('<img src="'+this.egw().image('nonblocking','calendar')+'" title="'+this.egw().lang('non blocking')+'"/>');
 		}
 		return icons;
 	},
