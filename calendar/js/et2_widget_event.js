@@ -251,7 +251,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			this._actionObject.id = 'calendar::' + id;
 		}
 
-		this._need_actions_linked = true;
+		this._need_actions_linked = !this.options.readonly;
 
 		// Make sure category stuff is there
 		// Fake it to use the cache / call - if already there, these will return

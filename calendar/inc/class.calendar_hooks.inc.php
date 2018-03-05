@@ -161,6 +161,11 @@ class calendar_hooks
 			'Sunday'   => lang('Sunday'),
 			'Saturday' => lang('Saturday')
 		);
+		$birthdays_as_events = array(
+			0          => lang('None'),
+			'birthday' => lang('Birthdays'),
+			'holiday'  => lang('Holidays')
+		);
 
 		if (!isset($hook_data['setup']))
 		{
@@ -315,7 +320,8 @@ class calendar_hooks
 				'admin'  => False
 			),
 			'birthdays_as_events' => array(
-				'type'   => 'checkbox',
+				'type'   => 'multiselect',
+				'values' => $birthdays_as_events,
 				'label'  => 'Show birthdays as events',
 				'name'   => 'birthdays_as_events',
 				'help'   => 'Show birthdays as all day non-blocking events as well as via mouseover of the date.',
