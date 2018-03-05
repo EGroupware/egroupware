@@ -92,7 +92,7 @@ class HtmLawed
 			'tidy'=>0,
 			'elements' => "* -script",
 			'deny_attribute' => 'on*',
-			'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https',
+			'schemes'=>'href: file, ftp, http, https, mailto, tel, phone; src: cid, data, file, ftp, http, https; *:file, http, https',
 			'hook_tag' =>"hl_my_tag_transform",
 		);
 		$this->Spec = 'img=alt(noneof="image"/default="")';

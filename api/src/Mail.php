@@ -143,7 +143,7 @@ class Mail
 		'tidy'=>0,
 		'elements' => "* -script",
 		'deny_attribute' => 'on*',
-		'schemes'=>'href: file, ftp, http, https, mailto, phone; src: cid, data, file, ftp, http, https; *:file, http, https, cid, src',
+		'schemes'=>'href: file, ftp, http, https, mailto, phone, tel; src: cid, data, file, ftp, http, https; *:file, http, https, cid, src',
 		'hook_tag' =>"hl_email_tag_transform",
 	);
 
