@@ -95,7 +95,7 @@ class SaveToVfsTest extends \EGroupware\Api\AppTest
 			array('Contains a /', true),
 			array('Contains a ?', true),
 			array('Contains a %', true),
-			array('Contains a '.chr(11), true),
+			array('Contains a \x0b', true),
 			array('This one contains them all < > " : | \ * / ? % are not allowed', true)
 		);
 	}
