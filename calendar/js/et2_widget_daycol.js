@@ -416,6 +416,14 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		// Holidays and birthdays
 		var holidays = et2_calendar_view.get_holidays(this,this.options.date.substring(0,4));
 		var holiday_list = [];
+		var holiday_pref = (egw.preference('birthdays_as_events','calendar')||'').split(',');
+debugger;
+		// Show holidays as events on mobile or by preference
+		var holidays_as_events = egwIsMobile() || egw.preference('birthdays_as_events','calendar') === true ||
+				holiday_pref.indexOf('holiday') >= 0;
+
+		var birthdays_as_events = egwIsMobile() || holiday_pref.indexOf('birthday') >= 0;
+
 		if(holidays && holidays[this.options.date])
 		{
 			holidays = holidays[this.options.date];
@@ -423,8 +431,8 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			{
 				if (typeof holidays[i]['birthyear'] !== 'undefined')
 				{
-					// Show holidays as events on mobile or by preference
-					if(egwIsMobile() || egw.preference('birthdays_as_events','calendar'))
+					// Show birthdays as events on mobile or by preference
+					if(birthdays_as_events)
 					{
 						// Create event
 						this._parent.date_helper.set_value(this.options.date.substring(0,4)+'-'+
@@ -460,7 +468,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 				else
 				{
 					// Show holidays as events on mobile
-					if(egwIsMobile())
+					if(holidays_as_events)
 					{
 						// Create event
 						this._parent.date_helper.set_value(this.options.date.substring(0,4)+'-'+
@@ -564,7 +572,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		{
 			this.day_class_holiday();
 		}
-		
+
 		// Apply styles to hidden events
 		this._out_of_view();
 	},
@@ -926,7 +934,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 	{
 		// If hidden, skip it - it takes too long
 		if(!this.div.is(':visible')) return;
-		
+
 		// Sort events into minimally-overlapping columns
 		var columns = this._spread_events();
 
@@ -1106,7 +1114,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			app.calendar.update_state({view: 'day',date: this.date.toJSON()});
 			return false;
 		}
-		
+
 	},
 
 	/**

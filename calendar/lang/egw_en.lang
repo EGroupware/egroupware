@@ -493,8 +493,8 @@ show all status incl. rejected events	calendar	en	Show all status incl. rejected
 show all status, but rejected	calendar	en	Show all status, but rejected
 show all status, but unknown	calendar	en	Show all status, but unknown
 show also events just owned by selected user	calendar	en	Show also events just owned by selected user
-show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	en	Show birthdays as all day non-blocking events as well as via mouseover of the date.
-show birthdays as events	calendar	en	Show birthdays as events
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	en	Show as all day non-blocking events as well as via mouseover of the date.
+show birthdays as events	calendar	en	Show as events
 show birthdays from addressbook	admin	en	Show birthdays from address book
 show default view on main screen	calendar	en	Show calendar on main screen
 show empty rows in planner	calendar	en	Show empty rows in planner
