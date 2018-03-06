@@ -153,7 +153,7 @@
 		for(var index in indexes)
 		{
 			var id = indexes[index];
-			var $message, $mark, $delete, $inner_container,
+			var $message, $mark, $delete, $inner_container, $nav_prev, $nav_next,
 				$more_info, $top_toolbar, $open_entry, $date, $collapse;
 			var message_id = 'egwpopup_message_'+id;
 			var time_label = this.getTimeLabel(notifymessages[id]['created'], notifymessages[id]['current']);
@@ -209,6 +209,18 @@
 						.click(jQuery.proxy(this.open_entry, this,[$message]))
 						.prependTo($top_toolbar);
 			}
+			// Previous button
+			$nav_prev = jQuery(document.createElement('span'))
+					.addClass('egwpopup_nav_prev')
+					.attr('title',egw.lang('previous message'))
+					.click(jQuery.proxy(this.nav_button, this,[$message, "prev"]))
+					.prependTo($top_toolbar);
+			// Next button
+			$nav_next = jQuery(document.createElement('span'))
+					.addClass('egwpopup_nav_next')
+					.attr('title',egw.lang('next message'))
+					.click(jQuery.proxy(this.nav_button, this,[$message, "next"]))
+					.prependTo($top_toolbar);
 			// Delete button
 			$delete = jQuery(document.createElement('span'))
 					.addClass('egwpopup_delete')
@@ -313,6 +325,7 @@
 			cloned.remove();
 		_node[0].removeClass('egwpopup_expanded');
 		_node[0].css('z-index', 0);
+		this.checkNavButtonStatus();
 	};
 
 	/**
@@ -335,7 +348,43 @@
 		}
 		var zindex = jQuery('.egwpopup_expanded').length;
 		_node[0].addClass('egwpopup_expanded').css('z-index', zindex++);
+		this.checkNavButtonStatus();
 	};
+
+	notifications.prototype.nav_button = function (_params, _event){
+		var $expanded = jQuery('.egwpopup_expanded');
+		var $messages = jQuery('.egwpopup_message').not('.egwpopup_message_clone');
+		var self = this;
+		var current = 0;
+		$messages.each(function(i, j){if (j.id == _params[0][0].id) current = i;});
+		$expanded.each(function(index, item){
+			self.collapseMessage([jQuery(item)], _event);
+		});
+		if (_params[1] == "prev")
+		{
+			$messages[current-1].click();
+		}
+		else
+		{
+			$messages[current+1].click();
+		}
+	}
+
+	notifications.prototype.checkNavButtonStatus = function (){
+		var top = 0;
+		var $expanded = jQuery('.egwpopup_expanded');
+		var $messages = jQuery('.egwpopup_message').not('.egwpopup_message_clone');
+		$expanded.removeClass('egwpopup_nav_disable');
+		$expanded.each(function(index, item){
+			if (item.style.getPropertyValue('z-index') > $expanded[top].style.getPropertyValue('z-index'))
+			{
+				top = index;
+			}
+		});
+		var $topNode = jQuery($expanded[top]);
+		if ($topNode[top] == $messages[0]) $topNode.find('.egwpopup_nav_prev').addClass('egwpopup_nav_disable');
+		if ($topNode[top] == $messages[$messages.length-1]) $topNode.find('.egwpopup_nav_next').addClass('egwpopup_nav_disable');
+	}
 
 	/**
 	 * Display or hide notifcation-bell

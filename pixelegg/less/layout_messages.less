@@ -136,6 +136,9 @@
 				padding-top: 5px;
 				padding-bottom: 5px;
 			}
+			span.egwpopup_nav_prev, span.egwpopup_nav_next {
+				display: none;
+			}
 		}
 		.egwpopup_message.egwpopup_expanded {
 			position: fixed;
@@ -163,6 +166,29 @@
 				cursor: pointer;display: inline-block
 			}
 			.egwpopup_message_more_info {display: none;}
+			span.egwpopup_nav_prev {
+				display: inline-block;
+				float: right;
+				width: 24px;
+				height: 24px;
+				background-image: url(../images/left-grey.png);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 16px;
+				cursor: pointer;
+			}
+			.egwpopup_nav_disable {opacity:0.5; pointer-events: none;}
+			span.egwpopup_nav_next {
+				display: inline-block;
+				float: right;
+				width: 24px;
+				height: 24px;
+				background-image: url(../images/right-grey.png);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 16px;
+				cursor: pointer;
+			}
 		}
 		.egwpopup_message_seen {
 			.egwpopup_mark {cursor: auto;background:none;border-color: #666c6e;}
