@@ -332,6 +332,19 @@ class Sharing
 	}
 
 	/**
+	 * Check if we should use Collabora UI
+	 *
+	 * Only for files, if URL says so, and Collabora & Stylite apps are installed
+	 */
+	public function use_collabora()
+	{
+		 return !Vfs::is_dir($this->share['share_root']) &&
+				array_key_exists('edit', $_REQUEST) &&
+				array_key_exists('collabora', $GLOBALS['egw_info']['apps']) &&
+				array_key_exists('stylite', $GLOBALS['egw_info']['apps']);
+	}
+
+	/**
 	 * Server a request on a share specified in REQUEST_URI
 	 */
 	public function ServeRequest()
@@ -352,8 +365,13 @@ class Sharing
 				$this->share['share_path'] => 1
 			));
 		}
+		if($this->use_collabora())
+		{
+			$ui = new \EGroupware\Collabora\Ui();
+			return $ui->editor($this->share['share_path']);
+		}
 		// use pure WebDAV for everything but GET requests to directories
-		if (!$this->use_filemanager())
+		else if (!$this->use_filemanager())
 		{
 			// send a content-disposition header, so browser knows how to name downloaded file
 			if (!Vfs::is_dir($this->share['share_root']))
