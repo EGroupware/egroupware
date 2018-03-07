@@ -162,7 +162,7 @@ class calendar_hooks
 			'Saturday' => lang('Saturday')
 		);
 		$birthdays_as_events = array(
-			0          => lang('None'),
+			'0'        => lang('None'),
 			'birthday' => lang('Birthdays'),
 			'holiday'  => lang('Holidays')
 		);
@@ -325,7 +325,7 @@ class calendar_hooks
 				'label'  => 'Show birthdays as events',
 				'name'   => 'birthdays_as_events',
 				'help'   => 'Show birthdays as all day non-blocking events as well as via mouseover of the date.',
-				'default'=> FALSE
+				'default'=> '0'
 			),
 			'limit_all_day_lines' => array(
 				'type'   => 'input',
