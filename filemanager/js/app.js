@@ -1210,7 +1210,7 @@ app.classes.filemanager = AppJS.extend(
 				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
 				return true;
 			},
-			title: egw.lang("%1 Share Link", _data.action ==='shareWritableLink'? "Writable": "Readonly"),
+			title: _data.title ? _data.title : egw.lang("%1 Share Link", _data.action ==='shareWritableLink'? "Writable": "Readonly"),
 			template: _data.template,
 			width: 450,
 			value: {content:{ "share_link": _data.share_link }}
