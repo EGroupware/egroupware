@@ -94,9 +94,8 @@ textarea.prefValue {
 #preferences-password .dialogHeader td {
   text-align: center;
 }
-/* arrange readonly selectbox background icon*/
 .et2_selectbox.readonly.prefType {
-  padding-right: 50px;
+  padding: 5px;
 }
 .prefValueColumn select.prefValue {
   white-space: pre-line;
