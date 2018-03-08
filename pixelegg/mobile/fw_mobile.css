@@ -4721,10 +4721,6 @@ td.message span.message {
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content_bottom {
   border-width: 0px 1px 1px 1px;
 }
-#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_bottom {
-  border-width: 0px;
-  border-color: #FFFFFF;
-}
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_icon {
   display: inline-block;
   height: 24px;
@@ -6561,6 +6557,7 @@ span.egw_tutorial_title {
   body #egw_fw_basecontainer div#egw_fw_topmenu_items {
     width: 100%;
     display: block;
+    padding-top: 10px;
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul {
     display: inline-block;
@@ -6619,7 +6616,7 @@ span.egw_tutorial_title {
     background-image: url(../images/topmenu_items/mobile/search.png);
   }
   body #egw_fw_basecontainer #egw_fw_userinfo {
-    height: 60px;
+    height: 50px;
     z-index: 1000;
     display: inline-block;
     float: right;
@@ -6627,9 +6624,13 @@ span.egw_tutorial_title {
   body #egw_fw_basecontainer #egw_fw_userinfo span.avatar {
     display: inline-block;
     float: left;
-    height: 45px;
-    width: 45px;
-    margin-top: 1px;
+    height: 35px;
+    width: 35px;
+    margin: 7px;
+    cursor: pointer;
+  }
+  body #egw_fw_basecontainer #egw_fw_userinfo span.avatar img {
+    width: 35px;
   }
   body #egw_fw_basecontainer #egw_fw_userinfo span.user {
     display: inline-block;
@@ -7019,10 +7020,6 @@ span.egw_tutorial_title {
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content_bottom {
     border-width: 0px 1px 1px 1px;
-  }
-  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_bottom {
-    border-width: 0px;
-    border-color: #FFFFFF;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_icon {
     display: inline-block;
