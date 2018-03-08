@@ -5140,8 +5140,7 @@ td.message span.message {
   border-width: 0px 1px 1px 1px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_bottom {
-  border-width: 0px;
-  border-color: #ffffff;
+  
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_icon {
   display: inline-block;
