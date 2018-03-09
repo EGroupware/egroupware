@@ -137,7 +137,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 			this.applications[this.appData.appName] = this.appData;
 
-			this.popups.concat(this.registerOpenedPopus(app.name));
+			this.popups.concat(this.registerOpenedPopups(app.name));
 		}
 
 		// else display the default application
@@ -808,7 +808,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		if (_returnID !== false) return windowID;
 	},
 
-	registerOpenedPopus: function (_app)
+	registerOpenedPopups: function (_app)
 	{
 		var w = Object.keys(egw.getOpenWindows(_app));
 		var popups = [];
