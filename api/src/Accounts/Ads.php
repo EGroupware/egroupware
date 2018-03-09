@@ -494,7 +494,8 @@ class Ads
 			'account_fullname'  => $data['displayname'][0],
 			'account_phone'     => $data['telephonenumber'][0],
 			'account_status'    => $data['useraccountcontrol'][0] & 2 ? false : 'A',
-			'account_expires'   => !isset($data['accountexpires']) || $data['accountexpires'][0] == self::EXPIRES_NEVER ? -1 :
+			'account_expires'   => !isset($data['accountexpires']) || !$data['accountexpires'][0] ||
+				$data['accountexpires'][0] == self::EXPIRES_NEVER ? -1 :
 				$this->adldap->utilities()->convertWindowsTimeToUnixTime($data['accountexpires'][0]),
 			'account_lastpwd_change' => !isset($data['pwdlastset']) ? null : (!$data['pwdlastset'][0] ? 0 :
 				$this->adldap->utilities()->convertWindowsTimeToUnixTime($data['pwdlastset'][0])),
