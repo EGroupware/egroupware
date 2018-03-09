@@ -656,7 +656,7 @@ app.classes.mail = AppJS.extend(
 	 * @function
 	 * @memberOf mail
 	 *
-	 * @param {String} window_name The name of an open content window.
+	 * @param {window object} compose compose window object
 	 * @param {object} content
 	 *
 	 * @description content Data to set into the window's fields
@@ -666,10 +666,9 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @return {boolean} Success
 	 */
-	setCompose: function(window_name, content)
+	setCompose: function(compose, content)
 	{
 		// Get window
-		var compose = window.open('', window_name);
 		if(!compose || compose.closed) return false;
 
 		// Get etemplate of popup

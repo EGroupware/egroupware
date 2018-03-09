@@ -56,6 +56,9 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 		// Override the egw_getAppName function
 		window.egw_getAppName = this.egw_getAppName;
+
+		// keep track of opened popups
+		this.popups = [];
 	},
 
 	/**
@@ -133,6 +136,8 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			}
 
 			this.applications[this.appData.appName] = this.appData;
+
+			this.popups.concat(this.registerOpenedPopus(app.name));
 		}
 
 		// else display the default application
@@ -793,6 +798,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		var windowID = egw(parentWindow).openPopup(_url, _width, _height, _windowName, _app, true, _status, true);
 
 		windowID.framework = this;
+		this.popups.push(windowID);
 
 		if (navigate)
 		{
@@ -800,6 +806,111 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		}
 
 		if (_returnID !== false) return windowID;
+	},
+
+	registerOpenedPopus: function (_app)
+	{
+		var w = Object.keys(egw.getOpenWindows(_app));
+		var popups = [];
+		var popup;
+		for (var i=0; i < w.length; i++)
+		{
+			try{
+				popup = window.open('', w[i], '100x100');
+				if (popup.location.href == "about:blank")
+				{
+					popup.close();
+					egw(window).windowClosed(_app, popup);
+				}
+				if (popup && egw.is_popup(popup)) popups.push(popup);
+			}catch(e)
+			{
+				if (popup)
+				{
+					popup.close();
+					egw.windowClosed(_app, popup);
+				}
+				continue;
+			}
+		}
+		return popups;
+	},
+
+	/**
+	 * Check if given window is a "popup" alike, returning integer or undefined if not
+	 *
+	 * @param {DOMWindow} _wnd
+	 * @returns {Number|undefined}
+	 */
+	popup_idx: function(_wnd)
+	{
+		if (typeof window.framework.popups != 'undefined')
+		{
+			for (var i=0; i < window.framework.popups.length; i++)
+			{
+				if (window.framework.popups[i] === _wnd)
+				{
+					return i;
+				}
+			}
+		}
+		return undefined;
+	},
+
+	/**
+	* @param {window} _wnd window object which suppose to be closed
+	*/
+	popup_close:function (_wnd)
+	{
+		var i = this.popup_idx(_wnd);
+
+		if (i !== undefined)
+		{
+			// Close the matched popup
+			this.popups.splice(i,1);
+		}
+		_wnd.close();
+	},
+
+	/**
+	 * Collect and close all already closed windowss
+	 */
+	popups_garbage_collector: function ()
+	{
+		for (var i=0; i < this.popups.length; i++)
+		{
+			if (this.popups[i].closed) this.popups.splice(i,1);
+		}
+	},
+
+	/**
+	 * get popups based on application name and regexp
+	 * @param {string} _app app name
+	 * @param {regexp} regex regular expression to check against location.href url
+	 *
+	 * @returns {Array} returns array of windows object
+	 */
+	popups_get: function(_app, regex)
+	{
+		var popups = [];
+		for (var i=0; i < this.popups.length; i++)
+		{
+			if (!this.popups[i].closed && this.popups[i].egw_appName == _app) {
+				popups.push(this.popups[i]);
+
+			}
+		}
+		if (regex)
+		{
+			for (var j=0; j < popups.length; j++)
+			{
+				if (!popups[j].location.href.match(regex))
+				{
+					popups.splice(j,1);
+				}
+			}
+		}
+		return popups;
 	},
 
 	/**

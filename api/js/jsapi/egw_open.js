@@ -55,9 +55,6 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			cc: match['cc']	|| [],
 			bcc: match['bcc'] || []
 		};
-		var popup;
-		// Get open compose windows
-		var compose = egw.getOpenWindows("mail", /(^compose_)||(^mail.compose)/);
 
 		// Encode html entities in the URI, otheerwise server XSS protection wont
 		// allow it to pass, because it may get mistaken for some forbiden tags,
@@ -65,82 +62,8 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		// including "<" would get mistaken for <math> tag, and server will cut it off.
 		uri = uri.replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-		if(compose.length == 0)
-		{
-			// No compose windows, might be no mail app.js
-			// We really want to use mail_compose() here
-
-			// Accoring to microsoft, IE 10/11 can only accept a url with 2083 caharacters
-			// therefore we need to send request to compose window with POST method
-			// instead of GET. We create a temporary <Form> and will post emails.
-			// ** WebServers and other browsers also have url length limit:
-			// Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k
-			if (uri.length > 2083)
-			{
-				popup = egw.open('','mail','add','','compose__','mail');
-				var $tmpForm = jQuery(document.createElement('form')).appendTo('body');
-				var $tmpInput = jQuery(document.createElement('input')).attr({name:"preset[mailto]", type:"text", value: uri});
-				var $tmpSubmitInput = jQuery(document.createElement('input')).attr({type:"submit"});
-				// Set the temporary form's attributes
-				$tmpForm.attr({target:popup.name, action:"index.php?menuaction=mail.mail_compose.compose", method:"post"})
-						.append($tmpInput)
-						.append($tmpSubmitInput);
-				$tmpForm.submit();
-				// Remove the form after submit
-				$tmpForm.remove();
-			}
-			else // simple GET request
-			{
-				egw.open('','mail','add',{'preset[mailto]': uri},'compose__','mail');
-			}
-		}
-		if(compose.length == 1)
-		{
-			try {
-				popup = egw.open_link('',compose[0],'100x100','mail');
-				popup.app.mail.setCompose(compose[0], content);
-			} catch(e) {
-				// Looks like a leftover window that wasn't removed from the list
-				egw.debug("warn", e.message);
-				popup.close();
-				egw.windowClosed("mail",popup);
-				window.setTimeout(function() {
-					egw.open_link(uri);
-					console.debug("Trying again with ", uri);
-				}, 500);
-			}
-		}
-		else if(compose.length > 1)
-		{
-			// Need to prompt
-			var prompt = jQuery(document.createElement('ul'));
-			for(var i = 0; i < compose.length; i++)
-			{
-				var w = window.open('',compose[i],'100x100');
-				if(w.closed) continue;
-				w.blur();
-				var title = w.document.title || egw.lang("compose");
-				jQuery("<li data-window = '" + compose[i] + "'>"+ title + "</li>")
-					.click(function() {
-						var w = egw.open_link('',jQuery(this).attr("data-window"),'100x100','mail');
-						w.app.mail.setCompose(w.name, content);
-						prompt.dialog("close");
-					})
-					.appendTo(prompt);
-			}
-			_wnd.setTimeout(function() {
-				this.focus();
-			}, 200);
-			var _buttons = {};
-			_buttons[egw.lang("cancel")] = function() {
-				jQuery(this).dialog("close");
-			};
-			prompt.dialog({
-				buttons: _buttons
-			});
-		}
+		egw.openWithinWindow ("mail", "setCompose", content, {'preset[mailto]':uri}, /mail_compose.compose/);
 	}
-
 	return {
 		/**
 		 * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url
@@ -508,6 +431,103 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			{
 				popup.close();
 				return false;
+			}
+		},
+
+		/**
+		 * This function helps to append content/ run commands into an already
+		 * opened popup window. Popup winodws now are getting stored in framework
+		 * object and can be retrived/closed from framework.
+		 *
+		 * @param {string} _app name of application to be requested its popups
+		 * @param {string} _method application method implemented in app.js
+		 * @param {object} _content content to be passed to method
+		 * @param {string|object} _extra url or object of extra
+		 * @param {regex} _regexp regular expression to get specific popup with matched url
+		 */
+		openWithinWindow: function (_app, _method, _content, _extra, _regexp)
+		{
+			var popups = window.framework.popups_get(_app, _regexp);
+
+			for(var i = 0; i < popups.length; i++)
+			{
+				if(popups[i].closed)
+				{
+					window.framework.popups_grabage_collector();
+				}
+			}
+
+			if(popups.length == 1)
+			{
+				try {
+					popups[0].app[_app][_method](popups[0], _content);
+				}
+				catch(e) {
+					window.setTimeout(function() {
+						egw.open('', _app, 'add', _extra, _app, _app);
+					});
+				}
+			}
+			else if (popups.length > 1)
+			{
+				var buttons = [
+					{text: this.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
+					{text: this.lang("Cancel"), id:"cancel"}
+				];
+				var c = [];
+				for(var i = 0; i < popups.length; i++)
+				{
+					c.push({label:popups[i].document.title || this.lang(_app), index:i});
+				}
+				et2_createWidget("dialog",
+				{
+					callback: function(_button_id, _value) {
+						if (_value && _value.grid)
+						{
+							switch (_button_id)
+							{
+								case "add":
+									popups[_value.grid.index].app[_app][_method](popups[_value.grid.index], _content);
+									return;
+								case "cancel":
+							}
+						}
+					},
+					title: this.lang("Select an opened dialog"),
+					buttons: buttons,
+					value:{content:{grid:c}},
+					template: this.webserverUrl+'/api/templates/default/promptOpenedDialog.xet?1',
+					resizable: false
+				}, et2_dialog._create_parent(this.app_name()));
+			}
+			else
+			{
+				// No compose windows, might be no mail app.js
+				// We really want to use mail_compose() here
+
+				// Accoring to microsoft, IE 10/11 can only accept a url with 2083 caharacters
+				// therefore we need to send request to compose window with POST method
+				// instead of GET. We create a temporary <Form> and will post emails.
+				// ** WebServers and other browsers also have url length limit:
+				// Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k
+				if (_extra.length > 2083)
+				{
+					var popup = egw.open('', _app, 'add', '', '', _app);
+					var $tmpForm = jQuery(document.createElement('form')).appendTo('body');
+					var $tmpInput = jQuery(document.createElement('input')).attr({name:Object.keys(_extra)[0], type:"text", value: _extra});
+					var $tmpSubmitInput = jQuery(document.createElement('input')).attr({type:"submit"});
+					// Set the temporary form's attributes
+					$tmpForm.attr({target:popup.name, action:"index.php?menuaction=mail.mail_compose.compose", method:"post"})
+							.append($tmpInput)
+							.append($tmpSubmitInput);
+					$tmpForm.submit();
+					// Remove the form after submit
+					$tmpForm.remove();
+				}
+				else // simple GET request
+				{
+					egw.open('', _app, 'add', _extra, _app, _app);
+				}
 			}
 		}
 	};
