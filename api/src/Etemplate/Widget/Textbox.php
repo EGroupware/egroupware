@@ -156,7 +156,9 @@ class Textbox extends Etemplate\Widget
 			{
 				$value = mb_substr($value,0,(int) $this->attrs['maxlength']);
 			}
-			if ($this->attrs['validator'] && !preg_match($this->attrs['validator'],$value))
+			// PHP xml parser reads backslashes literal from attributes, while JavaScript ones need them escaped (eg. like PHP strings)
+			// --> replace \\ with \ to get following XML working: validator="/^\\d+$" (server- AND client-side!)
+			if ($this->attrs['validator'] && !preg_match(str_replace('\\\\','\\', $this->attrs['validator']), $value))
 			{
 				switch($this->attrs['type'])
 				{
