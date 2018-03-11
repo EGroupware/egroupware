@@ -263,7 +263,11 @@ class Mail
 		//error_log(__METHOD__.' ('.__LINE__.') '.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
 		if ($_profileID && (!isset(self::$instances[$_profileID]) || $_restoreSession===false))
 		{
-			self::$instances[$_profileID] = new Mail('utf-8',$_restoreSession,$_profileID,false,$_reuseCache);
+			$account = Mail\Account::read($_profileID);
+			if ($account->is_ews())
+				self::$instances[$_profileID] = new Mail_EWS('utf-8', $_restoreSession, $_profileID, false, $_reuseCache);
+			else
+				self::$instances[$_profileID] = new Mail('utf-8',$_restoreSession,$_profileID,false,$_reuseCache);
 		}
 		else
 		{
@@ -798,6 +802,11 @@ class Mail
 		{
 			return $accountData;
 		}
+	}
+
+	function getDefaultFolder()
+	{
+		return $this->profileID . self::DELIMITER . 'INBOX';
 	}
 
 	/**

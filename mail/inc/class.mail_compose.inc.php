@@ -481,6 +481,12 @@ class mail_compose
 				try
 				{
 					$success = $this->send($_content);
+					if ( Api\Hooks::count( 'mail_compose_after_save' ) ) {
+						Api\Hooks::process( array(
+							'location' => 'mail_compose_after_save', 
+							'content' => $_content,
+						));
+					}
 					if ($success==false)
 					{
 						$sendOK=false;
@@ -589,6 +595,21 @@ class mail_compose
 				$_content['mimeType'] = $content['mimeType']='plain';
 			}
 
+		if ( Api\Hooks::count( 'mail_compose_index' ) ) {
+			$hooks= Api\Hooks::process( array(
+				'location' => 'mail_compose_index', 
+				'get' => $_GET,
+				'replyID' => $replyID,
+				'content' => $content,
+				'sel_options' => $sel_options,
+				'preserv' => $preserv,
+				'mail_bo' => $this->mail_bo,
+			));
+			foreach( $hooks as $app => $hook ) {
+				list( $hook_content, $hook_preserve ) = $hook;
+				$content = array_merge( $content, $hook_content );
+				$preserv = array_merge( $preserv, $hook_preserve );
+			}
 		}
 		// user might have switched desired mimetype, so we should convert
 		if ($content['is_html'] && $content['mimeType']=='plain')

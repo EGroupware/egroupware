@@ -1564,13 +1564,55 @@
                 "BSD License"
             ],
             "description": "Selection of methods that are often needed when working with XML documents.  Functionality includes creating of attribute lists from arrays, creation of tags, validation of XML names and more."
+        },
+        {
+            "name": "php-ews/php-ews",
+            "version": "dev-composer",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jamesiarmes/php-ews.git",
+                "reference": "b373c3804364aa6f31ef77d1561cc4edddc870c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jamesiarmes/php-ews/zipball/b373c3804364aa6f31ef77d1561cc4edddc870c8",
+                "reference": "b373c3804364aa6f31ef77d1561cc4edddc870c8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-soap": "*",
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2",
+                "symfony/console": "~2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Elsodaney",
+                    "email": "adam.elso@gmail.com"
+                }
+            ],
+            "description": "The PHP Exchange Web Services library (php-ews) is intended to make communication with Microsoft Exchange servers using Exchange Web Services easier. It handles the NTLM authentication required to use the SOAP services and provides an object-oriented interface to the complex types required to form a request.",
+            "time": "2016-04-03 15:23:19"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "php": 15
+        "php": 15,
+        "php-ews/php-ews": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -13,7 +13,7 @@
 				<row class="th">
 
 				</row>
-				<row>
+				<row class="$row_cont[class]">
 					<description class="$row_cont[class] mobile_cat_col"/>
 					<vbox>
 						<url-email id="${row}[fromaddress]" class="$row_cont[class]" readonly="true"/>

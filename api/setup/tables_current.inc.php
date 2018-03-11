@@ -451,7 +451,9 @@ $phpgw_baseline = array(
 			'acc_user_forward' => array('type' => 'bool','default' => '0','comment' => 'allow user to define forwards'),
 			'acc_further_identities' => array('type' => 'int','precision' => '1','nullable' => False,'default' => '1','comment' => '0=no, 1=yes, 2=only matching aliases'),
 			'acc_folder_ham' => array('type' => 'varchar','precision' => '128','comment' => 'ham folder'),
-			'acc_spam_api' => array('type' => 'varchar','precision' => '128','comment' => 'SpamTitan API URL')
+			'acc_spam_api' => array('type' => 'varchar','precision' => '128','comment' => 'SpamTitan API URL'),
+			'acc_ews_type' => array('type' => 'varchar','precision' => '128','default' => 'inbox','comment' => 'inbox/public_folders'),
+			'acc_ews_apply_permissions' => array('type' => 'bool','comment' => 'Always apply permissions ')
 		),
 		'pk' => array('acc_id'),
 		'fk' => array(),
@@ -509,6 +511,23 @@ $phpgw_baseline = array(
 		'pk' => array('notif_id'),
 		'fk' => array(),
 		'ix' => array(array('account_id','acc_id')),
+		'uc' => array()
+	),
+	'egw_ea_ews' => array(
+		'fd' => array(
+			'ews_profile' => array('type' => 'int','precision' => '11','nullable' => False,'comment' => 'ewg_ea_account, acc_id'),
+			'ews_folder' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'Exchange Folder ID'),
+			'ews_name' => array('type' => 'varchar','precision' => '100','nullable' => False,'comment' => 'Exchange Folder Name'),
+			'ews_is_default' => array('type' => 'bool','comment' => 'Default folder'),
+			'ews_order' => array('type' => 'int','precision' => '5','comment' => 'Order to display in tree'),
+			'ews_move_anywhere' => array('type' => 'bool','comment' => 'Permission to move emails between folders'),
+			'ews_move_to' => array('type' => 'text','comment' => 'Array with only folders allowed to move emails to'),
+			'ews_permissions' => array('type' => 'text','comment' => 'Array with folder permissions'),
+			'ews_apply_permissions' => array('type' => 'bool','comment' => 'Whether to apply extra permissions or not')
+		),
+		'pk' => array('ews_profile','ews_folder'),
+		'fk' => array('ews_profile' => 'egw_ea_account.acc_id'),
+		'ix' => array(),
 		'uc' => array()
 	)
 );

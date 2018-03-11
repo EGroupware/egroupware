@@ -407,3 +407,49 @@ function api_upgrade16_9_004()
 {
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.1';
 }
+
+function api_upgrade17_1()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_ews_type',array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'default' => 'inbox',
+		'comment' => 'inbox/public_folders'
+	));
+
+{
+	$GLOBALS['egw_setup']->oProc->CreateTable('egw_ea_ews',array(
+		'fd' => array(
+			'ews_profile' => array('type' => 'int','precision' => '11','nullable' => False,'comment' => 'ewg_ea_account, acc_id'),
+			'ews_folder' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'Exchange Folder ID'),
+			'ews_name' => array('type' => 'varchar','precision' => '100','nullable' => False,'comment' => 'Exchange Folder Name'),
+			'ews_is_default' => array('type' => 'bool','comment' => 'Default folder'),
+			'ews_order' => array('type' => 'int','precision' => '5','comment' => 'Order to display in tree'),
+			'ews_move_anywhere' => array('type' => 'bool','comment' => 'Permission to move emails between folders'),
+			'ews_move_to' => array('type' => 'text','comment' => 'Array with only folders allowed to move emails to')
+		),
+		'pk' => array('ews_profile','ews_folder'),
+		'fk' => array('ews_profile' => 'egw_ea_account.acc_id'),
+		'ix' => array(),
+		'uc' => array()
+	));
+
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_ews','ews_permissions',array(
+		'type' => 'text',
+		'comment' => 'Array with folder permissions'
+	));
+
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_ews','ews_apply_permissions',array(
+		'type' => 'bool',
+		'comment' => 'Whether to apply extra permissions or not'
+	));
+
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_ews_apply_permissions',array(
+		'type' => 'bool',
+		'comment' => 'Always apply permissions '
+	));
+
+	$GLOBALS['egw_setup']->db->query( 'alter table egw_ea_ews modify ews_folder varchar(255) collate utf8_bin' );
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.001';
+}

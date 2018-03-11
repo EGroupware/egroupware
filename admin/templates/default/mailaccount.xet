@@ -53,7 +53,7 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="emailadmin_no_single">
+				<row>
 					<description for="acc_imap_logintype" value="Type"/>
 					<menulist>
 						<menupopup id="acc_imap_type"/>
@@ -322,6 +322,32 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="admin.mailaccount.ews" template="" lang="" group="0" version="1.9.001">
+		<textbox type="hidden" id="clear_grid" />
+		<grid width="100%">
+			<columns>
+				<column width="115"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Account Type"/>
+					<menulist>
+						<menupopup id="acc_ews_type" class="et2_fullWidth" onchange="app.admin.ews_switch_type" />
+					</menulist>
+				</row>
+                <row disabled="@isInbox">
+					<description value="Always Apply Custom Permissions"/>
+					<checkbox id="acc_ews_apply_permissions" />
+				</row>
+                <row disabled="@isInbox">
+					<button label="Edit Custom Permissions" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_mail.ews_custom_permissions&amp;acc_id=$cont[acc_id]'),'roles','dependent=yes,width=900,height=600,scrollbars=no,status=yes'); return false;" />
+				</row>
+				<row>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="admin.mailaccount" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
@@ -335,7 +361,6 @@
 					<menulist>
 						<menupopup id="acc_id" onchange="app.admin.change_account" class="et2_fullWidth"/>
 					</menulist>
-					<description/>
 				</row>
 				<row class="dialogHeader">
 					<description for="acc_name" value="Name of account"/>
@@ -363,6 +388,7 @@
 							<tab id="admin.mailaccount.smtp" label="SMTP" statustext="outgoing mail"/>
 							<tab id="admin.mailaccount.aliases" label="Aliases+Forwards" statustext="Aliases, Forwarding, Quota, ..."/>
 							<tab id="admin.mailaccount.encryption" label="Encryption" statustext="Encryption settings"/>
+							<tab id="admin.mailaccount.ews" label="EWS" statustext="Microsoft Exchange Settings" />
 						</tabs>
 						<tabpanels>
 							<template id="admin.mailaccount.identity"/>
@@ -372,6 +398,7 @@
 							<template id="admin.mailaccount.smtp"/>
 							<template id="admin.mailaccount.aliases"/>
 							<template id="admin.mailaccount.encryption"/>
+							<template id="admin.mailaccount.ews"/>
 						</tabpanels>
 					</tabbox>
 				</row>

@@ -11,7 +11,7 @@
 /* Basic information about this app */
 $setup_info['api']['name']      = 'api';
 $setup_info['api']['title']     = 'EGroupware API';
-$setup_info['api']['version']   = '17.1';
+$setup_info['api']['version']   = '17.1.001';
 $setup_info['api']['versions']['current_header'] = '1.29';
 // maintenance release in sync with changelog in doc/rpm-build/debian.changes
 $setup_info['api']['versions']['maintenance_release'] = '17.1.20180209';
@@ -52,6 +52,7 @@ $setup_info['api']['tables'][]  = 'egw_ea_credentials';
 $setup_info['api']['tables'][]  = 'egw_ea_identities';
 $setup_info['api']['tables'][]  = 'egw_ea_valid';
 $setup_info['api']['tables'][]  = 'egw_ea_notifications';
+$setup_info['api']['tables'][]  = 'egw_ea_ews';
 
 // hooks used by vfs_home_hooks to manage user- and group-directories for the new stream based VFS
 $setup_info['api']['hooks']['addaccount']     = array('EGroupware\\Api\\Vfs\\Hooks::addAccount', 'EGroupware\\Api\\Mail\\Hooks::addaccount');

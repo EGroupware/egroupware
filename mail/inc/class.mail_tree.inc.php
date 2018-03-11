@@ -246,8 +246,10 @@ class mail_tree
 
 					array_unshift($path, $_profileID);
 
+					$nodeId = $_profileID.self::DELIMITER.$folder['MAILBOX'];
+
 					$data = array(
-						Tree::ID=>$_profileID.self::DELIMITER.$folder['MAILBOX'],
+						Tree::ID=>$nodeId,
 						Tree::AUTOLOAD_CHILDREN => $_allInOneGo?false:self::nodeHasChildren($folder),
 						Tree::CHILDREN =>array(),
 						Tree::LABEL =>lang($folder['MAILBOX']),

@@ -372,6 +372,11 @@ app.classes.mail = AppJS.extend(
 	{
 		switch(_app)
 		{
+			//fkara
+			case 'infolog':
+				// If new infolog is created, store its id. It will be fetched by popup windows
+				this.latest_infolog = _id;
+				break;
 			case 'mail':
 				if (_id === 'sieve')
 				{
@@ -1566,6 +1571,27 @@ app.classes.mail = AppJS.extend(
 			return false;
 		}
 
+		var actions = ['add','edit','delete','subscribe','unsubscribe'];
+		if ( actions.indexOf( action.id ) !== -1 ) {
+			var row_id = node.id.split('::');
+			var id = row_id[0];
+			var is_root = ( row_id.length == 1 );
+			var req = egw.json('mail.mail_ui.ajax_isEws',[ id ],null,this,false).sendRequest(); 
+			var is_ews = req.responseJSON.response[0].data;
+
+			switch( action.id ) {
+				case 'subscribe':
+				case 'unsubscribe':
+					if ( is_ews ) return false;
+					break;
+				case 'add':
+				case 'edit':
+				case 'delete':
+					if ( is_ews && is_root ) return false;
+					break;
+			}
+		}
+
 		return true;
 	},
 
@@ -1622,6 +1648,28 @@ app.classes.mail = AppJS.extend(
 		var node = ftree ? ftree.getNode(acc_id) : null;
 
 		return node && node.data && node.data.sieve;
+	},
+
+	/**
+	 * Check if capability is enabled on that account
+	 *
+	 * @param {object} _action
+	 * @param {object} _senders the representation of the tree leaf to be manipulated
+	 * @param {object} _currentNode
+	 */
+	capability_enabled: function( _action, _senders, _currentNode )
+	{
+		var capability;
+		switch ( _action.id ) {
+			case 'setLabel':
+				capability = 'SUPPORTS_KEYWORDS';
+				break;
+			case 'flagged':
+				capability = 'SUPPORTS_FLAGS';
+				break;
+		}
+		var req = egw.json('mail.mail_ui.ajax_checkCapability',[ capability ],null,this,false).sendRequest(); 
+		return req.responseJSON.response[0].data; 		
 	},
 
 	/**
@@ -2100,11 +2148,10 @@ app.classes.mail = AppJS.extend(
 		_widget.openItem(folder, true);
 
 		this.lock_tree();
-		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function() {
+		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function( defaultFolder ) {
 			// Profile changed, select inbox
-			var inbox = folder + '::INBOX';
-			_widget.reSelectItem(inbox);
-			this.mail_changeFolder(inbox,_widget,'');
+			_widget.reSelectItem( defaultFolder );
+			this.mail_changeFolder( defaultFolder,_widget,'');
 			this.unlock_tree();
 		},this))
 			.sendRequest(true);

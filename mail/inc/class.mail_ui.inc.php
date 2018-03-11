@@ -55,7 +55,8 @@ class mail_ui
 		'importMessageFromVFS2DraftAndDisplay'=>True,
 		'subscription'	=> True,
 		'folderManagement' => true,
-		'smimeExportCert' => true
+		'smimeExportCert' => true,
+		'moveEWS' => true,
 	);
 
 	/**
@@ -1193,6 +1194,18 @@ class mail_ui
 		} else {
 			$group++;
 		}
+		// Move in Exchange 
+		$actions['exchange_move'] = array(
+			'caption' => 'Move to EWS folder',
+			'icon' => 'move',
+			'group' => 2,
+			'allowOnMultiple' => true,
+			'nm_action' => 'popup',
+			'popup' => '500x600',
+			'url' => 'menuaction=mail.mail_ui.moveEWS&id=$row_id',
+			'enableClass' => 'is_ews',
+			'hideOnDisabled' => true,
+		);
 		$spam_actions = $this->getSpamActions();
 		$group++;
 		foreach ($spam_actions as &$action)
@@ -1330,7 +1343,7 @@ class mail_ui
 						'icon' => 'tag_message',
 						'group' => ++$group,
 						// note this one is NOT a real CAPABILITY reported by the server, but added by selectMailbox
-						'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
+						'enabled' => 'javaScript:app.mail.capability_enabled',
 						'hideOnDisabled' => true,
 						'children' => array(
 							'unlabel' => array(
@@ -1385,6 +1398,7 @@ class mail_ui
 						'onExecute' => 'javaScript:app.mail.mail_flag',
 						'hint' => 'Flag or Unflag a mail',
 						'shortcut' => KeyManager::shortcut(KeyManager::F, true, true),
+						'enabled' => 'javaScript:app.mail.capability_enabled',
 						'toolbarDefault' => true
 					),
 					'read' => array(
@@ -1424,6 +1438,16 @@ class mail_ui
 				//'onExecute' => 'javaScript:app.mail.mail_dragStart',
 			)
 		);
+		$extra_actions = Api\Hooks::process(array(
+			'location' => 'mail_extra_actions',
+			'group' => $group,
+		));
+		if ( is_array( $extra_actions ) ) {
+			foreach ( $extra_actions as $app => $extra) 
+				if ( is_array( $extra ) )
+					$actions += $extra;
+		}
+
 		//error_log(__METHOD__.__LINE__.array2string(array_keys($actions)));
 		// save as tracker, save as infolog, as this are actions that are either available for all, or not, we do that for all and not via css-class disabling
 		if (!isset($GLOBALS['egw_info']['user']['apps']['infolog']))
@@ -1476,7 +1500,7 @@ class mail_ui
 					$rows=array();
 					return 0;
 				}
-				if (empty($folderName)) $query['selectedFolder'] = $_profileID.self::$delimiter.'INBOX';
+				if (empty($folderName)) $query['selectedFolder'] = $mail_ui->mail_bo->getDefaultFolder();
 			}
 		}
 		if (!isset($mail_ui))
@@ -1491,7 +1515,7 @@ class mail_ui
 				$rows=array();
 				return 0;
 			}
-			if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->profileID.self::$delimiter.'INBOX';
+			if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->getDefaultFolder();		
 		}
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
 		//Mail::$debugTimes=true;
@@ -1610,7 +1634,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					$rByUid
 				);
 				$rowsFetched['messages'] = $_sR['count'];
-				$ids = $_sR['match']->ids;
+				$ids = ( is_array( $_sR['match'] ) ? $_sR['match'] : $_sR['match']->ids );
 				// if $sR is false, something failed fundamentally
 				if($reverse === true) $ids = ($ids===false?array():array_reverse((array)$ids));
 				$sR = array_slice((array)$ids,($offset==0?0:$offset-1),$maxMessages); // we need only $maxMessages of uids
@@ -1830,6 +1854,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (Mail::$debugTimes) $starttime = microtime(true);
 		$rv = array();
 		$i=0;
+		$account = Mail\Account::read($this->mail_bo->profileID);
 		foreach((array)$_headers as $header)
 		{
 			$i++;
@@ -1906,6 +1931,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			if ($header['label5']) {
 				$css_styles[] = 'labelfive';
+			}
+			if ( $account->is_ews() ){
+				$css_styles[] = 'is_ews';
 			}
 
 			//error_log(__METHOD__.array2string($css_styles));
@@ -2324,6 +2352,46 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		return array_reverse($actions2,true);
 	}
 
+	/**
+	 * Move mails between EWS folders
+	 */
+	function moveEWS (array $content = null)
+	{
+		$dtmpl = new Etemplate('mail.move_ews');
+		$ids = $_GET['id']? $_GET['id']: $content['id'];
+		$content['id'] = $ids;
+		$ids = explode(',', $ids );
+		list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $ids[0]);
+		$folderName = base64_decode( $folder64 );
+		$folderID = $this->mail_bo->getFolderId( $folderName );
+		$sel_options['folder'] = Mail\EWS\Lib::getWriteFolders( $profile, $folderID );
+
+		if ( !$content['folder'] )
+			$content['msg'] = lang('No Folder Selected');
+
+		if ( $content['folder'] && ($content['move'] || $content['copy'] ) ) {
+			$move = ( $content['move'] ? true : false );
+			$messageUIDs = array();
+			foreach( $ids as $uid ) {
+				list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $uid);
+				$messageUIDs[] = $message_uid;
+			}
+			$res = $this->mail_bo->moveMessages( $content['folder'], $messageUIDs, $move, $folderName );
+			if ( $res ) {
+				$msg = 'Operation Successful';
+				if ( $move )
+					Framework::refresh_opener( $msg, 'mail', $ids, 'delete' );
+				Framework::window_close();
+			}
+		}
+
+		$readonlys = array();
+		// Preserv
+		$preserv = array(
+			'id' => $content['id']
+		);
+		$dtmpl->exec('mail.mail_ui.moveEWS', $content,$sel_options,$readonlys,$preserv);
+	}
 	/**
 	 * helper function to create the attachment block/table
 	 *
@@ -4589,6 +4657,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			$mail_ui = new mail_ui(true);	// run constructor
 		}
+		// Return Default Folder to select
+		$defaultFolder = $mail_ui->mail_bo->getDefaultFolder();
+		Api\Json\Response::get()->data( $defaultFolder );	
 	}
 
 	/**
@@ -4983,7 +5054,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid = true,
 							false
 						);
-						$messageListForToggle = $_sRt['match']->ids;
+						$messageListForToggle = ( !is_array( $_sRt['match'] ) ? $_sRt['match']->ids : $_sRt['match'] );
 						$filter['status'] = array($_flag);
 						if ($query['filter'] && $query['filter'] !='any')
 						{
@@ -4997,7 +5068,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid = true,
 							false
 						);
-						$messageList = $_sR['match']->ids;
+						$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 						if (count($messageListForToggle)>0)
 						{
 							$flag2set = (strtolower($_flag));
@@ -5034,7 +5105,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid,
 							false
 						);
-						$messageList = $_sR['match']->ids;
+						$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 						unset($_messageList['all']);
 						$_messageList['msg'] = array();
 					}
@@ -5163,7 +5234,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$rByUid,
 						false
 					);
-					$messageList = $_sR['match']->ids;
+					$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 				}
 				else
 				{
@@ -5324,7 +5395,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$rByUid=true,
 						false
 					);
-					$messageList = $_sR['match']->ids;
+					$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 					foreach($messageList as $uID)
 					{
 						//error_log(__METHOD__.__LINE__.$uID);
@@ -5487,5 +5558,28 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			$response->data($res);
 		}
+	}
+
+	/**
+	 * Check whether capability is enabled
+	 *
+	 * @param string $profile
+	 * @return boolean 
+	 */
+	function ajax_checkCapability( $capability )
+	{
+		$res = $this->mail_bo->icServer->hasCapability( $capability );
+		Api\Json\Response::get()->data( $res );
+	}
+	/**
+	 * Function check whether profile is ews
+	 *
+	 * @param string $profile
+	 * @return boolean 
+	 */
+	function ajax_isEws( $profile )
+	{
+		$account = Mail\Account::read( $profile );
+		Api\Json\Response::get()->data( $account->is_ews() );
 	}
 }
