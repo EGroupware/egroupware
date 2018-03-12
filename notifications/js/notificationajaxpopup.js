@@ -212,13 +212,13 @@
 			// Previous button
 			$nav_prev = jQuery(document.createElement('span'))
 					.addClass('egwpopup_nav_prev')
-					.attr('title',egw.lang('previous message'))
+					.attr('title',egw.lang('previous'))
 					.click(jQuery.proxy(this.nav_button, this,[$message, "prev"]))
 					.prependTo($top_toolbar);
 			// Next button
 			$nav_next = jQuery(document.createElement('span'))
 					.addClass('egwpopup_nav_next')
-					.attr('title',egw.lang('next message'))
+					.attr('title',egw.lang('next'))
 					.click(jQuery.proxy(this.nav_button, this,[$message, "next"]))
 					.prependTo($top_toolbar);
 			// Delete button
@@ -466,7 +466,7 @@
 		delete (notifymessages[id]);
 		// try to close the dialog if expanded before hidding it
 		this.collapseMessage(_node, _event);
-		egwpopup_message.hide();
+		egwpopup_message.remove();
 		this.bell("inactive");
 		this.counterUpdate();
 	};
