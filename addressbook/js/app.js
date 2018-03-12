@@ -713,7 +713,7 @@ app.classes.addressbook = AppJS.extend(
 			// Don't get rows here, let applyFilters() do it
 			return false;
 		}
-		
+
 		return true;
 	},
 
@@ -769,23 +769,19 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	adb_mail_vcard: function(_action, _elems)
 	{
-		var app_registry = egw.link_get_registry('mail');
-		var link = egw().link("/index.php","menuaction="+app_registry['add']['menuaction']);
+		var link = '';
+		var content = {vcard:{file:[], type:[]}};
 		for (var i = 0; i < _elems.length; i++)
 		{
 			var idToUse = _elems[i].id;
 			var idToUseArray = idToUse.split('::');
 			idToUse = idToUseArray[1];
-			link += "&preset[type][]="+encodeURIComponent("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
-			link += "&preset[file][]="+encodeURIComponent("vfs://default/apps/addressbook/"+idToUse+"/.entry");
+			link += "preset[type][]="+"text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8')+'&';
+			link += "preset[file][]="+"vfs://default/apps/addressbook/"+idToUse+"/.entry"+'&';
+			content.vcard.file.push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
+			content.vcard.type.push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
 		}
-		if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
-		{
-			var w_h =app_registry['view_popup'].split('x');
-			if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
-			egw_openWindowCentered2(link, '_blank', w_h[0], w_h[1], 'yes');
-		}
-
+		egw.openWithinWindow("mail", "setCompose", content, link, /mail.mail_compose.compose/);
 	},
 
 	/**
@@ -1007,7 +1003,7 @@ app.classes.addressbook = AppJS.extend(
 				}
 
 				// Check to see if it's not there
-				if(options && (options.find && 
+				if(options && (options.find &&
 					!options.find(function(e) {console.log(e); return e.value === state.state.grouped_view;}) ||
 					typeof options.find === 'undefined' && !options[state.state.grouped_view]
 				))
