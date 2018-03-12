@@ -120,7 +120,8 @@ class Tutorial
 	{
 		if (!($json = Api\Cache::getCache(Api\Cache::TREE, __CLASS__, 'egw_tutorial_json')))
 		{
-			$json = file_get_contents('https://www.egroupware.de/videos/tutorials.json');
+			$json = file_get_contents('https://www.egroupware.de/videos/tutorials.json',
+				false, Api\Framework::proxy_context());
 			// Fallback tutorials.json
 			if (!$json) $json = file_get_contents('api/setup/tutorials.json');
 			// Cache the json object for two hours
