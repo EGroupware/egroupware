@@ -1003,7 +1003,8 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			}
 
 			this.tabsUi.setAppHeader(this.activeApp.app_header);
-			var default_title = egw.config('site_title', 'phpgwapi') + ' ['+this.activeApp.displayName+']';
+			var default_title = (egw.config('site_title', 'phpgwapi') ? egw.config('site_title', 'phpgwapi') : "EGroupware")
+					+ ' ['+this.activeApp.displayName+']';;
 			document.title = this.activeApp.website_title || default_title;
 		}
 
