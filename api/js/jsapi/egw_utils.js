@@ -270,12 +270,8 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		 */
 		storeWindow: function(appname, popup)
 		{
-			if (popup.opener) popup.opener.framework.popups_garbage_collector();
-			if (popup.opener && popup.opener.framework && egw.is_popup(popup)
-					&& typeof popup.opener.framework.popup_idx(popup) == 'undefined')
-			{
-				popup.opener.framework.popups.push(popup);
-			}
+			if (popup.opener && popup.opener.framework) popup.opener.framework.popups_garbage_collector();
+			
 			// Don't store if it has no name
 			if(!popup.name || ['_blank'].indexOf(popup.name) >= 0)
 			{

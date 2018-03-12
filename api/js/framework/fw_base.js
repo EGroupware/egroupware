@@ -137,7 +137,6 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 			this.applications[this.appData.appName] = this.appData;
 
-			this.popups.concat(this.registerOpenedPopups(app.name));
 		}
 
 		// else display the default application
@@ -806,34 +805,6 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		}
 
 		if (_returnID !== false) return windowID;
-	},
-
-	registerOpenedPopups: function (_app)
-	{
-		var w = Object.keys(egw.getOpenWindows(_app));
-		var popups = [];
-		var popup;
-		for (var i=0; i < w.length; i++)
-		{
-			try{
-				popup = window.open('', w[i], '100x100');
-				if (popup.location.href == "about:blank")
-				{
-					popup.close();
-					egw(window).windowClosed(_app, popup);
-				}
-				if (popup && egw.is_popup(popup)) popups.push(popup);
-			}catch(e)
-			{
-				if (popup)
-				{
-					popup.close();
-					egw.windowClosed(_app, popup);
-				}
-				continue;
-			}
-		}
-		return popups;
 	},
 
 	/**

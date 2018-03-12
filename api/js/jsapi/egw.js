@@ -224,6 +224,10 @@
 		{
 			// Timeout is 5 seconds, but it iks only applied(egw_utils) when something asks for the window list
 			window.setInterval(function() {
+				if (window.opener && window.opener.framework && typeof window.opener.framework.popup_idx(window) == 'undefined')
+				{
+					window.opener.framework.popups.push(window);
+				}
 				egw().storeWindow(this.egw_appName, this);
 			}, 2000);
 		}
