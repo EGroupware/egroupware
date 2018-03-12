@@ -239,6 +239,14 @@ class Sharing
 
 			$share['share_root'] = '/';
 			Vfs::$user = $share['share_owner'];
+
+			// Need to re-init stream wrapper, as some of them look at
+			// preferences or permissions
+			$scheme = Vfs\StreamWrapper::scheme2class(Vfs::parse_url($share['resolve_url'],PHP_URL_SCHEME));
+			if($scheme && method_exists($scheme, 'init_static'))
+			{
+				$scheme::init_static();
+			}
 		}
 
 		// mounting share
