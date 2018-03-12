@@ -176,7 +176,7 @@ class filemanager_ui
 				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.filemanager.viewEntry':'javaScript:app.filemanager.editprefs',
 				'mobileViewTemplate' => 'file?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/filemanager/templates/mobile/file.xet'))
 			),
-			'mail' => array(
+			'share' => array(
 				'caption' => lang('Share files'),
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
@@ -285,15 +285,11 @@ class filemanager_ui
 				'onExecute' => 'javaScript:app.filemanager.drop'
 			)
 		);
-		if (!isset($GLOBALS['egw_info']['user']['apps']['mail']))
-		{
-			unset($actions['mail']);
-		}
-		else
-		{
+
+		if (isset($GLOBALS['egw_info']['user']['apps']['mail'])) {
 			foreach(Vfs\Sharing::$modes as $mode => $data)
 			{
-				$actions['mail']['children']['mail_'.$mode] = array(
+				$actions['share']['children']['mail_'.$mode] = array(
 					'caption' => $data['label'],
 					'hint' => $data['title'],
 					'group' => 2,
@@ -301,10 +297,11 @@ class filemanager_ui
 				);
 				if ($mode == Vfs\Sharing::ATTACH || $mode == Vfs\Sharing::LINK)
 				{
-					$actions['mail']['children']['mail_'.$mode]['disableClass'] = 'isDir';
+					$actions['share']['children']['mail_'.$mode]['disableClass'] = 'isDir';
 				}
 			}
 		}
+
 		// This would be done automatically, but we're overriding
 		foreach($actions as $action_id => $action)
 		{
@@ -979,7 +976,7 @@ class filemanager_ui
 			{
 				$row['class'] .= 'noEdit ';
 			}
-			
+
 			$row['class'] .= !$dir_is_writable[$dir] ? 'noDelete' : '';
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
