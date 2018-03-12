@@ -7,10 +7,12 @@
 			<columns>
 				<column/>
 				<column/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
-					<radio id="index" options="$row_cont[index]" />
+					<radio id="index" options="$row_cont[index]"/>
+					<description/>
 					<description id="${row}[label]"/>
 				</row>
 			</rows>
