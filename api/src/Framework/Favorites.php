@@ -257,4 +257,111 @@ class Favorites
 			return !isset($result[$app][$pref_name]);
 		}
 	}
+
+	/**
+	 * Attributes for app-favorites below state containing account_ids
+	 */
+	protected static $app_favorite_attributes = array(
+		'calendar' => 'owner',
+		'addressbook' => 'filter',
+		'tracker' => array('col_filter' => array('tr_assigned', 'tr_created')),
+		'infolog' => array('col_filter' => array('info_owner', 'info_responsible')),
+		'projectmanager' => array('col_filter' => array('pe_resources')),
+		'timesheet' => array('col_filter' => array('ts_owner')),
+	);
+
+	/**
+	 * Change account_id's in favorites stored in preferences
+	 *
+	 * Favorites have a preference name "favorite_*" with an attribute "group" and
+	 * "state" (see $app_account_id_attributes above).
+	 *
+	 * Some apps use an implizit "favorite" to save their state called "index_state",
+	 * calendar uses "saved_states".
+	 *
+	 * @param string $app
+	 * @param array $ids2change from-id => to-id pairs
+	 * @return integer number of changed ids
+	 */
+	public static function change_account_ids($app, array $ids2change)
+	{
+		$changes = 0;
+		Api\Preferences::change_preference($app, '/^(index_state$|saved_states$|favorite_)/',
+			function($attr, $old_value) use ($app, $ids2change, &$changes)
+			{
+				$value = is_array($old_value) ? $old_value : php_safe_unserialize($old_value);
+
+				switch($attr)
+				{
+					case 'index_state':
+						$changes += self::change_account_id($value, self::$app_favorite_attributes[$app], $ids2change);
+						break;
+					case 'saved_states':	// calendar
+						$changes += self::change_account_id($value, self::$app_favorite_attributes[$app], $ids2change);
+						break;
+					default: // favorite_*
+						$changes += self::change_account_id($value['state'], self::$app_favorite_attributes[$app], $ids2change);
+						if ($value['group'] && isset($ids2change[$value['group']]))
+						{
+							$value['group'] = $ids2change[$value['group']];
+							++$changes;
+						}
+				}
+
+				// currently apps still use php-serialized index_state, can NOT transform to json
+				if (!is_array($old_value))
+				{
+					$value = serialize($value);
+				}
+				//error_log("$app: change_account_ids_callback('$app', '$attr', ".array2string($old_value).", $owner) --> ".array2string($value));
+				return $value;
+			});
+
+		return $changes;
+	}
+
+	/**
+	 * Change account_id in (comma-separated) value
+	 *
+	 * @param array|string|int $value
+	 * @param array|string $attrs_to_change
+	 * @param array $ids2change
+	 * @return int number of changes made
+	 */
+	protected static function change_account_id(&$value, $attrs_to_change, array $ids2change)
+	{
+		$changes = 0;
+
+		if (!is_array($attrs_to_change))
+		{
+			if (!empty($value[$attrs_to_change]))
+			{
+				$vals = !is_array($value[$attrs_to_change]) ? explode(',', $value[$attrs_to_change]) : $value[$attrs_to_change];
+				foreach($vals as &$v)
+				{
+					if (isset($ids2change[$v]))
+					{
+						$v = $ids2change[$v];
+						$changes++;
+					}
+				}
+				$value[$attrs_to_change] = !is_array($value[$attrs_to_change]) ? implode(',', $vals) : $vals;
+			}
+		}
+		else
+		{
+			foreach($attrs_to_change as $key => $names)
+			{
+				if (is_int($key))
+				{
+					$changes += self::change_account_id($value, $names, $ids2change);
+				}
+				elseif (!empty($value[$key]))
+				{
+					$changes += self::change_account_id($value[$key], $names, $ids2change);
+				}
+			}
+		}
+		return $changes;
+	}
 }
