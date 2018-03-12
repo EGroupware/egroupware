@@ -1488,6 +1488,14 @@ class Db
 		// for boolean types, causing it to return "true" or "false" and not a quoted string like "'1'"!
 		if (is_bool($value)) $value = (string)$value;
 
+		// MySQL and MariaDB before 10.1 need 4-byte utf8 chars replaced with our default utf8 charset
+		// (MariaDB 10.1 does the replacement automatic, 10.0 cuts everything off behind and MySQL gives an error)
+		// Changing charset to utf8mb4 requires schema update, shortening of some indexes and probably have negative impact on performace!
+		if (substr($this->Type, 0, 5) == 'mysql' && $this->ServerInfo['version'] < 10.1)
+		{
+			$value = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $value);
+		}
+
 		// need to cast to string, as ADOdb 5.20 would return NULL instead of '' for NULL, causing us to write that into NOT NULL columns
 		return $this->Link_ID->qstr((string)$value);
 	}
