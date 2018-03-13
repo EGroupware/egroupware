@@ -21,6 +21,9 @@ PASSWD=PW
 CHANGE=
 while IFS=, read account_lid account_id ad_user SID RID rest
 do
+	# if we have no RID but a SID, calculate the RID
+	[ -z "$RID" -a -n "$SID" ] && RID=${SID##*-}
+
 	if [ -n "$account_id" -a -n "$RID" ]
 	then
 		[ -z "$account_lid" -o -z "$ad_user" -o "$account_lid" = "$ad_user" ] && {
@@ -33,8 +36,13 @@ do
 			echo "admin/admin-cli.php --edit-group '$ADMIN,$PASSWD,$account_lid=$ad_user'"
 			RID=-$RID
 		fi
-		[ -n "$CHANGE" ] && CHANGE=$CHANGE,
-		CHANGE=$CHANGE$account_id,$RID
+
+		# if no change necessary, dont
+		if [ $account_id != $RID ]
+		then
+			[ -n "$CHANGE" ] && CHANGE=$CHANGE,
+			CHANGE=$CHANGE$account_id,$RID
+		fi
 	fi
 done
 
