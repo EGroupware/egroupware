@@ -3530,7 +3530,7 @@ td.lettersearch {
   top: 43px !important;
   right: 0px !important;
   left: auto !important;
-  height: calc(100% - 115px);
+  height: calc(100% - 65px);
   width: 300px !important;
   position: absolute;
   background: white;
