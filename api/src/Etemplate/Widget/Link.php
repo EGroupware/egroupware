@@ -243,11 +243,18 @@ class Link extends Etemplate\Widget
 		$response = Api\Json\Response::get();
 		$response->data($result !== false);
 	}
-
+	
 	/**
-	 * Symlink an existing file in filemanager
+	 * Symlink/copy/move an existing file in filemanager
+	 *
+	 * @param string $app_id app's id, e.g. infolog:2
+	 * @param array $files an array of paths
+	 * @param string $action custom action, default is null which
+	 * means link action (actions: copy, move)
+	 *
+	 * @return nothing
 	 */
-	public static function ajax_link_existing($app_id, $files)
+	public static function ajax_link_existing($app_id, $files, $action = null)
 	{
 		list($app, $id, $dest_file) = explode(':', $app_id);
 
@@ -261,6 +268,16 @@ class Link extends Etemplate\Widget
 		}
 
 		if(!is_array($files)) $files = array($files);
+
+		if ($action == "copy")
+		{
+			Api\Vfs::copy_files($files, Api\Link::vfs_path($app, $id, '', true));
+		}
+		if ($action == "move")
+		{
+			Api\Vfs::move_files($files, Api\Link::vfs_path($app, $id, '', true), $errs = array(), $moved = array());
+		}
+
 		foreach($files as $target)
 		{
 			Api\Link::link_file($app, $id, $target);

@@ -185,6 +185,8 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 			button_caption: '',
 			readonly: this.options.readonly,
 			dialog_title: egw.lang('Link'),
+			extra_buttons:[{text: egw.lang("copy"),	id:"copy", image: "copy"},
+			{text: egw.lang("move"), id:"move", image: "move"}],
 			onchange: function() {
 				var values = true;
 				// If entry not yet saved, store for linking on server

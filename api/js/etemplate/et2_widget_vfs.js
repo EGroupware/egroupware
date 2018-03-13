@@ -940,6 +940,11 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			default: "Save as",
 			description: "Title of dialog",
 			translate:true
+		},
+		"extra_buttons": {
+			name: "extra action buttons",
+			type: "any",
+			description: "Extra buttons passed to dialog. It's co-related to method.",
 		}
 	},
 
@@ -1019,9 +1024,19 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 				text: egw.lang(_data.content.label),
 				id:"submit",
 				image:_data.content.mode.match(/saveas|select-dir/) ? "save" : "check"
-			},
-			{text: egw.lang("Close"), id:"close"}
+			}
 		];
+		if (this.options.extra_buttons && this.options.method)
+		{
+			var extra_buttons_action = [];
+			for (var i=0; i < this.options.extra_buttons.length; i++)
+			{
+				buttons.push(this.options.extra_buttons[i]);
+				extra_buttons_action[this.options.extra_buttons[i]['id']] = this.options.extra_buttons[i]['id'];
+			}
+
+		}
+		buttons.push({text: egw.lang("Close"), id:"close"});
 		var data = jQuery.extend(_data, {'currentapp': egw(window).app_name()});
 
 		// define a mini app object for vfs select UI
@@ -1031,7 +1046,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			callback: function(_button_id, _value)
 			{
-				if (_button_id == 'submit' && _value)
+				if ((_button_id == 'submit' || extra_buttons_action[_button_id]) && _value)
 				{
 					var files = [];
 					switch(_data.content.mode)
@@ -1061,7 +1076,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 					{
 						egw(window).json(
 							self.options.method,
-							[self.options.method_id, files],
+							[self.options.method_id, files, _button_id],
 							function(){
 								jQuery(self.node).change();
 							}
