@@ -271,7 +271,7 @@ class filemanager_ui
 				'default' => true
 			),
 			'file_drop_copy' => array(
-				'icon' => 'stylite/edit_copy',
+				'icon' => 'stylite/copy',
 				'acceptedTypes' => 'file',
 				'caption' => lang('Copy into folder'),
 				'type' => 'drop',
