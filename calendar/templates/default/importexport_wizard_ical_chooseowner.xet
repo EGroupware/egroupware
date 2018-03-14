@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.importexport_wizard_ical_chooseowner" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description id="msg" no_lang="1"/>
+				</row>
+				<row>
+					<select-account id="cal_owner" empty_label="Select"/>
+				</row>
+				<row>
+					<description/>
+				</row>
+				<row>
+					<checkbox label="Skip notifications" id="no_notification"/>
+				</row>
+				<row>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

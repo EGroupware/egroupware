@@ -28,11 +28,11 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 {
 
 	protected static $prefix = '';
-	
+
 	protected static $transformation = array(
 		'type' => 'customfields'
 	 );
-		
+
 	/**
 	 * Adapt the settings to custom fields widget
 	 *
@@ -67,15 +67,15 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 		self::$transformation['label'] = '';
 
 		$this->setElementAttribute($form_name, 'prefix', self::$prefix);
-		
+
 		$n = 1;
 		foreach($fields as $lname => &$field)
 		{
 			$type =& $field['type'];
-			
+
 			// No filters are required
 			$field['needed'] = false;
-			
+
 			switch($type)
 			{
 				case 'date':
@@ -84,7 +84,7 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 					$type = $field['type'] = 'date-range';
 					$options = '';
 					$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'relative', $relative_dates);
-					$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'empty_label', lang('All...'));
+					$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'blur', $field['empty_label'] ? $field['empty_label'] : lang('All...'));
 					break;
 				case 'ajax_select' :
 					// Set some reasonable defaults for the widget
@@ -108,7 +108,7 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 					}
 					$options = array_merge($options, array_intersect_key($field['values'], array_flip(ajax_select_widget::$known_options)));
 
-					
+
 					break;
 				case 'select':
 				default:
@@ -163,14 +163,14 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 			}
 			unset($widget);
 		}
-		
+
 		parent::beforeSendToClient($cname, $expand);
 
 		$this->setElementAttribute($form_name, 'customfields', $fields);
 		$this->setElementAttribute($form_name, 'fields',array_fill_keys(array_keys($fields), true));
 		return false;
 	}
-	
+
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
