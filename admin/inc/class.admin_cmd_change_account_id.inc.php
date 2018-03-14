@@ -179,9 +179,6 @@ class admin_cmd_change_account_id extends admin_cmd
 		{
 			foreach($GLOBALS['egw_info']['apps'] as $app => $data)
 			{
-				$total += ($changed = Api\Storage\Customfields::change_account_ids($app, $this->change));
-				if ($changed) echo "$app:\t$changed id's in definition of private custom fields changed\n";
-
 				$total += ($changed = Api\Framework\Favorites::change_account_ids($app, $this->change));
 				if ($changed) echo "$app:\t$changed id's in favorites or index-state changed\n";
 			}

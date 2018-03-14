@@ -480,42 +480,6 @@ class Customfields implements \IteratorAggregate
 	}
 
 	/**
-	 * Change account_id's of private custom-fields
-	 *
-	 * @param string $app
-	 * @param array $ids2change from-id => to-id pairs
-	 * @return integer number of changed ids
-	 */
-	public static function change_account_ids($app, array $ids2change)
-	{
-		$total = 0;
-		if (($cfs = self::get($app, true)))
-		{
-			foreach($cfs as &$data)
-			{
-				if ($data['private'])
-				{
-					$changed = 0;
-					foreach($data['private'] as &$id)
-					{
-						if (isset($ids2change[$id]))
-						{
-							$id = $ids2change[$id];
-							++$changed;
-						}
-					}
-					if ($changed)
-					{
-						self::update($data);
-						$total += $changed;
-					}
-				}
-			}
-		}
-		return $total;
-	}
-
-	/**
 	 * Return names of custom fields containing account-ids
 	 *
 	 * @param string $app
