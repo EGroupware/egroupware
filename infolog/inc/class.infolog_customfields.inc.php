@@ -301,4 +301,37 @@ class infolog_customfields extends admin_customfields
 		Api\Storage\Customfields::save('infolog', $this->fields);
 		Api\Config::save_value('group_owners',$this->group_owners,'infolog');
 	}
+
+	/**
+	 * Change account_ids in group_owners configuration hook called from admin_cmd_change_account_id
+	 *
+	 * @param array $changes
+	 * @return int number of changed account_ids
+	 */
+	public static function change_account_ids(array $changes)
+	{
+		unset($changes['location']);	// no change, but the hook name
+		$changed = 0;
+
+		// migrate staff account_ids
+		$config = Api\Config::read('infolog');
+		if (!empty($config['group_owners']))
+		{
+			foreach($config['group_owners'] as &$account_id)
+			{
+				if (isset($changes[$account_id]))
+				{
+					$account_id = $changes[$account_id];
+					$changed++;
+					$needs_save = true;
+				}
+			}
+			if ($needs_save)
+			{
+				Api\Config::save_value('group_owners', $config['group_owners'], 'infolog');
+			}
+		}
+
+		return $changed;
+	}
 }
