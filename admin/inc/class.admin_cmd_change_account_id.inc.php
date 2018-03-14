@@ -185,6 +185,15 @@ class admin_cmd_change_account_id extends admin_cmd
 				$total += ($changed = Api\Framework\Favorites::change_account_ids($app, $this->change));
 				if ($changed) echo "$app:\t$changed id's in favorites or index-state changed\n";
 			}
+
+			// call hooks, in case apps need additional changes
+			$args = $this->change;
+			$args['location'] = 'change_account_ids';
+			foreach(Api\Hooks::process($args, array(), true) as $app => $changed)
+			{
+				$total += $changed;
+				if ($changed) echo "$app:\t$changed id's changed by application hook\n";
+			}
 		}
 		if ($total) Api\Cache::flush(Api\Cache::INSTANCE);
 
