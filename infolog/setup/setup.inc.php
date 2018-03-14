@@ -57,6 +57,7 @@ $setup_info['infolog']['hooks']['pm_custom_app_icons'] = 'infolog.infolog_bo.pm_
 $setup_info['infolog']['hooks']['timesheet_set'] = 'infolog.infolog_ui.timesheet_set';
 $setup_info['infolog']['hooks']['calendar_set'] = 'infolog.infolog_ui.calendar_set';
 $setup_info['infolog']['hooks']['mail_import'] = 'infolog_hooks::mail_import';
+$setup_info['infolog']['hooks']['change_account_ids'] = 'infolog_customfields::change_account_ids';
 
 // Dependencies for this app to work
 $setup_info['infolog']['depends'][] = array(
