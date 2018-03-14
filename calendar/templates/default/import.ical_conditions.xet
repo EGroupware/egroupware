@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.import.ical_conditions" template="" lang="" group="0" version="16.1">
+		<template id="importexport.wizard_basic_import_csv.conditions" disabled="@no_conditions"/>
+		<hbox>
+			<description value="Do not import conflicting events"/>
+			<checkbox id="skip_conflicts" />
+		</hbox>
+		<filter id="set_filter" relative_dates="true"/>
+	</template>
+</overlay>

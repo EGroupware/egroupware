@@ -133,17 +133,24 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 		}
 		// switch off notifications by default
 		$plugin_options = $_definition->plugin_options;
-		if (!isset($_definition->plugin_options['no_notification']))
+		if (!array_key_exists('no_notification', $_definition->plugin_options))
 		{
 			$plugin_options['no_notification'] = true;
 			$_definition->plugin_options = $plugin_options;
 		}
+
+		// Set owner, if not set will be null (current user)
+		$owner = $plugin_options['cal_owner'];
+
+		// Purge
+		$this->purge_calendar($owner, $_definition->filter['purge'], $plugin_options['no_notification']);
+
 		// User wants conflicting events to not be imported
 		if($_definition->plugin_options['skip_conflicts'])
 		{
 			$calendar_ical->conflict_callback = array($this, 'conflict_warning');
 		}
-		if (!$calendar_ical->importVCal($_stream, -1,null,false,0,'',null,null,null,$_definition->plugin_options['no_notification']))
+		if (!$calendar_ical->importVCal($_stream, -1,null,false,0,'',$owner,null,null,$_definition->plugin_options['no_notification']))
 		{
 			$this->errors[] = lang('Error: importing the iCal');
 		}
@@ -155,10 +162,10 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 		return $calendar_ical->events_imported;
 	}
 
-	
+
 	/**
 	 * Add a warning message about conflicting events
-	 * 
+	 *
 	 * @param int $record_num Current record index
 	 * @param Array $conflicts List of found conflicting events
 	 */
@@ -173,8 +180,48 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 
 		// iCal will always count as imported, even if it wasn't
 		$this->results['imported'] -= 1;
-		
+
 		$this->results['skipped']++;
+	}
+
+	/**
+	 * Empty the calendar before importing
+	 *
+	 * @param string $owner
+	 * @param array|string $timespan
+	 */
+	protected function purge_calendar($owner, $timespan, $skip_notification)
+	{
+		if(!$owner)
+		{
+			$owner = $GLOBALS['egw_info']['user']['account_id'];
+		}
+		if(!is_array($timespan))
+		{
+			$timespan = importexport_helper_functions::date_rel2abs($timespan);
+		}
+		if (!$timespan)
+		{
+			return;
+		}
+
+		// Get events in timespan
+		$events = $this->bo->search(array(
+			'start'     => $timespan['from'],
+			'end'       => $timespan['to'],
+			'users'     => $owner,
+			'num_rows'  => -1
+		));
+
+		// Delete
+		foreach($events as $event)
+		{
+			$result = $this->bo->delete($event['id'], $event['recur_date'], true, $skip_notification);
+			if($result)
+			{
+				$this->results['deleted']++;
+			}
+		}
 	}
 
 	/**
@@ -229,6 +276,34 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 		// lets do it!
 	}
 
+	/**
+	 * Filter while importing
+	 *
+	 * The only one currently supported is purge range, nothing on actual fields
+	 *
+	 * @see importexport_helper_functions::get_filter_fields
+	 *
+	 * @param array $fields
+	 */
+	public function get_filter_fields(&$fields) {
+		$fields = array(
+			'purge' => array(
+				'type' => 'date',
+				'name' =>'purge',
+				'label'=>'Empty target calendar before importing',
+				'empty_label' => 'No'
+			)
+		);
+	}
+	/**
+	 * Get the class name for the egw_record to use
+	 *
+	 * @return string;
+	 */
+	public static function get_egw_record_class()
+	{
+		return 'calendar_egw_record';
+	}
 	/**
         * Returns warnings that were encountered during importing
         * Maximum of one warning message per record, but you can append if you need to

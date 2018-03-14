@@ -23,15 +23,19 @@ class calendar_wizard_import_ical
 	* List of eTemplates to use for each step.  You can override this with your own etemplates steps.
 	*/
 	protected $step_templates = array(
-		'wizard_step55' => 'calendar.import.conditions'
+		'wizard_step55' => 'calendar.import.ical_conditions',
+		'wizard_step60' => 'calendar.importexport_wizard_ical_chooseowner'
 	);
     /**
 	 * constructor
 	 */
 	function __construct()
 	{
+		Api\Framework::includeJS('.','et2_widget_owner','calendar');
+		Api\Framework::includeCSS('calendar','calendar');
 		$this->steps = array(
 			'wizard_step55' => lang('Edit conditions'),
+			'wizard_step60' => lang('Choose owner of imported data'),
 		);
 	}
 
@@ -49,6 +53,16 @@ class calendar_wizard_import_ical
 		// return from step55
 		if ($content['step'] == 'wizard_step55')
 		{
+			unset($content['filter']);
+			unset($content['set_filter']['fields']);
+			foreach($content['set_filter'] as $key => $value)
+			{
+				if($value) {
+					$content['filter'][$key] = $value;
+				}
+			}
+			unset($content['set_filter']);
+
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
@@ -72,10 +86,62 @@ class calendar_wizard_import_ical
 			}
 			$preserv = $content;
 			unset ($preserv['button']);
-			
+
 			// No real conditions, but we share a template
 			$content['no_conditions'] = true;
 
+			// Filter - Purge
+			$content['set_filter']['fields'] = importexport_helper_functions::get_filter_fields(
+				$content['application'],$content['plugin'],$this
+			);
+			// Load existing filter from either content or definition
+			foreach($content['set_filter']['fields'] as $field => $settings)
+			{
+				$content['set_filter'][$field] = $content['filter'][$field];
+			}
+
+			return $this->step_templates[$content['step']];
+		}
+	}
+
+
+	/**
+	 * Set / override owner
+	 */
+	function wizard_step60(&$content, &$sel_options, &$readonlys, &$preserv)
+	{
+		if($this->debug) error_log('addressbook.importexport.addressbook_csv_import::wizard_step60->$content '.print_r($content,true));
+		unset($content['no_owner_map']);
+		// return from step60
+		if ($content['step'] == 'wizard_step60')
+		{
+			switch (array_search('pressed', $content['button']))
+			{
+				case 'next':
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
+				case 'previous' :
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],-1);
+				case 'finish':
+					return 'wizard_finish';
+				default :
+					return $this->wizard_step60($content,$sel_options,$readonlys,$preserv);
+			}
+		}
+		// init step60
+		else
+		{
+			$content['text'] = $this->steps['wizard_step60'];
+			$content['step'] = 'wizard_step60';
+			if(!array_key_exists('cal_owner', $content) && $content['plugin_options']) {
+				$content['cal_owner'] = $content['plugin_options']['cal_owner'];
+			}
+
+			// Include calendar-owner widget
+			$response = Api\Json\Response::get();
+			$response->includeScript(Api\Egw::link('/calendar/js/et2_widget_owner.js'));
+			Api\Framework::includeJS('','et2_widget_owner');
+			$preserv = $content;
+			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];
 		}
 	}
