@@ -449,22 +449,8 @@ class Sharing
 		}
 		else
 		{
-			if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
-			{
-				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
-			}
-
-			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
-			{
-				if (!preg_match("/^(sqlfs|vfs)/", $stat['url']))
-				{
-					$vfs_path = Vfs::parse_url($path, PHP_URL_PATH);
-				}
-				else
-				{
-					$vfs_path = Vfs::parse_url($stat['url'], PHP_URL_PATH);
-				}
-			}
+			$vfs_path = static::resolve_path($path);
+			$exists = !!($vfs_path);
 		}
 		// check if file exists and is readable
 		if (!$exists)
@@ -567,6 +553,36 @@ class Sharing
 			}
 		}
 		return $share;
+	}
+
+	/**
+	 * Get the actual VFS path for the given path
+	 *
+	 * We follow links & resolve whatever is possible so that when the share is
+	 * mounted later (possibly by anonymous) the file can be found.
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	public static function resolve_path($path)
+	{
+		$vfs_path = $path;
+		if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
+		{
+			$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
+		}
+		if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
+		{
+			if (!preg_match("/^(sqlfs|vfs|stylite\.versioning)/", $stat['url']))
+			{
+				$vfs_path = Vfs::parse_url($path, PHP_URL_PATH);
+			}
+			else
+			{
+				$vfs_path = Vfs::parse_url($stat['url'], PHP_URL_PATH);
+			}
+		}
+		return $vfs_path;
 	}
 
 	/**
