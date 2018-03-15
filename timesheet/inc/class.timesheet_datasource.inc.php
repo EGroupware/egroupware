@@ -74,7 +74,7 @@ class timesheet_datasource extends datasource
 			'pl_id'          => $data['pl_id'],
 			'pe_unitprice'   => $data['ts_unitprice'],
 			'pe_used_quantity' => $data['ts_quantity'],
-			'pe_used_budget' => $data['ts_quantity'] * $data['ts_unitprice'],
+			'pe_used_budget' => $data['ts_quantity'] * (float)$data['ts_unitprice'],
 			'pe_completion'  => 100,
 			'cat_id'         => $data['cat_id'],
 		);
