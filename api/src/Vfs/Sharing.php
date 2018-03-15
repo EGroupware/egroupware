@@ -573,7 +573,7 @@ class Sharing
 		}
 		if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
 		{
-			if (!preg_match("/^(sqlfs|vfs|stylite\.versioning)/", $stat['url']))
+			if (!preg_match("/^(sqlfs|vfs|stylite\.versioning|stylite\.merge)/", $stat['url']))
 			{
 				$vfs_path = Vfs::parse_url($path, PHP_URL_PATH);
 			}
