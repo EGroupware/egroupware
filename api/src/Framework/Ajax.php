@@ -174,23 +174,6 @@ abstract class Ajax extends Api\Framework
 	}
 
 	/**
-	 * Query additional CSP frame-src from current app
-	 *
-	 * We have to query all apps, as we dont reload frameset!
-	 *
-	 * @return array
-	 */
-	protected function _get_csp_frame_src()
-	{
-		$srcs = array();
-		foreach(Api\Hooks::process('csp-frame-src') as $src)
-		{
-			if ($src) $srcs = array_merge($srcs, $src);
-		}
-		return $srcs;
-	}
-
-	/**
 	 * Returns the html-header incl. the opening body tag
 	 *
 	 * @param array $extra = array() extra attributes passed as data-attribute to egw.js
