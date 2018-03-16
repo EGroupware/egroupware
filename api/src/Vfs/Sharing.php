@@ -305,6 +305,17 @@ class Sharing
 		// --> we dont need session and close it, to not modifiy it
 		elseif ($keep_session === false)
 		{
+			if ($GLOBALS['egw']->sharing->use_collabora())
+			{
+				// check if sharee has Collabora run rights --> give is to share too
+				// we need to have collabora app to avoid CSP error since redirect share-link
+				// in collabora should get frame-src. e.g:(Collabora/Src/Ui.php:redirect(Sharing::share2link))
+				$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
+				if (!empty($apps['collabora']))
+				{
+					$GLOBALS['egw_info']['user']['apps']['collabora'] = $GLOBALS['egw_info']['apps']['collabora'];
+				}
+			}
 			$GLOBALS['egw']->session->commit_session();
 		}
 		// need to store new fstab and vfs_user in session to allow GET requests / downloads via WebDAV
