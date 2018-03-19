@@ -75,7 +75,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 
 		this.set_label(this.options.label);
 		this._draw();
-		
+
 		this._link_actions([]);
 		return true;
 	},
@@ -133,7 +133,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 				break;
 			}
 		}
-		
+
 		// Determine if we allow a dropped event to use the invite/change actions
 		var _invite_enabled = function(action, event, target)
 		{
@@ -145,7 +145,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 			{
 				return false;
 			}
-			
+
 			var owner_match = false;
 			var own_row = event.getParent() === row;
 
@@ -257,7 +257,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 					_data.ui.draggable.off('drag.et2_timegrid_row'+widget_object.id);
 					// Remove highlight
 					widget_object.iface.getWidget().div.removeClass('drop-hover');
-					
+
 					// Out triggers after the over, count to not accidentally remove
 					time.data('count',time.data('count')-1);
 					if(time.length && time.data('count') <= 0)
@@ -330,7 +330,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		if (this._parent.options.group_by === 'month')
 		{
 			days = this.options.end_date.getUTCDate();
-			
+
 			if(days < 31)
 			{
 				var diff = 31 - days;
@@ -634,6 +634,15 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 				}
 			}
 
+			// Skip events entirely on hidden weekends
+			if(this._hidden_weekend_event(event))
+			{
+				var node = this._children[n];
+				this.removeChild(n--);
+				node.free();
+				continue;
+			}
+
 			var event_start = new Date(event.start).valueOf();
 			for(var row = 0; row_end[row] > event_start; ++row);	// find a "free" row (no other event)
 			if(typeof rows[row] === 'undefined') rows[row] = [];
@@ -642,6 +651,26 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		}
 		this._cached_rows = rows;
 		return rows;
+	},
+
+	/**
+	 * Check to see if the event is entirely on a hidden weekend
+	 *
+	 * @param values Array of event values, not an et2_widget_event
+	 */
+	_hidden_weekend_event: function(values)
+	{
+		if(!this._parent || this._parent.options.group_by == 'month' || this._parent.options.show_weekend)
+		{
+			return false;
+		}
+		// Starts on Saturday or Sunday, ends Sat or Sun, less than 2 days long
+		else if([0,6].indexOf(values.start.getUTCDay()) !== -1 && [0,6].indexOf(values.end.getUTCDay()) !== -1
+				&& values.end - values.start < 2 * 24 * 3600 * 1000)
+		{
+			return true;
+		}
+		return false;
 	},
 
 	/**
