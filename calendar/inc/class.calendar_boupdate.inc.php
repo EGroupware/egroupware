@@ -507,9 +507,18 @@ class calendar_boupdate extends calendar_bo
 	 */
 	public function check_acl_invite($uid)
 	{
-		if (!is_numeric($uid)) return true;	// nothing implemented for resources so far
-
-		if (!$this->require_acl_invite)
+		if (!is_numeric($uid))
+		{
+			$resources_config = Api\Config::read('resources');
+			if ($resources_config['bookingrequests'] === 'disabled') {
+				$ret = $this->check_perms(resources_acl_bo::DIRECT_BOOKING, 0, $uid);
+			}
+			else
+			{
+				$ret = true;
+			}
+		}
+		elseif (!$this->require_acl_invite)
 		{
 			$ret = true;	// no grant required
 		}

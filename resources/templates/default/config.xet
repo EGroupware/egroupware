@@ -18,6 +18,16 @@
 					</select>
 				</row>
 				<row>
+					<description value="Booking requests" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Allow booking requests from any user when creating events?"/>
+					<select id="newsettings[bookingrequests]">
+						<option value="disabled">No, users will need to contact users with direct booking permission</option>
+						<option value="">Yes</option>
+					</select>
+				</row>
+				<row>
 					<description value="History logging" span="all" class="subHeader"/>
 				</row>
 				<row>
