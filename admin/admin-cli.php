@@ -185,10 +185,10 @@ function run_command(admin_cmd $cmd)
 			$url = $GLOBALS['egw_info']['server']['webserver_url'].'/json.php?menuaction=admin.admin_hooks.ajax_clear_cache';
 			if ($url[0] == '/') $url = 'http://'.(!empty($domain) && $domain != 'default' ? $domain : 'localhost').$url;
 			$data = file_get_contents($url, false, Framework::proxy_context($user,$arg0s[1]));
-			error_log("file_get_contents('$url') returned ".array2string($data));
+			//error_log("file_get_contents('$url') returned ".array2string($data));
 			if ($data && strpos($data, '"success"') !== false)
 			{
-				error_log('Instance cache cleared.');
+				//error_log('Instance cache cleared.');
 			}
 			else
 			{
