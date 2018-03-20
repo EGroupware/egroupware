@@ -897,8 +897,12 @@ class resources_bo
 	 * @param int $resource_id
 	 * @return mixed string with msg if somthing went wrong; nothing if all right
 	 */
-	function save_picture($file,$resouce_id)
+	function save_picture($file,$resource_id)
 	{
+		if ($file['type'] == 'application/octet-stream')
+		{
+			$file['type'] = Api\MimeMagic::filename2mime($file['name']);
+		}
 		switch($file['type'])
 		{
 			case 'image/gif':
@@ -913,14 +917,14 @@ class resources_bo
 				$src_img = imagecreatefrompng($file['tmp_name']);
 				break;
 			default:
-				return lang('Picture type is not supported, sorry!');
+				return $file['type'].': '.lang('Picture type is not supported, sorry!');
 		}
 
 		$tmp_name = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'resources-picture');
 		imagejpeg($src_img,$tmp_name);
 		imagedestroy($src_img);
 
-		Link::attach_file('resources',$resouce_id,array(
+		Link::attach_file('resources',$resource_id,array(
 			'tmp_name' => $tmp_name,
 			'name'     => self::PICTURE_NAME,
 			'type'     => 'image/jpeg',
