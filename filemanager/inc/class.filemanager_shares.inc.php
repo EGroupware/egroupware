@@ -79,7 +79,8 @@ class filemanager_shares extends filemanager_ui
 
 		if (class_exists('EGroupware\\Collabora\\Wopi'))
 		{
-			$query['col_filter'][] = 'share_writable != '.(int)EGroupware\Collabora\Wopi::WOPI_SHARE;
+			$query['col_filter'][] = 'share_writable NOT IN ('.
+				EGroupware\Collabora\Wopi::WOPI_WRITABLE.','.EGroupware\Collabora\Wopi::WOPI_READONLY.')';
 		}
 
 		if ((string)$query['col_filter']['share_passwd'] !== '')

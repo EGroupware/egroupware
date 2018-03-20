@@ -214,7 +214,7 @@ class Sharing
 		}
 		$share['resolve_url'] = Vfs::resolve_url($share['share_path'], true, true, true, true);	// true = fix evtl. contained url parameter
 		// if share not writable append ro=1 to mount url to make it readonly
-		if (!self::$db->from_bool($share['share_writable']))
+		if (!($share['share_writable'] & 1))
 		{
 			$share['resolve_url'] .= (strpos($share['resolve_url'], '?') ? '&' : '?').'ro=1';
 		}
