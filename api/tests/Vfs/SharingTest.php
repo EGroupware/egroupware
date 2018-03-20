@@ -23,7 +23,11 @@ use EGroupware\Api\LoggedInTest as LoggedInTest;
 class SharingTest extends LoggedInTest
 {
 
+	// Keep track of shares to remove after
 	protected $shares = Array();
+
+	// Keep track of files to remove after
+	protected $files = Array();
 
 	// Keep some server stuff to reset when done
 	protected $original_server;
@@ -41,21 +45,27 @@ class SharingTest extends LoggedInTest
 	{
 		//echo "\n\nEnding " . $this->getName() . "\n";
 		$_SERVER += $this->original_server;
-		$GLOBALS['egw_info']['user'] = $this->original_user;
 
-		$GLOBALS['egw']->session->destroy($GLOBALS['egw']->session->sessionid, $GLOBALS['egw']->session->kp3);
-
-		// This resets the VFS, but logs in anonymous
+		LoggedInTest::tearDownAfterClass();
 		LoggedInTest::setupBeforeClass();
-		$GLOBALS['egw_info']['user'] = $this->original_user;
+
+		//$GLOBALS['egw_info']['user'] = $this->original_user;
 		Vfs::$user = $GLOBALS['egw_info']['user']['account_id'];
 
 		// Need to ask about mounts, or other tests fail
 		Vfs::mount();
 
+		// Remove any added files
+		foreach($this->files as $path)
+		{
+			//echo "Unlinking $path: " . (Vfs::unlink($path) ? 'success' : 'failed');
+			Vfs::unlink($path);
+		}
+
+		// Remove any added shares
 		foreach($this->shares as $share)
 		{
-	//		Sharing::delete($share);
+			Sharing::delete($share);
 		}
 	}
 
@@ -66,10 +76,6 @@ class SharingTest extends LoggedInTest
 	 */
 	public function _testHomeReadonly()
 	{
-		$this->markTestIncomplete(
-          'This test has not been implemented yet.'
-		);
-		return;
 		$dir = Vfs::get_home_dir().'/test_subdir/';
 		Vfs::mkdir($dir);
 
@@ -103,7 +109,6 @@ class SharingTest extends LoggedInTest
           'This test has not been implemented yet.'
 		);
 		return;
-		// Still have problems finding the files
 
 
 		$dir = Vfs::get_home_dir().'/';
@@ -114,26 +119,23 @@ class SharingTest extends LoggedInTest
 		}
 
 		// Add some things for us to find, and make sure the dir is actually writable
-		error_log(__METHOD__ . "------------\n");
-		error_log("Mount:");
-		error_log(print_r(Vfs::mount(),true));
-		$stat = Vfs::stat($dir.'/test_subdir/');
-		error_log("Stat: " . print_r($stat, true));
-		error_log("Perms: " . Vfs::int2mode($stat['mode']));
-		error_log( __METHOD__." ------------\n");
-		Vfs::mkdir($dir.'/test_subdir/');
 		$file = $dir.'test_file.txt';
-		echo "Test file: $file\n";
-		file_put_contents(Vfs::PREFIX.$dir.'test_file.txt', 'Test for ' . $this->getName());
+		$this->files[] = $file;
+		$this->assertTrue(
+			file_put_contents(Vfs::PREFIX.$file, 'Test for ' . $this->getName() ."\n". Api\DateTime::to()) !== FALSE,
+			'Unable to write test file - check file permissions for CLI user'
+		);
 
 		$logged_in_files = array_map(
 				function($path) use ($dir) {return str_replace($dir, '/', $path);},
 				Vfs::find($dir)
 		);
 
-				var_dump($logged_in_files);
-		$this->shareLink($dir, Sharing::WRITABLE);
-		var_dump(Vfs::find('/',array('maxdepth' => 1)));
+		// Make sure the file's there
+		$this->assertTrue(in_array('/test_file.txt', $logged_in_files), 'Test file did not get created');
+
+		// Now we go to the link...
+		$this->shareLink($dir, Sharing::WRITABLE, array('share_writable' => TRUE));
 		$files = Vfs::find(Vfs::get_home_dir());
 
 		// Make sure files are the same
@@ -144,6 +146,7 @@ class SharingTest extends LoggedInTest
 		{
 			// Root is not writable
 			if($file == '/') continue;
+
 			$this->assertTrue(Vfs::is_writable($file), $file . ' was not writable');
 		}
 	}
@@ -153,7 +156,7 @@ class SharingTest extends LoggedInTest
 	 *
 	 * @param string $path
 	 */
-	public function createShare($path, $mode)
+	public function createShare($path, $mode, $extra = array())
 	{
 		// Make sure the path is there
 		if(!Vfs::is_readable($path))
@@ -162,7 +165,7 @@ class SharingTest extends LoggedInTest
 		}
 
 		// Create share
-		$this->shares[] = $share = Sharing::create($path, $mode, $name, $recipients, $extra=array());
+		$this->shares[] = $share = Sharing::create($path, $mode, $name, $recipients, $extra);
 
 		return $share;
 	}
@@ -172,13 +175,14 @@ class SharingTest extends LoggedInTest
 	 *
 	 * @param string $path
 	 */
-	public function shareLink($path, $mode)
+	public function shareLink($path, $mode, $extra = array())
 	{
-		echo __METHOD__ . "('$path',$mode)\n";
+		//echo __METHOD__ . "('$path',$mode)\n";
 		// Setup - create path and share
-		$share = $this->createShare($path, $mode);
+		$share = $this->createShare($path, $mode, $extra);
 		$link = Vfs\Sharing::share2link($share);
-		echo __METHOD__ . " link: $link\n";
+		//echo __METHOD__ . " link: $link\n";
+		//echo __METHOD__ . " share: " . array2string($share)."\n";
 
 		// Setup for share to load
 		$_SERVER['REQUEST_URI'] = $link;

@@ -174,6 +174,8 @@ abstract class LoggedInTest extends TestCase
 			$GLOBALS['egw'] = new Api\Egw(array_keys($GLOBALS['egw_domain']));
 		}
 
+		// load up the $GLOBALS['egw_info']['server'] array
+		$GLOBALS['egw_info']['server'] += Config::read('phpgwapi');
 		// Make sure user is properly set
 		$GLOBALS['egw_info']['user'] = $GLOBALS['egw']->session->read_repositories();
 
