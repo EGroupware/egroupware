@@ -1,3 +1,48 @@
+egroupware-epl (17.1.20180321) hardy; urgency=low
+
+  * SECURITY AND MAINTENANCE RELEASE: PLEASE UPDATE IMMEDIATELY
+  * API: webservice call when password has been changed outside EGroupware to eg. re-encrypting (mail) credentials
+  * API: use proxy configuration when downloading available tutorial videos
+  * API: Check if email address is known before offering 'Add as contact' button
+  * API: Fix sharing from mounted shares failed with 404
+  * UCS/eTemplate: fix CSP error with custom eTemplates in Admin
+  * All apps: multiselect custom-field switches to single select after submit
+  * Nginx: fix upload of pictures bigger 1MB fails
+  * ActiveDirectory: additional allow accountExpires=0 for never expires
+  * AD/LDAP migration: change favorites and index states too
+  * AD/LDAP/InfoLog: change group owners on account-migration
+  * AD/LDAP/Tracker: account-migration changes now staff and autoassign in categories
+  * InfoLog/PHP7.1: fix fatal error stalling merge-print of some InfoLog templates under PHP 7.1+
+  * Filemanager/Sharing: fix PHP 7.1 error causing auth request to popup
+  * ActiveSync: fix PHP Warning A non-numeric value encountered
+  * Collabora: use proxy configuration to access external Collabora server
+  * Collabora: Fix to work with symlinked files
+  * Collabora: Fix editing documents on mounted shares
+  * Collabora: fix loading from shares mounted into VFS
+  * ProjectManager: stop sending mail notifications with empty body when elements change
+  * Resources: fixed image upload failed for some browsers (Picture type not supported)
+  * Addressbook: Implement new feature to send vcard of contact to an already opened mail compose dialog
+  * Addressbook: fix AJAX duplicate check skipped email addresses
+  * Notifications: New actions Prev and Next in order to navigate through messages
+  * Filemanager: Fix sharing menu completely disappears when user has no rights to mail app
+  * Calendar: Fix exporting CSV from search results exported owner as participants
+  * Calendar: Fix moving event to an un-loaded day would show only that event when the day is viewed
+  * Calendar: new placeholders {{participant_emails}} for non-declined participants and {{participant_summary}} for a summary of participants by status
+  * Calendar: Filter birthdays by name to remove duplicates caused by account + contact
+  * Calendar: always show non-blocking icon for non-blocking events, regardless of private flag
+  * Mail/Tracker/InfoLog: fix error converting mails by replacing 4-byte utf8 chars
+  * Mail: Improvements to list display in address search results
+  * Mail: Fix "tel:" href links wrongly get denied by mail compose
+  * Mail: Fix spacing issue between grouped toolbars
+  * Mail/SMime: fix not working storage of public key in mail account
+  * Admin: new config to generate no or lowercase email addresses for new users
+  * Admin: fix group list filter & sort
+  * Import/Export: Better matching on accounts to handle prefixes & suffixes
+  * Tracker: Fix filters with multiple values were not displayed as such when reading escalation
+  * Tracker: Add comment placeholder {{comment/-1/non_restricted/...}} for last non-restricted (public) comment
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 20 Mar 2018 19:09:55 +0100
+
 egroupware-epl (17.1.20180209) hardy; urgency=low
 
   * Filemanager: Add an user preference for being able to chose whether opening a merge print document should download it or open it with collabora editor
