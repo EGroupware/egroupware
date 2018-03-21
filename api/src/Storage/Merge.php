@@ -358,11 +358,8 @@ abstract class Merge
 					$link = Api\Framework::link($link, array());
 				}
 				// Prepend site
-				if ($link{0} == '/')
-				{
-					$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
-						($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
-				}
+				if ($link[0] == '/') $link = Api\Framework::getUrl($link);
+
 				$title = $style == 'href' ? Api\Html::a_href(Api\Html::htmlspecialchars($title), $link) : $link;
 			}
 			$link_titles[] = $title;
@@ -417,11 +414,8 @@ abstract class Merge
 							$link = Api\Framework::link($link, array());
 						}
 						// Prepend site
-						if ($link{0} == '/')
-						{
-							$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
-								($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
-						}
+						if ($link[0] == '/') $link = Api\Framework::getUrl($link);
+
 						$array[($prefix?$prefix.'/':'').$placeholder] = Api\Html::a_href(Api\Html::htmlspecialchars($title), $link);
 						break;
 					case 'links':

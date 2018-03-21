@@ -157,10 +157,7 @@ class notifications_email implements notifications_iface {
 			// do not expose sensitive data
 			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',Api\Html::link('/index.php', $link->view));
 			// complete missing protocol and domain part if needed
-			if ($url{0} == '/' && $_render_external) {
-				$url = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
-					($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$url;
-			}
+			if ($url[0] == '/' && $_render_external) $url = Api\Framework::getUrl($url);
 			$a_href = '<a href="'.$url.'" target="_blank">'.$link->text.'</a>';
 			$rendered_links[] = $_render_html ? $a_href : $url;
 		}

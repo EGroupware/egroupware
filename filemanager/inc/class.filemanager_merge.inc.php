@@ -200,11 +200,8 @@ class filemanager_merge extends Api\Storage\Merge
 		}
 
 		// Prepend site, if missing
-		if ($link{0} == '/')
-		{
-			$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
-				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
-		}
+		if ($link[0] == '/') $link = Api\Framework::getUrl($link);
+
 		$file['link'] = Api\Html::a_href(Api\Html::htmlspecialchars($file['name']), $link);
 		$file['url'] = $link;
 

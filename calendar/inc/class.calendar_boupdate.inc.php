@@ -1796,12 +1796,7 @@ class calendar_boupdate extends calendar_bo
 		$eventStart_arr = $this->date2array($event['start']); // give this as 'date' to the link to pick the right recurrence for the participants state
 		$link = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit&cal_id='.$event['id'].'&date='.$eventStart_arr['full'].'&no_popup=1&ajax=true';
 		// if url is only a path, try guessing the rest ;-)
-		if ($link[0] == '/')
-		{
-			$link = ($GLOBALS['egw_info']['server']['enforce_ssl'] || $_SERVER['HTTPS'] ? 'https://' : 'http://').
-				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).
-				$link;
-		}
+		if ($link[0] == '/') $link = Api\Framework::getUrl($link);
 		$event_arr['link']['data'] = $details['link'] = $link;
 
 		/* this is needed for notification-app

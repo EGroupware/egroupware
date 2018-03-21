@@ -171,6 +171,39 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
+	 * Get a full / externally usable URL from an EGroupware link
+	 *
+	 * Code is only used, if the Setup defined webserver_url is only a path!
+	 *
+	 * The following HTTP Headers / $_SERVER variables and EGroupware configuration
+	 * is taken into account to determine if URL should use https schema:
+	 * - $_SERVER['HTTPS'] !== off
+	 * - $GLOBALS['egw_info']['server']['enforce_ssl'] (EGroupware Setup)
+	 * - $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' (X-Forwarded-Proto HTTP header)
+	 *
+	 * Host is determined in the following order / priority:
+	 * 1. $GLOBALS['egw_info']['server']['hostname'] !== 'localhost' (EGroupware Setup)
+	 * 2. $_SERVER['HTTP_X_FORWARDED_HOST'] (X-Forwarded-Host HTTP header)
+	 * 3. $_SERVER['HTTP_HOST'] (Host HTTP header)
+	 *
+	 * @param string $link
+	 */
+	static function getUrl($link)
+	{
+		if ($link[0] === '/')
+		{
+			$link = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ||
+				!empty($GLOBALS['egw_info']['server']['enforce_ssl']) || $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ?
+				'https://' : 'http://').
+				($GLOBALS['egw_info']['server']['hostname'] && $GLOBALS['egw_info']['server']['hostname'] !== 'localhost' ?
+					$GLOBALS['egw_info']['server']['hostname'] :
+					(isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'])).
+				$link;
+		}
+		return $link;
+	}
+
+	/**
 	 * Handles redirects under iis and apache, it does NOT return (calls exit)
 	 *
 	 * This function handles redirects under iis and apache it assumes that $phpgw->link() has already been called
