@@ -967,15 +967,12 @@ abstract class Tracking
 		{
 			if (($view = Api\Link::view($this->app,$data[$this->id_field])))
 			{
-				$link = $GLOBALS['egw']->link('/index.php',$view);
+				$link = Api\Framework::link('/index.php',$view);
 				$popup = Api\Link::is_popup($this->app,'view');
 			}
 		}
-		if ($link[0] == '/')
-		{
-			$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
-				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
-		}
+		if ($link[0] == '/') Api\Framework::getUrl($link);
+
 		if (!$allow_popup)
 		{
 			// remove the session-id in the notification mail!

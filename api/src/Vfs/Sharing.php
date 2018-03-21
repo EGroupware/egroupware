@@ -675,21 +675,13 @@ class Sharing
 	 * Generate link from share or share-token
 	 *
 	 * @param string|array $share share or share-token
-	 * @return string
+	 * @return string full Url incl. schema and host
 	 */
 	public static function share2link($share)
 	{
 		if (is_array($share)) $share = $share['share_token'];
 
-		$link = Api\Framework::link('/share.php').'/'.$share;
-		if ($link[0] == '/')
-		{
-			$link = ($_SERVER['HTTPS'] ? 'https://' : 'http://').
-				($GLOBALS['egw_info']['server']['hostname'] && $GLOBALS['egw_info']['server']['hostname'] !== 'localhost' ?
-					$GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).
-				$link;
-		}
-		return $link;
+		return Api\Framework::getUrl(Api\Framework::link('/share.php')).'/'.$share;
 	}
 }
 
