@@ -214,7 +214,7 @@ class Sharing
 		}
 		$share['resolve_url'] = Vfs::resolve_url($share['share_path'], true, true, true, true);	// true = fix evtl. contained url parameter
 		// if share not writable append ro=1 to mount url to make it readonly
-		if (!self::$db->from_bool($share['share_writable']))
+		if (!($share['share_writable'] & 1))
 		{
 			$share['resolve_url'] .= (strpos($share['resolve_url'], '?') ? '&' : '?').'ro=1';
 		}
@@ -305,17 +305,6 @@ class Sharing
 		// --> we dont need session and close it, to not modifiy it
 		elseif ($keep_session === false)
 		{
-			if ($GLOBALS['egw']->sharing->use_collabora())
-			{
-				// check if sharee has Collabora run rights --> give is to share too
-				// we need to have collabora app to avoid CSP error since redirect share-link
-				// in collabora should get frame-src. e.g:(Collabora/Src/Ui.php:redirect(Sharing::share2link))
-				$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
-				if (!empty($apps['collabora']))
-				{
-					$GLOBALS['egw_info']['user']['apps']['collabora'] = $GLOBALS['egw_info']['apps']['collabora'];
-				}
-			}
 			$GLOBALS['egw']->session->commit_session();
 		}
 		// need to store new fstab and vfs_user in session to allow GET requests / downloads via WebDAV
@@ -351,19 +340,6 @@ class Sharing
 	}
 
 	/**
-	 * Check if we should use Collabora UI
-	 *
-	 * Only for files, if URL says so, and Collabora & Stylite apps are installed
-	 */
-	public function use_collabora()
-	{
-		 return !Vfs::is_dir($this->share['share_root']) &&
-				array_key_exists('edit', $_REQUEST) &&
-				array_key_exists('collabora', $GLOBALS['egw_info']['apps']) &&
-				array_key_exists('stylite', $GLOBALS['egw_info']['apps']);
-	}
-
-	/**
 	 * Server a request on a share specified in REQUEST_URI
 	 */
 	public function ServeRequest()
@@ -384,13 +360,8 @@ class Sharing
 				$this->share['share_path'] => 1
 			));
 		}
-		if($this->use_collabora())
-		{
-			$ui = new \EGroupware\Collabora\Ui();
-			return $ui->editor($this->share['share_path']);
-		}
 		// use pure WebDAV for everything but GET requests to directories
-		else if (!$this->use_filemanager())
+		if (!$this->use_filemanager())
 		{
 			// send a content-disposition header, so browser knows how to name downloaded file
 			if (!Vfs::is_dir($this->share['share_root']))
@@ -460,8 +431,15 @@ class Sharing
 		}
 		else
 		{
-			$vfs_path = static::resolve_path($path);
-			$exists = !!($vfs_path);
+			if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
+			{
+				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
+			}
+
+			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
+			{
+				$vfs_path = Vfs::parse_url($stat['url'], PHP_URL_PATH);
+			}
 		}
 		// check if file exists and is readable
 		if (!$exists)
@@ -564,36 +542,6 @@ class Sharing
 			}
 		}
 		return $share;
-	}
-
-	/**
-	 * Get the actual VFS path for the given path
-	 *
-	 * We follow links & resolve whatever is possible so that when the share is
-	 * mounted later (possibly by anonymous) the file can be found.
-	 *
-	 * @param string $path
-	 * @return string
-	 */
-	public static function resolve_path($path)
-	{
-		$vfs_path = $path;
-		if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
-		{
-			$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
-		}
-		if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
-		{
-			if (!preg_match("/^(sqlfs|vfs|stylite\.versioning|stylite\.merge)/", $stat['url']))
-			{
-				$vfs_path = Vfs::parse_url($path, PHP_URL_PATH);
-			}
-			else
-			{
-				$vfs_path = Vfs::parse_url($stat['url'], PHP_URL_PATH);
-			}
-		}
-		return $vfs_path;
 	}
 
 	/**
