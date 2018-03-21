@@ -29,28 +29,21 @@ class SharingTest extends LoggedInTest
 	// Keep track of files to remove after
 	protected $files = Array();
 
-	// Keep some server stuff to reset when done
-	protected $original_server;
-	protected $original_user;
-
 	public function setUp()
 	{
-		$this->original_server = array(
-			'REQUEST_URI' => $_SERVER['REQUEST_URI'],
-			'SCRIPT_NAME' => $_SERVER['SCRIPT_NAME']
-		);
-		$this->original_user = $GLOBALS['egw_info']['user'];
+
 	}
+
 	public function tearDown()
 	{
-		//echo "\n\nEnding " . $this->getName() . "\n";
-		$_SERVER += $this->original_server;
-
 		LoggedInTest::tearDownAfterClass();
 		LoggedInTest::setupBeforeClass();
 
-		//$GLOBALS['egw_info']['user'] = $this->original_user;
-		Vfs::$user = $GLOBALS['egw_info']['user']['account_id'];
+		// Re-init, since they look at user, fstab, etc.
+		// Also, further tests that access the filesystem fail if we don't
+		Vfs::clearstatcache();
+		Vfs::init_static();
+		Vfs\StreamWrapper::init_static();
 
 		// Need to ask about mounts, or other tests fail
 		Vfs::mount();
@@ -74,10 +67,9 @@ class SharingTest extends LoggedInTest
 	 * Test to make sure a readonly link to home gives just readonly access,
 	 * and just to user's home
 	 */
-	public function _testHomeReadonly()
+	public function testHomeReadonly()
 	{
-		$dir = Vfs::get_home_dir().'/test_subdir/';
-		Vfs::mkdir($dir);
+		$dir = Vfs::get_home_dir().'/';
 
 		//var_dump(Vfs::find('/',array('maxdepth' => 1)));
 		$logged_in_files = array_map(
@@ -105,12 +97,6 @@ class SharingTest extends LoggedInTest
 	 */
 	public function testHomeWritable()
 	{
-		$this->markTestIncomplete(
-          'This test has not been implemented yet.'
-		);
-		return;
-
-
 		$dir = Vfs::get_home_dir().'/';
 
 		if(!Vfs::is_writable($dir))
@@ -189,8 +175,9 @@ class SharingTest extends LoggedInTest
 		preg_match('|^https?://[^/]+(/.*)share.php/'.$share['share_token'].'$|', $path_info=$_SERVER['REQUEST_URI'], $matches);
         $_SERVER['SCRIPT_NAME'] = $matches[1];
 
-		// Log out
+		// Log out & clear cache
 		LoggedInTest::tearDownAfterClass();
+		Vfs::clearstatcache();
 
 		// If it's a directory, check to make sure it gives the filemanager UI
 		if(Vfs::is_dir($path))
