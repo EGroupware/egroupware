@@ -780,6 +780,20 @@ class mail_compose
 
 		// do not double insert a signature on a server roundtrip
 		if ($buttonClicked) $suppressSigOnTop = true;
+
+		// On submit reads vcard_from_ab widget's value and addes them as attachments.
+		// this happens when we send vcards from addressbook to an opened compose
+		// dialog.
+		if ($_content['vcard_from_ab'])
+		{
+			$vcard = json_decode($_content['vcard_from_ab'], true);
+			$_REQUEST['preset']['file'] = $vcard['file'];
+			$_REQUEST['preset']['type'] = $vcard['type'];
+			$suppressSigOnTop = true;
+			unset($_content['attachments']);
+			$this->addPresetFiles($content, $insertSigOnTop, true);
+		}
+
 		if ($isFirstLoad)
 		{
 			$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
@@ -944,65 +958,7 @@ class mail_compose
 						isset(Vfs\Sharing::$modes[$_REQUEST['preset']['filemode']]) ?
 							$_REQUEST['preset']['filemode'] : Vfs\Sharing::ATTACH;
 
-					$names = (array)$_REQUEST['preset']['name'];
-					$types = (array)$_REQUEST['preset']['type'];
-					//if (!empty($types) && in_array('text/calendar; method=request',$types))
-					$files = (array)$_REQUEST['preset']['file'];
-					foreach($files as $k => $path)
-					{
-						if (!empty($types[$k]) && stripos($types[$k],'text/calendar')!==false)
-						{
-							$insertSigOnTop = 'below';
-						}
-						//error_log(__METHOD__.__LINE__.$path.'->'.array2string(parse_url($path,PHP_URL_SCHEME == 'vfs')));
-						if (parse_url($path,PHP_URL_SCHEME == 'vfs'))
-						{
-							//Vfs::load_wrapper('vfs');
-							$type = Vfs::mime_content_type($path);
-							// special handling for attaching vCard of iCal --> use their link-title as name
-							if (substr($path,-7) != '/.entry' ||
-								!(list($app,$id) = array_slice(explode('/',$path),-3)) ||
-								!($name = Link::title($app, $id)))
-							{
-								$name = Vfs::decodePath(Vfs::basename($path));
-							}
-							else
-							{
-								$name .= '.'.Api\MimeMagic::mime2ext($type);
-							}
-							// use type specified by caller, if Vfs reports only default, or contains specified type (eg. "text/vcard; charset=utf-8")
-							if (!empty($types[$k]) && ($type == 'application/octet-stream' || stripos($types[$k], $type) === 0))
-							{
-								$type = $types[$k];
-							}
-							$path = str_replace('+','%2B',$path);
-							$formData = array(
-								'name' => $name,
-								'type' => $type,
-								'file' => Vfs::decodePath($path),
-								'size' => filesize(Vfs::decodePath($path)),
-							);
-							if ($formData['type'] == Vfs::DIR_MIME_TYPE && $content['filemode'] == Vfs\Sharing::ATTACH)
-							{
-								$content['filemode'] = Vfs\Sharing::READONLY;
-								Framework::message(lang('Directories have to be shared.'), 'info');
-							}
-						}
-						elseif(is_readable($path))
-						{
-							$formData = array(
-								'name' => isset($names[$k]) ? $names[$k] : basename($path),
-								'type' => isset($types[$k]) ? $types[$k] : (function_exists('mime_content_type') ? mime_content_type($path) : Api\MimeMagic::filename2mime($path)),
-								'file' => $path,
-								'size' => filesize($path),
-							);
-						}
-						else
-						{
-							continue;
-						}
-						$this->addAttachment($formData,$content,($alwaysAttachVCardAtCompose?true:false));
-					}
+					$this->addPresetFiles($content, $insertSigOnTop, $alwaysAttachVCardAtCompose);
 					$remember = array();
 					if (isset($_REQUEST['preset']['mailto']) || (isset($_REQUEST['app']) && isset($_REQUEST['method']) && isset($_REQUEST['id'])))
 					{
@@ -1394,6 +1350,77 @@ class mail_compose
 		$content['to'] = self::resolveEmailAddressList($content['to']);
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
+	}
+
+	/**
+	 * Add preset files like vcard as attachments into content array
+	 *
+	 * @param array $_content content
+	 * @param string $_insertSigOnTop
+	 * @param boolean $_eliminateDoubleAttachments
+	 */
+	function addPresetFiles (&$_content, &$_insertSigOnTop, $_eliminateDoubleAttachments)
+	{
+		$names = (array)$_REQUEST['preset']['name'];
+		$types = (array)$_REQUEST['preset']['type'];
+		//if (!empty($types) && in_array('text/calendar; method=request',$types))
+		$files = (array)$_REQUEST['preset']['file'];
+
+		foreach($files as $k => $path)
+		{
+			if (!empty($types[$k]) && stripos($types[$k],'text/calendar')!==false)
+			{
+				$_insertSigOnTop = 'below';
+			}
+			//error_log(__METHOD__.__LINE__.$path.'->'.array2string(parse_url($path,PHP_URL_SCHEME == 'vfs')));
+			if (parse_url($path,PHP_URL_SCHEME == 'vfs'))
+			{
+				//Vfs::load_wrapper('vfs');
+				$type = Vfs::mime_content_type($path);
+				// special handling for attaching vCard of iCal --> use their link-title as name
+				if (substr($path,-7) != '/.entry' ||
+					!(list($app,$id) = array_slice(explode('/',$path),-3)) ||
+					!($name = Link::title($app, $id)))
+				{
+					$name = Vfs::decodePath(Vfs::basename($path));
+				}
+				else
+				{
+					$name .= '.'.Api\MimeMagic::mime2ext($type);
+				}
+				// use type specified by caller, if Vfs reports only default, or contains specified type (eg. "text/vcard; charset=utf-8")
+				if (!empty($types[$k]) && ($type == 'application/octet-stream' || stripos($types[$k], $type) === 0))
+				{
+					$type = $types[$k];
+				}
+				$path = str_replace('+','%2B',$path);
+				$formData = array(
+					'name' => $name,
+					'type' => $type,
+					'file' => Vfs::decodePath($path),
+					'size' => filesize(Vfs::decodePath($path)),
+				);
+				if ($formData['type'] == Vfs::DIR_MIME_TYPE && $_content['filemode'] == Vfs\Sharing::ATTACH)
+				{
+					$_content['filemode'] = Vfs\Sharing::READONLY;
+					Framework::message(lang('Directories have to be shared.'), 'info');
+				}
+			}
+			elseif(is_readable($path))
+			{
+				$formData = array(
+					'name' => isset($names[$k]) ? $names[$k] : basename($path),
+					'type' => isset($types[$k]) ? $types[$k] : (function_exists('mime_content_type') ? mime_content_type($path) : Api\MimeMagic::filename2mime($path)),
+					'file' => $path,
+					'size' => filesize($path),
+				);
+			}
+			else
+			{
+				continue;
+			}
+			$this->addAttachment($formData,$_content, $_eliminateDoubleAttachments);
+		}
 	}
 
 	/**
@@ -3572,7 +3599,7 @@ class mail_compose
 	 * Get list of matching distribution lists when searching for email addresses
 	 *
 	 * The results are limited to 10 each of group lists and normal lists
-	 * 
+	 *
 	 * @param String $_searchString
 	 * @param Contacts $contacts_obj
 	 * @return array
