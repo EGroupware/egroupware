@@ -685,7 +685,7 @@ class Sharing
 		if ($link[0] == '/')
 		{
 			$link = ($_SERVER['HTTPS'] ? 'https://' : 'http://').
-				($GLOBALS['egw_info']['server']['hostname'] ?
+				($GLOBALS['egw_info']['server']['hostname'] && $GLOBALS['egw_info']['server']['hostname'] !== 'localhost' ?
 					$GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).
 				$link;
 		}
