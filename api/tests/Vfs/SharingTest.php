@@ -49,6 +49,11 @@ class SharingTest extends LoggedInTest
 	protected $mounts = Array();
 
 	/**
+	 * Entries that have to be deleted after
+	 */
+	protected $entries = Array();
+
+	/**
 	 * Options for searching the Vfs (Vfs::find())
 	 */
 	const VFS_OPTIONS = array(
@@ -92,6 +97,13 @@ class SharingTest extends LoggedInTest
 			Sharing::delete($share);
 		}
 
+		foreach($this->entries as $entry)
+		{
+			list($callback, $params) = $entry;
+			call_user_func_array($callback, $params);
+		}
+
+
 		Vfs::$is_root = $backup;
 	}
 
@@ -100,7 +112,7 @@ class SharingTest extends LoggedInTest
 	 * Test to make sure a readonly link to home gives just readonly access,
 	 * and just to user's home
 	 */
-	public function testHomeReadonly()
+	public function _testHomeReadonly()
 	{
 		$dir = Vfs::get_home_dir().'/';
 
@@ -111,7 +123,7 @@ class SharingTest extends LoggedInTest
 	 * Test to make sure a writable link to home gives write access, but just
 	 * to user's home
 	 */
-	public function testHomeWritable()
+	public function _testHomeWritable()
 	{
 		$dir = Vfs::get_home_dir().'/';
 
@@ -121,7 +133,7 @@ class SharingTest extends LoggedInTest
 	/**
 	 * Test for a readonly share of a path with versioning turned on
 	 */
-	public function testVersioningReadonly()
+	public function _testVersioningReadonly()
 	{
 		$this->files[] = $dir = Vfs::get_home_dir().'/versioned/';
 
@@ -137,7 +149,7 @@ class SharingTest extends LoggedInTest
 	/**
 	 * Test for a writable share of a path with versioning turned on
 	 */
-	public function testVersioningWritable()
+	public function _testVersioningWritable()
 	{
 		$this->files[] = $dir = Vfs::get_home_dir().'/versioned/';
 
@@ -153,7 +165,7 @@ class SharingTest extends LoggedInTest
 	/**
 	 * Test for a readonly share of a path from the filesystem
 	 */
-	public function testFilesystemReadonly()
+	public function _testFilesystemReadonly()
 	{
 		// Don't add to files list or it deletes the folder from filesystem
 		$dir = '/filesystem/';
@@ -173,7 +185,7 @@ class SharingTest extends LoggedInTest
 	/**
 	 * Test for a readonly share of a path from the filesystem
 	 */
-	public function testFilesystemWritable()
+	public function _testFilesystemWritable()
 	{
 		// Don't add to files list or it deletes the folder from filesystem
 		$dir = '/filesystem/';
@@ -188,6 +200,42 @@ class SharingTest extends LoggedInTest
 		// Test folder in filesystem already has this file in it
 		// It should be picked up normally, but an explicit check can't hurt
 		$this->checkOneFile('/filesystem_test.txt', Sharing::WRITABLE);
+	}
+
+	/**
+	 * Test for a readonly share of an application entry's filesystem (/apps)
+	 */
+	public function testLinksReadonly()
+	{
+		// Create an infolog entry for testing purposes
+		$info_id = $this->make_infolog();
+		$bo = new \infolog_bo();
+		$dir = "/apps/infolog/$info_id/";
+
+		$this->assertTrue(Vfs::is_writable($dir), "Unable to write to '$dir' as expected");
+
+		$this->checkDirectory($dir, Sharing::READONLY);
+
+		// Can't delete it here, we're still the anonymous user until after
+		$this->entries[] = Array(Array($bo, 'delete'), Array($info_id, false, false, true));
+	}
+
+	/**
+	 * Test for a writable share of an application entry's filesystem (/apps)
+	 */
+	public function testLinksWritable()
+	{
+		// Create an infolog entry for testing purposes
+		$bo = new \infolog_bo();
+		$info_id = $this->make_infolog();
+		$dir = "/apps/infolog/$info_id/";
+
+		$this->assertTrue(Vfs::is_writable($dir), "Unable to write to '$dir' as expected");
+
+		$this->checkDirectory($dir, Sharing::WRITABLE);
+
+		// Can't delete it here, we're still the anonymous user until after
+		$this->entries[] = Array(Array($bo, 'delete'), Array($info_id, false, false, true));
 	}
 
 	/**
@@ -405,6 +453,22 @@ class SharingTest extends LoggedInTest
 		$this->shares[] = $share = Sharing::create($path, $mode, $name, $recipients, $extra);
 
 		return $share;
+	}
+
+	/**
+	 * Make an infolog entry
+	 */
+	protected function make_infolog()
+	{
+		$bo = new \infolog_bo();
+		$element = array(
+			'info_subject' => "Test infolog for #{$this->getName()}",
+			'info_des'     => 'Test element for ' . $this->getName() ."\n". Api\DateTime::to(),
+			'info_status'  => 'open'
+		);
+
+		$element_id = $bo->write($element, true, true, true, true);
+		return $element_id;
 	}
 
 	/**
