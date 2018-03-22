@@ -166,7 +166,8 @@ class SharingTest extends LoggedInTest
 		$this->checkDirectory($dir, Sharing::READONLY);
 
 		// Test folder in filesystem already has this file in it
-		//$this->checkOneFile('/filesystem_text.txt', Sharing::READONLY);
+		// It should be picked up normally, but an explicit check can't hurt
+		$this->checkOneFile('/filesystem_test.txt', Sharing::READONLY);
 	}
 
 	/**
