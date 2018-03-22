@@ -915,6 +915,7 @@ class Vfs
 		// if we check writable and have a readonly mount --> return false, as backends dont know about r/o url parameter
 		if ($check == self::WRITABLE && Vfs\StreamWrapper::url_is_readonly($stat['url']))
 		{
+			//error_log(__METHOD__."(path=$path, check=writable, ...) failed because mount is readonly");
 			return false;
 		}
 		// check backend for extended acls (only if path given)

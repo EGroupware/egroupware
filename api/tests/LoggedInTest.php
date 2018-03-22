@@ -184,7 +184,7 @@ abstract class LoggedInTest extends TestCase
 
 		while(ob_get_level() > $ob_level)
 		{
-			ob_end_clean();
+			ob_end_flush();
 		}
 	}
 

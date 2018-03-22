@@ -23,6 +23,14 @@ use EGroupware\Stylite\Vfs\Versioning;
 
 class SharingTest extends LoggedInTest
 {
+	/**
+	 * How much should be logged to the console (stdout)
+	 *
+	 * 0 = Nothing
+	 * 1 = info
+	 * 2 = debug
+	 */
+	const LOG_LEVEL = 0;
 
 	/**
 	 * Keep track of shares to remove after
@@ -34,6 +42,11 @@ class SharingTest extends LoggedInTest
 	 * @var Array
 	 */
 	protected $files = Array();
+
+	/**
+	 * Keep track of mounts to remove after
+	 */
+	protected $mounts = Array();
 
 	/**
 	 * Options for searching the Vfs (Vfs::find())
@@ -61,17 +74,25 @@ class SharingTest extends LoggedInTest
 		// Need to ask about mounts, or other tests fail
 		Vfs::mount();
 
-		// Remove any added files as root to avoid versioning issues
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
+
+		// Remove any added files (as root to limit versioning issues)
 		Vfs::remove($this->files);
-		Vfs::$is_root = $backup;
+
+		// Remove any mounts
+		foreach($this->mounts as $mount)
+		{
+			Vfs::umount($mount);
+		}
 
 		// Remove any added shares
 		foreach($this->shares as $share)
 		{
 			Sharing::delete($share);
 		}
+
+		Vfs::$is_root = $backup;
 	}
 
 
@@ -83,7 +104,7 @@ class SharingTest extends LoggedInTest
 	{
 		$dir = Vfs::get_home_dir().'/';
 
-		$this->checkDirectory($dir, Sharing::WRITABLE);
+		$this->checkDirectory($dir, Sharing::READONLY);
 	}
 
 	/**
@@ -130,6 +151,25 @@ class SharingTest extends LoggedInTest
 	}
 
 	/**
+	 * Test for a readonly share of a path from the filesystem
+	 */
+	public function testFilesystemReadonly()
+	{
+		// Don't add to files list or it deletes the folder from filesystem
+		$dir = '/filesystem/';
+
+		// Mount filesystem directory
+		if(Vfs::is_dir($dir)) Vfs::remove($dir);
+		$this->mountFilesystem($dir);
+		$this->assertTrue(Vfs::is_writable($dir), "Unable to write to '$dir' as expected");
+
+		$this->checkDirectory($dir, Sharing::READONLY);
+
+		// Test folder in filesystem already has this file in it
+		//$this->checkOneFile('/filesystem_text.txt', Sharing::READONLY);
+	}
+
+	/**
 	 * Check a given directory to see that a link to it works.
 	 *
 	 * We check
@@ -142,6 +182,10 @@ class SharingTest extends LoggedInTest
 	 */
 	protected function checkDirectory($dir, $mode)
 	{
+		if(static::LOG_LEVEL)
+		{
+			echo "\n".__METHOD__ . "($dir, $mode)\n";
+		}
 		$this->files += $this->addFiles($dir);
 
 		$logged_in_files = array_map(
@@ -149,8 +193,11 @@ class SharingTest extends LoggedInTest
 				Vfs::find($dir, static::VFS_OPTIONS)
 		);
 
-		//echo "\n".$this->getName();
-		//echo "\nLogged in files:\n".implode("\n", $logged_in_files)."\n";
+		if(static::LOG_LEVEL > 1)
+		{
+			echo "\n".$this->getName();
+			echo "\nLogged in files:\n".implode("\n", $logged_in_files)."\n";
+		}
 
 		// Create and use link
 		$extra = array();
@@ -164,7 +211,10 @@ class SharingTest extends LoggedInTest
 
 		$files = Vfs::find('/', static::VFS_OPTIONS);
 
-		//echo "\nLinked files:\n".implode("\n", $files)."\n";
+		if(static::LOG_LEVEL > 1)
+		{
+			echo "\nLinked files:\n".implode("\n", $files)."\n";
+		}
 
 		// Make sure files are the same
 		$this->assertEquals($logged_in_files, $files);
@@ -184,6 +234,12 @@ class SharingTest extends LoggedInTest
 	 */
 	protected function checkOneFile($file, $mode)
 	{
+		if(static::LOG_LEVEL > 1)
+		{
+			$stat = Vfs::stat($file);
+			echo "\t".Vfs::int2mode($stat['mode'])."\t$file\n";
+		}
+
 		// All the test files have something in them
 		if(!Vfs::is_dir($file))
 		{
@@ -197,7 +253,8 @@ class SharingTest extends LoggedInTest
 				$this->assertFalse(Vfs::is_writable($file));
 				if(!Vfs::is_dir($file))
 				{
-					$this->assertFalse(file_put_contents(Vfs::PREFIX.$file, 'Writable check'));
+					// We expect this to fail
+					$this->assertFalse(@file_put_contents(Vfs::PREFIX.$file, 'Writable check'));
 				}
 				break;
 			case Sharing::WRITABLE:
@@ -214,17 +271,45 @@ class SharingTest extends LoggedInTest
 
 	}
 
+	/**
+	 * Start versioning for the given path
+	 *
+	 * @param string $path
+	 */
 	protected function mountVersioned($path)
 	{
 		if (!class_exists('EGroupware\Stylite\Vfs\Versioning\StreamWrapper'))
 		{
 			$this->markTestSkipped("No versioning available");
 		}
+		if(substr($path, -1) == '/') $path = substr($path, 0, -1);
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
 		$url = Versioning\StreamWrapper::PREFIX.$path;
 		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $path as versioned");
 		Vfs::$is_root = $backup;
+
+		$this->mounts[] = $path;
+		Vfs::clearstatcache();
+		Vfs::init_static();
+		Vfs\StreamWrapper::init_static();
+	}
+
+	protected function mountFilesystem($path)
+	{
+		// Vfs breaks if path has trailing /
+		if(substr($path, -1) == '/') $path = substr($path, 0, -1);
+
+		$backup = Vfs::$is_root;
+		Vfs::$is_root = true;
+		$url = Filesystem\StreamWrapper::SCHEME.'://default'.  realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount'). '?group=Default&mode=775';
+		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $fs to $path");
+		Vfs::$is_root = $backup;
+
+		$this->mounts[] = $path;
+		Vfs::clearstatcache();
+		Vfs::init_static();
+		Vfs\StreamWrapper::init_static();
 	}
 
 	/**
@@ -262,6 +347,23 @@ class SharingTest extends LoggedInTest
 			file_put_contents(Vfs::PREFIX.$file, 'Test for ' . $this->getName() ."\n". Api\DateTime::to()) !== FALSE,
 			'Unable to write test file - check file permissions for CLI user'
 		);
+
+		// Symlinked file
+		/* Always says its empty
+		$files[] = $symlink = $path.'symlink.txt';
+		if(Vfs::file_exists($symlink)) Vfs::remove($symlink);
+		$this->assertTrue(
+			Vfs::symlink($file, $symlink),
+			'Unable to create symlink'
+		);
+
+		// Symlinked dir
+		$files[] = $symlinked_dir = $path.'sym_dir/';
+		$this->assertTrue(
+			Vfs::symlink($dir, $symlinked_dir),
+			'Unable to create symlinked directory ' . $symlinked_dir
+		);
+*/
 		return $files;
 	}
 
@@ -291,12 +393,19 @@ class SharingTest extends LoggedInTest
 	 */
 	public function shareLink($path, $mode, $extra = array())
 	{
-		//echo __METHOD__ . "('$path',$mode)\n";
+		if(static::LOG_LEVEL > 1)
+		{
+			echo __METHOD__ . "('$path',$mode)\n";
+		}
 		// Setup - create path and share
 		$share = $this->createShare($path, $mode, $extra);
 		$link = Vfs\Sharing::share2link($share);
 		//echo __METHOD__ . " link: $link\n";
-		//echo __METHOD__ . " share: " . array2string($share)."\n";
+
+		if(static::LOG_LEVEL)
+		{
+			echo __METHOD__ . " share: " . array2string($share)."\n";
+		}
 
 		// Setup for share to load
 		$_SERVER['REQUEST_URI'] = $link;
@@ -322,8 +431,15 @@ class SharingTest extends LoggedInTest
 		// Load share
 		$this->setup_info();
 
+
+		if(static::LOG_LEVEL > 1)
+		{
+			echo "Sharing mounts:\n";
+			var_dump(Vfs::mount());
+		}
+
 		// Our path should be mounted to root
-		$this->assertTrue(Vfs::is_readable('/'));
+		$this->assertTrue(Vfs::is_readable('/'), 'Could not read root (/) from link');
 
 		// Check other paths
 		$this->assertFalse(Vfs::is_readable($path));
@@ -359,6 +475,14 @@ class SharingTest extends LoggedInTest
 		@$dom->loadHTML($html);
 		$xpath = new \DOMXPath($dom);
 		$form = $xpath->query ('//form')->item(0);
+		if(!$form && static::LOG_LEVEL)
+		{
+			echo "Didn't find filemanager interface\n";
+			if(static::LOG_LEVEL > 1)
+			{
+				echo $form."\n\n";
+			}
+		}
 		$data = json_decode($form->getAttribute('data-etemplate'));
 
 		$this->assertEquals('filemanager.index', $data->name);
@@ -386,6 +510,13 @@ class SharingTest extends LoggedInTest
 
 		ob_start();
 		static::load_egw('anonymous','','',$GLOBALS['egw_info']);
-		ob_end_clean();
+		if(static::LOG_LEVEL > 1)
+		{
+			ob_end_flush();
+		}
+		else
+		{
+			ob_end_clean();
+		}
 	}
 }
