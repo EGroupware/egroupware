@@ -171,6 +171,26 @@ class SharingTest extends LoggedInTest
 	}
 
 	/**
+	 * Test for a readonly share of a path from the filesystem
+	 */
+	public function testFilesystemWritable()
+	{
+		// Don't add to files list or it deletes the folder from filesystem
+		$dir = '/filesystem/';
+
+		// Mount filesystem directory
+		if(Vfs::is_dir($dir)) Vfs::remove($dir);
+		$this->mountFilesystem($dir);
+		$this->assertTrue(Vfs::is_writable($dir), "Unable to write to '$dir' as expected");
+
+		$this->checkDirectory($dir, Sharing::WRITABLE);
+
+		// Test folder in filesystem already has this file in it
+		// It should be picked up normally, but an explicit check can't hurt
+		$this->checkOneFile('/filesystem_test.txt', Sharing::WRITABLE);
+	}
+
+	/**
 	 * Check a given directory to see that a link to it works.
 	 *
 	 * We check
