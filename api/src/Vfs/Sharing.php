@@ -15,6 +15,7 @@ namespace EGroupware\Api\Vfs;
 
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
+use EGroupware\Collabora\Wopi;
 
 use filemanager_ui;
 
@@ -353,7 +354,7 @@ class Sharing
 		}
 
 		// No extended ACL for readonly shares, disable eacl by setting session cache
-		if(!$this->share['share_writable'])
+		if(!($this->share['share_writable'] & 1))
 		{
 			Api\Cache::setSession(Api\Vfs\Sqlfs\StreamWrapper::EACL_APPNAME, 'extended_acl', array(
 				'/' => 1,
@@ -400,6 +401,11 @@ class Sharing
 
 		return $token;
 	}
+
+	/**
+	 * Name of the async job for cleaning up shares
+	 */
+	const ASYNC_JOB_ID = 'egw_sharing-tmp_cleanup';
 
 	/**
 	 * Create a new share
@@ -511,13 +517,6 @@ class Sharing
 				$path2tmp[$path] = $tmp_file;
 
 				$vfs_path = $tmp_file;
-
-				// if not already installed, install periodic cleanup of tmp files
-				$async = new Api\Asyncservice();
-				if (!$async->read('egw_sharing-tmp-cleanup'))
-				{
-					$async->set_timer(array('day' => 28),'egw_sharing-tmp_cleanup','EGroupware\\Api\\Vfs\\Sharing::tmp_cleanup',null);
-				}
 			}
 
 			$i = 0;
@@ -541,6 +540,16 @@ class Sharing
 				}
 			}
 		}
+
+		// if not already installed, install periodic cleanup of shares
+		$async = new Api\Asyncservice();
+		if (!($job = $async->read(self::ASYNC_JOB_ID)) || $job[self::ASYNC_JOB_ID]['method'] === 'egw_sharing::tmp_cleanup')
+		{
+			if ($job) $async->delete(self::ASYNC_JOB_ID);	// update not working old class-name
+
+			$async->set_timer(array('day' => 28), self::ASYNC_JOB_ID, 'EGroupware\\Api\\Vfs\\Sharing::tmp_cleanup',null);
+		}
+
 		return $share;
 	}
 
@@ -613,6 +622,10 @@ class Sharing
 	 * Home long to keep temp. files: 100 day
 	 */
 	const TMP_KEEP = 8640000;
+	/**
+	 * How long to keep automatic created Wopi shares
+	 */
+	const WOPI_KEEP = '-3month';
 
 	/**.
 	 * Periodic (monthly) cleanup of temporary sharing files (download link)
@@ -663,6 +676,15 @@ class Sharing
 				{
 					self::$db->delete(self::TABLE, array('share_id' => $share_ids), __LINE__, __FILE__);
 				}
+			}
+
+			// delete automatic created and expired Collabora shares older then 3 month
+			if (class_exists('EGroupware\\Collabora\\Wopi'))
+			{
+				self::$db->delete(self::TABLE, array(
+					'share_expires < '.self::$db->quote(Api\DateTime::to(self::WOPI_KEEP, 'Y-m-d')),
+					'share_writable IN ('.Wopi::WOPI_WRITABLE.','.Wopi::WOPI_READONLY.')',
+				), __LINE__, __FILE__);
 			}
 		}
 		catch (\Exception $e) {
