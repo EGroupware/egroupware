@@ -258,9 +258,7 @@ abstract class Merge
 				case 'jpegphoto':	// returning a link might make more sense then the binary photo
 					if ($contact['photo'])
 					{
-						$value = ($GLOBALS['egw_info']['server']['webserver_url'][0] == '/' ?
-							($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
-							$GLOBALS['egw']->link('/index.php',$contact['photo']);
+						$value = Api\Framework::getUrl(Api\Framework::link('/index.php',$contact['photo']));
 					}
 					break;
 				case 'tel_prefer':
@@ -380,14 +378,14 @@ abstract class Merge
 	protected function get_all_links($app, $id, $prefix, &$content)
 	{
 		$array = array();
-		$pattern = '@\$(links_attachments|links|attachments|link)\/?(title|href|link)?\/?([a-z]*)\$@';
+		$pattern = '@\$\$(links_attachments|links|attachments|link)\/?(title|href|link)?\/?([a-z]*)\$\$@';
 		static $link_cache=null;
 		$matches = null;
 		if(preg_match_all($pattern, $content, $matches))
 		{
 			foreach($matches[0] as $i => $placeholder)
 			{
-				$placeholder = substr($placeholder, 1, -1);
+				$placeholder = substr($placeholder, 2, -2);
 				if($link_cache[$id][$placeholder])
 				{
 					$array[$placeholder] = $link_cache[$id][$placeholder];
@@ -416,26 +414,21 @@ abstract class Merge
 						// Prepend site
 						if ($link[0] == '/') $link = Api\Framework::getUrl($link);
 
-						$array[($prefix?$prefix.'/':'').$placeholder] = Api\Html::a_href(Api\Html::htmlspecialchars($title), $link);
+						$array['$$'.($prefix?$prefix.'/':'').$placeholder.'$$'] = Api\Html::a_href(Api\Html::htmlspecialchars($title), $link);
 						break;
 					case 'links':
 						$link_app = $matches[3][$i] ? $matches[3][$i] :  '!'.Api\Link::VFS_APPNAME;
-						$array[($prefix?$prefix.'/':'').$placeholder] = $this->get_links($app, $id, $link_app, array(),$matches[2][$i]);
+						$array['$$'.($prefix?$prefix.'/':'').$placeholder.'$$'] = $this->get_links($app, $id, $link_app, array(),$matches[2][$i]);
 						break;
 					case 'attachments':
-						$array[($prefix?$prefix.'/':'').$placeholder] = $this->get_links($app, $id, Api\Link::VFS_APPNAME,array(),$matches[2][$i]);
+						$array['$$'.($prefix?$prefix.'/':'').$placeholder.'$$'] = $this->get_links($app, $id, Api\Link::VFS_APPNAME,array(),$matches[2][$i]);
 						break;
 					default:
-						$array[($prefix?$prefix.'/':'').$placeholder] = $this->get_links($app, $id, $matches[3][$i], array(), $matches[2][$i]);
+						$array['$$'.($prefix?$prefix.'/':'').$placeholder.'$$'] = $this->get_links($app, $id, $matches[3][$i], array(), $matches[2][$i]);
 						break;
 				}
 				$link_cache[$id][$placeholder] = $array[$placeholder];
 			}
-		}
-		// Need to set each app, to make sure placeholders are removed
-		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $_app)
-		{
-			$array[($prefix?$prefix.'/':'')."links/$app"] = $this->get_links($app,$id,$_app);
 		}
 		return $array;
 	}
