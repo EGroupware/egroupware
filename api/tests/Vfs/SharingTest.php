@@ -112,7 +112,7 @@ class SharingTest extends LoggedInTest
 	 * Test to make sure a readonly link to home gives just readonly access,
 	 * and just to user's home
 	 */
-	public function _testHomeReadonly()
+	public function testHomeReadonly()
 	{
 		$dir = Vfs::get_home_dir().'/';
 
@@ -123,7 +123,7 @@ class SharingTest extends LoggedInTest
 	 * Test to make sure a writable link to home gives write access, but just
 	 * to user's home
 	 */
-	public function _testHomeWritable()
+	public function testHomeWritable()
 	{
 		$dir = Vfs::get_home_dir().'/';
 
@@ -133,7 +133,7 @@ class SharingTest extends LoggedInTest
 	/**
 	 * Test for a readonly share of a path with versioning turned on
 	 */
-	public function _testVersioningReadonly()
+	public function testVersioningReadonly()
 	{
 		$this->files[] = $dir = Vfs::get_home_dir().'/versioned/';
 
@@ -149,7 +149,7 @@ class SharingTest extends LoggedInTest
 	/**
 	 * Test for a writable share of a path with versioning turned on
 	 */
-	public function _testVersioningWritable()
+	public function testVersioningWritable()
 	{
 		$this->files[] = $dir = Vfs::get_home_dir().'/versioned/';
 
@@ -165,7 +165,7 @@ class SharingTest extends LoggedInTest
 	/**
 	 * Test for a readonly share of a path from the filesystem
 	 */
-	public function _testFilesystemReadonly()
+	public function testFilesystemReadonly()
 	{
 		// Don't add to files list or it deletes the folder from filesystem
 		$dir = '/filesystem/';
@@ -185,7 +185,7 @@ class SharingTest extends LoggedInTest
 	/**
 	 * Test for a readonly share of a path from the filesystem
 	 */
-	public function _testFilesystemWritable()
+	public function testFilesystemWritable()
 	{
 		// Don't add to files list or it deletes the folder from filesystem
 		$dir = '/filesystem/';
@@ -236,6 +236,62 @@ class SharingTest extends LoggedInTest
 
 		// Can't delete it here, we're still the anonymous user until after
 		$this->entries[] = Array(Array($bo, 'delete'), Array($info_id, false, false, true));
+	}
+
+	/**
+	 * Test merge stream wrapper
+	 */
+	public function testMergeReadonly()
+	{
+		if(!class_exists("\EGroupware\Stylite\Vfs\Merge\StreamWrapper"))
+		{
+			$this->markTestAsSkipped();
+			return;
+		}
+		// Don't add to files list or it deletes the folder from filesystem
+		$dir = '/merged/';
+
+		// Mount filesystem directory
+		if(Vfs::is_dir($dir)) Vfs::remove($dir);
+		$this->mountMerge($dir);
+
+		$this->assertTrue(
+				Vfs::is_writable($dir),
+				"Unable to write to '$dir' as expected, check {$GLOBALS['egw_info']['user']['account_lid']} is in Admin group (Merge requirement)"
+		);
+		$this->checkDirectory($dir, Sharing::READONLY);
+
+		// Test folder in filesystem already has this file in it
+		// It should be picked up normally, but an explicit check can't hurt
+		$this->checkOneFile('/filesystem_test.txt', Sharing::READONLY);
+	}
+
+	/**
+	 * Test merge stream wrapper
+	 */
+	public function testMergeWritable()
+	{
+		if(!class_exists("\EGroupware\Stylite\Vfs\Merge\StreamWrapper"))
+		{
+			$this->markTestAsSkipped();
+			return;
+		}
+		// Don't add to files list or it deletes the folder from filesystem
+		$dir = '/merged/';
+
+		// Mount filesystem directory
+		if(Vfs::is_dir($dir)) Vfs::remove($dir);
+		$this->mountMerge($dir);
+
+		$this->assertTrue(
+				Vfs::is_writable($dir),
+				"Unable to write to '$dir' as expected, check {$GLOBALS['egw_info']['user']['account_lid']} is in Admin group (Merge requirement)"
+		);
+		$this->checkDirectory($dir, Sharing::WRITABLE);
+
+		// Test folder in filesystem already has this file in it
+		// It should be picked up normally, but an explicit check can't hurt
+		$this->checkOneFile('/filesystem_test.txt', Sharing::WRITABLE);
 	}
 
 	/**
@@ -372,7 +428,24 @@ class SharingTest extends LoggedInTest
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
 		$url = Filesystem\StreamWrapper::SCHEME.'://default'.  realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount'). '?group=Default&mode=775';
-		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $fs to $path");
+		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");
+		Vfs::$is_root = $backup;
+
+		$this->mounts[] = $path;
+		Vfs::clearstatcache();
+		Vfs::init_static();
+		Vfs\StreamWrapper::init_static();
+	}
+
+	protected function mountMerge($path)
+	{
+		// Vfs breaks if path has trailing /
+		if(substr($path, -1) == '/') $path = substr($path, 0, -1);
+
+		$backup = Vfs::$is_root;
+		Vfs::$is_root = true;
+		$url = \EGroupware\Stylite\Vfs\Merge\StreamWrapper::SCHEME.'://default'.$path.'?merge=api/tests/fixtures/Vfs/filesystem_mount';
+		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");
 		Vfs::$is_root = $backup;
 
 		$this->mounts[] = $path;
