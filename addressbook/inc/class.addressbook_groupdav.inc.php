@@ -74,7 +74,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 
 		// since 1.9.007 we allow clients to specify the URL when creating a new contact, as specified by CardDAV
 		// LDAP does NOT have a carddav_name attribute --> stick with id mapped to LDAP attribute uid
-		if (version_compare($GLOBALS['egw_info']['apps']['phpgwapi']['version'], '1.9.007', '<') ||
+		if (version_compare($GLOBALS['egw_info']['apps']['api']['version'], '1.9.007', '<') ||
 			$this->bo->contact_repository != 'sql' ||
 			$this->bo->account_repository != 'sql' && strpos($_SERVER['REQUEST_URI'].'/','/addressbook-accounts/') !== false)
 		{
