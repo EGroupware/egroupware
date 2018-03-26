@@ -461,7 +461,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 				event_ids.splice(i--,1);
 			}
 		}
-		if(!this._parent.disabled)
+		if(!this._parent.disabled && event_ids.length > 0)
 		{
 			this.resize();
 			this._update_events(events);
@@ -496,7 +496,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		}
 
 		// Seperate loop so column sorting finds all children in the right place
-		for(var c = 0; c < events.length && c < this._children.length; c++)
+		for(var c = 0; c < events.length; c++)
 		{
 			var event = this.getWidgetById('event_'+events[c].row_id);
 			if(!event) continue;
@@ -715,6 +715,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		// Remove space for weekends, if hidden
 		var weekend_count = 0;
 		var weekend_before = 0;
+		var partial_weekend = 0;
 		if(this._parent.options.group_by !== 'month' && this._parent && !this._parent.options.show_weekend)
 		{
 
@@ -723,8 +724,16 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 			{
 				if([0,6].indexOf(counter_date.getUTCDay()) !== -1)
 				{
+					if(counter_date.getUTCDate() === t.getUTCDate() && counter_date.getUTCMonth() === t.getUTCMonth())
+					{
+						// Event is partially on a weekend
+						partial_weekend += (t.getUTCHours() *60 + t.getUTCMinutes())*60*1000;
+					}
+					else if(counter_date < t)
+					{
+						weekend_before++;
+					}
 					weekend_count++;
-					if(counter_date < t) weekend_before++;
 				}
 				counter_date.setUTCDate(counter_date.getUTCDate() + 1);
 			} while(counter_date < end)
@@ -734,7 +743,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		}
 
 		// Basic scaling, doesn't consider working times
-		pos = (t - start - weekend_before) / (end - start - weekend_count);
+		pos = (t - start - weekend_before-partial_weekend) / (end - start - weekend_count);
 
 		// Month view
 		if(this._parent.options.group_by !== 'month')
