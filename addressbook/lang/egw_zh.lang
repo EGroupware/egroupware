@@ -160,7 +160,7 @@ export file name	addressbook	zh	导出文件名
 export from addressbook	addressbook	zh	从通讯簿导出
 export selection	addressbook	zh	导出选项
 exported	addressbook	zh	已导出
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	zh	从通讯簿导出联系人到 CSV 文件，CSV 是'逗号分隔'方法，不过您也可以在选项标签中选择不同的分隔符。
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	zh	从通讯簿导出联系人到 CSV 文件，CSV 是'逗号分隔'方法，不过您也可以在选项标签中选择不同的分隔符。
 extra	addressbook	zh	额外
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	zh	更改 %1 组织成员时发生错误(没有权限)！
 fax	addressbook	zh	传真
@@ -206,7 +206,7 @@ import from outlook	addressbook	zh	从 Outlook 导入
 import multiple vcard	addressbook	zh	导入多重 vCard
 import next set	addressbook	zh	导入下一个集合
 import_instructions	addressbook	zh	请按照下列方法从其他应用程序导出通讯簿, 以便导入 EGroupware 中：<p>在 Netscape 中，打开通讯簿，选定<b>文件</b>菜单的<b>导出</b>项，导出的文件将以 LDIF 格式存放。<p>在 Outlook 中，选定将要导出的联系人文件夹，选定<b>文件菜单</b>的<b>导入和导出</b>项，导出的文件将以 CSV 格式存放。<p>在 Palm  Desktop 4.0 或更高版本中，打开通讯簿，选定<b>文件</b>菜单的<b>导出</b>项，导出的文件将以 VCard 格式存放。<p>Palm Desktop 4.0 或是更新的版本，在浏览通讯簿资料时在<b>文件</b>功能选择<b>导出</b>，导出的资料是 vCard 格式。
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	zh	从 CSV 文件导入联系人资料到通讯簿，CSV 是'逗号分隔'方式，不过您可以在选项标签指定其他的分隔符。
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	zh	从 CSV 文件导入联系人资料到通讯簿，CSV 是'逗号分隔'方式，不过您可以在选项标签指定其他的分隔符。
 in %1 days (%2) is %3's birthday.	addressbook	zh	在%1 天 (%2) 就是%3的生日。
 income	addressbook	zh	收入
 infolog	addressbook	zh	记事薄

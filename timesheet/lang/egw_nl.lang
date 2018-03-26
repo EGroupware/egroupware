@@ -35,7 +35,7 @@ existing links	timesheet	nl	Bestaande links
 exists	timesheet	nl	Bestaat
 export definition to use for nextmatch export	timesheet	nl	Export definitie om te gebruiken bij nextmatch export
 export to openoffice spreadsheet	timesheet	nl	Export naar OpenOffice rekenblad
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	nl	Exporteert records uit uw urenregistratie naar een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het opties tabblad kunt u ook andere scheidingstekens kiezen.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	nl	Exporteert records uit uw urenregistratie naar een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het opties tabblad kunt u ook andere scheidingstekens kiezen.
 field must not be empty !!!	timesheet	nl	Veld mag niet leeg zijn !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	nl	Gebruik deze tag voor serie brieven. Plaats de inhoud die herhaald moet worden tussen de twee tags.
 full: use only projectmanager	admin	nl	Volledig: alleen de ProjectManager gebruiken

@@ -227,7 +227,7 @@ export from addressbook	addressbook	nl	Exporteer vanuit adresboek
 export selection	addressbook	nl	Exporteer selectie
 exported	addressbook	nl	geexporteerd
 exports contacts from your addressbook into a csv file.	addressbook	nl	Exporteer contacten uit adresboek in CSV bestand formaat
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	nl	Exporteert contacten van jouw adresboek in een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het Opties tabblad kun je ook andere scheidingstekens kiezen.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	nl	Exporteert contacten van jouw adresboek in een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het Opties tabblad kun je ook andere scheidingstekens kiezen.
 exports contacts from your addressbook into a vcard file.	addressbook	nl	Exporteer contacten uit uw adresboek in vCard bestand formaat.
 extra	addressbook	nl	Extra
 extra encodings	addressbook	nl	Extra versleutelen
@@ -286,7 +286,7 @@ import multiple vcard	addressbook	nl	Importeer Meervoudige VCard
 import next set	addressbook	nl	Importeren volgende serie
 import_instructions	addressbook	nl	In Netscape, open het adressenboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>. Het bestand wordt geexporteerd in het LDIF formaat.<p>Of, in Outlook, selecteer de contacten-folder, kies <b>Importeren en Exporteren...</b> in het menu <b>Bestand</b> en exportoor als komma gescheiden tekst bestand (CSV).<p>Of, in Palm Desktop 4.0 of nieuwer, kies het adresboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>, het bestand wordt geëxporteerd in het VCard formaat.
 importer's personal	addressbook	nl	Importeer eigen
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	nl	Importeert contacten in je adresboek vanuit een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het Opties tabblad kun je ook andere scheidingstekens kiezen.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	nl	Importeert contacten in je adresboek vanuit een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het Opties tabblad kun je ook andere scheidingstekens kiezen.
 imports contacts into your addressbook from a vcard file.	addressbook	nl	Importeer contacten in uw adresboek van een bestand in vCard
 in %1 days (%2) is %3's birthday.	addressbook	nl	Over %1 dagen (%2) is %3  jarig.
 income	addressbook	nl	Inkomend

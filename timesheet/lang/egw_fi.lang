@@ -44,7 +44,7 @@ exists	timesheet	fi	Olemassaoleva
 export definition to use for nextmatch export	timesheet	fi	Vienti asetukset 'nextmatch' vientiin
 export to openoffice spreadsheet	timesheet	fi	Vie OpenOffice Spreadsheet
 exports entries from your timesheet into a csv file.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon. CSV 'Comma Separated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon. CSV 'Comma Separated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
 favorites	timesheet	fi	Suosikit
 field must not be empty !!!	timesheet	fi	Kenttää ei voi jättää tyhjäksi!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fi	Käytä tägiä toistettaviin dokumentteihin. Lisää sisältö kahden tägin väliin.

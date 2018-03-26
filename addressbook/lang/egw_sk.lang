@@ -240,7 +240,7 @@ export from addressbook	addressbook	sk	Export z Adresára
 export selection	addressbook	sk	Exportovať výber
 exported	addressbook	sk	Exportované.
 exports contacts from your addressbook into a csv file.	addressbook	sk	Vyexportuje kontakty z adresára do súboru CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	sk	Vyexportuje kontakty z Vášho Adresára do súboru CSV (Comma Separated Values čiže hodnoty oddelené čiarkou). V karte možností môžete zvoliť aj iný oddeľovač než čiarku.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sk	Vyexportuje kontakty z Vášho Adresára do súboru CSV (Comma Separated Values čiže hodnoty oddelené čiarkou). V karte možností môžete zvoliť aj iný oddeľovač než čiarku.
 exports contacts from your addressbook into a vcard file.	addressbook	sk	Vyexportuje kontakty z vášho Adresára do súboru vCard.
 extra	addressbook	sk	Extra
 extra encodings	addressbook	sk	Extra kódovania
@@ -305,7 +305,7 @@ import multiple vcard	addressbook	sk	Import viacerých vizitek VCard
 import next set	addressbook	sk	Importovať ďalšiu sadu
 import_instructions	addressbook	sk	V Netscape otvorte Adresár a vyberte <b>Export<b> v ponuke <b>Súbor</b>. Exportovaný súbor bude vo formáte LDIF.<p>V Outlooku vyberte Kontakty, zvoľte <b>Import a export...</b> z ponuky <b>Súbor</b> a exportujte dáta do súboru s hodnotami oddelenými čiarkami.<p>V Palm Desktop 4.0 a vyššom otvorete adresár a zvoľte <b>Export</b> z ponuky <b>Súbor</b>. Exportované dáta budú vo formáte VCard.
 importer's personal	addressbook	sk	Importérove súkromné
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	sk	Naimportuje kontakty do Vášho Adresára z CSV súboru (CSV znamená Comma Separated Values). V karte možností môžete samozrejme vybrať iný oddeľovač než čiarku.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sk	Naimportuje kontakty do Vášho Adresára z CSV súboru (CSV znamená Comma Separated Values). V karte možností môžete samozrejme vybrať iný oddeľovač než čiarku.
 imports contacts into your addressbook from a vcard file.	addressbook	sk	Naimportuje kontakty do vášho Adresára zo súboru vCard.
 in %1 days (%2) is %3's birthday.	addressbook	sk	O %1 dní (%2) bude mať narodeniny %3.
 income	addressbook	sk	Príjem

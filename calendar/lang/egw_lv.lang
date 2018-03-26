@@ -64,7 +64,7 @@ filemanager	calendar	lv	Datņu pārvaldnieks
 filename	calendar	lv	faila nosaukums
 firstname of person to notify	calendar	lv	Personas vārds, kurai jāpaziņo
 format of event updates	calendar	lv	Formatēt notikumu atjauninājumus
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	lv	brīvsaizņemts: Nezināms lietotājs"%1", nepareiza parole vai nav pieejams nav ielogojies lietotājs!!!
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	lv	brīvsaizņemts: Nezināms lietotājs"%1", nepareiza parole vai nav pieejams nav ielogojies lietotājs!!!
 fri	calendar	lv	Piektdiena
 full description	calendar	lv	Pilns apraksts
 fullname of person to notify	calendar	lv	Pilns personas vārds, kurai jāpaziņo
@@ -112,7 +112,7 @@ observance rule	calendar	lv	Ievērošanas kārtula
 occurence	calendar	lv	Notikums
 old startdate	calendar	lv	Vecais standarts
 olddate	calendar	lv	Vecais datums
-on invitation / cancelation only	calendar	lv	tikai uz uzaiciājumu/ atsaukšanu
+on invitation / cancellation only	calendar	lv	tikai uz uzaiciājumu/ atsaukšanu
 on participant responses too	calendar	lv	arī uz salībnieku atbildēm
 on time change of more than 4 hours too	calendar	lv	arī uz laiku vairāk par 4 stundām
 one month	calendar	lv	viens mēnesis
@@ -183,10 +183,10 @@ work day ends on	calendar	lv	Darba diena beidzas
 work day starts on	calendar	lv	Darba diena sākas
 yearly	calendar	lv	Ikgadējs
 yearview	calendar	lv	Gada skats
-you can either set a year or a occurence, not both !!!	calendar	lv	Tu vari uzstādīt vai nu gadu vai nu atgadījumu, ne abus!!!
-you can only set a year or a occurence !!!	calendar	lv	Tu vari uzstādīt gadu vai atgadījumu!!!
+you can either set a year or a occurrence, not both !!!	calendar	lv	Tu vari uzstādīt vai nu gadu vai nu atgadījumu, ne abus!!!
+you can only set a year or a occurrence !!!	calendar	lv	Tu vari uzstādīt gadu vai atgadījumu!!!
 you do not have permission to read this record!	calendar	lv	Tev nav tiesību lasīt šo ierakstu!
 you have a meeting scheduled for %1	calendar	lv	Tev ir ieplānota tikšanās %1
-you need to set either a day or a occurence !!!	calendar	lv	Tev jāuzstāda diena vai atgadījums!!!
+you need to set either a day or a occurrence !!!	calendar	lv	Tev jāuzstāda diena vai atgadījums!!!
 your meeting scheduled for %1 has been canceled	calendar	lv	Tava ieplānotā tikšanās %1 ir atcelta
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	lv	Tava ieplānotā tikšanās %1 tika pārcelta uz %2

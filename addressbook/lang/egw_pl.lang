@@ -185,7 +185,7 @@ export file name	addressbook	pl	Nazwa pliku
 export from addressbook	addressbook	pl	Eksport z książki adresowej
 export selection	addressbook	pl	Wyeksportuj wybrane
 exported	addressbook	pl	wyeksportowano
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	pl	Eksportuj kontakty z książki adresowej do pliku CSV, czyli "wartości rozdzielone przecinkami". Możesz wybrać również tabulator jako separator.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pl	Eksportuj kontakty z książki adresowej do pliku CSV, czyli "wartości rozdzielone przecinkami". Możesz wybrać również tabulator jako separator.
 extra	addressbook	pl	Dodatkowe
 extra private	addressbook	pl	Dodatkowe prywatne
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pl	nie udało się zmienić %1 członków organizacji (brak uprawnień)
@@ -236,7 +236,7 @@ import from outlook	addressbook	pl	Importuj z programu Outlook
 import multiple vcard	addressbook	pl	Importuj wiele plików VCard
 import next set	addressbook	pl	Importuj następny set
 import_instructions	addressbook	pl	W Netscape, otwórz Książkę Adresową (Addressbook) i wybierz z menu <b>Plik</b> (File) pozycję <b>Eksport</b>. Plik zostanie wyeksportowany w formacie LDIF.<p> W Outlooku, wybierz folder Kontakty, wybierz z menu <b>Plik</b> pozycję <b>Import i eksport</b> i wyeksportuj swoje kontakty do pliku tekstowego oddzielanego kropką (CSV).<p>W Palm Desktop 4.0 (lub wyższym), wejdź do książki adresowej i wybierz <b>Export</b> z menu <b>Plik</b>. Zostanie on wyeksportowany w formacie VCard.
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	pl	Importuj kontakty do Twojej książki adresowej z pliku CSV.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pl	Importuj kontakty do Twojej książki adresowej z pliku CSV.
 in %1 days (%2) is %3's birthday.	addressbook	pl	Za %1 dni są urodziny %3
 income	addressbook	pl	Dochód
 infolog	addressbook	pl	CRM Dziennik

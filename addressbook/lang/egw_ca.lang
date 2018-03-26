@@ -143,7 +143,7 @@ export file name	addressbook	ca	Nom de l'arxiu a exportar
 export from addressbook	addressbook	ca	Exportar des de la llibreta d'adreces
 export selection	addressbook	ca	Exporta la selecció
 exported	addressbook	ca	exportat
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	ca	Exporta contactes de la llibreta d'adreces a un Arxiu CSV. CSV vol dir 'Valors Separats per Comes'. De totes maneres a les opcions de tabulador podeu triar altres separadors.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ca	Exporta contactes de la llibreta d'adreces a un Arxiu CSV. CSV vol dir 'Valors Separats per Comes'. De totes maneres a les opcions de tabulador podeu triar altres separadors.
 extra	addressbook	ca	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	ca	error per canviar %1 membre(s) de l'organització (drets insuficients) !!!
 fax	addressbook	ca	Fax

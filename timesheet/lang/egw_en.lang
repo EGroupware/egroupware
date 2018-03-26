@@ -44,7 +44,7 @@ exists	timesheet	en	Exists
 export definition to use for nextmatch export	timesheet	en	Export definition to use for nextmatch export
 export to openoffice spreadsheet	timesheet	en	Export to OpenOffice Spreadsheet
 exports entries from your timesheet into a csv file.	timesheet	en	Exports entries from Time Sheet into a CSV file
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	en	Exports entries from Time Sheet into a CSV file. CSV means 'Comma Separated Values'. In the options Tab you can also choose other separators.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	en	Exports entries from Time Sheet into a CSV file. CSV means 'Comma Separated Values'. In the options Tab you can also choose other separators.
 favorites	timesheet	en	Favorites
 field must not be empty !!!	timesheet	en	Field must not be empty!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.

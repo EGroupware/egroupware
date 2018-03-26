@@ -38,7 +38,7 @@ delete series	calendar	vi	Xóa m&#7897;t lo&#7841;t
 deleted	calendar	vi	&#272;ã xóa
 display status of events	calendar	vi	Hi&#7875;n th&#7883; Tr&#7841;ng thái c&#7911;a các S&#7921; ki&#7879;n
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	vi	B&#7841;n có mu&#7889;n nh&#7853;n &#273;&#432;&#7907;c thông báo v&#7873; các cu&#7897;c h&#7865;n m&#7899;i ho&#7863;c có thay &#273;&#7893;i? B&#7841;n &#273;&#432;&#7907;c thông báo v&#7873; các thay &#273;&#7893;i do chính b&#7841;n t&#7841;o ra.<br>B&#7841;n có th&#7875; gi&#7899;i h&#7841;n nh&#7919;ng thông báo ch&#7881; cho nh&#7919;ng thay &#273;&#7893;i nào &#273;ó mà thôi. M&#7895;i m&#7909;c bao g&#7891;m t&#7845;t c&#7843; thông báo &#273;&#432;&#7907;c li&#7879;t kê &#7903; phía trên nó. T&#7845;t c&#7843; s&#7921; thay &#273;&#7893;i bao g&#7891;m thay &#273;&#7893;i tiêu &#273;&#7873;, di&#7877;n gi&#7843;i, thành viên, nh&#432;ng không có &#273;áp &#7913;ng thành viên nào. N&#7871;u ng&#432;&#7901;i ch&#7911; trì s&#7921; ki&#7879;n yêu c&#7847;u b&#7845;t k&#7923; thông báo nào, anh &#7845;y c&#361;ng luôn luôn nh&#7853;n &#273;&#432;&#7907;c các ph&#7843;n h&#7891;i c&#7911;a thành viên nh&#432; nh&#7919;ng s&#7921; &#273;&#7891;ng ý và t&#7915; ch&#7889;i
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	vi	B&#7841;n có mu&#7889;n nh&#7853;n m&#7897;t b&#7843;ng tóm t&#7855;t các cu&#7897;c h&#7865;n qua email hay không?<br>B&#7843;ng tóm t&#7855;t &#273;&#432;&#7907;c g&#7917;i t&#7899;i &#273;&#7883;a ch&#7881; email chính th&#7913;c c&#7911;a b&#7841;n vào sáng ngày hôm &#273;ó ho&#7863;c vào th&#7913; Hai &#273;&#7889;i v&#7899;i các b&#7843;ng t&#7893;ng k&#7871;t hàng tu&#7847;n.<br>Nó ch&#7881; &#273;&#432;&#7907;c g&#7917;i &#273;i khi b&#7841;n có b&#7845;t k&#7923; cu&#7897;c h&#7865;n nào trong ngày hôm &#273;ó ho&#7863;c trong tu&#7847;n &#273;ó.
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	vi	B&#7841;n có mu&#7889;n nh&#7853;n m&#7897;t b&#7843;ng tóm t&#7855;t các cu&#7897;c h&#7865;n qua email hay không?<br>B&#7843;ng tóm t&#7855;t &#273;&#432;&#7907;c g&#7917;i t&#7899;i &#273;&#7883;a ch&#7881; email chính th&#7913;c c&#7911;a b&#7841;n vào sáng ngày hôm &#273;ó ho&#7863;c vào th&#7913; Hai &#273;&#7889;i v&#7899;i các b&#7843;ng t&#7893;ng k&#7871;t hàng tu&#7847;n.<br>Nó ch&#7881; &#273;&#432;&#7907;c g&#7917;i &#273;i khi b&#7841;n có b&#7845;t k&#7923; cu&#7897;c h&#7865;n nào trong ngày hôm &#273;ó ho&#7863;c trong tu&#7847;n &#273;ó.
 do you wish to autoload calendar holidays files dynamically?	admin	vi	B&#7841;n có mu&#7889;n t&#7921; &#273;&#7897;ng t&#7843;i các t&#7853;p tin ngày ngh&#7881; l&#7877; ?
 download	calendar	vi	T&#7843;i v&#7873;
 duration	calendar	vi	Th&#7901;i gian
@@ -54,7 +54,7 @@ extended updates always include the complete event-details. ical's can be import
 fieldseparator	calendar	vi	D&#7845;u phân cách tr&#432;&#7901;ng
 firstname of person to notify	calendar	vi	Tên c&#7911;a ng&#432;&#7901;i &#273;&#432;&#7907;c thông báo
 format of event updates	calendar	vi	&#272;&#7883;nh d&#7841;ng c&#7911;a các c&#7853;p nh&#7853;t s&#7921; ki&#7879;n
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	vi	freebusy: Ng&#432;&#7901;i dùng ch&#432;a bi&#7871;t '%1', sai m&#7853;t kh&#7849;u ho&#7863;c ch&#432;a có ch&#7895; cho các ng&#432;&#7901;i s&#7917; d&#7909;ng ch&#432;a &#273;&#259;ng nh&#7853;p !!!
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	vi	freebusy: Ng&#432;&#7901;i dùng ch&#432;a bi&#7871;t '%1', sai m&#7853;t kh&#7849;u ho&#7863;c ch&#432;a có ch&#7895; cho các ng&#432;&#7901;i s&#7917; d&#7909;ng ch&#432;a &#273;&#259;ng nh&#7853;p !!!
 fri	calendar	vi	Sáu
 full description	calendar	vi	Di&#7877;n gi&#7843;i &#273;&#7847;y &#273;&#7911;
 fullname of person to notify	calendar	vi	H&#7885; tên c&#7911;a ng&#432;&#7901;i &#273;&#432;&#7907;c thông báo
@@ -103,7 +103,7 @@ olddate	calendar	vi	Ngày c&#361;
 on %1 %2 %3 your meeting request for %4	calendar	vi	Khi %1 %2 %3 yêu c&#7847;u h&#7885;p m&#7863;t c&#7911;a b&#7841;n cho %4
 on all modification, but responses	calendar	vi	&#273;&#7889;i v&#7899;i m&#7885;i c&#7853;p nh&#7853;t, ngo&#7841;i tr&#7915; các ph&#7843;n h&#7891;i
 on any time change too	calendar	vi	c&#361;ng &#273;&#7889;i v&#7899;i b&#7845;t k&#7923; s&#7921; thay &#273;&#7893;i nào v&#7873; th&#7901;i gian
-on invitation / cancelation only	calendar	vi	ch&#7881; &#273;&#7889;i v&#7899;i l&#7901;i m&#7901;i/s&#7921; h&#7911;y b&#7887;
+on invitation / cancellation only	calendar	vi	ch&#7881; &#273;&#7889;i v&#7899;i l&#7901;i m&#7901;i/s&#7921; h&#7911;y b&#7887;
 on participant responses too	calendar	vi	c&#361;ng &#273;&#7889;i v&#7899;i các ph&#7843;n h&#7891;i thành viên
 on time change of more than 4 hours too	calendar	vi	c&#361;ng &#273;&#7889;i v&#7899;i thay &#273;&#7893;i v&#7873; th&#7901;i gian quá 4 gi&#7901;
 open todo's:	calendar	vi	M&#7903; xem các vi&#7879;c c&#7847;n làm ngay
@@ -134,7 +134,7 @@ scheduling conflict	calendar	vi	Lên l&#7883;ch ch&#7891;ng chéo
 set a year only for one-time / non-regular holidays.	calendar	vi	Thi&#7871;t l&#7853;p ngày ngh&#7881; m&#7897;t l&#7847;n trong n&#259;m/ngày ngh&#7881; b&#7845;t th&#432;&#7901;ng
 set new events to private	calendar	vi	Gi&#7919; kín các s&#7921; ki&#7879;n m&#7899;i cho cá nhân
 should new events created as private by default ?	calendar	vi	Có nên &#273;&#7875; m&#7863;c &#273;&#7883;nh các s&#7921; ki&#7879;n m&#7899;i &#273;&#432;&#7907;c gi&#7919; riêng cho cá nhân ?
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	vi	Có c&#7847;n hi&#7875;n th&#7883; tình tr&#7841;ng c&#7911;a s&#7921; ki&#7879;n/công vi&#7879;c-các thành viên (&#273;&#7891;ng ý, t&#7915; ch&#7889;i, ...) trong ngo&#7863;c vuông phía sau m&#7895;i tên thành viên không?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	vi	Có c&#7847;n hi&#7875;n th&#7883; tình tr&#7841;ng c&#7911;a s&#7921; ki&#7879;n/công vi&#7879;c-các thành viên (&#273;&#7891;ng ý, t&#7915; ch&#7889;i, ...) trong ngo&#7863;c vuông phía sau m&#7895;i tên thành viên không?
 show default view on main screen	calendar	vi	hi&#7879;n b&#7843;ng xem m&#7863;c &#273;&#7883;nh trên màn hình chính
 show list of upcoming events	calendar	vi	Li&#7879;t kê các s&#7921; ki&#7879;n s&#7855;p x&#7843;y ra
 single event	calendar	vi	s&#7921; ki&#7879;n &#273;&#417;n
@@ -173,10 +173,10 @@ work day ends on	calendar	vi	Ngày làm vi&#7879;c k&#7871;t thúc vào
 work day starts on	calendar	vi	Ngày làm vi&#7879;c b&#7855;t &#273;&#7847;u vào
 yearly	calendar	vi	Hàng n&#259;m
 yearview	calendar	vi	B&#7843;ng xem theo n&#259;m
-you can either set a year or a occurence, not both !!!	calendar	vi	B&#7841;n có th&#7875; &#273;&#7863;t m&#7897;t N&#259;m ho&#7863;c m&#7897;t S&#7921; ki&#7879;n, ho&#7863;c không c&#7847;n c&#7843; hai !!!
-you can only set a year or a occurence !!!	calendar	vi	B&#7841;n ch&#7881; có th&#7875; &#273;&#7863;t m&#7897;t n&#259;m ho&#7863;c m&#7897;t s&#7921; ki&#7879;n !!!
+you can either set a year or a occurrence, not both !!!	calendar	vi	B&#7841;n có th&#7875; &#273;&#7863;t m&#7897;t N&#259;m ho&#7863;c m&#7897;t S&#7921; ki&#7879;n, ho&#7863;c không c&#7847;n c&#7843; hai !!!
+you can only set a year or a occurrence !!!	calendar	vi	B&#7841;n ch&#7881; có th&#7875; &#273;&#7863;t m&#7897;t n&#259;m ho&#7863;c m&#7897;t s&#7921; ki&#7879;n !!!
 you do not have permission to read this record!	calendar	vi	B&#7841;n không có quy&#7873;n &#273;&#7885;c m&#7849;u tin này!
 you have a meeting scheduled for %1	calendar	vi	B&#7841;n có m&#7897;t cu&#7897;c h&#7885;p &#273;ã lên l&#7883;ch tr&#432;&#7899;c vào %1
-you need to set either a day or a occurence !!!	calendar	vi	B&#7841;n c&#7847;n &#273;&#7863;t m&#7897;t ngày ho&#7863;c m&#7897;t s&#7921; ki&#7879;n
+you need to set either a day or a occurrence !!!	calendar	vi	B&#7841;n c&#7847;n &#273;&#7863;t m&#7897;t ngày ho&#7863;c m&#7897;t s&#7921; ki&#7879;n
 your meeting scheduled for %1 has been canceled	calendar	vi	Cu&#7897;c h&#7885;p &#273;ã lên l&#7883;ch tr&#432;&#7899;c c&#7911;a b&#7841;n vào %1 &#273;ã b&#7883; h&#7911;y
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	vi	Cu&#7897;c h&#7885;p c&#7911;a b&#7841;n &#273;&#432;&#7907;c lên l&#7883;ch vào %1 bây gi&#7901; &#273;ã d&#7901;i l&#7841;i vào %2

@@ -202,7 +202,7 @@ high	infolog	fi	Korkea
 history	infolog	fi	Historia
 history logging	infolog	fi	Merkintöjen historia
 history logging and deleting of items	infolog	fi	Historia ja poistettujen merkintöjen lopullinen poistaminen. Kenellä on oikeus tarkastella ja poistaa lopullisesti (deletoituja) merkintöjä?
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	fi	Kuinka monta riviä kuvaustekstiä on näkyvillä. Loput rivit ovat näkyvillä scroll barissa.
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	fi	Kuinka monta riviä kuvaustekstiä on näkyvillä. Loput rivit ovat näkyvillä scroll barissa.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	fi	Merkitse kuvauskentän leveys numeerisena arvona esim. 60
 id	infolog	fi	ID
 id#	infolog	fi	ID#
@@ -213,7 +213,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	infolog	fi	Valitse viennin oletusasetus
 import next set	infolog	fi	Tuo seuraava osa
 importance	infolog	fi	Tärkeys
-imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	fi	Tuo merkintöjä CSV tiedostosta tehtävienhallintaan. CSV 'Comma Separated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	fi	Tuo merkintöjä CSV tiedostosta tehtävienhallintaan. CSV 'Comma Separated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
 info log	common	fi	Tehtävienhallinta
 infolog	common	fi	Tehtävienhallinta
 infolog - delete	infolog	fi	Tehtävä - Poista

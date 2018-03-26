@@ -100,7 +100,7 @@ default appointment length (in minutes)	calendar	pl	domyślna długość spotkan
 default calendar filter	calendar	pl	Domyślny filtr kalendarza
 default calendar view	calendar	pl	Domyślny układ kalendarza
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	pl	Domyślna długość nowo dodawanych zdarzeń. Długość podaj w minutach.
-default type of resources application selected in the calendar particpants research form.	calendar	pl	Domyślny typ aplikacji zasobów wybrany w formularzu uczestników kalendarza
+default type of resources application selected in the calendar participants research form.	calendar	pl	Domyślny typ aplikacji zasobów wybrany w formularzu uczestników kalendarza
 default type of resources selection	calendar	pl	Domyślny wybrany typ zasobu
 default week view	calendar	pl	domyślny widok tygodnia
 delegated	calendar	pl	Oddelegowane
@@ -109,10 +109,10 @@ delete series	calendar	pl	Skasuj serię
 delete this alarm	calendar	pl	Usuń ten alarm
 delete this event	calendar	pl	Usuń ten termin
 delete this exception	calendar	pl	Usuń ten wyjątek
-delete this series of recuring events	calendar	pl	Usuń serię terminów powtarzanych
+delete this series of recurring events	calendar	pl	Usuń serię terminów powtarzanych
 deleted	calendar	pl	skasowany
-deny ressources reservation for private events	calendar	pl	Odmów rezerwacji zasobów dla zdarzeń prywatnych
-disinvited	calendar	pl	Zaproszenie cofnięto
+deny resources reservation for private events	calendar	pl	Odmów rezerwacji zasobów dla zdarzeń prywatnych
+uninvited	calendar	pl	Zaproszenie cofnięto
 display status of events	calendar	pl	Wyświetl status zdarzeń
 displayed view	calendar	pl	bieżący widok
 do not include events of group members	calendar	pl	Nie dołączaj zdarzeń członków grup
@@ -121,7 +121,7 @@ do you want to be notified about changes of appointments you modified?	calendar	
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	pl	Czy chcesz być powiadomiony o nowych lub zmienionych spotkaniach? Nie będziesz powiadomiony o zmianach które samemu wprowadziłeś.<br>Możesz ograniczyć powiadomienia tylko do niektórych typów zmian. Każdy element zawiera wszystkie modyfikacje wymienione wyżej. Wszystkie modyfikacje zawierają zmianę tytułu, opisu, uczestników ale nie odpowiedzi uczestników. Jeśli właściciel zdarzenia poprosił o jakiekolwiek powiadomienia zawsze otrzyma odpowiedzi uczestników (takie jak akceptacje lub odrzucenie).
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	pl	Czy chcesz być powiadamiany o nowych lub zmienionych spotkaniach? Będziesz powiadamiany o zmianach które sam zrobisz.<br>Możesz ograniczyć powiadomienia tylko do niektórych zmian. Każda pozycja zawiera wszystkie powiadomienia wymienione powyżej. <i>Wszystkie zmiany</i> zawierają zmiany nazwy, opisu, uczestników, ale nie same odpowiedzi uczestników. Jeżeli właściciel zdarzenia wybierze powiadomienia dowolne, będzie otrzymywał również odpowiedzi uczestników, takie jak akceptacje czy odrzucenia.
 do you want to edit this event as an exception or the whole series?	calendar	pl	Czy chcesz edytować to zdarzenie jako wyjątek czy całą serię?
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pl	Czy chcesz otrzymywać mailem regularne podsumowania swoich spotkań?<br>Podsumowanie jest wysyłane na Twój adres e-mail codziennie rano, lub w poniedziałki dla podsumowań tygodniowych.<br>Podsumowanie jest wysyłane tylko jeżeli masz zaplanowane jakieś spotkania w danym dniu lub tygodniu.
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pl	Czy chcesz otrzymywać mailem regularne podsumowania swoich spotkań?<br>Podsumowanie jest wysyłane na Twój adres e-mail codziennie rano, lub w poniedziałki dla podsumowań tygodniowych.<br>Podsumowanie jest wysyłane tylko jeżeli masz zaplanowane jakieś spotkania w danym dniu lub tygodniu.
 do you wish to autoload calendar holidays files dynamically?	admin	pl	Czy chcesz automatycznie ładować do kalendarza listę świąt?
 download	calendar	pl	Ściągnij
 download this event as ical	calendar	pl	Ściągnij zdarzenia w formacie iCal
@@ -131,7 +131,7 @@ edit exception	calendar	pl	Edytuj wyjątek
 edit series	calendar	pl	Edytuj serię
 edit status or alarms for this particular day	calendar	pl	Edytuj status lub alarmy dla tego konkretnego dnia
 edit this event	calendar	pl	Edytuj termin
-edit this series of recuring events	calendar	pl	Edytuj serię terminów powtarzanych
+edit this series of recurring events	calendar	pl	Edytuj serię terminów powtarzanych
 empty for all	calendar	pl	pusty dla wszystkich
 end	calendar	pl	Zakończenie
 end date/time	calendar	pl	Data/godzina zakończenia
@@ -142,7 +142,7 @@ ends	calendar	pl	kończy się
 error adding the alarm	calendar	pl	Błąd przy dodawaniu alarmu
 error: importing the ical	calendar	pl	Błąd przy importowaniu iCal
 error: no participants selected !!!	calendar	pl	Błąd: nie wybrano uczestników
-error: ressources reservation in private events is not allowed!!!	calendar	pl	Błąd: rezerwacja zasobów w prywatnych zdarzeniach zabroniona !!!
+error: resources reservation in private events is not allowed!!!	calendar	pl	Błąd: rezerwacja zasobów w prywatnych zdarzeniach zabroniona !!!
 error: saving the event !!!	calendar	pl	Błąd przy zapisywaniu terminu
 error: starttime has to be before the endtime !!!	calendar	pl	Błąd: czas rozpoczęcia musi być wcześniejszy niż czas zakończenia
 error: the entry has been updated since you opened it for editing!	calendar	pl	Błąd: wpis został zaktualizowany od czasu jego otwarcia do edycji!
@@ -166,7 +166,7 @@ fieldseparator	calendar	pl	Odzielnik pola
 filemanager	calendar	pl	Pliki
 filename	calendar	pl	Nazwa pliku
 filename of the download	calendar	pl	Nazwa pliku do ściągnięcia
-find free timeslots where the selected participants are availible for the given timespan	calendar	pl	Wyszukaj wolne przedziały czasu, dla których wybrani uczestnicy są dostępni przez określony okres
+find free timeslots where the selected participants are available for the given timespan	calendar	pl	Wyszukaj wolne przedziały czasu, dla których wybrani uczestnicy są dostępni przez określony okres
 firstname of person to notify	calendar	pl	Imię osoby do powiadomienia
 for	calendar	pl	dla
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	pl	Użyj tego tagu dla listów seryjnych. Wstaw zawartość którą chcesz powtórzyć pomiędzy dwa tagi.
@@ -176,7 +176,7 @@ forward half a month	calendar	pl	naprzód o pół miesiąca
 forward one month	calendar	pl	naprzód o jeden miesiąc
 four days view	calendar	pl	Widok czterodniowy
 freebusy	common	pl	Wolny/Zajęty
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	pl	wolny-zajęty: Nieznany użytkownik '%1', nieprawidłowe hasło lub dane nie są dostępne dla gości
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	pl	wolny-zajęty: Nieznany użytkownik '%1', nieprawidłowe hasło lub dane nie są dostępne dla gości
 freetime search	calendar	pl	Wyszukiwanie wolnego czasu
 fri	calendar	pl	Pt
 full description	calendar	pl	Pełny opis
@@ -190,7 +190,7 @@ group planner	calendar	pl	Planowanie grupowe
 group public only	calendar	pl	Tylko grupowo publiczne
 group(s) or user(s) whose calendars to show (if acl exists)	calendar	pl	Grupy i użytkownicy których kalendarze pokazać (jeśli ACL istnieje)
 groupmember(s) %1 not included, because you have no access.	calendar	pl	Następujący członkowie wybranych grup nie zostali uwzględnieni ze względu na brak dostępu: %1
-groups: other users can allways be invited, only groups require an invite grant	admin	pl	Grupy: inni użytkownicy zawsze mogą być zaproszeni, tylko grupy wymagają zezwolenia.
+groups: other users can always be invited, only groups require an invite grant	admin	pl	Grupy: inni użytkownicy zawsze mogą być zaproszeni, tylko grupy wymagają zezwolenia.
 h	calendar	pl	g
 here is your requested alarm.	calendar	pl	Oto alarm, którego zażądałeś/aś
 hide private events	calendar	pl	Ukryj prywatne zdarzenia
@@ -216,7 +216,7 @@ if you dont set a password here, the information is available to everyone, who k
 ignore conflict	calendar	pl	Ignoruj konflikt
 import	calendar	pl	Importuj
 import csv-file	common	pl	Importuj plik CSV
-imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	pl	Importuj zdarzenia do kalendarza z pliku CSV.
+imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	pl	Importuj zdarzenia do kalendarza z pliku CSV.
 insert	calendar	pl	wstaw
 insert in document	calendar	pl	Wstaw w dokumencie
 interval	calendar	pl	Przedział
@@ -236,7 +236,7 @@ location	calendar	pl	Lokalizacja
 location to autoload from	admin	pl	Lokalizacja do automatycznego załadowania z
 location, start- and endtimes, ...	calendar	pl	Lokalizacja, czas rozpoczęcia i zakończenia
 mail all participants	calendar	pl	wyślij do wszystkich uczestników
-make freebusy information available to not loged in persons?	calendar	pl	Czy udostępnić informację wolny-zajęty dla gości (osób nie zalogowanych)?
+make freebusy information available to not logged in persons?	calendar	pl	Czy udostępnić informację wolny-zajęty dla gości (osób nie zalogowanych)?
 manage mapping	calendar	pl	Zarządzaj mapowaniem
 max. number of entries to show (leave empty for no restriction)	calendar	pl	Ile maksymalnie wpisów pokazać (puste - bez ograniczenia)
 minutes	calendar	pl	minuty
@@ -263,7 +263,7 @@ not rejected	calendar	pl	Nie odrzucone
 nothing to update, version is already %1.	calendar	pl	Aktualizacja nie wymagana, numer wersji to %1.
 notification messages for added events	calendar	pl	Powiadomienia dla dodanych terminów
 notification messages for canceled events	calendar	pl	Powiadomienia dla odwołanych terminów
-notification messages for disinvited participants	calendar	pl	Powiadomienia dla uczestników, którym anulowano zaproszenie
+notification messages for uninvited participants	calendar	pl	Powiadomienia dla uczestników, którym anulowano zaproszenie
 notification messages for modified events	calendar	pl	Powiadomienia dla terminów zmodyfikowanych
 notification messages for your alarms	calendar	pl	Powiadomienia dla Twoich alarmów
 notification messages for your responses	calendar	pl	Powiadomienia dla Twoich odpowiedzi
@@ -276,20 +276,20 @@ olddate	calendar	pl	Oryginalna data
 on %1 %2 %3 your meeting request for %4	calendar	pl	Na %1 %2 %3 Twoje żądanie spotkania dla %4
 on all modification, but responses	calendar	pl	po wszystkich zmianach z wyjątkiem odpowiedzi
 on any time change too	calendar	pl	także po każdej zmianie czasu
-on invitation / cancelation only	calendar	pl	tylko po zaproszeniu / odwołaniu
+on invitation / cancellation only	calendar	pl	tylko po zaproszeniu / odwołaniu
 on participant responses too	calendar	pl	także po odpowiedziach uczestników
 on time change of more than 4 hours too	calendar	pl	przy zmianie czasu o więcej niż 4 godziny
 one month	calendar	pl	jeden miesiąc
 one week	calendar	pl	jeden tydzień
 one year	calendar	pl	jeden rok
 only group-events	calendar	pl	Tylko zdarzenia grupowe
-only the initial date of that recuring event is checked!	calendar	pl	Tylko data początkowa dla tego terminu powtarzanego jest brana pod uwagę!
+only the initial date of that recurring event is checked!	calendar	pl	Tylko data początkowa dla tego terminu powtarzanego jest brana pod uwagę!
 open todo's:	calendar	pl	Otwarte Do Zrobienia:
 optional	calendar	pl	Opcjonalne
 overlap holiday	calendar	pl	nakładające się święto
 owner too	calendar	pl	Także właściciel
 participants	calendar	pl	Uczestnicy
-participants disinvited from an event	calendar	pl	Uczestnicy wyproszeni z terminu
+participants uninvited from an event	calendar	pl	Uczestnicy wyproszeni z terminu
 participants, resources, ...	calendar	pl	Uczestnicy, Zasoby, ...
 password for not loged in users to your freebusy information?	calendar	pl	Hasło dla gości (użytkowników nie zalogowanych) dla Twoich informacji wolny-zajęty?
 people holiday	calendar	pl	ludowe święta
@@ -351,7 +351,7 @@ should the grid be shown in the calendar	calendar	pl	Czy pokazywać siatkę w ka
 should the number of weeks be shown on top of the calendar	calendar	pl	Czy wyświetlać liczbę tygodni na górze kalendarza
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	pl	Czy wyświetlać liczbę tygodni na górze kalendarza (tylko jeśli offset = 0)
 should the planner display an empty row for users or categories without any appointment.	calendar	pl	Czy widok planowania grupowego powinien zawierać puste wiersze dla użytkowników lub kategorii bez jakichkolwiek terminów?
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	pl	Czy pokazywać w nawiasach status (zaakceptowane, odrzucone...) uczestników zdarzenia obok ich nazwiska?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	pl	Czy pokazywać w nawiasach status (zaakceptowane, odrzucone...) uczestników zdarzenia obok ich nazwiska?
 show a calendar title	calendar	pl	Pokaż tytuł kalendarza
 show all events, as if they were private	calendar	pl	Pokaż wszystkie zdarzenia tak jakby były pyrwatne
 show all status incl. rejected events	calendar	pl	Pokaż wszystkie statusy, łącznie z odrzuconymi
@@ -398,7 +398,7 @@ this event is part of a series	calendar	pl	To zdarzenie jest częścią serii
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	pl	Ta grupa jest automatycznie wybierana gdy uruchamiasz widoki planowania grupowego. Możesz ją zmienić w plannerze, kiedy tylko chcesz.
 this message is sent for canceled or deleted events.	calendar	pl	Ta wiadomość jest wysyłana dla anulowanych lub skasowanych zdarzeń.
 this message is sent for modified or moved events.	calendar	pl	Ta wiadomość jest wysyłana dla zmodyfikowanych lub przeniesionych zdarzeń.
-this message is sent to disinvited participants.	calendar	pl	Ta wiadomość jest wysyłana do uczestników, którym cofnięto zaproszenie
+this message is sent to uninvited participants.	calendar	pl	Ta wiadomość jest wysyłana do uczestników, którym cofnięto zaproszenie
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	pl	Ta wiadomość jest wysyłana do wszystkich uczestników spotkania, którego jesteś właścicielem, którzy zażyczyli sobie otrzymywania powiadomień o nowych terminach.<br />Możesz użyć pewnych zmiennych, które ulegną podstawieniu danymi konkretnego terminu. Pierwsza linia jest tematem wiadomości e-mail.
 this message is sent when you accept, tentative accept or reject an event.	calendar	pl	Ta wiadomość jest wysyłana kiedy akceptujesz, akceptujesz próbnie lub odrzucasz zdarzenie.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	pl	Ta wiadomość jest wysyłana, kiedy ustawiasz Alarm dla jakiegoś zdarzenia. Dołącz wszystkie informacje, których możesz potrzebować.
@@ -434,7 +434,7 @@ use this timezone to import/export calendar data.	calendar	pl	Użyj tej strefy c
 use weekday start	calendar	pl	Użyj początku dnia tygodnia
 user or group	calendar	pl	Użytkownik lub grupa
 user selectable css file for the calendar setup	calendar	pl	Plik CSS użytkownika dla kalendarza
-users + groups: inviting both allways requires an invite grant	admin	pl	Użytkownicy + grupy: zaproszenie obydwu zawsze wymaga zezwolenia
+users + groups: inviting both always requires an invite grant	admin	pl	Użytkownicy + grupy: zaproszenie obydwu zawsze wymaga zezwolenia
 view exception	calendar	pl	Wyświetl wyjątek
 view series	calendar	pl	Wyświetl serię
 view this event	calendar	pl	Pokaż ten termin
@@ -460,14 +460,14 @@ workdays	calendar	pl	Dni robocze
 yearly	calendar	pl	Roczny
 yearview	calendar	pl	Widok roczny
 you are not allowed to book the resource selected:	calendar	pl	Nie masz uprawnień do rezerwacji zasobu:
-you can either set a year or a occurence, not both !!!	calendar	pl	Możesz ustawić albo rok albo pojedyncze wystąpienie, ale nie oba jednocześnie!
-you can only set a year or a occurence !!!	calendar	pl	Możesz ustawić tylko rok lub pojedyncze wystąpienie!
+you can either set a year or a occurrence, not both !!!	calendar	pl	Możesz ustawić albo rok albo pojedyncze wystąpienie, ale nie oba jednocześnie!
+you can only set a year or a occurrence !!!	calendar	pl	Możesz ustawić tylko rok lub pojedyncze wystąpienie!
 you do not have permission to read this record!	calendar	pl	Nie masz uprawnień do tego rekordu!!!
 you have a meeting scheduled for %1	calendar	pl	Masz spotkanie zaplanowane na %1
-you have been disinvited from the meeting at %1	calendar	pl	Twoje zaproszenie na spotkanie %1 zostało wycofane
+you have been uninvited from the meeting at %1	calendar	pl	Twoje zaproszenie na spotkanie %1 zostało wycofane
 you need to select an account, contact or resource first!	calendar	pl	Musisz najpierw wybrać konto, kontakt lub zasób!
 you need to select an ical file first	calendar	pl	Musisz wpierw wybrać iCal
-you need to set either a day or a occurence !!!	calendar	pl	Musisz ustawić dzień lub pojawienie się!!!
+you need to set either a day or a occurrence !!!	calendar	pl	Musisz ustawić dzień lub pojawienie się!!!
 you requested more than available for the selected resource:	calendar	pl	Wybrałeś większą ilość zasobu niż jest dostępna:
 your meeting scheduled for %1 has been canceled	calendar	pl	Twoje spotkanie zaplanowane na %1 zostało odwołane
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	pl	Twoje spotkanie zaplanowane na %1 zostało przesunięte na %2

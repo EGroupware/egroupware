@@ -40,7 +40,7 @@ exists	timesheet	fr	Existe
 export definition to use for nextmatch export	timesheet	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 export to openoffice spreadsheet	timesheet	fr	Export vers un classeur OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV. CSV tient pour "Comma Separated Values". Dans l'onglet Options, vous pouvez aussi choisir d'autres séparateurs.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV. CSV tient pour "Comma Separated Values". Dans l'onglet Options, vous pouvez aussi choisir d'autres séparateurs.
 field must not be empty !!!	timesheet	fr	Le champ ne doit pas être vide !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
 full: use only projectmanager	admin	fr	Complet: utiliser seulement le Gestionnaire de projets

@@ -44,7 +44,7 @@ exists	timesheet	sk	Existuje
 export definition to use for nextmatch export	timesheet	sk	Exportná definícia pre použitie v exporte
 export to openoffice spreadsheet	timesheet	sk	Exportovať do zošita OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	sk	Exportuje položky z Harmonogramu do súboru CSV
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	sk	THIS IS JUST A TEST FOR TRACKER #2121 PLEASE RETRANSLATE
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	sk	THIS IS JUST A TEST FOR TRACKER #2121 PLEASE RETRANSLATE
 favorites	timesheet	sk	Obľúbené
 field must not be empty !!!	timesheet	sk	Pole nesmie byť prázdne!!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	sk	Pre sériový list použite túto značku. Obsah, ktorý chcete zopakovať, vložte medzi dve značky.

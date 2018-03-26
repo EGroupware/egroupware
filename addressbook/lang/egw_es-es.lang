@@ -231,7 +231,7 @@ export from addressbook	addressbook	es-es	Exportar de la libreta de direcciones
 export selection	addressbook	es-es	Exportar la selección
 exported	addressbook	es-es	exportada
 exports contacts from your addressbook into a csv file.	addressbook	es-es	Exportar contactos de la libreta de direcciones en un fichero CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	es-es	Exporta los contactos de su libreta de direcciones en un fichero CSV. CSV significa 'Comma Separated Values' (valores separados por comas). Sin embargo, en la pestaña de opciones se pueden elegir otros separadores.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	es-es	Exporta los contactos de su libreta de direcciones en un fichero CSV. CSV significa 'Comma Separated Values' (valores separados por comas). Sin embargo, en la pestaña de opciones se pueden elegir otros separadores.
 exports contacts from your addressbook into a vcard file.	addressbook	es-es	Exportar contactos de la libreta de direcciones en un fichero vCard.
 extra	addressbook	es-es	Extra
 extra encodings	addressbook	es-es	Codificaciones extra
@@ -290,7 +290,7 @@ import from outlook	addressbook	es-es	Importar desde Outlook
 import multiple vcard	addressbook	es-es	Importar múltiples VCards
 import next set	addressbook	es-es	Importar el registro siguiente
 import_instructions	addressbook	es-es	Si usa Mozilla o Netscape, abra la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato LDIF.<p>O, en Outlook, seleccione su carpeta de contactos, luego, en el menú<b>Fichero</b>, <b>Importar y Exportar</b> para guardarlos en un fichero separado por comas (CSV).<p>O, en Palm Desktop 4.0 o superior, visite la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato VCard.
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	es-es	Importa los contactos en la libreta de direcciones desde un fichero CSV. CSV significa 'Valores separados por comas'. Sin embargo, en la pestaña de opciones, también se pueden elegir otros separadores.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	es-es	Importa los contactos en la libreta de direcciones desde un fichero CSV. CSV significa 'Valores separados por comas'. Sin embargo, en la pestaña de opciones, también se pueden elegir otros separadores.
 in %1 days (%2) is %3's birthday.	addressbook	es-es	En %1 días (%2) es el cumpleaños de %3.
 income	addressbook	es-es	Ingresos
 infolog	addressbook	es-es	Registro de tareas

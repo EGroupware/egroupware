@@ -239,7 +239,7 @@ export from addressbook	addressbook	en	Export from address book
 export selection	addressbook	en	Export selection
 exported	addressbook	en	exported
 exports contacts from your addressbook into a csv file.	addressbook	en	Exports contacts from address book into a CSV file.
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Exports contacts from address book into a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	en	Exports contacts from address book into a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
 exports contacts from your addressbook into a vcard file.	addressbook	en	Exports contacts from your Addressbook into a vCard File.
 extra	addressbook	en	Extra
 extra encodings	addressbook	en	Extra encodings
@@ -304,7 +304,7 @@ import multiple vcard	addressbook	en	Import multiple vCards
 import next set	addressbook	en	Import next set
 import_instructions	addressbook	en	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in vCard format.
 importer's personal	addressbook	en	Importer's personal
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Imports contacts into address book from a CSV File. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	en	Imports contacts into address book from a CSV File. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
 imports contacts into your addressbook from a vcard file.	addressbook	en	Imports contacts into your Addressbook from a vCard File.
 in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthday.
 income	addressbook	en	Income

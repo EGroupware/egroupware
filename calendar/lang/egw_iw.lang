@@ -49,7 +49,7 @@ delete series	calendar	iw	מחק סדרה
 deleted	calendar	iw	נמחקו
 display status of events	calendar	iw	הצג סטוטס של אירועים
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	iw	ברצונך לקבל הודעות בדבר פגישות חדשות או שינוים בפגישות קימות? תקבל הודעה על שינוים אתה מבצע
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	iw	?ברצונך לקבל סיכום הפגישות שלך בדוא"ל בקביעות
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	iw	?ברצונך לקבל סיכום הפגישות שלך בדוא"ל בקביעות
 do you wish to autoload calendar holidays files dynamically?	admin	iw	?ברצונך להטעין קבצי חגים של לוח השנה אוטומטית באופו דינמי
 download	calendar	iw	הורדה
 duration	calendar	iw	משך
@@ -67,7 +67,7 @@ fieldseparator	calendar	iw	מפריד שדות
 filemanager	calendar	iw	מנהל הקבצים
 firstname of person to notify	calendar	iw	שם פרטי של מקבל ההודעה
 format of event updates	calendar	iw	פורמט עדכוני אירוע
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	iw	!תפוס-פנוי: משתמש לא מוכר '%1', שגיאה בסיסמא או לזמין למשתמשים שלא נכנסו למערכת
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	iw	!תפוס-פנוי: משתמש לא מוכר '%1', שגיאה בסיסמא או לזמין למשתמשים שלא נכנסו למערכת
 fri	calendar	iw	שיש
 full description	calendar	iw	תיאור מלא
 fullname of person to notify	calendar	iw	שם מלא של האדם להודיע
@@ -121,7 +121,7 @@ olddate	calendar	iw	תאריך קודם
 on %1 %2 %3 your meeting request for %4	calendar	iw	ב-%1 %2 %3 בקשת הפגידה שלך עבור %4
 on all modification, but responses	calendar	iw	בכל שינוי, פרט לתגובות
 on any time change too	calendar	iw	גם על שינוי לוחות זמנים
-on invitation / cancelation only	calendar	iw	בהזמנה/ביטול בלבד
+on invitation / cancellation only	calendar	iw	בהזמנה/ביטול בלבד
 on participant responses too	calendar	iw	גם בתגובות משתתפים
 on time change of more than 4 hours too	calendar	iw	גם עבור שינוי לוח זמנים של יותר מ-4 שעות
 one month	calendar	iw	חודש אחד
@@ -155,7 +155,7 @@ scheduling conflict	calendar	iw	התנגשות זימון
 set a year only for one-time / non-regular holidays.	calendar	iw	.קבע שנה רק בעבור חגים חד-פעמיים או לא רגילים
 set new events to private	calendar	iw	קבע אירועים חדשים כפרטיים
 should new events created as private by default ?	calendar	iw	?האם ליצור אירועים חדשים כפרטיים כברירת מחדל
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	iw	?האם להציג את סטטוס של משתתפי האירוע (קיבל, דחה, ...) בסוגריים אחרי השם של כל משתתף
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	iw	?האם להציג את סטטוס של משתתפי האירוע (קיבל, דחה, ...) בסוגריים אחרי השם של כל משתתף
 show default view on main screen	calendar	iw	הצג תצוגת ברירת המחדל במסך הראשי
 show list of upcoming events	calendar	iw	הצג רשימה של אירועים מתקרבים
 single event	calendar	iw	אירוע בודד
@@ -196,10 +196,10 @@ work day ends on	calendar	iw	-שבוע עבודה מסתיים ב
 work day starts on	calendar	iw	-שבוע עבודה מתחיל ב
 yearly	calendar	iw	שנתי
 yearview	calendar	iw	תצוגה שנתית
-you can either set a year or a occurence, not both !!!	calendar	iw	!אפשר לקבוע או שנה או ופע, אבל לא את שניהם
-you can only set a year or a occurence !!!	calendar	iw	!אפשר לקבוע רק שנה טו מופע
+you can either set a year or a occurrence, not both !!!	calendar	iw	!אפשר לקבוע או שנה או ופע, אבל לא את שניהם
+you can only set a year or a occurrence !!!	calendar	iw	!אפשר לקבוע רק שנה טו מופע
 you do not have permission to read this record!	calendar	iw	!אין לך הרשאה לקרוא רשומה זו
 you have a meeting scheduled for %1	calendar	iw	יש לך פגישה המזומת ב-%1
-you need to set either a day or a occurence !!!	calendar	iw	!עליך לקבוע יום או מופע
+you need to set either a day or a occurrence !!!	calendar	iw	!עליך לקבוע יום או מופע
 your meeting scheduled for %1 has been canceled	calendar	iw	הפגישה שלך לשעה %1 התבטלה
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	iw	הפגישה שלך שנקבע ך-%1 נקבע מחדש ל-%2

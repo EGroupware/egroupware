@@ -2065,7 +2065,7 @@ class calendar_bo
 			'notifyAdded'     => $subject . lang ('You have a meeting scheduled for %1','$$startdate$$'),
 			'notifyCanceled'  => $subject . lang ('Your meeting scheduled for %1 has been canceled','$$startdate$$'),
 			'notifyModified'  => $subject . lang ('Your meeting that had been scheduled for %1 has been rescheduled to %2','$$olddate$$','$$startdate$$'),
-			'notifyDisinvited'=> $subject . lang ('You have been disinvited from the meeting at %1','$$startdate$$'),
+			'notifyDisinvited'=> $subject . lang ('You have been uninvited from the meeting at %1','$$startdate$$'),
 			'notifyResponse'  => $subject . lang ('On %1 %2 %3 your meeting request for %4','$$date$$','$$fullname$$','$$action$$','$$startdate$$'),
 			'notifyAlarm'     => lang('Alarm for %1 at %2 in %3','$$title$$','$$startdate$$','$$location$$')."\n".lang ('Here is your requested alarm.'),
 			'interval'        => 30,

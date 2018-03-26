@@ -1,6 +1,6 @@
 %1 %2 in %3	calendar	id	%1 %2 dalam %3
 %1 event(s) %2	calendar	id	%1 kegiatan %2
-%1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	id	%1 kegiatan %2, %3 gagal karena kurang kewenangan !!!
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	id	%1 kegiatan %2, %3 gagal karena kurang kewenangan !!!
 %1 hours	calendar	id	%1 jam
 %1 participants removed because of missing invite grants	calendar	id	%1 peserta dibuang karena tiada hak mengundang
 %1 records imported	calendar	id	%1 rekaman diimpor
@@ -98,9 +98,9 @@ delete series	calendar	id	Hapus runtun
 delete this alarm	calendar	id	Hapus alarm ini
 delete this event	calendar	id	Hapus kegiatan ini
 delete this exception	calendar	id	Hapus pengecualian ini
-delete this series of recuring events	calendar	id	Hapus runtun kegiatan yang berulang ini
+delete this series of recurring events	calendar	id	Hapus runtun kegiatan yang berulang ini
 deleted	calendar	id	Dihapus
-disinvited	calendar	id	Batal diundang
+uninvited	calendar	id	Batal diundang
 display status of events	calendar	id	Tampilkan status kegiatan
 download	calendar	id	Unduh
 download this event as ical	calendar	id	Unduh kegiatan ini sebagai iCal
@@ -110,7 +110,7 @@ edit exception	calendar	id	Edit pengecualian
 edit series	calendar	id	Edit runtun
 edit status or alarms for this particular day	calendar	id	Edit status atau alarm untuk hari tersebut
 edit this event	calendar	id	Edit kegiatan ini
-edit this series of recuring events	calendar	id	Edit runtun kegiatan yang berulang ini
+edit this series of recurring events	calendar	id	Edit runtun kegiatan yang berulang ini
 empty for all	calendar	id	Kosongkan semua
 end	calendar	id	Akhir
 end date/time	calendar	id	Tanggal/Jam berakhir
@@ -210,7 +210,7 @@ optional	calendar	id	Opsional
 overlap holiday	calendar	id	Overlap holiday
 owner too	calendar	id	Termasuk Pemilik
 participants	calendar	id	Peserta
-participants disinvited from an event	calendar	id	Peserta yang batal diundang dari kegiatan
+participants uninvited from an event	calendar	id	Peserta yang batal diundang dari kegiatan
 participants, resources, ...	calendar	id	Peserta, Sumber Daya, ...
 people holiday	calendar	id	People holiday
 permission denied	calendar	id	Ijin Ditolak
@@ -299,6 +299,6 @@ years	admin	id	tahun
 yearview	calendar	id	Tampilan Tahunan
 you are not allowed to book the resource selected:	calendar	id	Anda tidak dibolehkan memesan sumberdaya terpilih:
 you have a meeting scheduled for %1	calendar	id	Anda dijadualkan rapat pada %1
-you have been disinvited from the meeting at %1	calendar	id	Anda batal diundang rapat pada %1
+you have been uninvited from the meeting at %1	calendar	id	Anda batal diundang rapat pada %1
 your meeting scheduled for %1 has been canceled	calendar	id	Rapat anda yang dijadualkan pada %1 telah dibatalkan
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	id	Rapat anda yang dijadualkan pada %1 telah dijadual-ulang menjadi %2

@@ -448,7 +448,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 	 * @return string descriprion
 	 */
 	public static function get_description() {
-		return lang("Imports entries into the infolog from a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.");
+		return lang("Imports entries into the infolog from a CSV File. CSV means 'Comma Separated Values'. However in the options Tab you can also choose other seperators.");
 	}
 
 	/**

@@ -237,7 +237,7 @@ export from addressbook	addressbook	cs	Export z adresáře
 export selection	addressbook	cs	Výběr exportu
 exported	addressbook	cs	exportován
 exports contacts from your addressbook into a csv file.	addressbook	cs	Exportuje kontakty z adresáře do souboru CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	cs	Exportuje kontakty z Vašeho adresáře do CSV souboru. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete zvolit jiné oddělovače.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	cs	Exportuje kontakty z Vašeho adresáře do CSV souboru. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete zvolit jiné oddělovače.
 exports contacts from your addressbook into a vcard file.	addressbook	cs	Exportuje kontakty z adresáře do souboru vCard.
 extra	addressbook	cs	Extra
 extra encodings	addressbook	cs	Zvláštní kódování
@@ -298,7 +298,7 @@ import multiple vcard	addressbook	cs	Importovat více VCard
 import next set	addressbook	cs	Importovat následující sadu
 import_instructions	addressbook	cs	V prohlížeči Netscape otevřete Adresář a vyberte <b>Exportovat</b> z menu <b>Soubor</b>. Exportovaný soubor bude ve formátu LDIF.<p>Nebo v Outlooku vyberte složku s Kontakty, zvolte <b>Import a export</b> z menu <b>Start</b> a vyexportujte své kontakty do souboru typu CSV (text oddělený čárkami).<p>Nebo v Palm Desktopu 4.0 a vyšším vyberte <b>Export</b> z menu <b>File</b>. Exportovaný soubor bude ve formátu VCard.
 importer's personal	addressbook	cs	osobní toho, kdo prování import
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	cs	Importuje kontakty z CSV souboru do Vašeho adresáře. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete zvolit jiné oddělovače.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	cs	Importuje kontakty z CSV souboru do Vašeho adresáře. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete zvolit jiné oddělovače.
 imports contacts into your addressbook from a vcard file.	addressbook	cs	Importuje kontakty ze souboru vCard do Vašeho adresáře.
 in %1 days (%2) is %3's birthday.	addressbook	cs	Za %1 dní (%2) má %3 narozeniny.
 income	addressbook	cs	Hospodářský výsledek

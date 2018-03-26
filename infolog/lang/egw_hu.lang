@@ -169,7 +169,7 @@ high	infolog	hu	magas
 history	infolog	hu	Történet
 history logging	infolog	hu	Történet követése (log)
 history logging and deleting of items	infolog	hu	Történet követése (log) és bejegyzések törlése
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	hu	Mennyi leírás sor legyen látható? További sorokat a csúszka használatával lehet megtekinteni.
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	hu	Mennyi leírás sor legyen látható? További sorokat a csúszka használatával lehet megtekinteni.
 id	infolog	hu	Azonosító
 id#	infolog	hu	Azonosító#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	hu	Ha egy típusnak van csoport tulajdonosa, akkor az ezzel a típussal létrehozott bejegyzések tulajdonosa a megadott CSOPORT és nem az a felhasználó, aki létrehozta!

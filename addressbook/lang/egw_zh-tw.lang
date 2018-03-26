@@ -157,7 +157,7 @@ export file name	addressbook	zh-tw	匯出檔名
 export from addressbook	addressbook	zh-tw	從通訊錄匯出
 export selection	addressbook	zh-tw	匯出選擇的項目
 exported	addressbook	zh-tw	匯出了
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	zh-tw	從通訊錄匯出聯絡人資料成一個 CSV 檔案， CSV 意思是逗點分隔數值，不過您可以在過程中選擇希望使用的分隔字元。
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	zh-tw	從通訊錄匯出聯絡人資料成一個 CSV 檔案， CSV 意思是逗點分隔數值，不過您可以在過程中選擇希望使用的分隔字元。
 extra	addressbook	zh-tw	其他
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	zh-tw	變更 %1 組織成員時發生錯誤（沒有權限）！
 fax	addressbook	zh-tw	傳真
@@ -203,7 +203,7 @@ import from outlook	addressbook	zh-tw	從Outlook匯入
 import multiple vcard	addressbook	zh-tw	匯入多重名片檔
 import next set	addressbook	zh-tw	匯入下一個
 import_instructions	addressbook	zh-tw	Netscape，開啟通訊錄並且從<b>檔案</b>功能選擇<b>匯出</b>，匯出的檔案是LDIF格式。Outlook，選擇聯絡人資料夾，從<b>檔案</b>功能選擇<b>匯入與匯出...</b>來匯出聯絡人資料成為逗點分隔(CSV)檔案。
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	zh-tw	從 CSV 檔案匯入聯絡人資料到通訊錄，CSV 表示逗點分隔數值，不過在選項欄位可以指定其他的分隔字元。
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	zh-tw	從 CSV 檔案匯入聯絡人資料到通訊錄，CSV 表示逗點分隔數值，不過在選項欄位可以指定其他的分隔字元。
 in %1 days (%2) is %3's birthday.	addressbook	zh-tw	再 %1 天 (%2) 就是 %3 的生日。
 income	addressbook	zh-tw	收入
 infolog	addressbook	zh-tw	記事本

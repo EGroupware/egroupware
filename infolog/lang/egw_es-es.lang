@@ -202,7 +202,7 @@ high	infolog	es-es	alta
 history	infolog	es-es	Historial
 history logging	infolog	es-es	Registro histórico
 history logging and deleting of items	infolog	es-es	Registro histórico y borrado de elementos
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	es-es	Cuántas líneas de descripción deben estar visibles directamente. Las líneas siguientes se ven mediante una barra de desplazamiento.
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	es-es	Cuántas líneas de descripción deben estar visibles directamente. Las líneas siguientes se ven mediante una barra de desplazamiento.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	es-es	Ancho deseado del área de descripción. Este valor es numérico y se interpreta como em; 60 funciona razonablemente bien.
 html link to the current record	infolog	es-es	Enlace HTML al registro actual
 id	infolog	es-es	Id
@@ -213,7 +213,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	infolog	es-es	Si especifica una definición de exportación, se usará al exportar
 import next set	infolog	es-es	importar juego siguiente
 importance	infolog	es-es	Importancia
-imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	es-es	Importa entradas en el registro desde un fichero CSV. CSV significa 'Valores Separados por Comas'. Sin embargo, en la pestaña de opciones también puede elegir otros separadores.
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	es-es	Importa entradas en el registro desde un fichero CSV. CSV significa 'Valores Separados por Comas'. Sin embargo, en la pestaña de opciones también puede elegir otros separadores.
 info log	common	es-es	Registro de notas y tareas
 infolog	common	es-es	Registro de notas y tareas
 infolog - delete	infolog	es-es	Registro - Eliminar

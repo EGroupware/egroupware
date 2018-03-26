@@ -32,7 +32,7 @@ error deleting the entry!!!	timesheet	cs	Chyba při mazání záznamu!!!
 error saving the entry!!!	timesheet	cs	Chyba při ukládání záznamu!!!
 existing links	timesheet	cs	Stávající odkazy
 export to openoffice spreadsheet	timesheet	cs	Exportovat do formátu tabulky OpenOffice
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	cs	Exportuje záznamy z Vašeho Pracovního výkazu do CSV souboru. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	cs	Exportuje záznamy z Vašeho Pracovního výkazu do CSV souboru. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
 favorites	timesheet	cs	Oblíbené
 field must not be empty !!!	timesheet	cs	Položka nesmí být prázdná !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	cs	Pro hromadný dopis použijte tento štítek. Obsah, který chcete opakovat vložte mezi dva štítky.

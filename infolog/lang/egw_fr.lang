@@ -214,7 +214,7 @@ high	infolog	fr	Haut
 history	infolog	fr	Historique
 history logging	infolog	fr	Enregistrement de l'historique
 history logging and deleting of items	infolog	fr	Enregistrement de l'historique et suppression d'éléments
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	fr	Combien de lignes de descriptions devraient être directement visibles. Les lignes supplémentaires sont disponibles via une barre de défilement.
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	fr	Combien de lignes de descriptions devraient être directement visibles. Les lignes supplémentaires sont disponibles via une barre de défilement.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	fr	Quelle largeur devrait avoir la zone de description. Cette valeur est numérique, par ex 60.
 html link to the current record	infolog	fr	Lien HTML vers l'enregistrement courant
 id	infolog	fr	Id
@@ -226,7 +226,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	infolog	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 import next set	infolog	fr	importer l´élément suivant
 importance	infolog	fr	Importance
-imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	fr	Importe les entrées dans l'Infolog depuis un fichier CSV. CSV veut dire 'Valeurs Séparées par des Virgules". Dans l'onglet d'options, vous pouvez aussi choisir d'autres séparateurs.
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	fr	Importe les entrées dans l'Infolog depuis un fichier CSV. CSV veut dire 'Valeurs Séparées par des Virgules". Dans l'onglet d'options, vous pouvez aussi choisir d'autres séparateurs.
 imports todos into infolog from an ical file.	infolog	fr	Importer des tâches dans l'infolog depuis un fichier iCal.
 info log	common	fr	InfoLog
 infolog	common	fr	InfoLog

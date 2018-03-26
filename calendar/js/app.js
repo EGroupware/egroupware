@@ -1247,7 +1247,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		}
 		else if (content['recur_type'] !== 0)
 		{
-			et2_dialog.confirm(widget,'Delete this series of recuring events','Delete Series');
+			et2_dialog.confirm(widget,'Delete this series of recurring events','Delete Series');
 		}
 		else
 		{

@@ -84,14 +84,14 @@ delete series	calendar	ca	Esborrar sèries
 delete this alarm	calendar	ca	Esborra aquesta alarma
 delete this event	calendar	ca	Esborra aquesta cita
 delete this exception	calendar	ca	Esborra aquesta excepció
-delete this series of recuring events	calendar	ca	Esborra aquesta sèrie de cites recurrents
+delete this series of recurring events	calendar	ca	Esborra aquesta sèrie de cites recurrents
 deleted	calendar	ca	eliminat
-disinvited	calendar	ca	Desinvitat
+uninvited	calendar	ca	Desinvitat
 display status of events	calendar	ca	Mostrar estat de les cites
 displayed view	calendar	ca	vista mostrada
 do you want a weekview with or without weekend?	calendar	ca	Vols una vista setmanal amb o sense cap de setmana?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	ca	Voleu que us notifiquin les cites noves o modificades? Se us notificarà dels vostres propis canvis.<br>Podeu limitar les notificacions a només certs canvis. Cada element inclou tota la notificació llistada anteriorment. Totes les modificacions inclouen canvis de títol, participants, pero no les respostes dels participants. Si l'amo d'una cita demanà qualsevol notificació, sempre tindrà les respostes del participant, com les acceptacions o rebuigs.
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ca	Voleu rebre regularment per correu un resum de les vostres cites?<br>El resum s'enviarà al vostre correu electrònic habitual el mateix dia al matí o el dilluns per a resums setmanals.<br>Només s'envia si hi ha cites en aquest dia o setmana.
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ca	Voleu rebre regularment per correu un resum de les vostres cites?<br>El resum s'enviarà al vostre correu electrònic habitual el mateix dia al matí o el dilluns per a resums setmanals.<br>Només s'envia si hi ha cites en aquest dia o setmana.
 do you wish to autoload calendar holidays files dynamically?	admin	ca	Voleu carregar automàticament al calendari els arxius de festes?
 download	calendar	ca	Descarregar
 download this event as ical	calendar	ca	Descarrega aquesta cita com a iCal
@@ -100,7 +100,7 @@ duration of the meeting	calendar	ca	Durada de la trobada
 edit exception	calendar	ca	Edita excepció
 edit series	calendar	ca	Editar sèries
 edit this event	calendar	ca	Edita aquesta cita
-edit this series of recuring events	calendar	ca	Edita aquesta sèrie de cites recursives
+edit this series of recurring events	calendar	ca	Edita aquesta sèrie de cites recursives
 empty for all	calendar	ca	buit per a tots
 end	calendar	ca	Fi
 end date/time	calendar	ca	Data/Hora final
@@ -130,7 +130,7 @@ fieldseparator	calendar	ca	Separador de camps
 filemanager	calendar	ca	Administrador d'Arxius
 filename	calendar	ca	nom del fitxer
 filename of the download	calendar	ca	Nom del fitxer descarregat
-find free timeslots where the selected participants are availible for the given timespan	calendar	ca	Cerca intérvals de temps lliure en què els participants seleccionats estiguin disponibles per a la franja de temps donada
+find free timeslots where the selected participants are available for the given timespan	calendar	ca	Cerca intérvals de temps lliure en què els participants seleccionats estiguin disponibles per a la franja de temps donada
 firstname of person to notify	calendar	ca	Nom de pila de la persona a notificar
 for	calendar	ca	per
 for which views should calendar show distinct lines with a fixed time interval.	calendar	ca	Per quines vistes el calendari hauria de mostrar línies distintives per a intervals de temps fixats.
@@ -138,7 +138,7 @@ format of event updates	calendar	ca	Format de les actualitzacions de cites
 forward half a month	calendar	ca	endavant mig mes
 forward one month	calendar	ca	endavant un mes
 four days view	calendar	ca	Quatre dies vista
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	ca	lliure/ocupat: Usuari desconegut '%1', contrasenya incorrecta o no disponible als usuaris no registrats !!!
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	ca	lliure/ocupat: Usuari desconegut '%1', contrasenya incorrecta o no disponible als usuaris no registrats !!!
 freetime search	calendar	ca	Cerca d'hores lliures
 fri	calendar	ca	Dv
 full description	calendar	ca	Descripció completa
@@ -186,7 +186,7 @@ location	calendar	ca	Lloc
 location to autoload from	admin	ca	Lloc des d'on carregar automàticament
 location, start- and endtimes, ...	calendar	ca	Lloc, hores d'inici i fi,...
 mail all participants	calendar	ca	correu de tots els participants
-make freebusy information available to not loged in persons?	calendar	ca	Fer que la informació lliure/ocupat estigui disponible per a les persones no registrades?
+make freebusy information available to not logged in persons?	calendar	ca	Fer que la informació lliure/ocupat estigui disponible per a les persones no registrades?
 minutes	calendar	ca	minuts
 modified	calendar	ca	Modificat
 mon	calendar	ca	Dl
@@ -204,7 +204,7 @@ no response	calendar	ca	Sense resposta
 non blocking	calendar	ca	no blocant
 notification messages for added events	calendar	ca	Missatges de notificació per a cites afegides
 notification messages for canceled events	calendar	ca	Missatges de notificació per a cites cancel·lades
-notification messages for disinvited participants	calendar	ca	Missatges de notificació per a participants desconvidats
+notification messages for uninvited participants	calendar	ca	Missatges de notificació per a participants desconvidats
 notification messages for modified events	calendar	ca	Missatges de notificació per a cites modificades
 notification messages for your alarms	calendar	ca	Missatges de notificació per les vostres alarmes
 notification messages for your responses	calendar	ca	Missatges de notificació per les vostres respostes
@@ -215,17 +215,17 @@ old startdate	calendar	ca	Data d'inici anterior
 on %1 %2 %3 your meeting request for %4	calendar	ca	El %1 %2 %3 la vostra solicitut de reunió per %4
 on all modification, but responses	calendar	ca	en todes les modificacions, excepte les respostes
 on any time change too	calendar	ca	també en qualsevol canvi d'hora
-on invitation / cancelation only	calendar	ca	només en invitació / cancel·lació
+on invitation / cancellation only	calendar	ca	només en invitació / cancel·lació
 on participant responses too	calendar	ca	també en respostes dels participants
 on time change of more than 4 hours too	calendar	ca	també en un canvi d'hora superior a 4 hores
 one month	calendar	ca	un mes
 one week	calendar	ca	una setmana
 one year	calendar	ca	un any
-only the initial date of that recuring event is checked!	calendar	ca	Només s'ha comprovat la data inicial d'aquesta cita recursiva!
+only the initial date of that recurring event is checked!	calendar	ca	Només s'ha comprovat la data inicial d'aquesta cita recursiva!
 open todo's:	calendar	ca	Tasques pendents
 overlap holiday	calendar	ca	encavalcar festiu
 participants	calendar	ca	Participants
-participants disinvited from an event	calendar	ca	Participants desconvidats d'una cita
+participants uninvited from an event	calendar	ca	Participants desconvidats d'una cita
 participants, resources, ...	calendar	ca	Participants, recursos,...
 password for not loged in users to your freebusy information?	calendar	ca	Demanar contrasenya als usuaris no registrats a la informació lliure/ocupat?
 people holiday	calendar	ca	festa popular
@@ -270,7 +270,7 @@ set a year only for one-time / non-regular holidays.	calendar	ca	Establir l'any 
 set new events to private	calendar	ca	Establir noves cites com a privades
 should new events created as private by default ?	calendar	ca	Establir noves cites com a privades per defecte?
 should the planner display an empty row for users or categories without any appointment.	calendar	ca	El planificador hauria de mostrar una fila buida per usuaris o categories sense cap cita.
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	ca	S'ha de mostrar l'estat de cada cita (acceptar, rebutjar, etc) entre claudàtors[] darrere del nom de cada participant?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	ca	S'ha de mostrar l'estat de cada cita (acceptar, rebutjar, etc) entre claudàtors[] darrere del nom de cada participant?
 show default view on main screen	calendar	ca	Mostrar la vista predeterminada a la pantalla principal
 show empty rows in planner	calendar	ca	Mostra files buides al Planificador
 show list of upcoming events	calendar	ca	Mostrar la llista de properes cites
@@ -295,7 +295,7 @@ this defines the start of your dayview. events before this time, are shown above
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	ca	Aquest grup és el predeterminat en entrar al planificador. Podeu canviar-ho en el planificador quan volgueu.
 this message is sent for canceled or deleted events.	calendar	ca	Aquest missatge s'envia quan una cita s'esborra o es cancel·la.
 this message is sent for modified or moved events.	calendar	ca	Aquest missatge s'envia en modificar o moure cites.
-this message is sent to disinvited participants.	calendar	ca	Aquest missatge és enviat als participants desconvidats.
+this message is sent to uninvited participants.	calendar	ca	Aquest missatge és enviat als participants desconvidats.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	ca	Aquest missatge s'envia a cada participant de les cites de les que sou el propietari, qui ha demanat notificacions sobre noves cites.<br>Podeu usar certes variables a les que substitueixen les dades de la cita. La primera línia és l'assumpte del correu electrònic.
 this message is sent when you accept, tentative accept or reject an event.	calendar	ca	Aquest missatge s'envia quan accepteu, accepteu l'intent o rebutgeu una cita.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	ca	Aquest missatge s'envia quan establiu una alarma per una cita en concret. Incluiu tota la informació necessària.
@@ -332,13 +332,13 @@ work day ends on	calendar	ca	La jornada laboral acaba a les
 work day starts on	calendar	ca	La jornada laboral comença a les
 yearly	calendar	ca	Anual
 yearview	calendar	ca	Vista anual
-you can either set a year or a occurence, not both !!!	calendar	ca	Podeu indicar un any o una repetició, però no ambdós !!!
-you can only set a year or a occurence !!!	calendar	ca	Només podeu indicar un any o una repetició !!!
+you can either set a year or a occurrence, not both !!!	calendar	ca	Podeu indicar un any o una repetició, però no ambdós !!!
+you can only set a year or a occurrence !!!	calendar	ca	Només podeu indicar un any o una repetició !!!
 you do not have permission to read this record!	calendar	ca	No teniu permís per llegir aquest registre!
 you have a meeting scheduled for %1	calendar	ca	Teniu una reunió programada per %1
-you have been disinvited from the meeting at %1	calendar	ca	Has estat desconvidat de la trobada a %1
+you have been uninvited from the meeting at %1	calendar	ca	Has estat desconvidat de la trobada a %1
 you need to select an account, contact or resource first!	calendar	ca	Necessiteu seleccionar un compte, contacte o recurs primer!
 you need to select an ical file first	calendar	ca	Primer has de seleccionar un fitxer iCal
-you need to set either a day or a occurence !!!	calendar	ca	Heu d'establir un dia o una repetició !!!
+you need to set either a day or a occurrence !!!	calendar	ca	Heu d'establir un dia o una repetició !!!
 your meeting scheduled for %1 has been canceled	calendar	ca	S'ha cancel·lat la vostra reunió programada per %1
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	ca	La vostra reunió programada per %1 ha estat reprogramada a %2
