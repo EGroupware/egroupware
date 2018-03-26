@@ -585,7 +585,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				var end_key = end.getFullYear() +'-'+end.getMonth();
 				var year = start.getFullYear();
 				var month = start.getMonth();
-				while(key !== end_key)
+				while(key <= end_key)
 				{
 					if (++month > 11)
 					{
