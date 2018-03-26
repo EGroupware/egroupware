@@ -564,6 +564,7 @@ french southern territories	common	de	FRANZÖSISCHEN SÜD- und ANTARKTISGEBIETE
 friday	common	de	Freitag
 ftp	common	de	FTP
 fullname	common	de	Vor- und Nachname
+fullscreen	api	de	Vollbild
 fullscreen mode	common	de	Vollbild Modus
 gabon	common	de	GABUN
 gambia	common	de	GAMBIA
@@ -858,6 +859,7 @@ new egroupware release %1 available	common	de	Neues EGroupware Release %1 verfü
 new entry added sucessfully	common	de	Neuer Eintrag wurde erfolgreich hinzugefügt
 new favorite	common	de	Erstellen Sie hier einen neuen Favorit
 new main category	common	de	neue Hauptkategorie
+new password	api	de	Neues Passwort
 new search	common	de	Neue Suche
 new table created	common	de	Neue Tabelle erzeugt
 new value	common	de	Neuer Wert
@@ -991,6 +993,7 @@ philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
 pitcairn	common	de	PITCAIRN
 placeholders	common	de	Platzhalter
+play/pause	api	de	Abspielen/Pause
 please %1 by hand	common	de	Bitte %1 per Hand
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
@@ -1390,6 +1393,7 @@ version	common	de	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefüllt)
 vertical alignment of row	common	de	vertikale Ausrichtung der Zeile
 vfs upload directory	common	de	Dateimanager Upload Verzeichnis
+video tutorials	api	de	Video-Anleitungen
 viet nam	common	de	VIETNAM
 view	common	de	Anzeigen
 view linked %1 entries	common	de	Verknüpfte %1 Einträge anzeigen
