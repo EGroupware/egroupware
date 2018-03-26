@@ -47,7 +47,7 @@ deleted	calendar	hr	Obrisano
 display status of events	calendar	hr	Prikaži status obveza
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	hr	Da li želite biti obaviješteni o novim ili promijenjenim obvezama? Biti će te obaviješteni o promijenama kada ih sami napravite.<br>Obavijesti možete ograničiti na samo o određene promjene. Svaka obavijest uključuje događaje nabrojene gore. Sve promjene uključuju promjene naslova, opisa, sudionika, ali ne i odgovor sudionika. Ukoliko je vlasnik obveze zahtijevao neku obavijest, uvijek će dobiti sudionikov odgovor poput prihvata ali i odbijanja.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	hr	Da li želite biti obaviješteni o novim ili promijenjenim obvezama? Biti će te obaviješteni o promijenama kada ih sami napravite.<br>Obavijesti možete ograničiti na samo o određene promjene. Svaka obavijest uključuje događaje nabrojene gore. Sve promjene uključuju promjene naslova, opisa, sudionika, ali ne i odgovor sudionika. Ukoliko je vlasnik obveze zahtijevao neku obavijest, uvijek će dobiti sudionikov odgovor poput prihvata ali i odbijanja.
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	hr	Da li želite primati redoviti sažetak vaših obveza na vaš e-mail?<br>Sažetak će biti poslan na vašu e-mail adresu ujutro toga dana ili u ponedjeljak za tjedne sažetke.<br>Sažetak će biti poslan samo ako imate obvezu taj dan ili tjedan.
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	hr	Da li želite primati redoviti sažetak vaših obveza na vaš e-mail?<br>Sažetak će biti poslan na vašu e-mail adresu ujutro toga dana ili u ponedjeljak za tjedne sažetke.<br>Sažetak će biti poslan samo ako imate obvezu taj dan ili tjedan.
 do you wish to autoload calendar holidays files dynamically?	admin	hr	Da li želite dinamičko automatizirano punjenje datoteka za praznike?
 download	calendar	hr	Preuzmi sa poslužitelja
 duration	calendar	hr	Trajanje
@@ -65,7 +65,7 @@ fieldseparator	calendar	hr	Razmaknica polja
 filemanager	calendar	hr	Filemanager
 firstname of person to notify	calendar	hr	Ime osobe za obavijestiti
 format of event updates	calendar	hr	Ažuriranje formata ili događaja
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	hr	Obveze: Nepoznat korisnik '%1', pogrešna zaporka ili nije dostupno neprijavljenim korisnicima !!!
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	hr	Obveze: Nepoznat korisnik '%1', pogrešna zaporka ili nije dostupno neprijavljenim korisnicima !!!
 fri	calendar	hr	Pet
 full description	calendar	hr	Puni opis
 fullname of person to notify	calendar	hr	Puno ime osobe za obavijestiti
@@ -120,7 +120,7 @@ olddate	calendar	hr	Stari datum
 on %1 %2 %3 your meeting request for %4	calendar	hr	On %1 %2 %3 your meeting request for %4
 on all modification, but responses	calendar	hr	Za sve promjene, ali i odgovore
 on any time change too	calendar	hr	Za bilo koju promjenu vremena
-on invitation / cancelation only	calendar	hr	Samo za poziv / otkaz
+on invitation / cancellation only	calendar	hr	Samo za poziv / otkaz
 on participant responses too	calendar	hr	Prlikomi odgovora sudionika
 on time change of more than 4 hours too	calendar	hr	Prlikomi promjeei vremena više od 4 sata
 one month	calendar	hr	one month
@@ -154,7 +154,7 @@ scheduling conflict	calendar	hr	Sukob u rasporedu
 set a year only for one-time / non-regular holidays.	calendar	hr	Set a Year only for one-time / non-regular holidays.
 set new events to private	calendar	hr	Postavi nove događaju u privatno
 should new events created as private by default ?	calendar	hr	Trebaju li se nove obvezei postaviti kao privatne?
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	hr	Da li bi se status sudionika obveze (prihvaćen, odbijen, ...) trebao prikazati nakon imena sudionika u zagradama?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	hr	Da li bi se status sudionika obveze (prihvaćen, odbijen, ...) trebao prikazati nakon imena sudionika u zagradama?
 show default view on main screen	calendar	hr	Prikaži početno postavljeni prikaz na glavnom ekranu
 show list of upcoming events	calendar	hr	Prikaži listu dolazećih obvezama
 single event	calendar	hr	jedna obveza
@@ -194,10 +194,10 @@ work day ends on	calendar	hr	Radni dan završava u
 work day starts on	calendar	hr	Radni dan počinje u
 yearly	calendar	hr	Godišnje
 yearview	calendar	hr	Godišnji pregled
-you can either set a year or a occurence, not both !!!	calendar	hr	You can either set a Year or a Occurence, not both !!!
-you can only set a year or a occurence !!!	calendar	hr	You can only set a year or a occurence !!!
+you can either set a year or a occurrence, not both !!!	calendar	hr	you can either set a year or a occurrence, not both !!!
+you can only set a year or a occurrence !!!	calendar	hr	You can only set a year or a occurence !!!
 you do not have permission to read this record!	calendar	hr	Nemate dozvolu čitanja ovog zapisa
 you have a meeting scheduled for %1	calendar	hr	Imate sastanak na rasporedu za %1
-you need to set either a day or a occurence !!!	calendar	hr	You need to set either a day or a occurence !!!
+you need to set either a day or a occurrence !!!	calendar	hr	You need to set either a day or a occurence !!!
 your meeting scheduled for %1 has been canceled	calendar	hr	Vaš sastanak na rasporedu za %1 je otkazan
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	hr	Vaš sastanak zakazan za %1 je premiješten na %2

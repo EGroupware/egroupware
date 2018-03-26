@@ -220,7 +220,7 @@ high	infolog	it	Alta
 history	infolog	it	Storico
 history logging	infolog	it	Registrazione dello storico
 history logging and deleting of items	infolog	it	Registrazione dello storico e di eliminazione di schede
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	it	Quante righe di descrizione dovranno essere visibili direttamente. Righe ulteriori sono disponibili tramite una barra di scorrimento.
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	it	Quante righe di descrizione dovranno essere visibili direttamente. Righe ulteriori sono disponibili tramite una barra di scorrimento.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	it	Quanto deve essere larga l'area di descrizione. Valore numerico p.es. 60
 html link to the current record	infolog	it	Collegamento ipertestuale al record attuale
 id	infolog	it	ID
@@ -232,7 +232,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	infolog	it	Se viene specificata un formato di esportazione, verrà utilizzato quando esporterai.
 import next set	infolog	it	importa il prossimo set
 importance	infolog	it	Importanza
-imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	it	Importa le schede attività in un file CSV. Puoi selezionare separatori anche diversi dalla virgola nella scheda opzioni.
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	it	Importa le schede attività in un file CSV. Puoi selezionare separatori anche diversi dalla virgola nella scheda opzioni.
 imports todos into infolog from an ical file.	infolog	it	Importa i ToDo da Attività in un file iCal
 info log	common	it	Attività
 infolog	common	it	Attività

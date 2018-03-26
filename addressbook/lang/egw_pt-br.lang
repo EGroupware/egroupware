@@ -174,7 +174,7 @@ export file name	addressbook	pt-br	Exportar arquivo
 export from addressbook	addressbook	pt-br	Exportar Livro de Contatos
 export selection	addressbook	pt-br	Exportar seleção
 exported	addressbook	pt-br	exportado
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	pt-br	Exporta seu Livro de Contatos em um arquivo CSV. CSV significa 'Comma Seperated Values' (Valores Separados por Vírgula). No entando na guia Opções você também pode escolher outros separadores.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt-br	Exporta seu Livro de Contatos em um arquivo CSV. CSV significa 'Comma Seperated Values' (Valores Separados por Vírgula). No entando na guia Opções você também pode escolher outros separadores.
 extra	addressbook	pt-br	Extra
 extra encodings	addressbook	pt-br	Codificações extras
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pt-br	Falha ao alterar %1 membro(s) da organização (direitos insuficientes) !!!
@@ -225,7 +225,7 @@ import from outlook	addressbook	pt-br	Importar do Outlook
 import multiple vcard	addressbook	pt-br	Importar múltiplo VCard
 import next set	addressbook	pt-br	Importar próximo conjunto
 import_instructions	addressbook	pt-br	No Netscape, abra o Livro de Contatos e selecione <b>Exportar</b> do menu <b>Arquivo</b>. O arquivo exportado será do format LDIF.<p> Ou, no Outlook, selecione a sua pastas de contatos, selecione <b>Importar e Exportar...</b> do menu <b>Arquivo</b> e exporte seus contatos para um arquivo separado por vírgulas (CSV). Ou no Palmdesktop 4.0 ou superior, vá para seu Livro de Contatos e selecione <b>Exportar</b> do menu <b>Arquivo</b>. O arquivo exportado será do tipo VCard.
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	pt-br	Importa itens em sua lista de Contatos de um arquivo CVS. CVS significa 'Comma Separated Values' (Valores Separados por Vírgula). Na aba Opções, no entanto, você pode escolher outros separadores.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt-br	Importa itens em sua lista de Contatos de um arquivo CVS. CVS significa 'Comma Separated Values' (Valores Separados por Vírgula). Na aba Opções, no entanto, você pode escolher outros separadores.
 in %1 days (%2) is %3's birthday.	addressbook	pt-br	Em %1 dia(s) (%2) será aniversário de %3
 income	addressbook	pt-br	Renda
 infolog	addressbook	pt-br	Tarefas

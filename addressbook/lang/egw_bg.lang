@@ -166,7 +166,7 @@ export file name	addressbook	bg	Име на файла за експорт
 export from addressbook	addressbook	bg	Експорт от Адресния указател
 export selection	addressbook	bg	Експорт на избраните
 exported	addressbook	bg	експортиран(и)
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	bg	Експортира контактите от адресния Ви указател в CSV-файл (стойности, разделени със запетая). Чрез таб-а за опции може да изберете друг разделител.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	bg	Експортира контактите от адресния Ви указател в CSV-файл (стойности, разделени със запетая). Чрез таб-а за опции може да изберете друг разделител.
 extra	addressbook	bg	Допълнително
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	bg	Неуспешна промяна на %1 член(а) на организацията поради недостатъчни права !!!
 fax	addressbook	bg	Факс
@@ -210,7 +210,7 @@ import from outlook	addressbook	bg	Импорт от Outlook
 import multiple vcard	addressbook	bg	Импорт на множество VCard
 import next set	addressbook	bg	Импорт на следващ комплект
 import_instructions	addressbook	bg	В Netscape, отворете адресния указател (Addressbook) и изберете <b>Export</b> от меню <b>File</b>. Експортираният файл ще бъде в LDIF формат.<p>В Outlook, изберете папка Контакти (Contacts), изберете <b>Import and Export...</b> от меню <b>File</b> и експортирайте контактите в CSV файл. <p>На Palm Desktop 4.0 или по-нов, отворете адресния указател и изберете <b>Export</b> от меню <b>File</b>. Експортирания файл ще бъде във формат VCard.
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	bg	Импортира контакти в Адресния указател от CSV файл (стойности, разделени със запетая). От таб Опции може да изберете друг разделител.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	bg	Импортира контакти в Адресния указател от CSV файл (стойности, разделени със запетая). От таб Опции може да изберете друг разделител.
 in %1 days (%2) is %3's birthday.	addressbook	bg	Рожденият ден на %3 е след %1 дни (%2).
 income	addressbook	bg	Доход
 infolog	addressbook	bg	Дневник

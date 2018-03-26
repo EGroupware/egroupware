@@ -44,7 +44,7 @@ exists	timesheet	it	Esiste
 export definition to use for nextmatch export	timesheet	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
 export to openoffice spreadsheet	timesheet	it	Esporta in openoffice calc
 exports entries from your timesheet into a csv file.	timesheet	it	Esporta fogli ore in CSV
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	it	Esporta fogli ore in CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni è possibile scegliere altri separatori
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	it	Esporta fogli ore in CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni è possibile scegliere altri separatori
 favorites	timesheet	it	Preferiti
 field must not be empty !!!	timesheet	it	Il campo non può essere vuoto !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	it	Per una lettera seriale, utilizzare questo tag. Immettere il contenuto che si vuole ripetere tra due tag.

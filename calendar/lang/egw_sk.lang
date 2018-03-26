@@ -3,7 +3,7 @@
 %1 entries %2, %3 failed because of insufficent rights !!!	calendar	sk	%1 záznamov %2, %3 zlyhalo kvôli nedostatočným oprávneniam !!!
 %1 entries %2, %3 failed.	calendar	sk	%1 záznamov %2, %3 zlyhalo.
 %1 event(s) %2	calendar	sk	%1 udalost(i) %2
-%1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	sk	%1 udalost(i) %2, %3 zlyhalo kvôli nedostatočným oprávneniam !!!
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	sk	%1 udalost(i) %2, %3 zlyhalo kvôli nedostatočným oprávneniam !!!
 %1 events in ical file, only first one imported and displayed!	calendar	sk	%1 udalostí v súbore iCal, naimportovala a zobrazila sa len prvá!
 %1 hours	calendar	sk	%1 hodín
 %1 minutes	calendar	sk	%1 minút
@@ -157,7 +157,7 @@ default calendar filter	calendar	sk	Predvolený filter kalendára
 default calendar view	calendar	sk	Predvolený pohľad na kalendár
 default document to insert entries	calendar	sk	Predvolený dokument pre vloženie položiek
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	sk	Predvolená dĺžka novovytvorených udalostí, v minútach.
-default type of resources application selected in the calendar particpants research form.	calendar	sk	Predvolený typ aplikácie zdrojov vybraný vo vyhľadávacom okne účastníkov.
+default type of resources application selected in the calendar participants research form.	calendar	sk	Predvolený typ aplikácie zdrojov vybraný vo vyhľadávacom okne účastníkov.
 default type of resources selection	calendar	sk	Predvolený typ výberu zdrojov
 default week view	calendar	sk	Predvolený týždenný pohľad
 delegated	calendar	sk	Delegované
@@ -168,12 +168,12 @@ delete this alarm	calendar	sk	Odstrániť túto pripomienku
 delete this event	calendar	sk	Odstrániť túto udalosť
 delete this exception	calendar	sk	Odstrániť túto výnimku
 delete this recurrence	calendar	sk	Odstrániť toto opakovanie
-delete this series of recuring events	calendar	sk	Odstrániť túto sériu pravidelných udalostí
+delete this series of recurring events	calendar	sk	Odstrániť túto sériu pravidelných udalostí
 deleted	calendar	sk	Odstránené
-deny ressources reservation for private events	calendar	sk	Zakázať rezerváciu Zdrojov pre súkromné udalosti
+deny resources reservation for private events	calendar	sk	Zakázať rezerváciu Zdrojov pre súkromné udalosti
 description	calendar	sk	Popis
 directory with documents to insert entries	calendar	sk	Priečinok s dokumentami pre vloženie položiek
-disinvited	calendar	sk	Zrušená pozvánka
+uninvited	calendar	sk	Zrušená pozvánka
 display holidays or birthdays as events in dayview	calendar	sk	Zobraziť sviatky alebo narodeniny ako udalosti v dennom pohľade
 display in header	calendar	sk	Zobraziť v hlavičke
 display status of events	calendar	sk	Zobraziť stav udalostí
@@ -189,7 +189,7 @@ do you want to be notified about new or changed appointments? you are not notifi
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	sk	Chcete dostávať upozornenia na zmeny nových alebo zmenených udalostí? Budete upozorňovaní na zmeny, ktoré sami urobíte.<br>Upozornenia môžete obmedziť na niektoré vybrané zmeny. Každá položka obsahuje všetky upozornenia, ktoré sú nad ňou vymenované. Všetky úpravy zahŕňa: zmeny v titulku, opise, účastníkoch, ale bez odpovedí účastníkov. Ak si vlastník udalosti vyžiadal nejaké upozornenia, bude vždy dostávať odpovede účastníkov ako napríklad potvrdenia a odmietnutia účasti.
 do you want to edit this event as an exception or the whole series?	calendar	sk	Chcete upraviť túto udalosť ako výnimku alebo celú sériu?
 do you want to keep the series exceptions in your calendar?	calendar	sk	Chcete ponechať výnimky tejto série v kalendári?
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sk	Chcete dostávať E-mailom pravidelný súhrn vašich schôdzok?<br>Súhrn sa bude posielať na vašu bežnú adresu každé ráno, prípadne v pondelok pre týždenný súhrn.<br>Posiela sa len vtedy, ak máte plánované nejaké schôdzky na daný deň alebo týždeň.
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sk	Chcete dostávať E-mailom pravidelný súhrn vašich schôdzok?<br>Súhrn sa bude posielať na vašu bežnú adresu každé ráno, prípadne v pondelok pre týždenný súhrn.<br>Posiela sa len vtedy, ak máte plánované nejaké schôdzky na daný deň alebo týždeň.
 download	calendar	sk	Stiahnuť
 download this event as ical	calendar	sk	Stiahnuť túto udalosť ako iCal
 duration	calendar	sk	Trvanie
@@ -201,7 +201,7 @@ edit exception	calendar	sk	Upraviť výnimku
 edit series	calendar	sk	Upraviť sériu
 edit status or alarms for this particular day	calendar	sk	Upraviť stav alebo pripomienky pre tento konkrétny deň
 edit this event	calendar	sk	Upraviť túto udalosť
-edit this series of recuring events	calendar	sk	Upraviť túto sériu pravidelných udalostí
+edit this series of recurring events	calendar	sk	Upraviť túto sériu pravidelných udalostí
 empty = no alarm	calendar	sk	prázdne = bez pripomienky
 empty for all	calendar	sk	prázdne znamená všetko
 end	calendar	sk	Koniec
@@ -218,7 +218,7 @@ error: can't delete original series!	calendar	sk	Chyba: Nedá sa odstrániť ori
 error: duration of event longer then recurrence interval!	calendar	sk	Chyba: udalosť trvá dlhšie než je nastavený interval opakovania!
 error: importing the ical	calendar	sk	Chyba: import iCal-u
 error: no participants selected !!!	calendar	sk	Chyba: Neboli vybraní účastníci!!!
-error: ressources reservation in private events is not allowed!!!	calendar	sk	Chyba: rezervácia zdrojov nie je povolená pre súkromné udalosti!!!
+error: resources reservation in private events is not allowed!!!	calendar	sk	Chyba: rezervácia zdrojov nie je povolená pre súkromné udalosti!!!
 error: saving the event !!!	calendar	sk	Chyba: ukladanie udalosti!!!
 error: starttime has to be before the endtime !!!	calendar	sk	Chyba: Čas začiatku by mal byť PRED časom konca!!!
 error: the entry has been updated since you opened it for editing!	calendar	sk	Chyba: tento záznam bol aktualizovaný v čase, odkedy ho máte otvorený pre úpravy!
@@ -253,7 +253,7 @@ filemanager	calendar	sk	Správca súborov
 filename	calendar	sk	Názov súboru
 filename of the download	calendar	sk	Názov súboru na stiahnutie
 filter	calendar	sk	Filter
-find free timeslots where the selected participants are availible for the given timespan	calendar	sk	Nájsť voľné časové úseky, kde sú všetci uvedení účastníci voľní
+find free timeslots where the selected participants are available for the given timespan	calendar	sk	Nájsť voľné časové úseky, kde sú všetci uvedení účastníci voľní
 firstname of person to notify	calendar	sk	Krstné meno upozorňovanej osoby
 for	calendar	sk	pre
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	sk	Pre hromadný list použite túto značku. Obsah, ktorý chcete opakovať, vložte medzi značky.
@@ -265,8 +265,8 @@ forward one month	calendar	sk	dopredu o mesiac
 forward one year	calendar	sk	dopredu o rok
 four days view	calendar	sk	Štvordenný pohľad
 freebusy	common	sk	Zaneprázdnenosť
-freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	sk	Zaneprázdnenosť: Neznámy používateľ '%1', alebo nedostupné pre neoverených používateľov!
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	sk	Zaneprázdnenosť: Neznámy používateľ '%1', chybné heslo alebo funkcia nedostupná pre neprihlásených používateľov!
+freebusy: unknown user '%1', or not available for unauthenticated users!	calendar	sk	Zaneprázdnenosť: Neznámy používateľ '%1', alebo nedostupné pre neoverených používateľov!
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	sk	Zaneprázdnenosť: Neznámy používateľ '%1', chybné heslo alebo funkcia nedostupná pre neprihlásených používateľov!
 freetime	calendar	sk	Voľný čas
 freetime search	calendar	sk	Vyhľadanie voľného času
 fri	calendar	sk	Pi
@@ -285,7 +285,7 @@ group(s) or user(s) to show	calendar	sk	Skupina(y) alebo používateľ(ia) ktor�
 group(s) or user(s) whose calendars to show (if acl exists)	calendar	sk	Skupina(y) alebo používateľ(ia) ktorých kalendáre zobraziť (ak existuje ACL)
 groupmember(s) %1 not included, because you have no access.	calendar	sk	Členovia skupiny %1 neboli zahrnutí, pretože nemáte prístupové oprávnenia.
 groups	calendar	sk	Skupiny
-groups: other users can allways be invited, only groups require an invite grant	admin	sk	Skupiny: ostatní používatelia môžu byť vždy pozvaní, iba skupiny vyžadujú k pozývaniu povolenie.
+groups: other users can always be invited, only groups require an invite grant	admin	sk	Skupiny: ostatní používatelia môžu byť vždy pozvaní, iba skupiny vyžadujú k pozývaniu povolenie.
 h	calendar	sk	h
 here is your requested alarm.	calendar	sk	Toto je pripomienka, ktorú ste si vyžiadali.
 hide private events	calendar	sk	Skryť súkromné udalosti
@@ -302,10 +302,10 @@ how far to search (from startdate)	calendar	sk	ako ďaleko hľadať (od dátumu 
 how many appointments should non-admins be able to export	admin	sk	Koľko udalostí smú exportovať používatelia bez oprávnení správcu.
 how many days to sync in the future (default %1)	calendar	sk	Koľko dní do budúcnosti synchronizovať (predvolené %1)
 how many days to sync in the past (default %1)	calendar	sk	Koľko dní do minulosti synchronizovať (predvolené %1)
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	sk	Koľko riadkov popisu má byť priamo viditeľných. Ďalšie riadky sú dostupné cez skrolovacie tlačítko.
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	sk	Koľko riadkov popisu má byť priamo viditeľných. Ďalšie riadky sú dostupné cez skrolovacie tlačítko.
 how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	sk	Koľko riadkov celodenných udalostí má byť priamo viditeľných. Ďalšie riadky sú dostupné cez namierenie myši.
 how many minutes should each interval last?	calendar	sk	Koľko minút má trvať každý interval?
-how many seperate calendars to show before merging them together	calendar	sk	Koľko samostatných kalendárov zobraziť než sa zlúčia dohromady
+how many separate calendars to show before merging them together	calendar	sk	Koľko samostatných kalendárov zobraziť než sa zlúčia dohromady
 how many weeks should the multiple week view show?	calendar	sk	Koľko týždňov sa má zobraziť v pohľade viacerých týždňov?
 how much entries to skip	calendar	sk	Koľko položiek preskočiť?
 html link to the current record	calendar	sk	HTML odkaz na aktuálny záznam
@@ -325,7 +325,7 @@ if you specify an export definition, it will be used when you export	calendar	sk
 ignore conflict	calendar	sk	Ignorovať konflikt
 import	calendar	sk	Import
 import csv-file	common	sk	Importovať CSV súbor
-imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	sk	Importuje udalosti do vášho Kalendára zo súboru CSV. CSV znamená 'Comma Separated Values' čiže čiarkami oddelené hodnoty. Avšak v karte možností si môžete vybrať aj iné oddeľovače.
+imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	sk	Importuje udalosti do vášho Kalendára zo súboru CSV. CSV znamená 'Comma Separated Values' čiže čiarkami oddelené hodnoty. Avšak v karte možností si môžete vybrať aj iné oddeľovače.
 imports events into your calendar from an ical file.	calendar	sk	Naimportuje udalosti zo súboru iCal do vášho kalendára.
 initially year aligned	calendar	sk	pôvodne zarovnané podľa roku
 insert	calendar	sk	Vložiť
@@ -359,7 +359,7 @@ location	calendar	sk	Miesto konania
 location, start- and endtimes, ...	calendar	sk	Miesto konania, časy začiatku a konca,...
 low	calendar	sk	Nízka
 mail all participants	calendar	sk	Oboslať všetkých účastníkov
-make freebusy information available to not loged in persons?	calendar	sk	Sprístupniť informácie o zaneprázdnení všetkým, aj neprihláseným osobám?
+make freebusy information available to not logged in persons?	calendar	sk	Sprístupniť informácie o zaneprázdnení všetkým, aj neprihláseným osobám?
 manage mapping	calendar	sk	Správa mapovania
 mark event as private to hide title and description	calendar	sk	Označenie udalosti ako súkromnú skryje titulok a popis
 max. number of entries to show (leave empty for no restriction)	calendar	sk	Maximálny počet položiek, ktorý sa má zobraziť (ak nechcete obmedziť, ponechajte prázdne)
@@ -412,7 +412,7 @@ not rejected	calendar	sk	Neodmietnuté
 nothing to update, version is already %1.	calendar	sk	Niet čo aktualizovať, verzia už je %1.
 notification messages for added events	calendar	sk	Tvar správy pre nové udalosti
 notification messages for canceled events	calendar	sk	Tvar správy pri zrušení udalosti
-notification messages for disinvited participants	calendar	sk	Tvar správy pre účastníkov so zrušením pozvánky
+notification messages for uninvited participants	calendar	sk	Tvar správy pre účastníkov so zrušením pozvánky
 notification messages for modified events	calendar	sk	Tvar správy pri zmene udalosti
 notification messages for your alarms	calendar	sk	Tvar správy pripomienky udalosti
 notification messages for your responses	calendar	sk	Tvar správy pre Vaše odpovede
@@ -428,7 +428,7 @@ olddate	calendar	sk	Pôvodný dátum
 on %1 %2 %3 your meeting request for %4	calendar	sk	%1 %2 %3 vašu požiadavku na stretnutie plánované na %4
 on all modification, but responses	calendar	sk	Pri všetkých zmenách okrem odpovedí
 on any time change too	calendar	sk	Aj pri akejkoľvek zmene času
-on invitation / cancelation only	calendar	sk	Len pri pozvaní / zrušení
+on invitation / cancellation only	calendar	sk	Len pri pozvaní / zrušení
 on participant responses too	calendar	sk	Aj pri odpovediach účastníkov
 on time change of more than 4 hours too	calendar	sk	Aj pri zmene času o viac než 4 hodiny
 one month	calendar	sk	jeden mesiac
@@ -437,7 +437,7 @@ one year	calendar	sk	jeden rok
 only group-events	calendar	sk	Iba skupinové udalosti
 only recurrences until %1 (excluding) have been checked!	calendar	sk	Boli ozčené len opakovania po %1 (okrem)!
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	sk	Podporované len plne kompatibilnými klientami (napr. od Apple). Ak musíte zadávať URL, pravdepodobne k nim Váš klient nepatrí!
-only the initial date of that recuring event is checked!	calendar	sk	Kontroluje sa iba úvodný dátum tejto pravidelnej udalosti!
+only the initial date of that recurring event is checked!	calendar	sk	Kontroluje sa iba úvodný dátum tejto pravidelnej udalosti!
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	sk	Použije sa len pre prvý pohľad na Kalendár, potom sa už používa naposledy použitý pohľad.
 open todo's:	calendar	sk	Otvorené Úlohy:
 optional	calendar	sk	Voliteľné
@@ -447,7 +447,7 @@ owner too	calendar	sk	Vrátane vlastníka
 participant table	calendar	sk	Tabuľka účastníkov
 participants	calendar	sk	Účastníci
 participants automatically added to new events	calendar	sk	Účastníci automaticky pridaní k novým udalostiam
-participants disinvited from an event	calendar	sk	Pre účastníkov je pozvánka zrušená
+participants uninvited from an event	calendar	sk	Pre účastníkov je pozvánka zrušená
 participants, resources, ...	calendar	sk	Účastníci, Zdroje,...
 password for not loged in users to your freebusy information?	calendar	sk	Prístupové heslo k informáciám o zaneprázdnení pre neprihlásené osoby..?
 paste	calendar	sk	Prilepiť
@@ -522,7 +522,7 @@ select an action...	calendar	sk	Vyberte akciu...
 select multiple contacts for a further action	calendar	sk	Vyberte viacero kontaktov pre budúcu akciu
 select one	calendar	sk	Vyberte jeden
 select resources	calendar	sk	Vybrať zdroje
-select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	sk	Vyberte si, či sa pri posune udalosti má vynulovať stanovisko účastníkov na neznáme.
+select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	sk	Vyberte si, či sa pri posune udalosti má vynulovať stanovisko účastníkov na neznáme.
 select who should get the alarm	calendar	sk	Vybrať kto dostane pripomienku
 selected range	calendar	sk	Vybraný rozsah
 selected users/groups	calendar	sk	Vybraní používatelia/skupiny
@@ -538,7 +538,7 @@ should the grid be shown in the calendar	calendar	sk	Chcete mať v kalendári zo
 should the number of weeks be shown on top of the calendar	calendar	sk	Chcete, aby sa čísla týždňov zobrazovali navrchu kalendára
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	sk	Chcete, aby sa čísla týždňov zobrazovali navrchu kalendára (iba ak posun = 0)
 should the planner display an empty row for users or categories without any appointment.	calendar	sk	Chcete, aby plánovač zobrazoval prázdny riadok pri používateľoch, ktorí nemajú žiadnu udalosť?
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	sk	Má se za menom používateľa zobrazovať jeho vzťah k udalosti (prijal, odmietol, ...)?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	sk	Má se za menom používateľa zobrazovať jeho vzťah k udalosti (prijal, odmietol, ...)?
 show a calendar title	calendar	sk	Zobraziť titulok kalendára
 show all events, as if they were private	calendar	sk	Zobraziť všetky udalosti tak, ako keby boli všetky súkromné
 show all status incl. rejected events	calendar	sk	Zobraziť všetky stavy vrátane odmietnutých udalostí
@@ -607,7 +607,7 @@ this mail contains a meeting request	calendar	sk	Táto správa obsahuje požiada
 this mail contains a reply to a meeting request	calendar	sk	Táto sprá obsahuje odpoveď na požiadavku na stretnutie
 this message is sent for canceled or deleted events.	calendar	sk	Táto správa se posiela pri zrušení či odstránení udalostí.
 this message is sent for modified or moved events.	calendar	sk	Táto správa sa posiela pri zmene či presune udalostí.
-this message is sent to disinvited participants.	calendar	sk	Táto správa sa posiela účastníkom pri zrušení pozvánky.
+this message is sent to uninvited participants.	calendar	sk	Táto správa sa posiela účastníkom pri zrušení pozvánky.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	sk	Táto správa sa posiela všetkým účastníkom Vášho stretnutia, ktorí požiadali o zasielanie pripomienok o nových udalostiach<br>Môžete použiť rôzné premenné, ktoré budú nahradené skutočnými údajmi o udalosti.<br>Prvý riadok je predmet správy.
 this message is sent when you accept, tentative accept or reject an event.	calendar	sk	Táto správa se posiela vtedy, keď prijmete, predbežne prijmete či odmietnete udalosť (stretnutie).
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	sk	Táto správa se posiela vtedy, keď je nastavená pripomienka nejakej udalosti. Uveďte všetky údaje ktoré môžete potrebovať.
@@ -658,7 +658,7 @@ user	calendar	sk	Používateľ
 user or group	calendar	sk	Používateľ alebo skupina
 user selectable css file for the calendar setup	calendar	sk	Používateľom vyberateľný CSS súbor pre nastavenie kalendára
 username	calendar	sk	Používateľské meno
-users + groups: inviting both allways requires an invite grant	admin	sk	Používatelia + skupiny: pre pozývanie oboch sa vždy vyžaduje pozývacie oprávnenie
+users + groups: inviting both always requires an invite grant	admin	sk	Používatelia + skupiny: pre pozývanie oboch sa vždy vyžaduje pozývacie oprávnenie
 using already existing event on server.	calendar	sk	Používam už existujúcu udalosť na serveri.
 vfs file not found	calendar	sk	VFS súbor sa nenašiel
 view	calendar	sk	Pohľad
@@ -702,16 +702,16 @@ you already replied to this invitation with	calendar	sk	Na toto pozvanie ste už
 you are not allowed to book the resource selected:	calendar	sk	Nemáte dovolené rezervovať tento zdroj:
 you are not invited to that event!	calendar	sk	K tejto udalosti nie ste pozvaní!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	sk	Pokúšate sa e-mailovať žiadosť o stretnutie vyššieuvedeným adresátom. V závislosti od vášho poštového klienta ktorým otvárate súrávu, adresát môže ale nemusí vidieť nižšieuvedenú správu; možno uvidí len žiadosť o stretnutie v prílohe.
-you can either set a year or a occurence, not both !!!	calendar	sk	Môžete zadať buď rok, alebo výskyt, ale nie obidvoje !!!
-you can only set a year or a occurence !!!	calendar	sk	Môžete zadať buď rok alebo výskyt, ale nie obidvoje!!!
+you can either set a year or a occurrence, not both !!!	calendar	sk	Môžete zadať buď rok, alebo výskyt, ale nie obidvoje !!!
+you can only set a year or a occurrence !!!	calendar	sk	Môžete zadať buď rok alebo výskyt, ale nie obidvoje!!!
 you do not have permission to read this record!	calendar	sk	Nemáte právo čítať tento záznam!
 you have a meeting scheduled for %1	calendar	sk	Máte naplánované stretnutie na %1
-you have been disinvited from the meeting at %1	calendar	sk	Vaše pozvanie na stretnutie o %1 bolo zrušené
+you have been uninvited from the meeting at %1	calendar	sk	Vaše pozvanie na stretnutie o %1 bolo zrušené
 you need to select an account, contact or resource first!	calendar	sk	Najprv treba vybrať účet, kontakt alebo zdroj!
 you need to select an ical file first	calendar	sk	Najprv treba vybrať súbor iCal.
 you need to select some entries first	calendar	sk	Najprv treba vybrať niektoré udalosti
 you need to select some events first	calendar	sk	Najprv treba vybrať niektoré udalosti.
-you need to set either a day or a occurence !!!	calendar	sk	Musíte nastaviť buď deň alebo výskyt!!!
+you need to set either a day or a occurrence !!!	calendar	sk	Musíte nastaviť buď deň alebo výskyt!!!
 you requested more than available for the selected resource:	calendar	sk	Požadujete z vybraného zdroja viac, než je k dispozícii:
 your meeting scheduled for %1 has been canceled	calendar	sk	Stretnutie, ktoré bolo naplánované na %1, bolo zrušené
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	sk	Stretnutie, pôvodne plánované na %1, bolo preložené na %2.

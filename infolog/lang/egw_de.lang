@@ -222,7 +222,7 @@ high	infolog	de	hoch
 history	infolog	de	Historie
 history logging	infolog	de	Protokollierung der Historie
 history logging and deleting of items	infolog	de	Protokollierung der Historie und löschen von Einträgen
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein. Zusätzliche Zeilen können über einen Rollbalken erreicht werden
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein. Zusätzliche Zeilen können über einen Rollbalken erreicht werden
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	de	Wie breit darf das Beschreibungsfeld sein. Sie können hier einen nummerischen Wert eintragen
 html link to the current record	infolog	de	HTML-Link zum aktuellen Datensatz
 id	infolog	de	ID
@@ -234,7 +234,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	infolog	de	Wählen Sie eine Export-Definition für den Export
 import next set	infolog	de	Nächsten Satz importieren
 importance	infolog	de	Wichtigkeit
-imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	de	Importiert Einträge in das Infolog Modul aus einer CSV Datei (Komma getrennte Werte).
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	de	Importiert Einträge in das Infolog Modul aus einer CSV Datei (Komma getrennte Werte).
 imports todos into infolog from an ical file.	infolog	de	Import von Aufgaben (TODOs) aus einer iCal Datei in das Infolog Modul
 info log	common	de	InfoLog
 infolog	common	de	InfoLog

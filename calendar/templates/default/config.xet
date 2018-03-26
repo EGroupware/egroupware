@@ -21,7 +21,7 @@
 					<textbox id="newsettings[Lock_Time_Calender]" size="40"/>
 				</row>
 				<row>
-					<description value="Deny Ressources reservation for private events" label="%s:"/>
+					<description value="Deny Resources reservation for private events" label="%s:"/>
 					<select id="newsettings[no_ressources_private]">
 						<option value="">No</option>
 						<option value="yes">Yes</option>
@@ -31,8 +31,8 @@
 					<description value="Require an ACL grant to invite other users and groups" label="%s:"/>
 					<select id="newsettings[require_acl_invite]">
 						<option value="">{No}: {Every user can invite other users and groups}</option>
-						<option value="groups">Groups: other users can allways be invited, only groups require an invite grant</option>
-						<option value="all">Users + groups: inviting both allways requires an invite grant</option>
+						<option value="groups">Groups: other users can always be invited, only groups require an invite grant</option>
+						<option value="all">Users + groups: inviting both always requires an invite grant</option>
 					</select>
 				</row>
 				<row>

@@ -44,7 +44,7 @@ exists	timesheet	ru	Существует
 export definition to use for nextmatch export	timesheet	ru	Определение экспорта для последующего использования
 export to openoffice spreadsheet	timesheet	ru	Экспорт в электронную таблицу OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	ru	Экспортирует записи Табеля в файл формата CSV
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	ru	Экспортирует записи в файл CSV. CSV означает 'Значения, Разделенные Запятыми'. Однако, в закладке опции вы можете также выбрать другие разделители.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ru	Экспортирует записи в файл CSV. CSV означает 'Значения, Разделенные Запятыми'. Однако, в закладке опции вы можете также выбрать другие разделители.
 favorites	timesheet	ru	Избранное
 field must not be empty !!!	timesheet	ru	Поле не должно быть пустым !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	ru	Для серии писем используйте этот тэг. Поместите содержимое, которое нужно повторить, между двумя тэгами.

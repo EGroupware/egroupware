@@ -2318,7 +2318,7 @@ class calendar_uiforms extends calendar_ui
 
 		if ($content['recur_type'])
 		{
-			$content['msg'] .= lang('Only the initial date of that recuring event is checked!');
+			$content['msg'] .= lang('Only the initial date of that recurring event is checked!');
 		}
 		$content['freetime'] = $this->freetime($content['participants'],$content['start'],$content['start']+$content['search_window'],$content['duration'],$content['cal_id']);
 		$content['freetime'] = $this->split_freetime_daywise($content['freetime'],$content['duration'],(is_array($content['weekdays'])?$weekds:$content['weekdays']),$sTime,$eTime,$sel_options);

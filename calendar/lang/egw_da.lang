@@ -75,14 +75,14 @@ delete series	calendar	da	Slet rækker
 delete this alarm	calendar	da	Slet denne alarm
 delete this event	calendar	da	Slet denne aftale
 delete this exception	calendar	da	Slet denne undtagelse
-delete this series of recuring events	calendar	da	Slet denne række af gentagne aftaler
+delete this series of recurring events	calendar	da	Slet denne række af gentagne aftaler
 deleted	calendar	da	slettet
-disinvited	calendar	da	Uinviteret
+uninvited	calendar	da	Uinviteret
 display status of events	calendar	da	Vis status på aftaler
 displayed view	calendar	da	øjeblikkeligt view
 do you want a weekview with or without weekend?	calendar	da	Ønsker du uge-view med eller uden week-end?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	da	Vil du påmindes om nye eller ændrede aftaler? Vil du påmindes omkring ændringer du selv har lavet.<br>Du kan begrænse påmindelser til bestemte ændringer. Hvert punkt indeholder alle påmindelser listet ovenfor. Alle ændringer inkluderer ændringer af titel, beskrivelse, deltagere, men ikke deltagernes svar. Hvis ejeren af en hændelse har anmodet om påmindelse, vil han også altid modtage deltagerens svar, såsom accepteret og ikke accepteret.
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	da	Vil du modtage en reglmæssig opsummering af dine aftaler via e-mail?<br>Opsummeringen bliver sendt til din standard e-mail addresse om morgenen på dagen eller mandag for ugenligt opsummering.<br>Den bliver kun sendt hvis du har aftaler på dagen eller ugen.
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	da	Vil du modtage en reglmæssig opsummering af dine aftaler via e-mail?<br>Opsummeringen bliver sendt til din standard e-mail addresse om morgenen på dagen eller mandag for ugenligt opsummering.<br>Den bliver kun sendt hvis du har aftaler på dagen eller ugen.
 do you wish to autoload calendar holidays files dynamically?	admin	da	Ønsker du automatisk at få hentet helligdagsfiler?
 download	calendar	da	Hent
 download this event as ical	calendar	da	Download denne aftale som iCal
@@ -91,7 +91,7 @@ duration of the meeting	calendar	da	Længde af møde
 edit exception	calendar	da	Rediger undtagelse
 edit series	calendar	da	Rediger rækker
 edit this event	calendar	da	Rediger denne aftale
-edit this series of recuring events	calendar	da	Rediger denne række af gentagne aftaler
+edit this series of recurring events	calendar	da	Rediger denne række af gentagne aftaler
 empty for all	calendar	da	tøm for alle
 end	calendar	da	Slut
 end date/time	calendar	da	Slut Dato/Tid
@@ -119,7 +119,7 @@ fieldseparator	calendar	da	Felt separator
 filemanager	calendar	da	Filhåndtering
 filename	calendar	da	Filnavn
 filename of the download	calendar	da	Downloaden's filnavn
-find free timeslots where the selected participants are availible for the given timespan	calendar	da	Find 'frie' tidspunkter, hvor de valgte deltagere kan deltage
+find free timeslots where the selected participants are available for the given timespan	calendar	da	Find 'frie' tidspunkter, hvor de valgte deltagere kan deltage
 firstname of person to notify	calendar	da	Fornavn på personen som skal have besked
 for	calendar	da	for
 for which views should calendar show distinct lines with a fixed time interval.	calendar	da	For hvilke views skal der i kalenderen vises adskilte linier med fast tids interval.
@@ -127,7 +127,7 @@ format of event updates	calendar	da	Formatet på hændelses opdateringer
 forward half a month	calendar	da	halv måned fremad
 forward one month	calendar	da	hel måned fremad
 four days view	calendar	da	Fire-dages view
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	da	fri/optaget: Ukendt bruger ´%1´, forkert adgangskode eller ikke tilgængelig for bruger der ikke er logget ind!!!
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	da	fri/optaget: Ukendt bruger ´%1´, forkert adgangskode eller ikke tilgængelig for bruger der ikke er logget ind!!!
 freetime search	calendar	da	Søg ledig tid
 fri	calendar	da	Fri
 full description	calendar	da	Fuld beskrivelse
@@ -175,7 +175,7 @@ location	calendar	da	Sted
 location to autoload from	admin	da	Sted der automatisk skal hentes fra
 location, start- and endtimes, ...	calendar	da	Lokation, start- og sluttider,...
 mail all participants	calendar	da	E-mail alle deltagere
-make freebusy information available to not loged in persons?	calendar	da	Gør fri/optaget information tilgængelig for ikke-indloggede personer?
+make freebusy information available to not logged in persons?	calendar	da	Gør fri/optaget information tilgængelig for ikke-indloggede personer?
 minutes	calendar	da	Minutter
 modified	calendar	da	Modificeret
 mon	calendar	da	Man
@@ -194,7 +194,7 @@ non blocking	calendar	da	ikke-optaget
 not	calendar	da	ikke
 notification messages for added events	calendar	da	Påmindelses besked for nye hændelser
 notification messages for canceled events	calendar	da	Påmindelses besked for annulleret hændelser
-notification messages for disinvited participants	calendar	da	Påmindelses besked for ikke-inviterede deltagere
+notification messages for uninvited participants	calendar	da	Påmindelses besked for ikke-inviterede deltagere
 notification messages for modified events	calendar	da	Påmindelses besked for ændrede hændelser
 notification messages for your alarms	calendar	da	Påmindelses besked for dine alarmer
 notification messages for your responses	calendar	da	Påmindelses besked for dine besvarelser
@@ -205,17 +205,17 @@ old startdate	calendar	da	Gammel startdato
 on %1 %2 %3 your meeting request for %4	calendar	da	Ved %1 %2 %3 dit møde efterspørgelse for %4
 on all modification, but responses	calendar	da	ved alle ændringer undtagen svar
 on any time change too	calendar	da	også ved ændring af tidspunktet
-on invitation / cancelation only	calendar	da	kun ved invitation / annullering
+on invitation / cancellation only	calendar	da	kun ved invitation / annullering
 on participant responses too	calendar	da	også ved deltager svar
 on time change of more than 4 hours too	calendar	da	også når tiden ændres mere end 4 timer
 one month	calendar	da	en måned
 one week	calendar	da	en uge
 one year	calendar	da	et år
-only the initial date of that recuring event is checked!	calendar	da	Kun den initielle dato af den gentagne aftale er checket!
+only the initial date of that recurring event is checked!	calendar	da	Kun den initielle dato af den gentagne aftale er checket!
 open todo's:	calendar	da	Åben Opgave:
 overlap holiday	calendar	da	overlap helligdag
 participants	calendar	da	Deltagere
-participants disinvited from an event	calendar	da	Deltagere, af-inviteret fra en aftale
+participants uninvited from an event	calendar	da	Deltagere, af-inviteret fra en aftale
 participants, resources, ...	calendar	da	Deltagere, Resourcer, ...
 password for not loged in users to your freebusy information?	calendar	da	Adgangskode for brugere der ikke er logget ind, der skal kunne se din fri/optaget, information?
 permission denied	calendar	da	Adgang nægtet
@@ -254,7 +254,7 @@ select who should get the alarm	calendar	da	Vælg hvem der skal have sat alarm
 set a year only for one-time / non-regular holidays.	calendar	da	Sæt et årstal, kun for engangs /ikke standard helligedage
 set new events to private	calendar	da	Marker nye aftaler som private
 should new events created as private by default ?	calendar	da	Skal nye aftaler markeres private som standard?
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	da	Skal status for deltagere (accepteret, forkastet...) vises i parentes efter hver deltagers navn?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	da	Skal status for deltagere (accepteret, forkastet...) vises i parentes efter hver deltagers navn?
 show default view on main screen	calendar	da	Vis standard visning på forsiden
 show list of upcoming events	calendar	da	vis liste over kommende aftaler
 show this month	calendar	da	vis denne måned
@@ -278,7 +278,7 @@ this defines the start of your dayview. events before this time, are shown above
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	da	Denne gruppe bliver automatisk valgt, når du er i planlæggeren. Du kan ændre det i planlæggeren når som helst.
 this message is sent for canceled or deleted events.	calendar	da	Denne besked bliver sendt, når en aftale bliver annulleret eller slettet.
 this message is sent for modified or moved events.	calendar	da	Denne besked bliver sendt, hvis en aftale bliver flyttet eller ændret.
-this message is sent to disinvited participants.	calendar	da	Denne meddelelse er sendt til af-inviterede
+this message is sent to uninvited participants.	calendar	da	Denne meddelelse er sendt til af-inviterede
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	da	Denne besked er sendt til alle deltagere af aftalen som du ejer, som har anmodet om påmindelse af nye aftaler.<br>Du kan bruge visse variabler, som bliver erstattet af informationen i aftalen. Den første linie er emne linien i e-mailen.
 this message is sent when you accept, tentative accept or reject an event.	calendar	da	Denne besked bliver sendt når du accepterer, delvist accepterer eller forkaster en aftale.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	da	Denne besked bliver sendt til dig når der er en alarm for en hændelse. Inklusiv den information du behøver.
@@ -313,12 +313,12 @@ work day ends on	calendar	da	arbejdsdage slutter om
 work day starts on	calendar	da	arbejdsdage begynder om
 yearly	calendar	da	Årlig
 yearview	calendar	da	årlig visning
-you can either set a year or a occurence, not both !!!	calendar	da	Du kan enten sætte den til År eller en hændelse, men ikke begge!!!
-you can only set a year or a occurence !!!	calendar	da	Du kan kun sætte et år eller hændelse!!!
+you can either set a year or a occurrence, not both !!!	calendar	da	Du kan enten sætte den til År eller en hændelse, men ikke begge!!!
+you can only set a year or a occurrence !!!	calendar	da	Du kan kun sætte et år eller hændelse!!!
 you do not have permission to read this record!	calendar	da	Du har ikke rettigheder til at læse denne postering!
 you have a meeting scheduled for %1	calendar	da	Du har et møde planglagt d. (%1)
-you have been disinvited from the meeting at %1	calendar	da	Du er blevet fravalgt fra mødet : %1
+you have been uninvited from the meeting at %1	calendar	da	Du er blevet fravalgt fra mødet : %1
 you need to select an ical file first	calendar	da	Du skal først vælge en iCAl
-you need to set either a day or a occurence !!!	calendar	da	Du skal vælge en dag eller en hændelse !!!!
+you need to set either a day or a occurrence !!!	calendar	da	Du skal vælge en dag eller en hændelse !!!!
 your meeting scheduled for %1 has been canceled	calendar	da	Dit møde planlagt til %1 er blevet annulleret
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	da	Dit møde der var planlagt d. %1 er blevet flyttet til %2

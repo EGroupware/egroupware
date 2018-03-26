@@ -222,7 +222,7 @@ high	infolog	en	High
 history	infolog	en	History
 history logging	infolog	en	History logging
 history logging and deleting of items	infolog	en	History logging and deleting of items
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	en	How many description lines should be directly visible. Further lines are available via a scroll bar.
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	en	How many description lines should be directly visible. Further lines are available via a scroll bar.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	en	How wide should the description area be. This value is numeric e.g. 60.
 html link to the current record	infolog	en	HTML link to the current record
 id	infolog	en	ID
@@ -234,7 +234,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	infolog	en	If you specify an export definition, it will be used when you export
 import next set	infolog	en	Import next set
 importance	infolog	en	Importance
-imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	en	Imports entries into the InfoLog from a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	en	Imports entries into the InfoLog from a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
 imports todos into infolog from an ical file.	infolog	en	Imports TODOs into Infolog from an iCal File.
 info log	common	en	InfoLog
 infolog	common	en	InfoLog

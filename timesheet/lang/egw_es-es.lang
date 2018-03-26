@@ -42,7 +42,7 @@ existing links	timesheet	es-es	Enlaces existentes
 exists	timesheet	es-es	Existe
 export definition to use for nextmatch export	timesheet	es-es	Exportar la definición a usar para exportar nextmatch
 export to openoffice spreadsheet	timesheet	es-es	Exportar a hoja de cálculo de OpenOffice
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	es-es	Exporta entradas desde la hoja de tiempos en un fichero CSV (valores separados por comas). Sin embargo, también se pueden elegir otros separadores en la pestaña de opciones.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	es-es	Exporta entradas desde la hoja de tiempos en un fichero CSV (valores separados por comas). Sin embargo, también se pueden elegir otros separadores en la pestaña de opciones.
 favorites	timesheet	es-es	Favoritos
 field must not be empty !!!	timesheet	es-es	¡El campo no debe estar vacío!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	es-es	Para carta de serie use esta etiqueta. Ponga el contenido que quiera repetir entre dos etiquetas.

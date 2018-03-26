@@ -192,7 +192,7 @@ export file name	addressbook	sl	Ime izvožene datoteke
 export from addressbook	addressbook	sl	Izvoz iz adresarja
 export selection	addressbook	sl	Izvozi izbor
 exported	addressbook	sl	Izvoženo
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	sl	Izvozi stike iz vašega adresarja v datoteko CSV. CSV pomeni 'Comma Seperated Values' (vrednosti, ločene z vejico). Na zavihku možnosti pa lahko za ločilo polj izberete drugi znak.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sl	Izvozi stike iz vašega adresarja v datoteko CSV. CSV pomeni 'Comma Seperated Values' (vrednosti, ločene z vejico). Na zavihku možnosti pa lahko za ločilo polj izberete drugi znak.
 extra	addressbook	sl	Dodatno
 extra private	addressbook	sl	Posebej zasebno
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sl	Napaka pri spreminjanju %1 članov organizacije (premalo pravic)!
@@ -245,7 +245,7 @@ import from outlook	addressbook	sl	Uvoz iz Outlook-a
 import multiple vcard	addressbook	sl	Uvoz večih VCard
 import next set	addressbook	sl	Uvozi naslednji niz
 import_instructions	addressbook	sl	V Netscapu odprite adresar in izberite <b>Export</b> v meniju <b>File</b>. Izvožena datoteka bo v obliki LDIF.<p>V Outlooku izberite mapo Stiki (Contacts), izberite <b>Uvoz/izvoz (Import/Export)</b> v meniju <b>Datoteka (File)</b>. Izvožena datoteka bo v obliki CSV.
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	sl	Uvozi stike v vaš adresar iz datoteke CSV. CSV pomeni 'vrednosti, ločene z vejico'. Vendar na zavihku Možnosti lahko izberete drugo ločilo polj.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sl	Uvozi stike v vaš adresar iz datoteke CSV. CSV pomeni 'vrednosti, ločene z vejico'. Vendar na zavihku Možnosti lahko izberete drugo ločilo polj.
 in %1 days (%2) is %3's birthday.	addressbook	sl	V %1 dneh (%2) je rojstni dan %3.
 income	addressbook	sl	Priliv
 infolog	addressbook	sl	InfoDnevnik

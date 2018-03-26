@@ -151,7 +151,7 @@ export file name	addressbook	el	Ονομα αρχείου εξαγωγής
 export from addressbook	addressbook	el	Εξαγωγή από το βιβλίο Διευθύνσεων
 export selection	addressbook	el	Επιλογές εξαγωγής
 exported	addressbook	el	εξήχθη
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	el	Εξάγει επαφές από το βιβλίο διευθύνσεών σας σε CSV αρχείο.CSV σημαίνει 'Comma Seperated Values'. Παρολαυτά στην καρτέλα Επιλογές μπορείτε επίσης να διαλέξετε και άλλους διαχωριστήρες.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	el	Εξάγει επαφές από το βιβλίο διευθύνσεών σας σε CSV αρχείο.CSV σημαίνει 'Comma Seperated Values'. Παρολαυτά στην καρτέλα Επιλογές μπορείτε επίσης να διαλέξετε και άλλους διαχωριστήρες.
 extra	addressbook	el	Επιπλέον
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	el	Απέτυχε η αλλαγή του-των μέλους(η) του %1 οργανισμού (ανεπαρκή δικαιώματα)!!!
 fax	addressbook	el	Fax

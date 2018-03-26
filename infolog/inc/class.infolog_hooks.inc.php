@@ -275,7 +275,7 @@ class infolog_hooks
 				'size'   => 5,
 				'label'  => 'Limit number of description lines (default 5, 0 for no limit)',
 				'name'   => 'limit_des_lines',
-				'help'   => 'How many describtion lines should be directly visible. Further lines are available via a scrollbar.',
+				'help'   => 'How many description lines should be directly visible. Further lines are available via a scrollbar.',
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> 5,

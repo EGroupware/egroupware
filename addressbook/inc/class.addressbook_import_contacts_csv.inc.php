@@ -361,7 +361,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	 * @return string descriprion
 	 */
 	public static function get_description() {
-		return lang("Imports contacts into your Addressbook from a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.");
+		return lang("Imports contacts into your Addressbook from a CSV File. CSV means 'Comma Separated Values'. However in the options Tab you can also choose other seperators.");
 	}
 
 	/**

@@ -214,7 +214,7 @@ high	infolog	ru	Высокий
 history	infolog	ru	История
 history logging	infolog	ru	Запись истории
 history logging and deleting of items	infolog	ru	Журналирование истории и удаление записей
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	ru	Сколько строк описания должно быть непосредственно видно. Оставшиеся строки доступны через меню прокрутки.
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	ru	Сколько строк описания должно быть непосредственно видно. Оставшиеся строки доступны через меню прокрутки.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	ru	Какова должна быть ширина области описания. Цифровая величина, например, 60.
 html link to the current record	infolog	ru	HTML-ссылка на запись
 id	infolog	ru	ID идентификатор
@@ -226,7 +226,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	infolog	ru	Если указать определение экспорта, оно будет использовано при последующем экспорте
 import next set	infolog	ru	Импортировать следующий набор
 importance	infolog	ru	Важность
-imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	ru	Импорт записей в ИнфоЖурнал из файла формата CSV. CSV означает "величины, разделенные запятой". На вкладке "Дополнительно" можно выбрать другой разделитель.
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	ru	Импорт записей в ИнфоЖурнал из файла формата CSV. CSV означает "величины, разделенные запятой". На вкладке "Дополнительно" можно выбрать другой разделитель.
 imports todos into infolog from an ical file.	infolog	ru	Импорт заданий в ИнфоЖурнал из файла формата iCal.
 info log	common	ru	ИнфоЖурнал
 infolog	common	ru	ИнфоЖурнал

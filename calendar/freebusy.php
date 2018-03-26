@@ -57,7 +57,7 @@ if (!is_numeric($user = $_GET['user']))
 }
 if ($user === false || !($username = $GLOBALS['egw']->accounts->id2name($user)))
 {
-	fail_exit(lang("freebusy: Unknow user '%1', wrong password or not availible to not loged in users !!!"." $username($user)",$_GET['user']));
+	fail_exit(lang("freebusy: unknown user '%1', wrong password or not available to not logged in users !!!"." $username($user)",$_GET['user']));
 }
 if (!$loged_in)
 {
@@ -100,7 +100,7 @@ if (!$loged_in)
 	}
 	if (!$loged_in)
 	{
-		fail_exit(lang("freebusy: Unknow user '%1', or not available for unauthenticated users!", $_GET['user']));
+		fail_exit(lang("freebusy: unknown user '%1', or not available for unauthenticated users!", $_GET['user']));
 	}
 }
 if ($_GET['debug'])

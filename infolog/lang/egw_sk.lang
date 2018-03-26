@@ -219,7 +219,7 @@ high	infolog	sk	Vysoká
 history	infolog	sk	História
 history logging	infolog	sk	Zaznamenávanie histórie
 history logging and deleting of items	infolog	sk	Zaznamenávať históriu a odstránené položky?
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	sk	Koľko riadkov z popisu má byť priamo viditeľných? Ďalšie riadky budú dostupné cez posuvník.
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	sk	Koľko riadkov z popisu má byť priamo viditeľných? Ďalšie riadky budú dostupné cez posuvník.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	sk	Aká široká má byť oblasť popisu. Hodnota je číselná, napr. 60.
 html link to the current record	infolog	sk	HTML odkaz na aktuálny záznam
 id	infolog	sk	ID
@@ -231,7 +231,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	infolog	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch.
 import next set	infolog	sk	Importovať ďalšiu sadu
 importance	infolog	sk	Dôležitosť
-imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	sk	Naimportuje položky do Záznamníka z CSV súboru. CSV znamená 'Comma Separated Values'. V karte možností môžete vybrať aj iné oddeľovače.
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	sk	Naimportuje položky do Záznamníka z CSV súboru. CSV znamená 'Comma Separated Values'. V karte možností môžete vybrať aj iné oddeľovače.
 imports todos into infolog from an ical file.	infolog	sk	Importuje do Záznamníka úlohy zo súboru iCal.
 info log	common	sk	Záznamník
 infolog	common	sk	Záznamník

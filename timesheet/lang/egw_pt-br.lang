@@ -32,7 +32,7 @@ existing links	timesheet	pt-br	Links existentes
 exists	timesheet	pt-br	Existe
 export definition to use for nextmatch export	timesheet	pt-br	Definição Exportar para usar para exportação NextMatch
 export to openoffice spreadsheet	timesheet	pt-br	Exportar como Planilha do OpenOffice
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	pt-br	Exporta registros de sua Planilha de Tempo em um arquivo CSV. CSV significa 'Valores Separados por Vírgula'. Entretando, na aba Opções você pode escolher outros separadores.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	pt-br	Exporta registros de sua Planilha de Tempo em um arquivo CSV. CSV significa 'Valores Separados por Vírgula'. Entretando, na aba Opções você pode escolher outros separadores.
 field must not be empty !!!	timesheet	pt-br	Campo não pode estar vazio !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	pt-br	Para cartas em série use esta tag. Coloque o conteúdo, que você quer que repita, entre duas Tags.
 full: use only projectmanager	admin	pt-br	Completo: usar apenas Gerenciador de Projetos

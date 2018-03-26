@@ -234,7 +234,7 @@ export from addressbook	addressbook	it	Esporta dalla Rubrica
 export selection	addressbook	it	Esporta selezione
 exported	addressbook	it	esportato
 exports contacts from your addressbook into a csv file.	addressbook	it	Esporta i contatti della rubrica in un file CSV
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	it	Esporta i contatti della rubrica in un file CSV. CSV significa 'Comma Separated Values' ovvero valori separati da virgola. Si possono scegliere anche separatori diversi.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	it	Esporta i contatti della rubrica in un file CSV. CSV significa 'Comma Separated Values' ovvero valori separati da virgola. Si possono scegliere anche separatori diversi.
 exports contacts from your addressbook into a vcard file.	addressbook	it	Esporta i contatti della rubrica in file vCard
 extra	addressbook	it	Extra
 extra encodings	addressbook	it	Codifiche extra
@@ -294,7 +294,7 @@ import multiple vcard	addressbook	it	Importa Molteplici VCard
 import next set	addressbook	it	Import il prossimo set
 import_instructions	addressbook	it	In Netscape, apri la rubrica e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato LDIF.<p>O, in Outlook, seleziona la cartella Contatti , seleziona <b>Importa ed esporta...</b> dal menu <b>File</b> ed esporta i contatti nel formato testo separato da virgola (CSV).  <p>O, in Palm Desktop 4.0 o superiore, apri l'agenda e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato VCard.
 importer's personal	addressbook	it	Personale dell'account importatore
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	it	Importa i contatti da file CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni sarà possibile selezionare anche altri separatori.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	it	Importa i contatti da file CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni sarà possibile selezionare anche altri separatori.
 imports contacts into your addressbook from a vcard file.	addressbook	it	Importa contatti nella tua rubrica da un file vCard.
 in %1 days (%2) is %3's birthday.	addressbook	it	Tra %1 giorni (%2) sarà il compleanno di %3.
 income	addressbook	it	Entrata

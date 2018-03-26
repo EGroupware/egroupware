@@ -28,7 +28,7 @@
 		<hbox>
 			<button label="Ignore conflict" id="button[ignore]" statustext="Saves the event ignoring the conflict"/>
 			<button id="button[reedit]" label="Re-Edit event" statustext="Allows to edit the event again"/>
-			<button label="Freetime search" id="button[freetime]" statustext="Find free timeslots where the selected participants are availible for the given timespan"/>
+			<button label="Freetime search" id="button[freetime]" statustext="Find free timeslots where the selected participants are available for the given timespan"/>
 		</hbox>
 	</template>
 </overlay>

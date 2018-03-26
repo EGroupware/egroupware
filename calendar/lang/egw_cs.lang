@@ -1,7 +1,7 @@
 %1 %2 in %3	calendar	cs	%1 %2 v %3
 %1 days	calendar	cs	%1 dnů
 %1 event(s) %2	calendar	cs	%1 událost(í) %2
-%1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	cs	%1 událost(i) %2, %3 selhalo kvůli nedostatečným právům
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	cs	%1 událost(i) %2, %3 selhalo kvůli nedostatečným právům
 %1 events in ical file, only first one imported and displayed!	calendar	cs	V iCal souboru je %1 událostí, ale importována a zobrazena bude pouze první!
 %1 hours	calendar	cs	%1 hodin
 %1 minutes	calendar	cs	%1 minut
@@ -136,7 +136,7 @@ default calendar filter	calendar	cs	Výchozí filtr kalendáře
 default calendar view	calendar	cs	Výchozí pohled kalendáře
 default document to insert entries	calendar	cs	Přednastavený dokument pro vkládání
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	cs	Výchozí délka nově vytvořených událostí. Zadává se v minutách, např. 60 pro 1 hodinu.
-default type of resources application selected in the calendar particpants research form.	calendar	cs	Která aplikace má být v kalendáři přednastavena jako výchozí typ zdroje při výběru účastníků
+default type of resources application selected in the calendar participants research form.	calendar	cs	Která aplikace má být v kalendáři přednastavena jako výchozí typ zdroje při výběru účastníků
 default type of resources selection	calendar	cs	Výchozí volba při výběru zdroje
 default week view	calendar	cs	Výchozí týdenní pohled
 delegated	calendar	cs	delegované
@@ -147,11 +147,11 @@ delete this alarm	calendar	cs	Smazat tuto připomínku
 delete this event	calendar	cs	Smazat tuto událost
 delete this exception	calendar	cs	Smazat tuto vyjímku
 delete this recurrence	calendar	cs	Smazat toto opakování (řadu)
-delete this series of recuring events	calendar	cs	Smazat tyto řady pravidelných opakování
+delete this series of recurring events	calendar	cs	Smazat tyto řady pravidelných opakování
 deleted	calendar	cs	smazáno
-deny ressources reservation for private events	calendar	cs	Zakázat rezervaci zdrojů pro soukromé události
+deny resources reservation for private events	calendar	cs	Zakázat rezervaci zdrojů pro soukromé události
 directory with documents to insert entries	calendar	cs	Složka pro vkládání dokumentů
-disinvited	calendar	cs	Zrušená pozvánka
+uninvited	calendar	cs	Zrušená pozvánka
 display holidays or birthdays as events in dayview	calendar	cs	Zobrazit svátky nebo narozeniny jako události v denním pohledu
 display in header	calendar	cs	Zobrazit v hlavičce
 display status of events	calendar	cs	Zobrazit stav událostí
@@ -166,7 +166,7 @@ do you want to be notified about new or changed appointments? you are not notifi
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	cs	Chcete být upozorněni na nové nebo změněné události? Budete upozorněni také na změny, které sami provedete.<br>Upozornění můžete omezit jen na některé události. Každá položka zahrnuje všechna předchozí upozornění. Všechny modifikace zahrnují také změny titulku, popisu a účastníků (nikoli však jejich odpovědi). Pokud vlastník události žádal jakékoli zprávy o změnách, vždy dostane i odpovědi účastníků, mj. také přijetí a odmítnutí.
 do you want to edit this event as an exception or the whole series?	calendar	cs	Chcete editovat tuto událost jako výjimku nebo celou řadu pravidelných opakování?
 do you want to keep the series exceptions in your calendar?	calendar	cs	Chcete zachovat výjimky řady pravidelného opakování ve svém kalendáři?
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	cs	Chcete pravidelně dostávat přehled Vašich událostí e-mailem?<br>Přehled bude odesílán na Vaši výchozí e-mailovou adresu každý den ráno, respektive v pondělí ráno v případě týdenních přehledů.<br>Přehled bude odeslán jen v případě, že máte na daný den, resp. týden naplánovány nějaké události.
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	cs	Chcete pravidelně dostávat přehled Vašich událostí e-mailem?<br>Přehled bude odesílán na Vaši výchozí e-mailovou adresu každý den ráno, respektive v pondělí ráno v případě týdenních přehledů.<br>Přehled bude odeslán jen v případě, že máte na daný den, resp. týden naplánovány nějaké události.
 download	calendar	cs	Stáhnout
 download this event as ical	calendar	cs	Stáhnout tuto událost jako iCal
 duration	calendar	cs	Trvání
@@ -176,7 +176,7 @@ edit exception	calendar	cs	Editovat výjimku
 edit series	calendar	cs	Editovat řadu pravidelného opakování
 edit status or alarms for this particular day	calendar	cs	Editovat stav nebo alarmy pro tento konkrétní den
 edit this event	calendar	cs	Editovat tuto událost
-edit this series of recuring events	calendar	cs	Editovat tuto řadu pravidelných opakování
+edit this series of recurring events	calendar	cs	Editovat tuto řadu pravidelných opakování
 empty = no alarm	calendar	cs	prázdné = bez připomínky
 empty for all	calendar	cs	prázdné znamená vše
 end	calendar	cs	Konec
@@ -191,7 +191,7 @@ error: can't delete original series!	calendar	cs	Chyba: není možné smazat pů
 error: duration of event longer then recurrence interval!	calendar	cs	Chyba: Trvání události je delší než doba opakování!
 error: importing the ical	calendar	cs	Chyba při importu iCal
 error: no participants selected !!!	calendar	cs	Chyba: nebyli vybráni žádní účastníci !!!
-error: ressources reservation in private events is not allowed!!!	calendar	cs	Chyba: rezervace zdrojů pro soukromé události není povolena !!!
+error: resources reservation in private events is not allowed!!!	calendar	cs	Chyba: rezervace zdrojů pro soukromé události není povolena !!!
 error: saving the event !!!	calendar	cs	Chyba pri ukládání události !!!
 error: starttime has to be before the endtime !!!	calendar	cs	Chyba: počáteční čas musí předcházet koncovému času !!!
 error: the entry has been updated since you opened it for editing!	calendar	cs	Chyba: během Vaší editace byl záznam zaktualizován!
@@ -223,7 +223,7 @@ fieldseparator	calendar	cs	Oddělovač položek
 filemanager	calendar	cs	Správce souborů
 filename	calendar	cs	Jméno souboru
 filename of the download	calendar	cs	Jméno souboru ke stažení
-find free timeslots where the selected participants are availible for the given timespan	calendar	cs	Najdi tři volné časové úseky v daném rozmezí, během kterých jsou vybraní účastníci volní
+find free timeslots where the selected participants are available for the given timespan	calendar	cs	Najdi tři volné časové úseky v daném rozmezí, během kterých jsou vybraní účastníci volní
 firstname of person to notify	calendar	cs	Křestní jméno osoby, která má být upozorněna
 for	calendar	cs	pro
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	cs	Pro hromadný dopis použijte tento štítek. Obsah, který chcete opakovat vložte mezi dva štítky.
@@ -234,8 +234,8 @@ forward one month	calendar	cs	dopředu o měsíc
 forward one year	calendar	cs	dopředu o rok
 four days view	calendar	cs	Čtyřdenní pohled
 freebusy	common	cs	Volný/Zaneprázdněn
-freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	cs	Volný/Zaneprázdněn: uživatel %1 je neznámý, nebo tato volba není možná pro uživatele, kteří se nemohou přihlásit!
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	cs	Volný/zaneprázdněn: Neznámý uživatel '%1', chybné heslo nebo informace není dostupná nepřihlášeným uživatelům !!!
+freebusy: unknown user '%1', or not available for unauthenticated users!	calendar	cs	Volný/Zaneprázdněn: uživatel %1 je neznámý, nebo tato volba není možná pro uživatele, kteří se nemohou přihlásit!
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	cs	Volný/zaneprázdněn: Neznámý uživatel '%1', chybné heslo nebo informace není dostupná nepřihlášeným uživatelům !!!
 freetime search	calendar	cs	Hledání volného času
 fri	calendar	cs	Pá
 full description	calendar	cs	Celý popis
@@ -251,7 +251,7 @@ group public only	calendar	cs	veřejné jen pro skupinu
 group(s) or user(s) to show	calendar	cs	Skupiny nebo uživatelé pro zobrazení
 group(s) or user(s) whose calendars to show (if acl exists)	calendar	cs	Skupiny nebo uživatelé, kterým se má kalendář zobrazit, pokud jsou nastavena práva ACL.
 groupmember(s) %1 not included, because you have no access.	calendar	cs	Členové skupin(y) %1 nebyly zahrnuti, protože nemáte přístup.
-groups: other users can allways be invited, only groups require an invite grant	admin	cs	Skupiny: ostatní uživatelé mohou být pozváni vždy, jen skupiny vyžadují oprávnění
+groups: other users can always be invited, only groups require an invite grant	admin	cs	Skupiny: ostatní uživatelé mohou být pozváni vždy, jen skupiny vyžadují oprávnění
 h	calendar	cs	h
 here is your requested alarm.	calendar	cs	Zde je Váše požadovaná připomínka.
 hide private events	calendar	cs	Skrýt soukromé události
@@ -265,7 +265,7 @@ holidays only	calendar	cs	Pouze svátky
 hours	calendar	cs	hodin
 how far to search (from startdate)	calendar	cs	jak daleko hledat (od počátečního data)
 how many appointments should non-admins be able to export	admin	cs	Kolik událostí může uživatel bez administrátorských práv exportovat?
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	cs	Kolik řádek popisu má být vidět přímo. Ostatní řádky budou dostupné přes posouvací lištu.
+how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	cs	Kolik řádek popisu má být vidět přímo. Ostatní řádky budou dostupné přes posouvací lištu.
 how many minutes should each interval last?	calendar	cs	Kolik minut by měl každý interval trvat?
 how many weeks should the multiple week view show?	calendar	cs	Kolik týdnů má zobrazovat vícetýdenní pohled?
 how much entries to skip	calendar	cs	Kolik záznamů se má přeskočit?
@@ -285,7 +285,7 @@ if you specify an export definition, it will be used when you export	calendar	cs
 ignore conflict	calendar	cs	Ignorovat konflikt
 import	calendar	cs	Importovat
 import csv-file	common	cs	Importovat CSV soubor
-imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	cs	Importuje události z CSV souboru do Vašeho kalendáře. CSV znamená 'hodnoty oddělené čárkou'.  Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
+imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	cs	Importuje události z CSV souboru do Vašeho kalendáře. CSV znamená 'hodnoty oddělené čárkou'.  Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
 imports events into your calendar from an ical file.	calendar	cs	Importovat události ze souboru iCal do vašeho kalendáře.
 initially year aligned	calendar	cs	Počáteční rok
 insert	calendar	cs	Vložit
@@ -316,7 +316,7 @@ listview	calendar	cs	Zobrazení seznamu
 location	calendar	cs	Místo
 location, start- and endtimes, ...	calendar	cs	Umístění, počáteční a koncové časy...
 mail all participants	calendar	cs	obeslat všechny účastníky
-make freebusy information available to not loged in persons?	calendar	cs	Povolit zobrazení stavu volný/zaneprázdněn nepřihlášeným osobám?
+make freebusy information available to not logged in persons?	calendar	cs	Povolit zobrazení stavu volný/zaneprázdněn nepřihlášeným osobám?
 manage mapping	calendar	cs	Spravovat mapování
 mark event as private to hide title and description	calendar	cs	Označit událost jako soukromou a skrýt tak název a popis
 max. number of entries to show (leave empty for no restriction)	calendar	cs	Maximální počet záznamů pro zobrazení. Pokud necháte prázdné, bude bez zobrazení omezení.
@@ -357,7 +357,7 @@ not rejected	calendar	cs	Neodmítnuté
 nothing to update, version is already %1.	calendar	cs	Žádný update není k dispozici, verze je již %1.
 notification messages for added events	calendar	cs	Tvar zprávy s upozorněním na přidané události
 notification messages for canceled events	calendar	cs	Tvar zprávy s upozorněním na zrušené události
-notification messages for disinvited participants	calendar	cs	Tvar zprávy s upozorněním na zrušení účasti
+notification messages for uninvited participants	calendar	cs	Tvar zprávy s upozorněním na zrušení účasti
 notification messages for modified events	calendar	cs	Tvar zprávy s upozorněním na změněné údálosti
 notification messages for your alarms	calendar	cs	Tvar zprávy pro Vaše připomínky
 notification messages for your responses	calendar	cs	Tvar zprávy pro Vaše odpovědi
@@ -373,7 +373,7 @@ olddate	calendar	cs	Původní datum
 on %1 %2 %3 your meeting request for %4	calendar	cs	%1 %2 %3 Vás požadavek na setkání pro %4
 on all modification, but responses	calendar	cs	při všech změnách, kromě odpovědí
 on any time change too	calendar	cs	také při jakékoli změně času
-on invitation / cancelation only	calendar	cs	jen při pozvání / zrušení
+on invitation / cancellation only	calendar	cs	jen při pozvání / zrušení
 on participant responses too	calendar	cs	také při odpovědích účastníků
 on time change of more than 4 hours too	calendar	cs	také při změně času o více jak 4 hodiny
 one month	calendar	cs	jeden měsíc
@@ -381,7 +381,7 @@ one week	calendar	cs	jeden týden
 one year	calendar	cs	jeden rok
 only group-events	calendar	cs	Jen skupinové události
 only recurrences until %1 (excluding) have been checked!	calendar	cs	Byly zkontrolovány opakující se události pouze do %1 (vyjma)
-only the initial date of that recuring event is checked!	calendar	cs	Kontroluje se jen úvodní čas této opakující se události!
+only the initial date of that recurring event is checked!	calendar	cs	Kontroluje se jen úvodní čas této opakující se události!
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	cs	Použije se pouze pro první zobrazení kalendáře, dále se použije poslední vybrané zobrazení.
 open todo's:	calendar	cs	aktivní úkoly:
 optional	calendar	cs	účast možná
@@ -389,7 +389,7 @@ overlap holiday	calendar	cs	překrýt svátek
 owner too	calendar	cs	Také vlastník
 participant table	calendar	cs	Tabulka účastníků
 participants	calendar	cs	Účastníci
-participants disinvited from an event	calendar	cs	Účastníci, kterým byla zrušena pozvánka
+participants uninvited from an event	calendar	cs	Účastníci, kterým byla zrušena pozvánka
 participants, resources, ...	calendar	cs	Účastníci, Zdroje, ...
 password for not loged in users to your freebusy information?	calendar	cs	Heslo pro nepřihlášené uživatele k získání informace o Vašem statusu volný/zaneprázdněn?
 people holiday	calendar	cs	osobní dovolená
@@ -455,7 +455,7 @@ select an action	calendar	cs	Vyberte akci
 select an action...	calendar	cs	Vyberte akci...
 select multiple contacts for a further action	calendar	cs	Vybrat více kontaktů pro další akci
 select resources	calendar	cs	Vybrat zdroje
-select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	cs	Pokud je událost posunuta na později, má být status účastníků obnoven?
+select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	cs	Pokud je událost posunuta na později, má být status účastníků obnoven?
 select who should get the alarm	calendar	cs	Vybrat kdo dostane připomínku
 selected range	calendar	cs	Vybraný rozsah
 send meetingrequest to all participants after the event is saved	calendar	cs	Odeslat požadavek na schůzku všem účastníkům poté, co je událost uložena
@@ -469,7 +469,7 @@ should the grid be shown in the calendar	calendar	cs	Má se v kalendáři zobraz
 should the number of weeks be shown on top of the calendar	calendar	cs	Mají se na horní straně kalendáře zobrazovat čísla týdnů?
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	cs	Mají se na horní straně kalendáře zobrazovat čísla týdnů? (pouze pokud je offset=0)
 should the planner display an empty row for users or categories without any appointment.	calendar	cs	Má plánovač zobrazovat prázdný řádek pro uživatele nebo kategorie bez události.
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	cs	Má být informace o stavu účasti jednotlivých účastníků (přijal, odmítnul) zobrazena v závorkách vedle jejich jména?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	cs	Má být informace o stavu účasti jednotlivých účastníků (přijal, odmítnul) zobrazena v závorkách vedle jejich jména?
 show a calendar title	calendar	cs	Zobrazit název kalendáře
 show all events, as if they were private	calendar	cs	Zobrazit všechny události jako by byly soukromé
 show all status incl. rejected events	calendar	cs	Zobrazit stav všech událostí včetně odmítnutých
@@ -532,7 +532,7 @@ this mail contains a meeting request	calendar	cs	Tento e-mail obsahuje žádost 
 this mail contains a reply to a meeting request	calendar	cs	Tento e-mail obsahuje odpověď na žádost o schůzku
 this message is sent for canceled or deleted events.	calendar	cs	Tato zpráva je zasílána v případě ukončených nebo smazaných událostí.
 this message is sent for modified or moved events.	calendar	cs	Tato zpráva je zasílána  v případě změněných nebo posunutých událostí.
-this message is sent to disinvited participants.	calendar	cs	Tato zpráva je zasílána účastníkům, kterým byla zrušena pozvánka.
+this message is sent to uninvited participants.	calendar	cs	Tato zpráva je zasílána účastníkům, kterým byla zrušena pozvánka.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	cs	Tato zpráva je zaslána každému účastníkovi události, jejíž jste vlastníkem, který si nastavil zasílání informací o nových událostech.<br>V textu můžete použít některé proměnné, které budou nahrazeny údaji konkrétní události. První řádka textu bude subjektem e-mailové zprávy.
 this message is sent when you accept, tentative accept or reject an event.	calendar	cs	Tato zpráva je zaslána, pokud přijmete, předběžně přijmete nebo odmítnete událost.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	cs	Tato zpráva je zaslána, pokud nastavíte upozornění pro určitou událost. Zahrnuje všechny informace, které by jste mohl(a) potřebovat.
@@ -576,7 +576,7 @@ use this timezone to import/export calendar data.	calendar	cs	Použít toto čas
 use weekday start	calendar	cs	Týden začíná v
 user or group	calendar	cs	Uživatel nebo skupina
 user selectable css file for the calendar setup	calendar	cs	Uživatelsky volitelný CSS soubor pro nastavení kalendáře
-users + groups: inviting both allways requires an invite grant	admin	cs	Uživatelé + skupiny: pro pozvání obou je vždy vyžadováno oprávnění
+users + groups: inviting both always requires an invite grant	admin	cs	Uživatelé + skupiny: pro pozvání obou je vždy vyžadováno oprávnění
 using already existing event on server.	calendar	cs	Použít již existující událost na serveru.
 view exception	calendar	cs	Zobrazit výjimku
 view series	calendar	cs	Zobrazit řady pravidelného opakování
@@ -616,15 +616,15 @@ you already replied to this invitation with	calendar	cs	Na tuto pozvánku jste j
 you are not allowed to book the resource selected:	calendar	cs	Nemáte oprávnění si rezervovat vybraný zdroj:
 you are not invited to that event!	calendar	cs	Na tuto událost nejste pozváni!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	cs	Pokoušíte se odeslat požadavek na schůzku výše uvedeným příjemcům. V závislosti na tom, jakým e-mailovým klientem bude pozvánka otevřena, bude, nebo nebude viditelný text níže (pak bude požadavek na schůzku v příloze mailu).
-you can either set a year or a occurence, not both !!!	calendar	cs	Můžete nastavit rok nebo výskyt, ne obojí !!!
-you can only set a year or a occurence !!!	calendar	cs	Můžete nastavit jen rok nebo výskyt !
+you can either set a year or a occurrence, not both !!!	calendar	cs	Můžete nastavit rok nebo výskyt, ne obojí !!!
+you can only set a year or a occurrence !!!	calendar	cs	Můžete nastavit jen rok nebo výskyt !
 you do not have permission to read this record!	calendar	cs	Nemáte oprávnění ke čtení tohoto záznamu!
 you have a meeting scheduled for %1	calendar	cs	Máte naplánovano setkání na %1
-you have been disinvited from the meeting at %1	calendar	cs	Byla Vám zrušena pozvánka na setkání v %1
+you have been uninvited from the meeting at %1	calendar	cs	Byla Vám zrušena pozvánka na setkání v %1
 you need to select an account, contact or resource first!	calendar	cs	Musíte nejprve vybrat účet, kontakt nebo zdroj!
 you need to select an ical file first	calendar	cs	Nejprve musíte vybrat iCal soubor
 you need to select some events first	calendar	cs	Nejprve musíte vybrat nějaké události.
-you need to set either a day or a occurence !!!	calendar	cs	Musíte nastavit buď den nebo výskyt !!!
+you need to set either a day or a occurrence !!!	calendar	cs	Musíte nastavit buď den nebo výskyt !!!
 you requested more than available for the selected resource:	calendar	cs	Požadujete víc než je možné pro vybraný zdroj:
 your meeting scheduled for %1 has been canceled	calendar	cs	Vaše setkání plánované na %1 bylo zrušeno
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	cs	Vaše setkání plánované na %1 bylo přesunuto na %2

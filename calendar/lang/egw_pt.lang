@@ -83,15 +83,15 @@ delete series	calendar	pt	Eliminar consjuntos
 delete this alarm	calendar	pt	Eliminar este aviso
 delete this event	calendar	pt	Eliminar este evento
 delete this exception	calendar	pt	Eliminar esta excepção
-delete this series of recuring events	calendar	pt	Eliminar este conjunto de eventos recorrentes
+delete this series of recurring events	calendar	pt	Eliminar este conjunto de eventos recorrentes
 deleted	calendar	pt	eliminado/a
 directory with documents to insert entries	calendar	pt	Diretório com documentos para inserir entradas
-disinvited	calendar	pt	Desconvidado
+uninvited	calendar	pt	Desconvidado
 display status of events	calendar	pt	Exibir estado dos eventos
 displayed view	calendar	pt	Visualização exibida
 do you want a weekview with or without weekend?	calendar	pt	Deseja que a visualização semanal inclua os fins de semana?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	pt	Deseja ser avisado de compromissos novos ou alterados? Será avisado de alterações que fizer.<br>Pode limitar os avisos para apenas algumas alterações. Cada item inclui todas os avisos listados. Todas as modificações incluem alterações de título, descrições, participantes, mas não as respostas dos participantes. Se o administrador de um evento requerer quaisquer avisos, obterá sempre as respostas dos participantes, bem como a aceitação e rejeição das mesmas.
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pt	Deseja receber um resumo regular dos seus compromissos através de correio electrónico?<br>O resumo será enviado para a sua conta de correio electrónico na manhã do próprio dia ou à segunda-feira para resumos semanais.<br>Será apenas enviado quando tiver compromissos nesse dia ou semana.
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pt	Deseja receber um resumo regular dos seus compromissos através de correio electrónico?<br>O resumo será enviado para a sua conta de correio electrónico na manhã do próprio dia ou à segunda-feira para resumos semanais.<br>Será apenas enviado quando tiver compromissos nesse dia ou semana.
 do you wish to autoload calendar holidays files dynamically?	admin	pt	Deseja carregar automaticamente ficheiros de feriados do Calendário dinamicamente ?
 download	calendar	pt	Transferir
 download this event as ical	calendar	pt	Transferir este evento como iCal
@@ -100,7 +100,7 @@ duration of the meeting	calendar	pt	Duração da reunião
 edit exception	calendar	pt	Editar excepção
 edit series	calendar	pt	Editar conjuntos
 edit this event	calendar	pt	Editar este evento
-edit this series of recuring events	calendar	pt	Editar este conjunto de eventos recorrentes
+edit this series of recurring events	calendar	pt	Editar este conjunto de eventos recorrentes
 empty for all	calendar	pt	vazio para todos
 end	calendar	pt	Fim
 end date/time	calendar	pt	Data/Hora de conclusão
@@ -132,7 +132,7 @@ fieldseparator	calendar	pt	Separador de campos
 filemanager	calendar	pt	Gestor de ficheiros
 filename	calendar	pt	Nome de ficheiro
 filename of the download	calendar	pt	Nome de ficheiro para a transferência
-find free timeslots where the selected participants are availible for the given timespan	calendar	pt	Procurar por horas vagas dos participantes num dado período de tempo
+find free timeslots where the selected participants are available for the given timespan	calendar	pt	Procurar por horas vagas dos participantes num dado período de tempo
 firstname of person to notify	calendar	pt	Nome da pessoa a avisar
 for	calendar	pt	para
 for which views should calendar show distinct lines with a fixed time interval.	calendar	pt	O calendário deve exibir linhas distintas com um intervalo de tempo fixo para que visualizações.
@@ -140,7 +140,7 @@ format of event updates	calendar	pt	Formato de actualizações de eventos
 forward half a month	calendar	pt	Avançar meio mês
 forward one month	calendar	pt	Avançar um mês
 four days view	calendar	pt	Visualização a quatro dias
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	pt	disponibilidade: Utilizador desconhecido %1', senha incorrecta ou informação não acessível a utilizadores não ligados !!!
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	pt	disponibilidade: Utilizador desconhecido %1', senha incorrecta ou informação não acessível a utilizadores não ligados !!!
 freetime search	calendar	pt	Pesquisa de tempo livre
 fri	calendar	pt	Sex
 full description	calendar	pt	Descrição completa
@@ -195,7 +195,7 @@ location	calendar	pt	Local
 location to autoload from	admin	pt	Local para enviar automaticamente de
 location, start- and endtimes, ...	calendar	pt	Local, data de início e de fim, ....
 mail all participants	calendar	pt	Enviar mensagens a todos os participantes
-make freebusy information available to not loged in persons?	calendar	pt	Deseja tornar acessível a informação sobre a disponibilidade a pessoas não ligadas?
+make freebusy information available to not logged in persons?	calendar	pt	Deseja tornar acessível a informação sobre a disponibilidade a pessoas não ligadas?
 manage mapping	calendar	pt	Gerenciar mapeamento
 minutes	calendar	pt	Minutos
 modified	calendar	pt	Modificado
@@ -217,7 +217,7 @@ non blocking	calendar	pt	Não conflituoso
 not	calendar	pt	não
 notification messages for added events	calendar	pt	Mensagens de aviso: Eventos adicionados
 notification messages for canceled events	calendar	pt	Mensagens de aviso: Eventos cancelados
-notification messages for disinvited participants	calendar	pt	Mensagens de aviso: Participantes desconvidados
+notification messages for uninvited participants	calendar	pt	Mensagens de aviso: Participantes desconvidados
 notification messages for modified events	calendar	pt	Mensagens de aviso: Eventos modificados
 notification messages for your alarms	calendar	pt	Mensagens de aviso: Os seus avisos
 notification messages for your responses	calendar	pt	Mensagens de aviso: As suas respostas
@@ -230,17 +230,17 @@ old startdate	calendar	pt	Data de início antiga
 on %1 %2 %3 your meeting request for %4	calendar	pt	Por %1 %2 %3 o seu pedido de reunião para %4
 on all modification, but responses	calendar	pt	Por todas as modificações, excluindo repostas
 on any time change too	calendar	pt	Por todas as alterações de horário também
-on invitation / cancelation only	calendar	pt	Por convite / cancelamento apenas
+on invitation / cancellation only	calendar	pt	Por convite / cancelamento apenas
 on participant responses too	calendar	pt	Por respostas dos participantes também
 on time change of more than 4 hours too	calendar	pt	Por alterações de horário em mais de 4 horas também
 one month	calendar	pt	um mês
 one week	calendar	pt	uma semana
 one year	calendar	pt	um ano
-only the initial date of that recuring event is checked!	calendar	pt	Apenas será verificada a data de início de um evento recorrente!
+only the initial date of that recurring event is checked!	calendar	pt	Apenas será verificada a data de início de um evento recorrente!
 open todo's:	calendar	pt	Abrir lista de tarefas
 overlap holiday	calendar	pt	saltar feriado
 participants	calendar	pt	Participantes
-participants disinvited from an event	calendar	pt	Participantes desconvidados de um evento
+participants uninvited from an event	calendar	pt	Participantes desconvidados de um evento
 participants, resources, ...	calendar	pt	Participantes, Fontes, ...
 password for not loged in users to your freebusy information?	calendar	pt	Deseja atribuir uma senha aos utilizadores não ligados para acederem à sua informação de disponibilidade?
 people holiday	calendar	pt	aniversários
@@ -285,7 +285,7 @@ select who should get the alarm	calendar	pt	Seleccionar quem deve ser avisado
 set a year only for one-time / non-regular holidays.	calendar	pt	Definir um Ano para feriados únicos / não regulares
 set new events to private	calendar	pt	Definir novos eventos com acesso privado
 should new events created as private by default ?	calendar	pt	Deseja que os novos eventos sejam criados como privados por omissão?
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	pt	Deseja que o estado dos participantes do evento (aceite, rejeitado, ...) seja exibido entre parenteses depois do nome de cada participante ?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	pt	Deseja que o estado dos participantes do evento (aceite, rejeitado, ...) seja exibido entre parenteses depois do nome de cada participante ?
 show default view on main screen	calendar	pt	Exibir visualização por omissão no ecrã principal
 show list of upcoming events	calendar	pt	Exibir lista de próximos eventos
 show this month	calendar	pt	Exibir este mês
@@ -311,7 +311,7 @@ this defines the start of your dayview. events before this time, are shown above
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	pt	Grupo pré-seleccionado quando inicia o planeamento. Pode alterá-lo no planeamento sempre que quiser.
 this message is sent for canceled or deleted events.	calendar	pt	Esta mensagem é enviada para eventos cancelados ou eliminados
 this message is sent for modified or moved events.	calendar	pt	Esta mensagem é enviada para eventos modificados ou transferidos.
-this message is sent to disinvited participants.	calendar	pt	Esta mensagem é enviada aos participantes desconvidados.
+this message is sent to uninvited participants.	calendar	pt	Esta mensagem é enviada aos participantes desconvidados.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	pt	Esta mensagem é enviada para todos os participantes de eventos, que gere, que tenham pedido para ser avisados de novos eventos.<br>Pode utilizar certas variáveis a ser substituídas  pela data do evento. A primeira linha é o assunto da mensagem.
 this message is sent when you accept, tentative accept or reject an event.	calendar	pt	Esta mensagem é enviada quando aceita, tenta aceitar ou rejeita um evento.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	pt	Esta mensagem é enviada quando define um Aviso para um determinado evento. Inclui toda a informação de que precisa.
@@ -347,12 +347,12 @@ work day starts on	calendar	pt	Dia de trabalho começa às
 yearly	calendar	pt	Anual
 yearview	calendar	pt	Visualização anual
 yes, only admins can purge deleted items	admin	pt	Sim, só os administradores podem remover os itens excluídos
-you can either set a year or a occurence, not both !!!	calendar	pt	Pode definir um Ano ou uma Ocorrência. Não pode definir os dois !!!
-you can only set a year or a occurence !!!	calendar	pt	Pode apenas definir um ano ou uma ocorrência !!!
+you can either set a year or a occurrence, not both !!!	calendar	pt	Pode definir um Ano ou uma Ocorrência. Não pode definir os dois !!!
+you can only set a year or a occurrence !!!	calendar	pt	Pode apenas definir um ano ou uma ocorrência !!!
 you do not have permission to read this record!	calendar	pt	Não tem permissões para ler este registo!
 you have a meeting scheduled for %1	calendar	pt	Tem uma reunião agendada para %1
-you have been disinvited from the meeting at %1	calendar	pt	Foi desconvidado para a reunião em %1
+you have been uninvited from the meeting at %1	calendar	pt	Foi desconvidado para a reunião em %1
 you need to select an ical file first	calendar	pt	É necessário seleccionar um ficheiro iCal primeiro
-you need to set either a day or a occurence !!!	calendar	pt	É necessário definir um dia ou uma ocorrência !!!
+you need to set either a day or a occurrence !!!	calendar	pt	É necessário definir um dia ou uma ocorrência !!!
 your meeting scheduled for %1 has been canceled	calendar	pt	A sua reunião agendada para %1 foi cancelada
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	pt	A sua reunião agendada para %1 foi remarcada para as %2

@@ -27,7 +27,7 @@ error deleting the entry!!!	timesheet	zh	删除条目错误！
 error saving the entry!!!	timesheet	zh	保存条目错误！
 existing links	timesheet	zh	现有链接
 export to openoffice spreadsheet	timesheet	zh	导出到 OpenOffice 电子表格
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	zh	从您的Timesheet导出词条到CSV文件。CSV采用'逗号分隔'方法。然而在选项标签您仍能够选择其它分隔符。
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	zh	从您的Timesheet导出词条到CSV文件。CSV采用'逗号分隔'方法。然而在选项标签您仍能够选择其它分隔符。
 field must not be empty !!!	timesheet	zh	字段不得为空！
 full: use only projectmanager	admin	zh	完全：只使用项目管理
 general fields:	timesheet	zh	通用字段：

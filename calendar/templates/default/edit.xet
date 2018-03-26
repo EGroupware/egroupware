@@ -278,7 +278,7 @@
 				<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
 			</menulist>
 			<checkbox label="Do not notify" id="no_notifications" statustext="Do not notify of these changes"/>
-			<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="timesheet" background_image="1" span="all"/>
+			<buttononly statustext="Find free timeslots where the selected participants are available for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="timesheet" background_image="1" span="all"/>
 			<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete" background_image="1"/>
 			<textbox type="hidden" id="delete_exceptions"/>
 		</hbox>

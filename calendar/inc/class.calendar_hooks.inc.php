@@ -126,7 +126,7 @@ class calendar_hooks
 		);
 		$updates = array(
 			'no'             => lang('Never'),
-			'add_cancel'     => lang('on invitation / cancelation only'),
+			'add_cancel'     => lang('on invitation / cancellation only'),
 			'time_change_4h' => lang('on time change of more than 4 hours too'),
 			'time_change'    => lang('on any time change too'),
 			'modifications'  => lang('on all modification, but responses'),
@@ -154,7 +154,7 @@ class calendar_hooks
 			'repetition'  => lang('Repetitiondetails (or empty)'),
 			'action'      => lang('Action that caused the notify: Added, Canceled, Accepted, Rejected, ...'),
 			'link'        => lang('Link to view the event'),
-			'disinvited'  => lang('Participants disinvited from an event'),
+			'disinvited'  => lang('Participants uninvited from an event'),
 		);
 		$weekdaystarts = array(
 			'Monday'   => lang('Monday'),
@@ -294,7 +294,7 @@ class calendar_hooks
 				'label' => 'Minimum number of users for showing day view as consolidated.',
 				'name'  => 'day_consolidate',
 				'values'=> $consolidated,
-				'help'  => 'How many seperate calendars to show before merging them together',
+				'help'  => 'How many separate calendars to show before merging them together',
 				'default'=> 6
 			),
 			'week_consolidate' => array(
@@ -302,7 +302,7 @@ class calendar_hooks
 				'label' => 'Minimum number of users for showing week view as consolidated.',
 				'name'  => 'week_consolidate',
 				'values'=> $consolidated,
-				'help'  => 'How many seperate calendars to show before merging them together',
+				'help'  => 'How many separate calendars to show before merging them together',
 				'default'=> 4
 			),
 			'limit_des_lines' => array(
@@ -310,7 +310,7 @@ class calendar_hooks
 				'size'   => 5,
 				'label'  => 'Limit number of description lines in list view (default 5, 0 for no limit)',
 				'name'   => 'limit_des_lines',
-				'help'   => 'How many describtion lines should be directly visible. Further lines are available via a scrollbar.',
+				'help'   => 'How many description lines should be directly visible. Further lines are available via a scrollbar.',
 				'xmlrpc' => True,
 				'admin'  => False
 			),
@@ -429,7 +429,7 @@ class calendar_hooks
 				'label'		=> 'default type of resources selection',
 				'name'		=> 'defaultresource_sel',
 				'values'	=> $defaultresource_sel,
-				'help'		=> 'Default type of resources application selected in the calendar particpants research form.',
+				'help'		=> 'Default type of resources application selected in the calendar participants research form.',
 				'xmlrpc'	=> True,
 				'admin'		=> False,
 				'default'	=> 'resources'
@@ -447,7 +447,7 @@ class calendar_hooks
 				'type'   => 'select',
 				'label'  => 'Reset participant stati on event shifts',
 				'name'   => 'reset_stati',
-				'help'   => 'Select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.',
+				'help'   => 'Select whether you want the participant stati reset to unknown, if an event is shifted later on.',
 				'values' => $reset_stati_on_shifts,
 				'default' => 'no',
 				'xmlrpc' => True,
@@ -549,11 +549,11 @@ class calendar_hooks
 			),
 			'notifyDisinvited' => array(
 				'type'   => 'notify',
-				'label'  => 'Notification messages for disinvited participants',
+				'label'  => 'Notification messages for uninvited participants',
 				'name'   => 'notifyDisinvited',
 				'rows'   => 5,
 				'cols'   => 50,
-				'help'   => 'This message is sent to disinvited participants.',
+				'help'   => 'This message is sent to uninvited participants.',
 				'values' => $event_details,
 				'subst_help' => False,
 				'xmlrpc' => True,
@@ -674,7 +674,7 @@ class calendar_hooks
 			),
 			'freebusy' => array(
 				'type'  => 'select',
-				'label' => 'Make freebusy information available to not loged in persons?',
+				'label' => 'Make freebusy information available to not logged in persons?',
 				'name'  => 'freebusy',
 				'help'  => $freebusy_help,
 				'values'	=> $freebusy_values,

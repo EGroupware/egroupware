@@ -74,14 +74,14 @@ delete series	calendar	eu	Serieak ezabatu
 delete this alarm	calendar	eu	Alarma hau ezabatu
 delete this event	calendar	eu	Gertakari hau ezabatu
 delete this exception	calendar	eu	Salbuespen hau ezabatu
-delete this series of recuring events	calendar	eu	Gertakari serie hau ezabatu
+delete this series of recurring events	calendar	eu	Gertakari serie hau ezabatu
 deleted	calendar	eu	ezabatua
-disinvited	calendar	eu	Ez zaude gonbidatuta
+uninvited	calendar	eu	Ez zaude gonbidatuta
 display status of events	calendar	eu	Gertakarien egoera erakutsi
 displayed view	calendar	eu	Ikuspegia erakutsita
 do you want a weekview with or without weekend?	calendar	eu	Asteko ikuspegia, astebukaerekin edo gabe nahiago duzu?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	eu	Gertakari berrien edo gertakarien aldaketen berri izan nahi duzu? Zuk zeuk egindako aldaketez ere jakin araziko zaizu.<br> Abisuak mugatu egin ditzazkezu gertakariaren arabera. Aldaketa guztiak hautatuz gero abisuak datak, titulua, deskribapena edo partehartzaileak aldatzerakoan bidaliko ditu baina ez partehartzaileen erantzunak jasotzean. Gertakariaren jabeak abisu eskaera hautatu badu, beti jasoko ditu partehartzaileen onarpenak edo gaitzezpenak gertakariarekiko.
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	eu	Zure egutegiko gertakarien laburpena posta bidez jaso nahi duzu? Laburpena zure posta helbidera bidaliko da goizero baldin eta zure eguneko egutegian gertakaririk baldin badaukazu.
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	eu	Zure egutegiko gertakarien laburpena posta bidez jaso nahi duzu? Laburpena zure posta helbidera bidaliko da goizero baldin eta zure eguneko egutegian gertakaririk baldin badaukazu.
 do you wish to autoload calendar holidays files dynamically?	admin	eu	Jai egutegia dinamikoki internetetik kargatu nahi duzu?
 download	calendar	eu	Deskargatu
 download this event as ical	calendar	eu	Gertakari hau deskargatu ¡Cal moduan
@@ -90,7 +90,7 @@ duration of the meeting	calendar	eu	Bileraren iraupena
 edit exception	calendar	eu	Salbuespena editatu
 edit series	calendar	eu	Serieak editatu
 edit this event	calendar	eu	Gertaera hau editatu
-edit this series of recuring events	calendar	eu	Gertakari serie hau editatu
+edit this series of recurring events	calendar	eu	Gertakari serie hau editatu
 empty for all	calendar	eu	Hutsik guztientzako
 end	calendar	eu	Bukaera
 end date/time	calendar	eu	Bukaera data/ordua
@@ -117,14 +117,14 @@ fieldseparator	calendar	eu	Eremu banatzailea
 filemanager	calendar	eu	Fitxategi-kudeatzailea
 filename	calendar	eu	Fitxategiaren izena
 filename of the download	calendar	eu	Deskargatu den fitxategiaren izena
-find free timeslots where the selected participants are availible for the given timespan	calendar	eu	Bilera modaltzeko hutsune libreak aurkitu partehartzaileen egutegietan
+find free timeslots where the selected participants are available for the given timespan	calendar	eu	Bilera modaltzeko hutsune libreak aurkitu partehartzaileen egutegietan
 firstname of person to notify	calendar	eu	Abisua eman behar zaion pertsonaren izena
 for which views should calendar show distinct lines with a fixed time interval.	calendar	eu	Zein egutegi ikuspegitan erakutsi beharko litzatezke denbora lerroak?
 format of event updates	calendar	eu	Gertakarien eguneratze formatua
 forward half a month	calendar	eu	hilabete erdia aurreratu
 forward one month	calendar	eu	hilabete bat aurreratu
 four days view	calendar	eu	4 egunetako ikuspegia
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	eu	ordu-libreak: '%1' erabiltzaile ezezaguna, pasahitz ez zuzena edo ez zaude baimendurik bere informazioa ikusteko!!!
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	eu	ordu-libreak: '%1' erabiltzaile ezezaguna, pasahitz ez zuzena edo ez zaude baimendurik bere informazioa ikusteko!!!
 freetime search	calendar	eu	Denbora librean bilatu
 fri	calendar	eu	Ostirala
 full description	calendar	eu	Deskribapen osatua
@@ -171,7 +171,7 @@ location	calendar	eu	Lekua
 location to autoload from	admin	eu	Automatikoki kargatzeko lekua
 location, start- and endtimes, ...	calendar	eu	Lekua, hasiera eta amaiera ordua
 mail all participants	calendar	eu	Partehartzaile guztiei e-posta bat bidali
-make freebusy information available to not loged in persons?	calendar	eu	ordu libre/lanpetu ikuspegia sisteman sarturik ez dauden pertsonendako baimendu <br>(URL bat sortuko da eta berau pasa beharko diezu pertsona horiei)
+make freebusy information available to not logged in persons?	calendar	eu	ordu libre/lanpetu ikuspegia sisteman sarturik ez dauden pertsonendako baimendu <br>(URL bat sortuko da eta berau pasa beharko diezu pertsona horiei)
 minutes	calendar	eu	minutuak
 modified	calendar	eu	Aldatua
 mon	calendar	eu	Astelehena
@@ -190,7 +190,7 @@ non blocking	calendar	eu	ez du blokeatzen
 not	calendar	eu	ez
 notification messages for added events	calendar	eu	Abisu mezuak gehitzen diren gertaeretan
 notification messages for canceled events	calendar	eu	Abisu mezuak ezeztatzen diren gertaeretan
-notification messages for disinvited participants	calendar	eu	Abisu mezuak partehartzaileak ez gonbidatzeko
+notification messages for uninvited participants	calendar	eu	Abisu mezuak partehartzaileak ez gonbidatzeko
 notification messages for modified events	calendar	eu	Abisu mezuak aldatzen diren gertaeretan
 notification messages for your alarms	calendar	eu	Abisu mezua alarmentzako
 notification messages for your responses	calendar	eu	Abisu mezua erantzunentzako
@@ -201,17 +201,17 @@ old startdate	calendar	eu	Antzinako hasiera data
 on %1 %2 %3 your meeting request for %4	calendar	eu	%1 %2 %3 bilaera eskaera %4entzako
 on all modification, but responses	calendar	eu	Aldaketa guztietan erantzunetan izan ezik
 on any time change too	calendar	eu	edozein ordu aldaketan baita ere
-on invitation / cancelation only	calendar	eu	gobidapen edo ezeztapenetan bakarrik
+on invitation / cancellation only	calendar	eu	gobidapen edo ezeztapenetan bakarrik
 on participant responses too	calendar	eu	partehartzaileen erantzunetan baita ere
 on time change of more than 4 hours too	calendar	eu	4 orduko ordu aldaketa batean baita ere
 one month	calendar	eu	hilabete bat
 one week	calendar	eu	aste bat
 one year	calendar	eu	urte bat
-only the initial date of that recuring event is checked!	calendar	eu	Hasiera data bakarrik dago markatuta gertakarian!
+only the initial date of that recurring event is checked!	calendar	eu	Hasiera data bakarrik dago markatuta gertakarian!
 open todo's:	calendar	eu	ireki egitekoen zerrenda:
 overlap holiday	calendar	eu	jaiegunak gainjarri
 participants	calendar	eu	Partehartzaileak
-participants disinvited from an event	calendar	eu	Gertakari bateko gonbidapena kentzen zaien pratehartzaileak
+participants uninvited from an event	calendar	eu	Gertakari bateko gonbidapena kentzen zaien pratehartzaileak
 participants, resources, ...	calendar	eu	Partehartzaileak, baliabideak...
 password for not loged in users to your freebusy information?	calendar	eu	Sisteman sartu gabe dauden pertsonek zure libre/lanpetu egutegia ikusi ahal izateko pasahitza?
 people holiday	calendar	eu	jendearentzako jaieguna
@@ -253,7 +253,7 @@ select who should get the alarm	calendar	eu	Aukeratu nork jaso behar duen alarma
 set a year only for one-time / non-regular holidays.	calendar	eu	Urtero errepikatzen ez diren oporretan ez ezarri urterik.
 set new events to private	calendar	eu	Gertakari berriak pribatu moduan jarri
 should new events created as private by default ?	calendar	eu	Pribatu moduan sortu gertakariak?
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	eu	Gertakari-patehartzaile baten egoera izenarekin batera agertu beharko litzateke edo partehartzaile izenaren ondoren?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	eu	Gertakari-patehartzaile baten egoera izenarekin batera agertu beharko litzateke edo partehartzaile izenaren ondoren?
 show default view on main screen	calendar	eu	Ikuspegi lehenetsia erakutsi pantaila nagusian
 show list of upcoming events	calendar	eu	Datozen gertakarien zerrenda erakutsi
 show this month	calendar	eu	Hilabete hau erakutsi
@@ -277,7 +277,7 @@ this defines the start of your dayview. events before this time, are shown above
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	eu	Taldekako plangintzako ikuspegian hautatu daukazun taldea da hau. Edozein momentutan aldatu dezakezu ikuspegian bertan.
 this message is sent for canceled or deleted events.	calendar	eu	Mezu hau gaitzetsitako edo ezabatutako gertakarietan bidaliko da.
 this message is sent for modified or moved events.	calendar	eu	Mezu hau gertakaria aldatu edo mugitzerakoan bidaliko da.
-this message is sent to disinvited participants.	calendar	eu	Mezu hau gonpidatuak egoteari uzten dutenei bidaltzen zaie.
+this message is sent to uninvited participants.	calendar	eu	Mezu hau gonpidatuak egoteari uzten dutenei bidaltzen zaie.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	eu	Mezu hau zu jabe zaren gertakarien partehartzaileei bidaliko zaie, beti ere hala eskatu badute.<br>Zenbait aldagai erabil ditzakezu mezuaren formatua definitzerakoan, gertakariaren informazioarekin ordezkatuko direlarik.<br> Lehen lerroa mezuaren izenburua da.
 this message is sent when you accept, tentative accept or reject an event.	calendar	eu	Mezu hau gertakari bat onartu, zalantzan edo gaitzezten baduzu bidaltzen da.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	eu	Mezu hau gertakari batekiko alarma bat ezartzean bidaltzen da. Gertakariari buruzko informazio guztia bidaliko du.
@@ -311,12 +311,12 @@ work day ends on	calendar	eu	Lan egunak bukatzen dira
 work day starts on	calendar	eu	Lan egunak hasten dira
 yearly	calendar	eu	Urtero
 yearview	calendar	eu	Urtearen ikuspegia
-you can either set a year or a occurence, not both !!!	calendar	eu	Bakarrik urtea edo zebateko jarri dezakezu, ez biak!!!
-you can only set a year or a occurence !!!	calendar	eu	Bakarrik urtea edo zebateko jarri dezakezu.
+you can either set a year or a occurrence, not both !!!	calendar	eu	Bakarrik urtea edo zebateko jarri dezakezu, ez biak!!!
+you can only set a year or a occurrence !!!	calendar	eu	Bakarrik urtea edo zebateko jarri dezakezu.
 you do not have permission to read this record!	calendar	eu	Ez daukazu baimenik erregistro hau irakurtzeko!
 you have a meeting scheduled for %1	calendar	eu	Bilera bat daukazu %1 programatua
-you have been disinvited from the meeting at %1	calendar	eu	%1en bilerara gobidatua egoteari utzi diozu
+you have been uninvited from the meeting at %1	calendar	eu	%1en bilerara gobidatua egoteari utzi diozu
 you need to select an ical file first	calendar	eu	Lehenago ¡Cal fitxategi bat aukeratu behar duzu
-you need to set either a day or a occurence !!!	calendar	eu	Egun bat edo ateraldi bat jarri behar duzu
+you need to set either a day or a occurrence !!!	calendar	eu	Egun bat edo ateraldi bat jarri behar duzu
 your meeting scheduled for %1 has been canceled	calendar	eu	%1 programatutako bilera ezeztatu egin da
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	eu	%1 programatutako bilera %2 programatu da

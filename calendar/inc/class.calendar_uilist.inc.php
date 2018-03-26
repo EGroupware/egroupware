@@ -123,7 +123,7 @@ class calendar_uilist extends calendar_ui
 					}
 					elseif(is_null($msg))
 					{
-						$msg .= lang('%1 event(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+						$msg .= lang('%1 event(s) %2, %3 failed because of insufficient rights !!!',$success,$action_msg,$failed);
 					}
 				}
 			}

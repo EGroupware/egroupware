@@ -155,7 +155,7 @@ export file name	addressbook	hu	Export állomány neve
 export from addressbook	addressbook	hu	Export a Címjegyzékből
 export selection	addressbook	hu	Kijelölés exportálása
 exported	addressbook	hu	exportálva
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	hu	Kapcsolatok exportálása a Címjegyzékből CSV formátumban. CSV jelentése 'Comma Separated Values'. Az opcióknál kiválasztható más elválasztó karakter is, nem csak a vessző.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	hu	Kapcsolatok exportálása a Címjegyzékből CSV formátumban. CSV jelentése 'Comma Separated Values'. Az opcióknál kiválasztható más elválasztó karakter is, nem csak a vessző.
 extra	addressbook	hu	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	hu	%1
 favorites	addressbook	hu	Kedvencek

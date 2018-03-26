@@ -199,7 +199,7 @@ export from addressbook	addressbook	fi	Vie osoitekirjasta
 export selection	addressbook	fi	Vie valinnat
 exported	addressbook	fi	Viety
 exports contacts from your addressbook into a csv file.	addressbook	fi	Vie kontakteja Osoitekirjasta CSV tiedostoon.
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	fi	Vie osoitekirjan yhteystiedot CSV tiedostoon. CVS (Comma Seperated Values) tarkoittaa pilkulla erotettua muotoilua. Voit valita Asetukset välilehdeltä myös muita erotustapoja.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fi	Vie osoitekirjan yhteystiedot CSV tiedostoon. CVS (Comma Seperated Values) tarkoittaa pilkulla erotettua muotoilua. Voit valita Asetukset välilehdeltä myös muita erotustapoja.
 extra	addressbook	fi	Lisätiedot
 extra private	addressbook	fi	Yksityiset tiedot
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	fi	%1 organisaation jäsen(ien) muutos epäonnistui (Puutteelliset oikeudet) !!!
@@ -253,7 +253,7 @@ import multiple vcard	addressbook	fi	Tuo useita VCard:ja
 import next set	addressbook	fi	Tuo seuraava ryhmä
 import_instructions	addressbook	fi	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu. The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu. The file exported will be in vCard format.
 importer's personal	addressbook	fi	Tuojan henkilökohtainen
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	fi	Tuo yhteystiedot osoitekirjaan CSV tiedostosta. CVS (Comma Seperated Values) tarkoittaa pilkulla erotettua muotoilua. Voit valita Asetukset välilehdeltä myös muita erotustapoja.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fi	Tuo yhteystiedot osoitekirjaan CSV tiedostosta. CVS (Comma Seperated Values) tarkoittaa pilkulla erotettua muotoilua. Voit valita Asetukset välilehdeltä myös muita erotustapoja.
 in %1 days (%2) is %3's birthday.	addressbook	fi	%1:n päivän kuluttua (%2) on syntymäpäivä henkilöllä %3.
 income	addressbook	fi	Tulo
 infolog	addressbook	fi	InfoLog

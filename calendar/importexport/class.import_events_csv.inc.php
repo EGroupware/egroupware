@@ -269,7 +269,7 @@ class import_events_csv implements iface_import_plugin  {
 	 * @return string descriprion
 	 */
 	public static function get_description() {
-		return lang("Imports events into your Calendar from a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.");
+		return lang("Imports events into your Calendar from a CSV File. CSV means 'Comma Separated Values'. However in the options Tab you can also choose other seperators.");
 	}
 
 	/**

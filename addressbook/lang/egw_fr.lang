@@ -233,7 +233,7 @@ export from addressbook	addressbook	fr	Exporter depuis le carnet d'adresses
 export selection	addressbook	fr	Sélection pour l'exportation
 exported	addressbook	fr	exporté
 exports contacts from your addressbook into a csv file.	addressbook	fr	Exporter les contacts du carnet d'adresses vers un fichier CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Exporter les contacts du carnet d'adresses vers un fichier CSV.  CSV correspond à des valeurs séparées par des virgules.  Dans les options, vous pouvez choisir d'autres séparateurs.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Exporter les contacts du carnet d'adresses vers un fichier CSV.  CSV correspond à des valeurs séparées par des virgules.  Dans les options, vous pouvez choisir d'autres séparateurs.
 exports contacts from your addressbook into a vcard file.	addressbook	fr	Exporter les contacts de votre carnet d'adresses vers un fichier vCard.
 extra	addressbook	fr	Supplément
 extra encodings	addressbook	fr	Encodage supplémentairess
@@ -294,7 +294,7 @@ import multiple vcard	addressbook	fr	Importation VCard Multiple
 import next set	addressbook	fr	Importer l'élément suivant
 import_instructions	addressbook	fr	Dans Netscape, ouvrir le carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format LDIF.<p>Ou, dans Outlook, sélectionner votre dossier des contacts, sélectionner <b>Importer et Exporter...</b> depuis le menu <b>Fichier</b> et exporter vos contacts, séparés par des virgules,  dans un fichier texte (CSV). <p>Ou, dans Palm Desktop 4.0 ou supérieur, consulter votre carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format VCard.
 importer's personal	addressbook	fr	répertoire personnel de l'importeur
-imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Importer les contacts depuis un fichier CSV.  CSV correspond à des valeurs séparées par des virgules.  Dans les options, vous pouvez choisir d'autres séparateurs.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Importer les contacts depuis un fichier CSV.  CSV correspond à des valeurs séparées par des virgules.  Dans les options, vous pouvez choisir d'autres séparateurs.
 imports contacts into your addressbook from a vcard file.	addressbook	fr	Importer les contacts vers votre carnet d'adresses depuis un fichier vCard.
 in %1 days (%2) is %3's birthday.	addressbook	fr	Dans %1 jours (%2) c'est l'anniversaire de %3.
 income	addressbook	fr	Revenus

@@ -221,7 +221,7 @@ high	infolog	cs	Vysoká
 history	infolog	cs	Historie
 history logging	infolog	cs	Protokolování historie
 history logging and deleting of items	infolog	cs	Protokolování historie a mazání položek
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	cs	Kolik řádek popisu má být vidět přímo. Ostatní řádky budou dostupné přes posouvací lištu.
+how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	cs	Kolik řádek popisu má být vidět přímo. Ostatní řádky budou dostupné přes posouvací lištu.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	cs	Šířka pole pro popis, hodnota je číslo, např. 60.
 html link to the current record	infolog	cs	HTML odkaz na aktuální záznam
 id	infolog	cs	Id
@@ -233,7 +233,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	infolog	cs	Pokud specifikujete definici pro export, bude při exportu použita.
 import next set	infolog	cs	importovat následující sadu
 importance	infolog	cs	Důležitost
-imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	cs	Import záznamů do Úkolů ze souboru CSV (textový soubor s oddělovači). V záložce s možnostmi je možné vybrat druh oddělovače.
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	cs	Import záznamů do Úkolů ze souboru CSV (textový soubor s oddělovači). V záložce s možnostmi je možné vybrat druh oddělovače.
 imports todos into infolog from an ical file.	infolog	cs	Import záznamů do Úkolů ze souboru iCal.
 info log	common	cs	InfoLog
 infolog	common	cs	InfoLog
