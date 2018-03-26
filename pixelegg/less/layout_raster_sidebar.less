@@ -290,7 +290,7 @@
                 border-width: 0px 1px 1px 1px;
             }
             .egw_fw_ui_sidemenu_entry_header_bottom {
-                
+
             }
 
             .egw_fw_ui_sidemenu_entry_icon {
@@ -321,7 +321,7 @@
 		border-top:1px solid;
 		border-left: 1px solid;
 		border-color:@gray_30;
-        &:hover {background-color: @egw_color_1;}
+        &:hover {border-color: @gray_10;}
     }
 
 	// Toggle menu
@@ -455,9 +455,17 @@
 	height: 100%;
 	cursor: col-resize;
 }
+.egw_fw_ui_splitter.ui-draggable-dragging {
+	background-color: #fbec88;
+	border-left: 1px solid #B4B4B4;
+	opacity: 1 !important;
+}
 
 
 
+.egw_fw_ui_splitter_hover {
+	background-color: white;
+}
 
             //####################################################
             // Submenu / Unterpunkte in der Seitenleiste

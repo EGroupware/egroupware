@@ -949,6 +949,19 @@
   .et2_toolbar_actionlist {
     float: left;
   }
+  .splitter-bar .ui-icon.ui-icon-grip-solid-vertical {
+    background-image: url(../images/splitter_vert.png);
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .splitter-bar .ui-icon.ui-icon-grip-solid-horizontal {
+    background-image: url(../images/splitter_horz.png);
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .splitter-bar.ui-state-hover {
+    background: none;
+  }
   /**
  * Do not wrap content of a single widget incl. a label or children of a hbox.
  * Taking into eg. select-account widget rendered as ul and prefixed with a label
@@ -4758,7 +4771,7 @@ td.message span.message {
   border-color: #B4B4B4;
 }
 #egw_fw_sidebar #egw_fw_splitter:hover {
-  background-color: #ffc200;
+  border-color: #E6E6E6;
 }
 #egw_fw_sidebar #egw_fw_toggler {
   display: block;
@@ -4881,6 +4894,14 @@ td.message span.message {
   width: 5px;
   height: 100%;
   cursor: col-resize;
+}
+.egw_fw_ui_splitter.ui-draggable-dragging {
+  background-color: #fbec88;
+  border-left: 1px solid #B4B4B4;
+  opacity: 1 !important;
+}
+.egw_fw_ui_splitter_hover {
+  background-color: white;
 }
 .egw_fw_ui_category_content {
   background-color: #ffffff;
