@@ -520,7 +520,8 @@ action buttons, left aligned for "extra" controls
 	width: 100%;
 }
 .et2_customfield_list tr td:first-child {width:30%;}
-.et2_customfield_list tr td:nth-child(2) > *, .et2_customfield_list tr td:nth-child(2) > * > input {
+.et2_customfield_list tr td:nth-child(2)> *:not(.et2_checkbox):not(.et2_file):not(.et2_vfs_btn):not(.et2_button):not(.et2_radiobox),
+.et2_customfield_list tr td:nth-child(2) > * > input:not(.et2_checkbox):not(.et2_radiobox):not(.et2_button):not(.et2_vfs_btn) {
     width: calc(100% - 20px);
 }
 .et2_customfield_list input, .et2_customfield_list textarea {
