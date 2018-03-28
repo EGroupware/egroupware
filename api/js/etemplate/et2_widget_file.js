@@ -409,6 +409,15 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			if(this.createStatus(event,file))
 			{
+
+				// Disable buttons
+				this.disabled_buttons = jQuery("input[type='submit'], button")
+					.not("[disabled]")
+					.attr("disabled", true)
+					.addClass('et2_button_ro')
+					.removeClass('et2_clickable')
+					.css('cursor', 'default');
+			
 				// Actually start uploading
 				this.resumable.upload();
 			}
@@ -443,13 +452,6 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 		// Hide any previous errors
 		this.hideMessage();
 
-		// Disable buttons
-		this.disabled_buttons = jQuery("input[type='submit'], button")
-				.not("[disabled]")
-				.attr("disabled", true)
-				.addClass('et2_button_ro')
-				.removeClass('et2_clickable')
-				.css('cursor', 'default');
 
 		event.data = this;
 
