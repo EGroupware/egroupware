@@ -183,6 +183,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 		var select_attrs = {
 			button_label: egw.lang('Link'),
 			button_caption: '',
+			button_icon:'link',
 			readonly: this.options.readonly,
 			dialog_title: egw.lang('Link'),
 			extra_buttons:[{text: egw.lang("copy"),	id:"copy", image: "copy"},
