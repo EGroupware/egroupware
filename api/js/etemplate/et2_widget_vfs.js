@@ -928,6 +928,12 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			description: "Caption for vfs-select button.",
 			translate:true
 		},
+		"button_icon":{
+			name: "button icon",
+			type: "string",
+			default: "check",
+			description: "Custom icon to show on submit button.",
+		},
 		"name": {
 			name:"File name",
 			type: "any", // Object
@@ -1023,7 +1029,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			{
 				text: egw.lang(_data.content.label),
 				id:"submit",
-				image:_data.content.mode.match(/saveas|select-dir/) ? "save" : "check"
+				image: _data.content.mode.match(/saveas|select-dir/) ? "save" : this.options.button_icon
 			}
 		];
 		if (this.options.extra_buttons && this.options.method)
@@ -1046,7 +1052,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			callback: function(_button_id, _value)
 			{
-				if ((_button_id == 'submit' || extra_buttons_action[_button_id]) && _value)
+				if ((_button_id == 'submit' || (extra_buttons_action && extra_buttons_action[_button_id])) && _value)
 				{
 					var files = [];
 					switch(_data.content.mode)
