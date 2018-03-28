@@ -393,7 +393,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 				}
 				if (button.image)
 				{
-					button.style = 'background-image: url('+this.egw().image(button.image,'etemplate')+')';
+					button.style = 'background-image: url('+this.egw().image(button.image,'api')+')';
 					delete button.image;
 				}
 			}
