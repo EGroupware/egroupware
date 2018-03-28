@@ -2416,7 +2416,13 @@ window.egw_LAB.wait(function() {
 					'addressbook.edit.upload' => false
 				));
 			}
+			if (!$readonlys['pubkey'])
+			{
+				$readonlys['addressbook:'.$content['id'].':.files/pgp-pubkey.asc'] =
+				$readonlys['addressbook:'.$content['id'].':.files/smime-pubkey.crt'] = false;
+			}
 		}
+
 		if (isset($readonlys['n_fileas'])) $readonlys['fileas_type'] = $readonlys['n_fileas'];
 		// disable not needed tabs
 		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
