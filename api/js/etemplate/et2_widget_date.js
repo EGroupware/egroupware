@@ -612,9 +612,9 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		// date-timeonly returns just the seconds, without any date!
 		if (this._type == 'date-timeonly')
 		{
-			this.date.setDate(1);
-			this.date.setMonth(0);
-			this.date.setFullYear(1970);
+			this.date.setUTCDate(1);
+			this.date.setUTCMonth(0);
+			this.date.setUTCFullYear(1970);
 		}
 		else if (this._type == 'date')
 		{
