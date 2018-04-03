@@ -527,13 +527,17 @@ var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_co
 			// Make sure that placeholder actions are defined and existed in client-side,
 			// otherwise do not set them as placeholder. for instance actions with
 			// attribute hideOnMobile do not get sent to client-side.
-			if (links.length > 0)
-			{
-				for (var i=links.length-1; i >= 0; i--)
+			var action_search = function(current) {
+				if (typeof this._widget.options.actions[current] !== 'undefined') return true;
+				// Check children
+				for(var action in this._widget.options.actions)
 				{
-					if (typeof this._widget.options.actions[links[i]] == 'undefined') links.splice(i,1);
+					action = this._widget.options.actions[action];
+					if( action.children && action.children[current]) return true;
 				}
+				return false;
 			}
+			links = links.filter(action_search, this);
 		} catch (e) {
 		}
 
