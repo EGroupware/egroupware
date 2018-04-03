@@ -401,7 +401,6 @@ class addressbook_ui extends addressbook_bo
 			'add' => array(
 				'caption' => 'Add',
 				'group' => $group,
-				'enableClass' => 'contact_contact',
 				'hideOnDisabled' => true,
 				'children' => array(
 					'new' => array(
@@ -414,6 +413,7 @@ class addressbook_ui extends addressbook_bo
 						'caption' => 'Copy',
 						'url' => 'menuaction=addressbook.addressbook_ui.edit&makecp=1&contact_id=$id',
 						'popup' => Link::get_registry('addressbook', 'add_popup'),
+						'enableClass' => 'contact_contact',
 						'allowOnMultiple' => false,
 						'icon' => 'copy',
 					),
