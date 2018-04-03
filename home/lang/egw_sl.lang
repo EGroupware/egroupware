@@ -1,13 +1,37 @@
+a quick note	home	sl	Hitro opozorilo
+add	home	sl	Dodaj
+all	home	sl	Vse
+birthday reminders	home	sl	Opomniki za rojstni
 color	home	sl	Barva
+configure	home	sl	Konfiguriraj
 displays home	home	sl	Prikaže domačo stran
+edit	home	sl	Uredi
 egroupware	home	sl	EGroupware
+entry	home	sl	Vstavi
+favorite	home	sl	Priljubljeno
+forced	home	sl	Prisiljeno
 home	home	sl	Domov
 in %1 days (%2) is %3's birthday.	home	sl	V %1 dneh (%2) je rojstni dan %3.
+list of entries	home	sl	Seznam vpisov
+location	home	sl	Lokacija
+note	home	sl	Opomba
+open	home	sl	Odpri
 remove	home	sl	Odstrani
+remove as default for %1	home	sl	Odstrani kot privzeto za %1
+remove default %1	home	sl	Odstrani privzeto %1
+removed default	home	sl	Odstranjeno privzeto
 set as default	home	sl	Nastavi kot privzeto
+set default	home	sl	Nastavi privzeto
+show a list of entries	home	sl	Prikaži seznam vnosov
+show all the entries using a favorite	home	sl	Pokaži vse vnose z uporabo priljubljenega
+show one entry	home	sl	Pokaži en vnos
+single entry	home	sl	Enotni vnos
 there is a new version of egroupware available	home	sl	Na voljo je nova različica EGroupware-a
+title	home	sl	Naslov
 today is %1's birthday!	home	sl	Danes ima rojstni dan %1.
 tomorrow is %1's birthday.	home	sl	Jutri ima rojstni dan %1.
+weather	home	sl	Vreme
+weekview	home	sl	Tedenski pogled
 yes, for the next three days	home	sl	Da, za naslednje tri dni
 yes, for the next two weeks	home	sl	Da, za naslednja dva tedna
 yes, for the next week	home	sl	Da, za naslednji teden

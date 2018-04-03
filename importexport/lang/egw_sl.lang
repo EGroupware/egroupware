@@ -1,43 +1,161 @@
+%1 definition(s) %2	importexport	sl	%1 definicije %2
+%1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	sl	%1 definicije %2, %3 ni uspelo zaradi nezadostnih pravic!
+%1 definitions %2	importexport	sl	%1 definicij % 2
+%1 is not a known user or group	importexport	sl	%1 ni znan uporabnik ali skupina
+%1 is not readable	importexport	sl	%1 ni berljiva.
+%1 is not writable	importexport	sl	%1 ni mogoče zapisati.
+%1 records processed	importexport	sl	%1 zapisov obdelanih.
+%s just me	importexport	sl	% s Samo jaz
+(* for all)	importexport	sl	(* za vse)
+(0-23)	importexport	sl	(0-23)
+(0-6, 0=sun)	importexport	sl	(0-6, 0 = ne)
+*contact id cannot be changed by import	importexport	sl	* Kontaktne številke ni mogoče spremeniti z uvozom
+add	importexport	sl	Dodaj
 addressbook csv import	importexport	sl	Uvoz adresarja iz CSV
+addressbook vcard import	importexport	sl	Dodajanje vnose vCard
+admin	importexport	sl	Skrbnik
+admin disabled exporting	importexport	sl	Skrbnik je onemogočil izvoz
+all	importexport	sl	vse
+all encodings	importexport	sl	Vse kodiranje
 all users	importexport	sl	Vsi uporabniki
+all...	importexport	sl	Vse...
 allowed users	importexport	sl	Dovoljeni uporabniki
 automatically created by importexport	importexport	sl	Samodejno ustvarjeno z Importexport
+basic csv import	importexport	sl	Osnovni uvoz CSV
 changed	importexport	sl	Spremenjeno
+changed allowed_users	importexport	sl	Spremenjeni dovoljeni uporabniki
+changed owner	importexport	sl	Spremenjen lastnik
 charset of file	importexport	sl	Kodna tabela datoteke
 check all	importexport	sl	Preveri vse
 choose a name for this definition	importexport	sl	Izberite ime za to definicijo
 choose a plugin	importexport	sl	Izberite vtičnik
 choose an application	importexport	sl	Izberite aplikacijo
+choose fields to export	importexport	sl	Izberite polja za izvoz
 choose seperator and charset	importexport	sl	Izberite ločilo polj in nabor znakov
+column mismatch.  expected %1 columns, your file has %2.	importexport	sl	Neusklajenost stolpcev. Pričakovani %1 stolpcev, vaša datoteka ima %2.ns
+column mismatch: %1 should be %2, not %3	importexport	sl	Neusklajenost stolpcev: %1 mora biti %2, ne %3
 condition	importexport	sl	Pogoj
 copied	importexport	sl	Kopirano
+create a <a href="%1">new definition</a> for this file	importexport	sl	Ustvarite <a href="%1"> novo definicijo </a> za to datoteko
+create export	importexport	sl	Ustvari izvoz
 created	importexport	sl	Ustvarjeno
+csv field	importexport	sl	Polje CSV
+database error	importexport	sl	Napaka v bazi podatkov
+database values	importexport	sl	Vrednosti baze podatkov
+day of week	importexport	sl	Dan v tednu
+define imports|exports	common	sl	Določite uvoz | Izvoz
+definition	importexport	sl	Opredelitev
 delete all selected definitions	importexport	sl	Izbriši vse izbrane definicije
 deleted	importexport	sl	Zbrisano
+delimiter	importexport	sl	Deljitelj
+duplicate name, please choose another.	importexport	sl	Podvojeno ime, izberite drugo.
+edit conditions	importexport	sl	Urejanje pogojev
+edit definition <a href="%1">%2</a> to match your file	importexport	sl	Uredite definicijo <a href="%1">%2 </a>, da se ujema z vašo datoteko
+edit your file to match the definition:	importexport	sl	Uredite svojo datoteko tako, da ustreza definiciji:
+encoding mismatch.  expected %1 file, you uploaded %2.<br />\n	importexport	sl	Uredite svojo datoteko, da se bo ujemala z de nespoštovanjem kodiranja. Pričakovana datoteka %1, naložili ste %2. <br /> \ nizhod:
+errors	importexport	sl	Napake
+execute	importexport	sl	Izvedi
 expert options	importexport	sl	Napredne možnosti
 export	importexport	sl	Izvozi
 export all selected definitions	importexport	sl	Izvozi vse izbrane definicije
+export data as	importexport	sl	Izvoz podatkov kot
+export definition to use for nextmatch export	preferences	sl	Izvozna definicija, ki jo je treba uporabiti za izvoz naslednjega računa
+export spreadsheet	importexport	sl	Izvozi preglednico
 exported	importexport	sl	Izvoženo
+extra %1	importexport	sl	Dodatna %1
+extra charsets for import / export	importexport	sl	Dodatni znaki za uvoz / izvoz
+extra encodings	importexport	sl	Dodatna kodiranja
 false	importexport	sl	Ne
+field labels	importexport	sl	Polje nalepk
+field names	importexport	sl	Imena polj
+fieldseperator	importexport	sl	Polje ločevalnik
+filters	importexport	sl	Filtri
 finish	importexport	sl	Končaj
+from definition	importexport	sl	Iz definicije
 general	preferences	sl	Splošno
 general fields:	preferences	sl	Splošna polja:
+group	importexport	sl	Skupina
+header lines to skip	importexport	sl	Vrstice glave, da preskočite
+how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	sl	Kako se združiti z obstoječimi podatki? Za vsak zapis so vsi pogoji ocenjeni od zgoraj navzdol ali pa se ustavijo. Za slepo vstavite, pustite prazno.
+human friendly values	importexport	sl	Ljudem prijazne vrednote
+if you specify an export definition, it will be used when you export	preferences	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili.
 import	importexport	sl	Uvoz
+import aborted	importexport	sl	Uvoz je prekinjen
+import data is	importexport	sl	Podatki o uvozu so
+import definition	importexport	sl	Uvozna opredelitev
+import definitions	common	sl	Uvoz definicij
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	sl	Uvozi definicije (pozor: obstoječe definicije z enakim imenom bodo prepisane!)
+imported	importexport	sl	uvoženo
+importexport	common	sl	Uvoz | Izvozi
 importexport wizard finished successfully!	importexport	sl	Čarovnik ImportExport se je uspešno zaključil.
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	sl	Uvozi informacije iz datoteke CSV. To je samo osnovni razred in ne naredi ničesar samega.
+include header	importexport	sl	Vključi glavo
+just me	importexport	sl	Samo jaz
+last run	importexport	sl	Zadnja vožnja
 load sample file	importexport	sl	Naloži datoteko s primeri
+lock expired on previous run	importexport	sl	Zakleni se je iztekel ob prejšnjem zagonu
 manage mapping	importexport	sl	Upravljaj mapiranje
 next	importexport	sl	Naslednji
 next run	importexport	sl	Naslednji zagon
+no	importexport	sl	Ne
+no custom field "%1" for %2.	importexport	sl	Ni polj po meri "%1" za %2.
+no matches	importexport	sl	ni zadetkov
+no matching records	importexport	sl	ni zadetkov
+no notifications	importexport	sl	Brez obvestil
+no records selected	importexport	sl	Noben zapis ni izbran!
+none	importexport	sl	Brez
+none found	importexport	sl	Nihče ni najden
+old fixed definition	preferences	sl	Stara določena opredelitev
+other	importexport	sl	Drugo
+please select file to import	importexport	sl	Prosimo, izberite datoteko za uvoz
+plugin	importexport	sl	Vključiti
 preview	importexport	sl	Predogled
+preview not supported by %1	importexport	sl	Predogled ni podprt z %1
 previous	importexport	sl	Prejšnji
+private	importexport	sl	Zasebno
+problems during import:	importexport	sl	Težave pri uvozu:
+replace	importexport	sl	Zamenjati
 save as definition	importexport	sl	Shrani kot definicijo
 schedule	common	sl	urnik
+schedule import / export	common	sl	Uvoz urnika | izvoz
+schedule import | export	importexport	sl	Uvoz urnika | izvoz
+schedule not found	importexport	sl	Urnik ni bil najden.
+schedule times are server time!  currently %s.	importexport	sl	Urnik časov je strežniški čas! Trenutno %s.
+select	importexport	sl	Izberite
 select definition	importexport	sl	Izberi definicijo
+select one	importexport	sl	Izberi eno
 select plugin	importexport	sl	Izberi vtičnik
+select...	importexport	sl	Izberite ...
+site configuration	importexport	sl	Konfiguracija strani
+skipped	importexport	sl	Preskočeno
 some nice text	importexport	sl	Nekaj ljubkega besedila
+some records may not have been imported	importexport	sl	Nekateri zapisi morda niso bili uvoženi.
+stop	importexport	sl	Stop
+stylite template folder	importexport	sl	Mapa predloge stylite
+target	importexport	sl	Cilj
+target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	sl	Ciljni primeri: vfs: //default/home/user/export.csv ali http://server.net/prices.csv
+target field	importexport	sl	Ciljno polje
+test only	importexport	sl	Samo test
+too many matches	importexport	sl	preveč zadetkov
 translation	importexport	sl	Prevod
 true	importexport	sl	DA
+try	importexport	sl	Poskusi
+unable to delete	importexport	sl	Ni mogoče izbrisati
+unable to link to %1 "%2"	importexport	sl	Ni mogoče povezati z %1 "%2"
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	importexport	sl	Povezave do %3 ni mogoče povezati po meri po meri "%1": "%4". %2 ujemanja.
+unable to schedule	importexport	sl	Ni mogoče načrtovati.
+update categories	importexport	sl	Posodobite kategorije
 use default	importexport	sl	Uporabi privzeto
+use field from csv if possible	importexport	sl	Če je mogoče, uporabite polje CSV
+use search results	common	sl	Uporabite rezultate iskanja
+user preference	importexport	sl	Prednost uporabnika
+user template folder	importexport	sl	Mapa uporabniške predloge
+users allowed to create their own definitions	importexport	sl	Uporabniki so lahko ustvarili lastne definicije
+users allowed to share their own definitions	importexport	sl	Uporabniki lahko delijo svoje definicije
+warnings	importexport	sl	Opozorila
 which useres are allowed for this definition	importexport	sl	Kateri uporabniki so dovoljeni za to definicijo
+which users are allowed to use this definition	importexport	sl	Kateri uporabniki lahko uporabljajo to definicijo
+yes	importexport	sl	Da
+you may want to <a href="%1" target="_new">backup</a> first.	importexport	sl	Najprej boste morda želeli <a href="%1" target="_new"> varnostno kopiranje </a>.
 you need to select an app and format first!	importexport	sl	Najprej morate izbrati aplikacijo in obliko.
+you need to select some entries first!	importexport	sl	Najprej morate izbrati nekaj vnosov!
