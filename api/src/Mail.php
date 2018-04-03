@@ -6776,7 +6776,7 @@ class Mail
 
 					// If it is an inline image url, we need to fetch the actuall attachment
 					// content and later on to be able to store its content as temp file
-					if (strpos($myUrl, '/index.php?menuaction=mail.mail_ui.displayImage') !== false)
+					if (strpos($myUrl, '/index.php?menuaction=mail.mail_ui.displayImage') !== false && $mail_bo)
 					{
 						$URI_params = array();
 						// Strips the url and store it into a temp for further procss
