@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupWare admin - admin command: check ACL for entries of deleted Api\Accounts
+ * EGroupWare admin - admin command: check ACL for entries of deleted accounts
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -50,7 +50,7 @@ class admin_cmd_check_acl extends admin_cmd
 			$GLOBALS['egw']->db->query("DELETE FROM egw_acl WHERE acl_account NOT IN (".implode(',',$ids).") OR acl_appname='phpgw_group' AND acl_location NOT IN ('".implode("','",$ids)."')",__LINE__,__FILE__);
 			$deleted = $GLOBALS['egw']->db->affected_rows();
 		}
-		return lang("%1 ACL records of not (longer) existing Api\Accounts deleted.",$deleted);
+		return lang("%1 ACL records of not (longer) existing accounts deleted.",$deleted);
 	}
 
 	/**
