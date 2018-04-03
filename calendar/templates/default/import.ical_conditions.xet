@@ -3,11 +3,14 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="calendar.import.ical_conditions" template="" lang="" group="0" version="16.1">
-		<template id="importexport.wizard_basic_import_csv.conditions" disabled="@no_conditions"/>
-		<hbox>
-			<description value="Do not import conflicting events"/>
-			<checkbox id="skip_conflicts" />
-		</hbox>
-		<filter id="set_filter" relative_dates="true"/>
+		<vbox>
+			<template id="importexport.wizard_basic_import_csv.conditions" disabled="@no_conditions"/>
+			<hbox>
+				<description value="Do not import conflicting events"/>
+				<checkbox id="skip_conflicts" />
+			</hbox>
+			<integer label="How many days to be removed in the past (default 100)" id="remove_past"/>
+			<integer label="How many days to be removed in the future (default 365)" id="remove_future"/>
+		</vbox>
 	</template>
 </overlay>
