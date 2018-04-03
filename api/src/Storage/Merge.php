@@ -211,7 +211,7 @@ abstract class Merge
 	 * @param boolean $ignore_acl =false true: no acl check
 	 * @return array
 	 */
-	public function contact_replacements($contact,$prefix='',$ignore_acl=false)
+	public function contact_replacements($contact,$prefix='',$ignore_acl=false, &$content = '')
 	{
 		if (!is_array($contact))
 		{
@@ -285,6 +285,11 @@ abstract class Merge
 				// use raw data for yaml, no user-preference specific formatting
 				$this->mimetype == 'application/x-yaml' ? (string)$contact[$name] :
 				Customfields::format($field, (string)$contact[$name]);
+		}
+
+		if($content && strpos($content, '$$#') !== FALSE)
+		{
+			$this->cf_link_to_expand($contact, $content, $replacements, 'addressbook');
 		}
 
 		// Add in extra cat field
@@ -1356,7 +1361,6 @@ abstract class Merge
 				$expand_sub_cfs[$cf[$index]] .= '$$'.$cf_sub . '$$ ';
 			}
 		}
-		$expand_sub_cfs = array_unique($expand_sub_cfs);
 
 		foreach($cf as $index => $field)
 		{
@@ -1413,7 +1417,7 @@ abstract class Merge
 		$replacements = array();
 		if($app == 'addressbook')
 		{
-			return $this->contact_replacements($id, $prefix);
+			return $this->contact_replacements($id, $prefix, false, $content);
 		}
 
 		try
