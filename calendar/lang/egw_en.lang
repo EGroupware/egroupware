@@ -164,6 +164,7 @@ display status of events	calendar	en	Display status of events
 displayed view	calendar	en	Displayed view
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	en	Displays this calendar view on the home page, the page you get when you enter EGroupware or click on the home page icon?
 distribution list	calendar	en	Distribution list
+do not import conflicting events	calendar	en	Do not import conflicting events
 do not include events of group members	calendar	en	Do not include events of group members
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	en	Do you really want to change the start of this series? If you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.
 do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
@@ -274,6 +275,8 @@ holidays only	calendar	en	Holidays only
 hours	calendar	en	hours
 how far to search (from startdate)	calendar	en	How far to search (from start date)
 how many appointments should non-admins be able to export	admin	en	How many appointments should non-admins be able to export.
+how many days to be removed in the future (default 365)	calendar	en	How many days to be removed in the future (default 365)
+how many days to be removed in the past (default 100)	calendar	en	How many days to be removed in the past (default 100)
 how many days to sync in the future (default %1)	calendar	en	How many days to sync in the future (default %1)
 how many days to sync in the past (default %1)	calendar	en	How many days to sync in the past (default %1)
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	en	How many description lines should be directly visible. Further lines are available via a scroll bar.

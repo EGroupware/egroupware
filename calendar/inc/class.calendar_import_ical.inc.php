@@ -11,6 +11,7 @@
  * @version $Id$
  */
 
+use \EGroupware\Api;
 
 /**
  * import ical for calendar
@@ -143,7 +144,18 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 		$owner = $plugin_options['cal_owner'];
 
 		// Purge
-		$this->purge_calendar($owner, $_definition->filter['purge'], $plugin_options['no_notification']);
+		$remove_past = new Api\DateTime();
+		$remove_future = new Api\DateTime();
+		$plugin_options = array_merge(array('remove_past' => 100, 'remove_future' => 365), $plugin_options);
+		foreach(array('remove_past','remove_future') as $date)
+		{
+			${$date}->add( (($date == 'remove_past' ? -1 : 1) * (int)$plugin_options[$date]) . ' days');
+		}
+		$this->purge_calendar(
+				$owner,
+				array('from' => $remove_past, 'to' => $remove_future),
+				$plugin_options['no_notification']
+		);
 
 		// User wants conflicting events to not be imported
 		if($_definition->plugin_options['skip_conflicts'])

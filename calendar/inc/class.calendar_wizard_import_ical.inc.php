@@ -53,16 +53,6 @@ class calendar_wizard_import_ical
 		// return from step55
 		if ($content['step'] == 'wizard_step55')
 		{
-			unset($content['filter']);
-			unset($content['set_filter']['fields']);
-			foreach($content['set_filter'] as $key => $value)
-			{
-				if($value) {
-					$content['filter'][$key] = $value;
-				}
-			}
-			unset($content['set_filter']);
-
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
@@ -80,25 +70,18 @@ class calendar_wizard_import_ical
 		{
 			$content['text'] = $this->steps['wizard_step55'];
 			$content['step'] = 'wizard_step55';
-			if(!$content['skip_conflicts'] && array_key_exists('skip_conflicts', $content['plugin_options']))
+			foreach(array('skip_conflicts','remove_past','remove_future') as $field)
 			{
-				$content['skip_conflicts'] = $content['plugin_options']['skip_conflicts'];
+				if(!$content[$field] && array_key_exists($field, $content['plugin_options']))
+				{
+					$content[$field] = $content['plugin_options'][$field];
+				}
 			}
 			$preserv = $content;
 			unset ($preserv['button']);
 
 			// No real conditions, but we share a template
 			$content['no_conditions'] = true;
-
-			// Filter - Purge
-			$content['set_filter']['fields'] = importexport_helper_functions::get_filter_fields(
-				$content['application'],$content['plugin'],$this
-			);
-			// Load existing filter from either content or definition
-			foreach($content['set_filter']['fields'] as $field => $settings)
-			{
-				$content['set_filter'][$field] = $content['filter'][$field];
-			}
 
 			return $this->step_templates[$content['step']];
 		}
