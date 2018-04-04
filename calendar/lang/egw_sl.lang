@@ -594,7 +594,7 @@ summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	sl
 sun	calendar	sl	Ned
 sunday	calendar	sl	Nedelja
 tag to mark positions for address labels	calendar	sl	Oznaka za označitev položajev oznak adresarja
-tentative	calendar	sl	Preizkušen
+tentative	calendar	sl	Začasno
 test import (show importable records <u>only</u> in browser)	calendar	sl	Test uvoza (pokaži uvozljive zapise<u>samo</u> v brskalniku)
 the apple ical apps use this color to display events from this calendar.	calendar	sl	Aplikacije Apple iCal uporabljajo to barvo za prikaz dogodkov iz tega koledarja.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	sl	Dokument lahko vsebuje vsebnik kot {{%1}}, ki ga je treba zamenjati s podatki.
