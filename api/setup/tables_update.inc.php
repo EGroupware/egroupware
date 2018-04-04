@@ -407,3 +407,19 @@ function api_upgrade16_9_004()
 {
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.1';
 }
+
+/**
+ * Give egw_ea_credentials.cred_password size 16k to accommodate bigger private s/mime keys
+ *
+ * @return string
+ */
+function api_upgrade17_1()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_credentials','cred_password',array(
+		'type' => 'varchar',
+		'precision' => '16384',
+		'comment' => 'password encrypted'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.001';
+}
