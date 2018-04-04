@@ -1025,6 +1025,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			var extra_buttons_action = [];
 			for (var i=0; i < this.options.extra_buttons.length; i++)
 			{
+				delete(this.options.extra_buttons[i]['click']);
 				buttons.push(this.options.extra_buttons[i]);
 				extra_buttons_action[this.options.extra_buttons[i]['id']] = this.options.extra_buttons[i]['id'];
 			}
@@ -1081,6 +1082,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 						jQuery(self.node).change();
 					}
 					delete app.vfsSelectUI;
+					return true;
 				}
 			},
 			title: this.options.dialog_title,
