@@ -17,10 +17,10 @@
 
 namespace EGroupware\Api\Vfs;
 
-use EGroupware\Api;
+require_once __DIR__ . '/SharingBase.php';
+
 use EGroupware\Api\Vfs;
 use EGroupware\Api\LoggedInTest as LoggedInTest;
-use EGroupware\Stylite\Vfs\Versioning;
 
 
 class SharingTest extends SharingBase
@@ -61,54 +61,6 @@ class SharingTest extends SharingBase
 	const VFS_OPTIONS = array(
 		'maxdepth' => 5
 	);
-
-	public function setUp()
-	{
-
-	}
-
-	public function tearDown()
-	{
-		LoggedInTest::tearDownAfterClass();
-		LoggedInTest::setupBeforeClass();
-
-		// Re-init, since they look at user, fstab, etc.
-		// Also, further tests that access the filesystem fail if we don't
-		Vfs::clearstatcache();
-		Vfs::init_static();
-		Vfs\StreamWrapper::init_static();
-
-		// Need to ask about mounts, or other tests fail
-		Vfs::mount();
-
-		$backup = Vfs::$is_root;
-		Vfs::$is_root = true;
-
-		// Remove any added files (as root to limit versioning issues)
-		Vfs::remove($this->files);
-
-		// Remove any mounts
-		foreach($this->mounts as $mount)
-		{
-			Vfs::umount($mount);
-		}
-
-		// Remove any added shares
-		foreach($this->shares as $share)
-		{
-			Sharing::delete($share);
-		}
-
-		foreach($this->entries as $entry)
-		{
-			list($callback, $params) = $entry;
-			call_user_func_array($callback, $params);
-		}
-
-
-		Vfs::$is_root = $backup;
-	}
-
 
 	/**
 	 * Test to make sure a readonly link to home gives just readonly access,
