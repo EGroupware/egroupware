@@ -243,7 +243,7 @@ class Link extends Etemplate\Widget
 		$response = Api\Json\Response::get();
 		$response->data($result !== false);
 	}
-	
+
 	/**
 	 * Symlink/copy/move an existing file in filemanager
 	 *
@@ -273,14 +273,16 @@ class Link extends Etemplate\Widget
 		{
 			Api\Vfs::copy_files($files, Api\Link::vfs_path($app, $id, '', true));
 		}
-		if ($action == "move")
+		elseif ($action == "move")
 		{
 			Api\Vfs::move_files($files, Api\Link::vfs_path($app, $id, '', true), $errs = array(), $moved = array());
 		}
-
-		foreach($files as $target)
+		else
 		{
-			Api\Link::link_file($app, $id, $target);
+			foreach($files as $target)
+			{
+				Api\Link::link_file($app, $id, $target);
+			}
 		}
 	}
 
