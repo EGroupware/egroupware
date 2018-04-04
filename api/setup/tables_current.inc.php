@@ -465,7 +465,7 @@ $phpgw_baseline = array(
 			'cred_type' => array('type' => 'int','precision' => '1','nullable' => False,'comment' => '&1=imap, &2=smtp, &4=admin'),
 			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'account_id or 0=all'),
 			'cred_username' => array('type' => 'varchar','precision' => '80','nullable' => False,'comment' => 'username'),
-			'cred_password' => array('type' => 'varchar','precision' => '9600','comment' => 'password encrypted'),
+			'cred_password' => array('type' => 'varchar','precision' => '16384','comment' => 'password encrypted'),
 			'cred_pw_enc' => array('type' => 'int','precision' => '1','default' => '0','comment' => '0=not, 1=user pw, 2=system')
 		),
 		'pk' => array('cred_id'),
