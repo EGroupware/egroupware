@@ -246,7 +246,8 @@ class SharingBase extends LoggedInTest
 
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
-		$url = Filesystem\StreamWrapper::SCHEME.'://default'.  realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount'). '?group=Default&mode=775';
+		$url = Filesystem\StreamWrapper::SCHEME.'://default'.  realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount').
+				'?user='.$GLOBALS['egw_info']['user']['account_id'].'&group=Default&mode=775';
 		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");
 		Vfs::$is_root = $backup;
 
@@ -270,9 +271,9 @@ class SharingBase extends LoggedInTest
 
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
-		
+
 		// I guess merge needs the dir in SQLFS first
-		Vfs::mkdir($path);
+		if(!Vfs::is_dir($dir)) Vfs::mkdir($path);
 		Vfs::chmod($path, 0750);
 		Vfs::chown($path, $GLOBALS['egw_info']['user']['account_id']);
 
@@ -293,14 +294,22 @@ class SharingBase extends LoggedInTest
 	 *
 	 * @return array of paths
 	 */
-	protected function addFiles($path)
+	protected function addFiles($path, $content = false)
 	{
+		if(substr($path, -1) != '/')
+		{
+			$path .= '/';
+		}
+		if(!$content)
+		{
+			$content = 'Test for ' . $this->getName() ."\n". Api\DateTime::to();
+		}
 		$files = array();
 
 		// Plain file
 		$files[] = $file = $path.'test_file.txt';
 		$this->assertTrue(
-			file_put_contents(Vfs::PREFIX.$file, 'Test for ' . $this->getName() ."\n". Api\DateTime::to()) !== FALSE,
+			file_put_contents(Vfs::PREFIX.$file, $content) !== FALSE,
 			'Unable to write test file - check file permissions for CLI user'
 		);
 
@@ -318,7 +327,7 @@ class SharingBase extends LoggedInTest
 		// File in a subdirectory
 		$files[] = $file = $dir.'subdir_test_file.txt';
 		$this->assertTrue(
-			file_put_contents(Vfs::PREFIX.$file, 'Test for ' . $this->getName() ."\n". Api\DateTime::to()) !== FALSE,
+			file_put_contents(Vfs::PREFIX.$file, $content) !== FALSE,
 			'Unable to write test file - check file permissions for CLI user'
 		);
 
