@@ -19,7 +19,7 @@
 					</menulist>
 				</row>
 				<row>
-					<description value="Which additional fields should the responsible be allowed to edit without having edit rights?&lt;br /&gt;Status, percent and date completed are always allowed."/>
+					<html value="Which additional fields should the responsible be allowed to edit without having edit rights?&lt;br /&gt;Status, percent and date completed are always allowed."/>
 					<listbox id="responsible_edit" rows="6" options=",,,,,,0"/>
 				</row>
 				<row class="th">
