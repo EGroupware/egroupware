@@ -209,7 +209,10 @@ class notifications_ajax {
 					$this->response->apply('app.notifications.bell', array('active'));
 					break;
 				case 'high':
-					$this->response->alert(lang('EGroupware has notifications for you'));
+					if (empty($notification['notify_status']) || $notification['notify_status'] === "UNSEEN")
+					{
+						$this->response->alert(lang('EGroupware has notifications for you'));
+					}
 					$this->response->apply('app.notifications.display');
 					break;
 				case 'medium':
