@@ -148,3 +148,17 @@ function notifications_upgrade17_1()
 
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '17.1.001';
 }
+
+/**
+ * Change notify_message column type from Varchar to Text, this field is a dynamic field.
+ *
+ * @return string
+ */
+function notifications_upgrade17_1_001()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_notificationpopup','notify_message',array(
+		'type' => 'text',
+		'comment' => 'notification message'
+	));
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '17.1.002';
+}
