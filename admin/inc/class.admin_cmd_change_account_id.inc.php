@@ -5,9 +5,8 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-18 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -15,6 +14,9 @@ use EGroupware\Api;
 
 /**
  * admin command: change an account_id
+ *
+ * @property boolean $group_renumbered =false true: group(s) have been renumbered by LDAP --> SQL migration,
+ *		do NOT change egw_accounts.account_id and egw_acl where acl_appname='phpgw_group'
  */
 class admin_cmd_change_account_id extends admin_cmd
 {
@@ -116,28 +118,36 @@ class admin_cmd_change_account_id extends admin_cmd
 	 */
 	protected function exec($check_only=false)
 	{
+		$errors = array();
 		foreach($this->change as $from => $to)
 		{
 			if (!(int)$from || !(int)$to)
 			{
-				throw new Api\Exception\WrongUserinput(lang("Account-id's have to be integers!"),16);
+				$errors[] = lang("Account-id's have to be integers!");
 			}
 			if (($from < 0) != ($to < 0))
 			{
-				throw new Api\Exception\WrongUserinput(lang("Can NOT change users into groups, same sign required!"),17);
+				$errors[] = lang("Can NOT change users into groups, same sign required!");
 			}
-			if (!($from_exists = $GLOBALS['egw']->accounts->exists($from)))
+			if (!$this->group_renumbered)
 			{
-				throw new Api\Exception\WrongUserinput(lang("Source account #%1 does NOT exist!", $from),18);
+				if (!($from_exists = $GLOBALS['egw']->accounts->exists($from)))
+				{
+					$errors[] = lang("Source account #%1 does NOT exist!", $from);
+				}
+				if ($from_exists !== ($from > 0 ? 1 : 2))
+				{
+					$errors[] = lang("Group #%1 must have negative sign!", $from);
+				}
+				if ($GLOBALS['egw']->accounts->exists($to) && !isset($this->change[$to]))
+				{
+					$errors[] = lang("Destination account #%1 does exist and is NOT renamed itself! Can not merge Api\Accounts, it will violate unique contains. Delete with transfer of data instead.", $to);
+				}
 			}
-			if ($from_exists !== ($from > 0 ? 1 : 2))
-			{
-				throw new Api\Exception\WrongUserinput(lang("Group #%1 must have negative sign!", $from),19);
-			}
-			if ($GLOBALS['egw']->accounts->exists($to) && !isset($this->change[$to]))
-			{
-				throw new Api\Exception\WrongUserinput(lang("Destination account #%1 does exist and is NOT renamed itself! Can not merge Api\Accounts, it will violate unique contains. Delete with transfer of data instead.", $to),20);
-			}
+		}
+		if ($errors)
+		{
+			throw new Api\Exception\WrongUserinput(implode("\n", $errors), 16);
 		}
 		$columns2change = $this->get_changes();
 		$total = 0;
@@ -169,6 +179,14 @@ class admin_cmd_change_account_id extends admin_cmd
 						unset($column['.type']);
 						$where = $column;
 						$column = array_shift($where);
+					}
+					if ($this->group_renumbered && $table == 'egw_accounts' && $column == 'account_id')
+					{
+						continue;
+					}
+					if ($this->group_renumbered && $table == 'egw_acl')
+					{
+						$where[] = "acl_appname != 'phpgw_group'";
 					}
 					$total += ($changed = self::_update_account_id($this->change,$db,$table,$column,$where,$type));
 					if (!$check_only && $changed) echo "$app:\t$table.$column $changed id's changed\n";
