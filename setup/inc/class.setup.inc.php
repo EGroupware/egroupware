@@ -249,15 +249,24 @@ class setup
 		// make sure we have session extension available, otherwise fail with exception that we need it
 		check_load_extension('session', true);
 
-		ini_set('session.use_cookie', true);
-		session_name(self::SESSIONID);
-		session_set_cookie_params(0, '/', self::cookiedomain(),
-			// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
-			!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
+		switch(session_status())
+		{
+			case PHP_SESSION_DISABLED:
+				throw new \ErrorException('EGroupware requires PHP session extension!');
+			case PHP_SESSION_NONE:
+				ini_set('session.use_cookie', true);
+				session_name(self::SESSIONID);
+				session_set_cookie_params(0, '/', self::cookiedomain(),
+					// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
+					!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
 
-		if (isset($_COOKIE[self::SESSIONID])) session_id($_COOKIE[self::SESSIONID]);
+				if (isset($_COOKIE[self::SESSIONID])) session_id($_COOKIE[self::SESSIONID]);
 
-		$ok = @session_start();	// suppress notice if session already started or warning in CLI
+				$ok = @session_start();	// suppress notice if session already started or warning in CLI
+				break;
+			case PHP_SESSION_ACTIVE:
+				$ok = true;
+		}
 		// need to decrypt session, in case session encryption is switched on in header.inc.php
 		Api\Session::decrypt();
 		//error_log(__METHOD__."() returning ".array2string($ok).' _SESSION='.array2string($_SESSION));

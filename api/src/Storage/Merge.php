@@ -996,7 +996,7 @@ abstract class Merge
 			// Tags we can replace with the target document's version
 			$replace_tags = array();
 			// only keep tags, if we have xsl extension available
-			if (class_exists(XSLTProcessor) && class_exists(DOMDocument) && $this->parse_html_styles)
+			if (class_exists('XSLTProcessor') && class_exists('DOMDocument') && $this->parse_html_styles)
 			{
 				switch($mimetype.$mso_application_progid)
 				{

@@ -582,8 +582,8 @@ class calendar_bo
 			}
 		}
 
-		if (!isset($params['users']) || !$params['users'] ||
-			count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
+		if (empty($params['users']) ||
+			is_array($params['users']) && count($params['users']) == 1 && empty($params['users'][0]))	// null or '' casted to an array
 		{
 			// for a search use all account you have read grants from
 			$params['users'] = $params['query'] ? array_keys($this->grants) : $this->user;

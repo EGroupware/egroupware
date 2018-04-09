@@ -330,7 +330,7 @@ class Customfields extends Transformer
 				$widget->attrs['multiple'] = $field['rows'] > 1;
 				// fall through
 			case 'radio':
-				if (count($field['values']) == 1 && isset($field['values']['@']))
+				if (!empty($field['values']) && count($field['values']) == 1 && isset($field['values']['@']))
 				{
 					$field['values'] = Api\Storage\Customfields::get_options_from_file($field['values']['@']);
 				}

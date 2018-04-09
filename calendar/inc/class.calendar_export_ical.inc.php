@@ -127,7 +127,8 @@ class calendar_export_ical extends calendar_export_csv {
 	 * return html for options.
 	 *
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl($definition = null) {
+		unset($definition);	// not used, but required by function signature
 	}
 
 	/**

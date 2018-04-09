@@ -74,12 +74,6 @@ class Session
 	const EGW_SESSION_NAME = 'sessionid';
 
 	/**
-	 * Used mcrypt algorithm and mode
-	 */
-	const MCRYPT_ALGO = MCRYPT_TRIPLEDES;
-	const MCRYPT_MODE = MCRYPT_MODE_ECB;
-
-	/**
 	* current user login (account_lid@domain)
 	*
 	* @var string
@@ -266,8 +260,10 @@ class Session
 	 */
 	function __wakeup()
 	{
-		ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
-
+		if (!empty($GLOBALS['egw_info']['server']['sessions_timeout']) && session_status() === PHP_SESSION_NONE)
+		{
+			ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
+		}
 		$this->action = null;
 	}
 
@@ -399,13 +395,13 @@ class Session
 	/**
 	 * Check if session encryption is configured, possible and initialise it
 	 *
+	 * If mcrypt extension is not available (eg. in PHP 7.2+ no longer contains it) fail gracefully.
+	 *
 	 * @param string $kp3 mcrypt key transported via cookie or get parameter like the session id,
 	 *	unlike the session id it's not know on the server, so only the client-request can decrypt the session!
-	 * @param string $algo =self::MCRYPT_ALGO
-	 * @param string $mode =self::MCRYPT_MODE
 	 * @return boolean true if encryption is used, false otherwise
 	 */
-	static private function init_crypt($kp3,$algo=self::MCRYPT_ALGO,$mode=self::MCRYPT_MODE)
+	static private function init_crypt($kp3)
 	{
 		if(!$GLOBALS['egw_info']['server']['mcrypt_enabled'])
 		{
@@ -422,9 +418,9 @@ class Session
 				error_log(__METHOD__."() required PHP extension mcrypt not loaded and can not be loaded, sessions get NOT encrypted!");
 				return false;
 			}
-			if (!(self::$mcrypt = mcrypt_module_open($algo, '', $mode, '')))
+			if (!(self::$mcrypt = mcrypt_module_open(MCRYPT_TRIPLEDES, '', MCRYPT_MODE_ECB, '')))
 			{
-				error_log(__METHOD__."() could not mcrypt_module_open(algo='$algo','',mode='$mode',''), sessions get NOT encrypted!");
+				error_log(__METHOD__."() could not mcrypt_module_open(MCRYPT_TRIPLEDES,'',MCRYPT_MODE_ECB,''), sessions get NOT encrypted!");
 				return false;
 			}
 			$iv_size = mcrypt_enc_get_iv_size(self::$mcrypt);
@@ -927,10 +923,19 @@ class Session
 			return false;
 		}
 
-		session_name(self::EGW_SESSION_NAME);
-		session_id($this->sessionid);
-		self::cache_control();
-		session_start();
+		switch (session_status())
+		{
+			case PHP_SESSION_DISABLED:
+				throw new ErrorException('EGroupware requires the PHP session extension!');
+			case PHP_SESSION_NONE:
+				session_name(self::EGW_SESSION_NAME);
+				session_id($this->sessionid);
+				self::cache_control();
+				session_start();
+				break;
+			case PHP_SESSION_ACTIVE:
+				// session already started eg. by managementserver_client
+		}
 
 		// check if we have a eGroupware session --> return false if not (but dont destroy it!)
 		if (is_null($_SESSION) || !isset($_SESSION[self::EGW_SESSION_VAR]))
@@ -1586,16 +1591,22 @@ class Session
 	 */
 	public static function init_handler()
 	{
-		ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
-		session_name(self::EGW_SESSION_NAME);
-		if (($sessionid = self::get_sessionid()))
+		switch(session_status())
 		{
-		 	session_id($sessionid);
-		 	self::cache_control();
-			$ok = session_start();
-			self::decrypt();
-			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
-			return $ok;
+			case PHP_SESSION_DISABLED:
+				throw new \ErrorException('EGroupware requires PHP session extension!');
+			case PHP_SESSION_NONE:
+				ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
+				session_name(self::EGW_SESSION_NAME);
+				if (($sessionid = self::get_sessionid()))
+				{
+					session_id($sessionid);
+					self::cache_control();
+					$ok = session_start();
+					self::decrypt();
+					if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
+					return $ok;
+				}
 		}
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() no active session!");
 

@@ -158,6 +158,11 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	static public $extra_columns = ',fs_link';
 
 	/**
+	 * @var array $overwrite_new =null if set create new file with values overwriten by the given ones
+	 */
+	protected $overwrite_new;
+
+	/**
 	 * Clears our stat-cache
 	 *
 	 * Normaly not necessary, as it is automatically cleared/updated, UNLESS Vfs::$user changes!
@@ -184,10 +189,9 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * - STREAM_REPORT_ERRORS If this flag is set, you are responsible for raising errors using trigger_error() during opening of the stream.
 	 *                        If this flag is not set, you should not raise any errors.
 	 * @param string &$opened_path full path of the file/resource, if the open was successfull and STREAM_USE_PATH was set
-	 * @param array $overwrite_new =null if set create new file with values overwriten by the given ones
 	 * @return boolean true if the ressource was opened successful, otherwise false
 	 */
-	function stream_open ( $url, $mode, $options, &$opened_path, array $overwrite_new=null )
+	function stream_open ($url, $mode, $options, &$opened_path)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 
@@ -201,7 +205,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		parse_str(parse_url($url, PHP_URL_QUERY), $this->dir_url_params);
 
-		if (!is_null($overwrite_new) || !($stat = $this->url_stat($path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
+		if (!is_null($this->overwrite_new) || !($stat = $this->url_stat($path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if (!$dir || $mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
 				$mode[0] == 'x' && $stat ||	// or file should not exist, but does
@@ -239,7 +243,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 				'fs_size'     => 0,
 				'fs_active'   => self::_pdo_boolean(true),
 			);
-			if ($overwrite_new) $values = array_merge($values,$overwrite_new);
+			if ($this->overwrite_new) $values = array_merge($values, $this->overwrite_new);
 			if (!$stmt->execute($values) || !($this->opened_fs_id = self::$pdo->lastInsertId('egw_sqlfs_fs_id_seq')))
 			{
 				$this->opened_stream = $this->opened_path = $this->opened_mode = null;
@@ -543,18 +547,15 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param string $url
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	function unlink ( $url, $parent_stat=null )
+	function unlink ( $url )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
 		// need to get parent stat from Sqlfs, not Vfs
-		if (!isset($parent_stat))
-		{
-			$parent_stat = !($dir = Vfs::dirname($path)) ? false :
-				$this->url_stat($dir, STREAM_URL_STAT_LINK);
-		}
+		$parent_stat = !($dir = Vfs::dirname($path)) ? false :
+			$this->url_stat($dir, STREAM_URL_STAT_LINK);
 
 		if (!$parent_stat || !($stat = $this->url_stat($path,STREAM_URL_STAT_LINK)) ||
 			!$dir || !Vfs::check_access($dir, Vfs::WRITABLE, $parent_stat))
@@ -1123,10 +1124,9 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set,
 	 *                          you are responsible for reporting errors using the trigger_error() function during stating of the path.
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
-	 * @param boolean $eacl_access =null allows extending classes to pass the value of their check_extended_acl() method (no lsb!)
 	 * @return array
 	 */
-	function url_stat ( $url, $flags, $eacl_access=null )
+	function url_stat ( $url, $flags )
 	{
 		static $max_subquery_depth=null;
 		if (is_null($max_subquery_depth))
@@ -1134,7 +1134,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			$max_subquery_depth = $GLOBALS['egw_info']['server']['max_subquery_depth'];
 			if (!$max_subquery_depth) $max_subquery_depth = 7;	// setting current default of 7, if nothing set
 		}
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags,$eacl_access)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags)");
 
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
@@ -1148,7 +1148,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			return false;	// is invalid and gives sql error
 		}
 		// check if we already have the info from the last dir_open call, as the old vfs reads it anyway from the db
-		if (self::$stat_cache && isset(self::$stat_cache[$path]) && (is_null($eacl_access) || self::$stat_cache[$path] !== false))
+		if (self::$stat_cache && isset(self::$stat_cache[$path]) && self::$stat_cache[$path] !== false)
 		{
 			return self::$stat_cache[$path] ? self::_vfsinfo2stat(self::$stat_cache[$path]) : false;
 		}
@@ -1162,11 +1162,9 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			' AND fs_name'.self::$case_sensitive_equal.'? AND fs_dir=';
 		$parts = explode('/',$path);
 
-		// if we have extendes acl access to the url, we dont need and can NOT include the sql for the readable check
-		if (is_null($eacl_access))
-		{
-			$eacl_access = self::check_extended_acl($path,Vfs::READABLE);	// should be static::check_extended_acl, but no lsb!
-		}
+		// if we have extended acl access to the url, we dont need and can NOT include the sql for the readable check
+		// using $this->check_extended_acl instead of self::check_extended_acl to ensure we call Vfs\Links\StreamWraper::check_extended_stat()
+		$eacl_access = self::check_extended_acl($path,Vfs::READABLE);	// should be static::check_extended_acl, but no lsb!
 
 		try {
 			foreach($parts as $n => $name)
@@ -1211,7 +1209,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 					$query = str_replace('fs_name'.self::$case_sensitive_equal.'?','fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name),$base_query).'('.$query.')';
 				}
 			}
-			if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__."($url,$flags,$eacl_access)".' */ '.$query;
+			if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__."($url,$flags) eacl_access=$eacl_access".' */ '.$query;
 			//if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 
 			if (!($result = self::$pdo->query($query)) || !($info = $result->fetch(\PDO::FETCH_ASSOC)))
@@ -1235,7 +1233,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			error_log(__METHOD__."() decremented max_subquery_depth to $max_subquery_depth");
 			Api\Config::save_value('max_subquery_depth', $max_subquery_depth, 'phpgwapi');
 			if (method_exists($GLOBALS['egw'],'invalidate_session_cache')) $GLOBALS['egw']->invalidate_session_cache();
-			return $this->url_stat($url, $flags, $eacl_access);
+			return $this->url_stat($url, $flags);
 		}
 		self::$stat_cache[$path] = $info;
 
