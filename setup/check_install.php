@@ -226,6 +226,10 @@ $checks = array(
 		'func' => 'extension_check',
 		'warning' => lang('The tidy extension is need in merge-print to clean up html before inserting it in office documents.'),
 	),
+	'xsl' => array(
+		'func' => 'extension_check',
+		'warning' => lang('The xsl extension is need in merge-print for processing html and office documents.'),
+	),
 	'xmlreader' => array(
 		'func' => 'extension_check',
 		'error' => lang('The xmlreader extension is required by EGroupware in several applications.'),

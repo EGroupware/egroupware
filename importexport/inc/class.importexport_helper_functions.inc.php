@@ -571,7 +571,7 @@ class importexport_helper_functions {
 		foreach($definitions as $appname => $_types) {
 			$definitions[$appname] = array_intersect_key($definitions[$appname], array_flip($types));
 		}
-		return count($definitions[$appname]) > 0;
+		return !empty($definitions[$appname]);
 	}
 
 	// Api\Cache needs this public

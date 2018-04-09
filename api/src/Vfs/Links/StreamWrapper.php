@@ -180,7 +180,7 @@ class StreamWrapper extends LinksParent
 			);
 		}
 		// if entry directory does not exist --> return fake directory
-		elseif (!($ret = parent::url_stat($url,$flags,$eacl_check)) && $eacl_check)
+		elseif (!($ret = parent::url_stat($url,$flags)) && $eacl_check)
 		{
 			list(,/*$apps*/,/*$app*/,$id,$rel_path) = explode('/', Vfs::parse_url($url, PHP_URL_PATH), 5);
 			if ($id && !isset($rel_path))

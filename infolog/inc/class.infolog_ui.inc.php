@@ -470,13 +470,13 @@ class infolog_ui
 		if ($query['action_id'] && $query['csv_export'] !== 'children')
 		{
 			$parents = $query['action'] == 'sp' && $query['action_id'] ? (array)$query['action_id'] : array();
-			if (count($parents) == 1 && is_array($query['action_id']))
+			if (!empty($parents) && count($parents) == 1 && is_array($query['action_id']))
 			{
 				$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
 			}
 		}
 
-		$parent_first = count($parents) == 1;
+		$parent_first = !empty($parents) && count($parents) == 1;
 		$parent_index = 0;
 		// et2 nextmatch listens to total, and only displays that many rows, so add parent in or we'll lose the last row
 		if($parent_first || $query['action'] == 'sp' && is_array($query['action_id'])) $query['total']++;
@@ -759,7 +759,7 @@ class infolog_ui
 		}
 		if (is_array($values) && !empty($values['nm']['multi_action']))
 		{
-			if (!count($values['nm']['selected']) && !$values['nm']['select_all'])
+			if (empty($values['nm']['selected']) && !$values['nm']['select_all'])
 			{
 				$msg = lang('You need to select some entries first');
 			}

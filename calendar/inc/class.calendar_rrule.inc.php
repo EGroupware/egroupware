@@ -574,7 +574,7 @@ class calendar_rrule implements Iterator
 		if($this->type != self::NONE)
 		{
 			$str = lang(self::$types[$this->type]);
-			
+
 			$str_extra = array();
 			switch ($this->type)
 			{
@@ -756,7 +756,7 @@ class calendar_rrule implements Iterator
 		self::rrule2tz($event, $time, $to_tz);
 
 		$time->setTimezone(self::$tz_cache[$to_tz]);
-		
+
 		if ($event['recur_enddate'])
 		{
 			$enddate = is_a($event['recur_enddate'],'DateTime') ? clone $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'],$timestamp_tz);
@@ -863,7 +863,7 @@ class calendar_rrule implements Iterator
 				$enddate = new DateTime($date);
 			}
 		}
-		
+
 		return new calendar_rrule($time,$type_id,$interval,$enddate,$weekdays,$exceptions);
 	}
 	/**
@@ -897,7 +897,7 @@ class calendar_rrule implements Iterator
 		if (!is_array($event) ||
 			!isset($event['recur_type']) ||
 			$event['recur_type'] == self::NONE ||
-			empty($event['recur_data']) || $event['recur_data'] == ALLDAYS ||
+			empty($event['recur_data']) || $event['recur_data'] == self::ALLDAYS ||
 			empty($event['tzid']) || empty($to_tz) ||
 			$event['tzid'] == $to_tz) return;
 
