@@ -384,7 +384,7 @@ class Vfs
 	 *
 	 * @param string|array $base base of the search
 	 * @param array $options =null the following keys are allowed:
-	 * - type => {d|f|F} d=dirs, f=files (incl. symlinks), F=files (incl. symlinks to files), default all
+	 * - type => {d|f|F|!l} d=dirs, f=files (incl. symlinks), F=files (incl. symlinks to files), !l=no symlinks, default all
 	 * - depth => {true|false(default)} put the contents of a dir before the dir itself
 	 * - dirsontop => {true(default)|false} allways return dirs before the files (two distinct blocks)
 	 * - mindepth,maxdepth minimal or maximal depth to be returned
@@ -646,7 +646,8 @@ class Vfs
 			return;	// not found, should not happen
 		}
 		if ($type && (($type == 'd') == !($stat['mode'] & Vfs\Sqlfs\StreamWrapper::MODE_DIR) ||	// != is_dir() which can be true for symlinks
-		    $type == 'F' && is_dir($path)))	// symlink to a directory
+		    $type == 'F' && is_dir($path)) ||	// symlink to a directory
+			$type == '!l' && ($stat['mode'] & Vfs::MODE_LINK)) // Symlink
 		{
 			return;	// wrong type
 		}

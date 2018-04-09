@@ -443,7 +443,7 @@ class Sharing
 			}
 
 			// We don't allow sharing links, share target instead
-			if($target = Vfs::readlink($path))
+			if(($target = Vfs::readlink($path)))
 			{
 				$path = $target;
 			}
@@ -760,6 +760,16 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 				),
 			);
 			return $actions;
+		}
+
+		protected function get_vfs_options($query)
+		{
+			$options = parent::get_vfs_options($query);
+
+			// Hide symlinks
+			$options['type'] = '!l';
+
+			return $options;
 		}
 	}
 }

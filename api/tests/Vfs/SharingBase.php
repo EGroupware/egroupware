@@ -131,8 +131,8 @@ class SharingBase extends LoggedInTest
 		$this->files += $this->addFiles($dir);
 
 		$logged_in_files = array_map(
-				function($path) use ($dir) {return str_replace($dir, '/', $path);},
-				Vfs::find($dir, static::VFS_OPTIONS)
+			function($path) use ($dir) {return str_replace($dir, '/', $path);},
+			Vfs::find($dir, static::VFS_OPTIONS)
 		);
 
 		if(static::LOG_LEVEL > 1)
@@ -354,15 +354,16 @@ class SharingBase extends LoggedInTest
 		);
 
 		// Symlinked file
-		/*
+		/* We don't test these because they don't work - the target will always
+		 * be outside the share root
 		// Always says its empty
 		$files[] = $symlink = $path.'symlink.txt';
 		if(Vfs::file_exists($symlink)) Vfs::remove($symlink);
 		$this->assertTrue(
 			Vfs::symlink($file, $symlink),
-			'Unable to create symlink'
+			"Unable to create symlink $symlink => $file"
 		);
-/*
+
 		// Symlinked dir
 		$files[] = $symlinked_dir = $path.'sym_dir/';
 		$this->assertTrue(
