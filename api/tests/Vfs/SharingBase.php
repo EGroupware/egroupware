@@ -124,6 +124,10 @@ class SharingBase extends LoggedInTest
 		{
 			echo "\n".__METHOD__ . "($dir, $mode)\n";
 		}
+		if(substr($dir, -1) != '/')
+		{
+			$dir .= '/';
+		}
 		$this->files += $this->addFiles($dir);
 
 		$logged_in_files = array_map(
@@ -139,12 +143,7 @@ class SharingBase extends LoggedInTest
 
 		// Create and use link
 		$extra = array();
-		switch($mode)
-		{
-			case Sharing::WRITABLE:
-				$extra['share_writable'] = TRUE;
-				break;
-		}
+		$this->getShareExtra($dir, $mode, $extra);
 		$this->shareLink($dir, $mode, $extra);
 
 		$files = Vfs::find('/', static::VFS_OPTIONS);
@@ -161,6 +160,24 @@ class SharingBase extends LoggedInTest
 		foreach($files as $file)
 		{
 			$this->checkOneFile($file, $mode);
+		}
+	}
+
+	/**
+	 * Get the extra information required to create a share link for the given
+	 * directory, with the given mode
+	 *
+	 * @param string $dir Share target
+	 * @param int $mode Share mode
+	 * @param Array $extra
+	 */
+	protected function getShareExtra($dir, $mode, &$extra)
+	{
+		switch($mode)
+		{
+			case Sharing::WRITABLE:
+				$extra['share_writable'] = TRUE;
+				break;
 		}
 	}
 
@@ -246,7 +263,12 @@ class SharingBase extends LoggedInTest
 
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
-		$url = Filesystem\StreamWrapper::SCHEME.'://default'.  realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount').
+		$fs_path = realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount');
+		if(!file_exists($fs_path))
+		{
+			$this->fail("Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
+		}
+		$url = Filesystem\StreamWrapper::SCHEME.'://default'. $fs_path.
 				'?user='.$GLOBALS['egw_info']['user']['account_id'].'&group=Default&mode=775';
 		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");
 		Vfs::$is_root = $backup;
