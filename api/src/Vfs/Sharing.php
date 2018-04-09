@@ -442,6 +442,12 @@ class Sharing
 				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
 			}
 
+			// We don't allow sharing links, share target instead
+			if($target = Vfs::readlink($path))
+			{
+				$path = $target;
+			}
+
 			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
 			{
 				$vfs_path = $path;
