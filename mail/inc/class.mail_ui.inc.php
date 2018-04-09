@@ -3721,9 +3721,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			if (!$importFailed)
 			{
-				list($width, $height) = explode('x', Link::get_registry('mail', 'add_popup'));
-				if ($width > 0 && $height > 0) Api\Json\Response::get()->call('resizeTo', $width, $height);
-				ExecMethod2('mail.mail_ui.displayMessage',$linkData);
+				Api\Json\Response::get()->call('egw.open', $linkData['id'], 'mail', 'view');
+				Api\Json\Response::get()->call('window.close');
 				return;
 			}
 		}
