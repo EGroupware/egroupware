@@ -608,7 +608,6 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$from_dir = Vfs::dirname($path_from);
 		$path_to = Vfs::parse_url($url_to,PHP_URL_PATH);
 		$to_dir = Vfs::dirname($path_to);
-		$operation = self::url2operation($url_from);
 
 		if (!($from_stat = $this->url_stat($path_from, 0)) || !$from_dir ||
 			!Vfs::check_access($from_dir, Vfs::WRITABLE, $from_dir_stat = $this->url_stat($from_dir, 0)))
@@ -637,7 +636,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			return false;	// no permission or file does not exist
 		}
 		// if destination file already exists, delete it
-		if ($to_stat && !static::unlink($url_to,$operation))
+		if ($to_stat && !$this->unlink($url_to))
 		{
 			self::_remove_password($url_to);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) can't unlink existing $url_to!");
