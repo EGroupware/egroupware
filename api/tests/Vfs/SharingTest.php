@@ -210,4 +210,55 @@ class SharingTest extends SharingBase
 		// It should be picked up normally, but an explicit check can't hurt
 		$this->checkOneFile('/filesystem_test.txt', Sharing::WRITABLE);
 	}
+
+	/**
+	 * Test that creating a share on a symlink actually creates the share on the
+	 * link target instead.
+	 */
+	public function testSharingSymlinkActuallySharesTargetFile()
+	{
+		$target = Vfs::get_home_dir();
+
+		$this->files = $this->addFiles($target);
+
+		// Make symlink
+		$this->files[] = $symlink = $target.'/symlink.txt';
+		$file = $target.'/test_file.txt';
+		if(Vfs::file_exists($symlink)) Vfs::remove($symlink);
+		$this->assertTrue(
+			Vfs::symlink($file, $symlink),
+			"Unable to create symlink $symlink => $file"
+		);
+
+		// Create share
+		$this->shares[] = $created_share = Sharing::create($symlink, Sharing::READONLY, '', '');
+
+		$this->assertEquals($file, $created_share['share_path']);
+	}
+
+
+	/**
+	 * Test that creating a share on a symlink actually creates the share on the
+	 * link target instead.
+	 */
+	public function testSharingSymlinkActuallySharesTargetDirectory()
+	{
+		$target = Vfs::get_home_dir();
+
+		$this->files = $this->addFiles($target);
+
+		// Make symlink
+		$this->files[] = $symlink = $target.'/symlinked_dir';
+		$file = $target.'/sub_dir';
+		if(Vfs::file_exists($symlink)) Vfs::remove($symlink);
+		$this->assertTrue(
+			Vfs::symlink($file, $symlink),
+			"Unable to create symlink $symlink => $file"
+		);
+
+		// Create share
+		$this->shares[] = $created_share = Sharing::create($symlink, Sharing::READONLY, '', '');
+
+		$this->assertEquals($file, $created_share['share_path']);
+	}
 }
