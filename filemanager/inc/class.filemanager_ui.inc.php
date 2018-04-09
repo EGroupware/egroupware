@@ -909,46 +909,7 @@ class filemanager_ui
 			return 0;
 		}
 		$rows = $dir_is_writable = array();
-		if($query['searchletter'] && !empty($query['search']))
-		{
-			$namefilter = '/^'.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
-			if ($query['searchletter'] == strtolower($query['search'][0]))
-			{
-				$namefilter = '/^('.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'|'.
-					str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).')/i';
-			}
-		}
-		elseif ($query['searchletter'])
-		{
-			$namefilter = '/^'.$query['searchletter'].'/i';
-		}
-		elseif(!empty($query['search']))
-		{
-			$namefilter = '/'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
-		}
-
-		// Re-map so 'No filters' favorite ('') is depth 1
-		$filter = $query['filter'] === '' ? 1 : $query['filter'];
-
-		$maxdepth = $filter && $filter != 4 ? (int)(boolean)$filter : null;
-		if($filter == 5) $maxdepth = 2;
-		$n = 0;
-		$vfs_options = array(
-			'mindepth' => 1,
-			'maxdepth' => $maxdepth,
-			'dirsontop' => $filter <= 1,
-			'type' => $filter && $filter != 5 ? ($filter == 4 ? 'd' : null) : ($filter == 5 ? 'F':'f'),
-			'order' => $query['order'], 'sort' => $query['sort'],
-			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
-			'need_mime' => true,
-			'name_preg' => $namefilter,
-			'hidden' => $filter == 3,
-			'follow' => $filter == 5,
-		);
-		if($query['col_filter']['mime'])
-		{
-			$vfs_options['mime'] = $query['col_filter']['mime'];
-		}
+		$vfs_options = $this->get_vfs_options($query);
 		foreach(Vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],$vfs_options,true) as $path => $row)
 		{
 			//echo $path; _debug_array($row);
@@ -1024,6 +985,56 @@ class filemanager_ui
 				$css_file.'?'.filemtime(EGW_SERVER_ROOT.$css_file).'" type="text/css" rel="StyleSheet" />'."\n\t\t<style>\n\t\t\t";
 		}
 		return Vfs::$find_total;
+	}
+
+
+	/**
+	 * Get the VFS options (for get rows)
+	 */
+	protected function get_vfs_options($query)
+	{
+		if($query['searchletter'] && !empty($query['search']))
+		{
+			$namefilter = '/^'.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
+			if ($query['searchletter'] == strtolower($query['search'][0]))
+			{
+				$namefilter = '/^('.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'|'.
+					str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).')/i';
+			}
+		}
+		elseif ($query['searchletter'])
+		{
+			$namefilter = '/^'.$query['searchletter'].'/i';
+		}
+		elseif(!empty($query['search']))
+		{
+			$namefilter = '/'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
+		}
+
+		// Re-map so 'No filters' favorite ('') is depth 1
+		$filter = $query['filter'] === '' ? 1 : $query['filter'];
+
+		$maxdepth = $filter && $filter != 4 ? (int)(boolean)$filter : null;
+		if($filter == 5) $maxdepth = 2;
+		$n = 0;
+		$vfs_options = array(
+			'mindepth' => 1,
+			'maxdepth' => $maxdepth,
+			'dirsontop' => $filter <= 1,
+			'type' => $filter && $filter != 5 ? ($filter == 4 ? 'd' : null) : ($filter == 5 ? 'F':'f'),
+			'order' => $query['order'], 'sort' => $query['sort'],
+			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
+			'need_mime' => true,
+			'name_preg' => $namefilter,
+			'hidden' => $filter == 3,
+			'follow' => $filter == 5,
+		);
+		if($query['col_filter']['mime'])
+		{
+			$vfs_options['mime'] = $query['col_filter']['mime'];
+		}
+
+		return $vfs_options;
 	}
 
 	/**
