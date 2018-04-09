@@ -26,43 +26,6 @@ use EGroupware\Api\LoggedInTest as LoggedInTest;
 class SharingTest extends SharingBase
 {
 	/**
-	 * How much should be logged to the console (stdout)
-	 *
-	 * 0 = Nothing
-	 * 1 = info
-	 * 2 = debug
-	 */
-	const LOG_LEVEL = 0;
-
-	/**
-	 * Keep track of shares to remove after
-	 */
-	protected $shares = Array();
-
-	/**
-	 * Keep track of files to remove after
-	 * @var Array
-	 */
-	protected $files = Array();
-
-	/**
-	 * Keep track of mounts to remove after
-	 */
-	protected $mounts = Array();
-
-	/**
-	 * Entries that have to be deleted after
-	 */
-	protected $entries = Array();
-
-	/**
-	 * Options for searching the Vfs (Vfs::find())
-	 */
-	const VFS_OPTIONS = array(
-		'maxdepth' => 5
-	);
-
-	/**
 	 * Test to make sure a readonly link to home gives just readonly access,
 	 * and just to user's home
 	 */
