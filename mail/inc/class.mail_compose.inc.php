@@ -1361,10 +1361,10 @@ class mail_compose
 	 */
 	function addPresetFiles (&$_content, &$_insertSigOnTop, $_eliminateDoubleAttachments)
 	{
-		$names = (array)$_REQUEST['preset']['name'];
-		$types = (array)$_REQUEST['preset']['type'];
+		$names = !is_array($_REQUEST['preset']['name'])? json_decode($_REQUEST['preset']['name'], true):$_REQUEST['preset']['name'];
+		$types = !is_array($_REQUEST['preset']['type'])? json_decode($_REQUEST['preset']['type'], true):$_REQUEST['preset']['type'];
 		//if (!empty($types) && in_array('text/calendar; method=request',$types))
-		$files = (array)$_REQUEST['preset']['file'];
+		$files = !is_array($_REQUEST['preset']['file'])? json_decode($_REQUEST['preset']['file'], true):$_REQUEST['preset']['file'];
 
 		foreach($files as $k => $path)
 		{
