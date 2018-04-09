@@ -769,15 +769,23 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	adb_mail_vcard: function(_action, _elems)
 	{
-		var link = '';
+		var link = {'preset[type]':[], 'preset[file]':[]};
 		var content = {vcard:{file:[], type:[]}};
+		var nm = this.et2.getWidgetById('nm');
+		if(fetchAll(_elems, nm, jQuery.proxy(function(ids) {
+			this.adb_mail_vcard(_action, ids.map(function(num) {return {id:'addressbook::'+num};}));
+		}, this)))
+		{
+			return;
+		}
+
 		for (var i = 0; i < _elems.length; i++)
 		{
 			var idToUse = _elems[i].id;
 			var idToUseArray = idToUse.split('::');
 			idToUse = idToUseArray[1];
-			link += "preset[type][]="+"text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8')+'&';
-			link += "preset[file][]="+"vfs://default/apps/addressbook/"+idToUse+"/.entry"+'&';
+			link['preset[type]'].push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
+			link['preset[file]'].push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
 			content.vcard.file.push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
 			content.vcard.type.push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
 		}
