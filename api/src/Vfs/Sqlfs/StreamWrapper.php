@@ -1162,8 +1162,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$parts = explode('/',$path);
 
 		// if we have extended acl access to the url, we dont need and can NOT include the sql for the readable check
-		// using $this->check_extended_acl instead of self::check_extended_acl to ensure we call Vfs\Links\StreamWraper::check_extended_stat()
-		$eacl_access = self::check_extended_acl($path,Vfs::READABLE);	// should be static::check_extended_acl, but no lsb!
+		$eacl_access = static::check_extended_acl($path,Vfs::READABLE);
 
 		try {
 			foreach($parts as $n => $name)
