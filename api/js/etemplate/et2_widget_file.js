@@ -111,6 +111,8 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 		this.input = null;
 		this.progress = null;
 		this.span = null;
+		// Contains all submit buttons need to be disabled during upload process
+		this.disabled_buttons = jQuery("input[type='submit'], button");
 		if(!this.options.value) this.options.value = {};
 
 		if(!this.options.id) {
@@ -411,13 +413,13 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			{
 
 				// Disable buttons
-				this.disabled_buttons = jQuery("input[type='submit'], button")
+				this.disabled_buttons
 					.not("[disabled]")
 					.attr("disabled", true)
 					.addClass('et2_button_ro')
 					.removeClass('et2_clickable')
 					.css('cursor', 'default');
-			
+
 				// Actually start uploading
 				this.resumable.upload();
 			}
