@@ -139,10 +139,6 @@ class admin_cmd_change_account_id extends admin_cmd
 				{
 					$errors[] = lang("Group #%1 must have negative sign!", $from);
 				}
-				if ($GLOBALS['egw']->accounts->exists($to) && !isset($this->change[$to]))
-				{
-					$errors[] = lang("Destination account #%1 does exist and is NOT renamed itself! Can not merge Api\Accounts, it will violate unique contains. Delete with transfer of data instead.", $to);
-				}
 			}
 		}
 		if ($errors)
