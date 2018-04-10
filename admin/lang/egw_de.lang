@@ -481,7 +481,9 @@ ip	admin	de	IP
 jobs	admin	de	Jobs
 kill	admin	de	Beenden
 kill session	admin	de	Sitzung beenden
+kill these sessions	admin	de	Sitzungen beenden
 kill this session	admin	de	Sitzung beenden
+language	admin	de	Sprache
 languages	admin	de	Sprachen
 last %1 logins	admin	de	Letzte %1 Logins
 last %1 logins for %2	admin	de	Letzte %1 Logins für %2

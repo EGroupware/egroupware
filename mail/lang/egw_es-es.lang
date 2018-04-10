@@ -39,6 +39,7 @@ all messages in the folder will be lost	mail	es-es	Se perderán todos los mensaj
 all my email addresses	mail	es-es	todas mis direcciones de correo-e
 all of	mail	es-es	todos los
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	es-es	Todas las subcarpetas también se eliminarán y todos los mensajes de todas las carpetas afectadas se perderán
+allow	mail	es-es	Permitir
 allow external images	mail	es-es	Permitir imágenes externas
 allow external images from listed domains	mail	es-es	Permitir imágenes externas de dominios listados
 allow images from external sources in html emails	mail	es-es	permitir imágenes de origen externo en correos HTML
@@ -177,6 +178,7 @@ empty trash and junk	mail	es-es	vaciar papelera y correo basura
 enable	mail	es-es	Activar
 enabled!	mail	es-es	activado!
 encrypt	mail	es-es	Encriptar
+encryption	mail	es-es	Encripción
 enter the name for the new folder:	mail	es-es	Introduzca el nombre de la nueva carpeta:
 error saving %1!	mail	es-es	¡Error al guardar %1!
 error while setting acl for folder %1!	mail	es-es	¡Error al establecer la lista de control de acceso para la carpeta %1!
@@ -212,6 +214,7 @@ flagged %1 messages as flagged in %2	mail	es-es	marcado %1 mensaje(s) como marca
 flagged %1 messages as unflagged in %2	mail	es-es	marcado %1 mensaje(s) como desmarcado en %2
 flagged / unflagged	mail	es-es	marcado/desmarcado
 folder	mail	es-es	Carpeta
+folder %1 %2 failed because of %3!	mail	es-es	¡Carpeta %1 %2 falló debido a 3%!
 folder %1 %2 failed!	mail	es-es	¡Carpeta %1 %2 falló!
 folder %1 is moving to folder %2	mail	es-es	La carpeta %1 se mueve a la carpeta %2
 folder management	mail	es-es	Gestión de carpeta
