@@ -1,13 +1,12 @@
 <?php
 /**
- * EGroupware EMailAdmin: Wizard to create mail Api\Accounts
+ * EGroupware EMailAdmin: Wizard to create mail accounts
  *
- * @link http://www.stylite.de
+ * @link http://www.egroupware.org
  * @package emailadmin
- * @author Ralf Becker <rb@stylite.de>
- * @copyright (c) 2013-16 by Ralf Becker <rb@stylite.de>
+ * @author Ralf Becker <rb@egroupware.org>
+ * @copyright (c) 2013-18 by Ralf Becker <rb@egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -1031,30 +1030,7 @@ class admin_mail
 							// SMIME SAVE
 							if (isset($content['smimeKeyUpload']))
 							{
-								$smime = new Mail\Smime;
-								$content['acc_smime_username'] = $smime->getEmailFromKey($content['smime_cert']);
-								$AB_bo = new addressbook_bo();
-								if (($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])))
-								{
-									$cert_info = Mail\Smime::extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
-									if (is_array($cert_info))
-									{
-										$content['acc_smime_password'] = $pkcs12;
-										$content['smime_cert'] = $cert_info['cert'];
-										if ($content['smime_cert'])
-										{
-											$content['acc_smime_username'] = $smime->getEmailFromKey($content['smime_cert']);
-											$AB_bo = new addressbook_bo();
-											$AB_bo->set_smime_keys(array(
-												$content['acc_smime_username'] => $content['smime_cert']
-											));
-										}
-									}
-									else
-									{
-										$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
-									}
-								}
+								self::save_smime_key($content, $tpl, $content['called_for']);
 							}
 							self::fix_account_id_0($content['account_id'], true);
 							$content = Mail\Account::write($content, $content['called_for'] || !$this->is_admin ?
@@ -1117,6 +1093,11 @@ class admin_mail
 									$content['mailForwardingAddress'],
 									$content['forwardOnly'] ? null : 'yes');
 							}
+							// smime (private) key uploaded by user himself
+							if (!empty($content['smimeKeyUpload']))
+							{
+								self::save_smime_key($content, $tpl);
+							}
 						}
 					}
 					catch (Horde_Imap_Client_Exception $e)
@@ -1167,7 +1148,7 @@ class admin_mail
 		}
 		// SMIME UPLOAD/DELETE/EXPORT control
 		$content['hide_smime_upload'] = false;
-		if (!empty($content['acc_smime_password']))
+		if (isset($content['acc_smime_password']))
 		{
 			if (!empty($content['smime_delete_p12']) &&
 					Mail\Credentials::delete (
@@ -1181,6 +1162,9 @@ class admin_mail
 			}
 			else
 			{
+				// do NOT send smime private key to client side, it's unnecessary and binary blob breaks json encoding
+				$content['acc_smime_password'] = '';
+
 				$content['hide_smime_upload'] = true;
 			}
 		}
@@ -1203,8 +1187,10 @@ class admin_mail
 			$readonlys['button[cancel]'] = false;
 			// allow to edit notification-folders
 			$readonlys['button[save]'] = $readonlys['button[apply]'] =
-			$readonlys['notify_folders'] = $readonlys['notify_use_default'] =
-			$readonlys['smimeKeyUpload'] = $readonlys['smime_pkcs12_password']= false;
+			$readonlys['notify_folders'] = $readonlys['notify_use_default'] = false;
+			// allow to edit sMime stuff
+			$readonlys['smimeGenerate'] = $readonlys['smimeKeyUpload'] = $readonlys['smime_pkcs12_password'] =
+			$readonlys['smime_export_p12'] = $readonlys['smime_delete_p12'] = false;
 		}
 
 		$sel_options['acc_imap_ssl'] = $sel_options['acc_sieve_ssl'] =
@@ -1377,6 +1363,38 @@ class admin_mail
 		}
 
 		$tpl->exec(static::APP_CLASS.'edit', $content, $sel_options, $readonlys, $content, 2);
+	}
+
+	/**
+	 * Saves the smime key
+	 *
+	 * @param array $content
+	 * @param Etemplate $tpl
+	 * @param int $account_id =null account to save smime key for, default current user
+	 */
+	private static function save_smime_key(array $content, Etemplate $tpl, $account_id=null)
+	{
+		if (($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])))
+		{
+			$cert_info = Mail\Smime::extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
+			if (is_array($cert_info) && !empty($cert_info['cert']))
+			{
+				// save public key
+				$smime = new Mail\Smime;
+				$email = $smime->getEmailFromKey($cert_info['cert']);
+				$AB_bo = new addressbook_bo();
+				$AB_bo->set_smime_keys(array(
+					$email => $cert_info['cert']
+				));
+				// save private key
+				if (!isset($account_id)) $account_id = $GLOBALS['egw_info']['user']['account_id'];
+				Mail\Credentials::write($content['acc_id'], $email, $pkcs12, Mail\Credentials::SMIME, $account_id);
+			}
+			else
+			{
+				$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
+			}
+		}
 	}
 
 	/**

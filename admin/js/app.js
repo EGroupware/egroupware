@@ -1269,7 +1269,7 @@ app.classes.admin = AppJS.extend(
 				content:{
 					value: ''
 			}},
-			template: egw.webserverUrl+'/mail/templates/default/smimeCertGen.xet',
+			template: egw.webserverUrl+'/mail/templates/default/smimeCertGen.xet?'+Date.now(),
 			resizable: false,
 			position: 'left top'
 		}, et2_dialog._create_parent('mail'));

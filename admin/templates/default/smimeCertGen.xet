@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
 <overlay>
 	<template id="mail.smimeCertGen" template="" lang="" group="0" version="17.1">
 		<grid width="100%">
@@ -11,14 +12,14 @@
 					<groupbox>
 						<caption label="Certificate details"/>
 						<vbox>
-							<textbox id="countryName" class="et2_fullWidth" blur="Country name (2 letter code, eg. DE)" maxlength="2"/>
+							<textbox id="countryName" class="et2_fullWidth" blur="Country name"/>
 							<textbox id="stateOrProvinceName" class="et2_fullWidth" blur="State or province name"/>
 							<textbox id="localityName" class="et2_fullWidth" blur="Locality name"/>
 							<textbox id="organizationName" class="et2_fullWidth" blur="Organization name"/>
 							<textbox id="organizationalUnitName" class="et2_fullWidth" blur="Organizational unit name"/>
 							<textbox id="commonName" class="et2_fullWidth" blur="Common name"/>
 							<textbox id="emailAddress" class="et2_fullWidth" blur="Email address"/>
-							<textbox id="validity" type="integer" label="Certificate validity in days" blur="3650"/>
+							<textbox id="validation" type="integer" label="Certificate validation in days" blur="365"/>
 						</vbox>
 					</groupbox>
 				</row>
