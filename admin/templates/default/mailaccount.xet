@@ -297,19 +297,21 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="S/MIME"/>
+					<description value="S/MIME" span="all"/>
 				</row>
-				<row>
+				<!-- disabled, because not working/fully implemented
+				<row disabled="@hide_smime_upload">
 					<description value="Certificate"/>
 					<hbox>
-						<buttononly label="Generate Certificate" onclick="app.admin.smime_genCertificate" image="add" background_image="1"/>
+						<buttononly id="smimeGenerate" label="Generate Certificate" onclick="app.admin.smime_genCertificate" image="add" background_image="1"/>
 					</hbox>
 				</row>
-				<row disabled="@hide_smime_upload">
+				-->
+				<row disabled="@hide_smime_upload" valign="top">
 					<description value="Upload your certificate .p12/.pfx file"/>
 					<vbox>
 						<file id="smimeKeyUpload" accept=".p12,.pfx"/>
-						<passwd id="smime_pkcs12_password" size="32" maxlength="128"  blur="Password to unlock encrypted p12" autocomplete="off"/>
+						<passwd id="smime_pkcs12_password" size="48" maxlength="128"  blur="Password to unlock encrypted p12" autocomplete="off"/>
 					</vbox>
 				</row>
 				<row disabled="!@hide_smime_upload">

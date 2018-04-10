@@ -2270,14 +2270,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$smime = new Mail\Smime();
 		$response = Api\Json\Response::get();
 		// fields need to be excluded from data
-		$discards = array ('passphrase', 'passphraseConf', 'ca');
+		$discards = array ('passphrase', 'passphraseConf', 'ca', 'validity');
 		$ca = $_data['ca'];
 		$passphrase = $_data['passphrase'];
-		foreach ($_data as $key => $val)
+		foreach (array_keys($_data) as $key)
 		{
 			if (empty($_data[$key]) || in_array($key, $discards)) unset($_data[$key]);
 		}
-		$response->data($smime->generate_certificate($_data, $ca, null, $passphrase));
+		$response->data($smime->generate_certificate($_data, $ca, null, $passphrase, $_data['validity']));
 	}
 
 	/**
