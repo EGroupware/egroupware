@@ -1260,18 +1260,6 @@ class Account implements \ArrayAccess
 			Credentials::delete($data['acc_id'], $valid_for, Credentials::SMTP, true);
 		}
 
-		//Store or delete smime private key
-		if ($data['acc_smime_password'])
-		{
-			Credentials::write($data['acc_id'], $data['acc_smime_username'],
-			$data['acc_smime_password'], Credentials::SMIME, $valid_for,
-			$data['acc_smime_cred_id']);
-		}
-		else
-		{
-			Credentials::delete($data['acc_id'], $data['account_id'][0], Credentials::SMIME);
-		}
-
 		// store or delete admin credentials
 		if ($data['acc_imap_admin_username'] && $data['acc_imap_admin_password'])
 		{
@@ -1647,7 +1635,7 @@ class Account implements \ArrayAccess
 	 *
 	 * account_id == 0 == everyone, is multiple too!
 	 *
-	 * @param array|Account $account value for key account_id (can be an array too!)
+	 * @param array|Account|Imap $account value for key account_id (can be an array too!)
 	 * @return boolean
 	 */
 	public static function is_multiple($account)

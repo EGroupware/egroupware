@@ -1030,7 +1030,8 @@ class admin_mail
 							// SMIME SAVE
 							if (isset($content['smimeKeyUpload']))
 							{
-								self::save_smime_key($content, $tpl, $content['called_for']);
+								$content['acc_smime_cred_id'] = self::save_smime_key($content, $tpl, $content['called_for']);
+								unset($content['smimeKeyUpload']);
 							}
 							self::fix_account_id_0($content['account_id'], true);
 							$content = Mail\Account::write($content, $content['called_for'] || !$this->is_admin ?
@@ -1096,7 +1097,8 @@ class admin_mail
 							// smime (private) key uploaded by user himself
 							if (!empty($content['smimeKeyUpload']))
 							{
-								self::save_smime_key($content, $tpl);
+								$content['acc_smime_cred_id'] = self::save_smime_key($content, $tpl);
+								unset($content['smimeKeyUpload']);
 							}
 						}
 					}
@@ -1148,7 +1150,7 @@ class admin_mail
 		}
 		// SMIME UPLOAD/DELETE/EXPORT control
 		$content['hide_smime_upload'] = false;
-		if (isset($content['acc_smime_password']))
+		if (!empty($content['acc_smime_cred_id']))
 		{
 			if (!empty($content['smime_delete_p12']) &&
 					Mail\Credentials::delete (
@@ -1157,13 +1159,13 @@ class admin_mail
 						Mail\Credentials::SMIME
 				))
 			{
-				unset($content['acc_smime_password'], $content['smimeKeyUpload'], $content['smime_delete_p12']);
+				unset($content['acc_smime_password'], $content['smimeKeyUpload'], $content['smime_delete_p12'], $content['acc_smime_cred_id']);
 				$content['hide_smime_upload'] = false;
 			}
 			else
 			{
 				// do NOT send smime private key to client side, it's unnecessary and binary blob breaks json encoding
-				$content['acc_smime_password'] = '';
+				$content['acc_smime_password'] = Mail\Credentials::UNAVAILABLE;
 
 				$content['hide_smime_upload'] = true;
 			}
@@ -1371,6 +1373,7 @@ class admin_mail
 	 * @param array $content
 	 * @param Etemplate $tpl
 	 * @param int $account_id =null account to save smime key for, default current user
+	 * @return int cred_id or null on error
 	 */
 	private static function save_smime_key(array $content, Etemplate $tpl, $account_id=null)
 	{
@@ -1388,13 +1391,11 @@ class admin_mail
 				));
 				// save private key
 				if (!isset($account_id)) $account_id = $GLOBALS['egw_info']['user']['account_id'];
-				Mail\Credentials::write($content['acc_id'], $email, $pkcs12, Mail\Credentials::SMIME, $account_id);
+				return Mail\Credentials::write($content['acc_id'], $email, $pkcs12, Mail\Credentials::SMIME, $account_id);
 			}
-			else
-			{
-				$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
-			}
+			$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
 		}
+		return null;
 	}
 
 	/**
