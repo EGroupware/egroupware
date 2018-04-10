@@ -119,7 +119,11 @@ var et2_textbox = (function(){ "use strict"; return et2_inputWidget.extend([et2_
 				case "passwd":
 					this.input.attr("type", "password");
 					// Make autocomplete default value off for password field
-					if (this.options.autocomplete === "") this.options.autocomplete = "off";
+					// seems browsers not respecting 'off' anymore and started to
+					// impelement a new key called "new-password" considered as switching
+					// autocomplete off.
+					// https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
+					if (this.options.autocomplete === "" || this.options.autocomplete == "off") this.options.autocomplete = "new-password";
 					break;
 				case "hidden":
 					this.input.attr("type", "hidden");
