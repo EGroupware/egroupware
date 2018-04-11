@@ -391,6 +391,7 @@ prevent managing vacation notice	mail	de	Zugriff auf die Abwesenheitsbenachricht
 preview pane	mail	de	Mailvorschau
 primary profile	mail	de	Primäres Profil
 printview	mail	de	Druckansicht
+printing	mail	de	Drucke
 processing of file %1 failed. failed to meet basic restrictions.	mail	de	Das Verarbeiten der Datei %1 ist fehlgeschlagen. Grundlegende Voraussetzungen wurden nicht erfüllt.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	de	Vorschlagstext für eine Abwesenheitsnotiz (wenn noch kein eigener Benachrichtigungstext vorhanden ist)
 quicksearch	mail	de	Schnellsuche

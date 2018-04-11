@@ -1074,7 +1074,7 @@
 							return;
 						}
 						history.back();
-					}, 'Are you sure you want to logout?', 'Logout');
+					}, egw.lang('Are you sure you want to logout?'), 'Logout');
 				}
 				// Execute action based on
 				switch (e.originalEvent.state && e.originalEvent.state.type)
