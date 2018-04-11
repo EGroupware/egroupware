@@ -6438,13 +6438,19 @@ class Mail
 	 * Under Windows the characters < > ? " : | \ / * are not allowed.
 	 * % causes problems with VFS UI
 	 *
+	 * 4-byte unicode is also unwanted, as our current MySQL collation can store it
+	 *
+	 * We also dont want empty filenames, using lang('empty') instead.
+	 *
 	 * @param string $filename
-	 * @return Cleaned filename, with problematic characters replaced with '_'.
+	 * @return Cleaned filename, with problematic characters replaced with ' '.
 	 */
 	static function clean_subject_for_filename($filename)
 	{
-		static $filter_pattern = '$[\f\n\t\x0b\:*#?<>%"\|/\\\?]$';
-		return preg_replace($filter_pattern, "_", trim($filename));
+		static $filter_pattern = '$[\f\n\t\x0b\:*#?<>%"\|/\x{10000}-\x{10FFFF}]$u';
+		$file = trim(preg_replace($filter_pattern, ' ', $filename));
+		if (empty($file)) $file = lang('empty');
+		return $file;
 	}
 
 	/**
