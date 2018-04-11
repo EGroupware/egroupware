@@ -66,6 +66,7 @@ class SaveToVfsTest extends \EGroupware\Api\AppTest
 		$this->assertNotContains('/', $cleaned);
 		$this->assertNotContains('?', $cleaned);
 		$this->assertNotContains('\x0b', $cleaned);
+		$this->assertNotContains('😂', $cleaned);
 
 		// Length should stay the same
 		$this->assertEquals(strlen($filename), strlen($cleaned), 'Length changed');
@@ -96,7 +97,8 @@ class SaveToVfsTest extends \EGroupware\Api\AppTest
 			array('Contains a ?', true),
 			array('Contains a %', true),
 			array('Contains a \x0b', true),
-			array('This one contains them all < > " : | \ * / ? % are not allowed', true)
+			array('Contains a 😂', true),
+			array('This one contains them all < > " : | \ * / ? % 😂 are not allowed', true)
 		);
 	}
 }
