@@ -591,7 +591,7 @@ class Egw extends Egw\Base
 			}
 			flush();*/
 			// working for fastCGI :-)
-			if (function_exists('fastcgi_finish_request') && substr($_SERVER['PHP_SELF'], -32) != '/phpgwapi/cron/asyncservices.php')
+			if (function_exists('fastcgi_finish_request') && substr($_SERVER['PHP_SELF'], -18) != '/asyncservices.php')
 			{
 				fastcgi_finish_request();
 			}
