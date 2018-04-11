@@ -13,11 +13,7 @@
 
 namespace EGroupware\Mail;
 
-require_once realpath(__DIR__.'/../../api/tests/AppTest.php');	// Application test base
-
-use Egroupware\Api;
-
-class SaveToVfsTest extends \EGroupware\Api\AppTest
+class SaveToVfsTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * Create a custom status we can use to test
@@ -69,7 +65,7 @@ class SaveToVfsTest extends \EGroupware\Api\AppTest
 		$this->assertNotContains('😂', $cleaned);
 
 		// Check if the filename is not empty
-		$this->assertGreaterThan(0, strlen($filename), 'File name is empty');
+		$this->assertGreaterThan(0, strlen($cleaned), 'File name is empty');
 
 		if(!$replacements)
 		{

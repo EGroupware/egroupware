@@ -6447,7 +6447,7 @@ class Mail
 	 */
 	static function clean_subject_for_filename($filename)
 	{
-		static $filter_pattern = '$[\f\n\t\x0b\:*#?<>%"\|/\x{10000}-\x{10FFFF}]$u';
+		static $filter_pattern = '$[\f\n\t\x0b\:*#?<>%"\|/\x{10000}-\x{10FFFF}\\\\]$u';
 		$file = trim(preg_replace($filter_pattern, ' ', $filename));
 		if (empty($file)) $file = lang('empty');
 		return $file;
