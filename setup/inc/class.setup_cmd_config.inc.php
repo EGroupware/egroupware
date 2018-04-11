@@ -1,6 +1,6 @@
 <?php
 /**
- * eGgroupWare setup - create / change eGW configuration
+ * eGgroupWare setup - create / change EGw configuration
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -13,7 +13,7 @@
 use EGroupware\Api;
 
 /**
- * setup command: create / change eGW configuration
+ * setup command: create / change EGw configuration
  */
 class setup_cmd_config extends setup_cmd
 {

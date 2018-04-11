@@ -25,7 +25,7 @@ accounts existing	setup	pt-br	Contas existentes
 actions	setup	pt-br	Ações
 activate safe password check	setup	pt-br	Ativar salvamento de senhas
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pt-br	Adicionar usuários criados automaticamente para este grupo (o grupo 'Padrão' será utilizado se este campo estiver vazio.)
-add new database instance (egw domain)	setup	pt-br	Adicionar nova base de dados (domínio eGW )
+add new database instance (egw domain)	setup	pt-br	Adicionar nova base de dados (domínio EGw )
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	pt-br	adicionar ou editar um domínio:
 adding, editing or deleting an egroupware domain / database instance:	setup	pt-br	Adicionando, editando ou removendo um domínio / base de dados do EGroupware:
 additional options and there defaults (in brackets)	setup	pt-br	Opções adicionais e valores padrões (entre parênteses)
@@ -171,7 +171,7 @@ currently installed languages: %1 <br />	setup	pt-br	Idiomas instalados atualmen
 custom set via %1	setup	pt-br	Definição personalizada através de %1
 cyrus imap: admin user,password	setup	pt-br	IMAP Cyrus: usuário administrador,senha
 database	setup	pt-br	Base de dados
-database instance (egw domain)	setup	pt-br	Instância da base de dados (domínio eGW)
+database instance (egw domain)	setup	pt-br	Instância da base de dados (domínio EGw)
 database is version %1 and up to date.	setup	pt-br	base de dados está na versão %1 e atualizada
 database successfully converted from '%1' to '%2'	setup	pt-br	Conversão bem sucedida da base de dados de '%1' para '%2'
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	pt-br	Nota ntp <br /> se estiver usando a porta 13, por favor configure as regras de acesso do seu firewall corretamente antes de enviar essa página <br /> (port 13 / servidor 129.6.15.28)
@@ -330,7 +330,7 @@ ldap host	setup	pt-br	Servidor LDAP
 ldap import	setup	pt-br	Importação LDAP
 ldap root password	setup	pt-br	Senha do super usuário LDAP
 ldap rootdn	setup	pt-br	Super usuário LDAP
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	pt-br	Filtro de pesquisa para contas LDAP. Padrão: "(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	pt-br	Filtro de pesquisa para contas LDAP. Padrão: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	pt-br	Deixe em branco para manter a atual
 limit access	setup	pt-br	Limitar acesso
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	pt-br	Limitar acesso ao setup aos seguintes endereços IP, redes ou nomes de domínio (ex: 127.0.0.1, 10.1.1, meudominio.nomesite.com.br)

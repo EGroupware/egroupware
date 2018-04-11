@@ -16,7 +16,7 @@
 '%1' must be integer	setup	es-es	%1 debe ser un valor entero
 (searching accounts and changing passwords)	setup	es-es	(buscando cuentas y cambiando contraseñas)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	es-es	*** NO actualice su base de datos mediante esta instalación, ya que la actualización podría interrumpirse por el tiempo máximo de ejecución permitido, lo que deja su base de datos en un estado irrecuperable ¡¡(se pierden los datos)!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	es-es	*** Tiene que hacer los cambios manualmente en su php.ini (normalmente en /etc en linux) para que eGW funcione completamente ***
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	es-es	*** Tiene que hacer los cambios manualmente en su php.ini (normalmente en /etc en linux) para que EGw funcione completamente ***
 00 (disable)	setup	es-es	00 (desactivar / recomendado)
 13 (ntp)	setup	es-es	13 (ntp)
 80 (http)	setup	es-es	80 (http)
@@ -30,7 +30,7 @@ accounts existing	setup	es-es	Existen cuentas
 actions	setup	es-es	Acciones
 activate safe password check	setup	es-es	Activar la comprobación para guardar contraseñas
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	es-es	Añadir usuarios creados automáticamente a este grupo (si está vacío, se le asignará el grupo predeterminado)
-add new database instance (egw domain)	setup	es-es	Añadir nueva instancia de base de datos (dominio eGW)
+add new database instance (egw domain)	setup	es-es	Añadir nueva instancia de base de datos (dominio EGw)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	es-es	añadir o editar un dominio: [nombre dominio (default)], [nombre base de datos (egroupware)], [usuario de la base de datos (egroupware)], contraseña de la base de datos,[tipo de base de datos [mysql)], [servidor de la base de datos (localhost)],[puerto de la base de datos (específico de la base de datos)], [usuario de configuración (como encabezado)], [contraseña de configuración (como encabezado)]
 adding, editing or deleting an egroupware domain / database instance:	setup	es-es	Añadir, editar o borrar un dominio o instancia de EGroupware
 additional options and there defaults (in brackets)	setup	es-es	Opciones adicionales y predeterminadas (entre corchetes)
@@ -193,7 +193,7 @@ custom handler: %1	setup	es-es	Manejador personalizado: %1
 custom set via %1	setup	es-es	Conjunto personalizado via %1
 cyrus imap: admin user,password	setup	es-es	Cyrus IMAP: Usuario administrador, contraseña
 database	setup	es-es	Base de datos
-database instance (egw domain)	setup	es-es	Instancia de la base de datos (dominio eGW)
+database instance (egw domain)	setup	es-es	Instancia de la base de datos (dominio EGw)
 database is version %1 and up to date.	setup	es-es	La versión de la base de datos es %1 y está actualizada.
 database successfully converted from '%1' to '%2'	setup	es-es	La base de datos se convirtió correctamente de '%1' a '%2'
 datebase %1 droped.	setup	es-es	Se ha borrado la base de datos %1.
@@ -317,7 +317,7 @@ however, the application is otherwise installed	setup	es-es	De todas formas, la 
 however, the application may still work	setup	es-es	Sin embargo, puede que la aplicación todavía funcione
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	es-es	Tipos de identificación HTTP (separados por comas) a usar sin página de inicio de sesión. Por ejemplo, "NTLM"
 if no acl records for user or any group the user is a member of	setup	es-es	Si no hay registros ACL ni grupo para el usuario, entonces es miembro de
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	es-es	Si está activado safe_mode, eGW no puede cambiar ciertas opciones en modo de ejecución, ni puede cargar ningún módulo que aún no sea cargable.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	es-es	Si está activado safe_mode, EGw no puede cambiar ciertas opciones en modo de ejecución, ni puede cargar ningún módulo que aún no sea cargable.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	es-es	Si la aplicación no ha definido tablas, seleccionando actualizar debería de remediar el problemas
 if using ads (active directory)	setup	es-es	Si se usa identificación del Directorio Activo
 if using cas (central authentication service):	setup	es-es	Si se usa CAS (Sistema de identificación centralizado):
@@ -363,7 +363,7 @@ ldap host	setup	es-es	Servidor LDAP
 ldap import	setup	es-es	Importar LDAP
 ldap root password	setup	es-es	Contraseña del administrador LDAP
 ldap rootdn	setup	es-es	rootdn LDAP
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	es-es	Filtro de búsqueda LDAP para las cuentas. Predeterminado: "(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	es-es	Filtro de búsqueda LDAP para las cuentas. Predeterminado: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	es-es	Dejar en blanco para mantener el actual
 limit access	setup	es-es	Limitar aceso
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	es-es	Limitar el acceso a la instalación a las siguientes direcciones, redes o máquinas (p. ej. 127.0.0.1,10.1.1,myhost.dyndns.org)

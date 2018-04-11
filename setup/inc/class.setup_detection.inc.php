@@ -369,7 +369,7 @@ class setup_detection
 	}
 
 	/**
-	 * Check if eGW configuration exists
+	 * Check if EGw configuration exists
 	 *
 	 * @return int 1 = Needs config, ..., 10 = Config Ok
 	 */

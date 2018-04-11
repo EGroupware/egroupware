@@ -1,6 +1,6 @@
 <?php
 /**
- * eGgroupWare setup - create a first eGroupWare user / admin and our two standard groups: Default & Admins
+ * eGgroupWare setup - create a first EGroupware user / admin and our two standard groups: Default & Admins
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -13,7 +13,7 @@
 use EGroupware\Api;
 
 /**
- * setup command: create a first eGroupWare user / admin and our two standard groups: Default & Admins
+ * setup command: create a first EGroupware user / admin and our two standard groups: Default & Admins
  *
  * @ToDo: get rid of the ugly setup_admin.php include
  */
@@ -61,7 +61,7 @@ class setup_cmd_admin extends setup_cmd
 	}
 
 	/**
-	 * run the command: create eGW admin and standard groups
+	 * run the command: create EGw admin and standard groups
 	 *
 	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message

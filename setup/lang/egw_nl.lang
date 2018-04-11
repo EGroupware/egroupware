@@ -25,7 +25,7 @@ accounts existing	setup	nl	Bestaande accounts
 actions	setup	nl	Acties
 activate safe password check	setup	nl	Activeer de veilige wachtwoorden controle
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	nl	Automatisch gecreërde gebruikers toevoegen aan deze groep ('Standaard' wordt gebruikt als dit veld leeg is)
-add new database instance (egw domain)	setup	nl	Voeg een nieuwe database instantie toe (eGW domein)
+add new database instance (egw domain)	setup	nl	Voeg een nieuwe database instantie toe (EGw domein)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	nl	Voeg toe of bewerk domein: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
 adding, editing or deleting an egroupware domain / database instance:	setup	nl	Toevoegen, bewerken of verwijderen van een EGroupware domein / database instantie:
 additional options and there defaults (in brackets)	setup	nl	Additionele opties en hun standaardwaarden (tussen haken)
@@ -178,7 +178,7 @@ custom handler: %1	setup	nl	Custom handler: %1
 custom set via %1	setup	nl	Custom set via %1
 cyrus imap: admin user,password	setup	nl	Cyrus IMAP: Beheerder gebruiker, Wachtwoord
 database	setup	nl	Database
-database instance (egw domain)	setup	nl	Database instantie (eGW domein)
+database instance (egw domain)	setup	nl	Database instantie (EGw domein)
 database is version %1 and up to date.	setup	nl	database is versie %1 en actueel
 database successfully converted from '%1' to '%2'	setup	nl	Database is met succes geconverteerd van '%1' naar %'2'
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	nl	Datetime poort.<br />Indien poort 13 gebruikt wordt, stel a.u.b. de firewall regels hiervoor in voordat u deze pagina verzendt.<br />(Poort: 13 / Host: 129.6.15.28)
@@ -294,7 +294,7 @@ however, the application is otherwise installed	setup	nl	Hoewel, de toepassing i
 however, the application may still work	setup	nl	Hoewel, de toepassing zal misschien werken
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	nl	HTTP auth types (komma gescheiden) die gebruikt moeten worden zonder loginpagina, bijvoorbeeld "NTLM"
 if no acl records for user or any group the user is a member of	setup	nl	Als er ACL records voor de gebruiker of een willekeurige groep zijn is de gebruiker lid van
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	nl	Indien safe_mode ingeschakeld is kan eGW bepaalde instellingen niet tijdens runtime wijzen, bovendien kunnen we geen enkele nog niet geladen module laden.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	nl	Indien safe_mode ingeschakeld is kan EGw bepaalde instellingen niet tijdens runtime wijzen, bovendien kunnen we geen enkele nog niet geladen module laden.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	nl	Indien de toepassing geen tabellen heeft gedefinieerd is het kiezen voor upgrade de oplossing voor dit problemen
 if using ads (active directory)	setup	nl	Indien ADS (Active Directory) authenticatie gebruikt wordt
 if using cas (central authentication service):	setup	nl	indien cas gebruikt wordt (Centrale Authenticatie Service)
@@ -339,7 +339,7 @@ ldap host	setup	nl	LDAP host
 ldap import	setup	nl	LDAP importeren
 ldap root password	setup	nl	LDAP root wachtwoord
 ldap rootdn	setup	nl	LDAP rootdn
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	nl	LDAP zoekfilter voor accounts, standaard: "(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	nl	LDAP zoekfilter voor accounts, standaard: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	nl	Laat leeg om huidige te behouden.
 limit access	setup	nl	Beperk toegang
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	nl	Limiteer toegang tot de setup tot de volgende adressen, netwerken of hostnamen (voorbeeld: 127.0.0.1,10.1.1,myhost.dnydns.org)

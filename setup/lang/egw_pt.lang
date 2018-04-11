@@ -247,7 +247,7 @@ ldap host	setup	pt	Servidor LDAP
 ldap import	setup	pt	Importar LDAP
 ldap root password	setup	pt	Senha da raiz LDAP
 ldap rootdn	setup	pt	DN da raiz LDAP
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	pt	Filtro de pesquisa LDAP para as contas, por omissão: "(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	pt	Filtro de pesquisa LDAP para as contas, por omissão: "(uid=%user)", %domain=EGw-domain
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	pt	Limitar o acesso à configuração aos endereços, redes ou servidores seguintes (ex: 127.0.0.1,10.1.1,meuservidor.dnydns.org)
 login as user postgres, eg. by using su as root	setup	pt	Aceder como utilizador postgres, ex: utilizando su como root
 login to mysql -	setup	pt	Aceder ao mysql -

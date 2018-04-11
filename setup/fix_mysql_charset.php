@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare Setup - fixes a mysql DB to match our system_charset
+ * EGroupware Setup - fixes a mysql DB to match our system_charset
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -31,7 +31,7 @@ if (!isset($GLOBALS['egw_setup']) || !is_object($GLOBALS['egw_setup']))
 		'T_footer' => 'footer.tpl',
 	));
 	$GLOBALS['egw_setup']->html->show_header('',False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
-	echo '<h3>'.'Fix mysql DB to match the eGroupWare system_charset'."</h3>\n";
+	echo '<h3>'.'Fix mysql DB to match the EGroupware system_charset'."</h3>\n";
 	$running_standalone = true;
 }
 $db =& $GLOBALS['egw_setup']->db;
@@ -41,7 +41,7 @@ $mysql2charset = array_flip($charset2mysql);
 $ServerInfo = $db->Link_ID->ServerInfo();
 $db_version = (float) $ServerInfo['version'];
 
-if ($running_standalone || $_REQUEST['debug']) echo "<p>DB-Type='<b>{$GLOBALS['egw_setup']->db->Type}</b>', DB-Version=<b>$db_version</b> ($ServerInfo[description]), eGroupWare system_charset='<b>{$GLOBALS['egw_setup']->system_charset}</b>', DB-connection charset was '<b>{$GLOBALS['egw_setup']->db_charset_was}</b>'</p>\n";
+if ($running_standalone || $_REQUEST['debug']) echo "<p>DB-Type='<b>{$GLOBALS['egw_setup']->db->Type}</b>', DB-Version=<b>$db_version</b> ($ServerInfo[description]), EGroupware system_charset='<b>{$GLOBALS['egw_setup']->system_charset}</b>', DB-connection charset was '<b>{$GLOBALS['egw_setup']->db_charset_was}</b>'</p>\n";
 
 $mysql_system_charset = isset($charset2mysql[$GLOBALS['egw_setup']->system_charset]) ?
 	$charset2mysql[$GLOBALS['egw_setup']->system_charset] : $GLOBALS['egw_setup']->system_charset;

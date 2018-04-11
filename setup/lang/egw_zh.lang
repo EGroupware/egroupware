@@ -21,7 +21,7 @@ accounts existing	setup	zh	帐户已存在
 actions	setup	zh	操作
 activate safe password check	setup	zh	启用安全密码校验
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zh	自动添加用户到该组 (如果留空则'默认'添加。)
-add new database instance (egw domain)	setup	zh	添加数据库实例 (eGW 域)
+add new database instance (egw domain)	setup	zh	添加数据库实例 (EGw 域)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	zh	添加或编辑域：[域名(默认)],[数据库名(egroupware)],[数据库帐号(egroupware)],数据库密码,[数据库类型(mysql)],[数据库主机(localhost)],[数据库端口(据 db 而定)],[用户名(同 header)],[密码(同 header)]
 adding, editing or deleting an egroupware domain / database instance:	setup	zh	添加、编辑或删除一个 EGroupware 域/数据库实例：
 additional options and there defaults (in brackets)	setup	zh	附加选项及其默认设置 (括号内)
@@ -161,7 +161,7 @@ current version	setup	zh	当前版本号
 currently installed languages: %1 <br />	setup	zh	当前已安装的语言：%1<br />
 cyrus imap: admin user,password	setup	zh	Cyrus IMAP: Admin user,Password
 database	setup	zh	Database
-database instance (egw domain)	setup	zh	数据库实例 (eGW 域)
+database instance (egw domain)	setup	zh	数据库实例 (EGw 域)
 database is version %1 and up to date.	setup	zh	数据库版本为 %1 ，是最新版本
 database successfully converted from '%1' to '%2'	setup	zh	已成功将数据库'%1'转换为'%2'
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	zh	数据库端口。<br />如果使用13号端口，用请在提交之前设置正确的防火墙规则。<br />(例如端口号：13/主机：129.6.15.28)
@@ -315,7 +315,7 @@ ldap host	setup	zh	LDAP 主机
 ldap import	setup	zh	LADP 导入
 ldap root password	setup	zh	LDAP root 密码
 ldap rootdn	setup	zh	LDAP rootdn ("cn=root, o=yourdomain, c=us")
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	zh	LDAP 帐户搜索过滤器，默认："(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	zh	LDAP 帐户搜索过滤器，默认："(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	zh	留空保持当前。
 limit access	setup	zh	访问限制
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	zh	限制以下地址对安装程序的访问 (如：127.0.0.1,10.0.0.1,myhost.dnydns,org)

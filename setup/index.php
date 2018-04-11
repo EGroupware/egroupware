@@ -161,7 +161,7 @@ if ((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
 {
 	$GLOBALS['egw_setup']->html->show_header($GLOBALS['egw_info']['setup']['header_msg'],True);
 	$GLOBALS['egw_setup']->html->show_alert_msg('Error',
-		lang('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',
+		lang('You are using PHP version %1. EGroupware now requires %2 or later, recommended is PHP %3.',
 		PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version));
 	$GLOBALS['egw_setup']->html->show_footer();
 	exit;
@@ -232,7 +232,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 		break;
 	case 2:
-		$setup_tpl->set_var('prebeta',lang('You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.'));
+		$setup_tpl->set_var('prebeta',lang('You appear to be running a pre-beta version of EGroupware.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.'));
 		$setup_tpl->set_var('notcomplete',lang('not complete'));
 		$setup_tpl->parse('V_db_stage_2','B_db_stage_2');
 		$db_filled_block = $setup_tpl->get_var('V_db_stage_2');
@@ -256,7 +256,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		break;
 	case 4:
 		$setup_tpl->set_var('hidden_vars', Api\Html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
-		$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of eGroupWare',
+		$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of EGroupware',
 			isset($setup_info['api']['currentver']) ? $setup_info['api']['currentver'] : $setup_info['phpgwapi']['currentver']));
 		$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to %1',$setup_info['api']['version']));
 		$setup_tpl->set_var('backupwarn',lang('but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>'));
@@ -389,7 +389,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 		break;
 	case 10:
-		$setup_tpl->set_var('tablescurrent',lang('Your eGroupWare API is current'));
+		$setup_tpl->set_var('tablescurrent',lang('Your EGroupware API is current'));
 		$setup_tpl->set_var('uninstall_all_applications',lang('Uninstall all applications'));
 		$setup_tpl->set_var('dropwarn',lang('Your tables will be dropped and you will lose data'));
 		$setup_tpl->set_var('deletetables',lang('Uninstall all applications'));
@@ -419,7 +419,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['config'])
 {
 	case 1:	// AFAIK this dont happen any more, as we have setup_process::save_minimal_config() now -- RalfBecker
 		$btn_config_now = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
-			lang('Please configure eGroupWare for your environment'),
+			lang('Please configure EGroupware for your environment'),
 			'post','config.php',
 			'submit',lang('Configure Now'),
 			'');

@@ -215,7 +215,7 @@ ldap host	setup	lv	LDAP hosts
 ldap import	setup	lv	LDAP importēt
 ldap root password	setup	lv	LDAP saknes parole
 ldap rootdn	setup	lv	LDAP saknesdn
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	lv	LDAP meklēšanas filtrs kontiem, noklusējums:"(uid=%lietotājs)",%domēns=eGW-domēns
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	lv	LDAP meklēšanas filtrs kontiem, noklusējums:"(uid=%lietotājs)",%domēns=EGw-domēns
 login to mysql -	setup	lv	Pieteikties msql -
 logout	setup	lv	Iziet
 mail domain (for virtual mail manager)	setup	lv	Pasta domēns (Virtuālajam pasta pārvaldniekam)

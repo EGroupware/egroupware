@@ -77,7 +77,7 @@ if(!$_POST['submit'] || $error)
 		'email'    => $email,
 	));
 	$setup_tpl->set_var('action_url','admin_account.php');
-	$setup_tpl->set_var('description',lang('This will create a first user in eGroupWare or reset password and admin rights of an exiting user'));
+	$setup_tpl->set_var('description',lang('This will create a first user in EGroupware or reset password and admin rights of an exiting user'));
 	$setup_tpl->set_var('lang_deleteall',lang('Delete all existing SQL accounts, groups, ACLs and preferences (normally not necessary)?'));
 
 	$setup_tpl->set_var('detailadmin',lang('Details for Admin account'));

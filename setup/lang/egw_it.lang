@@ -16,7 +16,7 @@
 '%1' must be integer	setup	it	%1 deve essere un valore intero
 (searching accounts and changing passwords)	setup	it	(ricerca di account e variazione password)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	it	*** NON aggiornare il tuo database tramite setup, perché l'aggiornamento potrebbe essere interrotto dal max_execution_time, che lascerebbe il tuo DB in uno stato irrecuperabile (dati persi) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	it	*** Devi effettuare manualmente le modifiche al tuo php.ini (di solito in /etc su linux) perché eGW sia completamente funzionante !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	it	*** Devi effettuare manualmente le modifiche al tuo php.ini (di solito in /etc su linux) perché EGw sia completamente funzionante !!!
 00 (disable)	setup	it	00 (disabilitato/ consigliato)
 13 (ntp)	setup	it	13 (ntp)
 80 (http)	setup	it	80 (http)

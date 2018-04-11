@@ -104,7 +104,7 @@ class setup_cmd_install extends setup_cmd
 		// regular (new) install
 		if ($GLOBALS['egw_info']['setup']['stage']['db'] != 3)
 		{
-			throw new Api\Exception\WrongUserinput(lang('eGroupWare is already installed!'),30);
+			throw new Api\Exception\WrongUserinput(lang('EGroupware is already installed!'),30);
 		}
 		$setup_info = self::$egw_setup->detection->upgrade_exclude($setup_info);
 

@@ -110,7 +110,7 @@ abstract class setup_cmd extends admin_cmd
 	static private $egw_accounts_backup;
 
 	/**
-	 * Create the setup enviroment (for running within setup or eGW)
+	 * Create the setup enviroment (for running within setup or EGw)
 	 */
 	static protected function _setup_enviroment($domain=null)
 	{
@@ -125,7 +125,7 @@ abstract class setup_cmd extends admin_cmd
 		if (isset($GLOBALS['egw_info']['server']['header_admin_user']) && !isset($GLOBALS['egw_domain']) &&
 			is_object($GLOBALS['egw']) && $GLOBALS['egw'] instanceof Egw)
 		{
-			// we run inside eGW, not setup --> read egw_domain array from the header via the showheader cmd
+			// we run inside EGw, not setup --> read egw_domain array from the header via the showheader cmd
 			$cmd = new setup_cmd_showheader(null);	// null = only header, no db stuff, no hashes
 			$header = $cmd->run();
 			$GLOBALS['egw_domain'] = $header['egw_domain'];
@@ -148,7 +148,7 @@ abstract class setup_cmd extends admin_cmd
 	}
 
 	/**
-	 * Restore eGW's db connection
+	 * Restore EGw's db connection
 	 *
 	 */
 	static function restore_db()
@@ -218,7 +218,7 @@ abstract class setup_cmd extends admin_cmd
 	static public $apps_to_upgrade=array();
 
 	/**
-	 * Check if eGW is installed, which versions and if an update is needed
+	 * Check if EGw is installed, which versions and if an update is needed
 	 *
 	 * Sets self::$apps_to_update and self::$apps_to_install for the last/only domain only!
 	 *

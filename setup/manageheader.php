@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware Setup - Manage the eGW config file header.inc.php
+ * EGroupware Setup - Manage the EGw config file header.inc.php
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -63,7 +63,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['header'])
 	case '3':
 		$GLOBALS['egw_info']['setup']['HeaderFormMSG'] = $GLOBALS['egw_info']['setup']['PageMSG'] =
 			$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] =
-			lang('You need to add at least one eGroupWare domain / database instance.');
+			lang('You need to add at least one EGroupware domain / database instance.');
 		break;
 	case '4':
 		$GLOBALS['egw_info']['setup']['HeaderFormMSG'] = $GLOBALS['egw_info']['setup']['HeaderLoginMSG'] =
@@ -230,7 +230,7 @@ function show_header_form($validation_errors)
 	{
 		$GLOBALS['egw_setup']->html->show_header($GLOBALS['egw_info']['setup']['header_msg'],True);
 		$GLOBALS['egw_setup']->html->show_alert_msg('Error',
-			lang('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',
+			lang('You are using PHP version %1. EGroupware now requires %2 or later, recommended is PHP %3.',
 			PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version));
 		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
@@ -243,7 +243,7 @@ function show_header_form($validation_errors)
 		echo '<p align="center" class="msg"><b>'
 			. lang('Did not find any valid DB support!')
 			. "<br />\n"
-			. lang('Try to configure your php to support one of the above mentioned DBMS, or install eGroupWare by hand.')
+			. lang('Try to configure your php to support one of the above mentioned DBMS, or install EGroupware by hand.')
 			. '</b></p>';
 		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
@@ -342,11 +342,11 @@ function show_header_form($validation_errors)
 	$setup_tpl->set_var(array(
 		'lang_analysis'        => $validation_errors ? lang('Validation errors') : '',
 		'lang_settings'        => lang('Settings'),
-		'lang_domain'          => lang('Database instance (eGW domain)'),
+		'lang_domain'          => lang('Database instance (EGw domain)'),
 		'lang_delete'          => lang('Delete'),
-		'lang_adddomain'       => lang('Add new database instance (eGW domain)'),
+		'lang_adddomain'       => lang('Add new database instance (EGw domain)'),
 		'lang_serverroot'      => lang('Server Root'),
-		'lang_serverroot_descr'=> lang('Path (not URL!) to your eGroupWare installation.'),
+		'lang_serverroot_descr'=> lang('Path (not URL!) to your EGroupware installation.'),
 		'lang_adminuser'       => lang('Header username'),
 		'lang_adminuser_descr' => lang('Admin user for header manager'),
 		'lang_adminpass'       => lang('Header password'),
@@ -363,11 +363,11 @@ function show_header_form($validation_errors)
 		'lang_dbname'          => lang('DB Name'),
 		'lang_dbnamedescr'     => lang('Name of database'),
 		'lang_dbuser'          => lang('DB User'),
-		'lang_dbuserdescr'     => lang('Name of db user eGroupWare uses to connect'),
+		'lang_dbuserdescr'     => lang('Name of db user EGroupware uses to connect'),
 		'lang_dbpass'          => lang('DB Password'),
 		'lang_dbpassdescr'     => lang('Password of db user'),
 		'lang_dbtype'          => lang('DB Type'),
-		'lang_whichdb'         => lang('Which database type do you want to use with eGroupWare?'),
+		'lang_whichdb'         => lang('Which database type do you want to use with EGroupware?'),
 		'lang_configuser'      => lang('Configuration User'),
 		'lang_configuser_descr'=> lang('Loginname needed for domain configuration'),
 		'lang_configpass'      => lang('Configuration Password'),
@@ -377,7 +377,7 @@ function show_header_form($validation_errors)
 		'lang_session'         => lang('Sessions Handler'),
 		'lang_session_descr'   => lang('Session handler class used.'),
 		'lang_enablemcrypt'    => lang('Enable MCrypt'),
-		'lang_mcrypt_warning'  => lang('Not all mcrypt algorithms and modes work with eGroupWare. If you experience problems try switching it off.'),
+		'lang_mcrypt_warning'  => lang('Not all mcrypt algorithms and modes work with EGroupware. If you experience problems try switching it off.'),
 		'lang_mcryptiv'        => lang('MCrypt initialization vector'),
 		'lang_mcryptivdescr'   => lang('This should be around 30 bytes in length.<br />Note: The default has been randomly generated.'),
 		'lang_domselect'       => lang('Domain select box on login'),

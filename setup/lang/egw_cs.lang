@@ -16,7 +16,7 @@
 '%1' must be integer	setup	cs	%1 musí být hodnota typu integer
 (searching accounts and changing passwords)	setup	cs	(prohledávání účtů a změna hesel)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	cs	*** Neaktualizujte Vaší databázi prostřednictvím Instalátoru, protože aktualizace by díky nastavení parametru max_execution_time mohla být přerušena a Vaše databáze by pak zůstala v neobnovitelném stavu (ztratil(a) by jste svá data) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	cs	*** Změny musíte provést ručně ve Vašem php.ini (na Linuxu obvykle v adresáři /etc), aby byl eGW plně funkční !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	cs	*** Změny musíte provést ručně ve Vašem php.ini (na Linuxu obvykle v adresáři /etc), aby byl EGw plně funkční !!!
 00 (disable)	setup	cs	00 (zakázat / doporučeno)
 13 (ntp)	setup	cs	13 (ntp)
 80 (http)	setup	cs	80 (http)
@@ -30,7 +30,7 @@ accounts existing	setup	cs	Stávající účty
 actions	setup	cs	Akce
 activate safe password check	setup	cs	Aktivovat kontrolu bezpečnosti hesla
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	cs	Přidat automaticky vytvořené uživatele do této skupiny (Ponecháte-li prázdné, zkusím skupinu 'Default'.)
-add new database instance (egw domain)	setup	cs	Přidat novou instanci databáze (eGW doménu)
+add new database instance (egw domain)	setup	cs	Přidat novou instanci databáze (EGw doménu)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	cs	přidat nebo editovat doménu:[název domény(default)],[název databáze(egroupware)],[uživatel databáze(egroupware)],heslo databáze,[typ databáze(mysql)],[databázový server(localhost)],[port databáze(db specific)],[administrátor konfigurace(jako admin. hlaviček)],[heslo administrátora konfigurace(jako admin. hlaviček)]
 adding, editing or deleting an egroupware domain / database instance:	setup	cs	Přidání, editace nebo mazání EGroupware domény / instance databáze
 additional options and there defaults (in brackets)	setup	cs	Další volby a jejich výchozí hodnoty (v závorkách)
@@ -201,7 +201,7 @@ custom handler: %1	setup	cs	Uživatelský správce: %1
 custom set via %1	setup	cs	Uživatelské nastavení přes %1
 cyrus imap: admin user,password	setup	cs	Cyrus IMAP: Uživatelské jméno administrátora, heslo
 database	setup	cs	Databáze
-database instance (egw domain)	setup	cs	Instance databáze (eGW doména)
+database instance (egw domain)	setup	cs	Instance databáze (EGw doména)
 database is version %1 and up to date.	setup	cs	databáze je verze %1 a je aktuální.
 database successfully converted from '%1' to '%2'	setup	cs	Databáze úspěšně zkonvertována z '%1' na '%2'
 datebase %1 droped.	setup	cs	Databáze %1 byla smazána.
@@ -331,7 +331,7 @@ however, the application is otherwise installed	setup	cs	Nicméně aplikace je j
 however, the application may still work	setup	cs	Nicméně aplikace stále může fungovat
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	cs	Typy HTTP autentikace (oddělené čárkami), které mají být použity bez přihlašovací stránky, např. "NTLM"
 if no acl records for user or any group the user is a member of	setup	cs	Pokud nejsou ACL záznamy pro uživatele nebo libovolnou skupinu, které je členem
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	cs	Pokud je zapnutý režim safe_mode, eGW nemůže za běhu měnit některá nastavení ani načítat dosud nenačtené moduly
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	cs	Pokud je zapnutý režim safe_mode, EGw nemůže za běhu měnit některá nastavení ani načítat dosud nenačtené moduly
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	cs	Pokud aplikace nemá definovány tabulky, aktualizace by měla problém napravit
 if using ads (active directory)	setup	cs	Při použití ADS (Active Directory) autentikace
 if using cas (central authentication service):	setup	cs	Při použití CAS (Central Authentication Service):
@@ -379,7 +379,7 @@ ldap host	setup	cs	LDAP server
 ldap import	setup	cs	LDAP import
 ldap root password	setup	cs	LDAP root heslo
 ldap rootdn	setup	cs	LDAP rootdn
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	cs	LDAP filtr pro vyhledávání účtů, výchozí: "(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	cs	LDAP filtr pro vyhledávání účtů, výchozí: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	cs	Ponechte prázdné pro zachování současného.
 leave empty to use default	setup	cs	Ponechte rázdné pro použití výchozího
 limit access	setup	cs	Omezit přístup

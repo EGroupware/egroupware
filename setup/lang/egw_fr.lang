@@ -30,7 +30,7 @@ accounts existing	setup	fr	Comptes déjà créés
 actions	setup	fr	Actions
 activate safe password check	setup	fr	Activer la vérification de la sécurité des mots de passe
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fr	Ajouter les utilisateurs auto-créés à ce groupe (le groupe 'Default' sera tenté si ceci est vide.)
-add new database instance (egw domain)	setup	fr	Ajouter une nouvelle instance de base de données (domaine eGW)
+add new database instance (egw domain)	setup	fr	Ajouter une nouvelle instance de base de données (domaine EGw)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	fr	ajouter ou modifier un domaine: [domain-name(par défaut)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(hôte local)],[db-port(spécifique base de données)],[config-user(comme En-tête)],[config-passwd(comme En-tête)]
 adding, editing or deleting an egroupware domain / database instance:	setup	fr	Ajouter, modifier ou supprimer un domaine / instance base de données EGroupware :
 additional options and there defaults (in brackets)	setup	fr	Options supplémentaires et leurs valeurs par défaut (entre parenthèses)
@@ -199,7 +199,7 @@ current version	setup	fr	Version actuelle
 currently installed languages: %1 <br />	setup	fr	Langues installées actuellement: %1 <br />
 cyrus imap: admin user,password	setup	fr	Cyrus IMAP: Admin user,Password
 database	setup	fr	Base de données
-database instance (egw domain)	setup	fr	Instance de base de données (domaine eGW)
+database instance (egw domain)	setup	fr	Instance de base de données (domaine EGw)
 database is version %1 and up to date.	setup	fr	la base de données est en version %1 et est à jour
 database successfully converted from '%1' to '%2'	setup	fr	Base de données convertie de '%1' à '%2' avec succès
 datebase %1 droped.	setup	fr	Base de données %1 supprimée.

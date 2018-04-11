@@ -2,7 +2,7 @@
 %1 is %2%3 !!!	setup	no	%1 er %2%3 !!!
 (searching accounts and changing passwords)	setup	no	(søker opp konto og endrer passord)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	no	Oppdater *IKKE* databasen via setup. Oppdateringen kan avbrytas av max_execution_time hvilket ødelegger databasen ugjenkallelig!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	no	***Du må oppdatere php.ini manuellt (finnes vanligvis i /etc på Linux og i windows-mappen på Windows) for å få eGW til å fungere.
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	no	***Du må oppdatere php.ini manuellt (finnes vanligvis i /etc på Linux og i windows-mappen på Windows) for å få EGw til å fungere.
 00 (disable)	setup	no	00 (steng av/ anbefalt)
 13 (ntp)	setup	no	13 (ntp)
 80 (http)	setup	no	80 (http)
@@ -133,7 +133,7 @@ default	setup	no	Standard
 default file system space per user/group ?	setup	no	Standardutrymme i filsystemet per användare/grupp?
 delete	setup	no	Ta bort
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	no	Ta bort existerande SQL-konton, grupper, behörigheter och inställningar (normalt inte nödvändigt)?
-delete all my tables and data	setup	no	Ta bort alla eGW-tabeller och dess data
+delete all my tables and data	setup	no	Ta bort alla EGw-tabeller och dess data
 delete all old languages and install new ones	setup	no	Ta bort samtliga språk och installer nye
 deleting tables	setup	no	Sletter tabeller
 demo server setup	setup	no	Oppsett for demotjener
@@ -197,7 +197,7 @@ hour (0-24)	setup	no	Time (0-24)
 however, the application is otherwise installed	setup	no	Programmet er fortsatt installert
 however, the application may still work	setup	no	Det kan hende programmet fortsatt virker
 if no acl records for user or any group the user is a member of	setup	no	Om inga åtkomstregler finns för användaren eller de grupper användaren är medlem av
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	no	Om Safe Mode är aktiverat kan inte eGW ändra vissa inställningar medans den kör, eller ladda  en modul som inte redan är laddad.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	no	Om Safe Mode är aktiverat kan inte EGw ändra vissa inställningar medans den kör, eller ladda  en modul som inte redan är laddad.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	no	Om applikationen saknar definerade tabeller bör du välja att uppgradera den.
 if using ads (active directory)	setup	no	Dersom det benyttes ADS (Active Directory) autentisering.
 if using ldap	setup	no	Om LDAP används
@@ -233,7 +233,7 @@ ldap host	setup	no	LDAP tjener (server)
 ldap import	setup	no	LDAP import
 ldap root password	setup	no	LDAP root passord
 ldap rootdn	setup	no	LDAP rootdn
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	no	LDAP sökfilter för konton, default: "(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	no	LDAP sökfilter för konton, default: "(uid=%user)", %domain=EGw-domain
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	no	Begränsa åtkomst till följande adresser, nätverk eller hostnamn (dvs 127.0.0.1,192.168.1,frodo.mydomain.org
 login to mysql -	setup	no	login till mysql -
 logout	setup	no	logg ut

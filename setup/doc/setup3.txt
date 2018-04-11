@@ -1,6 +1,6 @@
 
 
-eGroupWare Setup
+EGroupware Setup
 
 June 18, 2001 
 Updated May 9, 2003

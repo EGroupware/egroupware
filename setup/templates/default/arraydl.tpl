@@ -1,6 +1,6 @@
 <!-- BEGIN sqlheader --><?php
   /**************************************************************************\
-  * eGroupWare - Setup                                                       *
+  * EGroupware - Setup                                                       *
   * http://www.egroupware.org                                                *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *

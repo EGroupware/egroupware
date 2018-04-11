@@ -2,7 +2,7 @@
 /**
  * EGroupware Setup - Account migration between SQL <--> LDAP
  *
- * The migration is done to the account-repository configured for eGroupWare!
+ * The migration is done to the account-repository configured for EGroupware!
  *
  * @link http://www.egroupware.org
  * @package setup

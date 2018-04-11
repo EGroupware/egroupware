@@ -7,7 +7,7 @@
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	ca	'%1' no és permès com %2. arguments de l'opció %3 !!!
 (searching accounts and changing passwords)	setup	ca	(cercant comptes i canviant contrasenyes)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ca	*** NO actualitzeu la vostra base de dades a través d'aquesta Instal·lació, perquè l'actualització pot ser interrompuda pel max_execution_time deixant la vostra base de dades en un estat irrecuperable (les vostres dades es perdran) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ca	*** Heu de fer els canvis manualment al vostre php.ini (normalment dins /etc a linux) a fi de fer que l'eGW sigui totalment funcional !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ca	*** Heu de fer els canvis manualment al vostre php.ini (normalment dins /etc a linux) a fi de fer que l'EGw sigui totalment funcional !!!
 00 (disable)	setup	ca	00 (desactivar / recomanat)
 13 (ntp)	setup	ca	13 (ntp)
 80 (http)	setup	ca	80 (http)
@@ -18,7 +18,7 @@ accounts existing	setup	ca	Comptes existents
 actions	setup	ca	Accions
 activate safe password check	setup	ca	Activa comprovació de contrasenya segura
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ca	Afegir usuaris creats automàticament a aquest grup (Si es buit, serà assignat al grup 'Default')
-add new database instance (egw domain)	setup	ca	Afegeix una nova instància a la base de dades (domini eGW)
+add new database instance (egw domain)	setup	ca	Afegeix una nova instància a la base de dades (domini EGw)
 additional settings	setup	ca	Configuració addicional
 admin account successful created.	setup	ca	Compte de l'administrador creat correctament.
 admin email address	setup	ca	Adreça email de l'Administrador
@@ -147,7 +147,7 @@ current version	setup	ca	Versió Actual
 currently installed languages: %1 <br />	setup	ca	Idiomes instal·lats actualment: %1 <br />
 cyrus imap: admin user,password	setup	ca	Cyrus IMAP: Usuari administrador, contrasenya
 database	setup	ca	Base de dades
-database instance (egw domain)	setup	ca	Instància de base de dades (domini eGW)
+database instance (egw domain)	setup	ca	Instància de base de dades (domini EGw)
 database is version %1 and up to date.	setup	ca	base de dades està en la versió %1 i actualitzada.
 database successfully converted from '%1' to '%2'	setup	ca	Base de dades convertida correctament de '%1' a '%2'
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	ca	Port data i hora.<br />Si utilitzes el port 13, per favor comprova les regles del firewall abans d'enviar aquesta pàgina.<br />(Port: 13 / Host: 129.6.15.28)
@@ -243,7 +243,7 @@ however the tables are still in the database	setup	ca	Tanmateix les taules encar
 however, the application is otherwise installed	setup	ca	Tanmateix, l'aplicació fou instal·lada
 however, the application may still work	setup	ca	Tanmateix, l'aplicació encara pot funcionar
 if no acl records for user or any group the user is a member of	setup	ca	Si no hi han registres ACL ni grup per a l'usuari, aleshores és membre de
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ca	Si mode_segur està activat, eGW no pot canviar determinades configuracions en temps d'execució ni tampoc podem carregar cap mòdul que no estigui carregat.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ca	Si mode_segur està activat, EGw no pot canviar determinades configuracions en temps d'execució ni tampoc podem carregar cap mòdul que no estigui carregat.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	ca	Si l'aplicació no ha definit taules, seleccionant actualitzar hauria de resoldre el problema
 if using ads (active directory)	setup	ca	Si feu servir autentificació ADS (Activer Directory)
 if using ldap	setup	ca	Si feu servir LDAP
@@ -282,7 +282,7 @@ ldap host	setup	ca	Servidor LDAP
 ldap import	setup	ca	Importació LDAP
 ldap root password	setup	ca	Contrasenya de l'administrador LDAP
 ldap rootdn	setup	ca	rootdn LDAP
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	ca	filtre de cerca LDAP per a comptes, per defecte: "(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	ca	filtre de cerca LDAP per a comptes, per defecte: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	ca	Deixa buit per mantenir l'actual
 limit access	setup	ca	Accés limitat
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	ca	Accés limitat a la instal·lació a les següents adreces, xarxes o màquines (ex. 127.0.0.1,10.1.1,myhost.dnydns.org)
