@@ -648,7 +648,7 @@ div.et2_file {
 }
 /* Customize file upload styling */
 span.et2_file_span{
-	display: block;
+	display: inline-block;
 	background-position: 2px;
 	background-image: url(images/attach.png);
 	background-repeat: no-repeat;

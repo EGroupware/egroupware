@@ -239,7 +239,6 @@
   }
   span.et2_file_span {
     background-image: url(../images/attach.png);
-    width: 145px;
   }
   span.et2_file_span img[url*="svg"] {
     background-color: #b4b4b4 !important;
