@@ -1588,6 +1588,9 @@ class Session
 
 	/**
 	 * Initialise the used session handler
+	 *
+	 * @return boolean true if we have a session, false otherwise
+	 * @throws \ErrorException if there is no PHP session support
 	 */
 	public static function init_handler()
 	{
@@ -1607,6 +1610,9 @@ class Session
 					if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
 					return $ok;
 				}
+				break;
+			case PHP_SESSION_ACTIVE:
+				return true;	// session created by MServer
 		}
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() no active session!");
 
