@@ -231,7 +231,7 @@ filemanager	mail	sl	Dokumenti
 files	mail	sl	Datoteke
 flag / unflag	mail	sl	Oznaka / BrezOznake
 flag or unflag a mail	mail	sl	Oznaka ali BrezOznake v ePošti
-flagged	mail	sl	Označen
+flagged	mail	sl	Označeno
 flagged %1 messages as %2 in %3	mail	sl	označil %1 sporočilo kot %2 v %3
 flagged %1 messages as flagged in %2	mail	sl	označene oznake %1 označene kot označene v %2
 flagged %1 messages as unflagged in %2	mail	sl	označil %1 sporočilo kot neuglagano v %2
@@ -432,7 +432,7 @@ quicksearch	mail	sl	Hitro iskanje
 quicksearch (with cc)	mail	sl	hitri iskalnik (vklj.CC)
 quota not provided by server	mail	sl	Kvota, ki jo ne zagotavlja strežnik
 quota: %1	mail	sl	Kvota: %1
-read	mail	sl	preberite
+read	mail	sl	Prebrano
 read / unread	mail	sl	Branje / Neprebrano
 readable	mail	sl	berljivo
 reason!	mail	sl	razlog!
@@ -490,8 +490,8 @@ save as draft	mail	sl	Shrani kot osnutek
 save as draft and print	mail	sl	Shrani kot osnutek in natisni
 save as infolog	mail	sl	Shrani kot Infolog
 save as infolog on send	mail	sl	Shrani kot Infolog ob pošiljanju
-save as ticket	mail	sl	Shrani kot vozovnico
-save as tracker on send	mail	sl	Shrani kot sledilnik ob pošiljanju
+save as ticket	mail	sl	Shrani kot zahtevo
+save as tracker on send	mail	sl	Shrani kot zahtevek ob pošiljanju
 save message to disk	mail	sl	Shrani sporočilo na disk
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	sl	Shranjevanje sporočila %1 ni uspelo. Sporočila ni bilo mogoče shraniti v mapo %2 zaradi: %3
 save the drafted message as eml file into vfs	mail	sl	Shranite pripeto sporočilo kot datoteko eml v VFS

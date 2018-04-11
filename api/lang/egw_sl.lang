@@ -109,7 +109,7 @@ all in one	groupdav	sl	Vse v enem
 all languages	common	sl	vsi jeziki
 all operations save the template!	common	sl	Vse operacije shranijo predlogo!
 all users	common	sl	Vsi uporabniki
-allowed file type: %1	common	sl	Dovoljena vrsta datoteke:% 1
+allowed file type: %1	common	sl	Dovoljena vrsta datoteke: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	sl	Omogoča, da odgovorne uporabnike spreminja iz naprav, ki jih ne podpirajo, tako da nastavite naslov e-poštnega naslova uporabnika kot kategorije.
 alt	common	sl	Alt
 alternate style-sheet:	common	sl	Nadomestna (CSS) predloga
@@ -1014,7 +1014,7 @@ pre	common	sl	Nat
 precision	common	sl	Natančnost
 preference	common	sl	Nastavitev
 preferences	common	sl	Nastavitve
-preferences for the %1 template set	preferences	sl	Nastavitve za nastavljeno predlogo% 1
+preferences for the %1 template set	preferences	sl	Nastavitve za nastavljeno predlogo %1
 prev	common	sl	Prej
 previous page	common	sl	Prejšnja stran
 primary group	common	sl	Osnovna skupina
