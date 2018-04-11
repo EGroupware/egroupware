@@ -1543,6 +1543,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		foreach(Vfs::find(Link::vfs_path($app, $id, '', true), array(
 			'type' => 'F',
 			'need_mime' => true,
+			'maxdepth' => 10,	// set a limit to not run into an infinit recursion
 		), true) as $path => $stat)
 		{
 			// handle symlinks --> return target size and mime-type
