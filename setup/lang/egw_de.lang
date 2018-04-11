@@ -30,7 +30,7 @@ accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
 activate safe password check	setup	de	Aktiviere die "sichere Passwort" Überprüfung
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Gruppe hinzufügen ("Default" wird versucht wenn nichts angegeben.)
-add new database instance (egw domain)	setup	de	Neue Datenbankinstanz (eGW Domain) hinzufügen
+add new database instance (egw domain)	setup	de	Neue Datenbankinstanz (EGw Domain) hinzufügen
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	de	Domain hinzufügen oder bearbeiten: [Domainname(default)],[DB-Name(egroupware)],[DB-Benutzer(egroupware)],DB-Passwort,[DB-Typ(mysql)],[DB-Host(localhost)],[DB-Port(DB spezifisch)],[Konfigurationsbenutzer(wie Header)],[Konfig-Passwort(wie Header)]
 adding, editing or deleting an egroupware domain / database instance:	setup	de	Hinzufügen, bearbeiten oder Löschen einer EGroupware Domain / Datenbank Instanz
 additional options and there defaults (in brackets)	setup	de	Zusätzliche Optionen und ihre Vorgaben (in Klammer)
@@ -203,7 +203,7 @@ custom handler: %1	setup	de	Eigener Sitzunghandler: %1
 custom set via %1	setup	de	Benutzerdefiniert über "%1" gesetzt
 cyrus imap: admin user,password	setup	de	Cyrus IMAP: Adminbenutzer,Passwort
 database	setup	de	Datenbank
-database instance (egw domain)	setup	de	Datenbankinstanz (eGW Domain)
+database instance (egw domain)	setup	de	Datenbankinstanz (EGw Domain)
 database is version %1 and up to date.	setup	de	Datenbank ist Version %1 und aktuell.
 database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von "%1" nach "%2" konvertiert
 datebase %1 droped.	setup	de	Datenbank %1 gelöscht.
@@ -335,7 +335,7 @@ however, the application is otherwise installed	setup	de	Wie auch immer, die Anw
 however, the application may still work	setup	de	Wie auch immer, die Anwendung mag dennoch funktionieren
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	de	HTTP Authetifizierungs Typen (Komma-getrennt) die ohne Login Seite benutzt werden sollen, zB. "NTLM"
 if no acl records for user or any group the user is a member of	setup	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört gibt
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	de	Wenn safe_mode eingeschaltet ist, kann eGW verschiedene Einstellungen nicht mehr zur Laufzeit ändern, noch können wir nicht geladene Erweiterungen (php extensions) laden.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	de	Wenn safe_mode eingeschaltet ist, kann EGw verschiedene Einstellungen nicht mehr zur Laufzeit ändern, noch können wir nicht geladene Erweiterungen (php extensions) laden.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	de	Wenn die Anwendung keine definierten Tabellen hat, wählen Sie überarbeiten. Das Problem sollte damit behoben werden.
 if using ads (active directory)	setup	de	Wenn Sie ADS (Active Directory) benutzen
 if using cas (central authentication service):	setup	de	Wenn Sie CAS (Central Authentication Service) benutzen
@@ -383,7 +383,7 @@ ldap host	setup	de	LDAP Host
 ldap import	setup	de	LDAP Import
 ldap root password	setup	de	LDAP Root Passwort
 ldap rootdn	setup	de	LDAP Root DN
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	de	LDAP Suchfilter für Benutzerkonten, Vorgabe "(uid=%user)", %domain=eGW Domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	de	LDAP Suchfilter für Benutzerkonten, Vorgabe "(uid=%user)", %domain=EGw Domain
 leave empty to keep current.	setup	de	Leer lassen um das existierende Password zu behalten.
 leave empty to use default	setup	de	leer lassen um Standard zu benutzen
 limit access	setup	de	Zugang beschränken

@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware Setup - Manage the eGW config file header.inc.php
+ * EGroupware Setup - Manage the EGw config file header.inc.php
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -15,7 +15,7 @@ use EGroupware\Api;
 use EGroupware\Api\Framework;
 
 /**
- * Functions to manage the eGW config file header.inc.php
+ * Functions to manage the EGw config file header.inc.php
  *
  * Used by manageheader.php and the new setup command line interface setup-cli.php
  *
@@ -153,7 +153,7 @@ class setup_header
 	 * should write an identical header.inc.php as the one include
 	 *
 	 * @param array $egw_info usual content (in server key) plus keys server_root and include_root
-	 * @param array $egw_domain info about the existing eGW domains / DB instances
+	 * @param array $egw_domain info about the existing EGw domains / DB instances
 	 * @return string content of header.inc.php
 	 */
 	function generate($egw_info,$egw_domain)

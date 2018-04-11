@@ -1,7 +1,7 @@
 %1 does not exist !!!	setup	hr	%1 does not exist !!!
 %1 is %2%3 !!!	setup	hr	%1 is %2%3 !!!
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	hr	*** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your DB in an unrecoverable state (your data is lost) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	hr	*** You have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get eGW fully working !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	hr	*** You have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get EGw fully working !!!
 00 (disable)	setup	hr	00 (disable / recomended)
 13 (ntp)	setup	hr	13 (ntp)
 80 (http)	setup	hr	80 (http)
@@ -170,7 +170,7 @@ hostname/ip of database server	setup	hr	Hostname/IP of database server
 however, the application is otherwise installed	setup	hr	However, the application is otherwise installed
 however, the application may still work	setup	hr	However, the application may still work
 if no acl records for user or any group the user is a member of	setup	hr	If no ACL records for user or any group the user is a member of
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	hr	If safe_mode is turned on, eGW is not able to change certain settings on runtime, nor can we load any not yet loaded module.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	hr	If safe_mode is turned on, EGw is not able to change certain settings on runtime, nor can we load any not yet loaded module.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	hr	If the application has no defined tables, selecting upgrade should remedy the problem
 if using ldap	setup	hr	If using LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	hr	If using LDAP, do you want to manage homedirectory and loginshell attributes?

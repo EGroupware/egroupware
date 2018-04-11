@@ -200,7 +200,7 @@ ldap groups context	setup	iw	LDAP הקשר קבוצות
 ldap host	setup	iw	LDAP מחשב
 ldap import	setup	iw	LDAP ייבוא
 ldap root password	setup	iw	LDAP של root סיסמת
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	iw	(uid=%user)", %domain=eGW-domain: ברירת מחדל, LDAP מסנן חיפוש עבור חשבונות
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	iw	(uid=%user)", %domain=EGw-domain: ברירת מחדל, LDAP מסנן חיפוש עבור חשבונות
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	iw	(127.0.0.1,10.1.1,myhost.dnydns.org :הגבל גישה להגדרה לרשתות, כתובות או מחשבים הבאים (למשל
 login to mysql -	setup	iw	mysql-כנס ל
 logout	setup	iw	יציאה מהמערכת

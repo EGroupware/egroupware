@@ -20,7 +20,7 @@ accounts existing	setup	zh-tw	帳號已經存在
 actions	setup	zh-tw	動作
 activate safe password check	setup	zh-tw	啟用儲存密碼功能
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zh-tw	新增自動建立使用者到這個群組﹝若留空白則使用「Default」﹞
-add new database instance (egw domain)	setup	zh-tw	新增資料庫實例(eGW 網域)
+add new database instance (egw domain)	setup	zh-tw	新增資料庫實例(EGw 網域)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	zh-tw	新增或編輯一個網域：
 adding, editing or deleting an egroupware domain / database instance:	setup	zh-tw	新增、編輯或刪除一個 EGroupware 網域/資料庫實例：
 additional options and there defaults (in brackets)	setup	zh-tw	附加選項與預設（同時處理）
@@ -304,7 +304,7 @@ ldap host	setup	zh-tw	LDAP 主機
 ldap import	setup	zh-tw	LDAP匯入
 ldap root password	setup	zh-tw	LDAP 管理者密碼
 ldap rootdn	setup	zh-tw	LDAP 主要端點﹝rootdn﹞
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	zh-tw	LDAP帳號搜尋規則，預設："(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	zh-tw	LDAP帳號搜尋規則，預設："(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	zh-tw	空白表示不改變
 limit access	setup	zh-tw	存取限制
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	zh-tw	限制下面位址、網域或是主機存取安裝設定(例如：127.0.0.1,10.1.1,myhost.dnydns.org)

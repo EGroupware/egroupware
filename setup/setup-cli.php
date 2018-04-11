@@ -301,7 +301,7 @@ function do_update($arg)
 }
 
 /**
- * Check if eGW is installed according to $stop and we have the necessary authorization for config
+ * Check if EGw is installed according to $stop and we have the necessary authorization for config
  *
  * The password can be specified as parameter, via the enviroment variable EGW_CLI_PASSWORD or
  * querier from the user. Specifying it as parameter can be security problem!
@@ -310,7 +310,7 @@ function do_update($arg)
  *
  * @param string $arg [domain(default)],[user(admin)],password
  * @param int $stop see setup_cmd::check_installed
- * @param boolean $set_lang =true set our charset, overwriting the charset of the eGW installation, default true
+ * @param boolean $set_lang =true set our charset, overwriting the charset of the EGw installation, default true
  * @return array with unprocessed arguments from $arg
  */
 function _check_auth_config($arg,$stop,$set_lang=true)
@@ -395,7 +395,7 @@ function do_header($create,&$arguments)
  * Reads the users language from the enviroment
  *
  * @param string &$charset charset set in LANG enviroment variable or the default utf-8
- * @return string 2 or 5 digit language code used in eGW
+ * @return string 2 or 5 digit language code used in EGw
  */
 function get_lang(&$charset)
 {

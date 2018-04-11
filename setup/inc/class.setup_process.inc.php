@@ -220,7 +220,7 @@ class setup_process
 		$current_config['site_title'] = 'EGroupware';
 		$current_config['hostname']  = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
 
-		// guessing the eGW url
+		// guessing the EGw url
 		if (isset($_SERVER['HTTP_HOST']))
 		{
 			$parts = explode('/',$_SERVER['PHP_SELF']);

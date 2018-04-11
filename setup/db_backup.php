@@ -14,7 +14,7 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Vfs;
 
-if (!is_object(@$GLOBALS['egw']))	// called from outside eGW ==> setup
+if (!is_object(@$GLOBALS['egw']))	// called from outside EGw ==> setup
 {
 	include ('./inc/functions.inc.php');
 

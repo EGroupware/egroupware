@@ -16,7 +16,7 @@
 '%1' must be integer	setup	ru	%1 должно быть целым числом.
 (searching accounts and changing passwords)	setup	ru	Поиск учетных записей и смена паролей
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ru	*** НЕ обновляйте базу данных с помощью модуля установки, так-как обновление может быть прервано в связи с исчерпанием максимального времени запуска, что приведет вышу БД в невосстаноимое состояние (все данные будут утеряны) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ru	*** Сделайте изменения вручную в вашем php.ini (в линуксе обычно находится в /etc), чтобы привести eGW в полную работоспособность !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ru	*** Сделайте изменения вручную в вашем php.ini (в линуксе обычно находится в /etc), чтобы привести EGw в полную работоспособность !!!
 00 (disable)	setup	ru	00 (отключить  / рекомендовано)
 13 (ntp)	setup	ru	13 (ntp)
 80 (http)	setup	ru	80 (http)
@@ -198,7 +198,7 @@ custom handler: %1	setup	ru	Пользовательский обработчи�
 custom set via %1	setup	ru	Пользовательский набор через %1
 cyrus imap: admin user,password	setup	ru	Cyrus IMAP: имя входа администратора, пароль
 database	setup	ru	База данных
-database instance (egw domain)	setup	ru	Экземпляр базы данных (домен eGW)
+database instance (egw domain)	setup	ru	Экземпляр базы данных (домен EGw)
 database is version %1 and up to date.	setup	ru	Версия базы данных %1 актуальна
 database successfully converted from '%1' to '%2'	setup	ru	База данных успешно  преобразована из %1 в %2
 datebase %1 droped.	setup	ru	База данных %1 удалена
@@ -325,7 +325,7 @@ however, the application is otherwise installed	setup	ru	Однако, прил�
 however, the application may still work	setup	ru	однако, приложение может все-еще работать
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	ru	Типы авторизации HTTP (разделенные запятыми) для использования без страницы логина, напр. "NTLM"
 if no acl records for user or any group the user is a member of	setup	ru	Если нет записей ACL для пользователя или группы, пользователь входит в
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ru	Если безопасный режим включен, у eGW нет возможностии менять некоторые настройки при запуске так же как и нет возможности запускать любые еще не загруженные модули.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ru	Если безопасный режим включен, у EGw нет возможностии менять некоторые настройки при запуске так же как и нет возможности запускать любые еще не загруженные модули.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	ru	Если приложение не имеет заранее определенных таблиц, выбор модернизации скорее всего вызовет ряд проблем
 if using ads (active directory)	setup	ru	Используя ADS (Active Directory) идентификацию
 if using cas (central authentication service):	setup	ru	При использовании CAS (Central Authentication Service)
@@ -371,7 +371,7 @@ ldap host	setup	ru	Имя сервера LDAP
 ldap import	setup	ru	Импорт  LDAP
 ldap root password	setup	ru	Пароль LDAP
 ldap rootdn	setup	ru	Корневой dn LDAP
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	ru	Фильтр поиска учетных записей LDAP, по умолчанию: "(uid=%user)",%domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	ru	Фильтр поиска учетных записей LDAP, по умолчанию: "(uid=%user)",%domain=EGw-domain
 leave empty to keep current.	setup	ru	Оставьте пустым для сохранения текущего значения.
 limit access	setup	ru	Ограничить доступ
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	ru	Ограничить доступ к установке следующими адресами, сетями или именами компьютеров (напр. 127.0.0.1,10.1.1,myhost.dnydns.org)

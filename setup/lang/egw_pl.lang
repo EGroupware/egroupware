@@ -16,14 +16,14 @@
 '%1' must be integer	setup	pl	%1 musi mieć wartość INTEGER
 (searching accounts and changing passwords)	setup	pl	(wyszukuję konta i zmieniam hasła)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	pl	*** Nie aktualizuj bazy danych przez aplikację ustawień. ponieważ aktualizacja może być przerwana przez parametr maksymalnego czasu wykonania, co spowoduje uszkodzenie bazy danych - dane zostaną utracone!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	pl	*** Należy wykonać zmiany w pliku php.ini ręcznie (zwykle w /etc/ dla OS Linux) by eGW w pełni działał.
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	pl	*** Należy wykonać zmiany w pliku php.ini ręcznie (zwykle w /etc/ dla OS Linux) by EGw w pełni działał.
 00 (disable)	setup	pl	00 (wyłączony / opcja zalecana)
 13 (ntp)	setup	pl	13 (ntp)
 80 (http)	setup	pl	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pl	<b>zestaw znaków do użycia</b> (wybierz UTF8 jeżeli planujesz używać różnych języków z różnymi zestawami znaków)
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	pl	===> inna grupa '%1' pod numerem <i>gidNumber</i> , nie ustawiono przynależności.
 [header-password],[header-user],[new-password],[new-user]	setup	pl	[hasło-administracyjne (header)],[użytkownik-administracyjny (header)],[nowe-hasło],[nowy-użytkownik]
-access denied: wrong username or password for manage-header !!!	setup	pl	Dostęp zabroniony: nieprawidłowa nazwa użytkownika lub hasło do zarządzania domenami eGW!
+access denied: wrong username or password for manage-header !!!	setup	pl	Dostęp zabroniony: nieprawidłowa nazwa użytkownika lub hasło do zarządzania domenami EGw!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	pl	Dostęp zabroniony: nieprawidłowa nazwa użytkownika lub hasło do konfigurowania domeny '%1(%2)'!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	pl	konto repozytorium{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	pl	Konta istnieją
@@ -40,8 +40,8 @@ admin email address	setup	pl	Adres e-mail administratora
 admin first name	setup	pl	Imię administratora
 admin last name	setup	pl	Nazwisko administratora
 admin password	setup	pl	Hasło administratora
-admin password to header manager	setup	pl	Hasło konta do administracji domenami eGW
-admin user for header manager	setup	pl	Nazwa konta do administracji domenami eGW
+admin password to header manager	setup	pl	Hasło konta do administracji domenami EGw
+admin user for header manager	setup	pl	Nazwa konta do administracji domenami EGw
 admin username	setup	pl	Nazwa administratora
 admins	setup	pl	Administratorzy
 after backing up your tables first.	setup	pl	Po wcześniejszym wykonaniu kopii zapasowej tabel
@@ -143,7 +143,7 @@ checking pear%1 is installed	setup	pl	Sprawdzam czy PEAR%1 jest zainstalowany
 checking php.ini	setup	pl	Sprawdzam plik php.ini
 checking required php version %1 (recommended %2)	setup	pl	Sprawdzam wersje PHP (wymana %1, pożądana %2)
 checking the egroupware installation	setup	pl	Sprawdzam instalację EGroupware
-checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	pl	Sprawdzam instalacje eGW, jego wersję i ważne aktualizacje (zwraca wartość --kod-wyjścia)
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	pl	Sprawdzam instalacje EGw, jego wersję i ważne aktualizacje (zwraca wartość --kod-wyjścia)
 click <a href="index.php">here</a> to return to setup.	setup	pl	wybierz <a href="index.php">here</a> by wrócić do menu setup.
 click here	setup	pl	Kliknij tutaj
 click here to re-run the installation tests	setup	pl	Kliknij, aby ponowić testy instalacyjne
@@ -162,7 +162,7 @@ configure now	setup	pl	Konfiguruj teraz
 confirm to delete this backup?	setup	pl	Czy na pewno usunąć kopię zapasową?
 contain	setup	pl	zawiera
 continue	setup	pl	Kontunuj
-continue to the header admin	setup	pl	Przejdź do administrowania domenami eGW
+continue to the header admin	setup	pl	Przejdź do administrowania domenami EGw
 convert	setup	pl	Konwertuj
 convert backup to charset selected above	setup	pl	Wykonaj konwersję kopii zapasowej do zestawu znaków wskazanego powyżej
 could not open header.inc.php for writing!	setup	pl	Plik 'header.inc.php' nie może być zapisany przez serwer WWW.
@@ -292,7 +292,7 @@ go to	setup	pl	Idź do
 grant access	setup	pl	Przydziel dostęp
 group memberships will be migrated too.	setup	pl	Zawartość grupy będzie również zmigrowana .
 has a version mismatch	setup	pl	ma niezgodną wersję
-header admin login	setup	pl	Logowanie do administrowania domenami eGW
+header admin login	setup	pl	Logowanie do administrowania domenami EGw
 header password	setup	pl	Hasło do zarządzania domenami
 header username	setup	pl	Użytkownik do zarządzania domenami
 header-password[,header-user(admin)]	setup	pl	hasło-header[,użytkownik--header(admin)]
@@ -312,7 +312,7 @@ however, the application is otherwise installed	setup	pl	Mimo to aplikacja jest 
 however, the application may still work	setup	pl	Mimo to aplikacja może ciągle pracować
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	pl	typy autoryzacji HTTP (oddzielone przecinkami) do używania bez strony logowania, np. "NTLM"
 if no acl records for user or any group the user is a member of	setup	pl	Jeśli brak uprawnień dostępu (ACL) dla użytkownika lub jakiejkolwiek grupy, której użytkownik jest członkiem
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pl	Jeśli tryb bezpieczny (safe_mode) jest aktywny, eGW nie może zmieniać różnych ustawień poprzez runtime ani nie można załadować do tej pory niezaładowanych modułów.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pl	Jeśli tryb bezpieczny (safe_mode) jest aktywny, EGw nie może zmieniać różnych ustawień poprzez runtime ani nie można załadować do tej pory niezaładowanych modułów.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	pl	Jeśli aplikacja nie ma zdefiniowanych tabel, wybór aktualizacji rozwiąże problem.
 if using ads (active directory)	setup	pl	Jeśli używana autoryzacja  ADS (Active Directory)
 if using cas (central authentication service):	setup	pl	Jeśli używany CAS (Central Authentication Service):
@@ -356,7 +356,7 @@ ldap host	setup	pl	Stacja (host) LDAP
 ldap import	setup	pl	LDAP IMPORT
 ldap root password	setup	pl	Hasło użytkownika root LDAP
 ldap rootdn	setup	pl	LDAP rootdn
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	pl	Filtr wyszukiwarki LDAP dla kont, domyślnie: "(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	pl	Filtr wyszukiwarki LDAP dla kont, domyślnie: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	pl	Pozostaw puste by użyć bieżących ustawień
 limit access	setup	pl	Ogranicz dostęp
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	pl	Dostęp do menu setup ograniczony z tego adresu, sieci lub hosta (np. 127.0.0.1,10.1.1,myhost.dnydns.org)
@@ -373,14 +373,14 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	pl	Zarządzanie aplikacjami
 manage languages	setup	pl	Zarządzanie językami
 manual / help	setup	pl	Podręcznik pomocy
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pl	max_execution_time jest ustawiony na mniej niż 30 (sekund): eGW wymaga czasami dłuższego czasu time_execution - mogą powstać błędy
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pl	max_execution_time jest ustawiony na mniej niż 30 (sekund): EGw wymaga czasami dłuższego czasu time_execution - mogą powstać błędy
 maximum account id (e.g. 65535 or 1000000)	setup	pl	Maksymalny ID konta (np. 65535 lub 1000000)
 may be broken	setup	pl	być może uszkodzony
 mcrypt algorithm (default tripledes)	setup	pl	Mcrypt algorithm (default TRIPLEDES)
 mcrypt initialization vector	setup	pl	Wektor inicjalizujący MCrypt
 mcrypt mode (default cbc)	setup	pl	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pl	Ustawienia Mcrypt (wymaga rozszerzenia PHP: mcrypt)
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pl	memory_limit jest ustawiony na mniej niż 5!: niektóre aplikacje eGW wymagają więcej niż zalecane 8M - mogą powstać błędy.
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pl	memory_limit jest ustawiony na mniej niż 5!: niektóre aplikacje EGw wymagają więcej niż zalecane 8M - mogą powstać błędy.
 migration between egroupware account repositories	setup	pl	Migracja międzu repozytoriami kont EGroupware
 min backup count	setup	pl	Liczba kopi bezpieczeństwa do przechowywania (zero: wszystkie/ bez limitu)
 minimum account id (e.g. 500 or 100, etc.)	setup	pl	Minimalny ID konta (np. 500 lub 100, itd.)
@@ -391,7 +391,7 @@ modify	setup	pl	Modyfikuj
 month	setup	pl	Miesiąc
 multi-language support setup	setup	pl	Instalacja wersji językowych
 name of database	setup	pl	Nazwa bazy danych
-name of db user egroupware uses to connect	setup	pl	Nazwa bazy danych użytkowników eGW używane do połączeń
+name of db user egroupware uses to connect	setup	pl	Nazwa bazy danych użytkowników EGw używane do połączeń
 never	setup	pl	Nigdy
 new	setup	pl	Nowa
 next run	setup	pl	Termin następnego wykonania
@@ -399,14 +399,14 @@ no	setup	pl	Nie
 no %1 support found. disabling	setup	pl	Brak wsparcia %1. Dezaktywowano
 no accounts existing	setup	pl	Brak kont
 no algorithms available	setup	pl	brak dostępnych algorytmów
-no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	pl	Brak domen eGW/ instancji baz danych! Użyj --edit-header --domain by dodać (--usage pokaże więcej opcji).
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	pl	Brak domen EGw/ instancji baz danych! Użyj --edit-header --domain by dodać (--usage pokaże więcej opcji).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	pl	Brak ustawionego hasła administratora dla menu header! Użyj --edit-header <password>[,<user>]  by dodać (--usage pokaże więcej opcji).
 no modes available	setup	pl	brak dostępnych trybów
 no update necessary, domain %1(%2) is up to date.	setup	pl	Aktualizacja niewymagana, domena %1(%2) jest aktualna.
 no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	pl	Brak aktywnej strefy czasowej! ("%1" nie jest wystarczający, użyj identyfikatora strefy czasowej jak "%2", zobacz %3 pełną listę dostępnych identyfikatorów %4).
 no xml support found. disabling	setup	pl	Brak wsparcia dla XML. Deaktywowane
 not	setup	pl	nie
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	pl	Nie wszystkie algorytmy MCrypt i tryby pracują z eGW. Jeśli pojawiają się problemy wyłącz opcję.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	pl	Nie wszystkie algorytmy MCrypt i tryby pracują z EGw. Jeśli pojawiają się problemy wyłącz opcję.
 not complete	setup	pl	Nie gotowe
 not completed	setup	pl	Nie zakończone
 not ready for this stage yet	setup	pl	Jeszcze nie gotowe na tym etapie
@@ -517,7 +517,7 @@ setting the system-charset to utf-8 (unicode) allows the coexistens of data from
 settings	setup	pl	Ustawienia
 setup	setup	pl	Setup
 setup the database	setup	pl	Setup bazy danych
-setup/config admin login	setup	pl	Logowanie do konfiguracji domeny eGW
+setup/config admin login	setup	pl	Logowanie do konfiguracji domeny EGw
 show 'powered by' logo on	setup	pl	Wyświetlaj logo 'działa w oparciu o'
 sieve: host[,port(4190)]	setup	pl	Nawiąż połączenie do: Host[,Port(4190)]
 size	setup	pl	Wielkość
@@ -528,7 +528,7 @@ some or all of its tables are missing	setup	pl	Some or all of its tables are mis
 sources deleted/missing	setup	pl	Śródło usunięte/zagubione
 sql encryption type	setup	pl	Typ kodowania haseł w SQL (domyślnie md5)
 ssl validation:	setup	pl	Walidacja SSL:
-standard (login-name identical to egroupware user-name)	setup	pl	standardowy (login identyczny do  użytkownika w eGW)
+standard (login-name identical to egroupware user-name)	setup	pl	standardowy (login identyczny do  użytkownika w EGw)
 standard mailserver settings (used for mail authentication too)	setup	pl	Ustawienia podstawowe serwera mail (używane również do autoryzacji maili)
 standard, as defined above	setup	pl	Standardowo jak zdefiniowano powyżej
 start the postmaster	setup	pl	Uruchom postmastera
@@ -565,7 +565,7 @@ the following applications are required, but not installed:	setup	pl	Następują
 the following applications need to be upgraded:	setup	pl	Następujące aplikacje powinny być aktualizowane:
 the function %1 is needed from: %2.	setup	pl	Funkcja %1 jest wymagana z: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	pl	Funkcja imagecreatefromjpep jest dostarczana przez rozszerzenie GD (zgodnie ze wsparciem jpeg). Wymagane dla załączania fotografii do kontaktów.
-the json extension is required by egroupware for ajax.	setup	pl	Rozszerzenie JSON jest wymagane przez eGW dla AJAX.
+the json extension is required by egroupware for ajax.	setup	pl	Rozszerzenie JSON jest wymagane przez EGw dla AJAX.
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	pl	Rozszerzenie ldap jest wymagane jeśli LDAP używane do przechowywania kont i kontaktów lub autoryzacja z ldap do Active Directory. Nie wymagane do standardowej instalacji z bazą SQL.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pl	Rozszerzenie mbstring jest wymagane do pełnego wsparcia dla systemu kodowania (utf-8) lub wielobajtowego kodowania systemu znaków.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pl	mbstring.func_overload = 7 jest wymagane do pełnego wsparcia dla systemu kodowania znaków (utf-8) lub wielobajtowego kodowania systemu znaków.
@@ -585,7 +585,7 @@ this program will convert your database to a new system-charset.	setup	pl	Progra
 this program will help you upgrade or install different languages for egroupware	setup	pl	Ten program pomoże Ci zainstalować lub uaktualnić wersje językowe EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	pl	Wymagana długość ok 30bajtów długości. <br/>Uwaga: przykład został wygenerowany losowo.
 this stage is completed<br />	setup	pl	Etap zakończony<br />
-this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	pl	Zostanie utworzony pierwszy użytkownik eGW lub hasło nadpisane ustawienia obecnego użytkownika admin.
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	pl	Zostanie utworzony pierwszy użytkownik EGw lub hasło nadpisane ustawienia obecnego użytkownika admin.
 to a version it does not know about	setup	pl	do wersji o której nie ma informacji
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	pl	dodaj następującą linie do pg_hba.conf by zapewnić autoryzację haseł (dla wszystkich powyższych). Zrestartuj postgres:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	pl	By zmienić system kodowania znaków: wykonaj kopię bezpieczeństwa bazy danych, odinstaluj wszystkie aplikacje z opcją sprawdzania "konwertuj system kodowania znaków do wybranego".
@@ -611,8 +611,8 @@ uploads a backup and installs it on your db	setup	pl	załaduj kopię bezpieczeń
 uploads a backup to the backup-dir, from where you can restore it	setup	pl	załaduj kopię bezpieczeństwa do katalogu kopii bezpieczeństwa skąd może być odtwarzana
 usage: %1 command [additional options]	setup	pl	Użycie: polecenie %1 [dodatkowe opcje]
 use --create-header to create the configuration file (--usage gives more options).	setup	pl	Użyj --create-header do utworzenia pliku konfiguracyjnego (--usage pokaże więcej opcji).
-use --install to install egroupware.	setup	pl	Użyj --install by zainstalować eGW
-use --update to do so.	setup	pl	Użyj --update by zaktualizować eGW
+use --install to install egroupware.	setup	pl	Użyj --install by zainstalować EGw
+use --update to do so.	setup	pl	Użyj --update by zaktualizować EGw
 use cookies to pass sessionid	setup	pl	Używać cookie do przechowywania sessionid
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	pl	Użyj mcrypt do kodowania danych sesji: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
 use persistent db connections: {on(default) | off}	setup	pl	użyj stałego połączenia do bazy danych: {on(default) | off}
@@ -634,7 +634,7 @@ we could not determine the version of %1, please make sure it is at least %2	set
 we will automatically update your tables/records to %1	setup	pl	We will automatically update your tables/records to %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pl	Zostaną przeprowadzone testy -- to może zająć kilka minut -- Wybierz poniższy link by zatwierdzić.
 welcome to the egroupware installation	setup	pl	Witamy w instalacji systemu EGroupware
-where should egroupware store file content	setup	pl	Gdzie eGW powinien przechowywać zawartość plików
+where should egroupware store file content	setup	pl	Gdzie EGw powinien przechowywać zawartość plików
 which database type do you want to use with egroupware?	setup	pl	Którą bazę danych chcesz używać z EGroupware
 world readable	setup	pl	do odczytu
 world writable	setup	pl	do zapisu
@@ -657,8 +657,8 @@ you can install it by running:	setup	pl	Można zainstalować to wydając polecen
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	pl	Możesz teraz używać użytkownika i hasła z HEADER do wszystkich domen. Jeśli to hasło nie jest ustawione przez linię poleceń, to jest pobierane ze zmiennych systemowych EGW_CLI_PASSWORD lub oczekuje podania przez użytkownika.
 you didn't enter a config password for domain %1	setup	pl	Nie podano hasła administratora dla domeny '%1'.
 you didn't enter a config username for domain %1	setup	pl	Nie podano nazwy administratora dla domeny '%1'.
-you didn't enter a header admin password	setup	pl	Nie podano hasła do administracji domenami eGW
-you didn't enter a header admin username	setup	pl	Nie podano nazwy użytkownika do administracji domenami eGW
+you didn't enter a header admin password	setup	pl	Nie podano hasła do administracji domenami EGw
+you didn't enter a header admin username	setup	pl	Nie podano nazwy użytkownika do administracji domenami EGw
 you do not have any languages installed. please install one now <br />	setup	pl	You do not have any languages installed. Please install one now <br />
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	pl	JPGraph wersja %1 lub wyższa nie zainstalowana! Wymagane do działania Menadźera projektów - wykresów Ganta
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	pl	Nie utworzono dotąd pliku konfiguracyjnego 'header.inc.php'!<br />Możesz zrobić to teraz.
@@ -681,7 +681,7 @@ your database is not working!	setup	pl	Baza danych nie pracuje!
 your database is working, but you dont have any applications installed	setup	pl	Twoja baza pracuje, ale nie ma zainstalowanej żadnej aplikacji
 your egroupware api is current	setup	pl	EGroupware API jest w najnowszej wersji
 your files directory '%1' %2	setup	pl	Katalog plików '%1' %2
-your header admin password is not set. please set it now!	setup	pl	Brak hasła administratora domen eGW. Proszę ustawić hasło teraz!
+your header admin password is not set. please set it now!	setup	pl	Brak hasła administratora domen EGw. Proszę ustawić hasło teraz!
 your header.inc.php needs upgrading.	setup	pl	Plik 'header.inc.php' wymaga aktualizacji
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	pl	Plik 'header.inc.php' wymaga aktualizacji.<br /><blink><b class="msg">UWAGA!</b></blink><br /><b>WYKONAJ KOPIĘ ZAPASOWĄ!</b>
 your installed version of %1 is %2, required is at least %3, please run:	setup	pl	Zainstalowaną wersją komponentu '%1' jest '%2', podczas gdy wymagana jest przynajmniej %3, proszę wykonaj:

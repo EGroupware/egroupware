@@ -16,7 +16,7 @@
 '%1' must be integer	setup	sk	%1 musí byť celočíselná hodnota.
 (searching accounts and changing passwords)	setup	sk	(prehľadávanie účtov a zmena hesiel)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	sk	NIKDY neaktualizujte vašu databázu pomocou Inštalátora, pretože aktualizácia by mohla byť prerušená na základe maximálneho času vykonávania, čo by zanechalo vašu databázu v dezolátnom stave (stratené všetky dáta)!!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	sk	Zmeny musíte vykonať vo svojom php.ini (pod Linuxom zvyčajne v adresári /etc), až potom bude eGW plne funkčný!!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	sk	Zmeny musíte vykonať vo svojom php.ini (pod Linuxom zvyčajne v adresári /etc), až potom bude EGw plne funkčný!!!
 00 (disable)	setup	sk	00 (zablokovať / odporúča sa)
 13 (ntp)	setup	sk	13 (ntp)
 80 (http)	setup	sk	80 (http)
@@ -28,7 +28,7 @@ accounts existing	setup	sk	Existujúce účty
 actions	setup	sk	Akcie
 activate safe password check	setup	sk	Aktivovať voľbu ukladania hesla
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sk	Automaticky vytvorených používateľov priradiť do tejto skupiny (ak prázdne, použije sa 'Predvolená').
-add new database instance (egw domain)	setup	sk	Pridať novú databázovú inštanciu (eGW domain)
+add new database instance (egw domain)	setup	sk	Pridať novú databázovú inštanciu (EGw domain)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	sk	pridať alebo upraviť doménu: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
 adding, editing or deleting an egroupware domain / database instance:	setup	sk	Pridanie, úprava alebo odstránenie domény EGroupware / databázovej inštancie:
 additional options and there defaults (in brackets)	setup	sk	Prídavné možnosti a tam predvolené (v hranatých zátvorkách)
@@ -197,7 +197,7 @@ custom handler: %1	setup	sk	Vlastná obsluha: %1
 custom set via %1	setup	sk	Vlastné nastavenie cez %1
 cyrus imap: admin user,password	setup	sk	Cyrus IMAP: Správcovo používateľské meno,heslo
 database	setup	sk	Databáza
-database instance (egw domain)	setup	sk	Databázová inštancia (eGW domain)
+database instance (egw domain)	setup	sk	Databázová inštancia (EGw domain)
 database is version %1 and up to date.	setup	sk	Databáza má verziu %1 a je aktuálna.
 database successfully converted from '%1' to '%2'	setup	sk	Databáza bola úspešne konvertovaná z '%1' na '%2'
 datebase %1 droped.	setup	sk	Databáza %1 zahodená
@@ -318,7 +318,7 @@ however, the application is otherwise installed	setup	sk	Avšak aplikácia je in
 however, the application may still work	setup	sk	Avšak aplikácia možno stále funguje
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	sk	Typy HTTP autentifikácie (oddelené čiarkou) pre použitie na prihlasovacej stránke, napr. "NTML"
 if no acl records for user or any group the user is a member of	setup	sk	Ak pre používateľa neexistujú ACL záznamy, používateľom je členom
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	sk	Ak je bezpečný režim zapnutý, eGW nedokáže zmeniť niektoré veci za behu, ani nahrať nejaký nenahratý modul.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	sk	Ak je bezpečný režim zapnutý, EGw nedokáže zmeniť niektoré veci za behu, ani nahrať nejaký nenahratý modul.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	sk	Ak aplikácia nemá tabuľky definícií, voľba "aktualizácia" by mala problém vyriešiť
 if using ads (active directory)	setup	sk	Ak používate ADS (ActiveDirectory) autentifikáciu
 if using cas (central authentication service):	setup	sk	Ak používate cas (Centrálnu Autentifikačnú Službu):
@@ -366,7 +366,7 @@ ldap host	setup	sk	LDAP hostiteľ
 ldap import	setup	sk	LDAP Import
 ldap root password	setup	sk	LDAP root heslo
 ldap rootdn	setup	sk	LDAP koreňový dn
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sk	LDAP vyhľadávací filter pre účty, predvolený: "(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sk	LDAP vyhľadávací filter pre účty, predvolený: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	sk	Ponechajte prázdne ak chcete zachovať súčasný stav.
 leave empty to use default	setup	sk	Ponechajte prázdne ak chcete použiť predvolenú hodnotu
 limit access	setup	sk	Obmedziť prístup

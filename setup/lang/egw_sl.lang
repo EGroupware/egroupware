@@ -12,7 +12,7 @@
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	sl	'%1' ni dovoljen kot %2. argument možnosti %3!
 (searching accounts and changing passwords)	setup	sl	(iskanje računov in spreminjanje gesel)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	sl	*** NE POSODABLJAJTE podatkovne baze preko namestitve. Lahko se zgodi, da bo posodabljanje prekinjeno zaradi predolgega izvajanja, kar posledično lahko pomeni izgubo podatkov!!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	sl	*** Da bo eGW deloval pravilno morate spremembe ročno popraviti v datoteki php.ini (ponavadi v /etc na linuxu)!!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	sl	*** Da bo EGw deloval pravilno morate spremembe ročno popraviti v datoteki php.ini (ponavadi v /etc na linuxu)!!!
 00 (disable)	setup	sl	00 (onemogoči / priporočeno)
 13 (ntp)	setup	sl	13 (ntp)
 80 (http)	setup	sl	80 (http)
@@ -25,7 +25,7 @@ accounts existing	setup	sl	Račun obstaja
 actions	setup	sl	Akcije
 activate safe password check	setup	sl	Aktivira varno preverjanje gesel
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sl	Samodejno kreirani uporabniki se dodajo v to skupino (Če pustite prazno, bo uporabljena skupina 'Privzeto')
-add new database instance (egw domain)	setup	sl	Dodaj novo zbirko podatkov (domeno eGW)
+add new database instance (egw domain)	setup	sl	Dodaj novo zbirko podatkov (domeno EGw)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	sl	Doda ali uredi domeno:
 adding, editing or deleting an egroupware domain / database instance:	setup	sl	Dodajanje, urejanje ali brisanje domene EGroupware / zbirke podatkov:
 additional options and there defaults (in brackets)	setup	sl	Nadaljnje možnosti in privzete vrednosti (v oklepajih)
@@ -177,7 +177,7 @@ custom handler: %1	setup	sl	Ročnik po meri: %1
 custom set via %1	setup	sl	Nastavitev po meri %1
 cyrus imap: admin user,password	setup	sl	Cyrus IMAP: administratorko ime,geslo
 database	setup	sl	Zbirka podatkov
-database instance (egw domain)	setup	sl	Instanca zbirke podatkov (domena eGW)
+database instance (egw domain)	setup	sl	Instanca zbirke podatkov (domena EGw)
 database is version %1 and up to date.	setup	sl	Zbirka podatkov je različica %1 in je posodobljena.
 database successfully converted from '%1' to '%2'	setup	sl	Podatkovna baza je bila uspešno prevedena iz '%1' v '%2'.
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	sl	Vrata za datum.<br />Če uporabljate vrata 13, prosim, da ustrezno prilagodite pravila požarnega zidu, preden potrdite podatke na tej strani. <br />(Vrata: 13 / Strežnik: 129.6.15.28)
@@ -293,7 +293,7 @@ however, the application is otherwise installed	setup	sl	Vendar je aplikacija na
 however, the application may still work	setup	sl	Vendar aplikacija še vedno deluje
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	sl	Vrste avtentikacije HTTP (ločene z vejico), za prijavo brez prijavne strani, kot na primer "NTLM"
 if no acl records for user or any group the user is a member of	setup	sl	Če ni ACL zapisov za uporabnika ali katerokoli skupino, katere član je
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	sl	Če je vključen način "safe_mode", eGW med delovanjem ne more spremeniti nekaterih nastavitev  niti ne more naložiti novih modulov.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	sl	Če je vključen način "safe_mode", EGw med delovanjem ne more spremeniti nekaterih nastavitev  niti ne more naložiti novih modulov.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	sl	Če aplikacija nima definiranih tabel, potem bi nadgrajevanje moralo rešiti težave.
 if using ads (active directory)	setup	sl	Če uporabljate ADS (Aktivni Direktorij ) overovljenje
 if using cas (central authentication service):	setup	sl	Če uporabljate cas (Central Authentication Service):
@@ -338,7 +338,7 @@ ldap host	setup	sl	LDAP strežnik
 ldap import	setup	sl	LDAP uvoz
 ldap root password	setup	sl	LDAP root geslo
 ldap rootdn	setup	sl	LDAP rootdn
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sl	Iskalni filter LDAP računov, privzet: ("uid=%user"), %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sl	Iskalni filter LDAP računov, privzet: ("uid=%user"), %domain=EGw-domain
 leave empty to keep current.	setup	sl	Pustite prazno, da ohranite obstoječe.
 limit access	setup	sl	Omeji dostop
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	sl	Omejitev dostopa do nastavitev z naslovov, omrežij ali gostiteljev (npr. 127.0.0.1,10.1.1,myhost.dnydns.org)
@@ -355,14 +355,14 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	sl	Upravljanje aplikacij
 manage languages	setup	sl	Upravljanje jezikov
 manual / help	setup	sl	Priročnik/pomoč
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	sl	Najdaljši čas izvajanja (max_execution_time) je nastavljen na manj kot 30 sekund: eGW občasno potrebuje daljši čas izvajanja zato lahko pričajujete občasne napake
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	sl	Najdaljši čas izvajanja (max_execution_time) je nastavljen na manj kot 30 sekund: EGw občasno potrebuje daljši čas izvajanja zato lahko pričajujete občasne napake
 maximum account id (e.g. 65535 or 1000000)	setup	sl	Najvišji ID uporabniškega računa (npr. 65535 ali 1000000)
 may be broken	setup	sl	morda je prekinjen
 mcrypt algorithm (default tripledes)	setup	sl	Mcrypt algoritem (privzeto TIRPLEDES)
 mcrypt initialization vector	setup	sl	Mcrypt začetni vektor
 mcrypt mode (default cbc)	setup	sl	Mcrypt način (privzeto CBC)
 mcrypt settings (requires mcrypt php extension)	setup	sl	Mcrypt nastavitve (zahteva mcrypt razširitev PHPja)
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sl	Omejitev spomina (memory_limit) je nastavljena na manj kot 16 Mb: nekatere aplikacije v eGW potrebujejo več kot priporočljivih 8 Mb zato se lahko pojavijo občasne napake
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sl	Omejitev spomina (memory_limit) je nastavljena na manj kot 16 Mb: nekatere aplikacije v EGw potrebujejo več kot priporočljivih 8 Mb zato se lahko pojavijo občasne napake
 migration between egroupware account repositories	setup	sl	Migracija med repozitoriji uporabniških računov EGroupware
 minimum account id (e.g. 500 or 100, etc.)	setup	sl	Najnižji ID računa (npr. 500 ali 100)
 minute	setup	sl	minuta
@@ -387,7 +387,7 @@ no modes available	setup	sl	Ni razpoložljivih načinov
 no update necessary, domain %1(%2) is up to date.	setup	sl	Posodobitev ni potrebna, domena %1 (%2) je posodobljena.
 no xml support found. disabling	setup	sl	Ni podpore za XML. Onemogočam.
 not	setup	sl	ne
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	sl	Vsi mcrypt algoritmi in načini ne delujejo v eGW. Če se pojavijo težave, jih izklopite.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	sl	Vsi mcrypt algoritmi in načini ne delujejo v EGw. Če se pojavijo težave, jih izklopite.
 not complete	setup	sl	Ni dokončano
 not completed	setup	sl	Ni dokončano
 not ready for this stage yet	setup	sl	Sistem še ni pripravljen za ta korak.
@@ -431,7 +431,7 @@ please consult the %1.	setup	sl	Prosim, posvetujte se z %1.
 please fix the above errors (%1) and warnings(%2)	setup	sl	Prosim, popravite zgornje napake (%1) in opozorila (%2)
 please install	setup	sl	Prosim, namestite
 please login	setup	sl	Prosim, prijavite se
-please login to egroupware and run the admin application for additional site configuration	setup	sl	Prosim, da se prijavite v eGW in poženite aplikacijo Admin za dodatne nastavitve strežnika
+please login to egroupware and run the admin application for additional site configuration	setup	sl	Prosim, da se prijavite v EGw in poženite aplikacijo Admin za dodatne nastavitve strežnika
 please make the following change in your php.ini	setup	sl	Prosim, da v php.ini popravite nasednje
 please wait...	setup	sl	Prosim, počakajte...
 pop/imap mail server hostname or ip address	setup	sl	Ime ali naslov IP poštnega strežnika POP/IMAP.
@@ -450,7 +450,7 @@ re-enter password	setup	sl	Ponovite vnos gesla
 read translations from	setup	sl	Preberi prevode iz
 readable by the webserver	setup	sl	ima omogočeno branje spletnega strežnika
 really uninstall all applications	setup	sl	RES odstranim vse aplikacije
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sl	Vrednost "register_globals" je nastavljena na "On", eGW NE zahteva spremembe vendar je na splošno bolj varno, če je nastavljena na "Off"
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sl	Vrednost "register_globals" je nastavljena na "On", EGw NE zahteva spremembe vendar je na splošno bolj varno, če je nastavljena na "Off"
 registered	setup	sl	registriran
 rejected lines	setup	sl	Zavržene vrstice
 remove	setup	sl	Odstrani

@@ -7,7 +7,7 @@
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	sv	'%1' tillåts inte som %2 argument till %3!
 (searching accounts and changing passwords)	setup	sv	(söker konton och ändrar lösenord)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	sv	Uppdatera *INTE* databasen via installationen. Uppdateringen kan avbrytas av max_execution_time vilket förstör databasen oåterkallerligt!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	sv	***Du måste uppdatera php.ini manuellt (finns vanligtvis i /etc på Linux och i windows-mappen på Windows) för att eGW ska fungera.
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	sv	***Du måste uppdatera php.ini manuellt (finns vanligtvis i /etc på Linux och i windows-mappen på Windows) för att EGw ska fungera.
 00 (disable)	setup	sv	00 (stäng av/rekomenderat)
 13 (ntp)	setup	sv	13 (ntp)
 80 (http)	setup	sv	80 (http)
@@ -19,7 +19,7 @@ accounts existing	setup	sv	Befintliga konton
 actions	setup	sv	Åtgärder
 activate safe password check	setup	sv	Aktivera säkra lösenords kontrollen
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sv	Lägg till automatiskt skapade användare till denna grupp ('Default' kommer att användas om denna är tom)
-add new database instance (egw domain)	setup	sv	Lägg till ny databas instans (eGW domän)
+add new database instance (egw domain)	setup	sv	Lägg till ny databas instans (EGw domän)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	sv	Lägg till eller ändra en domän: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
 adding, editing or deleting an egroupware domain / database instance:	setup	sv	Lägger till, ändrar eller raderar en EGroupware domän / databas instans:
 additional options and there defaults (in brackets)	setup	sv	Övriga inställningar och deras standard (inom klammer)
@@ -157,7 +157,7 @@ current version	setup	sv	Aktuell version
 currently installed languages: %1 <br />	setup	sv	. Installerade språk: %1 <br />
 cyrus imap: admin user,password	setup	sv	Cyrus IMAP: Admin användare och lösenord
 database	setup	sv	Databas
-database instance (egw domain)	setup	sv	Databas instans (eGW domän)
+database instance (egw domain)	setup	sv	Databas instans (EGw domän)
 database is version %1 and up to date.	setup	sv	Databas version %1 och är uppdaterad
 database successfully converted from '%1' to '%2'	setup	sv	Databas konverterad från '%1' till '%2'
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	sv	Datetime port.<br />Om du använder port 13, sätt brandväggsreglerna korrekt innan du trycker på Klar<br />(Port: 13 / Host 129.6.15.28)
@@ -266,7 +266,7 @@ hour (0-24)	setup	sv	Timme (0-24)
 however, the application is otherwise installed	setup	sv	Applikationen är ändå installerad
 however, the application may still work	setup	sv	Applikationen kanske ändå fungerar
 if no acl records for user or any group the user is a member of	setup	sv	Om inga åtkomst regler finns för användaren eller de grupper användaren är medlem av
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	sv	Om Safe Mode är aktiverat kan inte eGW ändra vissa inställningar medans den kör, eller ladda  en modul som inte redan är laddad.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	sv	Om Safe Mode är aktiverat kan inte EGw ändra vissa inställningar medans den kör, eller ladda  en modul som inte redan är laddad.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	sv	Om applikationen saknar definerade tabeller bör du välja att uppgradera den.
 if using ads (active directory)	setup	sv	Om AD (Active Directory) autenticering används
 if using ldap	setup	sv	Om LDAP används
@@ -308,7 +308,7 @@ ldap host	setup	sv	LDAP värd (server)
 ldap import	setup	sv	LDAP import
 ldap root password	setup	sv	LDAP root lösenord
 ldap rootdn	setup	sv	LDAP root dn
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sv	LDAP sökfilter för konton, standard: "(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sv	LDAP sökfilter för konton, standard: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	sv	Lämnas tomt för att behålla befintligt
 limit access	setup	sv	Begränsa åtkomst
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	sv	Begränsa åtkomst till följande adresser, nätverk eller hostnamn (dvs 127.0.0.1,192.168.1,frodo.mydomain.org

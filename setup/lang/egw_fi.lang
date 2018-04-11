@@ -16,7 +16,7 @@
 '%1' must be integer	setup	fi	%1 pitää olla kokonaisluku!
 (searching accounts and changing passwords)	setup	fi	Etsitään tunnuksia ja vaihdetaan salasanoja..
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	fi	*** Älä päivitä tietokantaa asennuksen kautta, koska päivitysaika saattaa ylittää max_execution_time-määrityksen, jolloin tietokanta jää toimimattomaan tilaan (data menetetään) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	fi	*** Muokkaa php.ini-tiedostoa käsin (tiedosto on Linuxissa yleensä hakemistossa /etc) voidaksesi käyttää eGW:n kaikkia ominaisuuksia !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	fi	*** Muokkaa php.ini-tiedostoa käsin (tiedosto on Linuxissa yleensä hakemistossa /etc) voidaksesi käyttää EGw:n kaikkia ominaisuuksia !!!
 00 (disable)	setup	fi	00 (ei käytössä / suositus)
 13 (ntp)	setup	fi	13 (ntp)
 80 (http)	setup	fi	80 (http)
@@ -177,7 +177,7 @@ current version	setup	fi	Nykyinen versio
 currently installed languages: %1 <br />	setup	fi	Asennetut kielet: %1 <br />
 cyrus imap: admin user,password	setup	fi	Cyrus IMAP: pääkäyttäjä, salasana
 database	setup	fi	Tietokanta
-database instance (egw domain)	setup	fi	Tietokannan instanssi (eGW domain)
+database instance (egw domain)	setup	fi	Tietokannan instanssi (EGw domain)
 database is version %1 and up to date.	setup	fi	Tietokanta on versiosta %1 ja se päivitetään.
 database successfully converted from '%1' to '%2'	setup	fi	Tietokanta on konvertoitu versiosta '%1' versioon '%2'
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	fi	Datetime-portti.<br />Jos käytät porttia 13, määrittele palomuuriasetukset oikein ennen kuin lähetät tämän lomakkeen tiedot.<br />(Port: 13 / Host: 129.6.15.28)
@@ -279,7 +279,7 @@ however the tables are still in the database	setup	fi	Jokatapauksessa taulut ova
 however, the application is otherwise installed	setup	fi	Sovellus on muuten asennettu
 however, the application may still work	setup	fi	Sovellus voi toimia tästä huolimatta
 if no acl records for user or any group the user is a member of	setup	fi	Jos käyttäjällä tai käyttäjän ryhmillä ei ole ACL-tietueita, käyttäjä on tämän ryhmän jäsen:
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	fi	Jos safe_mode on päällä, eGW ei voi muuttaa kaikkia asetuksia ajon aikana, eikä ladata uusia moduuleita.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	fi	Jos safe_mode on päällä, EGw ei voi muuttaa kaikkia asetuksia ajon aikana, eikä ladata uusia moduuleita.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	fi	Jos sovelluksella ei ole määriteltyjä tauluja, päivittämisen pitäisi korjata ongelma
 if using ads (active directory)	setup	fi	Jos käytetään ADS (Active Directory) -tunnistusta
 if using cas (central authentication service):	setup	fi	Jos käytetään CAS (Central Authentication Service):
@@ -321,7 +321,7 @@ ldap host	setup	fi	LDAP-palvelin
 ldap import	setup	fi	LDAP-tuonti
 ldap root password	setup	fi	LDAP-pääkäyttäjän salasana
 ldap rootdn	setup	fi	LDAP-rootdn
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	fi	LDAP hakusuodin tunnuksille, oletus: "(uid=%user)", %domain=eGW-toimialue
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	fi	LDAP hakusuodin tunnuksille, oletus: "(uid=%user)", %domain=EGw-toimialue
 limit access	setup	fi	Rajoita pääsyä
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	fi	Rajoita asennukseen pääsy seuraaville verkkoalueille (esim. 127.0.0.1, 10.1.1, oma.toimialue.com)
 list availible values	setup	fi	Listaa saatavilla olevat arvot

@@ -807,7 +807,7 @@ class setup_cmd_ldap extends setup_cmd
 		if (is_null($pw)) $pw = $this->ldap_root_pw;
 		if (is_null($host)) $host = $this->ldap_host;
 
-		if (!$pw)	// Api\Ldap::ldapConnect use the current eGW's pw otherwise
+		if (!$pw)	// Api\Ldap::ldapConnect use the current EGw's pw otherwise
 		{
 			throw new Api\Exception\WrongUserinput(lang('You need to specify a password!'));
 		}

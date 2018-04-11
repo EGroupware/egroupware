@@ -16,7 +16,7 @@
 '%1' must be integer	setup	en	%1 must be an integer value.
 (searching accounts and changing passwords)	setup	en	Searching accounts and changing passwords.
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	en	*** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your DB in an unrecoverable state (your data is lost) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	en	*** You have to do the changes manually in your php.ini, usually in /etc on Linux in order to get eGW fully working !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	en	*** You have to do the changes manually in your php.ini, usually in /etc on Linux in order to get EGw fully working !!!
 00 (disable)	setup	en	00 (disable / recommended)
 13 (ntp)	setup	en	13 (ntp)
 80 (http)	setup	en	80 (http)
@@ -30,7 +30,7 @@ accounts existing	setup	en	Accounts existing
 actions	setup	en	Actions
 activate safe password check	setup	en	Activate safe password check
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
-add new database instance (egw domain)	setup	en	Add new database instance (eGW domain)
+add new database instance (egw domain)	setup	en	Add new database instance (EGw domain)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	en	add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
 adding, editing or deleting an egroupware domain / database instance:	setup	en	Adding, editing or deleting an EGroupware domain / database instance:
 additional options and there defaults (in brackets)	setup	en	Additional options and there defaults (in brackets)
@@ -203,7 +203,7 @@ custom handler: %1	setup	en	Custom handler: %1
 custom set via %1	setup	en	Custom set via %1
 cyrus imap: admin user,password	setup	en	Cyrus IMAP: admin user, password
 database	setup	en	Database
-database instance (egw domain)	setup	en	Database instance (eGW domain)
+database instance (egw domain)	setup	en	Database instance (EGw domain)
 database is version %1 and up to date.	setup	en	Database is version %1 and up to date.
 database successfully converted from '%1' to '%2'	setup	en	Database successfully converted from '%1' to '%2'
 datebase %1 droped.	setup	en	Database %1 dropped.
@@ -335,7 +335,7 @@ however, the application is otherwise installed	setup	en	The application is othe
 however, the application may still work	setup	en	The application may still work
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	en	HTTP auth types, comma-separated to use without login page, eg. "NTLM"
 if no acl records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	en	If safe_mode is turned on, eGW is not able to change certain settings on runtime, nor can we load any not yet loaded module.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	en	If safe_mode is turned on, EGw is not able to change certain settings on runtime, nor can we load any not yet loaded module.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
 if using ads (active directory)	setup	en	If using ADS (Active Directory) authentication
 if using cas (central authentication service):	setup	en	if using cas (Central Authentication Service):
@@ -383,7 +383,7 @@ ldap host	setup	en	LDAP host
 ldap import	setup	en	LDAP import
 ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP rootdn
-ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	en	LDAP search filter for accounts, default: "(uid=%user)", %domain=eGW-domain
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	en	LDAP search filter for accounts, default: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	en	Leave empty to keep current.
 leave empty to use default	setup	en	leave empty to use default
 limit access	setup	en	Limit access

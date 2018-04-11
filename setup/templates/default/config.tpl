@@ -295,7 +295,7 @@
    </tr>
 
    <tr class="row_on">
-    <td>{lang_LDAP_search_filter_for_accounts,_default:_"(uid=%user)",_%domain=eGW-domain}:</td>
+    <td>{lang_LDAP_search_filter_for_accounts,_default:_"(uid=%user)",_%domain=EGw-domain}:</td>
     <td><input name="newsettings[ldap_search_filter]" value="{value_ldap_search_filter}" size="40" /></td>
    </tr>
 

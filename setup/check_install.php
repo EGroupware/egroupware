@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare Setup - Check installation enviroment
+ * EGroupware Setup - Check installation enviroment
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -59,8 +59,8 @@ $checks = array(
 		'value' => 0,
 		'verbose_value' => 'Off',
 		'warning' => lang('safe_mode is turned on, which is generaly a good thing as it makes your install more secure.')."\n".
-			lang('If safe_mode is turned on, eGW is not able to change certain settings on runtime, nor can we load any not yet loaded module.')."\n".
-			lang('*** You have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get eGW fully working !!!')."\n".
+			lang('If safe_mode is turned on, EGw is not able to change certain settings on runtime, nor can we load any not yet loaded module.')."\n".
+			lang('*** You have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get EGw fully working !!!')."\n".
 			lang('*** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your DB in an unrecoverable state (your data is lost) !!!')
 	),
 	'magic_quotes_runtime' => array(
@@ -73,7 +73,7 @@ $checks = array(
 		'func' => 'php_ini_check',
 		'value' => 0,
 		'verbose_value' => 'Off',
-		'warning' => lang("register_globals is turned On, eGroupWare does NOT require it and it's generaly more secure to have it turned Off")
+		'warning' => lang("register_globals is turned On, EGroupware does NOT require it and it's generaly more secure to have it turned Off")
 	),
 	'display_errors' => array(
 		'func' => 'php_ini_check',
@@ -85,14 +85,14 @@ $checks = array(
 		'func' => 'php_ini_check',
 		'value' => '128M',
 		'check' => '>=',
-		'error' => lang('memory_limit is set to less than %1: some applications of eGroupWare need more than the recommend 8M, expect occasional failures','24M'),
+		'error' => lang('memory_limit is set to less than %1: some applications of EGroupware need more than the recommend 8M, expect occasional failures','24M'),
 		'change' => 'memory_limit = 24M'
 	),
 	'max_execution_time' => array(
 		'func' => 'php_ini_check',
 		'value' => 30,
 		'check' => '>=',
-		'error' => lang('max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time, expect occasional failures'),
+		'error' => lang('max_execution_time is set to less than 30 (seconds): EGroupware sometimes needs a higher execution_time, expect occasional failures'),
 		'safe_mode' => 'max_execution_time = 30'
 	),
 	'file_uploads' => array(
@@ -252,7 +252,7 @@ if (extension_loaded('session') && ini_get('session.save_handler') == 'files' &&
 			'func' => 'permission_check',
 			'is_writable' => true,
 			'msg' => lang("Checking if php.ini setting session.save_path='%1' is writable by the webserver",session_save_path()),
-			'error' => lang('You will NOT be able to log into eGroupWare using PHP sessions: "session could not be verified" !!!'),
+			'error' => lang('You will NOT be able to log into EGroupware using PHP sessions: "session could not be verified" !!!'),
 		);
 	}
 }
@@ -857,27 +857,27 @@ if ($run_by_webserver)
 		{
 			$GLOBALS['egw_setup']->set_cookie('ConfigLang',$ConfigLang,(int) (time()+(1200*9)),'/');
 		}
-		$GLOBALS['egw_setup']->html->show_header(lang('Welcome to the eGroupWare Installation'),False,'config');
-		echo '<h1>'.lang('Welcome to the eGroupWare Installation')."</h1>\n";
+		$GLOBALS['egw_setup']->html->show_header(lang('Welcome to the EGroupware Installation'),False,'config');
+		echo '<h1>'.lang('Welcome to the EGroupware Installation')."</h1>\n";
 		if(!$ConfigLang)
 		{
 			echo '<p><form action="check_install.php?intro=1" method="Post">Please Select your language '.setup_html::lang_select(True,'en')."</form></p>\n";
 		}
-		echo '<p>'.lang('The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.').'</p>';
+		echo '<p>'.lang('The first step in installing EGroupware is to ensure your environment has the necessary settings to correctly run the application.').'</p>';
 		echo '<p>'.lang('We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.').'</p>';
 		echo '<h3><a href="check_install.php">'.lang('Run installation tests').'</a></h3>';
 		echo '<p><a href="manageheader.php">'.lang('Skip the installation tests (not recommended)')."</a></p>\n";
 		$setup_tpl->pparse('out','T_footer');
 		exit;
 	} else {
-		$GLOBALS['egw_setup']->html->show_header(lang('Checking the eGroupWare Installation'),False,'config',$ConfigDomain ? $ConfigDomain . '(' . @$GLOBALS['egw_domain'][$ConfigDomain]['db_type'] . ')' : '');
-		echo '<h1>'.lang('Checking the eGroupWare Installation')."</h1>\n";
+		$GLOBALS['egw_setup']->html->show_header(lang('Checking the EGroupware Installation'),False,'config',$ConfigDomain ? $ConfigDomain . '(' . @$GLOBALS['egw_domain'][$ConfigDomain]['db_type'] . ')' : '');
+		echo '<h1>'.lang('Checking the EGroupware Installation')."</h1>\n";
 		# echo "<pre style=\"text-align: left;\">\n";;
 	}
 }
 else
 {
-	echo "Checking the eGroupWare Installation\n";
+	echo "Checking the EGroupware Installation\n";
 	echo "====================================\n\n";
 }
 
