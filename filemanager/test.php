@@ -38,7 +38,7 @@ if (isset($path) && !empty($path))
 	foreach(explode('/',$path) as $n => $part)
 	{
 		$p .= ($p != '/' ? '/' : '').$part;
-		echo ($n > 1 ? ' / ' : '').Api\Html::a_href($n ? $part : ' / ','/filemanager/test.php',array('path'=>$p));
+		echo ($n > 1 ? ' / ' : '').Api\Html::a_href($n ? $part : ' / ','/filemanager/test.php',array('path'=>$p,'cd'=>'no'));
 	}
 	echo "</h2>\n";
 
@@ -61,7 +61,7 @@ if (isset($path) && !empty($path))
 		{
 			if (Vfs::is_readable($fpath=Vfs::concat($path,$file)))
 			{
-				$file = Api\Html::a_href($file,'/filemanager/test.php',array('path'=>$fpath));
+				$file = Api\Html::a_href($file,'/filemanager/test.php',array('path'=>$fpath,'cd'=>'no'));
 			}
 			$file .= ' ('.Vfs::mime_content_type($fpath).')';
 			$files[] = $file;
