@@ -266,7 +266,7 @@ infolog filter for the main screen	infolog	sl	Filter InfoDnevnika za uvodni zasl
 infolog ical export	infolog	sl	Infolog iCal izvoz
 infolog ical import	infolog	sl	Infolog iCal uvoz
 infolog id	infolog	sl	InfoLog ID
-infolog list	infolog	sl	Seznam InfoDnevnika
+infolog list	infolog	sl	Seznam opravil
 infolog preferences	common	sl	Nastavitve InfoDnevnika
 infolog-fieldname	infolog	sl	Info Log - ime polja
 insert	infolog	sl	Vstavi
