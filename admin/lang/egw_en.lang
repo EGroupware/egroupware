@@ -827,6 +827,7 @@ update current email address:	admin	en	Update current email address:
 updated	admin	en	Updated
 upload your background image or enter the url	admin	en	Upload your background image or enter the URL
 upload your certificate .p12/.pfx file	admin	en	Upload your certificate .p12/.pfx file
+Upload your header logo or enter the URL (leave it empty if it is the same as login logo)	admin	en	Upload your header logo or enter the URL (leave it empty if it is the same as login logo)
 upload your favicon or enter the url	admin	en	Upload your favicon or enter the URL
 upload your logo or enter the url	admin	en	Upload your logo or enter the URL
 uppercase, lowercase, number, special char	admin	en	Uppercase, lowercase, number, special char

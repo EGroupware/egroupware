@@ -4618,7 +4618,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_display_print: function ()
 	{
-		this.egw.message('Printing....');
+		this.egw.message(this.egw.lang('Printing')+' ...');
 
 		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
 		setTimeout(function(){

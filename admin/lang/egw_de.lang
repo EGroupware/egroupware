@@ -116,7 +116,7 @@ application '%1' not found (maybe not installed or misspelled)!	admin	de	Anwendu
 application name	admin	de	Name der Anwendung
 application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
-applications available on mobile devices	admin	de	Anwendungen die auf Mobilgeräten zur Verfügung stehen
+applications available on mobile devices	admin	de	Anwendungen, die auf Mobilgeräten zur Verfügung stehen
 applications list	admin	de	Liste der Anwendungen
 applications run rights updated.	admin	de	Anwendungsrechte aktualisiert.
 applies the changes	admin	de	übernimmt Änderungen
@@ -272,7 +272,7 @@ destination account #%1 does exist and is not renamed itself! can not merge acco
 determines the order the fields are displayed	admin	de	bestimmt die Reihenfolge der angezeigten Felder
 disable	admin	de	abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
-disable all	admin	de	Alle Videos deaktivieren
+disable all	admin	de	Alle Video-Anletungen deaktivieren
 disable minifying of javascript and css files	admin	de	Komprimierung von Javascript und CSS Dateien deaktivieren
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
@@ -281,7 +281,7 @@ displayed length of input field (set rows=1 to limit length)	admin	de	angezeigte
 displaying html messages is disabled	admin	de	Das Anzeigen von HTML Nachrichten ist deaktiviert
 displaying plain messages is disabled	admin	de	Das Anzeigen von Text Nachrichten ist deaktiviert
 do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
-do not generate email addresses	admin	de	Keine EMail Adressen erzeugen
+do not generate email addresses	admin	de	Keine E-Mail-Adressen erzeugen
 do not offer introduction video	admin	de	Einführungsvideo nicht anbieten
 do not validate certificate	admin	de	Zertifikat nicht überprüfen
 do you also want to delete all global subcategories ?	admin	de	Wollen Sie auch alle globalen Unterkategorien löschen?
@@ -313,7 +313,7 @@ edit user	admin	de	Benutzer bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
 educational: universities, schools, ...	admin	de	Ausbildung: Universitäten, Schulen, ...
 egroupware directory	admin	de	EGroupware Verzeichnis
-egroupware tutorial	admin	de	EGroupware Video Tutorials
+egroupware tutorial	admin	de	EGroupware Video-Anleitungen
 egroupware version	admin	de	EGroupware Version
 either install id and config password needed or the remote hash!	admin	de	Sie benötigen entweder die Install ID UND das Konfigurationspasswort ODER den Remote Hash!
 email account active	admin	de	E-Mail-Konto aktiv
@@ -427,7 +427,7 @@ group manager	admin	de	Gruppenmanager
 group name	admin	de	Gruppenname
 hash	admin	de	Hash-Wert
 hide php information	admin	de	PHP-Informationen ausblenden
-hide sidebox video tutorials	admin	de	Videotutorials im Seitenmenü nicht anzeigen
+hide sidebox video tutorials	admin	de	Video-Anleitungen im Seitenmenü nicht anzeigen
 home directory	admin	de	Benutzerverzeichnis
 host information	admin	de	Host-Information
 hostname or ip	admin	de	Hostname oder IP
@@ -532,7 +532,7 @@ login-status	admin	de	Angemeldet-Status
 loginid	admin	de	Login-ID
 logintime	admin	de	Anmeldezeit
 logoutime	admin	de	Abmeldezeit
-lowercase email addresses	admin	de	EMail Adressen mit Kleinbuchstaben
+lowercase email addresses	admin	de	E-Mail-Adressen mit Kleinbuchstaben
 mail account	admin	de	E-Mail Konto
 mail settings	admin	de	E-Mail-Einstellungen
 main email-address	admin	de	Stamm-E-Mail-Adresse
@@ -665,6 +665,7 @@ remove	admin	de	Entfernen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe.
 remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	de	Sind Sie sicher? Den Zugriff für Gruppen zu nehmen kann zu Problemen mit den Daten dieser Kategorie führen. Benutzer dieser Gruppen haben möglicherweise keinen Zugriff mehr:
+renaming user 'anonymous' will break file sharing and collabora online office!	admin	de	Das Umbenennen des Benutzers 'anonymous' verhindert die Dateifreigabe und Collabora Online Office!
 requested	admin	de	angefordert
 required pear class mail/mimedecode.php not found.	admin	de	Die benötigte Classe PEAR  (Mail/mimeDecode.php) wurde nicht gefunden.
 reset filter	admin	de	Filter zurücksetzen
@@ -827,6 +828,7 @@ update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse
 updated	admin	de	aktualisiert
 upload your background image or enter the url	admin	de	Laden Sei ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
 upload your certificate .p12/.pfx file	admin	de	Zertifikat hochladen (.p12/.pfx-Datei)
+Upload your header logo or enter the URL (leave it empty if it is the same as login logo)	admin	de	Laden Sie Ihr Header-Logo hoch oder geben Sie die URL ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein
 upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Sie eine URL dafür ein
 uppercase, lowercase, number, special char	admin	de	Großbuchstaben, kleine Buchstaben, Zahlen, Sonderzeichen

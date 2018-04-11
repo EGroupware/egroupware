@@ -86,6 +86,7 @@ defines how to open a merge print document	filemanager	de	Definiert, wie ein Ser
 delete all older versions and deleted files older then %s days	filemanager	de	Lösche alle alten Versionen und gelösche Dateien älter als %s Tage
 delete these files or directories?	filemanager	de	Diese Dateien oder Verzeichnisse löschen?
 delete these shares?	filemanager	de	Diese Freigaben löschen?
+delete this extended ACL?	filemanager	de	Diese erweiterten Zugriffrechte löschen?
 delete this file or directory	filemanager	de	Datei oder Verzeichnis löschen
 deleted %1	filemanager	de	%1 gelöscht
 directories sorted in	filemanager	de	Verzeichnisse einsortiert

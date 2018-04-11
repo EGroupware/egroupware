@@ -156,7 +156,7 @@
 										<menupopup id="${row}[rights]" readonly="true"/>
 									</menulist>
 									<description id="${row}[path]"/>
-									<button label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="et2_dialog.confirm(widget,'Delete this extended ACL','Delete')" image="delete"/>
+									<button label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="et2_dialog.confirm(widget,'Delete this extended ACL?','Delete')" image="delete"/>
 								</row>
 							</rows>
 						</grid>
