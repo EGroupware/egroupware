@@ -384,7 +384,10 @@ class SharingBase extends LoggedInTest
 		// Make sure the path is there
 		if(!Vfs::is_readable($path))
 		{
-			$this->assertTrue(Vfs::is_dir($path) ? Vfs::mkdir($path,0750,true) : Vfs::touch($path));
+			$this->assertTrue(
+					Vfs::is_dir($path) ? Vfs::mkdir($path,0750,true) : Vfs::touch($path),
+					"Share path $path does not exist"
+			);
 		}
 
 		// Create share
@@ -434,6 +437,7 @@ class SharingBase extends LoggedInTest
 		$_SERVER['REQUEST_URI'] = $link;
 		preg_match('|^https?://[^/]+(/.*)share.php/'.$share['share_token'].'$|', $path_info=$_SERVER['REQUEST_URI'], $matches);
         $_SERVER['SCRIPT_NAME'] = $matches[1];
+		$is_dir = Vfs::is_dir($path);
 
 		// Log out & clear cache
 		LoggedInTest::tearDownAfterClass();
@@ -446,7 +450,7 @@ class SharingBase extends LoggedInTest
 
 
 		// If it's a directory, check to make sure it gives the filemanager UI
-		if(Vfs::is_dir($path))
+		if($is_dir)
 		{
 			$this->checkDirectoryLink($link, $share);
 		}
@@ -454,6 +458,8 @@ class SharingBase extends LoggedInTest
 		// Load share
 		$this->setup_info();
 
+		// Sometimes Vfs::$db gets lost.  Reason unknown.
+		Vfs::$db = $GLOBALS['egw']->db;
 
 		if(static::LOG_LEVEL > 1)
 		{
