@@ -299,7 +299,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 					$where['list_'.self::$path_attr] = $filter[self::$path_attr];
 				}
 				//error_log(__METHOD__."() filter=".array2string($filter).", do_groups=".in_array('D',$this->home_set_pref).", where=".array2string($where));
-				if ($where['id'] && ($lists = $this->bo->read_lists($where,'contact_uid',$where['list_owner'])))	// limit to contacts in same AB!
+				if (($lists = $this->bo->read_lists($where,'contact_uid',$where['list_owner'])))	// limit to contacts in same AB!
 				{
 					foreach($lists as $list)
 					{
@@ -690,7 +690,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			{
 				if (($contact = $this->bo->read_list($save_ok)))
 				{
-					$contact = Api\Db::strip_array_keys($contact, 'list_');
+					// re-read group to get correct etag (not dublicate etag code here)
+					$contact = $this->read($contact['list_'.self::$path_attr], $options['path']);
 				}
 			}
 			else
@@ -723,7 +724,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			$data['list_'.$name] = $contact[$name];
 		}
 		//error_log(__METHOD__.'('.array2string($contact).', '.array2string($oldContact).') data='.array2string($data));
-		if (($list_id=$this->bo->add_list(array('list_'.self::$path_attr => $contact[self::$path_attr]),
+		if (($list_id=$this->bo->add_list(empty($contact[self::$path_attr]) ? null : array('list_'.self::$path_attr => $contact[self::$path_attr]),
 			$contact['owner'], null, $data)))
 		{
 			// update members given in $contact['##X-ADDRESSBOOKSERVER-MEMBER']
@@ -773,7 +774,11 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				if ($to_delete_ids) $this->bo->remove_from_list($to_delete_ids, $list_id);
 			}
 			// reread as update of list-members updates etag and modified
-	 		$contact = $this->bo->read_list($list_id);
+			if (($contact = $this->bo->read_list($list_id)))
+			{
+				// re-read group to get correct etag (not dublicate etag code here)
+				$contact = $this->read($contact['list_'.self::$path_attr]);
+			}
 		}
 		if ($this->debug > 1) error_log(__METHOD__.'('.array2string($contact).', '.array2string($oldContact).') on return contact='.array2string($data).' returning '.array2string($list_id));
  		return $list_id;
