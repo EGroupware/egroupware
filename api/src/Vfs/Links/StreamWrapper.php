@@ -398,6 +398,31 @@ class StreamWrapper extends LinksParent
 	}
 
 	/**
+	 * This method is called in response to rename() calls on URL paths associated with the wrapper.
+	 *
+	 * Reimplemented to create the entry directory, in case it's only faked to be there.
+	 *
+	 * @param string $path_from
+	 * @param string $path_to
+	 * @return boolean TRUE on success or FALSE on failure
+	 */
+	function rename ( $path_from, $path_to )
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path_from,$path_to)");
+
+		// Check to make sure target _really_ exists, not just fake dir from Links/StreamWrapper
+		$path = Vfs::parse_url($path_to, PHP_URL_PATH);
+		list(,/*$apps*/,/*$app*/,$id) = explode('/', $path);
+
+		if($id && !parent::url_stat(Vfs::dirname($path_to),STREAM_URL_STAT_QUIET))
+		{
+			$this->mkdir(Vfs::dirname($path), 0, STREAM_MKDIR_RECURSIVE );
+		}
+
+		return parent::rename($path_from,$path_to);
+	}
+
+	/**
 	 * Register this stream-wrapper
 	 */
 	public static function register()
