@@ -7,8 +7,7 @@
  * @package api
  * @subpackage caldav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id$
+ * @copyright (c) 2008-18 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api\CalDAV;
@@ -16,7 +15,7 @@ namespace EGroupware\Api\CalDAV;
 use EGroupware\Api;
 
 // explicit import classes without namespace
-use resources_bo;
+use resources_bo, resources_acl_bo;
 use calendar_bo;
 
 /**
@@ -1381,8 +1380,8 @@ class Principals extends Handler
 					$resource = self::read_resource((int)$account);
 				}
 				$location = 'L'.$resource['cat_id'];
-				$right = $what == 'write' ? EGW_ACL_DIRECT_BOOKING : EGW_ACL_CALREAD;
-				$mask = $what == 'write' ? EGW_ACL_DIRECT_BOOKING : EGW_ACL_DIRECT_BOOKING|EGW_ACL_CALREAD;	// do NOT report write+read in read
+				$right = $what == 'write' ? resources_acl_bo::DIRECT_BOOKING : resources_acl_bo::CAL_READ;
+				$mask = $what == 'write' ? resources_acl_bo::DIRECT_BOOKING : resources_acl_bo::DIRECT_BOOKING|resources_acl_bo::CAL_READ;	// do NOT report write+read in read
 				break;
 		}
 		static $principal2grants = array();
@@ -1490,7 +1489,7 @@ class Principals extends Handler
 			{
 				foreach($grants as $account_id => $rights)
 				{
-					if (($rights & (EGW_ACL_CALREAD|EGW_ACL_DIRECT_BOOKING)) &&	// we only care for these rights
+					if (($rights & (resources_acl_bo::CAL_READ|resources_acl_bo::DIRECT_BOOKING)) &&	// we only care for these rights
 						($account_id == $account || in_array($account_id, $memberships)))
 					{
 						if (!isset($location_grants[$location])) $location_grants[$location] = 0;
@@ -1505,7 +1504,7 @@ class Principals extends Handler
 				if (isset($rights))
 				{
 					$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.$this->resource2name($resource).
-						'/calendar-proxy-'.($rights & EGW_ACL_DIRECT_BOOKING ? 'write' : 'read').'/');
+						'/calendar-proxy-'.($rights & resources_acl_bo::DIRECT_BOOKING ? 'write' : 'read').'/');
 				}
 			}
 		}
