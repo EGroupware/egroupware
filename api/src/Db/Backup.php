@@ -529,17 +529,6 @@ class Backup
 				{
 					$convert_to_system_charset = false;	// no conversation necessary
 				}
-				// set the DB's client encoding (for mysql only if api_version >= 1.0.1.019)
-				if ((!$convert_to_system_charset || $this->db->capabilities['client_encoding']) &&
-					(substr($this->db->Type,0,5) != 'mysql' || !is_object($GLOBALS['egw_setup']) ||
-					$api_version && !$GLOBALS['egw_setup']->alessthanb($api_version,'1.0.1.019')))
-				{
-					$this->db->Link_ID->SetCharSet($charset);
-					if (!$convert_to_system_charset)
-					{
-						$this->schema_proc->system_charset = $charset;	// so schema_proc uses it for the creation of the tables
-					}
-				}
 				continue;
 			}
 			if (substr($line,0,8) == 'schema: ')
@@ -589,16 +578,6 @@ class Backup
 				if (feof($f)) break;
 				continue;
 			}
-			if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
-			{
-				if ($GLOBALS['egw_setup'])
-				{
-					if (!is_object($GLOBALS['egw_setup']->translation->sql))
-					{
-						$GLOBALS['egw_setup']->translation->setup_translation_sql();
-					}
-				}
-			}
 			if ($table)	// do we already reached the data part
 			{
 				$import = true;
@@ -619,7 +598,7 @@ class Backup
 				{
 					if (count($data) == count($cols))
 					{
-						if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
+						if ($convert_to_system_charset)
 						{
 							$data = Api\Translation::convert($data,$charset);
 						}
