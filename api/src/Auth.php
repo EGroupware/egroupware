@@ -258,18 +258,36 @@ class Auth
 				Egw::invalidate_session_cache();
 			}
 			Accounts::cache_invalidate($account_id);
-			// run changepwasswd hook
-			$GLOBALS['hook_values'] = array(
-				'account_id'  => $account_id,
-				'account_lid' => Accounts::id2name($account_id),
-				'old_passwd'  => $old_passwd,
-				'new_passwd'  => $new_passwd,
-			);
-			Hooks::process($GLOBALS['hook_values']+array(
-				'location' => 'changepassword'
-			),False,True);	// called for every app now, not only enabled ones)
+
+			self::changepwd($old_passwd, $new_passwd, $account_id);
 		}
 		return $ret;
+	}
+
+	/**
+	 * Call all changepwd hooks to re-encrypt mail credentials and let apps know about the change
+	 *
+	 * This method does not verification of the given passwords!
+	 * ´
+	 * @param string $old_passwd old password
+	 * @param string $new_passwd =null new password, default session password
+	 * @param int $account_id =null account_id, default current user
+	 */
+	static function changepwd($old_passwd, $new_passwd=null, $account_id=null)
+	{
+		if (!isset($account_id)) $account_id = $GLOBALS['egw']->session->account_id;
+		if (!isset($new_passwd)) $new_passwd = $GLOBALS['egw']->session->passwd;
+
+		// run changepwasswd hook
+		$GLOBALS['hook_values'] = array(
+			'account_id'  => $account_id,
+			'account_lid' => Accounts::id2name($account_id),
+			'old_passwd'  => $old_passwd,
+			'new_passwd'  => $new_passwd,
+		);
+		Hooks::process($GLOBALS['hook_values']+array(
+			'location' => 'changepassword'
+		),False,True);	// called for every app now, not only enabled ones)
 	}
 
 	/**
@@ -610,7 +628,7 @@ class Auth
 		);
 
 		// mark the securest algorithm for the user
-		list($securest) = each($hashes); reset($hashes);
+		$securest = key($hashes);
 		$hashes[$securest] .= ' ('.lang('securest').')';
 
 		return $hashes;
