@@ -10,7 +10,6 @@
  * @author Miles Lott <milos@groupwhere.org>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -515,17 +514,31 @@ class setup
 						'config_value'	=> $setup_info[$appname]['tables_prefix'],
 					),False,__LINE__,__FILE__);
 			}
-			$this->db->insert($this->applications_table,array(
-					'app_name'		=> $appname,
-					'app_enabled'	=> $enable,
-					'app_order'		=> $setup_info[$appname]['app_order'],
-					'app_tables'	=> (string)$tables,	// app_tables is NOT NULL
-					'app_version'	=> $setup_info[$appname]['version'],
-					'app_index'     => $setup_info[$appname]['index'],
-					'app_icon'      => $setup_info[$appname]['icon'],
-					'app_icon_app'  => $setup_info[$appname]['icon_app'],
-				),False,__LINE__,__FILE__);
+			try {
+				$this->db->insert($this->applications_table,array(
+						'app_name'		=> $appname,
+						'app_enabled'	=> $enable,
+						'app_order'		=> $setup_info[$appname]['app_order'],
+						'app_tables'	=> (string)$tables,	// app_tables is NOT NULL
+						'app_version'	=> $setup_info[$appname]['version'],
+						'app_index'     => $setup_info[$appname]['index'],
+						'app_icon'      => $setup_info[$appname]['icon'],
+						'app_icon_app'  => $setup_info[$appname]['icon_app'],
+					),False,__LINE__,__FILE__);
+			}
+			catch (Api\Db\Exception\InvalidSql $e)
+			{
+				// ease update from pre 1.6 eg. 1.4 not having app_index, app_icon, app_icon_app columns
+				_egw_log_exception($e);
 
+				$this->db->insert($this->applications_table,array(
+						'app_name'		=> $appname,
+						'app_enabled'	=> $enable,
+						'app_order'		=> $setup_info[$appname]['app_order'],
+						'app_tables'	=> (string)$tables,	// app_tables is NOT NULL
+						'app_version'	=> $setup_info[$appname]['version'],
+					),False,__LINE__,__FILE__);
+			}
 			Api\Egw\Applications::invalidate();
 		}
 	}
@@ -1024,6 +1037,18 @@ class setup
 				'account_email'     => $email,
 				'account_members'   => array()
 			);
+
+			// check if egw_accounts.account_description already exists, as the update otherwise fails
+			$meta = $GLOBALS['egw_setup']->db->metadata('egw_accounts', true);
+			if (!isset($meta['meta']['account_description']))
+			{
+				$GLOBALS['egw_setup']->oProc->AddColumn('egw_accounts','account_description',array(
+					'type' => 'varchar',
+					'precision' => '255',
+					'comment' => 'group description'
+				));
+			}
+
 			if (!($accountid = $this->accounts->save($account)))
 			{
 				error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') failed! accountid=$accountid");
