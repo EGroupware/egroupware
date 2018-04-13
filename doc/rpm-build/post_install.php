@@ -608,7 +608,7 @@ function fix_perms()
 	// in case update changes something in filesystem
 	if (file_exists($config['data_dir']) && !empty($config['webserver_user']))
 	{
-		system('/bin/chown -R '.$config['webserver_user'].' '.$config['data_dir'].'/*/files/sqlfs');
+		@system('/bin/chown -R '.$config['webserver_user'].' '.$config['data_dir'].'/*/files/sqlfs');
 	}
 }
 
