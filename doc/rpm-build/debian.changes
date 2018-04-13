@@ -1,3 +1,32 @@
+egroupware-epl (17.1.20180413) hardy; urgency=low
+
+  * PHP 7.2: fix several PHP Fatal errors and warnings stalling installation and usage
+  * Setup: updates from old versions (eg. 1.4 or 1.8) no longer require to update to 14.x and 16.1 first
+  * Setup/Restore: restore from a other charsets then utf-8 failed
+  * All apps: fixed moving attachments to new entries (without attachments) lost moved file
+  * CardDAV/Addressbook: fixed not working distribution-lists as groups in Mac addressbook
+  * CardDAV/Addressbook: fix can NOT create new entries on a minimal (non-compat) install
+  * CalDAV/Resources: fix wrong ACL/rights send to clients (PHP warning in log)
+  * EMail/sMime: allow non-admin users to upload their keys
+  * Versioning: moving or renaming files is done now as copy and delete to keep original file in attic
+  * Addressbook: Enable upload buttons of smime/pgp pubkeys if user is allowed to modify them
+  * Addressbook: Fix missing 'Add' action for no results
+  * Addressbook: Fix send all contact's emails/vcards to compose dialog does not work
+  * Calendar: add preference to display birthdays as events as well as holidays
+  * Calendar: fix events on weekend were sometimes shown on Friday if weekends were hidden
+  * Calendar: fix occasional infinite loop in yearly planner
+  * Api: Fix auto-complete password field gets activated even though user hasn't selected it deliberately
+  * Mail: Fix mail import does not display imported mail in correct style
+  * Notifications: Database update to not loose big messages
+  * Notifications: On verbosity of high, alert only if the message is unseen
+  * Timesheet: Stop times from advancing 1 hour shortly after DST
+  * Sharing/Collabora: fix not working cleanup of temp. files and shares
+  * Tracker: Fix tracker opening filemanager in iframe
+  * News: use proxy configuration to import news
+  * News: fix error storing a (new) category under PHP 7.1+
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 13 Apr 2018 15:14:50 +0200
+
 egroupware-epl (17.1.20180321) hardy; urgency=low
 
   * SECURITY AND MAINTENANCE RELEASE: PLEASE UPDATE IMMEDIATELY
