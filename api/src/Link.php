@@ -313,13 +313,13 @@ class Link extends Link\Storage
 		{
 			//error_log(__METHOD__.'() items in title-cache: '.count(self::$title_cache).' file-access-cache: '.count(self::$file_access_cache));
 
-			if (count(self::$title_cache > self::TITLE_CACHE_SIZE))
+			if (count(self::$title_cache) > self::TITLE_CACHE_SIZE)
 			{
 				self::$title_cache = array_slice(self::$title_cache, -self::TITLE_CACHE_SIZE);
 			}
 			Cache::setSession(__CLASS__, 'link_title_cache', self::$title_cache);
 
-			if (count(self::$file_access_cache > self::FILE_ACCESS_CACHE_SIZE))
+			if (count(self::$file_access_cache) > self::FILE_ACCESS_CACHE_SIZE)
 			{
 				self::$file_access_cache = array_slice(self::$file_access_cache, -self::FILE_ACCESS_CACHE_SIZE);
 			}
