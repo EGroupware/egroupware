@@ -7,8 +7,7 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id$
+ * @copyright (c) 2003-18 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api\Db;
@@ -514,7 +513,7 @@ class Backup
 
 			if (substr($line,0,9) == 'version: ')
 			{
-				$api_version = trim(substr($line,9));
+				// currenty not used: $api_version = trim(substr($line,9));
 				continue;
 			}
 			if (substr($line,0,9) == 'charset: ')

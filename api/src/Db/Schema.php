@@ -12,7 +12,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage db
- * @version $Id$
  */
 
 namespace EGroupware\Api\Db;
@@ -20,7 +19,7 @@ namespace EGroupware\Api\Db;
 use EGroupware\Api;
 
 /**
- * eGW's ADOdb based schema-processor
+ * EGroupware's ADOdb based schema-processor
  */
 class Schema
 {
@@ -536,7 +535,7 @@ class Schema
 	 * Create an (unique) Index over one or more columns
 	 *
 	 * @param string $sTableName table-name
-	 * @param array $aColumnNames columns for the index
+	 * @param string|array $aColumnNames column(s) for the index
 	 * @param boolean $bUnique =false true for a unique index, default false
 	 * @param array|string $options ='' db-sepecific options, default '' = none
 	 * @param string $sIdxName ='' name of the index, if not given (default) its created automaticaly
@@ -555,6 +554,18 @@ class Schema
 		}
 		if (!is_array($options)) $options = $options ? array($options) : array();
 		if ($bUnique) $options[] = 'UNIQUE';
+
+		// if index already exists drop it first
+		$definition = array();
+		$this->GetIndexes($sTableName, $definition);
+		$type = $bUnique ? 'uc' : 'ix';
+		if ($this->_in_index($aColumnNames, $definition[$type], true) ||
+			// sometimes index is listed as unique index too --> ignore that
+			($type == 'ix' && $this->_in_index($aColumnNames, $definition['uc'], true)))
+		{
+			//error_log(__METHOD__."('$sTableName', ['".implode("','", (array)$aColumnNames)."'], $bUnique, ...) already exists --> droping it first");
+			$this->DropIndex($sTableName, (array)$aColumnNames);
+		}
 
 		$aSql = $this->dict->CreateIndexSQL($sIdxName,$sTableName,$aColumnNames,$options);
 
@@ -1100,6 +1111,13 @@ class Schema
 					$ado_col = 'I AUTOINCREMENT NOTNULL';
 					unset($col_data['nullable']);	// else we set it twice
 					break;
+				case 'binary':	// varbinary column for MySQL/MariaDB
+					if ($this->sType == 'mysql' && $col_data['precision'] <= $this->max_varchar_length)
+					{
+						$ado_col = 'C('.$col_data['precision'].') CONSTRAINT "CHARACTER SET binary"';
+						break;
+					}
+					// fall through to blob
 				case 'blob':
 					$ado_col = 'B';
 					break;
@@ -1413,7 +1431,7 @@ class Schema
 						$s = strtolower($s);
 					});
 				}
-				if (count($definition['pk']) && (implode(':',$definition['pk']) == implode(':',$index['columns']) ||
+				if (!empty($definition['pk']) && (implode(':',$definition['pk']) == implode(':',$index['columns']) ||
 					$index['unique'] && count(array_intersect($definition['pk'],$index['columns'])) == count($definition['pk'])))
 				{
 					continue;	// is already the primary key => ignore it
@@ -1430,7 +1448,9 @@ class Schema
 	/**
 	 * Check if all indexes exist and create them if not
 	 *
-	 * Does not check index-type of length!
+	 * Used eg. after restoring a backup to make sure all indexes are in place.
+	 *
+	 * Does not check index-type or length!
 	 */
 	function CheckCreateIndexes()
 	{
@@ -1440,6 +1460,7 @@ class Schema
 
 			$definition = array();
 			$this->GetIndexes($table, $definition);
+			$current = $this->m_odb->metadata($table, true);
 
 			// iterate though indexes we should have according to tables_current
 			foreach(array('uc', 'ix') as $type)
@@ -1449,6 +1470,12 @@ class Schema
 					// sometimes primary key is listed as (unique) index too --> ignore it
 					if ($this->_in_index($columns, array($table_def['pk']), true)) continue;
 
+					// current table does NOT contain all columns, eg. not yet updated --> ignore index
+					if (array_diff((array)$columns, array_keys($current['meta'])))
+					{
+						//error_log(__METHOD__."() Can't create index over ", implode(',')." on table $table, as not all columns exist (yet)!");
+						continue;
+					}
 					// check if they exist in real table and create them if not
 					if (!$this->_in_index($columns, $definition[$type]) &&
 						// sometimes index is listed as unique index too --> ignore that
