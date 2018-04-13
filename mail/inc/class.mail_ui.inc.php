@@ -1926,46 +1926,45 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			//error_log(__METHOD__.__LINE__.array2string($header));
 			if (in_array("attachments", $cols))
 			{
-				if($header['mimetype'] == 'multipart/mixed' ||
-					$header['mimetype'] == 'multipart/signed' ||
-					$header['mimetype'] == 'multipart/related' ||
-					$header['mimetype'] == 'multipart/report' ||
-					$header['mimetype'] == 'text/calendar' ||
-					$header['mimetype'] == 'text/html' ||
+				if (!empty($header['attachments']) && (in_array($header['mimetype'], array(
+						'multipart/mixed', 'multipart/signed', 'multipart/related', 'multipart/report',
+						'text/calendar', 'text/html', 'multipart/alternative',
+					)) ||
 					substr($header['mimetype'],0,11) == 'application' ||
 					substr($header['mimetype'],0,5) == 'audio' ||
-					substr($header['mimetype'],0,5) == 'video' ||
-					$header['mimetype'] == 'multipart/alternative')
+					substr($header['mimetype'],0,5) == 'video'))
 				{
 					$image = Api\Html::image('mail','attach');
-					$imageHTMLBlock = '';
 					$datarowid = $this->createRowID($_folderName,$message_uid,true);
 					$attachments = $header['attachments'];
-					if (count($attachments)<1)
+					if (count($attachments) == 1)
 					{
-						$image = '&nbsp;';
-					}
-					if (count($attachments)==1)
-					{
-						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'],$_folderName);
 						$image = Api\Html::image('mail','attach',$attachments[0]['name'].(!empty($attachments[0]['mimeType'])?' ('.$attachments[0]['mimeType'].')':''));
 					}
-					if (count($attachments)>1)
+					else
 					{
-						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'],$_folderName);
 						$image = Api\Html::image('mail','attach',lang('%1 attachments',count($attachments)));
 					}
+					$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'],$_folderName);
 
 					$attachmentFlag = $image;
-				} else {
-					$attachmentFlag ='&nbsp;';
+				}
+				else
+				{
+					$attachmentFlag = '&nbsp;';
+					$imageHTMLBlock = '';
 				}
 				// show priority flag
-				if ($header['priority'] < 3) {
+				if ($header['priority'] < 3)
+				{
 					 $image = Api\Html::image('mail','prio_high');
-				} elseif ($header['priority'] > 3) {
+				}
+				elseif ($header['priority'] > 3)
+				{
 					$image = Api\Html::image('mail','prio_low');
-				} else {
+				}
+				else
+				{
 					$image = '';
 				}
 				// show a flag for flagged messages

@@ -1939,7 +1939,7 @@ class Db
 		{
 			$table = self::$tablealiases[$table];
 		}
-		if (count($data))
+		if (!empty($data))
 		{
 			$inputarr = false;
 			if ($use_prepared_statement && $this->Link_ID->_bindInputArray)	// eg. MaxDB

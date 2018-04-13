@@ -194,7 +194,8 @@ class Hooks
 		if (!isset(self::$locations)) self::read();
 
 		//error_log(__METHOD__.__LINE__.array2string(self::$locations[$location]));
-		return $return_methods ? self::$locations[$location][$app] : count(self::$locations[$location][$app]);
+		return $return_methods ? self::$locations[$location][$app] :
+			(empty(self::$locations[$location][$app]) ? 0 : count(self::$locations[$location][$app]));
 	}
 
 	/**

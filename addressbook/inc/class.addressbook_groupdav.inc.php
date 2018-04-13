@@ -263,7 +263,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			}
 		}
 		// last chunk or no chunking: add accounts from different repo and report missing multiget urls
-		if (!$start || count($contacts) < $start[1])
+		if (!$start || (empty($contact)?0:count($contacts)) < $start[1])
 		{
 			//error_log(__METHOD__."('$path', ".array2string($filter).", ".array2string($start)."; $report_not_found_multiget_ids) last chunk detected: count()=".count($contacts)." < $start[1]");
 			// add accounts after contacts, if enabled and stored in different repository
