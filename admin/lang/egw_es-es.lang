@@ -87,8 +87,8 @@ admin username	admin	es-es	usuario del administrador
 administration	admin	es-es	Administración
 admins	admin	es-es	Administradores
 advanced options	admin	es-es	opciones avanzadas
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	es-es	¿Después de cuántos intentos fallidos de conexión debe bloquearse una cuenta? (por defecto, 3)
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	es-es	¿Después de cuántos intentos fallidos de conexión debe bloquearse una IP? (por defecto, 3)
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	es-es	¿Después de cuántos intentos fallidos de conexión debe bloquearse una cuenta? (por defecto, 3)
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	es-es	¿Después de cuántos intentos fallidos de conexión debe bloquearse una IP? (por defecto, 3)
 aliases	admin	es-es	Alias
 all applications	admin	es-es	Todas las aplicaciones
 all categories	admin	es-es	Todas las categorías
@@ -412,7 +412,7 @@ hour<br>(0-23)	admin	es-es	Hora<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	es-es	¿Qué tamaño deben tener las miniaturas para las imágenes vinculadas (máximo en pixels)?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	es-es	¿Cuántos días deben permanecer las entradas en el registro de acceso, antes de borrarlas? (por defecto, 90)
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	es-es	¿Cuántas entradas deben poder exportar los usuarios que no son administradores (vacío=sin límite, no=no exportan)?
-how many minutes should an account or ip be blocked (default 30) ?	admin	es-es	¿Cuántos minutos debe permanecer bloqueada una cuenta o una IP? (por defecto, 30)
+how many minutes should an account or ip be blocked (default 1) ?	admin	es-es	¿Cuántos minutos debe permanecer bloqueada una cuenta o una IP? (por defecto, 30)
 how should email addresses for new users be constructed?	admin	es-es	¿Cómo deben construirse las direcciones para los usuarios nuevos?
 icon	admin	es-es	Icono
 identity deleted	admin	es-es	Identidad suprimida

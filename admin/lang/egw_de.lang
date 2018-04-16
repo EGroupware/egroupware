@@ -90,7 +90,7 @@ administration	admin	de	Administration
 admins	admin	de	Administratoren
 advanced options	admin	de	erweiterte Einstellungen
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	de	Nach wievielen erfolglosen Anmeldeversuchen soll ein Benutzerkonto gesperrt werden (Vorgabe 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	de	Nach wievielen erfolglosen Anmeldeversuchen soll eine IP-Adresse gesperrt werden (Vorgabe 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	de	Nach wievielen erfolglosen Anmeldeversuchen soll eine IP-Adresse gesperrt werden (Vorgabe 15)?
 aliases	admin	de	E-Mail-Alias
 all applications	admin	de	Alle Anwendungen
 all categories	admin	de	Alle Kategorien
@@ -435,7 +435,7 @@ hour<br>(0-23)	admin	de	Stunde<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	de	Wie gross sollen Thumbnails für verknüpfte Bilder sein (Maximum in Bildpunkten)?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	de	Wie viele Tage sollen Einträge im Zugangsprotokoll bleiben, bevor sie gelöscht werden (Vorgabe 90)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	de	Wie viele Einträge sollen Nicht-Administratoren exportieren können (leer = kein Limit, Nein = kein Export)
-how many minutes should an account or ip be blocked (default 30) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 30)?
+how many minutes should an account or ip be blocked (default 1) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 1)?
 how should email addresses for new users be constructed?	admin	de	In welchem Format sollen E-Mail-Adressen von neuen Benutzern erzeugt werden?
 how username get constructed	admin	de	Wie wird der Benutzername gebildet
 icon	admin	de	Icon
@@ -830,7 +830,7 @@ upload your background image or enter the url	admin	de	Laden Sei ein Hintergrund
 upload your certificate .p12/.pfx file	admin	de	Zertifikat hochladen (.p12/.pfx-Datei)
 Upload your header logo or enter the URL (leave it empty if it is the same as login logo)	admin	de	Laden Sie Ihr Header-Logo hoch oder geben Sie die URL ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein
-upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Sie eine URL dafür ein
+upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Sie eine URL dafür ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
 uppercase, lowercase, number, special char	admin	de	Großbuchstaben, kleine Buchstaben, Zahlen, Sonderzeichen
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	de	URL der EGroupware Installation, z.B. http://domain.com/egroupware
 usage	admin	de	Einsatz

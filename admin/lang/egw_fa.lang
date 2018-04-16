@@ -40,8 +40,8 @@ admin name	admin	fa	نام مدیر
 administration	admin	fa	مدیریت
 admins	admin	fa	مدیران
 advanced options	admin	fa	گزینه های پیشرفته
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fa	بعد از چند تلاش ناموفق باید حساب کاربر قفل شود؟(پیش فرض 3 است)
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fa	بعد از چند تلاش ناموفق باید نشانی IP کاربر قفل شود؟(پیش فرض 3 است)
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	fa	بعد از چند تلاش ناموفق باید حساب کاربر قفل شود؟(پیش فرض 3 است)
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fa	بعد از چند تلاش ناموفق باید نشانی IP کاربر قفل شود؟(پیش فرض 3 است)
 aliases	admin	fa	نامهای مستعار
 all applications	admin	fa	همه کاربردها
 all categories	admin	fa	همه دسته ها
@@ -219,7 +219,7 @@ home directory	admin	fa	پوشه خانه
 host information	admin	fa	اطلاعات میزبان
 hour<br>(0-23)	admin	fa	ساعت <br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fa	اطلاعات چند روز قبل از حذف ثبت دسترسی باید نگهداری شوند:(پیش فرض ۹۰)؟
-how many minutes should an account or ip be blocked (default 30) ?	admin	fa	چند دقیقه باید یک IP قفل باشد؟ (پیش فرض 30 دقیقه)
+how many minutes should an account or ip be blocked (default 1) ?	admin	fa	چند دقیقه باید یک IP قفل باشد؟ (پیش فرض 30 دقیقه)
 icon	admin	fa	نمایه
 idle	admin	fa	بیکار
 if no acl records for user or any group the user is a member of	admin	fa	اگر هیچ لیست حق دسترسی برای کاربر یا هیچ گروهی نباشد کابر عضوی خواهد بود از

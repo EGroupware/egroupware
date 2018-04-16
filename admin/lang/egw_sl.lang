@@ -99,8 +99,8 @@ admin username	admin	sl	Oskrbnikovo uporabniško ime
 administration	admin	sl	Upravljanje
 admins	admin	sl	Oskrbniki
 advanced options	admin	sl	Napredne izbire
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sl	Po kolikih neuspešnih prijavah se račun onemogoči? (privzeto 3)
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	sl	Po kolikih neuspešnih prijavah se onemogoči IP? (privzeto 3)
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	sl	Po kolikih neuspešnih prijavah se račun onemogoči? (privzeto 3)
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	sl	Po kolikih neuspešnih prijavah se onemogoči IP? (privzeto 3)
 aliases	admin	sl	Psevdonimi
 all	admin	sl	Vse
 all acls	admin	sl	Vse ACL s
@@ -477,7 +477,7 @@ hour<br>(0-23)	admin	sl	Ura <BR> (0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	sl	Največja velikost slikovnih pik za povezane slike.
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	sl	Koliko dni zapisi ostanejo v evidenci dostopov predno se izbrišejo? (privzeto 90)
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	sl	Koliko zapisov lahko izvozijo uporabniki, ki nimajo administratorskih pravic? (prazno = ni omejitev, no = izvoz ni omogočen)
-how many minutes should an account or ip be blocked (default 30) ?	admin	sl	Koliko minut naj bo račun ali IP onemogočen? (privzeto 30)
+how many minutes should an account or ip be blocked (default 1) ?	admin	sl	Koliko minut naj bo račun ali IP onemogočen? (privzeto 30)
 how should email addresses for new users be constructed?	admin	sl	Kako naj bo sestavljen elektronski naslov za nove uporabnike?
 how username get constructed	admin	sl	Kako se pridobi uporabniško ime
 icon	admin	sl	Ikona

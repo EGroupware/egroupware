@@ -46,8 +46,8 @@ admin name	admin	hu	Adminisztrátor neve
 administration	admin	hu	Adminisztráció
 admins	admin	hu	Adminisztrátorok
 advanced options	admin	hu	További beállítások
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az azonosító blokkolt (alapértelmezésben 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az IP-cím blokkolt (alapértelmezésben 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az azonosító blokkolt (alapértelmezésben 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az IP-cím blokkolt (alapértelmezésben 3)?
 aliases	admin	hu	Álnevek
 all categories	admin	hu	Összes kategória
 all records and account information will be lost!	admin	hu	Minden bejegyzés és információ törlésre kerül a hozzáférési joggal kapcsolatban!
@@ -247,7 +247,7 @@ home directory	admin	hu	Home könyvtár
 host information	admin	hu	Host információ
 hour<br>(0-23)	admin	hu	Óra<br />(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	hu	A hozzáférési listában hány napig legyenek megőrizve az adatok, mielőtt törlődnének (alapértelmezett 90 nap)?
-how many minutes should an account or ip be blocked (default 30) ?	admin	hu	Hány percig legyenek blokkolva a hozzáférések vagy IP címek (alapértelmezett 30 perc)?
+how many minutes should an account or ip be blocked (default 1) ?	admin	hu	Hány percig legyenek blokkolva a hozzáférések vagy IP címek (alapértelmezett 30 perc)?
 how should email addresses for new users be constructed?	admin	hu	Új felhasználók email címét hogyan készítsük el?
 icon	admin	hu	Ikon
 idle	admin	hu	inaktív

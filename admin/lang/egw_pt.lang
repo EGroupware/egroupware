@@ -41,8 +41,8 @@ admin name	admin	pt	Nome do Administrador
 administration	admin	pt	Administração
 admins	admin	pt	Administradores
 advanced options	admin	pt	opções avançadas
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pt	Uma conta deve ser bloqueada após quantas tentativas de acesso sem sucesso (por omissão 3) ?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	pt	Um IP deve ser bloqueado após quantas tentativas de acesso sem sucesso (por omissão 3) ?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	pt	Uma conta deve ser bloqueada após quantas tentativas de acesso sem sucesso (por omissão 3) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	pt	Um IP deve ser bloqueado após quantas tentativas de acesso sem sucesso (por omissão 3) ?
 aliases	admin	pt	Sinónimos
 all applications	admin	pt	Todas as aplicações
 all categories	admin	pt	Todas as categorias
@@ -234,7 +234,7 @@ home directory	admin	pt	Directório da instalação
 host information	admin	pt	Informações do servidor
 hour<br>(0-23)	admin	pt	Hora<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt	Os registos devem ser permanecer no registo de acessos quantos dias até serem eliminados (por omissão 90) ?
-how many minutes should an account or ip be blocked (default 30) ?	admin	pt	Uma conta ou IP deve ficar bloqueado durante quantos minutos (por omissão 30) ?
+how many minutes should an account or ip be blocked (default 1) ?	admin	pt	Uma conta ou IP deve ficar bloqueado durante quantos minutos (por omissão 30) ?
 icon	admin	pt	Ícone
 idle	admin	pt	Ocioso
 if no acl records for user or any group the user is a member of	admin	pt	Se não houver registo de ACL para um utilizador ou grupo, o utilizador é membro do

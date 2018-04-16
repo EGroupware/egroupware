@@ -38,8 +38,8 @@ admin name	admin	hr	Ime administratora
 administration	admin	hr	Administracija
 admins	admin	hr	Administratori
 advanced options	admin	hr	advanced options
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	hr	Nakon koliko neuspijelih pokušaja prijave treba zaključati korisnički račun (početna vrijednost 3) ?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	hr	Nakon koliko neuspijelih pokušaja prijave treba zaključati IP adresu (početna vrijednost 3) ?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	hr	Nakon koliko neuspijelih pokušaja prijave treba zaključati korisnički račun (početna vrijednost 3) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	hr	Nakon koliko neuspijelih pokušaja prijave treba zaključati IP adresu (početna vrijednost 3) ?
 all applications	admin	hr	all applications
 all records and account information will be lost!	admin	hr	Svi zapisi i informacije o korisničkim računima će biti izgubljene!
 all users	admin	hr	Svi korisnici
@@ -212,7 +212,7 @@ home directory	admin	hr	Home directory
 host information	admin	hr	Informacije poslužitelja
 hour<br>(0-23)	admin	hr	Sat<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	hr	Koliko dana bi zapisi trebali biti sačuvani u zapisu pristupa, prije brisanja (početno postavljeno 90) ?
-how many minutes should an account or ip be blocked (default 30) ?	admin	hr	Koliko minuta bi korisnički račun ili IP trebali biti blokirani (početno postavljeno 30) ?
+how many minutes should an account or ip be blocked (default 1) ?	admin	hr	Koliko minuta bi korisnički račun ili IP trebali biti blokirani (početno postavljeno 30) ?
 icon	admin	hr	Ikona
 idle	admin	hr	idle
 if no acl records for user or any group the user is a member of	admin	hr	Ukoliko nema ACL zapisa za korisnika ili bilo koju grupu kojoj korisnik pripada

@@ -38,8 +38,8 @@ admin name	admin	iw	שם מנהל
 administration	admin	iw	ניהול
 admins	admin	iw	מנהלים
 advanced options	admin	iw	אופציות מתקדמות
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	iw	?(לאחר כמה נסיונות כניסה כושלים יש לחסום חשבון (ברירת מחדל 3
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	iw	?(לאחר כמה נסיונות כניסה כושלים יש לחסום כתובת (ברירת מחדל 3
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	iw	?(לאחר כמה נסיונות כניסה כושלים יש לחסום חשבון (ברירת מחדל 3
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	iw	?(לאחר כמה נסיונות כניסה כושלים יש לחסום כתובת (ברירת מחדל 3
 all applications	admin	iw	כל היישומים
 all categories	admin	iw	כל הקטגוריות
 all records and account information will be lost!	admin	iw	!כל הרשומות ומידע חשבון יאבדו
@@ -213,7 +213,7 @@ home directory	admin	iw	מחיצת בית
 host information	admin	iw	מידע על השרת
 hour<br>(0-23)	admin	iw	שעה<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	iw	(כמה ימים יש להשאיר רשומות ביומן הגישה עד שמוחקים אותן (ברירת מחדל: 90
-how many minutes should an account or ip be blocked (default 30) ?	admin	iw	(ברירת מחדל: 30) IP כמה דקות יש לחסום חשבון או כתובת
+how many minutes should an account or ip be blocked (default 1) ?	admin	iw	(ברירת מחדל: 30) IP כמה דקות יש לחסום חשבון או כתובת
 icon	admin	iw	צלמית
 idle	admin	iw	סרק
 if no acl records for user or any group the user is a member of	admin	iw	אם אין למשתמש או לקבוצה כל שהיא אליה הוא שייך רשומות ברשימת גישה

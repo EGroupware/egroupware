@@ -97,8 +97,8 @@ admin username	admin	fr	Nom d'utilisateur de l'administrateur
 administration	admin	fr	Administration
 admins	admin	fr	Administrateurs
 advanced options	admin	fr	Options avancées
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué (3 par défaut) ?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée (3 par défaut) ?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué (3 par défaut) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée (3 par défaut) ?
 aliases	admin	fr	Alias
 all	admin	fr	Tout
 all applications	admin	fr	Toutes les applications
@@ -465,7 +465,7 @@ hour<br>(0-23)	admin	fr	Heure<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	fr	Taille maximale en pixels des vignettes pour les images liées.
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fr	Pendant combien de jours les entrées doivent-elles rester dans la log d'accès avant d'être effacées (90 par défaut) ?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	fr	Combien d'entrées les non-admins peuvent-ils exporter. Vide = pas de limite, no = pas d'export
-how many minutes should an account or ip be blocked (default 30) ?	admin	fr	Pendant combien de minutes un compte ou une adresse IP doit-il(elle) être bloqué(e) (30 par défaut) ?
+how many minutes should an account or ip be blocked (default 1) ?	admin	fr	Pendant combien de minutes un compte ou une adresse IP doit-il(elle) être bloqué(e) (30 par défaut) ?
 how should email addresses for new users be constructed?	admin	fr	Comment former les adresses de messagerie des nouveaux utilisateurs ?
 how username get constructed	admin	fr	Comment les codes utiliateurs sont construits
 icon	admin	fr	Icône

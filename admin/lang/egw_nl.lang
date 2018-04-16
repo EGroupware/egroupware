@@ -55,8 +55,8 @@ admin queue and history	admin	nl	Beheerders wachtrij en historie
 administration	admin	nl	Beheer
 admins	admin	nl	Beheerders
 advanced options	admin	nl	geavanceerde opties
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	nl	Na hoeveel onsuccesvolle inlogpogingen moet een account geblokkeerd worden (standaard 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	nl	Na hoeveel onsuccesvolle inlogpogingen moet een IP-adres geblokkeerd worden (standaard 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	nl	Na hoeveel onsuccesvolle inlogpogingen moet een account geblokkeerd worden (standaard 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	nl	Na hoeveel onsuccesvolle inlogpogingen moet een IP-adres geblokkeerd worden (standaard 3)?
 aliases	admin	nl	Aliassen
 all applications	admin	nl	alle toepassingen
 all categories	admin	nl	Alle categorieën
@@ -276,7 +276,7 @@ hour<br>(0-23)	admin	nl	Uur<br /> (0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	nl	Hoe groot moeten miniaturen voor gekoppelde afbeeldingen zijn (maximum in pixels)?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	nl	Hoeveel dagen moeten record worden bewaard in het toegangslogboek voordat zo worden verwijderd (standaard 90 dagen)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	nl	Hoe veel records moeten niet-beheerders kunnen exporteren (leeg = geen limiet, geen = geen export)
-how many minutes should an account or ip be blocked (default 30) ?	admin	nl	Hoeveel minuten moet een account of IP-adres worden geblokkeerd (standaard 30 minuten)?
+how many minutes should an account or ip be blocked (default 1) ?	admin	nl	Hoeveel minuten moet een account of IP-adres worden geblokkeerd (standaard 30 minuten)?
 how should email addresses for new users be constructed?	admin	nl	Hoe moet het Emailadres voor nieuwe gebruikers samengesteld worden?
 icon	admin	nl	Pictogram
 idle	admin	nl	inactief

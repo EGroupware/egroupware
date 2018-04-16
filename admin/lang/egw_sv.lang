@@ -41,8 +41,8 @@ admin name	admin	sv	Admin namn
 administration	admin	sv	Administration
 admins	admin	sv	Administratörer
 advanced options	admin	sv	Avancerade inställningar
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sv	Efter hur många misslyckade försök att logga in skall ett konto blockeras (standard 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	sv	Efter hur många misslyckade försök att logga in skall en IP adress blockeras (standard 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	sv	Efter hur många misslyckade försök att logga in skall ett konto blockeras (standard 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	sv	Efter hur många misslyckade försök att logga in skall en IP adress blockeras (standard 3)?
 aliases	admin	sv	Alias
 all applications	admin	sv	Samtliga applikationer
 all categories	admin	sv	Samtliga kategorier
@@ -235,7 +235,7 @@ home directory	admin	sv	Hemkatalog
 host information	admin	sv	Värdinformation
 hour<br>(0-23)	admin	sv	Timma<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	sv	Hur många dagar skall poster ligga kvar i accessloggen innan de raderas (standard 90)?
-how many minutes should an account or ip be blocked (default 30) ?	admin	sv	Hur många minuter skall ett konto eller IP adress blokeras (standard 30)?
+how many minutes should an account or ip be blocked (default 1) ?	admin	sv	Hur många minuter skall ett konto eller IP adress blokeras (standard 30)?
 how should email addresses for new users be constructed?	admin	sv	Hur ska e-postadresser för nya användare formateras?
 icon	admin	sv	Ikon
 idle	admin	sv	Vilande

@@ -50,8 +50,8 @@ admin queue and history	admin	zh	管理队列和历史纪录
 administration	admin	zh	系统管理
 admins	admin	zh	管理员
 advanced options	admin	zh	高级选项
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	zh	几次登录失败后，将锁定该账户 (默认 3)？
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	zh	几次登录失败后，将封禁 IP 地址 (默认 3)？
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	zh	几次登录失败后，将锁定该账户 (默认 3)？
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	zh	几次登录失败后，将封禁 IP 地址 (默认 3)？
 aliases	admin	zh	别名
 all applications	admin	zh	所有应用程序
 all categories	admin	zh	所有类别
@@ -269,7 +269,7 @@ hour<br>(0-23)	admin	zh	时(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	zh	用以链接图像的缩略图的尺寸应为多大 (最大像素) ？
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zh	访问日志中的条目在它们得以删除之前的保留天数 (缺省90)？
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	zh	非管理员应该能导出多少条目 (留空 = 无限制，no = 不导出)
-how many minutes should an account or ip be blocked (default 30) ?	admin	zh	多少分钟后账户或 IP 地址将被锁定 (默认值30分钟)？
+how many minutes should an account or ip be blocked (default 1) ?	admin	zh	多少分钟后账户或 IP 地址将被锁定 (默认值30分钟)？
 how should email addresses for new users be constructed?	admin	zh	应该怎么为新用户创建邮箱地址？
 icon	admin	zh	图标
 idle	admin	zh	空闲

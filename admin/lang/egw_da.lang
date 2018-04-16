@@ -36,8 +36,8 @@ admin name	admin	da	Administrator navn
 administration	admin	da	Administration
 admins	admin	da	Administratore
 advanced options	admin	da	avanceret indstillinger
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en konto låses (Standard 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en IP låses (Standard 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en konto låses (Standard 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en IP låses (Standard 3)?
 all categories	admin	da	Alle kategorier
 all records and account information will be lost!	admin	da	Alle posteringer og konto infomationer vil gå tabt!
 all users	admin	da	Alle brugere
@@ -205,7 +205,7 @@ home directory	admin	da	Hjemme mappe
 host information	admin	da	Host information
 hour<br>(0-23)	admin	da	Timer<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	da	Hvor mange dage skal en notits blive i adgangsloggen, før den slettes (standard 90)?
-how many minutes should an account or ip be blocked (default 30) ?	admin	da	Hvor mange minutter skal en konto eller IP låses (standard 30)?
+how many minutes should an account or ip be blocked (default 1) ?	admin	da	Hvor mange minutter skal en konto eller IP låses (standard 30)?
 icon	admin	da	Ikon
 if no acl records for user or any group the user is a member of	admin	da	Hvis ingen ACL journal for en bruger eller gruppe som brugeren er medlem af
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	da	Hvis LDAP bruges, vil du håndtere hjemmemapper og loginshells atributter?

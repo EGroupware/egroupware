@@ -63,8 +63,8 @@ admin queue and history	admin	ru	Администрирование очеред
 administration	admin	ru	Администрирование
 admins	admin	ru	Администраторы
 advanced options	admin	ru	Расширенные параметры
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать учетную запись (по умолчанию 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать IP-адрес (по умолчанию — 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать учетную запись (по умолчанию 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать IP-адрес (по умолчанию — 3)?
 aliases	admin	ru	Псевдонимы
 all applications	admin	ru	Все приложения
 all categories	admin	ru	Все категории
@@ -328,7 +328,7 @@ hour<br>(0-23)	admin	ru	Часы<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	ru	Максимальный размер пиктограмм для связанных изображений (в пикселях)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ru	Сколько дней должны храниться записи в журнале до их удаления? (По умолчанию - 90)
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	ru	Сколько записей могут экспортировать не-администраторы? (Пусто – не ограничено, «Нет» - экспорт запрещён)
-how many minutes should an account or ip be blocked (default 30) ?	admin	ru	На сколько минут блокировать учетную запись или IP? (По умолчанию - 30)
+how many minutes should an account or ip be blocked (default 1) ?	admin	ru	На сколько минут блокировать учетную запись или IP? (По умолчанию - 30)
 how should email addresses for new users be constructed?	admin	ru	Как должен строиться e-mail адрес для новых пользователей?
 icon	admin	ru	Пиктограмма
 idle	admin	ru	Простой

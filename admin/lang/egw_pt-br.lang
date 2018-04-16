@@ -52,8 +52,8 @@ admin queue and history	admin	pt-br	Lista de administradores e histórico
 administration	admin	pt-br	Administração
 admins	admin	pt-br	Administradores
 advanced options	admin	pt-br	opções avançadas
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pt-br	Após quantos erros de conexão, a conta deverá ser bloqueada (padrão 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	pt-br	Após quantos erros de conexão, um endereço IP deverá ser bloqueado (padrão 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	pt-br	Após quantos erros de conexão, a conta deverá ser bloqueada (padrão 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	pt-br	Após quantos erros de conexão, um endereço IP deverá ser bloqueado (padrão 3)?
 aliases	admin	pt-br	Apelidos
 all applications	admin	pt-br	Todos aplicativos
 all categories	admin	pt-br	Todas as categorias
@@ -273,7 +273,7 @@ hour<br>(0-23)	admin	pt-br	Hora<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	pt-br	Qual o tamanho das miniaturas para links de imagens (máximo em pixels)?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt-br	Quantos dias as entradas devem ser mantidas no registro de acessos, antes de serem removidas (padrão 90)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	pt-br	Quantos registros usuários não administradores serão capazes de exportar (vazio = sem limites, no = nenhum)
-how many minutes should an account or ip be blocked (default 30) ?	admin	pt-br	Quantos minutos uma conta ou endereço IP devem ser bloqueados (padrão 30)?
+how many minutes should an account or ip be blocked (default 1) ?	admin	pt-br	Quantos minutos uma conta ou endereço IP devem ser bloqueados (padrão 30)?
 how should email addresses for new users be constructed?	admin	pt-br	Como deverão ser construídos oo endereços de e-mail, para novos usuários ?
 icon	admin	pt-br	Ícone
 idle	admin	pt-br	ocioso

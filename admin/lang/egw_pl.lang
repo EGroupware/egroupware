@@ -55,8 +55,8 @@ admin queue and history	admin	pl	Kolejka administracji i historia
 administration	admin	pl	Administracja
 admins	admin	pl	Administratorzy
 advanced options	admin	pl	opcje dodatkowe
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pl	Po jakiej liczbie nieudanych prób zalogowania się do systemu blokować dostęp do konta (domyślnie 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	pl	Po jakiej liczbie nieudanych prób zalogowania się do systemu blokować dostęp z tego adresu IP (domyślnie 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	pl	Po jakiej liczbie nieudanych prób zalogowania się do systemu blokować dostęp do konta (domyślnie 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	pl	Po jakiej liczbie nieudanych prób zalogowania się do systemu blokować dostęp z tego adresu IP (domyślnie 3)?
 aliases	admin	pl	Aliasy
 all applications	admin	pl	wszystkie aplikacje
 all categories	admin	pl	Wszystkie kategorie
@@ -288,7 +288,7 @@ hour<br>(0-23)	admin	pl	Godzina<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	pl	Jak duże powinny być miniatury linkowanych obrazków (w pikselach) ?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pl	Ile dni wpisy powinny pozostawać w dzienniku dostępu, zanim zostaną wykasowane (domyślnie 90)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	pl	Ile wpisów może eksportować użytkownik bez praw administracyjnych (puste = bez limitu, no = brak praw eksportu)
-how many minutes should an account or ip be blocked (default 30) ?	admin	pl	Na ile minut powinno być blokowane konto użytkownika lub adres IP stacji roboczej (domyślnie 30)?
+how many minutes should an account or ip be blocked (default 1) ?	admin	pl	Na ile minut powinno być blokowane konto użytkownika lub adres IP stacji roboczej (domyślnie 30)?
 how should email addresses for new users be constructed?	admin	pl	Jak tworzyć adresy mailowe dla nowych użytkowników?
 icon	admin	pl	Ikonka
 idle	admin	pl	Czas jałowy

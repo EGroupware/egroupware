@@ -62,7 +62,7 @@
 					</vbox>
 				</row>
 				<row>
-					<description value="Upload your header logo or enter the URL (leave it empty if it is the same as login logo)" label="%s:"/>
+					<description value="Upload your header logo or enter the URL" label="%s:"/>
 					<vbox>
 						<textbox id="newsettings[login_logo_header]" width="100%"/>
 						<file onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value()], function(_data){widget._parent._children[0].set_value(_data.path)}).sendRequest()" width="100%" label="upload"/>

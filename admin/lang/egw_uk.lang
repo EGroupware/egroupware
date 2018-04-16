@@ -34,8 +34,8 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	uk	Ім'я адміністратора
 administration	admin	uk	Адміністрація
 admins	admin	uk	Адміністратори
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	uk	Після якої кількості неуспішних спроб входу рахунок має бути заблоковано (по замовченню 3) ?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	uk	Після якої кількості неуспішних спроб входу IP має бути заблоковано (по замовченню 3) ?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	uk	Після якої кількості неуспішних спроб входу рахунок має бути заблоковано (по замовченню 3) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	uk	Після якої кількості неуспішних спроб входу IP має бути заблоковано (по замовченню 3) ?
 all records and account information will be lost!	admin	uk	Всі записи та інформація рахунку будуть втрачені !
 all users	admin	uk	Всі користувачі
 allow anonymous access to this app	admin	uk	Дозволити анонімний доступ до цього приложення
@@ -179,7 +179,7 @@ home directory	admin	uk	Домашній каталог
 host information	admin	uk	Інформація хосту
 hour<br>(0-23)	admin	uk	Година<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	uk	Скільки днів записи мають зберігатися в протоколі доступу (по замовченню 90) ?
-how many minutes should an account or ip be blocked (default 30) ?	admin	uk	На скільки хвилин блокується рахунок або IP (по замовченню 30) ?
+how many minutes should an account or ip be blocked (default 1) ?	admin	uk	На скільки хвилин блокується рахунок або IP (по замовченню 30) ?
 idle	admin	uk	простій
 if no acl records for user or any group the user is a member of	admin	uk	Якщо немає записів ACL для користувача або будь якої групи, членом якої є користувач
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	uk	При використанні LDAP, чи хочете Ви керувати домашніми каталогами та атрибутами входу до системи?

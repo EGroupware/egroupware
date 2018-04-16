@@ -41,8 +41,8 @@ admin name	admin	zh-tw	管理者名稱
 administration	admin	zh-tw	管理
 admins	admin	zh-tw	系統管理
 advanced options	admin	zh-tw	進階選項
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	zh-tw	登入失敗幾次之後要鎖定該帳號(預設三次)？
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	zh-tw	登入失敗幾次之後要鎖定IP位址(預設三次)？
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	zh-tw	登入失敗幾次之後要鎖定該帳號(預設三次)？
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	zh-tw	登入失敗幾次之後要鎖定IP位址(預設三次)？
 aliases	admin	zh-tw	對齊
 all applications	admin	zh-tw	所有的應用程式
 all categories	admin	zh-tw	所有類別
@@ -239,7 +239,7 @@ home directory	admin	zh-tw	家目錄
 host information	admin	zh-tw	主機資訊
 hour<br>(0-23)	admin	zh-tw	小時<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zh-tw	存取紀錄應該保留幾天內的事件後刪除(預設90)？
-how many minutes should an account or ip be blocked (default 30) ?	admin	zh-tw	帳號鎖定將持續幾分鐘(預設30)？
+how many minutes should an account or ip be blocked (default 1) ?	admin	zh-tw	帳號鎖定將持續幾分鐘(預設30)？
 how should email addresses for new users be constructed?	admin	zh-tw	新使用者的信箱該如何建構？
 icon	admin	zh-tw	圖示
 idle	admin	zh-tw	閒置時間

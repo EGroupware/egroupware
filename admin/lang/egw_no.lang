@@ -39,8 +39,8 @@ admin name	admin	no	Admin Navn
 administration	admin	no	Administrasjon
 admins	admin	no	Administratorer
 advanced options	admin	no	Avanserte valg
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	no	Etter hvor mange mislykkede forsøk på å logge inn en konto blir sperret (standard 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	no	Etter hvor mange mislykkede forsøk på å logge inn en IP blir sperret (standard 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	no	Etter hvor mange mislykkede forsøk på å logge inn en konto blir sperret (standard 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	no	Etter hvor mange mislykkede forsøk på å logge inn en IP blir sperret (standard 3)?
 aliases	admin	no	Alias
 all applications	admin	no	Samtlige programmer
 all categories	admin	no	Alle kategorier
@@ -221,7 +221,7 @@ home directory	admin	no	Startmappe
 host information	admin	no	Vertsinformasjon
 hour<br>(0-23)	admin	no	Time <br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	no	Hvor mange dager skal innhold være i tilgangsloggen før de blir slettet (standard 90)?
-how many minutes should an account or ip be blocked (default 30) ?	admin	no	Hvor mange minutter skal en konto eller IP være sperret(standard 30)?
+how many minutes should an account or ip be blocked (default 1) ?	admin	no	Hvor mange minutter skal en konto eller IP være sperret(standard 30)?
 icon	admin	no	Ikon
 idle	admin	no	idle
 if no acl records for user or any group the user is a member of	admin	no	Dersom ingen ACL post for bruker eller noen gruppe bruker medlem av

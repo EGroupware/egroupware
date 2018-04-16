@@ -89,8 +89,8 @@ admin username	admin	it	username amministratore
 administration	admin	it	Amministrazione
 admins	admin	it	Amministratori
 advanced options	admin	it	opzioni avanzate
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	it	Dopo quanti tentativi falliti di login, un account deve essere bloccato (predefinito 3) ?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	it	Dopo quanti tentativi falliti di login, un IP deve essere bloccato (predefinito 3) ?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	it	Dopo quanti tentativi falliti di login, un account deve essere bloccato (predefinito 3) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	it	Dopo quanti tentativi falliti di login, un IP deve essere bloccato (predefinito 3) ?
 aliases	admin	it	Alias
 all applications	admin	it	Tutte le applicazioni
 all categories	admin	it	Tutte le categorie
@@ -431,7 +431,7 @@ hour<br>(0-23)	admin	it	Ore<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	it	Dimensione massima in pixel delle miniature per le immagini collegate
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	it	Quanti giorni le voci rimangono nel log di accesso prima che vengano cancellate (predefinito 90) ?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	it	Quante voci possono esportare gli utenti semplici. Vuoto = nessun limite, no = nessuna esportazione consentita
-how many minutes should an account or ip be blocked (default 30) ?	admin	it	Quanti minuti un account o un IP rimarrà bloccato (predefinito 30) ?
+how many minutes should an account or ip be blocked (default 1) ?	admin	it	Quanti minuti un account o un IP rimarrà bloccato (predefinito 30) ?
 how should email addresses for new users be constructed?	admin	it	Come deve essere strutturata la mail per i nuovi utenti ?
 how username get constructed	admin	it	Come viene costruito il nome utente
 icon	admin	it	Icona

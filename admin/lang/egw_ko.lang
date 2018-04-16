@@ -36,8 +36,8 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	ko	관리자 이름
 administration	admin	ko	관리자
 admins	admin	ko	관리자
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ko	접속 시도할때 몇번 실패하면 계정을 막겠습니까? ( 기본 3번 )
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ko	접속 시도할때 몇번 실패하면 IP를 막겠습니까? ( 기본 3번 )
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	ko	접속 시도할때 몇번 실패하면 계정을 막겠습니까? ( 기본 3번 )
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	ko	접속 시도할때 몇번 실패하면 IP를 막겠습니까? ( 기본 3번 )
 all applications	admin	ko	모든 응용프로그램
 all categories	admin	ko	모든 카테고리
 all records and account information will be lost!	admin	ko	이 계정의 자료와 정보가 삭제됩니다.
@@ -200,7 +200,7 @@ home directory	admin	ko	홈 디렉토리
 host information	admin	ko	호스트 정보
 hour<br>(0-23)	admin	ko	시간<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ko	접근 로그에 항목을 삭제되기까지 일간 유지할까요 (기본 90) ?
-how many minutes should an account or ip be blocked (default 30) ?	admin	ko	몇분간 IP나 계정을 막을까요 (기본 30) ?
+how many minutes should an account or ip be blocked (default 1) ?	admin	ko	몇분간 IP나 계정을 막을까요 (기본 30) ?
 icon	admin	ko	아이콘
 idle	admin	ko	대기시간
 if no acl records for user or any group the user is a member of	admin	ko	사용자나 어떤 그룹 사용자 ACL 레코드가 없다면 다음의 멤버 :
