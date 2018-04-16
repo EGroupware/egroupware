@@ -86,7 +86,7 @@ defines how to open a merge print document	filemanager	en	Defines how to open a 
 delete all older versions and deleted files older then %s days	filemanager	en	Delete all older versions and deleted files older than %s days
 delete these files or directories?	filemanager	en	Delete these files or directories?
 delete these shares?	filemanager	en	Delete these shares?
-delete this extended ACL?	filemanager	en	Delete this extended ACL?
+delete this extended acl?	filemanager	en	Delete this extended ACL?
 delete this file or directory	filemanager	en	Delete this file or directory
 deleted %1	filemanager	en	Deleted %1
 directories sorted in	filemanager	en	Directories sorted in
