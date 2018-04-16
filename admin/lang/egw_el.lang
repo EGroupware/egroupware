@@ -40,8 +40,8 @@ admin name	admin	el	Ονομα διαχειρηστή
 administration	admin	el	Διαχείρηση
 admins	admin	el	Διαχειριστές
 advanced options	admin	el	επιλογές για προχωρημένους
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένας λογαριασμός θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3) ?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένα IP θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3) ?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένας λογαριασμός θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένα IP θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3) ?
 aliases	admin	el	Ψευδώνυμα
 all categories	admin	el	Όλες οι κατηγορίες
 all records and account information will be lost!	admin	el	Ολες οι εγγραφές και οι πληροφορίες λογαριασμών θα χαθούν!
@@ -228,7 +228,7 @@ home directory	admin	el	Αρχικος κατάλογος
 host information	admin	el	Πληροφορία
 hour<br>(0-23)	admin	el	Ωρα<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	el	Πόσες ημέρες πρέπει οι εισαγωγές να μένουν στην καταγραφή πρόσβασης, πρίν σβυστούν(προκαθορισμένο 90) ?
-how many minutes should an account or ip be blocked (default 30) ?	admin	el	Πόσα λεπτά πρέπει ένας λογαριασμός ή IP να μπλοκαρίζεται (προκαθορισμένο 30) ?
+how many minutes should an account or ip be blocked (default 1) ?	admin	el	Πόσα λεπτά πρέπει ένας λογαριασμός ή IP να μπλοκαρίζεται (προκαθορισμένο 30) ?
 how should email addresses for new users be constructed?	admin	el	Πως θέλετε οι διευθύνσεις Email για τους νεόυς χρήστες να κατασκευάζονται;
 icon	admin	el	Εικόνα
 idle	admin	el	αδρανής

@@ -54,8 +54,8 @@ admin queue and history	admin	cs	Fronta a historie administrátora
 administration	admin	cs	Administrace
 admins	admin	cs	Administrátoři
 advanced options	admin	cs	rozšířené volby
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	cs	Po kolika neúspěšných pokusech o přihlášení má být účet zablokován (výchozí 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	cs	Po kolika neúspěšných pokusech o přihlášení má být IP zablokována (výchozí 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	cs	Po kolika neúspěšných pokusech o přihlášení má být účet zablokován (výchozí 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	cs	Po kolika neúspěšných pokusech o přihlášení má být IP zablokována (výchozí 3)?
 aliases	admin	cs	Aliasy
 all applications	admin	cs	všechny aplikace
 all categories	admin	cs	Všechny kategorie
@@ -286,7 +286,7 @@ hour<br>(0-23)	admin	cs	Hodina<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	cs	Jaká by měla být maximální velikost náhledů k odkazovaným obrázkům (v pixelech)?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	cs	Kolik dní mají záznamy zůstat v přístupovém protokolu, než budou smazány (výchozí 90) ?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	cs	Kolik položek smí uživatelé bez práv administrátora exportovat (prázdné = bez omezení, ne = žádný export)
-how many minutes should an account or ip be blocked (default 30) ?	admin	cs	Kolik minut mají být účet nebo IP blokovány (výchozí 30) ?
+how many minutes should an account or ip be blocked (default 1) ?	admin	cs	Kolik minut mají být účet nebo IP blokovány (výchozí 30) ?
 how should email addresses for new users be constructed?	admin	cs	Jak mají být sestaveny e-mailové adresy pro nové uživatele?
 icon	admin	cs	Ikona
 idle	admin	cs	nečinný

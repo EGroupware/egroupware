@@ -38,8 +38,8 @@ admin name	admin	lv	Administratora vārds
 administration	admin	lv	Vadība
 admins	admin	lv	Administratori
 advanced options	admin	lv	uzlabotās iespējas
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	lv	Pēc cik neveiksmīgiem mēģinājumiem pieslēgties kontu vajadzētu nobloķēt (noklusējums 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	lv	Pēc cik neveiksmīgiem mēģinājumiem pieslēgties vajadzētu nobloķēt IP(noklusējums 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	lv	Pēc cik neveiksmīgiem mēģinājumiem pieslēgties kontu vajadzētu nobloķēt (noklusējums 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	lv	Pēc cik neveiksmīgiem mēģinājumiem pieslēgties vajadzētu nobloķēt IP(noklusējums 3)?
 all applications	admin	lv	visas aplikācijas
 all categories	admin	lv	visas kategorijas
 all records and account information will be lost!	admin	lv	Visi ieraksti un konta informācija tiks pazaudēta!!!!
@@ -213,7 +213,7 @@ home directory	admin	lv	Mājas direktorija
 host information	admin	lv	Host informācija
 hour<br>(0-23)	admin	lv	Stundas <br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	lv	Cik dienu vajadzētu saglabāt iesniegtos datus piekļuves loga, pirms tie tiek izdzēsti (noklusējums 90)?
-how many minutes should an account or ip be blocked (default 30) ?	admin	lv	Cik minūtes vajadzētu bloķēt kontu vai IP (noklusējums 30)?
+how many minutes should an account or ip be blocked (default 1) ?	admin	lv	Cik minūtes vajadzētu bloķēt kontu vai IP (noklusējums 30)?
 icon	admin	lv	Ikona
 idle	admin	lv	dīkstāve (idle)
 if no acl records for user or any group the user is a member of	admin	lv	Ja nav ACL ierakstu lietotājiem vai kādai grupai, lietotājs ir ...????

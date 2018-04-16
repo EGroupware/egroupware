@@ -58,8 +58,8 @@ admin queue and history	admin	fi	Admin Queue ja historia
 administration	admin	fi	Ylläpito
 admins	admin	fi	Ylläpitäjät
 advanced options	admin	fi	Lisäasetukset
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen tunnus lukitaan (oletus: 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen IP-osoite lukitaan (oletus: 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen tunnus lukitaan (oletus: 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen IP-osoite lukitaan (oletus: 3)?
 aliases	admin	fi	Aliakset
 all applications	admin	fi	Kaikki sovellukset
 all categories	admin	fi	Kaikki kategoriat
@@ -302,7 +302,7 @@ hour<br>(0-23)	admin	fi	Tunti<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	fi	Thumbnailin maksimikoko linkitetyille kuville pikseleinä?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fi	Kuinka monta vuorokautta tietoja säilytetään käyttölokissa (oletus: 90) ?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	fi	Kuinka monta tietuetta käyttäjien (joilla EI ole ylläpiöoikeuksia) sallitaan viedä (tyhjä = ei rajoitusta, ei = ei vientiä)
-how many minutes should an account or ip be blocked (default 30) ?	admin	fi	Kuinka moneksi minuutiksi tunnus tai IP-osoite lukitaan (oletus: 30) ?
+how many minutes should an account or ip be blocked (default 1) ?	admin	fi	Kuinka moneksi minuutiksi tunnus tai IP-osoite lukitaan (oletus: 30) ?
 how should email addresses for new users be constructed?	admin	fi	Kuinka uusien käyttäjien sähköpostitunnus luodaan?
 icon	admin	fi	Kuvake
 idle	admin	fi	Vapaa

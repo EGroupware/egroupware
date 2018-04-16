@@ -41,8 +41,8 @@ admin name	admin	ca	Nom de l'Administrador
 administration	admin	ca	Administració
 admins	admin	ca	Administradors
 advanced options	admin	ca	opcions avançades
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ca	Després de quants intents erronis de connexió ha de bloquejar-se un compte? (predeterminat, 3)
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ca	Després de quants intents erronis de connexió ha de bloquejar-se una IP? (predeterminat, 3)
+after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	ca	Després de quants intents erronis de connexió ha de bloquejar-se un compte? (predeterminat, 3)
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	ca	Després de quants intents erronis de connexió ha de bloquejar-se una IP? (predeterminat, 3)
 aliases	admin	ca	Àlies
 all applications	admin	ca	Totes les aplicacions
 all categories	admin	ca	Totes les categories
@@ -237,7 +237,7 @@ home directory	admin	ca	Directori principal
 host information	admin	ca	Informació del servidor
 hour<br>(0-23)	admin	ca	Hora<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ca	Quants dies han d'estar les entrades al registre d'accés, abans d'esborrar-les? (per defecte, 90)
-how many minutes should an account or ip be blocked (default 30) ?	admin	ca	Quants minuts ha d'estar bloquejat un compte o una adreça IP? (per defecte, 30)
+how many minutes should an account or ip be blocked (default 1) ?	admin	ca	Quants minuts ha d'estar bloquejat un compte o una adreça IP? (per defecte, 30)
 how should email addresses for new users be constructed?	admin	ca	Com han de ser construides les adreces e-mail per a nous usuaris?
 icon	admin	ca	Icona
 idle	admin	ca	inactiu

@@ -90,7 +90,7 @@ administration	admin	en	Administration
 admins	admin	en	Admins
 advanced options	admin	en	Advanced options
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	en	After how many unsuccessful attempts to login an account should be blocked. Default = 3
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	en	After how many unsuccessful attempts to login an IP should be blocked. Default = 3
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	en	After how many unsuccessful attempts to login an IP should be blocked. Default = 15
 aliases	admin	en	Aliases
 all applications	admin	en	All applications
 all categories	admin	en	All categories
@@ -435,7 +435,7 @@ hour<br>(0-23)	admin	en	Hour<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	en	Maximum pixel size of thumbnails for linked images.
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	en	How many days should entries remain in the access log before they get deleted. Default = 90
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	en	How many entries should non-admins be able to export. Empty = no limit, no = no export
-how many minutes should an account or ip be blocked (default 30) ?	admin	en	How many minutes should an account or IP be blocked. Default = 30
+how many minutes should an account or ip be blocked (default 1) ?	admin	en	How many minutes should an account or IP be blocked. Default = 30
 how should email addresses for new users be constructed?	admin	en	Select default email address format for new user accounts
 how username get constructed	admin	en	How username get constructed
 icon	admin	en	Icon
@@ -829,7 +829,7 @@ upload your background image or enter the url	admin	en	Upload your background im
 upload your certificate .p12/.pfx file	admin	en	Upload your certificate .p12/.pfx file
 Upload your header logo or enter the URL (leave it empty if it is the same as login logo)	admin	en	Upload your header logo or enter the URL (leave it empty if it is the same as login logo)
 upload your favicon or enter the url	admin	en	Upload your favicon or enter the URL
-upload your logo or enter the url	admin	en	Upload your logo or enter the URL
+upload your logo or enter the url	admin	en	Upload your logo or enter the URL (leave it empty if it is the same as login logo)
 uppercase, lowercase, number, special char	admin	en	Uppercase, lowercase, number, special char
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the EGroupware installation, e.g. http://domain.com/egroupware
 usage	admin	en	Usage

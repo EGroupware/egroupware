@@ -131,7 +131,7 @@ group name	admin	et	Grupi Nimi
 hide php information	admin	et	peida php informatsioon
 home directory	admin	et	Kodu kataloog
 host information	admin	et	Hosti informatsioon
-how many minutes should an account or ip be blocked (default 30) ?	admin	et	Mitu minutit konto või IP blokeeritakse (vaikimisi 30) ?
+how many minutes should an account or ip be blocked (default 1) ?	admin	et	Mitu minutit konto või IP blokeeritakse (vaikimisi 30) ?
 how should email addresses for new users be constructed?	admin	et	Kuidas EMail aadress uute kasutajatejaoks konstrueeritakse?
 icon	admin	et	Ikoon
 installed applications	common	et	Installeeritud rakendused
