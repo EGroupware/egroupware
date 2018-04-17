@@ -1164,8 +1164,10 @@ class Storage
 			}
 		}
 
-		// add groups for all backends, if accounts addressbook is not hidden
-		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1')
+		// add groups for all backends, if accounts addressbook is not hidden &
+		// preference has not turned them off
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1' &&
+				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] == '0')
 		{
 			foreach($GLOBALS['egw']->accounts->search(array(
 				'type' => 'groups'
