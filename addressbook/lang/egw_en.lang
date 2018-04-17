@@ -275,6 +275,7 @@ group %1	addressbook	en	Group %1
 h	addressbook	en	h
 hide accounts from addressbook	addressbook	en	Hide user accounts
 hide all accounts	addressbook	en	Hide all accounts
+hide user groups as distribution lists	addressbook	en	Hide user groups as distribution lists
 hides accounts completly from the adressbook.	addressbook	en	Hide user accounts completely from the address book.
 history logging	admin	en	History logging
 home address	addressbook	en	Home address
@@ -507,6 +508,7 @@ use country list	addressbook	en	Use country list
 use setup for a full account-migration	admin	en	Use setup for a full account migration
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	en	Use this tag for address labels. Place the content you want to repeat between two tags.
 used for links and for the own sorting of the list	addressbook	en	Used for links and for the own sorting of the list
+user groups are automatically shown as distribution lists.	addressbook	en	User groups are automatically shown as distribution lists.
 user preference	addressbook	en	User preference
 vcard	common	en	vCard
 vcards require a first name entry.	addressbook	en	vCards require a first name entry.

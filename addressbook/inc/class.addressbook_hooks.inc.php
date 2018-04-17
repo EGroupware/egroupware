@@ -150,6 +150,15 @@ class addressbook_hooks
 			'admin'  => false,
 			'default'=> '0'
 		);
+		$settings['hide_groups_as_lists'] = array(
+			'type'   => 'check',
+			'label'  => 'Hide user groups as distribution lists',
+			'name'   => 'hide_groups_as_lists',
+			'help'   => 'User groups are automatically shown as distribution lists.',
+			'xmlrpc' => False,
+			'admin'  => false,
+			'default'=> '0'
+		);
 		$contacts = new Api\Contacts();
 		$fileas_options = $contacts->fileas_options();
 		foreach(Api\Contacts\Storage::$duplicate_fields as $key => $label)
