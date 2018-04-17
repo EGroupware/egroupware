@@ -585,28 +585,35 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				var end_key = end.getFullYear() +'-'+end.getMonth();
 				var year = start.getFullYear();
 				var month = start.getMonth();
-				while(key <= end_key)
+				key = sprintf('%04d-%d',year,month);
+				
+				do
 				{
+					var end_label_index = label_index;
+
+					for(var i = end_label_index; i < labels.length; i++)
+					{
+						if(labels[i].id == key)
+						{
+							end_label_index = i;
+							if(typeof rows[end_label_index] === 'undefined')
+							{
+								rows[end_label_index] = [];
+							}
+							break;
+						}
+					}
+					if(end_label_index != label_index)
+					{
+						rows[label_index].push(event);
+					}
 					if (++month > 11)
 					{
 						++year;
 						month = 0;
 					}
 					key = sprintf('%04d-%d',year,month);
-					for(var i = 0; i < labels.length; i++)
-					{
-						if(labels[i].id == key)
-						{
-							label_index = i;
-							if(typeof rows[label_index] === 'undefined')
-							{
-								rows[label_index] = [];
-							}
-							break;
-						}
-					}
-					rows[label_index].push(event);
-				}
+				} while(key <= end_key)
 			},
 			// Draw a single row, but split up the dates
 			draw_row: function(sort_key, label, events)
