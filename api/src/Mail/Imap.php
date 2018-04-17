@@ -56,7 +56,7 @@ use Horde_Imap_Client_Mailbox_List;
  * @property-read array $params parameters passed to constructor (all above as array)
  * @property-read boolean|int|string $isAdminConnection admin connection if true or account_id or imap username
  */
-class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
+class Imap extends Horde_Imap_Client_Socket implements Imap\Iface, \ArrayAccess
 {
 	/**
 	 * Default parameters for Horde_Imap_Client constructor
@@ -315,6 +315,68 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 				// calling Horde_Imap_Client's __get() method available since 2.24.1
 				return is_callable('parent::__get') ? parent::__get($name) : null;
 		}
+	}
+
+	/**
+	 * We need __isset to be able to use eg. empty
+	 *
+	 * @param type $name
+	 * @return type
+	 */
+	public function __isset($name)
+	{
+		$val = $this->__get($name);
+
+		return isset($val);
+	}
+
+	/**
+	 * ArrayAccess to Account
+	 *
+	 * @param string $offset
+	 * @return mixed
+	 */
+	public function offsetGet($offset)
+	{
+		return $this->__get($offset);
+	}
+
+	/**
+	 * ArrayAccess to Account
+	 *
+	 * @param string $offset
+	 * @return boolean
+	 */
+	public function offsetExists($offset)
+	{
+		return $this->__isset($offset);
+	}
+
+	/**
+	 * ArrayAccess requires it but we dont want to give public write access
+	 *
+	 * Protected access has to use protected attributes!
+	 *
+	 * @param string $offset
+	 * @param mixed $value
+	 * @throws Api\Exception\WrongParameter
+	 */
+	public function offsetSet($offset, $value)
+	{
+		throw new Api\Exception\WrongParameter(__METHOD__."($offset, $value) No write access through ArrayAccess interface of Imap!");
+	}
+
+	/**
+	 * ArrayAccess requires it but we dont want to give public write access
+	 *
+	 * Protected access has to use protected attributes!
+	 *
+	 * @param string $offset
+	 * @throws Api\Exception\WrongParameter
+	 */
+	public function offsetUnset($offset)
+	{
+		throw new Api\Exception\WrongParameter(__METHOD__."($offset) No write access through ArrayAccess interface of Imap!");
 	}
 
 	/**
