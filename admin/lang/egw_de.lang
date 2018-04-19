@@ -135,7 +135,7 @@ asynchronous timed services	admin	de	Asynchroner zeitgesteuerter Dienst
 asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Dienst ist noch nicht installiert oder ein anderer Fehler ist aufgetreten (%1) !!!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Es wird versucht, den richtigen MIME-typ für FTP zu verwenden, statt dem Vorgabewert "application/octet-stream".
 attribute accountstatus explained	admin	de	Dies betrifft das Attribut <b>-accountStatus-</b> aus dem QMAIL Schema
-attribute mail explained	admin	de	Dies betrifft das Attribut <b><i>-mail-</i></b> aus dem CORE Schema. Dieses Attribut darf nicht leer sein und wird gleichzeitig als E-Mail-Adresse innerhalb eGW verwendet.
+attribute mail explained	admin	de	Dies betrifft das Attribut <b><i>-mail-</i></b> aus dem CORE Schema. Dieses Attribut darf nicht leer sein und wird gleichzeitig als E-Mail-Adresse innerhalb EGw verwendet.
 attribute mailalternateaddress explained	admin	de	Dies betrifft das Attribut <b>-mailAlternateAddress-</b> aus dem QMAIL Schema. Das experimentelle Schema verwendet dies auch als Alias für mailLocalAddress.
 attribute mailforwardingaddress explained	admin	de	Dies betrifft das Attribut <b>-mailForwardingAddress-</b> aus dem QMAIL Schema. Darf nicht leer sein. Der Begriff mailRoutingAddress wurde hierfür früher als Alias verwendet.
 attributes	admin	de	Einstellungen
@@ -195,7 +195,7 @@ connection dropped by imap server.	admin	de	Verbindung von IMAP-Server beendet.
 connection is not secure! everyone can read eg. your credentials.	admin	de	Die Verbindung ist NICHT sicher! Jeder kann zB. Ihr Passwort lesen.
 continue	admin	de	Weiter
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain (Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt zB. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden)
-cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere eGW Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere EGw-Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)
 could not append message:	admin	de	Diese Mail lässt sich nicht anzeigen
 could not complete request. reason given: %s	admin	de	Konnte Anfrage nicht beenden. Grund: %s
 could not open secure connection to the imap server. %s : %s.	admin	de	Konnte keine sichere Verbindung zum IMAP Server aufbauen. %s: %s.
@@ -272,7 +272,7 @@ destination account #%1 does exist and is not renamed itself! can not merge acco
 determines the order the fields are displayed	admin	de	bestimmt die Reihenfolge der angezeigten Felder
 disable	admin	de	abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
-disable all	admin	de	Alle Video-Anletungen deaktivieren
+disable all	admin	de	Alle Video-Anleitungen deaktivieren
 disable minifying of javascript and css files	admin	de	Komprimierung von Javascript und CSS Dateien deaktivieren
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
@@ -444,7 +444,7 @@ identity saved.	admin	de	Identität gespeichert.
 idle	admin	de	im Leerlauf
 if different from email address	admin	de	falls unterschiedlich zu E-Mail-Adresse
 if no acl records for user or any group the user is a member of	admin	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört, gibt
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	de	Wenn Sie LDAP verwenden, möchten Sie Benutzerverzeichnisse und Kommandointerpreter verwalten ?
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	de	Wenn Sie LDAP verwenden, möchten Sie Benutzerverzeichnisse und Kommandointerpreter verwalten?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	de	Wenn Sie SSL oder TLS benutzen, müssen Sie die openssl PHP Erweiterung geladen haben.
 if you ignore that error as admin, you should check "%1"!	admin	de	Falls Sie den Fehler als Administrator ignorieren, sollten Sie "%1" abhacken!
 if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	de	Wenn Sie als SIEVE Server Port 5190 eintragen, wird für die Kommunikation mit dem SIEVE-Server eine SSL-Verbindung verwendet (der Server muss das natürlich unterstützen)
@@ -483,7 +483,6 @@ kill	admin	de	Beenden
 kill session	admin	de	Sitzung beenden
 kill these sessions	admin	de	Sitzungen beenden
 kill this session	admin	de	Sitzung beenden
-language	admin	de	Sprache
 languages	admin	de	Sprachen
 last %1 logins	admin	de	Letzte %1 Logins
 last %1 logins for %2	admin	de	Letzte %1 Logins für %2
@@ -667,7 +666,7 @@ remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gr
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	de	Sind Sie sicher? Den Zugriff für Gruppen zu nehmen kann zu Problemen mit den Daten dieser Kategorie führen. Benutzer dieser Gruppen haben möglicherweise keinen Zugriff mehr:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	de	Das Umbenennen des Benutzers 'anonymous' verhindert die Dateifreigabe und Collabora Online Office!
 requested	admin	de	angefordert
-required pear class mail/mimedecode.php not found.	admin	de	Die benötigte Classe PEAR  (Mail/mimeDecode.php) wurde nicht gefunden.
+required pear class mail/mimedecode.php not found.	admin	de	Die benötigte PEAR-Klasse Mail/mimeDecode.php wurde nicht gefunden.
 reset filter	admin	de	Filter zurücksetzen
 return to admin mainscreen	admin	de	zum Administrationsmenü zurückkehren
 return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
@@ -715,7 +714,7 @@ sessions last 30 days	admin	de	Sitzungen in letzten 30 Tagen
 set a random password	admin	de	Setze ein zufälliges Passwort
 set preference values.	admin	de	Einstellungswert wurde geändert
 should exceptions contain a trace (including function arguments)	admin	de	Sollen Ausnahmefehler eine Rückverfolgung enthalten (einschl. Funktionsargumente)
-should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl beinhalten (nützlich für Demosites) ?
+should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl beinhalten?
 show 'powered by' logo on	admin	de	Zeige "powered by" Logo
 show access log	admin	de	Zugangsprotokoll anzeigen
 show current action	admin	de	aktuelle Aktion anzeigen
@@ -828,8 +827,8 @@ update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse
 updated	admin	de	aktualisiert
 upload your background image or enter the url	admin	de	Laden Sei ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
 upload your certificate .p12/.pfx file	admin	de	Zertifikat hochladen (.p12/.pfx-Datei)
-Upload your header logo or enter the URL (leave it empty if it is the same as login logo)	admin	de	Laden Sie Ihr Header-Logo hoch oder geben Sie die URL ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein
+upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	de	Laden Sie Ihr Header-Logo hoch oder geben Sie die URL ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
 upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Sie eine URL dafür ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
 uppercase, lowercase, number, special char	admin	de	Großbuchstaben, kleine Buchstaben, Zahlen, Sonderzeichen
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	de	URL der EGroupware Installation, z.B. http://domain.com/egroupware

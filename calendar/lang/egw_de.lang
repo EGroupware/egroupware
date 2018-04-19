@@ -31,7 +31,7 @@ add new alarm	calendar	de	Neuen Alarm erstellen
 add new participants or resource	calendar	de	Neue(n) Teilnehmer oder Ressource auswählen
 add timesheet entry	calendar	de	Stundenzettel hinzufügen
 added	calendar	de	Neuer Termin
-added by synchronisation	calendar	de	Durch Synchronisation hinzugefügt
+added by synchronization	calendar	de	Durch Synchronisation hinzugefügt
 after	calendar	de	nach
 after %1	calendar	de	Nach dem %1
 after current date	calendar	de	Nach dem aktuellen Datum
@@ -154,13 +154,13 @@ delete this series of recurring events	calendar	de	Diese Serie von wiederholende
 deleted	calendar	de	Gelöscht
 deny resources reservation for private events	calendar	de	Verbiete die Reservierung von Ressourcen für private Termine
 directory with documents to insert entries	calendar	de	Verzeichnis mit Dokumenten zum Einfügen von Kalendereinträgen
-uninvited	calendar	de	Ausgeladen
 display holidays or birthdays as events in dayview	calendar	de	Zeige Feier- oder Geburtstage in der Tagesansicht als Termine
 display in header	calendar	de	Im Titel anzeigen
 display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	de	Zeigt diese Ansicht auf der Startseite (Seite die Sie bekommen wenn Sie EGroupware starten oder das Home Icon anklicken)?
 distribution list	calendar	de	Verteilerliste
+do not import conflicting events	calendar	de	Keine widersprüchlichen Ereignisse importieren
 do not include events of group members	calendar	de	Zeige nicht die Termine der Gruppenmitglieder
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	de	Wollen Sie wirklich den Beginn dieses Serientermins ändern? Wenn Sie das tun, so wird die bestehende Serie %1 beendet und für die Zukunft ein neuer Wiederholungstermin mit Ihren Änderungen erzeugt.
 do you want a weekview with or without weekend?	calendar	de	Möchten Sie eine Wochenansicht mit oder ohne Wochenende?
@@ -203,7 +203,6 @@ error: you can't shift a series from the past!	calendar	de	Eine abgelaufene Seri
 event	common	de	Termin
 event deleted	calendar	de	Termin gelöscht
 event details follow	calendar	de	Details zum Termin folgen
-event owner	calendar	de	Termin-Eigentümer
 event saved	calendar	de	Termin gespeichert
 event will occupy the whole day	calendar	de	Termin nimmt den ganzen Tag ein
 events	common	de	Termine
@@ -272,6 +271,8 @@ holidays only	calendar	de	Nur Feiertage
 hours	calendar	de	Stunden
 how far to search (from startdate)	calendar	de	wie weit suchen (vom Startdatum)
 how many appointments should non-admins be able to export	admin	de	Wie viele Termine sollen Nicht-Administratoren exportieren können?
+how many days to be removed in the future (default 365)	calendar	de	Wie viele Tage in der Zukunft entfernt werden sollen (Standard 365)
+how many days to be removed in the past (default 100)	calendar	de	Wieviele Tage in der Vergangenheit entfernt werden sollen (Standard 100)
 how many days to sync in the future (default %1)	calendar	de	Wieviele Tage in die Zukunft sollen gesynct werden (Vorgabe %1)
 how many days to sync in the past (default %1)	calendar	de	Wieviele Tage in die Vergangenheit sollen gesynct werden (Vorgabe %1)
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein (Rest über die Scrollbalken)?
@@ -373,8 +374,8 @@ not rejected	calendar	de	Nicht abgesagt
 nothing to update, version is already %1.	calendar	de	Nichts aktualisiert, Version ist bereits %1
 notification messages for added events	calendar	de	Benachrichtigungstext für neue Termine
 notification messages for canceled events	calendar	de	Benachrichtigungstext für stornierte Termine
-notification messages for uninvited participants	calendar	de	Benachrichtigungstext für ausgeladene Teilnehmer
 notification messages for modified events	calendar	de	Benachrichtigungstext für geänderte Termine
+notification messages for uninvited participants	calendar	de	Benachrichtigungstext für ausgeladene Teilnehmer
 notification messages for your alarms	calendar	de	Benachrichtigungstext für Ihre Alarme
 notification messages for your responses	calendar	de	Benachrichtigungstext für Ihre Antworten
 notification settings	calendar	de	Benachrichtigungseinstellungen
@@ -551,8 +552,8 @@ this mail contains a meeting request	calendar	de	Diese Nachricht enthält eine T
 this mail contains a reply to a meeting request	calendar	de	Diese Nachricht enthält eine Antwort auf eine Terminanfrage
 this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versendet
 this message is sent for modified or moved events.	calendar	de	Diese Benachrichtigung wird für geänderte Termine versendet
-this message is sent to uninvited participants.	calendar	de	Diese Nachricht wird ausgeladenen Teilnehmern gesendet
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	Diese Nachricht wird an alle Teilnehmer der Termine versendet, die Sie anlegen. (Teilnehmer müssen die Benachrichtigung per E-Mail aktiviert haben!) <br>Sie können verschiedene Variablen verwenden, die die notwendigen Informationen der Termin-Mitteilung beinhalten. Die erste Zeile ist der Betreff der E-Mail
+this message is sent to uninvited participants.	calendar	de	Diese Nachricht wird ausgeladenen Teilnehmern gesendet
 this message is sent when you accept, tentative accept or reject an event.	calendar	de	Diese Nachricht wird gesendet wenn Sie einen Termin zusagen, vorläufig zusagen oder absagen
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	de	Diese Alarm-Meldung wird Ihnen gesendet, wenn Sie einen Alarm für einen Termin aktivieren. Nehmen Sie alle Informationen darin auf, die Sie zum gewünschten Alarm-Zeitpunkt benötigen
 this module displays a planner calendar.	calendar	de	Dieses Modul zeigt einen Planerkalender
@@ -583,6 +584,7 @@ tue	calendar	de	Di
 two weeks	calendar	de	zwei Wochen
 type of planner	calendar	de	Planer Typ
 unable to save	calendar	de	Speichern nicht möglich
+uninvited	calendar	de	Ausgeladen
 update timezones	common	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
@@ -597,6 +599,7 @@ user or group	calendar	de	Benutzer oder Gruppe
 user selectable css file for the calendar setup	calendar	de	Benutzer können ausgewählte CSS Dateien aus dem Kalender Setup benutzen
 users + groups: inviting both always requires an invite grant	admin	de	Benutzer + Gruppen: Einladungen beider brauchen eine Freigabe
 using already existing event on server.	calendar	de	Benutze bereits existierenden Termin auf dem Server
+utilities	calendar	de	Zubehör
 view exception	calendar	de	Ausnahme anzeigen
 view series	calendar	de	Terminserie anzeigen
 view settings	calendar	de	Einträge anzeigen

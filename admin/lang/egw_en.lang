@@ -135,7 +135,7 @@ asynchronous timed services	admin	en	Asynchronous timed services
 asyncservices not yet installed or other error (%1) !!!	admin	en	Async services not yet installed or other error (%1) !
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	en	Attempt to use correct mime type for FTP instead of default 'application/octet-stream'.
 attribute accountstatus explained	admin	en	This handles the attribute <b><i>-accountStatus-</i></b> from the QMAIL schema.
-attribute mail explained	admin	en	This handles the attribute <b><i>-mail-</i></b> from the QMAIL schema and should never be empty. It is also the eGW internal email field.
+attribute mail explained	admin	en	This handles the attribute <b><i>-mail-</i></b> from the QMAIL schema and should never be empty. It is also the EGw internal email field.
 attribute mailalternateaddress explained	admin	en	This handles the attribute <b><i>-mailAlternateAddress-</i></b> from the QMAIL schema and can be handled as virtual maps or aliases.
 attribute mailforwardingaddress explained	admin	en	This handles the attribute <b><i>-mailForwardingAddress-</i></b> from QMAIL Schema and must not be empty if assigned.
 attributes	admin	en	Attributes
@@ -827,8 +827,8 @@ update current email address:	admin	en	Update current email address:
 updated	admin	en	Updated
 upload your background image or enter the url	admin	en	Upload your background image or enter the URL
 upload your certificate .p12/.pfx file	admin	en	Upload your certificate .p12/.pfx file
-Upload your header logo or enter the URL (leave it empty if it is the same as login logo)	admin	en	Upload your header logo or enter the URL (leave it empty if it is the same as login logo)
 upload your favicon or enter the url	admin	en	Upload your favicon or enter the URL
+upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	en	Upload your header logo or enter the URL (leave it empty if it is the same as login logo)
 upload your logo or enter the url	admin	en	Upload your logo or enter the URL (leave it empty if it is the same as login logo)
 uppercase, lowercase, number, special char	admin	en	Uppercase, lowercase, number, special char
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the EGroupware installation, e.g. http://domain.com/egroupware

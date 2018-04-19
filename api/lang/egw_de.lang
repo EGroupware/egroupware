@@ -375,6 +375,7 @@ delete this column	common	de	diese Spalte löschen
 delete this entry	common	de	Diesen Eintrag löschen
 delete this etemplate	common	de	dieses eTemplate löschen
 delete this file	common	de	Diese Datei löschen
+delete this photo?	api	de	Dieses Foto löschen?
 delete this row	common	de	diese Zeile löschen
 delete whole column (can not be undone!!!)	common	de	ganze Zeile löschen (kann NICHT rückgängig gemacht werden)
 deletes the above spez. etemplate from the database, can not be undone	common	de	löscht das oben spezifiziert eTemplate aus der Datenbank, kann NICHT rückgängig gemacht werden
@@ -860,7 +861,6 @@ new egroupware release %1 available	common	de	Neues EGroupware Release %1 verfü
 new entry added sucessfully	common	de	Neuer Eintrag wurde erfolgreich hinzugefügt
 new favorite	common	de	Erstellen Sie hier einen neuen Favorit
 new main category	common	de	neue Hauptkategorie
-new password	api	de	Neues Passwort
 new search	common	de	Neue Suche
 new table created	common	de	Neue Tabelle erzeugt
 new value	common	de	Neuer Wert
@@ -1139,6 +1139,7 @@ select an app to search in	common	de	Anwendung zum Durchsuchen auswählen
 select an application	common	de	Anwendung auswählen
 select an application, (*) = uninstalled	common	de	Anwendung auswählen, (*) = nicht installiert
 select an entry to link with	common	de	Eintrag zum Verknüpfen auswählen
+select an opened dialog	api	de	geöffneten Dialog auswählen
 select an table of the application	common	de	Tabelle der Anwendung auswählen
 select application	common	de	Anwendung auswählen
 select application to search	common	de	Anwendung zum Suchen auswählen
