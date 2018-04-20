@@ -763,6 +763,7 @@ class Mailer extends Horde_Mime_Mail
 	 */
 	function getHeader($header)
 	{
+		if(strtolower($header) === 'bcc') return $this->bcc->addresses;
 		return $this->_headers ? $this->_headers->getValue($header) : null;
 	}
 
