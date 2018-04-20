@@ -7011,10 +7011,14 @@ class Mail
 						// Parse destinations for placeholders
 						foreach(Mailer::$type2header as $type => $h)
 						{
-							$merged = $bo_merge->merge_string($mailObject->getHeader(Mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset);
+							$header = $mailObject->getHeader(Mailer::$type2header[$type]);
+							if(is_array($header)) $header = implode(', ',$header);
+							$mailObject->clearAddresses($type);
+							$merged = $bo_merge->merge_string($header,$val,$e,'text/plain',array(),self::$displayCharset);
 							//error_log($type . ': ' . $mailObject->getHeader(Mailer::$type2header[$type]) . ' -> ' .$merged);
 							$mailObject->addAddress(trim($merged,'"'),'',$type);
 						}
+						$mailObject->forceBccHeader();
 
 						// No addresses from placeholders?  Treat it as just a contact ID
 						if (count($mailObject->getAddresses('to',true)) == 0 &&
