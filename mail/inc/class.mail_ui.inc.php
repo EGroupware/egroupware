@@ -956,7 +956,7 @@ class mail_ui
 			{
 				$data = Api\Mail\Account::read($this->mail_bo->profileID)->smtpServer()->getUserData($GLOBALS['egw_info']['user']['account_id']);
 				if (($m = stylite_mail_spamtitan::setActionItems('sync_aliases',
-					array(array_merge((array)$data['mailLocalAddress'], $data['mailAlternateAddress'])), array(
+					array(array_merge((array)$data['mailLocalAddress'], (array)$data['mailAlternateAddress'])), array(
 					'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
 					'user'		=> $this->mail_bo->icServer->acc_imap_username,
 					'api_url'	=> $this->mail_bo->icServer->acc_spam_api
