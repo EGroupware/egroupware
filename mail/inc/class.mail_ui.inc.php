@@ -949,6 +949,23 @@ class mail_ui
 				'user'		=> $this->mail_bo->icServer->acc_imap_username,
 				'api_url'	=> $this->mail_bo->icServer->acc_spam_api
 			));
+
+			// sync aliases to SpamTitan when the first spam action in a session is used
+			if (Api\Mail\Account::read($this->mail_bo->profileID)->acc_smtp_type !== 'EGroupware\\Api\\Mail\\Smtp' &&
+				!Api\Cache::getSession('SpamTitian', 'AliasesSynced-'.$this->mail_bo->icServer->acc_id.'-'.$this->mail_bo->icServer->acc_imap_username))
+			{
+				$data = Api\Mail\Account::read($this->mail_bo->profileID)->smtpServer()->getUserData($GLOBALS['egw_info']['user']['account_id']);
+				if (($m = stylite_mail_spamtitan::setActionItems('sync_aliases',
+					array_merge((array)$data['mailLocalAddress'], $data['mailAlternateAdress']), array(
+					'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
+					'user'		=> $this->mail_bo->icServer->acc_imap_username,
+					'api_url'	=> $this->mail_bo->icServer->acc_spam_api
+				))))
+				{
+					$msg[] = $m;
+				}
+				Api\Cache::setSession('SpamTitian', 'AliasesSynced-'.$this->mail_bo->icServer->acc_id.'-'.$this->mail_bo->icServer->acc_imap_username, true);
+			}
 		}
 
 		if ($refresh)
