@@ -50,6 +50,7 @@ all exceptions are converted into single events.	calendar	de	Alle Ausnahmen wurd
 all future	calendar	de	Alle zukünftigen
 all incl. rejected	calendar	de	Alle einschl. abgesagte
 all participants	calendar	de	Alle Teilnehmer
+allow booking requests from any user when creating events?	calendar	de	Erlaube Buchungsanfragen von beliebigen Benutzern bei der Erstellung von Terminen?
 allow users to prevent change notifications ('do not notify')	calendar	de	Erlaube Benutzern Benachrichtigungen über Änderungen zu unterdrücken ('Nicht benachrichtigen')
 allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeiten
 always	calendar	de	Immer
@@ -368,6 +369,7 @@ no preview for ical	calendar	de	Keine Vorschau für iCal
 no recurrence	calendar	de	Keine Wiederholung
 no response	calendar	de	Keine Antwort
 no rights to export more than %1 entries!	calendar	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
+no, users will need to contact users with direct booking permission	calendar	de	Nein, Benutzer müssen sich mit Benutzern mit direkter Buchungsberechtigung in Verbindung setzen.
 non blocking	calendar	de	nicht blockierend
 not	calendar	de	nicht
 not rejected	calendar	de	Nicht abgesagt
