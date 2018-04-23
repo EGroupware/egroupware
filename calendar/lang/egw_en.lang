@@ -50,6 +50,7 @@ all exceptions are converted into single events.	calendar	en	All exceptions are 
 all future	calendar	en	All future
 all incl. rejected	calendar	en	All incl. rejected
 all participants	calendar	en	All participants
+allow booking requests from any user when creating events?	calendar	en	Allow booking requests from any user when creating events?
 allow users to prevent change notifications ('do not notify')	calendar	en	Allow users to prevent change notifications 'Do not notify'
 allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
@@ -369,6 +370,7 @@ no preview for ical	calendar	en	No preview for iCal
 no recurrence	calendar	en	No recurrence
 no response	calendar	en	No response
 no rights to export more than %1 entries!	calendar	en	No rights to export more than %1 entries!
+no, users will need to contact users with direct booking permission	calendar	en	No, users will need to contact users with direct booking permission
 non blocking	calendar	en	Non blocking
 not	calendar	en	Not
 not rejected	calendar	en	Not rejected
