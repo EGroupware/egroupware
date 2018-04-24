@@ -659,7 +659,7 @@ app.classes.filemanager = AppJS.extend(
 			window.setTimeout(jQuery.proxy(function() {
 				var evt = document.createEvent('MouseEvent');
 				evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
-				a[0].dispatchEvent(evt);
+				this[0].dispatchEvent(evt);
 				this.remove();
 			}, a), 100*i);
 		}
