@@ -231,6 +231,28 @@ class admin_cmd_change_account_id extends admin_cmd
 		}
 		$update_sql .= 'END';
 
+		// check if we have a timestamp column with default current_timestamp
+		// in that case we need to set the timestamp to it's current value,
+		// to not update it to the current time and thereby loosing its value
+		$extra_set = '';
+		$extra_set_array = array();
+		if (($table_def = $db->get_table_definitions(true, $table)))
+		{
+			foreach($table_def['fd'] as $col => $data)
+			{
+				if ($data['type'] === 'timestamp' && $data['default'] === 'current_timestamp')
+				{
+					$extra_set .= ($extra_set ? ',' : '').$col.'='.$col;
+				}
+			}
+			if (!empty($extra_set))
+			{
+				$extra_set_array[] = $extra_set;
+				$extra_set .= ',';
+			}
+		}
+
+
 		switch($type)
 		{
 			case 'commasep':
@@ -256,7 +278,8 @@ class admin_cmd_change_account_id extends admin_cmd
 				$changed = 0;
 				foreach($change as $from => $to)
 				{
-					$db->update($table,array($column=>$to),$where+array($column=>$from),__LINE__,__FILE__);
+					$db->update($table, array($column=>$to)+$extra_set_array,
+						$where+array($column=>$from), __LINE__, __FILE__);
 					$changed += $db->affected_rows();
 				}
 				break;
@@ -268,7 +291,8 @@ class admin_cmd_change_account_id extends admin_cmd
 				{
 					$where[$column][] = abs($from);
 				}
-				$db->update($table,$column.'= CASE '.$column.' '.preg_replace('/-([0-9]+)/','\1',$update_sql),$where,__LINE__,__FILE__);
+				$db->update($table, $extra_set.$column.'= CASE '.$column.' '.preg_replace('/-([0-9]+)/', '\1', $update_sql),
+					$where, __LINE__, __FILE__);
 				$changed = $db->affected_rows();
 				break;
 
@@ -283,14 +307,16 @@ class admin_cmd_change_account_id extends admin_cmd
 					$where[$column][] = $from;
 					$update_sql .= 'WHEN '.$db->quote($from,$db->column_definitions[$column]['type']).' THEN '.$db->quote($to,$db->column_definitions[$column]['type']).' ';
 				}
-				$db->update($table,$column.'= CASE '.$column.' '.$update_sql.'END',$where,__LINE__,__FILE__);
+				$db->update($table, $extra_set.$column.'= CASE '.$column.' '.$update_sql.'END',
+					$where, __LINE__, __FILE__);
 				$changed = $db->affected_rows();
 				break;
 
 			default:
 				if (!$where) $where = array();
 				$where[$column] = array_keys($ids2change);
-				$db->update($table,$column.'= CASE '.$column.' '.$update_sql,$where,__LINE__,__FILE__);
+				$db->update($table, $extra_set.$column.'= CASE '.$column.' '.$update_sql,
+					$where, __LINE__, __FILE__);
 				$changed = $db->affected_rows();
 				break;
 		}
