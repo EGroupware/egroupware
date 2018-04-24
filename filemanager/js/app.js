@@ -656,10 +656,12 @@ app.classes.filemanager = AppJS.extend(
 				.prop('download', data ? data.data.name : "")
 				.appendTo(this.et2.getDOMNode());
 
-			var evt = document.createEvent('MouseEvent');
-			evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
-			a[0].dispatchEvent(evt);
-			a.remove();
+			window.setTimeout(jQuery.proxy(function() {
+				var evt = document.createEvent('MouseEvent');
+				evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+				a[0].dispatchEvent(evt);
+				this.remove();
+			}, a), 100*i);
 		}
 		return false;
 	},
