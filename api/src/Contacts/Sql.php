@@ -552,17 +552,12 @@ class Sql extends Api\Storage
 		}
 		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
 		if ((is_array($owner) ? in_array(0, $owner) : !$owner) && substr($this->account_repository,0,3) == 'sql' &&
-			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter) &&
-			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== 'none')
+			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter))
 		{
 			$join .= self::ACCOUNT_ACTIVE_JOIN;
 			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
 			{
 				$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
-			}
-			else
-			{
-				$filter[] = 'egw_accounts.account_id IS NULL';
 			}
 		}
 		if ($join || ($criteria && is_string($criteria)) || ($criteria && is_array($criteria) && $order_by))	// search also adds a join for custom fields!
