@@ -109,10 +109,6 @@ class calendar_datasource extends datasource
 		// if we have multiple participants we have to multiply the time by the number of participants to get the total time
 		$ds['pe_planned_time'] *= count($ds['pe_resources']);
 
-		if($data['deleted'])
-		{
-			$ds['pe_status'] = 'deleted';
-		}
 /*
 		// ToDO: this does not change automatically after the event is over,
 		// maybe we need a flag for that in egw_pm_elements

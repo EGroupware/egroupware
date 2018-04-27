@@ -54,20 +54,8 @@ class timesheet_datasource extends datasource
 		{
 			$data =& $data_id;
 		}
-		$status = null;
-		switch($data['ts_status'])
-		{
-			case timesheet_bo::DELETED_STATUS:
-				$status = 'deleted';
-				break;
-			case '':
-			default:
-				$status = 'active';
-				break;
-		}
 		$ds = array(
 			'pe_title'       => $GLOBALS['timesheet_bo']->link_title($data),
-			'pe_status'      => $status,
 			'pe_real_start'  => $data['ts_start'],
 			'pe_resources'   => array($data['ts_owner']),
 			'pe_details'     => $data['ts_description'] ? nl2br($data['ts_description']) : '',
