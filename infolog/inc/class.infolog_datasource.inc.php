@@ -71,11 +71,9 @@ class infolog_datasource extends datasource
 		{
 			$data =& $data_id;
 		}
-		$status = null;
 
 		return array(
 			'pe_title'        => $this->infolog_bo->link_title($data),
-			'pe_status'       => $data['info_status'],
 			'pe_completion'   => $data['info_percent'],
 			'pe_planned_start'=> $data['info_startdate'] ? $data['info_startdate'] : null,
 			'pe_planned_end'  => $data['info_enddate'] ? $data['info_enddate'] : null,
