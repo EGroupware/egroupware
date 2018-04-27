@@ -8,6 +8,26 @@
  */
 
 /**
+ * Some dummy updates to ease update from before 16.1
+ */
+function filemanager_upgrade1_6()
+{
+	return $GLOBALS['setup_info']['filemanager']['currentver'] = '16.1';
+}
+function filemanager_upgrade1_8()
+{
+	return $GLOBALS['setup_info']['filemanager']['currentver'] = '16.1';
+}
+function filemanager_upgrade1_9_001()
+{
+	return $GLOBALS['setup_info']['filemanager']['currentver'] = '16.1';
+}
+function filemanager_upgrade14_1()
+{
+	return $GLOBALS['setup_info']['filemanager']['currentver'] = '16.1';
+}
+
+/**
  * Creating colaboration tables
  *
  * @return string
