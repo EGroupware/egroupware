@@ -275,6 +275,7 @@ group %1	addressbook	de	Gruppe %1
 h	addressbook	de	h
 hide accounts from addressbook	addressbook	de	Benutzer im Adressbuch ausblenden
 hide all accounts	addressbook	de	Zeigt keine Benutzer an
+hide user groups as distribution lists	addressbook	de	Benutzergruppen als Verteiler ausblenden
 hides accounts completly from the adressbook.	addressbook	de	Entfernt die Benutzer komplett aus dem Adressbuch.
 history logging	admin	de	Verfolgung der Änderungen
 home address	addressbook	de	Privatadresse
@@ -507,6 +508,7 @@ use country list	addressbook	de	Länderliste benutzen
 use setup for a full account-migration	admin	de	für eine komplette Benutzer Migration setup verwenden
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	de	Benutzen Sie diesen Markierungszeichen für Adressetiketten. Platzieren Sie den Inhalt, der wiederholt werden soll, zwischen zwei Markierungszeichen.
 used for links and for the own sorting of the list	addressbook	de	wird für Verknüpfungen und die eigene Sortierung der Liste benutzt
+user groups are automatically shown as distribution lists.	addressbook	de	Benutzergruppen werden automatisch als Verteilerlisten angezeigt.
 user preference	addressbook	de	Benutzerdefinierte Einstellungen
 vcard	common	de	vCard
 vcards require a first name entry.	addressbook	de	vCards benötigen einen Vornamen
