@@ -163,7 +163,7 @@ display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	de	Zeigt diese Ansicht auf der Startseite (Seite die Sie bekommen wenn Sie EGroupware starten oder das Home Icon anklicken)?
 distribution list	calendar	de	Verteilerliste
-do not import conflicting events	calendar	de	Keine widersprüchlichen Ereignisse importieren
+do not import conflicting events	calendar	de	Ereignisse mit Termin-Konflikt nicht importieren
 do not include events of group members	calendar	de	Zeige nicht die Termine der Gruppenmitglieder
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	de	Wollen Sie wirklich den Beginn dieses Serientermins ändern? Wenn Sie das tun, so wird die bestehende Serie %1 beendet und für die Zukunft ein neuer Wiederholungstermin mit Ihren Änderungen erzeugt.
 do you want a weekview with or without weekend?	calendar	de	Möchten Sie eine Wochenansicht mit oder ohne Wochenende?
@@ -186,6 +186,7 @@ edit this event	calendar	de	Diesen Termin bearbeiten
 edit this series of recurring events	calendar	de	Diese Serie von wiederholenden Terminen bearbeiten
 empty = no alarm	calendar	de	leer = kein Alarm
 empty for all	calendar	de	leer für alle
+empty target calendar before importing	calendar	de	Termine im Zielkalender vor dem Import im folgenden Zeitraum löschen
 end	calendar	de	Ende
 end date/time	calendar	de	Enddatum /-zeit
 enddate	calendar	de	Enddatum
@@ -274,8 +275,8 @@ holidays only	calendar	de	Nur Feiertage
 hours	calendar	de	Stunden
 how far to search (from startdate)	calendar	de	wie weit suchen (vom Startdatum)
 how many appointments should non-admins be able to export	admin	de	Wie viele Termine sollen Nicht-Administratoren exportieren können?
-how many days to be removed in the future (default 365)	calendar	de	Wie viele Tage in der Zukunft entfernt werden sollen (Standard 365)
-how many days to be removed in the past (default 100)	calendar	de	Wieviele Tage in der Vergangenheit entfernt werden sollen (Standard 100)
+how many days to be removed in the future (default 365)	calendar	de	Wie viele Tage in die Zukunft sollen gelöscht werden (Standard 365)
+how many days to be removed in the past (default 100)	calendar	de	Wie viele Tage in die Vergangenheit sollen gelöscht werden (Standard 100)
 how many days to sync in the future (default %1)	calendar	de	Wieviele Tage in die Zukunft sollen gesynct werden (Vorgabe %1)
 how many days to sync in the past (default %1)	calendar	de	Wieviele Tage in die Vergangenheit sollen gesynct werden (Vorgabe %1)
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein (Rest über die Scrollbalken)?

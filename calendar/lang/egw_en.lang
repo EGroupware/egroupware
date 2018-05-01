@@ -187,6 +187,7 @@ edit this event	calendar	en	Edit this event
 edit this series of recurring events	calendar	en	Edit this series of recurring events
 empty = no alarm	calendar	en	empty = no alarm
 empty for all	calendar	en	Empty for all
+empty target calendar before importing	calendar	en	Empty target calendar before importing
 end	calendar	en	End
 end date/time	calendar	en	End Date/Time
 enddate	calendar	en	End date
