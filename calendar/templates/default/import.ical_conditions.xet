@@ -7,10 +7,16 @@
 			<template id="importexport.wizard_basic_import_csv.conditions" disabled="@no_conditions"/>
 			<hbox>
 				<description value="Do not import conflicting events"/>
-				<checkbox id="skip_conflicts" />
+				<checkbox id="skip_conflicts"/>
 			</hbox>
+			<description id="delete_title" value="Empty target calendar before importing" font_style="b" class="et2_bold"/>
 			<integer label="How many days to be removed in the past (default 100)" id="remove_past"/>
 			<integer label="How many days to be removed in the future (default 365)" id="remove_future"/>
 		</vbox>
+		<styles>
+			#importexport-wizardbox_delete_title {
+				margin-top: 1em;
+			}
+		</styles>
 	</template>
 </overlay>
