@@ -57,6 +57,11 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 			this._parent._children.push(this);
 		}
 
+		// Use our selection instead of object manager's to handle not-loaded rows
+		this._actionObjectManager.getAllSelected = jQuery.proxy(
+				this.getAllSelected, this
+		);
+
 		// Internal map which contains all curently selected uids and their
 		// state
 		this._registeredRows = {};
@@ -193,6 +198,12 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 		var entry = this._getRegisteredRowsEntry(_uid);
 		this._updateEntryState(entry,
 				egwSetBit(entry.state, EGW_AO_STATE_SELECTED, _selected));
+	},
+
+	getAllSelected: function()
+	{
+		var selected = this.getSelected();
+		return selected.all || (selected.ids.length === this._total);
 	},
 
 	setFocused: function (_uid, _focused) {
@@ -406,6 +417,23 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 			_state ^= EGW_AO_STATE_SELECTED;
 		}
 
+		// Attach ao if not there, happens for rows loaded for selection, but
+		// not displayed yet
+		if(!_entry.ao && _entry.uid)
+		{
+			var _links = [];
+			for (var key in this._registeredRows)
+			{
+				if(this._registeredRows[key].ao && this._registeredRows[key].ao.actionLinks)
+				{
+					_links = this._registeredRows[key].ao.actionLinks;
+					break;
+				}
+			}
+			this._attachActionObjectInterface(_entry, null, _entry.uid);
+			this._attachActionObject(_entry, null, _entry.uid, _links, _entry.idx);
+		}
+
 		// Update the state if it has changed
 		if ((_entry.aoi && _entry.aoi.getState() !== _state) || _entry.state != _state)
 		{
@@ -527,16 +555,29 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 		}
 
 		// Query all unknown ranges from the server
-		for (var i = 0; i < queryRanges.length; i++)
+		var that = this;
+		this._fetchPromise = new Promise(function (resolve)
 		{
-			this._queryRangeCallback.call(this._context, queryRanges[i],
-				function (_order) {
-					for (var j = 0; j < _order.length; j++)
-					{
-						this.setSelected(_order[j], true);
-					}
-				}, this);
-		}
+			var count = queryRanges.length;
+			for (var i = 0; i < queryRanges.length; i++)
+			{
+				that._queryRangeCallback.call(that._context, queryRanges[i],
+					function (_order) {
+						for (var j = 0; j < _order.length; j++)
+						{
+							this.setSelected(_order[j], true);
+						}
+						if(--count <= 0)
+						{
+							// Done waiting
+							resolve();
+						}
+					}, that);
+			}
+		}).finally(function() {egw.loading_prompt('select_wait', false)});
+
+		// Lock the UI - we NEED these before the user does something with them
+		egw.loading_prompt('select_wait', true);
 	}
 
 });}).call(this);
