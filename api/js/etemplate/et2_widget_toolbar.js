@@ -585,8 +585,8 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 				}
 				return egwActionObject.prototype.handleKeyPress.call(this, _keyCode,_shift,_ctrl,_alt);
 			}
+			this._objectManager.parent.updateFocusedChild(this._objectManager, true);
 		}
-		this._objectManager.parent.updateFocusedChild(this._objectManager, true);
 	},
 
 	/**
