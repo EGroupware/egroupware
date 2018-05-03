@@ -184,11 +184,11 @@ class Sharing
 			!$GLOBALS['egw']->accounts->exists($share['share_owner']))
 		{
 			sleep(1);
-			$status = '404 Not Found';
-			header("HTTP/1.1 $status");
-			header("X-WebDAV-Status: $status", true);
-			echo "Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n";
-			exit;
+
+			return static::share_fail(
+				'404 Not Found',
+				"Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n"
+			);
 		}
 
 		// check password, if required
@@ -199,11 +199,10 @@ class Sharing
 		{
 			$realm = 'EGroupware share '.$share['share_token'];
 			header('WWW-Authenticate: Basic realm="'.$realm.'"');
-			$status = '401 Unauthorized';
-			header("HTTP/1.1 $status");
-			header("X-WebDAV-Status: $status", true);
-			echo "<html>\n<head>\n<title>401 Unauthorized</title>\n<body>\nAuthorization failed.\n</body>\n</html>\n";
-			exit;
+			return static::share_fail(
+				'401 Unauthorized',
+				"<html>\n<head>\n<title>401 Unauthorized</title>\n<body>\nAuthorization failed.\n</body>\n</html>\n"
+			);
 		}
 
 		// need to reset fs_tab, as resolve_url does NOT work with just share mounted
@@ -255,11 +254,10 @@ class Sharing
 		if (!Vfs::mount($share['resolve_url'], $share['share_root'], false, false, !$keep_session))
 		{
 			sleep(1);
-			$status = '404 Not Found';
-			header("HTTP/1.1 $status");
-			header("X-WebDAV-Status: $status", true);
-			echo "Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n";
-			exit;
+			return static::share_fail(
+				'404 Not Found',
+				"Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n"
+			);
 		}
 		Vfs::$is_root = false;
 		Vfs::clearstatcache();
@@ -285,11 +283,10 @@ class Sharing
 				'', 'text', false, false)))
 			{
 				sleep(1);
-				$status = '500 Internal Server Error';
-				header("HTTP/1.1 $status");
-				header("X-WebDAV-Status: $status", true);
-				echo "Failed to create session: ".$GLOBALS['egw']->session->reason."\n";
-				exit;
+				return static::share_fail(
+					'500 Internal Server Error',
+					"Failed to create session: ".$GLOBALS['egw']->session->reason."\n"
+				);
 			}
 			// only allow filemanager app (gets overwritten by session::create)
 			$GLOBALS['egw_info']['user']['apps'] = array(
@@ -325,6 +322,24 @@ class Sharing
 	}
 
 	/**
+	 * Something failed, stop everything
+	 *
+	 * @param String $status
+	 * @param String $message
+	 */
+	public static function share_fail($status, $message)
+	{
+		header("HTTP/1.1 $status");
+		header("X-WebDAV-Status: $status", true);
+		echo $message;
+
+		$class = strpos($status, '404') === 0 ? 'EGroupware\Api\Exception\NotFound' :
+				strpos($status, '401') === 0 ? 'EGroupware\Api\Exception\NoPermission' :
+				'EGroupware\Api\Exception';
+		throw new $class($message);
+	}
+
+	/**
 	 * Check if we use filemanager UI
 	 *
 	 * Only for directories, if browser supports it and filemanager is installed
@@ -338,6 +353,19 @@ class Sharing
 			Api\Header\UserAgent::type() == 'msie' && Api\Header\UserAgent::version() < 10.0 ||
 			// or if no filemanager installed (WebDAV has own autoindex)
 			!file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'));
+	}
+	/**
+	 * Check if we should use Collabora UI
+	 *
+	 * Only for files, if URL says so, and Collabora & Stylite apps are installed
+	 */
+	public function use_collabora()
+	{
+		 return false;/* !Vfs::is_dir($this->share['share_root']) &&
+				array_key_exists('edit', $_REQUEST) &&
+				array_key_exists('collabora', $GLOBALS['egw_info']['apps']) &&
+				array_key_exists('stylite', $GLOBALS['egw_info']['apps']);
+		  */
 	}
 
 	/**
@@ -361,8 +389,13 @@ class Sharing
 				$this->share['share_path'] => 1
 			));
 		}
+		if($this->use_collabora())
+		{
+			$ui = new \EGroupware\Collabora\Ui();
+			return $ui->editor($this->share['share_path']);
+		}
 		// use pure WebDAV for everything but GET requests to directories
-		if (!$this->use_filemanager())
+		else if (!$this->use_filemanager())
 		{
 			// send a content-disposition header, so browser knows how to name downloaded file
 			if (!Vfs::is_dir($this->share['share_root']))
