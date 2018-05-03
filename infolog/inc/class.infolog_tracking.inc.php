@@ -258,7 +258,7 @@ class infolog_tracking extends Api\Storage\Tracking
 		);
 		// add custom fields for given type
 		$details += $this->get_customfields($data, $data['info_type'], $receiver);
-		error_log(__METHOD__."(".array2string($data).", $receiver) returning ".array2string($details));
+		//error_log(__METHOD__."(".array2string($data).", $receiver) returning ".array2string($details));
 		return $details;
 	}
 
