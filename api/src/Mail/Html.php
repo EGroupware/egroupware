@@ -56,13 +56,10 @@ class Html
 				'+',
 			);
 
-			$newString = '';
-
-			$string = preg_replace('/\?=\s+=\?/', '?= =?', $_string);
-
-			$elements=imap_mime_header_decode($string);
+			$elements = imap_mime_header_decode(preg_replace('/\?=\s+=\?/', '?= =?', $_string));
 
 			$convertAtEnd = false;
+			$string = '';
 			foreach((array)$elements as $element)
 			{
 				if ($element->charset == 'default') $element->charset = Api\Translation::detect_encoding($element->text);
@@ -76,16 +73,15 @@ class Html
 						$element->text = self::decodeMailHeader($element->text, $element->charset, $reclevel);
 						$element->charset = $displayCharset;
 					}
-					$newString .= Api\Translation::convert($element->text,$element->charset);
+					$string .= Api\Translation::convert($element->text,$element->charset);
 				}
 				else
 				{
-					$newString .= $element->text;
+					$string .= $element->text;
 					$convertAtEnd = true;
 				}
 			}
-			if ($convertAtEnd) $newString = self::decodeMailHeader($newString,$displayCharset,$reclevel);
-			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$newString);
+			if ($convertAtEnd) $string = self::decodeMailHeader($string, $displayCharset, $reclevel);
 		}
 		elseif(function_exists(mb_decode_mimeheader))
 		{
@@ -101,17 +97,19 @@ class Html
 					str_replace('=?windows-1258','=?ISO-8859-1',$string));
 			}
 			$string = mb_decode_mimeheader($string);
-			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$string);
 		}
 		elseif(function_exists(iconv_mime_decode))
 		{
 			// continue decoding also if an error occurs
 			$string = @iconv_mime_decode($_string, 2, $displayCharset);
-			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$string);
 		}
-
-		// no decoding function available
-		return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$_string);
+		else
+		{
+			// no decoding function available
+			$string = $_string;
+		}
+		// remove unprintable chars
+		return preg_replace('/([\000-\012\015\016\020-\037])/', '', $string);
 	}
 
 	/**
