@@ -23,6 +23,8 @@ use calendar_timezones;
  * eTemplate select widget
  *
  * @todo unavailable cats (eg. private cats of an other user) need to be preserved!
+ * @todo fully implement attr[multiple] === "dynamic" to render widget with a button to switch to multiple
+ *	as it is used in account_id selection in admin >> mailaccount (app.admin.edit_multiple method client-side)
  */
 class Select extends Etemplate\Widget
 {
@@ -148,7 +150,7 @@ class Select extends Etemplate\Widget
 				if ($child->type == 'option') $allowed[] = (string)$child->attrs['value'];
 			}
 
-			if (!$multiple ) $allowed[] = '';
+			if (!$multiple || $this->attrs['multiple'] === "dynamic") $allowed[] = '';
 
 			foreach((array) $value as $val)
 			{

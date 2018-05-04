@@ -25,6 +25,8 @@
 var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
+		// todo fully implement attr[multiple] === "dynamic" to render widget with a button to switch to multiple
+		//	as it is used in account_id selection in admin >> mailaccount (app.admin.edit_multiple method client-side)
 		"multiple": {
 			"name": "multiple",
 			"type": "boolean",
