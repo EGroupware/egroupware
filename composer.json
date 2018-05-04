@@ -35,7 +35,7 @@
 		"bower-asset/cropper":"2.3.*",
 		"npm-asset/as-jqplot" : "1.0.*",
 		"npm-asset/gridster":"0.5.*",
-		"adldap2/adldap2": "=4.0.4",
+		"adldap2/adldap2": "=8.1.5",
 		"egroupware/ckeditor": "^4"
 	},
 	"require-dev": {
