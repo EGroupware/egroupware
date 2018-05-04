@@ -426,7 +426,7 @@ class SharingBase extends LoggedInTest
 		// Setup - create path and share
 		$share = $this->createShare($path, $mode, $extra);
 		$link = Vfs\Sharing::share2link($share);
-		//echo __METHOD__ . " link: $link\n";
+		echo __METHOD__ . " link: $link\n";
 
 		if(static::LOG_LEVEL)
 		{

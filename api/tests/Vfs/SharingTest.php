@@ -33,6 +33,7 @@ class SharingTest extends SharingBase
 	{
 		$dir = Vfs::get_home_dir().'/';
 error_log(__METHOD__ . " Dir: $dir");
+var_dump($GLOBALS['egw_info']['server']);
 		$this->checkDirectory($dir, Sharing::READONLY);
 	}
 
