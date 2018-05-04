@@ -81,7 +81,21 @@ class SharingBase extends LoggedInTest
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
 
+		if(static::LOG_LEVEL > 1)
+		{
+			error_log($this->getName() . ' files for removal:');
+			error_log(implode("\n",$this->files));
+			error_log($this->getName() . ' mounts for removal:');
+			error_log(implode("\n",$this->mounts));
+			error_log($this->getName() . ' shares for removal:');
+			error_log(implode("\n",$this->shares));
+		}
+
 		// Remove any added files (as root to limit versioning issues)
+		if(in_array('/',$this->files))
+		{
+			$this->fail('Tried to remove root');
+		}
 		Vfs::remove($this->files);
 
 		// Remove any mounts
