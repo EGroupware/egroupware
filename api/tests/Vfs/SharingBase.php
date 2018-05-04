@@ -440,8 +440,6 @@ class SharingBase extends LoggedInTest
         $_SERVER['SCRIPT_NAME'] = $matches[1];
 		$is_dir = Vfs::is_dir($path);
 
-		// Log out & clear cache
-		LoggedInTest::tearDownAfterClass();
 
 		// Re-init, since they look at user, fstab, etc.
 		// Also, further tests that access the filesystem fail if we don't
@@ -449,6 +447,8 @@ class SharingBase extends LoggedInTest
 		Vfs::init_static();
 		Vfs\StreamWrapper::init_static();
 
+		// Log out & clear cache
+		LoggedInTest::tearDownAfterClass();
 
 		// If it's a directory, check to make sure it gives the filemanager UI
 		if($is_dir)

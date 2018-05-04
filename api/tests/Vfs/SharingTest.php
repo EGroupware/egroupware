@@ -163,7 +163,7 @@ error_log(array2string($GLOBALS['egw_info']['server']));
 	{
 		if(!class_exists("\EGroupware\Stylite\Vfs\Merge\StreamWrapper"))
 		{
-			$this->markTestAsSkipped();
+			$this->markTestSkipped();
 			return;
 		}
 		// Don't add to files list or it deletes the folder from filesystem
@@ -191,7 +191,7 @@ error_log(array2string($GLOBALS['egw_info']['server']));
 	{
 		if(!class_exists("\EGroupware\Stylite\Vfs\Merge\StreamWrapper"))
 		{
-			$this->markTestAsSkipped();
+			$this->markTestSkipped();
 			return;
 		}
 		// Don't add to files list or it deletes the folder from filesystem
