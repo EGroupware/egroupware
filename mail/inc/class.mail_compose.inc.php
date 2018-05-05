@@ -1355,16 +1355,36 @@ class mail_compose
 	/**
 	 * Add preset files like vcard as attachments into content array
 	 *
+	 * Preset attachments are read from $_REQUEST['preset']['file'] with
+	 * optional ['type'] and ['name'].
+	 *
+	 * Attachments must either be in EGroupware Vfs or configured temp. directory!
+	 *
 	 * @param array $_content content
 	 * @param string $_insertSigOnTop
 	 * @param boolean $_eliminateDoubleAttachments
 	 */
 	function addPresetFiles (&$_content, &$_insertSigOnTop, $_eliminateDoubleAttachments)
 	{
-		$names = !is_array($_REQUEST['preset']['name'])? json_decode($_REQUEST['preset']['name'], true):$_REQUEST['preset']['name'];
-		$types = !is_array($_REQUEST['preset']['type'])? json_decode($_REQUEST['preset']['type'], true):$_REQUEST['preset']['type'];
-		//if (!empty($types) && in_array('text/calendar; method=request',$types))
-		$files = !is_array($_REQUEST['preset']['file'])? json_decode($_REQUEST['preset']['file'], true):$_REQUEST['preset']['file'];
+		// check if JSON was used
+		if (!is_array($_REQUEST['preset']['file']) &&
+			($_REQUEST['preset']['file'][0] === '[' && substr($_REQUEST['preset']['file'], -1) === ']' ||
+			$_REQUEST['preset']['file'][0] === '{' && substr($_REQUEST['preset']['file'], -1) === '}') &&
+			($files = json_decode($_REQUEST['preset']['file'], true)))
+		{
+			$types = !empty($_REQUEST['preset']['type']) ?
+				json_decode($_REQUEST['preset']['type'], true) : array();
+			$names = !empty($_REQUEST['preset']['name']) ?
+				json_decode($_REQUEST['preset']['name'], true) : array();
+		}
+		else
+		{
+			$files = (array)$_REQUEST['preset']['file'];
+			$types = !empty($_REQUEST['preset']['type']) ?
+				(array)$_REQUEST['preset']['type'] : array();
+			$names = !empty($_REQUEST['preset']['name']) ?
+				(array)$_REQUEST['preset']['name'] : array();
+		}
 
 		foreach($files as $k => $path)
 		{
@@ -1373,9 +1393,8 @@ class mail_compose
 				$_insertSigOnTop = 'below';
 			}
 			//error_log(__METHOD__.__LINE__.$path.'->'.array2string(parse_url($path,PHP_URL_SCHEME == 'vfs')));
-			if (parse_url($path,PHP_URL_SCHEME == 'vfs'))
+			if (($scheme = parse_url($path,PHP_URL_SCHEME)) === 'vfs')
 			{
-				//Vfs::load_wrapper('vfs');
 				$type = Vfs::mime_content_type($path);
 				// special handling for attaching vCard of iCal --> use their link-title as name
 				if (substr($path,-7) != '/.entry' ||
@@ -1405,6 +1424,11 @@ class mail_compose
 					$_content['filemode'] = Vfs\Sharing::READONLY;
 					Framework::message(lang('Directories have to be shared.'), 'info');
 				}
+			}
+			// do not allow to attache something from server filesystem outside configured temp_dir
+			elseif (strpos(realpath(parse_url($path, PHP_URL_PATH)), realpath($GLOBALS['egw_info']['server']['temp_dir']).'/') !== 0)
+			{
+				error_log(__METHOD__."() Attaching '$path' outside configured temp. directory '{$GLOBALS['egw_info']['server']['temp_dir']}' denied!");
 			}
 			elseif(is_readable($path))
 			{
