@@ -952,6 +952,11 @@ class mail_compose
 								Framework::message(lang('Directories have to be shared.'), 'info');
 							}
 						}
+						// do not allow to attache something from server filesystem outside configured temp_dir
+						elseif (strpos(realpath(parse_url($path, PHP_URL_PATH)), realpath($GLOBALS['egw_info']['server']['temp_dir']).'/') !== 0)
+						{
+							error_log(__METHOD__."() Attaching '$path' outside configured temp. directory '{$GLOBALS['egw_info']['server']['temp_dir']}' denied!");
+						}
 						elseif(is_readable($path))
 						{
 							$formData = array(
