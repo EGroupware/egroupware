@@ -361,11 +361,11 @@ class Sharing
 	 */
 	public function use_collabora()
 	{
-		 return false;/* !Vfs::is_dir($this->share['share_root']) &&
+		 return !Vfs::is_dir($this->share['share_root']) &&
 				array_key_exists('edit', $_REQUEST) &&
 				array_key_exists('collabora', $GLOBALS['egw_info']['apps']) &&
 				array_key_exists('stylite', $GLOBALS['egw_info']['apps']);
-		  */
+
 	}
 
 	/**
