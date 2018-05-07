@@ -174,6 +174,10 @@ abstract class Merge
 				return true;	// rtf files
 			case 'application/vnd.oasis.opendocument.text':	// oo text
 			case 'application/vnd.oasis.opendocument.spreadsheet':	// oo spreadsheet
+			case 'application/vnd.oasis.opendocument.presentation':
+			case 'application/vnd.oasis.opendocument.text-template':
+			case 'application/vnd.oasis.opendocument.spreadsheet-template':
+			case 'application/vnd.oasis.opendocument.presentation-template':
 				if (!$zip_available) break;
 				return true;	// open office write xml files
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms word 2007 xml format
@@ -592,8 +596,12 @@ abstract class Merge
 		$replace_tags = array();
 		switch($mimetype.$mso_application_progid)
 		{
-			case 'application/vnd.oasis.opendocument.text':		// open office
-			case 'application/vnd.oasis.opendocument.spreadsheet':
+			case 'application/vnd.oasis.opendocument.text':	// oo text
+			case 'application/vnd.oasis.opendocument.spreadsheet':	// oo spreadsheet
+			case 'application/vnd.oasis.opendocument.presentation':
+			case 'application/vnd.oasis.opendocument.text-template':
+			case 'application/vnd.oasis.opendocument.spreadsheet-template':
+			case 'application/vnd.oasis.opendocument.presentation-template':
 				// It seems easier to split the parent tags here
 				$replace_tags = array(
 					'/<(ol|ul|table)( [^>]*)?>/' => '</text:p><$1$2>',
@@ -734,7 +742,7 @@ abstract class Merge
 			}
 
 		}
-		if ($mimetype == 'application/vnd.oasis.opendocument.text' && count($ids) > 1)
+		if (in_array($mimetype, array('application/vnd.oasis.opendocument.text','application/vnd.oasis.opendocument.text-template')) && count($ids) > 1)
 		{
 			if(strpos($content, '$$pagerepeat') === false)
 			{
@@ -786,8 +794,12 @@ abstract class Merge
 				case 'text/rtf':
 					$joiner = '\\par \\page\\pard\\plain';
 					break;
-				case 'application/vnd.oasis.opendocument.text':
-				case 'application/vnd.oasis.opendocument.spreadsheet':
+				case 'application/vnd.oasis.opendocument.text':	// oo text
+				case 'application/vnd.oasis.opendocument.spreadsheet':	// oo spreadsheet
+				case 'application/vnd.oasis.opendocument.presentation':
+				case 'application/vnd.oasis.opendocument.text-template':
+				case 'application/vnd.oasis.opendocument.spreadsheet-template':
+				case 'application/vnd.oasis.opendocument.presentation-template':
 				case 'application/xml':
 				case 'text/html':
 				case 'text/csv':
@@ -899,8 +911,12 @@ abstract class Merge
 				case 'text/rtf':
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
 				case 'application/vnd.oasis.opendocument.text':
+				case 'application/vnd.oasis.opendocument.presentation':
+				case 'application/vnd.oasis.opendocument.text-template':
+				case 'application/vnd.oasis.opendocument.presentation-template':
 					return $contentstart.implode('<text:line-break />',$contentrepeatpages).$contentend;
 				case 'application/vnd.oasis.opendocument.spreadsheet':
+				case 'application/vnd.oasis.opendocument.spreadsheet-template':
 					return $contentstart.implode('</text:p><text:p>',$contentrepeatpages).$contentend;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.ms-word.document.macroenabled.12':
@@ -941,6 +957,10 @@ abstract class Merge
 		{
 			case 'application/vnd.oasis.opendocument.text':		// open office
 			case 'application/vnd.oasis.opendocument.spreadsheet':
+			case 'application/vnd.oasis.opendocument.presentation':
+			case 'application/vnd.oasis.opendocument.text-template':
+			case 'application/vnd.oasis.opendocument.spreadsheet-template':
+			case 'application/vnd.oasis.opendocument.presentation-template':
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
 			case 'application/vnd.ms-word.document.macroenabled.12':
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
@@ -1008,6 +1028,10 @@ abstract class Merge
 						break;
 					case 'application/vnd.oasis.opendocument.text':		// open office
 					case 'application/vnd.oasis.opendocument.spreadsheet':
+					case 'application/vnd.oasis.opendocument.presentation':
+					case 'application/vnd.oasis.opendocument.text-template':
+					case 'application/vnd.oasis.opendocument.spreadsheet-template':
+					case 'application/vnd.oasis.opendocument.presentation-template':
 						$replace_tags = array(
 							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
 							'<table>','<tr>','<td>','<a>',
@@ -1119,9 +1143,13 @@ abstract class Merge
 			switch($mimetype.$mso_application_progid)
 			{
 				case 'application/vnd.oasis.opendocument.text':		// open office writer
+				case 'application/vnd.oasis.opendocument.text-template':
+				case 'application/vnd.oasis.opendocument.presentation':
+				case 'application/vnd.oasis.opendocument.presentation-template':
 					$break = '<text:line-break/>';
 					break;
 				case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+				case 'application/vnd.oasis.opendocument.spreadsheet-template':
 					$break = '</text:p><text:p>';
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms word 2007
@@ -1194,10 +1222,14 @@ abstract class Merge
 		switch($mimetype)
 		{
 			case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+			case 'application/vnd.oasis.opendocument.spreadsheet-template':
 				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)(?:calcext:value-type="[^"]+")?>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
 				$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2><$3>$4</$3></table:table-cell>';
 				break;
 			case 'application/vnd.oasis.opendocument.text':		// tables in open office writer
+			case 'application/vnd.oasis.opendocument.presentation':
+			case 'application/vnd.oasis.opendocument.text-template':
+			case 'application/vnd.oasis.opendocument.presentation-template':
 				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
 				$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2><text:p text:style-name="Standard">$4</text:p></table:table-cell>';
 				break;
@@ -1506,6 +1538,10 @@ abstract class Merge
 		{
 			case 'application/vnd.oasis.opendocument.text':		// open office
 			case 'application/vnd.oasis.opendocument.spreadsheet':
+			case 'application/vnd.oasis.opendocument.presentation':
+			case 'application/vnd.oasis.opendocument.text-template':
+			case 'application/vnd.oasis.opendocument.spreadsheet-template':
+			case 'application/vnd.oasis.opendocument.presentation-template':
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
 			case 'application/vnd.ms-word.document.macroenabled.12':
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
@@ -1524,9 +1560,13 @@ abstract class Merge
 					$LF = '}\par \pard\plain{';
 					break;
 				case 'application/vnd.oasis.opendocument.text':
+				case 'application/vnd.oasis.opendocument.presentation':
+				case 'application/vnd.oasis.opendocument.text-template':
+				case 'application/vnd.oasis.opendocument.presentation-template':
 					$LF ='<text:line-break/>';
 					break;
 				case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+				case 'application/vnd.oasis.opendocument.spreadsheet-template':
 					$LF = '</text:p><text:p>';
 					break;
 				case 'application/xmlExcel.Sheet':	// Excel 2003
@@ -1642,7 +1682,19 @@ abstract class Merge
 				return $retString;
 			case 'application/vnd.oasis.opendocument.text':
 			case 'application/vnd.oasis.opendocument.spreadsheet':
-				$ext = $mimetype == 'application/vnd.oasis.opendocument.text' ? '.odt' : '.ods';
+			case 'application/vnd.oasis.opendocument.presentation':
+			case 'application/vnd.oasis.opendocument.text-template':
+			case 'application/vnd.oasis.opendocument.spreadsheet-template':
+			case 'application/vnd.oasis.opendocument.presentation-template':
+				switch($mimetype)
+				{
+					case 'application/vnd.oasis.opendocument.text':	$ext = '.odt'; break;
+					case 'application/vnd.oasis.opendocument.spreadsheet': $ext = '.ods'; break;
+					case 'application/vnd.oasis.opendocument.presentation': $ext = '.odp'; break;
+					case 'application/vnd.oasis.opendocument.text-template': $ext = '.ott'; break;
+					case 'application/vnd.oasis.opendocument.spreadsheet-template': $ext = '.ots'; break;
+					case 'application/vnd.oasis.opendocument.presentation-template': $ext = '.otp'; break;
+				}
 				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,$ext).'-').$ext;
 				copy($content_url,$archive);
 				$content_url = 'zip://'.$archive.'#'.($content_file = 'content.xml');
