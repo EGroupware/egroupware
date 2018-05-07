@@ -722,7 +722,7 @@ var et2_date_duration = (function(){ "use strict"; return et2_date.extend(
 						.addClass('et2_date_duration');
 		this.duration = jQuery(document.createElement("input"))
 						.addClass('et2_date_duration')
-						.attr({type: 'number', size: 3, step:this.options.step});
+						.attr({type: 'number', size: 3, step:this.options.step, lang: this.egw().preference('number_format')[0] === "," ? "en-150": "en-001"});
 		this.node.append(this.duration);
 
 		if(this.options.display_format.length > 1)
