@@ -165,7 +165,7 @@
 					<hbox  span="all" width="100%">
 						<button statustext="Apply the changes" id="button[apply]" image="apply" background_image="1"/>
 						<button statustext="delete this entry" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
-						<buttononly statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" background_image="1" image="timestamp" onclick="app.infolog.insert_text('info_des');"/>
+						<timestamper statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" background_image="1" image="timestamp" target="info_des"/>
 						<checkbox toggle_on=" " toggle_off=" " id="no_notifications" class="notification_check"/>
 						<textbox type="integer" id="info_number" readonly="true" class="entry_id"/>
 					</hbox>
