@@ -417,8 +417,7 @@ class resources_bo
 				if (($acc = $this->so->read($accessory)))
 				{
 					$acc['cat_id'] = $resource['cat_id'];
-					$this->so->data = $acc;
-					$this->so->save();
+					$this->so->save($acc);
 				}
 			}
 		}
