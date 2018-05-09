@@ -25,7 +25,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	protected static $conditions = array( 'exists', 'equal' );
 
 	/**
-	 * @var bocontacts
+	 * @var addressbook_bo
 	 */
 	private $bocontacts;
 
@@ -51,7 +51,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	public function init(importexport_definition &$_definition ) {
 
 		// fetch the addressbook bo
-		$this->bocontacts = new Api\Contacts();
+		$this->bocontacts = new addressbook_bo();
 
 		// Get the tracker for changes
 		$this->tracking = new Api\Contacts\Tracking($this->bocontacts);

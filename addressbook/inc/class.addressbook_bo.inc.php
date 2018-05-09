@@ -155,7 +155,7 @@ class addressbook_bo extends Api\Contacts
 	}
 
 	/**
-	 * Where to store public key delpending on type and storage backend
+	 * Where to store public key depending on type and storage backend
 	 *
 	 * @param boolean $pgp true: PGP, false: S/Mime
 	 * @param array $contact =null contact array to pass to get_backend()
@@ -379,5 +379,53 @@ class addressbook_bo extends Api\Contacts
 	public function set_smime_keys($keys, $allow_user_updates=null)
 	{
 		return $this->set_keys($keys, false, $allow_user_updates);
+	}
+
+	/**
+	 * Saves contact
+	 *
+	 * Reimplemented to strip pubkeys pasted into pubkey field or imported and store them as files in Vfs.
+	 * We allways store PGP pubkeys to Vfs, but S/Mime ones only for SQL backend, not for LDAP or AD.
+	 *
+	 * @param array &$contact contact array from etemplate::exec
+	 * @param boolean $ignore_acl =false should the acl be checked or not
+	 * @param boolean $touch_modified =true should modified/r be updated
+	 * @return int|string|boolean id on success, false on failure, the error-message is in $this->error
+	 */
+	function save(&$contact, $ignore_acl=false, $touch_modified=true)
+	{
+		if (($id = parent::save($contact, $ignore_acl, $touch_modified)) && !empty($contact['pubkey']))
+		{
+			$files = 0;
+			foreach(array(
+				array(addressbook_bo::$pgp_key_regexp, Api\Contacts::FILES_PGP_PUBKEY, Api\Contacts::FILES_BIT_PGP_PUBKEY),
+				array(Api\Mail\Smime::$certificate_regexp, Api\Contacts::FILES_SMIME_PUBKEY, Api\Contacts::FILES_BIT_SMIME_PUBKEY),
+			) as $data)
+			{
+				list($regexp, $file, $bit) = $data;
+				$matches = null;
+				if (!empty($contact['pubkey']) && preg_match($regexp, $contact['pubkey'], $matches) &&
+					// check if we store that pubkey as file (PGP allways, but S/Mime only for SQL backend, not for LDAP or AD!)
+					$this->pubkey_use_file($bit === Api\Contacts::FILES_BIT_PGP_PUBKEY, $contact))
+				{
+					// check_perms && save check ACL, in case of access only via own-account we have to use root to allow the update
+					$backup = Api\Vfs::$is_root; Api\Vfs::$is_root = true;
+					if (file_put_contents(Api\Link::vfs_path('addressbook', $id, $file), $matches[0]))
+					{
+						$files |= $bit;
+						$contact['pubkey'] = str_replace($matches[0], '', $contact['pubkey']);
+					}
+					Api\Vfs::$is_root = $backup;
+				}
+			}
+			// if we stripped a pubkey / stored it as file --> remove it from DB
+			if ($files)
+			{
+				if (!trim($contact['pubkey'])) $contact['pubkey'] = null;
+				$contact['files'] |= $files;
+				parent::save($contact, $ignore_acl, $touch_modified);
+			}
+		}
+		return $id;
 	}
 }
