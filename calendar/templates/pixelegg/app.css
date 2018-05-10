@@ -1506,6 +1506,8 @@ img.calendar_print_appicon {
 #calendar-list {
   /* Keeps the scrollbar in the window in chrome */
   margin-right: 10px;
+  /* Prevents going to far down (off bottom)*/
+  height: calc(100% - 75px);
 }
 #calendar_sidebox_content .egw_fw_ui_category_content {
   padding-left: 0px !important;
