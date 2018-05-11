@@ -58,9 +58,12 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 		}
 
 		// Use our selection instead of object manager's to handle not-loaded rows
-		this._actionObjectManager.getAllSelected = jQuery.proxy(
-				this.getAllSelected, this
-		);
+		if(_actionObjectManager)
+		{
+			this._actionObjectManager.getAllSelected = jQuery.proxy(
+					this.getAllSelected, this
+			);
+		}
 
 		// Internal map which contains all curently selected uids and their
 		// state
@@ -332,7 +335,10 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 		var dummyAOI = this._getDummyAOI(_entry, _tr, _uid, _idx);
 
 		// Create an action object for the tr and connect it to a dummy AOI
-		_entry.ao = this._actionObjectManager.addObject(_uid, dummyAOI);
+		if(this._actionObjectManager)
+		{
+			_entry.ao = this._actionObjectManager.addObject(_uid, dummyAOI);
+		}
 
 		// Force context (actual widget) in here, it's the last place it's available
 		_entry.ao._context = this._context;
@@ -419,7 +425,7 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 
 		// Attach ao if not there, happens for rows loaded for selection, but
 		// not displayed yet
-		if(!_entry.ao && _entry.uid)
+		if(!_entry.ao && _entry.uid && this._actionObjectManager)
 		{
 			var _links = [];
 			for (var key in this._registeredRows)
@@ -430,8 +436,11 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 					break;
 				}
 			}
-			this._attachActionObjectInterface(_entry, null, _entry.uid);
-			this._attachActionObject(_entry, null, _entry.uid, _links, _entry.idx);
+			if(_links)
+			{
+				this._attachActionObjectInterface(_entry, null, _entry.uid);
+				this._attachActionObject(_entry, null, _entry.uid, _links, _entry.idx);
+			}
 		}
 
 		// Update the state if it has changed
