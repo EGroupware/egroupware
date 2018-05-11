@@ -1323,6 +1323,9 @@ class StreamWrapper implements StreamWrapperIface
 	 */
 	static function init_static()
 	{
+		if (in_array(self::SCHEME, stream_get_wrappers())) {
+			stream_wrapper_unregister(self::SCHEME);
+		}
 		stream_register_wrapper(self::SCHEME,__CLASS__);
 
 		if (($fstab = $GLOBALS['egw_info']['server']['vfs_fstab']) && is_array($fstab) && count($fstab))
