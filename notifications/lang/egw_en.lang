@@ -22,6 +22,7 @@ disabled chains	notifications	en	Disabled chains
 do not notify me at all	notifications	en	Do not notify me at all
 domain not found, please check serveraddress.	notifications	en	Domain not found, please check Serveraddress.
 e-mail only	notifications	en	Email only
+email notifications only, if user is not logged in	en	Email notifications only, if user is not logged in
 egroupware has notifications for you	notifications	en	EGroupware has notifications for you
 egroupware login is starting, please wait.	notifications	en	EGroupware login is starting, please wait.
 egroupware logindomain:	notifications	en	EGroupware Logindomain:
