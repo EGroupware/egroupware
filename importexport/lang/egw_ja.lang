@@ -1,5 +1,151 @@
+%1 definition(s) %2	importexport	ja	%1 definition(s) %2
+%1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	ja	%1 definition(s) %2, %3 failed because of insufficient rights !!!
+%1 definitions %2	importexport	ja	%1 definitions %2
+%1 is not a known user or group	importexport	ja	%1 is not a known user or group
+%1 is not readable	importexport	ja	%1 is not readable.
+%1 is not writable	importexport	ja	%1 is not writable.
+%1 records processed	importexport	ja	%1 records processed.
+%s just me	importexport	ja	%s Just me
+(* for all)	importexport	ja	(* for all)
+(0-23)	importexport	ja	(0-23)
+(0-6, 0=sun)	importexport	ja	(0-6, 0=Sun)
+*contact id cannot be changed by import	importexport	ja	*Contact ID cannot be changed by import
+addressbook csv import	importexport	ja	Addressbook CSV Import
+addressbook vcard import	importexport	ja	Addressbook vCard import
+admin disabled exporting	importexport	ja	Admin disabled exporting
+all encodings	importexport	ja	All encodings
 all users	importexport	ja	全てのユーザ
+allowed users	importexport	ja	Allowed users
+automatically created by importexport	importexport	ja	Automatically created by Import|Export
+basic csv import	importexport	ja	Basic CSV import
+changed	importexport	ja	Changed
+changed allowed_users	importexport	ja	Changed allowed users
+changed owner	importexport	ja	Changed owner
+charset of file	importexport	ja	Charset of file
+check all	importexport	ja	Check all
+choose a name for this definition	importexport	ja	Choose a name for this definition
+choose a plugin	importexport	ja	Choose a plugin
+choose an application	importexport	ja	Choose an application
+choose fields to export	importexport	ja	Choose fields to export
+choose seperator and charset	importexport	ja	Choose separator and charset
+column mismatch.  expected %1 columns, your file has %2.	importexport	ja	Column mismatch.  Expected %1 columns, your file has %2.
+column mismatch: %1 should be %2, not %3	importexport	ja	Column mismatch: %1 should be %2, not %3
+condition	importexport	ja	Condition
+copied	importexport	ja	Copied.
+create a <a href="%1">new definition</a> for this file	importexport	ja	Create a <a href="%1">new definition</a> for this file
+create export	importexport	ja	Create export
 created	importexport	ja	作成
+csv field	importexport	ja	CSV field
+database values	importexport	ja	Database values
+day of week	importexport	ja	Day of week
+define imports|exports	common	ja	Define Imports|Exports
+definition	importexport	ja	Definition
+definition filter	importexport	ja	定義フィルター
+delete all selected definitions	importexport	ja	Delete ALL selected definitions
+deleted	importexport	ja	Deleted.
+delimiter	importexport	ja	区切り記号
+duplicate name, please choose another.	importexport	ja	Duplicate name, please choose another.
+edit conditions	importexport	ja	Edit conditions
+edit definition <a href="%1">%2</a> to match your file	importexport	ja	Edit definition <a href="%1">%2</a> to match your file
+edit your file to match the definition:	importexport	ja	Edit your file to match the definition:
+errors	importexport	ja	Errors
+execute	importexport	ja	Execute
+expert options	importexport	ja	Expert options
 export	importexport	ja	エクスポート
+export all selected definitions	importexport	ja	Export ALL selected definitions
+export data as	importexport	ja	Export data as
+export definition to use for nextmatch export	preferences	ja	Export definition to use for nextmatch export
+export spreadsheet	importexport	ja	Export Spreadsheet
+exported	importexport	ja	Exported.
+extra %1	importexport	ja	Extra %1
+extra charsets for import / export	importexport	ja	Extra charsets for import / export
+extra encodings	importexport	ja	Extra encodings
+false	importexport	ja	False
+field labels	importexport	ja	Field labels
+field names	importexport	ja	Field names
+fieldseperator	importexport	ja	Field separator
+filters	importexport	ja	Filters
+finish	importexport	ja	Finish
+from definition	importexport	ja	定義ファイルに従う
+general	preferences	ja	一般
+general fields:	preferences	ja	General fields:
+header lines to skip	importexport	ja	Header lines to skip
+how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	ja	How to merge with existing data? For each record, all conditions are evaluated from top to bottom, or stop. For blind insert, leave blank.
+human friendly values	importexport	ja	Human friendly values
+if you specify an export definition, it will be used when you export	preferences	ja	If you specify an export definition, it will be used when you export.
 import	importexport	ja	インポート
-translation	importexport	ja	翻訳
+import aborted	importexport	ja	Import aborted
+import data is	importexport	ja	Import data is
+import definition	importexport	ja	インポート定義
+import definitions	common	ja	Import definitions
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	ja	Import definitions. Attention: Existing definitions with equal names will be overwritten!
+imported	importexport	ja	imported
+importexport	common	ja	インポート | エクスポート
+importexport wizard finished successfully!	importexport	ja	Import|Export wizard finished successfully!
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	ja	Imports information from a CSV file.  This is only a base class, and doesn't do anything on its own.
+include header	importexport	ja	Include header
+just me	importexport	ja	Just me
+last run	importexport	ja	Last run
+load sample file	importexport	ja	Load sample file
+lock expired on previous run	importexport	ja	Lock expired on previous run
+manage mapping	importexport	ja	Manage mapping
+next	importexport	ja	Next
+next run	importexport	ja	Next run
+no custom field "%1" for %2.	importexport	ja	No custom field "%1" for %2.
+no matches	importexport	ja	no matches
+no matching records	importexport	ja	No matching records
+no notifications	importexport	ja	通知を無視
+no records selected	importexport	ja	No records selected!
+none found	importexport	ja	None found
+old fixed definition	preferences	ja	Old fixed definition
+other	importexport	ja	その他
+owner	importexport	ja	所有者
+please select file to import	importexport	ja	インポートするファイル
+plugin	importexport	ja	Plugin
+preview	importexport	ja	プリビュー
+preview not supported by %1	importexport	ja	Preview not supported by %1
+previous	importexport	ja	Previous
+problems during import:	importexport	ja	Problems during import:
+recurrence enddate	importexport	ja	繰返し最終日
+save as definition	importexport	ja	定義ファイルとして保存
+schedule	common	ja	Schedule
+schedule import / export	common	ja	Schedule import | export
+schedule import | export	importexport	ja	Schedule import | export
+schedule not found	importexport	ja	Schedule not found.
+schedule times are server time!  currently %s.	importexport	ja	Schedule times are server time!  Currently %s.
+select definition	importexport	ja	定義ファイルを選択
+select plugin	importexport	ja	プラグインを選択
+select...	importexport	ja	Select...
+skipped	importexport	ja	Skipped
+some nice text	importexport	ja	Some nice text
+some records may not have been imported	importexport	ja	Some records may not have been imported.
+space	importexport	ja	スペース
+stop	importexport	ja	Stop
+stylite template folder	importexport	ja	Stylite template folder
+tab	importexport	ja	タブ
+target	importexport	ja	Target
+target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	ja	Target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv
+target field	importexport	ja	Target field
+test only	importexport	ja	予行演習
+too many matches	importexport	ja	too many matches
+translation	importexport	ja	カスタム
+true	importexport	ja	True
+try	importexport	ja	Try
+unable to delete	importexport	ja	Unable to delete
+unable to link to %1 "%2"	importexport	ja	Unable to link to %1 "%2"
+unable to schedule	importexport	ja	Unable to schedule.
+update categories	importexport	ja	Update categories
+use default	importexport	ja	デフォルトを使用
+use field from csv if possible	importexport	ja	Use field from CSV if possible
+use definition filter	common	ja	定義フィルターを用いる
+use given criteria:	common	ja	下記条件を用いる
+use search results	common	ja	検索結果を用いる
+user preference	importexport	ja	個人設定
+user template folder	importexport	ja	User template folder
+users allowed to create their own definitions	importexport	ja	Users allowed to create their own definitions
+users allowed to share their own definitions	importexport	ja	Users allowed to share their own definitions
+warnings	importexport	ja	Warnings
+which useres are allowed for this definition	importexport	ja	Which users are allowed to use this definition
+which users are allowed to use this definition	importexport	ja	Which users are allowed to use this definition
+you may want to <a href="%1" target="_new">backup</a> first.	importexport	ja	You may want to <a href="%1" target="_new">backup</a> first.
+you need to select an app and format first!	importexport	ja	You need to select an app and format first!

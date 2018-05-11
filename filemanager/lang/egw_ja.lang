@@ -1,11 +1,310 @@
+%1 already exists as a file	filemanager	ja	ファイル %1 は既に存在します。
+%1 already mounted on %2!	filemanager	ja	%1 は既に %2 にマウント済みです!
+%1 directories and %2 files copied.	filemanager	ja	%1 個のディレクトリと %2 個のファイルをコピーしました。
+%1 directories and %2 files deleted.	filemanager	ja	%1 個のディレクトリと %2 個のファイルを削除しました。
+%1 elements linked.	filemanager	ja	%1 個の項目をリンクしました。
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	ja	コピー中に %1 個のエラーが発生しました（%2 個のディレクトリと %3 個のファイルをコピーしました）
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	ja	削除中に %1 個のエラーが発生しました（%2 個のディレクトリと %3 個のファイルを削除しました
+%1 errors deleting!	filemanager	ja	削除中に %1 個のエラーが発生しました!
+%1 errors linking (%2)!	filemanager	ja	リンク作成中に %1 個のエラーが発生しました (%2)!
+%1 errors moving (%2 files moved)!	filemanager	ja	移動中に %1 個のエラーが発生しました（%2 個を移動しました）
+%1 failed, %2 succeded	filemanager	ja	%1 個失敗, %2 個成功.
+%1 files	common	ja	%1 個のファイル
+%1 files copied.	filemanager	ja	%1 個のファイルをコピーしました。
+%1 files deleted.	filemanager	ja	%1 個のファイルを削除しました。
+%1 files moved.	filemanager	ja	%1 個のファイルを移動しました。
+%1 files or directories deleted in %2 seconds.	filemanager	ja	%1 個のファイル/ディレクトリを削除しました。(所要時間 %2秒）
+%1 shares deleted.	filemanager	ja	%1 個の共有を削除しました。
+%1 starts with '%2'	filemanager	ja	%1 は '%2' から始まります。
+%1 successful unmounted.	filemanager	ja	%1 をアンマウントしました。
+%1 successful uploaded.	filemanager	ja	%1 をアップロードしました。
+%1 the following files into current directory	filemanager	ja	このディレクトリに下記のファイルを%1
+%1 urls %2 to clipboard.	filemanager	ja	%1 個のURLをクリップボードに%2
+%d errors while copying, %d files successfully copied.	filemanager	ja	コピー中に %d 個のエラーが発生しました（%d 個のファイルをコピーしました）
+%d errors while moving, %d files successfully moved.	filemanager	ja	移動中に %d 個のエラーが発生しました（%d 個のファイルを移動しました）
+%d erros while copying, %d files successfully copied.	filemanager	ja	コピー中に %d 個のエラーが発生しました（%d 個のファイルをコピーしました）
+%d erros while moving, %d files successfully moved.	filemanager	ja	移動中に 個のエラーが発生しました（%d 個のファイルを移動しました）
+%d files successfully copied.	filemanager	ja	%d 個のファイルをコピーしました。
+%d files successfully moved.	filemanager	ja	%d 個のファイルを移動しました。
+/ = everywhere	filemanager	ja	/ = 任意の場所
+0 means all, -n newer then n days	filemanager	ja	「0」で全て, 「-N」で N日より新しい
+accessrights	filemanager	ja	アクセス権
+acl added.	filemanager	ja	ACL を追加しました。
+acl deleted.	filemanager	ja	ACL を削除しました。
 actions	filemanager	ja	動作
+add to clipboard	filemanager	ja	クリップボードに追加
+administrators	filemanager	ja	管理者
+all files	filemanager	ja	全ファイル
+all subdirectories	filemanager	ja	全サブディレクトリ
+all types	filemanager	ja	全タイプ
+allow a maximum of the above configured folderlinks to be configured in settings	admin	ja	フォルダ・リンクの最大値
+and all it's childeren	filemanager	ja	およびその子孫
+application fields	filemanager	ja	アプリケーション項目
 applications	common	ja	アプリケーション
-create folder	filemanager	ja	フォルダ作成
-created	filemanager	ja	作成
+backend	filemanager	ja	バックエンド
+backend url	filemanager	ja	バックエンド URL
+backend url to mount	filemanager	ja	マウントするバックエンド URL
+basedirectory	filemanager	ja	ベース・ディレクトリ
+can't open directory %1!	filemanager	ja	ディレクトリ %1 を開けません!
+cancel editing %1 without saving	filemanager	ja	保存せずに %1 の編集をキャンセル
+cannot create directory because it begins or ends in a space	filemanager	ja	空白文字で開始/終端する名前でディレクトリを作成することはできません。
+cautiously rejecting to remove folder '%1'!	filemanager	ja	フォルダ '%1' の削除が拒否されました!
+check all	filemanager	ja	全て選択
+check virtual filesystem	common	ja	仮想ファイルシステムをチェック
+clear search	filemanager	ja	検索をクリア
+clipboard is empty!	filemanager	ja	クリップボードが空です!
+collab editor settings	filemanager	ja	Collab エディタ設定
+comment	filemanager	ja	コメント
+configuration changed.	filemanager	ja	構成を変更しました。
+confirm final delete	filemanager	ja	完全削除確認
+copied	filemanager	ja	コピー済み
+copied %1 to %2	filemanager	ja	%1 を %2 にコピーしました。
+copy	filemanager	ja	コピー
+copy into folder	filemanager	ja	フォルダにコピー
+copy link address	filemanager	ja	リンク・アドレスをコピー
+copy to	filemanager	ja	コピー:
+copy to clipboard	filemanager	ja	クリップボードにコピー
+could not copy %1 to %2	filemanager	ja	%1 を %2 にコピーできませんでした。
+could not create %1	filemanager	ja	%1 を作成できませんでした。
+could not delete %1	filemanager	ja	%1 を削除できませんでした。
+could not move %1 to %2	filemanager	ja	%1 を %2 に移動できませんでした。
+could not rename %1 to %2	filemanager	ja	%1 を %2 に名称変更できませんでした。
+create a link	filemanager	ja	リンクを作成
+create directory	filemanager	ja	ディレクトリを作成
+create file	filemanager	ja	ファイルを作成
+create folder	filemanager	ja	フォルダを作成
+created	filemanager	ja	作成済み
+created %1,%2	filemanager	ja	%1,%2 を作成しました
+created directory %1	filemanager	ja	ディレクトリ %1 を作成しました
+current directory	filemanager	ja	カレント・ディレクトリ
 custom fields	filemanager	ja	カスタム項目
+cut	filemanager	ja	切り取る
+cut to clipboard	filemanager	ja	クリップボードに切り取る
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	ja	既定値は「いいえ」。リンクは表示されませんが、開始フォルダ/フォルダ・リンクとして構成することができます。
+default document to insert entries	filemanager	ja	項目を挿入する既定のドキュメント
+defines how to open a merge print document	filemanager	ja	マージ印刷ドキュメントを開く方法を指定
+delete all older versions and deleted files older then %s days	filemanager	ja	古いバージョン、および %s 日以上前に削除したファイルを全て削除
+delete these files or directories?	filemanager	ja	これらのファイル/ディレクトリを削除しますか？
+delete these shares?	filemanager	ja	これらの共有を削除しますか？
+delete this extended ACL?	filemanager	ja	この拡張ACLを削除しますか？
+delete this file or directory	filemanager	ja	このファイル/ディレクトリを削除しますか？
+deleted %1	filemanager	ja	%1を削除しました。
+directories sorted in	filemanager	ja	ディレクトリ: 格納先
+directory	filemanager	ja	ディレクトリ
+directory "%1" not found!	filemanager	ja	ディレクトリ "%1" が見つかりません!
+directory %1 already exists	filemanager	ja	ディレクトリ %1 は既に存在します。
+directory %1 does not exist	filemanager	ja	ディレクトリ %1 が見つかりません。
+directory not found or no permission to access it!	filemanager	ja	ディレクトリが見つかりません（またはパーミッションがありません）!
+directory successfully created.	filemanager	ja	ディレクトリを作成しました。
+directory with documents to insert entries	filemanager	ja	項目を挿入するディレクトリ/ドキュメント
+disable	filemanager	ja	無効化する
+disable versioning for this mountpoint	filemanager	ja	このマウントポイントについてバージョン管理を無効化
+display and modification of content	filemanager	ja	内容を表示/編集
+display of content	filemanager	ja	内容
+do you want more information about epl subscription?	common	ja	EPL サブスクリプションについて、もっとお知りになりたいですか？
+do you want to overwrite existing file %1 in directory %2?	filemanager	ja	ディレクトリ %2 のファイル %1 に上書き保存してよろしいですか？
+do you want to overwrite the existing file %1?	filemanager	ja	ファイル %1 に上書き保存してよろしいですか？
+download	filemanager	ja	ダウンロード
+edit comments	filemanager	ja	コメントを編集
+edit settings	filemanager	ja	設定を編集
+enable	filemanager	ja	有効化する
+enable versioning for given mountpoint	filemanager	ja	このマウントポイントについてバージョン管理を有効化
+enter setup user and password	filemanager	ja	設定ユーザ/パスワードを入力してください
+enter setup user and password to get root rights	filemanager	ja	ルート権限を得るために設定ユーザ/パスワードを入力してください
+enter the complete vfs path to specify a fast access link to a folder	filemanager	ja	フォルダに対するファスト・アクセス・リンクにする完全VFSパスを入力してください。
+enter the complete vfs path to specify your desired start folder.	filemanager	ja	Enter the complete VFS path to specify your start folder開始フォルダにする完全VFSパスを入力してください。
+error adding the acl!	filemanager	ja	ACL 追加中にエラー!
+error creating symlink to target %1!	filemanager	ja	%1 に対するシンボリック・リンク作成中にエラー!
+error deleting the acl entry!	filemanager	ja	ACL 項目の削除中にエラー!
+error mounting %1 on %2!	filemanager	ja	%2 に %1 をマウント中にエラー!
+error unmounting %1!	filemanager	ja	%1 をアンマウント中にエラー!
+error uploading file!	filemanager	ja	ファイルのアップロード中にエラー!
+error while creating directory.	filemanager	ja	ディレクトリの作成中にエラー
+everyone	filemanager	ja	Everyone
+Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.	filemanager	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
+Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example	filemanager	ja	例 {{LETTERPREFIX}} - ダブル・スペースを挟まずに接頭字を出力(タイトルが空の場合など）。
+Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller	calendar	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
+Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
+Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field	filemanager	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
+excludes selected mime types	filemanager	ja	選択されたMIMEタイプを除外する
+excludes selected mime types from being opened by editor	filemanager	ja	選択されたMIMEタイプを、エディタで開く対象から除外する
+executable	filemanager	ja	実行可能
 expires	filemanager	ja	有効期限
+export definition to use for nextmatch export	filemanager	ja	エクスポートで用いる設定ファイル
+extended access control list	filemanager	ja	拡張 ACL
+extended acl	filemanager	ja	拡張 ACL
+failed to change permissions of %1!	filemanager	ja	%1 のパーミッションの変更に失敗しました!
+failed to create directory!	filemanager	ja	ディレクトリの作成に失敗しました!
+favorites	filemanager	ja	お気に入り
+file	common	ja	ファイル
+file %1 already exists	filemanager	ja	ファイル %1 は既に存在します
+file %1 could not be created.	filemanager	ja	ファイル %1 を作成できませんでした。
+file %1 may be too big. contact your systemadministrator for further info	filemanager	ja	ファイル %1 はサイズが大き過ぎます。
+file a file is only available with an epl subscription.	filemanager	ja	EPL サブスクリプション版でのみ利用可能
+file deleted.	filemanager	ja	ファイルを削除しました。
+file names cannot contain "%1"	filemanager	ja	ファイル名に "%1" を含めることはできません
+file or directory not found!	filemanager	ja	ファイルまたはディレクトリが見つかりません!
+file successful uploaded.	filemanager	ja	ファイルをアップロードしました。
+filemanager	common	ja	ファイル・マネージャ
+filemanager configuration	admin	ja	ファイル・マネージャ構成
+filemanager fields:	filemanager	ja	ファイル・マネージャ 項目:
+filename must not be empty!	filemanager	ja	ファイル名を空にすることはできません!
+files	common	ja	ファイル
+files from links	filemanager	ja	リンク先ファイル
+files from subdirectories	filemanager	ja	サブディレクトリのファイル
+files in this directory	filemanager	ja	ディレクトリ内のファイル
+filesystem check reported no problems.	filemanager	ja	ファイルシステムに問題は見つかりませんでした。
+finally delete	filemanager	ja	完全削除
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ja	ディレクトリ内の古いバージョン、および削除済みファイルを完全に削除します。\n\nこの作業は元に戻せません。
+finally delete this version	filemanager	ja	このバージョンを完全削除
+fix reported problems	filemanager	ja	見つかった問題を修正
+folder up	filemanager	ja	上のフォルダ
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	ja	アプリケーション項目（/apps/appname/id 内）にリンクするファイルでは、アプリケーション用プレース・ホルダーを利用できます。利用可能なプレース・ホルダーについては各アプリケーションを参照してください。
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	ja	アプリケーション項目（/apps/appname/id 内）にリンクするファイルでは、アプリケーション用プレース・ホルダーを利用できます。利用可能なプレース・ホルダーについては各アプリケーションを参照してください。
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	ja	シリアルレター向けタグ。任意のコンテンツをこのタグで囲んで使用します。
+general	filemanager	ja	一般
+general fields:	filemanager	ja	一般項目:
+go home	filemanager	ja	ホーム
+go to	filemanager	ja	移動:
+go to your home directory	filemanager	ja	ホーム・ディレクトリに移動
+go up	filemanager	ja	上に移動
 id	filemanager	ja	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	calendar	ja	ディレクトリ（VFS フルパス）を指定すると、%1上で各ドキュメントに対するアクションが表示され、ドキュメントをダウンロードすることができるようになります。
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	ja	ドキュメント（VFS フルパス）を指定すると、%1の各項目ごとに拡張ドキュメント・アイコンが表示され、ドキュメントをダウンロードすることができるようになります。
+if you specify an export definition, it will be used when you export	filemanager	ja	エクスポート時に使用する設定を指定します。
+if you specify an export definition, it will be used when you export*	filemanager	ja	エクスポート時に使用する設定を指定します。*
+inherited	filemanager	ja	継承
+last accessed	filemanager	ja	最終アクセス日時
+link	filemanager	ja	リンク
+link %1: %2	filemanager	ja	リンク %1: %2
+link into folder	filemanager	ja	フォルダにリンク
+link target	filemanager	ja	リンク先
+link target %1 not found!	filemanager	ja	リンク先 %1 が見つかりません!
+list view	filemanager	ja	一覧表示
 location	filemanager	ja	場所
+log out as superuser	filemanager	ja	スーパー・ユーザからログアウト
+mail files	filemanager	ja	メール・ファイル
+mail paste	filemanager	ja	メール貼り付け
+max folderlinks	admin	ja	フォルダ・リンクの最大数
+merge print open handler	filemanager	ja	印刷オープン・ハンドラをマージ
+mime type	filemanager	ja	MIMEタイプ
+modified	filemanager	ja	変更日時
+modified between	filemanager	ja	変更: 
+modify all subdirectories and their content	filemanager	ja	全サブフォルダおよびその内容を変更
+mount	filemanager	ja	マウント
+mount /etemplates to allow customizing of etemplates	filemanager	ja	eTemplate のカスタマイズを許可するために /etemplates をマウント
+mountpoints	filemanager	ja	マウントポイント
 move	filemanager	ja	移動
+move into folder	filemanager	ja	フォルダに移動
+move to	filemanager	ja	移動:
+moved %1 to %2	filemanager	ja	%1 を %2 に移動しました。
+name of current user, all other contact fields are valid too	filemanager	ja	現ユーザ名
+new directory	filemanager	ja	新規ディレクトリ
+no access	filemanager	ja	アクセス権限無し
+no files in this directory.	filemanager	ja	ファイルがありません。
+no preview available	filemanager	ja	プリビュー無し
+no version history for this file/directory	filemanager	ja	バージョン履歴がありません。
+noone	filemanager	ja	禁止
+older versions or deleted files	filemanager	ja	古いバージョン、または削除済みファイル
+only owner can rename or delete the content	filemanager	ja	所有者だけが名称変更したり内容変更/削除できます。
+open	filemanager	ja	開く
+operation	filemanager	ja	オペレーション
+paste link	filemanager	ja	リンクを貼り付ける
+path %1 not found or not a directory!	filemanager	ja	%1 が見つかりません!
+percentage	filemanager	ja	パーセンテージ
+permission denied!	filemanager	ja	権限が拒否されました!
 permissions	filemanager	ja	パーミッション
+permissions of %1 changed.	filemanager	ja	%1 のパーミッションが変更されました。
+please select a file to delete.	filemanager	ja	削除するファイルを選択してください。
+preview	filemanager	ja	プリビュー
+preview %1	filemanager	ja	%1 プリビュー
+preview of %1	filemanager	ja	プリビュー: %1
+projectmanager	filemanager	ja	プロジェクト・マネージャ
+properties saved.	filemanager	ja	プロパティを保存しました。
+quick jump to	filemanager	ja	クイック・ジャンプ:
+read & write access	filemanager	ja	読み書き
+read access only	filemanager	ja	読み取り専用
+readonly share link	filemanager	ja	読み取り専用共有リンク
+reload	filemanager	ja	リロード
+rename of %1 to %2 failed!	filemanager	ja	%1 から %2 への名称変更に失敗しました!
+rename, change permissions or ownership	filemanager	ja	名称/パーミッション/所有者の変更
+renamed %1 to %2	filemanager	ja	%1 を %2 に名称変更
+renamed %1 to %2.	filemanager	ja	%1 を %2 に名称変更しました。
+replaced %1	filemanager	ja	%1 を置換しました
+replacements for inserting entries into documents	filemanager	ja	ドキュメントに項目を挿入する際の置換
+rights	filemanager	ja	権限
+root	filemanager	ja	ルート
+root access granted.	filemanager	ja	ルート・アクセス権を許可しました。
+root access stopped.	filemanager	ja	ルート・アクセス権を剥奪しました。
+save %1	filemanager	ja	%1を保存
+save %1, and go back to file listing	filemanager	ja	%1 を保存し、ファイル一覧に戻ります。
+save as zip	filemanager	ja	ZIPとして保存
+save changes	filemanager	ja	変更を保存
+saved %1	filemanager	ja	%1を保存しました。
+saving properties failed!	filemanager	ja	プロパティの保存に失敗しました!
+saving setting for document merge failed!	filemanager	ja	ドキュメント・マージ設定の保存に失敗しました!
+search for '%1'	filemanager	ja	'%1'を検索
+searchstring	filemanager	ja	文字列検索
+select action...	filemanager	ja	アクションを選択...
+select file to upload in current directory	filemanager	ja	アップロードするファイルを選択してください。
+select file(s) from vfs	common	ja	VFSからファイルを選択
+setting for document merge saved.	filemanager	ja	ドキュメント・マージの設定を保存しました。
+share files	filemanager	ja	ファイルを共有
+shared files	filemanager	ja	共有ファイル
+shared with	filemanager	ja	共有:
+show	filemanager	ja	表示
+show hidden files	filemanager	ja	隠しファイルを表示
+show link "%1" in side box menu?	filemanager	ja	サイドメニューにリンク"%1"を表示
+show link "users and groups" in side box menu?	filemanager	ja	サイドボックス・メニューに"ユーザとグループ"リンクを表示しますか？
+show link "users and groups*" in side box menu?*	filemanager	ja	サイドボックス・メニューに"ユーザとグループ*"リンクを表示しますか？*
+show link "your home directory" in side box menu?	filemanager	ja	サイドボックス・メニューに"ホーム・ディレクトリ"リンクを表示しますか？
+show link "your home directory*" in side box menu?*	filemanager	ja	サイドボックス・メニューに"ホーム・ディレクトリ*"リンクを表示しますか？*
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	ja	サイドボックス・メニューにファイル・マネージャのベース・ディレクトリ（/）を表示しますか？
+size	filemanager	ja	サイズ
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	ja	一部の機能を利用するには、スーパー・ユーザ権限が必要です。ファイル・マネージャのスーパー・ユーザでログインしてください。
+sqlfs statistics	filemanager	ja	sqlFS 統計
+start search	filemanager	ja	検索を開始
+startfolder	filemanager	ja	フォルダーを開始
+successful mounted %1 on %2.	filemanager	ja	%2 に %1 をマウントしました。
+superuser	filemanager	ja	スーパーユーザ
+superuser (root)	filemanager	ja	スーパーユーザ（ルート）
+symlink to %1 created.	filemanager	ja	%1 に対するシンボリック・リンクを作成しました。
+tag to mark positions for address labels	filemanager	ja	アドレスラベルで、位置を記録するためのタグ
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	ja	既定の開始フォルダは個人フォルダです。空に設定したり、指定されたパスが存在しない/アクセス権が無い場合は、既定値が使用されます。
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ja	ドキュメントにはプレース・ホルダー（例: {{%3}}）を埋め込むことができ、ドキュメント保存時に実データで置換されます（%1 全プレース・ホルダー一覧 %2）。
+the following document-types are supported:	filemanager	ja	下記のドキュメント・タイプがサポートされます: 
+the requested path %1 is not available.	filemanager	ja	指定されたパス %1 は利用できません!
+there's already a directory with that name!	filemanager	ja	同名のディレクトリが既に存在します!
+there's already a file with that name!	filemanager	ja	同名のファイルが既に存在します!
+tile view	filemanager	ja	タイル表示
+to overwrite the existing file store again.	filemanager	ja	上書き保存するには、再度ファイルを保存してください。
+total files	filemanager	ja	ファイル合計
+under directory	filemanager	ja	ディレクトリ下
+unmount	filemanager	ja	アンマウント
+unused space	filemanager	ja	未使用領域
 up	filemanager	ja	上
+updated comment for %1	filemanager	ja	%1のコメントを更新しました。
+upload fields	filemanager	ja	項目をアップロード
+upload files	filemanager	ja	ファイルをアップロード
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	ja	アドレスラベル向けタグ。任意のコンテンツをこのタグで囲んで使用します。
+used space	filemanager	ja	使用領域
+user color indicator	filemanager	ja	ユーザ色標識
+users and groups	filemanager	ja	ユーザとグループ
+versioning	filemanager	ja	バージョン管理
+vfs mounts and versioning	common	ja	VFS マウントとバージョン管理
+webdav link copied into clipboard	filemanager	ja	WebDAV リンクをクリップボードにコピーしました
+who should be allowed to finally delete deleted files or old versions of a file:	filemanager	ja	完全削除（古いバージョンや削除済みファイルを削除すること）ができるユーザ: 
+writable share link	filemanager	ja	書き込み可能共有リンク
+wrong username or password!	filemanager	ja	ユーザ名またはパスワードが不正です!
+you are not allowed to finally delete older versions and deleted files!	filemanager	ja	完全削除を実行する権限がありません!
+you are not allowed to upload a script!	filemanager	ja	スクリプトをアップロードする権限がありません!
+you can only grant additional rights, you can not take rights away!	filemanager	ja	権限を追加することはできますが剥奪することはできません!
+you can use regular upload [+] button to upload files.	filemanager	ja	ファイルをアップロードするには、アップロード・ボタン（＋）を使用します。
+you do not have access to %1	filemanager	ja	%1 に対するアクセス権がありません
+you need to become root, to enable or disable versioning on a directory!	filemanager	ja	ディレクトリのバージョン管理を有効化/無効化するには、ルートになる必要があります。
+you need to select an owner!	filemanager	ja	所有者を選択して下さい!
+you need to select some files first!	filemanager	ja	ファイルを選択してください!
+you will be redirected to your home directory.	filemanager	ja	ホーム・ディレクトリに移動します。
+you will be redirected to your start folder.	filemanager	ja	開始フォルダに移動します。
+your home dir did not exist, egroupware created a new one.	filemanager	ja	ホーム・ディレクトリが存在しなかったため、EGroupwareが作成しました。
+your home directory	filemanager	ja	ホーム・ディレクトリ

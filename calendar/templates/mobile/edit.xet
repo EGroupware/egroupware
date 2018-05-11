@@ -262,7 +262,7 @@
 					<description value="Options"/>
 					<vbox>
 						<checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"/>
-						<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,disable"/>
+						<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,"/>
 						<checkbox label="Private" id="public" options="0,1"/>
 					</vbox>
 				</row>
