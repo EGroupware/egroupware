@@ -22,6 +22,7 @@ disabled chains	notifications	de	Deaktivierte Ketten
 do not notify me at all	notifications	de	benachrichtige mich niemals
 domain not found, please check serveraddress.	notifications	de	Domain nicht gefunden, bitte Serveradresse überprüfen.
 e-mail only	notifications	de	nur E-Mail
+email notifications only, if user is not logged in	de	E-Mail, wenn der Benutzer nicht angemeldet ist.
 egroupware has notifications for you	notifications	de	EGroupware hat Benachrichtigungen für Sie
 egroupware login is starting, please wait.	notifications	de	EGroupware Login wird ausgeführt, bitte warten.
 egroupware logindomain:	notifications	de	EGroupware Logindomain:
