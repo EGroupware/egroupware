@@ -5,11 +5,13 @@
 %1 is not readable	importexport	de	%1 ist nicht lesbar
 %1 is not writable	importexport	de	%1 ist nicht möglich zu schreiben
 %1 records processed	importexport	de	%1 Einträge ausgeführt
+%s all users	importexport	en	%s all users
 %s just me	importexport	de	%s Nur für mich persönlich verfügbar
 (* for all)	importexport	de	(* Für alle)
 (0-23)	importexport	de	(0-23)
 (0-6, 0=sun)	importexport	de	(0-6, 0=Sonntag)
 *contact id cannot be changed by import	importexport	de	*Contact ID kann nicht durch den Import verändert werden
+add a new definition	importexport	de	Hinzufügen einer neuen Definition
 addressbook csv import	importexport	de	Adressen per CSV Importieren
 addressbook vcard import	importexport	de	Adressen per vCard Importieren
 admin disabled exporting	importexport	de	Ihr Administrator hat den Export deaktiviert
@@ -18,6 +20,7 @@ all users	importexport	de	Alle Benutzer
 allowed users	importexport	de	Erlaubte Benutzer
 automatically created by importexport	importexport	de	Wurde automatisch vom Import/Export Modul erstellt
 basic csv import	importexport	de	Basis CSV Import
+change allowed users	importexport	de	Erlaubte Benutzer ändern
 changed	importexport	de	Geändert
 changed allowed_users	importexport	de	Erlaubten Benutzer geändert
 changed owner	importexport	de	Besitzer geändert
@@ -110,6 +113,8 @@ schedule import | export	importexport	de	Zeitplan für Import/Export
 schedule not found	importexport	de	Kein Zeitplan gefunden
 schedule times are server time!  currently %s.	importexport	de	Zeitgesteuerter Import bezieht sich auf die Serverzeit. Aktuell %s.
 select definition	importexport	de	Definition auswählen
+select groups	importexport	de	Wähle Gruppen
+Select owner	importexport	de	Eigentümer auswählen
 select plugin	importexport	de	Plug-in auswählen
 select...	importexport	de	Auswählen...
 skipped	importexport	de	Überspringen

@@ -49,24 +49,24 @@
 			<vbox class="action_popup-content">
 				<description value="Select owner"/>
 				<listbox type="select-account" id="owner" options="None,accounts"/>
-				<hbox>
-					<button id="save_owner" label="Save" onclick="nm_submit_popup(this); return false;"/>
-					<buttononly label="Cancel" onclick="nm_hide_popup(this,'owner_popup');"/>
-				</hbox>
 			</vbox>
+			<hbox>
+				<button id="save_owner" label="Save" onclick="nm_submit_popup(this); return false;" image="save" background_image="1"/>
+				<buttononly id="cancel_owner" label="Cancel" onclick="nm_hide_popup(this,'owner_popup');" image="cancel" background_image="1"/>
+			</hbox>
 		</box>
 		<box id="allowed_popup" class="action_popup prompt">
-			<vbox>
-				<description value="Change allowed users" class="promptheader"/>
+			<description value="Change allowed users" class="promptheader"/>
+			<vbox class="action_popup-content">
 				<description value="Select groups"/>
 				<checkbox label="%s Just me" id="allowed_private"/>
 				<checkbox label="%s All users" id="all_users"/>
 				<listbox type="select-account" id="allowed" rows="5" account_type="groups"/>
-				<hbox>
-					<button id="save_allowed" label="Save" onclick="nm_submit_popup(this); return false;" image="save" background_image="1"/>
-					<buttononly label="Cancel" onclick="nm_hide_popup(this,'allowed_popup');" image="cancel" background_image="1"/>
-				</hbox>
 			</vbox>
+			<hbox>
+				<button id="save_allowed" label="Save" onclick="nm_submit_popup(this); return false;" image="save" background_image="1"/>
+				<buttononly id="cancel_allowed" label="Cancel" onclick="nm_hide_popup(this,'allowed_popup');" image="cancel" background_image="1"/>
+			</hbox>
 		</box>
 		<styles>
 			td.lr_padding { padding-left: 5px; padding-right: 5px; }
