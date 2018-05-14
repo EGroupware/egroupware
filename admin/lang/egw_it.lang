@@ -89,7 +89,7 @@ admin username	admin	it	username amministratore
 administration	admin	it	Amministrazione
 admins	admin	it	Amministratori
 advanced options	admin	it	opzioni avanzate
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	it	Dopo quanti tentativi falliti di login, un account deve essere bloccato (predefinito 3) ?
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	it	Dopo quanti tentativi falliti di accesso dovrebbe essere bloccato un account. Predefinito = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	it	Dopo quanti tentativi falliti di login, un IP deve essere bloccato (predefinito 3) ?
 aliases	admin	it	Alias
 all applications	admin	it	Tutte le applicazioni
@@ -100,6 +100,7 @@ all users	admin	it	Tutti gli utenti
 allow anonymous access to this app	admin	it	Consenti accesso anonimo a questa applicazione
 allow remote administration from following install id's (comma separated)	admin	it	Permetti l'amministrazione remota dai seguenti ID di installazione, separati da virgola.
 allow users to change forwards	admin	it	Permetti agli utenti di modificare gli inoltri
+allow users to create identities for aliases	admin	it	Permettere agli utenti di creare identità per gli alias
 alternate email address	admin	it	indirizzo email alternativo
 and logged in	admin	it	e collegato
 anonymous user	admin	it	Utente anonimo
@@ -166,6 +167,7 @@ category %1 has been saved !	admin	it	La categoria %1 è stata salvata!
 category deleted.	admin	it	Categoria eliminata
 category list	admin	it	Elenco categorie
 category saved.	admin	it	Categoria salvata
+certificate	admin	it	Certificato
 change account_id	admin	it	Cambia ID Account
 change acl rights	admin	it	Cambia i permessi ACL
 change config settings	admin	it	Cambia le impostazioni di configurazione
@@ -233,6 +235,7 @@ delete application	admin	it	Cancella applicazione
 delete category	admin	it	Cancella categoria
 delete group	admin	it	Cancella gruppo
 delete identity	admin	it	Cancella identità
+delete including sub-entries	admin	it	Elimina insieme alle sottovoci
 delete peer server	admin	it	Cancella server peer
 delete selected entries	admin	it	Rimuovi le voci selezionate
 delete the category	admin	it	cancella la categoria
@@ -269,6 +272,7 @@ destination account #%1 does exist and is not renamed itself! can not merge acco
 determines the order the fields are displayed	admin	it	Determina l'ordine di visualizzazione dei campi
 disable	admin	it	Disabilita
 disable "auto completion" of the login form	admin	it	Disabilita l' "auto completamento" del form di login
+disable all	admin	it	Disabilitare tutto
 disable minifying of javascript and css files	admin	it	Disabilita la compressione di file javascript e css
 disable wysiwyg-editor	admin	it	disabilita editor WYSIWYG
 disabled (not recomended)	admin	it	disabilitato (non consigliato)
@@ -277,6 +281,7 @@ displayed length of input field (set rows=1 to limit length)	admin	it	lunghezza 
 displaying html messages is disabled	admin	it	la visualizzazione html dei messaggi è disabilitata
 displaying plain messages is disabled	admin	it	la visualizzazione semplice dei messaggi è disabilitata
 do not delete the category and return back to the list	admin	it	NON eliminare la categoria e torna alla lista
+do not generate email addresses	admin	it	Non generare indirizzi email
 do not offer introduction video	admin	it	Non proporre i video di introduzione
 do not validate certificate	admin	it	Non convalidare il certificato
 do you also want to delete all global subcategories ?	admin	it	Vuoi eliminare anche tutte le sotto-categorie globali ?
@@ -344,8 +349,6 @@ enter the site password for peer servers	admin	it	Inserisci la password per i pe
 enter the site username for peer servers	admin	it	Inserisci il nome utente per i peer server
 enter the title for your site	admin	it	Inserisci il titolo per il tuo sito
 enter the title of your logo	admin	it	Inserisci il titolo del tuo logo
-enter the url or filename (in api/templates/default/images) of your logo	admin	it	Inserisci l'URL o il nome del file (in api/templates/default/images) del tuo logo
-enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	it	Inserisci l'URL oppure il percorso per il file favicon
 enter the url where your logo should link to	admin	it	Inserisci l'url a cui punterà il tuo logo
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	it	Inserisci il percorso VFS dove immagini, icone e logo aggiuntivi potranno essere memorizzati e localizzati dalle applicazioni di EGroupware. <br> Il percorso DEVE iniziare con / ed essere leggibile da parte di tutti gli utenti
 enter your default ftp server	admin	it	Inserire il server FTP predefinito
@@ -394,6 +397,7 @@ filtered by group	admin	it	Filtrati per gruppo
 folder acl	admin	it	Permessi ACL della cartella
 for the times above	admin	it	per il tempo sovrastante
 for the times below (empty values count as '*', all empty = every minute)	admin	it	per i tempi sottostanti (un valore vuoto equivale a '*', tutti vuoti = ogni minuto)
+forbid users to create identities	admin	it	Impedire agli utenti la creazione di identità
 force selectbox	admin	it	Forza elenco a discesa
 force users to change their password regularily?(empty for no,number for after that number of days	admin	it	Imposta l'obbligo di modifica periodica della password. Immetti il numero di giorni. Vuoto = Nessun obbligo di cambio periodico della password
 forward also to	admin	it	Inoltra anche a
@@ -477,6 +481,8 @@ ip	admin	it	IP
 jobs	admin	it	Jobs
 kill	admin	it	Termina
 kill session	admin	it	Termina sessione
+kill these sessions	admin	it	Termina queste sessioni
+kill this session	admin	it	Termina questa sessione
 languages	admin	it	Lingue
 last %1 logins	admin	it	Ultimi %1 login
 last %1 logins for %2	admin	it	Ultimi %1 login per %2
@@ -525,6 +531,7 @@ login-status	admin	it	Stato di accesso
 loginid	admin	it	ID di Login
 logintime	admin	it	Orario ingresso
 logoutime	admin	it	Orario logout
+lowercase email addresses	admin	it	Rendere indirizzi email in minuscolo
 mail account	admin	it	Account posta elettronica
 mail settings	admin	it	Impostazioni Posta
 main email-address	admin	it	Indirizzo email Principale
@@ -600,6 +607,7 @@ own install id:	admin	it	Tuo ID installazione
 owner "%1" removed, please select group-owner	admin	it	Proprietario "%1" rimosso. Per favore selezionare un proprietario per il gruppo
 passthrough	admin	it	Passthrough
 password for smtp-authentication	admin	it	Password per autenticazione SMTP
+password to unlock encrypted p12	admin	it	Password per sbloccare p12 criptato
 password updated	admin	it	Password aggiornata
 passwords and/or attributes of %1 accounts changed	admin	it	Password e/o attributi per %1 account modificate
 passwords require a minimum number of characters	admin	it	Le password richiedono un numero minimo di caratteri
@@ -656,6 +664,7 @@ remove	admin	it	rimuovi
 remove all users from this group	admin	it	Rimuovi tutti gli utenti da questo gruppo
 remove all users from this group ?	admin	it	Rimuovi tutti gli utenti da questo gruppo ?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	it	La rimozione dell'accesso ai gruppi può provocare problemi per i dati di questa categoria. Sei sicuro di volerlo fare? Gli utenti di questi gruppi potrebbero non avere più l'accesso:
+renaming user 'anonymous' will break file sharing and collabora online office!	admin	it	Rinominare l'utente "anonimo" (anonymous) renderà inutilizzabile la condivisione di file e Collabora Online Office!
 requested	admin	it	Richiesto
 required pear class mail/mimedecode.php not found.	admin	it	Non è stata trovata la classe PEAR Mail/mimeDecode.php
 reset filter	admin	it	Reimposta filtro
@@ -816,6 +825,11 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	it	Su
 update current email address:	admin	it	Aggiorna l'indirizzo email attuale:
 updated	admin	it	Aggiornato
+upload your background image or enter the url	admin	it	Carica la tua immagine di sfondo oppure inserisci l'URL
+upload your certificate .p12/.pfx file	admin	it	Carica il tuo file .p12/.pfx
+upload your favicon or enter the url	admin	it	Carica la tua favicon o inserisci l'URL
+upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	it	Carica il logo di testata oppure inseriscine l'URL (lasciare vuoto se fosse lo stesso logo della schermata di login)
+upload your logo or enter the url	admin	it	Caricare il tuo logo oppure inseriscine l'URL (lasciare vuoto se fosse lo stesso logo della schermata di login)
 uppercase, lowercase, number, special char	admin	it	Maiuscole, minuscole, numeri, caratteri speciali
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	it	URL della installazione EGroupware, p.es. http://dominio.com/egroupware
 usage	admin	it	Utilizzo

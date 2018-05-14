@@ -1,5 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	it	%1 (%2 nuovi) messaggi scritti per l'applicazione '%3' e linguaggi '%4'
 %1 active file(s) with same name as directory inactivated!	admin	it	% file attivi con lo stesso nome della cartella disattivata!
+%1 copied - the copy can now be edited	common	it	% copiato - la copia può adesso essere modificata
 %1 directories %2 found!	admin	it	%1 cartelle trovate!
 %1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti
 %1 entries found, select one ...	common	it	% voci trovate, selezionare una...
@@ -47,6 +48,7 @@
 80 (http)	admin	it	80 (http)
 a pattern to be searched for	common	it	un pattern da cercare
 a request to the egroupware server returned with an error	common	it	Una richiesta al server di EGroupware ha restituito un errore
+abcdefghijklmnopqrstuvwxyz	common	it	ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abort	common	it	Interrompi
 about	common	it	Info
 about %1	common	it	Info su %1
@@ -109,7 +111,6 @@ all operations save the template!	common	it	tutte le operazioni salvano il templ
 all users	common	it	Tutti gli utenti
 allowed file type: %1	common	it	Tipo file consentito: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	it	Permette di modificare gli utenti responsabili da dispositivi che non li supportano, impostando l'indirizzo email di un utente come categoria
-alphabet	common	it	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alt	common	it	Alt
 alternate style-sheet:	common	it	Foglio di stile alternativo:
 am	common	it	am
@@ -138,6 +139,7 @@ apply the action on the whole query, not only the shown entries	common	it	Applic
 april	common	it	Aprile
 are you sure you want to delete these entries ?	common	it	Vuoi davvero cancellare queste voci ?
 are you sure you want to delete this entry ?	common	it	Vuoi davvero cancellare questa voce?
+are you sure you want to logout?	common	it	Sei sicuro di voler uscire?
 are you sure, you would like to delete the backup key?	common	it	Sicuro di voler eliminare la chiave di backup?
 argentina	common	it	ARGENTINA
 armenia	common	it	ARMENIA
@@ -428,6 +430,7 @@ eastern european	common	it	Europeo orientale
 ecuador	common	it	EQUADOR
 edit	common	it	Modifica
 edit %1 category for	common	it	Modifica categoria %1 per
+edit avatar	common	it	Modifica l'avatar
 edit categories	common	it	Modifica Categorie
 edit category	common	it	Modifica Categoria
 edit embeded css styles or of the applications app.css file	common	it	modifica gli stili CSS incorporati o del file applicazioni app.css
@@ -498,9 +501,9 @@ ethiopia	common	it	ETIOPIA
 everything	common	it	Tutto
 exact	common	it	esatta
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	it	Esempio {{IF n_prefix~Sig~Hello Mr.~Salve Sig.ra.}} -  ricerca nel campo  "n_prefix", per "Sig", se trovato scrivere "Salve Sig" altrimenti scrivere "Salve Sig.ra"
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	it	Esempio {{LETTERPREFIX}} - Fornisce un prefisso senza doppi spazi, se per esempio il titolo fosse vuoto.
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, si otterrà una riga con il valore del campo "Ruolo"
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	it	Esempio {{nenvlf role}} - se il campo non è vuoto, impostare un LF senza alcun valore del campo
-example {} - gives a letter prefix without double spaces, if the title is empty for example	preferences	it	Esempio {} -  Darebbe un prefisso senza doppi spazi, se il titolo fosse vuoto per esempio
 exchange this row with the one above	common	it	scambia questa riga con quella superiore
 exchange this two columns	common	it	scambia queste due colonne
 expiration	common	it	Scadenza
@@ -617,6 +620,7 @@ high	common	it	Alta
 highest	common	it	Più Alta
 history log	common	it	Log cronologia
 hold [%1] and [%2] key to drag %3 to your desktop	common	it	Premere [%1] e [%2] per trascire sul tuo desktop
+hold [%1] key to select text eg. to copy it	common	it	Premere [%1] per selezionare il testo p.es. per copiarlo
 holy see (vatican city state)	common	it	SANTA SEDE (STATO DI CITTA' DEL VATICANO)
 home	common	it	Home
 home email	common	it	e-mail abitazione
@@ -629,6 +633,7 @@ how many days to sync in the future (default %1)	groupdav	it	Quanti giorni nel f
 how many days to sync in the past (default %1)	groupdav	it	Quanti giorni nel passato sincronizzare (predefinito %1)
 how many entries should the list show	common	it	Quante voci deve mostrare l'elenco
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	it	Quante icone visualizzare nella barra di navigazione (in cima alla pagina). Le icone addizionali vanno in un menù pulldown, richiamabile dall'icona all'estrema destra della barra di navigazione.
+how many rows to print	common	it	Quante righe stampare
 how to show the general egroupware menu ?	common	it	Come mostrare il menù generale di EGroupware
 html	common	it	Html
 html link to the current record	common	it	Collegamento HTML al record attuale
@@ -849,6 +854,7 @@ netherlands antilles	common	it	ANTILLE OLANDESI
 never	common	it	Mai
 new	common	it	Nuovo
 new caledonia	common	it	NUOVA CALEDONIA
+new egroupware release %1 available	common	it	È disponibile una nuova release di EGroupware
 new entry added sucessfully	common	it	Nuova voce aggiunto con successo
 new favorite	common	it	Nuovo preferito
 new main category	common	it	Nuova categoria principale
@@ -880,6 +886,7 @@ no filters	common	it	Nessun filtro
 no history for this record	common	it	Nessuna history per questo record
 no key for recipient:	common	it	Nessuna chiave per il destinatario:
 no matches found	common	it	Nessuna corrispondenza trovata.
+no results match	common	it	Non ci sono risultati che corrispondono
 no rights to export more than %1 entries!	common	it	Diritti insufficienti per esportare più di %1 voci!
 no row to swap with !!!	common	it	nessuna riga con cui scambiare !!!
 no savant2 template directories were found in:	common	it	Nessuna directory template Savant2 trovata in:
@@ -945,6 +952,7 @@ other	common	it	Altro
 overflow	common	it	Overflow
 overview	common	it	Panoramica
 owner	common	it	Proprietario
+ownership	common	it	Proprietà
 padding	common	it	Padding
 page	common	it	Pagina
 page was generated in %1 seconds	common	it	La pagina è stata generata in %1 secondi
@@ -991,6 +999,8 @@ please run setup to become current	common	it	Per favore esegui setup per aggiorn
 please select	common	it	Per favore Seleziona
 please set your global preferences	common	it	Per favore imposta le preferenze globali !
 please set your preferences for this application	common	it	Per favore imposta le tue preferenze per questa applicazione !
+please type %1 more characters	common	it	Per favore digitare %1 caratteri ancora
+please type 1 more character	common	it	Per favore digitare 1 carattere ancora
 please wait...	common	it	Attendere per Favore...
 please, check back with us shortly.	common	it	Per favore torna a trovarci più tardi
 pm	common	it	pm
@@ -1006,6 +1016,7 @@ preference	common	it	Preferenza
 preferences	common	it	Preferenze
 preferences for the %1 template set	preferences	it	Preferenze per il set %1 di template
 prev	common	it	Prec
+previous	common	it	Precedente
 previous page	common	it	Pagina precedente
 primary group	common	it	Gruppo primario
 primary key	common	it	Chiave Primaria
@@ -1067,6 +1078,8 @@ returns struct of users application access	common	it	Restituisce la struttura de
 reunion	common	it	REUNION
 right	common	it	Destra
 romania	common	it	ROMANIA
+rotate left	common	it	Ruotare a sinistra
+rotate right	common	it	Ruotare a destra
 row...	common	it	Riga...
 russian	common	it	Russo
 russian federation	common	it	FEDERAZIONE RUSSA
@@ -1350,6 +1363,7 @@ update the clock per minute or per second	common	it	Aggiorna l'orologio ogni min
 upload	common	it	Upload
 upload directory does not exist, or is not writeable by webserver	common	it	Cartella di upload inesistente o non scrivibile dal server
 upload file(s) from filemanager...	common	it	Carica file dal filemanager
+upload new photo	common	it	Carica nuova foto
 upload requires the directory to be writable by the webserver!	common	it	Il caricamento richiede che il server possa scrivere nella cartella!
 uppercase letters	common	it	lettere maiuscole
 url	common	it	URL
@@ -1379,6 +1393,7 @@ vertical alignment of row	common	it	allineamento verticale della riga
 vfs upload directory	common	it	Directory di upload VFS
 viet nam	common	it	VIET NAM
 view	common	it	Visualizza
+view linked %1 entries	common	it	Visualizza %1 voci collegate
 view this etemplate	common	it	Visualizza questo eTemplate
 view this linked entry in its application	common	it	Visualizza questa voce collegata nella sua applicazione
 virgin islands, british	common	it	ISOLE VERGINI, GRAN BRETAGNA
@@ -1446,6 +1461,7 @@ you need to install mailvelope plugin available for chrome and firefox from www.
 you need to select a file first!	common	it	Selezionare prima un file!
 you need to select some entries first!	common	it	Devi prima selezionare alcune voci"
 you need to set enable logging to "%1" to create/update a log.	groupdav	it	Devi impostare la registrazione a "%1" per creare e aggiornare i registri
+you tried to automatically size a flex column, which always takes the rest of the space	common	it	Hai tentato di ridimensionare automaticamente una colonna flessibile, che prende sempre il resto dello spazio
 you will not be able to send or receive encrypted mails before completing that step!	common	it	Non potrai inviare e ricevere email cifrate senza completare questo step!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	it	Non hai il permesso di accesso all'applicazione %1!
 your code is incorrect !!!	common	it	Codice errato!

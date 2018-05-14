@@ -1,6 +1,7 @@
 (update in sec. %s)	notifications	it	(Aggiorna in sec. %s)
 account:	notifications	it	Account:
 all possible notification backends	notifications	it	Tutti i backend di notifica possibili
+are you sure you want to delete all notifications?	notifications	it	Eliminare tutte le notifiche?
 browser	notifications	it	Browser
 browser is starting.	notifications	it	Il browser si sta avviando.
 cancal settings?	notifications	it	Cancellare impostazioni?
@@ -14,6 +15,9 @@ connection error.	notifications	it	Errore connessione
 connection error. please check connection to server.	notifications	it	Errore connessione. Per favore controllare connessione al server
 continue to connect?	notifications	it	Continuare la connessione?
 cookies are required to login to this site.	notifications	it	Sono necessari i cookie per accedere al sito
+delete all messages	notifications	it	elimina tutti i messaggi
+delete notifications	notifications	it	Elimina notifiche
+delete this message	notifications	it	elimina questo messaggio
 disabled chains	notifications	it	Catene disabilitate
 do not notify me at all	notifications	it	Non notificarmi affatto
 domain not found, please check serveraddress.	notifications	it	Dominio non trovato, controllare indirizzo server
@@ -46,15 +50,20 @@ if set, embedded links get rendered special for external clients	notifications	i
 info on load config file: create config file.	notifications	it	Informazioni sul caricamento config: creare file config
 issuer dn:	notifications	it	DN emettitore:
 java desktop notification app	preferences	it	App Java di notifica
+last month	notifications	it	Ultimo mese
 linked entries:	common	it	Voci collegate:
 login aborted, application exit?	notifications	it	Accesso rigettato, uscita da applicazione?
 login in egroupware:	notifications	it	login in EGroupware
 mail backend	admin	it	Backend email
+mark all as read	notifications	it	segna tutte come lette
+mark as read	notifications	it	segna come letta
 message from	notifications	it	Messaggio da
 minutes	notifications	it	Minuti
+more info	notifications	it	Più informazioni
 notification	common	it	Notifica
 notifier	notifications	it	Chi avvisa
 notify me by	notifications	it	Avvisami da
+open notified entry	notifications	it	aprire voce di notifica
 optimize e-mails for external mail client	notifications	it	Ottimizza email per client esterni
 page not found, please check serveraddress.	notifications	it	Pagina non trovata, per favore usare indirizzo server
 password:	notifications	it	Password:
@@ -82,13 +91,16 @@ subject dn:	notifications	it	DN oggetto
 the server certificate is not a valid trust center certificate!	notifications	it	Il certificato del server non è un certificato trust valido!
 this egroupware notification has been sent to you by mail because your	notifications	it	Questa notifica di EGroupware ti viene inviata via email perché
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	it	Questa notifica di EGroupware ti viene inviata via email perché la tua catena di notifica è stata disabilitata dall'amministratore. Per favore seleiziona un'altra catena di notifica nelle tue preferenze!
+this month	notifications	it	Questo mese
 user:	notifications	it	Utente:
 warning	notifications	it	Avvertenza
 windows-popup and e-mail	notifications	it	Popup di Windows e email
 windows-popup backend	admin	it	Backend di popup di Windows
 windows-popup first, if that fails notify me by e-mail	notifications	it	Prima popup di windows, se fallisce mandami email
 windows-popup only	notifications	it	Solo popup di Windows
+yesterday	notifications	it	ieri
 you can also use	admin	it	Puoi anche usare
+you have %1 unread notifications	notifications	it	Hai %1 notifiche non lette
 you have been successfully logged out	notifications	it	Hai effetttuato il logout con successo
 you've got new mail	notifications	it	Hai nuovi messaggi
 your session could not be verified.	notifications	it	La tua sessione non può essere verificata.
