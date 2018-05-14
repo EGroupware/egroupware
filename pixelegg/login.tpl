@@ -74,7 +74,7 @@
                 <tr>
                     <td>
 						<span class="field_icons password"></span>
-						<input name="new_passwd2" tabindex="7" type="password" plcaseholder="{lang_repeat_password}" size="30" />
+						<input name="new_passwd2" tabindex="7" type="password" placeholder="{lang_repeat_password}" size="30" />
 					</td>
                 </tr>
                <!-- END change_password -->
