@@ -218,16 +218,16 @@
         },
         {
             "name": "egroupware/ckeditor",
-            "version": "v4.7.3",
+            "version": "v4.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ckeditor.git",
-                "reference": "067f5e7ec7a73d449454755d7ae1ef884f409f9b"
+                "reference": "cd542e5b23f750f074a13228e1c8c783021ebd77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/ckeditor/zipball/067f5e7ec7a73d449454755d7ae1ef884f409f9b",
-                "reference": "067f5e7ec7a73d449454755d7ae1ef884f409f9b",
+                "url": "https://api.github.com/repos/EGroupware/ckeditor/zipball/cd542e5b23f750f074a13228e1c8c783021ebd77",
+                "reference": "cd542e5b23f750f074a13228e1c8c783021ebd77",
                 "shasum": ""
             },
             "require": {
@@ -248,7 +248,7 @@
             ],
             "description": "Compiled version of CKEditor customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/ckeditor",
-            "time": "2017-10-30T17:59:45+00:00"
+            "time": "2018-05-08 13:42:32"
         },
         {
             "name": "fxp/composer-asset-plugin",
