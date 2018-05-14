@@ -7219,8 +7219,11 @@ class Mail
 			//error_log(__METHOD__.__LINE__.':'.array2string($structure));
 
 			// unfortunately parseMessage does NOT return parsed headers (we assume header is shorter then 8k)
-			$start = is_string($message) ? substr($message, 0, 8192) :
-				(fseek($message, 0, SEEK_SET) == -1 ? '' : fread($message, 8192));
+			// *** increase the header size limit to 32k to make sure most of the mails even with huge headers are
+			// covered. TODO: Not sure if we even need to cut of the header parts and not just passing the whole
+			// message to be parsed in order to get all headers, it needs more invetigation.
+			$start = is_string($message) ? substr($message, 0, 32768) :
+				(fseek($message, 0, SEEK_SET) == -1 ? '' : fread($message, 32768));
 
 			$length = strpos($start, Horde_Mime_Part::RFC_EOL.Horde_Mime_Part::RFC_EOL);
 			if ($length===false) $length = strlen($start);
