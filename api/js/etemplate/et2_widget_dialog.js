@@ -483,6 +483,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			minWidth: this.options.minWidth,
 			minHeight:this.options.minHeight,
 			maxWidth: 640,
+			height: 'auto',
 			title: this.options.title,
 			open: function() {
 				// Focus default button so enter works
@@ -494,7 +495,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			position: {my:this.options.position, at:this.options.position, of:window}
 		};
 		// Leaving width unset lets it size itself according to contents
-		if(this.options.width && this.options.width !== 'auto')
+		if(this.options.width )
 		{
 			options.width = this.options.width;
 		}
@@ -584,7 +585,8 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 			buttons: typeof _buttons != 'undefined' ? _buttons : et2_dialog.BUTTONS_YES_NO,
 			dialog_type: typeof _type != 'undefined' ? _type : et2_dialog.QUESTION_MESSAGE,
 			icon: _icon,
-			value: _value
+			value: _value,
+			width: false
 		}, parent);
 	},
 
