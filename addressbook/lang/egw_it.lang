@@ -121,7 +121,6 @@ company name	addressbook	it	Nome società
 configuration	common	it	Configurazione
 contact	common	it	Contatto
 contact application	admin	it	Applicativo Contatti
-contact copied	addressbook	it	Contatto copiato
 contact data	addressbook	it	Dati di contatto
 contact deleted	addressbook	it	Contatto cancellato
 contact fields to show	addressbook	it	Campi di contatto da mostrare
@@ -186,6 +185,7 @@ displays a remider for birthdays on the startpage (page you get when you enter e
 distribution list deleted	addressbook	it	La lista di distribuzione è stata rimossa
 distribution list renamed	addressbook	it	La lista di distribuzione è stata rinominata
 distribution lists	addressbook	it	Liste di distribuzione
+distribution lists as groups	addressbook	it	Liste di distribuzione come gruppi
 distribution lists, ...	addressbook	it	Liste di distribuzione, ...
 do you really want to delete this contact?	addressbook	it	Confermi di voler eliminare questo contatto?
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	it	Vuoi una rubrica privata, che non può essere vista dagli utenti, autorizzi l'accesso alla tua rubrica personale?
@@ -196,6 +196,9 @@ don't hide empty columns	addressbook	it	Nascondi colonne vuote
 download	addressbook	it	Download
 download export file (uncheck to debug output in browser)	addressbook	it	Download del file export (Deseleziona per visualizzarlo nel browser)
 download this contact as vcard file	addressbook	it	scarica questo contatto come file vCard
+duplicate threshold	addressbook	it	Soglia di duplicati
+duplicate warning	addressbook	it	Avviso duplicati
+duplicates	addressbook	it	Duplicati
 duration	addressbook	it	Durata
 each category in its own field	addressbook	it	Ogni categoria nel suo campo
 each option in its own field	addressbook	it	Ogni opzione nel suo cao
@@ -249,6 +252,8 @@ field %1 has been updated !	addressbook	it	Il campo %1 è stato aggiornato!
 field name	addressbook	it	Nome Campo
 fields for the csv export	addressbook	it	Campi per l'esportazione CSV
 fields the user is allowed to edit himself	admin	it	Campi che l'utente ha il permesso di modificare
+fields to check for duplicates	addressbook	it	Campi da controllare per i duplicati
+fields to consider when looking for duplicate contacts.	addressbook	it	Campi da considerare quando si cercano contatti duplicati
 fields to copy when copying an address?	admin	it	Campi da copiare quando si copia un indirizzo
 fields to show in address list	addressbook	it	Campi da visualizzare nella lista degli indirizzi
 fieldseparator	addressbook	it	Separatore dei campi
@@ -260,12 +265,15 @@ general	admin	it	Generale
 general fields:	addressbook	it	Campi generali
 general settings	addressbook	it	Impostazioni generali
 geo	addressbook	it	GEO
+geolocation	addressbook	it	Geolocalizzazione
 geolocation integration	admin	it	Integrazione Geolocalizzazione
 global categories	addressbook	it	Categorie Globali
 grant addressbook access	common	it	Permetti accesso alla Rubrica
 group %1	addressbook	it	Gruppo %1
 h	addressbook	it	h
 hide accounts from addressbook	addressbook	it	Nascondi account utente
+hide all accounts	addressbook	it	Nascondi tutti gli account
+hide user groups as distribution lists	addressbook	it	Nascondi gruppi utenti come liste di distribuzione
 hides accounts completly from the adressbook.	addressbook	it	Nascondi completamente gli account degli utenti EPL dalla rubrica.
 history logging	admin	it	Registrazione dello storico
 home address	addressbook	it	Indirizzo abitazione
@@ -279,6 +287,7 @@ home state	addressbook	it	Provincia abitazione
 home street	addressbook	it	Via abitazione
 home zip code	addressbook	it	CAP abitazione
 how many contacts should non-admins be able to export	admin	it	Quanti contatti dovrebbero essere in grado di esportare gli utenti semplici (non amministratori)?
+how many fields must match for the record to be considered a duplicate.	addressbook	it	Quanti campi devono coincidere per ritenere che un record sia duplicato.
 html link to the current record	addressbook	it	Collegamento HTML al record attuale
 icon	addressbook	it	Icona
 if accounts are already in ldap	admin	it	se gli account sono già in LDAP
@@ -331,6 +340,7 @@ main categories in their own field	addressbook	it	Categorie principale nel loro 
 manage mapping	addressbook	it	Gestisci la mappatura
 mark records as private	addressbook	it	Marca i record come privati
 merge contacts	addressbook	it	Unisci contatti
+merge duplicates	addressbook	it	Unisci duplicati
 merge into first or account, deletes all other!	addressbook	it	L'unione nel primo o account, elimina tutti gli altri!
 merged	addressbook	it	Uniti
 message after submitting the form	addressbook	it	Messaggio dopo l'invio del modulo
@@ -388,6 +398,7 @@ preferred phone	addressbook	it	telefono preferito
 preferred type of email address to add for distribution lists	addressbook	it	Tipo di emai preferito per le liste di distribuzione
 prefix	addressbook	it	Prefisso
 prevent deleting of contacts	admin	it	Proteggi i contatti dall'eliminazione
+private address	addressbook	it	Indirizzo privato
 private custom fields	addressbook	it	Campi personalizzati privati
 public key	addressbook	it	Chiave Pubblica
 publish into groups:	addressbook	it	Pubblica nei gruppi:
@@ -402,6 +413,8 @@ region	addressbook	it	Regione
 remove from distribution list	addressbook	it	Rimuovi dalla lista di ditribuzione
 remove selected contacts from distribution list	addressbook	it	Rimuovi i contatti selezionati dalla lista di distribuzione
 removed from distribution list	addressbook	it	Rimosso dalla lista di distribuzione
+rename list	addressbook	it	Rinomina lista
+rename selected distribution list	addressbook	it	Rinomina la lista di distribuzione selezionata
 repetition	addressbook	it	Ripetizione
 replacements for inserting contacts into documents	addressbook	it	Sostituzioni per l'inserimento dei contatti nei documenti
 required fields *	addressbook	it	Campi obbligatori *
@@ -429,6 +442,8 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	it	Imposta solo nome completo
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	it	Mostrare foto e indirizzo abitazione sempre, anche se le colonne sono vuote
 show	addressbook	it	Mostra
+show active accounts	addressbook	it	Mostra account attivi
+show all accounts	addressbook	it	Mostra tutti gli account
 show birthday reminders on main screen	addressbook	it	Visualizza i promemoria dei compleanni nella schermata principale
 show infolog entries for this organisation	addressbook	it	Mostra tutte le attività per questa organizzazione
 show the contacts of this organisation	addressbook	it	Mostra i contatti di questa organizzazione
@@ -491,6 +506,7 @@ use country list	addressbook	it	Usa la lista delle nazioni
 use setup for a full account-migration	admin	it	Usare il setup per una migrazione account completa
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 used for links and for the own sorting of the list	addressbook	it	usato per collegamenti e per il proprio ordinamento della lista
+user groups are automatically shown as distribution lists.	addressbook	it	I gruppi di utenti sono automaticamente mostrati come liste di distribuzione
 user preference	addressbook	it	Preferenza utente
 vcard	common	it	VCard
 vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.

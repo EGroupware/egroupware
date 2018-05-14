@@ -113,6 +113,7 @@ resource	resources	it	Risorsa
 resource %1 deleted!	resources	it	Risorsa %1 rimossa
 resource %1 faild to be deleted!	resources	it	La risorsa %1 non è stata rimossa!
 resource %1 saved!	resources	it	Risorsa %1 salvata!
+resource / accessories	resources	it	Risorsa / Accessori
 resource id	resources	it	ID risorsa
 resources	common	it	Risorse
 resources and accessories	resources	it	Risorse e accessori
@@ -145,8 +146,7 @@ use general resources icon	resources	it	Usa l'icona risorsa generica
 use own picture	resources	it	Usa propria immagine
 use the category's icon	resources	it	Usa l'icona della categoria
 useable	resources	it	Utilizzabile
-useable:	resources	it	Utilizzabile:
-view accessories for this resource	resources	it	Vedi accessori per questa risorsa
+view accessories	resources	it	Visualizza accessori
 view calendar	resources	it	Visualizza calendario
 view this entry	resources	it	Vedi questa voce
 web-page of resource	resources	it	Pagina Web della risorsa

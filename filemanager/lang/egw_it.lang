@@ -35,6 +35,7 @@ actions	filemanager	it	Azioni
 add to clipboard	filemanager	it	Aggiungi agli appunti.
 administrators	filemanager	it	amministratori
 all files	filemanager	it	Tutti i file
+all subdirectories	filemanager	it	Tutte le sottocartelle
 all types	filemanager	it	Tutti i tipi
 allow a maximum of the above configured folderlinks to be configured in settings	admin	it	Numero massimo di collegamenti a cartelle da configurare nelle preferenze
 and all it's childeren	filemanager	it	e tutti i figli
@@ -52,6 +53,7 @@ check all	filemanager	it	Seleziona tutto
 check virtual filesystem	common	it	Controlla il filesystem virtuale
 clear search	filemanager	it	Reimposta la ricerca
 clipboard is empty!	filemanager	it	Gli appunti sono vuoti!
+collab editor settings	filemanager	it	Impostazioni Collab Editor
 comment	filemanager	it	Commento
 configuration changed.	filemanager	it	Configurazione modificata
 confirm final delete	filemanager	it	Confermare la rimozione definitiva
@@ -59,6 +61,7 @@ copied	filemanager	it	Copiato
 copied %1 to %2	filemanager	it	Ho copiato %1 in %2
 copy	filemanager	it	Copia
 copy into folder	filemanager	it	Copia nella cartella
+copy link address	filemanager	it	Copia indirizzo link
 copy to	filemanager	it	Copia In
 copy to clipboard	filemanager	it	Copia negli appunti
 could not copy %1 to %2	filemanager	it	Non posso copiare %1 in %2
@@ -79,9 +82,11 @@ cut	filemanager	it	Taglia
 cut to clipboard	filemanager	it	Taglia e metti negli appunti
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	it	Predefinito: No. Il collegamento non verrà mostrato, ma potrai comunque raggiungere questo percorso, oppure configurarlo come cartella di avvio o collegamento a cartella.
 default document to insert entries	filemanager	it	Documento predefinito per l'inserimento
+defines how to open a merge print document	filemanager	it	Definisce il modo di apertura di un documento per la stampa unione
 delete all older versions and deleted files older then %s days	filemanager	it	Eliminare tutte le versioni passate e le cartelle più vecchie di %s giorni
 delete these files or directories?	filemanager	it	Eliminare i file o le cartelle?
 delete these shares?	filemanager	it	Eliminare queste condivisioni?
+delete this extended acl?	filemanager	it	Eliminare questa ACL estesa?
 delete this file or directory	filemanager	it	Elimina questo file o questa cartella
 deleted %1	filemanager	it	Eliminato %1
 directories sorted in	filemanager	it	Cartelle ordinate per
@@ -120,6 +125,8 @@ example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", fo
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Esempio: Sig. Dr. Giorgio Rossi
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, otterrai una nuova riga col valore del campo "Ruolo"
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	it	Example {{nenvlf role}} - se il campo "Ruolo" non è vuoto, imposta un LF senza alcun valore del campo
+excludes selected mime types	filemanager	it	Esclude i tipi mime selezionati
+excludes selected mime types from being opened by editor	filemanager	it	Esclude i tipi mime selezionati dall'essere aperti dall'editor
 executable	filemanager	it	Eseguibile
 expires	filemanager	it	Scade
 export definition to use for nextmatch export	filemanager	it	Definizione da usare per l'esportazione nextmatch (corrispondenza successiva)
@@ -172,11 +179,13 @@ link %1: %2	filemanager	it	Collegamento %1: %2
 link into folder	filemanager	it	Collegamento in cartella
 link target	filemanager	it	Destinazione collegamento
 link target %1 not found!	filemanager	it	Destinazione %1 del collegamento non trovata!
+list view	filemanager	it	Visualizzazione elenco
 location	filemanager	it	Percorso
 log out as superuser	filemanager	it	Esci come super utente
 mail files	filemanager	it	Invia file per email
 mail paste	filemanager	it	Incolla in email
 max folderlinks	admin	it	Numero massimo di collegamenti a cartella
+merge print open handler	filemanager	it	Gestore aperto stampa unione
 mime type	filemanager	it	Tipo MIME
 modified	filemanager	it	Modificato
 modified between	filemanager	it	Modificato tra
@@ -214,6 +223,7 @@ properties saved.	filemanager	it	Proprietà salvate.
 quick jump to	filemanager	it	Salta a
 read & write access	filemanager	it	Lettura e scrittura
 read access only	filemanager	it	Sola lettura
+readonly share link	filemanager	it	Collegamento condiviso in sola lettura
 reload	filemanager	it	Ricarica
 rename of %1 to %2 failed!	filemanager	it	Non è stato possibile rinominare %1 a %2
 rename, change permissions or ownership	filemanager	it	Rinomina, modifica permessi oppure proprietario
@@ -238,6 +248,7 @@ select action...	filemanager	it	Scegli azione...
 select file to upload in current directory	filemanager	it	Seleziona il file da caricare nella cartella corrente
 select file(s) from vfs	common	it	Seleziona file dal sistema virtuale di file (vfs)
 setting for document merge saved.	filemanager	it	Impostazione stampa unione salvata.
+share files	filemanager	it	Condividi file
 shared files	filemanager	it	File condivisi
 shared with	filemanager	it	Condivisi con
 show	filemanager	it	Mostra
@@ -276,10 +287,13 @@ upload fields	filemanager	it	campi caricamento
 upload files	filemanager	it	Carica File
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 used space	filemanager	it	Spazio utilizzato
+user color indicator	filemanager	it	Indicatore colorato utente
 users and groups	filemanager	it	Utenti e gruppo
 versioning	filemanager	it	Registrazione Versioni di file
 vfs mounts and versioning	common	it	Montaggi VFS e registrazione versioni
+webdav link copied into clipboard	filemanager	it	Link webDAV copiato negli appunti
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	it	Chi dovrebbe poter eliminare definitivamente file o vecchie versioni di file:
+writable share link	filemanager	it	Collegamento condiviso in scrittura
 wrong username or password!	filemanager	it	Nome utente o password errati!
 you are not allowed to finally delete older versions and deleted files!	filemanager	it	Non hai i permessi per eliminare definitivamente i file vecchi e/o eliminati
 you are not allowed to upload a script!	filemanager	it	Non hai il permesso di caricamento di script!

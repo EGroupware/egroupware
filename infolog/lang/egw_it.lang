@@ -177,6 +177,7 @@ edit status	infolog	it	Modifica lo Stato
 edit the entry	infolog	it	Modifica una voce
 edit this entry	infolog	it	Modifica questa voce
 empty for all	infolog	it	vuoto per tutti
+encrypt description	infolog	it	Cifrare la descrizione
 end	infolog	it	Fine
 enddate	infolog	it	Data Fine
 enddate can not be before startdate	infolog	it	La data finale non può precedere la data iniziale
@@ -242,7 +243,6 @@ infolog - import csv-file	infolog	it	Attività - Importa File CSV
 infolog - new	infolog	it	Attività - Nuovo
 infolog - new subproject	infolog	it	Attività - Nuovo progetto secondario
 infolog - subprojects from	infolog	it	Attività - progetto secondario da
-infolog copied - the copy can now be edited	infolog	it	Scheda attività copiata - la copia può essere adesso modificata
 infolog csv export	infolog	it	Esportazione CSV Attività
 infolog csv import	infolog	it	Importazione CSV Attività
 infolog entry deleted	infolog	it	Voce Attività cancellata
@@ -257,6 +257,7 @@ infolog preferences	common	it	Preferenze Attività
 infolog-fieldname	infolog	it	Attività - Nome del Campo
 insert	infolog	it	Inserisci
 insert in document	infolog	it	Inserisci in documento
+insert timestamp into description field	infolog	it	Inserisci timbro temporale al campo descrizione
 invalid filename	infolog	it	Nome di Campo non valido
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	it	ID proprietario non valido: %1. Potrebbe essere una traduzione errata del campo. Usare %2.
 invalid status for entry type %1.	infolog	it	Stato non valido per il tipo %1
@@ -358,6 +359,7 @@ prefix for sub-entries (default: re:)	infolog	it	Prefisso per sottovoci (default
 price	infolog	it	Prezzo
 pricelist	infolog	it	Listino
 primary link	infolog	it	Collegamento primario
+printing...	infolog	it	In stampa...
 priority	infolog	it	Priorità
 private	infolog	it	Privata
 project	infolog	it	Progetto

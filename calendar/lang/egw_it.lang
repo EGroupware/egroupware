@@ -15,6 +15,7 @@
 (without a custom url we use nation of user preference to load holidays from %s)	calendar	it	(senza un URL personalizzato si usa la nazione di preferenza dell'utente per caricare i giorni festivi da %s)
 , exceptions preserved	calendar	it	, eccezioni preservate.
 , stati of participants reset	calendar	it	, stato dei partecipanti reimpostato.
+a list of email addresses of all participants who have not declined	calendar	it	Un elenco di indirizzi email di tutti i partecipanti che non hanno declinato l'invito
 a non blocking event will not conflict with other events	calendar	it	Un evento non bloccante non sarà in conflitto con altri eventi
 accept	calendar	it	Accetta
 accept or reject an invitation	calendar	it	Accetta o o rifiuta un invito
@@ -30,7 +31,7 @@ add new alarm	calendar	it	Aggiungi allarme
 add new participants or resource	calendar	it	Aggiungi nuovi partecipanti o risorse
 add timesheet entry	calendar	it	Aggiungi foglio ore
 added	calendar	it	Aggiunto
-added by synchronisation	calendar	it	Aggiunto da sincronizzazione
+added by synchronization	calendar	it	Aggiunto dalla sincronizzazione
 after	calendar	it	dopo
 after %1	calendar	it	Dopo %1
 after current date	calendar	it	Dopo la data attuale
@@ -49,6 +50,7 @@ all exceptions are converted into single events.	calendar	it	Tutte le eccezioni 
 all future	calendar	it	Tutti nel futuro
 all incl. rejected	calendar	it	Tutti, incusi i rigettati
 all participants	calendar	it	Tutti i partecipanti
+allow booking requests from any user when creating events?	calendar	it	Permettere richieste di prenotazione da qualsiasi utente quando si creano eventi?
 allow users to prevent change notifications ('do not notify')	calendar	it	Permetti agli utenti di modificare le notifiche 'Non notificare'
 allows to edit the event again	calendar	it	Permette di modificare ancora l'evento
 always	calendar	it	Sempre
@@ -116,6 +118,8 @@ csv	calendar	it	CSV
 csv-fieldname	calendar	it	Campi-CSV
 csv-filename	calendar	it	Nomefile-CSV
 custom	calendar	it	Personalizzato
+custom color for events without category color	calendar	it	Colore personalizzato per gli eventi che non hanno una categoria assegnata
+custom event color	calendar	it	Colore personalizzato evento
 custom fields	common	it	Personalizza i Campi
 custom url for ical with holidays for all users	calendar	it	URL personalizzato per iCal con le ferie per tutti gli utenti
 custom_2	common	it	Libero/Impegnato
@@ -151,12 +155,13 @@ delete this series of recurring events	calendar	it	Cancella questa serie di even
 deleted	calendar	it	Cancellati
 deny resources reservation for private events	calendar	it	Nega la prenotazione di risorse per eventi privati
 directory with documents to insert entries	calendar	it	Cartella con documenti per l'inserimento
-uninvited	calendar	it	Disinvitato
 display holidays or birthdays as events in dayview	calendar	it	Mostra le vacanze o i compleanni nella vista giornaliera
 display in header	calendar	it	Mostra sull'intestazione
 display status of events	calendar	it	Visualizza lo stato degli eventi
 displayed view	calendar	it	Vista mostrata
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	it	Mostra questa visualizzazione dell'agenda nella home page (la pagina che compare cliccando sull'immagine "home")
+distribution list	calendar	it	Lista di distribuzione
+do not import conflicting events	calendar	it	Non importare eventi in conflitto
 do not include events of group members	calendar	it	Non includere eventi di membri del gruppo
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	it	Confermi di voler modificare l'inizio di questa serie? Se confermi allora la serie originale terminerà da %1 e verrà creata una nuova serie nel futuro, che riflette queste modifiche.
 do you want a weekview with or without weekend?	calendar	it	Vuoi una vista settimanale con o senza weekend?
@@ -179,6 +184,7 @@ edit this event	calendar	it	Modifica questo evento
 edit this series of recurring events	calendar	it	Modifica questa serie di eventi ricorrenti
 empty = no alarm	calendar	it	vuoto = nessun allarme
 empty for all	calendar	it	vuoto per tutti
+empty target calendar before importing	calendar	it	Svuotare il calendario di destinazione prima di importare
 end	calendar	it	Fine
 end date/time	calendar	it	Data/Ora finale
 enddate	calendar	it	Data-finale
@@ -197,7 +203,6 @@ error: starttime has to be before the endtime !!!	calendar	it	Errore: Inizio dev
 error: the entry has been updated since you opened it for editing!	calendar	it	L'inserimento è stato modificato dall'ultima volta che l'hai aperto per la modifica!
 error: you can't shift a series from the past!	calendar	it	Non puoi spostare una serie dal passato
 event	common	it	Evento
-event copied - the copy can now be edited	calendar	it	Evento copiato - la copia può ora essere modificata
 event deleted	calendar	it	Evento cancellato
 event details follow	calendar	it	Dettagli dell'evento
 event saved	calendar	it	Evento salvato
@@ -228,6 +233,7 @@ find free timeslots where the selected participants are available for the given 
 firstname of person to notify	calendar	it	Nome della persona da avvisare
 for	calendar	it	per
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	it	Per una lettera seriale, utilizzare questo tag. Immettere il contenuto che si vuole ripetere tra due tag.
+for which views should calendar just a list of events instead of distinct lines with a fixed time interval.	calendar	it	Per quali visualizzazioni del calendario dovrebbe essere mostrato solo un elenco degli eventi al posto di righe distinte con un intervallo di tempo fissato
 for which views should calendar show distinct lines with a fixed time interval.	calendar	it	Per quali viste Agenda deve mostrare linee distinte con un intervallo fisso.
 format of event updates	calendar	it	Formato degli aggiornamenti degli eventi
 forward half a month	calendar	it	avanti di metà mese
@@ -237,7 +243,8 @@ four days view	calendar	it	vista quattro giorni
 freebusy	common	it	Libero/Impegnato
 freebusy: unknown user '%1', or not available for unauthenticated users!	calendar	it	libero/impegnato:  Utente '%1' sconosciuto o non disponibile per utenti non autenticati!
 freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	it	libero/impegnato: Utente '%1' sconosciuto, password errata o non disponibile agli utenti non loggati !!!
-freetime search	calendar	it	Ricerca Tempo libero
+freetime	calendar	it	Tempo libero
+freetime search	calendar	it	Ricerca tempo libero
 fri	calendar	it	Ven
 full description	calendar	it	Descrizione completa
 fullname of person to notify	calendar	it	Nome completo della persona da avvisare
@@ -266,8 +273,14 @@ holidays only	calendar	it	Solo ferie
 hours	calendar	it	ore
 how far to search (from startdate)	calendar	it	quanto lontano cercare (dalla data iniziale)
 how many appointments should non-admins be able to export	admin	it	Quanti appuntamenti possono esportare gli utenti non amministrativi?
+how many days to be removed in the future (default 365)	calendar	it	Quanti giorni nel futuro rimuovere (predefinito 365)
+how many days to be removed in the past (default 100)	calendar	it	Quanti giorni nel passato rimuovere (predefinito 100)
+how many days to sync in the future (default %1)	calendar	it	Quanti giorni sincronizzare nel futuro (predefinito %1)
+how many days to sync in the past (default %1)	calendar	it	Quanti giorni sincronizzare nel passato (predefinito %1)
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	it	Quante righe di descrizione dovranno essere visibili direttamente. Righe ulteriori sono disponibili tramite una barra di scorrimento.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	it	Quante righe di tutti gli eventi del giorno dovrebbero essere direttamente visibili. Ulteriori linee sono disponibili tramite un mouseover.
 how many minutes should each interval last?	calendar	it	Quanti minuti deve durare ogni intervallo?
+how many separate calendars to show before merging them together	calendar	it	Numero minimo di utenti per mostrare una vista del calendario consolidata, se viene selezionato un numero inferiore di utenti, il calendario viene visualizzato separatamente per la vista della settimana o del giorno.
 how many weeks should the multiple week view show?	calendar	it	Quante settimane dovrebbre mostrare la vista a settimane multiple?
 how much entries to skip	calendar	it	Quanti inserimenti saltare
 html link to the current record	calendar	it	Collegamento HTML al record attuale
@@ -297,6 +310,7 @@ invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calen
 invitations	calendar	it	Inviti
 invite	calendar	it	Invita
 it can not read timezones from sqlite database %1!	calendar	it	Non può leggere le zone orarie dal database sqlite %1!
+just me	calendar	it	Solo io
 keep exceptions	calendar	it	Mantieni le eccezioni
 keep the series unchanged.	calendar	it	Mantieni la serie
 last	calendar	it	Ultimo
@@ -304,6 +318,7 @@ last changed	calendar	it	Ultima modifica
 lastname of person to notify	calendar	it	Cognome della persona da avvisare
 length of the time interval	calendar	it	Lunghezza dell'intervallo di tempo
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	it	Limita il numero delle righe di descrizione nella vista ad elenco (predefinito 5, 0 per nessun limite).
+limit number of lines for all day events	calendar	it	Limita il numero di righe per gli eventi che occupano tutto il giorno
 limit search for conflicts in recurrences to given number of recurrences	calendar	it	Limitare la ricerca per conflitti nelle ricorrenze ad un certo numero di ricorrenze
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	it	LimitareLimitare la ricerca per conflitti nelle ricorrenze ad un certo numero di secondi (predefinito 3)
 link title for events to show	calendar	it	Titolo del link per gli eventi da mostrare
@@ -327,6 +342,8 @@ meeting request	calendar	it	Richiesta meeting
 meetingrequest to all participants	calendar	it	Richiesta di riunione a tutti i partecipanti
 merge document...	calendar	it	Unire documento...
 midnight	calendar	it	Mezzanotte
+minimum number of users for showing day view as consolidated.	calendar	it	Numero minimo di utenti per mostrare la vista giornaliera come consolidata.
+minimum number of users for showing week view as consolidated.	calendar	it	Numero minimo di utenti per mostrare la vista settimanale come consolidata.
 minutes	calendar	it	Minuti
 modified	calendar	it	Modificato
 modifier	calendar	it	Modificatore
@@ -341,6 +358,7 @@ name of current user, all other contact fields are valid too	calendar	it	Nome de
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	it	Nome della settimana, p.es. lunedì, disponibile per la prima voce in ogni giorno della settimana oppure tabella giornaliera entro l'intervallo selezionato.
 needs action	calendar	it	Richiede azione
 new	calendar	it	Nuovo
+new event participants	calendar	it	Nuovi partecipanti all'evento
 new search with the above parameters	calendar	it	nuova ricerca con i parametri indicati sopra
 no automatic purging	admin	it	no eliminazione automatica
 no events found	calendar	it	Nessun evento trovato
@@ -352,14 +370,15 @@ no preview for ical	calendar	it	Nessuna anteprima per iCal
 no recurrence	calendar	it	Nessuna ricorrenza
 no response	calendar	it	Nessuna Risposta
 no rights to export more than %1 entries!	calendar	it	Diritti insufficienti per esportare più di %1 voci!
+no, users will need to contact users with direct booking permission	calendar	it	No, gli utenti dovranno contattare gli utenti con il permesso di prenotazione diretto
 non blocking	calendar	it	non bloccante
 not	calendar	it	non
 not rejected	calendar	it	Non rifiutato
 nothing to update, version is already %1.	calendar	it	Niente da aggiornare la versione è già la %1
 notification messages for added events	calendar	it	Messaggi di notifica per gli eventi aggiunti
 notification messages for canceled events	calendar	it	Messaggi di notifica per gli eventi cancellati
-notification messages for uninvited participants	calendar	it	Messaggi di notifica per i partecipanti disinvitati
 notification messages for modified events	calendar	it	Messaggi di notifica per gli eventi modificati
+notification messages for uninvited participants	calendar	it	Messaggi di notifica per i partecipanti disinvitati
 notification messages for your alarms	calendar	it	Messaggi di notifica per i tuoi allarmi
 notification messages for your responses	calendar	it	Messaggi di notifica per le tue risposte
 notification settings	calendar	it	Impostazioni di notifica
@@ -388,6 +407,7 @@ open todo's:	calendar	it	ToDo Aperti:
 optional	calendar	it	Opzionale
 overlap holiday	calendar	it	sovrapposizione di una festività
 owner too	calendar	it	Anche il proprietario
+participant names by type	calendar	it	Nomi dei partecipanti per tipo
 participant table	calendar	it	Tavolo partecipanti
 participants	calendar	it	Partecipanti
 participants uninvited from an event	calendar	it	Partecipanti disinvitati da un evento
@@ -397,6 +417,7 @@ people holiday	calendar	it	festività personali
 permission denied	calendar	it	Permesso negato
 planner by category	calendar	it	Pianificatore per categorie
 planner by user	calendar	it	Pianificatore per utente
+please first select participants on the left and then use plus button to add them	calendar	it	Per prima cosa selezionare i partecipanti a sinistra e quindi utilizzare il pulsante più per aggiungerli
 please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	it	Per favore notare che il controllo dei conflitti non può essere effettuato nel passato ed è sempre limitato dall'orizzonte della ricorrenza (con il valore di data più alto).
 please note: you can configure the field assignments after you uploaded the file.	calendar	it	Attenzione: Puoi configurare il campo assegnazioni DOPO che hai caricato il file.
 preselected group for entering the planner	calendar	it	Gruppo predefinito per aggiunte al pianificatore
@@ -458,6 +479,7 @@ select resources	calendar	it	Seleziona risorse
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	it	Seleziona se vuoi reimpostare lo stato dei partecipanti a "sconosciuto", se un appuntamento viene spostato a più tardi
 select who should get the alarm	calendar	it	Seleziona chi dovrà avere la sveglia
 selected range	calendar	it	Intervallo di selezione
+selected users/groups	calendar	it	Utenti/Gruppi selezionati
 send meetingrequest to all participants after the event is saved	calendar	it	Invia richiesta meeting a tutti i partecipanti a evento salvato.
 series deleted	calendar	it	Serie cancellata
 set new events to private	calendar	it	Imposta il nuovo evento come privato
@@ -492,6 +514,7 @@ show only tentative accepted events	calendar	it	Mostra solo gli eventi tentati a
 show only the date, not the year	admin	it	Mostra solo mese e giorno
 show this month	calendar	it	mostra questo mese
 show this week	calendar	it	mostra questa settimana
+show year and age	calendar	it	Mostra anno e età
 single event	calendar	it	singolo evento
 specify where url of the day links to	calendar	it	Specifica l'URL del collegamento del giorno
 start	calendar	it	Inizio
@@ -508,6 +531,7 @@ status for all future scheduled days changed	calendar	it	Stato per tutti gli eve
 status for this particular day changed	calendar	it	Stato per questo giorno in particolare modificato
 status of participants set to unknown because of missing category rights	calendar	it	Stato dei partecipanti impostato a "sconosciuto" a causa di mancanza di diritti per la categoria
 submit to repository	calendar	it	Invia all'archivio
+summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	it	Riassunto dello stato dei partecipanti: 3 Partecipanti: 1 accettato, 2 sconosciuto
 sun	calendar	it	Dom
 tag to mark positions for address labels	calendar	it	Tagga per marcare le posizioni per le etichette di indirizzo
 tentative	calendar	it	Tentativo
@@ -531,8 +555,8 @@ this mail contains a meeting request	calendar	it	Questo messaggio contiene una r
 this mail contains a reply to a meeting request	calendar	it	Questo messaggio contiene una risposta alla richiesta di riunione
 this message is sent for canceled or deleted events.	calendar	it	Questo messaggio è inviato per gli eventi annullati o cancellati.
 this message is sent for modified or moved events.	calendar	it	Questo messaggio è inviato. per gli eventi modficiati o spostati.
-this message is sent to uninvited participants.	calendar	it	Questo messaggio viene inviato ai partecipanti disinvitati.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	it	Questo messaggio è inviato ad ogni partecipante, che ha richiesto la notifica, all'evento da te creato.<br>Puoi usare certe variabili che sostituiranno dati dell'evento. La prima linea è l'oggetto dell'e-mail.
+this message is sent to uninvited participants.	calendar	it	Questo messaggio viene inviato ai partecipanti disinvitati.
 this message is sent when you accept, tentative accept or reject an event.	calendar	it	Questo messaggio è inviato quando accetti, provi ad accettare, o rifiuti un evento.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	it	Questo messaggio è inviato quando imposti un Allarme per certi eventi.  Include tutte le informazioni di cui hai bisogno.
 this module displays a planner calendar.	calendar	it	Questo modulo mostra un calendario di pianificazione
@@ -563,6 +587,7 @@ tue	calendar	it	Mar
 two weeks	calendar	it	due settimane
 type of planner	calendar	it	Tipologia pianificatore
 unable to save	calendar	it	Impossibile salvare
+uninvited	calendar	it	Disinvitato
 update timezones	common	it	Aggiorna i fusi orari
 updated	calendar	it	Aggiornato
 use end date	calendar	it	Usa data di termine
@@ -581,6 +606,7 @@ view exception	calendar	it	Visualizza eccezione
 view series	calendar	it	Visualizza serie
 view settings	calendar	it	Visualizza impostazioni
 view this event	calendar	it	Visualizza questo evento
+views showing a list of events	calendar	it	Viste che mostrano un elenco di eventi
 views with fixed time intervals	calendar	it	Viste con intervalli di tempo fissi
 wed	calendar	it	Mer
 week	calendar	it	Settimana
