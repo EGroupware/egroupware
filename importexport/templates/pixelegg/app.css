@@ -60,7 +60,7 @@ div.preview .content {
   width: 400px;
 }
 #importexport-export_dialog_importexport-export_dialog-general_tab_content table.et2_grid tr:nth-child(even) {
-  background: #FFFFFF;
+  background: #ffffff;
 }
 #importexport-export_dialog_importexport-export_dialog-general_tab_content table.et2_grid tr:nth-child(odd) {
   background: #f2f2f2;
@@ -70,7 +70,7 @@ div.preview .content {
 }
 /* Tab Auswahl*/
 #importexport-export_dialog_importexport-export_dialog-selection_tab table.et2_grid tr:nth-child(even) {
-  background: #FFFFFF;
+  background: #ffffff;
 }
 #importexport-export_dialog_importexport-export_dialog-selection_tab table.et2_grid tr:nth-child(odd) {
   background: #f2f2f2;
@@ -80,7 +80,7 @@ div.preview .content {
 }
 /* Tab Optionen*/
 #importexport-export_dialog_importexport-export_dialog-options_tab table.et2_grid tr:nth-child(even) {
-  background: #FFFFFF;
+  background: #ffffff;
 }
 #importexport-export_dialog_importexport-export_dialog-options_tab table.et2_grid tr:nth-child(odd) {
   background: #f2f2f2;

@@ -5,11 +5,13 @@
 %1 is not readable	importexport	en	%1 is not readable.
 %1 is not writable	importexport	en	%1 is not writable.
 %1 records processed	importexport	en	%1 records processed.
+%s all users	importexport	en	%s all users
 %s just me	importexport	en	%s Just me
 (* for all)	importexport	en	(* for all)
 (0-23)	importexport	en	(0-23)
 (0-6, 0=sun)	importexport	en	(0-6, 0=Sun)
 *contact id cannot be changed by import	importexport	en	*Contact ID cannot be changed by import
+add a new definition	importexport	en	Add a new definition
 addressbook csv import	importexport	en	Addressbook CSV Import
 addressbook vcard import	importexport	en	Addressbook vCard import
 admin disabled exporting	importexport	en	Admin disabled exporting
@@ -18,6 +20,7 @@ all users	importexport	en	all users
 allowed users	importexport	en	Allowed users
 automatically created by importexport	importexport	en	Automatically created by Import|Export
 basic csv import	importexport	en	Basic CSV import
+change allowed users	importexport	en	Change allowed users
 changed	importexport	en	Changed
 changed allowed_users	importexport	en	Changed allowed users
 changed owner	importexport	en	Changed owner
@@ -110,6 +113,8 @@ schedule import | export	importexport	en	Schedule import | export
 schedule not found	importexport	en	Schedule not found.
 schedule times are server time!  currently %s.	importexport	en	Schedule times are server time!  Currently %s.
 select definition	importexport	en	Select definition
+select groups	importexport	en	Select groups
+Select owner	importexport	en	Select owner
 select plugin	importexport	en	Select plugin
 select...	importexport	en	Select...
 skipped	importexport	en	Skipped
