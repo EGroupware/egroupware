@@ -56,7 +56,7 @@
 		</grid>
 	</template>
 	<template id="admin.categories.index.add" template="" lang="" group="0" version="1.9.001">
-		<buttononly lable="Add" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
+		<buttononly label="Add" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
 	</template>
 	<template id="admin.categories.index" template="" lang="" group="0" version="1.9.001">
 		<nextmatch id="nm" options="admin.categories.index.rows" span="all" header_left="admin.categories.index.add"/>
@@ -69,7 +69,7 @@
 					<button label="Add" id="owner_action[add]" onclick="nm_submit_popup(this); return false;"/>
 					<button label="Delete" id="owner_action[delete]" onclick="nm_submit_popup(this); return false;"/>
 					<button disabled="true" label="OK" onclick="nm_submit_popup(this); return false;"/>
-					<buttononly label="Cancel" onclick="nm_hide_popup(this,'owner_popup');"/>
+					<button label="Cancel" id="owner_action[cancel]" onclick="nm_hide_popup(this,'owner_popup');"/>
 				</hbox>
 			</vbox>
 		</box>
