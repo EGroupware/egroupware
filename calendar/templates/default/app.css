@@ -1380,7 +1380,15 @@ Hide subsequent headers in week view with non-consolidated owners
 
 .calendar_freetime_header { font-size: 120%; font-weight: bold; }
 .calendar_freetime_timeframe { position: relative;}
-.calendar_freetime_dow { position: absolute; }
+.calendar_freetime_dow {
+	position: absolute;
+	width: 30ex;
+	height: 22em;
+}
+.calendar_freetime_dow ul.ui-multiselect-checkboxes {
+	overflow-y: visible;
+	height: 20em;
+}
 
 img.calendar_print_button, img.calendar_print_appicon {
 	height: 24px;
