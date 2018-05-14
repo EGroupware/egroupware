@@ -474,12 +474,12 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			this.set_dialog_type(this.options.dialog_type);
 		}
 		this.set_buttons(typeof this.options.buttons == "number" ? this._buttons[this.options.buttons] : this.options.buttons);
-		this.div.dialog({
+
+		var options = {
 			// Pass the internal object, not the option
 			buttons: this.options.buttons,
 			modal: this.options.modal,
 			resizable: this.options.resizable,
-			width: this.options.width,
 			minWidth: this.options.minWidth,
 			minHeight:this.options.minHeight,
 			maxWidth: 640,
@@ -492,7 +492,14 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			beforeClose: this.options.beforeClose,
 			closeText: this.egw().lang('close'),
 			position: {my:this.options.position, at:this.options.position, of:window}
-		});
+		};
+		// Leaving width unset lets it size itself according to contents
+		if(this.options.width && this.options.width !== 'auto')
+		{
+			options.width = this.options.width;
+		}
+
+		this.div.dialog(options);
 	}
 });}).call(this);
 et2_register_widget(et2_dialog, ["dialog"]);
