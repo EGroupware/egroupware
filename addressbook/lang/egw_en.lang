@@ -430,6 +430,7 @@ select addressbook type	addressbook	en	Select address book type
 select all	addressbook	en	Select all
 select an action or addressbook to move to	addressbook	en	Select an action or address book to move to
 select an action or addressbook to move to...	addressbook	en	Select an action or address book to move to...
+select an opened dialog	addressbook	en	Select an opened dialog
 select migration type	admin	en	Select migration type
 select multiple contacts for a further action	addressbook	en	Select multiple contacts for a further action
 select phone number as prefered way of contact	addressbook	en	Select phone number as preferred way of contact

@@ -430,6 +430,7 @@ select addressbook type	addressbook	de	Typ des Adressbuchs auswählen
 select all	addressbook	de	Alles auswählen
 select an action or addressbook to move to	addressbook	de	Befehl oder Adressbuch zum Verschieben auswählen
 select an action or addressbook to move to...	addressbook	de	Befehl oder Adressbuch zum Verschieben auswählen...
+select an opened dialog	addressbook	de	Wählen Sie einen offenen Dialog
 select migration type	admin	de	Migrationstyp auswählen
 select multiple contacts for a further action	addressbook	de	Mehrere Adressen für weiteren Befehl auswählen
 select phone number as prefered way of contact	addressbook	de	Telefonnummer als präferierten Kontaktweg auswählen
