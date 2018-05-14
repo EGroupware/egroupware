@@ -1,9 +1,160 @@
+%1 timesheets(s) %2	timesheet	ja	%1 個のタイムシートを %2
+%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	ja	%1 個のタイムシートを %2, %3 個は権限不足のため失敗!!!
+--> enter new name	timesheet	ja	--> 新しい名前を入力してください
+2 month ago	timesheet	ja	2ヶ月前
+2 years ago	timesheet	ja	2年前
+3 years ago	timesheet	ja	3年前
+access by	timesheet	ja	アクセスするユーザ/グループ
+all projects	timesheet	ja	全プロジェクト
+and its members	timesheet	ja	、およびそのメンバー
+applies the changes	timesheet	ja	変更を適用
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	ja	クエリ全体にアクションを適用（非表示分の項目にも適用）
+both: allow to use projectmanager and free project-names	admin	ja	両方: プロジェクト・マネージャを利用
+by	timesheet	ja	作業者:
+change category	timesheet	ja	カテゴリを変更
+changed category to %1	timesheet	ja	カテゴリを %1 に変更しました。
+changed status	timesheet	ja	状態を変更しました。
+check all	timesheet	ja	全て選択
+choose 'creator' of imported data	timesheet	ja	インポート・データの作成者を選択
+comment by %1 at %2:	timesheet	ja	%1が%2にコメント:
+create new links	timesheet	ja	新規リンクを作成
+created	timesheet	ja	作成日時
+creates a new field	timesheet	ja	Creates a new field
+creating new entry	timesheet	ja	新規項目を作成中
 custom fields	timesheet	ja	カスタム項目
+data from	timesheet	ja	データの取得元
+default document to insert entries	timesheet	ja	項目を挿入する既定のドキュメント
+delete this status	timesheet	ja	この状態を削除
+deleted	timesheet	ja	削除済み
+deletes this field	timesheet	ja	この項目を削除
+determines the order the fields are displayed	timesheet	ja	項目の表示順を指定
+directory with documents to insert entries	timesheet	ja	項目を挿入するディレクトリ/ドキュメント
+each value is a line like <id>[=<label>]	timesheet	ja	各値は <id>[=<label>] 形式の行
+edit status	common	ja	状態を編集
+edit this entry	timesheet	ja	この項目を編集
+empty if identical to duration	timesheet	ja	期間と同じ場合は空を指定
+end	timesheet	ja	終了日
+entry deleted	timesheet	ja	項目を削除しました。
+entry saved	timesheet	ja	項目を保存しました。
+error deleting the entry!!!	timesheet	ja	項目の削除中にエラー!
+error saving the entry!!!	timesheet	ja	項目の保存中にエラー!
+Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.	calendar	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
+Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example	calendar	ja	例 {{LETTERPREFIX}} - ダブル・スペースを挟まずに接頭字を出力(タイトルが空の場合など）。
+Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller	calendar	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
+Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role	calendar	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
+Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field	calendar	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
+existing links	timesheet	ja	リンク
+exists	timesheet	ja	存在
+export definition to use for nextmatch export	timesheet	ja	エクスポートで用いる設定ファイル
+export to openoffice spreadsheet	timesheet	ja	OpenOffice スプレッドシートにエクスポート
+exports entries from your timesheet into a csv file.	timesheet	ja	タイムシートの項目をCSV ファイルにエクスポート
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ja	タイムシートの項目をCSVファイルにエクスポートします。
+favorites	timesheet	ja	お気に入り
+field must not be empty !!!	timesheet	ja	項目を空にすることはできません!
+for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	ja	シリアルレター向けタグ。任意のコンテンツをこのタグで囲んで使用します。
+full: use only projectmanager	admin	ja	Full: プロジェクト・マネージャだけを使用
+general fields:	timesheet	ja	一般項目:
 global categories	timesheet	ja	グローバルカテゴリ
+history	timesheet	ja	履歴
+history logging	admin	ja	履歴出力
+html link to the current record	timesheet	ja	このレコードへのHTMLリンク
 id	timesheet	ja	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	calendar	ja	ディレクトリ（VFS フルパス）を指定すると、%1上で各ドキュメントに対するアクションが表示され、ドキュメントをダウンロードすることができるようになります。
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	ja	ドキュメント（VFS フルパス）を指定すると、%1の各項目ごとに拡張ドキュメント・アイコンが表示され、ドキュメントをダウンロードすることができるようになります。
+if you specify an export definition, it will be used when you export	timesheet	ja	エクスポート時に使用する設定を指定します。
+ignore	timesheet	ja	無視
+import options	timesheet	ja	インポート・オプション
+imports entries into the timesheet from a csv file.	timesheet	ja	CSVファイルからタイムシート項目をインポートします。
+insert	timesheet	ja	インサート
+invalid field: %1 = %2, it needs to be a number.	timesheet	ja	不正な項目: %1 = %2, 数値が必要です。
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	ja	不正な所有者 ID: %1。項目変換が不正である可能性があります。代わりに %2 を使用しました。
+last modified	timesheet	ja	最終更新日時
+last month	timesheet	ja	先月
+last week	timesheet	ja	先週
+last year	timesheet	ja	去年
+leave it empty for a full week	timesheet	ja	空にすると週7日間全部
+leaves without saveing	timesheet	ja	保存せずに終了
+length<br>rows	timesheet	ja	長さ<br>行
+links	timesheet	ja	リンク
+links and attached files	timesheet	ja	リンクと添付ファイル
+links to specified application.  example: {{links/infolog}}	timesheet	ja	指定されたアプリケーションへのリンク。  例: {{links/infolog}}
+list of files linked to the current record	timesheet	ja	List of files linked to the current record
+max length of the input [, length of the inputfield (optional)]	timesheet	ja	入力の最大長 [, 入力項目の長さ (オプショナル)]
+modified	timesheet	ja	変更日時
+modify status	timesheet	ja	状態を変更
+name of current user, all other contact fields are valid too	timesheet	ja	ユーザ名（他のコンタクト項目も有効）
+new ticket submitted by %1 at %2	timesheet	ja	%1 が %2に新規チケットを送信しました
+new timesheet submitted by %1 at %2	timesheet	ja	%1 が %2に新規タイムシートを送信しました
+no details	timesheet	ja	詳細無し
+no project	timesheet	ja	プロジェクト無し
+no status	timesheet	ja	状態無し
+none: use only free project-names	admin	ja	None: フリー・プロジェクト名のみ使用
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	ja	複数行の入力項目の行数(またはマルチ・セレクトボックスの行数）
+only admin	timesheet	ja	管理者のみ
+only admin can edit this status	timesheet	ja	この状態のタイムシートは管理者のみ編集可能
+or endtime	timesheet	ja	終了時刻
 order	timesheet	ja	順序
+parent	timesheet	ja	親
+permission denied!!!	timesheet	ja	権限が拒否されました!
+permissions error - %1 could not %2	timesheet	ja	権限エラー - %1は%2できません。
+prevent deleting	admin	ja	削除禁止
+price	timesheet	ja	価格
+project fields	timesheet	ja	プロジェクト項目
+projectmanager integration	admin	ja	プロジェクト・マネージャ統合
+quantity	timesheet	ja	数量
+recovered	timesheet	ja	復旧済み
+replacements for inserting entries into documents	timesheet	ja	ドキュメントに挿入する項目の置換
+rights	timesheet	ja	権限
+save & new	timesheet	ja	保存 & 新規
+saves the changes made	timesheet	ja	変更を保存
+saves the changes made and leaves	timesheet	ja	変更を保存して終了
+saves this entry and add a new one	timesheet	ja	この項目を保存して続けて新規項目を追加
+select a price	timesheet	ja	価格を選択
+select a project	timesheet	ja	プロジェクトを選択
+select a status of the timesheet	timesheet	ja	タイムシートの状態を選択
+select infolog	timesheet	ja	インフォログを選択
+select multiple timeshhets for a further action	timesheet	ja	タイムシートを選択してアクションを実行
+select the predefined status, whan creating a new timesheet	preferences	ja	新規項目作成時に規定の状態を選択
+select the predefined status, when creating a new timesheet	preferences	ja	新規項目作成時に規定の状態を選択
+set to	timesheet	ja	設定値:
+show a quantity sum (eg. to sum up negative overtime)	admin	ja	合計を表示
+skip record	timesheet	ja	レコードを読み飛ばす
+start	timesheet	ja	開始日
+starttime	timesheet	ja	開始時刻
+starttime has to be before endtime !!!	timesheet	ja	開始時刻は終了時刻よりも前である必要があります!
+status	timesheet	ja	状態
+status deleted.	timesheet	ja	状態を削除しました。
+status of created timesheets	timesheet	ja	作成したタイムシートの状態
+status updated.	timesheet	ja	状態を更新しました。
+sum %1:	timesheet	ja	%1 合計:
+tag to mark positions for address labels	timesheet	ja	アドレスラベルで、位置を記録するためのタグ
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	ja	ドキュメントにはプレース・ホルダー（例: {{%3}}）を埋め込むことができ、ドキュメント保存時に実データで置換されます。
+the following document-types are supported:	timesheet	ja	下記のドキュメント・タイプがサポートされます: 
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	ja	内部名（20文字以下）。これを変更すると既存のデータが利用できなくなります
+the text displayed to the user	timesheet	ja	ユーザに表示するテキスト
 this month	timesheet	ja	今月
 this week	timesheet	ja	今週
 this year	timesheet	ja	今年
-view this entry	timesheet	ja	項目表示
+ticket modified by %1 at %2	timesheet	ja	%1が%2にチケットを変更しました。
+timesheet	common	ja	タイムシート
+timesheet csv export	timesheet	ja	タイムシート CSV エクスポート
+timesheet csv import	timesheet	ja	タイムシート CSV インポート
+timesheet fields:	timesheet	ja	タイムシート項目:
+timesheet id	timesheet	ja	タイムシート ID
+timesheet list	timesheet	ja	タイムシート一覧
+timesheet modified by %1 at %2	timesheet	ja	%1が%2にタイムシートを変更しました。
+timesheet openoffice export	timesheet	ja	タイムシート OpenOffice エクスポート
+timesheet status-%1 '%2' added.	timesheet	ja	タイムシート（状態:%1) '%2' を追加しました。
+timesheet-%1 '%2' updated.	timesheet	ja	タイムシート-%1 '%2' を更新しました。
+timesheet-%1 deleted.	timesheet	ja	タイムシート-%1 を削除しました。
+titles of any entries linked to the current record, excluding attached files	timesheet	ja	このレコードにリンクする項目のタイトル（添付ファイルを除く）
+unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	ja	"%1" をアカウントIDに変換できません。%3にプラグイン設定(%2)を適用しました。
+unitprice	timesheet	ja	単価
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	ja	アドレスラベル向けタグ。任意のコンテンツをこのタグで囲んで使用します。
+values for selectbox	timesheet	ja	セレクトボックスで表示する値
+view this entry	timesheet	ja	項目を表示
 week	timesheet	ja	週
+yes, only admins can purge deleted items	admin	ja	はい（管理者だけが削除済みデータをパージ可能）
+yes, users can purge their deleted items	admin	ja	はい（ユーザ自身が削除済みデータをパージ可能）
+yesterday	timesheet	ja	昨日
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	ja	データベースが最新ではありません。(%1 対 %2), %3setup%4 を実行してアップデートしてください。

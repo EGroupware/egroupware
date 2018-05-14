@@ -1,95 +1,564 @@
-%1 records imported	addressbook	ja	%1 件インポートされました
+%1 added	addressbook	ja	%1 を追加しました
+%1 contact(s) %2	addressbook	ja	%1 個のコンタクトを %2
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ja	%1 個のコンタクトを %2, （権限不足のため %3 個は失敗!）
+%1 contacts updated (%2 errors).	addressbook	ja	%1 個のコンタクトを更新しました (%2 個のエラー)。
+%1 fields in %2 other organisation member(s) changed	addressbook	ja	%1 fields in %2 other organization member(s) changed.
+%1 key(s) added to public keyserver "%2".	addressbook	ja	%1 個のキーを公開キー・サーバー "%2" に追加しました。
+%1 not implemented for %2!	addressbook	ja	%2 用 %1 は実装されていません!
+%1 public keys added.	addressbook	ja	%1 公開キーを追加しました。
+%1 records imported	addressbook	ja	%1 件インポートしました
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ja	%1 個のレコードを読み込みましたが、まだインポートされていません。画面を戻って予行演習モードを解除してください。
+%1 starts with '%2'	addressbook	ja	%1 を %2 で開始
+%s please calculate the result	addressbook	ja	%s 結果を計算してください
+(e.g. 1969)	addressbook	ja	(例 1969)
+(empty = use global limit, no = no export at all)	admin	ja	空 = グローバル・リミットを使用, no = エクスポートしない
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ja	<b>変換タイプ &lt;none&gt; が見つかりません。</b>  一覧から変換タイプを選択してください。
+@-eval() is only availible to admins!!!	addressbook	ja	@-eval() は管理者専用です!
+access by	addressbook	ja	アクセスするユーザ/グループ
+account id	addressbook	ja	アカウント ID
+account repository	admin	ja	アカウント・リポジトリ
+accounts	addressbook	ja	アカウント
 actions	addressbook	ja	動作
+add %1	addressbook	ja	%1 を追加
+add a contact to this organisation	addressbook	ja	この組織・団体にコンタクトを追加
+add a customfield to link title	addressbook	ja	リンク・タイトルにカスタム項目を追加
+add a new contact	addressbook	ja	新規コンタクトを追加
+add a new infolog	addressbook	ja	新規インフォログを追加
+add a new list	addressbook	ja	新規リストを追加
+add a single entry by passing the fields.	addressbook	ja	項目を送信してデータを取得
+add appointment	addressbook	ja	約束を追加
+add business email of whole distribution list?	addressbook	ja	配信リストの仕事用メール・アドレスを追加しますか？
+add custom field	addressbook	ja	カスタム項目を追加
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	ja	アドレス帳のリンクにカスタム項目を追加します。ここで追加した項目は他のアプリケーションで表示されます。既定ではカスタム項目は設定されません。
+add emails of whole distribution list?	addressbook	ja	配信リストのメール・アドレスを追加しますか？
+add or delete categories	addressbook	ja	カテゴリの追加/削除
+add to bcc	addressbook	ja	BCCに追加
+add to cc	addressbook	ja	CCに追加
+add to distribution list	addressbook	ja	配信リストに追加
+add to distribution list:	addressbook	ja	配信リストに追加:
+add to to	addressbook	ja	宛先に追加
+added	addressbook	ja	追加済み
+added by synchronisation	addressbook	ja	同期によって追加済み
+added to distribution list	addressbook	ja	配信リストに追加済み
+additional information about using ldap as contact repository	admin	ja	追加情報（LDAPをコンタクト・リポジトリとして参照）
 address book	common	ja	アドレス帳
-address book - vcard in	addressbook	ja	アドレス帳 - VCard追加
+address book - vcard in	addressbook	ja	アドレス帳 - vCard追加
 address book - view	addressbook	ja	アドレス帳 - 表示
-address line 2	addressbook	ja	町域２
+address line 2	addressbook	ja	町域2
+address line 2 (private)	addressbook	ja	町域2 (個人)
 address type	addressbook	ja	アドレスタイプ
 addressbook	common	ja	アドレス帳
-addressbook preferences	addressbook	ja	アドレス帳ユーザ設定
-addvcard	addressbook	ja	VCard追加
+addressbook csv export	addressbook	ja	アドレス帳 CSV エクスポート
+addressbook csv import	addressbook	ja	アドレス帳 CSV インポート
+addressbook field	addressbook	ja	アドレス帳項目
+addressbook list	addressbook	ja	アドレス帳リスト
+addressbook menu	addressbook	ja	アドレス帳メニュー
+addressbook of	addressbook	ja	アドレス帳:
+addressbook preferences	addressbook	ja	アドレス帳個人設定
+addressbook the contact should be saved to	addressbook	ja	コンタクトの保存先アドレス帳:
+addressbook the contact should be shown	addressbook	ja	コンタクトを表示するアドレス帳:
+addressbook vcard export	addressbook	ja	アドレス帳 vCard エクスポート
+addressbook vcard import	addressbook	ja	アドレス帳 vCard インポート
+addressbook-fieldname	addressbook	ja	アドレス帳-項目名
+addvcard	addressbook	ja	vCard追加
+advanced search	addressbook	ja	詳細検索
+all addressbooks	addressbook	ja	全アドレス帳
+all contacts	addressbook	ja	全コンタクト
+all in one field	addressbook	ja	1項目内に全て
+all types	addressbook	ja	全タイプ
+allow members of following groups to edit contact-data of accounts	addressbook	ja	下記グループに所属するメンバーによるコンタクト・データの更新を許可
+allow users to maintain their own account-data	admin	ja	ユーザ自身のコンタクト・データの更新を許可
 alt. csv import	addressbook	ja	CSVインポート
-are you sure you want to delete this field?	addressbook	ja	この項目を削除してもよろしいですか。
+always	addressbook	ja	常に
+apply changes to all members, whose fields have the same previous content	addressbook	ja	Apply changes to all members, whose fields have the same previous content.
+apply the action on the whole query, not only the shown contacts!!!	addressbook	ja	Apply the action on the whole query, NOT only the shown contacts!
+are you shure you want to delete this contact?	addressbook	ja	このコンタクトを削除してよろしいですか？
+are you sure you want to delete this field?	addressbook	ja	この項目を削除してよろしいですか？
+assistent	addressbook	ja	アシスタント
+assistent phone	addressbook	ja	アシスタントの電話番号
 birthday	common	ja	誕生日
+birthdays	common	ja	誕生日
 blank	addressbook	ja	空白
-business	common	ja	ビジネス
+browser location	addressbook	ja	ブラウザ地域
+business	common	ja	仕事
+business address	addressbook	ja	住所(仕事)
+business address line 2	addressbook	ja	住所2（仕事）
 business city	addressbook	ja	市区町村
 business country	addressbook	ja	国
+business country code	addressbook	ja	国番号（仕事）
 business email	addressbook	ja	電子メール
 business fax	addressbook	ja	FAX
 business phone	addressbook	ja	電話
 business state	addressbook	ja	都道府県
 business street	addressbook	ja	町域
 business zip code	addressbook	ja	郵便番号
+calendar fields:	addressbook	ja	カレンダー項目:
+calendar uri	addressbook	ja	カレンダー URI
+can be changed via setup >> configuration	admin	ja	設定 >> 構成 で変更できます
+can't create dn %1	addressbook	ja	dn %1 を生成できません
 car phone	addressbook	ja	自動車電話
-cell phone	addressbook	ja	cell 電話
+categorie	addressbook	ja	カテゴリ
+categorie added	addressbook	ja	カテゴリを追加しました。
+categorie delete	addressbook	ja	カテゴリを削除しました。
+categories, notes, ...	addressbook	ja	カテゴリ, 備考, ...
+category path	addressbook	ja	カテゴリ・パス
+category tree	admin	ja	カテゴリ・ツリー
+cell phone	addressbook	ja	セルラー電話
+change all organisation members	addressbook	ja	組織・団体の全メンバーを変更
+charset for the csv export	addressbook	ja	CSV エクスポート時の文字セット
+charset for the vcard export	addressbook	ja	vCard エクスポート時の文字セット
+charset for the vcard import and export	addressbook	ja	vCard インポート/エクスポート時の文字セット
+charset of file	addressbook	ja	ファイルの文字セット
+check all	addressbook	ja	全て選択
+choose an icon for this contact type	admin	ja	コンタクト・タイプのアイコンを選択
+choose charset	addressbook	ja	文字セットを選択
+choose owner of imported data	addressbook	ja	インポート・データの所有者を選択
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	ja	定義済みマップ・ソースを選択、またはカスタムを指定（use %r = 町域, %t = 市区町村, %c = 国, %z = 郵便番号）
+chosse an etemplate for this contact type	admin	ja	コンタクト・タイプの eTemplate を選択
 city	common	ja	市区町村
+city (private)	addressbook	ja	市区町村 (個人)
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	ja	同期時に重複が発生した場合はアドレス帳側のデータをクリア
 company	common	ja	会社
 company name	addressbook	ja	会社名
 configuration	common	ja	環境設定
 contact	common	ja	連絡先
+contact	addressbook	ja	連絡先
+contact application	admin	ja	コンタクト・アプリケーション
+contact data	addressbook	ja	コンタクト・データ
+contact deleted	addressbook	ja	コンタクトを削除しました。
+contact fields to show	addressbook	ja	表示するコンタクト項目
+contact fields:	addressbook	ja	コンタクト項目:
+contact id	addressbook	ja	コンタクト ID
+contact id cannot be changed by import	addressbook	ja	インポートによるコンタクト ID の変更はできません。
+contact maintenance	admin	ja	コンタクト保守
+contact modified by %1 at %2	addressbook	ja	Contact modified by %1 at %2 .
+contact not found!	addressbook	ja	コンタクトが見つかりません!
+contact repository	admin	ja	コンタクト・リポジトリ
+contact saved	addressbook	ja	コンタクトを保存しました
+contact settings	admin	ja	コンタクト設定
+contactform	addressbook	ja	コンタクト・フォーム
+contacts	common	ja	コンタクト
+contacts and account contact-data to ldap	admin	ja	コンタクト、アカウント・コンタクト双方をLDAPに保存
+contacts and account contact-data to sql	admin	ja	コンタクト、アカウント・コンタクト双方をSQLに保存
+contacts to ldap	admin	ja	コンタクトをLDAPに保存
+contacts to ldap, account contact-data to sql	admin	ja	コンタクトをLDAPに、アカウント・コンタクトをSQLに保存
+contains	addressbook	ja	コンタクト
+copied	addressbook	ja	コピー済み
+copied by %1, from record #%2.	addressbook	ja	レコード #%2 から %1 がコピーしました。
+copy a contact and edit the copy	addressbook	ja	コンタクトをコピーし、コピーを編集
+copy instead of move	addressbook	ja	(移動ではなくて）コピーする
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	ja	変更をクリップボードにコピーし、%1 項目%2 をリロードしてマージ
 country	common	ja	国
+country (private)	addressbook	ja	国 (個人)
+country code	addressbook	ja	国番号
+country code (private)	addressbook	ja	国番号 (個人)
+create new links	addressbook	ja	新規リンクを作成
 created	addressbook	ja	作成
+credit	addressbook	ja	与信
+crm view list	addressbook	ja	CRM 表示リスト
+crm-view	addressbook	ja	CRM-表示
+csv-fieldname	addressbook	ja	CSV 項目名
 csv-filename	addressbook	ja	CSVファイル名
+custom	addressbook	ja	カスタム
+custom etemplate for the contactform	addressbook	ja	eTemplate をコンタクト・フォーム用にカスタマイズ
 custom fields	addressbook	ja	カスタム項目
+data exchange settings	addressbook	ja	データ交換設定
+data from	addressbook	ja	データの取得元
+debug output in browser	addressbook	ja	ブラウザにデバッグ情報を出力
+default	addressbook	ja	既定値
+default action on double-click	addressbook	ja	ダブル・クリック時の既定のアクション
+default address format	addressbook	ja	既定の住所書式
+default addressbook for adding contacts	addressbook	ja	既定のアドレス帳
+default document to insert contacts	addressbook	ja	コンタクトを挿入する既定のドキュメント
+default file as format	addressbook	ja	既定の書式ファイル
 default filter	addressbook	ja	既定のフィルタ
+default format for fileas, eg. for new entries.	addressbook	ja	ファイル保存時の既定の書式。
+default geolocation source address	addressbook	ja	既定の位置情報取得元
+default is to open email addresses in egroupware email application, if user has access to it.	addressbook	ja	既定値は、EGroupware メール・アプリケーションの公開メール・アドレスです(ユーザが公開メール・アドレスにアクセス可能である場合に限る)。
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	ja	配信リスト用メール・アドレスを設定してください。
+delete a single entry by passing the id.	addressbook	ja	ID を送信してデータを削除
+delete selected distribution list!	addressbook	ja	選択された配信リストを削除!
+delete this contact	addressbook	ja	コンタクトを削除
+delete this organisation including all its contacts	addressbook	ja	組織・団体（所属する全コンタクトを含めて）を削除
+deleted	addressbook	ja	削除済み
+deletes the photo	addressbook	ja	写真を削除
 department	common	ja	部署
-duration	addressbook	ja	継続時間
+departments	addressbook	ja	部署
+directory with documents to insert contacts	addressbook	ja	コンタクトを挿入するディレクトリ/ドキュメント
+display contact	addressbook	ja	コンタクトを表示
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	ja	ホーム画面に誕生日を表示
+distribution list deleted	addressbook	ja	配信リストを削除しました
+distribution list renamed	addressbook	ja	配信リストの名前を変更しました
+distribution lists	addressbook	ja	配信リスト
+distribution lists as groups	addressbook	ja	グループ化配信リスト
+distribution lists, ...	addressbook	ja	配信リスト, ...
+do you really want to delete this contact?	addressbook	ja	このコンタクトを削除してよろしいですか？
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	ja	個人用アドレス帳を作成しますか？個人用アドレス帳は他のユーザに対して秘匿されます。
+do your really want to delete this contact?	addressbook	ja	このコンタクトを削除してよろしいですか？
+doesn't matter	addressbook	ja	いずれも可
+domestic	addressbook	ja	国内
+don't hide empty columns	addressbook	ja	空のカラムを隠す
+download	addressbook	ja	ダウンロード
+download export file (uncheck to debug output in browser)	addressbook	ja	エクスポート・ファイルをダウンロード。注:ブラウザのデバッグ出力を無効にしてください。
+download this contact as vcard file	addressbook	ja	このコンタクトを vCard ファイルとしてダウンロード
+duplicate threshold	addressbook	ja	重複閾値
+duplicate warning	addressbook	ja	重複警告
+duplicates	addressbook	ja	重複
+duration	addressbook	ja	期間
+each category in its own field	addressbook	ja	各カテゴリをそれぞれの項目として
+each option in its own field	addressbook	ja	各オプションをそれぞれの項目として
+edit contact	addressbook	ja	コンタクトを編集
+edit custom field	addressbook	ja	カスタム項目を編集
 edit custom fields	admin	ja	カスタム項目訂正
+edit extra account-data in the addressbook	admin	ja	アドレス帳の拡張アカウント・データを編集
+edit phonenumbers	addressbook	ja	電話番号を編集
+edit phonenumbers -	addressbook	ja	電話番号を編集 -
+either the configured email addesses are wrong or the mail configuration.	addressbook	ja	メール・アドレスが不正か、メール構成が不正です。
+email & internet	addressbook	ja	メール & インターネット
+email (private)	addressbook	ja	メール・アドレス（個人）
+email addresses (comma separated) to send the contact data	addressbook	ja	コンタクト・データ送付先のメール・アドレス(コンマ区切り）
+empty	admin	ja	空
+empty for all	addressbook	ja	空に設定すると全て
+enable an extra private addressbook	addressbook	ja	拡張個人用アドレス帳
+enclosure	addressbook	ja	秘匿
+end	addressbook	ja	終了日
+enter the path to the exported file here	addressbook	ja	エクスポート・ファイルのパスを指定
+error deleting the contact !!!	addressbook	ja	エラー: コンタクトの削除失敗!
+error saving the contact !!!	addressbook	ja	エラー: コンタクトの保存失敗!
+error: the entry has been updated since you opened it for editing!	addressbook	ja	エラー: この項目は、既に他画面で編集中です!
+Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.	addressbook	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
+Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example	addressbook	ja	例 {{LETTERPREFIX}} - ダブル・スペースを挟まずに接頭字を出力(タイトルが空の場合など）。
+Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller	addressbook	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
+Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
+Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field	addressbook	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
+existing links	addressbook	ja	定義済みリンク
+exists	addressbook	ja	定義済み
+export as csv	addressbook	ja	CSV としてエクスポート
+export as vcard	addressbook	ja	vCard としてエクスポート
 export contacts	addressbook	ja	エクスポート
+export definition to use for nextmatch export	addressbook	ja	nextmatch エクスポートで使用する定義をエクスポート
+export definitition to use for nextmatch export	addressbook	ja	nextmatch エクスポートで使用する定義をエクスポート
 export file name	addressbook	ja	エクスポートファイル名
 export from addressbook	addressbook	ja	エクスポート（アドレス帳）
-fax	addressbook	ja	Fax
+export selection	addressbook	ja	選択をエクスポート
+exported	addressbook	ja	エクスポート済み
+exports contacts from your addressbook into a csv file.	addressbook	ja	アドレス帳からコンタクトを CSV ファイルにエクスポート。
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ja	アドレス帳からコンタクトを CSV ファイルにエクスポート。
+exports contacts from your addressbook into a vcard file.	addressbook	ja	アドレス帳からコンタクトを vCard ファイルにエクスポート。
+extra	addressbook	ja	拡張
+extra encodings	addressbook	ja	拡張エンコーディング
+extra private	addressbook	ja	拡張（個人用）
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	ja	組織・団体のメンバーを更新できませんでした（権限不足）!
+favorites	addressbook	ja	お気に入り
+fax	addressbook	ja	FAX
+fax (private)	addressbook	ja	FAX（個人用）
+fax number	common	ja	FAX番号
 field %1 has been added !	addressbook	ja	項目 %1 を追加しました。
-field %1 has been updated !	addressbook	ja	項目 %1 を訂正しました。
+field %1 has been updated !	addressbook	ja	項目 %1 を更新しました。
 field name	addressbook	ja	項目名
+fields for the csv export	addressbook	ja	CSV エクスポートする項目
+fields the user is allowed to edit himself	admin	ja	自身で更新可能な項目
+fields to check for duplicates	addressbook	ja	重複を検査する項目
+fields to consider when looking for duplicate contacts.	addressbook	ja	コンタクトの重複調査時に検査する項目。
+fields to copy when copying an address?	admin	ja	アドレス・コピー時にコピーする項目
 fields to show in address list	addressbook	ja	アドレスリストに表示する項目
 fieldseparator	addressbook	ja	項目の区切り
-geo	addressbook	ja	Geo
+for read only ldap	admin	ja	読み取り専用 LDAP 向け
+for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	ja	シリアルレター向けタグ。任意のコンテンツをこのタグで囲んで使用します。
+freebusy uri	addressbook	ja	空き/予定あり URI
+full name	addressbook	ja	氏名
+general	admin	ja	一般
+general fields:	addressbook	ja	一般項目:
+general settings	addressbook	ja	一般設定
+geo	addressbook	ja	位置情報
+geolocation	addressbook	ja	位置情報
+geolocation integration	admin	ja	位置情報統合
 global categories	addressbook	ja	グローバルカテゴリ
 grant addressbook access	common	ja	利用許可設定
-home city	addressbook	ja	市区町村
-home country	addressbook	ja	国
-home email	addressbook	ja	電子メール
-home phone	addressbook	ja	自宅TEL
-home state	addressbook	ja	都道府県
-home street	addressbook	ja	町域
-home zip code	addressbook	ja	郵便番号
+group %1	addressbook	ja	グループ %1
+h	addressbook	ja	時間
+hide accounts from addressbook	addressbook	ja	ユーザ・アカウントを隠す
+hide all accounts	addressbook	ja	全アカウントを隠す
+hides accounts completly from the adressbook.	addressbook	ja	アドレス帳でユーザ・アカウントを隠します。
+history logging	admin	ja	履歴を記録
+home address	addressbook	ja	住所（自宅）
+home address, birthday, ...	addressbook	ja	自宅住所, 誕生日, ...
+home city	addressbook	ja	市区町村（自宅）
+home country	addressbook	ja	国（自宅）
+home email	addressbook	ja	電子メール（自宅）
+home email if given, else work email	addressbook	ja	電子メール（自宅または仕事メール）
+home phone	addressbook	ja	電話番号（自宅）
+home state	addressbook	ja	都道府県（自宅）
+home street	addressbook	ja	町域（自宅）
+home zip code	addressbook	ja	郵便番号（自宅）
+how many contacts should non-admins be able to export	admin	ja	非管理者がエクスポート可能な最大コンタクト数。
+how many fields must match for the record to be considered a duplicate.	addressbook	ja	重複と判断するのに必要な最低一致項目数。
+html link to the current record	addressbook	ja	このレコードに対する HTML リンク
+icon	addressbook	ja	アイコン
+if accounts are already in ldap	admin	ja	アカウントが LDAP に既に存在する場合
+If you specify a directory, full vfs path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.	addressbook	ja	ディレクトリ（VFS フルパス）を指定すると、%1上で各ドキュメントに対するアクションが表示され、ドキュメントをダウンロードすることができるようになります。
+If you specify a document, full vfs path, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.	addressbook	ja	ドキュメント（VFS フルパス）を指定すると、%1の各項目ごとに拡張ドキュメント・アイコンが表示され、ドキュメントをダウンロードすることができるようになります。
+if you specify an export definition, it will be used when you export	addressbook	ja	エクスポート時に使用する設定を指定します。
+ignore first line	addressbook	ja	先頭行を無視
 import	addressbook	ja	インポート
 import contacts	addressbook	ja	インポート
 import csv-file into addressbook	addressbook	ja	CSVファイルからのインポート
 import file	addressbook	ja	インポート
-import from ldif, csv, or vcard	addressbook	ja	インポート（LDIF, CSV, VCard）
+import from	addressbook	ja	インポート元:
+import from ldif, csv, or vcard	addressbook	ja	インポート（LDIF, CSV, vCard）
 import from outlook	addressbook	ja	インポート（Outlook）
+import multiple vcard	addressbook	ja	複数の vCards をインポート
+import next set	addressbook	ja	次のセットをインポート
+import_instructions	addressbook	ja	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in vCard format.
+importer's personal	addressbook	ja	インポート実行者
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ja	Imports contacts into address book from a CSV File. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
+imports contacts into your addressbook from a vcard file.	addressbook	ja	vCard ファイルからアドレス帳にコンタクトをインポート。
+in %1 days (%2) is %3's birthday.	addressbook	ja	%1 日後（%2）は %3 さんの誕生日です。
+income	addressbook	ja	収入
+infolog	addressbook	ja	インフォログ
+insert	addressbook	ja	挿入
+insufficent rights to delete this list!	addressbook	ja	このリストを削除する権限が不足しています!
+insufficent rights to edit this list!	addressbook	ja	このリストを編集する権限が不足しています!
+international	addressbook	ja	国際
+internet	addressbook	ja	インターネット
 label	addressbook	ja	ラベル
+last date	addressbook	ja	最終日
+last modified	addressbook	ja	最終更新日時
+last modified by	addressbook	ja	最終更新者
+ldap context for contacts	admin	ja	コンタクト用 LDAP コンテキスト
+ldap host for contacts	admin	ja	コンタクト用 LDAP ホスト
+ldap settings for contacts	admin	ja	コンタクト用 LDAP 設定
+ldif	addressbook	ja	LDIF
 line 2	addressbook	ja	町域（２行目）
-location	addressbook	ja	場所
+link title for contacts show	addressbook	ja	コンタクト用リンク・タイトル
+links	addressbook	ja	リンク
+links and attached files	addressbook	ja	リンクと添付ファイル
+links to specified application.  example: {{links/infolog}}	addressbook	ja	アプリケーションへのリンク。  例: {{links/infolog}}
+list all categories	addressbook	ja	全カテゴリをリスト表示
+list all customfields	addressbook	ja	全カスタム項目をリスト表示
+list already exists!	addressbook	ja	リストは既に存在します!
+list created	addressbook	ja	リストを作成しました。
+list creation failed, no rights!	addressbook	ja	リストの作成失敗(権限不足)!
+list of files linked to the current record	addressbook	ja	このレコードにリンクするファイルの一覧
+load vcard	addressbook	ja	vCard をロード
+location	addressbook	ja	地域
+locations	addressbook	ja	地域
+mail vcard	addressbook	ja	vCard をメールで送付
+main categories in their own field	addressbook	ja	主カテゴリをそれぞれの項目で
+manage mapping	addressbook	ja	マッピングを管理
+mark records as private	addressbook	ja	個人用としてマーク
+merge contacts	addressbook	ja	コンタクトをマージ
+merge duplicates	addressbook	ja	重複をマージ
+merge into first or account, deletes all other!	addressbook	ja	先頭、またはアカウントにマージ（それ以外は削除）!
+merged	addressbook	ja	マージ済み
+message after submitting the form	addressbook	ja	フォーム送信後のメッセージ
 message phone	addressbook	ja	メッセージ
 middle name	addressbook	ja	ミドルネーム
+migration finished	addressbook	ja	移行完了
+migration to ldap	admin	ja	LDAP に移行
 mobile	addressbook	ja	携帯電話
+mobile phone	addressbook	ja	携帯電話
+mobile phone (private)	addressbook	ja	携帯電話（個人）
+modem phone	addressbook	ja	モデム電話
+more ...	addressbook	ja	詳細 ...
+move to addressbook	addressbook	ja	アドレス帳に移動
+moved	addressbook	ja	移動済み
+multiple vcard	addressbook	ja	複数 vCard
+name for the distribution list	addressbook	ja	配信リスト名
+name of current user, all other contact fields are valid too	addressbook	ja	ユーザ名、およびその他の項目は全て有効です。
+name, address	addressbook	ja	氏名, 住所
+new contact submitted by %1 at %2	addressbook	ja	新規コンタクトは %1 によって %2 に送信されました。
+new window opened to edit infolog for your selection	addressbook	ja	インフォログ編集ウィンドウを新規に開きました。
+next date	addressbook	ja	次の日付
+no categories selected	addressbook	ja	カテゴリ未選択
+no distribution list	addressbook	ja	配信リスト無し
+no fallback	addressbook	ja	既定値無し
+no vcard	addressbook	ja	vCard 無し
+number	addressbook	ja	番号
+number of records to read (%1)	addressbook	ja	読み込むレコード数（%1）
+open %1 crm view	addressbook	ja	%1 CRM 表示を開く
+open email addresses in external mail program	addressbook	ja	外部メール・プログラムで開く
+open for editing?	addressbook	ja	編集しますか？
+open infolog crm view	preferences	ja	インフォログ CRM 表示を開く
+open tracking system crm view	preferences	ja	トラッカー CRM 表示を開く
+options for type	admin	ja	タイプ・オプション
+organisation	addressbook	ja	組織・団体
+organisations	addressbook	ja	組織・団体
+organisations by departments	addressbook	ja	部署別 組織・団体
+organisations by location	addressbook	ja	地域別 組織・団体
 other number	addressbook	ja	その他番号
+other phone	addressbook	ja	その他電話番号
+Other Phone	addressbook	ja	その他電話番号
+own sorting	addressbook	ja	独自並べ変え
 pager	common	ja	ページャー
 parcel	addressbook	ja	区画
 participants	addressbook	ja	参加者
+permission denied !!!	addressbook	ja	権限が拒否されました!
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	ja	権限が拒否されました! 公開キーを更新できるように管理者に依頼してください。
+pgp key	addressbook	ja	PGPキー
 phone numbers	common	ja	電話番号
+photo	addressbook	ja	写真
+please enter a name for that field !	addressbook	ja	項目名を入力してください!
+please select only one category	addressbook	ja	カテゴリをひとつだけ選択してください
 postal	common	ja	郵便
+pref	addressbook	ja	県
+preferred email address to use in distribution lists	addressbook	ja	優先メール・アドレス
+preferred phone	addressbook	ja	優先電話
+preferred type of email address to add for distribution lists	addressbook	ja	配信リスト用優先メール・アドレス
 prefix	addressbook	ja	プレフィックス
-public key	addressbook	ja	パブリックキー
+prevent deleting of contacts	admin	ja	コンタクトの削除を禁止
+private address	addressbook	ja	住所（個人）
+private custom fields	addressbook	ja	カスタム項目（個人）
+public key	addressbook	ja	パブリック・キー
+publish into groups:	addressbook	ja	グループに追加:
+read a list / search for entries.	addressbook	ja	リストを読み込む / 項目を検索
+read a list of entries.	addressbook	ja	項目リストを読み込む
+read a single entry by passing the id and fieldlist.	addressbook	ja	ID と項目リストを送信してデータを取得
+read only	addressbook	ja	読み取り専用
 record access	addressbook	ja	アクセス権
 record owner	addressbook	ja	所有者
+recovered	addressbook	ja	復旧済み
 region	addressbook	ja	地域
+remove from distribution list	addressbook	ja	配信リストから削除
+remove selected contacts from distribution list	addressbook	ja	選択されたコンタクトを配信リストから削除します。
+removed from distribution list	addressbook	ja	配信リストから削除されました。
+rename list	addressbook	ja	リストの名前を変更
+rename selected distribution list	addressbook	ja	配信リストの名前を変更します。
 repetition	addressbook	ja	繰返し
+replacements for inserting contacts into documents	addressbook	ja	ドキュメントにコンタクトを埋め込む際の置換値
+required fields *	addressbook	ja	必須項目 *
+rights	addressbook	ja	権限
+role	addressbook	ja	職業
+room	addressbook	ja	部屋番号
+search letter	addressbook	ja	文字検索
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	ja	ポートレート写真(JPEG)を選択してください（60ピクセル幅にリサイズされます）。
+select a source address to be used in geolocation routing system	addressbook	ja	位置情報の取得元を選択
+select a view	addressbook	ja	表示を選択
+select addressbook type	addressbook	ja	アドレス帳タイプを選択
 select all	addressbook	ja	全て選択
+select an action or addressbook to move to	addressbook	ja	アクション、または移動するアドレス帳を選択
+select an action or addressbook to move to...	addressbook	ja	アクション、または移動するアドレス帳を選択...
+select migration type	admin	ja	移行タイプを選択
+select multiple contacts for a further action	addressbook	ja	アクションのためのコンタクトを選択
+select phone number as prefered way of contact	addressbook	ja	優先コンタクト方法として電話番号を選択
+select the type of conversion	addressbook	ja	変換タイプを選択
+select the type of conversion:	addressbook	ja	変換タイプを選択:
+select where you want to store / retrieve contacts	admin	ja	コンタクトの保存先/取得元を選択
+selected contacts	addressbook	ja	選択済みコンタクト
+send emailcopy to receiver	addressbook	ja	メールのコピーを送信
+send succeeded to %1	common	ja	%1 への送信成功
+seperator	addressbook	ja	区切り文字
+set full name and file as field in contacts of all users (either all or only empty values)	admin	ja	ユーザの氏名、およびファイル名を設定してください。
+set only full name	addressbook	ja	氏名（フルネーム）でのみ指定
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	ja	カラムが空でも写真と自宅住所を表示しますか？
+show	addressbook	ja	表示
+show active accounts	addressbook	ja	アクティブ・アカウントを表示
+show all accounts	addressbook	ja	全アカウントを表示
 show birthday reminders on main screen	addressbook	ja	メイン画面に誕生日情報を表示
+show infolog entries for this organisation	addressbook	ja	この組織・団体のインフォログ項目を表示
+show the contacts of this organisation	addressbook	ja	この組織・団体のコンタクトを表示
+similar contacts found:	addressbook	ja	似通ったコンタクトが見つかりました:
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	ja	ポップアップの大きさ。幅 x 高さ。例: 400x300
+smime key	addressbook	ja	S/MIMEキー
+special	addressbook	ja	特別
+stadt	addressbook	ja	市区町村
+start	admin	ja	開始日
+startrecord	addressbook	ja	開始レコード
 state	common	ja	都道府県
+state (private)	addressbook	ja	都道府県（個人）
 street	common	ja	町域
+street (private)	addressbook	ja	町域（個人）
+subject for email	addressbook	ja	メールの件名
+successfully imported %1 records into your addressbook.	addressbook	ja	%1 個のレコードをアドレス帳にインポートしました。
 suffix	addressbook	ja	敬称
+tag to mark positions for address labels	addressbook	ja	アドレス・ラベル用タグ
+tel home	addressbook	ja	電話番号（自宅）
+telephony integration	admin	ja	電話統合
+test import (show importable records <u>only</u> in browser)	addressbook	ja	インポートの予行演習。ブラウザにインポート可能なレコードを<u>表示するだけ</u>です。
+thank you for contacting us.	addressbook	ja	お問い合わせいただき、ありがとうございます。
 that field name has been used already !	addressbook	ja	項目名は既に存在しています。
-this person's first name was not in the address book.	addressbook	ja	アドレス帳に名前がありません。
+the anonymous user has probably no add rights for this addressbook.	addressbook	ja	追加権限がありません。
+the anonymous user needs add rights for it!	addressbook	ja	追加権限が必要です!
+the anonymous user needs read it!	addressbook	ja	読み取り権限が必要です!
+The document can contain placeholder like {{%1}}, to be replaced with the data.	addressbook	ja	ドキュメントにはプレース・ホルダー（例: {{%1}}）を埋め込むことがで
+the following document-types are supported:	addressbook	ja	下記のドキュメント・タイプがサポートされます:
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	ja	コンタクト・データをオフィス（OpenOffice / マイクロソフト・オフィス）に挿入するためには拡張子が ZIP である必要があります。
+there was an error saving your data :-(	addressbook	ja	エラー: データ保存失敗!
+this module displays a contactform, that stores direct into the addressbook.	addressbook	ja	このモジュールは、アドレス帳に直接データを保存するフォームを表示します。
+this module displays block from a adddressbook group.	addressbook	ja	このモジュールは、アドレス帳グループからブロックを表示します。
+this person's first name was not in the address book.	addressbook	ja	アドレス帳に名前（氏名の名）がありません。
+this person's last name was not in the address book.	addressbook	ja	アドレス帳で姓（氏名の氏）がありません。
+timezone	addressbook	ja	タイム・ゾーン
+title	addressbook	ja	役職
+titles of any entries linked to the current record, excluding attached files	addressbook	ja	このレコードにリンクする項目のタイトル（添付ファイルを除く）
+to many might exceed your execution-time-limit	addressbook	ja	数量が多過ぎるため、実行時間の制限値を越える恐れがあります。
 today is %1's birthday!	common	ja	今日は %1 さんの誕生日です。
+tomorrow is %1's birthday.	common	ja	明日は %1 さんの誕生日です。
 translation	addressbook	ja	翻訳
-vcard	common	ja	VCard
-vcards require a first name entry.	addressbook	ja	VCard には、名前が必要です。
+two of: %1	addressbook	ja	二つを選択: %1
+type	addressbook	ja	タイプ
+un-delete	addressbook	ja	復元
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	ja	"%1" をアカウント ID に変換できません。所有者用プラグイン設定 (%2) を使用。
+unable to delete	addressbook	ja	削除できません
+unable to import into %1, using %2	addressbook	ja	%2 による %1 へのインポートはできません
+unique id (uid)	addressbook	ja	固有 ID (UID)
+unique id<br />(to update existing records)	addressbook	ja	固有 ID<br />既存レコードの更新用
+unknown type %1, imported as %2	addressbook	ja	未知のタイプ %1 を %2 としてインポートしました。
+update a single entry by passing the fields.	addressbook	ja	項目を送信してデータを更新。
+update fields by edited organisations?	admin	ja	編集済み組織・団体の項目を更新しますか？
+updated	addressbook	ja	更新済み
+upload or delete the photo	addressbook	ja	写真を更新/削除
+url (business)	addressbook	ja	URL（仕事）
+url (private)	addressbook	ja	URL（個人）
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	ja	電話番号にリンクさせる URL。（%1 = 電話番号, %u = アカウント名, %t = アカウントの電話番号）
+use a category tree?	addressbook	ja	カテゴリ選択にツリー表示を使う
+use addressbooks "own sorting" attribute	addressbook	ja	アドレス帳の「独自並べ変え」属性を使う
+use an extra tab for private custom fields?	admin	ja	個人用カスタム項目で追加タブを使う
+use country list	addressbook	ja	国選択リストを使う
+use setup for a full account-migration	admin	ja	アカウント移行時に設定を使う
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	ja	アドレスラベル向けタグ。任意のコンテンツをこのタグで囲んで使用します。
+used for links and for the own sorting of the list	addressbook	ja	リンク、およびリストの独自並べ変えで使用。
+user preference	addressbook	ja	個人設定
+vcard	common	ja	vCard
+vcards require a first name entry.	addressbook	ja	vCard には、名前（氏名の名）が必要です。
+vcards require a last name entry.	addressbook	ja	vCards には、姓（氏名の氏）が必要です。
+verification	addressbook	ja	検証
+view linked infolog entries	addressbook	ja	リンクするインフォログの項目を表示
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ja	警告!! LDAP をアカウントの保存先としていない場合に限り、LDAP は有効です。
+warning: all contacts found will be deleted!	addressbook	ja	警告: 見つかったコンタクトは全て削除されます!
+weekday	addressbook	ja	曜日
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	ja	アドレス帳のリンクを他のアプリケーションで表示するか否かを指定します。この設定を変更した場合は、再ログイン後に変更が反映されます。
+when viewing a contact, show linked entries from the selected application	addressbook	ja	コンタクト表示時に、指定されたアプリケーションのリンク項目を表示する
+where to add the email address	addressbook	ja	メール・アドレスの追加先
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	ja	既定の住所書式が未定義である国のデータで使用する住所書式。
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	ja	現在のアドレス帳に対して書き込み権限が無い場合にコンタクトを保存するアドレス帳。
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ja	CSV エクスポート時の文字セット
+which charset should be used for the vcard export.	addressbook	ja	vCard エクスポート時の文字セット
+which charset should be used for the vcard import and export.	addressbook	ja	vCard インポート/エクスポート時の文字セット
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	ja	どの項目をエクスポートするかを指定します。「全て」を選択下場合、カスタム項目を含む全ての項目が対象となります。仕事住所のみ、または自宅住所のみを選択すると、氏名、会社名および指定された住所だけが対象となります。
+whole query	addressbook	ja	クエリ全体
+work email if given, else home email	addressbook	ja	メール・アドレス（仕事または自宅）
 work phone	addressbook	ja	勤務先TEL
+write (update or add) a single entry by passing the fields.	addressbook	ja	項目を送信してデータを更新/追加
+wrong - try again ...	addressbook	ja	不正 - 要 再試行 ...
+yes, for the next three days	addressbook	ja	はい（翌3日間）
+yes, for the next two weeks	addressbook	ja	はい（翌2週間）
+yes, for the next week	addressbook	ja	はい（翌1週間）
+yes, for today and tomorrow	addressbook	ja	はい（今日と明日）
+yes, only admins can purge deleted items	admin	ja	はい（管理者だけが削除済みデータをパージ可能）
+yes, users can purge their deleted items	admin	ja	はい（ユーザ自身が削除済みデータをパージ可能）
+you are not permitted to delete contact %1	addressbook	ja	コンタクト %1 を削除する権限がありません
+you are not permittet to delete this contact	addressbook	ja	このコンタクトを削除する権限がありません
+you are not permittet to edit this contact	addressbook	ja	このコンタクトを編集する権限がありません
+you are not permittet to view this contact	addressbook	ja	このコンタクトを表示する権限がありません
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	ja	アカウントが LDAP に保存されている場合のみ、LDAP をコンタクト・リポジトリとして使用できます!
+you can respond by visiting:	addressbook	ja	閲覧:
+you must select a vcard. (*.vcf)	addressbook	ja	vCard ファイル (*.vcf) を選択してください
 you must select at least 1 column to display	addressbook	ja	表示する項目を選択してください。
+you need to select a distribution list	addressbook	ja	配信リストを選択してください
+you need to select some contacts first	addressbook	ja	先にコンタクトを選択してください
+you need to select some entries first	addressbook	ja	先に項目を選択してください
+your new public key has been stored in accounts addressbook.	addressbook	ja	新しい公開キーがアカウント・アドレス帳に保存されました。
 zip code	common	ja	郵便番号
+zip code (private)	addressbook	ja	郵便番号（個人）
+zip_note	addressbook	ja	<p><b>注意:</b> ファイルは、.csv, .vcf, または .ldif 形式の郵便番号データ集の可能性があります。インポートの際、ファイル・タイプを混用しないようご注意ください。

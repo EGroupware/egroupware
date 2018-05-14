@@ -124,7 +124,7 @@
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
-					<description for="tel_other" value=" Other Phone"/>
+					<description for="tel_other" value="Other Phone"/>
 					<url-phone id="tel_other" tabindex="25" class="et2_fullWidth" autocomplete="tel"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 					<description/>

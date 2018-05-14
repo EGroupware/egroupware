@@ -134,6 +134,7 @@ remove	setup	ja	削除
 requires reinstall or manual repair	setup	ja	Requires reinstall or manual repair
 requires upgrade	setup	ja	Requires upgrade
 resolve	setup	ja	確認
+schedule	setup	ja	スケジュール
 select the default applications to which your users will have access	setup	ja	Select the default applications to which your users will have access
 select the desired action(s) from the available choices	setup	ja	アプリケーションの設定動作を選択してください。
 select where you want to store/retrieve user accounts	setup	ja	ユーザアカウントの格納/検索場所

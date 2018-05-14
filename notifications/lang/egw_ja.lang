@@ -1,6 +1,109 @@
+(update in sec. %s)	notifications	ja	（更新時間: %s 秒）
+account:	notifications	ja	アカウント:
+all possible notification backends	notifications	ja	利用可能な全通知バックエンド
+are you sure you want to delete all notifications?	notifications	ja	全ての通知を削除してよろしいですか？
+browser	notifications	ja	ブラウザ
+browser is starting.	notifications	ja	ブラウザを開始します。
+cancal settings?	notifications	ja	設定をキャンセルしますか？
+cancal?	notifications	ja	キャンセルしますか？
+certification-information:	notifications	ja	証明書情報:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	ja	Check both. First try active user defined account, if none, use eMailAdmin profile.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	ja	通知チェーンを選択します。選択されたチェーンの通知バックエンドによって通知されます。<br />注意: 「不可」と表示されているチェーンは管理者によって禁止されているため、これらのチェーンを選択すると電子メールで通知が送信されます。
+choose from mailsettings used for notification	admin	ja	電子メール通知で使用するメール設定を選択
+common chains	notifications	ja	共用チェーン
+connection error.	notifications	ja	接続エラー。
+connection error. please check connection to server.	notifications	ja	接続エラー。サーバー接続を確認してください。
+continue to connect?	notifications	ja	接続を続けますか？
+cookies are required to login to this site.	notifications	ja	このサイトにログインするにはくっキーを有効化する必要があります。
+delete all messages	notifications	ja	全メッセージを削除
+delete notifications	notifications	ja	通知を削除
+delete this message	notifications	ja	このメッセージを削除
+disabled chains	notifications	ja	無効チェーン
+do not notify me at all	notifications	ja	全ての通知を禁止
+domain not found, please check serveraddress.	notifications	ja	Domain not found, please check Serveraddress.
+e-mail only	notifications	ja	電子メールのみ
+egroupware has notifications for you	notifications	ja	通知メッセージがあります。
+egroupware login is starting, please wait.	notifications	ja	EGroupware ログインを開始しています。しばらくお待ち下さい。
+egroupware logindomain:	notifications	ja	EGroupware ログイン・ドメイン:
+egroupware logindomains founds, please select.	notifications	ja	EGroupware ログイン・ドメインを選択して下さい。
+egroupware not found by url or connection lost to server.	notifications	ja	指定された URL で EGroupware が見つからないか、サーバーに接続できません。
+egroupware not found by url.	notifications	ja	指定された URL で EGroupware が見つかりませんでした。
+egroupware-popup and e-mail	notifications	ja	EGroupware ポップアップと電子メール
+egroupware-popup and windows-popup	notifications	ja	EGroupware ポップアップと Windows ポップアップ
+egroupware-popup backend	admin	ja	EGroupware ポップアップ・バックエンド
+egroupware-popup first, if that fails notify me by e-mail	notifications	ja	EGroupware ポップアップ（ポップアップ失敗時のみ電子メール）
+egroupware-popup only	notifications	ja	EGroupware ポップアップのみ
+egroupware-popup verbosity	notifications	ja	EGroupware ポップアップの冗長度
+emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	ja	EmailAdmin profile only. Do NOT use user defined active mail profiles for notification.
+email notifications only, if user is not logged in	notifications	ja	電子メールのみ（ユーザがログインしていない場合）
+enable egroupware-popup backend	admin	ja	EGroupware ポップアップ・バックエンドを有効化
+enable windows-popup backend	admin	ja	Windows ポップアップ・バックエンドを有効化
+enabled chains	notifications	ja	有効チェーン
+error browser can`t start.	notifications	ja	エラー: ブラウザを開始できませんでした。
+error on loading tray icon	notifications	ja	エラー: トレイ・アイコンをロードできませんでした。
+error ssl	notifications	ja	SSL エラー
+exit	notifications	ja	終了
+folder	notifications	ja	フォルダ
 from	notifications	ja	差出人
+host:	notifications	ja	ホスト:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	ja	Ergoupware ポップアップでユーザに通知する時の、通知の冗長度（詳細度）を指定します:<br />低: トップメニューで通知ベルを表示するのみ（トップメニューが有効である必要があります）<br />中: 通知ウィンドウを前面に表示<br />高: 通知ウィンドウを前面に表示し、そのブラウザで実行可能な通知手段を追加
+if set, embedded links get rendered special for external clients	notifications	ja	これを設定すると、外部クライアントへのリンクが埋め込まれます。
+info on load config file: create config file.	notifications	ja	Info on load config file: create config file.
+issuer dn:	notifications	ja	Issuer DN:
+java desktop notification app	preferences	ja	Java デスクトップ通知アプリ
+java-windows-popup and egroupware-popup only	preferences	ja	Java-Windows ポップアップとEGroupware ポップアップのみ
+java-windows-popup, egroupware-popup and email	preferences	ja	Java-Windows ポップアップとEGroupware ポップアップと電子メール
+last month	notifications	ja	先月
+linked entries:	common	ja	リンク項目:
+login aborted, application exit?	notifications	ja	ログインを中断し、アプリケーションを終了しますか？
+login in egroupware:	notifications	ja	EGroupware にログイン:
+mail backend	admin	ja	電子メール・バックエンド
+mark all as read	notifications	ja	全て既読にする
+mark as read	notifications	ja	既読にする
 message from	notifications	ja	送信者
 minutes	notifications	ja	分
+more info	notifications	ja	詳細情報
+notification	common	ja	通知
+notifier	notifications	ja	通知元
+notify me by	notifications	ja	通知方法
+open notified entry	notifications	ja	通知項目を開く
+optimize e-mails for external mail client	notifications	ja	外部クライアント向けに電子メールを最適化
+page not found, please check serveraddress.	notifications	ja	ページが見つかりません。サーバー・アドレスを確認してください。
+password:	notifications	ja	パスワード:
+permission	notifications	ja	権限
+permission denied for notifications application.	notifications	ja	通知アプリケーションに対する権限が拒否されました。
+placeholders with user/ prefix	admin	ja	placeholders with user/ prefix
+please contact your egroupware admin.	notifications	ja	EGroupware 管理者にお問い合わせください。
+please enter the url of your egroupware.	notifications	ja	EGroupware URL を入力してください。
+please enter your egroupware username.	notifications	ja	EGroupware ユーザ名を入力してください。
+please enter your password	notifications	ja	パスワードを入力してください
+poll interval	notifications	ja	ポーリング間隔
+preferences for notification	notifications	ja	通知設定
+received	notifications	ja	受信済み
+repeat login?	notifications	ja	もういちどログインしますか？
+run application	notifications	ja	アプリケーションを起動
+save password	notifications	ja	パスワードを保存
+setting	notifications	ja	設定
+setting aborted, application exit	notifications	ja	設定を中断しアプリケーションを終了しました。
+settings	notifications	ja	設定
 signature	admin	ja	署名
+signature added to every change notification	admin	ja	Signature added to every change notification
+sorry, your login has expired	notifications	ja	時間切れのため、セッションを終了しました。
 step	notifications	ja	ステップ
-your session could not be verified.	notifications	ja	Your session could not be verified.
+subject dn:	notifications	ja	Subject DN:
+the server certificate is not a valid trust center certificate!	notifications	ja	The server certificate is not a valid trust center certificate!
+this egroupware notification has been sent to you by mail because your	notifications	ja	This EGroupware notification has been sent to you by mail because your
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	ja	This EGroupware notification has been sent to you by mail because your chosen notification chain has been disabled by the administrator. Please choose another notification chain in your preferences!
+this month	notifications	ja	今月
+you have %1 unread notifications	notifications	ja	%1 個の未読通知があります。
+user:	notifications	ja	ユーザ:
+warning	notifications	ja	警告
+windows-popup and e-mail	notifications	ja	Windows ポップアップと電子メール
+windows-popup backend	admin	ja	Windows ポップアップ・バックエンド
+windows-popup first, if that fails notify me by e-mail	notifications	ja	Windows ポップアップ（失敗時のみ電子メール）
+windows-popup only	notifications	ja	Windows ポップアップのみ
+yesterday	notifications	ja	昨日
+you can also use	admin	ja	You can also use
+you have been successfully logged out	notifications	ja	ログアウトしました。
+you've got new mail	notifications	ja	新着メールがあります!
+your session could not be verified.	notifications	ja	セッションが検証できません。
