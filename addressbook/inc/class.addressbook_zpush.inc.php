@@ -842,6 +842,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		if (!isset($hook_data['setup']) && in_array($hook_data['type'], array('user', 'group')))
 		{
 			$user = $hook_data['account_id'];
+			Api\Translation::add_app('addressbook');
 			$addressbook_bo = new Api\Contacts();
 			$addressbooks = $addressbook_bo->get_addressbooks(Acl::READ, null, $user);
 			if ($user > 0)
