@@ -78,9 +78,9 @@
 								<description id="${row}[winmailFlag]" />
 								<description class="useEllipsis et2_link" id="${row}[filename]" extra_link_target="$row_cont[windowName]" extra_link_popup="$row_cont[popup]" expose_view="true" mime="$row_cont[type]" no_lang="1" mime_data="$row_cont[mime_data]" href="$row_cont[mime_url]"/>
 								<description align="right" id="${row}[size]" />
-								<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})"/>
-								<buttononly id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})"/>
-								<buttononly  class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_all]" value="save_all" image="mail/save_all" onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})"/>
+								<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})" label="Save to disk"/>
+								<buttononly id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})" label="Save to filemanager"/>
+								<buttononly  class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_all]" value="save_all" image="mail/save_all" onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})" label="Save all attachments to filemanager"/>
 								<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" value="save_zip" image="mail/save_zip" onclick="app.mail.saveAttachmentHandler(widget,'downloadAllToZip', ${row})" label="Save as Zip"/>
 							</row>
 						</rows>

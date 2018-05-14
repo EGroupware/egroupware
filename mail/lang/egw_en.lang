@@ -65,6 +65,7 @@ arrival	mail	en	Recieved
 ask for permission	mail	en	Ask for permission
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
+attachment has been saved successfully.	mail	en	Attachment has been saved successfully.
 attachment	mail	en	Attachment
 attachments	mail	en	Attachments
 authentication	mail	en	Authentication
@@ -445,6 +446,7 @@ rule priority position	mail	en	Rule priority position
 rule with priority	mail	en	rule with priority
 rules	mail	en	rules
 save all	mail	en	Save all
+save all attachments to filemanager	mail	en	Save all attachments to filemanager
 save as calendar	mail	en	Save as Calendar
 save as default	mail	en	save as default
 save as draft	mail	en	Save as Draft
@@ -453,6 +455,8 @@ save as infolog	mail	en	Save as Infolog
 save as infolog on send	mail	en	Save as Infolog on send
 save as ticket	mail	en	Save as ticket
 save as tracker on send	mail	en	Save as tracker on send
+save attachment	mail	en	Save attachment
+save attachments	mail	en	Save attachments
 save message to disk	mail	en	Save Message to disk
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
 save the drafted message as eml file into vfs	mail	en	Save the drafted message as eml file into VFS

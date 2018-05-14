@@ -65,6 +65,7 @@ arrival	mail	de	Empfangsdatum
 ask for permission	mail	de	Immer nachfragen
 attach users vcard at compose to every new mail	mail	de	Füge die vCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
+attachment has been saved successfully.	mail	de	Anhang erfolgreich gespeichert.
 attachment	mail	de	Anhang
 attachments	mail	de	Dateien
 authentication	mail	de	Authentifizierung
@@ -453,6 +454,7 @@ save as infolog	mail	de	Als Infolog speichern
 save as infolog on send	mail	de	Als Infolog speichern
 save as ticket	mail	de	Als Ticket speichern
 save as tracker on send	mail	de	Als Ticket speichern
+save attachment	mail	de	Anhang speichern
 save message to disk	mail	de	Nachricht speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
 save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf im EGroupware Dateimanager ab.
