@@ -16,6 +16,7 @@
  */
 app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 {
+	appname: 'filemanager',
 	vfsSelectWidget: {},
 	path_widget: {},
 	/**
@@ -28,6 +29,7 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 		// call parent
 		this._super.apply(this, arguments);
 
+		this.egw.langRequireApp(this.egw.window, 'filemanager');
 	},
 
 	/**
