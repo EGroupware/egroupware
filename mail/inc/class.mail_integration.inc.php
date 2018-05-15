@@ -366,9 +366,16 @@ class mail_integration {
 				// Fix inline images
 				if($mailcontent['html_message'] && $attachment['cid'] && $data_attachments[$key]['egw_data'])
 				{
-					$link_callback = function($cid) use($data_attachments, $key)
+					$link_callback = function($cid) use($data_attachments, $attachment, $key)
 					{
-						return self::INLINE_PREFIX.$data_attachments[$key]['egw_data'].'" title="['.$data_attachments[$key]['name'].']';
+						if ($attachment['cid'] == $cid)
+						{
+							return self::INLINE_PREFIX.$data_attachments[$key]['egw_data'].'" title="['.$data_attachments[$key]['name'].']';
+						}
+						else
+						{
+							return "cid:".$cid;
+						}
 					};
 					foreach(array('src','url','background') as $type)
 					{
