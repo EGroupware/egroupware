@@ -3576,7 +3576,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				{
 					if (!isset($cache[$imageURL]))
 					{
-						if ($_type !="background")
+						if ($_type !="background" && !$imageURL)
 						{
 							$bo = Mail::getInstance(false, mail_ui::$icServerID);
 							$attachment = $bo->getAttachmentByCID($_uid, $CID, $_partID);
