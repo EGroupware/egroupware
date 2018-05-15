@@ -585,8 +585,11 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 			}
 		}).finally(function() {egw.loading_prompt('select_wait', false)});
 
-		// Lock the UI - we NEED these before the user does something with them
-		egw.loading_prompt('select_wait', true);
+		if(queryRanges.length > 0)
+		{
+			// Lock the UI - we NEED these before the user does something with them
+			egw.loading_prompt('select_wait', true);
+		}
 	}
 
 });}).call(this);
