@@ -998,7 +998,9 @@ class calendar_boupdate extends calendar_bo
 							// we need to pass $event[id] so iCal class reads event again,
 							// as event is in user TZ, but iCal class expects server TZ!
 							$ics = $calendar_ical->exportVCal(array(isset($cleared_event) ? $cleared_event : $event['id']),
-								'2.0', $method, 0, '', 'utf-8', $method == 'REPLY' ? $user : 0);
+								'2.0', $method, isset($cleared_event) ? $cleared_event['recur_date'] : $event['recur_date'],
+								'', 'utf-8', $method == 'REPLY' ? $user : 0
+							);
 							unset($calendar_ical);
 						}
 						$attachment = array(
