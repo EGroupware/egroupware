@@ -338,7 +338,7 @@ class calendar_uiforms extends calendar_ui
 			{
 				$content['alarm'][1]['offset'] = $offset = 60 * $def_alarm;
 				$content['start'] = $this->bo->date2array($content['start']);
-				$content['start'][1]['offset'] = $this->bo->date2ts($content['start']) - $offset;
+				$content['start'][1]['time'] = $this->bo->date2ts($content['start']) - $offset;
 				$content['start'] = $this->bo->date2ts($content['start']);
 			}
 		}

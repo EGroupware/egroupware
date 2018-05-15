@@ -2710,7 +2710,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 	/**
 	 * Set alarm options based on WD/Regular event user preferences
-	 * Gets fired by wholeday checkbox
+	 * Gets fired by wholeday checkbox.  This is mainly for display purposes,
+	 * the default alarm is calculated on the server as well.
 	 *
 	 * @param {egw object} _egw
 	 * @param {widget object} _widget whole_day checkbox
@@ -2728,13 +2729,17 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		var _secs_to_label = function (_secs)
 		{
 			var label='';
-			if (_secs <= 3600)
+			if (_secs < 3600)
 			{
 				label = self.egw.lang('%1 minutes', _secs/60);
 			}
-			else if(_secs <= 86400)
+			else if(_secs < 86400)
 			{
 				label = self.egw.lang('%1 hours', _secs/3600);
+			}
+			else
+			{
+				label = self.egw.lang('%1 days', _secs/(3600*24));
 			}
 			return label;
 		};
@@ -2756,7 +2761,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				start.set_hours(0);
 				start.set_minutes(0);
 				time.set_value(start.get_value());
-				time.set_value('-'+(60 * def_alarm));
+				time.set_value(new Date(new Date(start.get_value()).valueOf() - (60*def_alarm*1000)).toJSON());
 				event.set_value(_secs_to_label(60 * def_alarm));
 			}
 		}
