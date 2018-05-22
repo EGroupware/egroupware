@@ -770,19 +770,28 @@ class Select extends Etemplate\Widget
 	/**
 	 * Get available apps as options
 	 *
-	 * @param string $type2 ='installed' 'user'=apps of current user, 'enabled', 'installed' (default), 'all' = not installed ones too
+	 * @param string $type2 ='installed[:home;groupdav; ...]' 'user'=apps of current user,
+	 * 'enabled', 'installed' (default), 'all' = not installed ones too. In order to
+	 * exclude apps explicitly we can list them (app name separator is ';') in front of the type.
+	 *
 	 * @return array app => label pairs sorted by label
 	 */
 	public static function app_options($type2)
 	{
 		$apps = array();
+		$parts = explode(":", $type2);
+		if (is_array($parts))
+		{
+			$exceptions = explode(";", $parts[1]);
+			$type2 = $parts[0];
+		}
 		foreach ($GLOBALS['egw_info']['apps'] as $app => $data)
 		{
-			if ($type2 == 'enabled' && (!$data['enabled'] || !$data['status'] || $data['status'] == 3))
+			if ($type2 == 'enabled' && (!$data['enabled'] || !$data['status'] || $data['status'] == 3 || in_array($app, $exceptions)))
 			{
 				continue;	// app not enabled (user can not have run rights for these apps)
 			}
-			if ($type2 != 'user' || $GLOBALS['egw_info']['user']['apps'][$app])
+			if (($type2 != 'user' || $GLOBALS['egw_info']['user']['apps'][$app]) && !in_array($app, $exceptions))
 			{
 				$apps[$app] = lang($app);
 			}
