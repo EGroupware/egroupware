@@ -116,7 +116,7 @@
 				</row>
 				<row>
 					<description value="Applications available on mobile devices" label="%s:"/>
-					<select-app id="newsettings[fw_mobile_app_list]" multiple="true" tags="true" other=",enabled" width="100%"/>
+					<select-app id="newsettings[fw_mobile_app_list]" multiple="true" tags="true" other=",enabled:home;groupdav;sitemgr-link;sitemgr;developer_tools;etemplate" width="100%"/>
 				</row>
 				<row>
 					<description value="security" span="all" class="subHeader"/>
