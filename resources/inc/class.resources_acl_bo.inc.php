@@ -121,7 +121,7 @@ class resources_acl_bo
 	*
 	* @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	* @param int $cat_id
-	* @return int userid of cat admin
+	* @return int|null userid of cat admin or null for none set
 	*/
 	static public function get_cat_admin($cat_id)
 	{
@@ -138,7 +138,7 @@ class resources_acl_bo
 		{
 			return self::get_cat_admin($parent);
 		}
-		return lang('none');
+		return null;
 	}
 
 	/**
