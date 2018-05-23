@@ -209,12 +209,25 @@ class calendar_uiforms extends calendar_ui
 				$cat = (int)$cat;
 			}
 		}
+		$duration = isset($_GET['duration']) ? (int)$_GET['duration'] : (int) $this->bo->cal_prefs['defaultlength']*60;
+		if(isset($_GET['end']))
+		{
+			$end = Api\DateTime::to($_GET['end'], 'ts');
+			$duration = $end - $start;
+		}
+		else
+		{
+			$end = $start + $duration;
+		}
+		$whole_day = ($duration + 60 == DAY_s);
+
 		$alarms = array();
+		$alarm_pref = $whole_day ? 'default-alarm-wholeday' : 'default-alarm';
 		// if default alarm set in prefs --> add it
 		// we assume here that user does NOT have a whole-day but no regular default-alarm, no whole-day!
-		if ((string)$this->cal_prefs['default-alarm'] !== '')
+		if ((string)$this->cal_prefs[$alarm_pref] !== '')
 		{
-			$offset = 60 * $this->cal_prefs['default-alarm'];
+			$offset = 60 * $this->cal_prefs[$alarm_pref];
 			$alarms[1] =  array(
 				'default' => 1,
 				'offset' => $offset ,
@@ -224,8 +237,7 @@ class calendar_uiforms extends calendar_ui
 				'id'	=> 1,
 			);
 		}
-		$duration = isset($_GET['duration']) ? (int)$_GET['duration'] : (int) $this->bo->cal_prefs['defaultlength']*60;
-		$end = isset($_GET['end']) ? Api\DateTime::to($_GET['end'], 'ts') : $start + $duration;
+
 		return array(
 			'participant_types' => $participant_types,
 			'participants' => $participants,
@@ -341,6 +353,25 @@ class calendar_uiforms extends calendar_ui
 				$content['start'][1]['time'] = $this->bo->date2ts($content['start']) - $offset;
 				$content['start'] = $this->bo->date2ts($content['start']);
 			}
+		}
+		else if ($content['cal_id'] && count($content['alarm']) > 0 && current($content['alarm'])['default'] &&
+			// Existing event, check for change from/to whole day
+			($old = $this->bo->read($content['cal_id'])) && $old['whole_day'] !== $content['whole_day'] &&
+			($def_alarm = $this->cal_prefs['default-alarm'.($content['whole_day'] ? '-wholeday' : '')])
+		)
+		{
+			// Reset default alarm
+			$old_default = array_shift($content['alarm']);
+			$this->bo->delete_alarm($old_default['id']);
+			$offset = 60 * $def_alarm;
+			array_unshift($content['alarm'], array(
+				'default' => 1,
+				'offset' => $offset ,
+				'time'   => $content['start'] - $offset,
+				'all'    => false,
+				'owner'  => $owner,
+				'id'	=> 1
+			));
 		}
 
 		$event = $content;
