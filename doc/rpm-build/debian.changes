@@ -1,3 +1,33 @@
+egroupware-epl (17.1.20180523) hardy; urgency=low
+
+  * Setup/Filemanager: fix excess looping stalling update from before 16.1
+  * ProjectManager: fix "used" elements filter did not contain all not ignored elementes
+  * Api/Ckeditor: Update CKeditor to version v4.9.2
+  * Api: Fix references to sub-fields of custom field entries only merged for the first entry of each type
+  * Calendar: Fix notification for single event in series had original start date
+  * Calendar: fix not working Mail/Meetingrequest to all participants action
+  * Calendar: yearly planner view events would sometimes load in the next month as well
+  * Tracker: fix inline images from mailhandling are not getting resolved properly
+  * Tracker: fix inline images imported from mail get always overridden by the first inline image in the list
+  * Tracker: fix "delete mail from server" option in mailhandling
+  * Tracker: fix error Too few arguments to function tracker_bo::ajax_getTicketId(), 0 passed and exactly 1 expected, when creating new ticket out of eml file
+  * Tracker: Fix latest reply comment includes some html tags on it
+  * Admin: Exclude not supported apps from mobile's available app list
+  * Admin/Mail: fix saving mail-accounts for multiple accounts
+  * Mail: fixed equal signs (=) are not displayed in subject
+  * Mail: fix searching in email gives an error
+  * Addressbook: allow to import or paste S/Mime or PGP public keys via pubkey field into Vfs
+  * Addressbook: Add preference to turn off user groups as distribution lists
+  * Resources: fix 'Too few arguments' error when changing category of resource with accessories
+  * Infolog: Fix timestamper button does not work in mobile template
+  * Wiki: fix not working vfs: links in minimal installation
+  * Mail/SpamTitan: fix not working spam/ham learning and white/blacklist without API access
+  * EPL/SpamTitan: synchronize aliases with SpamTitan on first use of a spam function
+  * Collabora: do NOT check certificate for localhost or private IPs
+  * Calendar/Resources: fix SQL error with no responsible for a category set for Slovenian (and maybe other) translations
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 23 May 2018 08:11:18 +0200
+
 egroupware-epl (17.1.20180413) hardy; urgency=low
 
   * PHP 7.2: fix several PHP Fatal errors and warnings stalling installation and usage
