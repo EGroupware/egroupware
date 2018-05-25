@@ -220,19 +220,20 @@ class admin_passwordreset
 								$msg .= lang('Account "%1" has no email address --> not notified!',$account['account_lid']);
 								continue;
 							}
-							$send = new send();
+							$send = new Api\Mailer();
 							$send->AddAddress($account['account_email'],$account['account_fullname']);
 							$replacements = array();
 							foreach($this->replacements as $name => $label)
 							{
 								$replacements['$$'.$name.'$$'] = $account['account_'.$name];
 							}
-							$send->Subject = strtr($content['subject'],$replacements);
-							$send->Body = strtr($content['body'],$replacements);
+							$send->addHeader('Subject', strtr($content['subject'], $replacements));
+							$send->setBody(strtr($content['body'], $replacements));
 							if (!empty($GLOBALS['egw_info']['user']['account_email']))
 							{
-								$send->From = $GLOBALS['egw_info']['user']['account_email'];
-								$send->FromName = $GLOBALS['egw_info']['user']['account_fullname'];
+								$send->addHeader('From', Api\Mailer::add_personal(
+									$GLOBALS['egw_info']['user']['account_email'],
+									$GLOBALS['egw_info']['user']['account_fullname']));
 							}
 							try
 							{
@@ -240,9 +241,8 @@ class admin_passwordreset
 							}
 							catch (Exception $e)
 							{
-								unset ($e);
 								$msg .= lang('Notifying account "%1" %2 failed!',$account['account_lid'],$account['account_email']).
-									': '.strip_tags(str_replace('<p>',"\n",$send->ErrorInfo))."\n";
+									': '.strip_tags(str_replace('<p>', "\n", $e->getMessage()))."\n";
 							}
 						}
 					}
