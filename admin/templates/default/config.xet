@@ -82,7 +82,7 @@
 						<description value="If you wish to have randomly selected images you may upload multiple images."/>
 					</vbox>
 					<vbox>
-						<taglist id="newsettings[login_background_file]" width="100%" allowFreeEntries="true" empty_label="Upload your background image or enter the URL"/>
+						<taglist-thumbnail id="newsettings[login_background_file]" width="100%" allowFreeEntries="true" empty_label="Upload your background image or enter the URL"/>
 						<file width="100%" label="upload" onchange="app.admin.login_background_update"/>
 					</vbox>
 				</row>
