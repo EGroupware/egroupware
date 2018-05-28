@@ -1273,5 +1273,21 @@ app.classes.admin = AppJS.extend(
 			resizable: false,
 			position: 'left top'
 		}, et2_dialog._create_parent('mail'));
+	},
+
+	/**
+	 * Triggers upload for background image and updates its taglist
+	 *
+	 * @param {type} node
+	 * @param {type} widget
+	 */
+	login_background_update: function(node, widget)
+	{
+		var taglist = widget._parent._children[0];
+		egw.json('admin.admin_config.ajax_upload_anon_images',
+			[widget.get_value(), taglist.get_value()],
+			function(_data){
+				taglist.set_value(_data);
+		}).sendRequest()
 	}
 });
