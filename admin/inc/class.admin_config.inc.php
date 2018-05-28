@@ -22,12 +22,13 @@ class admin_config
 	/**
 	 * Upload function to store anonymous images into instance files_dir/anon_images
 	 *
-	 * @param type $file file info array
-	 * @param type $dir directory to store file
+	 * @param array $file file info array
+	 * @param array|string $value current value of login_background_file
 	 *
 	 */
-	function ajax_upload_anon_images ($file)
+	function ajax_upload_anon_images ($file, $value)
 	{
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin'])) die('no rights to be here!');
 		$path = $GLOBALS['egw_info']['server']['files_dir'].'/anon-images';
 		$success = false;
 		$response = Api\Json\Response::get();
@@ -40,9 +41,10 @@ class admin_config
 		}
 		if ($success)
 		{
-			$response->data(array(
-				'path' => $GLOBALS['egw_info']['server']['webserver_url'].'/api/anon_images.php?src='.urlencode($file[$tmp_file[0]]['name']).'&'.filemtime($destination)
+			$value = array_merge($value, array(
+				$GLOBALS['egw_info']['server']['webserver_url'].'/api/anon_images.php?src='.urlencode($file[$tmp_file[0]]['name']).'&'.filemtime($destination),
 			));
+			$response->data($value);
 		}
 		else
 		{
@@ -50,6 +52,36 @@ class admin_config
 		}
 	}
 
+	/**
+	 * Removes images from anon-images directory
+	 *
+	 * @param type $files
+	 */
+	function remove_anon_images ($files)
+	{
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin'])) die('no rights to be here!');
+		if ($files)
+		{
+			$base = $GLOBALS['egw_info']['server']['files_dir'].'/anon-images';
+			foreach ($files as $file)
+			{
+				$parts = explode('anon_images.php?src=', $file);
+				$parts = explode('&', $parts[1]);
+				$path = $base.'/'.urldecode($parts[0]);
+				if (is_writable(dirname($base)) && file_exists($path))
+				{
+					unlink($path);
+				}
+			}
+		}
+	}
+
+	/**
+	 * List of configs
+	 *
+	 * @param type $_content
+	 * @throws Api\Exception\WrongParameter
+	 */
 	function index($_content=null)
 	{
 		if (is_array($_content))
@@ -106,6 +138,9 @@ class admin_config
 		{
 			// support old validation hooks
 			$_POST = array('newsettings' => &$_content['newsettings']);
+
+			// Remove actual files (cleanup) of deselected urls from login_background_file
+			$this->remove_anon_images(array_diff($c->config_data['login_background_file'], $_content['newsettings']['login_background_file']));
 
 			/* Load hook file with functions to validate each config (one/none/all) */
 			Api\Hooks::single(array(

@@ -172,15 +172,9 @@ class Login
 
 		$tmpl->set_var('website_title', $GLOBALS['egw_info']['server']['site_title']);
 		$tmpl->set_var('template_set',$this->framework->template);
-		if (substr($GLOBALS['egw_info']['server']['login_background_file'], 0, 4) == 'http' ||
-			$GLOBALS['egw_info']['server']['login_background_file'][0] == '/')
-		{
-			$var['background_file'] = $GLOBALS['egw_info']['server']['login_background_file'];
-		}
-		else
-		{
-			$var['background_file'] = Api\Image::find('api',$GLOBALS['egw_info']['server']['login_background_file']?$GLOBALS['egw_info']['server']['login_background_file']:'login_background', '', null);
-		}
+
+		$var['background_file'] = self::pick_login_background($GLOBALS['egw_info']['server']['login_background_file']);
+
 		if (substr($GLOBALS['egw_info']['server']['login_logo_file'], 0, 4) == 'http' ||
 			$GLOBALS['egw_info']['server']['login_logo_file'][0] == '/')
 		{
@@ -243,6 +237,36 @@ class Login
 		Api\Framework::includeJS('jquery', 'jquery');
 
 		$this->framework->render($tmpl->fp('loginout','login_form'),false,false);
+	}
+
+	/**
+	 * Function to pick login background from given values. It picks them randomly
+	 * if there's more than one image in the list.
+	 *
+	 * @param array|string $backgrounds array of background urls or an url as string
+	 *
+	 * @return string returns full url of background image
+	 */
+	static function pick_login_background($backgrounds)
+	{
+		if (is_array($backgrounds))
+		{
+			$chosen = $backgrounds[rand(0, count($backgrounds)-1)];
+		}
+		else
+		{
+			$chosen = $backgrounds;
+		}
+
+		if (substr($chosen, 0, 4) == 'http' ||
+			$chosen[0] == '/')
+		{
+			return $chosen;
+		}
+		else
+		{
+			return Api\Image::find('api',$chosen ? $chosen : 'login_background', '', null);
+		}
 	}
 
 	/**
