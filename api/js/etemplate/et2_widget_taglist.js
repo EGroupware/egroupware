@@ -1310,6 +1310,26 @@ var et2_taglist_category = (function(){ "use strict"; return et2_taglist.extend(
 });}).call(this);
 et2_register_widget(et2_taglist_category, ["taglist-cat"]);
 
+/**
+ * Taglist customized specificlly for image url shown as thumbnail,
+ *
+ */
+var et2_taglist_thumbnail = (function(){ "use strict"; return et2_taglist.extend(
+{
+	init:function ()
+	{
+		this._super.apply(this, arguments);
+	},
+
+	selectionRenderer: function(item)
+	{
+		var tag = jQuery('<span>').attr('title',item.label);
+		jQuery('<img class="et2_taglist_thumbnail"/>').attr('src', item.label).prependTo(tag);
+		return tag;
+	}
+});}).call(this);
+et2_register_widget(et2_taglist_thumbnail, ["taglist-thumbnail"]);
+
 
 /**
  * et2_taglist_ro is the readonly implementation of the taglist.
