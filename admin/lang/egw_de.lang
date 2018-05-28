@@ -448,6 +448,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	de	Wenn Sie SSL oder TLS benutzen, müssen Sie die openssl PHP Erweiterung geladen haben.
 if you ignore that error as admin, you should check "%1"!	admin	de	Falls Sie den Fehler als Administrator ignorieren, sollten Sie "%1" abhacken!
 if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	de	Wenn Sie als SIEVE Server Port 5190 eintragen, wird für die Kommunikation mit dem SIEVE-Server eine SSL-Verbindung verwendet (der Server muss das natürlich unterstützen)
+if you wish to have randomly selected images you may upload multiple images.	admin	de	Wenn Sie zufällig ausgewählte Bilder haben möchten, können Sie mehrere Bilder hochladen.
 imap admin password	admin	de	IMAP Administrator Passwort
 imap admin user	admin	de	IMAP Administrator Benutzer
 imap c-client version < 2001	admin	de	IMAP C-Client Version < 2001
