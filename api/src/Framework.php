@@ -555,20 +555,11 @@ abstract class Framework extends Framework\Extra
 			$api_messages = lang('it has been more then %1 days since you changed your password',$GLOBALS['egw_info']['server']['change_pwd_every_x_days']);
 		}
 
-		if (substr($GLOBALS['egw_info']['server']['login_logo_file'],0,4) == 'http' ||
-			$GLOBALS['egw_info']['server']['login_logo_file'][0] == '/')
-		{
-			$var['logo_header'] = $var['logo_file'] = $GLOBALS['egw_info']['server']['login_logo_file'];
-		}
-		else
-		{
-			$var['logo_header'] = $var['logo_file'] = Image::find('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo', '', null);	// null=explicit allow svg
-		}
+		$var['logo_header'] = $var['logo_file'] = self::get_login_logo_or_bg_url('login_logo_file', 'logo');
 
-		if (substr($GLOBALS['egw_info']['server']['login_logo_header'],0,4) == 'http' ||
-			$GLOBALS['egw_info']['server']['login_logo_header'][0] == '/')
+		if ($GLOBALS['egw_info']['server']['login_logo_header'])
 		{
-			$var['logo_header'] = $GLOBALS['egw_info']['server']['login_logo_header'];
+			$var['logo_header'] = self::get_login_logo_or_bg_url('login_logo_header', 'logo');
 		}
 
 		$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
@@ -580,6 +571,31 @@ abstract class Framework extends Framework\Extra
 		$var['logo_title'] = $GLOBALS['egw_info']['server']['login_logo_title']?$GLOBALS['egw_info']['server']['login_logo_title']:'www.eGroupWare.org';
 
 		return $var;
+	}
+
+	/**
+	 * Get login logo or background image base on requested config type
+	 *
+	 * @param type $type config type to fetch. e.g.: "login_logo_file"
+	 * @param type $find_type type of image to search on as alternative option. e.g.: "logo"
+	 *
+	 * @return string returns full url of the image
+	 */
+	static function get_login_logo_or_bg_url ($type, $find_type)
+	{
+		$url = is_array($GLOBALS['egw_info']['server'][$type]) ?
+			$GLOBALS['egw_info']['server'][$type][0] :
+			$GLOBALS['egw_info']['server'][$type];
+
+		if (substr($url, 0, 4) == 'http' ||
+			$url[0] == '/')
+		{
+			return $url;
+		}
+		else
+		{
+			return Image::find('api',$url ? $url : $find_type, '', null);
+		}
 	}
 
 	/**

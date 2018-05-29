@@ -1319,12 +1319,13 @@ var et2_taglist_thumbnail = (function(){ "use strict"; return et2_taglist.extend
 	init:function ()
 	{
 		this._super.apply(this, arguments);
+		this.div.addClass('et2_taglist_thumbnail');
 	},
 
 	selectionRenderer: function(item)
 	{
 		var tag = jQuery('<span>').attr('title',item.label);
-		jQuery('<img class="et2_taglist_thumbnail"/>').attr('src', item.label).prependTo(tag);
+		jQuery('<img class="et2_taglist_thumbnail_img"/>').attr('src', item.label).prependTo(tag);
 		return tag;
 	}
 });}).call(this);

@@ -1087,8 +1087,16 @@ ul.et2_link_string {
 .et2_taglist, .et2_taglist > div.ms-ctn  {
 	min-height: 23px;
 }
-img.et2_taglist_thumbnail, table.egwGridView_grid .et2_taglist .et2_taglist_thumbnail {
-	height:100px;
+.et2_taglist_thumbnail {
+	overflow-y: hidden;
+}
+.et2_taglist_thumbnail .ms-ctn.form-control {
+	max-height: 220px;
+	overflow-y: auto;
+}
+.et2_taglist_thumbnail .et2_taglist_thumbnail_img,
+table.egwGridView_grid .et2_taglist_thumbnail .et2_taglist_thumbnail_img {
+	height:70px;
 }
 /* Toggle single / multiple */
 .et2_taglist_toggle {

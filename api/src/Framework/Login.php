@@ -175,15 +175,8 @@ class Login
 
 		$var['background_file'] = self::pick_login_background($GLOBALS['egw_info']['server']['login_background_file']);
 
-		if (substr($GLOBALS['egw_info']['server']['login_logo_file'], 0, 4) == 'http' ||
-			$GLOBALS['egw_info']['server']['login_logo_file'][0] == '/')
-		{
-			$var['logo_file'] = $GLOBALS['egw_info']['server']['login_logo_file'];
-		}
-		else
-		{
-			$var['logo_file'] = Api\Image::find('api',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'login_logo', '', null);	// null=explicit allow svg
-		}
+		$var['logo_file'] = Api\Framework::get_login_logo_or_bg_url('login_logo_file', 'login_logo');
+
 		$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.egroupware.org';
 		if (substr($var['logo_url'],0,4) != 'http')
 		{
