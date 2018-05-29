@@ -57,15 +57,15 @@
 				<row>
 					<description value="Upload your logo or enter the URL" label="%s:"/>
 					<vbox>
-						<textbox id="newsettings[login_logo_file]" width="100%"/>
-						<file onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value()], function(_data){widget._parent._children[0].set_value(_data.path)}).sendRequest()" width="100%" label="upload"/>
+						<taglist-thumbnail id="newsettings[login_logo_file]" width="100%" allowFreeEntries="true" maxSelection="1" />
+						<file onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()" width="100%" label="upload"/>
 					</vbox>
 				</row>
 				<row>
 					<description value="Upload your header logo or enter the URL" label="%s:"/>
 					<vbox>
-						<textbox id="newsettings[login_logo_header]" width="100%"/>
-						<file onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value()], function(_data){widget._parent._children[0].set_value(_data.path)}).sendRequest()" width="100%" label="upload"/>
+						<taglist-thumbnail id="newsettings[login_logo_header]" width="100%"  allowFreeEntries="true" maxSelection="1"/>
+						<file onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()" width="100%" label="upload"/>
 					</vbox>
 				</row>
 				<row>
@@ -89,8 +89,8 @@
 				<row>
 					<description value="Upload your favicon or enter the URL" label="%s:"/>
 					<vbox>
-						<textbox id="newsettings[favicon_file]" class="et2_fullWidth"/>
-						<file width="100%" label="upload" onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value()], function(_data){widget._parent._children[0].set_value(_data.path)}).sendRequest()"/>
+						<taglist-thumbnail id="newsettings[favicon_file]" class="et2_fullWidth"/>
+						<file width="100%" label="upload" onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
 					</vbox>
 				</row>
 				<row>
