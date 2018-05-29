@@ -1316,6 +1316,17 @@ et2_register_widget(et2_taglist_category, ["taglist-cat"]);
  */
 var et2_taglist_thumbnail = (function(){ "use strict"; return et2_taglist.extend(
 {
+	attributes: {
+		"minChars": {
+			default: 0
+		},
+		"autocomplete_url": {
+			"default": ""
+		},
+		"autocomplete_params": {
+			"default": {}
+		}
+	},
 	init:function ()
 	{
 		this._super.apply(this, arguments);
