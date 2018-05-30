@@ -1139,7 +1139,7 @@ select an app to search in	common	de	Anwendung zum Durchsuchen auswählen
 select an application	common	de	Anwendung auswählen
 select an application, (*) = uninstalled	common	de	Anwendung auswählen, (*) = nicht installiert
 select an entry to link with	common	de	Eintrag zum Verknüpfen auswählen
-select an opened dialog	api	de	geöffneten Dialog auswählen
+select an opened dialog	common	de	geöffneten Dialog auswählen
 select an table of the application	common	de	Tabelle der Anwendung auswählen
 select application	common	de	Anwendung auswählen
 select application to search	common	de	Anwendung zum Suchen auswählen
