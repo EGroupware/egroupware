@@ -2949,8 +2949,8 @@ app.classes.mail = AppJS.extend(
 				var vfs_select = et2_createWidget('vfs-select', {
 					mode: action === 'saveOneToVfs' ? 'saveas' : 'select-dir',
 					method: 'mail.mail_ui.ajax_vfsSave',
-					button_label: egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
-					dialog_title: egw.lang(action === 'saveOneToVfs' ? 'Save attachment' : 'Save attachments'),
+					button_label: this.egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
+					dialog_title: this.egw.lang(action === 'saveOneToVfs' ? 'Save attachment' : 'Save attachments'),
 					method_id: ids.length > 1 ?	{ids:ids, action:'attachment'} : {ids: ids[0], action: 'attachment'},
 					name: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
 				});
