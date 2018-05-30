@@ -2931,7 +2931,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	function vfsSaveAttachments($ids,$path)
 	{
 		$res = array (
-			'msg' => 'Attachment has been saved successfully.',
+			'msg' => lang('Attachment has been saved successfully.'),
 			'success' => true
 		);
 
