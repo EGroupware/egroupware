@@ -5,7 +5,7 @@
 %1 is not readable	importexport	de	%1 ist nicht lesbar
 %1 is not writable	importexport	de	%1 ist nicht möglich zu schreiben
 %1 records processed	importexport	de	%1 Einträge ausgeführt
-%s all users	importexport	en	%s all users
+%s all users	importexport	de	%s Alle Benutzer
 %s just me	importexport	de	%s Nur für mich persönlich verfügbar
 (* for all)	importexport	de	(* Für alle)
 (0-23)	importexport	de	(0-23)
@@ -114,7 +114,7 @@ schedule not found	importexport	de	Kein Zeitplan gefunden
 schedule times are server time!  currently %s.	importexport	de	Zeitgesteuerter Import bezieht sich auf die Serverzeit. Aktuell %s.
 select definition	importexport	de	Definition auswählen
 select groups	importexport	de	Wähle Gruppen
-Select owner	importexport	de	Eigentümer auswählen
+select owner	importexport	de	Eigentümer auswählen
 select plugin	importexport	de	Plug-in auswählen
 select...	importexport	de	Auswählen...
 skipped	importexport	de	Überspringen
