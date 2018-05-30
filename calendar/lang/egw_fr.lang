@@ -588,7 +588,7 @@ which view to show on home page	calendar	fr	Quelle vue afficher dans l'accueil ?
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	fr	Nombre minimum d'utilisateur pour afficher la vue journalière et multi-semaine en consolidée.  5 par défaut.
 whole day	calendar	fr	Journée entière
 with credentials included	calendar	fr	Avec les droits inclus
-wk	calendar	fr	Sem.
+wk	calendar	fr	Sem
 work day ends on	calendar	fr	La journée de travail finit à
 work day starts on	calendar	fr	La journée de travail démarre à
 workday	calendar	fr	Jour ouvré
