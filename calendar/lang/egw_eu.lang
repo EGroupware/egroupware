@@ -306,7 +306,7 @@ weekview	calendar	eu	Astearen ikuspegia
 weekview with weekend	calendar	eu	Asteko ikuspegia asteburuarekin
 weekview without weekend	calendar	eu	Asteko ikuspegia astebukaerarik gabe
 whole day	calendar	eu	egun osoa
-wk	calendar	eu	Astea
+wk	calendar	eu	Ast
 work day ends on	calendar	eu	Lan egunak bukatzen dira
 work day starts on	calendar	eu	Lan egunak hasten dira
 yearly	calendar	eu	Urtero

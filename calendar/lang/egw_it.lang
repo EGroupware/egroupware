@@ -626,7 +626,7 @@ which view to show on home page	calendar	it	Quale visualizzazione usare nella ho
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	it	Numero minimo di utenti per visualizzazioni giornaliera e settimanale come consolidate. Predefinito = 5
 whole day	calendar	it	Giornata intera
 with credentials included	calendar	it	Con credenziali incluse
-wk	calendar	it	Sett
+wk	calendar	it	Stt
 work day ends on	calendar	it	La giornata lavorativa termina alle
 work day starts on	calendar	it	La giornata lavorativa inizia alle
 workday	calendar	it	Giorno feriale

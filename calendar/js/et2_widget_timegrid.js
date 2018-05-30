@@ -232,7 +232,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 				/**
 				 * If dragging to resize an event, abort drag to create
-				 * 
+				 *
 				 * @param {jQuery.Event} event
 				 * @param {Object} ui
 				 */
@@ -337,7 +337,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			})
 			.on('mousedown', jQuery.proxy(this._mouse_down, this))
 			.on('mouseup', jQuery.proxy(this._mouse_up, this));
-		
+
 		return true;
 	},
 
@@ -1137,10 +1137,10 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					}, this, et2_calendar_daycol);
 				}
 			}
-			var enabled = !owner_match && 
+			var enabled = !owner_match &&
 				// Not inside its own timegrid
 				!own_timegrid;
-				
+
 			widget_object.getActionLink('invite').enabled = enabled;
 			widget_object.getActionLink('change_participant').enabled = enabled;
 
@@ -1278,7 +1278,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	_init_links_dnd: function(mgr,actionLinks) {
 
 		if (this.options.readonly) return;
-		
+
 		var self = this;
 
 		var drop_link = mgr.getActionById('egw_link_drop');
@@ -1381,7 +1381,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 			drop_link.acceptedTypes = ['default','link'];
 			drop_link.hideOnDisabled = true;
-			
+
 			// Create the drop action for moving events between calendars
 			var invite_action = function(action, source, target) {
 
@@ -1415,7 +1415,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 						{
 							jQuery('.calendar_timeDemo',loading).after('<div class="loading"></div>');
 						}
-						
+
 						var event_data = egw.dataGetUIDdata(source[i].id).data;
 						et2_calendar_event.recur_prompt(event_data, function(button_id) {
 							if(button_id === 'cancel' || !button_id)
@@ -1435,7 +1435,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 							egw().json('calendar.calendar_uiforms.ajax_invite', [
 									button_id==='series' ? event_data.id : event_data.app_id,
 									add_owner,
-									action.id === 'change_participant' ? 
+									action.id === 'change_participant' ?
 										jQuery.extend([],source[i].iface.getWidget().getParent().options.owner) :
 										[]
 								],
@@ -1658,7 +1658,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		// but is empty, but give extra space for a single owner name
 		this.div.toggleClass(
 			'calendar_TimeGridNoLabel',
-			label.trim().length > 0 && label.trim().length < 6 ||
+			label.trim().length > 0 && label.trim().length <= 6 ||
 			this.options.owner.length > 1
 		);
 	},
@@ -1792,7 +1792,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	{
 		var result = true;
 		if(this.options.readonly ) return;
-		
+
 		// Drag to create in progress
 		if(this.drag_create.start !== null) return;
 
@@ -1878,7 +1878,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 	/**
 	 * Mousedown handler to support drag to create
-	 * 
+	 *
 	 * @param {jQuery.Event} event
 	 */
 	_mouse_down: function(event)
@@ -1886,7 +1886,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		if(event.which !== 1) return;
 
 		if (this.options.readonly) return;
-		
+
 		var start = jQuery.extend({},this.gridHover[0].dataset);
 		if(start.date)
 		{
@@ -2148,7 +2148,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			// Allow for toolbar
 			height -= jQuery('#calendar-toolbar',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
 		}
-	
+
 		this.options.height = Math.floor(height / rowCount);
 
 		// Allow for borders & padding
@@ -2208,7 +2208,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		var total_width = modify_node.parent().innerWidth() - this.days.position().left;
 		// Space for todos, if there
 		total_width -= jQuery(this.getInstanceManager().DOMContainer).siblings().has(':visible').not('#calendar-toolbar').outerWidth()
-		
+
 		var day_width = (total_width > 0 ? total_width : modify_node.width())/this.day_widgets.length;
 		// update day widgets
 		for(var i = 0; i < this.day_widgets.length; i++)
