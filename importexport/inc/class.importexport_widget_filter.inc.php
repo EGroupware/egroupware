@@ -110,6 +110,9 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 
 
 					break;
+				case 'select-cat':
+					$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'other', $field['rows']);
+					// fall through
 				case 'select':
 				default:
 					if(strpos($field['type'],'select') === 0)
