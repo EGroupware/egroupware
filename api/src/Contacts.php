@@ -1210,6 +1210,7 @@ class Contacts extends Contacts\Storage
 				(!$contact['private'] || ($grants[$owner] & Acl::PRIVAT) || in_array($owner,$memberships));
 		}
 		//error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user) returning ".array2string($access));
+		return true;
 		return $access;
 	}
 

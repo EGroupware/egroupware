@@ -730,6 +730,8 @@ class addressbook_ui extends addressbook_bo
 				)
 			)
 		);
+		$actions += EGroupware\Api\Link\Sharing::get_actions('addressbook', $group);
+
 		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
 		$exception = Api\Storage\Merge::is_export_limit_excepted();
 		if ((isset($GLOBALS['egw_info']['user']['apps']['admin']) || $exception)  || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])

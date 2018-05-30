@@ -819,7 +819,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				jQuery(this).dialog("close");
 			}
 		};
-		
+
 		this.favorite_popup.dialog({
 			autoOpen: false,
 			modal: true,
@@ -1875,5 +1875,68 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				reject(_err);
 			});
 		});
-	}
+	},
+
+	/**
+	 * Check if the share action is enabled for this entry
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _entries
+	 * @param {egwActionObject} _target
+	 * @returns {boolean} if action is enabled
+	 */
+	is_share_enabled: function is_share_enabled(_action, _entries, _target)
+	{
+		return true;
+	},
+	/**
+	 * create a share-link for the given file or directory
+	 * @param {object} _action egw actions
+	 * @param {object} _senders selected nm row
+	 * @returns {Boolean} returns false if not successful
+	 */
+	share_link: function(_action, _senders){
+		var path = _senders[0].id;
+		egw.json('filemanager_ui::ajax_action', [_action.id, path],
+			this._share_link_callback, this, true, this).sendRequest();
+		return true;
+	},
+
+	/**
+	 * Share-link callback
+	 * @param {object} _data
+	 */
+	_share_link_callback: function(_data) {
+		if (_data.msg || _data.share_link) window.egw_refresh(_data.msg, this.appname);
+		console.log("_data", _data);
+
+		var copy_link_to_clipboard = null;
+
+		var copy_link_to_clipboard = function(evt){
+			var $target = jQuery(evt.target);
+			$target.select();
+			try {
+				var successful = document.execCommand('copy');
+				if (successful)
+				{
+					egw.message('Share link copied into clipboard');
+					return true;
+				}
+			}
+			catch (e) {}
+			egw.message('Failed to copy the link!');
+		};
+		jQuery("body").on("click", "[name=share_link]", copy_link_to_clipboard);
+		et2_createWidget("dialog", {
+			callback: function( button_id, value) {
+				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
+				return true;
+			},
+			title: _data.title ? _data.title : egw.lang("%1 Share Link", _data.action ==='shareWritableLink'? "Writable": "Readonly"),
+			template: _data.template,
+			width: 450,
+			value: {content:{ "share_link": _data.share_link }}
+		});
+	},
+
 });}).call(this);
