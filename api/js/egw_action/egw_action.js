@@ -2078,8 +2078,8 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 			(actionLinks[k].cnt >= testedSelected.length) &&
 			(
 				(actionLinks[k].actionObj.allowOnMultiple === true) ||
-				(actionLinks[k].actionObj.allowOnMultiple == "only" && actionLinks[k].cnt > 1) ||
-				(actionLinks[k].actionObj.allowOnMultiple == false && actionLinks[k].cnt == 1)
+				(actionLinks[k].actionObj.allowOnMultiple == "only" && _objs.length > 1) ||
+				(actionLinks[k].actionObj.allowOnMultiple == false && _objs.length === 1)
 			);
 		if (!egwIsMobile()) actionLinks[k].actionObj.hideOnMobile = false;
 		actionLinks[k].visible = actionLinks[k].visible && !actionLinks[k].actionObj.hideOnMobile &&
