@@ -1204,13 +1204,16 @@ class Contacts extends Contacts\Storage
 		{
 			$access = !!array_intersect($memberships,$GLOBALS['egw']->accounts->memberships($contact['account_id'],true));
 		}
+		else if ($contact['id'] && $GLOBALS['egw']->acl->check('A'.$contact['id'], $needed, 'addressbook'))
+		{
+			$access = true;
+		}
 		else
 		{
 			$access = ($grants[$owner] & $needed) &&
 				(!$contact['private'] || ($grants[$owner] & Acl::PRIVAT) || in_array($owner,$memberships));
 		}
 		//error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user) returning ".array2string($access));
-		return true;
 		return $access;
 	}
 
