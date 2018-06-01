@@ -68,11 +68,11 @@ class Sharing
 	static $modes = array(
 		self::READONLY => array(
 			'label' => 'Readonly share',
-			'title' => 'Link is appended to mail allowing recipients to download up to date version of files',
+			'title' => 'Link is generated allowing recipients to view entries',
 		),
 		self::WRITABLE => array(
 			'label' => 'Writable share',
-			'title' => 'Link is appended to mail allowing recipients to download or modify up to date version of files (EPL only)'
+			'title' => 'Link is generated allowing recipients to view and modify entries'
 		),
 	);
 
@@ -563,7 +563,10 @@ class Sharing
 			$action == 'shareWritableLink' ? Sharing::WRITABLE : Sharing::READONLY,
 			basename($selected),
 			array(),
-			array('share_writable' => $action == 'shareWritableLink')
+			array(
+				'share_writable' => $action == 'shareWritableLink',
+				'include_files'  => $files
+			)
 		);
 
 		$arr = array(
