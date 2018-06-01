@@ -1890,14 +1890,21 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		return true;
 	},
 	/**
-	 * create a share-link for the given file or directory
-	 * @param {object} _action egw actions
-	 * @param {object} _senders selected nm row
+	 * create a share-link for the given entry
+	 *
+	 * @param {egwAction} _action egw actions
+	 * @param {egwActionObject[]} _senders selected nm row
+	 * @param {egwActionObject} _target Drag source.  Not used here.
+	 * @param {Boolean} _files Allow access to files from the share.
 	 * @returns {Boolean} returns false if not successful
 	 */
-	share_link: function(_action, _senders){
+	share_link: function(_action, _senders, _target, _files){
 		var path = _senders[0].id;
-		egw.json('filemanager_ui::ajax_action', [_action.id, path],
+		if(typeof _files === 'undefined' && _action.parent && _action.parent.getActionById('shareFiles'))
+		{
+			_files = _action.parent.getActionById('shareFiles').checked || false;
+		}
+		egw.json('EGroupware\\Api\\Sharing::ajax_create', [_action.id, path, _files],
 			this._share_link_callback, this, true, this).sendRequest();
 		return true;
 	},
@@ -1932,7 +1939,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
 				return true;
 			},
-			title: _data.title ? _data.title : egw.lang("%1 Share Link", _data.action ==='shareWritableLink'? "Writable": "Readonly"),
+			title: _data.title ? _data.title : egw.lang("%1 Share Link", _data.action ==='shareWritableLink'? egw.lang("Writable"): egw.lang("Readonly")),
 			template: _data.template,
 			width: 450,
 			value: {content:{ "share_link": _data.share_link }}

@@ -495,6 +495,32 @@ class Sharing
 	}
 
 	/**
+	 * Create a share via AJAX
+	 *
+	 * @param String $action
+	 * @param String $path
+	 * @param boolean $files
+	 */
+	public static function ajax_create($action, $path, $files)
+	{
+		$class = self::get_share_class(array('share_path' => $path));
+		$share = $class::create(
+			$path,
+			$action == 'shareWritableLink' ? Sharing::WRITABLE : Sharing::READONLY,
+			basename($selected),
+			array(),
+			array('share_writable' => $action == 'shareWritableLink')
+		);
+
+		$arr = array(
+			'share_link'	=> $class::share2link($share),
+			'template'		=> Etemplate\Widget\Template::rel2url('/filemanager/templates/default/share_dialog.xet')
+		);
+		$response = Json\Response::get();
+		$response->data($arr);
+	}
+
+	/**
 	 * Api\Storage\Base instance for egw_sharing table
 	 *
 	 * @var Api\Storage\Base
