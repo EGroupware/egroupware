@@ -58,7 +58,7 @@ class admin_ui
 			'order' => 'account_lid',
 			'sort' => 'ASC',
 			'row_id' => 'account_id',
-			'default_cols' => '!account_id,created',
+			'default_cols' => '!account_id,created,account_lastlogin,account_lastloginfrom,account_lastpwd_change',
 			'actions' => self::user_actions(),
 			'placeholder_actions' => array('add')
 		);

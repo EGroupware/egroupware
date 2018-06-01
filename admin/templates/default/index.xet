@@ -17,6 +17,9 @@
 				<column width="90"/>
 				<column width="120"/>
 				<column width="120"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="120"/>
 			</columns>
 			<rows>
 				<row>
@@ -29,6 +32,9 @@
 					<nextmatch-sortheader label="Expires" id="account_expires"/>
 					<nextmatch-sortheader label="Created" id="created"/>
 					<nextmatch-sortheader label="Last modified" id="modified"/>
+					<nextmatch-sortheader label="Last login" id="account_lastlogin"/>
+					<nextmatch-sortheader label="Last IP" id="account_lastloginfrom"/>
+					<nextmatch-sortheader label="Last password change" id="account_lastpwd_change"/>
 				</row>
 				<row class="$row_cont[status_class]">
 					<description id="${row}[account_lid]" no_lang="1"/>
@@ -42,6 +48,9 @@
 					<description id="${row}[status]" no_lang="1" class="adminStatus"/>
 					<date-time id="${row}[account_created]" readonly="true"/>
 					<date-time id="${row}[account_modified]" readonly="true"/>
+					<date-time id="${row}[account_lastlogin]" readonly="true"/>
+					<description id="${row}[account_lastloginfrom]" no_lang="1"/>
+					<date-time id="${row}[account_lastpwd_change]" readonly="true"/>
 				</row>
 			</rows>
 		</grid>
