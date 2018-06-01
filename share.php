@@ -27,7 +27,7 @@ $GLOBALS['egw_info'] = array(
 
 include('./header.inc.php');
 
-if (!$GLOBALS['egw']->sharing)
+if (!isset($GLOBALS['egw']->sharing))
 {
 	Sharing::create_session(true);	// true = mount into existing session
 }
