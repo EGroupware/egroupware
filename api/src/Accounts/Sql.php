@@ -533,7 +533,8 @@ class Sql
 		$accounts = array();
 		foreach((array) $this->contacts->search($criteria,
 			array_merge(array(1,'n_given','n_family','id','created','modified',$this->table.'.account_id AS account_id'),$email_cols),
-			$order,"account_lid,account_type,account_status,account_expires,account_primary_group,account_description",
+			$order, "account_lid,account_type,account_status,account_expires,account_primary_group,account_description".
+			",account_lastlogin,account_lastloginfrom,account_lastpwd_change",
 			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',
 			$param['offset'] ? array($param['start'], $param['offset']) : (is_null($param['start']) ? false : $param['start']),
 			$filter,$join) as $contact)
@@ -555,6 +556,11 @@ class Sql
 					// Api\Contacts::search() returns everything in user-time, need to convert to server-time
 					'account_created'	=> Api\DateTime::user2server($contact['created']),
 					'account_modified'	=> Api\DateTime::user2server($contact['modified']),
+					'account_lastlogin'	=> $contact['account_lastlogin'] ?
+						Api\DateTime::user2server($contact['account_lastlogin']) : null,
+					'account_lastloginfrom'	=> $contact['account_lastloginfrom'],
+					'account_lastpwd_change'	=> $contact['account_lastpwd_change'] ?
+						Api\DateTime::user2server($contact['account_lastpwd_change']) : null,
 					'account_description' => $contact['account_description'],
 				);
 			}
