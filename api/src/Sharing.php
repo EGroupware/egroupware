@@ -345,6 +345,60 @@ class Sharing
 	}
 
 	/**
+	 * Get actions for sharing an entry from the given app
+	 *
+	 * @param string $appname
+	 * @param int $group Current menu group
+	 */
+	public static function get_actions($appname, $group = 6)
+	{
+		$actions = array(
+		'share' => array(
+				'caption' => lang('Share'),
+				'icon' => 'api/share',
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'children' => array(
+					'shareReadonlyLink' => array(
+						'caption' => lang('Readonly Share'),
+						'group' => 1,
+						'icon' => 'view',
+						'order' => 11,
+						'enabled' => "javaScript:app.$appname.is_share_enabled",
+						'onExecute' => "javaScript:app.$appname.share_link"
+					),
+					'shareWritableLink' => array(
+						'caption' => lang('Writable Share'),
+						'group' => 1,
+						'icon' => 'edit',
+						'allowOnMultiple' => false,
+						'order' => 11,
+						'enabled' => "javaScript:app.$appname.is_share_enabled",
+						'onExecute' => "javaScript:app.$appname.share_link"
+					),
+					'shareFiles' => array(
+						'caption' => lang('Share files'),
+						'group' => 2,
+						'enabled' => "javaScript:app.$appname.is_share_enabled",
+						'checkbox' => true
+					)
+				),
+		));
+		if(!$GLOBALS['egw_info']['apps']['stylite'])
+		{
+			array_unshift($actions['share']['children'], array(
+				'caption' => lang('EPL Only'),
+				'group' => 0
+			));
+			foreach($actions['share']['children'] as &$child)
+			{
+				$child['enabled'] = false;
+			}
+		}
+		return $actions;
+	}
+
+	/**
 	 * Server a request on a share specified in REQUEST_URI
 	 */
 	public function ServeRequest()
