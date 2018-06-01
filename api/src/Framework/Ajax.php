@@ -253,6 +253,12 @@ abstract class Ajax extends Api\Framework
 				$extra['check-framework'] = $_GET['cd'] !== 'no';
 			}
 		}
+		// allow apps to load JavaScript or CSS files, knowing we're loading the framework or not
+		Api\Hooks::process(array(
+			'location' => 'framework_header',
+			'popup' => !$do_framework,
+		));
+		
 		$this->tpl->set_var($this->_get_header($extra));
 		$content = $this->tpl->fp('out','head').$content;
 
