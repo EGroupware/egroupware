@@ -567,6 +567,7 @@ class Sharing
 		);
 
 		$arr = array(
+			'action'		=> $action,
 			'share_link'	=> $class::share2link($share),
 			'template'		=> Etemplate\Widget\Template::rel2url('/filemanager/templates/default/share_dialog.xet')
 		);
