@@ -5,9 +5,8 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-18 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -66,6 +65,11 @@ abstract class admin_cmd
 	public $remote_id;
 
 	/**
+	 * Display name of command, default ucfirst(str_replace(['_cmd_', '_'], ' ', __CLASS__))
+	 */
+	const NAME = null;
+
+	/**
 	 * Stores the data of the derived classes
 	 *
 	 * @var array
@@ -117,6 +121,18 @@ abstract class admin_cmd
 	function __tostring()
 	{
 		return $this->type;
+	}
+
+	/**
+	 * Generate human readable name of object
+	 *
+	 * @return string
+	 */
+	public static function name()
+	{
+		if (self::NAME) return self::NAME;
+
+		return ucfirst(str_replace(['_cmd_', '_', '\\'], ' ', get_called_class()));
 	}
 
 	/**
@@ -305,17 +321,8 @@ abstract class admin_cmd
 			$this->modifier = $set_modifier ? $GLOBALS['egw_info']['user']['account_id'] : 0;
 			if ($set_modifier) $this->modifier_email = admin_cmd::user_email();
 		}
-		if (version_compare(PHP_VERSION,'5.1.2','>'))
-		{
-			$vars = get_object_vars($this);	// does not work in php5.1.2 due a bug
-		}
-		else
-		{
-			foreach(array_keys(get_class_vars(__CLASS__)) as $name)
-			{
-				$vars[$name] = $this->$name;
-			}
-		}
+		$vars = get_object_vars($this);	// does not work in php5.1.2 due a bug
+
 		// data is stored serialized
 		// paswords are masked / removed, if we dont need them anymore
 		$vars['data'] = in_array($this->status, self::$require_pw_stati) ?
@@ -405,7 +412,8 @@ abstract class admin_cmd
 		{
 			$data['data'] = json_php_unserialize($data['data']);
 		}
-		if (!class_exists($class = $data['type']) || $class == 'admin_cmd')
+		if (!(class_exists($class = 'EGroupware\\'.$data['type']) ||	// namespaced class
+			class_exists($class = $data['type'])) || $data['type'] == 'admin_cmd')
 		{
 			throw new Api\Exception\WrongParameter(lang('Unknown command %1!',$class),0);
 		}
@@ -436,6 +444,46 @@ abstract class admin_cmd
 			$query['col_filter']['remote_id'] = null;
 		}
 		return admin_cmd::$sql->get_rows($query,$rows,$readonlys);
+	}
+
+	/**
+	 * Get list of stored or available (admin) cmd classes/types
+	 *
+	 * @return array class => label pairs
+	 */
+	static function get_cmd_labels()
+	{
+		return Api\Cache::getInstance(__CLASS__, 'cmd_labels', function()
+		{
+			admin_cmd::_instanciate_sql();
+
+			$labels = admin_cmd::$sql->query_list('cmd_type');
+
+			// for admin app we also add all available cmd objects
+			foreach(scandir(__DIR__) as $file)
+			{
+				$matches = null;
+				if (preg_match('/^class\.(admin_cmd_.*)\.inc\.php$/', $file, $matches))
+				{
+					if (!isset($labels[$matches[1]]))
+					{
+						$labels[$matches[1]] = $matches[1];
+					}
+				}
+			}
+			foreach($labels as $class => &$label)
+			{
+				$label = $class::name();
+			}
+
+			// sort them alphabetic
+			uasort($labels, function($a, $b)
+			{
+				return strcasecmp($a, $b);
+			});
+
+			return $labels;
+		});
 	}
 
 	/**
@@ -876,12 +924,11 @@ abstract class admin_cmd
 				$cmd->run(null,false);	// false = dont set current user as modifier, as job is run by the queue/system itself
 			}
 			catch (Exception $e) {	// we need to mark that command as failed, to prevent further execution
-				unset($e);
 				admin_cmd::$sql->init($job);
 				admin_cmd::$sql->save(array(
 					'status' => admin_cmd::failed,
-					'error'  => lang('Unknown command %1!',$job['type']),
-					'errno'  => 0,
+					'error'  => $e->getMessage(),
+					'errno'  => $e->getcode(),
 					'data'   => self::mask_passwords($job['data']),
 				));
 			}
