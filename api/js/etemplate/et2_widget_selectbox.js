@@ -976,11 +976,11 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 		// First check type, there may be static options.  There's some special handling
 		// for filterheaders, which have the wrong type.
 		var type = widget.instanceOf(et2_nextmatch_filterheader) ? attrs.widget_type || '' : widget._type;
-		var type_function = type.replace('select-','').replace('_ro','')+'_options';
+		var type_function = type.replace('select-','').replace('taglist-','').replace('_ro','')+'_options';
 		if(typeof this[type_function] == 'function')
 		{
 			var old_type = widget._type;
-			widget._type = type;
+			widget._type = type.replace('taglist-','select-');
 			if(typeof attrs.other == 'string')
 			{
 				attrs.other = attrs.other.split(',');
