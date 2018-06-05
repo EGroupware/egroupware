@@ -3348,6 +3348,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// Dynamic resize of sidebox calendar to fill sidebox
 			var preferred_width = jQuery('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
 			var font_ratio = 12 / parseFloat(jQuery('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
+			var go_button_widget = date_widget.getRoot().getWidgetById('header_go');
+			var auto_update = this.egw.preference('auto_update_on_sidebox_change', 'calendar') === '1';
 			var calendar_resize = function() {
 				try {
 					var percent = 1+((jQuery(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
@@ -3356,6 +3358,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						.css('font-size',(percent*100)+'%');
 
 					// Position go and today
+					go_button_widget.set_disabled(false);
 					var buttons = jQuery('#calendar-sidebox_date .ui-datepicker-header a span');
 					if(today.length && go_button.length)
 					{
@@ -3367,6 +3370,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						buttons.position({my: 'center', at: 'center', of: go_button})
 							.css('left', '');
 					}
+					if(auto_update)
+					{
+						go_button_widget.set_disabled(true);
+					}
 				} catch (e){
 					// Resize didn't work
 				}
@@ -3377,16 +3384,19 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				onChangeMonthYear: function(year, month, inst)
 				{
 					// Update month button label
-					var go_button = date_widget.getRoot().getWidgetById('header_go');
-					if(go_button)
+					if(go_button_widget)
 					{
 						var temp_date = new Date(year, month-1, 1,0,0,0);
 						//temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
-						go_button.btn.attr('title',egw.lang(date('F',temp_date)));
+						go_button_widget.btn.attr('title',egw.lang(date('F',temp_date)));
 
 						// Store current _displayed_ date in date button for clicking
 						temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
-						go_button.btn.attr('data-date', temp_date.toJSON());
+						go_button_widget.btn.attr('data-date', temp_date.toJSON());
+					}
+					if(auto_update)
+					{
+						go_button_widget.click();
 					}
 					window.setTimeout(calendar_resize,0);
 				},

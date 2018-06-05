@@ -587,6 +587,7 @@ two weeks	calendar	de	zwei Wochen
 type of planner	calendar	de	Planer Typ
 unable to save	calendar	de	Speichern nicht möglich
 uninvited	calendar	de	Ausgeladen
+update calendar view immediately when navigation calendar in sidebox is changed	calendar	de	Kalenderansicht sofort aktualisieren, wenn der Navigationskalender in der Sidebox geändert wird.
 update timezones	common	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen

@@ -584,6 +584,7 @@ tue	calendar	en	Tue
 two weeks	calendar	en	Two weeks
 type of planner	calendar	en	Type of planner
 unable to save	calendar	en	Unable to save
+update calendar view immediately when navigation calendar in sidebox is changed	calendar	en	Update calendar view immediately when navigation calendar in sidebox is changed
 update timezones	common	en	Update time zones
 updated	calendar	en	Updated
 use end date	calendar	en	Use end date
