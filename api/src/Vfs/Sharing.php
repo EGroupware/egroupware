@@ -274,9 +274,6 @@ class Sharing extends \EGroupware\Api\Sharing
 
 			return parent::create($vfs_path, $mode, $name, $recipients, $extra);
 		}
-
-
-		return $share;
 	}
 
 	/**
