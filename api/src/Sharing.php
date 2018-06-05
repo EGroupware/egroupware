@@ -451,7 +451,7 @@ class Sharing
 		do {
 			$token = function_exists('openssl_random_pseudo_bytes') ?
 				base64_encode(openssl_random_pseudo_bytes(3*self::TOKEN_LENGTH/4)) :
-				Api\Auth::randomstring(self::TOKEN_LENGTH);
+				Auth::randomstring(self::TOKEN_LENGTH);
 			// base64 can contain chars not allowed in our vfs-urls eg. / or #
 		} while ($token != urlencode($token));
 
@@ -529,7 +529,7 @@ class Sharing
 					$share['share_id'] = static::$db->get_last_insert_id(static::TABLE, 'share_id');
 					break;
 				}
-				catch(Api\Db\Exception $e) {
+				catch(Db\Exception $e) {
 					if ($i++ > 3) throw $e;
 					unset($e);
 				}
