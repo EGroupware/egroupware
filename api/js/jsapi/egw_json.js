@@ -368,6 +368,17 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		throw 'Invalid parameters';
 	}, null, 'alert');
 
+	// Regisert the "message" plugin
+	json.registerJSONPlugin(function(type, res, req) {
+		//Check whether all needed parameters have been passed and call the alertHandler function
+		if ((typeof res.data.message != 'undefined'))
+		{
+			req.egw.message(res.data.message, res.data.type);
+			return true;
+		}
+		throw 'Invalid parameters';
+	}, null, 'message');
+
 	// Register the "assign" plugin
 	json.registerJSONPlugin(function(type, res, req) {
 		//Check whether all needed parameters have been passed and call the alertHandler function

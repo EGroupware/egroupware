@@ -41,6 +41,29 @@ abstract class Msg
 	}
 
 	/**
+	 * Adds an "alert" to the response which can be handeled on the client side.
+	 *
+	 * The default implementation simply displays the text supplied here with the JavaScript function "alert".
+	 *
+	 * @param string $message contains the actual message being sent to the client.
+	 * @param string $type =null (optional) "success", "error" or "info",
+	 * null: check for "error" in message and use "error" in that case, otherwise "success"
+	 */
+	public function message($message, $type = null)
+	{
+		if (is_string($message) && (is_string($type) || is_null($type)))
+		{
+			$this->addGeneric('message', array(
+				"message" => $message,
+				"type" => $type));
+		}
+		else
+		{
+			throw new Exception("Invalid parameters supplied.");
+		}
+	}
+
+	/**
 	 * Allows to add a generic java script to the response which will be executed upon the request gets received.
 	 *
 	 * @deprecated
