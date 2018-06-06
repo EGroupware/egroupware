@@ -10,24 +10,24 @@
  * @version $Id$
  */
 
-require_once(__DIR__.'/api/src/Vfs/Sharing.php');
+require_once(__DIR__.'/api/src/Sharing.php');
 
-use EGroupware\Api\Vfs\Sharing;
+use EGroupware\Api\Sharing;
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'disable_Template_class' => true,
 		'noheader'  => true,
 		'nonavbar' => 'always',	// true would cause eTemplate to reset it to false for non-popups!
-		'currentapp' => 'filemanager',
-		'autocreate_session_callback' => 'EGroupware\\Api\\Vfs\\Sharing::create_session',
+		'currentapp' => 'api',
+		'autocreate_session_callback' => 'EGroupware\\Api\\Sharing::create_session',
 		'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
 	)
 );
 
 include('./header.inc.php');
 
-if (!$GLOBALS['egw']->sharing)
+if (!isset($GLOBALS['egw']->sharing))
 {
 	Sharing::create_session(true);	// true = mount into existing session
 }

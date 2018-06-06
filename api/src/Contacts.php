@@ -1204,6 +1204,10 @@ class Contacts extends Contacts\Storage
 		{
 			$access = !!array_intersect($memberships,$GLOBALS['egw']->accounts->memberships($contact['account_id'],true));
 		}
+		else if ($contact['id'] && $GLOBALS['egw']->acl->check('A'.$contact['id'], $needed, 'addressbook'))
+		{
+			$access = true;
+		}
 		else
 		{
 			$access = ($grants[$owner] & $needed) &&

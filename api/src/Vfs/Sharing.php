@@ -35,34 +35,8 @@ use filemanager_ui;
  * @todo handle mounts inside shared directory (they get currently lost)
  * @todo handle absolute symlinks (wont work as we use share as root)
  */
-class Sharing
+class Sharing extends \EGroupware\Api\Sharing
 {
-	/**
-	 * Length of base64 encoded token (real length is only 3/4 of it)
-	 *
-	 * Dropbox uses just 15 chars (letters/numbers 5-6 bit), php sessions use 32 chars (hex = 4bits),
-	 * so 32 chars of base64 = 6bits should be plenty.
-	 */
-	const TOKEN_LENGTH = 32;
-
-	/**
-	 * Name of table used for storing tokens
-	 */
-	const TABLE = 'egw_sharing';
-
-	/**
-	 * Reference to global db object
-	 *
-	 * @var Api\Db
-	 */
-	protected static $db;
-
-	/**
-	 * Share we are instanciated for
-	 *
-	 * @var array
-	 */
-	protected $share;
 
 	/**
 	 * Modes ATTACH is NOT a sharing mode, but it is traditional mode in email
@@ -97,48 +71,6 @@ class Sharing
 	);
 
 	/**
-	 * Protected constructor called via self::create_session
-	 *
-	 * @param string $token
-	 * @param array $share
-	 */
-	protected function __construct(array $share)
-	{
-		self::$db = $GLOBALS['egw']->db;
-		$this->share = $share;
-	}
-
-	/**
-	 * Get token from url
-	 */
-	public static function get_token()
-	{
-        // WebDAV has no concept of a query string and clients (including cadaver)
-        // seem to pass '?' unencoded, so we need to extract the path info out
-        // of the request URI ourselves
-        // if request URI contains a full url, remove schema and domain
-		$matches = null;
-        if (preg_match('|^https?://[^/]+(/.*)$|', $path_info=$_SERVER['REQUEST_URI'], $matches))
-        {
-        	$path_info = $matches[1];
-        }
-        $path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
-		list(, $token/*, $path*/) = preg_split('|[/?]|', $path_info, 3);
-
-		return $token;
-	}
-
-	/**
-	 * Get root of share
-	 *
-	 * @return string
-	 */
-	public function get_root()
-	{
-		return $this->share['share_root'];
-	}
-
-	/**
 	 * Create sharing session
 	 *
 	 * Certain cases:
@@ -156,54 +88,8 @@ class Sharing
 	 * @param boolean $keep_session =null null: create a new session, true: try mounting it into existing (already verified) session
 	 * @return string with sessionid, does NOT return if no session created
 	 */
-	public static function create_session($keep_session=null)
+	public static function setup_share($keep_session, &$share)
 	{
-		self::$db = $GLOBALS['egw']->db;
-
-		$token = static::get_token();
-
-		// are we called from header include, because session did not verify
-		// --> check if it verifys for our token
-		if ($token && !$keep_session)
-		{
-			$_SERVER['PHP_AUTH_USER'] = $token;
-			if (!isset($_SERVER['PHP_AUTH_PW'])) $_SERVER['PHP_AUTH_PW'] = '';
-
-			unset($GLOBALS['egw_info']['flags']['autocreate_session_callback']);
-			if (isset($GLOBALS['egw']->session) && $GLOBALS['egw']->session->verify()
-				&& isset($GLOBALS['egw']->sharing) && $GLOBALS['egw']->sharing->share['share_token'] === $token)
-			{
-				return $GLOBALS['egw']->session->sessionid;
-			}
-		}
-
-		if (empty($token) || !($share = self::$db->select(self::TABLE, '*', array(
-			'share_token' => $token,
-			'(share_expires IS NULL OR share_expires > '.self::$db->quote(time(), 'date').')',
-		), __LINE__, __FILE__)->fetch()) ||
-			!$GLOBALS['egw']->accounts->exists($share['share_owner']))
-		{
-			sleep(1);
-
-			return static::share_fail(
-				'404 Not Found',
-				"Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n"
-			);
-		}
-
-		// check password, if required
-		if ($share['share_passwd'] && (empty($_SERVER['PHP_AUTH_PW']) ||
-			!(Api\Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt') ||
-				Api\Header\Authenticate::decode_password($_SERVER['PHP_AUTH_PW']) &&
-					Api\Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt'))))
-		{
-			$realm = 'EGroupware share '.$share['share_token'];
-			header('WWW-Authenticate: Basic realm="'.$realm.'"');
-			return static::share_fail(
-				'401 Unauthorized',
-				"<html>\n<head>\n<title>401 Unauthorized</title>\n<body>\nAuthorization failed.\n</body>\n</html>\n"
-			);
-		}
 
 		// need to reset fs_tab, as resolve_url does NOT work with just share mounted
 		if (count($GLOBALS['egw_info']['server']['vfs_fstab']) <= 1)
@@ -263,150 +149,27 @@ class Sharing
 		Vfs::clearstatcache();
 		// clear link-cache and load link registry without permission check to access /apps
 		Api\Link::init_static(true);
-
-		// update accessed timestamp
-		self::$db->update(self::TABLE, array(
-			'share_last_accessed' => $share['share_last_accessed']=time(),
-		), array(
-			'share_id' => $share['share_id'],
-		), __LINE__, __FILE__);
-
-		// store sharing object in egw object and therefore in session
-		$GLOBALS['egw']->sharing = new Sharing($share);
-
-		// we have a session we want to keep, but share owner is different from current user and we need filemanager UI, or no session
-		// --> create a new anon session
-		if ($keep_session === false && $GLOBALS['egw']->sharing->use_filemanager() || is_null($keep_session))
-		{
-			// create session without checking auth: create(..., false, false)
-			if (!($sessionid = $GLOBALS['egw']->session->create('anonymous@'.$GLOBALS['egw_info']['user']['domain'],
-				'', 'text', false, false)))
-			{
-				sleep(1);
-				return static::share_fail(
-					'500 Internal Server Error',
-					"Failed to create session: ".$GLOBALS['egw']->session->reason."\n"
-				);
-			}
-			// only allow filemanager app (gets overwritten by session::create)
-			$GLOBALS['egw_info']['user']['apps'] = array(
-				'filemanager' => $GLOBALS['egw_info']['apps']['filemanager']
-			);
-			// check if sharee has Collabora run rights --> give is to share too
-			$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
-			if (!empty($apps['collabora']))
-			{
-				$GLOBALS['egw_info']['user']['apps']['collabora'] = $GLOBALS['egw_info']['apps']['collabora'];
-			}
-		}
-		// we have a session we want to keep, but share owner is different from current user and we dont need filemanager UI
-		// --> we dont need session and close it, to not modifiy it
-		elseif ($keep_session === false)
-		{
-			$GLOBALS['egw']->session->commit_session();
-		}
-		// need to store new fstab and vfs_user in session to allow GET requests / downloads via WebDAV
-		$GLOBALS['egw_info']['user']['vfs_user'] = Vfs::$user;
-		$GLOBALS['egw_info']['server']['vfs_fstab'] = Vfs::mount();
-
-		// update modified egw and egw_info again in session, if neccessary
-		if ($keep_session || $sessionid)
-		{
-			$_SESSION[Api\Session::EGW_INFO_CACHE] = $GLOBALS['egw_info'];
-			unset($_SESSION[Api\Session::EGW_INFO_CACHE]['flags']);	// dont save the flags, they change on each request
-
-			$_SESSION[Api\Session::EGW_OBJECT_CACHE] = serialize($GLOBALS['egw']);
-		}
-
-		return $sessionid;
 	}
 
-	/**
-	 * Something failed, stop everything
-	 *
-	 * @param String $status
-	 * @param String $message
-	 */
-	public static function share_fail($status, $message)
+	protected function after_login()
 	{
-		header("HTTP/1.1 $status");
-		header("X-WebDAV-Status: $status", true);
-		echo $message;
-
-		$class = strpos($status, '404') === 0 ? 'EGroupware\Api\Exception\NotFound' :
-				strpos($status, '401') === 0 ? 'EGroupware\Api\Exception\NoPermission' :
-				'EGroupware\Api\Exception';
-		throw new $class($message);
-	}
-
-	/**
-	 * Check if we use filemanager UI
-	 *
-	 * Only for directories, if browser supports it and filemanager is installed
-	 *
-	 * @return boolean
-	 */
-	public function use_filemanager()
-	{
-		return !(!Vfs::is_dir($this->share['share_root']) || $_SERVER['REQUEST_METHOD'] != 'GET' ||
-			// or unsupported browsers like ie < 10
-			Api\Header\UserAgent::type() == 'msie' && Api\Header\UserAgent::version() < 10.0 ||
-			// or if no filemanager installed (WebDAV has own autoindex)
-			!file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'));
-	}
-	/**
-	 * Check if we should use Collabora UI
-	 *
-	 * Only for files, if URL says so, and Collabora & Stylite apps are installed
-	 */
-	public function use_collabora()
-	{
-		 return !Vfs::is_dir($this->share['share_root']) &&
-				array_key_exists('edit', $_REQUEST) &&
-				array_key_exists('collabora', $GLOBALS['egw_info']['apps']) &&
-				array_key_exists('stylite', $GLOBALS['egw_info']['apps']);
-
+		// only allow filemanager app (gets overwritten by session::create)
+		$GLOBALS['egw_info']['user']['apps'] = array(
+			'filemanager' => $GLOBALS['egw_info']['apps']['filemanager']
+		);
+		// check if sharee has Collabora run rights --> give is to share too
+		$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
+		if (!empty($apps['collabora']))
+		{
+			$GLOBALS['egw_info']['user']['apps']['collabora'] = $GLOBALS['egw_info']['apps']['collabora'];
+		}
 	}
 
 	/**
 	 * Server a request on a share specified in REQUEST_URI
 	 */
-	public function ServeRequest()
+	public function get_ui()
 	{
-		// sharing is for a different share, change to current share
-		if ($this->share['share_token'] !== self::get_token())
-		{
-			self::create_session($GLOBALS['egw']->session->session_flags === 'N');
-
-			return $GLOBALS['egw']->sharing->ServeRequest();
-		}
-
-		// No extended ACL for readonly shares, disable eacl by setting session cache
-		if(!($this->share['share_writable'] & 1))
-		{
-			Api\Cache::setSession(Api\Vfs\Sqlfs\StreamWrapper::EACL_APPNAME, 'extended_acl', array(
-				'/' => 1,
-				$this->share['share_path'] => 1
-			));
-		}
-		if($this->use_collabora())
-		{
-			$ui = new \EGroupware\Collabora\Ui();
-			return $ui->editor($this->share['share_path']);
-		}
-		// use pure WebDAV for everything but GET requests to directories
-		else if (!$this->use_filemanager())
-		{
-			// send a content-disposition header, so browser knows how to name downloaded file
-			if (!Vfs::is_dir($this->share['share_root']))
-			{
-				Api\Header\Content::disposition(Vfs::basename($this->share['share_path']), false);
-			}
-			//$GLOBALS['egw']->session->commit_session();
-			$webdav_server = new Vfs\WebDAV();
-			$webdav_server->ServeRequest(Vfs::concat($this->share['share_root'], $this->share['share_token']));
-			return;
-		}
 		// run full eTemplate2 UI for directories
 		$_GET['path'] = $this->share['share_root'];
 		$GLOBALS['egw_info']['user']['preferences']['filemanager']['nm_view'] = 'tile';
@@ -416,29 +179,6 @@ class Sharing
 		$ui = new SharingUi();
 		$ui->index();
 	}
-
-	/**
-	 * Generate a new token
-	 *
-	 * @return string
-	 */
-	public static function token()
-	{
-		// generate random token (using oppenssl if available otherwise mt_rand based Api\Auth::randomstring)
-		do {
-			$token = function_exists('openssl_random_pseudo_bytes') ?
-				base64_encode(openssl_random_pseudo_bytes(3*self::TOKEN_LENGTH/4)) :
-				Api\Auth::randomstring(self::TOKEN_LENGTH);
-			// base64 can contain chars not allowed in our vfs-urls eg. / or #
-		} while ($token != urlencode($token));
-
-		return $token;
-	}
-
-	/**
-	 * Name of the async job for cleaning up shares
-	 */
-	const ASYNC_JOB_ID = 'egw_sharing-tmp_cleanup';
 
 	/**
 	 * Create a new share
@@ -492,35 +232,9 @@ class Sharing
 			throw new Api\Exception\NotFound("'$path' NOT found!");
 		}
 		// check if file has been shared before, with identical attributes
-		if (($mode != self::LINK || isset($path2tmp[$path])) &&
-			($share = self::$db->select(self::TABLE, '*', $extra+array(
-				'share_path' => $mode == 'link' ? $path2tmp[$path] : $vfs_path,
-				'share_owner' => Vfs::$user,
-				'share_expires' => null,
-				'share_passwd'  => null,
-				'share_writable'=> false,
-			), __LINE__, __FILE__)->fetch()))
+		if (($mode != self::LINK ))
 		{
-			// if yes, just add additional recipients
-			$share['share_with'] = $share['share_with'] ? explode(',', $share['share_with']) : array();
-			$need_save = false;
-			foreach((array)$recipients as $recipient)
-			{
-				if (!in_array($recipient, $share['share_with']))
-				{
-					$share['share_with'][] = $recipient;
-					$need_save = true;
-				}
-			}
-			$share['share_with'] = implode(',', $share['share_with']);
-			if ($need_save)
-			{
-				self::$db->update(self::TABLE, array(
-					'share_with' => $share['share_with'],
-				), array(
-					'share_id' => $share['share_id'],
-				), __LINE__, __FILE__);
-			}
+			return parent::create($vfs_path ? $vfs_path : $path, $mode, $name, $recipients, $extra);
 		}
 		else
 		{
@@ -558,38 +272,8 @@ class Sharing
 				$vfs_path = $tmp_file;
 			}
 
-			$i = 0;
-			while(true)	// self::token() can return an existing value
-			{
-				try {
-					self::$db->insert(self::TABLE, $share = array(
-						'share_token' => self::token(),
-						'share_path' => $vfs_path,
-						'share_owner' => Vfs::$user,
-						'share_with' => implode(',', (array)$recipients),
-						'share_created' => time(),
-					)+$extra, false, __LINE__, __FILE__);
-
-					$share['share_id'] = self::$db->get_last_insert_id(self::TABLE, 'share_id');
-					break;
-				}
-				catch(Api\Db\Exception $e) {
-					if ($i++ > 3) throw $e;
-					unset($e);
-				}
-			}
+			return parent::create($vfs_path, $mode, $name, $recipients, $extra);
 		}
-
-		// if not already installed, install periodic cleanup of shares
-		$async = new Api\Asyncservice();
-		if (!($job = $async->read(self::ASYNC_JOB_ID)) || $job[self::ASYNC_JOB_ID]['method'] === 'egw_sharing::tmp_cleanup')
-		{
-			if ($job) $async->delete(self::ASYNC_JOB_ID);	// update not working old class-name
-
-			$async->set_timer(array('day' => 28), self::ASYNC_JOB_ID, 'EGroupware\\Api\\Vfs\\Sharing::tmp_cleanup',null);
-		}
-
-		return $share;
 	}
 
 	/**
