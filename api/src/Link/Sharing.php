@@ -43,7 +43,7 @@ class Sharing extends \EGroupware\Api\Sharing
 		if($success)
 		{
 			static::setup_entry($share);
-			return static::login($share);
+			return static::login($keep_session, $share);
 		}
 		return '';
 	}
@@ -59,7 +59,7 @@ class Sharing extends \EGroupware\Api\Sharing
 	 */
 	protected function after_login()
 	{
-		list($app, $id) = explode('::', $this->share['share_path']);
+		list($app) = explode('::', $this->share['share_path']);
 
 		// allow app (gets overwritten by session::create)
 		$GLOBALS['egw_info']['flags']['currentapp'] = $app;

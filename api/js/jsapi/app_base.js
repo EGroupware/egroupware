@@ -1915,7 +1915,6 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 */
 	_share_link_callback: function(_data) {
 		if (_data.msg || _data.share_link) window.egw_refresh(_data.msg, this.appname);
-		console.log("_data", _data);
 
 		var copy_link_to_clipboard = null;
 

@@ -441,6 +441,15 @@ class Sharing
 	}
 
 	/**
+	 * Get the user interface for this share
+	 *
+	 */
+	public function get_ui()
+	{
+		echo 'Error: missing subclass';
+	}
+
+	/**
 	 * Generate a new token
 	 *
 	 * @return string
