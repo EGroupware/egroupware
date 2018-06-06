@@ -632,7 +632,7 @@
 			};
 			window.app.notifications = new self();
 			// toggle notifications bar
-			jQuery('.egwpopup_toggle').click(function(){window.app.notifications.toggle();});
+			jQuery('.egwpopup_toggle', '#egwpopup').click(function(){window.app.notifications.toggle();});
 			$egwpopup_fw.click(function(){window.app.notifications.toggle();});
 			jQuery(".egwpopup_deleteall", '#egwpopup').click(function(){
 				et2_dialog.show_dialog( function(_button){
