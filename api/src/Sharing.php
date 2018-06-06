@@ -119,6 +119,14 @@ class Sharing
 	}
 
 	/**
+	 * Get share with email addresses
+	 */
+	public function get_share_with()
+	{
+		return $this->share['share_with'];
+	}
+
+	/**
 	 * Create sharing session
 	 *
 	 * Certain cases:
@@ -432,7 +440,7 @@ class Sharing
 			{
 				Header\Content::disposition(Vfs::basename($this->share['share_path']), false);
 			}
-			//$GLOBALS['egw']->session->commit_session();
+			$GLOBALS['egw']->session->commit_session();
 			$webdav_server = new Vfs\WebDAV();
 			$webdav_server->ServeRequest(Vfs::concat($this->share['share_root'], $this->share['share_token']));
 			return;

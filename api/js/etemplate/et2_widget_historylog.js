@@ -466,6 +466,13 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 		jQuery("div", row).each(function (i) {
 			var nodes = [];
 			var widget = self.columns[i].widget;
+			var value = _data[self.columns[i].id];
+			if(self.OWNER === i && _data['share_email'])
+			{
+				// Show share email instead of owner
+				widget = undefined;
+				value = _data['share_email'];
+			}
 			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined')
 			{
 				widget = self.fields[_data.status].widget;
@@ -501,9 +508,9 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 
 					if (typeof _data[self.columns[self.NEW_VALUE].id] == "string")
 					{
-						_data[self.columns[i].id] = {
+						value = _data[self.columns[i].id] = {
 							'old': _data[self.columns[i+1].id],
-							'new': _data[self.columns[i].id]
+							'new': value
 						};
 					}
 
@@ -513,7 +520,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 					jthis.css("width", (self.dataview.columnMgr.columnWidths[i] + self.dataview.columnMgr.columnWidths[i+1]-10)+'px');
 
 					if(widget) widget.setDetachedAttributes(nodes, {
-						value:_data[self.columns[i].id],
+						value: value,
 						label: jthis.parents("td").prev().text()
 					});
 
@@ -524,7 +531,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			else
 			{
 				// No widget fallback - display actual value
-				nodes = '<span>'+_data[self.columns[i].id] + '</span>';
+				nodes = '<span>'+ value + '</span>';
 			}
 			if(widget)
 			{
@@ -534,14 +541,14 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 					var box = jQuery(widget.getDOMNode()).clone();
 					for(var j = 0; j < widget._children.length; j++)
 					{
-						widget._children[j].setDetachedAttributes(nodes[j], {value:_data[self.columns[i].id][j]});
+						widget._children[j].setDetachedAttributes(nodes[j], {value:value[j]});
 						box.append(nodes[j]);
 					}
 					nodes = box;
 				}
 				else
 				{
-					widget.setDetachedAttributes(nodes, {value:_data[self.columns[i].id]});
+					widget.setDetachedAttributes(nodes, {value:value});
 				}
 			}
 			jQuery(this).append(nodes);

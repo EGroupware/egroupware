@@ -106,6 +106,7 @@ class History
 				'history_old_value' => $old_value,
 				'history_timestamp' => time(),
 				'sessionid' => $GLOBALS['egw']->session->sessionid_access_log,
+				'share_email'       => isset($GLOBALS['egw']->sharing) ? $GLOBALS['egw']->sharing->get_share_with() : '',
 			),false,__LINE__,__FILE__);
 		}
 	}
@@ -126,6 +127,7 @@ class History
 				'history_old_value' => $old_value,
 				'history_timestamp' => time(),
 				'sessionid' => $GLOBALS['egw']->session->sessionid_access_log,
+				'share_email'       => isset($GLOBALS['egw']->sharing) ? $GLOBALS['egw']->sharing->get_share_with() : '',
 			),false,__LINE__,__FILE__);
 		}
 	}
@@ -221,7 +223,17 @@ class History
 		}
 		$_query = array(array(
 			'table' => self::TABLE,
-			'cols' => array('history_id', 'history_record_id','history_appname','history_owner','history_status','history_new_value', 'history_timestamp','history_old_value'),
+			'cols' => array(
+				'history_id',
+				'history_record_id',
+				'history_appname',
+				'history_owner',
+				'history_status',
+				'history_new_value',
+				'history_timestamp',
+				'history_old_value',
+				'share_email'
+			),
 			'where' => $filter,
 		));
 
@@ -232,7 +244,7 @@ class History
 		{
 			$_query[] = array(
 				'table' => Api\Vfs\Sqlfs\StreamWrapper::TABLE,
-				'cols' =>array('fs_id', 'fs_dir', "'filemanager'",'COALESCE(fs_modifier,fs_creator)',"'~file~'",'fs_name','fs_modified', 'fs_mime'),
+				'cols' =>array('fs_id', 'fs_dir', "'filemanager'",'COALESCE(fs_modifier,fs_creator)',"'~file~'",'fs_name','fs_modified', 'fs_mime', '"" AS share_email'),
 				'where' => array('fs_dir' => $file['ino'])
 			);
 		}

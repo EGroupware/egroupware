@@ -423,3 +423,18 @@ function api_upgrade17_1()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.001';
 }
+
+/**
+ * Add field to history log for share email address, if available
+ */
+function api_upgrade17_1_001()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_history_log','share_email',array(
+		'type' => 'varchar',
+		'precision' => '4096',
+		'default' => NULL,
+		'nullable' => True,
+		'comment' => 'email addresses of share who made the change, comma seperated'
+	));
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.002';
+}

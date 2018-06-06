@@ -154,7 +154,8 @@ $phpgw_baseline = array(
 			'history_new_value' => array('type' => 'text','nullable' => False),
 			'history_timestamp' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
 			'history_old_value' => array('type' => 'text','nullable' => False),
-			'sessionid' => array('type' => 'int','precision' => '4','comment' => 'primary key to egw_access_log')
+			'sessionid' => array('type' => 'int','precision' => '4','comment' => 'primary key to egw_access_log'),
+			'share_email' => array('type' => 'varchar','precision' => '4096','nullable' => True,'default'=> NULL,'comment' => 'email addresses of share who made the change, comma seperated')
 		),
 		'pk' => array('history_id'),
 		'fk' => array(),
