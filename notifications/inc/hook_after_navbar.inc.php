@@ -32,7 +32,7 @@ if ($GLOBALS['egw_info']['user']['apps']['notifications'])
 	echo '
 		<div id="egwpopup" style="display: none; z-index: 999;">
 			<div id="egwpopup_header">'.lang('Notifications').
-			'<span class="egwpopup_toggle"></span><span class="egwpopup_seenall" title="'. lang('mark all as read').'"></span>'.
+			'<span class="button_right_toggle"></span><span class="egwpopup_seenall" title="'. lang('mark all as read').'"></span>'.
 			'<span class="egwpopup_deleteall" title="'.lang('delete all messages').'"></span></div>
 			<div id="egwpopup_list"></div>
 		</div>
