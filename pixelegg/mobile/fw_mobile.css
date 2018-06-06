@@ -3783,49 +3783,6 @@ td.lettersearch {
   text-align: center;
   padding: 15px;
 }
-#egwpopup div#egwpopup_header .egwpopup_toggle {
-  height: 32px;
-  width: 32px;
-  cursor: pointer;
-  position: relative;
-  margin-top: 1px;
-  margin-left: -20px;
-  float: left;
-}
-#egwpopup div#egwpopup_header .egwpopup_toggle:after {
-  content: "";
-  position: absolute;
-  left: 13px;
-  top: 5px;
-  width: 10px;
-  height: 2px;
-  background-color: silver;
-  backface-visibility: hidden;
-  border-radius: 6px;
-  transform: rotate(145deg) translate(8px, -1px);
-  -ms-transform: rotate(145deg) translate(8px, -1px);
-  -moz-transform: rotate(145deg) translate(8px, -1px);
-  -webkit-transform: rotate(145deg) translate(8px, -1px);
-}
-#egwpopup div#egwpopup_header .egwpopup_toggle:before {
-  content: "";
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 10px;
-  height: 2px;
-  background-color: silver;
-  backface-visibility: hidden;
-  border-radius: 6px;
-  transform: rotate(45deg) translate(8px, -2px);
-  -ms-transform: rotate(45deg) translate(8px, -2px);
-  -moz-transform: rotate(45deg) translate(8px, -2px);
-  -webkit-transform: rotate(45deg) translate(8px, -2px);
-}
-#egwpopup div#egwpopup_header .egwpopup_toggle:hover:before,
-#egwpopup div#egwpopup_header .egwpopup_toggle:hover:after {
-  background-color: gray;
-}
 #egwpopup div#egwpopup_header .egwpopup_seenall {
   float: right;
   width: 10px;
@@ -3958,6 +3915,49 @@ td.message span.message {
   background: #E6E6E6;
   height: auto;
   width: 100%;
+}
+.button_right_toggle {
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+  position: relative;
+  margin-top: 1px;
+  margin-left: -20px;
+  float: left;
+}
+.button_right_toggle:after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 5px;
+  width: 10px;
+  height: 2px;
+  background-color: silver;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  transform: rotate(145deg) translate(8px, -1px);
+  -ms-transform: rotate(145deg) translate(8px, -1px);
+  -moz-transform: rotate(145deg) translate(8px, -1px);
+  -webkit-transform: rotate(145deg) translate(8px, -1px);
+}
+.button_right_toggle:before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 10px;
+  height: 2px;
+  background-color: silver;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  transform: rotate(45deg) translate(8px, -2px);
+  -ms-transform: rotate(45deg) translate(8px, -2px);
+  -moz-transform: rotate(45deg) translate(8px, -2px);
+  -webkit-transform: rotate(45deg) translate(8px, -2px);
+}
+.button_right_toggle:hover:before,
+.button_right_toggle:hover:after {
+  background-color: gray;
 }
 /**
  * EGroupware: Stylite Pixelegg template
