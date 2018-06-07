@@ -63,6 +63,18 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		uri = uri.replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
 		egw.openWithinWindow ("mail", "setCompose", content, {'preset[mailto]':uri}, /mail_compose.compose/);
+
+
+		for (var index in content)
+		{
+			if (content[index].length > 0)
+			{
+				var cLen = content[index].split(',');
+				egw.message(egw.lang('%1 email(s) added into %2', cLen.length, egw.lang(index)));
+				return;
+			}
+		}
+
 	}
 	return {
 		/**
