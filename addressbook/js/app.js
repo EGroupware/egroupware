@@ -790,6 +790,16 @@ app.classes.addressbook = AppJS.extend(
 			content.vcard.type.push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
 		}
 		egw.openWithinWindow("mail", "setCompose", content, link, /mail.mail_compose.compose/);
+
+		for (var index in content)
+		{
+			if (content[index].file.length > 0)
+			{
+				egw.message(egw.lang('%1 contact(s) added as %2', content[index].file.length, egw.lang(index)));
+				return;
+			}
+		}
+
 	},
 
 	/**
