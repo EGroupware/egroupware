@@ -933,7 +933,7 @@ class calendar_uiviews extends calendar_ui
 		}
 		if ($actions['timesheet'])
 		{
-			$actions['timesheet']['open'] = '{"app": "timesheet", "type": "add", "extra": "link_app[]=$app&link_id[]=$id"}';
+			$actions['timesheet']['open'] = '{"app": "timesheet", "type": "add", "extra": "link_app[]=$app&link_id[]=$app_id"}';
 			$actions['timesheet']['onExecute'] = 'javaScript:app.calendar.action_open';
 		}
 		if ($actions['documents'])

@@ -373,6 +373,10 @@ class timesheet_ui extends timesheet_bo
 							}
 							break;
 					}
+					if($link_app == 'calendar')
+					{
+						list($link_id) = explode(':', $link_id);
+					}
 					Link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);
 				}
 			}
