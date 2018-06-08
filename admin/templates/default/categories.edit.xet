@@ -80,7 +80,7 @@
 				</row>
 				<row>
 					<description value="Category owner" for="owner"/>
-					<listbox statustext="Limit global category to members of a certain group" id="owner" needed="1" rows="3"/>
+					<taglist statustext="Limit global category to members of a certain group" id="owner" needed="1" height="190" multiple="toggle" class="et2_fullWidth" rows="1" />
 				</row>
 				<row disabled="!@last_mod">
 					<description value="Modified"/>
@@ -98,5 +98,5 @@
 		</grid>
 		<template id="admin.categories.delete" class="globalCat_hiddenCatid"/>
 	</template>
-	
+
 </overlay>
