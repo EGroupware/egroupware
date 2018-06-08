@@ -113,7 +113,7 @@ class Etemplate extends Etemplate\Widget\Template
 		{
 			if (!$extras) continue;
 
-			foreach(isset($extras[0]) || count($extras) ? $extras : array($extras) as $extra)
+			foreach(count(array_filter(array_keys($extras), 'is_int')) ? $extras : array($extras) as $extra)
 			{
 				if ($extra['data'] && is_array($extra['data']))
 				{
