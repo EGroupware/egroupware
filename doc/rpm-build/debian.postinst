@@ -33,6 +33,7 @@ then
 		/usr/share/egroupware/doc/rpm-build/post_install.php 2>&1 | /usr/bin/tee -a $install_log
         # fix ownership of files created during update
         chown -R www-data /var/lib/egroupware
+		chmod 700 /var/lib/egroupware/
 	else
 		apache_conf=apache.conf
 		# Debian 9 has no more /etc/lsb-release and gives an error
@@ -96,6 +97,7 @@ then
 	# someone wants a different setup.
 	if [ -z "$2" ]; then
 		chown -R www-data:www-data /var/lib/egroupware/
+		chmod 700 /var/lib/egroupware/
 		chmod 600 $config
 	fi
 
