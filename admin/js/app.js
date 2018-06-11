@@ -473,16 +473,19 @@ app.classes.admin = AppJS.extend(
 	 *
 	 * @param content List of content for the dialog template
 	 * @param sel_options optional select options
+	 * @param {et2_widget} widgetContainer of etemplate that 'owns' the dialog
+	 * @param {string} app Name of app
 	 */
-	_acl_dialog: function(content, sel_options)
+	_acl_dialog: function(content, sel_options, etemplate, app, callback)
 	{
 		if(typeof content == 'undefined') content = {};
 
 		// Determine which application we're running as
-		var app = egw.app_name();	// can be either admin or preferences!
+		app = app ? app : egw.app_name();
+		// can be either admin or preferences!
 		if (app != 'admin') app = 'preferences';
 		// Get by ID, since this.et2 isn't always the ACL list
-		var et2 = etemplate2.getById('admin-acl').widgetContainer;
+		var et2 = etemplate ? etemplate : etemplate2.getById('admin-acl').widgetContainer;
 		var className = app+'_acl';
 		var acl_rights = {};
 		var readonlys = {acl: {}};
@@ -626,11 +629,11 @@ app.classes.admin = AppJS.extend(
 						// Remove any removed
 						if(removed.length > 0)
 						{
-							this.egw.json(className+'::ajax_change_acl', [removed, 0], this._acl_callback,this,false,this)
+							this.egw.json(className+'::ajax_change_acl', [removed, 0], callback ? callback : this._acl_callback,this,false,this)
 								.sendRequest();
 						}
 					}
-					this.egw.json(className+'::ajax_change_acl', [id, rights], this._acl_callback,this,false,this)
+					this.egw.json(className+'::ajax_change_acl', [id, rights], callback ? callback : this._acl_callback,this,false,this)
 						.sendRequest();
 				}
 			},this),
