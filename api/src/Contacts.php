@@ -1722,7 +1722,7 @@ class Contacts extends Contacts\Storage
 	 */
 	public function read_birthdays($addressbook, $year)
 	{
-		if (($birthdays = Cache::getInstance(__CLASS__,"birthday-$year-$addressbook")) !== null)
+		if (($birthdays = Cache::getInstance(__CLASS__,"birthday-$year-$addressbook-".$GLOBALS['egw_info']['user']['preferences']['common']['lang'])) !== null)
 		{
 			return $birthdays;
 		}
@@ -1770,7 +1770,7 @@ class Contacts extends Contacts\Storage
 				);
 			}
 		}
-		Cache::setInstance(__CLASS__,"birthday-$year-$addressbook", $birthdays, self::BIRTHDAY_CACHE_TIME);
+		Cache::setInstance(__CLASS__,"birthday-$year-$addressbook-".$GLOBALS['egw_info']['user']['preferences']['common']['lang'], $birthdays, self::BIRTHDAY_CACHE_TIME);
 		return $birthdays;
 	}
 
