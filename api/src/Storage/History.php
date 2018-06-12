@@ -195,14 +195,7 @@ class History
 				$filter[$column] = $value;
 			}
 		}
-		if ($GLOBALS['egw']->db->Type == 'mysql' && $GLOBALS['egw']->db->ServerInfo['version'] >= 4.0)
-		{
-			$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
-		}
-		else
-		{
-			$total = $GLOBALS['egw']->db->select(self::TABLE,'COUNT(*)',$filter,__LINE__,__FILE__,false,'','phpgwapi',0)->fetchColumn();
-		}
+
 		// filter out private (or no longer defined) custom fields
 		if ($filter['history_appname'])
 		{
@@ -292,6 +285,15 @@ class History
 			$rows[] = Api\Db::strip_array_keys($row,'history_');
 		}
 		$total = $GLOBALS['egw']->db->union($_query,__LINE__,__FILE__)->NumRows();
+
+		// allow to hook into get_rows of other apps
+		Api\Hooks::process(array(
+			'hook_location' => 'etemplate2_history_get_rows',
+			'get_rows'      => __METHOD__,
+			'value'         => &$query,
+			'rows'          => &$rows,
+			'total'         => &$total,
+		), array(), true);	// true = no permission check
 
 		return $total;
 	}

@@ -748,6 +748,17 @@ class Storage
 			{
 				$rows[$n] = $this->db2data($row);
 			}
+
+			// allow other apps to hook into search
+			Api\Hooks::process(array(
+				'hook_location' => 'contacts_search',
+				'criteria'      => $criteria,
+				'filter'        => $filter,
+				'ignore_acl'    => $ignore_acl,
+				'obj'           => $this,
+				'rows'          => &$rows,
+				'total'         => &$this->total,
+			), array(), true);	// true = no permission check
 		}
 		return $rows;
 	}

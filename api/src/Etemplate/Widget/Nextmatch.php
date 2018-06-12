@@ -7,8 +7,7 @@
  * @subpackage etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-16 by RalfBecker@outdoor-training.de
- * @version $Id$
+ * @copyright 2002-18 by RalfBecker@outdoor-training.de
  */
 
 namespace EGroupware\Api\Etemplate\Widget;
@@ -608,6 +607,17 @@ class Nextmatch extends Etemplate\Widget
 		{
 			$total = false;	// method not callable
 		}
+
+		// allow to hook into get_rows of other apps
+		Api\Hooks::process(array(
+			'hook_location' => 'etemplate2_after_get_rows',
+			'get_rows'      => $method,
+			'value'         => &$value,
+			'rows'          => &$rows,
+			'readonlys'     => &$readonlys,
+			'total'         => &$total,
+		), array(), true);	// true = no permission check
+
 		// if we have a nextmatch widget, find the repeating row
 		if ($widget && $widget->attrs['template'])
 		{
@@ -848,17 +858,20 @@ class Nextmatch extends Etemplate\Widget
 				//echo "*** Inserting id=$prefix$id"; _debug_array($action);
 				// we break at end of foreach loop, as rest of actions is already dealt with
 				// by putting them as children
-				
-				// sets the default attributes to every children dataset 
-				if (is_array($action['children'])) {
-					foreach ($action['children'] as $key => $children) {
+
+				// sets the default attributes to every children dataset
+				if (is_array($action['children']))
+				{
+					foreach ($action['children'] as $key => $children)
+					{
 						// checks if children is a valid array and if the "$default_attrs" variable exists
- 						if (is_array($action['children'][$key]) && $default_attrs) {
+ 						if (is_array($children) && $default_attrs)
+						{
 							$action['children'][$key] += $default_attrs;
 						}
 					}
-				}	
-			}	
+				}
+			}
 
 			// add all first level popup actions plus ones with enabled = 'javaScript:...' to action_links
 			if ((!isset($action['type']) || in_array($action['type'],array('popup','drag','drop'))) &&	// popup is the default
