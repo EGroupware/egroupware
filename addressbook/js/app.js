@@ -1247,5 +1247,20 @@ app.classes.addressbook = AppJS.extend(
 		var geo_url = egw.config('geolocation_url');
 		if (geo_url) geo_url = geo_url[0];
 		return geo_url || default_url;
+	},
+
+	/**
+	 * Check to see if the selection contains at most one account
+	 *
+	 * @param {egwAction} action
+	 * @param {egwActionObject[]} selected Selected rows
+	 */
+	can_merge: function(action, selected)
+	{
+		return selected.filter(function (row) {
+			var data = egw.dataGetUIDdata(row.id);
+			return data && data.data.account_id;
+		}).length <= 1;
 	}
+
 });
