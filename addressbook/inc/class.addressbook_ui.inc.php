@@ -585,7 +585,8 @@ class addressbook_ui extends addressbook_bo
 			'hint' => 'Merge into first or account, deletes all other!',
 			'allowOnMultiple' => 'only',
 			'group' => $group,
-			'hideOnMobile' => true
+			'hideOnMobile' => true,
+			'enabled' => 'javaScript:app.addressbook.can_merge'
 		);
 		// Duplicates view
 		$actions['merge_duplicates'] = array(
