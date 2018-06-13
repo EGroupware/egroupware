@@ -233,8 +233,7 @@ class Sharing
 		), __LINE__, __FILE__);
 
 		// store sharing object in egw object and therefore in session
-		$class = self::get_share_class($share);
-		$GLOBALS['egw']->sharing = new $class($share);
+		$GLOBALS['egw']->sharing = static::factory($share);
 
 		// we have a session we want to keep, but share owner is different from current user and we need filemanager UI, or no session
 		// --> create a new anon session
@@ -275,6 +274,20 @@ class Sharing
 	}
 
 	/**
+	 * Factory method to instanciate a share
+	 *
+	 * @param array $share
+	 *
+	 * @return Sharing
+	 */
+	public static function factory($share)
+	{
+		$class = static::get_share_class($share);
+
+		return new $class($share);
+	}
+
+	/**
 	 * Get the namespaced class for the given share
 	 *
 	 * @param string $share
@@ -283,9 +296,17 @@ class Sharing
 	{
 		try
 		{
-			if(self::is_entry($share) && class_exists('\EGroupware\Stylite\Link\Sharing'))
+			if(self::is_entry($share))
 			{
-				return '\\EGroupware\\Stylite\\Link\\Sharing';
+				list($app, $id) = explode('::', $share['share_path']);
+				if($app && class_exists('\EGroupware\\'. ucfirst($app) . '\Sharing'))
+				{
+					return '\EGroupware\\'. ucfirst($app) . '\Sharing';
+				}
+				else if(class_exists('\EGroupware\Stylite\Link\Sharing'))
+				{
+					return '\\EGroupware\\Stylite\\Link\\Sharing';
+				}
 			}
 		}
 		catch(Exception $e){throw $e;}
