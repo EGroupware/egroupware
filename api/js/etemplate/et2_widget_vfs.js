@@ -1190,6 +1190,10 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		}
 	},
 
+	set_value: function(value) {
+		this.value = value;
+	},
+	
 	getValue: function() {
 		return this.value;
 	}
