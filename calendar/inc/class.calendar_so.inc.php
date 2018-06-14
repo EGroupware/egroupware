@@ -2246,13 +2246,6 @@ ORDER BY cal_user_type, cal_usre_id
 			{
 				$this->db->delete($table, array('cal_id'=>$row['cal_id']), __LINE__, __FILE__, 'calendar');
 			}
-			// handle sync
-			$this->db->update('egw_api_content_history',array(
-				'sync_deleted' => time(),
-			),array(
-				'sync_appname' => 'calendar',
-				'sync_contentid' => $row['cal_id'],	// sync_contentid is varchar(60)!
-			), __LINE__, __FILE__, 'calendar');
 			// handle links
 			Link::unlink('', 'calendar', $row['cal_id']);
 		}
