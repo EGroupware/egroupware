@@ -6938,6 +6938,7 @@ class Mail
 				{
 					$errorInfo = $email = '';
 					$sendOK = $openComposeWindow = $openAsDraft = null;
+					$mailObject->clearAllRecipients();
 					//error_log(__METHOD__.' ('.__LINE__.') '.' Id To Merge:'.$val);
 					if (/*$GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&*/
 						count($SendAndMergeTocontacts) > 1 && $val &&
