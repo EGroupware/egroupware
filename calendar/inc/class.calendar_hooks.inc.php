@@ -310,48 +310,6 @@ class calendar_hooks
 				'help'  => 'How many separate calendars to show before merging them together',
 				'default'=> 4
 			),
-			'limit_des_lines' => array(
-				'type'   => 'input',
-				'size'   => 5,
-				'label'  => 'Limit number of description lines in list view (default 5, 0 for no limit)',
-				'name'   => 'limit_des_lines',
-				'help'   => 'How many description lines should be directly visible. Further lines are available via a scrollbar.',
-				'xmlrpc' => True,
-				'admin'  => False
-			),
-			'birthdays_as_events' => array(
-				'type'   => 'multiselect',
-				'values' => $birthdays_as_events,
-				'label'  => 'Show birthdays as events',
-				'name'   => 'birthdays_as_events',
-				'help'   => 'Show birthdays as all day non-blocking events as well as via mouseover of the date.',
-				'default'=> 'none'
-			),
-			'limit_all_day_lines' => array(
-				'type'   => 'input',
-				'size'   => 5,
-				'label'  => 'Limit number of lines for all day events',
-				'name'   => 'limit_all_day_lines',
-				'help'   => 'How many lines of all day events should be directly visible. Further lines are available via a mouseover.',
-				'xmlrpc' => True,
-				'default'=> 3,
-				'admin'  => False
-			),
-			'planner_show_empty_rows' => array(
-				'type'   => 'select',
-				'label'  => 'Show empty rows in Planner',
-				'name'   => 'planner_show_empty_rows',
-				'values' => array(
-					0 => lang('no'),
-					'user' => lang('Planner by user'),
-					'cat'  => lang('Planner by category'),
-					'both' => lang('All'),
-				),
-				'help'   => 'Should the planner display an empty row for users or categories without any appointment.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => 'user',
-			),
 			'use_time_grid' => array(
 				'type'   => 'multiselect',
 				'label'  => 'Views showing a list of events',
@@ -368,16 +326,6 @@ class calendar_hooks
 				'name'   => 'auto_update_on_sidebox_change',
 				'help'   => 'When changing the month',
 				'default'=> false
-			),
-			'link_title' => array(
-				'type'   => 'multiselect',
-				'label'  => 'Link title for events to show',
-				'name'   => 'link_title',
-				'values' => $link_title_options,
-				'help'   => 'What should links to the calendar events display in other applications.',
-				'xmlrpc' => True,
-				'admin'  => false,
-				'default'=> '',
 			),
 			'2.section' => array(
 				'type'  => 'section',
@@ -475,6 +423,66 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 			),
+			'2.5.section' => array(
+				'type'  => 'section',
+				'title' => lang('Configuration settings'),
+				'no_lang'=> true,
+				'xmlrpc' => False,
+				'admin'  => False
+			),
+			'limit_des_lines' => array(
+				'type'   => 'input',
+				'size'   => 5,
+				'label'  => 'Limit number of description lines in list view (default 5, 0 for no limit)',
+				'name'   => 'limit_des_lines',
+				'help'   => 'How many description lines should be directly visible. Further lines are available via a scrollbar.',
+				'xmlrpc' => True,
+				'admin'  => False
+			),
+			'limit_all_day_lines' => array(
+				'type'   => 'input',
+				'size'   => 5,
+				'label'  => 'Limit number of lines for all day events',
+				'name'   => 'limit_all_day_lines',
+				'help'   => 'How many lines of all day events should be directly visible. Further lines are available via a mouseover.',
+				'xmlrpc' => True,
+				'default'=> 3,
+				'admin'  => False
+			),
+			'planner_show_empty_rows' => array(
+				'type'   => 'select',
+				'label'  => 'Show empty rows in Planner',
+				'name'   => 'planner_show_empty_rows',
+				'values' => array(
+					0 => lang('no'),
+					'user' => lang('Planner by user'),
+					'cat'  => lang('Planner by category'),
+					'both' => lang('All'),
+				),
+				'help'   => 'Should the planner display an empty row for users or categories without any appointment.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'forced' => 'user',
+			),
+			'birthdays_as_events' => array(
+				'type'   => 'multiselect',
+				'values' => $birthdays_as_events,
+				'label'  => 'Show birthdays as events',
+				'name'   => 'birthdays_as_events',
+				'help'   => 'Show birthdays as all day non-blocking events as well as via mouseover of the date.',
+				'default'=> 'none'
+			),
+			'link_title' => array(
+				'type'   => 'multiselect',
+				'label'  => 'Link title for events to show',
+				'name'   => 'link_title',
+				'values' => $link_title_options,
+				'help'   => 'What should links to the calendar events display in other applications.',
+				'xmlrpc' => True,
+				'admin'  => false,
+				'default'=> '',
+			),
+
 			'3.section' => array(
 				'type'  => 'section',
 				'title' => lang('notification settings'),
