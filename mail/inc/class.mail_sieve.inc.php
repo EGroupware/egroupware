@@ -963,7 +963,7 @@ class mail_sieve
 
 		if($result)
 		{
-			$response->error($result);
+			$response->message($result);
 			return;
 		}
 		$this->saveSessionData();
@@ -1170,7 +1170,7 @@ class mail_sieve
 	{
 		if (!$this->account->imapServer()->setRules($this->rules))
 		{
-			return "update failed";
+			return $this->account->imapServer()->error;
 		}
 	}
 

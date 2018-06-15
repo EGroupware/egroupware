@@ -607,7 +607,12 @@ class Script
 		//error_log(__METHOD__.__LINE__.array2string($newscript));
 		//print "<pre>$newscript</pre>"; exit;
 		//print "<hr><pre>".htmlentities($newscript)."</pre><hr>";
+
 		try {
+			if (!$connection->hasSpace($this->name, mb_strlen($newscript)))
+			{
+				throw new \Exception(lang("There is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config."));
+			}
 			$connection->installScript($this->name, $newscript, true);
 		}
 		catch (\Exception $e) {
