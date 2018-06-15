@@ -557,6 +557,7 @@ the mimeparser can not parse this message.	mail	en	The mimeparser can not parse 
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
 then	mail	en	THEN
 there is no imap server configured.	mail	en	There is no IMAP Server configured.
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.
 this message is smime encrypted and password protected.	mail	en	This message is smime encrypted and password protected.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
 to do	mail	en	to do
