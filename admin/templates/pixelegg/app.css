@@ -184,6 +184,9 @@ select#admin-mailaccount_ident_id {
 #admin-acl {
   width: 99%;
 }
+#admin-categories-edit_owner {
+  overflow-y: auto;
+}
 @media all {
   div.dhtmlxTree td.standartTreeRow span.selectedTreeRow {
     background-color: #ffdd73;

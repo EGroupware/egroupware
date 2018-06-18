@@ -80,7 +80,7 @@
 				</row>
 				<row>
 					<description value="Category owner" for="owner"/>
-					<taglist statustext="Limit global category to members of a certain group" id="owner" needed="1" height="190" multiple="toggle" class="et2_fullWidth" rows="1" />
+					<taglist statustext="Limit global category to members of a certain group" id="owner" needed="1" height="190" class="et2_fullWidth" rows="4" />
 				</row>
 				<row disabled="!@last_mod">
 					<description value="Modified"/>
