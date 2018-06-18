@@ -16,7 +16,7 @@
 				<row>
 					<description class="$row_cont[class] mobile_cat_col"/>
 					<vbox>
-						<url-email id="${row}[fromaddress]" class="$row_cont[class]" readonly="true"/>
+						<url-email id="${row}[address]" class="$row_cont[class]" readonly="true"/>
 						<hbox>
 							<description  class="status_img $row_cont[class]"/>
 							<description id="${row}[subject]" no_lang="1" class="$row_cont[class]" />
