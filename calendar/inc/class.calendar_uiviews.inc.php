@@ -931,11 +931,6 @@ class calendar_uiviews extends calendar_ui
 			$actions['infolog_app']['open'] = '{"app": "infolog", "type": "add", "extra": "type=task&action=$app&action_id=$id"}';
 			$actions['infolog_app']['onExecute'] = 'javaScript:app.calendar.action_open';
 		}
-		if ($actions['timesheet'])
-		{
-			$actions['timesheet']['open'] = '{"app": "timesheet", "type": "add", "extra": "link_app[]=$app&link_id[]=$app_id"}';
-			$actions['timesheet']['onExecute'] = 'javaScript:app.calendar.action_open';
-		}
 		if ($actions['documents'])
 		{
 			// TODO: See if we can get this working sensibly

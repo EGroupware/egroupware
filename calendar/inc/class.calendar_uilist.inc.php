@@ -959,11 +959,11 @@ class calendar_uilist extends calendar_ui
 			$actions['timesheet'] = array(	// interactive add for a single event
 				'icon' => 'timesheet/navbar',
 				'caption' => 'Timesheet',
-				'url' => 'menuaction=timesheet.timesheet_ui.edit&link_app[]=$app&link_id[]=$id',
 				'group' => $group,
 				'allowOnMultiple' => false,
 				'hideOnDisabled' => true,	// show only one timesheet action in context menu
-				'onExecute' => 'javaScript:app.calendar.cal_fix_app_id',
+				'onExecute' => 'javaScript:app.calendar.action_open',
+				'open' => '{"app": "timesheet", "type": "add", "extra": "link_app[]=$app&link_id[]=$app_id"}',
 				'popup' => Link::get_registry('timesheet', 'add_popup'),
 			);
 			$actions['timesheet-add'] = array(	// automatic add for multiple events
