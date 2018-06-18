@@ -141,7 +141,7 @@ class Mail
 		// tidy eats away even some wanted whitespace, so we switch it off;
 		// we used it for its compacting and beautifying capabilities, which resulted in better html for further processing
 		'tidy'=>0,
-		'elements' => "* -script",
+		'elements' => "* -script -meta",
 		'deny_attribute' => 'on*',
 		'schemes'=>'href: file, ftp, http, https, mailto, phone, tel; src: cid, data, file, ftp, http, https; *:file, http, https, cid, src',
 		'hook_tag' =>"hl_email_tag_transform",
