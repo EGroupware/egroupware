@@ -6934,11 +6934,19 @@ class Mail
 
 					$mailObject->addReplyTo(Horde_Idna::encode($activeMailProfile['ident_email']),Mail::generateIdentityString($activeMailProfile,false));
 				}
+				if(count($SendAndMergeTocontacts) > 1)
+				{
+					foreach(Mailer::$type2header as $type => $h)
+					{
+						$header = $mailObject->getHeader(Mailer::$type2header[$type]);
+						if(is_array($header)) $header = implode(', ',$header);
+						$headers[$type] = $header;
+					}
+				}
 				foreach ($SendAndMergeTocontacts as $k => $val)
 				{
 					$errorInfo = $email = '';
 					$sendOK = $openComposeWindow = $openAsDraft = null;
-					$mailObject->clearAllRecipients();
 					//error_log(__METHOD__.' ('.__LINE__.') '.' Id To Merge:'.$val);
 					if (/*$GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&*/
 						count($SendAndMergeTocontacts) > 1 && $val &&
@@ -6950,7 +6958,8 @@ class Mail
 						foreach(Mailer::$type2header as $type => $h)
 						{
 							//error_log('ID ' . $val . ' ' .$type . ': ' . $mailObject->getHeader(Mailer::$type2header[$type]) . ' -> ' .$bo_merge->merge_string($mailObject->getHeader(Mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset));
-							$merged = $bo_merge->merge_string($mailObject->getHeader(Mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset);
+							$merged = $bo_merge->merge_string($headers[$type],$val,$e,'text/plain',array(),self::$displayCharset);
+							$mailObject->clearAddresses($type);
 							$mailObject->addAddress($merged,'',$type);
 							if($type == 'to')
 							{
