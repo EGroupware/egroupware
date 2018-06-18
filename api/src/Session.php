@@ -17,7 +17,6 @@
  * @package api
  * @subpackage session
  * @author Ralf Becker <ralfbecker@outdoor-training.de> since 2003 on
- * @version $Id$
  */
 
 namespace EGroupware\Api;
@@ -616,6 +615,21 @@ class Session
 				self::egw_setcookie('last_domain',$this->account_domain,$now+1209600);
 			}
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
+
+			// hook called once session is created
+			Hooks::process(array(
+				'location'       => 'session_created',
+				'sessionid'      => $this->sessionid,
+				'session_flags'  => $this->session_flags,
+				'account_id'     => $this->account_id,
+				'account_lid'    => $this->account_lid,
+				'passwd'         => $this->passwd,
+				'account_domain' => $this->account_domain,
+				'user_ip'        => $user_ip,
+				'session_type'   => Session\Type::get($_SERVER['REQUEST_URI'],
+					$GLOBALS['egw_info']['flags']['current_app'],
+					true),	// true return WebGUI instead of login, as we are logged in now
+			),'',true);
 
 			return $this->sessionid;
 		}
