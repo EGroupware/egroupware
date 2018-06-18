@@ -151,11 +151,11 @@ $phpgw_baseline = array(
 			'history_appname' => array('type' => 'ascii','precision' => '16','nullable' => False),
 			'history_owner' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False),
 			'history_status' => array('type' => 'varchar','precision' => '32','nullable' => False),
-			'history_new_value' => array('type' => 'text','nullable' => False),
+			'history_new_value' => array('type' => 'longtext','nullable' => False),
 			'history_timestamp' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
-			'history_old_value' => array('type' => 'text','nullable' => False),
+			'history_old_value' => array('type' => 'longtext','nullable' => False),
 			'sessionid' => array('type' => 'int','precision' => '4','comment' => 'primary key to egw_access_log'),
-			'share_email' => array('type' => 'varchar','precision' => '4096','nullable' => True,'default'=> NULL,'comment' => 'email addresses of share who made the change, comma seperated')
+			'share_email' => array('type' => 'varchar','precision' => '4096','comment' => 'email addresses of share who made the change, comma seperated')
 		),
 		'pk' => array('history_id'),
 		'fk' => array(),

@@ -438,3 +438,18 @@ function api_upgrade17_1_001()
 	));
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.002';
 }
+
+
+function api_upgrade17_1_002()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_history_log','history_new_value',array(
+		'type' => 'longtext',
+		'nullable' => False
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_history_log','history_old_value',array(
+		'type' => 'longtext',
+		'nullable' => False
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.003';
+}
