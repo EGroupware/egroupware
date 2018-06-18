@@ -177,3 +177,5 @@ select#admin-mailaccount_ident_id {
 	font-size: 110%;
 }
 #admin-acl {width:99%;}
+
+#admin-categories-edit_owner {overflow-y: auto;}
