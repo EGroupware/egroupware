@@ -587,6 +587,18 @@ class infolog_ui
 		if ((int)$data['id'] && ($info = $this->bo->read($data['id'])))
 		{
 			if ($info['info_cat']) $set['cat_id'] = $info['info_cat'];
+			if ($info['info_used_time'])
+			{
+				$set['ts_duration'] = $info['info_used_time'];
+			}
+			if ($info['pl_id'])
+			{
+				$set['pl_id'] = $info['pl_id'];
+			}
+			if ($info['info_price'])
+			{
+				$set['ts_unitprice'] = $info['info_price'];
+			}
 
 			foreach(Link::get_links('infolog',$info['info_id'],'','link_lastmod DESC',true) as $link)
 			{
@@ -596,6 +608,7 @@ class infolog_ui
 					$set['link_id'][]  = $link['id'];
 				}
 			}
+
 		}
 		return $set;
 	}
