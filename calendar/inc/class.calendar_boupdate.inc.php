@@ -1063,7 +1063,8 @@ class calendar_boupdate extends calendar_bo
 							// Add ACCEPT|REHECT|TENTATIVE actions
 							$notification->set_popupdata('calendar', array(
 								'event_id' => $event['id'],
-								'user_id' => $userid
+								'user_id' => $userid,
+								'egw_pr_notify' => 1
 							));
 						}
 						$notification->set_popupmessage($subject."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");
