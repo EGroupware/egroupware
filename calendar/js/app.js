@@ -1789,6 +1789,40 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	},
 
 	/**
+	 * Send a mail  or meeting request to event participants
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _selected
+	 */
+	action_mail: function(_action, _selected)
+	{
+		var data = egw.dataGetUIDdata(_selected[0].id) || {data:{}};
+		var event = data.data;
+		this.egw.json('calendar.calendar_uiforms.ajax_custom_mail',
+			[event, false, _action.id==='sendrequest'],
+			null,null,null,null
+		).sendRequest();
+	},
+
+	/**
+	 * Insert selected event(s) into a document
+	 *
+	 * Actually, just pass it off to the nextmatch
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _selected
+	 */
+	action_merge: function(_action, _selected)
+	{
+		var ids = {ids:[]};
+		for(var i = 0; i < _selected.length; i++)
+		{
+			ids.ids.push(_selected[i].id);
+		}
+		nm_action(egw_getAppActionManager('calendar').getActionById('nm').getActionById(_action.id), _selected, null, ids);
+	},
+
+	/**
 	 * Sidebox merge
 	 *
 	 * Manage the state and pass the request to the correct place.  Since the nextmatch
