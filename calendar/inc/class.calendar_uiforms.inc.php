@@ -1384,7 +1384,7 @@ class calendar_uiforms extends calendar_ui
 		$vars = array(
 			'menuaction'      => 'mail.mail_compose.compose',
 			'mimeType'		  => $GLOBALS['egw_info']['user']['preferences']['mail']['composeOptions'] != 'text' ? 'html' : 'plain',
-			'preset[to]'      => $to,
+			'preset[bcc]'      => $to,
 			'preset[subject]' => $event['title'],
 			'preset[body]'    => $body,
 			'preset[name]'    => 'event.ics',
