@@ -474,60 +474,82 @@
 	/**
 	 * Add message to internal display-queue
 	 *
-	 * @param _id
-	 * @param _message
+	 * @param _rowData
 	 * @param _browser_notify
-	 * @param {string} _status
-	 * @param {string} _created
-	 *
-	 * @return undefined
 	 */
-	notifications.prototype.append = function(_id, _message, _browser_notify,
-	_status, _created, _current, _actions) {
-		var data = this.getData(_message);
-		// Prevent the same thing popping up multiple times
-		notifymessages[_id] = {
-			message:_message,
-			data: data,
-			status: _status,
-			created: _created,
-			current: _current
-		};
-		if (_actions && _actions.length > 0) notifymessages[_id]['data']['actions'] = _actions;
-		// Notification API
-		if(_browser_notify && !_status)
+	notifications.prototype.append = function(_rawData, _browser_notify) {
+
+		var hasUnseen = [];
+		for (var i=0; i < _rawData.length; i++)
 		{
-			egw.notification(data.title, {
-				tag: data.app+":"+_id,
-				body: data.message,
-				icon: data.icon,
-				onclose:function(e){
-					// notification id
-					var id = this.tag.split(":");
-					// delete the message
-					var request = egw.json("notifications.notifications_ajax.update_status", [id[1], 'DISPLAYED']);
-					request.sendRequest();
-				},
-				onclick:function(e){
-					// notification id
-					var id = this.tag.split(":");
+			var data = this.getData(_rawData[i]['message']);
+			// Prevent the same thing popping up multiple times
+			notifymessages[_rawData[i]['id']] = {
+				message:_rawData[i]['message'],
+				data: data,
+				status: _rawData[i]['status'],
+				created: _rawData[i]['created'],
+				current: _rawData[i]['current']
+			};
+			if (_rawData[i]['actions'] && _rawData[i]['actions'].length > 0) notifymessages[_rawData[i]['id']]['data']['actions'] = _rawData[i]['actions'];
+			// Notification API
+			if(_browser_notify && !_rawData[i]['status'])
+			{
+				egw.notification(data.title, {
+					tag: data.app+":"+_rawData[i]['id'],
+					body: data.message,
+					icon: data.icon,
+					onclose:function(e){
+						// notification id
+						var id = this.tag.split(":");
+						// delete the message
+						var request = egw.json("notifications.notifications_ajax.update_status", [id[1], 'DISPLAYED']);
+						request.sendRequest();
+					},
+					onclick:function(e){
+						// notification id
+						var id = this.tag.split(":");
 
-					// get the right data from messages object
-					var notify = notifymessages[id[1]];
+						// get the right data from messages object
+						var notify = notifymessages[id[1]];
 
-					if (!notifymessages[id[1]]) this.close();
+						if (!notifymessages[id[1]]) this.close();
 
-					if (notify && notify.data && notify.data.id)
-					{
-						egw.open(notify.data.id, notify.data.app);
+						if (notify && notify.data && notify.data.id)
+						{
+							egw.open(notify.data.id, notify.data.app);
+						}
+						else if (notify && notify.data)
+						{
+							egw.open_link(notify.data.url,'_blank',notify.data.popup);
+						}
+						this.close();
 					}
-					else if (notify && notify.data)
-					{
-						egw.open_link(notify.data.url,'_blank',notify.data.popup);
-					}
-					this.close();
+				});
+			}
+			if (!_rawData[i]['status'])
+			{
+				egw.json("notifications.notifications_ajax.update_status", [_rawData[i]['id'], 'DISPLAYED']);
+				hasUnseen.push(_rawData[i]['id']);
+			}
+
+		}
+		switch(egw.preference('egwpopup_verbosity', 'notifications'))
+		{
+			case 'low':
+				this.bell('active');
+				break;
+			case 'high':
+				if (hasUnseen.length > 0)
+				{
+					alert(egw.lang('EGroupware has notifications for you'));
+					egw.json("notifications.notifications_ajax.update_status", [hasUnseen, 'DISPLAYED']).sendRequest();
 				}
-			});
+				this.display();
+				break;
+			case 'medium':
+				this.display();
+
 		}
 	};
 

@@ -180,7 +180,8 @@ class notifications_ajax {
 				'account_id' => $this->recipient->account_id,
 				'notify_type' => self::_type
 			),
-			__LINE__,__FILE__,false,'',self::_appname);
+			__LINE__,__FILE__,false,'ORDER BY notify_id DESC LIMIT 0,100',self::_appname);
+		$result = array();
 		if ($rs->NumRows() > 0)	{
 			foreach ($rs as $notification) {
 				$actions = null;
@@ -193,33 +194,17 @@ class notifications_ajax {
 						), $data['appname'], true);
 					$actions = $_actions[$data['appname']];
 				}
-				$this->response->apply('app.notifications.append',array(
-					$notification['notify_id'],
-					$notification['notify_message'],
-					$browserNotify,
-					$notification['notify_status'],
-					Api\DateTime::to($notification['notify_created']),
-					new DateTime(),
-					is_array($actions)?$actions:NULL)
+				$result[] = array(
+					'id'		=> $notification['notify_id'],
+					'message'	=> $notification['notify_message'],
+					'status'	=> $notification['notify_status'],
+					'created'	=> Api\DateTime::to($notification['notify_created']),
+					'current'		=> new DateTime(),
+					'action'	=> is_array($actions)?$actions:NULL
 				);
-			}
 
-			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {
-				case 'low':
-					$this->response->apply('app.notifications.bell', array('active'));
-					break;
-				case 'high':
-					if (empty($notification['notify_status']) || $notification['notify_status'] === "UNSEEN")
-					{
-						$this->response->alert(lang('EGroupware has notifications for you'));
-					}
-					$this->response->apply('app.notifications.display');
-					break;
-				case 'medium':
-				default:
-					$this->response->apply('app.notifications.display');
-					break;
 			}
+			$this->response->apply('app.notifications.append', array($result, $browserNotify));
 		}
 		return true;
 	}
