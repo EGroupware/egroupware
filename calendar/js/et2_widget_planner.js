@@ -552,7 +552,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				for(var i = 0; i < 12; i++)
 				{
 					// Not using UTC because we corrected for timezone offset
-					labels.push({id: d.getFullYear() +'-'+d.getMonth(), label:this.egw().lang(date('F',d))+' '+d.getFullYear()});
+					labels.push({id:sprintf('%04d-%02d', d.getFullYear(), d.getMonth()), label:this.egw().lang(date('F',d))+' '+d.getFullYear()});
 					d.setMonth(d.getMonth()+1);
 				}
 				return labels;
@@ -563,7 +563,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 				var start = new Date(event.start);
 				start = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
-				var key = start.getFullYear() +'-'+start.getMonth();
+				var key = sprintf('%04d-%02d', start.getFullYear(), start.getMonth());
 				var label_index = false;
 				for(var i = 0; i < labels.length; i++)
 				{
@@ -582,11 +582,11 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				// end in a different month?
 				var end = new Date(event.end);
 				end = new Date(end.valueOf() + end.getTimezoneOffset() * 60 * 1000);
-				var end_key = end.getFullYear() +'-'+end.getMonth();
+				var end_key = sprintf('%04d-%02d',end.getFullYear(),end.getMonth());
 				var year = start.getFullYear();
 				var month = start.getMonth();
-				key = sprintf('%04d-%d',year,month);
-				
+				key = sprintf('%04d-%02d',year,month);
+
 				do
 				{
 					var end_label_index = label_index;
@@ -612,7 +612,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 						++year;
 						month = 0;
 					}
-					key = sprintf('%04d-%d',year,month);
+					key = sprintf('%04d-%02d',year,month);
 				} while(key <= end_key)
 			},
 			// Draw a single row, but split up the dates
