@@ -41,6 +41,27 @@
 	const TIME_LABEL_LAST_MONTH = 3;
 
 	/**
+	 * Heigh priorority action for notifing about an entry.
+	 * Action: It pops up the entry once
+	 * @type Number
+	 */
+	const EGW_PR_NOTIFY_HEIGH = 1;
+
+	/**
+	 * Medium priority for notifing about an entry
+	 * Action: Not defined
+	 * @type Number
+	 */
+	const EGW_PR_NOTIFY_MEDIUM = 2;
+
+	/**
+	 * Low priority for notifing about an entry
+	 * Action: Not defined
+	 * @type Number
+	 */
+	const EGW_PR_NOTIFY_LOW = 3;
+
+	/**
 	 * Constructor inits polling and installs handlers, polling frequence is passed via data-poll-interval of script tag
 	 */
 	function notifications() {
@@ -277,6 +298,21 @@
 			// bind click handler after the message container is attached
 			$message.click(jQuery.proxy(this.clickOnMessage, this,[$message]));
 			this.update_message_status(id, notifymessages[id]['status']);
+			if (notifymessages[id]['extra_data']
+					&& !notifymessages[id]['status']
+					&& notifymessages[id]['extra_data']['egw_pr_notify'])
+			{
+				switch (notifymessages[id]['extra_data']['egw_pr_notify'])
+				{
+					case EGW_PR_NOTIFY_HEIGH:
+						poped.push(id);
+						this.toggle(true);
+						break;
+					case EGW_PR_NOTIFY_MEDIUM:
+					case EGW_PR_NOTIFY_LOW:
+						//Could be define with all sort of stuffs
+				}
+			}
 		}
 
 		if (poped.length > 0)
@@ -489,7 +525,8 @@
 				data: data,
 				status: _rawData[i]['status'],
 				created: _rawData[i]['created'],
-				current: _rawData[i]['current']
+				current: _rawData[i]['current'],
+				extra_data: _rawData[i]['extra_data']
 			};
 			if (_rawData[i]['actions'] && _rawData[i]['actions'].length > 0) notifymessages[_rawData[i]['id']]['data']['actions'] = _rawData[i]['actions'];
 			// Notification API
@@ -573,8 +610,9 @@
 
 	/**
 	 * toggle notifications container
+	 * @param boolean _stat true keeps the popup on
 	 */
-	notifications.prototype.toggle = function ()
+	notifications.prototype.toggle = function (_stat)
 	{
 		var $egwpopup = jQuery('#egwpopup');
 		var $body = jQuery('body');
@@ -593,6 +631,7 @@
 		}
 		else
 		{
+			if (_stat) return;
 			$body.off('click');
 		}
 		// Remove popup_note as soon as message list is toggled
