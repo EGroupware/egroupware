@@ -931,11 +931,16 @@ class calendar_uiviews extends calendar_ui
 			$actions['infolog_app']['open'] = '{"app": "infolog", "type": "add", "extra": "type=task&action=$app&action_id=$id"}';
 			$actions['infolog_app']['onExecute'] = 'javaScript:app.calendar.action_open';
 		}
-		if ($actions['documents'])
+		// Get documents working with other views
+		$set_execute = function(&$action) use (&$set_execute)
 		{
-			// TODO: See if we can get this working sensibly
-			$actions['documents']['enabled'] = false;
-		}
+			$action['onExecute'] = 'javaScript:app.calendar.action_merge';
+			foreach($action['children'] as &$child)
+			{
+				$set_execute($child);
+			}
+		};
+		$set_execute($actions['documents']);
 		$actions['ical']['onExecute'] = 'javaScript:app.calendar.ical';
 
 		$actions['delete']['onExecute'] = 'javaScript:app.calendar.delete';

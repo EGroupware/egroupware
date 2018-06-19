@@ -954,6 +954,29 @@ class calendar_uilist extends calendar_ui
 				'popup' => Link::get_registry('infolog', 'add_popup'),
 			);
 		}
+		if($GLOBALS['egw_info']['user']['apps']['mail'])
+		{
+			//Send to email
+			$actions['email'] = array(
+				'caption' => 'Email',
+				'icon'	=> 'mail/navbar',
+				'hideOnDisabled' => true,
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'children' => array(
+					'mail' => array(
+						'caption' => 'Mail all participants',
+						'onExecute' => 'javaScript:app.calendar.action_mail',
+
+					),
+					'sendrequest' => array(
+						'caption' => 'Meetingrequest to all participants',
+						'onExecute' => 'javaScript:app.calendar.action_mail',
+					)
+				),
+			);
+		}
+
 		if ($GLOBALS['egw_info']['user']['apps']['timesheet'])
 		{
 			$actions['timesheet'] = array(	// interactive add for a single event

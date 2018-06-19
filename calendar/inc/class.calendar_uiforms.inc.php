@@ -1318,6 +1318,14 @@ class calendar_uiforms extends calendar_ui
 		{
 			//error_log(__METHOD__.__LINE__.' '.$uid.':'.array2string($status));
 			if (empty($status)) continue;
+			if(!is_array($status))
+			{
+				calendar_so::split_status($status,$quantity,$role);
+				$status = array(
+					'status' => $status,
+					'uid' => $uid,
+				);
+			}
 			$toadd = '';
 			if ((isset($status['status']) && $status['status'] == 'R') || (isset($status['uid']) && $status['uid'] == $this->user)) continue;
 
