@@ -231,8 +231,8 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 		if(idx == 0)
 		{
 			// No rows, start with an empty
-			this._emptyRow();
 			this._selectionMgr.clear();
+			this._emptyRow();
 		}
 	},
 
