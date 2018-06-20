@@ -1452,6 +1452,17 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					context = egw.dataGetUIDdata(_events[0].id).data;
 					extra = {};
 				}
+				else if (_events[0].iface.getWidget() && _events[0].iface.getWidget()._get_time_from_position &&
+						_action.menu_context && _action.menu_context.event
+				)
+				{
+					// Context menu has position information
+					var date = _events[0].iface.getWidget()._get_time_from_position(_action.menu_context.event.offsetX, _action.menu_context.event.offsetY);
+					if(date)
+					{
+						context.start = date.toJSON();
+					}
+				}
 				else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_valueWidget))
 				{
 					// Able to extract something from the widget
