@@ -1244,7 +1244,7 @@ class Ads
 }
 
 /**
- * Fixes an enhancements for adLDAP required by EGroupware
+ * Fixes and enhancements for adLDAP required by EGroupware
  *
  * - allow to use utf-8 charset internally, not just an 8-bit iso-charset
  * - support for Windows2008r2 (maybe earlier too) and Samba4 "CN=Users" DN as container to create users or groups

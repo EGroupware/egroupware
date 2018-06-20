@@ -5,9 +5,8 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-18 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -454,6 +453,7 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			$GLOBALS['egw']->db->query('TRUNCATE TABLE egw_accounts', __LINE__, __FILE__);
 			$GLOBALS['egw']->db->query('DELETE FROM egw_addressbook WHERE account_id IS NOT NULL', __LINE__, __FILE__);
+			$GLOBALS['egw']->db->query('TRUNCATE TABLE egw_mailaccounts', __LINE__, __FILE__);
 		}
 		// instanciate accounts obj for new store
 		$accounts_obj = $this->accounts_obj($to);
@@ -524,9 +524,12 @@ class setup_cmd_ldap extends setup_cmd
 						$account['homedirectory'] = $GLOBALS['egw_info']['server']['ldap_account_home'] . '/' . $account['account_lid'];
 						$account['loginshell'] = $GLOBALS['egw_info']['server']['ldap_account_shell'];
 					}
-					$account['account_passwd'] = self::hash_sql2ldap($account['account_pwd']);
+					if (!empty($account['account_pwd']))
+					{
+						$account['account_passwd'] = self::hash_sql2ldap($account['account_pwd']);
+					}
 				}
-				else
+				elseif (!empty($account['account_pwd']))
 				{
 					$account['account_passwd'] = self::hash_ldap2sql($account['account_pwd']);
 				}
@@ -543,13 +546,18 @@ class setup_cmd_ldap extends setup_cmd
 				$accounts_created++;
 
 				// check if we need to migrate mail-account
-				if (!isset($ldap_class) && $this->account_repository !== 'ads')
+				if ($this->account_repository === 'ads')
+				{
+					$ldap_class = 'EGroupware\\Api\\Mail\\Smtp\\Ads';
+				}
+				elseif (!isset($ldap_class))
 				{
 					$ldap_class = false;
 					$ldap = Api\Ldap::factory(false);
 					foreach(array(	// todo: have these enumerated by emailadmin ...
 						'qmailUser' => 'EGroupware\\Api\\Mail\\Smtp\\Oldqmailuser',
 						'dbMailUser' => 'EGroupware\\Api\\Mail\\Smtp\\Dbmailuser',
+						'univentionMail' => 'EGroupware\\Api\\Mail\\Smtp\\Univention',
 						// nothing to migrate for inetOrgPerson ...
 					) as $object_class => $class)
 					{
@@ -583,7 +591,7 @@ class setup_cmd_ldap extends setup_cmd
 							$mailaccount['accountStatus'], $mailaccount['mailLocalAddress'],
 							$mailaccount['quotaLimit'], false, $mailaccount['mailMessageStore']);
 
-						$msg[] = lang("Mail account of %1 migraged", $account['account_lid']);
+						$msg[] = lang("Mail account of %1 migrated", $account['account_lid']);
 					}
 					//else echo "<p>No mail account data found for #$account_id $account[account_lid]!</p>\n";
 				}
