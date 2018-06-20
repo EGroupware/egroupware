@@ -1,14 +1,13 @@
 <?php
 /**
- * EGroupware Setup - Account migration between SQL <--> LDAP
+ * EGroupware Setup - Account migration between SQL <--> LDAP (incl. AD and Univention)
  *
- * The migration is done to the account-repository configured for EGroupware!
+ * The migration is done from the account-repository configured for EGroupware!
  *
  * @link http://www.egroupware.org
  * @package setup
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
