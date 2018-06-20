@@ -1392,7 +1392,6 @@ class calendar_uiforms extends calendar_ui
 		$vars = array(
 			'menuaction'      => 'mail.mail_compose.compose',
 			'mimeType'		  => $GLOBALS['egw_info']['user']['preferences']['mail']['composeOptions'] != 'text' ? 'html' : 'plain',
-			'preset[bcc]'      => $to,
 			'preset[subject]' => $event['title'],
 			'preset[body]'    => $body,
 			'preset[name]'    => 'event.ics',
@@ -1400,6 +1399,7 @@ class calendar_uiforms extends calendar_ui
 			'preset[type]'    => 'text/calendar'.($asrequest?'; method=REQUEST':''),
 			'preset[size]'    => filesize($ics_file),
 		);
+		$vars[$asrequest?'preset[to]': 'preset[bcc]'] = $to;
 		if ($asrequest) $vars['preset[msg]'] = lang('You attempt to mail a meetingrequest to the recipients above. Depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.');
 		$response = Api\Json\Response::get();
 		$response->call('app.calendar.custom_mail', $vars);
