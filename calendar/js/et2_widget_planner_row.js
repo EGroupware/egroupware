@@ -76,7 +76,9 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		this.set_label(this.options.label);
 		this._draw();
 
-		this._link_actions([]);
+		// Actions are set on the parent, so we need to explicitly get in here
+		// and get ours
+		this._link_actions(this._parent.options.actions || []);
 		return true;
 	},
 
@@ -306,11 +308,14 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 	_get_action_links: function(actions)
 	{
 		var action_links = [];
-		// TODO: determine which actions are allowed without an action (empty actions)
+
+		// Only these actions are allowed without a selection (empty actions)
+		var empty_actions = ['add'];
+		
 		for(var i in actions)
 		{
 			var action = actions[i];
-			if(action.type == 'drop')
+			if(empty_actions.indexOf(action.id) !== -1 || action.type == 'drop')
 			{
 				action_links.push(typeof action.id != 'undefined' ? action.id : i);
 			}
