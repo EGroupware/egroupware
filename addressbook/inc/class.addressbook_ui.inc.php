@@ -251,7 +251,6 @@ class addressbook_ui extends addressbook_bo
 				'is_parent'      => 'group_count',
 				'parent_id'      => 'parent_id',
 				'favorites'      => true,
-				'placeholder_actions' => array('add')
 			);
 
 			if ($do_email)
@@ -266,6 +265,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		$sel_options['cat_id'] = array('' => lang('All categories'), '0' => lang('None'));
 
+		$content['nm']['placeholder_actions'] = array('add');
 		// Edit and delete list actions depends on permissions
 		if($this->get_lists(Acl::EDIT))
 		{
