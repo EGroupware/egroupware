@@ -1456,12 +1456,36 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						_action.menu_context && _action.menu_context.event
 				)
 				{
-					// Context menu has position information
-					var date = _events[0].iface.getWidget()._get_time_from_position(_action.menu_context.event.offsetX, _action.menu_context.event.offsetY);
+					// Non-row space in planner
+					// Context menu has position information, but target is not what we expact
+					var target = jQuery('.calendar_plannerGrid',_action.menu_context.event.currentTarget);
+					var y = _action.menu_context.event.pageY - target.offset().top;
+					var x = _action.menu_context.event.pageX - target.offset().left;
+					var date = _events[0].iface.getWidget()._get_time_from_position(x, y);
 					if(date)
 					{
 						context.start = date.toJSON();
 					}
+				}
+				else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_calendar_planner_row))
+				{
+					// Empty space on a planner row
+					var widget = _events[0].iface.getWidget();
+					var parent = widget.getParent();
+					if(parent.options.group_by == 'month')
+					{
+						var date = parent._get_time_from_position(_action.menu_context.event.clientX, _action.menu_context.event.clientY);
+					}
+					else
+					{
+						var date = parent._get_time_from_position(_action.menu_context.event.offsetX, _action.menu_context.event.offsetY);
+					}
+					if(date)
+					{
+						context.start = date.toJSON();
+					}
+					jQuery.extend(context, widget.getDOMNode().dataset);
+
 				}
 				else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_valueWidget))
 				{

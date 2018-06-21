@@ -2211,7 +2211,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		var interval = egw.preference('interval','calendar') || 30;
 
 		// Relative horizontal position, as a percentage
-		var rel_x = Math.min(x / jQuery('.calendar_eventRows',this.div).width(),1);
+		var width = 0;
+		jQuery('.calendar_eventRows',this.div).each(function() {width = Math.max(width,jQuery(this).width());});
+		var rel_x = Math.min(x / width,1);
 
 		// Relative time, in minutes from start
 		var rel_time = 0;
