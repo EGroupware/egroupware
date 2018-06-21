@@ -247,7 +247,10 @@ app.classes.mail = AppJS.extend(
 
 				// Set autosaving interval to 2 minutes for compose message
 				this.W_INTERVALS.push(window.setInterval(function (){
-					that.saveAsDraft(null, 'autosaving');
+					if (jQuery('.ms-editor-wrap').length === 0)
+					{
+						that.saveAsDraft(null, 'autosaving');
+					}
 				}, 120000));
 
 				/* Control focus actions on subject to handle expanders properly.*/
