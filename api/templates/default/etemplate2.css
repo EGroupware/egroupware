@@ -1007,9 +1007,9 @@ ul.et2_link_string {
 	background-position: 0px -10px;
 	background-size: cover;
 	background-repeat: no-repeat;
-	margin: 2px 10px 0 2px;
+	margin: 2px 6px 0 2px;
 }
-.et2_taglist div.ms-sel-ctn span.ms-check-btn {margin: 2px 10px 0 10px;}
+.et2_taglist div.ms-sel-ctn span.ms-check-btn {margin: 2px 0px 0 6px;}
 .et2_taglist .ms-res-ctn {
 	position:absolute;
 	background: #FFF;
