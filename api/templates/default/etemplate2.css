@@ -7,7 +7,7 @@
  * Magic suggest / tag list widget
  */
 /* These imports processed by framework */
-/*@import url("../../js/jquery/magicsuggest/magicsuggest.css");*/
+/*@import url("../../../vendor/egroupware/magicsuggest/magicsuggest.css");*/
 /*@import url("../../js/jquery/jpicker/css/jPicker-1.1.6.min.css");*/
 /*@import url("../../js/jquery/jquery-ui-timepicker-addon.css");*/
 /*@import url("../../js/jquery/blueimp/css/blueimp-gallery.min.css");*/
@@ -1000,6 +1000,16 @@ ul.et2_link_string {
 	background-repeat: no-repeat;
 	margin: 2px -16px 0 10px;
 }
+.et2_taglist div.ms-sel-ctn .ms-edit-btn,
+.et2_taglist div.ms-sel-ctn .ms-check-btn{
+    width: 10px;
+    height: 10px;
+	background-position: 0px -10px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	margin: 2px 10px 0 2px;
+}
+.et2_taglist div.ms-sel-ctn span.ms-check-btn {margin: 2px 10px 0 10px;}
 .et2_taglist .ms-res-ctn {
 	position:absolute;
 	background: #FFF;

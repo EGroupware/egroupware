@@ -1155,7 +1155,9 @@ body {
 #mail-compose .mailComposeHeaders span.ms-close-btn,
 #mail-compose .mailComposeHeadersSection span.ms-close-btn,
 #mail-compose .mailComposeHeaders span.ms-edit-btn,
-#mail-compose .mailComposeHeadersSection span.ms-edit-btn {
+#mail-compose .mailComposeHeadersSection span.ms-edit-btn,
+#mail-compose .mailComposeHeaders span.ms-check-btn,
+#mail-compose .mailComposeHeadersSection span.ms-check-btn {
   padding-right: 0px;
 }
 #mail-compose .mailComposeHeaders div,

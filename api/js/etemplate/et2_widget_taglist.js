@@ -12,7 +12,7 @@
 
 /*egw:uses
 	et2_core_inputWidget;
-	/api/js/jquery/magicsuggest/magicsuggest.js;
+	/vendor/egroupware/magicsuggest/magicsuggest.js;
 */
 
 /**
@@ -127,6 +127,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			type: "integer",
 			default: 3,
 			description: "minimum number of characters before expanding the combo"
+		},
+		editModeEnabled: {
+			name: "Enable edit mode for tags",
+			type: "boolean",
+			"default": true,
+			description: "Allow to modify a tag by clicking on edit icon. It only can be enabled if only allowFreeEntries is true."
 		}
 	},
 
@@ -243,7 +249,8 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			highlight: false,	// otherwise renderer have to return strings
 			selectFirst: true,
 			groupBy: this.options.groupBy && typeof this.options.groupBy == 'string' ? this.options.groupBy : null,
-			minChars: parseInt(this.options.minChars) ? parseInt(this.options.minChars) : 0
+			minChars: parseInt(this.options.minChars) ? parseInt(this.options.minChars) : 0,
+			editModeEnabled: this.options.editModeEnabled
 		}, this.lib_options);
 
 		if(this.options.height) {
