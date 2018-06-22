@@ -553,7 +553,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			var wrapper = jQuery('<div>').addClass('et2_taglist_tags_icon_wrapper');
 			jQuery('<span/>')
 					.addClass('et2_taglist_tags_icon')
-					.css({"background-image": "url("+(item.icon.match(/^(http|https|\/)/) ? item.icon : egw.image(item.icon))+")"})
+					.css({"background-image": "url("+(item.icon.match(/^(http|https|\/)/) ? item.icon : egw.image(item.icon, item.app))+")"})
 					.appendTo(wrapper);
 			label.appendTo(wrapper);
 			return wrapper;
@@ -1239,7 +1239,7 @@ var et2_taglist_email = (function(){ "use strict"; return et2_taglist.extend(
 			var wrapper = jQuery('<div>').addClass('et2_taglist_tags_icon_wrapper');
 			jQuery('<span/>')
 					.addClass('et2_taglist_tags_icon')
-					.css({"background-image": "url("+(item.icon.match(/^(http|https|\/)/) ? item.icon : egw.image(item.icon))+")"})
+					.css({"background-image": "url("+(item.icon.match(/^(http|https|\/)/) ? item.icon : egw.image(item.icon, item.app))+")"})
 					.appendTo(wrapper);
 			label.appendTo(wrapper);
 			return wrapper;
