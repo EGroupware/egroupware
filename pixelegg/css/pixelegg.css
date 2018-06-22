@@ -3822,6 +3822,7 @@ td.lettersearch {
   line-height: 22pt;
   color: #b9436c;
   white-space: nowrap;
+  z-index: 999;
 }
 #egwpopup_fw_notifications .popup_note:before {
   content: '';
