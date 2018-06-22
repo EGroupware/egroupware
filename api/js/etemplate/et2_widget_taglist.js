@@ -548,7 +548,16 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 	{
 		var label = jQuery('<span>').text(item.label);
 		if (typeof item.title != 'undefined') label.attr('title', item.title);
-
+		if (typeof item.icon != 'undefined')
+		{
+			var wrapper = jQuery('<div>').addClass('et2_taglist_tags_icon_wrapper');
+			jQuery('<span/>')
+					.addClass('et2_taglist_tags_icon')
+					.css({"background-image": "url("+(item.icon.match(/^(http|https|\/)/) ? item.icon : egw.image(item.icon))+")"})
+					.appendTo(wrapper);
+			label.appendTo(wrapper);
+			return wrapper;
+		}
 		return label;
 	},
 
@@ -1225,7 +1234,16 @@ var et2_taglist_email = (function(){ "use strict"; return et2_taglist.extend(
 			},this),1);
 			return null;
 		}
-
+		if (typeof item.icon != 'undefined' && item.icon)
+		{
+			var wrapper = jQuery('<div>').addClass('et2_taglist_tags_icon_wrapper');
+			jQuery('<span/>')
+					.addClass('et2_taglist_tags_icon')
+					.css({"background-image": "url("+(item.icon.match(/^(http|https|\/)/) ? item.icon : egw.image(item.icon))+")"})
+					.appendTo(wrapper);
+			label.appendTo(wrapper);
+			return wrapper;
+		}
 		return label;
 	}
 });}).call(this);
