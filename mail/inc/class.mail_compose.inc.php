@@ -3549,8 +3549,8 @@ class mail_compose
 			$search_str = implode(' +', $search);	// tell contacts/so_sql to AND search patterns
 			//error_log(__METHOD__.__LINE__.$_searchString);
 			$filter = $showAccounts ? array() : array('account_id' => null);
-			$filter['cols_to_search'] = array('n_prefix','n_given','n_family','org_name','email','email_home');
-			$cols = array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home');
+			$filter['cols_to_search'] = array('n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id', 'etag');
+			$cols = array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id', 'etag');
 			$contacts = $contacts_obj->search($search_str, $cols, 'n_fn', '', '%', false, 'OR', array(0,100), $filter);
 			// additionally search the accounts, if the contact storage is not the account storage
 			if ($showAccounts && $contacts_obj->so_accounts)
@@ -3609,7 +3609,12 @@ class mail_compose
 							'label' => $completeMailString,
 							// Add just name for nice display, with title for hover
 							'name' => $contact['n_fn'],
-							'title' => $email
+							'title' => $email,
+							'icon' => Egw::link('/index.php', array(
+								'menuaction' => 'addressbook.addressbook_ui.photo',
+								'contact_id' => $contact['id'],
+								'etag' => $contact['etag']
+							))
 						 );
 					}
 				}
