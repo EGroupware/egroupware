@@ -112,7 +112,7 @@ class mail_compose
 	 *
 	 * @return array an array of actions
 	 */
-	function getToolbarActions($content)
+	static function getToolbarActions($content)
 	{
 		$group = 0;
 		$actions = array(
@@ -215,7 +215,7 @@ class mail_compose
 			),
 
 		);
-		$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
+		$acc_smime = Mail\Smime::get_acc_smime($content['mailaccount']);
 		if ($acc_smime['acc_smime_password'])
 		{
 			$actions = array_merge($actions, array(
@@ -1274,7 +1274,7 @@ class mail_compose
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new Etemplate('mail.compose');
 
-		$etpl->setElementAttribute('composeToolbar', 'actions', $this->getToolbarActions($_content));
+		$etpl->setElementAttribute('composeToolbar', 'actions', self::getToolbarActions($content));
 		if ($content['mimeType']=='html')
 		{
 			//mode="$cont[rtfEditorFeatures]" validation_rules="$cont[validation_rules]" base_href="$cont[upload_dir]"

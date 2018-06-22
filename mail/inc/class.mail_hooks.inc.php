@@ -181,6 +181,44 @@ class mail_hooks
 		// modify folderlist, add a none entry, to be able to force the regarding settings, if no folders apply
 		$folderList['none'] = lang('no folders');
 
+		// Build toogled on actions sel options
+		$allActions = array_merge(mail_compose::getToolbarActions(array(
+			'priority' => true,
+			'mailaccount' => $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']
+		)));
+		$toggledOnActions = array (
+			'mail_compose.cc_expander' => array (
+				'id' => 'mail_compose.cc_expander',
+				'label' => lang('Cc'),
+			),
+			'mail_compose.bcc_expander' => array (
+				'id' => 'mail_compose.bcc_expander',
+				'label' => lang('Bcc')
+			),
+			'mail_compose.folder_expander' => array(
+				'id' => 'mail_compose.folder_expander',
+				'label' => lang('Folder')
+			),
+			'mail_compose.replyto_expander' => array(
+				'id' => 'mail_compose.replyto_expander',
+				'label' => lang('Reply to')
+			)
+		);
+
+		foreach($allActions as $name => $action)
+		{
+			if ($action['checkbox'])
+			{
+				$toggledOnActions['mail_compose.'.$name] = array(
+					'id' => 'mail_compose.'.$name,
+					'label' => lang($action['caption']),
+					'title' => lang($action['hint']),
+					'icon' => $action['icon'],
+					'app' => 'mail'
+				);
+			}
+		}
+
 		/* Settings array for this app */
 		$settingsArray = array(
 			array(
@@ -368,6 +406,13 @@ class mail_hooks
 				),
 				'default' => 'vertical'
 			),
+			'toggledOnActions' => array(
+				'type' => 'taglist',
+				'label' => 'Toggled on actions',
+				'help' => 'List of actions to be switched/activated on by default',
+				'name' => 'toggledOnActions',
+				'values' => $toggledOnActions
+			)
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
 		return $settingsArray;
