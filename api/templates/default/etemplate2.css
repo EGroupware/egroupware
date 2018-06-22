@@ -1097,6 +1097,18 @@ ul.et2_link_string {
 .et2_taglist, .et2_taglist > div.ms-ctn  {
 	min-height: 23px;
 }
+.et2_taglist .et2_taglist_tags_icon {
+	height: 16px;
+    width: 16px;
+    display: inline-block;
+    padding-right: 3px;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    vertical-align: text-top;
+}
+.et2_taglist .et2_taglist_tags_icon_wrapper {
+	display: inline;
+}
 .et2_taglist_thumbnail {
 	overflow-y: hidden;
 }
