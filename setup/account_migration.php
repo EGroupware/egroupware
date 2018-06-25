@@ -45,7 +45,8 @@ if (!is_object($GLOBALS['egw_setup']->db))
 }
 // Load configuration values account_repository and auth_type, as setup has not yet done so
 foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',
-	"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR config_name='auth_type' OR config_name='mail_suffix' OR config_name LIKE 'ads_%'",
+	"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR ".
+	"config_name IN ('auth_type','install_id','mail_suffix') OR config_name LIKE 'ads_%'",
 	__LINE__,__FILE__) as $row)
 {
 	$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
@@ -58,7 +59,7 @@ if (!$from && !($from = $GLOBALS['egw_info']['server']['auth_type']))
 $to = $from == 'sql' ? 'ldap' : 'sql';
 
 // for Univention: cant check /etc/lsb-release, because it's not in open_basedir!
-if ($to == 'ldap' && @file_exists('/usr/share/univention-directory-manager-tools'))
+if ($to == 'ldap' && Api\Accounts\Univention::available())
 {
 	$to = 'univention';
 }
@@ -154,6 +155,9 @@ if (!$_POST['migrate'] && !$_POST['passwords2sql'])
 }
 else	// do the migration
 {
+	// switching off execution time limit, as migration can take quite some time
+	@set_time_limit(0);
+
 	$cmd->only = (array)$_POST['users'];
 	if (empty($_POST['passwords2sql'])) $cmd->only = array_merge($cmd->only, (array)$_POST['groups']);
 	$cmd->verbose = true;
@@ -163,6 +167,7 @@ else	// do the migration
 	if ($_POST['migrate'])
 	{
 		Api\Config::save_value('account_repository', $GLOBALS['egw_info']['server']['account_repository']=$to, 'phpgwapi');
+		if ($to == 'univention') $to = 'ldap';	// there is no auth type "univention", just "ldap"
 		if (empty($GLOBALS['egw_info']['server']['auth_type']) || $GLOBALS['egw_info']['server']['auth_type'] == $from)
 		{
 			Api\Config::save_value('auth_type', $GLOBALS['egw_info']['server']['auth_type']=$to, 'phpgwapi');
