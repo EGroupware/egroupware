@@ -6115,7 +6115,7 @@ app.classes.mail = AppJS.extend(
 			actions = actions.split(',');
 			for (var i=0; i < actions.length; i++)
 			{
-				if (toolbar.options.actions[actions[i]])
+				if (toolbar && toolbar.options.actions[actions[i]])
 				{
 					var $d = jQuery('#composeToolbar-'+actions[i]);
 					if ($d.length > 0
