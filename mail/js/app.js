@@ -350,6 +350,7 @@ app.classes.mail = AppJS.extend(
 				this.mail_currentlyFocussed = this.et2.mail_currentlyFocussed;
 
 		}
+		this.preSetToggledOnActions ();
 	},
 
 	/**
@@ -6100,5 +6101,39 @@ app.classes.mail = AppJS.extend(
 			template: egw.webserverUrl+'/mail/templates/default/modifyMessageSubjectDialog.xet?1',
 			resizable: false
 		}, et2_dialog._create_parent('mail'));
+	},
+
+	/**
+	 * Pre set toggled actions
+	 */
+	preSetToggledOnActions: function ()
+	{
+		var actions = egw.preference('toggledOnActions', 'mail');
+		var toolbar = this.et2.getWidgetById('composeToolbar');
+		if (actions)
+		{
+			actions = actions.split(',');
+			for (var i=0; i < actions.length; i++)
+			{
+				if (toolbar.options.actions[actions[i]])
+				{
+					var $d = jQuery('#composeToolbar-'+actions[i]);
+					if ($d.length > 0
+							&& toolbar._actionManager.getActionById(actions[i]).checkbox
+							&& !toolbar._actionManager.getActionById(actions[i]).checked)
+					{
+						$d.trigger('click');
+					}
+				}
+				else
+				{
+					var widget = this.et2.getWidgetById(actions[i]);
+					if (widget)
+					{
+						jQuery(widget.getDOMNode()).trigger('click');
+					}
+				}
+			}
+		}
 	}
 });

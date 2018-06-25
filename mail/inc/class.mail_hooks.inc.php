@@ -182,25 +182,25 @@ class mail_hooks
 		$folderList['none'] = lang('no folders');
 
 		// Build toogled on actions sel options
-		$allActions = array_merge(mail_compose::getToolbarActions(array(
+		$allActions = mail_compose::getToolbarActions(array(
 			'priority' => true,
 			'mailaccount' => $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']
-		)));
+		));
 		$toggledOnActions = array (
-			'mail_compose.cc_expander' => array (
-				'id' => 'mail_compose.cc_expander',
+			'cc_expander' => array (
+				'id' => 'cc_expander',
 				'label' => lang('Cc'),
 			),
-			'mail_compose.bcc_expander' => array (
-				'id' => 'mail_compose.bcc_expander',
+			'bcc_expander' => array (
+				'id' => 'bcc_expander',
 				'label' => lang('Bcc')
 			),
-			'mail_compose.folder_expander' => array(
-				'id' => 'mail_compose.folder_expander',
+			'folder_expander' => array(
+				'id' => 'folder_expander',
 				'label' => lang('Folder')
 			),
-			'mail_compose.replyto_expander' => array(
-				'id' => 'mail_compose.replyto_expander',
+			'replyto_expander' => array(
+				'id' => 'replyto_expander',
 				'label' => lang('Reply to')
 			)
 		);
@@ -209,8 +209,8 @@ class mail_hooks
 		{
 			if ($action['checkbox'])
 			{
-				$toggledOnActions['mail_compose.'.$name] = array(
-					'id' => 'mail_compose.'.$name,
+				$toggledOnActions[$name] = array(
+					'id' => $name,
 					'label' => lang($action['caption']),
 					'title' => lang($action['hint']),
 					'icon' => $action['icon'],
