@@ -23,7 +23,7 @@ use EGroupware\Api\Acl;
  */
 class addressbook_bo extends Api\Contacts
 {
-	static public $pgp_key_regexp = '/-----BEGIN PGP PUBLIC KEY BLOCK-----.*-----END PGP PUBLIC KEY BLOCK-----\r?\n/s';
+	static public $pgp_key_regexp = '/-----BEGIN PGP PUBLIC KEY BLOCK-----.*-----END PGP PUBLIC KEY BLOCK-----\r?\n?/s';
 
 	/**
 	 * Search addressbook for PGP public keys of given recipients
