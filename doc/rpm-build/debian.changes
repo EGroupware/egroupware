@@ -1,3 +1,35 @@
+egroupware-epl (17.1.20180625) hardy; urgency=low
+
+  * Addressbook: fix SMime/PGP public key import not containing a newline after the key
+  * Addressbook: Fix incorrect validation error from contact owner when editing import definition
+  * Addressbook: Disable merge contacts action if more than one account is selected
+  * Infolog: Provide duration, pricelist & unit price when creating a timesheet
+  * Calendar: add context menu actions for email & documents to non-list views
+  * Calendar: fix event positioning bug in yearly planner view
+  * Calendar: Mail all participants action now uses BCC instead of TO
+  * Calendar: reset the default alarm if you switch an existing whole day event to duration
+  * Calendar: Add preference to update calendar view immediately when navigation calendar in sidebox is changed
+  * Calendar: fix week header rendering problem in some languages
+  * Calendar: fix SQL error during purge caused by droped SyncML support
+  * Calendar: Open timesheet from recurring event on selected occurence instead of first occurence
+  * Calendar: Move some general preferences into a new tab "Configuration"
+  * Mail: fix from address in mobile template
+  * Mail: avoid javascript error blocking context menu from SpamTitan check when row data not found
+  * Mail: warn user when there's no space left for storing sieve rules because of sieve_maxscriptsize limit
+  * Api: Clear recipients between merges to avoid sending subsequent merges to previous contacts
+  * Admin: allow to show last login, IP and password change in list
+  * Admin: Implement new feature to upload multiple images for login background image in site-configuration and show them randomly.
+  * Admin: fix bulk password reset to work on minimal install / no longer require old phpgwapi
+  * Import/Export: fix only global categories available for export filtering, no app categories
+  * Tracker: disable first notification for a new ticket if auto-reply has an introduction message
+  * Tracker/API: change description, replies and history-log to longtext (was text=64k)
+  * Tracker: when copying a ticket, if user does not have permission to change the creator the copying user is used instead of the original ticket creator
+  * Projectmanager: Make project title a link to element list
+  * Timesheet: Fix general price list items unavailable after clicking 'Save & New'
+  * News: Fix NaN in nextmatch total if there are no news categories
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 25 Jun 2018 14:47:53 +0200
+
 egroupware-epl (17.1.20180523) hardy; urgency=low
 
   * Setup/Filemanager: fix excess looping stalling update from before 16.1
