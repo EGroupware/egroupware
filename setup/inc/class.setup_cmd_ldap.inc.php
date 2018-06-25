@@ -50,6 +50,12 @@ use EGroupware\Api;
  * 	ldap_context=ou=accounts,dc=local ldap_root_dn=cn=admin,dc=local ldap_root_pw=secret ldap_host=localhost
  *
  * - updating passwords for existing users in SQL from LDAP, eg. to switch off authentication to LDAP on a SQL install.
+ *
+ * - migrate whole domain from AD to Univention:
+ *   1. migrate from AD --> SQL including mail-attributes
+ *   2. optionaly fix user-names etc in SQL
+ *   3. migrate from SQL --> Univention (make sure NOT to select existing users like "join-backup/slaves"
+ *      and delete "anonymous" user from EGroupware App install in UCS)
  */
 class setup_cmd_ldap extends setup_cmd
 {
@@ -517,6 +523,19 @@ class setup_cmd_ldap extends setup_cmd
 					$errors++;
 					continue;
 				}
+				if ($accounts_obj->exists($account['account_lid']))
+				{
+					$msg[] = lang('%1 already exists in %2.',
+						lang('User').' '.$account['account_lid'].' ('.$account_id.')', $target);
+					$errors++;
+					continue;
+				}
+				if ($to == 'univention' && in_array($account['account_lid'], array('root')))
+				{
+					$msg[] = lang('%1 not allowed to create in Univention.', $what);
+					$errors++;
+					continue;
+				}
 				if ($to != 'sql')
 				{
 					if ($GLOBALS['egw_info']['server']['ldap_extra_attributes'])
@@ -668,7 +687,7 @@ class setup_cmd_ldap extends setup_cmd
 		$addressbook = new Api\Contacts\Storage();
 		foreach($this->as_array() as $name => $value)
 		{
-			if (substr($name, 5) == 'ldap_')
+			if (substr($name, 5) == 'ldap_' || substr($name, 4) == 'ads_')
 			{
 				$GLOBALS['egw_info']['server'][$name] = $value;
 			}
