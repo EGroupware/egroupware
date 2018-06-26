@@ -611,59 +611,60 @@ class calendar_boupdate extends calendar_bo
 		//
 		$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE || $msg_type == MSG_DELEGATED;
 
-		switch($ru = $part_prefs['calendar']['receive_updates'])
+		// always notify externals chairs
+		// EGroupware owner only get notified about responses, if pref is NOT "no"
+		if (!is_numeric($userid) && $role == 'CHAIR' &&
+			($msg_is_response || in_array($msg_type, array(MSG_ADDED, MSG_DELETED))))
 		{
-			case 'responses':
-				++$want_update;
-			case 'modifications':
-				if (!$msg_is_response)
-				{
+			switch($msg_type)
+			{
+				case MSG_DELETED:	// treat deleting event as rejection to organizer
+					$msg_type = MSG_REJECTED;
+					break;
+				case MSG_ADDED:		// new events use added, but organizer needs status
+					switch($status[0])
+					{
+						case 'A': $msg_type = MSG_ACCEPTED; break;
+						case 'R': $msg_type = MSG_REJECTED; break;
+						case 'T': $msg_type = MSG_TENTATIVE; break;
+						case 'D': $msg_type = MSG_DELEGATED; break;
+					}
+					break;
+			}
+			++$want_update;
+		}
+		else
+		{
+			switch($ru = $part_prefs['calendar']['receive_updates'])
+			{
+				case 'responses':
 					++$want_update;
-				}
-			case 'time_change_4h':
-			case 'time_change':
-			default:
-				if (is_array($new_event) && is_array($old_event))
-				{
-					$diff = max(abs(self::date2ts($old_event['start'])-self::date2ts($new_event['start'])),
-						abs(self::date2ts($old_event['end'])-self::date2ts($new_event['end'])));
-					$check = $ru == 'time_change_4h' ? 4 * 60 * 60 - 1 : 0;
-					if ($msg_type == MSG_MODIFIED && $diff > $check)
+				case 'modifications':
+					if (!$msg_is_response)
 					{
 						++$want_update;
 					}
-				}
-			case 'add_cancel':
-				if ($msg_is_response && ($old_event['owner'] == $userid || $role == 'CHAIR') ||
-					$msg_type == MSG_DELETED || $msg_type == MSG_ADDED || $msg_type == MSG_DISINVITE)
-				{
-					++$want_update;
-				}
-				break;
-			case 'no':
-				// always notify externals chairs
-				// EGroupware owner only get notified about responses, if pref is NOT "no"
-				if (!is_numeric($userid) && $role == 'CHAIR' &&
-					($msg_is_response || in_array($msg_type, array(MSG_ADDED, MSG_DELETED))))
-				{
-					switch($msg_type)
+				case 'time_change_4h':
+				case 'time_change':
+				default:
+					if (is_array($new_event) && is_array($old_event))
 					{
-						case MSG_DELETED:	// treat deleting event as rejection to organizer
-							$msg_type = MSG_REJECTED;
-							break;
-						case MSG_ADDED:		// new events use added, but organizer needs status
-							switch($status[0])
-							{
-								case 'A': $msg_type = MSG_ACCEPTED; break;
-								case 'R': $msg_type = MSG_REJECTED; break;
-								case 'T': $msg_type = MSG_TENTATIVE; break;
-								case 'D': $msg_type = MSG_DELEGATED; break;
-							}
-							break;
+						$diff = max(abs(self::date2ts($old_event['start'])-self::date2ts($new_event['start'])),
+							abs(self::date2ts($old_event['end'])-self::date2ts($new_event['end'])));
+						$check = $ru == 'time_change_4h' ? 4 * 60 * 60 - 1 : 0;
+						if ($msg_type == MSG_MODIFIED && $diff > $check)
+						{
+							++$want_update;
+						}
 					}
-					++$want_update;
-				}
-				break;
+				case 'add_cancel':
+					if ($msg_is_response && ($old_event['owner'] == $userid || $role == 'CHAIR') ||
+						$msg_type == MSG_DELETED || $msg_type == MSG_ADDED || $msg_type == MSG_DISINVITE)
+					{
+						++$want_update;
+					}
+					break;
+			}
 		}
 		//error_log(__METHOD__."(userid=$userid, receive_updates='$ru', msg_type=$msg_type, ..., role='$role') msg_is_response=$msg_is_response --> want_update=$want_update");
 		return $want_update > 0;
@@ -850,6 +851,28 @@ class calendar_boupdate extends calendar_bo
 						$to_notify[$member] = 'G';	// Group-invitation
 					}
 				}
+			}
+		}
+		// unless we notfiy externals about everything aka 'responses'
+		// we will notify only an external chair, if only one exists
+		if ($GLOBALS['egw_info']['user']['calendar']['notify_externals'] !== 'responses')
+		{
+			// check if we have *only* an external chair
+			$chair = null;
+			foreach($to_notify as $userid => $statusid)
+			{
+				$res_info = $quantity = $role = null;
+				calendar_so::split_status($statusid, $quantity, $role);
+				if ($role == 'CHAIR' && (empty($chair) || !is_numeric($chair)))
+				{
+					$chair = $userid;
+				}
+			}
+			// *only* an external chair --> do not notify anyone, but the external chair and the current user
+			if (!empty($chair) && !is_numeric($chair))
+			{
+				$to_notify = array($chair => $to_notify[$chair])+
+					(isset($to_notify[$user]) ? array($user => $to_notify[$user]) : array());
 			}
 		}
 		$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
