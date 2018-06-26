@@ -3216,10 +3216,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		$calendar_part = null;
 		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, $structure, false, $mailbox, $calendar_part);
-		if (!$smime)
-		{
-			Api\Session::cache_control(true);
-		}
+
 		// for meeting requests (multipart alternative with text/calendar part) let calendar render it
 		if ($calendar_part && isset($GLOBALS['egw_info']['user']['apps']['calendar']))
 		{
@@ -3235,6 +3232,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			return ExecMethod('calendar.calendar_uiforms.meeting',
 				array('event'=>null,'msg'=>'','useSession'=>true)
 			);
+		}
+		if (!$smime)
+		{
+			Api\Session::cache_control(true);
 		}
 		// Compose the content of the frame
 		$frameHtml =
