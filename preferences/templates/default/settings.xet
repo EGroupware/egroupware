@@ -15,7 +15,7 @@
 						<description for="@${row}[name]" id="${row}[label]"/>
 					</box>
 					<box class="prefValueColumn">
-						<widget type="@${row}[type]" id="@${row}[name]" onchange="@${row}[onchange]" no_lang="1" class="prefValue"/>
+						<widget type="@${row}[type]" id="@${row}[name]" onchange="@${row}[onchange]" no_lang="1" class="prefValue" attributes="@${row}[attributes]"/>
 						<description id="${row}[default]" no_lang="1" class="prefDefault"/>
 					</box>
 					<box class="prefHelpColumn">

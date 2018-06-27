@@ -451,6 +451,7 @@ class preferences_settings
 				'help' => lang($setting['help']),	// is html
 				'default' => (string)$default !== '' ? lang('Default').': '.$default : null,
 				'onchange' => $setting['onchange'],
+				'attributes' => $setting['attributes']
 			);
 			//error_log("appname=$appname, attribute=$attribute, setting=".array2string($setting));
 			$content[$tab][$setting['name']] = $GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']];
