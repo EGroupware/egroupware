@@ -1932,7 +1932,21 @@ class calendar_boupdate extends calendar_bo
 		if (isset($event['participants']) && is_array($event['participants']) && !empty($event['participants']))
 		{
 			$participants = $this->participants($event,true);
+
+			// fix external organiser to not be included as participant and shown as organiser
+			foreach($event['participants'] as $uid => $status)
+			{
+				$role = $quantity = null;
+				calendar_so::split_status($status, $quantity, $role);
+				if ($role == 'CHAIR' && $status == 'D' && !is_numeric($uid))
+				{
+					$var['owner']['data'] = $this->participant_name($uid);
+					unset($participants[$uid]);
+					break;
+				}
+			}
 		}
+
 		$var['participants'] = Array(
 			'field'	=> lang('Participants'),
 			'data'	=> $participants
