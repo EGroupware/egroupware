@@ -180,7 +180,7 @@ class notifications_ajax {
 				'account_id' => $this->recipient->account_id,
 				'notify_type' => self::_type
 			),
-			__LINE__,__FILE__,0 ,'ORDER BY notify_id DESC',self::_appname, 10);
+			__LINE__,__FILE__,0 ,'ORDER BY notify_id DESC',self::_appname, 100);
 		$result = array();
 		if ($rs->NumRows() > 0)	{
 			foreach ($rs as $notification) {
