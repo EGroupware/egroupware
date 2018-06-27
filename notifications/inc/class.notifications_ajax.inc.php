@@ -186,7 +186,7 @@ class notifications_ajax {
 			foreach ($rs as $notification) {
 				$actions = null;
 				$data = json_decode($notification['notify_data'], true);
-				if ($data['appname'])
+				if ($data['appname'] && $data['data'])
 				{
 					$_actions = Api\Hooks::process (array(
 						'location' => 'notifications_actions',
