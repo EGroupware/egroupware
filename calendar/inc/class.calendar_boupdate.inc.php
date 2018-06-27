@@ -1986,10 +1986,10 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param array $event
 	 * @param array $old_event
-	 * @param Api\DateTime $instance_date For recurring events, this is the date we
+	 * @param Api\DateTime|int|null $instance_date For recurring events, this is the date we
 	 *	are dealing with
 	 */
-	function check_move_alarms(Array &$event, Array $old_event = null, Api\DateTime $instance_date = null)
+	function check_move_alarms(Array &$event, Array $old_event = null, $instance_date = null)
 	{
 		if ($old_event !== null && $event['start'] == $old_event['start']) return;
 
@@ -1999,11 +1999,20 @@ class calendar_boupdate extends calendar_bo
 			$event['alarm'] = $this->so->read_alarms($event['id']);
 		}
 
+		if (is_object($instance_date))
+		{
+			if (!is_a($instance_date, 'EGroupware\\Api\\DateTime'))
+			{
+				throw new Api\Exception\WrongParameter('$instance_date must be integer or Api\DateTime!');
+			}
+			$instance_date = $instance_date->format('ts');
+		}
+
 		foreach($event['alarm'] as &$alarm)
 		{
-			if($event['recur_type'] != MCAL_RECUR_NONE && is_object($instance_date))
+			if($event['recur_type'] != MCAL_RECUR_NONE && $instance_date)
 			{
-				calendar_so::shift_alarm($event, $alarm, $instance_date->format('ts'));
+				calendar_so::shift_alarm($event, $alarm, $instance_date);
 			}
 			else if ($alarm['time'] !== $time->format('ts') - $alarm['offset'])
 			{

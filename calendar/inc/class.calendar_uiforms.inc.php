@@ -1991,7 +1991,8 @@ class calendar_uiforms extends calendar_ui
 			// convert event from servertime returned by calendar_ical to user-time
 			$this->bo->server2usertime($event);
 
-			if (($existing_event = $this->bo->read($event['uid'])) && !$existing_event['deleted'])
+			if (($existing_event = $this->bo->read($event['uid'], $event['recurrence'], false, 'ts', null, true)) && // true = read the exception
+				!$existing_event['deleted'])
 			{
 				switch(strtolower($ical_method))
 				{
@@ -2113,23 +2114,72 @@ class calendar_uiforms extends calendar_ui
 							break;
 						}
 					}
-					// set status and send notification / meeting response
-					if ($this->bo->set_status($event['id'], $user, $status))
+					// do we need to update the event itself
+					elseif (self::event_changed($event, $event['old']))
 					{
-						if (!$msg) $msg = lang('Status changed');
+						// check if we are allowed to update the event
+						if($this->bo->check_perms(Acl::EDIT, $event['old']))
+						{
+							if ($event['recurrence'] && !$event['old']['reference'] && ($recur_event = $this->bo->read($event['id'])))
+							{
+								// first we need to add the exception to the recurrence master
+								$recur_event['recur_exception'][] = $event['recurrence'];
+								// check if we need to move the alarms, because they are next on that exception
+								$this->bo->check_move_alarms($recur_event, null, $event['recurrence']);
+								unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
+								unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
+								$this->bo->update($recur_event, $ignore_conflicts=true, true, false, true, $msg, true);
+
+								// then we need to create the exception as new event
+								unset($event['id']);
+								$event['reference'] = $event['old']['id'];
+								$event['caldav_name'] = $event['old']['caldav_name'];
+							}
+							else
+							{
+								// keep all EGroupware only values of existing events plus alarms
+								unset($event['alarm']);
+								$event = array_merge($event['old'], $event);
+							}
+							unset($event['old']);
+
+							if (($event['id'] = $this->bo->update($event, $ignore_conflicts=true, true, false, true, $msg, true)))
+							{
+								$msg[] = lang('Event saved');
+							}
+							else
+							{
+								$msg[] = lang('Error saving the event!');
+								break;
+							}
+						}
+						else
+						{
+							$event['id'] = $event['old']['id'];
+							$msg[] = lang('Not enough rights to update the event!');
+						}
+					}
+					else
+					{
+						$event['id'] = $event['old']['id'];
+					}
+					// set status and send notification / meeting response
+					if ($this->bo->set_status($event['id'], $user, $status, $event['recurrence']))
+					{
+						$msg[] = lang('Status changed');
 					}
 					break;
 
 				case 'apply':
 					// set status and send notification / meeting response
-					if ($this->bo->set_status($event['id'], $event['ical_sender_uid'], $event['ical_sender_status']))
+					if ($this->bo->set_status($event['id'], $event['ical_sender_uid'], $event['ical_sender_status'], $event['recurrence']))
 					{
 						$msg = lang('Status changed');
 					}
 					break;
 
 				case 'cancel':
-					if ($event['id'] && $this->bo->set_status($event['id'], $user, 'R'))
+					if ($event['id'] && $this->bo->set_status($event['id'], $user, 'R', $event['recurrence']))
 					{
 						$msg = lang('Status changed');
 					}
@@ -2155,7 +2205,29 @@ class calendar_uiforms extends calendar_ui
 				break;
 		}
 		$tpl = new Etemplate('calendar.meeting');
-		$tpl->exec('calendar.calendar_uiforms.meeting', $event, array(), $readonlys, $event, 2);
+		$tpl->exec('calendar.calendar_uiforms.meeting', $event, array(), $readonlys, $event+array(
+			'old' => $existing_event,
+		), 2);
+	}
+
+	/**
+	 * Check if an event changed and need to be updated
+	 *
+	 * @param array $_a
+	 * @param array $_b
+	 * @return boolean true if there are some changes, false if not
+	 */
+	function event_changed($_a, $_b)
+	{
+		static $keys_to_check = array('start', 'end', 'title', 'description', 'location', 'participants',
+			'recur_type', 'recur_data', 'recur_interval', 'recur_exception');
+
+		$a = array_intersect_key($_a, array_flip($keys_to_check));
+		$b = array_intersect_key($_b, array_flip($keys_to_check));
+
+		$ret = $a != $b;
+		error_log(__METHOD__."() returning ".array2string($ret)." diff=".array2string(array_diff_key($a, $b)));
+		return $ret;
 	}
 
 	/**
