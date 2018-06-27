@@ -152,6 +152,16 @@ var et2_widget = (function(){ "use strict"; return ClassWithAttributes.extend(
 		 */
 		"readonly": {
 			"ignore": true
+		},
+
+		/**
+		 * Widget's attributes
+		 */
+		attributes: {
+			"name": "Widget attributes",
+			"type": "any",
+			"ignore": true,
+			"description": "Object of widget attributes"
 		}
 	},
 
@@ -188,6 +198,10 @@ var et2_widget = (function(){ "use strict"; return ClassWithAttributes.extend(
 			_attrs = {};
 		}
 
+		if (_attrs.attributes)
+		{
+			jQuery.extend(_attrs, _attrs.attributes);
+		}
 		// Initialize all important parameters
 		this._mgrs = {};
 		this._inst = null;

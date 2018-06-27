@@ -411,7 +411,14 @@ class mail_hooks
 				'label' => 'Toggled on actions',
 				'help' => 'List of actions to be switched/activated on by default',
 				'name' => 'toggledOnActions',
-				'values' => $toggledOnActions
+				'values' => '',
+				'attributes' => array(
+					'allowFreeEntries' => false,
+					//'multiple' => 'toggle',
+					'editModeEnabled' => false,
+					'autocomplete_url' => ' ',
+					'select_options' => $toggledOnActions
+				)
 			)
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
