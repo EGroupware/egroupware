@@ -369,7 +369,7 @@ class calendar_uiforms extends calendar_ui
 				'offset' => $offset ,
 				'time'   => $content['start'] - $offset,
 				'all'    => false,
-				'owner'  => $owner,
+				'owner'  => 0,
 				'id'	=> 1
 			));
 		}
@@ -547,6 +547,7 @@ class calendar_uiforms extends calendar_ui
 								if ($data['old_status'] != $status && !(!$data['old_status'] && $status == 'G'))
 								{
 									//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
+									$quantity = $role = null;
 									$new_status = calendar_so::combine_status($status, $quantity, $role);
 									if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0, false, true, $content['no_notifications']))
 									{
@@ -1320,6 +1321,7 @@ class calendar_uiforms extends calendar_ui
 			if (empty($status)) continue;
 			if(!is_array($status))
 			{
+				$quantity = $role = null;
 				calendar_so::split_status($status,$quantity,$role);
 				$status = array(
 					'status' => $status,
