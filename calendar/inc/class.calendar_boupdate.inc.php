@@ -79,7 +79,7 @@ class calendar_boupdate extends calendar_bo
 	 * @var array id => data
 	 */
 	protected static $tz_cache = array();
-	
+
 	/**
 	 * The resources storage object
 	 * @var resources_so $resources_so
@@ -94,7 +94,7 @@ class calendar_boupdate extends calendar_bo
 		if ($this->debug > 0) $this->debug_message('calendar_boupdate::__construct() started',True);
 
 		parent::__construct();	// calling the parent constructor
-		
+
 		$this->resources_so = new resources_so();
 
 		if ($this->debug > 0) $this->debug_message('calendar_boupdate::__construct() finished',True);
@@ -1941,7 +1941,21 @@ class calendar_boupdate extends calendar_bo
 		if (isset($event['participants']) && is_array($event['participants']) && !empty($event['participants']))
 		{
 			$participants = $this->participants($event,true);
+
+			// fix external organiser to not be included as participant and shown as organiser
+			foreach($event['participants'] as $uid => $status)
+			{
+				$role = $quantity = null;
+				calendar_so::split_status($status, $quantity, $role);
+				if ($role == 'CHAIR' && $status == 'D' && !is_numeric($uid))
+				{
+					$var['owner']['data'] = $this->participant_name($uid);
+					unset($participants[$uid]);
+					break;
+				}
+			}
 		}
+
 		$var['participants'] = Array(
 			'field'	=> lang('Participants'),
 			'data'	=> $participants
