@@ -79,6 +79,12 @@ class calendar_boupdate extends calendar_bo
 	 * @var array id => data
 	 */
 	protected static $tz_cache = array();
+	
+	/**
+	 * The resources storage object
+	 * @var resources_so $resources_so
+	 */
+	protected $resources_so;
 
 	/**
 	 * Constructor
@@ -88,6 +94,8 @@ class calendar_boupdate extends calendar_bo
 		if ($this->debug > 0) $this->debug_message('calendar_boupdate::__construct() started',True);
 
 		parent::__construct();	// calling the parent constructor
+		
+		$this->resources_so = new resources_so();
 
 		if ($this->debug > 0) $this->debug_message('calendar_boupdate::__construct() finished',True);
 	}
@@ -511,7 +519,8 @@ class calendar_boupdate extends calendar_bo
 		{
 			$resources_config = Api\Config::read('resources');
 			if ($resources_config['bookingrequests'] === 'disabled') {
-				$ret = $this->check_perms(resources_acl_bo::DIRECT_BOOKING, 0, $uid);
+				$cat_id = $this->resources_so->get_value('cat_id', intval(substr($uid, 1)));
+				return resources_acl_bo::is_permitted($cat_id, resources_acl_bo::DIRECT_BOOKING);
 			}
 			else
 			{
