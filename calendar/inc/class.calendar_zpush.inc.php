@@ -825,7 +825,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			{
 				$event['recur_enddate'] = Api\DateTime::server2user($message->recurrence->until);
 			}
-			$event['recur_exceptions'] = array();
+			$event['recur_exception'] = array();
 			if ($message->exceptions)
 			{
 				foreach($message->exceptions as $exception)

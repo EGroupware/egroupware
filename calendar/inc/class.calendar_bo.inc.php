@@ -1042,9 +1042,10 @@ class calendar_bo
 	 * @param string $date_format ='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in servertime, 'array'=array, or string with date-format
 	 * @param array|int $clear_private_infos_users =null if not null, return events with self::ACL_FREEBUSY too,
 	 * 	but call clear_private_infos() with the given users
+	 * @param boolean $read_recurrence =false true: read the exception, not the series master (only for recur_date && $ids='<uid>'!)
 	 * @return boolean|array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
 	 */
-	function read($ids,$date=null,$ignore_acl=False,$date_format='ts',$clear_private_infos_users=null)
+	function read($ids,$date=null, $ignore_acl=False, $date_format='ts', $clear_private_infos_users=null, $read_recurrence=false)
 	{
 		if (!$ids) return false;
 
@@ -1056,10 +1057,10 @@ class calendar_bo
 		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms($check,$ids,0,$date_format,$date)))
 		{
 			if (is_array($ids) || !isset(self::$cached_event['id']) || self::$cached_event['id'] != $ids ||
-				self::$cached_event_date_format != $date_format ||
+				self::$cached_event_date_format != $date_format || $read_recurrence ||
 				self::$cached_event['recur_type'] != MCAL_RECUR_NONE && self::$cached_event_date != $date)
 			{
-				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0);
+				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0, $read_recurrence);
 
 				if ($events)
 				{

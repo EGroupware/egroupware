@@ -307,9 +307,10 @@ class calendar_so
 	 *
 	 * @param int|array|string $ids id or array of id's of the entries to read, or string with a single uid
 	 * @param int $recur_date =0 if set read the next recurrence at or after the timestamp, default 0 = read the initital one
+	 * @param boolean $read_recurrence =false true: read the exception, not the series master (only for recur_date && $ids='<uid>'!)
 	 * @return array|boolean array with cal_id => event array pairs or false if entry not found
 	 */
-	function read($ids,$recur_date=0)
+	function read($ids, $recur_date=0, $read_recurrence=false)
 	{
 		//error_log(__METHOD__.'('.array2string($ids).",$recur_date) ".function_backtrace());
 		$cols = self::get_columns('calendar', $this->cal_table);
@@ -322,7 +323,15 @@ class calendar_so
 		{
 			// We want only the parents to match
 			$where['cal_uid'] = $ids;
-			$where['cal_reference'] = 0;
+			$where[] = 'cal_deleted IS NULL';
+			if ($read_recurrence)
+			{
+				$where['cal_recurrence'] = $recur_date;
+			}
+			else
+			{
+				$where['cal_reference'] = 0;
+			}
 		}
 		elseif(is_array($ids) && isset($ids[count($ids)-1]) || is_scalar($ids))	// one or more cal_id's
 		{
@@ -340,7 +349,7 @@ class calendar_so
 			));
 			unset($where['cal_id']);
 		}
-		if ((int) $recur_date)
+		if ((int) $recur_date && !$read_recurrence)
 		{
 			$where[] = 'cal_start >= '.(int)$recur_date;
 			$group_by = 'GROUP BY '.$cols;
@@ -354,6 +363,12 @@ class calendar_so
 		$cols .= ',range_end-1 AS recur_enddate';
 
 		$events =& $this->get_events($this->db->select($this->cal_table, $cols, $where, __LINE__, __FILE__, false, $group_by, 'calendar', 0, $join), $recur_date);
+
+		// if we wanted to read the real recurrence, but we have eg. only a virtual one, we need to try again without $read_recurrence
+		if ((!$events || ($e = current($events)) && $e['deleted']) && $recur_date && $read_recurrence)
+		{
+			return $this->read($ids, $recur_date);
+		}
 
 		return $events ? $events : false;
 	}
