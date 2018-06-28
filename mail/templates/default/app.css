@@ -941,7 +941,7 @@ img.smime_cert_unknownemail {
 .smimeIcons {position: absolute;right: 10px;}
 
 #mail-compose tr.mailComposeHeaders {
-  border-bottom: 1px solid silver;
+  border-top: 1px solid silver;
 }
 #mail-compose tr.mailComposeHeaders .et2_selectbox,
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn,
@@ -953,4 +953,12 @@ img.smime_cert_unknownemail {
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn-focus {
   border: none;
   box-shadow: none;
+}
+
+.et2_vbox.et2_box_widget.mailComposeBodySection {
+    margin-left: -3px;
+}
+
+#mail-compose_subject {
+	padding: 10px 0 10px 0;
 }

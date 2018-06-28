@@ -203,7 +203,9 @@ body {
 		/*background-color: @gray-0;*/
 		/*.gradient_thead;*/
 	}
-
+	.mailComposeBodySection {
+		margin-top: -4px;
+	}
 	// ##################################
 	//	Toolbar
 	.et2_toolbar button.toolbar_toggled {
@@ -264,20 +266,24 @@ body {
 		/*Kopie*/
 		span#mail-compose_cc_expander,
 		/*Blindkopie*/
-		span#mail-compose_bcc_expander,
-		span#mail-compose_folder_expander,
-		span#mail-compose_replyto_expander{
-			.Complete_Button_normal;
-			float: left;
-			width: 55px;
-			margin: 3px;
-			font-size: 8px;
-			margin-left: 12px;
-			padding:0;
-			&:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;color: @gray_0;}
+		span#mail-compose_cc_expander, span#mail-compose_cc_expander,
+		span#mail-compose_bcc_expander, span#mail-compose_bcc_expander,
+		span#mail-compose_folder_expander, span#mail-compose_folder_expander,
+		span#mail-compose_replyto_expander, span#mail-compose_replyto_expander
+		{
+			background: transparent;
+			border: none;
+			color: #26537c;
+			text-decoration: underline;
+			float: none;
+			width: auto;
+			white-space: nowrap;
 		}
 		/*Betreff*/
-		input#mail-compose_subject { max-width: 716px;}
+		input#mail-compose_subject {
+			max-width: 716px;
+			padding: 4px 0px 4px 5px;
+		}
 
 		/*HTML Box*/
 		input#mail-compose_mimeType {margin-left: 12px;}
