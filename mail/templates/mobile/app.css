@@ -930,7 +930,7 @@ img.smime_cert_unknownemail {
   right: 10px;
 }
 #mail-compose tr.mailComposeHeaders {
-  border-bottom: 1px solid silver;
+  border-top: 1px solid silver;
 }
 #mail-compose tr.mailComposeHeaders .et2_selectbox,
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn,
@@ -942,6 +942,12 @@ img.smime_cert_unknownemail {
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn-focus {
   border: none;
   box-shadow: none;
+}
+.et2_vbox.et2_box_widget.mailComposeBodySection {
+  margin-left: -3px;
+}
+#mail-compose_subject {
+  padding: 10px 0 10px 0;
 }
 #popupMainDiv {
   padding: 5px;
@@ -1109,6 +1115,9 @@ body {
   /*background-color: @gray-0;*/
   /*.gradient_thead;*/
 }
+#mail-compose .mailComposeBodySection {
+  margin-top: -4px;
+}
 #mail-compose .et2_toolbar button.toolbar_toggled:hover {
   background-color: white !important;
 }
@@ -1187,54 +1196,34 @@ body {
 }
 #mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander,
+#mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
+#mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander,
+#mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
+#mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander,
+#mail-compose .mailComposeHeaders span#mail-compose_bcc_expander,
+#mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander,
 #mail-compose .mailComposeHeaders span#mail-compose_bcc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander,
 #mail-compose .mailComposeHeaders span#mail-compose_folder_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_folder_expander,
+#mail-compose .mailComposeHeaders span#mail-compose_folder_expander,
+#mail-compose .mailComposeHeadersSection span#mail-compose_folder_expander,
+#mail-compose .mailComposeHeaders span#mail-compose_replyto_expander,
+#mail-compose .mailComposeHeadersSection span#mail-compose_replyto_expander,
 #mail-compose .mailComposeHeaders span#mail-compose_replyto_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_replyto_expander {
-  /*.border_normal;*/
-  /*.box_shadow_standard_light;*/
-  /*.rounded (3px);*/
-  color: #000000;
-  -webkit-appearance: none;
-  -webkit-transition-property: background-color;
-  -moz-transition-property: background-color;
-  -o-transition-property: background-color;
-  transition-property: background-color;
-  -webkit-transition-duration: 0.5s;
-  -moz-transition-duration: 0.5s;
-  -o-transition-duration: 0.5s;
-  transition-duration: 0.5s;
-  -webkit-transition-timing-function: linear;
-  -moz-transition-timing-function: linear;
-  -o-transition-timing-function: linear;
-  transition-timing-function: linear;
-  background-color: #E6E6E6;
-  float: left;
-  width: 55px;
-  margin: 3px;
-  font-size: 8px;
-  margin-left: 12px;
-  padding: 0;
-}
-#mail-compose .mailComposeHeaders span#mail-compose_cc_expander:hover,
-#mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander:hover,
-#mail-compose .mailComposeHeaders span#mail-compose_bcc_expander:hover,
-#mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander:hover,
-#mail-compose .mailComposeHeaders span#mail-compose_folder_expander:hover,
-#mail-compose .mailComposeHeadersSection span#mail-compose_folder_expander:hover,
-#mail-compose .mailComposeHeaders span#mail-compose_replyto_expander:hover,
-#mail-compose .mailComposeHeadersSection span#mail-compose_replyto_expander:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: #189800;
-  color: #FFFFFF;
+  background: transparent;
+  border: none;
+  color: #26537c;
+  text-decoration: underline;
+  float: none;
+  width: auto;
+  white-space: nowrap;
 }
 #mail-compose .mailComposeHeaders input#mail-compose_subject,
 #mail-compose .mailComposeHeadersSection input#mail-compose_subject {
   max-width: 716px;
+  padding: 4px 0px 4px 5px;
 }
 #mail-compose .mailComposeHeaders input#mail-compose_mimeType,
 #mail-compose .mailComposeHeadersSection input#mail-compose_mimeType {

@@ -60,10 +60,10 @@
 					<row class="mailComposeHeaders" >
 						<description value="To"/>
 						<taglist-email id="to" width="100%" onclick="app.mail.address_click" multiple="true" include_lists="true" onchange="app.mail.recipients_onchange"/>
-						<vbox>
+						<hbox>
 							<description id="cc_expander" value="Cc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
 							<description id="bcc_expander" value="Bcc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
-						</vbox>
+						</hbox>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryCc">
 						<description value="Cc"/>
@@ -82,16 +82,10 @@
 							<checkbox statustext="Change editor type" label="HTML" id="mimeType" onchange="app.mail.submitOnChange" options=",, ,disable" tabindex="7"/>
 						</hbox>
 					</row>
-					<row>
-						<description/>
-						<hbox class="mail_Composeicons">
-							<html id="mail_composeicons"/>
-						</hbox>
-					</row>
 				</rows>
 			</grid>
 		</vbox>
-		<vbox class="mailComposeBodySection" width="99%">
+		<vbox class="mailComposeBodySection" width="100%">
 			<hbox disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
 				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" imageUpload="link_to" expand_toolbar="true" height="478px" width="100%" resize_ratio="0"/>
 			</hbox>
