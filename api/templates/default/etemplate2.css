@@ -1106,6 +1106,12 @@ ul.et2_link_string {
     background-size: 16px;
     vertical-align: text-top;
 }
+.et2_taglist .dropdown-menu .et2_taglist_tags_icon {
+	height: 32px;
+    width: 32px;
+	background-size: 32px;
+	vertical-align: middle;
+}
 .et2_taglist .et2_taglist_tags_icon_wrapper {
 	display: inline;
 }
