@@ -83,6 +83,16 @@ var et2_calendar_owner = (function(){ "use strict"; return et2_taglist_email.ext
 			if (item.class) label.addClass(item.class);
 			if (typeof item.title != 'undefined') label.attr('title', item.title);
 			if (typeof item.data != 'undefined') label.attr('data', item.data);
+			if (typeof item.icon != 'undefined')
+			{
+				var wrapper = jQuery('<div>').addClass('et2_taglist_tags_icon_wrapper');
+				jQuery('<span/>')
+						.addClass('et2_taglist_tags_icon')
+						.css({"background-image": "url("+(item.icon.match(/^(http|https|\/)/) ? item.icon : egw.image(item.icon, item.app))+")"})
+						.appendTo(wrapper);
+				label.appendTo(wrapper);
+				return wrapper;
+			}
 			return label;
 		}
 	},

@@ -1479,6 +1479,7 @@ abstract class Framework extends Framework\Extra
 		{
 			$list['accounts']['filter']['group'] = $GLOBALS['egw_info']['user']['account_primary_group'];
 		}
+		$contact_obj = new Contacts();
 		foreach($list as $type => &$accounts)
 		{
 			$options = array('account_type' => $type) + $accounts;
@@ -1486,7 +1487,12 @@ abstract class Framework extends Framework\Extra
 			$accounts = array();
 			foreach($key_pair as $account_id => $name)
 			{
-				$accounts[] = array('value' => $account_id, 'label' => $name);
+				$contact = $contact_obj->read('account:'.$account_id, true);
+				$accounts[] = array('value' => $account_id, 'label' => $name, 'icon' => self::link('/index.php', array(
+						'menuaction' => 'addressbook.addressbook_ui.photo',
+						'contact_id' => $contact['id'],
+						'etag' => $contact['etag']
+					)));
 			}
 		}
 

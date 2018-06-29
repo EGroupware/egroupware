@@ -64,10 +64,17 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		}
 		$sel_options += array_map(
 			function($account_id, $account_name) {
+				$contact_obj = new Api\Contacts();
+				$contact = $contact_obj->read('account:'.$account_id, true);
 				return array(
 					'value' => ''.$account_id,
 					'label' => $account_name,
-					'app' => lang('api-accounts')
+					'app' => lang('api-accounts'),
+					'icon' => Api\Framework::link('/index.php', array(
+						'menuaction' => 'addressbook.addressbook_ui.photo',
+						'contact_id' => $contact['id'],
+						'etag' => $contact['etag'] ? $contact['etag'] : 1
+					))
 				);
 			},
 			array_keys($accounts), $accounts
@@ -80,7 +87,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			// calendar app is not yet loaded.
 			$value = !empty($sel_options) ? array(): explode(',', $value);
 		}
-		
+
 		// Add external owners that a select account widget will not find
 		foreach($value as &$owner)
 		{
@@ -161,6 +168,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		$remove_contacts = array();
 
 		$resources = array_merge(array('' => $bo->resources['']),$bo->resources);
+		$contacts_obj = new Api\Contacts();
 		foreach($resources as $type => $data)
 		{
 			$mapped = array();
@@ -193,7 +201,6 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				case 'l':
 					// Include mailing lists
-					$contacts_obj = new Api\Contacts();
 					$lists = array_filter(
 						$contacts_obj->get_lists(Api\Acl::READ),
 						function($element) use($query) {
@@ -228,6 +235,23 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 					if(is_array($value['label']))
 					{
 						$value = array_merge($value, $value['label']);
+					}
+					switch($type)
+					{
+						case 'r':
+							// TODO: fetch resources photo
+							break;
+						case 'c':
+						case '':
+							$contact = $contacts_obj->read($type === '' ? 'account:'.$id : $id, true);
+							if (is_array($contact)) $value['icon'] = Api\Framework::link('/index.php', array(
+								'menuaction' => 'addressbook.addressbook_ui.photo',
+								'contact_id' => $contact['id'],
+								'etag' => $contact['etag'] ? $contact['etag'] : 1
+							));
+							break;
+						default :
+							// do nothing
 					}
 					$mapped[] = $value;
 				}
