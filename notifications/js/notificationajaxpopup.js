@@ -203,13 +203,23 @@
 			// message container
 			$message = jQuery(document.createElement('div'))
 					.addClass('egwpopup_message')
-					.attr('id', message_id);
+					.attr({
+						id:message_id,
+						'data-entryid': notifymessages[id]['data']['id'],
+						'data-appname': notifymessages[id]['data']['app'],
+			});
 			// wrapper for message content
 			$inner_container =  jQuery(document.createElement('div'))
 					.addClass('egwpopup_message_inner_container')
 					.appendTo($message);
 			$inner_container[0].innerHTML = notifymessages[id]['message'];
-
+			if (notifymessages[id]['children'])
+			{
+				for (var c in notifymessages[id]['children'])
+				{
+					$inner_container[0].innerHTML += notifymessages[id]['children'][c]['message'];
+				}
+			}
 			$more_info = jQuery(document.createElement('div'))
 					.addClass('egwpopup_message_more_info')
 					.text(egw.lang('More info')+'...')
@@ -444,9 +454,14 @@
 		_event.stopPropagation();
 		var egwpopup_message = _node[0];
 		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
+		var ids = [id];
+		if (notifymessages[id]['children'])
+		{
+			ids = ids.concat(Object.keys(notifymessages[id]['children']));
+		}
 		if (notifymessages[id]['status'] !='SEEN')
 		{
-			var request = egw.json("notifications.notifications_ajax.update_status", [id, "SEEN"]);
+			var request = egw.json("notifications.notifications_ajax.update_status", [ids, "SEEN"]);
 			request.sendRequest(true);
 			this.update_message_status(id, "SEEN");
 		}
@@ -455,7 +470,9 @@
 	notifications.prototype.mark_all_seen = function()
 	{
 		if (!notifymessages || Object.keys(notifymessages).length == 0) return false;
-		egw.json("notifications.notifications_ajax.update_status", [Object.keys(notifymessages), "SEEN"]).sendRequest(true);
+		var ids = Object.keys(notifymessages);
+		ids = ids.concat(this.findAllChildrenIds());
+		egw.json("notifications.notifications_ajax.update_status", [ids, "SEEN"]).sendRequest(true);
 		for (var id in notifymessages)
 		{
 			this.update_message_status(id, "SEEN");
@@ -484,7 +501,9 @@
 
 	notifications.prototype.delete_all = function () {
 		if (!notifymessages || Object.entries(notifymessages).length == 0) return false;
-		egw.json("notifications.notifications_ajax.delete_message", [Object.keys(notifymessages)]).sendRequest(true);
+		var ids = Object.keys(notifymessages);
+		ids = ids.concat(this.findAllChildrenIds());
+		egw.json("notifications.notifications_ajax.delete_message", [ids]).sendRequest(true);
 		notifymessages = {};
 		jQuery("#egwpopup_list").empty();
 		this.counterUpdate();
@@ -497,14 +516,71 @@
 		_event.stopPropagation();
 		var egwpopup_message = _node[0];
 		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
-		var request = egw.json("notifications.notifications_ajax.delete_message", [id]);
+		var ids = [id];
+		if (notifymessages[id]['children'])
+		{
+			ids = ids.concat(Object.keys(notifymessages[id]['children']));
+		}
+		var request = egw.json("notifications.notifications_ajax.delete_message", [ids]);
 		request.sendRequest(true);
+		var nextNode = egwpopup_message.next();
 		delete (notifymessages[id]);
 		// try to close the dialog if expanded before hidding it
 		this.collapseMessage(_node, _event);
 		egwpopup_message.remove();
 		this.bell("inactive");
 		this.counterUpdate();
+		if (nextNode.length > 0 && nextNode[0].id.match(/egwpopup_message_/ig))
+		{
+			nextNode.trigger('click');
+		}
+	};
+
+	/**
+	 * Find all children ids from notifications
+	 * @returns {Array} returns ids of all children from all parents
+	 */
+	notifications.prototype.findAllChildrenIds = function ()
+	{
+		var map = [];
+		for (var i in notifymessages)
+		{
+			map = map.concat(this.findChildrenIds(notifymessages[i]));
+		}
+		return map;
+	};
+
+	/**
+	 * Find children of a parent
+	 * @param {object} _notification parent object
+	 * @returns {Array} return ids of children
+	 */
+	notifications.prototype.findChildrenIds = function (_notification)
+	{
+		if(_notification.children)
+		{
+			return Object.keys(_notification.children);
+		}
+		return [];
+	};
+
+	/**
+	 * Finds potential parent
+	 *
+	 * @param {type} _id
+	 * @param {type} _app
+	 * @returns {int} return id of notification
+	 */
+	notifications.prototype.findParent = function (_id, _app)
+	{
+		if (!_id && !_app) return null;
+		for(var i in notifymessages)
+		{
+			if (notifymessages[i]['data']['id'] == _id && notifymessages[i]['data']['app'] == _app)
+			{
+				return i;
+			}
+		}
 	};
 
 	/**
@@ -516,9 +592,28 @@
 	notifications.prototype.append = function(_rawData, _browser_notify) {
 
 		var hasUnseen = [];
+		notifymessages = {};
 		for (var i=0; i < _rawData.length; i++)
 		{
 			var data = this.getData(_rawData[i]['message']);
+			var parent;
+			if ((parent = this.findParent(data['id'], data['app']))
+					&& !(_rawData[i]['extra_data'] && typeof _rawData[i]['extra_data']['egw_pr_notify'] == 'undefined'))
+			{
+				if (parent == _rawData[i]['id']) continue;
+				if (!notifymessages[parent]['children']) notifymessages[parent] = jQuery.extend(notifymessages[parent], {children:{}});
+				notifymessages[parent]['children'][_rawData[i]['id']] = {
+					message:_rawData[i]['message'],
+					data: data,
+					status: _rawData[i]['status'],
+					created: _rawData[i]['created'],
+					current: _rawData[i]['current'],
+					extra_data: _rawData[i]['extra_data']
+				};
+				if (_rawData[i]['actions'] && _rawData[i]['actions'].length > 0) notifymessages[parent]['children'][_rawData[i]]['data']['actions'] = _rawData[i]['actions'];
+				continue;
+			}
+
 			// Prevent the same thing popping up multiple times
 			notifymessages[_rawData[i]['id']] = {
 				message:_rawData[i]['message'],
