@@ -12,8 +12,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage accounts
- * @access public
- * @version $Id$
  */
 
 namespace EGroupware\Api;
@@ -817,6 +815,16 @@ class Accounts
 	{
 		if (!$account_id || !($data = $this->read($account_id)))
 		{
+			// non sql backends might NOT show EGw all users, but backend->id2name/name2id does
+			if (is_a($this->backend, __CLASS__.'\\Univention'))
+			{
+				if (!is_numeric($account_id) ?
+					($account_id = $this->backend->name2id($account_id)) :
+					$this->backend->id2name($account_id))
+				{
+					return $account_id > 0 ? 1 : 2;
+				}
+			}
 			return 0;
 		}
 		return $data['account_type'] == 'u' ? 1 : 2;
@@ -1152,14 +1160,18 @@ class Accounts
 		// instance-wide cache
 		if ($account_ids)
 		{
+			$instance = self::getInstance();
+
 			foreach((array)$account_ids as $account_id)
 			{
-				$instance = self::getInstance();
-
 				Cache::unsetCache($instance->config['install_id'], __CLASS__, 'account-'.$account_id);
 
 				unset(self::$request_cache[$account_id]);
 			}
+		}
+		else
+		{
+			self::$request_cache = array();
 		}
 
 		// session-cache
