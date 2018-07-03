@@ -905,27 +905,31 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 	{
 		jQuery(".egwGridView_empty",this._grid.innerTbody).remove();
 		if(typeof this._grid._rowProvider != "undefined" && this._grid._rowProvider.getPrototype("empty"))
-                {
-                        var placeholder = this._grid._rowProvider.getPrototype("empty");
-                        if(jQuery("td",placeholder).length == 1)
-                        {
-                                jQuery("td",placeholder).css("width",this._grid.outerCell.width() + "px")
-                        }
-                        placeholder.appendTo(this._grid.innerTbody);
-
-			// Get the action links if the links callback is set
-			var links = null;
-			if (this._linkCallback)
+		{
+			var placeholder = this._grid._rowProvider.getPrototype("empty");
+			if(jQuery("td",placeholder).length == 1)
 			{
-				links = this._linkCallback.call(
-					this._context,
-					{},
-					0,
-					""
-				);
+					jQuery("td",placeholder).css("width",this._grid.outerCell.width() + "px")
 			}
-			this._selectionMgr.registerRow("",0,placeholder.get(0), links);
-                }
+			placeholder.appendTo(this._grid.innerTbody);
+
+			// Register placeholder action only if no rows
+			if (this._grid._total == 0)
+			{
+				// Get the action links if the links callback is set
+				var links = null;
+				if (this._linkCallback)
+				{
+					links = this._linkCallback.call(
+						this._context,
+						{},
+						0,
+						""
+					);
+				}
+				this._selectionMgr.registerRow("",0,placeholder.get(0), links);
+			}
+		}
 	},
 
 	/**
