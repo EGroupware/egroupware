@@ -55,7 +55,7 @@ use EGroupware\Api;
  *   1. migrate from AD --> SQL including mail-attributes
  *   2. optionaly fix user-names etc in SQL
  *   3. migrate from SQL --> Univention (make sure NOT to select existing users like "join-backup/slaves"
- *      and delete "anonymous" user from EGroupware App install in UCS)
+ *      and delete "anonymous" user and "Admins", "Default" and "NoGroup" from EGroupware App install in UCS)
  */
 class setup_cmd_ldap extends setup_cmd
 {
@@ -683,24 +683,27 @@ class setup_cmd_ldap extends setup_cmd
 				($errors || $this->verbose ? "\n- ".implode("\n- ",$msg) : '');
 		}
 		// migrate addressbook data
-		$GLOBALS['egw_info']['user']['apps']['admin'] = true;	// otherwise migration will not run in setup!
-		$addressbook = new Api\Contacts\Storage();
-		foreach($this->as_array() as $name => $value)
+		if ($to !== 'univention')	// ToDo: univentions currently gives only Oject class violation
 		{
-			if (substr($name, 5) == 'ldap_' || substr($name, 4) == 'ads_')
+			$GLOBALS['egw_info']['user']['apps']['admin'] = true;	// otherwise migration will not run in setup!
+			$addressbook = new Api\Contacts\Storage();
+			foreach($this->as_array() as $name => $value)
 			{
-				$GLOBALS['egw_info']['server'][$name] = $value;
+				if (substr($name, 5) == 'ldap_' || substr($name, 4) == 'ads_')
+				{
+					$GLOBALS['egw_info']['server'][$name] = $value;
+				}
 			}
+			ob_start();
+			$addressbook->migrate2ldap($to != 'sql' ? 'accounts' : 'accounts-back'.
+				($this->account_repository == 'ads' ? '-ads' : ''));
+			$msg = array_merge($msg, explode("\n", strip_tags(ob_get_clean())));
 		}
-		ob_start();
-		$addressbook->migrate2ldap($to != 'sql' ? 'accounts' : 'accounts-back'.
-			($this->account_repository == 'ads' ? '-ads' : ''));
-		$msgs = array_merge($msg, explode("\n", strip_tags(ob_get_clean())));
 
 		$this->restore_db();
 
 		return lang('%1 users and %2 groups created, %3 errors',$accounts_created,$groups_created,$errors).
-			($errors || $this->verbose ? "\n- ".implode("\n- ",$msgs) : '');
+			($errors || $this->verbose ? "\n- ".implode("\n- ",$msg) : '');
 	}
 
 	/**

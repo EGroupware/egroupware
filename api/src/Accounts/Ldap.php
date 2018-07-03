@@ -14,7 +14,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage accounts
- * @version $Id$
  */
 
 namespace EGroupware\Api\Accounts;
@@ -989,7 +988,7 @@ class Ldap
 	 *
 	 * @param int $account_id numerica account_id
 	 * @param string $which ='account_lid' type to convert to: account_lid (default), account_email, ...
-	 * @return string/false converted value or false on error ($account_id not found)
+	 * @return string|false converted value or false on error ($account_id not found)
 	 */
 	function id2name($account_id,$which='account_lid')
 	{
@@ -1058,7 +1057,7 @@ class Ldap
 
 			foreach($group[0]['memberuid'] as $lid)
 			{
-				if (($id = $this->name2id($lid, 'account_lid', 'u')))
+				if (($id = $this->name2id($lid, 'account_lid')))	// also return groups!
 				{
 					$members[$id] = $lid;
 				}
@@ -1104,7 +1103,6 @@ class Ldap
 	 * @param int $gid gidnumber of group to set
 	 * @param array $objectclass =null should we set the member and uniqueMember attributes (groupOf(Unique)Names|univentionGroup) (default detect it)
 	 * @param string $use_cn =null if set $cn is used instead $gid and the attributes are returned, not written to ldap
-	 * @param boolean $uniqueMember =null should we set the uniqueMember attribute (default detect it)
 	 * @return boolean/array false on failure, array or true otherwise
 	 */
 	function set_members($members, $gid, array $objectclass=null, $use_cn=null)
@@ -1112,15 +1110,31 @@ class Ldap
 		if (!($cn = $use_cn) && !($cn = $this->id2name($gid))) return false;
 
 		// do that group is a groupOf(Unique)Names or univentionGroup?
-		if (is_null($objectclass)) $objectclass = $this->id2name($gid,'objectclass');
+		if (!isset($objectclass))
+		{
+			$objectclass = $this->id2name($gid, 'objectclass');
+			// if we cant find objectclass, we might ge in the middle of a migration
+			if (!isset($objectclass))
+			{
+				Api\Accounts::cache_invalidate($gid);
+				if (!($objectclass = $this->id2name($gid, 'objectclass')))
+				{
+					// group does not yet exist --> return false
+					return false;
+				}
+			}
+		}
 
 		$to_write = array('memberuid' => array());
-		foreach((array)$members as $key => $member)
+		foreach((array)$members as $member)
 		{
+			if (!$member) continue;
+
 			$member_dn = $this->id2name($member, 'account_dn');
 			if (is_numeric($member)) $member = $this->id2name($member);
 
-			if ($member)
+			// only add a member, if we have the neccessary info / he already exists in migration
+			if ($member && ($member_dn || !array_intersect(array('groupofnames','groupofuniquenames','univentiongroup'), $objectclass)))
 			{
 				$to_write['memberuid'][] = $member;
 				if (in_array('groupofnames', $objectclass))
@@ -1154,7 +1168,7 @@ class Ldap
 			if ($forward)
 			{
 				$to_write[$forward] = array();
-				foreach($members as $key => $member)
+				foreach($members as $member)
 				{
 					if (($email = $this->id2name($member,'account_email')))	$to_write[$forward][] = $email;
 				}
@@ -1162,7 +1176,7 @@ class Ldap
 		}
 		if (!ldap_modify($this->ds,'cn='.Api\Ldap::quote($cn).','.$this->group_context,$to_write))
 		{
-			echo "ldap_modify(,'cn=$cn,$this->group_context',".print_r($to_write,true)."))\n";
+			error_log(__METHOD__."(members=".array2string($members).", gid=$gid, objectclass=".array2string($objectclass).", use_cn=$use_cn) !ldap_modify(,'cn=$cn,$this->group_context', ".array2string($to_write).") --> ldap_error()=".ldap_error($this->ds));
 			return false;
 		}
 		return true;

@@ -8,7 +8,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage accounts
- * @version $Id$
  */
 
 namespace EGroupware\Api\Accounts;
@@ -22,6 +21,8 @@ use EGroupware\Api;
  *
  * Only difference is that new users get created via univention-directory-manager CLI program,
  * to generate necesary Kerberos stuff.
+ *
+ * New groups are generated via same CLI, if we have an ID/RID to set.
  *
  * Existing users and groups need to be renamed via same CLI, as removing and
  * adding entry under new dn via LDAP fails (Type or value exists).
@@ -56,11 +57,16 @@ class Univention extends Ldap
 
 		if (self::available())
 		{
+			$ssh = null;//'/usr/bin/ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -i /var/lib/egroupware/id_rsa root@10.44.22.194';
 			$config = $this->frontend->config && $this->frontend->config['ldap_context'] ?
 				$this->frontend->config : $GLOBALS['egw_info']['server'];
 
-			if (!$data['account_id'] && $data['account_type'] !== 'g')
+			if ($data['account_type'] !== 'g' && (empty($data['account_id']) || !$this->id2name($data['account_id'])))
 			{
+				// empty names give an error: The property Last/First name is required is not valid
+				if (empty($data['account_firstname'])) $data['account_firstname'] = 'n/a';
+				if (empty($data['account_lastname'])) $data['account_lastname'] = 'n/a';
+
 				$params = array(
 					'users/user','create',
 					'--binddn', $config['ldap_root_dn'],
@@ -70,13 +76,34 @@ class Univention extends Ldap
 					'--set', 'firstname='.$data['account_firstname'],
 					'--set', 'lastname='.$data['account_lastname'],
 				);
-				if ($data['account_email'])
+
+				// we can't create a new user without a password, setting a randowm one for now
+				$matches = null;
+				if (empty($data['account_passwd']) || preg_match('/^{([a-z0-9_]+)}/i', $data['account_passwd'], $matches))
+				{
+					if ($matches && strtolower($matches[1]) === 'plain')
+					{
+						$data['account_passwd'] = substr($data['account_passwd'], 7);
+					}
+					else
+					{
+						$data['account_passwd'] = Api\Auth::randomstring(12);
+						//file_put_contents('/tmp/passwords', "$data[account_lid]\t$data[account_passwd]\n", FILE_APPEND);
+					}
+				}
+				$params[] = '--set'; $params[] = 'password='.$data['account_passwd'];
+
+				// if account_id is given and bigger then 1000, set it to facilitate migration
+				if (!empty($data['account_id']) && $data['account_id'] >= Ads::MIN_ACCOUNT_ID)
+				{
+					$params[] = '--set'; $params[] = 'uidNumber='.(int)$data['account_id'];
+					$params[] = '--set'; $params[] = 'sambaRID='.(int)$data['account_id'];
+				}
+
+				if (!empty($data['account_email']))
 				{
 					$params[] = '--set'; $params[] = 'mailPrimaryAddress='.$data['account_email'];
-				}
-				if (!empty($data['account_passwd']))
-				{
-					$params[] = '--set'; $params[] = 'password='.$data['account_passwd'];
+
 					// we need to set mailHomeServer, so mailbox gets created for Dovecot
 					// get_default() does not work for Adminstrator, try acc_id=1 instead
 					// if everything fails try hostname ...
@@ -90,10 +117,12 @@ class Univention extends Ldap
 					catch(\Exception $e) {
 						unset($e);
 					}
-					if (empty($hostname)) $hostname = trim(system('hostname -f'));
+					//$hostname='master.test-org.intranet';
+					if (empty($hostname)) $hostname = trim(exec('hostname -f'));
 					$params[] = '--set'; $params[] = 'mailHomeServer='.$hostname;
 				}
 				$cmd = self::DIRECTORY_MANAGER_BIN.' '.implode(' ', array_map('escapeshellarg', $params));
+				if (isset($ssh)) $cmd = $ssh.' bash -c "\\"'.$cmd.'\\""';
 				$output_arr = $ret = $matches = null;
 				exec($cmd, $output_arr, $ret);
 				$output = implode("\n", $output_arr);
@@ -105,6 +134,34 @@ class Univention extends Ldap
 				}
 				$data['account_dn'] = $matches[1];
 				$data['account_id'] = $this->name2id($data['account_lid'], 'account_lid', 'u');
+			}
+			// create new groups with given account_id via directory-manager too, to be able to set the RID
+			elseif($data['account_type'] === 'g' && !empty($data['account_id']) &&
+				$data['account_id'] >= Ads::MIN_ACCOUNT_ID && !$this->id2name($data['account_id']))
+			{
+				$params = array(
+					'groups/group', 'create',
+					'--binddn', $config['ldap_root_dn'],
+					'--bindpwd', 5=>$config['ldap_root_pw'],
+					'--position', empty($config['ldap_group_context']) ? $config['ldap_context'] : $config['ldap_group_context'],
+					'--set', 'name='.$data['account_lid'],
+					'--set', 'gidNumber='.(int)$data['account_id'],
+					'--set', 'sambaRID='.(int)$data['account_id'],
+				);
+
+				$cmd = self::DIRECTORY_MANAGER_BIN.' '.implode(' ', array_map('escapeshellarg', $params));
+				if (isset($ssh)) $cmd = $ssh.' bash -c "\\"'.$cmd.'\\""';
+				$output_arr = $ret = $matches = null;
+				exec($cmd, $output_arr, $ret);
+				$output = implode("\n", $output_arr);
+				if ($ret || !preg_match('/^Object created: (cn=.*)$/mui', $output, $matches))
+				{
+					$params[5] = '********';	// mask out password!
+					$cmd = self::DIRECTORY_MANAGER_BIN.' '.implode(' ', array_map('escapeshellarg', $params));
+					throw new Api\Exception\WrongUserinput($cmd."\nreturned\n".$output);
+				}
+				$data['account_dn'] = $matches[1];
+				$data['account_id'] = $this->name2id($data['account_lid'], 'account_lid', 'g');
 			}
 			elseif($data['account_id'] && ($data['old_loginid'] || ($data['old_loginid'] = $this->id2name($data['account_id']))) &&
 				$data['account_lid'] != $data['old_loginid'] &&
@@ -118,6 +175,7 @@ class Univention extends Ldap
 					'--set', ($data['account_type'] !== 'g' ? 'username' : 'name').'='.$data['account_lid'],
 				);
 				$cmd = self::DIRECTORY_MANAGER_BIN.' '.implode(' ', array_map('escapeshellarg', $params));
+				if (isset($ssh)) $cmd = $ssh.' bash -c "\\"'.$cmd.'\\""';
 				$output_arr = $ret = $matches = null;
 				exec($cmd, $output_arr, $ret);
 				$output = implode("\n", $output_arr);
@@ -137,12 +195,64 @@ class Univention extends Ldap
 	}
 
 	/**
+	 * convert an alphanumeric account-value (account_lid, account_email) to the account_id
+	 *
+	 * Reimplement to check for users outside regular user-dn eg. functional users
+	 *
+	 * @param string $_name value to convert
+	 * @param string $which ='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
+	 * @param string $account_type u = user, g = group, default null = try both
+	 * @return int|false numeric account_id or false on error ($name not found)
+	 */
+	function name2id($_name,$which='account_lid',$account_type=null)
+	{
+		if ((!$id = parent::name2id($_name, $which, $account_type)))
+		{
+			$user_dn = $this->user_context;
+			$this->user_context = preg_replace('/(cn|uid)=([^,]+),/i', '', $this->user_context);
+
+			$id = parent::name2id($_name, $which, $account_type);
+
+			$this->user_context = $user_dn;
+		}
+		return $id;
+	}
+
+	/**
+	 * Convert an numeric account_id to any other value of that account (account_lid, account_email, ...)
+	 *
+	 * Reimplement to check for users outside regular user-dn eg. functional users
+	 *
+	 * @param int $account_id numerica account_id
+	 * @param string $which ='account_lid' type to convert to: account_lid (default), account_email, ...
+	 * @return string|false converted value or false on error ($account_id not found)
+	 */
+	function id2name($account_id,$which='account_lid')
+	{
+		if (($name = parent::id2name($account_id, $which)) === false)
+		{
+			if (!is_numeric($account_id)) $account_id = $this->name2id($account_id);
+
+			$user_dn = $this->user_context;
+			$this->user_context = preg_replace('/(cn|uid)=([^,]+),/i', '', $this->user_context);
+
+			if ($account_id && ($data = $this->read($account_id)))
+			{
+				$name = $data[$which];
+			}
+			$this->user_context = $user_dn;
+		}
+		return $name;
+	}
+
+	/**
 	 * Check if our function depending on an external binary is available
 	 *
 	 * @return boolean
 	 */
 	public static function available()
 	{
+		//return true;
 		return file_exists(self::DIRECTORY_MANAGER_BIN) && is_executable(self::DIRECTORY_MANAGER_BIN);
 	}
 }
