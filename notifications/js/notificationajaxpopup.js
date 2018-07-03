@@ -525,15 +525,15 @@
 		request.sendRequest(true);
 		var nextNode = egwpopup_message.next();
 		delete (notifymessages[id]);
+		if (nextNode.length > 0 && nextNode[0].id.match(/egwpopup_message_/ig) && egwpopup_message.hasClass('egwpopup_expanded'))
+		{
+			nextNode.trigger('click');
+		}
 		// try to close the dialog if expanded before hidding it
 		this.collapseMessage(_node, _event);
 		egwpopup_message.remove();
 		this.bell("inactive");
 		this.counterUpdate();
-		if (nextNode.length > 0 && nextNode[0].id.match(/egwpopup_message_/ig))
-		{
-			nextNode.trigger('click');
-		}
 	};
 
 	/**
