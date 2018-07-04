@@ -879,7 +879,7 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 
 		if(_response.total == 0)
 		{
-			this.self._emptyRow();
+			this.self._emptyRow(true);
 		}
 		else
 		{
@@ -903,7 +903,7 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 	 */
 	_emptyRow: function(_noRows)
 	{
-		var noRows = _noRows || true;
+		var noRows = !_noRows ? false : true;
 		jQuery(".egwGridView_empty",this._grid.innerTbody).remove();
 		if(typeof this._grid._rowProvider != "undefined" && this._grid._rowProvider.getPrototype("empty"))
 		{
