@@ -84,6 +84,21 @@ class Smime extends Horde_Crypt_Smime
 	const TYPE_SIGN_ENCRYPT = 'smime_sign_encrypt';
 
 	/**
+	 * Smime content type of signed message
+	 *
+	 * @var string
+	 */
+	const SMIME_TYPE_SIGNED_DATA = 'signed-data';
+
+	/**
+	 * Smime content type of encrypted message
+	 *
+	 * @var string
+	 */
+	const SMIME_TYPE_ENVELOPED_DATA = 'enveleoped-data';
+
+
+	/**
      * Constructor.
      *
      * @param Horde_Crypt_Smime $params  S/MIME object.
@@ -106,15 +121,38 @@ class Smime extends Horde_Crypt_Smime
 	}
 
 	/**
-	 * Check if a given mime type is smime type of signature only
+	 * Check if a given smime type is smime type of signature only
 	 *
-	 * @param string $_mime mimetype
+	 * @param string $_smimeType smime type
+	 * @param string $_mimeType mime type, it takes into account only if smimeType is not found
 	 *
-	 * @return type
+	 * @return boolean return whether given type is smime signature or not
 	 */
-	public static function isSmimeSignatureOnly ($_mime)
+	public static function isSmimeSignatureOnly ($_smimeType)
 	{
-		return in_array($_mime, self::$SMIME_SIGNATURE_ONLY_TYPES);
+		return $_smimeType == self::SMIME_TYPE_SIGNED_DATA ? true : false;
+	}
+
+	/**
+	 * Extract smime type form mime part
+	 * @param Horde_Mime_Part $_mime_part
+	 *
+	 * @return string return smime type or null if not found
+	 */
+	public static function getSmimeType (Horde_Mime_Part $_mime_part)
+	{
+		if (($type = $_mime_part->getContentTypeParameter('smime-type'))) {
+            return strtolower($type);
+        }
+		//
+		$protocol = $_mime_part->getContentTypeParameter('protocol');
+		switch ($_mime_part->getType())
+		{
+			case "multipart/signed":
+				return self::isSmime($protocol) ? self::SMIME_TYPE_SIGNED_DATA : null;
+		}
+
+        return null;
 	}
 
 	/**

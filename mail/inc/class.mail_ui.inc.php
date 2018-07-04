@@ -1856,16 +1856,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$data['uid'] = $message_uid;
 			$data['row_id']=$this->createRowID($_folderName,$message_uid);
 
-			if (is_array($header['attachments']))
+			if ($header['smimeType'])
 			{
-				foreach ($header['attachments'] as $attch)
-				{
-					if (Mail\Smime::isSmime($attch['mimeType']))
-					{
-						$data['smime'] = Mail\Smime::isSmimeSignatureOnly($attch['mimeType'])?
-								Mail\Smime::TYPE_SIGN : Mail\Smime::TYPE_ENCRYPT;
-					}
-				}
+				$data['smime'] = Mail\Smime::isSmimeSignatureOnly($header['smimeType'])?
+				Mail\Smime::TYPE_SIGN : Mail\Smime::TYPE_ENCRYPT;
 			}
 
 			$flags = "";
