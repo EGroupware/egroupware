@@ -232,7 +232,7 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 		{
 			// No rows, start with an empty
 			this._selectionMgr.clear();
-			this._emptyRow();
+			this._emptyRow(this._grid._total);
 		}
 	},
 
@@ -898,20 +898,21 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 	/**
 	 * Insert an empty / placeholder row when there is no data to display
 	 */
-	_emptyRow: function()
+	_emptyRow: function(_noRows)
 	{
+		var noRows = _noRows || true;
 		jQuery(".egwGridView_empty",this._grid.innerTbody).remove();
 		if(typeof this._grid._rowProvider != "undefined" && this._grid._rowProvider.getPrototype("empty"))
 		{
 			var placeholder = this._grid._rowProvider.getPrototype("empty");
 			if(jQuery("td",placeholder).length == 1)
 			{
-					jQuery("td",placeholder).css("width",this._grid.outerCell.width() + "px")
+				jQuery("td",placeholder).css("width",this._grid.outerCell.width() + "px")
 			}
 			placeholder.appendTo(this._grid.innerTbody);
 
 			// Register placeholder action only if no rows
-			if (this._grid._total == 0)
+			if (noRows)
 			{
 				// Get the action links if the links callback is set
 				var links = null;
