@@ -1765,6 +1765,7 @@ class Mail
 				$retValue['header'][$sortOrder[$uid]]['uid']		= $headerObject['UID'];
 				$retValue['header'][$sortOrder[$uid]]['bodypreview']		= $headerObject['BODYPREVIEW'];
 				$retValue['header'][$sortOrder[$uid]]['priority']		= ($headerObject['PRIORITY']?$headerObject['PRIORITY']:3);
+				$retValue['header'][$sortOrder[$uid]]['smimeType']		= Mail\Smime::getSmimeType($mailStructureObject);
 				//error_log(__METHOD__.' ('.__LINE__.') '.' '.array2string($retValue['header'][$sortOrder[$uid]]));
 				if (isset($headerObject['DISPOSITION-NOTIFICATION-TO'])) $retValue['header'][$sortOrder[$uid]]['disposition-notification-to'] = $headerObject['DISPOSITION-NOTIFICATION-TO'];
 				if (is_array($headerObject['FLAGS'])) {
@@ -5648,7 +5649,7 @@ class Mail
 			if (is_object($mail))
 			{
 				$structure = $mail->getStructure();
-				$isSmime = Mail\Smime::isSmime(($mimeType = $structure->getType())) || Mail\Smime::isSmimeSignatureOnly(($protocol=$structure->getContentTypeParameter('protocol')));
+				$isSmime = Mail\Smime::isSmime(($mimeType = $structure->getType())) || Mail\Smime::isSmime(($protocol=$structure->getContentTypeParameter('protocol')));
 				if ($isSmime)
 				{
 					return $this->resolveSmimeMessage($structure, array(
@@ -5966,7 +5967,7 @@ class Mail
 				{
 					$mailStructureObject = $_headerObject->getStructure();
 					if (Mail\Smime::isSmime(($mimeType = $mailStructureObject->getType())) ||
-							Mail\Smime::isSmimeSignatureOnly(($protocol=$mailStructureObject->getContentTypeParameter('protocol'))))
+							Mail\Smime::isSmime(($protocol=$mailStructureObject->getContentTypeParameter('protocol'))))
 					{
 						$mailStructureObject = $this->resolveSmimeMessage($mailStructureObject, array(
 							'uid' => $_uid,
@@ -7457,7 +7458,7 @@ class Mail
 		);
 		$this->smime = new Mail\Smime;
 		$message = $this->getMessageRawBody($params['uid'], null, $params['mailbox']);
-		if (!Mail\Smime::isSmimeSignatureOnly($params['mimeType']))
+		if (!Mail\Smime::isSmimeSignatureOnly(Mail\Smime::getSmimeType($_mime_part)))
 		{
 			try{
 				$message = $this->_decryptSmimeBody($message, $params['passphrase'] !='' ?
