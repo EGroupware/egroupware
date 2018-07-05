@@ -864,14 +864,14 @@ app.classes.addressbook = AppJS.extend(
 		switch (action.id)
 		{
 			case "add_to_to":
-				egw.open_link('mailto:' + emails.join(','));
+				egw.open_link('mailto:' + emails.join(',').replace(/&/g, '__AMPERSAND__'));
 				break;
 			case "add_to_cc":
-				egw.open_link('mailto:' + '?cc='  + emails.join(','));
+				egw.open_link('mailto:' + '?cc='  + emails.join(',').replace(/&/g, '__AMPERSAND__'));
 				//egw.mailto('mailto:');
 				break;
 			case "add_to_bcc":
-				egw.open_link('mailto:' + '?bcc=' + emails.join(','));
+				egw.open_link('mailto:' + '?bcc=' + emails.join(',').replace(/&/g, '__AMPERSAND__'));
 				break;
 		}
 
