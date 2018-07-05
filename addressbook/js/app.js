@@ -852,6 +852,9 @@ app.classes.addressbook = AppJS.extend(
 			var personal = data.data.n_fn || '';
 			if (personal.match(/[^a-z0-9. -]/i)) personal = '"'+personal.replace(/"/, '\\"')+'"';
 
+			//remove comma in personal as it will confilict with mail content comma seperator in the process
+			personal = personal.replace(/,/g,'');
+			
 			if(email_business)
 			{
 				emails.push((personal?personal+' <':'')+email_business+(personal?'>':''));
