@@ -49,7 +49,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			match.push(index[0]);
 			match[index[0]] = index[1];
 		}
-
+		if (mailto[1]) mailto[1] = mailto[1].replace(/__AMPERSAND__/g, '&');
 		var content = {
 			to: mailto[1] || [],
 			cc: match['cc']	|| [],
