@@ -2126,6 +2126,10 @@ app.classes.mail = AppJS.extend(
 
 		// to reset iframes to the normal status
 		this.loadIframe();
+		
+		// reset nm action selection, seems actions system accumulate selected items
+		// and that leads to corruption for selected all actions
+		this.et2.getWidgetById(this.nm_index).controller._selectionMgr.resetSelection();
 
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
