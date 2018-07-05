@@ -1207,6 +1207,7 @@ body {
   float: none;
   width: auto;
   white-space: nowrap;
+  text-align: left;
 }
 #mail-compose .mailComposeHeaders input#mail-compose_subject,
 #mail-compose .mailComposeHeadersSection input#mail-compose_subject {
