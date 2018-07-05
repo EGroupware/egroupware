@@ -865,11 +865,12 @@ class mail_compose
 						$addRequests = explode('&',$mailtoArray[1]);
 						foreach ($addRequests as $key => $reqval) {
 							// the additional requests should have a =, to separate key from value.
+							$reqval = preg_replace('/__AMPERSAND__/i', "&", $reqval);
 							$keyValuePair = explode('=',$reqval,2);
 							$content[$keyValuePair[0]] .= (strlen($content[$keyValuePair[0]])>0 ? ' ':'') . $keyValuePair[1];
 						}
 					}
-					$content['to']=$mailtoArray[0];
+					$content['to']= preg_replace('/__AMPERSAND__/i', "&", $mailtoArray[0]);
 					$alreadyProcessed['to']='to';
 					// if the mailto string is not htmlentity decoded the arguments are passed as simple requests
 					foreach(array('cc','bcc','subject','body') as $name) {

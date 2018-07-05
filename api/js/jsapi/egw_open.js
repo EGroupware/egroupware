@@ -45,7 +45,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		var hashes = uri.slice(uri.indexOf('?') + 1).split('&');
 		for(var i = 0; i < hashes.length; i++)
 		{
-			index = hashes[i].split('=');
+			index = hashes[i].replace(/__AMPERSAND__/g, '&').split('=');
 			match.push(index[0]);
 			match[index[0]] = index[1];
 		}
