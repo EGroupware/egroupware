@@ -6,9 +6,8 @@
  * @link http://www.egroupware.org
  * @package admin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-18 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -298,12 +297,9 @@ function load_egw($user,$passwd,$domain='default')
  */
 function _check_pw($hash_or_cleartext,$pw)
 {
-	//echo "_check_pw($hash_or_cleartext,$pw) md5=".md5($pw)."\n";
-	if (preg_match('/^[0-9a-f]{32}$/',$hash_or_cleartext))
-	{
-		return $hash_or_cleartext == md5($pw);
-	}
-	return $hash_or_cleartext == $pw;
+	return Api\Auth::compare_password($pw, $hash_or_cleartext,
+		// old header.inc.php allows md5 or plain passwords with out {type} prefix, which takes precedence
+		preg_match('/^[0-9a-f]{32}$/', $hash_or_cleartext) ? 'md5' : 'plain');
 }
 
 /**
