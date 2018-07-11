@@ -313,6 +313,29 @@ class mail_compose
 		//error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
 		$_contentHasSigID = $_content?array_key_exists('mailidentity',(array)$_content):false;
 		$_contentHasMimeType = $_content? array_key_exists('mimeType',(array)$_content):false;
+
+		// fetch appendix data which is an assistance input value consisiting of json data
+		if ($_content['appendix_data'])
+		{
+			$appendix_data = json_decode($_content['appendix_data'], true);
+		}
+
+		if ($appendix_data['emails'])
+		{
+			try {
+				$attched_uids = $this->_get_uids_as_attachments($appendix_data['emails']['ids'], $_content['serverID']);
+				if (is_array($attched_uids))
+				{
+					$_content['attachments'] = array_merge_recursive((array)$_content['attachments'], $attched_uids);
+				}
+			} catch (Exception $ex) {
+				Framework::message($ex->getMessage(), 'error');
+			}
+			$suppressSigOnTop = true;
+			unset($appendix_data);
+			$_content['appendix_data'] = '';
+		}
+
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
 
@@ -782,14 +805,13 @@ class mail_compose
 		// do not double insert a signature on a server roundtrip
 		if ($buttonClicked) $suppressSigOnTop = true;
 
-		// On submit reads vcard_from_ab widget's value and addes them as attachments.
+		// On submit reads external_vcard widget's value and addes them as attachments.
 		// this happens when we send vcards from addressbook to an opened compose
 		// dialog.
-		if ($_content['vcard_from_ab'])
+		if ($appendix_data['files'])
 		{
-			$vcard = json_decode($_content['vcard_from_ab'], true);
-			$_REQUEST['preset']['file'] = $vcard['file'];
-			$_REQUEST['preset']['type'] = $vcard['type'];
+			$_REQUEST['preset']['file'] = $appendix_data['files']['file'];
+			$_REQUEST['preset']['type'] = $appendix_data['files']['type'];
 			$suppressSigOnTop = true;
 			unset($_content['attachments']);
 			$this->addPresetFiles($content, $insertSigOnTop, true);
@@ -3809,5 +3831,41 @@ class mail_compose
 		{
 			throw new $e;
 		}
+	}
+
+	/**
+	 * Builds attachments from provided UIDs and add them to sessionData
+	 *
+	 * @param string|array $_ids series of message ids
+	 * @param int $_serverID compose current profileID
+	 *
+	 * @return array returns an array of attachments
+	 *
+	 * @throws Exception throws exception on cross account attempt
+	 */
+	function _get_uids_as_attachments ($_ids, $_serverID)
+	{
+		$ids = is_array($_ids) ? $_ids : explode(',', $_ids);
+		if (is_array($ids) && $_serverID)
+		{
+			$parts = mail_ui::splitRowID($ids[0]);
+			if ($_serverID != $parts['profileID'])
+			{
+				throw new Exception(lang('Cross account forward attachment is not allowed!'));
+			}
+		}
+		foreach ($ids as &$id)
+		{
+			$parts = mail_ui::splitRowID($id);
+			$mail_bo    = $this->mail_bo;
+			$mail_bo->openConnection();
+			$mail_bo->reopen($parts['folder']);
+			$headers	= $mail_bo->getMessageEnvelope($parts['msgUID'], null,false,$parts['folder']);
+			$this->addMessageAttachment($parts['msgUID'], null, $parts['folder'],
+					$mail_bo->decode_header(($headers['SUBJECT']?$headers['SUBJECT']:lang('no subject'))).'.eml',
+					'MESSAGE/RFC822', $headers['SIZE'] ? $headers['SIZE'] : lang('unknown'));
+			$mail_bo->closeConnection();
+		}
+		return $this->sessionData['attachments'];
 	}
 }
