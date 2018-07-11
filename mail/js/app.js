@@ -638,6 +638,7 @@ app.classes.mail = AppJS.extend(
 						for(var j = 1; j < _elems.length; j++)
 						settings.id = settings.id + ',' + _elems[j].id;
 					}
+					return egw.openWithinWindow("mail", "setCompose", {data:{emails:{ids:settings.id}}}, settings, /mail.mail_compose.compose/);
 				}
 				else
 				{
@@ -689,10 +690,10 @@ app.classes.mail = AppJS.extend(
 		{
 			try
 			{
-				if (field == 'vcard')
+				if (field == 'data')
 				{
-					var vcard_from_ab = compose_et2[0].widgetContainer.getWidgetById('vcard_from_ab');
-					vcard_from_ab.set_value(JSON.stringify(content.vcard));
+					var w = compose_et2[0].widgetContainer.getWidgetById('appendix_data');
+					w.set_value(JSON.stringify(content[field]));
 					return compose_et2[0].widgetContainer._inst.submit();
 				}
 
@@ -2126,7 +2127,7 @@ app.classes.mail = AppJS.extend(
 
 		// to reset iframes to the normal status
 		this.loadIframe();
-		
+
 		// reset nm action selection, seems actions system accumulate selected items
 		// and that leads to corruption for selected all actions
 		this.et2.getWidgetById(this.nm_index).controller._selectionMgr.resetSelection();

@@ -260,13 +260,15 @@ app.classes.filemanager = AppJS.extend(
 		if (typeof attachments == 'undefined') attachments = this.get_clipboard_files();
 		if (!params || typeof params != 'object') params = {};
 		if (!(attachments instanceof Array)) attachments = [ attachments ];
+		var content = {data:{files:{file:[]}}};
 		for(var i=0; i < attachments.length; i++)
 		{
-		   params['preset[file]['+i+']'] = 'vfs://default'+attachments[i];
+			params['preset[file]['+i+']'] = 'vfs://default'+attachments[i];
+			content.data.files.file.push('vfs://default'+attachments[i]);
 		}
 		// always open compose in html mode, as attachment links look a lot nicer in html
 		params.mimeType = 'html';
-		egw.open('', 'mail', 'add', params);
+		return egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/);
 	},
 
 	/**

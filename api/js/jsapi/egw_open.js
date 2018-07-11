@@ -482,7 +482,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 							}
 							len += tmp.length;
 						}
-						else
+						else if(_extra[i])
 						{
 							len += _extra[i].length;
 						}

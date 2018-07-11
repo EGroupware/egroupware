@@ -770,7 +770,7 @@ app.classes.addressbook = AppJS.extend(
 	adb_mail_vcard: function(_action, _elems)
 	{
 		var link = {'preset[type]':[], 'preset[file]':[]};
-		var content = {vcard:{file:[], type:[]}};
+		var content = {data:{files:{file:[], type:[]}}};
 		var nm = this.et2.getWidgetById('nm');
 		if(fetchAll(_elems, nm, jQuery.proxy(function(ids) {
 			this.adb_mail_vcard(_action, ids.map(function(num) {return {id:'addressbook::'+num};}));
@@ -786,8 +786,8 @@ app.classes.addressbook = AppJS.extend(
 			idToUse = idToUseArray[1];
 			link['preset[type]'].push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
 			link['preset[file]'].push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
-			content.vcard.file.push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
-			content.vcard.type.push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
+			content.data.files.file.push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
+			content.data.files.type.push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
 		}
 		egw.openWithinWindow("mail", "setCompose", content, link, /mail.mail_compose.compose/);
 
@@ -854,7 +854,7 @@ app.classes.addressbook = AppJS.extend(
 
 			//remove comma in personal as it will confilict with mail content comma seperator in the process
 			personal = personal.replace(/,/g,'');
-			
+
 			if(email_business)
 			{
 				emails.push((personal?personal+' <':'')+email_business+(personal?'>':''));
