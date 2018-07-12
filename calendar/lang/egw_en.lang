@@ -100,6 +100,7 @@ check all	calendar	en	Check all
 choose a category	calendar	en	Choose a category
 close the window	calendar	en	Close the window
 compose a mail to all participants after the event is saved	calendar	en	Compose a mail to all participants after the event is saved.
+configuration settings	calendar	en	Configuration settings
 conflict	calendar	en	Conflict
 copy of:	calendar	en	Copy of:
 copy this event	calendar	en	Copy this event
@@ -118,8 +119,8 @@ csv	calendar	en	CSV
 csv-fieldname	calendar	en	CSV field name
 csv-filename	calendar	en	CSV file name
 custom	calendar	en	Custom
-custom event color	calendar	en	Custom event color
 custom color for events without category color	calendar	en	Custom color for events without category color
+custom event color	calendar	en	Custom event color
 custom fields	common	en	Custom fields
 custom url for ical with holidays for all users	calendar	en	Custom URL for iCal with holidays for all users
 custom_2	common	en	Free/Busy
@@ -378,8 +379,8 @@ not rejected	calendar	en	Not rejected
 nothing to update, version is already %1.	calendar	en	Nothing to update, version is already %1.
 notification messages for added events	calendar	en	Notification messages for added events
 notification messages for canceled events	calendar	en	Notification messages for canceled events
-notification messages for uninvited participants	calendar	en	Notification messages for uninvited participants
 notification messages for modified events	calendar	en	Notification messages for modified events
+notification messages for uninvited participants	calendar	en	Notification messages for uninvited participants
 notification messages for your alarms	calendar	en	Notification messages for your alarms
 notification messages for your responses	calendar	en	Notification messages for your responses
 notification settings	calendar	en	Notification settings
@@ -556,8 +557,8 @@ this mail contains a meeting request	calendar	en	This mail contains a meeting re
 this mail contains a reply to a meeting request	calendar	en	This mail contains a reply to a meeting request
 this message is sent for canceled or deleted events.	calendar	en	This message is sent for canceled or deleted events.
 this message is sent for modified or moved events.	calendar	en	This message is sent for modified or moved events.
-this message is sent to uninvited participants.	calendar	en	This message is sent to uninvited participants.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	en	This message is sent to every participant of events you own, who has requested notifications about new events.<br>You can use certain variables which get substituted with the data of the event. The first line is the subject of the email.
+this message is sent to uninvited participants.	calendar	en	This message is sent to uninvited participants.
 this message is sent when you accept, tentative accept or reject an event.	calendar	en	This message is sent when you accept, tentative accept or reject an event.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	en	This message is sent when you set an Alarm for a certain event. Include all information you might need.
 this module displays a planner calendar.	calendar	en	This module displays a planner calendar.
@@ -588,6 +589,7 @@ tue	calendar	en	Tue
 two weeks	calendar	en	Two weeks
 type of planner	calendar	en	Type of planner
 unable to save	calendar	en	Unable to save
+uninvited	calendar	en	uninvited.
 update calendar view immediately when navigation calendar in sidebox is changed	calendar	en	Update calendar view immediately when navigation calendar in sidebox is changed
 update timezones	common	en	Update time zones
 updated	calendar	en	Updated
