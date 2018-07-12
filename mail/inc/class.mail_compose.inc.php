@@ -1380,6 +1380,7 @@ class mail_compose
 			$attach['filemode_icon'] = !is_dir($attach['file']) &&
 					($content['filemode'] == Vfs\Sharing::READONLY || $content['filemode'] == Vfs\Sharing::WRITABLE)
 					? Vfs\Sharing::LINK : $content['filemode'];
+			$attach['filemode_title'] = lang(Vfs\Sharing::$modes[$attach['filemode_icon']]['label']);
 		}
 
 		$content['to'] = self::resolveEmailAddressList($content['to']);

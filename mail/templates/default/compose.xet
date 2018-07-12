@@ -108,7 +108,7 @@
 					</columns>
 					<rows>
 						<row class="row attachmentRow">
-							<image src="$row_cont[filemode_icon]"/>
+							<image src="$row_cont[filemode_icon]" statustext="$row_cont[filemode_title]"/>
 							<description id="${row}[tmp_name]"/>
 							<description class="useEllipsis et2_link" id="${row}[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
 							<vfs-size align="right" id="${row}[size]" />
