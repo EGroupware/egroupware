@@ -72,7 +72,6 @@ attachments	mail	en	Attachments
 authentication	mail	en	Authentication
 available personal email-accounts/profiles	mail	en	available personal EMail-Accounts/Profiles
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r would you like to proceed?	mail	en	Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r Would you like to proceed?
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r\ would you like to proceed?	mail	en	Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r\ Would you like to proceed?
 be aware that all attachments will be sent as %1!	mail	en	Be aware that all attachments will be sent as %1!
 before reply, visible during compose	mail	en	Before reply, visible during compose
 blacklisted mails are marked as spam	mail	en	Blacklisted mails are marked as spam
