@@ -317,6 +317,7 @@ class mail_compose
 		if ($_content['appendix_data'])
 		{
 			$appendix_data = json_decode($_content['appendix_data'], true);
+			$_content['appendix_data'] = '';
 		}
 
 		if ($appendix_data['emails'])
@@ -332,7 +333,6 @@ class mail_compose
 			}
 			$suppressSigOnTop = true;
 			unset($appendix_data);
-			$_content['appendix_data'] = '';
 		}
 
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
@@ -811,6 +811,9 @@ class mail_compose
 		{
 			$_REQUEST['preset']['file'] = $appendix_data['files']['file'];
 			$_REQUEST['preset']['type'] = $appendix_data['files']['type'];
+			$_content['filemode'] = !empty($appendix_data['files']['filemode']) &&
+						isset(Vfs\Sharing::$modes[$appendix_data['files']['filemode']]) ?
+							$appendix_data['files']['filemode'] : Vfs\Sharing::ATTACH;
 			$suppressSigOnTop = true;
 			unset($_content['attachments']);
 			$this->addPresetFiles($content, $insertSigOnTop, true);
@@ -1368,6 +1371,15 @@ class mail_compose
 		foreach(array('to', 'cc', 'bcc', 'replyto')  as $f)
 		{
 			if (is_array($content[$f])) $content[$f]= self::resolveEmailAddressList ($content[$f]);
+		}
+
+		// set filemode icons for all attachments
+		foreach($content['attachments'] as &$attach)
+		{
+			$attach['is_dir'] = is_dir($attach['file']);
+			$attach['filemode_icon'] = !is_dir($attach['file']) &&
+					($content['filemode'] == Vfs\Sharing::READONLY || $content['filemode'] == Vfs\Sharing::WRITABLE)
+					? Vfs\Sharing::LINK : $content['filemode'];
 		}
 
 		$content['to'] = self::resolveEmailAddressList($content['to']);

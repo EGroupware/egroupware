@@ -266,6 +266,7 @@ app.classes.filemanager = AppJS.extend(
 			params['preset[file]['+i+']'] = 'vfs://default'+attachments[i];
 			content.data.files.file.push('vfs://default'+attachments[i]);
 		}
+		content.data.files.filemode = params['preset[filemode]'];
 		// always open compose in html mode, as attachment links look a lot nicer in html
 		params.mimeType = 'html';
 		return egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/);

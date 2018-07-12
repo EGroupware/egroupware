@@ -694,7 +694,28 @@ app.classes.mail = AppJS.extend(
 				{
 					var w = compose_et2[0].widgetContainer.getWidgetById('appendix_data');
 					w.set_value(JSON.stringify(content[field]));
-					return compose_et2[0].widgetContainer._inst.submit();
+					var filemode = compose_et2[0].widgetContainer.getWidgetById('filemode');
+					if (content[field]['files'] && content[field]['files']['filemode']
+							&& filemode && filemode.get_value() != content[field]['files']['filemode'])
+					{
+						var filemode_label = filemode.options.select_options[content[field]['files']['filemode']]['label'];
+						var files = content[field]['files']['file'].join('\n\r');
+						et2_dialog.show_dialog(function(_button){
+							if (_button == 2)
+							{
+								compose_et2[0].widgetContainer._inst.submit();
+							}
+						},
+						this.egw.lang(
+							'Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r\ Would you like to proceed?',
+							filemode_label, filemode_label, files),
+						this.egw.lang('Add files as %1', filemode_label), '', et2_dialog.BUTTONS_YES_NO, et2_dialog.WARNING_MESSAGE);
+						return;
+					}
+					else
+					{
+						return compose_et2[0].widgetContainer._inst.submit();
+					}
 				}
 
 				var widget = compose_et2[0].widgetContainer.getWidgetById(field);
@@ -4969,6 +4990,33 @@ app.classes.mail = AppJS.extend(
 		{
 			this.egw.message(this.egw.lang('Writable sharing requires EPL version!'), 'info');
 			_widget.set_value('share_ro');
+		}
+
+		if (typeof _node != 'undefined')
+		{
+			et2_dialog.alert(this.egw.lang(
+						'Be aware that all attachments will be sent as %1!',
+						_widget.options.select_options[_widget.get_value()]['label']
+					),
+					this.egw.lang(
+						'Filemode has been switched to %1',
+						_widget.options.select_options[_widget.get_value()]['label']
+					),
+					et2_dialog.WARNING_MESSAGE);
+			var content = this.et2.getArrayMgr('content');
+			var attachments = this.et2.getWidgetById('attachments');
+			for (var i in content.data.attachments)
+			{
+				if (content.data.attachments[i] == null)
+				{
+					content.data.attachments.splice(i,1);
+					continue;
+				}
+				content.data.attachments[i]['filemode_icon'] = !content.data.attachments[i]['is_dir'] &&
+						(_widget.get_value() == 'share_rw' || _widget.get_value() == 'share_ro') ? 'link' : _widget.get_value();
+			}
+			this.et2.setArrayMgr('content', content);
+			attachments.set_value({content:content.data.attachments});
 		}
 	},
 
