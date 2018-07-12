@@ -1065,6 +1065,10 @@ abstract class Tracking
 		{
 			$body .= ($html_email ? '<br />':'') . "\n$sig";
 		}
+		if (!$html_email && $data['tr_edit_mode'] == 'html')
+		{
+			$body = Api\Mail\Html::convertHTMLToText($body);
+		}
 		return $body;
 	}
 
