@@ -65,8 +65,8 @@ arrival	mail	de	Empfangsdatum
 ask for permission	mail	de	Immer nachfragen
 attach users vcard at compose to every new mail	mail	de	Füge die vCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
-attachment has been saved successfully.	mail	de	Anhang erfolgreich gespeichert.
 attachment	mail	de	Anhang
+attachment has been saved successfully.	mail	de	Anhang erfolgreich gespeichert.
 attachments	mail	de	Dateien
 authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
@@ -391,8 +391,8 @@ prevent managing notifications	mail	de	Zugriff auf Benachrichtigungen deaktivier
 prevent managing vacation notice	mail	de	Zugriff auf die Abwesenheitsbenachrichtigung deaktivieren
 preview pane	mail	de	Mailvorschau
 primary profile	mail	de	Primäres Profil
-printview	mail	de	Druckansicht
 printing	mail	de	Drucke
+printview	mail	de	Druckansicht
 processing of file %1 failed. failed to meet basic restrictions.	mail	de	Das Verarbeiten der Datei %1 ist fehlgeschlagen. Grundlegende Voraussetzungen wurden nicht erfüllt.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	de	Vorschlagstext für eine Abwesenheitsnotiz (wenn noch kein eigener Benachrichtigungstext vorhanden ist)
 quicksearch	mail	de	Schnellsuche
