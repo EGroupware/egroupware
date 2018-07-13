@@ -361,12 +361,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/magicsuggest.git",
-                "reference": "2818189cd8ae69b1ab6dccd5d4516ffa19b92e55"
+                "reference": "c9f571479c6b12772256ca8b63d67f5cb3f04e56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/magicsuggest/zipball/2818189cd8ae69b1ab6dccd5d4516ffa19b92e55",
-                "reference": "2818189cd8ae69b1ab6dccd5d4516ffa19b92e55",
+                "url": "https://api.github.com/repos/EGroupware/magicsuggest/zipball/c9f571479c6b12772256ca8b63d67f5cb3f04e56",
+                "reference": "c9f571479c6b12772256ca8b63d67f5cb3f04e56",
                 "shasum": ""
             },
             "require": {
@@ -390,7 +390,7 @@
             ],
             "description": "Compiled version of magicsuggest customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/magicsuggest",
-            "time": "2018-06-21 10:14:03"
+            "time": "2018-06-21 13:36:37"
         },
         {
             "name": "fxp/composer-asset-plugin",
