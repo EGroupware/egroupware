@@ -1900,7 +1900,7 @@ body {
   background-color: transparent;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select[name="remember_me"] {
-  text-indent: 120px;
+  text-indent: 60%;
   background-color: transparent;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select:focus,
