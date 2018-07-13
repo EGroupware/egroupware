@@ -24,6 +24,7 @@ function show_pixelegg_header(_toggle, _delay)
         jQuery(".egw_fw_ui_sidemenu_entry_header_active").css("background-position","95% -3000px");
 	jQuery(_toggle).parent().removeClass("slidedown");
 	jQuery(_toggle).parent().addClass("slideup");
+	jQuery('#egwpopup, .egwpopup_message.egwpopup_expanded').css({top:'90px', height:'calc(100% - 130px)'});
 }
 
 //closed = Topmenu is gone
@@ -31,7 +32,7 @@ function hide_pixelegg_header(_toggle, _delay)
 {
 	jQuery("#egw_fw_header").slideToggle();
 	jQuery("#egw_fw_sidebar").animate({'top':'3px'},_delay);
-//	jQuery("#egw_fw_topmenu_info_items").show();
+	//	jQuery("#egw_fw_topmenu_info_items").show();
 	jQuery("#egw_fw_logout").show();
 	jQuery("#egw_fw_print").show();
         jQuery("#egw_fw_tabs").animate({'margin-top':'8px', "top": "0px"},_delay);
@@ -44,30 +45,21 @@ function hide_pixelegg_header(_toggle, _delay)
 //			"white-space": "nowrap",
 //			},_delay);
 	jQuery(".egw_fw_ui_sidemenu_entry_header_active").css("background-position","95% 50%");
-
-//	jQuery("#egw_fw_topmenu_info_items").css("position", "fixed");
-//	jQuery("#egw_fw_topmenu_info_items").css("z-index", "1000");
-        // Form - Country Switch
-//        jQuery("#egw_fw_topmenu_info_items form").css("display", "none");
-
-        jQuery(".egw_fw_ui_tabs_header").css("height", "34px")
-			// Padding to adjust for icons left & right of the tabs
-			.css("padding", "1px 150px 0px 20px");
-
-
-        //Tab
-        jQuery(".egw_fw_ui_tab_header").css("height", "24px");
-            // ICON
-            //jQuery(".egw_fw_ui_tab_icon").css("height", "17px");
-            jQuery(".egw_fw_ui_tab_icon").css("display", "inline-block");
-            jQuery(".egw_fw_ui_tab_icon").css("margin-right", "5px");
-            // H1
-            jQuery(".egw_fw_ui_tabs_header h1").css("float", "none");
-            jQuery(".egw_fw_ui_tabs_header h1").css("display", "inline");
-
-
+	jQuery(".egw_fw_ui_tabs_header").css("height", "34px")
+		// Padding to adjust for icons left & right of the tabs
+		.css("padding", "1px 150px 0px 20px");
+	//Tab
+	jQuery(".egw_fw_ui_tab_header").css("height", "24px");
+	// ICON
+	//jQuery(".egw_fw_ui_tab_icon").css("height", "17px");
+	jQuery(".egw_fw_ui_tab_icon").css("display", "inline-block");
+	jQuery(".egw_fw_ui_tab_icon").css("margin-right", "5px");
+	// H1
+	jQuery(".egw_fw_ui_tabs_header h1").css("float", "none");
+	jQuery(".egw_fw_ui_tabs_header h1").css("display", "inline");
 	jQuery(_toggle).parent().removeClass("slideup");
 	jQuery(_toggle).parent().addClass("slidedown");
+	jQuery('#egwpopup, .egwpopup_message.egwpopup_expanded').css({top:'45px', height:'calc(100% - 85px)'});
 }
 
 /*

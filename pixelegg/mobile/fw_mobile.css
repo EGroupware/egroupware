@@ -3561,14 +3561,16 @@ td.lettersearch {
  * @version $Id$
  */
 #egwpopup {
-  top: 43px !important;
+  top: 85px;
   right: 0px !important;
   left: auto !important;
-  height: calc(100% - 65px);
-  width: 300px !important;
+  height: calc(100% - 130px);
+  width: 277px !important;
   position: absolute;
   background: white;
-  box-shadow: -2px 1px 18px 1px silver;
+  border: 1px solid silver;
+  border-top: none;
+  border-bottom: none;
   padding: 1em;
   /*Button*/
 }
@@ -3713,8 +3715,8 @@ td.lettersearch {
 }
 #egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded {
   position: fixed;
-  top: 4vh;
-  height: 90vh;
+  top: 85px;
+  height: calc(100% - 130px);
   left: 20vw;
   width: 60vw;
   box-shadow: 0 0 40px #666;
