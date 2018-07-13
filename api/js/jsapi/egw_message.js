@@ -288,7 +288,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				var $animator = jQuery(_wnd.document.createElement('div'))
 						.addClass('egw-loading-prompt-'+mode+'-animator')
 						.appendTo($container);
-				$container.insertBefore($node);
+				if (jQuery('#'+id).length == 0) $container.insertBefore($node);
 				return $container;
 			}
 			else
