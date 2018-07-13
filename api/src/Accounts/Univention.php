@@ -255,4 +255,92 @@ class Univention extends Ldap
 		//return true;
 		return file_exists(self::DIRECTORY_MANAGER_BIN) && is_executable(self::DIRECTORY_MANAGER_BIN);
 	}
+
+	/**
+	 * changes password in LDAP
+	 *
+	 * If $old_passwd is given, the password change is done binded as user and NOT with the
+	 * "root" dn given in the configurations.
+	 *
+	 * @param string $old_passwd must be cleartext or empty to not to be checked
+	 * @param string $new_passwd must be cleartext
+	 * @param int $account_id account id of user whose passwd should be changed
+	 * @param boolean $update_lastchange =true
+	 * @return boolean true if password successful changed, false otherwise
+	 */
+	function change_password($old_passwd, $new_passwd, $account_id=0, $update_lastchange=true)
+	{
+		if (!self::available())
+		{
+			return false;
+		}
+		if (!$account_id)
+		{
+			$username = $GLOBALS['egw_info']['user']['account_lid'];
+		}
+		else
+		{
+			$username = Api\Translation::convert($GLOBALS['egw']->accounts->id2name($account_id),
+				Api\Translation::charset(),'utf-8');
+		}
+		if ($this->debug) error_log(__METHOD__."('$old_passwd','$new_passwd',$account_id, $update_lastchange) username='$username'");
+
+		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),
+			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
+
+		$ds = $ds_admin = Api\Ldap::factory();
+		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
+		$allValues = ldap_get_entries($ds, $sri);
+
+		if ($update_lastchange)
+		{
+			// ToDo: $entry['shadowlastchange'] = round((time()-date('Z')) / (24*3600));
+		}
+
+		$dn = $allValues[0]['dn'];
+
+		if($old_passwd)	// if old password given (not called by admin) --> bind as that user to change the pw
+		{
+			try {
+				$ds = Api\Ldap::factory(true, '', $dn, $old_passwd);
+			}
+			catch (Api\Exception\NoPermission $e) {
+				unset($e);
+				return false;	// wrong old user password
+			}
+		}
+		$ssh = null;//'/usr/bin/ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -i /var/lib/egroupware/id_rsa root@10.44.22.194';
+		$config = $this->frontend->config && $this->frontend->config['ldap_context'] ?
+			$this->frontend->config : $GLOBALS['egw_info']['server'];
+
+		$params = array(
+			'users/user','modify',
+			'--binddn', $config['ldap_root_dn'],
+			'--bindpwd', 5=>$config['ldap_root_pw'],
+			'--dn', $dn,
+			'--set', 'password='.$new_passwd,
+		);
+		if ($old_passwd)
+		{
+			$params[] = '--set';
+			$params[] = 'pwdChangeNextLogin=0';
+		}
+		$cmd = self::DIRECTORY_MANAGER_BIN.' '.implode(' ', array_map('escapeshellarg', $params));
+		if (isset($ssh)) $cmd = $ssh.' bash -c "\\"'.$cmd.'\\""';
+		$output_arr = $ret = $matches = null;
+		exec($cmd, $output_arr, $ret);
+		$output = implode("\n", $output_arr);
+		if ($ret || !preg_match('/^Object modified: ((uid|cn)=.*)$/mui', $output, $matches))
+		{
+			$params[5] = '********';	// mask out password!
+			$cmd = self::DIRECTORY_MANAGER_BIN.' '.implode(' ', array_map('escapeshellarg', $params));
+			throw new Api\Exception\WrongUserinput($cmd."\nreturned\n".$output);
+		}
+		if($old_passwd)	// if old password given (not called by admin) update the password in the session
+		{
+			// using time() is sufficient to represent the current time, we do not need the timestamp written to the storage
+			Api\Cache::setSession('phpgwapi','auth_alpwchange_val',time());
+		}
+		return $new_passwd;
+	}
 }

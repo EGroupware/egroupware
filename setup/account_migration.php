@@ -167,7 +167,6 @@ else	// do the migration
 	if ($_POST['migrate'])
 	{
 		Api\Config::save_value('account_repository', $GLOBALS['egw_info']['server']['account_repository']=$to, 'phpgwapi');
-		if ($to == 'univention') $to = 'ldap';	// there is no auth type "univention", just "ldap"
 		if (empty($GLOBALS['egw_info']['server']['auth_type']) || $GLOBALS['egw_info']['server']['auth_type'] == $from)
 		{
 			Api\Config::save_value('auth_type', $GLOBALS['egw_info']['server']['auth_type']=$to, 'phpgwapi');
