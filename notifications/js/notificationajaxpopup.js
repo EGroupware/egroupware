@@ -372,6 +372,7 @@
 		_node[0].removeClass('egwpopup_expanded');
 		_node[0].css('z-index', 0);
 		this.checkNavButtonStatus();
+		egw.loading_prompt('popup_notifications', false);
 	};
 
 	/**
@@ -395,6 +396,7 @@
 		var zindex = jQuery('.egwpopup_expanded').length;
 		_node[0].addClass('egwpopup_expanded').css('z-index', zindex++);
 		this.checkNavButtonStatus();
+		if (jQuery('#egwpopup').is(':visible')) egw.loading_prompt('popup_notifications', true);
 	};
 
 	notifications.prototype.nav_button = function (_params, _event){
@@ -507,6 +509,7 @@
 		notifymessages = {};
 		jQuery("#egwpopup_list").empty();
 		this.counterUpdate();
+		egw.loading_prompt('popup_notifications', false);
 	};
 
 	/**
@@ -524,16 +527,20 @@
 		var request = egw.json("notifications.notifications_ajax.delete_message", [ids]);
 		request.sendRequest(true);
 		var nextNode = egwpopup_message.next();
+		var keepLoadingPrompt = false;
 		delete (notifymessages[id]);
 		if (nextNode.length > 0 && nextNode[0].id.match(/egwpopup_message_/ig) && egwpopup_message.hasClass('egwpopup_expanded'))
 		{
 			nextNode.trigger('click');
+			keepLoadingPrompt = true;
 		}
 		// try to close the dialog if expanded before hidding it
 		this.collapseMessage(_node, _event);
+		if (keepLoadingPrompt) egw.loading_prompt('popup_notifications', true);
 		egwpopup_message.remove();
 		this.bell("inactive");
 		this.counterUpdate();
+
 	};
 
 	/**
@@ -720,19 +727,22 @@
 						!$egwpopup.is(e.target) && $egwpopup.has(e.target).length == 0)
 				{
 					jQuery(this).off(e);
-					$egwpopup.slideToggle('fast');
+					$egwpopup.toggle('slide');
+					egw.loading_prompt('popup_notifications', false);
 				}
 			});
+			egw.loading_prompt('popup_notifications', jQuery("#egwpopup_list").find('.egwpopup_expanded').length>0);
 		}
 		else
 		{
+			egw.loading_prompt('popup_notifications', false);
 			if (_stat) return;
 			$body.off('click');
 		}
 		// Remove popup_note as soon as message list is toggled
 		jQuery('.popup_note', '#egwpopup_fw_notifications').remove();
 
-		if ($egwpopup.length>0) $egwpopup.slideToggle('fast');
+		if ($egwpopup.length>0) $egwpopup.toggle('slide');
 	};
 
 	/**
