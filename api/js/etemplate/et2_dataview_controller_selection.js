@@ -108,6 +108,10 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 			this.unregisterRow(key, this._registeredRows[key].tr);
 			delete this._registeredRows[key];
 		}
+		if(this._actionObjectManager)
+		{
+			this._actionObjectManager.clear();
+		}
 		this._indexMap = {};
 		this._total = 0;
 		this._focusedEntry = null;
@@ -234,6 +238,10 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 
 		this._selectAll = true;
 
+		if(Object.keys(this._registeredRows).length != this._total)
+		{
+			this._selectRange(0, this._total);
+		}
 		// Tell action manager to do all
 		this._actionObjectManager.setAllSelected(true);
 
