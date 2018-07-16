@@ -147,6 +147,9 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 
 			// Free selection manager
 			this._selectionMgr.clear();
+			
+			// Clear object manager
+			this._objectManager.clear();
 
 			// Clear the map
 			this._indexMap = {}

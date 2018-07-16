@@ -489,6 +489,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 					changed = true;
 					keep_selection = true;
 					this.controller._selectionMgr.resetSelection();
+					this.controller._objectManager.clear();
 					for(var i in _set.selected)
 					{
 						this.controller._selectionMgr.setSelected(_set.selected[i].indexOf('::') > 0 ? _set.selected[i] : this.controller.dataStorePrefix + '::'+_set.selected[i],true);
@@ -514,6 +515,8 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		{
 			// Do not keep selection
             this.controller._selectionMgr.resetSelection();
+			this.controller._objectManager.clear();
+			this.controller.keepSelection();
 		}
 
 		// Update the filters in the grid controller
