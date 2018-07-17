@@ -408,7 +408,7 @@ class mail_hooks
 			'toggledOnActions' => array(
 				'type' => 'taglist',
 				'label' => 'Toggled on actions',
-				'help' => 'List of actions to be switched/activated on by default',
+				'help' => 'List of actions to be switched/activated on by default (eg. Mail compose save as infolog action)',
 				'name' => 'toggledOnActions',
 				'values' => '',
 				'attributes' => array(
