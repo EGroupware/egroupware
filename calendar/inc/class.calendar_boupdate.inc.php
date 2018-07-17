@@ -673,6 +673,8 @@ class calendar_boupdate extends calendar_bo
 						++$want_update;
 					}
 					break;
+				case 'no':
+					break;
 			}
 		}
 		//error_log(__METHOD__."(userid=$userid, receive_updates='$ru', msg_type=$msg_type, ..., role='$role') msg_is_response=$msg_is_response --> want_update=$want_update");
