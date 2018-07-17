@@ -237,29 +237,6 @@ class mail_hooks
 				'admin'  => False,
 				'forced' => 'always_display',
 			),
-			'allowExternalIMGs' => array(
-				'type'   => 'select',
-				'label'  => 'Allow external images',
-				'help'   => 'allow images from external sources in html emails',
-				'name'   => 'allowExternalIMGs',
-				'values' => array(
-					0 => lang('Never'),
-					1 => lang('Always'),
-					2 => lang('Ask for permission')
-				),
-				'xmlrpc' => True,
-				'admin'  => True,
-				'default' => 2,
-				'forced' => 1,
-			),
-			'allowExternalDomains' => array(
-				'type'   => 'taglist',
-				'label'  => 'Allow external images from listed domains',
-				'help'   => 'allow images from listed domains in html emails',
-				'name'   => 'allowExternalDomains',
-				'values' => $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains'],
-				'no_sel_options' => true
-			),
 			'message_forwarding' => array(
 				'type'   => 'select',
 				'label'  => 'how to forward messages',
@@ -323,6 +300,29 @@ class mail_hooks
 				'xmlrpc' => True,
 				'default'=> 0,
 				'admin'  => False,
+			),
+			'allowExternalIMGs' => array(
+				'type'   => 'select',
+				'label'  => 'Allow external images',
+				'help'   => 'allow images from external sources in html emails',
+				'name'   => 'allowExternalIMGs',
+				'values' => array(
+					0 => lang('Never'),
+					1 => lang('Always'),
+					2 => lang('Ask for permission')
+				),
+				'xmlrpc' => True,
+				'admin'  => True,
+				'default' => 2,
+				'forced' => 1,
+			),
+			'allowExternalDomains' => array(
+				'type'   => 'taglist',
+				'label'  => 'Allow external images from listed domains',
+				'help'   => 'allow images from listed domains in html emails',
+				'name'   => 'allowExternalDomains',
+				'values' => $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains'],
+				'no_sel_options' => true
 			),
 			array(
 				'type'  => 'section',
