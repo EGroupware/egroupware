@@ -433,7 +433,7 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 
 		// Attach ao if not there, happens for rows loaded for selection, but
 		// not displayed yet
-/*		if(!_entry.ao && _entry.uid && this._actionObjectManager)
+		if(!_entry.ao && _entry.uid && this._actionObjectManager)
 		{
 			var _links = [];
 			for (var key in this._registeredRows)
@@ -450,7 +450,7 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 				this._attachActionObject(_entry, null, _entry.uid, _links, _entry.idx);
 			}
 		}
-*/
+
 		// Update the state if it has changed
 		if ((_entry.aoi && _entry.aoi.getState() !== _state) || _entry.state != _state)
 		{
