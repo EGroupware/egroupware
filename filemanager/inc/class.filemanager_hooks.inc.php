@@ -268,7 +268,7 @@ class filemanager_hooks
 				'label'  => 'Excludes selected mime types',
 				'help'   => 'Excludes selected mime types from being opened by editor',
 				'name'   => 'collab_excluded_mimes',
-				'values' => array(),
+				'values' => $mimes,
 				'default' => '',
 				'attributes' => array(
 					'autocompelete_url' => ' ',
