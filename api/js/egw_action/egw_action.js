@@ -492,7 +492,20 @@ egwAction.prototype.updateActions = function(_actions, _app)
  */
 egwAction.prototype.not_disableClass = function(_action, _senders, _target)
 {
-	return !jQuery(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
+	if(_target.iface.getDOMNode())
+	{
+		return !jQuery(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
+	}
+	else if (_target.id)
+	{
+		// Checking on a something that doesn't have a DOM node, like a nm row
+		// that's not currently rendered
+		var data = egw.dataGetUIDdata(_target.id);
+		if(data && data.data && data.data.class)
+		{
+			return -1 === data.data.class.split(' ').indexOf(_action.data.disableClass);
+		}
+	}
 };
 
 /**
@@ -505,7 +518,21 @@ egwAction.prototype.not_disableClass = function(_action, _senders, _target)
  */
 egwAction.prototype.enableClass = function(_action, _senders, _target)
 {
-	return jQuery(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
+	if(_target.iface.getDOMNode())
+	{
+		return jQuery(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
+	}
+	else if (_target.id)
+	{
+		// Checking on a something that doesn't have a DOM node, like a nm row
+		// that's not currently rendered.  Not as good as an actual DOM node check
+		// since things can get missed, but better than nothing.
+		var data = egw.dataGetUIDdata(_target.id);
+		if(data && data.data && data.data.class)
+		{
+			return -1 !== data.data.class.split(' ').indexOf(_action.data.enableClass);
+		}
+	}
 };
 
 /**
