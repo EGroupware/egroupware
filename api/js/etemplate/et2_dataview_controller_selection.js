@@ -29,6 +29,11 @@
  */
 var et2_dataview_selectionManager = (function(){ "use strict"; return Class.extend(
 {
+
+	// Maximum number of rows we can safely fetch for selection
+	// Actual selection may have more rows if we already have some
+	MAX_SELECTION: 1000,
+
 	/**
 	 * Constructor
 	 *
@@ -112,7 +117,9 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 		{
 			this._actionObjectManager.clear();
 		}
-		this._indexMap = {};
+		for (key in this._indexMap) {
+			delete this._indexMap[key];
+		}
 		this._total = 0;
 		this._focusedEntry = null;
 		this._invertSelection = false;
@@ -238,7 +245,8 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 
 		this._selectAll = true;
 
-		if(Object.keys(this._registeredRows).length != this._total)
+		// Run as a range if there's less then the max
+		if(Object.keys(this._registeredRows).length != this._total && this._total <= this.MAX_SELECTION)
 		{
 			this._selectRange(0, this._total);
 		}
@@ -543,6 +551,8 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 		var naStart = false;
 		var s = Math.min(_start, _stop);
 		var e = Math.max(_stop, _start);
+		var RANGE_MAX = 50;
+		var range_break = s + RANGE_MAX;
 		for (var i = s; i <= e; i++)
 		{
 			if (typeof this._indexMap[i] !== "undefined" &&
@@ -558,6 +568,12 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 				// Select the element
 				this.setSelected(this._indexMap[i].uid, true);
 			}
+			else if(i >= range_break)
+			{
+				queryRanges.push(et2_bounds(naStart ? naStart : s, i - 1));
+				naStart = i;
+				range_break += RANGE_MAX;
+			}
 			else if (naStart === false)
 			{
 				naStart = i;
@@ -572,32 +588,73 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 		}
 
 		// Query all unknown ranges from the server
-		var that = this;
-		this._fetchPromise = new Promise(function (resolve)
-		{
-			var count = queryRanges.length;
-			for (var i = 0; i < queryRanges.length; i++)
-			{
-				that._queryRangeCallback.call(that._context, queryRanges[i],
-					function (_order) {
-						for (var j = 0; j < _order.length; j++)
-						{
-							this.setSelected(_order[j], true);
-						}
-						if(--count <= 0)
-						{
-							// Done waiting
-							resolve();
-						}
-					}, that);
-			}
-		}).finally(function() {egw.loading_prompt('select_wait', false)});
-
 		if(queryRanges.length > 0)
 		{
-			// Lock the UI - we NEED these before the user does something with them
-			egw.loading_prompt('select_wait', true);
+			this._query_ranges(queryRanges);
 		}
+	},
+
+	_query_ranges: function _query_ranges(queryRanges)
+	{
+		var that = this;
+		var record_count = 0;
+		var range_index = 0;
+		var range_count = queryRanges.length;
+		var cont = true;
+		var fetchPromise = new Promise(function (resolve) {
+			resolve();
+		});
+		// Found after dialog loads
+		var progressbar;
+
+		var parent = et2_dialog._create_parent();
+		var dialog = et2_createWidget("dialog", {
+			callback:
+				// Abort the long task if they canceled the data load
+				function() {cont = false},
+			template: egw.webserverUrl+'/api/templates/default/long_task.xet',
+			message: egw.lang('Loading'),
+			title: egw.lang('please wait...'),
+			buttons: [{"button_id": et2_dialog.CANCEL_BUTTON,"text": 'cancel',id: 'dialog[cancel]',image: 'cancel'}],
+			width: 300
+		}, parent);
+		jQuery(dialog.template.DOMContainer).on('load', function() {
+			// Get access to template widgets
+			progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
+		});
+
+		for (var i = 0; i < queryRanges.length; i++)
+		{
+			if(record_count + (queryRanges[i].bottom - queryRanges[i].top+1) > that.MAX_SELECTION)
+			{
+				egw.message(egw.lang('Too many rows selected.<br />Select all, or less than %1 rows', that.MAX_SELECTION));
+				break;
+			}
+			else
+			{
+				record_count += (queryRanges[i].bottom - queryRanges[i].top+1);
+				fetchPromise = fetchPromise.then((function ()
+				{
+					// Check for abort
+					if(!cont) return;
+
+					return new Promise(function(resolve) {
+					that._queryRangeCallback.call(that._context, this,
+						function (_order) {
+							for (var j = 0; j < _order.length; j++)
+							{
+								this.setSelected(_order[j], true);
+							}
+							progressbar.set_value(100*(++range_index/range_count));
+							resolve();
+						}, that);
+					}.bind(this));
+				}).bind(queryRanges[i]));
+			}
+		}
+		fetchPromise.finally(function() {
+			dialog.destroy();
+		});
 	}
 
 });}).call(this);
