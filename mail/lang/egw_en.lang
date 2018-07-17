@@ -305,6 +305,7 @@ later	mail	en	later
 learning as ham (not spam) failed because of %1	mail	en	Learning as ham (not spam) failed because of %1
 learning as spam failed because of %1	mail	en	Learning as spam failed because of %1
 less than	mail	en	less than
+list of actions to be switched/activated on by default (eg. Mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. Mail compose save as infolog action)
 mail	common	en	Mail
 mail acl	mail	en	Mail ACL
 mail filter	mail	en	Mail filter
@@ -572,6 +573,7 @@ this message is smime encrypted and password protected.	mail	en	This message is 
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
 to do	mail	en	to do
 toggle all folders view for %1	mail	en	Toggle all Folders view for %1
+toggled on actions	mail	en	Toggled on actions
 trash	mail	en	Trash
 trash folder	mail	en	trash folder
 trust servers seen / unseen info	mail	en	trust servers SEEN / UNSEEN info

@@ -305,6 +305,7 @@ later	mail	de	später
 learning as ham (not spam) failed because of %1	mail	de	Als "gute E-Mail" (kein Spam) lernen fehlgeschlagen, da %1
 learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da %1
 less than	mail	de	kleiner als
+list of actions to be switched/activated on by default (eg. Mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als Infolog speichern)
 mail	common	de	Mail
 mail acl	mail	de	Zugriffsrechte
 mail filter	mail	de	Filter-Regeln
@@ -572,6 +573,7 @@ this message is smime encrypted and password protected.	mail	de	Diese Nachricht 
 timeout on connections to your imap server	mail	de	Stellen Sie hier das Verbindungstimeout für IMAP Verbindungen ein.
 to do	mail	de	zu erledigen
 toggle all folders view for %1	mail	de	Umschaltung der Alle-Ordner-anzeigen Ansicht für %1
+toggled on actions	mail	de	Folgende Aktionen sind immer eingeschaltet
 trash	mail	de	Papierkorb
 trash folder	mail	de	Ordner für gelöschte Nachrichten
 trust servers seen / unseen info	mail	de	Abruf des ungelesen/gelesen Status des Mailservers
