@@ -66,7 +66,7 @@ canceled	calendar	pl	Anulowany
 category %1 removed because of missing rights	calendar	pl	Kategoria %1 usunięta z powodu brakujących praw
 category acl	common	pl	ACL kategorii
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	pl	ACL kategorii ograniczają tylko dodawanie kategorii do zdarzenia lub zmianę statusu uczestnika. Nie zmienia to widoczności zdarzenia!
-chair	calendar	pl	Stanowiko
+chair	calendar	pl	Stanowisko
 change history	calendar	pl	Zmień historię
 charset of file	calendar	pl	strona kodowa pliku
 check all	calendar	pl	Sprawdź wszystko

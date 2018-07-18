@@ -47,7 +47,7 @@ addressbook the contact should be saved to	addressbook	pl	Książka adresowa do 
 addressbook the contact should be shown	addressbook	pl	Książka adresowa w której kontakt ma być wydoczny
 addressbook-fieldname	addressbook	pl	Nazwa pola adresowego
 addvcard	addressbook	pl	Dodaj kartkę elektroniczną
-advanced search	addressbook	pl	Wyszukiwanie szczgółowe
+advanced search	addressbook	pl	Wyszukiwanie szczegółowe
 all contacts	addressbook	pl	Wszystkie kontakty
 allow users to maintain their own account-data	admin	pl	Pozwól użytkownikom zarządzać danymi własnego konta
 alt. csv import	addressbook	pl	Alt. CSV Import
