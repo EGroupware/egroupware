@@ -30,6 +30,7 @@ add	common	pl	Dodaj
 add %1 category for	common	pl	Dodaj kategorię %1 dla
 add a new contact	common	pl	Dodaj nowy kontakt
 add category	common	pl	Dodaj kategorię
+add current	common	pl	Dodaj bieżący widok
 add shortcut	common	pl	Dodaj skrót
 add sub	common	pl	Dodaj podrzędne
 addressbook	common	pl	Adresy, kontakty
@@ -443,6 +444,7 @@ netherlands antilles	common	pl	ANTYLE HOLENDERSKIE
 never	common	pl	Nigdy
 new caledonia	common	pl	NOWA KALEDONIA
 new entry added sucessfully	common	pl	Nowy wpis został dodany
+new favorite	common	pl	Nowy ulubiony
 new main category	common	pl	Nowa kategoria główna
 new value	common	pl	Nowa wartość
 new zealand	common	pl	NOWA ZELANDIA
@@ -455,6 +457,7 @@ niue	common	pl	NIUE
 no	common	pl	Nie
 no - cancel	common	pl	Nie - Anuluj
 no entries found, try again ...	common	pl	nie znaleziono wpisów, spróbuj jeszcze raz...
+no filters	common	pl	Bez filtrów
 no history for this record	common	pl	Brak historii dla tego zapisu
 no savant2 template directories were found in:	common	pl	Nie znaleziono katalogów wzorca Savant2 w:
 no subject	common	pl	Bez tematu
