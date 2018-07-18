@@ -175,6 +175,7 @@ class Sharing extends \EGroupware\Api\Sharing
 		$GLOBALS['egw_info']['user']['preferences']['filemanager']['nm_view'] = 'tile';
 		$_GET['cd'] = 'no';
 		$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'filemanager';
 		Api\Framework::includeCSS('filemanager', 'sharing');
 		$ui = new SharingUi();
 		$ui->index();
