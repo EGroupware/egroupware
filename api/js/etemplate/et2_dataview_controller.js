@@ -147,7 +147,7 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 
 			// Free selection manager
 			this._selectionMgr.clear();
-			
+
 			// Clear object manager
 			this._objectManager.clear();
 
@@ -184,6 +184,8 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 	reset: function () {
 		// Throw away all internal mappings and reset the timestamp
 		this._indexMap = {};
+		// Update selection manager, it uses this by reference
+		this._selectionMgr.setIndexMap(this._indexMap);
 
 		// Clear the grid
 		this._grid.clear();
