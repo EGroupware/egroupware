@@ -2859,10 +2859,10 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 		if(this.nextmatch.options.settings.lettersearch)
 		{
 			jQuery("td",this.lettersearch).removeClass("lettersearch_active");
-			jQuery(filters.searchletter ? "td#"+filters.searchletter : "td.lettersearch[id='']").addClass("lettersearch_active");
+			jQuery(filters.searchletter ? "td#"+filters.searchletter : "td.lettersearch[id='']",this.lettersearch).addClass("lettersearch_active");
 
 			// Set activeFilters to current value
-			filters.searchletter = jQuery("td.lettersearch_active").attr("id");
+			filters.searchletter = jQuery("td.lettersearch_active",this.lettersearch).attr("id") || false;
 		}
 
 		// Reset flag

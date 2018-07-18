@@ -1562,7 +1562,7 @@ window.egw_LAB.wait(function() {
 		{
 			if(!is_numeric($key)) continue;
 			if(preg_match('/'.$GLOBALS['egw']->db->capabilities['case_insensitive_like'].
-				' '.$GLOBALS['egw']->db->quote('[a-z]%').'$/',$col_filter) == 1
+				' '.$GLOBALS['egw']->db->quote('[a-z]%').'$/i',$col_filter) == 1
 			)
 			{
 				unset($query['col_filter'][$key]);
