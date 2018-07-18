@@ -393,7 +393,7 @@ var et2_vfsMime = (function(){ "use strict"; return expose(et2_valueWidget.exten
 			}
 			this.image.attr("src", src);
 			// tooltip for mimetypes with available detailed thumbnail
-			if (_value.mime.match(/application\/vnd\.oasis\.opendocument\.(text|presentation|spreadsheet|chart)/))
+			if (_value.mime && _value.mime.match(/application\/vnd\.oasis\.opendocument\.(text|presentation|spreadsheet|chart)/))
 			{
 				var tooltip_target = this.image.parent().parent().parent().length > 0 ?
 					// Nextmatch row
@@ -1193,7 +1193,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 	set_value: function(value) {
 		this.value = value;
 	},
-	
+
 	getValue: function() {
 		return this.value;
 	}
