@@ -52,6 +52,7 @@ all	infolog	de	alle
 all links and attachments	infolog	de	alle Verknüpfungen und Anhänge
 all other %1 fields are valid	infolog	de	Alle anderen %1 Felder sind gültig
 all projects	infolog	de	Alle Projekte
+allow to save entries with due date in the past	infolog	de	Erlaubt speichern von Einträgen mit Fälligkeitsdatum in der Vergangenheit
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	de	erlaubt den Status eines Eintrags zu setzen, z.B. eine Aufgabe auf erledigt wenn sie beendet ist (Werte hängen vom Type des Eintrags ab)
 alternatives	infolog	de	Alternativen
 always show them	infolog	de	Immer anzeigen
@@ -168,6 +169,7 @@ done	infolog	de	geschlossen
 download	infolog	de	Datei laden
 download url for links	infolog	de	Download Link für Verknüpfungen
 due %1	infolog	de	%1 fällig
+due date must be in the future!!!	de	Das Fälligkeitsdatum muss in der Zukunft liegen.
 duration	infolog	de	Dauer
 e-mail:	infolog	de	E-Mail
 each value is a line like <id>[=<label>]	infolog	de	jeder Wert ist eine Zeile im Format id=[angezeigter Wert]
@@ -451,7 +453,7 @@ start a new search, cancel this link	infolog	de	eine neue Suche starten, diese V
 startdate	infolog	de	Startdatum
 startdate enddate	infolog	de	Startdatum Fälligkeitsdatum
 startdate for new entries	infolog	de	Startdatum für neue Einträge
-startdate must be before enddate!!!	infolog	de	Startdatum muss vor dem Enddatum liegen!!!
+startdate must be before enddate!!!	infolog	de	Startdatum muss vor dem Fälligkeitsdatum liegen!!!
 starting %1	infolog	de	%1 startet
 startrecord	infolog	de	Startdatensatz
 status	infolog	de	Status
