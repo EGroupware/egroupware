@@ -46,19 +46,7 @@
 		<textbox multiline="true" id="ts_description" rows="9" cols="70" class="et2_fullWidth"  height="250" resize_ratio="0"/>
 	</template>
 	<template id="timesheet.view.customfields" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%">
-			<columns>
-				<column width = "120"/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<box width="100%" overflow="auto">
-						<customfields options="@info_type"/>
-					</box>
-				</row>
-			</rows>
-		</grid>
+		<customfields options="@info_type"/>
 	</template>
 	<template id="timesheet.view.ownership" template="" lang="" group="0" version="16.1.00">
 		<grid width="100%">

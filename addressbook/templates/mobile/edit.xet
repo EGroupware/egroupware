@@ -275,7 +275,7 @@
 			<rows>
 				<row>
 					<box width="100%" overflow="auto">
-						<customfields options="$cont[tid],$cont[no_private_cfs]"/>
+						<customfields options=",$cont[no_private_cfs]" type_filter="$cont[tid]"/>
 					</box>
 				</row>
 			</rows>
@@ -290,7 +290,7 @@
 			<rows>
 				<row>
 					<box width="100%" overflow="auto">
-						<customfields id="private_cfs" options="$cont[tid],1"/>
+						<customfields id="private_cfs" options=",1" type_filter="$cont[tid]"/>
 					</box>
 				</row>
 			</rows>
