@@ -170,6 +170,20 @@ class Sql extends Api\Storage
 		{
 			$filter[] = "org_name != ''";// AND org_name IS NOT NULL";
 		}
+		if (isset($filter['list']))
+		{
+			if ($filter['list'] < 0)
+			{
+				$join .= " JOIN egw_acl ON $this->table_name.account_id=acl_account AND acl_appname='phpgw_group' AND ".
+					$this->db->expression('egw_acl', array('acl_location' => $filter['list']));
+			}
+			else
+			{
+				$join .= " JOIN $this->ab2list_table ON $this->table_name.contact_id=$this->ab2list_table.contact_id AND ".
+					$this->db->expression($this->ab2list_table, array('list_id' => $filter['list']));
+			}
+			unset($filter['list']);
+		}
 		$sort = $param['sort'] == 'DESC' ? 'DESC' : 'ASC';
 
 		list(,$by) = explode(',',$param['org_view']);

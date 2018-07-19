@@ -886,8 +886,6 @@ class addressbook_ui extends addressbook_bo
 			// Just switched from contact view, update actions
 			$query['actions'] = $this->get_actions($query['col_filter']['tid']);
 		}
-		unset($query['col_filter']['list']);	// does not work together
-		$query['no_filter2'] = true;			// switch the distribution list selection off
 
 		$query['template'] = $query['grouped_view'] == 'duplicates' ? 'addressbook.index.duplicate_rows' : 'addressbook.index.org_rows';
 
@@ -910,9 +908,20 @@ class addressbook_ui extends addressbook_bo
 					$query['order'] = 'org_name';
 				}
 				$query['org_view'] = $query['grouped_view'];
-				$rows = parent::organisations($query);
+				// switch the distribution list selection off for ldap
+				if($this->contact_repository != 'sql')
+				{
+					$query['no_filter2'] = true;
+					unset($query['col_filter']['list']);	// does not work here
+				}
+				else
+				{
+					$rows = parent::organisations($query);
+				}
 				break;
 			case 'addressbook.index.duplicate_rows':
+				$query['no_filter2'] = true;			// switch the distribution list selection off
+				unset($query['col_filter']['list']);	// does not work for duplicates
 				$rows = parent::duplicates($query);
 				break;
 		}
