@@ -524,6 +524,7 @@ class calendar_uiforms extends calendar_ui
 
 						default:		// existing participant row
 							if (!is_array($data)) continue;	// widgets in participant tab, above participant list
+							$quantity = $status = $role = null;
 							foreach(array('uid','status','quantity','role') as $name)
 							{
 								$$name = $data[$name];
@@ -547,7 +548,6 @@ class calendar_uiforms extends calendar_ui
 								if ($data['old_status'] != $status && !(!$data['old_status'] && $status == 'G'))
 								{
 									//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
-									$quantity = $role = null;
 									$new_status = calendar_so::combine_status($status, $quantity, $role);
 									if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0, false, true, $content['no_notifications']))
 									{
