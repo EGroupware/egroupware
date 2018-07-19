@@ -193,19 +193,7 @@
 		</grid>
 	</template>
 	<template id="filemanager.file.custom" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%">
-			<columns>
-				<column width = "120"/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<box width="100%" overflow="auto">
-						<customfields options="@info_type"/>
-					</box>
-				</row>
-			</rows>
-		</grid>
+		<customfields/>
 	</template>
 	<template id="filemanager.file" template="" lang="" group="0" version="1.9.001">
 		<grid border="1" width="100%">
