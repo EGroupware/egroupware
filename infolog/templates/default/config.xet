@@ -50,6 +50,13 @@
 					<description value="Fields to exclude when creating a sub-entry:"/>
 					<listbox id="sub_excludefields" rows="6"/>
 				</row>
+				<row>
+					<description value="Allow to save entries with due date in the past" label="%s:"/>
+					<select id="allow_past_due_date">
+						<option value="1">Yes</option>
+						<option value="0">No</option>
+					</select>
+				</row>
 			</rows>
 		</grid>
 	</template>

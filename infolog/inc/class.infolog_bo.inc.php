@@ -213,6 +213,7 @@ class infolog_bo
 		);
 		if (($config_data = Api\Config::read('infolog')))
 		{
+			$this->allow_past_due_date = $config_data['allow_past_due_date'] === null ? 1 : $config_data['allow_past_due_date'];
 			if (isset($config_data['status']) && is_array($config_data['status']))
 			{
 				foreach(array_keys($config_data['status']) as $key)

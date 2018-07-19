@@ -52,6 +52,7 @@ all	infolog	en	All
 all links and attachments	infolog	en	All links and attachments
 all other %1 fields are valid	infolog	en	All other %1 fields are valid
 all projects	infolog	en	All projects
+allow to save entries with due date in the past	infolog	en	Allow to save entries with due date in the past
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	Allows to set the status of an entry, e.g. set a ToDo to done if it's finished. Values depend on entry type.
 alternatives	infolog	en	Alternatives
 always show them	infolog	en	Always show them
@@ -168,6 +169,7 @@ done	infolog	en	Done
 download	infolog	en	Download
 download url for links	infolog	en	Download url for links
 due %1	infolog	en	Due %1
+due date must be in the future!!!	en	Due date must be in the future!!!
 duration	infolog	en	Duration
 e-mail:	infolog	en	Email:
 each value is a line like <id>[=<label>]	infolog	en	Each value is a line like <id>[=<label>]
@@ -451,7 +453,7 @@ start a new search, cancel this link	infolog	en	Start a new search, cancel this 
 startdate	infolog	en	Start date
 startdate enddate	infolog	en	Start date, Due date
 startdate for new entries	infolog	en	Start date for new entries
-startdate must be before enddate!!!	infolog	en	Startdate must be before Enddate!!!
+startdate must be before enddate!!!	infolog	en	Startdate must be before due date!!!
 starting %1	infolog	en	Starting %1
 startrecord	infolog	en	Start record
 status	infolog	en	Status

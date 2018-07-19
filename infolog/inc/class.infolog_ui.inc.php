@@ -1797,6 +1797,14 @@ class infolog_ui
 						$status_only = $this->bo->is_responsible($old);
 						$undelete = $this->bo->check_access($old,infolog_bo::ACL_UNDELETE);
 					}
+					// enddate in the past gives warning
+					if (isset($content['info_enddate'])
+							&& $content['info_enddate'] < $this->bo->user_time_now
+							&& !$this->bo->allow_past_due_date && !($content['info_status'] == 'done'
+							|| $content['info_status'] == 'archive'))
+					{
+						$this->tmpl->set_validation_error('info_enddate', lang('Due date must be in the future!!!'));
+					}
 				}
 				if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only || $undelete))
 				{
@@ -2492,7 +2500,7 @@ class infolog_ui
 				Api\Config::save_value('history', $this->bo->history = $content['history'], 'infolog');
 				Api\Config::save_value('index_load_cfs', implode(',', (array)$content['index_load_cfs']), 'infolog');
 				Api\Config::save_value('sub_prefix', $content['sub_prefix'], 'infolog');
-
+				Api\Config::save_value('allow_past_due_date', $content['allow_past_due_date'], 'infolog');
 				// Notifications
 				$notifications =& $config[infolog_tracking::CUSTOM_NOTIFICATION];
 				$notifications[$content['notification_type']] = $content['notification'];
