@@ -759,11 +759,11 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 							break;
 						}
 					}
-					if(label_index && typeof rows[label_index] === 'undefined')
+					if(label_index !== false && typeof rows[label_index] === 'undefined')
 					{
 						rows[label_index] = [];
 					}
-					if(label_index && rows[label_index].indexOf(event) === -1)
+					if(label_index !== false && rows[label_index].indexOf(event) === -1)
 					{
 						rows[label_index].push(event);
 					}
