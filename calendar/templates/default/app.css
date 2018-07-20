@@ -67,6 +67,9 @@
 #calendar-et2_target {
 	position: relative;
 }
+#calendar-et2_target > div {
+	position: relative;
+}
 #calendar-sidebox_owner {
 	width: 90%;
 }
