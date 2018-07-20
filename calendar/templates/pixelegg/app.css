@@ -77,6 +77,9 @@
 #calendar-et2_target {
   position: relative;
 }
+#calendar-et2_target > div {
+  position: relative;
+}
 #calendar-sidebox_owner {
   width: 90%;
 }
@@ -1354,8 +1357,8 @@ Hide subsequent headers in week view with non-consolidated owners
   height: 22em;
 }
 .calendar_freetime_dow ul.ui-multiselect-checkboxes {
-	overflow-y: visible;
-	height: 20em;
+  overflow-y: visible;
+  height: 20em;
 }
 img.calendar_print_button,
 img.calendar_print_appicon {

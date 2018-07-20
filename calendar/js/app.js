@@ -3432,12 +3432,12 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					if(today.length && go_button.length)
 					{
 						go_button.position({my: 'left+8px center', at: 'right center-1',of: jQuery('#calendar-sidebox_date .ui-datepicker-year')});
-						today.css({
-							'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth(true)/2),
-							'top': go_button.css('top')
-						});
 						buttons.position({my: 'center', at: 'center', of: go_button})
 							.css('left', '');
+						today.position({my: 'top', at: 'top', of: buttons});
+						today.css({
+							'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth(true)/2),
+						});
 					}
 					if(auto_update)
 					{
