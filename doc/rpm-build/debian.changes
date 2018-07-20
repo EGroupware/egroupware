@@ -1,3 +1,29 @@
+egroupware-epl (17.1.20180720) hardy; urgency=low
+
+  * Addressbook: inform the user about number of contacts adding to mail compose dialog via Email action
+  * Addressbook: add filtering by distribution list for organisations
+  * Addressbook: fix bug preventing turning off letter filter after some actions
+  * Admin: fix admin-cli.php to understand bcrypt hashes in header.inc.php
+  * All apps: adopt custom theme color for all dialogs headers
+  * Api: fix enabled actions don't show up on nm initiation
+  * Calendar: fix participant quantity lost when changing status
+  * Calendar: fix missing first row in planner by category view
+  * Calendar: fix EGroupware users were notified even if they choose not to in their preferences
+  * Calendar/Mail: handle meeting requests for single recurrences and exceptions
+  * Calendar: fix notifications show actions for alarm notify messages
+  * Calendar/CalDAV: sending correct iMip REPLY to mail invitations and only reply to external chair
+  * Mail: implement new preference for toggle actions. For instance, switching Cc, BCc or S/MIME Sign always on when trying to compose an email.
+  * Mail: fix some smime signed messages get recognized wrongly as encrypted
+  * Nginx: fix error: upstream sent too big header while reading response header from upstream
+  * Notifications: group notifications base on entry ID to help minimizing number of notifications on the list
+  * Notifications: fix sql query error happens for PostgreSQL
+  * Univention: fix not working password change (setting Kerberos credentials)
+  * Tracker: fix issue text part of some html tickets mail notifications contain html parts
+  * Tracker: fix inline images from comments are not getting resolved properly
+  * Tracker: fix inline images from mailhandling are not getting resolved properly
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 20 Jul 2018 15:06:54 +0200
+
 egroupware-epl (17.1.20180625) hardy; urgency=low
 
   * Addressbook: fix SMime/PGP public key import not containing a newline after the key
