@@ -669,6 +669,11 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 				this.self._selectionMgr.registerRow(this.entry.uid, this.entry.idx,
 						tr, links);
 			}
+			else
+			{
+				// Remember that
+				this.entry.no_actions = true;
+			}
 
 			// Invalidate the current row entry
 			this.entry.row.invalidate();
