@@ -7639,7 +7639,7 @@ form[id^="wiki-"] .dialogHeadbar {
     background-size: 24px 24px !important;
     border: none;
   }
-  body #egwpopup #egwpopup_header .egwpopup_toggle {
+  body #egwpopup #egwpopup_header .button_right_toggle {
     background-image: url(../images/cancelled.svg);
     background-repeat: no-repeat;
     background-position: center;
@@ -7650,10 +7650,10 @@ form[id^="wiki-"] .dialogHeadbar {
     float: left;
     margin: 0;
   }
-  body #egwpopup #egwpopup_header .egwpopup_toggle:before {
+  body #egwpopup #egwpopup_header .button_right_toggle:before {
     display: none;
   }
-  body #egwpopup #egwpopup_header .egwpopup_toggle:after {
+  body #egwpopup #egwpopup_header .button_right_toggle:after {
     display: none;
   }
   body #egwpopup #egwpopup_header .egwpopup_deleteall {
