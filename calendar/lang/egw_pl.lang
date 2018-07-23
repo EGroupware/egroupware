@@ -1,5 +1,7 @@
 %1 %2 in %3	calendar	pl	%1 %2 w %3
-%1 hours	calendar	pl	%1 godzin
+%1 days	calendar	pl	%1 dni
+%1 hours	calendar	pl	%1 godziny
+%1 minutes	calendar	pl	%1 minut
 %1 participants removed because of missing invite grants	calendar	pl	Usunięto %1 uczestników z powodu brakujących grantów zaproszeń
 %1 records imported	calendar	pl	Zaimportowano %1 rekordów
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	pl	Wczytano %1 rekordów (jeszcze nie zaimportowano; możesz się cofnąć i odznaczyć Import Testowy)
@@ -15,7 +17,10 @@ accepted	calendar	pl	Zaakceptowano
 access denied to the calendar of %1 !!!	calendar	pl	Brak dostępu do kalendarza użytkownika %1
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pl	Akcja która spowodowała powiadomienie: Dodano, Anulowano, Zakceptowano, Odrzucono...
 actions	calendar	pl	Operacje
+actions...	calendar	pl	Działania...
 add alarm	calendar	pl	Dodaj alarm
+add new alarm	calendar	pl	Dodaj nowy alarm
+add new participants or resource	calendar	pl	Dodaj nowych uczestników lub zasoby
 add timesheet entry	calendar	pl	Dodaj wpis czasu pracy
 added	calendar	pl	Dodano
 added by synchronisation	calendar	pl	dodano poprzez synchronizację
@@ -43,6 +48,7 @@ are you sure you want to delete this holiday ?	calendar	pl	Na pewno chcesz usun�
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	pl	Jako alternatywę, możesz %1pobrać zrzut MySQL%2 i importować go ręcznie do tabeli egw_cal_timezones
 back half a month	calendar	pl	wstecz o pół miesiąca
 back one month	calendar	pl	wstecz o jeden miesiąc
+before	calendar	pl	przed
 before %1	calendar	pl	Przed %1
 before current date	calendar	pl	Przed bieżącą datą
 before the event	calendar	pl	przed zdarzeniem
@@ -66,7 +72,7 @@ canceled	calendar	pl	Anulowany
 category %1 removed because of missing rights	calendar	pl	Kategoria %1 usunięta z powodu brakujących praw
 category acl	common	pl	ACL kategorii
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	pl	ACL kategorii ograniczają tylko dodawanie kategorii do zdarzenia lub zmianę statusu uczestnika. Nie zmienia to widoczności zdarzenia!
-chair	calendar	pl	Stanowisko
+chair	calendar	pl	Prowadzący
 change history	calendar	pl	Zmień historię
 charset of file	calendar	pl	strona kodowa pliku
 check all	calendar	pl	Sprawdź wszystko
@@ -113,6 +119,7 @@ delete this series of recurring events	calendar	pl	Usuń serię terminów powtar
 deleted	calendar	pl	skasowany
 deny resources reservation for private events	calendar	pl	Odmów rezerwacji zasobów dla zdarzeń prywatnych
 uninvited	calendar	pl	Zaproszenie cofnięto
+utilities	calendar	pl	Narzędzia
 display status of events	calendar	pl	Wyświetl status zdarzeń
 displayed view	calendar	pl	bieżący widok
 do not include events of group members	calendar	pl	Nie dołączaj zdarzeń członków grup
@@ -239,7 +246,7 @@ mail all participants	calendar	pl	wyślij do wszystkich uczestników
 make freebusy information available to not logged in persons?	calendar	pl	Czy udostępnić informację wolny-zajęty dla gości (osób nie zalogowanych)?
 manage mapping	calendar	pl	Zarządzaj mapowaniem
 max. number of entries to show (leave empty for no restriction)	calendar	pl	Ile maksymalnie wpisów pokazać (puste - bez ograniczenia)
-minutes	calendar	pl	minuty
+minutes	calendar	pl	minut
 modified	calendar	pl	Zmodyfikowany
 mon	calendar	pl	Pon
 month	calendar	pl	Miesiąc
@@ -458,6 +465,7 @@ work day starts on	calendar	pl	Początek dnia o
 workday	calendar	pl	Dzień roboczy
 workdays	calendar	pl	Dni robocze
 yearly	calendar	pl	Roczny
+yearly planner	calendar	pl	Planner roczny
 yearview	calendar	pl	Widok roczny
 you are not allowed to book the resource selected:	calendar	pl	Nie masz uprawnień do rezerwacji zasobu:
 you can either set a year or a occurrence, not both !!!	calendar	pl	Możesz ustawić albo rok albo pojedyncze wystąpienie, ale nie oba jednocześnie!
