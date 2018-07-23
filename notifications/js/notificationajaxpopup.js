@@ -602,10 +602,10 @@
 		notifymessages = {};
 		for (var i=0; i < _rawData.length; i++)
 		{
-			var data = this.getData(_rawData[i]['message']);
+			var data = this.getData(_rawData[i]['message'], _rawData[i]['extra_data']);
 			var parent;
 			if ((parent = this.findParent(data['id'], data['app']))
-					&& !(_rawData[i]['extra_data'] && typeof _rawData[i]['extra_data']['egw_pr_notify'] == 'undefined'))
+					&& typeof _rawData[i]['extra_data']['egw_pr_notify'] == 'undefined')
 			{
 				if (parent == _rawData[i]['id']) continue;
 				if (!notifymessages[parent]['children']) notifymessages[parent] = jQuery.extend(notifymessages[parent], {children:{}});
@@ -617,7 +617,7 @@
 					current: _rawData[i]['current'],
 					extra_data: _rawData[i]['extra_data']
 				};
-				if (_rawData[i]['actions'] && _rawData[i]['actions'].length > 0) notifymessages[parent]['children'][_rawData[i]]['data']['actions'] = _rawData[i]['actions'];
+				if (_rawData[i]['actions'] && _rawData[i]['actions'].length > 0) notifymessages[parent]['children'][_rawData[i]['id']]['data']['actions'] = _rawData[i]['actions'];
 				continue;
 			}
 
@@ -698,15 +698,16 @@
 	 * @param {type} _message
 	 * @returns {notificationajaxpopup_L15.notifications.prototype.getData.data}
 	 */
-	notifications.prototype.getData = function (_message) {
-		var dom = jQuery(document.createElement('div')).html(_message);;
+	notifications.prototype.getData = function (_message, _extra_data) {
+		var dom = jQuery(document.createElement('div')).html(_message);
+		var extra_data = _extra_data || {};
 		var link = dom.find('div[data-id],div[data-url]');
 		var data = {
 			message: dom.text(),
 			title: link.text(),
 			icon: link.find('img').attr('src')
 		};
-		jQuery.extend(data,link.data());
+		jQuery.extend(data,link.data(), extra_data);
 		return typeof data == 'object'? data: {};
 	};
 

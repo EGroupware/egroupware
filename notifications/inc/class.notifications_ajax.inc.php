@@ -201,7 +201,7 @@ class notifications_ajax {
 					'created'	=> Api\DateTime::to($notification['notify_created']),
 					'current'		=> new DateTime(),
 					'actions'	=> is_array($actions)?$actions:NULL,
-					'extra_data'		=> $data['data']
+					'extra_data'		=> ($data['data'] ? $data['data'] : array())
 				);
 
 			}
