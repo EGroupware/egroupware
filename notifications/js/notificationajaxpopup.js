@@ -396,7 +396,7 @@
 		var zindex = jQuery('.egwpopup_expanded').length;
 		_node[0].addClass('egwpopup_expanded').css('z-index', zindex++);
 		this.checkNavButtonStatus();
-		if (jQuery('#egwpopup').is(':visible')) egw.loading_prompt('popup_notifications', true);
+		if (jQuery('#egwpopup').is(':visible') && !egwIsMobile()) egw.loading_prompt('popup_notifications', true);
 	};
 
 	notifications.prototype.nav_button = function (_params, _event){
@@ -536,7 +536,7 @@
 		}
 		// try to close the dialog if expanded before hidding it
 		this.collapseMessage(_node, _event);
-		if (keepLoadingPrompt) egw.loading_prompt('popup_notifications', true);
+		if (keepLoadingPrompt && !egwIsMobile()) egw.loading_prompt('popup_notifications', true);
 		egwpopup_message.remove();
 		this.bell("inactive");
 		this.counterUpdate();
