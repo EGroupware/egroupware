@@ -57,7 +57,7 @@ choose owner of imported data	infolog	pl	Wybierz właściciela zaimportowanych d
 click here to create the link	infolog	pl	kliknij tutaj aby stworzyć odnośnik
 click here to start the search	infolog	pl	kliknij tutaj aby rozpocząć szukanie
 close	infolog	pl	Zamknij
-close all	infolog	pl	zamknij wszystko
+close all	infolog	pl	Zamknij wszystko
 closed	infolog	pl	Zamknięto
 comment	infolog	pl	Komentarz
 completed	infolog	pl	Wykonany
@@ -115,6 +115,7 @@ edit status	infolog	pl	Edytuj status
 edit the entry	infolog	pl	Edytuj wpis
 edit this entry	infolog	pl	Edytuj ten wpis
 empty for all	infolog	pl	puste dla wszystkich
+encrypt description	infolog	pl	Zaszyfruj opis
 end	infolog	pl	Zakończenie
 enddate	infolog	pl	Koniec
 enddate can not be before startdate	infolog	pl	Data zakończenia nie może być wcześniejsza od daty rozpoczęcia
@@ -163,13 +164,14 @@ infolog preferences	common	pl	CRM Dziennik preferencje
 infolog-fieldname	infolog	pl	CRM Dziennik - Nazwa pola
 insert	infolog	pl	wstaw
 insert in document	infolog	pl	Wstaw w dokumencie
+insert timestamp into description field	infolog	pl	Wstaw znacznik czasu do pola opisu
 invalid filename	infolog	pl	Niepoprawna nazwa pliku
 label<br>helptext	infolog	pl	Etykieta<br>Tekst pomocy
 last changed	infolog	pl	Ostatnia zmiana
 last modified	infolog	pl	Ostatnio modyfikowany
 leave it empty	infolog	pl	zostaw puste
 leave it empty for a full week	infolog	pl	Pozostaw pusty na cały tydzień
-leave without saveing the entry	infolog	pl	cofnij bez zapisywania wpisu
+leave without saveing the entry	infolog	pl	Cofnij bez zapisywania wpisu
 leaves without saveing	infolog	pl	cofnij bez zapisywania
 link	infolog	pl	Podłącz
 links	infolog	pl	Linki
@@ -228,7 +230,7 @@ phone	infolog	pl	Rozmowa telefoniczna
 phone/email	infolog	pl	Telefon/Email
 phonecall	infolog	pl	Telefon
 planned	infolog	pl	zaplanowany
-planned time	infolog	pl	zaplanowany termin
+planned time	infolog	pl	Zaplanowany czas
 price	infolog	pl	Cena
 pricelist	infolog	pl	Cennik
 priority	infolog	pl	Priorytet
@@ -238,6 +240,7 @@ project id	infolog	pl	ID projektu
 project settings: price, times	infolog	pl	Ustawienia projektu: cena, terminy
 projectmanager	infolog	pl	Menedżer Projektów
 re-planned	infolog	pl	re-planowany
+re-planned time	infolog	pl	Ponownie zaplanowany czas
 re:	infolog	pl	Odp:
 read one record by passing its id.	infolog	pl	Odczytaj jeden rekord przekazując jego id.
 read rights (default)	infolog	pl	prawda odczytu (domyślne)
@@ -253,7 +256,7 @@ rights for the responsible	infolog	pl	Uprawnienia do osoby odpowiedzialnej
 rows	infolog	pl	Wiersze
 save	infolog	pl	Zapisz
 saves the changes made and leaves	infolog	pl	zapisuje zmiany i wychodzi
-saves this entry	infolog	pl	Zapisuję ten wpis
+saves this entry	infolog	pl	Zapisz ten wpis
 search	infolog	pl	Szukaj
 search for:	infolog	pl	Szukaj dla
 select	infolog	pl	Wybór
@@ -271,6 +274,7 @@ select to filter by owner	infolog	pl	wybierz aby sortować po właścicielu
 select to filter by responsible	infolog	pl	wybierz aby sortować po osobie odpowiedzialnej
 sender	infolog	pl	nadawca
 sets the status of this entry and its subs to done	infolog	pl	Ustaw stan wpisu i jego wpisów podrzędnych na "gotowy".
+schedule appointment	infolog	pl	Zaplanuj termin
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pl	Czy Dziennik CRM ma w domyślnym widoku wyświetlać wszystkie Zadania, Rozmowy i Notatki podrzędne? Możesz zawsze dotrzeć do nich poprzez ich <i>rodzica</i>.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pl	Czy Dziennik CRM powinien pokazywać odnośniki do innych aplikacji oraz/lub załączone pliki na liście zadań (domyślny widok gdy uruchamiany jest Dziennik CRM)?
 should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	pl	Czy Dziennik CRM powinien pokazywać zadania na głównym ekranie a jeżeli tak, to z jakim filtrem. Działa tylko, jeżeli nie wybrano aplikacji na główny ekran (we wspólnych ustawieniach).
@@ -296,7 +300,8 @@ startrecord	infolog	pl	Początkowy rekord
 status	infolog	pl	Status
 status ...	infolog	pl	Status ...
 sub	infolog	pl	Podrz.
-sub-entries become subs of the parent or main entries, if there's no parent	infolog	pl	Zadani są podrzędne wobec zadań, z których je utworzono lub głównych zadań, jeżeli zadania z których je utworzono nie istnieją.
+sub-entry	infolog	pl	Wpis podrzędny
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	pl	Zadania stają się podrzędne wobec zadań, z których je utworzono lub głównych zadań, jeżeli zadania z których je utworzono nie istnieją.
 subject	infolog	pl	Temat
 tag to mark positions for address labels	infolog	pl	Zaznacz, aby oznaczyć pozycję dla etykiet adresu
 task	infolog	pl	Zadanie
@@ -306,7 +311,7 @@ the name used internaly (<= 10 chars), changeing it makes existing data unavaili
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	pl	nazwa użyta wewnętrznie (<= 20 znaków), zmiana spowoduje niedostępność istniejących danych
 the text displayed to the user	infolog	pl	tekst wyświetlany użytkownikowi
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	pl	Ten filtr jest domyślnie używany przez CRM Dziennik po wejściu do aplikacji. Filtry ograniczają ilość wpisów w bieżącym widoku. Dostępne filtry pokazują tylko zakończone, wciąż otwarte lub nadchodzące wydarzenia, Twoje lub wszystkich użytkowników.
-til when should the todo or phonecall be finished	infolog	pl	do kiedy powinno być zakończone Dadanie lub Rozmowa tel.
+til when should the todo or phonecall be finished	infolog	pl	Do kiedy powinno być zakończone Zadanie lub Rozmowa telefoniczna
 times	infolog	pl	Terminy
 to many might exceed your execution-time-limit	infolog	pl	zbyt wiele może spowodować przekroczenie czasu wykonywania
 to what should the startdate of new entries be set.	infolog	pl	Jaką wartość ustawić jako datę początkową dla nowych zadań?
@@ -318,21 +323,22 @@ typ '%1' already exists !!!	infolog	pl	Typ %1 już istnieje !!!
 type	infolog	pl	Typ
 type ...	infolog	pl	Typ ..
 type of customfield	infolog	pl	Typ pola dodatkowego
-type of the log-entry: note, phonecall or todo	infolog	pl	Typ wpisu: Notatka, Rozmowa tel. lub Zadanie
+type of the log-entry: note, phonecall or todo	infolog	pl	Typ wpisu: Notatka, Rozmowa telefoniczna lub Zadanie
 unlink	infolog	pl	Odłącz
 upcoming	infolog	pl	nadchodzące
 urgency	infolog	pl	pilność
 urgent	infolog	pl	pilne
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	pl	Użyj tego znacznika dla etykiet adresu. Wstaw zawartość którą chcesz powtórzyć pomiędzy dwa znaczniki.
-used time	infolog	pl	wykorzystany czas
+used time	infolog	pl	Wykorzystany czas
 values for selectbox	infolog	pl	Wartości selectboxa
 view all subs of this entry	infolog	pl	Zoabcz wszystkie podrzędne dla tego wpisu
 view other subs	infolog	pl	zobacz inne podrzędne
 view parent	infolog	pl	Zobacz rodzica
+view parent with children	infolog	pl	Zobacz rodzica z potomkami
 view subs	infolog	pl	zobacz podrzędne
 view the parent of this entry and all his subs	infolog	pl	Zoabcz rodzica tego wpisu i wszystkie wpisy podrzędne
 view this linked entry in its application	infolog	pl	zoabcz podlinkowany wpis w jego aplikacji (np. w Książce Adresowej dla kontaktu)
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pl	kiedy zadanie lub telefon powinno wystartować, to pokazuje z tej daty w filtrze otwartym lub  jego otwartym (strona startowa)
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pl	Kiedy powinno się rozpocząć Zadanie lub Rozmowa telefoniczna
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	pl	Które dodatkowe pola powinna móc edytować osoba odpowiedzialna nie posiadając praw edycji? <br />Status, stopień zaawansowania oraz data wykonania są zawsze możliwe do edycji.
 which implicit acl rights should the responsible get?	infolog	pl	Które prawa ACL powinna otrzymać niejawnie osoba odpowiedzialna?
 will-call	infolog	pl	zadzwoni

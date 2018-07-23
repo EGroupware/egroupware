@@ -25,6 +25,7 @@ accounts	common	pl	Konta
 acl	common	pl	ACL
 action	common	pl	Operacja
 actions	common	pl	Polecenia
+actions...	common	pl	Działania...
 active	common	pl	Aktywne
 add	common	pl	Dodaj
 add %1 category for	common	pl	Dodaj kategorię %1 dla
@@ -159,6 +160,7 @@ contacting server...	common	pl	Trwa łączenie z serwerem...
 content type	common	pl	Typ zawartości
 cook islands	common	pl	WYSPY COOKA
 copy	common	pl	Kopiuj
+copy "%1"	common	pl	Kopiuj "%1"
 costa rica	common	pl	KOSTARYKA
 cote d ivoire	common	pl	WYBRZEŻE KOŚCI SŁONIOWEJ
 could not contact server. operation timed out!	common	pl	Brak połączenia z serwerem. Czas operacji przekroczony.
@@ -183,7 +185,7 @@ default width for the windows	common	pl	Domyslna szerokość dla okna
 delete	common	pl	Usuń
 delete category	common	pl	Usuń kategorię
 delete row	common	pl	Skasuj wiersz
-delete this entry	common	pl	skasuj ten wpis
+delete this entry	common	pl	Skasuj ten wpis
 denmark	common	pl	DANIA
 description	common	pl	Opis
 detail	common	pl	Opis szczegółowy
@@ -198,6 +200,8 @@ disable the animated slider effects when showing or hiding menus in the page? op
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pl	Wyłączyć wykonywanie skryptu poprawki dla Internet Explorer 5.5 i wyższych, który odpowiada za pokazywanie przezroczystości w obrazkach PNG?
 disabled	common	pl	Zablokowany
 djibouti	common	pl	DŻIBUTI
+do not notify	common	pl	Nie powiadamiaj
+do not notify of these changes	common	pl	Nie wysyłaj powiadomień po utworzeniu lub zmianie
 do you also want to delete all subcategories ?	common	pl	Czy chcesz również usunąć wszystkie podkategorie?
 doctype:	common	pl	DOCTYPE:
 document properties	common	pl	Ustawienia dokumentu
@@ -555,7 +559,7 @@ reading	common	pl	odczytywanie
 register	common	pl	rejestracja
 regular	common	pl	prawidłowy
 reject	common	pl	Odrzuć
-remember me	common	pl	zapamiętaj mnie
+remember me	common	pl	Pamiętaj mnie
 remove selected accounts	common	pl	usuń wybrane konta
 remove shortcut	common	pl	Usuń skrót
 rename	common	pl	Zmień nazwę
@@ -586,6 +590,7 @@ saudi arabia	common	pl	ARABIA SAUDYJSKA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pl	Wersja Savant2 różni się od wersji wrappera. <br />Twoja wersja: %1 <br /> Wersja Savant2: %2
 save	common	pl	Zachowaj
 search	common	pl	Szukaj
+search...	common	pl	Szukaj...
 search %1 '%2'	common	pl	Wyszukaj %1 '%2'
 search accounts	common	pl	Wyszukaj konta
 search or select accounts	common	pl	Wyszukaj lub wybierz konta
@@ -734,6 +739,7 @@ venezuela	common	pl	WENEZUELA
 version	common	pl	Wersja
 viet nam	common	pl	WIETNAM
 view	common	pl	Przeglądaj
+view linked %1 entries	common	pl	%1: zobacz powiązane wpisy
 virgin islands, british	common	pl	BRYTYJSKIE WYSPY DZIEWICZE
 virgin islands, u.s.	common	pl	AMERYKAŃSKIE WYSPY DZIEWICZE
 wallis and futuna	common	pl	WALLIS AND FUTUNA
@@ -811,6 +817,7 @@ add column	common	pl	Dodaj kolumnę
 add index	common	pl	Dodaj indeks
 add new	common	pl	Dodaj nowy
 add table	common	pl	Dodaj tablicę
+add to clipboard	common	pl	Dodaj do schowka
 advanced search	common	pl	Wyszukiwanie zaawansowane
 align	common	pl	Wyrównanie
 alignment of label and input-field in table-cell	common	pl	wyrównanie etykiety i pola wprowadzania w komórce tabeli
@@ -867,6 +874,7 @@ comment	common	pl	Komentarz
 confirm	common	pl	zatwierdź
 confirmation message or custom javascript (returning true or false)	common	pl	wiadomość potwierdzenia lub własny skrypt JS (zwracający 'true' lub 'false')
 confirmation necesary or custom java-script	common	pl	potwierdzenie konieczne lub skrypt JS
+confirmation required	common	pl	Wymagane potwierdzenie
 contact	common	pl	Kontakt
 contact field to show	common	pl	Pole kontaktu do wyświetlenia
 contact fields	common	pl	Pola kontaktu
@@ -897,6 +905,7 @@ delete all selected etemplates, without further inquiry	common	pl	usuń WSZYSTKI
 delete and cut save the template!	common	pl	usuń zawartość i zapisz szablon!
 delete column	common	pl	Usuń kolumnę
 delete index	common	pl	Usuń indeks
+delete selected entries?	common	pl	Czy skasować wybrane wpisy?
 delete the spezified etemplate	common	pl	Usuń wskazny e-Szablon
 delete this column	common	pl	usuń tą kolumnę
 delete this etemplate	common	pl	usuń ten e-Szablon
