@@ -565,8 +565,11 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 					naStart = false;
 				}
 
-				// Select the element
-				this.setSelected(this._indexMap[i].uid, true);
+				// Select the element, unless flagged for exclusion
+				if(!this._indexMap[i].no_actions)
+				{
+					this.setSelected(this._indexMap[i].uid, true);
+				}
 			}
 			else if(i >= range_break)
 			{
