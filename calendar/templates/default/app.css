@@ -97,7 +97,7 @@
 
 #calendar-sidebox_header_go,
 #calendar-sidebox_header_today {
-	position: absolute;
+	position: absolute !important;
 	width: 12.0px;
 	height: 12.0px;
 	top: 28px;
