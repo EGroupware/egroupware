@@ -67,12 +67,12 @@ only admin can edit this status	timesheet	pl	tylko administrator może edytować
 or endtime	timesheet	pl	lub czas zakończenia
 order	timesheet	pl	Porządek
 parent	timesheet	pl	Nadrzędny
-permission denied!!!	timesheet	pl	Dostęp zabroniony !!!
+permission denied!!!	timesheet	pl	Dostęp zabroniony!!!
 price	timesheet	pl	Cena
 projectmanager integration	admin	pl	Integracja z Menadżerem projektów
 quantity	timesheet	pl	Ilość
 recovered	timesheet	pl	odzyskany
-save & new	timesheet	pl	Zapisz & Nowy
+save & new	timesheet	pl	Zapisz i nowy
 saves the changes made	timesheet	pl	Zapisz poczynione zmiany
 saves the changes made and leaves	timesheet	pl	zapisz zmiany i zamknij
 saves this entry and add a new one	timesheet	pl	Zachowaj ten wpis i dodaj nowy
