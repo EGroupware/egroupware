@@ -1877,9 +1877,6 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 							_type:'select-cat',
 							getInstanceManager: function() {return im;}
 						}, {application:event.data.app||'calendar'});
-
-						// Get CSS too
-						egw.includeCSS('/api/categories.php?app='+event.data.app);
 					}
 				}
 

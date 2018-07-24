@@ -262,9 +262,6 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			getInstanceManager: function() {return im}
 		}, {application:event.app||'calendar'});
 
-		// Get CSS too
-		egw.includeCSS('/api/categories.php?app='+event.app);
-
 		// Need cleaning? (DnD helper removes content)
 		if(!this.div.has(this.title).length)
 		{
