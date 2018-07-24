@@ -563,23 +563,27 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 				{
 					queryRanges.push(et2_bounds(naStart, i - 1));
 					naStart = false;
+					range_break += RANGE_MAX;
 				}
 
 				// Select the element, unless flagged for exclusion
-				if(!this._indexMap[i].no_actions)
+				// Check for no_actions flag via data
+				var data = egw.dataGetUIDdata(this._indexMap[i].uid);
+				if(!data || data && data.data && !data.data.no_actions)
 				{
 					this.setSelected(this._indexMap[i].uid, true);
 				}
+			}
+			else if (naStart === false)
+			{
+				naStart = i;
+				range_break = naStart + RANGE_MAX;
 			}
 			else if(i >= range_break)
 			{
 				queryRanges.push(et2_bounds(naStart ? naStart : s, i - 1));
 				naStart = i;
 				range_break += RANGE_MAX;
-			}
-			else if (naStart === false)
-			{
-				naStart = i;
 			}
 		}
 
@@ -646,7 +650,12 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 						function (_order) {
 							for (var j = 0; j < _order.length; j++)
 							{
-								this.setSelected(_order[j], true);
+								// Check for no_actions flag via data since entry isn't there/available
+								var data = egw.dataGetUIDdata(_order[j]);
+								if(!data || data && data.data && !data.data.no_actions)
+								{
+									this.setSelected(_order[j], true);
+								}
 							}
 							progressbar.set_value(100*(++range_index/range_count));
 							resolve();
