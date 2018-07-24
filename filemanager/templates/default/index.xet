@@ -31,7 +31,7 @@
 				</row>
 				<row class="row $row_cont[class]">
 					<vfs-mime align="center" id="$row"/>
-					<vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
+					<vfs id="$row" no_lang="1"/>
 					<vfs-size align="right" id="${row}[size]"/>
 					<date-time id="${row}[mtime]" readonly="true"/>
 					<date-time id="${row}[ctime]" readonly="true"/>
