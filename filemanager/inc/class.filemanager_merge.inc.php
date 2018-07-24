@@ -203,6 +203,7 @@ class filemanager_merge extends Api\Storage\Merge
 		if ($link[0] == '/') $link = Api\Framework::getUrl($link);
 
 		$file['link'] = Api\Html::a_href(Api\Html::htmlspecialchars($file['name']), $link);
+		$file['webdav_url'] = Api\Session::link(Vfs::download_url($file['url']));
 		$file['url'] = $link;
 
 		// Add markers
@@ -239,6 +240,7 @@ class filemanager_merge extends Api\Storage\Merge
 			'folder' => 'Containing folder',
 			'folder_file' => 'Containing folder and file name',
 			'url' => 'url',
+			'webdav_url' => 'External path using webdav',
 			'link' => 'Clickable link to file',
 			'comment' => 'comment',
 			'mtime' => 'modified',
