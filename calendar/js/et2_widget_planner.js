@@ -1149,6 +1149,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			tempDate.setMinutes(tempDate.getMinutes()-tempDate.getTimezoneOffset());
 			var title = '';
 			var state = '';
+			state = new Date(t.valueOf() - t.getTimezoneOffset() * 60 * 1000);
+			var day_class = this.day_class_holiday(state,holidays, days);
 
 			if (days <= 3)
 			{
@@ -1162,8 +1164,6 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			{
 				title = this.egw().lang(date('D',t)).substr(0,2)+'<br />'+date('j',t);
 			}
-			state = new Date(t.valueOf() - t.getTimezoneOffset() * 60 * 1000);
-			var day_class = this.day_class_holiday(state,holidays);
 
 			content += '<div class="calendar_plannerDayScale et2_clickable et2_link '+ day_class+
 				'" data-date=\'' + state.toJSON() +'\''+
@@ -1224,10 +1224,11 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	 *
 	 * @param {Date} date
 	 * @param {string[]} holiday_list Filled with a list of holidays for that day
+	 * @param {integer} days Number of days shown in the day header
 	 *
 	 * @return {string} CSS Classes for the day.  calendar_calBirthday, calendar_calHoliday, calendar_calToday and calendar_weekend as appropriate
 	 */
-	day_class_holiday: function(date,holiday_list) {
+	day_class_holiday: function(date,holiday_list, days) {
 
 		if(!date) return '';
 
@@ -1247,6 +1248,10 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				if (typeof holidays[i]['birthyear'] !== 'undefined')
 				{
 					day_class += ' calendar_calBirthday ';
+					if(typeof days == 'undefined' || days <= 21)
+					{
+						day_class += ' calendar_calBirthdayIcon ';
+					}
 
 					holiday_list.push(holidays[i]['name']);
 				}
