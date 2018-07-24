@@ -312,7 +312,11 @@ class calendar_merge extends Api\Storage\Merge
 		}
 
 		$emails = array();
-		foreach($record->participants as $uid => $status)
+		$event = array(
+			'participants' => $record->participants
+		);
+		$this->bo->enum_groups($event);
+		foreach($event['participants'] as $uid => $status)
 		{
 			// Skip rejected
 			if (in_array(substr($status, 0, 1), array('R')))
