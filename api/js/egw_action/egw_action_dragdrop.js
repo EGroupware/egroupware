@@ -104,8 +104,9 @@ function egwDragActionImplementation()
 
 		// Take select all into account when counting number of rows, because they may not be
 		// in _selected object
-		var pseudoNumRows = (_selected[0] && _selected[0]._context._selectionMgr._selectAll) ?
-			_selected[0]._context._selectionMgr._total : _selected.length;
+		var pseudoNumRows = (_selected[0] && _selected[0]._context && _selected[0]._context._selectionMgr &&
+				_selected[0]._context._selectionMgr._selectAll) ?
+				_selected[0]._context._selectionMgr._total : _selected.length;
 
 		for (var i = 0; i < _selected.length;i++)
 		{
