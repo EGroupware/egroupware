@@ -351,7 +351,21 @@ class Nextmatch extends Etemplate\Widget
 		{
 			$GLOBALS['egw_info']['flags']['currentapp'] = $app;
 			Api\Translation::add_app($app);
+
+			// Avoid SQL errors from missing custom fields (deleted or no permission)
+			if(!Api\Storage\Customfields::get($app))
+			{
+				if(Api\Storage::remove_customfields($value['order']))
+				{
+					Api\Json\Response::get()->message(lang('Sort removed, given custom field is no longer available'));
+				}
+				if(Api\Storage::remove_customfields($value['col_filter']))
+				{
+					Api\Json\Response::get()->message(lang('Filter removed, given custom field is no longer available'));
+				}
+			}
 		}
+
 		// If specific data requested, just do that
 		if (($row_id = $value['row_id']) && $queriedRange['refresh'])
 		{

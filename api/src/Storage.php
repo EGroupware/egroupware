@@ -221,7 +221,7 @@ class Storage extends Storage\Base
 		$id = isset($data[$this->autoinc_id]) ? $data[$this->autoinc_id] : $data[$this->db_key_cols[$this->autoinc_id]];
 
 		\EGroupware\Api\Storage\Customfields::handle_files($this->app, $id, $data, $this->customfields);
-		
+
 		foreach (array_keys((array)$this->customfields) as $name)
 		{
 			if (!isset($data[$field = $this->get_cf_field($name)])) continue;
@@ -431,6 +431,11 @@ class Storage extends Storage\Base
 		//error_log(__METHOD__.'('.array2string(array_combine(array_slice(array('criteria','only_keys','order_by','extra_cols','wildcard','empty','op','start','filter','join','need_full_no_count'), 0, count(func_get_args())), func_get_args())).')');
 		if (!$this->customfields)
 		{
+			$this->remove_customfields($criteria);
+			$this->remove_customfields($only_keys);
+			$this->remove_customfields($order_by);
+			$this->remove_customfields($extra_cols);
+			$this->remove_customfields($filter);
 			return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 		}
 		if ($only_keys === false)
@@ -681,6 +686,52 @@ class Storage extends Storage\Base
 			}
 		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
+	}
+
+	/**
+	 * Make sure there are no custom fields referred to in the field
+	 *
+	 * Use this to prevent SQL errors caused by queries / favorites that refer to
+	 * a custom field that is no longer available due to permission changes or
+	 * deletion.
+	 *
+	 * @param Array|String $field
+	 *
+	 * @return Boolean True if any changes were made
+	 */
+	public static function remove_customfields(&$field)
+	{
+		$was_string = false;
+		$changed = false;
+		if(is_string($field) && strpos($field, self::CF_PREFIX) !== FALSE)
+		{
+			$was_string = true;
+			$field = explode(',',$field);
+		}
+		if(!is_array($field))
+		{
+			return;
+		}
+		foreach($field as $key => $value)
+		{
+
+			if($key[0] == self::CF_PREFIX || is_string($value) && strpos($value, self::CF_PREFIX) !== FALSE)
+			{
+				unset($field[$key]);
+				$changed = true;
+			}
+			else if(is_array($value))
+			{
+				$changed = $changed || static::remove_customfields($value);
+			}
+		}
+
+		if($was_string)
+		{
+			$field = implode(',',$field);
+		}
+
+		return $changed;
 	}
 
 	/**
