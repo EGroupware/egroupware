@@ -328,7 +328,7 @@ module.exports = function (grunt) {
 						"api/templates/default/print.css",
 						"pixelegg/print.css"
 					],
-					"pixelegg/css/Standard.min.css": [
+					"pixelegg/css/traditional.min.css": [
 						"api/js/jquery/chosen/chosen.css",
 						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
@@ -340,39 +340,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/etemplate2.css",
-						"pixelegg/css/pixelegg.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css"
-					],
-					"pixelegg/css/Compact.min.css": [
-						"api/js/jquery/chosen/chosen.css",
-						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
-						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/jpicker/css/jPicker-1.1.6.min.css",
-						"api/js/jquery/jquery-ui-timepicker-addon.css",
-						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
-						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
-						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
-						"api/js/etemplate/lib/jsdifflib/diffview.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/etemplate2.css",
-						"pixelegg/css/pixelegg.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css"
-					],
-					"pixelegg/css/Traditional.min.css": [
-						"api/js/jquery/chosen/chosen.css",
-						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
-						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/jpicker/css/jPicker-1.1.6.min.css",
-						"api/js/jquery/jquery-ui-timepicker-addon.css",
-						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
-						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
-						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
-						"api/js/etemplate/lib/jsdifflib/diffview.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/etemplate2.css",
-						"pixelegg/css/pixelegg.css",
+						"pixelegg/css/traditional.css",
 						"api/templates/default/print.css",
 						"pixelegg/print.css"
 					]
