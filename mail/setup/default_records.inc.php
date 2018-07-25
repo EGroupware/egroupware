@@ -27,6 +27,10 @@ if (!$GLOBALS['egw_setup']->db->affected_rows())
 	$defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
 	$GLOBALS['egw_setup']->add_acl('mail','run',$defaultgroup);
 }
+$prefs = new Api\Preferences();
+$prefs->read_repository(false);
+$prefs->add('mail', 'nextmatch-mail.index.rows-autorefresh', '300', 'default');
+$prefs->save_repository(false, 'default');
 
 // change common/default_app pref to mail, if it was felamimail
 Api\Preferences::change_preference('common', 'default_app', 'mail', 'felamimail');
