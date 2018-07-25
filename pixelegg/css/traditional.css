@@ -35,7 +35,7 @@
  * @version: 1
  * Stefan Reinhardt
  */
-@import "../../etemplate/templates/default/etemplate2.css";
+@import "../../api/templates/default/etemplate2.css";
 @media all {
   /**
  * Top level
@@ -5140,7 +5140,7 @@ td.message span.message {
   border-width: 0px 1px 1px 1px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_bottom {
-  
+
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_icon {
   display: inline-block;
