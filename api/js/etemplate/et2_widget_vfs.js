@@ -132,7 +132,7 @@ var et2_vfs = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDet
 			}
 			var self = this;
 			var data = {path: path, type: i < path_parts.length-1 ? this.DIR_MIME_TYPE : _value.mime };
-			jQuery(document.createElement("li"))
+			var node = jQuery(document.createElement("li"))
 				.addClass("vfsFilename")
 				.text(text + (i < path_parts.length-1 ? '/' : ''))
 				//.attr('title', egw.decodePath(path))
@@ -147,6 +147,47 @@ var et2_vfs = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDet
 					}
 				})
 				.appendTo(this.span);
+		}
+
+		// Last part of path do default action
+		this._bind_default_action(node, data);
+
+	},
+
+	_bind_default_action: function(node, data)
+	{
+		var links = [];
+		var widget = this;
+		var defaultAction = null;
+		var object = null;
+		while(links.length == 0 && widget.getParent())
+		{
+			object = egw_globalObjectManager.getObjectById(widget.id);
+			if(object && object.manager && object.manager.children)
+			{
+				links = object.manager.children;
+			}
+			widget = widget.getParent();
+		}
+		for (var k in links)
+		{
+			if (links[k].default && links[k].enabled.exec())
+			{
+				defaultAction = links[k];
+				break;
+			}
+		}
+		if(defaultAction && !this.onclick)
+		{
+			node.off('click').click({data:data, egw: this.egw()}, function(e) {
+				// Wait until object selection happens
+				window.setTimeout(function() {
+					// execute default action
+					egw_keyHandler(EGW_KEY_ENTER, false, false, false);
+				});
+				// Select row
+				return true;
+			}.bind({data: data, object: object}));
 		}
 	},
 
