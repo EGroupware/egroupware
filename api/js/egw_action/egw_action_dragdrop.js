@@ -101,6 +101,12 @@ function egwDragActionImplementation()
 		var itemLabel = egw.lang(egw.link_get_registry(egw.app_name(),_selected.length > 1?'entries':'entry')||egw.app_name());
 
 		var index = 0;
+
+		// Take select all into account when counting number of rows, because they may not be
+		// in _selected object
+		var pseudoNumRows = (_selected[0] && _selected[0]._context._selectionMgr._selectAll) ?
+			_selected[0]._context._selectionMgr._total : _selected.length;
+
 		for (var i = 0; i < _selected.length;i++)
 		{
 			var row = jQuery(_selected[i].iface.getDOMNode()).clone();
@@ -117,12 +123,12 @@ function egwDragActionImplementation()
 						.addClass('et2_egw_action_ddHelper_itemsCnt')
 						.appendTo(div);
 
-				spanCnt.text(_selected.length +' '+ itemLabel);
+				spanCnt.text(pseudoNumRows +' '+ itemLabel);
 				// Number of not shown rows
-				var restRows = _selected.length - maxRows;
+				var restRows = pseudoNumRows - maxRows;
 				if (restRows)
 				{
-					moreRow.text((_selected.length - maxRows) +' '+egw.lang('more %1 selected ...', itemLabel));
+					moreRow.text((pseudoNumRows - maxRows) +' '+egw.lang('more %1 selected ...', itemLabel));
 				}
 				table.append(moreRow);
 				break;
