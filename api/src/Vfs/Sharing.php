@@ -158,7 +158,7 @@ class Sharing extends \EGroupware\Api\Sharing
 			'filemanager' => $GLOBALS['egw_info']['apps']['filemanager']
 		);
 		// check if sharee has Collabora run rights --> give is to share too
-		$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
+		$apps = $GLOBALS['egw']->acl->get_user_applications($this->share['share_owner']);
 		if (!empty($apps['collabora']))
 		{
 			$GLOBALS['egw_info']['user']['apps']['collabora'] = $GLOBALS['egw_info']['apps']['collabora'];
