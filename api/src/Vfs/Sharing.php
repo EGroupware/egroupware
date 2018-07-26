@@ -456,6 +456,8 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 		{
 			$actions = parent::get_actions();
 			$group = 1;
+			// do not add edit setting action when we are in sharing
+			unset($actions['edit']);
 			if(Vfs::is_writable($GLOBALS['egw']->sharing->get_root()))
 			{
 				return $actions;
