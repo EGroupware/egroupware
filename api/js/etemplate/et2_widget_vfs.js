@@ -171,7 +171,7 @@ var et2_vfs = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDet
 		}
 		for (var k in links)
 		{
-			if (links[k].default && links[k].enabled.exec())
+			if (links[k].default && links[k].enabled.exec(links[k]))
 			{
 				defaultAction = links[k];
 				break;
