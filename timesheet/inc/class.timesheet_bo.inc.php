@@ -278,6 +278,30 @@ class timesheet_bo extends Api\Storage
 	}
 
 	/**
+	 * Get status labels with admin statuses (optionally) filtered out
+	 *
+	 * @param boolean $admin
+	 *
+	 * @return Array
+	 */
+	protected function get_status_labels($admin = null)
+	{
+		if(is_null($admin))
+		{
+			$admin = isset($GLOBALS['egw_info']['user']['apps']['admin']);
+		}
+		$labels = array();
+		foreach($this->status_labels as $status_id => $label)
+		{
+			if($admin || !$admin && !$this->status_labels_config[$status_id]['admin'])
+			{
+				$labels[$status_id] = $label;
+			}
+		}
+		return $labels;
+	}
+
+	/**
 	 * get list of specified grants as uid => Username pairs
 	 *
 	 * @param int $required =Acl::READ
