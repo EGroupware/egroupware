@@ -444,7 +444,7 @@ class timesheet_ui extends timesheet_bo
 			$edit_grants[$content['ts_owner']] = Api\Accounts::username($content['ts_owner']);
 		}
 		$sel_options['ts_owner']  = $edit_grants;
-		$sel_options['ts_status']  = $this->status_labels;
+		$sel_options['ts_status']  = $this->get_status_labels($only_admin_edit);
 		if($this->config_data['history'] && $content['ts_status'] == self::DELETED_STATUS)
 		{
 			$sel_options['ts_status'][self::DELETED_STATUS] = 'Deleted';
@@ -1051,9 +1051,9 @@ class timesheet_ui extends timesheet_bo
 				'icon' => 'apply',
 				'caption' => 'Modify status',
 				'group' => $group,
-				'children' => $this->status_labels,
+				'children' => $this->get_status_labels(),
 				'prefix' => 'to_status_',
-				'enabled' => (boolean)$this->status_labels,
+				'enabled' => (boolean)$this->get_status_labels(),
 			),
 		);
 
