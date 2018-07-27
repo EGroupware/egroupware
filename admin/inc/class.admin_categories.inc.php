@@ -187,6 +187,10 @@ class admin_categories
 						{
 							// Update category styles
 							Api\Json\Response::get()->apply('opener.egw.includeCSS',array(Categories::css($refresh_app == 'admin' ? Categories::GLOBAL_APPNAME : $refresh_app)));
+							if($refresh_app != $content['appname'])
+							{
+								Api\Json\Response::get()->apply('opener.egw.includeCSS',array(Categories::css($content['appname'])));
+							}
 							if($this->appname != 'admin')
 							{
 								Api\Json\Response::get()->apply('opener.egw.show_preferences',array(
