@@ -36,6 +36,12 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 			default: et2_no_init,
 			description: "Format for the timestamp.  User is always after."
 		},
+		timezone: {
+			name: "Timezone",
+			type: "string",
+			default: et2_no_init,
+			description: "Timezone.  Default is user time."
+		},
 		image: {
 			default: "timestamp"
 		},
@@ -70,7 +76,9 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 
 	_insert_text: function() {
 		var text = "";
-		var now = new Date();
+		var now = new Date(new Date().toLocaleString('en-US', {
+			timeZone: this.options.timezone ? this.options.timezone : egw.preference('tz')
+		}));
 		var format = (this.options.format ?
 			this.options.format :
 			egw.preference('dateformat') + ' ' + (egw.preference("timeformat") === "12" ? "h:ia" : "H:i"))+' ';
