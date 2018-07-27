@@ -1099,7 +1099,8 @@ class calendar_boupdate extends calendar_bo
 								'event_id' => $event['id'],
 								'user_id' => $userid,
 								'type' => $m_type,
-								'id' => $event['id']
+								'id' => $event['id'],
+								'app' => 'calendar'
 							));
 						}
 						if ($m_type === MSG_ALARM) $notification->set_popupdata('calendar', array('egw_pr_notify' => 1, 'type' => $m_type));
