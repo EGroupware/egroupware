@@ -160,9 +160,10 @@ var et2_vfs = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDet
 		var widget = this;
 		var defaultAction = null;
 		var object = null;
-		while(links.length == 0 && widget.getParent())
+		var app = this.getInstanceManager().app;
+		while(links.length === 0 && widget.getParent())
 		{
-			object = egw_globalObjectManager.getObjectById(widget.id);
+			object = egw_getAppObjectManager(app).getObjectById(widget.id);
 			if(object && object.manager && object.manager.children)
 			{
 				links = object.manager.children;
