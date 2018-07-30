@@ -224,6 +224,13 @@ class Sharing extends \EGroupware\Api\Sharing
 
 			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
 			{
+				// Make sure we get the correct path if sharing from a share
+				if(isset($GLOBALS['egw']->sharing) && $exists)
+				{
+					$resolved_stat = Vfs::parse_url($stat['url']);
+					$path = 'vfs://default'. $resolved_stat['path'];
+				}
+
 				$vfs_path = $path;
 			}
 		}
