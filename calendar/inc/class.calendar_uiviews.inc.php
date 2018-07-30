@@ -935,9 +935,12 @@ class calendar_uiviews extends calendar_ui
 		$set_execute = function(&$action) use (&$set_execute)
 		{
 			$action['onExecute'] = 'javaScript:app.calendar.action_merge';
-			foreach($action['children'] as &$child)
+			if (!empty($action['children']))
 			{
-				$set_execute($child);
+				foreach($action['children'] as &$child)
+				{
+					$set_execute($child);
+				}
 			}
 		};
 		$set_execute($actions['documents']);
