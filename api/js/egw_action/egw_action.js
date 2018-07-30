@@ -518,6 +518,10 @@ egwAction.prototype.not_disableClass = function(_action, _senders, _target)
  */
 egwAction.prototype.enableClass = function(_action, _senders, _target)
 {
+	if (typeof _target == 'undefined')
+	{
+		return false;
+	} else
 	if(_target.iface.getDOMNode())
 	{
 		return jQuery(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
