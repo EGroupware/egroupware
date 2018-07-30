@@ -416,9 +416,10 @@ class timesheet_ui extends timesheet_bo
 		// or the preserved project-blur comming from the current selected project
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $content['ts_project_blur'];
 		$readonlys = array(
-			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(Acl::DELETE) || $this->data['ts_status'] == self::DELETED_STATUS,
+			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(Acl::DELETE) ||
+				$this->data['ts_status'] == self::DELETED_STATUS ||$only_admin_edit ,
 			'button[undelete]' => $this->data['ts_status'] != self::DELETED_STATUS,
-			'button[edit]'     => !$view || !$this->check_acl(Acl::EDIT),
+			'button[edit]'     => !$view || !$this->check_acl(Acl::EDIT) || $only_admin_edit,
 			'button[save]'     => $view,
 			'button[save_new]' => $view,
 			'button[apply]'    => $view,
