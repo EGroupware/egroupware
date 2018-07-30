@@ -221,7 +221,7 @@ class Storage extends Storage\Base
 		$id = isset($data[$this->autoinc_id]) ? $data[$this->autoinc_id] : $data[$this->db_key_cols[$this->autoinc_id]];
 
 		\EGroupware\Api\Storage\Customfields::handle_files($this->app, $id, $data, $this->customfields);
-		
+
 		foreach (array_keys((array)$this->customfields) as $name)
 		{
 			if (!isset($data[$field = $this->get_cf_field($name)])) continue;
@@ -429,7 +429,10 @@ class Storage extends Storage\Base
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
 		//error_log(__METHOD__.'('.array2string(array_combine(array_slice(array('criteria','only_keys','order_by','extra_cols','wildcard','empty','op','start','filter','join','need_full_no_count'), 0, count(func_get_args())), func_get_args())).')');
-		if (!$this->customfields)
+
+		// if no CFs are defined OR used and became unavailable (deleted or permissions changed)
+		if (!$this->customfields && strpos($order_by, self::CF_PREFIX) === false &&
+			strpos(implode(',', array_keys($filter)), self::CF_PREFIX) === false)
 		{
 			return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 		}
@@ -447,6 +450,7 @@ class Storage extends Storage\Base
 			// check if we search in the custom fields
 			if (isset($criteria[$this->extra_value]))
 			{
+				// we should check if the CF is (still) available, but that makes the slow search even slower :(
 				if (($negate = $criteria[$this->extra_value][0] === '!'))
 				{
 					$criteria[$this->extra_value] = substr($criteria[$this->extra_value],1);
@@ -542,6 +546,11 @@ class Storage extends Storage\Base
 					$buff = explode(' ',trim($v));
 					$orderDir = array_pop($buff);
 					$key = substr(trim(implode(' ',$buff)), 1);
+					if (!isset($this->customfields[$key]))
+					{
+						$order_by = preg_replace('/'.preg_quote($v, '/').',?/', '', $order_by);
+						continue;	// ignore unavaiable CF
+					}
 					switch($this->customfields[$key]['type'])
 					{
 						case 'int':
@@ -602,6 +611,12 @@ class Storage extends Storage\Base
 				}
 				elseif (is_string($name) && $this->is_cf($name))
 				{
+					$cf_name = $this->get_cf_name($name);
+					if (!isset($this->customfields[$cf_name]))
+					{
+						unset($filter[$name]);
+						continue;	// ignore unavailable CF
+					}
 					if (!empty($val))	// empty -> dont filter
 					{
 						if ($val[0] === '!')	// negative filter
@@ -610,8 +625,8 @@ class Storage extends Storage\Base
 						}
 						else	// using Db::expression to allow to use array() with possible values or NULL
 						{
-							if($this->customfields[$this->get_cf_name($name)]['type'] == 'select' &&
-								$this->customfields[$this->get_cf_name($name)]['rows'] > 1)
+							if($this->customfields[$cf_name]['type'] == 'select' &&
+								$this->customfields[$cf_name]['rows'] > 1)
 							{
 								// Multi-select - any entry with the filter value selected matches
 								$sql_filter = str_replace($this->extra_value,'extra_filter.'.
@@ -620,7 +635,7 @@ class Storage extends Storage\Base
 									))
 								);
 							}
-							elseif ($this->customfields[$this->get_cf_name($name)]['type'] == 'text')
+							elseif ($this->customfields[$cf_name]['type'] == 'text')
 							{
 								$sql_filter = str_replace($this->extra_value,'extra_filter.'.$this->extra_value,
 										$this->db->expression($this->extra_table,array(
@@ -637,7 +652,7 @@ class Storage extends Storage\Base
 						// need to use a LEFT JOIN for negative search or to allow NULL values
 						$need_left_join = $val[0] === '!' || strpos($sql_filter,'IS NULL') !== false ? ' LEFT ' : '';
 						$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$need_left_join.$this->extra_join_filter.
-							' AND extra_filter.'.$this->extra_key.'='.$this->db->quote($this->get_cf_name($name)).
+							' AND extra_filter.'.$this->extra_key.'='.$this->db->quote($cf_name).
 							' AND '.$sql_filter);
 						++$extra_filter;
 					}
@@ -658,11 +673,13 @@ class Storage extends Storage\Base
 							break;
 						}
 					}
+					unset($filter[$name]);
+					$cf_name = $this->get_cf_name($cf);
+					if (!isset($this->customfields[$cf_name])) continue;	// ignore unavailable CF
 					$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.
-						' AND extra_filter.'.$this->extra_key.'='.$this->db->quote($this->get_cf_name($cf)).
+						' AND extra_filter.'.$this->extra_key.'='.$this->db->quote($cf_name).
 						' AND '.str_replace($cf,'extra_filter.'.$this->extra_value,$val));
 					++$extra_filter;
-					unset($filter[$name]);
 				}
 			}
 		}
