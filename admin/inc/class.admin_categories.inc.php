@@ -185,31 +185,27 @@ class admin_categories
 					{
 						if(Api\Json\Response::isJSONResponse())
 						{
-							// Update category styles
-							Api\Json\Response::get()->apply('opener.egw.includeCSS',array(Categories::css($refresh_app == 'admin' ? Categories::GLOBAL_APPNAME : $refresh_app)));
-							if($refresh_app != $content['appname'])
-							{
-								Api\Json\Response::get()->apply('opener.egw.includeCSS',array(Categories::css($content['appname'])));
-							}
 							if($this->appname != 'admin')
 							{
-								Api\Json\Response::get()->apply('opener.egw.show_preferences',array(
-									'cats',
-									$this->appname == 'admin' ? Categories::GLOBAL_APPNAME : array($refresh_app)
-								));
-								$change_color = false;
+								// Need to forcably re-load everything to force the CSS to be loaded
+								Api\Json\Response::get()->redirect(Framework::link('/index.php', array(
+									'menuaction' => 'preferences.preferences_categories_ui.index',
+									'ajax' => 'true',
+									'cats_app' => $appname
+								)), TRUE, $this->appname);
 							}
 							else
 							{
-								Categories::css($refresh_app == 'admin' ? Categories::GLOBAL_APPNAME : $refresh_app);
-								// Need to forcably re-load the iframe to avoid smart etemplate refresh
-								Api\Json\Response::get()->apply('opener.app.admin.load',array(
-									Framework::link('/index.php', array(
-										'menuaction' => $this->list_link,
-										'appname' => $appname
-									)
-								)));
+								// Need to forcably re-load everything to force the CSS to be loaded
+								Api\Json\Response::get()->redirect(Framework::link('/index.php', array(
+									'menuaction' => 'admin.admin_ui.index',
+									'load' => $this->list_link,
+									'ajax' => 'true',
+									'appname' => $appname
+								)), TRUE, $this->appname);
 							}
+							Framework::window_close();
+							return;
 						}
 						else
 						{

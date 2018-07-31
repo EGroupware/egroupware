@@ -106,6 +106,10 @@ app.classes.admin = AppJS.extend(
 						}
 					);
 				}
+				if( this.ajax_target && this.et2.getArrayMgr('content').getEntry('ajax_target'))
+				{
+					this.load(this.et2.getArrayMgr('content').getEntry('ajax_target'));
+				}
 				break;
 
 			case 'admin.customfield_edit':
