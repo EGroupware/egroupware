@@ -96,16 +96,13 @@ class admin_ui
 		// important for first time load eg. from an other application calling it's site configuration
 		$tpl->setElementAttribute('nm', 'disabled', !empty($_GET['load']));
 		$tpl->setElementAttribute('iframe', 'disabled', empty($_GET['load']));
+		$content['iframe'] = 'about:blank';	// we show accounts-list be default now
 		if (!empty($_GET['load']))
 		{
 			$vars = $_GET;
 			$vars['menuaction'] = $vars['load'];
 			unset($vars['load']);
-			$content['iframe'] = Egw::link('/index.php', $vars);
-		}
-		else
-		{
-			$content['iframe'] = 'about:blank';	// we show accounts-list be default now
+			$content[$vars['ajax'] ? 'ajax_target':'iframe'] = Egw::link('/index.php', $vars);
 		}
 
 		$tpl->exec('admin.admin_ui.index', $content, $sel_options);
