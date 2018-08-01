@@ -199,9 +199,9 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
                 if (!$options["overwrite"]) {
                     return "412 precondition failed";
                 }
-                $dest .= basename($source);
+                $dest .= Vfs::basename($source);
                 if (file_exists($dest)) {
-                    $options["dest"] .= basename($source);
+                    $options["dest"] .= Vfs::basename($source);
                 } else {
                     $new          = true;
                     $existing_col = true;
@@ -737,11 +737,11 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 
 			if (substr($file['path'],-1) == '/')
 			{
-				$name = basename(substr($file['path'],0,-1)).'/';
+				$name = Vfs::basename(substr($file['path'],0,-1)).'/';
 			}
 			else
 			{
-				$name = basename($file['path']);
+				$name = Vfs::basename($file['path']);
 			}
 
 			echo "\t<tr class='$class'>\n\t\t<td>$n</td>\n\t\t<td>".
