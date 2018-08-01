@@ -748,7 +748,7 @@ class StreamWrapper implements StreamWrapperIface
 				(!self::HIDE_UNREADABLES || $this->opened_dir_writable ||
 					Vfs::check_access($mounted,Vfs::READABLE)))
 			{
-				$this->extra_dirs[] = basename($mounted);
+				$this->extra_dirs[] = Vfs::basename($mounted);
 			}
 		}
 
@@ -852,14 +852,14 @@ class StreamWrapper implements StreamWrapperIface
 		}
 		// check if a failed url_stat was for a home dir, in that case silently create it
 		if (!$stat && $try_create_home && Vfs::dirname(Vfs::parse_url($path,PHP_URL_PATH)) == '/home' &&
-			($id = $GLOBALS['egw']->accounts->name2id(basename($path))) &&
-			$GLOBALS['egw']->accounts->id2name($id) == basename($path))	// make sure path has the right case!
+			($id = $GLOBALS['egw']->accounts->name2id(Vfs::basename($path))) &&
+			$GLOBALS['egw']->accounts->id2name($id) == Vfs::basename($path))	// make sure path has the right case!
 		{
 			$hook_data = array(
 				'location' => $GLOBALS['egw']->accounts->get_type($id) == 'g' ? 'addgroup' : 'addaccount',
 				'account_id' => $id,
-				'account_lid' => basename($path),
-				'account_name' => basename($path),
+				'account_lid' => Vfs::basename($path),
+				'account_name' => Vfs::basename($path),
 			);
 			call_user_func(array(__NAMESPACE__.'\\Hooks',$hook_data['location']),$hook_data);
 			unset($hook_data);
