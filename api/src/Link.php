@@ -1287,7 +1287,7 @@ class Link extends Link\Storage
 			$link = self::get_link(-$app);
 			if($link['app2'] && $link['id2'])
 			{
-				Storage\History::static_add($link['app2'],$link['id2'],$GLOBALS['egw_info']['user']['account_id'],'~file~','', basename($url));
+				Storage\History::static_add($link['app2'],$link['id2'],$GLOBALS['egw_info']['user']['account_id'],'~file~','', Vfs::basename($url));
 			}
 		}
 		if (($Ok = !file_exists($url) || Vfs::remove($url,true)) && ((int)$app > 0 || $fname))

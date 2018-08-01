@@ -100,7 +100,7 @@ class Image
 	 */
 	protected static function get_extension($path, &$name=null)
 	{
-		$parts = explode('.', basename($path));
+		$parts = explode('.', Vfs::basename($path));
 		$ext = array_pop($parts);
 		$name = implode('.', $parts);
 		return $ext;
