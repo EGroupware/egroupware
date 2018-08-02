@@ -17,7 +17,7 @@
  * To generate the now existing package.json:
  *		npm init
  *		npm install grunt --save-dev
- *		npm install grunt-contrib-uglify --save-dev
+ *		npm install grunt-contrib-uglify-es --save-dev
  *		npm install grunt-newer --save-dev
  *		npm install grunt-contrib-cssmin --save-dev
  *		npm install grunt-hub --save-dev
@@ -426,7 +426,7 @@ module.exports = function (grunt) {
 		}
 	});
 	// Load the plugin that provides the "uglify" task.
-	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-uglify-es');
 
 	// Load plugin for css minificaton
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
