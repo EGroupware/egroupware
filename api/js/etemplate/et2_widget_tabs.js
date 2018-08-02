@@ -338,7 +338,7 @@ var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 				entry.flagDiv.addClass(entry.widget_options.class);
 			}
 			entry.flagDiv.text(entry.label || "Tab");
-			if(entry.hidden)
+			if(entry.hidden || this.tabData.length === 1)
 			{
 				entry.flagDiv.hide();
 			}
