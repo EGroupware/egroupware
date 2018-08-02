@@ -485,15 +485,7 @@ abstract class Framework extends Framework\Extra
 
 		if($GLOBALS['egw_info']['flags']['currentapp'] != 'wiki') $robots ='<meta name="robots" content="none" />';
 
-		if (substr($GLOBALS['egw_info']['server']['favicon_file'],0,4) == 'http')
-		{
-			$var['favicon_file'] = $GLOBALS['egw_info']['server']['favicon_file'];
-		}
-		else
-		{
-			$var['favicon_file'] = Image::find('api', $GLOBALS['egw_info']['server']['favicon_file'] ?
-				$GLOBALS['egw_info']['server']['favicon_file'] : 'favicon.ico');
-		}
+		$var['favicon_file'] = self::get_login_logo_or_bg_url('favicon_file', 'favicon.ico');
 
 		if ($GLOBALS['egw_info']['flags']['include_wz_tooltip'] &&
 			file_exists(EGW_SERVER_ROOT.($wz_tooltip = '/phpgwapi/js/wz_tooltip/wz_tooltip.js')))
