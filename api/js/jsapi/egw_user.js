@@ -192,6 +192,29 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		},
 
 		/**
+		 * Set specified account-data of selected user in an other widget
+		 *
+		 * Used eg. in template as: onchange="egw.set_account_data(widget, 'target', 'account_email')"
+		 *
+		 * @param {et2_widget} _src_widget widget to select the user
+		 * @param {string} _target_name name of widget to set the data
+		 * @param {string} _field name of data to set eg. "account_email"
+		 */
+		set_account_data: function(_src_widget, _target_name, _field)
+		{
+			var user = _src_widget.get_value();
+			var target = _src_widget.getRoot().getWidgetById(_target_name);
+
+			if (user && target)
+			{
+				egw.accountData(user, _field, false, function(_data)
+				{
+					target.set_value(_data[user]);
+				});
+			};
+		},
+
+		/**
 		 * Invalidate client-side account cache
 		 *
 		 * For _type == "add" we invalidate the whole cache currently.

@@ -13,7 +13,36 @@ use EGroupware\Api;
 use EGroupware\Api\Acl;
 
 /**
- * admin comand base class
+ * Admin comand base class
+ *
+ * Admin commands should be used to implement and log (!) all actions admins carry
+ * out using the administrative rights (regular users cant do).
+ *
+ * They are stored in DB table egw_admin_queue which builds a persitent log
+ * of administrative actions cared out on an EGroupware installation.
+ * Commands can be marked deleted (canceled for scheduled commands),
+ * but they are never deleted for the table to implement a persistent log!
+ *
+ * All administrative actions are encapsulated in classes derived from this
+ * abstract base class implementing an exec method to carry out the command.
+ *
+ * @property-read int $created Creation timestamp
+ * @property-read int $creator Creator user-id
+ * @property-read string $creator_email rfc822 address ("Name <email@domain.com>") of creator
+ * @property-read int $modified Modification timestamp
+ * @property-read int|NULL $scheduled timestamp if command is not run immediatly,
+ *	but scheduled to run automatic by the system at a later point in time
+ * @property-read int $modifier Modifier user-id
+ * @property-read string $modifier_email rfc822 address ("Name <email@domain.com>") of modifier
+ * @property int|NULL $requested User who requested the change (not current user!)
+ * @property string|NULL $requested_email rfc822 address ("Name <email@domain.com>") of requested
+ * @property string|NULL $comment comment, eg. reasoning why change was requested
+ * @property-read int|NULL $errno Numerical error-code or NULL on success
+ * @property-read string|NULL $error Error message or NULL on success
+ * @property-read int $id $id of command/row in egw_admin_queue table
+ * @property-read string $uid uuid of command (necessary if command is send to a remote system to execute)
+ * @property int|NULL $remote_id id of remote system, if command is not meant to run on local system
+ *  foreign key into egw_admin_remote (table of remote systems administrated by this one)
  */
 abstract class admin_cmd
 {
@@ -327,6 +356,12 @@ abstract class admin_cmd
 		// paswords are masked / removed, if we dont need them anymore
 		$vars['data'] = in_array($this->status, self::$require_pw_stati) ?
 			json_encode($this->data) : self::mask_passwords($this->data);
+
+		// skip EGroupware\\ prefix in new class-names, as value gets too long for column otherwise
+		if (strpos($this->type, 'EGroupware\\') === 0)
+		{
+			$vars['type'] = substr($this->type, 11);
+		}
 
 		admin_cmd::$sql->init($vars);
 		if (admin_cmd::$sql->save() != 0)

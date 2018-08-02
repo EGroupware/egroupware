@@ -148,6 +148,7 @@ class admin_account
 			'account_primary_group',
 			'account_expires',
 			'homedirectory', 'loginshell',
+			'requested', 'requested_email', 'comment',	// admin_cmd documentation (EPL)
 		) as $c_name => $a_name)
 		{
 			if (is_int($c_name)) $c_name = $a_name;
