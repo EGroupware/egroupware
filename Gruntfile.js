@@ -247,6 +247,13 @@ module.exports = function (grunt) {
 					]
 				}
 			},
+			notifications: {
+				files: {
+					"notifications/js/notificationajaxpopup.min.js":[
+						"notifications/js/notificationajaxpopup.js"
+					]
+				}
+			},
 			pixelegg: {
 				files: {
 					"pixelegg/js/fw_pixelegg.min.js": [

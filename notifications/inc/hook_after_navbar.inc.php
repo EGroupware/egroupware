@@ -25,8 +25,9 @@ if ($GLOBALS['egw_info']['user']['apps']['notifications'])
 		'etag'	=> Api\Translation::etag('notifications', Api\Translation::$userlang)
 	);
 	$popup_poll_interval = empty($notification_config['popup_poll_interval']) ? 60 : $notification_config['popup_poll_interval'];
-	echo '<script src="'. $GLOBALS['egw_info']['server']['webserver_url']. '/notifications/js/notificationajaxpopup.js?'.
-		filemtime(EGW_SERVER_ROOT.'/notifications/js/notificationajaxpopup.js').
+	$minjs = $GLOBALS['egw_info']['server']['debug_minify'] === 'True' ? '' : '.min';
+	echo '<script src="'. $GLOBALS['egw_info']['server']['webserver_url']. '/notifications/js/notificationajaxpopup'.$minjs.'.js?'.
+		filemtime(EGW_SERVER_ROOT.'/notifications/js/notificationajaxpopup'.$minjs.'.js').
 		'" type="text/javascript" id="notifications_script_id" data-poll-interval="'.$popup_poll_interval.
 		'" data-langRequire="'. htmlspecialchars(json_encode($langRequire)).'"></script>';
 	echo '
