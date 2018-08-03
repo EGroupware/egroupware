@@ -139,8 +139,16 @@ class admin_account
 		$content['account_firstname'] = $content['n_given'];
 		$content['account_lastname'] = $content['n_family'];
 		$content['account_email'] = $content['email'];
-		if ($content['deny_edit'] ||
-			$content['old_account'] && !($old = array_diff_assoc($content['old_account'], $content)))
+		if (!empty($content['old_account']))
+		{
+			$old = array_diff_assoc($content['old_account'], $content);
+			// array_diff_assoc compares everything as string (cast to string)
+			if ($content['old_account']['account_groups'] != $content['account_groups'])
+			{
+				$old['account_groups'] = $content['old_account']['account_groups'];
+			}
+		}
+		if ($content['deny_edit'] || empty($old))
 		{
 			return '';	// no need to save account data, if nothing changed
 		}
