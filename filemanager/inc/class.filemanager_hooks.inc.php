@@ -283,6 +283,18 @@ class filemanager_hooks
 				'name'   => 'merge_open_handler',
 				'values' => array ('download' => lang('download'), 'collabora' => 'Collabora'),
 				'default' => 'collabora',
+			),
+			'document_doubleclick_action' => array (
+				'type'   => 'select',
+				'label'  => lang('Default action on double-click'),
+				'help'   => lang('Defines how to handle double click action on a document file.'),
+				'name'   => 'document_doubleclick_action',
+				'values' => array (
+					'collabora' => lang('open documents with Collabora, if permissions are given'),
+					'download' => lang('download documents'),
+					'collabeditor' => lang('open odt documents with CollabEditor')
+				),
+				'default' => 'collabora',
 			)
 		);
 
@@ -333,11 +345,11 @@ class filemanager_hooks
 		foreach ($implemented as $app)
 		{
 			if (($access = \EGroupware\Api\Vfs\Links\StreamWrapper::check_app_rights($app)) &&
-					($l = Api\Hooks::process('filemanager-editor-link',$app, true)) && $l[$app])
+					($l = Api\Hooks::process('filemanager-editor-link',$app, true)) && $l[$app]
+					&& $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_doubleclick_action'] == $app)
 			{
 				$link = $l[$app];
 			}
-			if ($app == 'collabora' && $access) break; // collabora is default
 		}
 		return $link;
 	}

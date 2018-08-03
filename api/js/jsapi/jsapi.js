@@ -758,10 +758,20 @@ function addOption(id,label,value,do_onchange)
 	if (selectBox.onchange && do_onchange) selectBox.onchange();
 }
 
-function egw_get_file_editor_prefered_mimes(_data, _params)
+/**
+ *
+ * @param {string} _mime current mime type
+ * @returns {object|null} returns object of filemanager editor hook
+ */
+function egw_get_file_editor_prefered_mimes(_mime)
 {
 	var fe = jQuery.extend(true, {},egw.link_get_registry('filemanager-editor'));
 	var ex_mimes = egw.preference('collab_excluded_mimes', 'filemanager');
+	var dblclick_action = egw.preference('document_doubleclick_action', 'filemanager');
+	if (dblclick_action == 'download' && typeof _mime === 'string')
+	{
+		ex_mimes = !ex_mimes ? _mime : ex_mimes+','+_mime;
+	}
 	if (fe && fe.mime && ex_mimes)
 	{
 		ex_mimes = ex_mimes.split(',');
@@ -818,3 +828,6 @@ jQuery(function(){
 	});
 });
 
+jQuery(document).ready(function() {
+	jQuery('head').append('<link rel="manifest" href="/egroupware/pixelegg/manifest.json">');
+})

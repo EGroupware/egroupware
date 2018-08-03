@@ -785,6 +785,7 @@ app.classes.filemanager = AppJS.extend(
 	{
 		var data = egw.dataGetUIDdata(_senders[0].id);
 		var path = this.id2path(_senders[0].id);
+		this.et2 = this.et2 ? this.et2 : etemplate2.getById('filemanager-index').widgetContainer;
 		var mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 		// try to get mime widget DOM node out of the row DOM
 		var mime_dom = jQuery(_senders[0].iface.getDOMNode()).find("span#filemanager-index_\\$row");
@@ -809,8 +810,13 @@ app.classes.filemanager = AppJS.extend(
 		}
 		else
 		{
+
 			// Build ViewerJS url
-			if (data.data.mime.match(/application\/vnd\.oasis\.opendocument/)) var url = '/ViewerJS/#..' + data.data.download_url;
+			if (data.data.mime.match(/application\/vnd\.oasis\.opendocument/) &&
+					egw.preference('document_doubleclick_action', 'filemanager') == 'collabeditor')
+			{
+				var url = '/ViewerJS/#..' + data.data.download_url;
+			}
 
 			egw.open({path: path, type: data.data.mime, download_url: url}, 'file','view',null,'_browser');
 		}
@@ -1293,7 +1299,7 @@ app.classes.filemanager = AppJS.extend(
 		if (_senders.length>1) return false;
 		var data = egw.dataGetUIDdata(_senders[0].id),
 			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
-		var fe = egw_get_file_editor_prefered_mimes();
+		var fe = egw_get_file_editor_prefered_mimes(data.data.mime);
 		if (fe && fe.mime && !fe.mime[data.data.mime]) return false;
 		return data.data.mime.match(mime.mime_odf_regex)?true:false;
 	},
