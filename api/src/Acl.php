@@ -348,7 +348,7 @@ class Acl
 	 * @param int $account_id account id
 	 * @param int $rights rights
 	 * @param boolean $invalidate_session =true false: do NOT invalidate session
-	 * @return boolean allways true
+	 * @return int number of affected rows: 0: no change, 1: acl changed
 	 */
 	function add_repository($app, $location, $account_id, $rights, $invalidate_session=true)
 	{
@@ -366,7 +366,7 @@ class Acl
 		{
 			$GLOBALS['egw']->invalidate_session_cache();
 		}
-		return True;
+		return $this->db->affected_rows();
 	}
 
 	/**

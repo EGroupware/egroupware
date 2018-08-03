@@ -890,6 +890,7 @@ class Accounts
 	 *
 	 * @param array $groups array with gidnumbers
 	 * @param int $account_id uidnumber
+	 * @return boolean true: membership changed, false: no change necessary
 	 */
 	function set_memberships($groups,$account_id)
 	{
@@ -897,17 +898,19 @@ class Accounts
 		{
 			$account_id = $this->name2id($account_id);
 		}
-		if (($old_memberships = $this->memberships($account_id, true)) != $groups)
+		if (($old_memberships = $this->memberships($account_id, true)) == $groups)
 		{
-			$this->backend->set_memberships($groups, $account_id);
-
-			if (!$old_memberships) $old_memberships = array();
-			self::cache_invalidate(array_unique(array_merge(
-				array($account_id),
-				array_diff($old_memberships, $groups),
-				array_diff($groups, $old_memberships)
-			)));
+			return false;	// nothing changed
 		}
+		$this->backend->set_memberships($groups, $account_id);
+
+		if (!$old_memberships) $old_memberships = array();
+		self::cache_invalidate(array_unique(array_merge(
+			array($account_id),
+			array_diff($old_memberships, $groups),
+			array_diff($groups, $old_memberships)
+		)));
+		return true;
 	}
 
 	/**
