@@ -204,7 +204,11 @@ class admin_account
 			$account['account_groups'][] = $account['account_primary_group'];
 		}
 
-		$cmd = new admin_cmd_edit_user((int)$content['account_id'], $account, null, null, $old);
+		$cmd = new admin_cmd_edit_user(array(
+			'account' => (int)$content['account_id'],
+			'set' => $account,
+			'old' => $old,
+		)+(array)$content['admin_cmd']);
 		$cmd->run();
 
 		Api\Json\Response::get()->call('egw.refresh', '', 'admin', $cmd->account, $content['account_id'] ? 'edit' : 'add');

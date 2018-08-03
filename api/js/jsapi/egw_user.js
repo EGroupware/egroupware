@@ -198,18 +198,36 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 *
 		 * @param {et2_widget} _src_widget widget to select the user
 		 * @param {string} _target_name name of widget to set the data
-		 * @param {string} _field name of data to set eg. "account_email"
+		 * @param {string} _field name of data to set eg. "account_email" or "{account_fullname} <{account_email}>"
 		 */
 		set_account_data: function(_src_widget, _target_name, _field)
 		{
 			var user = _src_widget.get_value();
 			var target = _src_widget.getRoot().getWidgetById(_target_name);
+			var field = _field;
 
 			if (user && target)
 			{
 				egw.accountData(user, _field, false, function(_data)
 				{
-					target.set_value(_data[user]);
+					var data;
+					if (field.indexOf('{') == -1)
+					{
+						data = _data[user];
+					}
+					else
+					{
+						data = field;
+						var match;
+						while((match = data.match(/{([^}]+)}/)))
+						{
+							egw.accountData(user, match[1], false, function(_data)
+							{
+								data = data.replace(/{([^}]+)}/, _data[user]);
+							});
+						}
+					}
+					target.set_value(data);
 				});
 			};
 		},

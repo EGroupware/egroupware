@@ -29,7 +29,7 @@
 				</row>
 				<row class="row $row_cont[class]">
 					<description id="${row}[title]" statustext="$row_cont[data]"/>
-					<url-email id="${row}[requested]" options=",,,$row_cont[requested_email]" readonly="true"/>
+					<url-email id="${row}[requested_email]" readonly="true" statustext="$row_cont[comment]"/>
 					<date-time id="${row}[scheduled]" readonly="true"/>
 					<select id="${row}[remote_id]" readonly="true"/>
 					<date-time id="${row}[created]" readonly="true"/>
