@@ -721,11 +721,11 @@ app.classes.mail = AppJS.extend(
 
 				// Merge array values, replace strings
 				var value = widget.getValue() || content[field];
-				if(jQuery.isArray(value))
+				if(jQuery.isArray(value) || jQuery.isArray(content[field]))
 				{
 					if(jQuery.isArray(content[field]))
 					{
-						value.concat(content[field]);
+						value = value.concat(content[field]);
 					}
 					else
 					{
@@ -740,7 +740,7 @@ app.classes.mail = AppJS.extend(
 			}
 			catch(e)
 			{
-				egw.log("error", "Unable to set field %s to '%s' in window '%s'", field, content[field],window_name);
+				egw.debug("error", "Unable to set field %s to '%s' in window '%s'", field, content[field],window.name);
 				success = false;
 				continue;
 			}
