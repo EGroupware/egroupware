@@ -204,7 +204,7 @@ a.et2_url.url {
 	box-shadow: none !important;
 	background: transparent !important;
 }
-.et2_email > span.email {
+.et2_email > span.noemail {
 	display: none;
 }
 /**

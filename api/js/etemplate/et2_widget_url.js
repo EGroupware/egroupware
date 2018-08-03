@@ -339,7 +339,7 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 					this.span.attr('title',_value);
 
 					this.span.text(val.replace(/"/g,''));
-					this.span.append("<span class='email'>"+
+					this.span.append("<span class='noemail'>"+
 						_value.replace(val,'')
 						.replace(/</g, '&lt;')
 						.replace(/>/g, '&gt;')
