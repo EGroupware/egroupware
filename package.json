@@ -2,13 +2,12 @@
   "name": "EGroupware",
   "description": "EGroupware is a groupware suite in PHP and Javascript: http://www.egroupware.org/",
   "license": "GPL-2.0",
-  "version": "16.1.001",
+  "version": "17.1.001",
   "dependencies": {},
   "repository": {},
   "devDependencies": {
     "grunt": "^1.0.3",
     "grunt-contrib-cssmin": "^2.2.1",
-    "grunt-contrib-uglify": "^3.1.0",
     "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-hub": "^0.7.0",
     "grunt-newer": "^1.3.0"
