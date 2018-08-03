@@ -44,7 +44,7 @@ class admin_account
 				$GLOBALS['egw']->acl->check('account_access', 4, 'admin');
 			//error_log(__METHOD__."() contact_id=$content[contact_id], account_id=$content[account_id], deny_edit=".array2string($deny_edit));
 
-			if (!$content['account_id'] && $deny_edit) return;	// no right to add new Api\Accounts, should not happen by AB ACL
+			if (!$content['account_id'] && $deny_edit) return;	// no right to add new accounts, should not happen by AB ACL
 
 			// load our translations
 			Api\Translation::add_app('admin');
@@ -59,7 +59,7 @@ class admin_account
 				}
 				if ($account['account_expires'] == -1) $account['account_expires'] = '';
 				unset($account['account_pwd']);	// do NOT send to client
-				$account['memberships'] = array_keys($account['memberships']);
+				$account['account_groups'] = array_keys($account['memberships']);
 				$acl = new Acl($content['account_id']);
 				$acl->read_repository();
 				$account['anonymous'] = $acl->check('anonymous', 1, 'phpgwapi');
@@ -76,7 +76,7 @@ class admin_account
 			{
 				$account = array(
 					'account_status' => 'A',
-					'memberships' => array(),
+					'account_groups' => array(),
 					'anonymous' => false,
 					'changepassword' => true,	//old default: (bool)$GLOBALS['egw_info']['server']['change_pwd_every_x_days'],
 					'mustchangepassword' => false,
@@ -111,9 +111,12 @@ class admin_account
 				'label' => 'Account',
 				'data' => $account,
 				// save old values to only trigger save, if one of the following values change (contact data get saved anyway)
-				'preserve' => array('old_account' => array_intersect_key($account, array_flip(array(
-					'account_lid', 'account_status', 'memberships', 'anonymous', 'changepassword',
-					'mustchangepassword', 'account_primary_group', 'homedirectory', 'loginshell')))),
+				'preserve' => empty($content['id']) ? array() :
+					array('old_account' => array_intersect_key($account, array_flip(array(
+						'account_lid', 'account_status', 'account_groups', 'anonymous', 'changepassword',
+						'mustchangepassword', 'account_primary_group', 'homedirectory', 'loginshell',
+						'account_expires', 'account_firstname', 'account_lastname', 'account_email'))),
+						'deny_edit' => $deny_edit),
 				'readonlys' => $readonlys,
 				'pre_save_callback' => $deny_edit ? null : 'admin_account::addressbook_pre_save',
 			);
@@ -129,7 +132,15 @@ class admin_account
 	 */
 	public static function addressbook_pre_save(&$content)
 	{
-		if ($content['old_account'] && $content['old_account'] == array_diff_key($content, $content['old_account']))
+		if (!isset($content['mustchangepassword']))
+		{
+			$content['mustchangepassword'] = true;	// was readonly because already set
+		}
+		$content['account_firstname'] = $content['n_given'];
+		$content['account_lastname'] = $content['n_family'];
+		$content['account_email'] = $content['email'];
+		if ($content['deny_edit'] ||
+			$content['old_account'] && !($old = array_diff_assoc($content['old_account'], $content)))
 		{
 			return '';	// no need to save account data, if nothing changed
 		}
@@ -140,9 +151,9 @@ class admin_account
 			'n_given' => 'account_firstname',
 			'n_family' => 'account_lastname',
 			'email' => 'account_email',
-			'memberships' => 'account_groups',
+			'account_groups',
 			// copy following fields to account
-			'account_lid', 'account_id',
+			'account_lid',
 			'changepassword', 'anonymous', 'mustchangepassword',
 			'account_passwd', 'account_passwd_2',
 			'account_primary_group',
@@ -152,6 +163,14 @@ class admin_account
 		) as $c_name => $a_name)
 		{
 			if (is_int($c_name)) $c_name = $a_name;
+
+			// only record real changes
+			if (isset($content['old_account']) &&
+				(!isset($content[$c_name]) && $c_name !== 'account_expires' || // account_expires is not set when empty!
+				$content['old_account'][$a_name] == $content[$c_name]))
+			{
+				continue;	// no change --> no need to log setting it to identical value
+			}
 
 			switch($a_name)
 			{
@@ -172,12 +191,12 @@ class admin_account
 			}
 		}
 		// Make sure primary group is in account groups
-		if($account['account_primary_group'] && !array_search($account['account_primary_group'], (array)$account['account_groups']))
+		if ($account['account_primary_group'] && !in_array($account['account_primary_group'], (array)$account['account_groups']))
 		{
 			$account['account_groups'][] = $account['account_primary_group'];
 		}
 
-		$cmd = new admin_cmd_edit_user((int)$content['account_id'], $account);
+		$cmd = new admin_cmd_edit_user((int)$content['account_id'], $account, null, null, $old);
 		$cmd->run();
 
 		Api\Json\Response::get()->call('egw.refresh', '', 'admin', $cmd->account, $content['account_id'] ? 'edit' : 'add');

@@ -5,9 +5,8 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-18 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -24,8 +23,9 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	 * @param array $set =null array with all data to change
 	 * @param string $password =null password
 	 * @param boolean $run_addaccount_hook =null default run addaccount for new Api\Accounts and editaccount for existing ones
+	 * @param array $old =null array to log old values of $set
 	 */
-	function __construct($account,$set=null,$password=null,$run_addaccount_hook=null)
+	function __construct($account, $set=null, $password=null, $run_addaccount_hook=null, array $old=null)
 	{
 		if (!is_array($account))
 		{
@@ -35,6 +35,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 				'set' => $set,
 				'password' => is_null($password) ? $set['account_passwd'] : $password,
 				'run_addaccount_hook' => $run_addaccount_hook,
+				'old' => $old,
 			);
 		}
 		admin_cmd::__construct($account);

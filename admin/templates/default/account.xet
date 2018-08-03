@@ -61,7 +61,7 @@
 				</row>
 				<row>
 					<description value="Groups" for="groups"/>
-					<select-account account_type="groups" id="memberships" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
+					<select-account account_type="groups" id="account_groups" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
 					<description/>
 				</row>
 				<row disabled="!@account_id">

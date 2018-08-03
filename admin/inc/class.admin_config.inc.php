@@ -5,9 +5,8 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
  * @package admin
- * @copyright (c) 2016 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2016-18 by Ralf Becker <rb@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -65,8 +64,8 @@ class admin_config
 			$base = $GLOBALS['egw_info']['server']['files_dir'].'/anon-images';
 			foreach ($files as $file)
 			{
-				$parts = explode('anon_images.php?src=', $file);
-				$parts = explode('&', $parts[1]);
+				$parts2 = explode('anon_images.php?src=', $file);
+				$parts = explode('&', $parts2[1]);
 				$path = $base.'/'.urldecode($parts[0]);
 				if (is_writable(dirname($base)) && file_exists($path))
 				{

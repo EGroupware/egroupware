@@ -2,7 +2,17 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.config" template="" lang="" group="0" version="16.1">
+	<template id="admin.config" template="" lang="" group="0" version="18.1">
+		<tabbox id="tabs" width="100%">
+			<tabs>
+				<tab id="config" label="Configuration"/>
+			</tabs>
+			<tabpanels>
+				<template id="admin.config.config"/>
+			</tabpanels>
+		</tabbox>
+	</template>
+	<template id="admin.config.config" template="" lang="" group="0" version="16.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
 			<columns>
 				<column width="70%"/>
@@ -19,7 +29,7 @@
 				<row>
 					<description value="How should EMail addresses for new users be constructed?" label="%s:"/>
 					<vbox>
-					<select id="newsettings[email_address_format]">
+						<select id="newsettings[email_address_format]">
 							<option value="first-dot-last">{Firstname}.{Lastname}@domain.com</option>
 							<option value="first-last">{Firstname}{Lastname}@domain.com</option>
 							<option value="first-underscore-last">{Firstname}_{Lastname}@domain.com</option>
