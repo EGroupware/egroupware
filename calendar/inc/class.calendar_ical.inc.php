@@ -585,7 +585,7 @@ class calendar_ical extends calendar_boupdate
 								if (!empty($event['owner'])) $options['X-EGROUPWARE-UID'] = $event['owner'];
 								$attributes['ATTENDEE'][] = $organizerURL;
 			    				$parameters['ATTENDEE'][] = $options;
-		    				}
+							}
 	    				}
     					// do NOT use ORGANIZER for events without further participants or a different organizer
 	    				if (count($event['participants']) > 1 || !isset($event['participants'][$event['owner']]))
@@ -2488,6 +2488,7 @@ class calendar_ical extends calendar_boupdate
 		$isDate = false;
 		$event		= array();
 		$alarms		= array();
+		$organizer_status = $organizer_uid = null;
 		$vcardData	= array(
 			'recur_type'		=> MCAL_RECUR_NONE,
 			'recur_exception'	=> array(),
@@ -3056,7 +3057,11 @@ class calendar_ical extends calendar_boupdate
 								// for multiple entries the ACCEPT wins
 								// add quantity and role
 								$vcardData['participants'][$uid] =
-									calendar_so::combine_status($status, $quantity, $role);
+									calendar_so::combine_status(
+										// Thunderbird: if there is a PARTICIPANT for the ORGANIZER AND ORGANZIER has PARTSTAT
+										// --> use the one from ORGANIZER
+										$uid === $organizer_uid && !empty($organizer_status) && $organizer_status !== 'X' ?
+										$organizer_status : $status, $quantity, $role);
 
 								try {
 									if (!$this->calendarOwner && is_numeric($uid) && $role == 'CHAIR')
@@ -3071,6 +3076,9 @@ class calendar_ical extends calendar_boupdate
 							break;
 
 						case 'ORGANIZER':
+							// remember evtl. set PARTSTAT from ORGANIZER, as TB sets it on ORGANIZER not PARTICIPANT!
+							$organizer_uid = $uid;
+							$organizer_status = $status;
 							if (isset($vcardData['participants'][$uid]))
 							{
 								$status = $vcardData['participants'][$uid];
