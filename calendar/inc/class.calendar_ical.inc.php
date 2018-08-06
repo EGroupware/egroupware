@@ -541,7 +541,11 @@ class calendar_ical extends calendar_boupdate
 								$options['EMAIL'] = $info['email'];	// only add EMAIL attribute, if not already URL, as eg. Akonadi is reported to have problems with it
 							}
 							if ($info['type'] != 'e') $options['X-EGROUPWARE-UID'] = (string)$uid;
-							if ($quantity > 1) $options['X-EGROUPWARE-QUANTITY'] = (string)$quantity;
+							if ($quantity > 1)
+							{
+								$options['X-EGROUPWARE-QUANTITY'] = (string)$quantity;
+								$options['CN'] .= ' ('.$quantity.')';
+							}
 							$attributes['ATTENDEE'][] = $participantURL;
 							$parameters['ATTENDEE'][] = $options;
 						}
@@ -1265,6 +1269,17 @@ class calendar_ical extends calendar_boupdate
 							else
 							{
 								$event['participants'][$uid] = calendar_so::combine_status('U');
+							}
+						}
+						// restore resource-quantity from existing event as neither iOS nor Thunderbird returns our X-EGROUPWARE-QUANTITY
+						elseif ($uid[0] === 'r' && isset($event_info['stored_event']['participants'][$uid]))
+						{
+							$quantity = $role = $old_quantity = null;
+							calendar_so::split_status($status, $quantity, $role);
+							calendar_so::split_status($event_info['stored_event']['participants'][$uid], $old_quantity);
+							if ($old_quantity > 1)
+							{
+								$event['participants'][$uid] = calendar_so::combine_status('U', $old_quantity, $role);
 							}
 						}
 					}
