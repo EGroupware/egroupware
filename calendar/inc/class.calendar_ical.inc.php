@@ -572,20 +572,6 @@ class calendar_ical extends calendar_boupdate
 		    					$organizerURL = empty($organizerEMail) ? '' : 'mailto:' . $organizerEMail;
 			    			}
 			    			$organizerUID = $event['owner'];
-		    				if (!isset($event['participants'][$event['owner']]))
-		    				{
-			    				$options = array(
-									'ROLE'     => 'CHAIR',
-									'PARTSTAT' => 'DELEGATED',
-									'CUTYPE'   => 'INDIVIDUAL',
-									//'RSVP'     => 'FALSE',
-									);
-								if (!empty($organizerCN)) $options['CN'] = $organizerCN;
-								if (!empty($organizerEMail)) $options['EMAIL'] = $organizerEMail;
-								if (!empty($event['owner'])) $options['X-EGROUPWARE-UID'] = $event['owner'];
-								$attributes['ATTENDEE'][] = $organizerURL;
-			    				$parameters['ATTENDEE'][] = $options;
-							}
 	    				}
     					// do NOT use ORGANIZER for events without further participants or a different organizer
 	    				if (count($event['participants']) > 1 || !isset($event['participants'][$event['owner']]))
