@@ -65,6 +65,12 @@
 				opacity: 0.7,
 				axis: 'y'
 			});
+
+			// warn user about using IE not compatibilities
+			if (navigator && navigator.userAgent.match(/Trident|msie|edge/ig))
+			{
+				egw.message(egw.lang('Browser %1 %2 is not recommended. You may experience issues and not working features. Please use the latest version of Chrome, Firefox or Edge. Thank You!', 'IE',''), 'info', 'browser:ie:warning');
+			}
 		},
 
 		/**
