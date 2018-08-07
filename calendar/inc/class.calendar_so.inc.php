@@ -121,6 +121,11 @@ class calendar_so
 	const STATUS_SORT = "CASE cal_status WHEN 'U' THEN 1 WHEN 'T' THEN 2 WHEN 'A' THEN 3 WHEN 'R' THEN 4 ELSE 0 END ASC";
 
 	/**
+	 * Time to keep alarms in async table to allow eg. alarm snozzing
+	 */
+	const ALARM_KEEP_TIME = 86400;
+
+	/**
 	 * Cached timezone data
 	 *
 	 * @var array id => data
@@ -2400,11 +2405,18 @@ ORDER BY cal_user_type, cal_usre_id
 			$this->async->cancel_timer($id);
 		}
 		$alarm['cal_id'] = $cal_id;		// we need the back-reference
+		// do not deleted async-job, as we need it for alarm snozzing
+		$alarm['keep'] = self::ALARM_KEEP_TIME;
+		// past alarms need NOT to be triggered, but kept around for a while to allow alarm snozzing
+		if ($alarm['time'] < time())
+		{
+			$alarm['time'] = $alarm['keep_time'] = time()+self::ALARM_KEEP_TIME;
+		}
 		// add an alarm uid, if none is given
 		if (empty($alarm['uid']) && class_exists('Horde_Support_Uuid')) $alarm['uid'] = (string)new Horde_Support_Uuid;
 		//error_log(__METHOD__.__LINE__.' Save Alarm for CalID:'.$cal_id.'->'.array2string($alarm).'-->'.$id.'#'.function_backtrace());
 		// allways store job with the alarm owner as job-owner to get eg. the correct from address
-		if (!$this->async->set_timer($alarm['time'],$id,'calendar.calendar_boupdate.send_alarm',$alarm,$alarm['owner']))
+		if (!$this->async->set_timer($alarm['time'], $id, 'calendar.calendar_boupdate.send_alarm', $alarm, $alarm['owner'], false, true))
 		{
 			return False;
 		}

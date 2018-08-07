@@ -9,7 +9,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @access public
- * @version $Id$
  */
 
 namespace EGroupware\Api;
@@ -30,11 +29,21 @@ class Asyncservice
 	 */
 	var $db;
 	var $db_table = 'egw_async';
-	var $debug = 0;
+	/**
+	 * Enable logging to PHP error_log
+	 *
+	 * @var boolean
+	 */
+	var $debug = false;
 	/**
 	 * Line in crontab set by constructor with absolute path
 	 */
 	var $cronline = '/api/asyncservices.php default';
+
+	/**
+	 * Time to keep expired jobs marked as  "keep", until they got finally deleted
+	 */
+	const DEFAULT_KEEP_TIME = 86400;	// 1day
 
 	/**
 	 * constructor of the class
@@ -57,7 +66,7 @@ class Asyncservice
 	/**
 	 * calculates the next run of the timer and puts that with the rest of the data in the db for later execution.
 	 *
-	 * @param int/array $times unix timestamp or array('min','hour','dow','day','month','year') with execution time.
+	 * @param int|array $times unix timestamp or array('min','hour','dow','day','month','year') with execution time.
 	 * 	Repeated events are possible to shedule by setting the array only partly, eg.
 	 * 	array('day' => 1) for first day in each month 0am or array('min' => '* /5', 'hour' => '9-17')
 	 * 	for every 5mins in the time from 9am to 5pm.
@@ -67,16 +76,28 @@ class Asyncservice
 	 * 	'<app>.<class>.<public function>'.
 	 * @param mixed $data =null This data is passed back when the method is called. If it is an array,
 	 * 	EGroupware will add the rest of the job parameters like id, next (sheduled exec time), times, ...
+	 *  Integer value for key "keep" (in seconds) can be used to NOT delete the job automatically, after it was triggered.
+	 *  Async service with set a async_next value of 0 and key "keep_time" with timestamp on how long to keep the entry around.
 	 * @param int $account_id account_id, under which the methode should be called or False for the actual user
 	 * @param boolean $debug =false
+	 * @param boolean $allow_past =false allow to set alarms in the past eg. with times===0 to not trigger it in next run
 	 * @return boolean False if $id already exists, else True
 	 */
-	function set_timer($times,$id,$method,$data=null,$account_id=False,$debug=false)
+	function set_timer($times, $id, $method, $data=null, $account_id=False, $debug=false, $allow_past=false)
 	{
 		if (empty($id) || empty($method) || $this->read($id) ||
 				!($next = $this->next_run($times,$debug)))
 		{
-			return False;
+			// allow to set "keep" alarms in the past ($next === false)
+			if ($next === false && !is_array($times) && $allow_past)
+			{
+				$next = $times;
+			}
+			else
+			{
+				if ($this->debug) error_log(__METHOD__."(".array2string($times).", '$id', '$method', ".array2string($data).", $account_id, $debug, $allow_past) returning FALSE");
+				return False;
+			}
 		}
 		if ($account_id === False)
 		{
@@ -92,6 +113,7 @@ class Asyncservice
 		);
 		$this->write($job);
 
+		if ($this->debug) error_log(__METHOD__."(".array2string($times).", '$id', '$method', ".array2string($data).", $account_id, $debug, $allow_past) returning TRUE");
 		return True;
 	}
 
@@ -111,7 +133,7 @@ class Asyncservice
 	{
 		if ($this->debug)
 		{
-			echo "<p>next_run("; print_r($times); echo ",'$debug', " . date('Y-m-d H:i', $now) . ")</p>\n";
+			error_log(__METHOD__."(".array2string($times).", '$debug', " . date('Y-m-d H:i', $now) . ")");
 			$debug = True;	// enable syntax-error messages too
 		}
 		if(is_null($now)) {
@@ -179,7 +201,7 @@ class Asyncservice
 		foreach($units as $u => $date_pattern)
 		{
 			++$n;
-			if ($this->debug) { echo "<p>n=$n, $u: isset(times[$u]="; print_r($times[$u]); echo ")=".(isset($times[$u])?'True':'False')."</p>\n"; }
+			if ($this->debug) error_log("n=$n, $u: isset(times[$u]=".array2string($times[$u]).")=".(isset($times[$u])?'True':'False'));
 			if (isset($times[$u]))
 			{
 				if(is_array($times[$u])) {
@@ -197,7 +219,7 @@ class Asyncservice
 
 						if (count($arr) != 2 || !is_numeric($min) || !is_numeric($max) || $min > $max)
 						{
-							if ($debug) echo "<p>Syntax error in $u='$t', allowed is 'min-max', min <= max, min='$min', max='$max'</p>\n";
+							if ($debug) error_log("Syntax error in $u='$t', allowed is 'min-max', min <= max, min='$min', max='$max'");
 
 							return False;
 						}
@@ -215,7 +237,7 @@ class Asyncservice
 						if (!(is_numeric($one) && count($arr) == 1 ||
 									count($arr) == 2 && is_numeric($inc)))
 						{
-							if ($debug) echo "<p>Syntax error in $u='$t', allowed is a number or '{*|range}/inc', inc='$inc'</p>\n";
+							if ($debug) error_log("Syntax error in $u='$t', allowed is a number or '{*|range}/inc', inc='$inc'");
 
 							return False;
 						}
@@ -233,7 +255,7 @@ class Asyncservice
 							}
 							elseif (count($arr) != 2 || $min > $max)
 							{
-								if ($debug) echo "<p>Syntax error in $u='$t', allowed is '{*|min-max}/inc', min='$min',max='$max', inc='$inc'</p>\n";
+								if ($debug) error_log("Syntax error in $u='$t', allowed is '{*|min-max}/inc', min='$min',max='$max', inc='$inc'");
 								return False;
 							}
 							for ($i = $min; $i <= $max; $i += $inc)
@@ -256,7 +278,7 @@ class Asyncservice
 				$times[$u][$min_unit[$u]] = True;
 			}
 		}
-		if ($this->debug) { echo "enumerated times=<pre>"; print_r($times); echo "</pre>\n"; }
+		if ($this->debug) error_log("enumerated times=".array2string($times));
 
 		// now we have the times enumerated, lets find the first not expired one
 		//
@@ -274,7 +296,7 @@ class Asyncservice
 				if (isset($found[$u]))
 				{
 					$future = $future || $found[$u] > $unit_now;
-					if ($this->debug) echo "--> already have a $u = ".$found[$u].", future='$future'<br>\n";
+					if ($this->debug) error_log("--> already have a $u = ".$found[$u].", future='$future'");
 					continue;	// already set
 				}
 				foreach(array_keys($times[$u]) as $unit_value)
@@ -304,18 +326,18 @@ class Asyncservice
 					$nexts = array_keys($units);
 					if (!isset($nexts[count($found)-1]))
 					{
-						if ($this->debug) echo "<p>Nothing found, exiting !!!</p>\n";
+						if ($this->debug) error_log("Nothing found, exiting !!!");
 						return False;
 					}
 					$next = $nexts[count($found)-1];
 					$over = $found[$next];
 					unset($found[$next]);
-					if ($this->debug) echo "<p>Have to try the next $next, $u's are over for $next=$over !!!</p>\n";
+					if ($this->debug) error_log("Have to try the next $next, $u's are over for $next=$over !!!");
 					break;
 				}
 			}
 		}
-		if ($this->debug) { echo "<p>next="; print_r($found); echo "</p>\n"; }
+		if ($this->debug) error_log("next=".array2string($found));
 
 		return mktime($found['hour'],$found['min'],0,$found['month'],$found['day'],$found['year']);
 	}
@@ -377,7 +399,7 @@ class Asyncservice
 			);
 			// as the async_next column is used as a semaphore we only update it,
 			// if it is 0 (semaphore released) or older then 10min to recover from failed or crashed attempts
-			if ($exists) $where = array('async_next=0 OR async_next<'.(time()-600));
+			if ($exists) $where = array('(async_next=0 OR async_next<'.(time()-600).')');
 		}
 		//echo "last_run=<pre>"; print_r($last_run); echo "</pre>\n";
 		return $this->write($last_run, !!$exists, $where) > 0;
@@ -442,9 +464,31 @@ class Asyncservice
 				{
 					$job['data'] += array_diff_key($job,array('data' => false));
 				}
-				// update job before running it, to cope with jobs taking longer then async-frequency
-				if (($job['next'] = $this->next_run($job['times'])))
+
+				if ($this->debug) error_log(__METHOD__."() processing job ".array2string($job));
+
+				// purge keeped jobs, if they are due
+				if (is_array($job['data']) && !empty($job['data']['keep_time']))
 				{
+					if ($job['data']['keep_time'] <= time())
+					{
+						error_log(__METHOD__."() finally deleting job ".array2string($job));
+						$this->delete($job['id']);
+					}
+					if ($this->debug) error_log(__METHOD__."() keeping job ".array2string($job));
+					continue;
+				}
+
+				// update job before running it, to cope with jobs taking longer then async-frequency
+				if (($job['next'] = $this->next_run($job['times'])) ||
+					// keep jobs with keep set (eg. calendar alarms) around
+					is_array($job['data']) && !empty($job['data']['keep']))
+				{
+					if (!$job['next'])
+					{
+						$job['next'] = $job['data']['keep_time'] = time() + ((int)$job['data']['keep'] > 1 ? $job['data']['keep'] : self::DEFAULT_KEEP_TIME);
+						if ($this->debug) error_log(__METHOD__."() setting keep_time to ".date('Y-m-d H:i:s', $job['data']['keep_time']).' for job '.array2string($job));
+					}
 					$this->write($job, True);
 				}
 				else	// no further runs
@@ -453,6 +497,7 @@ class Asyncservice
 				}
 				try
 				{
+					if ($this->debug) error_log(__METHOD__."() running job ".array2string($job));
 					ExecMethod($job['method'],$job['data']);
 				}
 				catch(Exception $e)
@@ -562,6 +607,7 @@ class Asyncservice
 	 */
 	function delete($id)
 	{
+		if ($this->debug) error_log(__METHOD__."('$id') ".function_backtrace());
 		$this->db->delete($this->db_table,array('async_id' => $id),__LINE__,__FILE__);
 
 		return $this->db->affected_rows();
@@ -659,7 +705,7 @@ class Asyncservice
 			$n = 0;
 			while ($line = fgets($crontab,256))
 			{
-				if ($this->debug) echo 'line '.++$n.": $line<br>\n";
+				if ($this->debug) error_log(__METHOD__.'() line '.++$n.": $line");
 				$parts = explode(' ',$line,6);
 
 				if ($line{0} == '#' || count($parts) < 6 || ($parts[5]{0} != '/' && substr($parts[5],0,3) != 'php'))
