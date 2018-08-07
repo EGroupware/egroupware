@@ -937,6 +937,12 @@ img.smime_cert_unknownemail {
 #mail-compose_subject {
   padding: 10px 0 10px 0;
 }
+div#mail-index_nm.splitter-pane {
+  min-height: 100px;
+}
+#mail-index_mailSplitter .splitter-bar-horizontal {
+  background: white;
+}
 #popupMainDiv {
   padding: 5px;
 }
