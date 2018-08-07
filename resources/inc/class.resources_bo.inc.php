@@ -698,7 +698,7 @@ class resources_bo
 			$criteria = array('name' => $pattern
 				, 'short_description' => $pattern);
 		}
-		$only_keys = 'res_id,name,short_description,bookable,useable';
+		$only_keys = 'res_id,name,short_description,bookable,useable,quantity';
 
 		// If no read access to any category, just stop
 		if(!$this->acl->get_cats(Acl::READ))
@@ -810,11 +810,15 @@ class resources_bo
 				//maybe this resource is reserved
 				if ( ($resource['useable'] < 1) )
 				{
-					if($show_conflict) {
+					if($show_conflict)
+					{
 						$list[$id] = ' ('.lang('conflict').') '.$resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 					}
-				} else {
-				        $list[$id] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+				}
+				else
+				{
+					$list[$id] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'') .
+							($resource['useable'] > 1 ? "( {$resource['useable']} / {$resource['quantity']} )" : '');
 				}
 			}
 		} else {
