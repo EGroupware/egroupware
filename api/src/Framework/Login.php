@@ -226,6 +226,11 @@ class Login
 		}
 		$tmpl->set_var('autocomplete', ($GLOBALS['egw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
 
+		if (Api\Header\UserAgent::type() == 'msie' && Api\Header\UserAgent::version() < 12)
+		{
+			$tmpl->set_var('cd', lang('Browser %1 %2 is not recommended. You may experience issues and not working features. Please use the latest version of Chrome, Firefox or Edge. Thank You!',Api\Header\UserAgent::type(), Api\Header\UserAgent::version()));
+			$tmpl->set_var('cd_class', 'error');
+		}
 		// load jquery for login screen too
 		Api\Framework::includeJS('jquery', 'jquery');
 
