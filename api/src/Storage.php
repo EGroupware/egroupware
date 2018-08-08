@@ -432,7 +432,7 @@ class Storage extends Storage\Base
 
 		// if no CFs are defined OR used and became unavailable (deleted or permissions changed)
 		if (!$this->customfields && strpos($order_by, self::CF_PREFIX) === false &&
-			strpos(implode(',', array_keys($filter)), self::CF_PREFIX) === false)
+			strpos(implode(',', array_keys($filter ? $filter : [])), self::CF_PREFIX) === false)
 		{
 			return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 		}
