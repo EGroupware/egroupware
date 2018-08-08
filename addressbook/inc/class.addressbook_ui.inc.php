@@ -597,7 +597,32 @@ class addressbook_ui extends addressbook_bo
 			'hideOnDisabled'	=> true
 		);
 
-		++$group;	// integration with other apps: infolog, calendar, filemanager
+		++$group;	// integration with other apps: infolog, calendar, filemanager, messenger
+
+		// Integrate Messenger app actions for adding new buddy into roster list
+		if ($GLOBALS['egw_info']['user']['apps']['messenger'])
+		{
+			$actions['messenger_app'] = array(
+				'caption' => 'Messenger',
+				'icon' => 'messenger/navbar',
+				'group' => $group,
+				'children' => array(
+					'addBuddy' => array(
+						'caption' => lang('Add contact'),
+						'icon' => 'add',
+						'allowOnMultiple' => true,
+						'onExecute' => 'javaScript:app.messenger.addBuddy',
+						'enabled' => 'javaScript:app.messenger.addBuddyEnabaled'
+					)
+				)
+			);
+		}
+
+		$actions = array_merge($actions, Api\Hooks::process (array(
+						'location' => 'addressbook_actions',
+						'actions' => $actions
+						), '', true));
+
 		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
 		{
 			$actions['infolog_app'] = array(
