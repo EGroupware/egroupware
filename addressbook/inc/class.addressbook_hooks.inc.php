@@ -181,7 +181,7 @@ class addressbook_hooks
 		if (($cf_opts = Api\Contacts::cf_options()))
 		{
 			$settings['link_title_cf'] = array(
-				'type'  => 'select',
+				'type'  => 'multiselect',
 				'label' => 'Add a customfield to link title',
 				'name'  => 'link_title_cf',
 				'values' => $cf_opts,
