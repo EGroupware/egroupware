@@ -65,12 +65,6 @@
 				opacity: 0.7,
 				axis: 'y'
 			});
-
-			// warn user about using IE not compatibilities
-			if (navigator && navigator.userAgent.match(/Trident|msie/ig))
-			{
-				egw.message(egw.lang('Browser %1 %2 is not recommended. You may experience issues and not working features. Please use the latest version of Chrome, Firefox or Edge. Thank You!', 'IE',''), 'info', 'browser:ie:warning');
-			}
 		},
 
 		/**
@@ -216,6 +210,16 @@
 			}
 
 			_sideboxSizeCallback(_sideboxStartSize);
+
+			// warn user about using IE not compatibilities
+			// we need to wait until common translations are loaded
+			egw.langRequireApp(window, 'common', function()
+			{
+				if (navigator && navigator.userAgent.match(/Trident|msie/ig))
+				{
+					egw.message(egw.lang('Browser %1 %2 is not recommended. You may experience issues and not working features. Please use the latest version of Chrome, Firefox or Edge. Thank You!', 'IE',''), 'info', 'browser:ie:warning');
+				}
+			});
 		},
 
 		/**
