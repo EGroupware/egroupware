@@ -818,7 +818,7 @@ class resources_bo
 				else
 				{
 					$list[$id] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'') .
-							($resource['useable'] > 1 ? "( {$resource['useable']} / {$resource['quantity']} )" : '');
+							($resource['useable'] > 1 ? " ( {$resource['useable']} / {$resource['quantity']} )" : '');
 				}
 			}
 		} else {
