@@ -66,6 +66,7 @@ app.classes.admin = AppJS.extend(
 		this.iframe = null;
 		this.nm = null;
 		this.acl_dialog = null;
+		this.tree = null;
 
 		// call parent
 		this._super.apply(this, arguments);
@@ -92,6 +93,7 @@ app.classes.admin = AppJS.extend(
 				this.groups = this.et2.getWidgetById('groups');
 				this.groups.set_disabled(true);
 				this.ajax_target = this.et2.getWidgetById('ajax_target');
+				this.tree = this.et2.getWidgetById('tree');
 				if (iframe)
 				{
 					var self = this;
@@ -172,6 +174,12 @@ app.classes.admin = AppJS.extend(
 			else
 			{
 				this.iframe.set_src(_url);
+			}
+			var m = _url.match(/menuaction=([^&]+)(?:.*appname=(\w+))?/)
+			if(m.length >= 2)
+			{
+				var app = m[2] ? m[2] : m[1].split('.')[0];
+				this.tree.set_value('/apps/'+app+'/'+m[1]);
 			}
 		}
 		else
