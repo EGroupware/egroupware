@@ -425,6 +425,16 @@ var et2_widget = (function(){ "use strict"; return ClassWithAttributes.extend(
 				return elem;
 			}
 		}
+		if(this.id && _id.indexOf('[') > -1 && this._children.length)
+		{
+			var ids = (new et2_arrayMgr()).explodeKey(_id);
+			var widget = this;
+			for(var i = 0; i < ids.length && widget !== null; i++)
+			{
+				widget = widget.getWidgetById(ids[i]);
+			}
+			return widget;
+		}
 
 		return null;
 	},
