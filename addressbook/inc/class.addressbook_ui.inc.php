@@ -618,11 +618,6 @@ class addressbook_ui extends addressbook_bo
 			);
 		}
 
-		$actions = array_merge($actions, Api\Hooks::process (array(
-						'location' => 'addressbook_actions',
-						'actions' => $actions
-						), '', true));
-
 		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
 		{
 			$actions['infolog_app'] = array(
