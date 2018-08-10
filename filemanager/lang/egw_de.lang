@@ -80,8 +80,10 @@ current directory	filemanager	de	Aktuelles Verzeichnis
 custom fields	filemanager	de	Benutzerdefinierte Felder
 cut	filemanager	de	Ausschneiden
 cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
+default action on double-click	filemanager	de	Aktion beim Doppel-Klick einer Datei
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Verzeichnis navigieren, Sie können aber das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis konfigurieren.
 default document to insert entries	filemanager	de	Standarddokument zum Einfügen von Daten
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	de	Legt fest, wie Dokumente behandelt werden beim Doppelklick auf die Datei. Bilder werden immer in der Exposé-Ansicht geöffnet und E-Mails mit der E-Mail-Anwendung. Alle anderen Mime-Typen werden vom Browser selbst behandelt.
 defines how to open a merge print document	filemanager	de	Definiert, wie ein Seriendruckdokument geöffnet wird.
 delete all older versions and deleted files older then %s days	filemanager	de	Lösche alle alten Versionen und gelösche Dateien älter als %s Tage
 delete these files or directories?	filemanager	de	Diese Dateien oder Verzeichnisse löschen?
@@ -105,6 +107,7 @@ do you want more information about epl subscription?	common	de	Wollen Sie mehr I
 do you want to overwrite existing file %1 in directory %2?	filemanager	de	Wollen Sie die bestehende Datei %1 im Verzeichnis %2 überschreiben?
 do you want to overwrite the existing file %1?	filemanager	de	Wollen Sie die existierende Datei %1 überschreiben?
 download	filemanager	de	Herunterladen
+download documents	filemanager	de	Dokument herunterladen
 edit comments	filemanager	de	Kommentare bearbeiten
 edit settings	filemanager	de	Eigenschaften bearbeiten
 enable	filemanager	de	Einschalten
@@ -207,6 +210,8 @@ noone	filemanager	de	Niemand
 older versions or deleted files	filemanager	de	Ältere Versionen oder gelöschte Dateien
 only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen
 open	filemanager	de	Öffnen
+open documents with collabora, if permissions are given	filemanager	de	Dokument mit Collabora öffen, falls Rechte vorhanden sind
+open odt documents with collabeditor	filemanager	de	odt Dokumente mit CollabEditor öffnen
 operation	filemanager	de	Vorgang
 paste link	filemanager	de	Als Verknüpfung einfügen
 path %1 not found or not a directory!	filemanager	de	Pfad %1 nicht gefunden oder kein Verzeichnis!

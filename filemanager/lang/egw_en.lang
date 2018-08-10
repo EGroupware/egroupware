@@ -80,8 +80,10 @@ current directory	filemanager	en	Current directory
 custom fields	filemanager	en	Custom fields
 cut	filemanager	en	Cut
 cut to clipboard	filemanager	en	Cut to clipboard
+default action on double-click	filemanager	en	Default action on double-click
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default = No. The link will not be shown, but you are still able to navigate to this location, or configure this particular location as start folder or folder link.
 default document to insert entries	filemanager	en	Default document to insert entries
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	en	Defines how to handle double click action on a document file. Images are always opened in the expose-view and emails with email application. All other mime-types are handled by the browser itself.
 defines how to open a merge print document	filemanager	en	Defines how to open a merge print document
 delete all older versions and deleted files older then %s days	filemanager	en	Delete all older versions and deleted files older than %s days
 delete these files or directories?	filemanager	en	Delete these files or directories?
@@ -105,6 +107,7 @@ do you want more information about epl subscription?	common	en	Do you want more 
 do you want to overwrite existing file %1 in directory %2?	filemanager	en	Do you want to overwrite existing file %1 in directory %2?
 do you want to overwrite the existing file %1?	filemanager	en	Do you want to overwrite the existing file %1?
 download	filemanager	en	Download
+download documents	filemanager	en	download documents
 edit comments	filemanager	en	Edit comments
 edit settings	filemanager	en	Edit settings
 enable	filemanager	en	Enable
@@ -207,6 +210,8 @@ noone	filemanager	en	Noone
 older versions or deleted files	filemanager	en	Older versions or deleted files
 only owner can rename or delete the content	filemanager	en	Only owner can rename or delete the content.
 open	filemanager	en	Open
+open documents with collabora, if permissions are given	filemanager	en	open documents with Collabora, if permissions are given
+open odt documents with collabeditor	filemanager	en	open odt documents with CollabEditor
 operation	filemanager	en	Operation
 paste link	filemanager	en	Paste Link
 path %1 not found or not a directory!	filemanager	en	Path %1 not found or not a directory!
