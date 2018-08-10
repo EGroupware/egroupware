@@ -287,7 +287,7 @@ class filemanager_hooks
 			'document_doubleclick_action' => array (
 				'type'   => 'select',
 				'label'  => lang('Default action on double-click'),
-				'help'   => lang('Defines how to handle double click action on a document file.'),
+				'help'   => lang('Defines how to handle double click action on a document file. Images are always opened in the expose-view and emails with email application. All other mime-types are handled by the browser itself.'),
 				'name'   => 'document_doubleclick_action',
 				'values' => array (
 					'collabora' => lang('open documents with Collabora, if permissions are given'),
