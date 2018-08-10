@@ -58,6 +58,7 @@ apply the action on the whole query, not only the shown events	calendar	de	Befeh
 apply the changes	calendar	de	Übernimmt die Änderungen
 appointment settings	calendar	de	Einstellungen der Terminverwaltung
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	de	Als Alternative können Sie auch einen %1MySQL Dump herunterladen%2 und diesen von Hand in die Datenbank Tabelle egw_cal_timezones importieren.
+at start of the event	calendar	de	am Beginn des Termins
 automatically purge old events after	admin	de	Bereinigt bzw. löscht alte Termine automatisch nach
 back half a month	calendar	de	einen halben Monat zurück
 back one month	calendar	de	einen Monat zurück
