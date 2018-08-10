@@ -818,3 +818,9 @@ jQuery(function(){
 	});
 });
 
+// IE does not support ES6 therefore we need to use polyfill function
+Number.isInteger = Number.isInteger || function(value) {
+  return typeof value === 'number' &&
+    isFinite(value) &&
+    Math.floor(value) === value;
+};
