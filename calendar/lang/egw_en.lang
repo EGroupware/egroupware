@@ -58,6 +58,7 @@ apply the action on the whole query, not only the shown events	calendar	en	Apply
 apply the changes	calendar	en	Apply the changes
 appointment settings	calendar	en	Appointment settings
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	en	As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.
+at start of the event	calendar	en	at start of the event
 automatically purge old events after	admin	en	Automatically purge old events after
 back half a month	calendar	en	Back half a month
 back one month	calendar	en	Back one month
@@ -156,6 +157,7 @@ delete this series of recurring events	calendar	en	Delete this series of recurri
 deleted	calendar	en	Deleted.
 deny resources reservation for private events	calendar	en	Deny resources reservation for private events
 directory with documents to insert entries	calendar	en	Directory with documents to insert entries
+utilities	calendar	en	Utilities
 uninvited	calendar	en	uninvited.
 display holidays or birthdays as events in dayview	calendar	en	Display holidays or birthdays as events in dayview
 display in header	calendar	en	Display in header

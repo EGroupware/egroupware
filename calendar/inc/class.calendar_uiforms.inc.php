@@ -5,9 +5,8 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-16 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-18 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -1791,7 +1790,16 @@ class calendar_uiforms extends calendar_ui
 				if ($days) $label[] = $days.' '.lang('days');
 				if ($hours) $label[] = $hours.' '.lang('hours');
 				if ($minutes) $label[] = $minutes.' '.lang('Minutes');
-				$alarm['offset'] = implode(', ',$label) . ' ' . ($after ? lang('after') : lang('before'));
+				if (!$label)
+				{
+					$alarm['offset'] = lang('at start of the event');
+				}
+				else
+				{
+					$alarm['offset'] = implode(', ',$label) . ' ' . ($after ? lang('after') : lang('before'));
+				}
+				// fix alarm time in case of alread run alarms, where the time will be their keep_time / when they will be cleaned up otherwise
+				$alarm['time'] = $event['start'] - $alarm['offset'];
 				$content['alarm'][] = $alarm;
 
 				$readonlys['alarm[delete_alarm]['.$alarm['id'].']'] = !$this->bo->check_perms(Acl::EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
