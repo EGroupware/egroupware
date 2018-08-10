@@ -482,7 +482,7 @@ class Asyncservice
 				// update job before running it, to cope with jobs taking longer then async-frequency
 				if (($job['next'] = $this->next_run($job['times'])) ||
 					// keep jobs with keep set (eg. calendar alarms) around
-					is_array($job['data']) && !empty($job['data']['keep']))
+					is_array($job['data']) && (!empty($job['data']['keep']) || substr($job['id'], 0, 4) === 'cal:'))
 				{
 					if (!$job['next'])
 					{
