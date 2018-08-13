@@ -182,6 +182,7 @@ empty trash and junk	mail	de	Papierkorb und Spam-Ordner leeren
 enable	mail	de	aktivieren
 enabled!	mail	de	aktiviert!
 encrypt	mail	de	Verschlüsseln
+encrypt your message with smime certificate	mail	de	Verschlüsseln Sie Ihre Nachricht mit einem Smime-Zertifikat
 encryption	mail	de	Verschlüsselung
 enter the name for the new folder:	mail	de	Tragen Sie hier den Namen für den neuen Ordner ein:
 error saving %1!	mail	de	Fehler beim Speichern von %1!
@@ -298,7 +299,7 @@ later	mail	de	später
 learning as ham (not spam) failed because of %1	mail	de	Als "gute E-Mail" (kein Spam) lernen fehlgeschlagen, da %1
 learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da %1
 less than	mail	de	kleiner als
-list of actions to be switched/activated on by default (eg. Mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als Infolog speichern)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als Infolog speichern)
 mail	common	de	Mail
 mail acl	mail	de	Zugriffsrechte
 mail filter	mail	de	Filter-Regeln
@@ -481,6 +482,7 @@ selected date range (with quicksearch)	mail	de	Datumsbereich (mit Schnellsuche)
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
 send files as	mail	de	Dateien versenden als
 send message and move to send folder (if configured)	mail	de	Versende Nachricht und kopiere diese in den konfigurierten Gesendet Ordner
+send message pgp encrypted: requires keys from all recipients!	mail	de	Nachricht PGP-verschlüsselt senden: benötigt Schlüssel von allen Empfängern!
 sender	mail	de	Absender
 sent	mail	de	Gesendet
 sent folder	mail	de	Ordner für gesendete Nachrichten
@@ -510,6 +512,7 @@ sieve connection status	mail	de	Sieve Verbindungsstatus
 sieve not activated	mail	de	Sieve nicht aktiviert
 sieve script name	mail	de	Stellen Sie den Sieve Skript Namen ein.
 sieve server	mail	de	Sieve Server
+sign your message with smime certificate	mail	de	Signieren Sie Ihre Nachricht mit einem Smime-Zertifikat
 signature	mail	de	Signatur
 signature at top	mail	de	Signatur am Anfang der Nachricht
 signature position and visibility	mail	de	Position und Sichtbarkeit der Signatur

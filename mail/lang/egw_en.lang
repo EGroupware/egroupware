@@ -182,6 +182,7 @@ empty trash and junk	mail	en	Empty Trash and Junk
 enable	mail	en	Enable
 enabled!	mail	en	enabled!
 encrypt	mail	en	Encrypt
+encrypt your message with smime certificate	mail	en	Encrypt your message with smime certificate
 encryption	mail	en	Encryption
 enter the name for the new folder:	mail	en	Enter the name for the new Folder:
 error saving %1!	mail	en	Error saving %1!
@@ -298,7 +299,7 @@ later	mail	en	later
 learning as ham (not spam) failed because of %1	mail	en	Learning as ham (not spam) failed because of %1
 learning as spam failed because of %1	mail	en	Learning as spam failed because of %1
 less than	mail	en	less than
-list of actions to be switched/activated on by default (eg. Mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. Mail compose save as infolog action)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. Mail compose save as infolog action)
 mail	common	en	Mail
 mail acl	mail	en	Mail ACL
 mail filter	mail	en	Mail filter
@@ -481,6 +482,7 @@ selected date range (with quicksearch)	mail	en	Selected date range (with quickse
 send a reject message:	mail	en	Send a reject message:
 send files as	mail	en	Send files as
 send message and move to send folder (if configured)	mail	en	send message and move to send folder (if configured)
+send message pgp encrypted: requires keys from all recipients!	mail	en	Send message PGP encrypted: requires keys from all recipients!
 sender	mail	en	sender
 sent	mail	en	Sent
 sent folder	mail	en	sent folder
@@ -510,6 +512,7 @@ sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
 sieve script name	mail	en	sieve script name
 sieve server	mail	en	Sieve server
+sign your message with smime certificate	mail	en	Sign your message with smime certificate
 signature	mail	en	Signature
 signature at top	mail	en	signature at top
 signature position and visibility	mail	en	Signature position and visibility
