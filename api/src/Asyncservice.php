@@ -475,6 +475,13 @@ class Asyncservice
 						error_log(__METHOD__."() finally deleting job ".array2string($job));
 						$this->delete($job['id']);
 					}
+					// fix somehow created async-job with a next time before the keep time, eg. not updated alarm trigger time in the past
+					if ($job['next'] < $job['data']['keep_time'])
+					{
+						$job['next'] = $job['data']['keep_time'];
+						if ($this->debug) error_log(__METHOD__."() setting next to keep_time (".date('Y-m-d H:i:s', $job['data']['keep_time']).') for job '.array2string($job));
+						$this->write($job, True);
+					}
 					if ($this->debug) error_log(__METHOD__."() keeping job ".array2string($job));
 					continue;
 				}
