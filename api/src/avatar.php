@@ -80,7 +80,7 @@ class avatar
 		$bgcolor = $_color ? $_color : self::_getBgColor($firstname.$lastname.$id);
 
 		// Letters to be shown
-		$text = $firstname[0].$lastname[0];
+		$text = strtoupper($firstname[0].$lastname[0]);
 
 		//create an image
 		$image = imagecreatetruecolor($_size, $_size);
