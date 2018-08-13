@@ -647,18 +647,18 @@ class timesheet_bo extends Api\Storage
 			Link::restore(TIMESHEET_APP, $new['ts_id']);
 		}
 
-		if (!is_object($this->tracking))
-		{
-			$this->tracking = new timesheet_tracking($this);
-
-			$this->tracking->html_content_allow = true;
-		}
-		if ($this->tracking->track($this->data,$old,$this->user) === false)
-		{
-			return implode(', ',$this->tracking->errors);
-		}
 		if (!($err = parent::save()))
 		{
+			if (!is_object($this->tracking))
+			{
+				$this->tracking = new timesheet_tracking($this);
+
+				$this->tracking->html_content_allow = true;
+			}
+			if ($this->tracking->track($this->data,$old,$this->user) === false)
+			{
+				return implode(', ',$this->tracking->errors);
+			}
 			// notify the link-class about the update, as other apps may be subscribt to it
 			Link::notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
 		}
