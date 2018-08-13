@@ -2510,7 +2510,7 @@ window.egw_LAB.wait(function() {
 		// Enable history
 		$this->setup_history($content, $sel_options);
 
-		$content['photo'] = $this->photo_src($content['id'],$content['jpegphoto'],'photo',$content['etag']);
+		$content['photo'] = $this->photo_src($content['id'],$content['jpegphoto'],'',$content['etag']);
 
 		if ($content['private']) $content['owner'] .= 'p';
 
@@ -3204,6 +3204,15 @@ window.egw_LAB.wait(function() {
 			!(($contact['files'] & Api\Contacts::FILES_BIT_PHOTO) && // new SQL in VFS
 				($size = filesize($url=Api\Link::vfs_path('addressbook', $contact_id, Api\Contacts::FILES_PHOTO)))))
 		{
+			if (is_array($contact))
+			{
+				echo Api\avatar::lavatar(array(
+					'id' => $contact['id'],
+					'firstname' => $contact['n_given'],
+					'lastname' => $contact['n_family'])
+				);
+				exit();
+			}
 			Egw::redirect(Api\Image::find('addressbook','photo'));
 		}
 		// use an etag over the image mapp
