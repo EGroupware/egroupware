@@ -48,5 +48,11 @@ egw_LAB.wait(function()
 			{ "svg": egw_webserverUrl+"/api/templates/default/images/login_facebook.svg", "url": "https://www.facebook.com/egroupware" },
 			{ "svg": egw_webserverUrl+"/api/templates/default/images/login_twitter.svg", "url": "https://twitter.com/egroupware" }
 		]);
+
+		// IE or Edge do not respect text-indent :( use padding left instead.
+		if (navigator && navigator.userAgent.match(/Trident|msie|edge/ig))
+		{
+			jQuery('select[name="remember_me"]').css({"padding-left": "60%"});
+		}
 	});
 });
