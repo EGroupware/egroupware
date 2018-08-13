@@ -1777,6 +1777,8 @@ class calendar_uiforms extends calendar_ui
 					continue;	// no read rights to the calendar of the alarm-owner, dont show the alarm
 				}
 				$alarm['all'] = (int) $alarm['all'];
+				// fix alarm time in case of alread run alarms, where the time will be their keep_time / when they will be cleaned up otherwise
+				$alarm['time'] = $event['start'] - $alarm['offset'];
 				$after = false;
 				if($alarm['offset'] < 0)
 				{
@@ -1798,8 +1800,6 @@ class calendar_uiforms extends calendar_ui
 				{
 					$alarm['offset'] = implode(', ',$label) . ' ' . ($after ? lang('after') : lang('before'));
 				}
-				// fix alarm time in case of alread run alarms, where the time will be their keep_time / when they will be cleaned up otherwise
-				$alarm['time'] = $event['start'] - $alarm['offset'];
 				$content['alarm'][] = $alarm;
 
 				$readonlys['alarm[delete_alarm]['.$alarm['id'].']'] = !$this->bo->check_perms(Acl::EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
