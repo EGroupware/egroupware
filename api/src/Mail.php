@@ -7509,7 +7509,7 @@ class Mail
 			));
 			// check for email address if both signer email address and
 			// email address of sender are the same.
-			if (is_array($from) && $from[0] != $cert->email)
+			if (is_array($from) && strcasecmp($from[0], $cert->email) != 0)
 			{
 				$metadata['unknownemail'] = true;
 				$metadata['msg'] .= ' '.lang('Email address of signer is different from the email address of sender!');
@@ -7517,7 +7517,7 @@ class Mail
 
 			$AB_bo   = new \addressbook_bo();
 			$certkey = $AB_bo->get_smime_keys($cert->email);
-			if (!is_array($certkey) || $certkey[$cert->email] != $cert->cert) $metadata['addtocontact'] = true;
+			if (!is_array($certkey) || strcasecmp($certkey[$cert->email], $cert->cert) != 0) $metadata['addtocontact'] = true;
 		}
 		else // only encrypted message
 		{
