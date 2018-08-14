@@ -592,6 +592,7 @@ update calendar view immediately when navigation calendar in sidebox is changed	
 update timezones	common	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
+use given criteria:	calendar	en	Kriterien benutzen:
 use range-views to optimise calendar queries?	calendar	de	Sollen spezielle Bereichs-Ansichten verwendet werden, um Kalenderabfragen zu optimieren?
 use side menu to filter participants	calendar	de	Zum Filtern von Teilnehmern, bitte Seitenmenu verwenden
 use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Pop-up
