@@ -1845,7 +1845,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 							{
 								promises.push(keyring.importPublicKey(data[email]).then(function(_result)
 								{
-									if (_result == 'IMPORTED')
+									if (_result == 'IMPORTED' || _result == 'UPDATED')
 									{
 										no_key.splice(no_key.indexOf(email),1);
 									}
@@ -1943,6 +1943,6 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			width: 450,
 			value: {content:{ "share_link": _data.share_link }}
 		});
-	},
+	}
 
 });}).call(this);
