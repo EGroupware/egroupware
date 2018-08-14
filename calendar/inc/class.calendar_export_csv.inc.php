@@ -92,6 +92,8 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 
 					$ui->get_rows($query, $events, $unused);
 				}
+				// Filter out extra things like sel_options
+				unset($events['sel_options']);
 				break;
 			case 'filter':
 				$fields = importexport_helper_functions::get_filter_fields($_definition->application, $this);
