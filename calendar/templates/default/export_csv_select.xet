@@ -16,7 +16,7 @@
 				<row>
 					<radio label="Use search results" id="selection" onclick="jQuery('.criteria').hide();jQuery('div.filters').hide();"  options="search_results" span="all"/>
 				</row>
-				<row>
+				<row disabled="@no_filter">
 					<radio label="Use definition filter" id="selection" onclick="jQuery('div.filters').show();jQuery('.criteria').hide();" options="filter" span="all"/>
 				</row>
 				<row>

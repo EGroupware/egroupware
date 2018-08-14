@@ -137,6 +137,7 @@ class calendar_export_ical extends calendar_export_csv {
 	 */
 	public function get_selectors_etpl($definition = null) {
 		$data = parent::get_selectors_etpl($definition);
+		$data['content']['no_filter'] = true;
 		return $data;
 	}
 	/**
