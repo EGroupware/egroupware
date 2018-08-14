@@ -135,6 +135,7 @@ unable to link to %1 "%2"	importexport	en	Unable to link to %1 "%2"
 unable to schedule	importexport	en	Unable to schedule.
 update categories	importexport	en	Update categories
 use default	importexport	en	Use default
+use definition filter	importexport	en	Use definition filter
 use field from csv if possible	importexport	en	Use field from CSV if possible
 use search results	common	en	Use search results
 user preference	importexport	en	User preference
