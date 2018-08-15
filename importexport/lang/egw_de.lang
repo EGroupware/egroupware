@@ -135,7 +135,7 @@ unable to link to %1 "%2"	importexport	de	Verknüpfung nicht möglich %1 "%2"
 unable to schedule	importexport	de	Zeitplan nicht möglich
 update categories	importexport	de	Kategorien aktualisieren
 use default	importexport	de	Standard verwenden
-use definition filter	importexport	en	Definitionsfilter benutzen
+use definition filter	importexport	de	Definitionsfilter benutzen
 use field from csv if possible	importexport	de	Verwendet Werte der CSV-Datei, falls dort vorhanden.
 use search results	common	de	Suchergebnis nutzen
 user preference	importexport	de	Einstellen verwenden
