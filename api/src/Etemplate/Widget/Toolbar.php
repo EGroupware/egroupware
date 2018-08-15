@@ -40,4 +40,20 @@ class Toolbar extends Etemplate\Widget
 			if (true) $valid = $value;
 		}
 	}
+
+	/**
+	 * Set up what we know on the server side.
+	 *
+	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 */
+	public function beforeSendToClient($cname, array $expand=null)
+	{
+		if ($GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			$form_name = self::form_name($cname, $this->id, $expand);
+			$value = &self::get_array(self::$request->modifications, $form_name, true);
+			$value['is_admin'] = true;
+		}
+	}
 }

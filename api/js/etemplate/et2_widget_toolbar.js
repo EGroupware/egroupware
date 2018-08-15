@@ -152,10 +152,17 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 		this.div.empty();
 		this.actionbox.empty();
 		this.actionlist.empty();
-		this.actionbox.append('<h class="ui-toolbar-menulistHeader">'+egw.lang('more')+' ...'+'</h>');
+		var admin_setting = this.options.is_admin ? '<span class="toolbar-admin-pref">admin</span>': '';
+		this.actionbox.append('<h class="ui-toolbar-menulistHeader">'+egw.lang('more')+' ...'+admin_setting+'</h>');
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 		var that = this;
-
+		if (this.options.is_admin)
+		{
+			this.actionbox.find('.toolbar-admin-pref').click(function(e){
+				e.stopImmediatePropagation();
+				// TODO
+			});
+		}
 		var pref = (!egwIsMobile())? egw.preference(this.dom_id,this.egw().getAppName()): undefined;
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
 
