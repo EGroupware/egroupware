@@ -7,7 +7,6 @@
  * @package api
  * @subpackage ajax
  * @author Andreas Stoeckel <as@stylite.de>
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -116,7 +115,15 @@ if (isset($_GET['menuaction']))
 		$json->isJSONRequest(true);	// otherwise exception is not send back to client, as we have not yet called parseRequest()
 		throw new Json\Exception\ScriptTags("JSON Data contains script tags. Aborting...");
 	}
-	$json->parseRequest($_GET['menuaction'], $_REQUEST['json_data']);
+	// check if we have a real json request
+	if (strpos($_SERVER['CONTENT_TYPE'], 'application/json') === 0)
+	{
+		$json->parseRequest($_GET['menuaction'], file_get_contents('php://input'));
+	}
+	else
+	{
+		$json->parseRequest($_GET['menuaction'], $_REQUEST['json_data']);
+	}
 	Json\Response::get();
 	exit();
 }
