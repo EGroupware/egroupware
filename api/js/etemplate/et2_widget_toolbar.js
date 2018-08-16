@@ -160,7 +160,14 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 		{
 			this.actionbox.find('.toolbar-admin-pref').click(function(e){
 				e.stopImmediatePropagation();
-				that._admin_settings_dialog.call(that, actions);
+				egw.json('EGroupware\\Api\\Etemplate\\Widget\\Toolbar::ajax_get_default_prefs', [egw.app_name(), that.dom_id], function(_prefs){
+					var prefs = [];
+					for (var p in _prefs)
+					{
+						if (_prefs[p] === false) prefs.push(p);
+					}
+					that._admin_settings_dialog.call(that, actions, prefs);
+				}).sendRequest(true);
 			});
 		}
 		var pref = (!egwIsMobile())? egw.preference(this.dom_id,this.egw().getAppName()): undefined;
@@ -698,27 +705,61 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 	 *
 	 * @param {type} _actions
 	 */
-	_admin_settings_dialog: function (_actions)
+	_admin_settings_dialog: function (_actions, _default_prefs)
 	{
 		var buttons = [
 			{text: egw.lang("Close"), id:"close"},
 			{text: egw.lang("Save"), id:"save"},
 		];
+		var self = this;
 		var sel_options = {actions:[]};
+		var content = {actions:[]};
 		for (var key in _actions)
 		{
-			sel_options.actions.push({id:key, value: key, label: _actions[key]['caption'], app: egw.app_name(), icon: _actions[key]['iconUrl']});
+			if (_actions[key]['children'] && this.flat_list)
+			{
+				for (var child in _actions[key]['children'])
+				{
+					sel_options.actions.push({
+						id:child,
+						value: child,
+						label: _actions[key]['children'][child]['caption'],
+						app: egw.app_name(),
+						icon: _actions[key]['children'][child]['iconUrl']
+					});
+				}
+			}
+			else
+			{
+				sel_options.actions.push({
+					id:key,
+					value: key,
+					label: _actions[key]['caption'],
+					app: egw.app_name(),
+					icon: _actions[key]['iconUrl']
+				});
+			}
+			if ((!_default_prefs || _default_prefs.length == 0) && _actions[key]['toolbarDefault']) content.actions.push(key);
 		}
-		var content = {actions:''};
+		if (_default_prefs && _default_prefs.length > 0) content.actions = _default_prefs;
 		et2_createWidget("dialog",
 		{
 			callback: function(_button_id, _value)
 			{
 				if (_button_id == 'save' && _value)
 				{
+					if (_value.actions)
+					{
+						var pref = jQuery.extend({}, self.preference);
+						for (var i in pref)
+						{
+							pref[i] = true;
+							if (_value.actions.includes(i)) pref[i] = false;
+						}
+						_value.actions = pref;
+					}
 					egw.json('EGroupware\\Api\\Etemplate\\Widget\\Toolbar::ajax_setAdminSettings',
-					[_value],function(_result){
-
+					[_value, self.dom_id, egw.app_name()],function(_result){
 						egw.message(_result);
 					}).sendRequest(true);
 				}

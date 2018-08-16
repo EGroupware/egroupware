@@ -59,10 +59,41 @@ class Toolbar extends Etemplate\Widget
 
 	/**
 	 * Set admin settings
-	 * 
+	 *
 	 * @param array $settings array of settings to be processed
 	 */
-	public static function ajax_setAdminSettings ($settings)
+	public static function ajax_setAdminSettings ($settings, $id, $app)
+	{
+		$response = \EGroupware\Api\Json\Response::get();
+		// None admin users are not allowed to access
+		if (!$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			$response->data(Lang('Permission denied! This is an administration only feature.'));
+			exit();
+		}
+		foreach ($settings as $key => $setting)
+		{
+			switch ($key)
+			{
+				case 'actions':
+					$GLOBALS['egw']->preferences->read_repository(true);
+					$GLOBALS['egw']->preferences->add($app, $id, $setting, 'default');
+					$GLOBALS['egw']->preferences->save_repository(true, 'default');
+					$GLOBALS['egw']->preferences->read(true);
+					break;
+				default:
+			}
+		}
+		$response->data(Lang('Settings saved.'));
+	}
+
+	/**
+	 * Get default prefs
+	 *
+	 * @param string $app
+	 * @param string $id
+	 */
+	public static function ajax_get_default_prefs ($app, $id)
 	{
 		$response = \EGroupware\Api\Json\Response::get();
 		// None admin users are not allowed to access
@@ -72,5 +103,6 @@ class Toolbar extends Etemplate\Widget
 			exit();
 		}
 
+		$response->data($GLOBALS['egw']->preferences->default_prefs($app, $id));
 	}
 }
