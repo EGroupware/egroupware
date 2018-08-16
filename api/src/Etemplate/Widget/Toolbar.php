@@ -56,4 +56,21 @@ class Toolbar extends Etemplate\Widget
 			$value['is_admin'] = true;
 		}
 	}
+
+	/**
+	 * Set admin settings
+	 * 
+	 * @param array $settings array of settings to be processed
+	 */
+	public static function ajax_setAdminSettings ($settings)
+	{
+		$response = \EGroupware\Api\Json\Response::get();
+		// None admin users are not allowed to access
+		if (!$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			$response->data(Lang('Permission denied! This is an administration only feature.'));
+			exit();
+		}
+
+	}
 }

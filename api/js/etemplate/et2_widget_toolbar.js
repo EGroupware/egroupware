@@ -152,7 +152,7 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 		this.div.empty();
 		this.actionbox.empty();
 		this.actionlist.empty();
-		var admin_setting = this.options.is_admin ? '<span class="toolbar-admin-pref">admin</span>': '';
+		var admin_setting = this.options.is_admin ? '<span class="toolbar-admin-pref" title="'+egw.lang('Admin settings')+' ..."></span>': '';
 		this.actionbox.append('<h class="ui-toolbar-menulistHeader">'+egw.lang('more')+' ...'+admin_setting+'</h>');
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 		var that = this;
@@ -160,7 +160,7 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 		{
 			this.actionbox.find('.toolbar-admin-pref').click(function(e){
 				e.stopImmediatePropagation();
-				// TODO
+				that._admin_settings_dialog.call(that, actions);
 			});
 		}
 		var pref = (!egwIsMobile())? egw.preference(this.dom_id,this.egw().getAppName()): undefined;
@@ -691,6 +691,46 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 	{
 		this._super.apply(this, arguments);
 		return false;
+	},
+
+	/**
+	 * Builds dialog for possible admin settings (e.g. default actions pref)
+	 *
+	 * @param {type} _actions
+	 */
+	_admin_settings_dialog: function (_actions)
+	{
+		var buttons = [
+			{text: egw.lang("Close"), id:"close"},
+			{text: egw.lang("Save"), id:"save"},
+		];
+		var sel_options = {actions:[]};
+		for (var key in _actions)
+		{
+			sel_options.actions.push({id:key, value: key, label: _actions[key]['caption'], app: egw.app_name(), icon: _actions[key]['iconUrl']});
+		}
+		var content = {actions:''};
+		et2_createWidget("dialog",
+		{
+			callback: function(_button_id, _value)
+			{
+				if (_button_id == 'save' && _value)
+				{
+					egw.json('EGroupware\\Api\\Etemplate\\Widget\\Toolbar::ajax_setAdminSettings',
+					[_value],function(_result){
+
+						egw.message(_result);
+					}).sendRequest(true);
+				}
+			},
+			title: egw.lang('admin settings for %1', this.dom_id),
+			buttons: buttons,
+			minWidth: 500,
+			minHeight: 300,
+			value:{content: content, sel_options: sel_options},
+			template: egw.webserverUrl+'/api/templates/default/toolbarAdminSettings.xet?1',
+			resizable: false
+		}, et2_dialog._create_parent('api'));
 	}
 });}).call(this);
 et2_register_widget(et2_toolbar, ["toolbar"]);

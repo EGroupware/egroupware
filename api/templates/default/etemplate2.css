@@ -1975,6 +1975,21 @@ div.ui-dialog div.ui-dialog-content > div[id] {
 	margin: 0 !important;
 	padding: 0 !important;
 }
+.et2_toolbar .et2_toolbar_more h .toolbar-admin-pref {
+	background-image: url(../../../pixelegg/images/gear.png);
+    background-repeat: no-repeat;
+    background-size: 12px;
+    width: 20px;
+    height: 100%;
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background-position: center;
+}
+.et2_toolbar .et2_toolbar_more h .toolbar-admin-pref:hover {
+	background-color: #ffd555;
+}
 .et2_toolbar .et2_toolbar_actionlist span[data-group]:not(:first-child) > button.et2_button:first-child {
 	margin-left: 7px;
 }
@@ -2224,7 +2239,7 @@ div.et2_toolbar_more .ui-accordion-header-active {
 	color:black;
 }
 div.et2_toolbar_more h.ui-accordion-header {
-	padding: 4px 14px 3px 25px !important;
+	padding: 4px 30px 3px 25px !important;
 	margin:1px;
 }
 .et2_toolbar_actionlist{
