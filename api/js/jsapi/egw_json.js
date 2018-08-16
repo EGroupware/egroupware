@@ -108,14 +108,14 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			this.async = async;
 		}
 
+		if (typeof method === 'undefined') method = 'POST';
+
 		// Assemble the complete request
-		var request_obj = {
-			'json_data': this.egw.jsonEncode({
-				'request': {
-					'parameters': this.parameters
-				}
-			})
-		};
+		var request_obj = JSON.stringify({
+			request: {
+				parameters: this.parameters
+			}
+		});
 
 		// Send the request via AJAX using the jquery ajax function
 		// we need to use jQuery of window of egw object, as otherwise the one from main window is used!
@@ -124,9 +124,11 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			url: this.url,
 			async: this.async,
 			context: this,
-			data: request_obj,
+			// only POST can send JSON as direct payload, GET can not
+			data: method === 'GET' ? { json_data: request_obj } : request_obj,
+			contentType: method === 'GET' ? false : 'application/json',
 			dataType: 'json',
-			type: method || 'POST',
+			type: method,
 			success: this.handleResponse,
 			error: error || this.handleError
 		});
