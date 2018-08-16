@@ -307,7 +307,7 @@ if (!isset($GLOBALS['egw_domain']) ||  $config['domain'] !== 'default' && !isset
 	$extra_config .= ' '.escapeshellarg('account_repository='.$config['account_repository']);
 	$extra_config .= ' '.escapeshellarg('auth_type='.(empty($config['auth_type']) ? $config['account_repository'] : $config['auth_type']));
 	if (empty($rest)) unset($config['account-auth']);
-	if ($config['account_repository'] == 'ldap' || $config['auth_type'] == 'ldap')
+	if (array_intersect(array($config['account_repository'], $config['auth_type']), array('ldap', 'univention')))
 	{
 		// set account_min_id to 1100 if not specified to NOT clash with system accounts
 		$extra_config .= ' '.escapeshellarg('account_min_id='.(!empty($config['account_min_id']) ? $config['account_min_id'] : 1100));
