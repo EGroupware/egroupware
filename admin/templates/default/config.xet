@@ -5,14 +5,18 @@
 	<template id="admin.config" template="" lang="" group="0" version="18.1">
 		<tabbox id="tabs" width="100%">
 			<tabs>
-				<tab id="config" label="Configuration"/>
+				<tab id="general" label="General"/>
+				<tab id="appearance" label="Appearance"/>
+				<tab id="secrurity" label="Security"/>
 			</tabs>
 			<tabpanels>
-				<template id="admin.config.config"/>
+				<template id="admin.config.general"/>
+				<template id="admin.config.appearance"/>
+				<template id="admin.config.security"/>
 			</tabpanels>
 		</tabbox>
 	</template>
-	<template id="admin.config.config" template="" lang="" group="0" version="16.1">
+	<template id="admin.config.general" template="" lang="" group="0" version="18.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
 			<columns>
 				<column width="70%"/>
@@ -57,9 +61,16 @@
 						<option value="True">Yes</option>
 					</select>
 				</row>
-				<row>
-					<description value="appearance" span="all" class="subHeader"/>
-				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.config.appearance" template="" lang="" group="0" version="18.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="70%"/>
+				<column/>
+			</columns>
+			<rows>
 				<row>
 					<description value="Enter the title for your site" label="%s:"/>
 					<textbox id="newsettings[site_title]"/>
@@ -131,9 +142,16 @@
 					<description value="Applications available on mobile devices" label="%s:"/>
 					<select-app id="newsettings[fw_mobile_app_list]" multiple="true" tags="true" other=",enabled:home;groupdav;sitemgr-link;sitemgr;developer_tools;etemplate;stylite;archive;importexport;activesync;notifications;esyncpro;preferences;registration" width="100%"/>
 				</row>
-				<row>
-					<description value="security" span="all" class="subHeader"/>
-				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.config.security" template="" lang="" group="0" version="18.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="70%"/>
+				<column/>
+			</columns>
+			<rows>
 				<row>
 					<description value="Cookie path (allows multiple eGW sessions with different directories, has problemes with SiteMgr!)" label="%s:"/>
 					<select id="newsettings[cookiepath]">
