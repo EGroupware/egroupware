@@ -3781,11 +3781,12 @@ class mail_compose
 
 		try
 		{
+			$sender_cert = $AB->get_smime_keys($sender);
+			if (!$sender_cert)	throw new Exception("S/MIME Encryption failed because no certificate has been found for sender address: " . $sender);
+			$params['senderPubKey'] = $sender_cert[$sender];
+
 			if (isset($sender) && ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
 			{
-				$sender_cert = $AB->get_smime_keys($sender);
-				if (!$sender_cert)	throw new Exception("S/MIME Encryption failed because no certificate has been found for sender address: " . $sender);
-				$params['senderPubKey'] = $sender_cert[$sender];
 				$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID, $params['passphrase']);
 				$params['senderPrivKey'] = $acc_smime['pkey'];
 				$params['extracerts'] = $acc_smime['extracerts'];
