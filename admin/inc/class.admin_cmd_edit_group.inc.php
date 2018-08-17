@@ -56,14 +56,11 @@ class admin_cmd_edit_group extends admin_cmd
 		{
 			$data['account_id'] = admin_cmd::parse_account($this->account,false);
 		}
-		else
-		{
-			$data += array(
-				'account_type' => 'g',
-				'account_status' => 'A',	// not used, but so we do the same thing as the web-interface
-				'account_expires' => -1,
-			);
-		}
+		$data += array(
+			'account_type' => 'g',
+			'account_status' => 'A',	// not used, but so we do the same thing as the web-interface
+			'account_expires' => -1,
+		);
 		if (!$data['account_lid'] && (!$this->account || !is_null($data['account_lid'])))
 		{
 			throw new Api\Exception\WrongUserinput(lang('You must enter a group name.'),9);
