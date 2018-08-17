@@ -106,6 +106,7 @@ class Etemplate extends Etemplate\Widget\Template
 			array('hook_location'   => 'etemplate2_before_exec') +
 			array('location_name'   => $this->name) +
 			array('location_object' => &$this) +
+			array('sel_options'     => $sel_options) +
 			$content
 		);
 
