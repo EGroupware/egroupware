@@ -2345,7 +2345,7 @@ class mail_compose
 
 					// Try to remove signatures from qouted parts to avoid multiple
 					// signatures problem in reply (rfc3676#section-4.3).
-					if ($_mode != 'forward' && ($hasSignature || ($hasSignature = preg_match("/^--(\s|\s[\r\n])$/",$value))))
+					if ($_mode != 'forward' && ($hasSignature || ($hasSignature = preg_match("/^--\s[\r\n]$/",$value))))
 					{
 						continue;
 					}
