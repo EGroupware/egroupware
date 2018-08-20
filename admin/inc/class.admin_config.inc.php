@@ -127,7 +127,7 @@ class admin_config
 		}
 
 		$c = new Api\Config($config_appname);
-		$c->read_repository();
+		$old = $c->read_repository();
 		if ($_content['cancel'] || ($_content['save'] || $_content['apply']) && $GLOBALS['egw']->acl->check('site_config_acce',2,'admin'))
 		{
 			Api\Framework::redirect_link('/admin/index.php?ajax=true');
@@ -179,11 +179,20 @@ class admin_config
 				unset($GLOBALS['egw_info']['server']['found_validation_hook']);
 			}
 
-			$c->save_repository();
-
+			$modifications = array_diff_assoc($c->config_data, $old);
+			$removals = array_diff_assoc($old, $c->config_data);
+			if ($modifications || $removals)
+			{
+				$c->save_repository();
+				$msg = lang('Configuration saved.');
+			}
+			else
+			{
+				$msg = lang('Nothing to save.');
+			}
 			if(!$errors && !$_content['apply'])
 			{
-				Api\Framework::message(lang('Configuration saved.'), 'success');
+				Api\Framework::message($msg, 'success');
 				Api\Framework::redirect_link('/index.php', array(
 					'menuaction' => 'admin.admin_ui.index',
 					'ajax' => 'true'
@@ -199,7 +208,7 @@ class admin_config
 		}
 		elseif ($_content['apply'])
 		{
-			Api\Framework::message(lang('Configuration saved.'), 'success');
+			Api\Framework::message($msg, 'success');
 		}
 
 		$sel_options = $readonlys = array();
@@ -218,6 +227,8 @@ class admin_config
 		$tmpl = new Api\Etemplate($appname.'.config');
 		$path = (parse_url($tmpl->rel_path, PHP_URL_SCHEME) !== 'vfs' ? EGW_SERVER_ROOT : '').$tmpl->rel_path;
 		$content = array(
+			'tabs' => $_content['tabs'],
+			'tabs2' => $_content['tabs2'],
 			'template' => $appname.'.config',
 			'newsettings' => array(),
 		);

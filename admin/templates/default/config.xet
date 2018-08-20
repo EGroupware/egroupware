@@ -2,20 +2,6 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.config" template="" lang="" group="0" version="18.1">
-		<tabbox id="tabs" width="100%">
-			<tabs>
-				<tab id="general" label="General"/>
-				<tab id="appearance" label="Appearance"/>
-				<tab id="secrurity" label="Security"/>
-			</tabs>
-			<tabpanels>
-				<template id="admin.config.general"/>
-				<template id="admin.config.appearance"/>
-				<template id="admin.config.security"/>
-			</tabpanels>
-		</tabbox>
-	</template>
 	<template id="admin.config.general" template="" lang="" group="0" version="18.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
 			<columns>
@@ -324,5 +310,19 @@
 				</row>
 			</rows>
 		</grid>
+	</template>
+	<template id="admin.config" template="" lang="" group="0" version="18.1">
+		<tabbox id="tabs" width="100%">
+			<tabs>
+				<tab id="general" label="General"/>
+				<tab id="appearance" label="Appearance"/>
+				<tab id="security" label="Security"/>
+			</tabs>
+			<tabpanels>
+				<template id="admin.config.general"/>
+				<template id="admin.config.appearance"/>
+				<template id="admin.config.security"/>
+			</tabpanels>
+		</tabbox>
 	</template>
 </overlay>
