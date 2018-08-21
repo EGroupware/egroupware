@@ -713,7 +713,7 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 		];
 		var self = this;
 		var sel_options = {actions:[]};
-		var content = {actions:[]};
+		var content = {actions:[], reset:false};
 		for (var key in _actions)
 		{
 			if (_actions[key]['children'] && this.flat_list)

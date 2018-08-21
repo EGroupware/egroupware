@@ -13,6 +13,10 @@
 					<description value="default visible actions" label="%s:"/>
 					<taglist id="actions" editModeEnabled="false" allowFreeEntries="false" autocomplete_url=' ' class="et2_fullWidth"/>
 				</row>
+				<row>
+					<description value="reset all to default" label="%s:"/>
+					<checkbox id="reset" statustext="This will reset toolbar preferences for all users and set them to configured default prefs."/>
+				</row>
 			</rows>
 		</grid>
 	</template>

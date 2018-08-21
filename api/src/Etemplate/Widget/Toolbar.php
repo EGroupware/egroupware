@@ -81,6 +81,9 @@ class Toolbar extends Etemplate\Widget
 					$GLOBALS['egw']->preferences->save_repository(true, 'default');
 					$GLOBALS['egw']->preferences->read(true);
 					break;
+				case 'reset':
+					if ($setting) $GLOBALS['egw']->preferences->change_preference($app, $id,'', null, 'user');
+					break;
 				default:
 			}
 		}
