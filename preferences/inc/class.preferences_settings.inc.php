@@ -60,11 +60,13 @@ class preferences_settings
 			{
 				$account_id = (int)$_GET['account_id'];
 				$type = $_GET['account_id'] < 0 ? 'group' : 'user';
+				$is_admin = true;
 			}
 			$content['current_app'] = isset($GLOBALS['egw_info']['user']['apps'][$_GET['current_app']]) ? $_GET['current_app'] : $appname;
 		}
 		else
 		{
+			$is_admin = $content['is_admin'];
 			//error_log(__METHOD__."(".array2string($content).")");
 			if ($content['button'])
 			{
@@ -100,7 +102,7 @@ class preferences_settings
 						$old_values = array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'], array_flip($require_reload));
 
 						$attribute = $type == 'group' ? 'user' : $type;
-						if (!($msg=$this->process_array($GLOBALS['egw']->preferences->$attribute, $prefs, $content['types'], $appname, $attribute)))
+						if (!($msg=$this->process_array($GLOBALS['egw']->preferences->$attribute, $prefs, $content['types'], $appname, $attribute, $content)))
 						{
 							$msg_type = 'success';
 							$msg = lang('Preferences saved.');
@@ -157,18 +159,39 @@ class preferences_settings
 		{
 			$attribute = $type == 'group' ? 'user' : $type;
 			$msg = $this->process_array($GLOBALS['egw']->preferences->$attribute,
-				(array)$GLOBALS['egw']->preferences->{$attribute}[$appname], $preserve['types'], $appname, $attribute, true);
+				(array)$GLOBALS['egw']->preferences->{$attribute}[$appname], $preserve['types'], $appname, $attribute, $content, true);
 		}
 
 		$sel_options = $readonlys = null;
 		$data = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
 		$preserve['appname'] = $preserve['old_appname'] = $data['appname'];
 		$preserve['type'] = $preserve['old_type'] = $data['type'];
+		$preserve['is_admin'] = $is_admin;
 		if (isset($old_tab)) $data['tabs'] = $old_tab;
 
 		if ($msg) Framework::message($msg, $msg_type ? $msg_type : 'error');
 
 		$tpl->exec('preferences.preferences_settings.index', $data, $sel_options, $readonlys, $preserve, 2);
+	}
+
+	/**
+	 * run admin command instance
+	 *
+	 * @param array $content
+	 * @param array $prefs
+	 * @param array $values
+	 * @param string $account_id
+	 */
+	static function admin_cmd_run($content, $prefs, $values, $account_id)
+	{
+		$changes = array_diff($values, $prefs);
+		$old = array_intersect_key($prefs, $changes);
+		$cmd = new admin_cmd_edit_preferences(array(
+			'account' => $account_id,
+			'set'	=> $changes,
+			'old' =>$old
+		)+(array)$content['admin_cmd']);
+		$cmd->run();
 	}
 
 	/**
@@ -179,10 +202,11 @@ class preferences_settings
 	 * @param array $types setting-name => type
 	 * @param string $appname appname or 'common'
 	 * @param string $type 'user', 'default', 'forced'
+	 * @param array $content
 	 * @param boolean $only_verify =false
 	 * @return string with verification error or null on success
 	 */
-	function process_array(array &$repository, array $values, array $types, $appname, $type, $only_verify=false)
+	function process_array(array &$repository, array $values, array $types, $appname, $type, $content, $only_verify=false)
 	{
 		//fetch application specific settings from a hook
 		$settings = Api\Hooks::single(array(
@@ -194,6 +218,7 @@ class preferences_settings
 		$prefs = &$repository[$appname];
 
 		unset($prefs['']);
+		$old = $prefs;
 		//_debug_array($values);exit;
 		foreach($values as $var => $value)
 		{
@@ -281,12 +306,23 @@ class preferences_settings
 			return $error;
 		}
 
-		if (!$only_verify) $GLOBALS['egw']->preferences->save_repository(True,$type);
 
-		// certain common prefs (language, template, ...) require the session to be re-created
-		if ($appname == 'common' && !$only_verify)
+		if (!$only_verify)
 		{
-			Egw::invalidate_session_cache();
+			if ($content['is_admin'])
+			{
+				self::admin_cmd_run($content, $old, $values, $GLOBALS['egw']->preferences->get_account_id());
+			}
+			else
+			{
+				$GLOBALS['egw']->preferences->save_repository(True,$type);
+			}
+
+			// certain common prefs (language, template, ...) require the session to be re-created
+			if ($appname == 'common')
+			{
+				Egw::invalidate_session_cache();
+			}
 		}
 
 		return null;
