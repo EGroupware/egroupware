@@ -179,12 +179,18 @@ class admin_config
 				unset($GLOBALS['egw_info']['server']['found_validation_hook']);
 			}
 
+			// compute real changes and their old values (null for removals)
 			$modifications = array_diff_assoc($c->config_data, $old);
 			$removals = array_diff_assoc($old, $c->config_data);
-			if ($modifications || $removals)
+			$set = array_merge(array_fill_keys(array_keys($removals), null), $modifications);
+			$old = array_filter($old, function($key) use ($set)
 			{
-				$c->save_repository();
-				$msg = lang('Configuration saved.');
+				return array_key_exists($key, $set);
+			}, ARRAY_FILTER_USE_KEY);
+			if ($set)
+			{
+				$cmd = new admin_cmd_config($config_appname, $set, $old, $_content['admin_cmd']);
+				$msg = $cmd->run();
 			}
 			else
 			{
