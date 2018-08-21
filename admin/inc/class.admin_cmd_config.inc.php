@@ -14,7 +14,8 @@ use EGroupware\Api;
 /**
  * setup command: change EGw configuration
  *
- * @property-read string $app app whos config to change
+ * @property-read string $app app whos config to change (egw_config.config_app)
+ * @property-read string $appname app name whos config is changed (some apps store their config under app="phpgwapi")
  * @property-read array $set config data to set, value of null or "" to remove
  * @property-read array $old old values to record
  */
@@ -72,6 +73,17 @@ class admin_cmd_config extends admin_cmd
 		}
 		$config->save_repository();
 
-		return lang('Configuration changed.');
+		return lang('Configuration saved.');
+	}
+
+	/**
+	 * Return a title / string representation for a given command, eg. to display it
+	 *
+	 * @return string
+	 */
+	function __tostring()
+	{
+		return lang('%1 site configuration',
+			lang($this->appname ? $this->appname : $this->app));
 	}
 }

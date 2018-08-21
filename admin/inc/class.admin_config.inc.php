@@ -180,8 +180,14 @@ class admin_config
 			}
 
 			// compute real changes and their old values (null for removals)
-			$modifications = array_diff_assoc($c->config_data, $old);
-			$removals = array_diff_assoc($old, $c->config_data);
+			$modifications = array_udiff_assoc($c->config_data, $old, function($a, $b)
+			{
+				return (int)($a != $b);	// necessary to kope with arrays
+			});
+			$removals = array_udiff_assoc($old, $c->config_data, function($a, $b)
+			{
+				return (int)($a != $b);
+			});
 			$set = array_merge(array_fill_keys(array_keys($removals), null), $modifications);
 			$old = array_filter($old, function($key) use ($set)
 			{
@@ -189,7 +195,8 @@ class admin_config
 			}, ARRAY_FILTER_USE_KEY);
 			if ($set)
 			{
-				$cmd = new admin_cmd_config($config_appname, $set, $old, $_content['admin_cmd']);
+				$cmd = new admin_cmd_config($config_appname, $set, $old,
+					$_content['admin_cmd']+array('appname' => $_appname));
 				$msg = $cmd->run();
 			}
 			else
