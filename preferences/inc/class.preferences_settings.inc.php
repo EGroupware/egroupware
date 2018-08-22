@@ -167,6 +167,20 @@ class preferences_settings
 		$preserve['appname'] = $preserve['old_appname'] = $data['appname'];
 		$preserve['type'] = $preserve['old_type'] = $data['type'];
 		$preserve['is_admin'] = $is_admin;
+
+		// preserve the old values since we need them for admin cmd data comparison
+		$preserve['old_values'] = array ();
+		foreach($data as $key => $val)
+		{
+			if (is_array($val) && strpos($key, 'tab') === 0)
+			{
+				foreach ($val as $k => $v)
+				{
+					if (!is_int($k)) $preserve['old_values'][$k] = $v;
+				}
+			}
+		}
+
 		if (isset($old_tab)) $data['tabs'] = $old_tab;
 
 		if ($msg) Framework::message($msg, $msg_type ? $msg_type : 'error');
@@ -178,14 +192,15 @@ class preferences_settings
 	 * run admin command instance
 	 *
 	 * @param array $content
-	 * @param array $prefs
 	 * @param array $values
 	 * @param string $account_id
 	 */
-	static function admin_cmd_run($content, $prefs, $values, $account_id)
+	static function admin_cmd_run($content, $values, $account_id)
 	{
-		$changes = array_diff($values, $prefs);
-		$old = array_intersect_key($prefs, $changes);
+		$changes = array_udiff_assoc($values, $content['old_values'], function($a, $b){
+			return (int) $a !== $b;
+		});
+		$old = array_intersect_key($content['old_values'], $changes);
 		$cmd = new admin_cmd_edit_preferences(array(
 			'account' => $account_id,
 			'set'	=> $changes,
@@ -218,7 +233,7 @@ class preferences_settings
 		$prefs = &$repository[$appname];
 
 		unset($prefs['']);
-		$old = $prefs;
+
 		//_debug_array($values);exit;
 		foreach($values as $var => $value)
 		{
@@ -311,7 +326,7 @@ class preferences_settings
 		{
 			if ($content['is_admin'])
 			{
-				self::admin_cmd_run($content, $old, $values, $GLOBALS['egw']->preferences->get_account_id());
+				self::admin_cmd_run($content, $content['old_values'], $values, $GLOBALS['egw']->preferences->get_account_id());
 			}
 			else
 			{

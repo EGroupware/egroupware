@@ -46,4 +46,14 @@ class admin_cmd_edit_preferences extends admin_cmd
 		$GLOBALS['egw']->preferences->save_repository(True, $this->type);
 		return lang('Preferences saved.');
 	}
+
+	/**
+	 * Return a title / string representation for a given command, eg. to display it
+	 *
+	 * @return string
+	 */
+	function __tostring()
+	{
+		return lang('Preferences of user %1 changed by %2', $this->data['account'], $this->requested_email);
+	}
 }
