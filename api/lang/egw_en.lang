@@ -92,6 +92,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	en	Address Book
 addressbooks to sync in addition to personal addressbook	groupdav	en	Addressbooks to sync in addition to personal addressbook
 admin	common	en	Admin
+admin settings for %1	common	en	admin settings for %1
 administration	common	en	Administration
 advanced search	common	en	Advanced search
 afghanistan	common	en	AFGHANISTAN
@@ -354,6 +355,7 @@ deck	common	en	Deck (internal)
 default	common	en	Default
 default category	common	en	Default category
 default height for the windows	common	en	Default height for the windows
+default visible actions	common	en	default visible actions
 default width for the windows	common	en	Default width for the windows
 del	common	en	Del
 delete	common	en	Delete
@@ -981,6 +983,7 @@ paste	common	en	Paste
 path	common	en	Path
 path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the web servers document root!
 permission denied!	common	en	Permission denied!
+permission denied! this is an administration only feature.	common	en	Permission denied! This is an administration only feature.
 permissions to the files/users directory	common	en	Permissions to the files/users directory
 permisson denied!	common	en	Permission denied!
 personal	common	en	Personal
@@ -1064,6 +1067,7 @@ required directory "%1" has wrong mode %2 instead of %3!	admin	en	Required direc
 required directory "%1" not found!	admin	en	Required directory "%1" not found!
 reset	common	en	Reset
 reset all user's column preferences	common	en	Reset all user's column preferences
+reset all to default	common	en	reset all to default
 resource calendars	groupdav	en	Resource calendars
 resource type	common	en	Resource type
 resources	common	en	Resources
@@ -1194,6 +1198,7 @@ set these columns as the default	common	en	Set these columns as the default
 set user as only responsible user, but keeping groups	groupdav	en	set user as only responsible user, but keeping groups
 set user as only responsible, removing all existing responsibles	groupdav	en	set user as only responsible, removing all existing responsibles
 sets today as date	common	en	Set today as date
+settings saved.	common	en	Settings saved.
 setup	common	en	Setup
 setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
@@ -1307,6 +1312,7 @@ there already is a system-user with this name. user's should not have the same n
 they will be sub-folders in users home (%1 attribute).	common	en	They will be sub-folders in users home (%1 attribute).
 this name has been used already	common	en	This name has been used already!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	en	Text gets displayed if the input field is empty and has no focus (blur)
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	en	This will reset toolbar preferences for all users and set them to configured default prefs.
 thursday	common	en	Thursday
 tiled	common	en	Tiled
 time	common	en	Time
