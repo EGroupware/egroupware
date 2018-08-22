@@ -19,6 +19,7 @@ if (!defined('IMPORTEXPORT_APP'))
 
 class importexport_admin_prefs_sidebox_hooks
 {
+	const _appname = 'importexport';
 
 	public $public_functions = array(
 		'spreadsheet_list' => true
@@ -66,7 +67,7 @@ class importexport_admin_prefs_sidebox_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Site Configuration' => Egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.site_config'),
+				'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=importexport'),
 				'Import definitions' => Egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition'),
 				'Define imports|exports'  => Egw::link('/index.php',array(
 					'menuaction' => 'importexport.importexport_definitions_ui.index',
@@ -138,7 +139,7 @@ class importexport_admin_prefs_sidebox_hooks
 				$file['Export CSV']['link'] = '';
 			}
 		}
-		
+
 		$config = Api\Config::read('importexport');
 		if($appname != 'admin' && ($config['users_create_definitions'] || $GLOBALS['egw_info']['user']['apps']['admin']) &&
 			count(importexport_helper_functions::get_plugins($appname)) > 0
@@ -152,12 +153,56 @@ class importexport_admin_prefs_sidebox_hooks
 		}
 		if($file) display_sidebox($appname,lang('importexport'),$file);
 	}
-	
+
 	/**
 	 * Returns a list of custom widgets classes for etemplate2
 	 */
 	public static function widgets()
 	{
 		return array('importexport_widget_filter');
+	}
+
+	/**
+	 * Add stuff to admin >> site configuration
+	 *
+	 * @param array $config
+	 * @return array
+	 */
+	public static function config(array $config)
+	{
+		unset($config);	// not used, but required by function signature
+
+		$ret = array(
+			'share_definition' => $GLOBALS['egw']->acl->get_ids_for_location('share_definition', Api\Acl::READ, self::_appname)
+		);
+
+		if (function_exists('mb_list_encodings'))
+		{
+			$ret['sel_options']['import_charsets'] = array_combine(mb_list_encodings(), mb_list_encodings());
+
+			// Remove 'standard' encodings to prevent doubles
+			foreach(array_keys(Api\Translation::get_installed_charsets()) as $charset)
+			{
+				unset($ret['sel_options']['import_charsets'][strtoupper($charset)]);
+			}
+		}
+		return $ret;
+	}
+
+	/**
+	 * Save non-config stuff, after site-configuration is successful saved
+	 *
+	 * @param array $content
+	 */
+	public static function config_after_save(array $content)
+	{
+		// ACL
+		$GLOBALS['egw']->acl->delete_repository(self::_appname, 'definition', false);
+		$GLOBALS['egw']->acl->delete_repository(self::_appname, 'share_definition', false);
+
+		foreach($content['newsettings']['share_definition'] as $group)
+		{
+			$GLOBALS['egw']->acl->add_repository(self::_appname, 'share_definition', $group, Api\Acl::READ);
+		}
 	}
 }

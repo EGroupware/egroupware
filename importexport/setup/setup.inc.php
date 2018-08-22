@@ -32,6 +32,8 @@ $setup_info['importexport']['hooks']['admin'] =
 $setup_info['importexport']['hooks']['sidebox_menu'] = 'importexport_admin_prefs_sidebox_hooks::all_hooks';
 $setup_info['importexport']['hooks']['sidebox_all'] = 'importexport_admin_prefs_sidebox_hooks::other_apps';
 $setup_info['importexport']['hooks']['etemplate2_register_widgets'] = 'importexport_admin_prefs_sidebox_hooks::widgets';
+$setup_info['importexport']['hooks']['config'] = 'importexport_admin_prefs_sidebox_hooks::config';
+$setup_info['importexport']['hooks']['config_after_save'] = 'importexport_admin_prefs_sidebox_hooks::config_after_save';
 
 /* Dependencies for this app to work */
 $setup_info['importexport']['depends'][] = array(

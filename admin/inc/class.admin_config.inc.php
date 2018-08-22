@@ -184,10 +184,10 @@ class admin_config
 			{
 				return (int)($a != $b);	// necessary to kope with arrays
 			});
-			$removals = array_udiff_assoc($old, $c->config_data, function($a, $b)
+			$removals = array_diff(array_udiff_assoc($old, $c->config_data, function($a, $b)
 			{
-				return (int)($a != $b);
-			});
+				return (int)(!empty($a) && $a != $b);
+			}), array(null, ''));
 			$set = array_merge(array_fill_keys(array_keys($removals), null), $modifications);
 			$old = array_filter($old, function($key) use ($set)
 			{
@@ -202,6 +202,12 @@ class admin_config
 			else
 			{
 				$msg = lang('Nothing to save.');
+			}
+			if (!$errors)
+			{
+				// allow apps to hook into configuration dialog to eg. save some stuff outside configuration
+				$_content['location'] = 'config_after_save';
+				Api\Hooks::single($_content, $_appname);
 			}
 			if(!$errors && !$_content['apply'])
 			{
