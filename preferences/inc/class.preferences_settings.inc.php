@@ -326,7 +326,7 @@ class preferences_settings
 		{
 			if ($content['is_admin'])
 			{
-				self::admin_cmd_run($content, $content['old_values'], $values, $GLOBALS['egw']->preferences->get_account_id());
+				self::admin_cmd_run($content, $values, $GLOBALS['egw']->preferences->get_account_id());
 			}
 			else
 			{
