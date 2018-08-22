@@ -38,7 +38,7 @@ class calendar_export_ical extends calendar_export_csv {
 		{
 			$query = array(
 				'start' => $options['criteria']['start'],
-				'end'   => strtotime('+1 day',$options['criteria']['end'])-1,
+				'end'   => $options['criteria']['end'] ? strtotime('+1 day',$options['criteria']['end'])-1 : null,
 				'categories'	=> $options['categories'],
 				'daywise'       => false,
 				'users'         => $options['criteria']['owner'],
