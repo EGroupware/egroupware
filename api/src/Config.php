@@ -1,17 +1,16 @@
 <?php
 /**
- * eGW's application configuration in a centralized location
+ * EGroupware API - application configuration
  *
  * @link www.egroupware.org
  * @author Joseph Engo <jengo@phpgroupware.org> original class Copyright (C) 2000, 2001 Joseph Engo
  * @author Ralf Becker <ralfbecker@outdoor-training.de>
- * @version $Id$
  */
 
 namespace EGroupware\Api;
 
 /**
- * eGW's application configuration in a centralized location
+ * Application configuration
  *
  * New config values are stored JSON serialized now instead of PHP serialized before 14.1.
  */
@@ -47,7 +46,7 @@ class Config
 	 * @deprecated dont use direct
 	 * @var array
 	 */
-	public $config_data;
+	public $config_data = array();
 
 	/**
 	 * Constructor for the old non-static use
@@ -211,7 +210,7 @@ class Config
 		{
 			self::init_static();
 		}
-		return self::$configs[$app];
+		return (array)self::$configs[$app];
 	}
 
 	/**
