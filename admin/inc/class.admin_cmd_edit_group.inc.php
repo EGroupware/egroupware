@@ -99,7 +99,11 @@ class admin_cmd_edit_group extends admin_cmd
 			//_debug_array($data);
 			throw new Api\Db\Exception(lang("Error saving account!"),11);
 		}
-		$data['account_name'] = $data['account_lid'];	// also set deprecated name
+		// Make sure we have lid for hook even if not changed, also set deprecated name
+		$data['account_name'] = $data['account_lid'] = $data['account_lid'] ?
+				$data['account_lid'] :
+				admin_cmd::$accounts->id2name($data['account_id']);
+
 		if ($update) $data['old_name'] = $old['account_lid'];	// make old name available for hooks
 		$GLOBALS['hook_values'] =& $data;
 		Api\Hooks::process($GLOBALS['hook_values']+array(
