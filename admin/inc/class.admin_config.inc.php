@@ -127,7 +127,7 @@ class admin_config
 		}
 
 		$c = new Api\Config($config_appname);
-		$old = $c->read_repository();
+		$old = (array)$c->read_repository();
 		if ($_content['cancel'] || ($_content['save'] || $_content['apply']) && $GLOBALS['egw']->acl->check('site_config_acce',2,'admin'))
 		{
 			Api\Framework::redirect_link('/admin/index.php?ajax=true');
@@ -139,7 +139,7 @@ class admin_config
 			$_POST = array('newsettings' => &$_content['newsettings']);
 
 			// Remove actual files (cleanup) of deselected urls from login_background_file
-			$this->remove_anon_images(array_diff($c->config_data['login_background_file'], $_content['newsettings']['login_background_file']));
+			$this->remove_anon_images(array_diff((array)$c->config_data['login_background_file'], $_content['newsettings']['login_background_file']));
 
 			/* Load hook file with functions to validate each config (one/none/all) */
 			Api\Hooks::single(array(
@@ -196,7 +196,7 @@ class admin_config
 			if ($set)
 			{
 				$cmd = new admin_cmd_config($config_appname, $set, $old,
-					$_content['admin_cmd']+array('appname' => $_appname));
+					(array)$_content['admin_cmd']+array('appname' => $_appname));
 				$msg = $cmd->run();
 			}
 			else
