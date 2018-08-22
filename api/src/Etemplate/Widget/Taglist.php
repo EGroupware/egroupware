@@ -79,6 +79,13 @@ class Taglist extends Etemplate\Widget
 		{
 			$results[] = array('id' => $id, 'label' => $name);
 		}
+		
+		usort($results, function ($a, $b) use ($query) {
+		    similar_text($query, $a["label"], $percent_a);
+		    similar_text($query, $b["label"], $percent_b);
+		    return $percent_a === $percent_b ? 0 : ($percent_a > $percent_b ? -1 : 1);
+		});
+		
 		 // switch regular JSON response handling off
 		Api\Json\Request::isJSONRequest(false);
 
