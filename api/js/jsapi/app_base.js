@@ -1564,7 +1564,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 							}
 						},
 						title: egw.lang('Backup/Restore'),
-						buttons:[{"button_id": 'close',"text": 'Close', id: 'dialog[close]', image: 'cancelled', "default":true}],
+						buttons:[{"button_id": 'close',"text": egw.lang('Close'), id: 'dialog[close]', image: 'cancelled', "default":true}],
 						value: {
 							content: {
 								menu:_content

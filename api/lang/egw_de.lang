@@ -166,6 +166,7 @@ back to user login	common	de	Zurück zur Benutzer Anmeldung
 background color:	common	de	Hintergrund Farbe:
 backup key	common	de	Schlüssel sichern
 backup/restore	common	de	Backup/Wiederherstellung
+backup/restore ...	common	de	Backup/Wiederherstellung ...
 backupdir '%1' is not writeable by the webserver	common	de	Der Webserver hat keine Schreibrechte auf das Backupverzeichnis '%1' .
 bad login or password	common	de	Falscher Benutzername oder Passwort
 bahamas	common	de	BAHAMAS
