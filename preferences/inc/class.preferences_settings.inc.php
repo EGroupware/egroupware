@@ -195,18 +195,26 @@ class preferences_settings
 	 * @param array $values
 	 * @param string $account_id
 	 */
-	static function admin_cmd_run($content, $values, $account_id)
+	static function admin_cmd_run($content, $values, $account_id, $type, $appname)
 	{
-		$changes = array_udiff_assoc($values, $content['old_values'], function($a, $b){
-			return (int) $a !== $b;
+		$changes = array_udiff_assoc($values, $content['old_values'], function($a, $b)
+		{
+			// some prefs are still comma-delimitered
+			if (is_array($a) != is_array($b))
+			{
+				if (!is_array($a)) $a = explode(',', $a);
+				if (!is_array($b)) $b = explode(',', $b);
+			}
+			return (int)($a != $b);
 		});
 		$old = array_intersect_key($content['old_values'], $changes);
-		$cmd = new admin_cmd_edit_preferences(array(
-			'account' => $account_id,
-			'set'	=> $changes,
-			'old' =>$old
-		)+(array)$content['admin_cmd']);
-		$cmd->run();
+
+		if ($changes)
+		{
+			$cmd = new admin_cmd_edit_preferences($account_id, $type, $appname, $changes, $old, (array)$content['admin_cmd']);
+			return $cmd->run();
+		}
+		return lang('Nothing to save.');
 	}
 
 	/**
@@ -326,11 +334,11 @@ class preferences_settings
 		{
 			if ($content['is_admin'])
 			{
-				self::admin_cmd_run($content, $values, $GLOBALS['egw']->preferences->get_account_id());
+				self::admin_cmd_run($content, $values, $GLOBALS['egw']->preferences->get_account_id(), $type, $appname);
 			}
 			else
 			{
-				$GLOBALS['egw']->preferences->save_repository(True,$type);
+				$GLOBALS['egw']->preferences->save_repository(True, $type);
 			}
 
 			// certain common prefs (language, template, ...) require the session to be re-created
