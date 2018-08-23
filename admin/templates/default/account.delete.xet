@@ -4,7 +4,7 @@
 <overlay>
 	<template id="admin.account.delete" template="" lang="" group="0" version="18.1.001">
 		<box class="dialogHeader">
-			<select-account id="account_id" readonly="true" label="Delete account %s"/>
+			<select-account id="account_id" readonly="true" label="Delete"/>
 		</box>
 		<tabbox id="tabs" width="99%">
 			<tabs>

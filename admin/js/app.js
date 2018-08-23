@@ -175,7 +175,7 @@ app.classes.admin = AppJS.extend(
 			{
 				this.iframe.set_src(_url);
 			}
-			var m = _url.match(/menuaction=([^&]+)(?:.*appname=(\w+))?/)
+			var m = _url.match(/menuaction=([^&]+)(?:.*appname=(\w+))?/);
 			if(m.length >= 2)
 			{
 				var app = m[2] ? m[2] : m[1].split('.')[0];
@@ -416,9 +416,12 @@ app.classes.admin = AppJS.extend(
 				break;
 
 			case 'delete':
-				this.egw.json('admin_account::ajax_delete_group', [account_id]).sendRequest();
-				break;
-
+				if (!this.egw.app('policy'))
+				{
+					this.egw.json('admin_account::ajax_delete_group', [account_id]).sendRequest();
+					break;
+				}
+				// fall through to open popup for policy
 			default:
 				if (!_action.data.url)
 				{
@@ -485,8 +488,9 @@ app.classes.admin = AppJS.extend(
 	 *
 	 * @param content List of content for the dialog template
 	 * @param sel_options optional select options
-	 * @param {et2_widget} widgetContainer of etemplate that 'owns' the dialog
+	 * @param {etemplate2} etemplate of etemplate that 'owns' the dialog
 	 * @param {string} app Name of app
+	 * @param {function} callback
 	 */
 	_acl_dialog: function(content, sel_options, etemplate, app, callback)
 	{
@@ -1303,6 +1307,6 @@ app.classes.admin = AppJS.extend(
 			[widget.get_value(), taglist.get_value()],
 			function(_data){
 				taglist.set_value(_data);
-		}).sendRequest()
+		}).sendRequest();
 	}
 });
