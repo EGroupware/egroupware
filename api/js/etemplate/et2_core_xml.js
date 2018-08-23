@@ -19,8 +19,9 @@
  * @param {string} _url
  * @param {function} _callback function(_xml)
  * @param {object} _context for _callback
+ * @param {function} _fail_callback function(_xml)
  */
-function et2_loadXMLFromURL(_url, _callback, _context)
+function et2_loadXMLFromURL(_url, _callback, _context, _fail_callback)
 {
 	if (typeof _context == "undefined")
 	{
@@ -52,6 +53,10 @@ function et2_loadXMLFromURL(_url, _callback, _context)
 		},
 		error: function(_xmlhttp, _err) {
 			egw().debug('error', 'Loading eTemplate from '+_url+' failed! '+_xmlhttp.status+' '+_xmlhttp.statusText);
+			if(typeof _fail_callback !== 'undefined')
+			{
+				_fail_callback.call(_context, _err)
+			}
 		}
 	});
 }

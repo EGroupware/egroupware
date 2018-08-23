@@ -117,8 +117,9 @@ var et2_template = (function(){ "use strict"; return et2_DOMWidget.extend(
 					if (!this.options.url)
 					{
 						var splitted = template_name.split('.');
+						var app = splitted.shift();
 						// use template base url from initial template, to continue using webdav, if that was loaded via webdav
-						url = this.getRoot()._inst.template_base_url + splitted.shift() + "/templates/default/" +
+						url = this.getRoot()._inst.template_base_url + app + "/templates/default/" +
 							splitted.join('.')+ ".xet" + (cache_buster ? '?download='+cache_buster : '');
 					}
 					// if server did not give a cache-buster, fall back to current time
@@ -126,7 +127,7 @@ var et2_template = (function(){ "use strict"; return et2_DOMWidget.extend(
 
 					if(this.options.url || splitted.length)
 					{
-						et2_loadXMLFromURL(url, function(_xmldoc) {
+						var fetch_url_callback = function(_xmldoc) {
 							// Scan for templates and store them
 							for(var i = 0; i < _xmldoc.childNodes.length; i++) {
 								var template = _xmldoc.childNodes[i];
@@ -140,7 +141,14 @@ var et2_template = (function(){ "use strict"; return et2_DOMWidget.extend(
 							// Update flag
 							this.loading.resolve();
 
-						}, this);
+						}
+
+						et2_loadXMLFromURL(url, fetch_url_callback, this, function( error) {
+							url = egw.link('/'+ app + "/templates/default/" +
+								splitted.join('.')+ ".xet", {download:cache_buster? cache_buster :(new Date).valueOf()});
+
+							et2_loadXMLFromURL(url, fetch_url_callback, this);
+						});
 					}
 					return;
 				}
