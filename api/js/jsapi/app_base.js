@@ -1606,8 +1606,8 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	mailvelopeInstallationOffer: function ()
 	{
 		var buttons = [
-			{"text": 'Install', id: 'install', image: 'check', "default":true},
-			{"text": 'Close', id:'close', image: 'cancelled'}
+			{"text": egw.lang('Install'), id: 'install', image: 'check', "default":true},
+			{"text": egw.lang('Close'), id:'close', image: 'cancelled'}
 		];
 		var dialog = function(_content, _callback)
 		{
