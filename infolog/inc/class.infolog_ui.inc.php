@@ -2271,9 +2271,13 @@ class infolog_ui
 		{
 			$sel_options['action']['schedule'] = array('label' => 'Schedule', 'title' => 'Schedule appointment');
 		}
-		if ($GLOBALS['egw_info']['user']['apps']['stylite'])
+		if ($GLOBALS['egw_info']['user']['apps']['stylite'] && !$GLOBALS['egw_info']['server']['disable_pgp_encryption'])
 		{
 			$content['encryption_ts'] = filemtime(EGW_SERVER_ROOT.'/stylite/js/infolog-encryption.js');
+		}
+		elseif ($GLOBALS['egw_info']['server']['disable_pgp_encryption'])
+		{
+			$readonlys['encrypt'] = true;
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.
 			($content['status_only'] ? lang('Edit Status') : lang('Edit'));

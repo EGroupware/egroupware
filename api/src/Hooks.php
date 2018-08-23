@@ -284,7 +284,7 @@ class Hooks
 	 */
 	public static function pgp_encryption_menu($appname)
 	{
-		if (Header\UserAgent::mobile()) return;
+		if (Header\UserAgent::mobile() || $GLOBALS['egw_info']['server']['disable_pgp_encryption']) return;
 
 		// PGP Encryption (Mailvelope plugin) restore/backup menu
 		$file = Array(
