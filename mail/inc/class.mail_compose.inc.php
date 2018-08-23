@@ -271,6 +271,7 @@ class mail_compose
 			}
 			unset($actions['pgp']);
 		}
+		if ($GLOBALS['egw_info']['server']['disable_pgp_encryption']) unset($actions['pgp']);
 		// remove vfs actions if the user has no run access to filemanager
 		if (!$GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{

@@ -47,6 +47,16 @@
 						<option value="True">Yes</option>
 					</select>
 				</row>
+				<row>
+					<description value="Encryption" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Disable PGP encryption (Mailvelope)" lable="%s:"/>
+					<select id="newsettings[disable_pgp_encryption]">
+						<option value="">{No} - {Default}</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
 			</rows>
 		</grid>
 	</template>
