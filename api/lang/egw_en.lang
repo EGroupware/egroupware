@@ -92,7 +92,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	en	Address Book
 addressbooks to sync in addition to personal addressbook	groupdav	en	Addressbooks to sync in addition to personal addressbook
 admin	common	en	Admin
-admin settings for %1	common	en	admin settings for %1
+admin settings for %1	common	en	Admin settings for %1
 administration	common	en	Administration
 advanced search	common	en	Advanced search
 afghanistan	common	en	AFGHANISTAN
@@ -355,7 +355,7 @@ deck	common	en	Deck (internal)
 default	common	en	Default
 default category	common	en	Default category
 default height for the windows	common	en	Default height for the windows
-default visible actions	common	en	default visible actions
+default visible actions	common	en	Default visible actions
 default width for the windows	common	en	Default width for the windows
 del	common	en	Del
 delete	common	en	Delete
@@ -1067,7 +1067,7 @@ required directory "%1" has wrong mode %2 instead of %3!	admin	en	Required direc
 required directory "%1" not found!	admin	en	Required directory "%1" not found!
 reset	common	en	Reset
 reset all user's column preferences	common	en	Reset all user's column preferences
-reset all to default	common	en	reset all to default
+reset all to default	common	en	Reset all to default
 resource calendars	groupdav	en	Resource calendars
 resource type	common	en	Resource type
 resources	common	en	Resources

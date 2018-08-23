@@ -92,6 +92,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	de	Adressbuch
 addressbooks to sync in addition to personal addressbook	groupdav	de	Adressbücher die zusätzlich zum persönlichen synchronisiert werden sollen
 admin	common	de	Admin
+admin settings for %1	common	de	Administrative Einstellungen für %1
 administration	common	de	Administration
 advanced search	common	de	Erweiterte Suche
 afghanistan	common	de	AFGHANISTAN
@@ -354,6 +355,7 @@ deck	common	de	Deck (intern)
 default	common	de	Vorgabe
 default category	common	de	Standard-Kategorie
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
+default visible actions	common	de	standardmäßig sichtbare Aktionen
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
 del	common	de	entf
 delete	common	de	Löschen
@@ -983,6 +985,7 @@ paste	common	de	Einfügen
 path	common	de	Pfad
 path to user and group files has to be outside of the webservers document-root!!!	common	de	Der Pfad für Benutzer oder Gruppen Ordner muss ausserhalb des Webserver Root Verzeichnisses liegen (Webserver Root = /var/www/html; Pfad für Benutzer/Gruppen Ordner /var/www
 permission denied!	common	de	Zugriff verweigert!
+permission denied! this is an administration only feature.	common	de	Zugriff verweigert! Dies ist eine reine Verwaltungsfunktion für Administratoren.
 permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien / Benutzerverzeichnissen
 permisson denied!	common	de	Zugriff verweigert!
 personal	common	de	persönlich
@@ -1066,6 +1069,7 @@ required directory "%1" created.	admin	de	Benötigtes Verzeichnis "%1" angelegt.
 required directory "%1" has wrong mode %2 instead of %3!	admin	de	Benötigtes Verzeichnis "%1" hat falsche Zugriffsrechte %2 statt %3!
 required directory "%1" not found!	admin	de	Benötigtes Verzeichnis "%1" nicht gefunden!
 reset	common	de	Zurücksetzen
+reset all to default	common	de	Einstellung für alle Benutzer überschreiben
 reset all user's column preferences	common	de	Spaltenauswahl für alle Benutzer zurücksetzen
 resource calendars	groupdav	de	Kalender von Ressourcen
 resource type	common	de	Ressource Typ
@@ -1197,6 +1201,7 @@ set these columns as the default	common	de	Speichern Sie diese Spaltenauswahl al
 set user as only responsible user, but keeping groups	groupdav	de	setze Benutzer als einzigen verantwortlichen Benutzer, Gruppen werden nicht geändert
 set user as only responsible, removing all existing responsibles	groupdav	de	setze Benutzer als alleinigen Verantwortlichen, entferne alle bestehenden Verantwortlichen
 sets today as date	common	de	setzt heutiges Datum
+settings saved.	common	de	Einstellungen gespeichert.
 setup	common	de	Setup
 setup main menu	common	de	Setup Hauptmenü
 seychelles	common	de	SEYCHELLEN
@@ -1310,6 +1315,7 @@ there already is a system-user with this name. user's should not have the same n
 they will be sub-folders in users home (%1 attribute).	common	de	Diese werden Unterordner im Homeverzeichnis des Benutzers (%1 Attribute).
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
 this text gets displayed if the input-field is empty and has no focus (blur)	common	de	dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	de	Hiermit werden die Toolbar-Einstellungen für alle Benutzer zurückgesetzt und auf die konfigurierten Standardeinstellungen gesetzt.
 thursday	common	de	Donnerstag
 tiled	common	de	gekachelt
 time	common	de	Uhrzeit
