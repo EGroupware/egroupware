@@ -165,6 +165,7 @@ back to user login	common	en	Back to user login
 background color:	common	en	Background color:
 backup key	common	en	Backup Key
 backup/restore	common	en	Backup/Restore
+backup/restore ...	common	en	Backup/Restore ...
 backupdir '%1' is not writeable by the webserver	common	en	Backupdir '%1' is not writeable by the web server.
 bad login or password	common	en	Bad login or password.
 bahamas	common	en	BAHAMAS
