@@ -474,6 +474,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			this.set_dialog_type(this.options.dialog_type);
 		}
 		this.set_buttons(typeof this.options.buttons == "number" ? this._buttons[this.options.buttons] : this.options.buttons);
+		var self = this;
 
 		var options = {
 			// Pass the internal object, not the option
@@ -488,6 +489,12 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			open: function() {
 				// Focus default button so enter works
 				jQuery(this).parents('.ui-dialog-buttonpane button[default]').focus();
+				window.setTimeout(function() {
+				jQuery(this).dialog('option','position',{
+					my: "center",
+					at: "center",
+					of: window
+				});}.bind(this),0);
 			},
 			close: jQuery.proxy(function() {this.destroy();},this),
 			beforeClose: this.options.beforeClose,
