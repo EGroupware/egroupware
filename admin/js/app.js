@@ -505,6 +505,7 @@ app.classes.admin = AppJS.extend(
 		var className = app+'_acl';
 		var acl_rights = {};
 		var readonlys = {acl: {}};
+		var modifications = {};
 
 		// Select options are already here, just pull them and pass along
 		sel_options = et2.getArrayMgr('sel_options').data||{};
@@ -585,8 +586,7 @@ app.classes.admin = AppJS.extend(
 			this.egw.link_title('api-accounts', content.acl_location, function(title) {sel_options.acl_location[content.acl_location] = title;});
 		}
 
-		// Create the dialog
-		this.acl_dialog = et2_createWidget("dialog", {
+		var dialog_options = {
 			callback: jQuery.proxy(function(_button_id, _value) {
 				this.acl_dialog = null;
 				if(_button_id != et2_dialog.OK_BUTTON) return;
@@ -649,7 +649,7 @@ app.classes.admin = AppJS.extend(
 								.sendRequest();
 						}
 					}
-					this.egw.json(className+'::ajax_change_acl', [id, rights], callback ? callback : this._acl_callback,this,false,this)
+					this.egw.json(className+'::ajax_change_acl', [id, rights, _value], callback ? callback : this._acl_callback,this,false,this)
 						.sendRequest();
 				}
 			},this),
@@ -658,10 +658,29 @@ app.classes.admin = AppJS.extend(
 			value: {
 				content: content,
 				sel_options: sel_options,
+				modifications: modifications,
 				readonlys: readonlys
 			},
 			template: egw.webserverUrl+'/admin/templates/default/acl.edit.xet'
-		}, et2_dialog._create_parent(app));
+		};
+
+		// Handle policy documentation tab here
+		if(this.egw.user('apps').policy)
+		{
+			dialog_options['width'] = 550;
+			dialog_options['height'] = 350,
+			modifications.tabs = {
+				add_tabs:   true,
+				tabs: [{
+					label:    egw.lang('Documentation'),
+					template: 'policy.admin_cmd',
+					prepend:  false
+				}]
+			};
+		}
+
+		// Create the dialog
+		this.acl_dialog = et2_createWidget("dialog", dialog_options, et2_dialog._create_parent(app));
 	},
 
 	/**

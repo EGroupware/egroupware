@@ -336,9 +336,10 @@ class admin_acl
 	 *
 	 * @param string|array $ids "$app:$account:$location" string used as row-id in list
 	 * @param int $rights =null null to delete, or new rights
+	 * @param Array $values =array() Additional values from UI
 	 * @throws Api\Exception\NoPermission
 	 */
-	public static function ajax_change_acl($ids, $rights=null)
+	public static function ajax_change_acl($ids, $rights=null, $values = array())
 	{
 		try {
 			foreach((array)$ids as $id)
@@ -349,13 +350,23 @@ class admin_acl
 
 				$acl = $GLOBALS['egw']->acl;
 
-				if (!(int)$rights)	// this also handles taking away all rights as delete
+				$right_list = Api\Hooks::single(array('location' => 'acl_rights'), $app);
+				$current = (int)$acl->get_specific_rights_for_account($account_id,$location,$app);
+				foreach($right_list as $right => $name)
 				{
-					$acl->delete_repository($app, $location, $account_id);
-				}
-				else
-				{
-					$acl->add_repository($app, $location, $account_id, $rights);
+					$have_it = !!($current & $right);
+					$set_it = !!($rights & $right);
+					if($have_it == $set_it) continue;
+					$data = array(
+						'allow' => $set_it,
+						'account' => $account_id,
+						'app' => $app,
+						'location' => $location,
+						'rights' => (int)$right
+						// This is the documentation from policy app
+					)+(array)$values['admin_cmd'];
+					$cmd = new admin_cmd_acl($data);
+					$cmd->run();
 				}
 			}
 			if (!(int)$rights)
@@ -428,7 +439,7 @@ class admin_acl
 		// Set this so if loaded via preferences, js is still properly
 		// loaded into global app.admin
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
-		
+
 		$tpl->exec('admin.admin_acl.index', $content, $sel_options, array(), array(), 2);
 	}
 

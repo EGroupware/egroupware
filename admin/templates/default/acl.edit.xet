@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.acl.edit" template="" lang="" group="0" version="1.9.001">
+	<template id="admin.acl.edit.acl" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column/>
@@ -48,5 +48,15 @@
 				</row>
 			</rows>
 		</grid>
+	</template>
+	<template id="admin.acl.edit" template="" lang="" group="0" version="1.9.001">
+		<tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tab_height="250px">
+			<tabs>
+				<tab id="acl" label="Access" statustext="Access"/>
+			</tabs>
+			<tabpanels>
+				<template id="admin.acl.edit.acl"/>
+			</tabpanels>
+		</tabbox>
 	</template>
 </overlay>
