@@ -23,8 +23,9 @@ class admin_cmd_delete_account extends admin_cmd
 	 * @param string|int|array $account account name or id, or array with all parameters
 	 * @param string $new_user =null if specified, account to transfer the data to (users only)
 	 * @param string $is_user =true type of the account: true=user, false=group
+	 * @param array $extra =array() values for requested(_email), comment, ...
 	 */
-	function __construct($account,$new_user=null,$is_user=true)
+	function __construct($account, $new_user=null, $is_user=true, array $extra=array())
 	{
 		if (!is_array($account))
 		{
@@ -32,7 +33,7 @@ class admin_cmd_delete_account extends admin_cmd
 				'account' => $account,
 				'new_user' => $new_user,
 				'is_user' => $is_user,
-			);
+			)+$extra;
 		}
 		admin_cmd::__construct($account);
 	}
@@ -74,6 +75,9 @@ class admin_cmd_delete_account extends admin_cmd
 		{
 			Api\Hooks::single($GLOBALS['hook_values'],$app);
 		}
+		// store old content at time of deletion
+		$this->old = $GLOBALS['egw']->accounts->read($account_id);
+
 		$GLOBALS['egw']->accounts->delete($account_id);
 
 		if ($account_id < 0)

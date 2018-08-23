@@ -61,6 +61,9 @@ td.admin_userAgent span {
 .admin_account_delete > * {
 	padding: 8px;
 }
+form#admin-account-delete div.dialogHeader > label {
+	font-size: 120%;
+}
 /* Global Category classes*/
 .globalCat_confirmDelete {
   position: absolute;

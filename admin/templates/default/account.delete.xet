@@ -2,17 +2,27 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.account.delete" template="" lang="" group="0" version="1.9.003">
+	<template id="admin.account.delete" template="" lang="" group="0" version="18.1.001">
+		<box class="dialogHeader">
+			<select-account id="account_id" readonly="true" label="Delete account %s"/>
+		</box>
+		<tabbox id="tabs" width="99%">
+			<tabs>
+				<tab id="main" label="Delete"/>
+			</tabs>
+			<tabpanels>
+				<template template="admin.account.delete.delete" width="99%"/>
+			</tabpanels>
+		</tabbox>
+		<hbox class="dialogFooterToolbar">
+			<button id="delete" label="Delete"/>
+			<button id="cancel" label="Cancel" onclick="window.close()"/>
+		</hbox>
+	</template>
+	<template id="admin.account.delete.delete" template="" lang="" group="0" version="18.1.001">
 		<vbox class="admin_account_delete">
-			<box class="dialogHeader">
-				<select-account id="account_id" readonly="true" label="Delete account %s"/>
-			</box>
 			<description value="Who would you like to transfer ALL records owned by the deleted user to?" class="dialogHeader2"/>
 			<select-account id="new_owner" empty_label="Delete all records" class="dialogHeader3"/>
-			<hbox class="dialogFooterToolbar">
-				<button id="delete" label="Delete"/>
-				<button id="cancel" label="Cancel" onclick="window.close()"/>
-			</hbox>
 		</vbox>
 	</template>
 </overlay>
