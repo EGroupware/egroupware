@@ -245,6 +245,17 @@ class filemanager_hooks
 				$mimes[$mime] .= ', '.strtoupper(implode(', ', $value['extra_extensions']));
 			}
 		}
+		$merge_open_handler = array ('download' => lang('download'), 'collabora' => 'Collabora');
+		$document_doubleclick_action = array (
+			'collabora' => lang('open documents with Collabora, if permissions are given'),
+			'download' => lang('download documents'),
+			'collabeditor' => lang('open odt documents with CollabEditor')
+		);
+		if (!$GLOBALS['egw_info']['user']['apps']['collabora'])
+		{
+			unset($document_doubleclick_action['collabora'], $merge_open_handler['collabora']);
+		}
+		if (!$GLOBALS['egw_info']['user']['apps']['collabeditor']) unset($document_doubleclick_action['collabeditor']);
 		asort($mimes);
 		$settings += array (
 			'sections.2' => array(
@@ -281,20 +292,16 @@ class filemanager_hooks
 				'label'  => lang('Merge print open handler'),
 				'help'   => lang('Defines how to open a merge print document'),
 				'name'   => 'merge_open_handler',
-				'values' => array ('download' => lang('download'), 'collabora' => 'Collabora'),
-				'default' => 'collabora',
+				'values' => $merge_open_handler,
+				'default' => $GLOBALS['egw_info']['user']['apps']['collabora'] ? 'collabora' : 'download',
 			),
 			'document_doubleclick_action' => array (
 				'type'   => 'select',
 				'label'  => lang('Default action on double-click'),
 				'help'   => lang('Defines how to handle double click action on a document file. Images are always opened in the expose-view and emails with email application. All other mime-types are handled by the browser itself.'),
 				'name'   => 'document_doubleclick_action',
-				'values' => array (
-					'collabora' => lang('open documents with Collabora, if permissions are given'),
-					'download' => lang('download documents'),
-					'collabeditor' => lang('open odt documents with CollabEditor')
-				),
-				'default' => 'collabora',
+				'values' => $document_doubleclick_action,
+				'default' => $GLOBALS['egw_info']['user']['apps']['collabora'] ? 'collabora' : 'download',
 			)
 		);
 
