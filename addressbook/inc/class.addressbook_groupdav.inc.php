@@ -672,6 +672,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		}
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
+		$contact['photo_unchanged'] = false;	// photo needs saving
 		if (!($save_ok = $is_group ? $this->save_group($contact, $oldContact) : $this->bo->save($contact)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) save(".array2string($contact).") failed, Ok=$save_ok");
