@@ -55,7 +55,12 @@ then
 			# for non-interactive install let post_install generate passwords
 			if [ "$DEBIAN_FRONTEND" = "noninteractive" ]
 			then
-				/usr/share/egroupware/doc/rpm-build/post_install.php 2>&1 | /usr/bin/tee -a $install_log
+				if [ -n "$DOCKER_OWN_SETUP" ]
+				then
+					# own docker setup
+				else
+					/usr/share/egroupware/doc/rpm-build/post_install.php 2>&1 | /usr/bin/tee -a $install_log
+				fi
 			else
 				# Get configuration passwords
 				db_get "egroupware/header/user"
