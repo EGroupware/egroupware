@@ -295,8 +295,6 @@
 					<textbox id="newsettings[recaptcha_site]" size="60"/>
 				</row>
 				<row>
-					<description value="appearance" span="all" class="subHeader"/>
-				</row>
 					<description value="Encryption" span="all" class="subHeader"/>
 				</row>
 				<row>
