@@ -346,7 +346,8 @@ class addressbook_bo extends Api\Contacts
 			$file = Api\Contacts::FILES_SMIME_PUBKEY;
 		}
 		$matches = null;
-		if (($content = @file_get_contents(Api\Link::vfs_path('addressbook', $contact['id'], $file))) &&
+		if (file_exists($path = Api\Link::vfs_path('addressbook', $contact['id'], $file)) &&
+			($content = file_get_contents($path)) &&
 			preg_match($key_regexp, $content, $matches) ||
 			preg_match($key_regexp, $contact['pubkey'], $matches))
 		{
