@@ -64,7 +64,7 @@ class admin_cmd_acl extends admin_cmd
 
 
 		$old_rights = (int)$GLOBALS['egw']->acl->get_specific_rights_for_account($account_id, $location, $app);
-		$new_rights = $old_rights + (($this->allow ? 1 : -1) * $rights);
+		$new_rights = max(0,$old_rights + (($this->allow ? 1 : -1) * $rights));
 
 		$this->set = $new_rights;
 		$this->old = $old_rights;
