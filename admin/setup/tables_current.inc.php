@@ -32,11 +32,16 @@ $phpgw_baseline = array(
 			'cmd_requested_email' => array('type' => 'varchar','precision' => '128'),
 			'cmd_comment' => array('type' => 'varchar','precision' => '255'),
 			'cmd_data' => array('type' => 'ascii','precision' => '16384'),
-			'remote_id' => array('type' => 'int','precision' => '4')
+			'remote_id' => array('type' => 'int','precision' => '4'),
+			'cmd_app' => array('type' => 'ascii','precision' => '16','comment' => 'affected app'),
+			'cmd_account' => array('type' => 'int','meta' => 'account','precision' => '4','comment' => 'affected account'),
+			'cmd_rrule' => array('type' => 'varchar','precision' => '128','comment' => 'rrule for periodic execution'),
+			'cmd_parent' => array('type' => 'int','precision' => '4','comment' => 'cmd_id of periodic command'),
+			'cmd_run' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'periodic execution time')
 		),
 		'pk' => array('cmd_id'),
 		'fk' => array(),
-		'ix' => array('cmd_status','cmd_scheduled'),
+		'ix' => array('cmd_status','cmd_scheduled','cmd_app','cmd_account','cmd_parent'),
 		'uc' => array('cmd_uid')
 	),
 	'egw_admin_remote' => array(

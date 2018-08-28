@@ -11,6 +11,8 @@
  * @subpackage setup
  */
 
+use EGroupware\Api;
+
 function admin_upgrade1_2()
 {
 	return $GLOBALS['setup_info']['admin']['currentver'] = '1.4';
@@ -182,3 +184,62 @@ function admin_upgrade16_1()
 {
 	return $GLOBALS['setup_info']['admin']['currentver'] = '17.1';
 }
+
+function admin_upgrade17_1()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_admin_queue','cmd_app',array(
+		'type' => 'ascii',
+		'precision' => '16',
+		'comment' => 'affected app'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_admin_queue','cmd_account',array(
+		'type' => 'int',
+		'meta' => 'account',
+		'precision' => '4',
+		'comment' => 'affected account'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_admin_queue','cmd_rrule',array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'comment' => 'rrule for periodic execution'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_admin_queue','cmd_parent',array(
+		'type' => 'int',
+		'precision' => '4',
+		'comment' => 'cmd_id of periodic command'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_admin_queue','cmd_run',array(
+		'type' => 'int',
+		'meta' => 'timestamp',
+		'precision' => '8',
+		'comment' => 'periodic execution time'
+	));
+
+	// fill cmd_account/app from
+	foreach($GLOBALS['egw_setup']->db->select('egw_admin_queue', 'cmd_id,cmd_data',
+		"cmd_data LIKE '%\"account\":%' OR cmd_data LIKE '%\"app\":%'",
+		__LINE__, __FILE__, false, '', 'admin') as $row)
+	{
+		$data = json_php_unserialize($row['cmd_data']);
+		if (!empty($data['account']))
+		{
+			$row['cmd_account'] = $data['account'];
+			unset($data['account']);
+		}
+		if (!empty($data['app']))
+		{
+			$row['cmd_app'] = $data['app'];
+			unset($data['app']);
+		}
+		if (isset($row['cmd_account']) || isset($row['cmd_app']))
+		{
+			$cmd_id = $row['cmd_id'];
+			unset($row['cmd_id']);
+			$row['cmd_data'] = json_encode($data);
+			$GLOBALS['egw_setup']->db->update('egw_admin_queue', $row, array('cmd_id' => $cmd_id), __LINE__, __FILE__, 'admin');
+		}
+	}
+
+	return $GLOBALS['setup_info']['admin']['currentver'] = '18.1';
+}
+

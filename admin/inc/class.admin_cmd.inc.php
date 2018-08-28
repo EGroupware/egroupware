@@ -43,6 +43,8 @@ use EGroupware\Api\Acl;
  * @property-read string $uid uuid of command (necessary if command is send to a remote system to execute)
  * @property int|NULL $remote_id id of remote system, if command is not meant to run on local system
  *  foreign key into egw_admin_remote (table of remote systems administrated by this one)
+ * @property-read int $account account_id of user affected by this cmd or NULL
+ * @property-read string $app app-name affected by this cmd or NULL
  */
 abstract class admin_cmd
 {
@@ -92,6 +94,8 @@ abstract class admin_cmd
 	protected $uid;
 	private $type = __CLASS__;
 	public $remote_id;
+	protected $account;
+	protected $app;
 
 	/**
 	 * Display name of command, default ucfirst(str_replace(['_cmd_', '_'], ' ', __CLASS__))
