@@ -261,12 +261,34 @@ class AclCommandTest extends CommandBase {
 		$acl->read_repository();
 		echo "Rights:\n";
 		var_dump($acl->get_all_rights($data['location'], static::APP));
+		if($GLOBALS['egw_info']['server']['acl_default'] != 'deny')
+		{
+			echo "DEBUG: Default allow\n";
+			// Default allow - nothing means they're allowed
+			$this->assertTrue($acl->check($data['location'], Acl::ADD, static::APP));
+		}
+		else
+		{
+			// Default is deny - nothing means not allowed
+			echo "DEBUG: Default deny\n";
+			$this->assertFalse($acl->check($data['location'], Acl::ADD, static::APP));
+		}
 
 		// Check that user gets it too
 		$acl = new Acl($this->account_id);
 		$acl->read_repository();
-
-		$this->assertFalse($acl->check($data['location'], Acl::ADD, static::APP));
+		if($GLOBALS['egw_info']['server']['acl_default'] != 'deny')
+		{
+			echo "DEBUG: Default allow\n";
+			// Default allow - nothing means they're allowed
+			$this->assertTrue($acl->check($data['location'], Acl::ADD, static::APP));
+		}
+		else
+		{
+			// Default is deny - nothing means not allowed
+			echo "DEBUG: Default deny\n";
+			$this->assertFalse($acl->check($data['location'], Acl::ADD, static::APP));
+		}
 		$this->assertEquals(0, $acl->get_rights($data['location'], $data['app']));
 	}
 
