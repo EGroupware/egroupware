@@ -251,6 +251,8 @@ class AclCommandTest extends CommandBase {
 
 		// Check group
 		$acl = new Acl($this->group_id);
+		$acl->read_repository();
+		var_dump($acl->get_rights($data['location']));
 		$this->assertFalse($acl->check($data['location'], Acl::ADD, static::APP));
 		$this->assertEquals(0, $acl->get_specific_rights($data['location'], $data['app']));
 
