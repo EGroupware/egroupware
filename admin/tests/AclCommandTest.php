@@ -233,16 +233,12 @@ class AclCommandTest extends CommandBase {
 	 */
 	public function testRemoveForGroupToEmpty()
 	{
-		echo "\n== DEBUG ==\n";
-		echo "Server ACL default: " . $GLOBALS['egw_info']['server']['acl_default']."\n";
 		// Set up
 		$acl = new Acl($this->group_id);
 		$acl->add_repository(static::APP, $GLOBALS['egw_info']['user']['account_id'], $this->group_id, Acl::ADD);
 		$acl->read_repository();
 		$this->assertTrue($acl->check($GLOBALS['egw_info']['user']['account_id'], Acl::ADD, static::APP));
 
-		echo "\nBefore:\n";
-		var_dump($acl->get_all_rights($GLOBALS['egw_info']['user']['account_id']));
 		$data = array(
 			'allow' => false,
 			'account' => $this->group_id,
@@ -254,20 +250,24 @@ class AclCommandTest extends CommandBase {
 		$command = new admin_cmd_acl($data);
 		$command->run();
 
-		echo "Data:\n";
-		var_dump($data);
 		// Check group
 		$acl = new Acl($this->group_id);
 		$acl->read_repository();
-		echo "Rights:\n";
-		var_dump($acl->get_all_rights($data['location'], static::APP));
 		$this->assertFalse($acl->check($data['location'], Acl::ADD, static::APP));
 		$this->assertEquals(0, $acl->get_specific_rights($data['location'], $data['app']));
 
 		// Check that user gets it too
 		$acl = new Acl($this->account_id);
 		$acl->read_repository();
-		$this->assertFalse($acl->check($data['location'], Acl::ADD, static::APP));
+		if($GLOBALS['egw_info']['server']['acl_default'] != 'deny')
+		{
+			$this->assertTrue($acl->check($data['location'], Acl::ADD, static::APP));
+		}
+		else
+		{
+			// Default is deny
+			$this->assertFalse($acl->check($data['location'], Acl::ADD, static::APP));
+		}
 		$this->assertEquals(0, $acl->get_rights($data['location'], $data['app']));
 	}
 
