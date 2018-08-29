@@ -116,13 +116,6 @@ class Credentials
 	);
 
 	/**
-	 * Reference to global db object
-	 *
-	 * @var Api\Db
-	 */
-	static protected $db;
-
-	/**
 	 * Mcrypt instance initialised with system specific key
 	 *
 	 * @var ressource
@@ -166,7 +159,7 @@ class Credentials
 		if (!isset(self::$cache[$acc_id]) ||
 			!($rows = array_intersect_key(self::$cache[$acc_id], array_flip((array)$account_id))))
 		{
-			$rows = self::$db->select(self::TABLE, '*', array(
+			$rows = self::get_db()->select(self::TABLE, '*', array(
 				'acc_id' => $acc_id,
 				'account_id' => $account_id,
 				'(cred_type & '.(int)$type.') > 0',	// postgreSQL require > 0, or gives error as it expects boolean
@@ -293,7 +286,7 @@ class Credentials
 			//error_log(__METHOD__."($acc_id, '$username', \$password, $type, $account_id, ".array2string($cred_id).") not storing session credentials!");
 			return;	// do NOT store credentials from session of current user!
 		}
-		
+
 		// Add arbitary char to the ending to make sure the Smime binary content
 		// with \0 at the end not getting trimmed of while trying to decrypt.
 		if ($type == self::SMIME) $password .= 'x';
@@ -301,7 +294,7 @@ class Credentials
 		// no need to write empty usernames, but delete existing row
 		if ((string)$username === '')
 		{
-			if ($cred_id) self::$db->delete(self::TABLE, array('cred_id' => $cred_id), __LINE__, __FILE__, self::APP);
+			if ($cred_id) self::get_db()->delete(self::TABLE, array('cred_id' => $cred_id), __LINE__, __FILE__, self::APP);
 			return;	// nothing to save
 		}
 		$pw_enc = self::CLEARTEXT;
@@ -323,16 +316,16 @@ class Credentials
 		//error_log(__METHOD__."($acc_id, '$username', '$password', $type, $account_id, $cred_id) storing ".array2string($data).' '.function_backtrace());
 		if ($cred_id > 0)
 		{
-			self::$db->update(self::TABLE, $data, array('cred_id' => $cred_id), __LINE__, __FILE__, self::APP);
+			self::get_db()->update(self::TABLE, $data, array('cred_id' => $cred_id), __LINE__, __FILE__, self::APP);
 		}
 		else
 		{
-			self::$db->insert(self::TABLE, $data, array(
+			self::get_db()->insert(self::TABLE, $data, array(
 				'acc_id' => $acc_id,
 				'account_id' => $account_id,
 				'cred_type' => $type,
 			), __LINE__, __FILE__, self::APP);
-			$cred_id = self::$db->get_last_insert_id(self::TABLE, 'cred_id');
+			$cred_id = self::get_db()->get_last_insert_id(self::TABLE, 'cred_id');
 		}
 		// invalidate cache
 		unset(self::$cache[$acc_id][$account_id]);
@@ -367,14 +360,14 @@ class Credentials
 		{
 			$where[] = '(cred_type & '.(int)$type.') > 0';	// postgreSQL require > 0, or gives error as it expects boolean
 		}
-		self::$db->delete(self::TABLE, $where, __LINE__, __FILE__, self::APP);
+		self::get_db()->delete(self::TABLE, $where, __LINE__, __FILE__, self::APP);
 
 		// invalidate cache: we allways unset everything about an account to simplify cache handling
 		foreach($acc_id > 0 ? (array)$acc_id : array_keys(self::$cache) as $acc_id)
 		{
 			unset(self::$cache[$acc_id]);
 		}
-		$ret = self::$db->affected_rows();
+		$ret = self::get_db()->affected_rows();
 		//error_log(__METHOD__."($acc_id, ".array2string($account_id).", $type) affected $ret rows");
 		return $ret;
 	}
@@ -441,7 +434,7 @@ class Credentials
 			else
 			{
 				$pw_enc = self::SYSTEM_AES;
-				$key = self::$db->Password;
+				$key = self::get_db()->Password;
 			}
 		}
 		// using a pbkdf2 password derivation with a (stored) salt
@@ -593,7 +586,7 @@ class Credentials
 		}
 		else
 		{
-			$key = self::$db->Password;
+			$key = self::get_db()->Password;
 		}
 		return $key;
 	}
@@ -715,9 +708,9 @@ class Credentials
 			throw new Api\Exception\AssertionFailed('Password in session !== password given in $data[new_password]!');
 		}
 
-		foreach(self::$db->select(self::TABLE, self::TABLE.'.*', array(
+		foreach(self::get_db()->select(self::TABLE, self::TABLE.'.*', array(
 			'account_id' => $data['account_id']
-		),__LINE__, __FILE__, false, '', self::APP, 0, self::USER_EDITABLE_JOIN.self::$db->quote(true, 'bool')) as $row)
+		),__LINE__, __FILE__, false, '', self::APP, 0, self::USER_EDITABLE_JOIN.self::get_db()->quote(true, 'bool')) as $row)
 		{
 			$password = self::decrypt($row, self::isUser($row['cred_pw_enc']) ? $data['old_passwd'] : null);
 
@@ -767,7 +760,7 @@ class Credentials
 			}
 			else
 			{
-				$key = self::$db->Password;
+				$key = self::get_db()->Password;
 			}
 			check_load_extension('mcrypt', true);
 
@@ -813,11 +806,12 @@ class Credentials
 	}
 
 	/**
-	 * Init our static properties
+	 * Get the current Db object, from either setup or egw
+	 * 
+	 * @return Db
 	 */
-	static public function init_static()
+	static public function get_db()
 	{
-		self::$db = isset($GLOBALS['egw_setup']) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
+		return isset($GLOBALS['egw_setup']) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
 	}
 }
-Credentials::init_static();
