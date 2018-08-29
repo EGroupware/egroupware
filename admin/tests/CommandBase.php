@@ -21,5 +21,13 @@ require_once realpath(__DIR__.'/../../api/tests/LoggedInTest.php');	// Applicati
  */
 abstract class CommandBase extends EGroupware\Api\LoggedInTest
 {
-	// Nothing here yet
+
+	/**
+	 * Get how many entries in the admin command history log so we can see if
+	 * a command made a log entry.
+	 */
+	protected function get_log_count()
+	{
+		return count(admin_cmd::search(array()));
+	}
 }

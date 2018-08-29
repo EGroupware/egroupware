@@ -94,6 +94,9 @@ class AclCommandTest extends CommandBase {
 	public function testAddForUserWhenEmpty()
 	{
 		// Set up
+		$log_count = $this->get_log_count();
+
+		// Run
 		$data = array(
 			'allow' => true,
 			'account' => $this->account_id,
@@ -109,6 +112,7 @@ class AclCommandTest extends CommandBase {
 		$acl = new Acl($this->account_id);
 		$this->assertTrue($acl->check($data['location'], Acl::ADD, static::APP));
 		$this->assertEquals($data['rights'], $acl->get_specific_rights($data['location'], $data['app']));
+		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 	}
 
 	/**
@@ -120,6 +124,7 @@ class AclCommandTest extends CommandBase {
 		$acl = new Acl($this->account_id);
 		$acl->add_repository(static::APP, $GLOBALS['egw_info']['user']['account_id'], $this->account_id, Acl::ADD);
 		$acl->read_repository();
+		$log_count = $this->get_log_count();
 
 		$data = array(
 			'allow' => false,
@@ -136,6 +141,7 @@ class AclCommandTest extends CommandBase {
 		$acl->read_repository();
 		$this->assertFalse($acl->check($data['location'], Acl::ADD, static::APP));
 		$this->assertEquals(0, $acl->get_specific_rights($data['location'], $data['app']));
+		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 	}
 
 	/**
@@ -147,6 +153,7 @@ class AclCommandTest extends CommandBase {
 		$acl = new Acl($this->account_id);
 		$acl->add_repository(static::APP, $GLOBALS['egw_info']['user']['account_id'], $this->account_id, Acl::READ|Acl::ADD|Acl::EDIT);
 		$acl->read_repository();
+		$log_count = $this->get_log_count();
 
 		// Run - remove delete
 		$data = array(
@@ -167,6 +174,7 @@ class AclCommandTest extends CommandBase {
 		$this->assertTrue($acl->check($data['location'], Acl::EDIT, static::APP));
 		$this->assertTrue($acl->check($data['location'], Acl::DELETE, static::APP));
 		$this->assertEquals(Acl::READ|Acl::ADD|Acl::EDIT|Acl::DELETE, $acl->get_specific_rights($data['location'], $data['app']));
+		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 	}
 
 	/**
@@ -178,6 +186,7 @@ class AclCommandTest extends CommandBase {
 		$acl = new Acl($this->account_id);
 		$acl->add_repository(static::APP, $GLOBALS['egw_info']['user']['account_id'], $this->account_id, Acl::READ|Acl::ADD|Acl::EDIT|Acl::DELETE);
 		$acl->read_repository();
+		$log_count = $this->get_log_count();
 
 		// Run - remove delete
 		$data = array(
@@ -198,6 +207,7 @@ class AclCommandTest extends CommandBase {
 		$this->assertTrue($acl->check($data['location'], Acl::EDIT, static::APP));
 		$this->assertFalse($acl->check($data['location'], Acl::DELETE, static::APP));
 		$this->assertEquals(Acl::READ|Acl::ADD|Acl::EDIT, $acl->get_specific_rights($data['location'], $data['app']));
+		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 	}
 
 	/**
@@ -205,6 +215,7 @@ class AclCommandTest extends CommandBase {
 	 */
 	public function testAddForGroupWhenEmpty()
 	{
+		$log_count = $this->get_log_count();
 		// Set up
 		$data = array(
 			'allow' => true,
@@ -226,6 +237,7 @@ class AclCommandTest extends CommandBase {
 		$acl = new Acl($this->account_id);
 		$this->assertTrue($acl->check($data['location'], Acl::ADD, static::APP));
 		$this->assertEquals($data['rights'], $acl->get_rights($data['location'], $data['app']));
+		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 	}
 
 	/**
@@ -238,6 +250,7 @@ class AclCommandTest extends CommandBase {
 		$acl->add_repository(static::APP, $GLOBALS['egw_info']['user']['account_id'], $this->group_id, Acl::ADD);
 		$acl->read_repository();
 		$this->assertTrue($acl->check($GLOBALS['egw_info']['user']['account_id'], Acl::ADD, static::APP));
+		$log_count = $this->get_log_count();
 
 		$data = array(
 			'allow' => false,
@@ -261,6 +274,7 @@ class AclCommandTest extends CommandBase {
 		$this->assertFalse($acl->check($data['location'], Acl::ADD, static::APP));
 
 		$this->assertEquals(0, $acl->get_rights($data['location'], $data['app']));
+		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 	}
 
 
@@ -271,6 +285,8 @@ class AclCommandTest extends CommandBase {
 	public function testAddForEntry()
 	{
 		// Set up
+		$log_count = $this->get_log_count();
+
 		$data = array(
 			'allow' => true,
 			'account' => $this->account_id,
@@ -286,6 +302,7 @@ class AclCommandTest extends CommandBase {
 		$acl = new Acl($this->account_id);
 		$this->assertTrue($acl->check($data['location'], Acl::EDIT, static::APP));
 		$this->assertEquals($data['rights'], $acl->get_specific_rights($data['location'], $data['app']));
+		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 	}
 
 	/**
@@ -298,6 +315,7 @@ class AclCommandTest extends CommandBase {
 		$acl = new Acl($this->account_id);
 		$acl->add_repository(static::APP, 'A' . $GLOBALS['egw_info']['user']['person_id'], $this->account_id, Acl::ADD);
 		$acl->read_repository();
+		$log_count = $this->get_log_count();
 
 		$data = array(
 			'allow' => false,
@@ -314,5 +332,6 @@ class AclCommandTest extends CommandBase {
 		$acl->read_repository();
 		$this->assertFalse($acl->check($data['location'], Acl::ADD, static::APP));
 		$this->assertEquals(0, $acl->get_specific_rights($data['location'], $data['app']));
+		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 	}
 }
