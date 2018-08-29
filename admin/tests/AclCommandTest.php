@@ -233,11 +233,16 @@ class AclCommandTest extends CommandBase {
 	 */
 	public function testRemoveForGroupToEmpty()
 	{
+		echo "\n== DEBUG ==\n";
 		// Set up
 		$acl = new Acl($this->group_id);
 		$acl->add_repository(static::APP, $GLOBALS['egw_info']['user']['account_id'], $this->group_id, Acl::ADD);
 		$acl->read_repository();
 
+		echo "\nBefore:\n";
+		var_dump($acl->get_all_rights($GLOBALS['egw_info']['user']['account_id']));
+		echo "Data:\n";
+		var_dump($data);
 		$data = array(
 			'allow' => false,
 			'account' => $this->group_id,
@@ -252,7 +257,8 @@ class AclCommandTest extends CommandBase {
 		// Check group
 		$acl = new Acl($this->group_id);
 		$acl->read_repository();
-		var_dump($acl->get_rights($data['location']));
+		echo "Rights:\n";
+		var_dump($acl->get_all_rights($data['location']));
 		$this->assertFalse($acl->check($data['location'], Acl::ADD, static::APP));
 		$this->assertEquals(0, $acl->get_specific_rights($data['location'], $data['app']));
 
