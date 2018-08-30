@@ -1,3 +1,35 @@
+egroupware-epl (17.1.20180831) hardy; urgency=low
+
+  * CardDAV: photo was not saved/changed in PUT requests
+  * Mail: take opened compose dialogs into account when trying to forward attachment, share files into mail or vcard attachment from addressbook
+  * Mail: fix S/MIME encrypted only composed mail fails
+  * Mail: fix DASH DASH SPACE (-- ) signature removes lines which have only DASH DASH
+  * Mail: set default refresh rate to 5 minutes for new installations
+  * Calendar: Fix CSV export search results did not work (gave error)
+  * Timesheet: Fix links to application custom fields are not created on first save
+  * Login: fix in login page "remember me" options gets messy in IE or Edge
+  * Resources: add (usable / quantity) for bookable resources in calendar participants results
+  * Addressbook: Allow multiselection for customfield added to link title
+  * CalDAV/Calendar: fix not working snozzing of alarms in Thunderbird
+  * CalDAV/Calendar/Resources: do not allow to change resource quantity via CalDAV
+  * CalDAV/Calendar: fix accepting invitations with an not attending organizer adds organizer as attendee
+  * CalDAV/Calendar: dealing with Thunderbird setting partipant status on organizer
+  * Timesheet: Admin only status also blocks editing & deleting for non-admins
+  * Timesheet: only admins can select admin only statuses
+  * Framework: fix broken favicon
+  * Etemplate: timestamper widget now supports timezone attribute to force a certain timezone
+  * Filemanager: make files and their paths clickable
+  * Notifications: fix some calendar notifications event can not be opened, error: "egw.open() app is not in registery!"
+  * Api: Fix minified themes cause multiple theme false entries
+  * Api: Fix row category colors go missing after a change
+  * Tracker: fix missing fields in escalation time column
+  * Registration: fix Site configuration layout
+  * EPL: new streamwrapper for links with just versioning eg. for backups without virtual structure
+  * Collabora: fix saving fails if the opened file name starts with umlaut.
+  * Univention/Collabora: fix not working Collabora in 17.1.20180720
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 30 Aug 2018 16:56:14 +0200
+
 egroupware-epl (17.1.20180720) hardy; urgency=low
 
   * Addressbook: inform the user about number of contacts adding to mail compose dialog via Email action
