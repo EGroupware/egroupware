@@ -30,7 +30,7 @@ class Taglist extends Etemplate\Widget
 	 * this should be used regarding the domainOptional attribute defined in
 	 * taglist-email.
 	 */
-	const EMAIL_PREG_NO_DOMAIN = "/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x01-\x20()<>@,;:\042\[\]]+(?<![.\s])(@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,})?>?$/iu";
+	const EMAIL_PREG_NO_DOMAIN = "/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x01-\x20()\xe2\x80\x8b<>@,;:\042\[\]]+(?<![.\s])(@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,})?>?$/iu";
 
 	/**
 	 * Constructor
