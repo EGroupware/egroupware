@@ -1,7 +1,10 @@
 <?php
 
 /**
- * Tests for ACL command
+ * Tests for edit user command
+ * 
+ * It would be good to check to see if the hooks get called, but that's impossible
+ * with static hook calls.
  *
  * @link http://www.egroupware.org
  * @author Nathan Gray

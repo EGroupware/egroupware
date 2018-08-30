@@ -1,8 +1,11 @@
 <?php
 
 /**
- * Tests for ACL command
+ * Tests for edit group command
  *
+ * It would be good to check to see if the hooks get called, but that's impossible
+ * with static hook calls.
+ * 
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @copyright (c) 2018  Nathan Gray
@@ -29,6 +32,12 @@ class GroupCommandTest extends CommandBase {
 	{
 		// Can't set this until now - value is not available
 		$this->group['account_members'] = array($GLOBALS['egw_info']['user']['account_id']);
+
+		if(($account_id = $GLOBALS['egw']->accounts->name2id($this->group['account_lid'])))
+		{
+			// Delete if there in case something went wrong
+			$GLOBALS['egw']->accounts->delete($account_id);
+		}
 	}
 	public function tearDown()
 	{
@@ -138,6 +147,8 @@ class GroupCommandTest extends CommandBase {
 
 	/**
 	 * Test adding & removing a new member
+	 *
+	 * @depends UserCommandTest::testAddUser
 	 */
 	public function testChangeMembers()
 	{
@@ -191,7 +202,7 @@ class GroupCommandTest extends CommandBase {
 		$command = new admin_cmd_edit_group($this->group_id, $account);
 		$command->comment = 'Needed for unit test ' . $this->getName();
 		$command->run();
-		
+
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
 		$this->assertEquals(count($pre_search), count($post_search), 'Should have same number of accounts as before');
