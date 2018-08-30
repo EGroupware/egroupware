@@ -7504,20 +7504,20 @@ class Mail
 				'certDetails'	=> $this->smime->parseCert($cert->cert),
 				'msg'			=> $cert->msg,
 				'certHtml'		=> $this->smime->certToHTML($cert->cert),
-				'email'			=> $this->smime->getEmailFromKey($cert->cert),
+				'email'			=> $cert->email,
 				'signed'		=> true
 			));
 			// check for email address if both signer email address and
 			// email address of sender are the same.
-			if (is_array($from) && strcasecmp($from[0], $metadata['email']) != 0)
+			if (is_array($from) && strcasecmp($from[0], $cert->email) != 0)
 			{
 				$metadata['unknownemail'] = true;
 				$metadata['msg'] .= ' '.lang('Email address of signer is different from the email address of sender!');
 			}
 
 			$AB_bo   = new \addressbook_bo();
-			$certkey = $AB_bo->get_smime_keys($metadata['email']);
-			if (!is_array($certkey) || strcasecmp($certkey[$metadata['email']], $cert->cert) != 0) $metadata['addtocontact'] = true;
+			$certkey = $AB_bo->get_smime_keys($cert->email);
+			if (!is_array($certkey) || strcasecmp($certkey[$cert->email], $cert->cert) != 0) $metadata['addtocontact'] = true;
 		}
 		else // only encrypted message
 		{
