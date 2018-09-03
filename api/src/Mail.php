@@ -7314,6 +7314,18 @@ class Mail
 				$adr->mailbox = str_replace("'","",$adr->mailbox);
 				$adr->host = str_replace("'","",$adr->host);
 			}
+
+
+			// try to strip extra quoting or slashes from personal part
+			$adr->personal = stripslashes($adr->personal);
+			if ($adr->personal && (stripos($adr->personal, '"') == 0 &&
+					substr($adr->personal, -1) == '"') ||
+					(substr($adr->personal, -2) == '""'))
+			{
+				$adr->personal = str_replace('"', "", $adr->personal);
+			}
+
+
 			// no mailbox or host part as 'Xr\xc3\xa4hlyz, User <mailboxpart1.mailboxpart2@yourhost.com>' is parsed as 2 addresses separated by ','
 			//#'Xr\xc3\xa4hlyz, User <mailboxpart1.mailboxpart2@yourhost.com>'
 			//#Horde_Mail_Rfc822_List Object([_data:protected] => Array(
