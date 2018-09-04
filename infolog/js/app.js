@@ -279,6 +279,8 @@ app.classes.infolog = AppJS.extend(
 			// column change
 			var in_progress = nm.update_in_progress;
 			nm.update_in_progress = true;
+			// Set the actual filter value here
+			nm.activeFilters.filter2 = filter2.get_value();
 			nm.dataview.updateColumns();
 			nm.update_in_progress = in_progress;
 		}
