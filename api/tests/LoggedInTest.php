@@ -95,6 +95,10 @@ abstract class LoggedInTest extends TestCase
 			{
 				$GLOBALS['egw']->applications = null;
 			}
+			if($GLOBALS['egw']->db)
+			{
+				$GLOBALS['egw']->db->disconnect();
+			}
 			unset($GLOBALS['egw']);
 		}
 
