@@ -180,7 +180,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	 */
 	private function set_options(array $_plugin_options) {
 		// Check conditions
-		foreach ( $_plugin_options['conditions'] as $key => $condition ) {
+		foreach ( (Array)$_plugin_options['conditions'] as $key => $condition ) {
 			if(!$condition['string'])
 			{
 				unset($_plugin_options['conditions'][$key]);
