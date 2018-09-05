@@ -73,7 +73,10 @@ class PreferencesCommandTest extends CommandBase
 		$this->assertEquals($set[$this->preference_name], $post[static::APP][$this->preference_name]);
 		// At type level
 	// DEBUG
-	echo "\n\n". __METHOD__ . "($type) after:\n"; print_r($post_pref->$type);
+	echo "\n\n". __METHOD__ . "($type) after:\n";
+	echo implode(', ',array_keys($post_pref->$type))."\n";
+	print_r($post_pref->$type[static::APP]);
+	echo "Does it have the key? " . (array_key_exists($this->preference_name, $post_pref->$type[static::APP]) ? 'Yes' : 'No') . "\n";
 		$this->assertArrayHasKey($this->preference_name, $post_pref->$type[static::APP],
 				"$type preferences does not have {$this->preference_name}");
 		$this->assertEquals($set[$this->preference_name], $post_pref->$type[static::APP][$this->preference_name]);
