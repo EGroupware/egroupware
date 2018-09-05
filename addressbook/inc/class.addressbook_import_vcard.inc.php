@@ -163,6 +163,12 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 
 		$record['owner'] = $owner;
 
+		// If photo is set, we want to update it
+		if($record['jpegphoto'])
+		{
+			$record['photo_unchanged'] = false;
+		}
+
 		// Check that owner (addressbook) is allowed
 		if(!array_key_exists($record['owner'], $this->bocontacts->get_addressbooks()))
 		{
