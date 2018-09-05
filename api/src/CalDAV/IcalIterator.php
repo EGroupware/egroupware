@@ -161,7 +161,7 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 		}
 		else
 		{
-			$line = fgets($this->ical_file);
+			$line = ltrim(fgets($this->ical_file), "\xef\xbb\xbf");
 		}
 		// check if end of container reached
 		if ($this->container && $line && substr($line,0,4+strlen($this->base)) === 'END:'.$this->base)
@@ -229,6 +229,7 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 
 		while (($line = $this->read_line()) && substr($line,0,6) !== 'BEGIN:')
 		{
+			error_log("'".$line."'");
 			// ignore it
 		}
 		if ($line === false)	// end-of-file or end-of-container
