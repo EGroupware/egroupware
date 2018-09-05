@@ -272,10 +272,10 @@ class PreferencesCommandTest extends CommandBase
 	 */
 	public function typeDataProvider() {
 		return array(
-			['default'],
-			['user'],
-			//['group'], Not really supported yet
-			['forced']
+			Array('default'),
+			Array('user'),
+			//Array('group'), Not really supported yet
+			Array('forced')
 		);
 	}
 
@@ -286,12 +286,12 @@ class PreferencesCommandTest extends CommandBase
 	public function typeChangeDataProvider() {
 		$levels = array(
 			// Change and this should/should not change
-			['default', 'user',   false],
-			['default', 'forced', false],
-			['user',    'default', true],
-			['user',    'forced', false],
-			['forced',  'user',    true],
-			['forced',  'default', true],
+			Array('default', 'user',   false),
+			Array('default', 'forced', false),
+			Array('user',    'default', true),
+			Array('user',    'forced', false),
+			Array('forced',  'user',    true),
+			Array('forced',  'default', true),
 		);
 
 
