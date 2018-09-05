@@ -72,7 +72,8 @@ class PreferencesCommandTest extends CommandBase
 		$this->assertArrayHasKey($this->preference_name, $post[static::APP]);
 		$this->assertEquals($set[$this->preference_name], $post[static::APP][$this->preference_name]);
 		// At type level
-		$this->assertArrayHasKey($this->preference_name, (Array)$post_pref->$type[static::APP]);
+		$this->assertArrayHasKey($this->preference_name, $post_pref->$type[static::APP],
+				"$type preferences does not have {$this->preference_name}");
 		$this->assertEquals($set[$this->preference_name], $post_pref->$type[static::APP][$this->preference_name]);
 
 		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
@@ -119,7 +120,8 @@ class PreferencesCommandTest extends CommandBase
 		$this->assertEquals($set[$this->preference_name], $post[static::APP][$this->preference_name]);
 
 		// At type level
-		$this->assertArrayHasKey($this->preference_name, (Array)$post_pref->$type[static::APP]);
+		$this->assertArrayHasKey($this->preference_name, $post_pref->$type[static::APP],
+				"$type preferences does not have {$this->preference_name}");
 		$this->assertEquals($set[$this->preference_name], $post_pref->$type[static::APP][$this->preference_name]);
 
 		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
@@ -168,7 +170,8 @@ class PreferencesCommandTest extends CommandBase
 		);
 
 		// At type level
-		$this->assertArrayHasKey($this->preference_name, (Array)$post_pref->$type[static::APP]);
+		$this->assertArrayHasKey($this->preference_name, $post_pref->$type[static::APP],
+				"$type preferences does not have {$this->preference_name}");
 		$this->assertEquals($set[$this->preference_name], $post_pref->$type[static::APP][$this->preference_name]);
 
 		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
@@ -213,7 +216,8 @@ class PreferencesCommandTest extends CommandBase
 		$post = $post_pref->read_repository(false);
 
 		// At type level - should always be what we set
-		$this->assertArrayHasKey($this->preference_name, (Array)$post_pref->$type[static::APP]);
+		$this->assertArrayHasKey($this->preference_name, $post_pref->$type[static::APP],
+				"$type preferences does not have {$this->preference_name}");
 		$this->assertEquals($set[$this->preference_name], $post_pref->$type[static::APP][$this->preference_name]);
 
 		// At user level - depends on type priority

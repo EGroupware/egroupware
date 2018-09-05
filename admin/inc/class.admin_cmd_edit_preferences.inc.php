@@ -74,7 +74,7 @@ class admin_cmd_edit_preferences extends admin_cmd
 
 		if ($check_only) return;
 
-		$prefs = new Api\Preferences(in_array($this->pref, 'default', 'forced') ? $this->pref : $this->account);
+		$prefs = new Api\Preferences(in_array($this->pref, array('default', 'forced')) ? $this->pref : $this->account);
 		$prefs->read_repository();
 		foreach($this->set as $name => $value)
 		{
