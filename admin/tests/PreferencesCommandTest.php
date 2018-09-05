@@ -72,6 +72,8 @@ class PreferencesCommandTest extends CommandBase
 		$this->assertArrayHasKey($this->preference_name, $post[static::APP]);
 		$this->assertEquals($set[$this->preference_name], $post[static::APP][$this->preference_name]);
 		// At type level
+	// DEBUG
+	echo "\n\n". __METHOD__ . "($type) after:\n"; print_r($post_pref->$type);
 		$this->assertArrayHasKey($this->preference_name, $post_pref->$type[static::APP],
 				"$type preferences does not have {$this->preference_name}");
 		$this->assertEquals($set[$this->preference_name], $post_pref->$type[static::APP][$this->preference_name]);
