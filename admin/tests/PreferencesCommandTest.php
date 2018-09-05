@@ -128,9 +128,11 @@ class PreferencesCommandTest extends CommandBase
 		$this->assertEquals($set[$this->preference_name], $post[static::APP][$this->preference_name]);
 
 		// At type level
-		$this->assertArrayHasKey($this->preference_name, $post_pref->$type[static::APP],
+		// Get type as an array since direct sub-access doesn't work in 5.6
+		$post_app = $post_pref->$type;
+		$this->assertArrayHasKey($this->preference_name, $post_app[static::APP],
 				"$type preferences does not have {$this->preference_name}");
-		$this->assertEquals($set[$this->preference_name], $post_pref->$type[static::APP][$this->preference_name]);
+		$this->assertEquals($set[$this->preference_name], $post_app[static::APP][$this->preference_name]);
 
 		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 	}
@@ -178,9 +180,11 @@ class PreferencesCommandTest extends CommandBase
 		);
 
 		// At type level
-		$this->assertArrayHasKey($this->preference_name, $post_pref->$type[static::APP],
+		// Get type as an array since direct sub-access doesn't work in 5.6
+		$post_app = $post_pref->$type;
+		$this->assertArrayHasKey($this->preference_name, $post_app[static::APP],
 				"$type preferences does not have {$this->preference_name}");
-		$this->assertEquals($set[$this->preference_name], $post_pref->$type[static::APP][$this->preference_name]);
+		$this->assertEquals($set[$this->preference_name], $post_app[static::APP][$this->preference_name]);
 
 		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 	}
@@ -224,9 +228,11 @@ class PreferencesCommandTest extends CommandBase
 		$post = $post_pref->read_repository(false);
 
 		// At type level - should always be what we set
-		$this->assertArrayHasKey($this->preference_name, $post_pref->$type[static::APP],
+		// Get type as an array since direct sub-access doesn't work in 5.6
+		$post_app = $post_pref->$type;
+		$this->assertArrayHasKey($this->preference_name, $post_app[static::APP],
 				"$type preferences does not have {$this->preference_name}");
-		$this->assertEquals($set[$this->preference_name], $post_pref->$type[static::APP][$this->preference_name]);
+		$this->assertEquals($set[$this->preference_name], $post_app[static::APP][$this->preference_name]);
 
 		// At user level - depends on type priority
 		$this->assertArrayHasKey($this->preference_name, $post[static::APP]);
@@ -272,7 +278,9 @@ class PreferencesCommandTest extends CommandBase
 		$this->assertEquals($override ? $set[$this->preference_name] : $old[$this->preference_name], $post[static::APP][$this->preference_name]);
 
 		// At type level
-		$this->assertNull($post_pref->$check[static::APP][$this->preference_name]);
+		// Get type as an array since direct sub-access doesn't work in 5.6
+		$post_app = $post_pref->$check;
+		$this->assertNull($post_app[static::APP][$this->preference_name]);
 
 		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 	}
