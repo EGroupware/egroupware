@@ -148,7 +148,7 @@ class admin_account
 				$old['account_groups'] = $content['old_account']['account_groups'];
 			}
 		}
-		if ($content['deny_edit'] || empty($old))
+		if ($content['deny_edit'] || $old === array())
 		{
 			return '';	// no need to save account data, if nothing changed
 		}
