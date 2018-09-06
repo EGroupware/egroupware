@@ -78,7 +78,7 @@
 	 * @type Number
 	 */
 	var TIMEOUT = 0;
-	
+
 	/**
 	 * Constructor inits polling and installs handlers, polling frequence is passed via data-poll-interval of script tag
 	 */
@@ -120,7 +120,7 @@
 					_resolve();
 					self.check_browser_notify()
 				}).sendRequest(true,'POST', function(_err){
-					egw.message(_err);
+					if (_err && _err.statusText) egw.message(_err.statusText);
 					_reject();
 			});
 		});
