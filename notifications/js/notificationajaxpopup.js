@@ -62,15 +62,49 @@
 	const EGW_PR_NOTIFY_LOW = 3;
 
 	/**
+	 * Interval set by user
+	 * @type Number
+	 */
+	var POLL_INTERVAL = 60;
+
+	/**
+	 * Current interval set by system (gets increased by factor of 2 in case of request failure)
+	 * @type Number
+	 */
+	var CURRENT_INTERVAL = 60;
+
+	/**
+	 * Current timeout ID
+	 * @type Number
+	 */
+	var TIMEOUT = 0;
+	
+	/**
 	 * Constructor inits polling and installs handlers, polling frequence is passed via data-poll-interval of script tag
 	 */
 	function notifications() {
 		var notification_script = document.getElementById('notifications_script_id');
-		var popup_poll_interval = notification_script && notification_script.getAttribute('data-poll-interval');
-		this.setTimeout(popup_poll_interval || 60);
+		CURRENT_INTERVAL = POLL_INTERVAL = notification_script && notification_script.getAttribute('data-poll-interval');
+		TIMEOUT = this.setTimeout(POLL_INTERVAL || 60);
 		jQuery('#notificationbell').click(jQuery.proxy(this.display, this));
 		// query notifictions now
-		this.get_notifications();
+		this.run_notifications();
+
+	};
+
+	notifications.prototype.run_notifications = function ()
+	{
+		var self = this;
+		this.get_notifications().then(function(){
+			window.clearTimeout(TIMEOUT);
+			self.check_browser_notify();
+			TIMEOUT = self.setTimeout(POLL_INTERVAL);
+		},
+		function(){
+			window.clearTimeout(TIMEOUT);
+			CURRENT_INTERVAL *= 2;
+			self.setTimeout(CURRENT_INTERVAL);
+		});
 	};
 
 	/**
@@ -78,10 +112,18 @@
 	 */
 	notifications.prototype.get_notifications = function()
 	{
-		egw.json(
-			"notifications.notifications_ajax.get_notifications",
-			this.check_browser_notify()
-		).sendRequest(true);
+		var self = this;
+		return new Promise (function(_resolve, _reject){
+			egw.json(
+				"notifications.notifications_ajax.get_notifications",[],
+				function(){
+					_resolve();
+					self.check_browser_notify()
+				}).sendRequest(true,'POST', function(_err){
+					egw.message(_err);
+					_reject();
+			});
+		});
 	};
 
 	/**
@@ -90,9 +132,8 @@
 	 */
 	notifications.prototype.setTimeout = function(_i) {
 		var self = this;
-		window.setTimeout(function(){
-			self.get_notifications();
-			self.setTimeout(_i);
+		return window.setTimeout(function(){
+			self.run_notifications();
 		}, _i*1000);
 	};
 
