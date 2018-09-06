@@ -261,7 +261,7 @@ class admin_account
 		}
 		if ($content['delete'])
 		{
-			$cmd = new admin_cmd_delete_account($content['account_id'], $content['new_owner'], $content['account_id'] > 0, $content['admin_cmd']);
+			$cmd = new admin_cmd_delete_account($content['account_id'], $content['new_owner'], $content['account_id'] > 0, (array)$content['admin_cmd']);
 			$msg = $cmd->run();
 			if ($content['contact_id'])
 			{
