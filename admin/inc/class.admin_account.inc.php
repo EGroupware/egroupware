@@ -199,7 +199,8 @@ class admin_account
 			}
 		}
 		// Make sure primary group is in account groups
-		if ($account['account_primary_group'] && !in_array($account['account_primary_group'], (array)$account['account_groups']))
+		if (isset($account['account_groups']) && $account['account_primary_group'] &&
+			!in_array($account['account_primary_group'], (array)$account['account_groups']))
 		{
 			$account['account_groups'][] = $account['account_primary_group'];
 		}
