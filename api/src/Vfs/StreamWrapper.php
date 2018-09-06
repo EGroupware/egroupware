@@ -652,10 +652,17 @@ class StreamWrapper implements StreamWrapperIface
 			!($this->url_stat($parent_url, STREAM_URL_STAT_QUIET)) &&
 			Vfs::parse_url($parent_url, PHP_URL_PATH) !== '/')
 		{
-			if (!mkdir($parent_url, $mode, $options)) return false;
+			if (!self::mkdir(Vfs::dirname($path), $mode, $options)) return false;
 		}
 		// unset it now, as it was handled above
-		$options &= ~STREAM_MKDIR_RECURSIVE;
+		if (strpos($url, 'smb://') === 0)
+		{
+			$options = 0;	// smbclient php extension treats every bit as recursive
+		}
+		else
+		{
+			$options &= ~STREAM_MKDIR_RECURSIVE;
+		}
 
 		$ret = mkdir($url,$mode,$options);
 
