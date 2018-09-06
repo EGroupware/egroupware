@@ -71,6 +71,12 @@ app.classes.mail = AppJS.extend(
 	W_INTERVALS:[],
 
 	/**
+	 *
+	 * @array of setted timeouts
+	 */
+	W_TIMEOUTS: [],
+
+	/**
 	 * Initialize javascript for this application
 	 *
 	 * @memberOf mail
@@ -1062,12 +1068,19 @@ app.classes.mail = AppJS.extend(
 				this.mail_selectedMails.push(_id);
 			}
 			var self = this;
-			// Request email body from server
-			IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
-			jQuery(IframeHandle.getDOMNode()).on('load', function(e){
-				self.resolveExternalImages (this.contentWindow.document);
-			});
 
+			// Try to avoid sending so many request when user tries to scroll on list
+			// via key up/down quite fast.
+			for (var t in this.W_TIMEOUTS) {window.clearTimeout(this.W_TIMEOUTS[t]);}
+			this.W_TIMEOUTS.push(window.setTimeout(function(){
+
+				console.log(_id);
+				// Request email body from server
+				IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
+				jQuery(IframeHandle.getDOMNode()).on('load', function(e){
+					self.resolveExternalImages (this.contentWindow.document);
+				});
+			}, 300));
 		}
 		if (dataElem.data['smime']) this.smimeAttachmentsCheckerInterval();
 		var messages = {};
