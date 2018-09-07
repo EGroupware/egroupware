@@ -374,6 +374,15 @@ class infolog_hooks
 			'admin'  => False,
 			'default'=> '0',	// No
 		);
+		// Notify for types (default)
+		$settings['no_notification_types'] = array(
+			'type'   => 'multiselect',
+			'label'  => 'Do not notify',
+			'name'   => 'no_notification_types',
+			'help'   => "Automatically check 'Do not notify' for these types",
+			'values' => $info->enums['type'],
+			'default'=> array(),	// None
+		);
 
 		$settings[] = array(
 			'type'  => 'section',
