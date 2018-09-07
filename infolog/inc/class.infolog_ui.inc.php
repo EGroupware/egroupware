@@ -2206,6 +2206,15 @@ class infolog_ui
 		$content['hours_per_workday'] = $this->hours_per_workday;
 		if ($this->prefs['show_id']) $content['info_number'] = $info_id;
 
+		// Check no notification preference, update if type changed
+		if($content['info_type'] != $content['old_type'])
+		{
+			$content['no_notifications'] = in_array($content['info_type'], !is_array($this->prefs['no_notification_types']) ?
+					explode(',',$this->prefs['no_notification_types']):
+					$this->prefs['no_notification_types']
+			);
+		}
+
 		$content['info_anz_subs'] = (int)$content['info_anz_subs'];	// gives javascript error if empty!
 
 		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
@@ -2294,6 +2303,7 @@ class infolog_ui
 			'referer'       => $referer,
 			'no_popup'      => $no_popup,
 			'old_pm_id'     => $old_pm_id,
+			'old_type'      => $content['info_type'],
 		));
 		$this->tmpl->exec('infolog.infolog_ui.edit',$content,$sel_options,$readonlys,$preserve,$no_popup ? 0 : 2);
 	}
