@@ -839,6 +839,7 @@ more	common	de	Weitere
 more than 1 match for '%1'	common	de	Mehr als 1 trifft für '%1' zu
 more then one active file %1 found, inactivating %2 older revisions!	admin	de	Mehr als eine Datei %1 verfügbar, %2 ältere Revisionen werden deaktiviert
 morocco	common	de	MAROKKO
+move	common	de	Verschieben
 moved %1 children from directory fs_id=%2 to %3	admin	de	verschoben %1 Kinderelemente vom Verzeichnis fs_id=%2 nach %3
 moved unconnected %1 %2 to %3.	admin	de	nicht verbundene Einträge verschoben  %1 %2 nach %3.
 mozambique	common	de	MOZAMBIQUE
