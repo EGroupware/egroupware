@@ -630,7 +630,7 @@ class Sharing
 	{
 		if (!isset(self::$so))
 		{
-			self::$so = new Api\Storage\Base('phpgwapi', self::TABLE, null, '', true);
+			self::$so = new Storage\Base('phpgwapi', self::TABLE, null, '', true);
 			self::$so->set_times('string');
 		}
 		return self::$so;
