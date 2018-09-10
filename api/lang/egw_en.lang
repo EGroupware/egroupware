@@ -835,6 +835,7 @@ more	common	en	More
 more than 1 match for '%1'	common	en	More than 1 match for '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	en	More then one active file %1 found, inactivating %2 older revisions!
 morocco	common	en	MOROCCO
+move	common	en	move
 moved %1 children from directory fs_id=%2 to %3	admin	en	Moved %1 children from directory fs_id=%2 to %3
 moved unconnected %1 %2 to %3.	admin	en	Moved unconnected %1 %2 to %3.
 mozambique	common	en	MOZAMBIQUE
