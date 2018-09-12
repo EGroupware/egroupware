@@ -16,12 +16,12 @@
 	<xsl:variable name="custom-styles">
 		<style:style style:name="Custom" style:family="text" />
 	</xsl:variable>
-	<xsl:template match="node()|@*">
+	<xsl:template match="node()|@*" name="identity">
 		<xsl:copy>
 			<xsl:apply-templates select="node()|@*"/>
 		</xsl:copy>
 	</xsl:template>
-	
+
 	<!-- Fonts -->
 	<xsl:template match="office:font-face-decls">
 		<xsl:copy>
@@ -29,7 +29,7 @@
 			<xsl:call-template name="extract-fonts"/>
 		</xsl:copy>
 	</xsl:template>
-	
+
 	<!-- Add in some known styles -->
 	<xsl:template match="office:automatic-styles">
 		<xsl:copy>
@@ -261,7 +261,27 @@
 		</text:p></text:list-item>
 	</xsl:template>
 
-	<xsl:template match="table[ancestor::office:text]">
+	<!-- This section to deal with tables, which need to be outside the text:p tag -->
+	<xsl:template match="text:p[table]">
+		<xsl:apply-templates select="node()[1]"/>
+	</xsl:template>
+	<xsl:template match="text:p/table">
+		<xsl:call-template name="tableator"/>
+		<xsl:apply-templates select="following-sibling::node()[1]"/>
+	</xsl:template>
+	<xsl:template match="text:p[table]/node()[not(self::table)]">
+		<text:p>
+			<xsl:value-of select="node()"/>
+			<xsl:apply-templates select="following-sibling::node()[1][not(self::table)]" mode="copy"/>
+		</text:p>
+		<xsl:apply-templates select="following-sibling::node()[self::table][1]"/>
+	</xsl:template>
+	<xsl:template match="text:p[table]/node()[not(self::table)]" mode="copy">
+		<xsl:call-template name="identity"/>
+		<xsl:apply-templates select="following-sibling::node()[1][not(self::table)]" mode="copy"/>
+	</xsl:template>
+	<!-- Actually swap the HTML table tag for openoffice table tags -->
+	<xsl:template match="table" name="tableator">
 		<table:table table:name="Table{generate-id(.)}" table:style-name="TableX">
 			<table:table-column table:style-name="TableX.A" table:number-columns-repeated="{count(tr[position() = 1]/td | tr[position() = 1]/th)}"/>
 			<xsl:apply-templates/>
@@ -287,9 +307,14 @@
 		</table:table-cell>
 	</xsl:template>
 
-	<xsl:template match="td">
+	<xsl:template match="td[not(table:table)]">
 		<table:table-cell table:style-name="TableX.A1">
 			<text:p><xsl:apply-templates/></text:p>
+		</table:table-cell>
+	</xsl:template>
+	<xsl:template match="td[table]">
+		<table:table-cell table:style-name="TableX.A1">
+			<xsl:apply-templates/>
 		</table:table-cell>
 	</xsl:template>
 
@@ -312,7 +337,7 @@
 	<xsl:template match="span">
 		<text:span text:style-name="TSpan{generate-id(.)}"><xsl:apply-templates/></text:span>
 	</xsl:template>
-	
+
 	<!-- Convert rgb(r,g,b) to hex RGB values -->
 	<xsl:template name="rbga-to-hex">
 		<xsl:param name="rgba-val"/>
@@ -332,7 +357,7 @@
 			<xsl:otherwise>
 				<xsl:call-template name="to-hex">
 					<xsl:with-param name="val" select="$rgba-val"/>
-				</xsl:call-template>				
+				</xsl:call-template>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
