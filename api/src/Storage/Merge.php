@@ -602,14 +602,6 @@ abstract class Merge
 			case 'application/vnd.oasis.opendocument.text-template':
 			case 'application/vnd.oasis.opendocument.spreadsheet-template':
 			case 'application/vnd.oasis.opendocument.presentation-template':
-				// It seems easier to split the parent tags here
-				$replace_tags = array(
-					'/<(ol|ul|table)( [^>]*)?>/' => '</text:p><$1$2>',
-					'/<\/(ol|ul|table)>/' => '</$1><text:p>',
-					//'/<(li)(.*?)>(.*?)<\/\1>/' => '<$1 $2>$3</$1>',
-				);
-				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
-
 				$doc = new DOMDocument();
 				$xslt = new XSLTProcessor();
 				$doc->load(EGW_INCLUDE_ROOT.'/api/templates/default/Merge/openoffice.xslt');
@@ -669,7 +661,7 @@ abstract class Merge
 				throw new Api\Exception('Unable to parse merged document for styles.  Check warnings in log for details.');
 			}
 			$content = $xslt->transformToXml($element);
-
+//echo $content;die();
 			// Word 2003 needs two declarations, add extra declaration back in
 			if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document' && strpos($content, '<?xml') !== 0) {
 				$content = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.$content;
