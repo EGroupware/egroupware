@@ -8,7 +8,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage ldap
- * @version $Id$
  */
 
 namespace EGroupware\Api\Ldap;
@@ -188,17 +187,17 @@ class ServerInfo
 					switch($info[0]['structuralobjectclass'][0])
 					{
 						case 'OpenLDAProotDSE':
-							$ldapServerType = OPENLDAP_LDAPSERVER;
+							$ldapServerType = self::OPENLDAP;
 							break;
 						default:
-							$ldapServerType = UNKNOWN_LDAPSERVER;
+							$ldapServerType = self::UNKNOWN;
 							break;
 					}
 					$ldapServerInfo->setServerType($ldapServerType);
 				}
 				if ($info[0]['vendorname'] && stripos($info[0]['vendorname'][0], 'samba') !== false)
 				{
-					$ldapServerInfo->setServerType(SAMBA4_LDAPSERVER);
+					$ldapServerInfo->setServerType(self::SAMBA4);
 				}
 
 				// check for subschema entry dn
