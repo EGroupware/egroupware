@@ -151,7 +151,7 @@ class Taglist extends Etemplate\Widget
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}
-			if(array_key_exists('multiple', $this->attrs) && $this->attrs['multiple'] == false)
+			if(array_key_exists('multiple', $this->attrs) && (!$this->attrs['multiple'] || $this->attrs['multiple'] === 'false'))
 			{
 				$value = array_shift($value);
 			}
