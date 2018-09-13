@@ -465,6 +465,7 @@ save as ticket	mail	de	Als Ticket speichern
 save as tracker on send	mail	de	Als Ticket speichern
 save attachment	mail	de	Anhang speichern
 save attachments	mail	de	Anhänge speichern
+save email	mail	de	E-Mail speichern
 save message to disk	mail	de	Nachricht speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
 save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf im EGroupware Dateimanager ab.
