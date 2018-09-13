@@ -1000,6 +1000,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				}
 			}
 		}
+		// schedule tag with deleted event should not create a new entry, therefore returning 404 Not Found
+		elseif (!isset($oldEvent) && isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']))
+		{
+			return '404 Not Found';
+		}
 		else
 		{
 			// new entry
