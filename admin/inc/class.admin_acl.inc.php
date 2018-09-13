@@ -372,7 +372,14 @@ class admin_acl
 						'rights' => (int)$right
 						// This is the documentation from policy app
 					)+(array)$values['admin_cmd'];
-					$cmd = new admin_cmd_acl($data);
+					if($location == 'run')
+					{
+						$cmd = new admin_cmd_account_app($set_it,$account_id, $app);
+					}
+					else
+					{
+						$cmd = new admin_cmd_acl($data);
+					}
 					$cmd->run();
 				}
 			}
