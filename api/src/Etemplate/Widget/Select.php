@@ -7,8 +7,7 @@
  * @subpackage etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-16 by RalfBecker@outdoor-training.de
- * @version $Id$
+ * @copyright 2002-18 by RalfBecker@outdoor-training.de
  */
 
 namespace EGroupware\Api\Etemplate\Widget;
@@ -83,6 +82,14 @@ class Select extends Etemplate\Widget
 	 */
 	public function __construct($xml = '')
 	{
+		$this->bool_attr_default += array(
+			//'multiple' => false,	// handeled in set_attrs, as we additional allow "dynamic"
+			'selected_first' => true,
+			'search' => false,
+			'tags' => false,
+			'allow_single_deselect' => true,
+		);
+
 		if($xml) {
 			parent::__construct($xml);
 		}
@@ -101,6 +108,12 @@ class Select extends Etemplate\Widget
 	public function set_attrs($xml, $cloned=true)
 	{
 		parent::set_attrs($xml, $cloned);
+
+		if ($this->attrs['multiple'] !== 'dynamic')
+		{
+			$this->attrs['multiple'] = !isset($this->attrs['multiple']) ? false :
+				!(!$this->attrs['multiple'] || $this->attrs['multiple'] === 'false');
+		}
 
 		// set attrs[multiple] from attrs[options], unset options only if it just contains number or rows
 		if ($this->attrs['options'] > 1)

@@ -7,8 +7,7 @@
  * @subpackage etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-16 by RalfBecker@outdoor-training.de
- * @version $Id$
+ * @copyright 2002-18 by RalfBecker@outdoor-training.de
  */
 
 namespace EGroupware\Api\Etemplate;
@@ -42,6 +41,20 @@ class Widget
 	 * @var array
 	 */
 	public $attrs = array();
+
+	/**
+	 * Names and defaults of boolean attributes to correctly cast them from XML in set_attrs
+	 *
+	 * @var array
+	 */
+	public $bool_attr_default = array(
+		'disabled' => false,
+		'statustext_html' => false,
+		'no_lang' => false,
+		// strictly speeding only for input widgets, but server-side input-widgets have a validation method, but no shared parent
+		'readonly' => false,
+		'needed' => false,
+	);
 
 	/**
 	 * Children
@@ -211,6 +224,20 @@ class Widget
 		if(is_array(self::$request->modifications[$this->id]))
 		{
 			$this->attrs = array_merge($this->attrs,self::$request->modifications[$this->id]);
+		}
+
+		// cast boolean attributes to boolean and set their defaults
+		foreach($this->bool_attr_default as $name => $default_value)
+		{
+			if (!isset($this->attrs[$name]))
+			{
+				$this->attrs[$name] = $default_value;
+			}
+			elseif (!is_bool($this->attrs[$name]))
+			{
+				// use PHP default evaluation, with the exception of "false" --> false
+				$this->attrs[$name] = !(!$this->attrs[$name] || $this->attrs[$name] === 'false');
+			}
 		}
 
 		return $template;

@@ -7,8 +7,7 @@
  * @subpackage etemplate
  * @link http://www.egroupware.org
  * @author Nathan Gray
- * @copyright 2012 Nathan Gray
- * @version $Id$
+ * @copyright 2012-18 Nathan Gray
  */
 
 namespace EGroupware\Api\Etemplate\Widget;
@@ -110,6 +109,24 @@ class Tree extends Etemplate\Widget
 	 * key to instruct the component not to render checkbox for the related item, optional
 	 */
 	const NOCHECKBOX = 'nocheckbox';
+
+	/**
+	 * Constructor
+	 *
+	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
+	 * @throws Api\Exception\WrongParameter
+	 */
+	public function __construct($xml = '')
+	{
+		$this->bool_attr_default += array(
+			'multiple' => false,
+			'highlighting' => true,
+		);
+
+		if($xml) {
+			parent::__construct($xml);
+		}
+	}
 
 	/**
 	 * Parse and set extra attributes from xml in template object

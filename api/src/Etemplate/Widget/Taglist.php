@@ -7,8 +7,7 @@
  * @subpackage etemplate
  * @link http://www.egroupware.org
  * @author Nathan Gray
- * @copyright 2013 Nathan Gray
- * @version $Id$
+ * @copyright 2013-18 Nathan Gray
  */
 
 namespace EGroupware\Api\Etemplate\Widget;
@@ -42,7 +41,17 @@ class Taglist extends Etemplate\Widget
 	 */
 	public function __construct($xml = '')
 	{
-		$this->attrs['allowFreeEntries'] = true;
+		$this->bool_attr_default = array_merge($this->bool_attr_default, array(
+			'allowFreeEntries' => true,
+			'useCommaKey' => true,
+			'editModeEnabled' => true,
+			// inherited on js-side from Selextbox
+			'multiple' => true,
+			'selected_first' => true,
+			'search' => false,
+			'tags' => false,
+			'allow_single_deselect' => true,
+		));
 
 		if($xml) {
 			parent::__construct($xml);

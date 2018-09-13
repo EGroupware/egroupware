@@ -7,8 +7,7 @@
  * @subpackage etemplate
  * @link http://www.egroupware.org
  * @author Nathan Gray
- * @copyright 2015 Nathan Gray
- * @version $Id$
+ * @copyright 2015-18 Nathan Gray
  */
 
 namespace EGroupware\Api\Etemplate\Widget;
@@ -20,6 +19,21 @@ use EGroupware\Api\Etemplate;
  */
 class AjaxSelect extends Select
 {
+	/**
+	 * Constructor
+	 *
+	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
+	 * @throws Api\Exception\WrongParameter
+	 */
+	public function __construct($xml = '')
+	{
+		$this->bool_attr_default += array(
+			'link' => true,
+		);
+
+		parent::__construct($xml);
+	}
+
 	/**
 	 * Fill type options in self::$request->sel_options to be used on the client
 	 *

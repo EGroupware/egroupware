@@ -7,8 +7,7 @@
  * @subpackage etemplate
  * @link http://www.egroupware.org
  * @author Nathan Gray
- * @copyright 2011 Nathan Gray
- * @version $Id$
+ * @copyright 2011-18 Nathan Gray
  */
 
 namespace EGroupware\Api\Etemplate\Widget;
@@ -42,6 +41,10 @@ class File extends Etemplate\Widget
 	 */
 	public function __construct($xml='')
 	{
+		$this->bool_attr_default += array(
+			'multiple' => false,
+		);
+
 		if($xml) parent::__construct($xml);
 
 		// Legacy multiple - id ends in []
