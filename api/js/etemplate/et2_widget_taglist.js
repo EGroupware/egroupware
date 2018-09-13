@@ -440,10 +440,11 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			{
 				jQuery.extend(option, options[id]);
 				if(option.value) option.id = option.value;
+				option.label = this.options.no_lang ? option.label : this.egw().lang(option.label);
 			}
 			else
 			{
-				option.label = options[id];
+				option.label = this.options.no_lang ? options[id] : this.egw().lang(options[id]);
 			}
 			data.push(option);
 		}
