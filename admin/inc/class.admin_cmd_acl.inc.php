@@ -92,8 +92,12 @@ class admin_cmd_acl extends admin_cmd
 	function __tostring()
 	{
 		$rights = $this->rights;
-		$location = $this->location;
+		$location = lang($this->location);
 
+		if($this->location == 'run')
+		{
+			$rights = lang('run');
+		}
 		$names = Api\Hooks::single(array(
 			'location' => 'acl_rights'
 		), $this->app);

@@ -350,9 +350,16 @@ class admin_acl
 
 				$acl = $GLOBALS['egw']->acl;
 
-				$right_list = Api\Hooks::single(array('location' => 'acl_rights'), $app);
+				if($location == 'run')
+				{
+					$right_list = array(1 => 'run');
+				}
+				else
+				{
+					$right_list = Api\Hooks::single(array('location' => 'acl_rights'), $app);
+				}
 				$current = (int)$acl->get_specific_rights_for_account($account_id,$location,$app);
-				foreach($right_list as $right => $name)
+				foreach((array)$right_list as $right => $name)
 				{
 					$have_it = !!($current & $right);
 					$set_it = !!($rights & $right);
