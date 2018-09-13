@@ -3033,7 +3033,7 @@ app.classes.mail = AppJS.extend(
 			mime: 'message/rfc822',
 			method: 'mail.mail_ui.ajax_vfsSave',
 			button_label: _elems.length>1 ? egw.lang('Save all') : egw.lang('save'),
-			dialog_title: "Save email",
+			dialog_title: this.egw.lang("Save email"),
 			method_id: _elems.length > 1 ? {ids:ids, action:'message'}: {ids: ids[0], action: 'message'},
 			name: _elems.length > 1 ? names : names[0],
 		});

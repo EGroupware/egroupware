@@ -377,7 +377,7 @@ delete this column	common	de	diese Spalte löschen
 delete this entry	common	de	Diesen Eintrag löschen
 delete this etemplate	common	de	dieses eTemplate löschen
 delete this file	common	de	Diese Datei löschen
-delete this photo?	api	de	Dieses Foto löschen?
+delete this photo?	common	de	Dieses Foto löschen?
 delete this row	common	de	diese Zeile löschen
 delete whole column (can not be undone!!!)	common	de	ganze Zeile löschen (kann NICHT rückgängig gemacht werden)
 deletes the above spez. etemplate from the database, can not be undone	common	de	löscht das oben spezifiziert eTemplate aus der Datenbank, kann NICHT rückgängig gemacht werden

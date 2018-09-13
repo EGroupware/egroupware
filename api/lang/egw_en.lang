@@ -377,6 +377,7 @@ delete this column	common	en	Delete column
 delete this entry	common	en	Delete this entry
 delete this etemplate	common	en	Delete eTemplate
 delete this file	common	en	Delete file
+delete this photo?	common	en	Delete this photo?
 delete this row	common	en	Delete row
 delete whole column (can not be undone!!!)	common	en	Delete whole column
 deletes the above spez. etemplate from the database, can not be undone	common	en	Deletes eTemplate from the database

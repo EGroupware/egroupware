@@ -504,7 +504,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 									}
 								}).sendRequest();
 						}
-					}, egw.lang('Delete this photo?'), 'Delete', null, et2_dialog.BUTTONS_YES_NO);
+					}, egw.lang('Delete this photo?'), egw.lang('Delete'), null, et2_dialog.BUTTONS_YES_NO);
 				})
 				.appendTo(eml);
 		if (_noDelete) del.hide();
