@@ -668,7 +668,7 @@ div.et2_file input.et2_file_upload{
  * Restricting result size
  */
 .ui-autocomplete {
-  max-height: 20ex;
+  max-height: 25ex;
   overflow-y: auto;
   /* prevent horizontal scrollbar */
   overflow-x: hidden;
@@ -738,6 +738,7 @@ div.et2_link_entry.app_icons:not(.no_app) input {
 }
 div.et2_link_entry input.ui-autocomplete-input {
   padding-bottom: 1px;
+  width: 100%;
 }
 .et2_link_entry.no_app input.ui-autocomplete-input {
   width: 100%;
