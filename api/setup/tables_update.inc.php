@@ -453,3 +453,18 @@ function api_upgrade17_1_002()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.003';
 }
+
+/**
+ * Fix forced preferences with value '' (casted to from false) to '0' eg. addressbook:private_addressbook
+ *
+ * Forced preferences with value '' behave unexpected, false values of type "check" need to be written as "0".
+ *
+ * @return type
+ */
+function api_upgrade17_1_003()
+{
+	Api\Preferences::change_preference(null, '/.*/', '0', '', 'forced');
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.004';
+}
+

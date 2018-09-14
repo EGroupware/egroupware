@@ -744,11 +744,11 @@ class setup
 		{
 			if (isset($setting['default']))
 			{
-				$default[$name] = (string)$setting['default'];
+				$default[$name] = $setting['default'] === false && $setting['type'] === 'check' ? '0' : (string)$setting['default'];
 			}
 			if (isset($setting['forced']))
 			{
-				$forced[$name] = (string)$setting['forced'];
+				$forced[$name] = $setting['forced'] === false && $setting['type'] === 'check' ? '0' : (string)$setting['forced'];
 			}
 		}
 		// store default/forced preferences, if any found
