@@ -3121,6 +3121,7 @@ class mail_compose
 		// SMIME SIGN/ENCRYPTION
 		if ($_formData['smime_sign'] == 'on' || $_formData['smime_encrypt'] == 'on' )
 		{
+			$recipients = array_merge($_formData['to'], (array) $_formData['cc'], (array) $_formData['bcc']);
 			try	{
 				if ($_formData['smime_sign'] == 'on')
 				{
@@ -3135,7 +3136,7 @@ class mail_compose
 					$smime_success = $this->_encrypt(
 						$mail,
 						$_formData['smime_encrypt'] == 'on'? Mail\Smime::TYPE_SIGN_ENCRYPT: Mail\Smime::TYPE_SIGN,
-						Mail::stripRFC822Addresses($_formData['to']),
+						Mail::stripRFC822Addresses($recipients),
 						$identity['ident_email'],
 						$_formData['smime_passphrase']
 					);
@@ -3154,7 +3155,7 @@ class mail_compose
 					$smime_success =  $this->_encrypt(
 						$mail,
 						Mail\Smime::TYPE_ENCRYPT,
-						Mail::stripRFC822Addresses($_formData['to']),
+						Mail::stripRFC822Addresses($recipients),
 						$identity['ident_email']
 					);
 				}
