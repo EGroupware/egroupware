@@ -230,7 +230,7 @@
 					</hbox>
 				</row>
 				<row class="dialogFooterToolbar">
-					<hbox span="4">
+					<hbox span="6">
 						<button statustext="Saves this entry" label="Save" id="button[save]" image="save" background_image="1"/>
 						<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
 						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
