@@ -48,11 +48,11 @@ class Widget
 	 * @var array
 	 */
 	public $bool_attr_default = array(
-		'disabled' => false,
+		'disabled' => null,	// null = no default
 		'statustext_html' => false,
 		'no_lang' => false,
 		// strictly speeding only for input widgets, but server-side input-widgets have a validation method, but no shared parent
-		'readonly' => false,
+		'readonly' => null,	// null = no default
 		'needed' => false,
 	);
 
@@ -226,19 +226,24 @@ class Widget
 			$this->attrs = array_merge($this->attrs,self::$request->modifications[$this->id]);
 		}
 
-		// cast boolean attributes to boolean and set their defaults
+		// cast boolean attributes to boolean and set their defaults, if they have one
+		//$old_attrs = $this->attrs;
 		foreach($this->bool_attr_default as $name => $default_value)
 		{
 			if (!isset($this->attrs[$name]))
 			{
-				$this->attrs[$name] = $default_value;
+				if (isset($default_value)) $this->attrs[$name] = $default_value;
 			}
-			elseif (!is_bool($this->attrs[$name]))
+			// cast to bool, only if NOT containing variables
+			elseif (!is_bool($this->attrs[$name]) && strpos($this->attrs[$name], '@') === false &&
+				strpos($this->attrs[$name], '$') === false)
 			{
 				// use PHP default evaluation, with the exception of "false" --> false
 				$this->attrs[$name] = !(!$this->attrs[$name] || $this->attrs[$name] === 'false');
 			}
 		}
+		// report modifications
+		//if (($modifications = array_diff_assoc($this->attrs, $old_attrs))) error_log(__METHOD__."() id=$this->id, bool_modifications=".array2string($modifications).", old_values=".array2string(array_intersect_key($old_attrs, $this->bool_attr_default)).", bool_attr_default=".array2string($this->bool_attr_default));
 
 		return $template;
 	}
@@ -628,17 +633,17 @@ class Widget
 	 * @param string $name the name to expand
 	 * @param int $c is the column index starting with 0 (if you have row-headers, data-cells start at 1)
 	 * @param int $row is the row number starting with 0 (if you have col-headers, data-cells start at 1)
-	 * @param int $c_ is the value of the previous template-inclusion,
+	 * @param int $c_ =0 is the value of the previous template-inclusion,
 	 * 	eg. the column-headers in the eTemplate-editor are templates itself,
 	 * 	to show the column-name in the header you can not use $col as it will
 	 * 	be constant as it is always the same col in the header-template,
 	 * 	what you want is the value of the previous template-inclusion.
-	 * @param int $row_ is the value of the previous template-inclusion,
-	 * @param array $cont content of the template, you might use it to generate button-names with id values in it:
+	 * @param int $row_ =0 is the value of the previous template-inclusion,
+	 * @param array $cont =array() content of the template, you might use it to generate button-names with id values in it:
 	 * 	"del[$cont[id]]" expands to "del[123]" if $cont = array('id' => 123)
 	 * @return string the expanded name
 	 */
-	protected static function expand_name($name,$c,$row,$c_='',$row_='',$cont='')
+	protected static function expand_name($name,$c,$row,$c_=0,$row_=0,$cont=array())
 	{
 		$is_index_in_content = $name[0] == '@';
 		if (($pos_var=strpos($name,'$')) !== false)
