@@ -333,6 +333,12 @@ class Egw extends Egw\Base
 					$relpath = $matches[1];
 				}
 			}
+
+			// remove evtl. set caching headers, we dont want the "Session not verified" redirect to be cached
+			header('Cache-Control: no-store, no-cache, must-revalidate');
+			header('Expires: Thu, 19 Nov 1981 08:52:00 GMT');
+			header('Pragma: no-cache');
+
 			// this removes the sessiondata if its saved in the URL
 			$query = preg_replace('/[&]?sessionid(=|%3D)[^&]+&kp3(=|%3D)[^&]+&domain=.*$/','',$_SERVER['QUERY_STRING']);
 			if ($GLOBALS['egw_info']['server']['http_auth_types'])
