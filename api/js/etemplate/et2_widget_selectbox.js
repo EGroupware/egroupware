@@ -749,9 +749,11 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				allow_single_deselect: this.options.allow_single_deselect,
 				no_results_text: this.egw().lang('No results match')
 			});
-			if (this._type == 'select-country' && this.getValue()) {
+			// set autocomplete for search input field to an arbitary value in order to stop it.
+			this.input.siblings().find('.chzn-search input').attr('autocomplete', 'new-password');
+			if (this._type == 'select-country') {
 				var selected = this.input.siblings().find('a.chzn-single');
-				if (selected && selected.length == 1)
+				if (selected && selected.length == 1 && this.getValue())
 				{
 					selected.removeClass (function (index, className) {
 						return (className.match (/(^|\s)flag-\S+/g) || []).join(' ');
