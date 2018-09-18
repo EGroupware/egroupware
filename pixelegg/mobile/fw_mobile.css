@@ -2689,9 +2689,6 @@ button[id="add"]:active {
 /**
  * Egw customizations for Chosen widget
  */
-.chzn-container {
-  width: 100% !important;
-}
 .chzn-container-single .chzn-single {
   border: 1px solid #e5e5e5;
   border-radius: 0;

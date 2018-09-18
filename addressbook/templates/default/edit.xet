@@ -84,7 +84,7 @@
 					<description for="adr_one_countryname" value="country"/>
 					<vbox width="100%">
 						<menulist class="et2_fullWidth">
-							<menupopup type="select-country" tags="true" class="countrySelect et2_fullWidth" id="adr_one_countrycode" tabindex="15" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
+							<menupopup type="select-country" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_one_countrycode" tabindex="15" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
 						</menulist>
 						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" autocomplete="country-name"/>
 					</vbox>
@@ -117,7 +117,7 @@
 					<description for="adr_one_countryname" value="country"/>
 					<vbox width="100%" tabindex="16">
 						<menulist tabindex="16">
-							<menupopup type="select-country" tabindex="16" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
+							<menupopup type="select-country" tabindex="16" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
 						</menulist>
 						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" tabindex="16" autocomplete="country-name"/>
 					</vbox>
@@ -240,7 +240,7 @@
 					<description for="adr_two_countryname" value="country"/>
 					<vbox width="100%">
 						<menulist class="et2_fullWidth">
-							<menupopup type="select-country" tabindex="37" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="section-two country" />
+							<menupopup type="select-country" tabindex="37" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="section-two country" />
 						</menulist>
 						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth" autocomplete="section-two country-name" />
 					</vbox>
@@ -273,7 +273,7 @@
 					<description for="adr_two_countryname" value="country"/>
 					<vbox width="100%">
 						<menulist>
-							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="section-two country" />
+							<menupopup type="select-country" class="countrySelect et2_fullWidth" tags="true" width="100%" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="section-two country" />
 						</menulist>
 						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth" autocomplete="section-two country-name" />
 					</vbox>
