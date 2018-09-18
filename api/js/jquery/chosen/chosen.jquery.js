@@ -250,7 +250,7 @@
         classes.push(option.classes);
       }
       style = option.style.cssText !== "" ? " style=\"" + option.style + "\"" : "";
-      return "<li class=\"" + (classes.join(' ')) + "\"" + style + " data-option-array-index=\"" + option.array_index + "\">" + option.search_text + "</li>";
+      return "<li class=\"" + (classes.join(' ')) + "\"" + style + " data-option-array-index=\"" + option.array_index + "\"><span class=\"img\"></span>" + option.search_text + "</li>";
     };
 
     AbstractChosen.prototype.result_add_group = function(group) {

@@ -84,7 +84,7 @@
 					<description for="adr_one_countryname" value="country"/>
 					<vbox width="100%">
 						<menulist class="et2_fullWidth">
-							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_one_countrycode" tabindex="15" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
+							<menupopup type="select-country" tags="true" class="countrySelect et2_fullWidth" id="adr_one_countrycode" tabindex="15" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
 						</menulist>
 						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" autocomplete="country-name"/>
 					</vbox>

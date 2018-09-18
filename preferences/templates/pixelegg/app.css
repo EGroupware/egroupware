@@ -100,6 +100,9 @@ textarea.prefValue {
 .prefValueColumn select.prefValue {
   white-space: pre-line;
 }
+#preferences_settings_country_chzn {
+  width: 49% !important;
+}
 /* #############################################################################
 // iframe
 // Rahmen + padding**/

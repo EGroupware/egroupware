@@ -255,14 +255,16 @@ class preferences_hooks
 				'default'=> $lang,
 			),
 			'country' => array(
-				'type'   => 'select',
+				'type'   => 'select-country',
 				'label'  => 'Country',
 				'name'   => 'country',
-				'values' => Api\Country::countries(),
 				'help'   => 'In which country are you. This is used to set certain defaults for you.',
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> strtoupper($country),
+				'attributes' => array (
+					'tags' => true
+				)
 			),
 			'tz' => array(
 				'type'   => 'select',

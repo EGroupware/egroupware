@@ -235,6 +235,25 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		}
 	},
 
+	change: function(_node, _widget, _value) {
+		var valid = this._super.apply(this, arguments);
+		var selected = this.input.siblings().find('a.chzn-single');
+		if (selected && selected.length == 1 && _value && _value.selected)
+		{
+			selected.removeClass (function (index, className) {
+				return (className.match (/(^|\s)flag-\S+/g) || []).join(' ');
+			});
+			selected.find('span.img').remove();
+			selected.prepend('<span class="img"></span>');
+			selected.addClass('et2_country-select flag-'+ _value.selected.toLowerCase());
+		}
+		else if(selected)
+		{
+			selected.removeClass('et2_country-select');
+		}
+		return valid;
+	},
+
 	/**
 	 * Add an option to regular drop-down select
 	 *
@@ -256,9 +275,19 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		var option = jQuery(document.createElement("option"))
 			.attr("value", _value)
 			.text(_label+"");
-		if (this.options.tags && this._type == 'select-cat')
+		if (this.options.tags)
 		{
-			option.addClass('cat_'+_value);
+			switch (this._type)
+			{
+				case 'select-cat':
+					option.addClass('cat_'+_value);
+					break;
+				case 'select-country':
+				//	jQuery(document.createElement("span")).addClass('et2_country-select').appenTo(option);
+					option.addClass('et2_country-select flag-'+_value.toLowerCase())
+					break;
+			}
+
 		}
 		if (typeof _title != "undefined" && _title)
 		{
@@ -720,7 +749,18 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				allow_single_deselect: this.options.allow_single_deselect,
 				no_results_text: this.egw().lang('No results match')
 			});
-
+			if (this._type == 'select-country' && this.getValue()) {
+				var selected = this.input.siblings().find('a.chzn-single');
+				if (selected && selected.length == 1)
+				{
+					selected.removeClass (function (index, className) {
+						return (className.match (/(^|\s)flag-\S+/g) || []).join(' ');
+					});
+					selected.find('span.img').remove();
+					selected.prepend('<span class="img"></span>');
+					selected.addClass('et2_country-select flag-'+ this.getValue().toLowerCase());
+				}
+			}
 			if(this.options.onchange)
 			{
 				// Unbind change handler of widget's ancestor to stop it from bubbling

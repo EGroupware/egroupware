@@ -2623,14 +2623,8 @@ button[id="add"]:active {
 .chzn-container {
   color: #808080;
 }
-.chzn-container .chzn-drop {
-  width: auto;
-}
 /* @end */
 /* @group Single Chosen */
-.chzn-container-single .chzn-single span {
-  width: auto;
-}
 /* @end */
 /* @group Results */
 .chzn-container .chzn-results {
@@ -2684,6 +2678,27 @@ button[id="add"]:active {
 /**
  * Egw customizations for Chosen widget
  */
+.chzn-container {
+  width: 100% !important;
+}
+.chzn-container-single .chzn-single {
+  border: 1px solid #e5e5e5;
+  border-radius: 0;
+  background: none !important;
+  box-shadow: none !important;
+  color: #26537C;
+  height: 22px;
+}
+.chzn-container-single .et2_country-select.chzn-single span {
+  display: inline-block;
+}
+.chzn-single.chzn-single-with-deselect.et2_country-select span.img {
+  top: -4px;
+  color: transparent;
+}
+.chzn-container-single.chzn-container-active.chzn-with-drop:hover {
+  transition: none;
+}
 /**
  * EGroupware: Stylite Pixelegg template
  *
