@@ -301,7 +301,8 @@ module.exports = function (grunt) {
 						"api/templates/default/etemplate2.css",
 						"pixelegg/css/pixelegg.css",
 						"api/templates/default/print.css",
-						"pixelegg/print.css"
+						"pixelegg/print.css",
+						"api/templates/default/css/flags.css"
 					],
 					"pixelegg/css/mobile.min.css": [
 						"api/js/jquery/chosen/chosen.css",
@@ -317,7 +318,8 @@ module.exports = function (grunt) {
 						"api/templates/default/etemplate2.css",
 						"pixelegg/css/mobile.css",
 						"api/templates/default/print.css",
-						"pixelegg/print.css"
+						"pixelegg/print.css",
+						"api/templates/default/css/flags.css"
 					],
 					"pixelegg/mobile/fw_mobile.min.css": [
 						"api/js/jquery/chosen/chosen.css",
@@ -349,7 +351,8 @@ module.exports = function (grunt) {
 						"api/templates/default/etemplate2.css",
 						"pixelegg/css/traditional.css",
 						"api/templates/default/print.css",
-						"pixelegg/print.css"
+						"pixelegg/print.css",
+						"api/templates/default/css/flags.css"
 					]
 				}
 			},
@@ -373,7 +376,8 @@ module.exports = function (grunt) {
 						"jdots/css/jdots.css",
 						"jdots/css/high-contrast.css",
 						"api/templates/default/print.css",
-						"jdots/print.css"
+						"jdots/print.css",
+						"api/templates/default/css/flags.css"
 					],
 					"jdots/css/jdots.min.css": [
 						"api/js/jquery/chosen/chosen.css",
@@ -392,7 +396,8 @@ module.exports = function (grunt) {
 						"jdots/egw_fw.css",
 						"jdots/css/jdots.css",
 						"api/templates/default/print.css",
-						"jdots/print.css"
+						"jdots/print.css",
+						"api/templates/default/css/flags.css"
 					],
 					"jdots/css/orange-green.min.css": [
 						"api/js/jquery/chosen/chosen.css",
@@ -412,7 +417,8 @@ module.exports = function (grunt) {
 						"jdots/css/jdots.css",
 						"jdots/css/orange-green.css",
 						"api/templates/default/print.css",
-						"jdots/print.css"
+						"jdots/print.css",
+						"api/templates/default/css/flags.css"
 					]
 				}
 			}
