@@ -238,14 +238,15 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	change: function(_node, _widget, _value) {
 		var valid = this._super.apply(this, arguments);
 		var selected = this.input.siblings().find('a.chzn-single');
-		if (selected && selected.length == 1 && _value && _value.selected)
+		var val = _value && _value.selected ? _value.selected : this.value;
+		if (selected && selected.length == 1 && val)
 		{
 			selected.removeClass (function (index, className) {
 				return (className.match (/(^|\s)flag-\S+/g) || []).join(' ');
 			});
 			selected.find('span.img').remove();
 			selected.prepend('<span class="img"></span>');
-			selected.addClass('et2_country-select flag-'+ _value.selected.toLowerCase());
+			selected.addClass('et2_country-select flag-'+ val.toLowerCase());
 		}
 		else if(selected)
 		{
