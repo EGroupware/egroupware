@@ -9,7 +9,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
  * @subpackage export
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -28,15 +27,6 @@ class calendar_ical extends calendar_boupdate
 	 */
 	var $supportedFields;
 
-	var $recur_days_1_0 = array(
-		MCAL_M_MONDAY    => 'MO',
-		MCAL_M_TUESDAY   => 'TU',
-		MCAL_M_WEDNESDAY => 'WE',
-		MCAL_M_THURSDAY  => 'TH',
-		MCAL_M_FRIDAY    => 'FR',
-		MCAL_M_SATURDAY  => 'SA',
-		MCAL_M_SUNDAY    => 'SU',
-	);
 	/**
 	 * @var array $status_egw2ical conversation of the participant status egw => ical
 	 */
@@ -2640,160 +2630,8 @@ class calendar_ical extends calendar_boupdate
 					$vcardData['location']	= str_replace("\r\n", "\n", $attributes['value']);
 					break;
 				case 'RRULE':
-					$recurence = $attributes['value'];
-					$vcardData['recur_interval'] = 1;
-					$type = preg_match('/FREQ=([^;: ]+)/i',$recurence,$matches) ? $matches[1] : $recurence[0];
-					// vCard 2.0 values for all types
-					if (preg_match('/UNTIL=([0-9TZ]+)/',$recurence,$matches))
-					{
-						$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($matches[1]);
-						// If it couldn't be parsed, treat it as not set
-						if(is_string($vcardData['recur_enddate']))
-						{
-							unset($vcardData['recur_enddate']);
-						}
-						else
-						{
-							// iCal defines enddate to be a time and eg. Apple sends 1s less then next recurance, if they split events
-							self::check_fix_endate($vcardData);
-						}
-					}
-					elseif (preg_match('/COUNT=([0-9]+)/',$recurence,$matches))
-					{
-						$vcardData['recur_count'] = (int)$matches[1];
-					}
-					if (preg_match('/INTERVAL=([0-9]+)/',$recurence,$matches))
-					{
-						$vcardData['recur_interval'] = (int) $matches[1] ? (int) $matches[1] : 1;
-					}
-					$vcardData['recur_data'] = 0;
-					switch($type)
-					{
-						case 'D':	// 1.0
-							$recurenceMatches = null;
-							if (preg_match('/D(\d+) #(\d+)/', $recurence, $recurenceMatches))
-							{
-								$vcardData['recur_interval'] = $recurenceMatches[1];
-								$vcardData['recur_count'] = $recurenceMatches[2];
-							}
-							elseif (preg_match('/D(\d+) (.*)/', $recurence, $recurenceMatches))
-							{
-								$vcardData['recur_interval'] = $recurenceMatches[1];
-								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime(trim($recurenceMatches[2]));
-							}
-							else break;
-							// fall-through
-						case 'DAILY':	// 2.0
-							$vcardData['recur_type'] = MCAL_RECUR_DAILY;
-							if (stripos($recurence, 'BYDAY') === false) break;
-							// hack to handle TYPE=DAILY;BYDAY= as WEEKLY, which is true as long as there's no interval
-							// fall-through
-						case 'W':
-						case 'WEEKLY':
-							$days = array();
-							if (preg_match('/W(\d+) *((?i: [AEFHMORSTUW]{2})+)?( +([^ ]*))$/',$recurence, $recurenceMatches))		// 1.0
-							{
-								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if (empty($recurenceMatches[2]))
-								{
-									$days[0] = strtoupper(substr(date('D', $vcardData['start']),0,2));
-								}
-								else
-								{
-									$days = explode(' ',trim($recurenceMatches[2]));
-								}
-
-								$repeatMatches = null;
-								if (preg_match('/#(\d+)/',$recurenceMatches[4],$repeatMatches))
-								{
-									if ($repeatMatches[1]) $vcardData['recur_count'] = $repeatMatches[1];
-								}
-								else
-								{
-									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[4]);
-								}
-
-								$recur_days = $this->recur_days_1_0;
-							}
-							elseif (preg_match('/BYDAY=([^;: ]+)/',$recurence,$recurenceMatches))	// 2.0
-							{
-								$days = explode(',',$recurenceMatches[1]);
-								$recur_days = $this->recur_days;
-							}
-							else	// no day given, use the day of dtstart
-							{
-								$vcardData['recur_data'] |= 1 << (int)date('w',$vcardData['start']);
-								$vcardData['recur_type'] = MCAL_RECUR_WEEKLY;
-							}
-							if ($days)
-							{
-								foreach ($recur_days as $id => $day)
-								{
-									if (in_array(strtoupper(substr($day,0,2)),$days))
-									{
-										$vcardData['recur_data'] |= $id;
-									}
-								}
-								$vcardData['recur_type'] = MCAL_RECUR_WEEKLY;
-							}
-							break;
-
-						case 'M':
-							if (preg_match('/MD(\d+)(?: [^ ]+)? #(\d+)/', $recurence, $recurenceMatches))
-							{
-								$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
-								$vcardData['recur_interval'] = $recurenceMatches[1];
-								$vcardData['recur_count'] = $recurenceMatches[2];
-							}
-							elseif (preg_match('/MD(\d+)(?: [^ ]+)? ([0-9TZ]+)/',$recurence, $recurenceMatches))
-							{
-								$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
-								$vcardData['recur_interval'] = $recurenceMatches[1];
-								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
-							}
-							elseif (preg_match('/MP(\d+) (.*) (.*) (.*)/',$recurence, $recurenceMatches))
-							{
-								$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_WDAY;
-								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if (preg_match('/#(\d+)/',$recurenceMatches[4],$recurenceMatches))
-								{
-									$vcardData['recur_count'] = $recurenceMatches[1];
-								}
-								else
-								{
-									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime(trim($recurenceMatches[4]));
-								}
-							}
-							break;
-
-						case 'Y':		// 1.0
-							if (preg_match('/YM(\d+)(?: [^ ]+)? #(\d+)/', $recurence, $recurenceMatches))
-							{
-								$vcardData['recur_interval'] = $recurenceMatches[1];
-								$vcardData['recur_count'] = $recurenceMatches[2];
-							}
-							elseif (preg_match('/YM(\d+)(?: [^ ]+)? ([0-9TZ]+)/',$recurence, $recurenceMatches))
-							{
-								$vcardData['recur_interval'] = $recurenceMatches[1];
-								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
-							} else break;
-							// fall-through
-						case 'YEARLY':	// 2.0
-							if (strpos($recurence, 'BYDAY') === false)
-							{
-								$vcardData['recur_type'] = MCAL_RECUR_YEARLY;
-								break;
-							}
-							// handle FREQ=YEARLY;BYDAY= as FREQ=MONTHLY;BYDAY= with 12*INTERVAL
-							$vcardData['recur_interval'] = $vcardData['recur_interval'] ?
-								12*$vcardData['recur_interval'] : 12;
-							// fall-through
-						case 'MONTHLY':
-							// does currently NOT parse BYDAY or BYMONTH, it has to be specified/identical to DTSTART
-							$vcardData['recur_type'] = strpos($recurence,'BYDAY') !== false ?
-								MCAL_RECUR_MONTHLY_WDAY : MCAL_RECUR_MONTHLY_MDAY;
-							break;
-					}
+					$vcardData += calendar_rrule::parseRrule($attributes['value']);
+					if (!empty($vcardData['recur_enddate'])) self::check_fix_endate ($vcardData);
 					break;
 				case 'EXDATE':	// current Horde_Icalendar returns dates, no timestamps
 					if ($attributes['values'])

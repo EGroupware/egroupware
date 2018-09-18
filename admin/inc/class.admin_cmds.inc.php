@@ -48,7 +48,8 @@ class admin_cmds
 				$row['title'] = $e->getMessage();
 			}
 			$row['data'] = !($data = json_php_unserialize($row['data'])) ? '' :
-				json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+				json_encode($data+(empty($row['rrule'])?array():array('rrule' => $row['rrule'])),
+					JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
 
 			if ($row['status'] == admin_cmd::scheduled)
 			{

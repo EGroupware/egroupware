@@ -45,6 +45,10 @@ use EGroupware\Api\Acl;
  *  foreign key into egw_admin_remote (table of remote systems administrated by this one)
  * @property-read int $account account_id of user affected by this cmd or NULL
  * @property-read string $app app-name affected by this cmd or NULL
+ * @property-read string $parent parent cmd (with rrule) of single periodic execution
+ * @property-read string $rrule rrule for periodic execution
+ * @property int $rrule_start optional start timestamp for rrule, default $created time
+ * @property string async_job_id optional name of async job for periodic-run, default "admin-cmd-$id"
  */
 abstract class admin_cmd
 {
@@ -67,7 +71,7 @@ abstract class admin_cmd
 	 *
 	 * @var int
 	 */
-	protected $status;
+	protected $status = self::successful;
 
 	static $stati = array(
 		admin_cmd::scheduled  => 'scheduled',
@@ -96,6 +100,8 @@ abstract class admin_cmd
 	public $remote_id;
 	protected $account;
 	protected $app;
+	protected $rrule;
+	protected $parent;
 
 	/**
 	 * Display name of command, default ucfirst(str_replace(['_cmd_', '_'], ' ', __CLASS__))
@@ -387,6 +393,16 @@ abstract class admin_cmd
 		{
 			admin_cmd::_set_async_job();
 		}
+		// schedule periodic execution, if we have an rrule
+		elseif (!empty($this->rrule))
+		{
+			$this->set_periodic_job();
+		}
+		// existing object with no rrule, cancle evtl. running periodic job
+		elseif($vars['id'])
+		{
+			$this->cancel_periodic_job();
+		}
 		return true;
 	}
 
@@ -418,12 +434,12 @@ abstract class admin_cmd
 	}
 
 	/**
-	 * reading a command from the queue returning the comand object
+	 * Reading a command from the queue returning the comand object
 	 *
 	 * @static
 	 * @param int|string $id id or uid of the command
 	 * @return admin_cmd or null if record not found
-	 * @throws Exception(lang('Unknown command %1!',$class),0);
+	 * @throws Api\Exception\WrongParameter if class does not exist or is no instance of admin_cmd
 	 */
 	static function read($id)
 	{
@@ -975,6 +991,72 @@ abstract class admin_cmd
 		admin_cmd::$running_queued_jobs = false;
 
 		return admin_cmd::_set_async_job();
+	}
+
+	const PERIOD_ASYNC_ID_PREFIX = 'admin-cmd-';
+
+	/**
+	 * Schedule next execution of a periodic job
+	 *
+	 * @return boolean
+	 */
+	public function set_periodic_job()
+	{
+		if (empty($this->rrule)) return false;
+
+		// parse rrule and calculate next execution time
+		$event = calendar_rrule::parseRrule($this->rrule, true);	// true: allow HOURLY or MINUTELY
+		// rrule can depend on start-time, use policy creation time by default, if rrule_start is not set
+		$event['start'] = empty($this->rrule_start) ? $this->created : $this->rrule_start;
+		$event['tzid'] = Api\DateTime::$server_timezone->getName();
+		$rrule = calendar_rrule::event2rrule($event, false);	// false = server timezone
+		$rrule->rewind();
+		while((($time = $rrule->current()->format('ts'))) <= time())
+		{
+			$rrule->next();
+		}
+
+		// schedule run_periodic_job to run at that time
+		$async = new Api\Asyncservice();
+		$job_id = empty($this->async_job_id) ? self::PERIOD_ASYNC_ID_PREFIX.$this->id : $this->async_job_id;
+		$async->cancel_timer($job_id);	// we delete it in case a job already exists
+		return $async->set_timer($time, $job_id, __CLASS__.'::run_periodic_job', $this->as_array(), $this->creator);
+	}
+
+	/**
+	 * Cancel evtl. existing periodic job
+	 *
+	 * @return boolean true if job was canceled, false otherwise
+	 */
+	protected function cancel_periodic_job()
+	{
+		$async = new Api\Asyncservice();
+		$job_id = empty($this->async_job_id) ? self::PERIOD_ASYNC_ID_PREFIX.$this->id : $this->async_job_id;
+		$async->cancel_timer($job_id);	// we delete it in case a job already exists
+	}
+
+	/**
+	 * Run a periodic job, record it's result and schedule next run
+	 */
+	static function run_periodic_job($data)
+	{
+		$cmd = admin_cmd::read($data['id']);
+
+		// schedule next execution
+		$cmd->set_periodic_job();
+
+		// instanciate single periodic execution object
+		$single = $cmd->as_array();
+		$single['parent'] = $single['id'];
+		unset($single['id'], $single['uid'], $single['rrule'], $single['created'], $single['modified'], $single['modifier']);
+		$periodic = admin_cmd::instanciate($single);
+
+		try {
+			$periodic->run(null, false);
+		}
+		catch (Exception $ex) {
+			error_log(__METHOD__."(".array2string($data).") periodic execution failed: ".$ex->getMessage());
+		}
 	}
 
 	/**
