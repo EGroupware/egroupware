@@ -348,6 +348,105 @@ class Country
 	);
 
 	/**
+	 * List of DE states as 2-letter code => name pairs
+	 *
+	 * @var array
+	 */
+	protected static $de_states_array = array(
+		'BW' =>	'Baden-Württemberg',
+		'BY' =>	'Bayern',
+		'BE' =>	'Berlin',
+		'BB' =>	'Brandenburg',
+		'HB' =>	'Bremen',
+		'HH' =>	'Hamburg',
+		'HE' =>	'Hessen',
+		'MV' =>	'Mecklenburg-Vorpommern',
+		'NI' =>	'Niedersachsen',
+		'NW' =>	'Nordrhein-Westfalen',
+		'RP' =>	'Rheinland-Pfalz',
+		'SL' =>	'Saarland',
+		'SN' =>	'Sachsen',
+		'ST' =>	'Sachsen-Anhalt',
+		'SH' =>	'Schleswig-Holstein',
+		'TH' =>	'Thüringen'
+	);
+
+	/**
+	 * List of CH states as 2-letter code => name pairs
+	 *
+	 * @var array
+	 */
+	protected static $ch_states_array = array(
+		'AG' =>	'Aargau',
+		'AR' =>	'Appenzell Ausserrhoden',
+		'AI' =>	'Appenzell Innerrhoden',
+		'BL' =>	'Basel-Landschaft',
+		'BS' =>	'Basel-Stadt',
+		'BE' =>	'Bern',
+		'FR' =>	'Freiburg',
+		'GE' =>	'Genève',
+		'GL' =>	'Glarus',
+		'GR' =>	'Graubünden',
+		'JU' =>	'Jura',
+		'LU' =>	'Luzern',
+		'NE' =>	'Neuchâtel',
+		'NW' =>	'Nidwalden',
+		'OW' =>	'Obwalden',
+		'SG' =>	'Sankt Gallen',
+		'SH' =>	'Schaffhausen',
+		'SZ' =>	'Schwyz',
+		'SO' =>	'Solothurn',
+		'TG' =>	'Thurgau',
+		'TI' =>	'Ticino',
+		'UR' =>	'Uri',
+		'VS' =>	'Wallis',
+		'VD' =>	'Vaud',
+		'ZG' =>	'Zug',
+		'ZH' =>	'Zürich',
+	);
+
+	/**
+	 * List of AT states as 2-letter code => name pairs
+	 *
+	 * @var array
+	 */
+	protected static $at_states_array = array(
+		'1' =>	'Burgenland',
+		'2' =>	'Kärnten',
+		'3' =>	'Niederösterreich',
+		'4' =>	'Oberösterreich',
+		'5'	=>	'Salzburg',
+		'6'	=>	'Steiermark',
+		'7'	=>	'Tirol',
+		'8'	=>	'Vorarlberg',
+		'9'	=>	'Wien'
+	);
+
+	/**
+	 * Get list of US states
+	 * @param string $country = de selected country code to fetch its states
+	 *
+	 * @return array with code => name pairs
+	 */
+	public static function get_states($country='de')
+	{
+		switch(strtolower($country))
+		{
+			case 'us':
+				return self::$us_states_array;
+				break;
+			case 'de':
+				return self::$de_states_array;
+				break;
+			case 'at':
+				return self::$at_states_array;
+				break;
+			case 'ch':
+				return self::$ch_states_array;
+		}
+	}
+
+	/**
 	 * Get list of US states
 	 *
 	 * @return array with code => name pairs
