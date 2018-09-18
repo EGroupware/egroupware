@@ -120,3 +120,5 @@ select#addressbook-index_col_filter\[tid\] {
 	width: 134px;
 }
 #addressbook-edit .chzn-container .chzn-results {max-height: 110px}
+
+#addressbook-index_nm .chzn-drop {width:auto;}
