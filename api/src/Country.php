@@ -434,13 +434,10 @@ class Country
 		{
 			case 'us':
 				return self::$us_states_array;
-				break;
 			case 'de':
 				return self::$de_states_array;
-				break;
 			case 'at':
 				return self::$at_states_array;
-				break;
 			case 'ch':
 				return self::$ch_states_array;
 		}

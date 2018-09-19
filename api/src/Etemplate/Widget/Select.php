@@ -576,7 +576,7 @@ class Select extends Etemplate\Widget
 				break;
 
 			case 'select-state':
-				$options = Api\Country::us_states();
+				$options = (array)Api\Country::get_states($field);
 				$no_lang = True;
 				break;
 

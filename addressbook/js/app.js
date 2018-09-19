@@ -564,6 +564,13 @@ app.classes.addressbook = AppJS.extend(
 				custom_field.style.display = "none";
 			}
 		}
+		var region = this.et2.getWidgetById(selectbox.name.replace('countrycode', 'region'));
+		if (region)
+		{
+			region.set_country_code(selectbox.value);
+			region.options.select_options = {};
+			region.transformAttributes(region.options);
+		}
 	},
 
 	/**

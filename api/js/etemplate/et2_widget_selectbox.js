@@ -1317,6 +1317,10 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 		var options = ',';
 		return this.cached_server_side_options(widget, options, attrs);
 	},
+	state_options: function(widget, attrs) {
+		var options = attrs.country_code ? attrs.country_code : 'de';
+		return this.cached_server_side_options(widget, options, attrs);
+	},
 	dow_options: function(widget,attrs) {
 		var options = ','+(attrs.other||[]).join(',');
 		return this.cached_server_side_options(widget, options, attrs);

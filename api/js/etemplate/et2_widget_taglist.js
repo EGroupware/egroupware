@@ -1370,6 +1370,86 @@ et2_register_widget(et2_taglist_thumbnail, ["taglist-thumbnail"]);
 
 
 /**
+ * Taglist represents list of states of a country,
+ *
+ */
+var et2_taglist_state = (function(){ "use strict"; return et2_taglist.extend(
+{
+	attributes: {
+		"minChars": {
+			default: 0
+		},
+		"autocomplete_url": {
+			"default": ""
+		},
+		"autocomplete_params": {
+			"default": {}
+		},
+		"country_code": {
+			name: "country code to fetch states for",
+			default: "de",
+			type: "string",
+			description: "Defines country code to fetch list of states for it"
+		}
+	},
+	/**
+	 *
+	 * @returns {undefined}
+	 */
+	init:function ()
+	{
+		this._super.apply(this, arguments);
+		this.div.addClass('et2_taglist_state');
+	},
+
+	/**
+	 * Get options automatically from select option cache
+	 * @param {type} _attrs
+	 */
+	transformAttributes: function(_attrs) {
+		// Pretend to be a select box so it works
+		var type = this._type;
+		this._type = 'select-state';
+		this._super.apply(this, arguments);
+		this._type = type;
+	},
+	/**
+	 * convert selectbox options from the cache to taglist data [{id:...,label:...},...] format
+	 *
+	 * @param {(object|array)} _options id: label or id: {label: ..., title: ...} pairs, or array if id's are 0, 1, ...
+	 *
+	 * @return {Object[]} Returns an array of objects with ID and label
+	 */
+	_options2data: function(_options)
+	{
+		var options = jQuery.isArray(_options) ? jQuery.extend({}, _options) : _options;
+		var data = [];
+		for(var id in options)
+		{
+			var option = {};
+			if (typeof options[id] == 'object')
+			{
+				jQuery.extend(option, options[id]);
+				if(option.value) option.id = option.value;
+			}
+			else
+			{
+				option.label = options[id];
+			}
+			data.push(option);
+		}
+		return data;
+	},
+	set_country_code: function (_country_code)
+	{
+		var country_code = _country_code || '';
+		this.country_code = country_code;
+		this.options.country_code = country_code;
+	}
+});}).call(this);
+et2_register_widget(et2_taglist_state, ["taglist-state"]);
+
+/**
  * et2_taglist_ro is the readonly implementation of the taglist.
  *
  * @augments et2_selectbox
