@@ -95,7 +95,7 @@
 					<url-phone id="tel_other" tabindex="25" class="et2_fullWidth"  autocomplete="tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 					<description value="Region"/>
-					<taglist-state statustext="State" maxSelection="1" country_code="$cont[adr_one_countrycode]" id="adr_one_region" tabindex="16" maxlength="64" class="et2_fullWidth" autocomplete="address-level1"/>
+					<taglist-state statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_one_countrycode]" id="adr_one_region" tabindex="16" maxlength="64" class="et2_fullWidth" autocomplete="address-level1"/>
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
@@ -251,7 +251,7 @@
 					<date id="bday" tabindex="31" options="Y-m-d"  year_range="c-90:c+2" class="et2_fullWidth"/>
 					<description/>
 					<description value="Region"/>
-					<taglist-state statustext="State" maxSelection="1" country_code="$cont[adr_two_region]" id="adr_two_region" tabindex="38" maxlength="64" class="et2_fullWidth" autocomplete="section-two address-level1" />
+					<taglist-state statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_two_region]" id="adr_two_region" tabindex="38" maxlength="64" class="et2_fullWidth" autocomplete="section-two address-level1" />
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
