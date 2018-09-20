@@ -2246,6 +2246,7 @@ span.et2_checkbox_slideSwitch {
     display: inline-block;
 	vertical-align: middle;
 	border: 1px solid silver;
+	cursor: pointer;
 }
 span.et2_checkbox_slideSwitch > span.slideSwitch_container {
     height: 16px;
@@ -2313,6 +2314,7 @@ span.et2_checkbox_slideSwitch > input {
 	z-index: 7;
 	width: 100%;
 	height: 100%;
+	cursor: pointer;
 }
 span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container a {
 	right:50%;
@@ -2323,6 +2325,7 @@ span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container a {
 	margin: 1px;
 	margin-right: 3px;
 	border-radius: 3px;
+	cursor: pointer;
 }
 .et2_toolbar_more span.et2_checkbox_slideSwitch {
 	text-align: left;
