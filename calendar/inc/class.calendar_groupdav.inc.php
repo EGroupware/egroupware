@@ -98,6 +98,21 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$this->bo = new calendar_boupdate();
 		$this->vCalendar = new Horde_Icalendar;
 
+		if (self::get_agent() == 'caldavsynchronizer')
+		{
+			// Work around problems with Outlook CalDAV Synchroniser (https://caldavsynchronizer.org/)
+			// - sends a DELETE to reject a meeting request --> deletes event for all participants, if user has delete rights on the calendar
+			// - always sends all participants back with status NEEDS-ACTION --> resets status of all participant, if user has edit rights
+			// --> remove all add, edit, delete rights from other users
+			foreach($this->bo->grants as $user => &$grant)
+			{
+				if ($user != $this->bo->user)
+				{
+					$grant &= ~(Api\Acl::ADD | Api\Acl::EDIT | Api\Acl::DELETE);
+				}
+			}
+		}
+
 		// since 1.9.003 we allow clients to specify the URL when creating a new event, as specified by CalDAV
 		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
 		{
@@ -107,6 +122,18 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	}
 
 	/**
+	 * Get grants of current user and app
+	 *
+	 * Overwritten to return rights modified for certain user-agents (eg. Outlook CalDAV Synchroniser) in the consturctor.
+	 *
+	 * @return array user-id => Api\Acl::ADD|Api\Acl::READ|Api\Acl::EDIT|Api\Acl::DELETE pairs
+	 */
+	public function get_grants()
+	{
+		return $this->bo->grants;
+	}
+
+/**
 	 * Create the path for an event
 	 *
 	 * @param array|int $event

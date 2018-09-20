@@ -453,6 +453,7 @@ abstract class Handler
 				'ical4ol'			=> 'ical4ol',	// iCal4OL client
 				'evolution'         => 'evolution',	// Evolution
 				'thunderbird'       => 'thunderbird',	// SOGo connector for addressbook, no Lightning installed
+				'caldavsynchronizer'=> 'caldavsynchronizer',	// Outlook CalDAV Synchroniser (https://caldavsynchronizer.org/)
 			) as $pattern => $name)
 			{
 				if (strpos($user_agent,$pattern) !== false)
