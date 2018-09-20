@@ -3319,7 +3319,7 @@ class mail_compose
 						!(($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on' || $_formData['to_calendar'] == 'on') && $this->sessionData['attachments']))
 					{
 						//error_log(__METHOD__.__LINE__."#".$this->sessionData['uid'].'#'.$this->sessionData['messageFolder']);
-						$mail_bo->deleteMessages(array($this->sessionData['uid']),$this->sessionData['messageFolder']);
+						$mail_bo->deleteMessages(array($this->sessionData['uid']),$this->sessionData['messageFolder'], 'remove_immediately');
 					}
 				}
 				catch (Api\Exception $e)
