@@ -45,6 +45,12 @@ class Acl
 	const TABLE = 'egw_acl';
 
 	/**
+	 * Cache for grants
+	 * @var array
+	 */
+	var $cache = array();
+
+	/**
 	 * Constants for acl rights, like old EGW_ACL_* defines
 	 */
 	const READ      = 1;	// EGW_ACL_READ
@@ -662,7 +668,7 @@ class Acl
 		if (!$app) $app = $GLOBALS['egw_info']['flags']['currentapp'];
 		if (!$user) $user = $this->account_id;
 
-		static $cache = array();	// some caching withing the request
+		$cache = $this->cache;	// some caching within the request
 
 		$grants =& $cache[$app][$user];
 		if (!isset($grants))
