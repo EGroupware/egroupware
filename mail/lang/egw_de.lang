@@ -63,6 +63,7 @@ are you sure you want to delete all selected folders?	mail	de	Sollen alle selekt
 are you sure you want to move folder %1 to folder %2?	mail	de	Soll der Ordner %1 in den Ordner %2 verschoben werden?
 arrival	mail	de	Empfangsdatum
 ask for permission	mail	de	Immer nachfragen
+attach files	mail	de	Dateien anhängen
 attach users vcard at compose to every new mail	mail	de	Füge die vCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
 attachment	mail	de	Anhang

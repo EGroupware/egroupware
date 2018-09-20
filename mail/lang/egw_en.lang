@@ -63,6 +63,7 @@ are you sure you want to delete all selected folders?	mail	en	Are you sure you w
 are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you want to move folder %1 to folder %2?
 arrival	mail	en	Recieved
 ask for permission	mail	en	Ask for permission
+attach files	mail	en	Attach files
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
 attachment	mail	en	Attachment

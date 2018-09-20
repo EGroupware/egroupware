@@ -249,6 +249,7 @@ select file to upload in current directory	filemanager	de	Datei(en) zum hochlade
 select file(s) from vfs	common	de	Datei(en) aus dem EGroupware Dateimanager auswählen
 setting for document merge saved.	filemanager	de	Einstellungen für Serienbriefe gespeichert
 share files	filemanager	de	Dateien freigeben
+share link copied into clipboard	filemanager	de	Link in die Zwischenablage kopiert
 shared files	filemanager	de	Freigegebene Dateien
 shared with	filemanager	de	Geteilt mit
 show	filemanager	de	Zeige
