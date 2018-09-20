@@ -39,7 +39,7 @@
 }
 .normal,
 .normal_done {
-  color: #000000;
+  color: black;
 }
 .high {
   color: #cc0000;
@@ -129,12 +129,12 @@ button.infologExtraButton {
 button.infologExtraButton:hover {
   background-size: 16px;
 }
-td.infologEncrypt {
+div.et2_hbox.tab_toolbar {
   position: relative;
 }
 button#infolog-edit_encrypt {
   position: absolute;
-  right: -2px;
+  right: 0px;
   top: 3px;
 }
 td.infologTimestamp {
@@ -142,7 +142,7 @@ td.infologTimestamp {
 }
 button#infolog-edit_timestamp {
   position: absolute;
-  right: -25px;
+  right: 29px;
   top: 3px;
 }
 div#infolog-edit_infolog-edit-description {
@@ -198,7 +198,7 @@ div#infolog-edit_infolog-edit-description {
   height: auto;
 }
 div#infolog-edit_info_contact input.ui-autocomplete-input span.ui-icon-close {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   background-size: contain;
   background-position: 5px 5px;
   top: 9px !important;

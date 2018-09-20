@@ -174,9 +174,11 @@
 					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth" span="4"/>
 				</row>
 				<row class="et2_toolbar">
-					<description id="spacer" span="5"/>
-					<timestamper statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"/>
-					<buttononly statustext="Encrypt description" id="encrypt" class="infologExtraButton infologEncrypt" background_image="1" image="lock" onclick="app.infolog.toggleEncrypt"/>
+					<description id="spacer" span="6"/>
+					<hbox class="tab_toolbar">
+						<timestamper statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"/>
+						<buttononly statustext="Encrypt description" id="encrypt" class="infologExtraButton infologEncrypt" background_image="1" image="lock" onclick="app.infolog.toggleEncrypt"/>
+					</hbox>
 				</row>
 				<row>
 					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tab_height="250px">
