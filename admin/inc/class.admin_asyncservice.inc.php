@@ -59,25 +59,25 @@ class admin_asyncservice
 			{
 				if (strpos($GLOBALS['egw_info']['user']['account_email'],'@') === false)
 				{
-					echo '<p><b>'.lang("You have no email address for your user set !!!")."</b></p>\n";
+					echo '<p><b>'.htmlspecialchars(lang("You have no email address for your user set !!!"))."</b></p>\n";
 				}
 				elseif (!$async->set_timer($times,'test','admin.admin_asyncservice.test',$GLOBALS['egw_info']['user']['account_email']))
 				{
-					echo '<p><b>'.lang("Error setting timer, wrong syntax or maybe there's one already running !!!")."</b></p>\n";
+					echo '<p><b>'.htmlspecialchars(lang("Error setting timer, wrong syntax or maybe there's one already running !!!"))."</b></p>\n";
 				}
 			}
 			if ($_POST['cancel'])
 			{
 				if (!$async->cancel_timer('test'))
 				{
-					echo '<p><b>'.lang("Error canceling timer, maybe there's none set !!!")."</b></p>\n";
+					echo '<p><b>'.htmlspecialchars(lang("Error canceling timer, maybe there's none set !!!"))."</b></p>\n";
 				}
 			}
 			if ($_POST['install'] || $_POST['deinstall'])
 			{
 				if (!($install = $async->install($_POST['install'] ? $times : False)))
 				{
-					echo '<p><b>'.lang('Error: %1 not found or other error !!!',$async->crontab)."</b></p>\n";
+					echo '<p><b>'.htmlspecialchars(lang('Error: %1 not found or other error !!!',$async->crontab))."</b></p>\n";
 				}
 				$_POST['asyncservice'] = $_POST['deinstall'] ? 'fallback' : 'crontab';
 			}
@@ -91,7 +91,8 @@ class admin_asyncservice
 
 		$last_run = $async->last_check_run();
 		$lr_date = $last_run['end'] ? Api\DateTime::server2user($last_run['end'],'') : lang('never');
-		echo '<p><b>'.lang('Async services last executed').'</b>: '.$lr_date.' ('.$last_run['run_by'].")</p>\n<hr>\n";
+		echo '<p><b>'. htmlspecialchars(lang('Async services last executed')).'</b>: '.
+			$lr_date.' ('.htmlspecialchars($last_run['run_by']).")</p>\n<hr>\n";
 
 		if (isset($_POST['asyncservice']) && $_POST['asyncservice'] != $GLOBALS['egw_info']['server']['asyncservice'])
 		{
@@ -107,28 +108,28 @@ class admin_asyncservice
 		}
 		$async_use['']    = lang('fallback (after each pageview)');
 		$async_use['off'] = lang('disabled (not recomended)');
-		echo '<p><b>'.lang('Run Asynchronous services').'</b>'.
+		echo '<p><b>'.htmlspecialchars(lang('Run Asynchronous services')).'</b>'.
 			' <select name="asyncservice" onChange="this.form.submit();">';
 		foreach ($async_use as $key => $label)
 		{
 			$selected = $key == $GLOBALS['egw_info']['server']['asyncservice'] ? ' selected' : '';
-			echo "<option value=\"$key\"$selected>$label</option>\n";
+			echo "<option value=\"$key\"$selected>".htmlspecialchars($label)."</option>\n";
 		}
 		echo "</select>\n";
 
 		if (is_array($installed) && isset($installed['cronline']))
 		{
-			echo ' &nbsp; <input type="submit" name="deinstall" value="'.lang('Deinstall crontab')."\">\n";
+			echo ' &nbsp; <input type="submit" name="deinstall" value="'.htmlspecialchars(lang('Deinstall crontab'))."\">\n";
 		}
 		echo "</p>\n";
 
 		if ($async->only_fallback)
 		{
-			echo '<p>'.lang('Under windows you need to install the asyncservice %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page-view !!!','<a href="http://www.egroupware.org/wiki/TimedAsyncServicesWindows" target="_blank">','</a>')."</p>\n";
+			echo '<p>'.htmlspecialchars(lang('Under windows you need to install the asyncservice %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page-view !!!','<a href="http://www.egroupware.org/wiki/TimedAsyncServicesWindows" target="_blank">','</a>'))."</p>\n";
 		}
 		else
 		{
-			echo '<p>'.lang('Installed crontab').": \n";
+			echo '<p>'.htmlspecialchars(lang('Installed crontab')).": \n";
 
 			if (is_array($installed) && isset($installed['cronline']))
 			{
@@ -136,34 +137,34 @@ class admin_asyncservice
 			}
 			elseif ($installed === 0)
 			{
-				echo '<b>'.lang('%1 not found or not executable !!!',$async->crontab)."</b></p>\n";
+				echo '<b>'.htmlspecialchars(lang('%1 not found or not executable !!!',$async->crontab))."</b></p>\n";
 			}
 			else
 			{
-				echo '<b>'.lang('asyncservices not yet installed or other error (%1) !!!',$installed['error'])."</b></p>\n";
+				echo '<b>'.htmlspecialchars(lang('asyncservices not yet installed or other error (%1) !!!',$installed['error']))."</b></p>\n";
 			}
-			echo '<p><input type="submit" name="install" value="'.lang('Install crontab')."\">\n".
-				lang("for the times below (empty values count as '*', all empty = every minute)")."</p>\n";
+			echo '<p><input type="submit" name="install" value="'.htmlspecialchars(lang('Install crontab'))."\">\n".
+				htmlspecialchars(lang("for the times below (empty values count as '*', all empty = every minute)"))."</p>\n";
 		}
 
 		echo "<hr><table border=0><tr>\n";
 		foreach ($units as $u => $ulabel)
 		{
-			echo " <td>$ulabel</td><td><input name=\"$u\" value=\"$times[$u]\" size=5> &nbsp; </td>\n";
+			echo " <td>$ulabel</td><td><input name=\"$u\" value=\"".htmlspecialchars($times[$u])."\" size=5> &nbsp; </td>\n";
 		}
 		echo "</tr><tr>\n <td colspan=4>\n";
-		echo ' <input type="submit" name="send" value="'.lang('Calculate next run').'"></td>'."\n";
+		echo ' <input type="submit" name="send" value="'.htmlspecialchars(lang('Calculate next run')).'"></td>'."\n";
 		echo ' <td colspan="8"><input type="checkbox" name="debug" value="1"'.($_POST['debug'] ? ' checked' : '')."> \n".
-			lang('Enable debug-messages')."</td>\n</tr></table>\n";
+			htmlspecialchars(lang('Enable debug-messages'))."</td>\n</tr></table>\n";
 
 		if ($_POST['send'])
 		{
 			$next = $async->next_run($times,True);
 
-			echo "<p>asyncservice::next_run(";print_r($times);echo")=".($next === False ? 'False':"'$next'=".Api\DateTime::server2user($next,''))."</p>\n";
+			echo "<p>asyncservice::next_run(". htmlspecialchars(json_encode($times, JSON_UNESCAPED_SLASHES)).")=".($next === False ? 'False':"$next=".Api\DateTime::server2user($next,''))."</p>\n";
 		}
-		echo '<hr><p><input type="submit" name="cancel" value="'.lang('Cancel TestJob!')."\"> &nbsp;\n";
-		echo '<input type="submit" name="test" value="'.lang('Start TestJob!')."\">\n";
+		echo '<hr><p><input type="submit" name="cancel" value="'.htmlspecialchars(lang('Cancel TestJob!'))."\"> &nbsp;\n";
+		echo '<input type="submit" name="test" value="'.htmlspecialchars(lang('Start TestJob!'))."\">\n";
 		echo lang('for the times above')."</p>\n";
 		echo '<p>'.lang('The TestJob sends you a mail everytime it is called.')."</p>\n";
 
@@ -173,11 +174,17 @@ class admin_asyncservice
 			echo "<table border=1>\n<tr>\n<th>Id</th><th style='width:18ex;'>".lang('Next run').'</th><th>'.lang('Times').'</th><th>'.lang('Method').'</th><th>'.lang('Data')."</th><th>".lang('LoginID')."</th></tr>\n";
 			foreach($jobs as $job)
 			{
-				echo "<tr>\n<td>$job[id]</td><td>".Api\DateTime::server2user($job['next'],'')."</td><td>";
-				print_r($job['times']);
-				echo "</td><td>$job[method]</td><td>";
-				print_r($job['data']);
-				echo "</td><td align=\"center\">".$GLOBALS['egw']->accounts->id2name($job[account_id])."</td></tr>\n";
+				echo "<tr>\n<td>$job[id]</td><td>".Api\DateTime::server2user($job['next'],'')."</td>\n";
+				echo "<td>".htmlspecialchars(json_encode($job['times'], JSON_UNESCAPED_SLASHES))."</td>\n";
+				echo "</td><td>".htmlspecialchars(str_replace('EGroupware\\', '', $job['method']))."</td>\n<td";
+				$data = is_array($job['data']) ? json_encode($job['data'], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) : $job['data'];
+				if (strlen($data) >= 64)
+				{
+					echo ' title="'.htmlspecialchars(json_encode($job['data'], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)).'"';
+					$data = substr($data, 0, 60).'...';
+				}
+				echo ">". htmlspecialchars($data)."</td>\n";
+				echo "<td align=\"center\">".htmlspecialchars($GLOBALS['egw']->accounts->id2name($job['account_id']))."</td></tr>\n";
 			}
 			echo "</table>\n";
 		}
@@ -185,7 +192,7 @@ class admin_asyncservice
 		{
 			echo lang('No jobs in the database !!!')."</p>\n";
 		}
-		echo '<p><input type="submit" name="update" value="'.lang('Update').'"></p>'."\n";
+		echo '<p><input type="submit" name="update" value="'.htmlspecialchars(lang('Update')).'"></p>'."\n";
 		echo "</form>\n";
 		echo $GLOBALS['egw']->framework->footer();
 	}
