@@ -1200,6 +1200,7 @@ app.classes.filemanager = AppJS.extend(
 		console.log("_data", _data);
 
 		var copy_link_to_clipboard = null;
+		var app = this;
 
 		var copy_link_to_clipboard = function(evt){
 			var $target = jQuery(evt.target);
@@ -1208,7 +1209,7 @@ app.classes.filemanager = AppJS.extend(
 				var successful = document.execCommand('copy');
 				if (successful)
 				{
-					egw.message('Share link copied into clipboard');
+					egw.message(app.egw.lang('Share link copied into clipboard'));
 					return true;
 				}
 			}
@@ -1221,7 +1222,7 @@ app.classes.filemanager = AppJS.extend(
 				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
 				return true;
 			},
-			title: _data.title ? _data.title : egw.lang("%1 Share Link", _data.action ==='shareWritableLink'? "Writable": "Readonly"),
+			title: _data.title ? _data.title : this.egw.lang((_data.action ==='shareWritableLink'? "Writable": "Readonly") +" Share Link"),
 			template: _data.template,
 			width: 450,
 			value: {content:{ "share_link": _data.share_link }}
