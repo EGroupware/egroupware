@@ -3923,8 +3923,7 @@ class Mail
 		$trashFolder    = $this->getTrashFolder();
 		$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['draftFolder'];
 		$templateFolder = $this->getTemplateFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['templateFolder'];
-		if((strtolower($_folder) == strtolower($trashFolder) && $deleteOptions == "move_to_trash") ||
-		   (strtolower($_folder) == strtolower($draftFolder))) {
+		if((strtolower($_folder) == strtolower($trashFolder) && $deleteOptions == "move_to_trash")) {
 			$deleteOptions = "remove_immediately";
 		}
 		if($this->icServer->getCurrentMailbox() != $_folder) {
