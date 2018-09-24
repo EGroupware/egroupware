@@ -3126,7 +3126,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				{
 					// Check to make sure it's in range first, record.data.date is start date
 					// and could be before our start
-					if(record.data.date >= bounds.first && record.data.date <= bounds.last)
+					if(record.data.date >= bounds.first && record.data.date <= bounds.last ||
+					// Or it's for a day we already have
+						typeof this.egw.dataGetUIDdata('calendar_daywise::'+record.data.date) !== 'undefined'
+					)
 					{
 						updated_days[record.data.date] = [];
 					}
