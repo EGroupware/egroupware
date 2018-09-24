@@ -7527,8 +7527,8 @@ class Mail
 			}
 
 			$AB_bo   = new \addressbook_bo();
-			$certkey = trim($AB_bo->get_smime_keys($cert->email));
-			if (!is_array($certkey) || strcasecmp($certkey[$cert->email], $cert->cert) != 0) $metadata['addtocontact'] = true;
+			$certkey = $AB_bo->get_smime_keys($cert->email);
+			if (!is_array($certkey) || strcasecmp(trim($certkey[$cert->email]), trim($cert->cert)) != 0) $metadata['addtocontact'] = true;
 		}
 		else // only encrypted message
 		{
