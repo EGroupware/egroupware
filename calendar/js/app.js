@@ -3143,9 +3143,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					start: typeof record.data.start === 'string' ? record.data.start : record.data.start.toJSON(),
 					end: typeof record.data.end === 'string' ? record.data.end : record.data.end.toJSON()
 				};
-				if(dates.start.substr(0,10) !== dates.end.substr(0,10) &&
-						// Avoid events ending at midnight having a 0 length event the next day
-						dates.end.substr(11,8) !== '00:00:00')
+				if(dates.start.substr(0,10) !== dates.end.substr(0,10))
 				{
 					var end = new Date(Math.min(new Date(record.data.end), new Date(state.last)));
 					end.setUTCHours(23);
@@ -3156,6 +3154,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					do
 					{
 						var expanded_date = ''+t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
+
+						// Avoid events ending at midnight having a 0 length event the next day
+						if(t.toJSON().substr(0,10) === dates.end.substr(0,10) && dates.end.substr(11,8) === '00:00:00') break;
+
 						if(typeof(updated_days[expanded_date]) === 'undefined')
 						{
 							// Check to make sure it's in range first, expanded_date could be after our end
@@ -3171,7 +3173,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						}
 						t.setUTCDate(t.getUTCDate() + 1);
 					}
-					while(end >= t)
+					while(end >= t )
 				}
 			}
 		}
