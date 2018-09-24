@@ -2630,6 +2630,7 @@ class calendar_ical extends calendar_boupdate
 					$vcardData['location']	= str_replace("\r\n", "\n", $attributes['value']);
 					break;
 				case 'RRULE':
+					unset($vcardData['recur_type']);	// it wont be set by +=
 					$vcardData += calendar_rrule::parseRrule($attributes['value']);
 					if (!empty($vcardData['recur_enddate'])) self::check_fix_endate ($vcardData);
 					break;
