@@ -108,8 +108,19 @@ input.et2_radiobox {
   padding-top: 0;
 }
 #addressbook-edit_adr_one_locality,
-#addressbook-edit_adr_two_locality {
-  margin-left: 5px;
+#addressbook-edit_adr_two_locality,
+#addressbook-edit_adr_one_postalcode,
+#addressbook-edit_adr_two_postalcode {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+#addressbook-edit_adr_one_postalcode,
+#addressbook-edit_adr_two_postalcode {
+  margin-right: -4px;
+}
+div.city_state_postcode #addressbook-edit_adr_two_postalcode,
+div.city_state_postcode #addressbook-edit_adr_one_postalcode {
+  margin-right: 5px !important;
 }
 #addressbook-edit_role {
   margin-right: 5px;
@@ -145,6 +156,12 @@ select#addressbook-index_col_filter\[tid\] {
 }
 #addressbook-index_nm .chzn-drop {
   width: auto;
+}
+#addressbook-edit_adr_one_region,
+#addressbook-edit_adr_two_region {
+  width: 130px;
+  vertical-align: middle;
+  margin-left: 3px;
 }
 @media all {
   /* #############################################################################

@@ -239,18 +239,23 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		var valid = this._super.apply(this, arguments);
 		var selected = this.input.siblings().find('a.chzn-single');
 		var val = _value && _value.selected ? _value.selected : this.value;
-		if (selected && selected.length == 1 && val)
+		switch (this._type)
 		{
-			selected.removeClass (function (index, className) {
-				return (className.match (/(^|\s)flag-\S+/g) || []).join(' ');
-			});
-			selected.find('span.img').remove();
-			selected.prepend('<span class="img"></span>');
-			selected.addClass('et2_country-select flag-'+ val.toLowerCase());
-		}
-		else if(selected)
-		{
-			selected.removeClass('et2_country-select');
+			case 'select-country':
+				if (selected && selected.length == 1 && val)
+				{
+					selected.removeClass (function (index, className) {
+						return (className.match (/(^|\s)flag-\S+/g) || []).join(' ');
+					});
+					selected.find('span.img').remove();
+					selected.prepend('<span class="img"></span>');
+					selected.addClass('et2_country-select flag-'+ val.toLowerCase());
+				}
+				else if(selected)
+				{
+					selected.removeClass('et2_country-select');
+				}
+				break;
 		}
 		return valid;
 	},

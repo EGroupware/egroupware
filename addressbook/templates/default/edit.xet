@@ -71,7 +71,7 @@
 					<url-phone id="tel_assistent" tabindex="23" class="et2_fullWidth"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
 					<description for="adr_one_locality" value="city" />
-					<hbox>
+					<hbox class="city_state_postcode">
 						<textbox statustext="ZIP Code" id="adr_one_postalcode" tabindex="13" width="24%" maxlength="64" autocomplete="postal-code"/>
 						<textbox statustext="City" id="adr_one_locality" tabindex="14" maxlength="64"  width="70%" autocomplete="address-level2"/>
 					</hbox>
@@ -82,7 +82,7 @@
 					<url-phone id="tel_fax" tabindex="24" class="et2_fullWidth" autocomplete="fax" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
 					<description for="adr_one_countryname" value="country"/>
-					<vbox width="100%">
+					<vbox  class="city_state_postcode" width="100%">
 						<menulist class="et2_fullWidth">
 							<menupopup type="select-country" submit="1" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_one_countrycode" tabindex="15" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
 						</menulist>
@@ -95,7 +95,7 @@
 					<url-phone id="tel_other" tabindex="25" class="et2_fullWidth"  autocomplete="tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 					<description value="Region"/>
-					<taglist-state statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_one_countrycode]" id="adr_one_region" tabindex="16" maxlength="64" class="et2_fullWidth" autocomplete="address-level1"/>
+					<taglist-state  class="city_state_postcode et2_fullWidth" statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_one_countrycode]" id="adr_one_region" tabindex="16" maxlength="64"/>
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
@@ -105,7 +105,7 @@
 					<description value="City"/>
 					<hbox>
 						<textbox statustext="City" id="adr_one_locality" size="30" maxlength="64" tabindex="13" autocomplete="address-level2"/>
-						<textbox statustext="State" id="adr_one_region" size="3" maxlength="64" tabindex="14" autocomplete="address-level1"/>
+						<taglist-state statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_one_countrycode]" id="adr_one_region" tabindex="14" width="130"/>
 						<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64" tabindex="15" autocomplete="postal-code"/>
 					</hbox>
 					<description/>
@@ -227,7 +227,7 @@
 					<url-phone id="tel_fax_home" tabindex="29" class="et2_fullWidth" autocomplete="section-two fax tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
 					<description for="adr_two_locality" value="city"/>
-					<hbox>
+					<hbox class="city_state_postcode">
 						<textbox statustext="ZIP Code" id="adr_two_postalcode" tabindex="34" width="24%" maxlength="64" autocomplete="section-two postal-code" />
 						<textbox statustext="City" id="adr_two_locality" maxlength="64" tabindex="36" width="70%" autocomplete="section-two address-level2" />
 					</hbox>
@@ -238,7 +238,7 @@
 					<url-phone id="tel_pager" tabindex="30" class="et2_fullWidth"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_pager,&amp;hearts;"/>
 					<description for="adr_two_countryname" value="country"/>
-					<vbox width="100%">
+					<vbox width="100%" class="city_state_postcode">
 						<menulist class="et2_fullWidth">
 							<menupopup type="select-country" tabindex="37" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="section-two country" />
 						</menulist>
@@ -251,7 +251,7 @@
 					<date id="bday" tabindex="31" options="Y-m-d"  year_range="c-90:c+2" class="et2_fullWidth"/>
 					<description/>
 					<description value="Region"/>
-					<taglist-state statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_two_region]" id="adr_two_region" tabindex="38" maxlength="64" class="et2_fullWidth" autocomplete="section-two address-level1" />
+					<taglist-state statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_two_countrycode]" id="adr_two_region" tabindex="38" maxlength="64" class="et2_fullWidth city_state_postcode"/>
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
@@ -261,7 +261,7 @@
 					<description value="City"/>
 					<hbox>
 						<textbox statustext="City" id="adr_two_locality" size="30" maxlength="64" autocomplete="section-two address-level2" />
-						<textbox statustext="State" id="adr_two_region" size="3" maxlength="64" autocomplete="section-two address-level1"/>
+						<taglist-state maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_one_countrycode]" statustext="State" id="adr_two_region" width="130"  autocomplete="section-two address-level1"/>
 						<textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64" autocomplete="section-two postal-code" />
 					</hbox>
 					<description/>
