@@ -9,6 +9,8 @@
 	margin-right: 10px;
 }
 
+.et2_country-select.flag-0 span.img,
+.et2_country-select.flag- span.img,
 .et2_country-select.flag--custom- span.img{
 	background-image: none;
 }

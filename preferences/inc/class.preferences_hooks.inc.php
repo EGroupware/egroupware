@@ -261,6 +261,7 @@ class preferences_hooks
 				'help'   => 'In which country are you. This is used to set certain defaults for you.',
 				'xmlrpc' => True,
 				'admin'  => False,
+				'values' => array(''),
 				'default'=> strtoupper($country),
 				'attributes' => array (
 					'tags' => true

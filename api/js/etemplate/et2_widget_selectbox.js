@@ -237,8 +237,9 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 
 	change: function(_node, _widget, _value) {
 		var valid = this._super.apply(this, arguments);
+		if (!this.input) return valid;
 		var selected = this.input.siblings().find('a.chzn-single');
-		var val = _value && _value.selected ? _value.selected : this.value;
+		var val = _value && _value.selected ? _value.selected : this.input.val();
 		switch (this._type)
 		{
 			case 'select-country':
@@ -549,6 +550,19 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			if (chosen.length > 0) {
 				chosen.removeClass('cat_'+this._oldValue);
 				chosen.addClass('cat_'+this.value);
+			}
+		}
+		if (this._type == 'select-country' && this.options.tags)
+		{
+			var selected = this.input.siblings().find('a.chzn-single');
+			if (selected && selected.length == 1 && _value)
+			{
+				selected.removeClass (function (index, className) {
+					return (className.match (/(^|\s)flag-\S+/g) || []).join(' ');
+				});
+				selected.find('span.img').remove();
+				selected.prepend('<span class="img"></span>');
+				selected.addClass('et2_country-select flag-'+ _value.toLowerCase());
 			}
 		}
 		this._oldValue = this.value;

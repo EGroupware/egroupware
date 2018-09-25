@@ -2881,6 +2881,12 @@ tr.dialogHeader2 td {padding-top:15px;}
 	box-shadow: 0px 0px 10px 2px #888888;
 }
 
+/*Posion the selected flag better*/
+a.chzn-single.et2_country-select span.img {
+    color: transparent;
+    top: -4px;
+}
+
 .et2_avatar {
 
 }
