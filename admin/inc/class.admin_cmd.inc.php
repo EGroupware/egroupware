@@ -498,6 +498,16 @@ abstract class admin_cmd
 		{
 			$query['col_filter']['remote_id'] = null;
 		}
+		if ((string)$query['col_filter']['periodic'] === '0')
+		{
+			$query['col_filter']['rrule'] = null;
+		}
+		else if ((string)$query['col_filter']['periodic'] === '1')
+		{
+			$query['col_filter'][] = 'cmd_rrule IS NOT NULL';
+		}
+		unset($query['col_filter']['periodic']);
+
 		return admin_cmd::$sql->get_rows($query,$rows,$readonlys);
 	}
 
@@ -1048,15 +1058,17 @@ abstract class admin_cmd
 		// instanciate single periodic execution object
 		$single = $cmd->as_array();
 		$single['parent'] = $single['id'];
-		unset($single['id'], $single['uid'], $single['rrule'], $single['created'], $single['modified'], $single['modifier']);
+		unset($single['id'], $single['uid'], $single['rrule'], $single['created'], $single['modified'], $single['modifier'], $single['async_job_id']);
 		$periodic = admin_cmd::instanciate($single);
 
 		try {
-			$periodic->run(null, false);
+			$value = $periodic->run(null, false);
 		}
 		catch (Exception $ex) {
 			error_log(__METHOD__."(".array2string($data).") periodic execution failed: ".$ex->getMessage());
 		}
+		$periodic->value = $value;
+		$periodic->save();
 	}
 
 	/**
