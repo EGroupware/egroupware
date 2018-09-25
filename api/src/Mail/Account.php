@@ -1553,9 +1553,9 @@ class Account implements \ArrayAccess
 	 * @param array|Account $account object or values for keys 'ident_(realname|org|email)', 'acc_(id|name|imap_username)'
 	 * @param boolean $replace_placeholders =true should placeholders like {{n_fn}} be replaced
 	 * @param int $account_id =null account_id of user we are called for
-	 * @return string with htmlencoded angle brackets
+	 * @return string|array with htmlencoded angle brackets, returns account details as array if return_array is true
 	 */
-	public static function identity_name($account, $replace_placeholders=true, $account_id=null)
+	public static function identity_name($account, $replace_placeholders=true, $account_id=null, $return_array=false)
 	{
 		if ($replace_placeholders)
 		{
@@ -1604,6 +1604,10 @@ class Account implements \ArrayAccess
 			catch(\Exception $e) {
 				_egw_log_exception($e);
 			}
+		}
+		if ($return_array)
+		{
+			return $account;
 		}
 		if (strlen(trim($account['ident_realname'].$account['ident_org'])))
 		{
