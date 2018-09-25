@@ -49,6 +49,8 @@ class admin_cmds
 				$row['title'] = $e->getMessage();
 			}
 
+			$row['value'] = $cmd->value;
+			
 			if(method_exists($cmd, 'summary'))
 			{
 				$row['data'] = $cmd->summary();
