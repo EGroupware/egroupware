@@ -320,7 +320,7 @@ class resources_bo
 		// we need an id to save pictures and make links...
 		if(!$resource['res_id'])
 		{
-			$resource['res_owner'] = $GLOBALS['egw_info']['user']['account_id'];
+			$resource['res_creator'] = $GLOBALS['egw_info']['user']['account_id'];
 			$resource['res_created'] = Api\DateTime::server2user(time(),'ts');
 			$resource['res_id'] = $this->so->save($resource);
 		}

@@ -181,7 +181,7 @@
 					<description value="Created by"/>
 					<hbox>
 						<menulist>
-							<menupopup type="select-account" id="res_owner" readonly="true"/>
+							<menupopup type="select-account" id="res_creator" readonly="true"/>
 						</menulist>
 						<date-time id="res_created" readonly="true" align="right"/>
 					</hbox>
