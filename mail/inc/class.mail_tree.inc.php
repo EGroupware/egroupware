@@ -30,6 +30,23 @@ class mail_tree
 	const DELIMITER = Mail::DELIMITER;
 
 	/**
+	 * bit flag: ident_realname
+	 */
+	const IDENT_NAME = 1;
+	/**
+	 * bit flag: ident_email
+	 */
+	const IDENT_EMAIL = 2;
+	/**
+	 * bit flag: ident_org
+	 */
+	const IDENT_ORG = 4;
+	/**
+	 * bit flag: ident_name
+	 */
+	const IDENT_NAME_IDENTITY= 8;
+
+	/**
 	 * Icons used for nodes different states
 	 *
 	 * @var array
@@ -460,7 +477,7 @@ class mail_tree
 		foreach(Mail\Account::search(true, false) as $acc_id => $accObj)
 		{
 			if (!$accObj->is_imap()|| $_profileID && $acc_id != $_profileID) continue;
-			$identity = Mail\Account::identity_name($accObj,true,$GLOBALS['egw_info']['user']['acount_id']);
+			$identity = self::getIdentityName(Mail\Account::identity_name($accObj,true,$GLOBALS['egw_info']['user']['acount_id'], true));
 			// Open top level folders for active account
 			$openActiveAccount = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] == $acc_id?1:0;
 
@@ -515,5 +532,45 @@ class mail_tree
 			}
 		}
 		return $tree;
+	}
+
+	/**
+	 * Build folder tree parent identity label
+	 *
+	 * @param array $_account
+	 * @return string
+	 */
+	static function getIdentityName ($_account)
+	{
+		$identLabel = $GLOBALS['egw_info']['user']['preferences']['mail']['identLabel'];
+		$name = array();
+
+		if ($identLabel & self::IDENT_NAME_IDENTITY)
+		{
+			$name[] = $_account['ident_name'];
+		}
+
+		if ($identLabel & self::IDENT_NAME)
+		{
+			$name[] = $_account['ident_realname']. ' ';
+		}
+
+		if ($identLabel & self::IDENT_ORG)
+		{
+			$name[] = $_account['ident_org'];
+		}
+
+		if ($identLabel & self::IDENT_EMAIL || empty($name))
+		{
+			if (strpos($_account['ident_email'], '@') !== false || trim($_account['ident_email']) !='')
+			{
+				$name[] = ' <'.$_account['ident_email'].'>';
+			}
+			elseif(strpos($_account['acc_imap_username'], '@') !== false || trim($_account['acc_imap_username']) !='')
+			{
+				$name[] = ' <'.$_account['acc_imap_username'].'>';
+			}
+		}
+		return implode(' ', $name);
 	}
 }

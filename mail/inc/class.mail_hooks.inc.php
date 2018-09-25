@@ -418,6 +418,23 @@ class mail_hooks
 					'autocomplete_url' => ' ',
 					'select_options' => $toggledOnActions
 				)
+			),
+			'identLabel' => array(
+				'type' => 'select',
+				'label' => 'Identity label',
+				'help' => 'Defines what to show as identity label on mail folder header',
+				'name' => 'identLabel',
+				'values' => array(
+					7 => lang('Real name Organization Email'),
+					3 => lang('Real name Email'),
+					14 => lang('Ident name Organization Email'),
+					10 => lang('Ident name Email'),
+					1 => lang('Real name'),
+					2 => lang('Email'),
+					4 => lang('Organization'),
+					8 => lang('Ident name')
+				),
+				'default' => 7
 			)
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
