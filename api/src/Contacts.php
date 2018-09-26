@@ -1053,13 +1053,28 @@ class Contacts extends Contacts\Storage
 			if($isUpdate && $old['bday'] !== $to_write['bday'] || !$isUpdate && $to_write['bday'])
 			{
 				$year = (int) date('Y',time());
-				Cache::unsetInstance(__CLASS__,"birthday-$year-{$to_write['owner']}");
+				$this->clear_birthday_cache($year, $to_write['owner']);
 				$year++;
-				Cache::unsetInstance(__CLASS__,"birthday-$year-{$to_write['owner']}");
+				$this->clear_birthday_cache($year, $to_write['owner']);
 			}
 		}
 
 		return $this->error ? false : $contact['id'];
+	}
+
+	/**
+	 * Since birthdays are cached for the instance for BIRTHDAY_CACHE_TIME, we
+	 * need to clear them if a birthday changes.
+	 *
+	 * @param type $year
+	 */
+	protected function clear_birthday_cache($year, $owner)
+	{
+		// Cache is kept per-language, so clear them all
+		foreach(array_keys(Translation::get_installed_langs()) as $lang)
+		{
+			Cache::unsetInstance(__CLASS__,"birthday-$year-{$owner}-$lang");
+		}
 	}
 
 	/**
