@@ -24,10 +24,10 @@ booked	resources	en	booked
 buy this article	resources	en	Buy this article
 buy this resource	resources	en	Buy this resource
 buyable	resources	en	Buyable
-categories admin	resources	en	Categories admin
+category admin	resources	en	Category admin
 category:	resources	en	Category:
 check all	resources	en	Check all
-choose categories admin	resources	en	Choose categories admin
+choose category admin	resources	en	Choose category admin
 clear selection	resources	en	Clear selection
 configure access permissions	admin	en	Configure ACL
 confirmation email text	resources	en	Confirmation email text

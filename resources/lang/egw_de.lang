@@ -24,10 +24,10 @@ booked	resources	de	gebucht
 buy this article	resources	de	Diesen Artikel kaufen
 buy this resource	resources	de	Diese Ressource kaufen
 buyable	resources	de	käuflich
-categories admin	resources	de	Verwalter der Kategorie
+category admin	resources	de	Verwalter der Kategorie
 category:	resources	de	Kategorie:
 check all	resources	de	Alle auswählen
-choose categories admin	resources	de	Wählen Sie einen Verwalter für diese Kategorie
+choose category admin	resources	de	Wählen Sie einen Verwalter für diese Kategorie
 clear selection	resources	de	Auswahl löschen
 configure access permissions	admin	de	Zugriffsrechte konfigurieren
 confirmation email text	resources	de	Text der Bestätigungsmail

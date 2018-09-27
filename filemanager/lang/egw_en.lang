@@ -116,6 +116,7 @@ enter setup user and password	filemanager	en	Enter setup user and password
 enter setup user and password to get root rights	filemanager	en	Enter setup user and password to get root rights
 enter the complete vfs path to specify a fast access link to a folder	filemanager	en	Enter the complete VFS path to specify a fast access link to a folder
 enter the complete vfs path to specify your desired start folder.	filemanager	en	Enter the complete VFS path to specify your start folder
+enter your file name	filemanager	en	Enter your file name
 error adding the acl!	filemanager	en	Error adding the ACL!
 error creating symlink to target %1!	filemanager	en	Error creating symlink to target %1!
 error deleting the acl entry!	filemanager	en	Error deleting the ACL entry!

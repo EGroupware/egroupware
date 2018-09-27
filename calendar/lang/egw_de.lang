@@ -407,6 +407,7 @@ only the initial date of that recurring event is checked!	calendar	de	Nur das St
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	de	Wird nur bei der Erstanzeige des Kalenders benutzt, danach immer die zuletzt ausgewählte Anzeige
 open todo's:	calendar	de	unerledigte Aufgaben:
 optional	calendar	de	Optional
+organizer	calendar	de	Organisator
 overlap holiday	calendar	de	überlappender Feiertag
 owner too	calendar	de	Auch Besitzer
 participant names by type	calendar	de	Teilnehmernamen nach Typ
