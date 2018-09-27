@@ -145,6 +145,10 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			this.createInputWidget();
 		}
+		if(!this.options.empty_label && this.options.multiple)
+		{
+			this.options.empty_label = this.egw().lang('Select some options');
+		}
 	},
 
 	destroy: function() {
@@ -372,13 +376,11 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			.addClass('ui-helper-reset')
 			.appendTo(header);
 
-		if(this.options.empty_label)
-		{
 			jQuery(document.createElement("span"))
 				.text(this.options.empty_label)
 				.addClass("ui-multiselect-header")
 				.appendTo(header);
-		}
+
 
 		// Set up for options to be added later
 		var options = this.multiOptions = jQuery(document.createElement("ul"));
