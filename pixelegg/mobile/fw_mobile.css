@@ -8452,6 +8452,7 @@ form[id^="wiki-"] .dialogHeadbar {
   body .popupMainDiv .et2_selectbox {
     height: 46px;
     padding-left: 8px;
+    outline: none;
   }
   body .popupMainDiv input,
   body .popupMainDiv select,
