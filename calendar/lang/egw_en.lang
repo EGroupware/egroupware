@@ -404,6 +404,7 @@ only the initial date of that recurring event is checked!	calendar	en	Only the i
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	en	Only used for first viewing of calendar, afterwards last selected view is used.
 open todo's:	calendar	en	Open ToDo's:
 optional	calendar	en	Optional
+organizer	calendar	en	Organizer
 overlap holiday	calendar	en	Overlap holiday
 owner too	calendar	en	Owner too
 participant names by type	calendar	en	Participant names by type
