@@ -145,7 +145,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			this.createInputWidget();
 		}
-		if(!this.options.empty_label && this.options.multiple)
+		if(!this.options.empty_label && !this.options.readonly && this.options.multiple)
 		{
 			this.options.empty_label = this.egw().lang('Select some options');
 		}
