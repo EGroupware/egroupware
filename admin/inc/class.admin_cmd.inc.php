@@ -220,6 +220,7 @@ abstract class admin_cmd
 					$this->exec(true);
 				}
 				catch (Exception $e) {
+					_egw_log_exception($e);
 					$this->error = $e->getMessage();
 					$ret = $this->errno = $e->getCode();
 					$this->status = admin_cmd::failed;
@@ -241,6 +242,7 @@ abstract class admin_cmd
 				if (is_null($this->status)) $this->status = admin_cmd::successful;
 			}
 			catch (Exception $e) {
+				_egw_log_exception($e);
 				$this->error = $e->getMessage();
 				$ret = $this->errno = $e->getCode();
 				$this->status = admin_cmd::failed;
@@ -989,6 +991,7 @@ abstract class admin_cmd
 				$cmd->run(null,false);	// false = dont set current user as modifier, as job is run by the queue/system itself
 			}
 			catch (Exception $e) {	// we need to mark that command as failed, to prevent further execution
+				_egw_log_exception($e);
 				admin_cmd::$sql->init($job);
 				admin_cmd::$sql->save(array(
 					'status' => admin_cmd::failed,
@@ -1065,6 +1068,7 @@ abstract class admin_cmd
 			$value = $periodic->run(null, false);
 		}
 		catch (Exception $ex) {
+			_egw_log_exception($ex);
 			error_log(__METHOD__."(".array2string($data).") periodic execution failed: ".$ex->getMessage());
 		}
 		$periodic->value = $value;
