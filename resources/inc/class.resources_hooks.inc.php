@@ -108,6 +108,7 @@ class resources_hooks
 			'type' => 'r',// one char type-identifiy for this resources
 			'icon' => 'calicon',//icon
 			'participants_header' => lang('resources'), // header of participants from this type
+			'check_invite' => 'resources_acl_bo::check_calendar_invite' // Check that the current user is allowed to invite the givent resource
 		);
 	}
 
