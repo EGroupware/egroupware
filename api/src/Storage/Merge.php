@@ -108,6 +108,14 @@ abstract class Merge
 	public $report_memory_usage = false;
 
 	/**
+	 * Save sent emails.  Used when merge template is an email.  Default is true,
+	 * to save sent emails in your sent folder.
+	 *
+	 * @var boolean
+	 */
+	public $keep_emails = true;
+
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -1656,7 +1664,7 @@ abstract class Merge
 				$mail_bo->openConnection();
 				try
 				{
-					$msgs = $mail_bo->importMessageToMergeAndSend($this, $content_url, $ids, $_folder='');
+					$msgs = $mail_bo->importMessageToMergeAndSend($this, $content_url, $ids, $_folder=($this->keep_emails ? '' : FALSE));
 				}
 				catch (Api\Exception\WrongUserinput $e)
 				{
