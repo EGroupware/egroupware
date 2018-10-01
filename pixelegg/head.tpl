@@ -13,6 +13,9 @@
 		{meta_robots}
 		<link rel="icon" href="{img_icon}" type="image/x-ico" />
 		<link rel="shortcut icon" href="{img_shortcut}" />
+		<link rel="stylesheet" href="/egroupware/api/js/offline/themes/offline-theme-slide.css">
+		<link rel="stylesheet" href="{webserver_url}/api/js/offline/themes/offline-language-{lang_code}.css">
+		<script src="{webserver_url}/api/js/offline/offline.min.js"></script>
 		{css_file}
 		<style type="text/css">
 			{app_css}

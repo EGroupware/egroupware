@@ -314,6 +314,44 @@
 				}
 			});
 
+			// Offline/Online checking part
+			if (typeof window.Offline != 'undefined')
+			{
+				Offline.options = {
+					// Should we check the connection status immediatly on page load.
+					checkOnLoad: false,
+
+					// Should we monitor AJAX requests to help decide if we have a connection.
+					interceptRequests: true,
+
+					// Should we automatically retest periodically when the connection is down (set to false to disable).
+					reconnect: {
+					  // How many seconds should we wait before rechecking.
+					  initialDelay: 3,
+
+					  // How long should we wait between retries.
+					  //delay: (1.5 * last delay, capped at 1 hour)
+					},
+
+					// Should we store and attempt to remake requests which fail while the connection is down.
+					requests: true,
+
+					checks: {
+						xhr: {
+							url: egw.webserverUrl+'/api/templates/default/images/favicon.png?'+Date.now()
+						}
+					}
+				};
+
+				window.Offline.on('down', function(){
+					this.loading_prompt('connectionLost', true, '', null);
+				}, egw(window));
+				window.Offline.on('up', function(){
+					jQuery('#egw_message').click()
+					this.loading_prompt('connectionLost', false);
+				}, egw(window));
+			}
+
 			// set app-header
 			if (window.framework && egw_script.getAttribute('data-app-header'))
 			{

@@ -12,6 +12,9 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="viewport" content="user-scalable=no,width=device-width" />
 		<link rel="apple-touch-icon" href="{webserver_url}/api/templates/default/images/logo64x64.png" />
+		<link rel="stylesheet" href="/egroupware/api/js/offline/themes/offline-theme-slide.css">
+		<link rel="stylesheet" href="{webserver_url}/api/js/offline/themes/offline-language-{lang_code}.css">
+		<script src="{webserver_url}/api/js/offline/offline.min.js"></script>
 		{pngfix}
 		{meta_robots}
 		<link rel="icon" href="{img_icon}" type="image/x-ico" />
