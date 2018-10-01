@@ -204,6 +204,20 @@ class resources_acl_bo
 		return $GLOBALS['egw']->acl->get_all_rights('L'.$cat_id,'resources');
 	}
 
+	static public function check_calendar_invite($uid)
+	{
+		$resources_config = Api\Config::read('resources');
+		$resources_so = new resources_so();
+		if ($resources_config['bookingrequests'] === 'disabled') {
+			$resources_so = new resources_so();
+			$cat_id = $resources_so->get_value('cat_id', intval(substr($uid, 1)));
+			return resources_acl_bo::is_permitted($cat_id, resources_acl_bo::DIRECT_BOOKING);
+		}
+		else
+		{
+			return true;
+		}
+	}
 
 	// privat functions from here on -------------------------------------------------------------------------
 	function save_sessiondata()

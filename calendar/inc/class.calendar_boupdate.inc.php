@@ -81,12 +81,6 @@ class calendar_boupdate extends calendar_bo
 	protected static $tz_cache = array();
 	
 	/**
-	 * The resources storage object
-	 * @var resources_so $resources_so
-	 */
-	protected $resources_so;
-
-	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -94,8 +88,6 @@ class calendar_boupdate extends calendar_bo
 		if ($this->debug > 0) $this->debug_message('calendar_boupdate::__construct() started',True);
 
 		parent::__construct();	// calling the parent constructor
-		
-		$this->resources_so = new resources_so();
 
 		if ($this->debug > 0) $this->debug_message('calendar_boupdate::__construct() finished',True);
 	}
@@ -515,17 +507,12 @@ class calendar_boupdate extends calendar_bo
 	 */
 	public function check_acl_invite($uid)
 	{
-		if (!is_numeric($uid))
+		if (!is_numeric($uid) && $this->resources[$uid[0]]['check_invite'])
 		{
-			$resources_config = Api\Config::read('resources');
-			if ($resources_config['bookingrequests'] === 'disabled') {
-				$cat_id = $this->resources_so->get_value('cat_id', intval(substr($uid, 1)));
-				return resources_acl_bo::is_permitted($cat_id, resources_acl_bo::DIRECT_BOOKING);
-			}
-			else
-			{
-				$ret = true;
-			}
+			// Resource specific ACL check
+			return call_user_func($this->resources[$uid[0]]['check_invite'], $uid);
+
+
 		}
 		elseif (!$this->require_acl_invite)
 		{
