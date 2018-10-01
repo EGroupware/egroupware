@@ -6863,8 +6863,8 @@ class Mail
 	 * @param Storage\Merge Storage\Merge bo_merge object
 	 * @param string $document the full filename
 	 * @param array $SendAndMergeTocontacts array of contact ids
-	 * @param string& $_folder (passed by reference) will set the folder used. must be set with a folder, but will hold modifications if
-	 *					folder is modified
+	 * @param string&|false $_folder (passed by reference) will set the folder used. must be set with a folder, but will hold modifications if
+	 *					folder is modified.  Set to false to not keep the message.
 	 * @param string& $importID ID for the imported message, used by attachments to identify them unambiguously
 	 * @return mixed array of messages with success and failed messages or exception
 	 */
@@ -6907,7 +6907,7 @@ class Mail
 
 			//_debug_array($Body);
 			$this->openConnection();
-			if (empty($_folder))
+			if (empty($_folder) && $_folder !== FALSE)
 			{
 				$_folder = $this->getSentFolder();
 			}
@@ -6923,6 +6923,11 @@ class Mail
 				$AltBody = ($html_body = $mailObject->findBody('html')) ? $html_body->getContents() : null;
 				//error_log(__METHOD__.' ('.__LINE__.') '.' AltBody:'.$AltBody);
 				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($mailObject->GetReplyTo()));
+
+				if(!$Body && !$AltBody)
+				{
+					throw new Exception\NotFound('No mail body in template "'.$document.'"');
+				}
 
 				// Fetch ReplyTo - Address if existing to check if we are to replace it
 				$replyTo = $mailObject->getReplyTo();
@@ -6949,7 +6954,7 @@ class Mail
 					$sendOK = $openComposeWindow = $openAsDraft = null;
 					//error_log(__METHOD__.' ('.__LINE__.') '.' Id To Merge:'.$val);
 					if (/*$GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&*/
-						count($SendAndMergeTocontacts) > 1 && $val &&
+						(count($SendAndMergeTocontacts) > 1 || $_folder === FALSE) && $val &&
 						(is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val))) // do the merge
 					{
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($mailObject));
@@ -7002,8 +7007,11 @@ class Mail
 						try {
 							$mailObject->send();
 							$message_id = $mailObject->getHeader('Message-ID');
-							$id = $this->appendMessage($_folder, $mailObject->getRaw(), '');
-							$importID = $id->current();
+							if($_folder)
+							{
+								$id = $this->appendMessage($_folder, $mailObject->getRaw(), '');
+								$importID = $id->current();
+							}
 						}
 						catch(Exception $e) {
 							$sendOK = false;
@@ -7048,7 +7056,10 @@ class Mail
 						if (!empty($Body)) $text_body->setContents($bo_merge->merge_string($Body, $val, $e, 'text/plain', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 						//error_log(__METHOD__.' ('.__LINE__.') '.' Result:'.$mailObject->Body.' error:'.array2string($e));
 						if (!empty($AltBody)) $html_body->setContents($bo_merge->merge_string($AltBody, $val, $e, 'text/html', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
-						$_folder = $this->getDraftFolder();
+						if(!$_folder !== false)
+						{
+							$_folder = $this->getDraftFolder();
+						}
 					}
 					if ($sendOK || $openAsDraft)
 					{
@@ -7084,7 +7095,7 @@ class Mail
 									$openComposeWindow = true;
 								}
 							}
-							else
+							else if ($_folder !== FALSE)
 							{
 								$savefailed = true;
 								$alert_msg .= lang("Saving of message %1 failed. Destination Folder %2 does not exist.",$Subject,$_folder);
