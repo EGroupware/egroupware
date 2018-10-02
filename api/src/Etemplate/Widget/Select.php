@@ -438,6 +438,12 @@ class Select extends Etemplate\Widget
 			$options += self::$request->sel_options[$name];
 		}
 
+		// Check for non-trivial name like a[b]
+		if(!$options)
+		{
+			$options = (array)self::get_array(self::$request->sel_options,$name);
+		}
+
 		// Check for base of name in root of sel_options
 		if(!$options)
 		{
