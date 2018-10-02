@@ -338,7 +338,7 @@
 
 					checks: {
 						xhr: {
-							url: egw.webserverUrl+'/api/templates/default/images/favicon.png?'+Date.now()
+							url: egw.webserverUrl+'/api/templates/default/images/favicon.ico?'+Date.now()
 						}
 					}
 				};
