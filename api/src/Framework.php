@@ -124,6 +124,22 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
+	 * Check if we have a valid and installed EGroupware template
+	 *
+	 * Templates are installed in their own directory and contain a setup/setup.inc.php file
+	 *
+	 * @param string $template
+	 * @return boolean
+	 */
+	public static function validTemplate($template)
+	{
+		return preg_match('/^[A-Z0-9_-]+$/i', $template) &&
+			file_exists(EGW_SERVER_ROOT.'/'.$template) &&
+			file_exists($file=EGW_SERVER_ROOT.'/'.$template.'/setup/setup.inc.php') &&
+			include_once($file) && !empty($GLOBALS['egw_info']['template'][$template]);
+	}
+
+	/**
 	 * Send HTTP headers: Content-Type and Content-Security-Policy
 	 */
 	public function send_headers()

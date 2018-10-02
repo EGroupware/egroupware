@@ -405,6 +405,37 @@ function api_upgrade16_9_003()
  */
 function api_upgrade16_9_004()
 {
+	// check if we have a valid template and/or theme
+	Api\Preferences::change_preference('common', '/^(template_set|theme)$/', function($attr, $value, $owner, $prefs)
+	{
+		static $template_set = null;
+
+		switch ($attr)
+		{
+			case 'template_set':
+				if (!Api\Framework::validTemplate($value))
+				{
+					$template_set = $owner;
+					$value = 'pixelegg';
+					break;
+				}
+				$template_set = null;
+				break;
+
+			case 'theme':
+				if ($template_set == $owner ||
+					// check template_set, as we can not garanty calling order
+					!Api\Framework::validTemplate($prefs['template_set']))
+				{
+					$value = null;
+				}
+				$template_set = null;
+				break;
+		}
+		if ($value !== $prefs[$attr]) error_log(__FUNCTION__."('$attr', '{$prefs[$attr]}', $owner, ...) setting $attr to ".array2string($value));
+		return $value;
+	});
+
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.1';
 }
 
