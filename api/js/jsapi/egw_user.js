@@ -103,7 +103,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 				egw.json('EGroupware\\Api\\Framework::ajax_user_list',[],
 					function(data) {
 						accountStore = jQuery.extend(true, {}, data||{});
-					}
+					}, this, false
 				).sendRequest();
 			}
 			if(type == 'both')
