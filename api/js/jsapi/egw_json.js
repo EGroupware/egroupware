@@ -67,7 +67,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		// as objects and loosing parameters which are undefined
 		// JSON.strigify([123,undefined]) --> '{"0":123}' instead of '[123,null]'
 		this.parameters = _parameters ? [].concat(_parameters) : [];
-		this.async = _async ? _async : false;
+		this.async = _async ? _async : true;
 		this.callback = _callback ? _callback : null;
 		this.context = _context ? _context : null;
 		this.sender = _sender ? _sender : null;
