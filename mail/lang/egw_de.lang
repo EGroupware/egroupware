@@ -393,6 +393,7 @@ please enter password	mail	de	Bitte geben Sie ein Passwort ein
 please select a address	mail	de	Bitte wählen Sie eine Adresse
 please select the number of days to wait between responses	mail	de	Bitte wählen wie viele Tage zwischen den Antworten gewartet werden soll.
 please supply the message to send with auto-responses	mail	de	Bitte geben Sie eine Nachricht ein, die mit der automatischen Antwort gesendet werden soll
+please wait while sending your mail	mail	de	Bitte warten, Ihre Mail wird gesendet
 post	mail	de	versenden
 prevent managing filters	mail	de	Zugriff auf Filterregeln deaktivieren
 prevent managing folders	mail	de	Zugriff auf die Ordnerverwaltung deaktivieren

@@ -666,13 +666,21 @@ etemplate2.prototype.autocomplete_fixer = function ()
  * Submit form via ajax
  *
  * @param {(et2_button|string)} button button widget or string with id
- * @param {boolean} async true: do an asynchronious submit, default is synchronious
+ * @param {boolean|string} async true: do an asynchronious submit, string: spinner message (please wait...)
+ * default is asynchronoush with message
  * @param {boolean} no_validation - Do not do individual widget validation, just submit their current values
  * @param {et2_widget|undefined} _container container to submit, default whole template
  * @return {boolean} true if submit was send, false if eg. validation stoped submit
  */
 etemplate2.prototype.submit = function(button, async, no_validation, _container)
 {
+	var api = this.widgetContainer.egw();
+
+	if (typeof async == 'undefined' || typeof async == 'string')
+	{
+		api.loading_prompt('et2_submit_spinner', true, api.lang(typeof async == 'string' ? async : 'Please wait...'));
+		async = true;
+	}
 	if(typeof no_validation == 'undefined')
 	{
 		no_validation = false;
@@ -751,8 +759,10 @@ etemplate2.prototype.submit = function(button, async, no_validation, _container)
 			// unbind our session-destroy handler, as we are submitting
 			this.unbind_unload();
 
-			var api = this.widgetContainer.egw();
-			var request = api.json(this.menuaction, [this.etemplate_exec_id, values, no_validation], null, this, async);
+
+			var request = api.json(this.menuaction, [this.etemplate_exec_id, values, no_validation], function(){
+				api.loading_prompt('et2_submit_spinner', false);
+			}, this, async);
 			request.sendRequest();
 		}
 		else
@@ -995,7 +1005,7 @@ etemplate2.prototype.print = function()
 	this.widgetContainer.iterateOver(function(_widget) {
 		// Skip widgets from a different etemplate (home)
 		if(_widget.getInstanceManager() != this) return;
-		
+
 		// Skip hidden widgets
 		if(jQuery(_widget.getDOMNode()).filter(':visible').length === 0) return;
 
