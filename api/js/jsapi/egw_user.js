@@ -104,7 +104,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 					function(data) {
 						accountStore = jQuery.extend(true, {}, data||{});
 					}, this, false
-				).sendRequest();
+				).sendRequest(false);
 			}
 			if(type == 'both')
 			{
