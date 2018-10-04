@@ -139,15 +139,16 @@ class timesheet_merge extends Api\Storage\Merge
 			if(!$array['#'.$name]) $array['#'.$name] = '';
 		}
 
-		// Links
-		$array += $this->get_all_links('timesheet', $id, $prefix, $content);
-
 		// Add markers
 		foreach($array as $key => &$value)
 		{
 			if(!$value) $value = '';
 			$info['$$'.($prefix ? $prefix.'/':'').$key.'$$'] = $value;
 		}
+
+		// Links
+		$info += $this->get_all_links('timesheet', $id, $prefix, $content);
+
 		return $info;
 	}
 
