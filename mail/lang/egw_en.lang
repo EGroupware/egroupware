@@ -386,6 +386,7 @@ please enter password	mail	en	Please enter password
 please select a address	mail	en	Please select a address
 please select the number of days to wait between responses	mail	en	Please select the number of days to wait between responses
 please supply the message to send with auto-responses	mail	en	Please supply the message to send with auto-responses
+please wait while sending your mail	mail	en	Please wait while sending your mail
 post	mail	en	post
 prevent managing filters	mail	en	Prevent managing filters
 prevent managing folders	mail	en	Prevent managing folders

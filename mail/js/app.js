@@ -5270,7 +5270,7 @@ app.classes.mail = AppJS.extend(
 			});
 			return false;
 		}
-		this.et2._inst.submit();
+		this.et2._inst.submit(null, 'Please wait while sending your mail');
 	},
 
 	/**
