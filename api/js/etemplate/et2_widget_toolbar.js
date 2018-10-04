@@ -479,9 +479,10 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 		var button = jQuery(document.createElement('button'))
 			.addClass("et2_button et2_button_text et2_button_with_image")
 			.attr('id', this.id+'-'+action.id)
-			.attr('title', (action.hint ? action.hint : action.caption) + (action.shortcut ? ' ('+action.shortcut.caption+')' : ''))
 			.attr('type', 'button')
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:jQuery('[data-group='+action.group+']',this.actionlist));
+
+		this.egw().tooltipBind(button, action.hint ? action.hint : action.caption) + (action.shortcut ? ' ('+action.shortcut.caption+')' : '');
 
 		if (action && action.checkbox)
 		{
