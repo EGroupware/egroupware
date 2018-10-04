@@ -121,9 +121,6 @@ class infolog_merge extends Api\Storage\Merge
 			}
 		}
 
-		// Links
-		$array += $this->get_all_links('infolog', $id, $prefix, $content);
-
 		// Timesheet time
 		if(strpos($content, 'info_sum_timesheets'))
 		{
@@ -152,6 +149,9 @@ class infolog_merge extends Api\Storage\Merge
 			if(!$value) $value = '';
 			$info['$$'.($prefix ? $prefix.'/':'').$key.'$$'] = $value;
 		}
+
+		// Links
+		$info += $this->get_all_links('infolog', $id, $prefix, $content);
 
 		// Add contact fields
 		if($array['info_link'] && $array['info_link']['app'] && $array['info_link']['id'])
