@@ -275,18 +275,6 @@ class Egw extends Egw\Base
 			   echo $GLOBALS['egw']->framework->navbar();
 			}
 		}
-
-		// Load the (depricated) app include files if they exists
-		if (EGW_APP_INC != "" && ! preg_match ('/phpgwapi/i', EGW_APP_INC) &&
-			file_exists(EGW_APP_INC . '/functions.inc.php') && !isset($_GET['menuaction']))
-		{
-			include(EGW_APP_INC . '/functions.inc.php');
-		}
-		if (!@$GLOBALS['egw_info']['flags']['noheader'] && !@$GLOBALS['egw_info']['flags']['noappheader'] &&
-			file_exists(EGW_APP_INC . '/header.inc.php') && !isset($_GET['menuaction']))
-		{
-			include(EGW_APP_INC . '/header.inc.php');
-		}
 	}
 
 	/**
