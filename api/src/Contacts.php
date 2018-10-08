@@ -1505,12 +1505,16 @@ class Contacts extends Contacts\Storage
 			$type = null;
 		}
 		$title =  $this->fileas($contact,$type);
-		$field_list = is_string($this->prefs['link_title_cf']) ? explode(',', $this->prefs['link_title_cf']) : $this->prefs['link_title_cf'];
-		foreach ($field_list as $field)
+
+		if (!empty($this->prefs['link_title_cf']))
 		{
-			if($contact['#'.$field])
+			$field_list = is_string($this->prefs['link_title_cf']) ? explode(',', $this->prefs['link_title_cf']) : $this->prefs['link_title_cf'];
+			foreach ($field_list as $field)
 			{
-			   $title .= ', ' . $contact['#'.$field];
+				if($contact['#'.$field])
+				{
+				   $title .= ', ' . $contact['#'.$field];
+				}
 			}
 		}
 		return $title ;
