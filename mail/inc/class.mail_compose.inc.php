@@ -504,7 +504,6 @@ class mail_compose
 			{
 				try
 				{
-					$GLOBALS['egw']->session->commit_session();
 					$success = $this->send($_content);
 					if ($success==false)
 					{
@@ -3162,6 +3161,11 @@ class mail_compose
 		//error_log("Folder:".count(array($this->sessionData['folder']))."To:".count((array)$this->sessionData['to'])."CC:". count((array)$this->sessionData['cc']) ."bcc:".count((array)$this->sessionData['bcc']));
 		if(count((array)$this->sessionData['to']) > 0 || count((array)$this->sessionData['cc']) > 0 || count((array)$this->sessionData['bcc']) > 0) {
 			try {
+				// do no close the session before sending, if we have to store the send text for infolog or other integration in the session
+				if (!($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on' || $_formData['to_calendar'] == 'on' ))
+				{
+					$GLOBALS['egw']->session->commit_session();
+				}
 				$mail->send();
 			}
 			catch(Exception $e) {
