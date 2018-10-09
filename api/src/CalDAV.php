@@ -2009,7 +2009,12 @@ class CalDAV extends HTTP_WebDAV_Server
 			$user = $GLOBALS['egw_info']['user']['account_id'];
 		}
 
-		$id = array_pop($parts);
+		// Api\WebDAV\Server encodes %, # and ? again, which leads to storing eg. '%' as '%25'
+		$id = strtr(array_pop($parts), array(
+			'%25' => '%',
+			'%23' => '#',
+			'%3F' => '?',
+		));
 
 		$ok = ($id || isset($_GET['add-member']) && $_SERVER['REQUEST_METHOD'] == 'POST') &&
 			($user || $user === 0) && in_array($app,array('addressbook','calendar','infolog','principals'));
