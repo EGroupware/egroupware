@@ -1365,9 +1365,9 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			// Work around problems with Outlook CalDAV Synchroniser (https://caldavsynchronizer.org/)
 			// - sends a DELETE to reject a meeting request --> deletes event for all participants, if user has delete rights on the calendar
 			// --> only set status for everyone else but the organizer
-			self::get_agent() == 'caldavsynchronizer' && $event['owner'] != $user)
+			self::get_agent() == 'caldavsynchronizer' && is_array($event) && $event['owner'] != $user)
 		{
- 			if (!$return_no_access || $event['owner'] != $user)
+ 			if (is_array($event) && (!$return_no_access || $event['owner'] != $user))
 			{
 				// check if user is a participant or one of the groups he is a member of --> reject the meeting request
 				$ret = '403 Forbidden';
