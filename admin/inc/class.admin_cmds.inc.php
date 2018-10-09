@@ -50,7 +50,7 @@ class admin_cmds
 			}
 
 			$row['value'] = $cmd->value;
-			
+
 			if(method_exists($cmd, 'summary'))
 			{
 				$row['data'] = $cmd->summary();
@@ -126,11 +126,14 @@ class admin_cmds
 			0 => 'no',
 			1 => 'yes'
 		);
-		$tpl->exec('admin.admin_cmds.index',$content,array(
+		$sel_options = array(
 			'periodic' => $periodic,
 			'status' => admin_cmd::$stati,
 			'remote_id' => admin_cmd::remote_sites(),
-		),array(),$content);
+			'type' => admin_cmd::get_cmd_labels()
+		);
+
+		$tpl->exec('admin.admin_cmds.index',$content,$sel_options,array(),$content);
 	}
 
 	/**

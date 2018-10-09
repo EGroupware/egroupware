@@ -15,11 +15,15 @@
 				<column width="30%" minWidth="120"/>
 				<column/>
 				<column/>
+				<column/>
+				<column/>
 			</columns>
 			<rows>
 				<row class="th">
 					<nextmatch-header label="Title" id="title"/>
-					<nextmatch-header label="Requested" id="requested"/>
+					<nextmatch-filterheader empty_label="Type" id="type"/>
+					<nextmatch-accountfilter empty_label="Requested" id="requested"/>
+					<nextmatch-header label="Comment" id="comment"/>
 					<nextmatch-sortheader label="Scheduled" id="scheduled"/>
 					<nextmatch-filterheader empty_label="Periodic" id="periodic"/>
 					<nextmatch-filterheader options="Remote" id="remote_id"/>
@@ -31,7 +35,9 @@
 				</row>
 				<row class="row $row_cont[class]">
 					<description id="${row}[title]" statustext="$row_cont[data]"/>
+					<select id="${row}[type]" readonly="true"/>
 					<url-email id="${row}[requested_email]" readonly="true" statustext="$row_cont[comment]"/>
+					<description id="${row}[comment]"/>
 					<date-time id="${row}[scheduled]" readonly="true"/>
 					<description id="${row}[rrule]"/>
 					<select id="${row}[remote_id]" readonly="true"/>
