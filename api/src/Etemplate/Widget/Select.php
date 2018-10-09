@@ -439,15 +439,20 @@ class Select extends Etemplate\Widget
 		}
 
 		// Check for non-trivial name like a[b]
+		$name_parts = explode('[',str_replace(array('&#x5B;','&#x5D;',']'),array('['),$name));
 		if(!$options)
 		{
 			$options = (array)self::get_array(self::$request->sel_options,$name);
+			if(is_numeric(end($name_parts)) && $options['label'] && $options['value'])
+			{
+				// Too deep, we got a single option
+				$options = array();
+			}
 		}
 
 		// Check for base of name in root of sel_options
 		if(!$options)
 		{
-			$name_parts = explode('[',str_replace(array('&#x5B;','&#x5D;',']'),array('['),$name));
 			if (count($name_parts))
 			{
 				$org_name = $name_parts[count($name_parts)-1];
