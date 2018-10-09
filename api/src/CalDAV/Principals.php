@@ -1671,11 +1671,12 @@ class Principals extends Handler
 	 *
 	 * @param array &$options
 	 * @param int $id
+	 * @param int $user account_id of collection owner
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function delete(&$options,$id)
+	function delete(&$options,$id,$user)
 	{
-		unset($options, $id);	// not used, but required by function signature
+		unset($options, $id, $user);	// not used, but required by function signature
 
 		return false;
 	}
