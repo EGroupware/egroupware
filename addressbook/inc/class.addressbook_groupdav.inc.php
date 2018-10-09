@@ -935,10 +935,13 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	 *
 	 * @param array &$options
 	 * @param int $id
+	 * @param int $user account_id of collection owner
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function delete(&$options,$id)
+	function delete(&$options,$id,$user)
 	{
+		unset($user);	// not used, but required by function signature
+
 		if (!is_array($contact = $this->_common_get_put_delete('DELETE',$options,$id)))
 		{
 			return $contact;

@@ -1774,7 +1774,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		if (($handler = self::app_handler($app)))
 		{
-			$status = $handler->delete($options,$id);
+			$status = $handler->delete($options,$id,$user);
 			// set default stati: true --> 204 No Content, false --> should be already handled
 			if (is_bool($status)) $status = $status ? '204 No Content' : '400 Something went wrong';
 			return $status;
