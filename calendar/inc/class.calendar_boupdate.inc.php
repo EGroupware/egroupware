@@ -511,8 +511,10 @@ class calendar_boupdate extends calendar_bo
 		{
 			// Resource specific ACL check
 			return call_user_func($this->resources[$uid[0]]['check_invite'], $uid);
-
-
+		}
+		elseif (!is_numeric($uid)) // contact, no grant required
+		{
+			$ret = true;
 		}
 		elseif (!$this->require_acl_invite)
 		{
