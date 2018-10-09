@@ -274,9 +274,9 @@ abstract class Handler
 	 *  - etag handling for precondition failed and not modified
 	 *
 	 * @param string $method GET, PUT, DELETE
-	 * @param array &$options
-	 * @param int|string &$id on return self::$path_extension got removed
-	 * @param boolean &$return_no_access=false if set to true on call, instead of '403 Forbidden' the entry is returned and $return_no_access===false
+	 * @param array& $options
+	 * @param int|string& $id on return self::$path_extension got removed
+	 * @param boolean& $return_no_access =false if set to true on call, instead of '403 Forbidden' the entry is returned and $return_no_access===false
 	 * @param boolean $ignore_if_match =false if true, ignore If-Match precondition
 	 * @return array|string entry on success, string with http-error-code on failure, null for PUT on an unknown id
 	 */
@@ -657,8 +657,7 @@ abstract class Handler
 			$type = $this->accounts->get_type($entry['owner']) == 'u' ? 'users' : 'groups';
 			$props['owner'] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.$type.'/'.$account_lid.'/');
 		}
-		// we urldecode here, as Api\CalDAV uses a minimal (#?%) urlencoding for incomming pathes and urlencodes pathes in propfind
-		return $this->caldav->add_resource($path.urldecode($this->get_path($entry)), $props, $privileges);
+		return $this->caldav->add_resource($path.$this->get_path($entry), $props, $privileges);
 	}
 
 	/**
