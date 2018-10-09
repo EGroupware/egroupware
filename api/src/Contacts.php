@@ -1670,67 +1670,84 @@ class Contacts extends Contacts\Storage
 		if (!$GLOBALS['egw_info']['user']['apps']['calendar']) return array();
 
 		$bocal = new calendar_bo();
-		$events = $bocal->search(array(
-			'start' => strtotime('2 years ago'),
-			'end'	=> strtotime('2 years from now'),
-			'users' => $uids,
-			'enum_recuring' => true,
-		));
-		if (!$events) return array();
+		$sql = 'SELECT n_fn,org_name,contact_id,
+			(
+				select concat(cal_start,":",egw_cal_user.cal_id,":",cal_title)
+				from egw_cal_user
+				JOIN egw_cal_dates on egw_cal_dates.cal_id=egw_cal_user.cal_id and (cal_recur_date=0 or cal_recur_date=cal_start)
+				JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id
+				WHERE cal_user_type="c" and cal_user_id=contact_id and cal_start < unix_timestamp(now())';
+		if ( !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected'])
+		{
+			$sql .= ' AND egw_cal_user.cal_status != "R"';
+		}
+		$sql .= '
+				order by cal_start DESC Limit 1
+			) as last_event,
+			(
+				select concat(cal_start,":",egw_cal_user.cal_id,":",cal_title)
+				FROM egw_cal_user
+				JOIN egw_cal_dates on egw_cal_dates.cal_id=egw_cal_user.cal_id and (cal_recur_date=0 or cal_recur_date=cal_start)
+				JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id
+				WHERE cal_user_type="c" and cal_user_id=contact_id and cal_start > unix_timestamp(now())';
+		if ( !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected'])
+		{
+			$sql .= ' AND egw_cal_user.cal_status != "R"';
+		}
+		$sql .= 'order by cal_start DESC Limit 1
+
+			) as next_event
+			FROM egw_addressbook
+			WHERE CONCAT("c",contact_id) IN ('.implode(',', array_map(array($this->db, 'quote'), $uids)).')';
+
+
+		$contacts =& $this->db->query($sql, __LINE__, __FILE__);
+
+		if (!$contacts) return array();
 
 		//_debug_array($events);
 		$calendars = array();
-		foreach($events as $event)
+		foreach($contacts as $contact)
 		{
-			foreach($event['participants'] as $uid => $status)
+			if($contact['last_event'])
 			{
-				if ($status == 'R' && !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected'])
-				{
-					continue;
-				}
+				list($start, $cal_id, $title) = explode(':', $contact['last_event']);
 
-				if ($event['start'] < $this->now_su)	// past event --> check for last event
+				$link = array(
+					'id' => $cal_id,
+					'app' => 'calendar',
+					'title' => $bocal->link_title($cal_id),
+					'extra_args' => array(
+						'date' => date('Ymd',$start),
+					),
+				);
+				if ($extra_title)
 				{
-					if (!isset($calendars[$uid]['last_event']) || $event['start'] > $calendars[$uid]['last_event'])
-					{
-						$calendars[$uid]['last_event'] = $event['start'];
-						$link = array(
-							'id' => $event['id'],
-							'app' => 'calendar',
-							'title' => $bocal->link_title($event),
-							'extra_args' => array(
-								'date' => date('Ymd',$event['start']),
-							),
-						);
-						if ($extra_title)
-						{
-							$link['extra_title'] = $link['title'];
-							$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']);
-						}
-						$calendars[$uid]['last_link'] = $link;
-					}
+					$link['extra_title'] = $link['title'];
+					$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$start);
 				}
-				else	// future event --> check for next event
+				$calendars['c'.$contact['contact_id']]['last_event'] = $start;
+				$calendars['c'.$contact['contact_id']]['last_link'] = $link;
+			}
+			if($contact['next_event'])
+			{
+				list($start, $cal_id, $title) = explode(':', $contact['next_event']);
+
+				$link = array(
+					'id' => $cal_id,
+					'app' => 'calendar',
+					'title' => $bocal->link_title($cal_id),
+					'extra_args' => array(
+						'date' => date('Ymd',$start),
+					),
+				);
+				if ($extra_title)
 				{
-					if (!isset($calendars[$uid]['next_event']) || $event['start'] < $calendars[$uid]['next_event'])
-					{
-						$calendars[$uid]['next_event'] = $event['start'];
-						$link = array(
-							'id' => $event['id'],
-							'app' => 'calendar',
-							'title' => $bocal->link_title($event),
-							'extra_args' => array(
-								'date' => date('Ymd',$event['start']),
-							),
-						);
-						if ($extra_title)
-						{
-							$link['extra_title'] = $link['title'];
-							$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']);
-						}
-						$calendars[$uid]['next_link'] = $link;
-					}
+					$link['extra_title'] = $link['title'];
+					$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$start);
 				}
+				$calendars['c'.$contact['contact_id']]['next_event'] = $start;
+				$calendars['c'.$contact['contact_id']]['next_link'] = $link;
 			}
 		}
 		return $calendars;
