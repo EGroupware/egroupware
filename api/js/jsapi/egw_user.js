@@ -183,7 +183,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						}
 						_callback.call(_context, data);
 					}
-				).sendRequest();
+					).sendRequest();
 			}
 			else
 			{
@@ -214,20 +214,47 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 					if (field.indexOf('{') == -1)
 					{
 						data = _data[user];
+						target.set_value(data);
 					}
 					else
 					{
 						data = field;
-						var match;
-						while((match = data.match(/{([^}]+)}/)))
+
+						/**
+						 * resolve given data whilst the condition met
+						 */
+						const resolveData = function(_d, condition, action) {
+							var whilst = function (_d) {
+								return condition(_d) ? action(condition(_d)).then(whilst) : Promise.resolve(_d);
+							}
+							return whilst(_d);
+						};
+
+						/**
+						 * get data promise
+						 */
+						const getData = function(_match)
 						{
-							egw.accountData(user, match[1], false, function(_data)
+							var match = _match;
+							return new Promise(function(resolve)
 							{
-								data = data.replace(/{([^}]+)}/, _data[user]);
+							  egw.accountData(user, match, false, function(_d)
+								{
+									data = data.replace(/{([^}]+)}/, _d[user]);
+									resolve(data);
+								});
 							});
-						}
+						};
+
+						// run rsolve data
+						resolveData(data, function(_d){
+							var r = _d.match(/{([^}]+)}/);
+							return r && r.length > 0 ? r[1] : r;
+						},
+						getData).then(function(data){
+							target.set_value(data)
+						});
 					}
-					target.set_value(data);
 				});
 			};
 		},
