@@ -98,21 +98,6 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$this->bo = new calendar_boupdate();
 		$this->vCalendar = new Horde_Icalendar;
 
-		if (self::get_agent() == 'caldavsynchronizer')
-		{
-			// Work around problems with Outlook CalDAV Synchroniser (https://caldavsynchronizer.org/)
-			// - sends a DELETE to reject a meeting request --> deletes event for all participants, if user has delete rights on the calendar
-			// - always sends all participants back with status NEEDS-ACTION --> resets status of all participant, if user has edit rights
-			// --> remove all add, edit, delete rights from other users
-			foreach($this->bo->grants as $user => &$grant)
-			{
-				if ($user != $this->bo->user)
-				{
-					$grant &= ~(Api\Acl::ADD | Api\Acl::EDIT | Api\Acl::DELETE);
-				}
-			}
-		}
-
 		// since 1.9.003 we allow clients to specify the URL when creating a new event, as specified by CalDAV
 		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
 		{
@@ -930,7 +915,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				}
 			}
 			// if no edit-rights (aka no organizer), update only attendee stuff: status and alarms
-			if (!$this->check_access(Acl::EDIT, $oldEvent))
+			if (!$this->check_access(Acl::EDIT, $oldEvent) ||
+				// Work around problems with Outlook CalDAV Synchroniser (https://caldavsynchronizer.org/)
+				// - always sends all participants back with status NEEDS-ACTION --> resets status of all participant, if user has edit rights
+				// --> allow full updates only for organizer
+				self::get_agent() == 'caldavsynchronizer' && $oldEvent['owner'] != $user)
 			{
 				$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 				$user_and_memberships[] = $user;
@@ -1362,18 +1351,23 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @todo remove (non-virtual) exceptions, if series master gets deleted
 	 * @param array &$options
 	 * @param int $id
+	 * @param int $user account_id of collection owner
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function delete(&$options,$id)
+	function delete(&$options,$id,$user)
 	{
 		if (strpos($options['path'], '/inbox/') !== false)
 		{
 			return true;	// simply ignore DELETE in inbox for now
 		}
 		$return_no_access = true;	// to allow to check if current use is a participant and reject the event for him
-		if (!is_array($event = $this->_common_get_put_delete('DELETE',$options,$id,$return_no_access)) || !$return_no_access)
+		if (!is_array($event = $this->_common_get_put_delete('DELETE',$options,$id,$return_no_access)) || !$return_no_access ||
+			// Work around problems with Outlook CalDAV Synchroniser (https://caldavsynchronizer.org/)
+			// - sends a DELETE to reject a meeting request --> deletes event for all participants, if user has delete rights on the calendar
+			// --> only set status for everyone else but the organizer
+			self::get_agent() == 'caldavsynchronizer' && $event['owner'] != $user)
 		{
- 			if (!$return_no_access)
+ 			if (!$return_no_access || $event['owner'] != $user)
 			{
 				// check if user is a participant or one of the groups he is a member of --> reject the meeting request
 				$ret = '403 Forbidden';
