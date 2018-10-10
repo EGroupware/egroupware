@@ -1992,6 +1992,9 @@ class calendar_bo
 					case 'owner':
 						$extra_fields [$val] = Api\Accounts::id2name($event[$val], 'account_fullname');
 						break;
+					case 'category':
+						$extra_fields [$val] = Api\Categories::id2name($event[$val]);
+						break;
 					default:
 						$extra_fields [] = $event[$val];
 				}
