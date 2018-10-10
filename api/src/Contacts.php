@@ -1676,7 +1676,7 @@ class Contacts extends Contacts\Storage
 		$bocal = new calendar_bo();
 		$sql = 'SELECT n_fn,org_name,contact_id,
 			(
-				select concat(cal_start,":",egw_cal_user.cal_id,":",cal_title)
+				select concat(cal_start,":",egw_cal_user.cal_id)
 				from egw_cal_user
 				JOIN egw_cal_dates on egw_cal_dates.cal_id=egw_cal_user.cal_id and (cal_recur_date=0 or cal_recur_date=cal_start)
 				JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id
@@ -1689,7 +1689,7 @@ class Contacts extends Contacts\Storage
 				order by cal_start DESC Limit 1
 			) as last_event,
 			(
-				select concat(cal_start,":",egw_cal_user.cal_id,":",cal_title)
+				select concat(cal_start,":",egw_cal_user.cal_id)
 				FROM egw_cal_user
 				JOIN egw_cal_dates on egw_cal_dates.cal_id=egw_cal_user.cal_id and (cal_recur_date=0 or cal_recur_date=cal_start)
 				JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id
@@ -1728,7 +1728,7 @@ class Contacts extends Contacts\Storage
 				if ($extra_title)
 				{
 					$link['extra_title'] = $link['title'];
-					$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$start);
+					$link['title'] = \EGroupware\Api\DateTime::server2user($start, true);
 				}
 				$calendars['c'.$contact['contact_id']]['last_event'] = $start;
 				$calendars['c'.$contact['contact_id']]['last_link'] = $link;
@@ -1748,7 +1748,7 @@ class Contacts extends Contacts\Storage
 				if ($extra_title)
 				{
 					$link['extra_title'] = $link['title'];
-					$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$start);
+					$link['title'] = \EGroupware\Api\DateTime::server2user($start, true);
 				}
 				$calendars['c'.$contact['contact_id']]['next_event'] = $start;
 				$calendars['c'.$contact['contact_id']]['next_link'] = $link;
