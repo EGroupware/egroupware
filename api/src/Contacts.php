@@ -1673,14 +1673,34 @@ class Contacts extends Contacts\Storage
 	{
 		if (!$GLOBALS['egw_info']['user']['apps']['calendar']) return array();
 
+		$split_uids = array();
+		$events = array();
+
+		foreach($uids as $id => $uid)
+		{
+			$type = is_numeric($uid[0]) ? 'u' : $uid[0];
+			$split_uids[$type][$id] = str_replace($type, '', $uid);
+		}
+
+		foreach($split_uids as $type => $s_uids)
+		{
+			$events += $this->read_calendar_type($s_uids, $type, $extra_title);
+		}
+		return $events;
+	}
+
+	private function read_calendar_type($uids, $type='c', $extra_title = true)
+	{
+		$calendars = array();
 		$bocal = new calendar_bo();
-		$sql = 'SELECT n_fn,org_name,contact_id,
+		$type_field = $type=='u' ? 'account_id' : 'contact_id';
+		$sql = 'SELECT n_fn,org_name,'.$type_field.' AS user_id,
 			(
-				select concat(cal_start,":",egw_cal_user.cal_id)
+				select concat(cal_start,":",egw_cal_user.cal_id,":",cal_recur_date)
 				from egw_cal_user
 				JOIN egw_cal_dates on egw_cal_dates.cal_id=egw_cal_user.cal_id and (cal_recur_date=0 or cal_recur_date=cal_start)
-				JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id
-				WHERE cal_user_type="c" and cal_user_id=contact_id and cal_start < unix_timestamp(now())';
+				JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id AND egw_cal.cal_deleted IS NULL
+				WHERE cal_user_type="'.$type.'" and cal_user_id='.$type_field.' and cal_start < unix_timestamp(now())';
 		if ( !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected'])
 		{
 			$sql .= ' AND egw_cal_user.cal_status != "R"';
@@ -1689,69 +1709,58 @@ class Contacts extends Contacts\Storage
 				order by cal_start DESC Limit 1
 			) as last_event,
 			(
-				select concat(cal_start,":",egw_cal_user.cal_id)
+				select concat(cal_start,":",egw_cal_user.cal_id,":",cal_recur_date)
 				FROM egw_cal_user
 				JOIN egw_cal_dates on egw_cal_dates.cal_id=egw_cal_user.cal_id and (cal_recur_date=0 or cal_recur_date=cal_start)
-				JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id
-				WHERE cal_user_type="c" and cal_user_id=contact_id and cal_start > unix_timestamp(now())';
+				JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id AND egw_cal.cal_deleted IS NULL
+				WHERE cal_user_type="'.$type.'" and cal_user_id='.$type_field.' and cal_start > unix_timestamp(now())';
 		if ( !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected'])
 		{
 			$sql .= ' AND egw_cal_user.cal_status != "R"';
 		}
-		$sql .= 'order by cal_start DESC Limit 1
+		$sql .= 'order by cal_recur_date ASC, cal_start ASC Limit 1
 
 			) as next_event
 			FROM egw_addressbook
-			WHERE CONCAT("c",contact_id) IN ('.implode(',', array_map(array($this->db, 'quote'), $uids)).')';
+			WHERE '.$type_field.' IN ('.implode(',', array_map(array($this->db, 'quote'), $uids)).')';
 
 
 		$contacts =& $this->db->query($sql, __LINE__, __FILE__);
 
 		if (!$contacts) return array();
 
-		//_debug_array($events);
-		$calendars = array();
+		// Extract the event info and generate what is needed for next/last event
+		$do_event = function($key, $contact) use (&$bocal, &$calendars, $type)
+		{
+			list($start, $cal_id, $recur_date) = explode(':', $contact[$key.'_event']);
+
+			$link = array(
+				'id' => $cal_id,
+				'app' => 'calendar',
+				'title' => $bocal->link_title($cal_id . ($recur_date ? '-'.$recur_date : '')),
+				'extra_args' => array(
+					'date' => date('Ymd',$start),
+				),
+			);
+			if ($extra_title)
+			{
+				$link['extra_title'] = $link['title'];
+				$link['title'] = \EGroupware\Api\DateTime::server2user($start, true);
+			}
+			$user_id = ($type == 'u' ? '' : $type) . $contact['user_id'];
+			$calendars[$user_id][$key.'_event'] = $start;
+			$calendars[$user_id][$key.'_link'] = $link;
+		};
+
 		foreach($contacts as $contact)
 		{
 			if($contact['last_event'])
 			{
-				list($start, $cal_id, $title) = explode(':', $contact['last_event']);
-
-				$link = array(
-					'id' => $cal_id,
-					'app' => 'calendar',
-					'title' => $bocal->link_title($cal_id),
-					'extra_args' => array(
-						'date' => date('Ymd',$start),
-					),
-				);
-				if ($extra_title)
-				{
-					$link['extra_title'] = $link['title'];
-					$link['title'] = \EGroupware\Api\DateTime::server2user($start, true);
-				}
-				$calendars['c'.$contact['contact_id']]['last_event'] = $start;
-				$calendars['c'.$contact['contact_id']]['last_link'] = $link;
+				$do_event('last', $contact);
 			}
 			if($contact['next_event'])
 			{
-				list($start, $cal_id, $title) = explode(':', $contact['next_event']);
-
-				$link = array(
-					'id' => $cal_id,
-					'app' => 'calendar',
-					'title' => $bocal->link_title($cal_id),
-					'extra_args' => array(
-						'date' => date('Ymd',$start),
-					),
-				);
-				if ($extra_title)
-				{
-					$link['extra_title'] = $link['title'];
-					$link['title'] = \EGroupware\Api\DateTime::server2user($start, true);
-				}
-				$calendars['c'.$contact['contact_id']]['next_event'] = $start;
-				$calendars['c'.$contact['contact_id']]['next_link'] = $link;
+				$do_event('next', $contact);
 			}
 		}
 		return $calendars;
