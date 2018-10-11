@@ -451,6 +451,58 @@ abstract class Merge
 	}
 
 	/**
+	 * Get share placeholder
+	 *
+	 * If the placeholder is present in the content, the share will be automatically
+	 * created.
+	 */
+	protected function share_placeholder($app, $id, $prefix, &$content)
+	{
+		$replacements = array();
+
+		// Skip if no content or content has no share placeholder
+		if(!$content || strpos($content, '$$share') === FALSE)
+		{
+			return $replacements;
+		}
+
+		if(!$GLOBALS['egw_info']['user']['apps']['stylite'])
+		{
+			$replacements['$$'.$prefix.'share$$'] = lang('EPL Only');
+			return $replacements;
+		}
+
+		// Get or create the share
+		// Check if some other process created the share (with custom options)
+		// and put it in the session cache for us
+		$path = "$app::$id";
+		$session = \EGroupware\Api\Cache::getSession(Api\Sharing::class, $path);
+		if($session && $session['share_path'] == $path)
+		{
+			$share = $session;
+		}
+		else
+		{
+			// Need to create the share here.
+			// No way to know here if it should be writable, or who it's going to
+			$mode = /* ?  ? Sharing::WRITABLE :*/ Api\Sharing::READONLY;
+			$recipients = array();
+			$extra = array();
+
+			//$extra['share_writable'] |=  ($mode == Sharing::WRITABLE ? 1 : 0);
+
+			$share = \EGroupware\Stylite\Link\Sharing::create($path, $mode, NULL, $recipients, $extra);
+		}
+
+		if($share)
+		{
+			$replacements['$$'.$prefix.'share$$'] = $link = Api\Sharing::share2link($share);
+		}
+
+		return $replacements;
+	}
+
+	/**
 	 * Format a datetime
 	 *
 	 * @param int|string|DateTime $time unix timestamp or Y-m-d H:i:s string (in user time!)
@@ -849,6 +901,9 @@ abstract class Merge
 			$replacements['$$date$$'] = Api\DateTime::to('now',true);
 			$replacements['$$datetime$$'] = Api\DateTime::to('now');
 			$replacements['$$time$$'] = Api\DateTime::to('now',false);
+
+			$app = $this->get_app();
+			$replacements += $this->share_placeholder($app, $id, $prefix, $content);
 
 			// does our extending class registered table-plugins AND document contains table tags
 			if ($this->table_plugins && preg_match_all('/\\$\\$table\\/([A-Za-z0-9_]+)\\$\\$(.*?)\\$\\$endtable\\$\\$/s',$content,$matches,PREG_SET_ORDER))
@@ -1436,6 +1491,31 @@ abstract class Merge
 				if ($cfs[$field]['type'] == 'date' || $cfs[$field]['type'] == 'date-time') $this->date_fields[] = '#'.$field;
 			}
 		}
+	}
+
+	/**
+	 * Figure out which app we're running as
+	 *
+	 * @return string
+	 */
+	protected function get_app()
+	{
+		switch (get_class($this))
+		{
+			case 'EGroupware\Api\Contacts\Merge':
+				$app = 'addressbook';
+				break;
+			default:
+				$app = str_replace('_merge','',get_class($this));
+				if(!in_array($app, $GLOBALS['egw_info']['apps']))
+				{
+					$app = false;
+				}
+				break;
+
+		}
+
+		return $app;
 	}
 
 	/**

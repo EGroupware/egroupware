@@ -218,6 +218,9 @@ class Merge extends Api\Storage\Merge
 			echo '<tr><td>{{'.$name.'}}</td><td colspan="3">'.$label."</td></tr>\n";
 		}
 
+		echo '<tr><td colspan="4"><h3>'.lang('EPL Only').":</h3></td></tr>";
+		echo '<tr><td>{{share}}</td><td colspan="3">'.lang('Public sharing URL')."</td></tr>\n";
+
 		Api\Translation::add_app('calendar');
 		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')." # = 1, 2, ..., 20, -1</h3></td></tr>";
 		foreach(array(
@@ -278,7 +281,7 @@ class Merge extends Api\Storage\Merge
 
 		// Change merge into email actions so we can customize them
 		static::customise_mail_actions($actions);
-			
+
 		return $actions;
 	}
 

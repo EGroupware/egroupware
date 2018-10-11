@@ -1895,18 +1895,55 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 * @param {egwAction} _action egw actions
 	 * @param {egwActionObject[]} _senders selected nm row
 	 * @param {egwActionObject} _target Drag source.  Not used here.
+	 * @param {Boolean} _writable Allow edit access from the share.
 	 * @param {Boolean} _files Allow access to files from the share.
+	 * @param {Function} _callback Callback with results
 	 * @returns {Boolean} returns false if not successful
 	 */
-	share_link: function(_action, _senders, _target, _files){
+	share_link: function(_action, _senders, _target, _writable, _files, _callback){
 		var path = _senders[0].id;
+		if(typeof _writable === 'undefined' && _action.parent && _action.parent.getActionById('shareWritable'))
+		{
+			_writable = _action.parent.getActionById('shareWritable').checked || false;
+		}
 		if(typeof _files === 'undefined' && _action.parent && _action.parent.getActionById('shareFiles'))
 		{
 			_files = _action.parent.getActionById('shareFiles').checked || false;
 		}
-		egw.json('EGroupware\\Api\\Sharing::ajax_create', [_action.id, path, _files],
-			this._share_link_callback, this, true, this).sendRequest();
-		return true;
+
+		return egw.json('EGroupware\\Api\\Sharing::ajax_create', [_action.id, path, _writable, _files],
+			_callback ? _callback : this._share_link_callback, this, true, this).sendRequest();
+	},
+
+	share_merge: function(_action, _senders, _target)
+	{
+		var parent = _action.parent.parent;
+		var _writable = false;
+		var _files = false;
+		if(parent && parent.getActionById('shareWritable'))
+		{
+			_writable = parent.getActionById('shareWritable').checked || false;
+		}
+		if(parent && parent.getActionById('shareFiles'))
+		{
+			_files = parent.getActionById('shareFiles').checked || false;
+		}
+
+		// Share only works on one at a time
+		var promises = [];
+		for(var i = 0; i < _senders.length; i++)
+		{
+			promises.push(new Promise(function(resolve, reject) {
+				this.share_link(_action, [_senders[i]], _target, _writable, _files, resolve);
+			}.bind(this)));
+		}
+
+		// But merge into email can handle several
+		Promise.all(promises.map(p => p.catch(e => e)))
+			.then(function(values) {
+				// Process document after all shares created
+				return nm_action(_action, _senders, _target);
+			});
 	},
 
 	/**
@@ -1938,7 +1975,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
 				return true;
 			},
-			title: _data.title ? _data.title : egw.lang("%1 Share Link", _data.action ==='shareWritableLink'? egw.lang("Writable"): egw.lang("Readonly")),
+			title: _data.title ? _data.title : egw.lang("%1 Share Link", _data.writable ? egw.lang("Writable"): egw.lang("Readonly")),
 			template: _data.template,
 			width: 450,
 			value: {content:{ "share_link": _data.share_link }}

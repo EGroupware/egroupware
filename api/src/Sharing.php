@@ -389,31 +389,31 @@ class Sharing
 				'allowOnMultiple' => false,
 				'children' => array(
 					'shareReadonlyLink' => array(
-						'caption' => lang('Readonly Share'),
+						'caption' => lang('Share link'),
 						'group' => 1,
 						'icon' => 'view',
 						'order' => 11,
 						'enabled' => "javaScript:app.$appname.is_share_enabled",
 						'onExecute' => "javaScript:app.$appname.share_link"
 					),
-					'shareWritableLink' => array(
-						'caption' => lang('Writable Share'),
-						'group' => 1,
+					'shareWritable' => array(
+						'caption' => lang('Writable'),
+						'group' => 2,
 						'icon' => 'edit',
-						'allowOnMultiple' => false,
-						'order' => 11,
+						'allowOnMultiple' => true,
 						'enabled' => "javaScript:app.$appname.is_share_enabled",
-						'onExecute' => "javaScript:app.$appname.share_link"
+						'checkbox' => true
 					),
 					'shareFiles' => array(
 						'caption' => lang('Share files'),
 						'group' => 2,
+						'allowOnMultiple' => true,
 						'enabled' => "javaScript:app.$appname.is_share_enabled",
 						'checkbox' => true
 					)
 				),
 		));
-		if(!$GLOBALS['egw_info']['apps']['stylite'])
+		if(!$GLOBALS['egw_info']['user']['apps']['stylite'])
 		{
 			array_unshift($actions['share']['children'], array(
 				'caption' => lang('EPL Only'),
@@ -591,24 +591,28 @@ class Sharing
 	 *
 	 * @param String $action
 	 * @param String $path
+	 * @param boolean $writable
 	 * @param boolean $files
 	 */
-	public static function ajax_create($action, $path, $files)
+	public static function ajax_create($action, $path, $writable = false, $files = false)
 	{
 		$class = self::get_share_class(array('share_path' => $path));
 		$share = $class::create(
 			$path,
-			$action == 'shareWritableLink' ? Sharing::WRITABLE : Sharing::READONLY,
-			basename($selected),
+			$action == $writable ? Sharing::WRITABLE : Sharing::READONLY,
+			basename($path),
 			array(),
 			array(
-				'share_writable' => $action == 'shareWritableLink',
+				'share_writable' => $writable,
 				'include_files'  => $files
 			)
 		);
 
+		// Store share in session so Merge can find this one and not create a read-only one
+		\EGroupware\Api\Cache::setSession(__CLASS__, $path, $share);
 		$arr = array(
 			'action'		=> $action,
+			'writable'      => $writable,
 			'share_link'	=> $class::share2link($share),
 			'template'		=> Etemplate\Widget\Template::rel2url('/filemanager/templates/default/share_dialog.xet')
 		);

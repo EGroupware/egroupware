@@ -76,49 +76,33 @@ class Sharing extends \EGroupware\Api\Sharing
 	 */
 	public static function get_actions($appname, $group = 6)
 	{
-		$actions = array(
-		'share' => array(
-				'caption' => lang('Share'),
-				'icon' => 'api/share',
-				'group' => $group,
-				'allowOnMultiple' => false,
-				'children' => array(
-					'shareReadonlyLink' => array(
-						'caption' => lang('Readonly Share'),
-						'group' => 1,
-						'icon' => 'view',
-						'order' => 11,
-						'enabled' => "javaScript:app.$appname.is_share_enabled",
-						'onExecute' => "javaScript:app.$appname.share_link"
-					),
-					'shareWritableLink' => array(
-						'caption' => lang('Writable Share'),
-						'group' => 1,
-						'icon' => 'edit',
-						'allowOnMultiple' => false,
-						'order' => 11,
-						'enabled' => "javaScript:app.$appname.is_share_enabled",
-						'onExecute' => "javaScript:app.$appname.share_link"
-					),
-					'shareFiles' => array(
-						'caption' => lang('Share files'),
-						'group' => 2,
-						'enabled' => "javaScript:app.$appname.is_share_enabled",
-						'checkbox' => true
-					)
-				),
-		));
-		if(!$GLOBALS['egw_info']['apps']['stylite'])
+		$actions = parent::get_actions($appname, $group);
+
+		// Add in merge to mail document
+		if ($GLOBALS['egw_info']['user']['apps']['mail'] && class_exists($appname.'_merge'))
 		{
-			array_unshift($actions['share']['children'], array(
-				'caption' => lang('EPL Only'),
-				'group' => 0
-			));
-			foreach($actions['share']['children'] as &$child)
+			$documents = call_user_func(array($appname.'_merge', 'document_action'),
+				$GLOBALS['egw_info']['user']['preferences']['addressbook']['document_dir'],
+				1, 'Insert in document', 'shareDocument_'
+			);
+			$documents['order'] = 20;
+
+			// Mail only
+			foreach($documents['children'] as $key => &$document)
 			{
-				$child['enabled'] = false;
+				if(strpos($document['target'],'compose_') === FALSE)
+				{
+					unset($documents['children'][$key]);
+					continue;
+				}
+
+				$document['allowOnMultiple'] = true;
+				$document['onExecute'] = "javaScript:app.$appname.share_merge";
 			}
+			$documents['enabled'] = !!($GLOBALS['egw_info']['user']['apps']['stylite']);
+			$actions['share']['children']['shareDocuments'] = $documents;
 		}
+
 		return $actions;
 	}
 
