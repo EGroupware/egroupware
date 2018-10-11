@@ -364,7 +364,7 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			if(options && options.find)
 			{
 				var found = options.find(function(element) {return element.id == user;}) || {};
-				if(found && found.label)
+				if(found && found.label && found.label !== user)
 				{
 					label = found.label;
 				}
@@ -373,7 +373,10 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			{
 				// No sidebox?  Must be in home or sitemgr (no caching) - ask directly
 				label = '?';
-				egw.json('calendar_owner_etemplate_widget::ajax_owner',user,function(data) {label = data;}, this).sendRequest();
+				egw.json('calendar_owner_etemplate_widget::ajax_owner',user,function(data) {
+					et2_calendar_view.owner_name_cache[user] = data;
+					this.invalidate(true);
+				}.bind(this), this).sendRequest();
 			}
 		}
 		if(label)
