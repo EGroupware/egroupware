@@ -47,6 +47,10 @@ tr.infolog_rowHasParent > td:first-child {
 .et2_nextmatch .egwGridView_grid tr td div.et2_vbox .infoDes a{
 	display: inline-table;
 }
+/* break in words if necessary for description */
+#infolog-index_nm div.infoDes > span{
+	overflow-wrap: break-word;
+}
 /* Put line break for the first column*/
 #infolog-index .egwGridView_grid .et2_hbox.et2_box_widget.infolog_CompletedClmn {
 	white-space: normal;
