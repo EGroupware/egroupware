@@ -590,6 +590,13 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 		this.request = null;
 
 		this.createInputWidget();
+		var self = this;
+		
+		jQuery(this.getInstanceManager().DOMContainer).on('clear', function(){
+			// We need to unbind events to prevent a second triggerd event handler
+			// (eg. setting a project in infolog edit dialog) when the widget gets cleared.
+			jQuery(self.getDOMNode()).off();
+		});
 	},
 
 	destroy: function() {
