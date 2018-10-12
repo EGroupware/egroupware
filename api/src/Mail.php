@@ -6759,7 +6759,7 @@ class Mail
 				// do not change urls for absolute images (thanks to corvuscorax)
 				if (substr($url, 0, 5) !== 'data:')
 				{
-					$filename = Vfs::basename($url);
+					$filename = basename($url); // need to resolve all sort of url
 					if (($directory = dirname($url)) == '.') $directory = '';
 					$ext = pathinfo($filename, PATHINFO_EXTENSION);
 					$mimeType  = MimeMagic::ext2mime($ext);
