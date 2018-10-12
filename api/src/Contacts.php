@@ -1730,16 +1730,17 @@ class Contacts extends Contacts\Storage
 		if (!$contacts) return array();
 
 		// Extract the event info and generate what is needed for next/last event
-		$do_event = function($key, $contact) use (&$bocal, &$calendars, $type)
+		$do_event = function($key, $contact) use (&$bocal, &$calendars, $type, $extra_title)
 		{
 			list($start, $cal_id, $recur_date) = explode(':', $contact[$key.'_event']);
 
 			$link = array(
-				'id' => $cal_id,
+				'id' => $cal_id,//.':'.$start,
 				'app' => 'calendar',
-				'title' => $bocal->link_title($cal_id . ($recur_date ? '-'.$recur_date : '')),
+				'title' => $bocal->link_title($cal_id . ($start ? '-'.$start : '')),
 				'extra_args' => array(
-					'date' => date('Ymd',$start),
+					'date' => \EGroupware\Api\DateTime::server2user($start,\EGroupware\Api\DateTime::ET2),
+					'exception'=> 1
 				),
 			);
 			if ($extra_title)

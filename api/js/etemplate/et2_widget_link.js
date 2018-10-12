@@ -1298,7 +1298,7 @@ var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		{
 			this.link.addClass("et2_link");
 			this.link.click( function(e){
-				self.egw().open(_value, "", self.options.link_hook,null,_value.app,_value.app);
+				self.egw().open(_value, "", self.options.link_hook,_value.extra_args,_value.app,_value.app);
 				e.stopImmediatePropagation();
 			});
 		}
