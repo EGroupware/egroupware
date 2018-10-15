@@ -520,6 +520,9 @@ class Sharing
 
 		if (empty($name)) $name = $path;
 
+		$table_def = static::$db->get_table_definitions(false,static::TABLE);
+		$extra = array_intersect_key($extra, $table_def['fd']);
+
 		// check if file has been shared before, with identical attributes
 		if (($share = static::$db->select(static::TABLE, '*', $extra+array(
 				'share_path' => $path,
@@ -594,18 +597,19 @@ class Sharing
 	 * @param boolean $writable
 	 * @param boolean $files
 	 */
-	public static function ajax_create($action, $path, $writable = false, $files = false)
+	public static function ajax_create($action, $path, $writable = false, $files = false, $extra = array())
 	{
 		$class = self::get_share_class(array('share_path' => $path));
+		$extra = $extra + array(
+			'share_writable' => $writable,
+			'include_files'  => $files
+		);
 		$share = $class::create(
 			$path,
-			$action == $writable ? Sharing::WRITABLE : Sharing::READONLY,
+			$writable ? Sharing::WRITABLE : Sharing::READONLY,
 			basename($path),
 			array(),
-			array(
-				'share_writable' => $writable,
-				'include_files'  => $files
-			)
+			$extra
 		);
 
 		// Store share in session so Merge can find this one and not create a read-only one
