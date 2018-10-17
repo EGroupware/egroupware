@@ -4010,7 +4010,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		$error='';
 		$created = false;
-
+		$response = Api\Json\Response::get();
+		$del = $this->mail_bo->getHierarchyDelimiter(flase);
+		if (strpos($_new, $del) !== FALSE)
+		{
+			return $response->call('egw.message', lang('failed to rename %1 ! Reason: %2 is not allowed!',$_parent, $del));
+		}
 		if ($_parent)
 		{
 			$parent = $this->mail_bo->decodeEntityFolderName($_parent);
@@ -4075,7 +4080,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				if (!empty($new)) $this->mail_bo->reopen($new);
 			}
 
-			$response = Api\Json\Response::get();
+
 			if ($created===true && $error =='')
 			{
 				$this->mail_bo->resetFolderObjectCache($profileID);
@@ -4111,12 +4116,20 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	function ajax_renameFolder($_folderName, $_newName)
 	{
 		if (Mail::$debug) error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
+		//error_log(__METHOD__.__LINE__.array2string($oA));
+		$response = Api\Json\Response::get();
+		$del = $this->mail_bo->getHierarchyDelimiter(false);
+		if (strpos($_newName, $del) !== FALSE)
+		{
+			return $response->call('egw.message', lang('failed to rename %1 ! Reason: %2 is not allowed!',$_folderName, $del));
+		}
+
 		if ($_folderName)
 		{
 			Api\Translation::add_app('mail');
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 			$_newName = $this->mail_bo->decodeEntityFolderName($_newName);
-			$del = $this->mail_bo->getHierarchyDelimiter(false);
+
 			$oA = array();
 			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
 			$hasChildren = false;
