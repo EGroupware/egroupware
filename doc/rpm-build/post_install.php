@@ -6,7 +6,6 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author RalfBecker@outdoor-training.de
- * @version $Id$
  */
 
 if (php_sapi_name() !== 'cli')	// security precaution: forbit calling post_install as web-page
@@ -91,17 +90,28 @@ function set_distro_defaults($distro=null)
 	global $config;
 	if (is_null($distro))
 	{
-		$distro = file_exists('/etc/SuSE-release') ? 'suse' :
-			(file_exists('/etc/mandriva-release') ? 'mandriva' :
-			(file_exists('/etc/lsb-release') && preg_match('/^DISTRIB_ID="?Univention"?$/mi',
-				file_get_contents('/etc/lsb-release')) ? 'univention' :
-			(file_exists('/etc/debian_version') ? 'debian' : 'rh')));
+		$matches = null;
+		// check for ID in /etc/os-release and use it
+		if (file_exists('/etc/os-release') && preg_match('/^ID="?([^"=]+)"?$/m', $os_release=file_get_contents('/etc/os-release'), $matches))
+		{
+			$distro = $matches[1];
+		}
+		// old detections based on distro specific /etc/*release files
+		else
+		{
+			$distro = file_exists('/etc/SuSE-release') ? 'suse' :
+				(file_exists('/etc/mandriva-release') ? 'mandriva' :
+				(file_exists('/etc/lsb-release') && preg_match('/^DISTRIB_ID="?Univention"?$/mi',
+					file_get_contents('/etc/lsb-release')) ? 'univention' :
+				(file_exists('/etc/debian_version') ? 'debian' : 'rh')));
+		}
 	}
 	switch (($config['distro'] = $distro))
 	{
-		case 'suse':
+		case 'suse': case 'opensuse-leap': case 'opensuse':
 			// openSUSE 12.1+ no longer uses php5
 			if (file_exists('/usr/bin/php5')) $config['php'] = '/usr/bin/php5';
+			if (file_exists('/usr/bin/php7')) $config['php'] = '/usr/bin/php7';
 			$config['start_db'] = '/sbin/service mysql';
 			$config['autostart_db'] = '/sbin/chkconfig --level 345 mysql on';
 			$config['start_webserver'] = '/sbin/service apache2';
@@ -115,7 +125,7 @@ function set_distro_defaults($distro=null)
 			$config['webserver_user'] = 'wwwrun';
 			$config['apache_config'] = '/etc/apache2/conf.d/egroupware.conf';
 			break;
-		case 'debian':
+		case 'debian': case 'ubuntu':
 			// service not in Debian5, only newer Ubuntu, which complains about /etc/init.d/xx
 			if (file_exists('/usr/sbin/service'))
 			{
@@ -145,9 +155,16 @@ function set_distro_defaults($distro=null)
 			set_univention_defaults();
 			break;
 		default:
+			// if we dont support ID from os-release, look for first one in ID_LIKE
+			if (!empty($os_release) && preg_match('/^ID_LIKE="?([^"=]+)"?$/m', $os_release, $matches))
+			{
+				list($distro) = explode(' ', $matches[1]);
+				return set_distro_defaults($distro);
+			}
+			// old default: rh
 			$config['distro'] = 'rh';
 			// fall through
-		case 'rh':
+		case 'rh': case 'rhel': case 'centos': case 'fedora':
 			// some MySQL packages (mysql.com, MariaDB, ...) use "mysql" as service name instead of RH default "mysqld"
 			if (file_exists('/usr/bin/systemctl'))	// RHEL 7
 			{
