@@ -676,6 +676,9 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 				case 'url':
 					// ignored, only used for download_url method
 					break;
+				case 'ro':
+					// ignored here, as it is handled by vfs itself
+					break;
 				default:
 					error_log(__METHOD__."('$query') unknown option '$name'!");
 					break;
