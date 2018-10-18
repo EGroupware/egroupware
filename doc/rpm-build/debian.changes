@@ -1,3 +1,26 @@
+egroupware-epl (17.1.20181018) hardy; urgency=low
+
+  * Api: change default submit to async call and try to block user interfering with submitted popup until the response
+  * Mail: do not let hierarchy delimiter inside folder names as it may break the folder structure
+  * Mail: fix deleting mails from draft folder does not respect "move to trash" in delete message preference
+  * Mail: fix signed/encrypted S/MIME new message does not take CC or BCC fields into account
+  * Mail: avoid to send so many requests when user tries to scroll on mail list via key up/down
+  * Calendar: iCal import: add option to specify owner of imported events
+  * Calendar: fix adding events to days loaded and cached but not shown in current view
+  * Calendar: fix multi-day events ending at 00:00 would only be shown for the first day
+  * CalDAV: CalDAVSynchronizer: only allow owner/organizer to update or delete an event (not users with edit/delete rights)
+  * CalDAV/Calendar: iOS sometimes created a new event when confirming a deleted one
+  * Infolog/Timesheet: fix link title placeholders not working
+  * Infolog: add a preference to check 'Do not notify' by default for selected types
+  * Addressbook: fix birthday cache was not cleared when birthday edited
+  * Resources: correct the field name from res_owner to res_creator
+  * Notifications: do not fire another notification request unless the last one has been responded
+  * Filemanager/SMB: fix directory creation failed on Samba (smbclient PHP extension)
+  * Tracker: add config to re-open closed tickets if someone comments
+  * Tracker: fix link title placeholders not working
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 18 Oct 2018 13:47:47 +0200
+
 egroupware-epl (17.1.20180831) hardy; urgency=low
 
   * CardDAV: photo was not saved/changed in PUT requests
