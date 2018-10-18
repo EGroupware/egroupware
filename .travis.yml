@@ -33,10 +33,13 @@ before_script:
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
        ;;
-    "7"|"7.0"|"7.1"|"7.2"|"7.3"|"master")
+    "7"|"7.0"|"7.1"|"7.2")
        yes "" | pecl install apcu;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
+      ;;
+    "7.3"|"master")
+       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
       ;;
     esac
   - case $(phpenv version-name) in
