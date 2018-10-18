@@ -1,8 +1,8 @@
 diff --git egroupware/admin/inc/class.admin_asyncservice.inc.php egroupware/admin/inc/class.admin_asyncservice.inc.php
-index cb19e5fbbf..2e58ce3fdf 100644
+index df66f9c39e..38f9c35818 100644
 --- egroupware/admin/inc/class.admin_asyncservice.inc.php
 +++ egroupware/admin/inc/class.admin_asyncservice.inc.php
-@@ -97,16 +97,20 @@ class admin_asyncservice
+@@ -98,16 +98,20 @@ class admin_asyncservice
  		{
  			Api\Config::save_value('asyncservice', $GLOBALS['egw_info']['server']['asyncservice']=$_POST['asyncservice'], 'phpgwapi');
  		}
@@ -20,32 +20,32 @@ index cb19e5fbbf..2e58ce3fdf 100644
  		$async_use['']    = lang('fallback (after each pageview)');
  		$async_use['off'] = lang('disabled (not recomended)');
 +*/
- 		echo '<p><b>'.lang('Run Asynchronous services').'</b>'.
+ 		echo '<p><b>'.htmlspecialchars(lang('Run Asynchronous services')).'</b>'.
  			' <select name="asyncservice" onChange="this.form.submit();">';
  		foreach ($async_use as $key => $label)
-@@ -128,8 +132,9 @@ class admin_asyncservice
+@@ -116,7 +120,7 @@ class admin_asyncservice
+ 			echo "<option value=\"$key\"$selected>".htmlspecialchars($label)."</option>\n";
  		}
- 		else
- 		{
--			echo '<p>'.lang('Installed crontab').": \n";
-+			echo '<p>'.lang('Installed crontab').": /etc/cron.d/egroupware.cron\n";
-
+ 		echo "</select>\n";
+-
 +/*
- 			if (is_array($installed) && isset($installed['cronline']))
- 			{
- 				echo "$installed[cronline]</p>";
-@@ -144,6 +149,7 @@ class admin_asyncservice
- 			}
- 			echo '<p><input type="submit" name="install" value="'.lang('Install crontab')."\">\n".
- 				lang("for the times below (empty values count as '*', all empty = every minute)")."</p>\n";
-+*/
+ 		if (is_array($installed) && isset($installed['cronline']))
+ 		{
+ 			echo ' &nbsp; <input type="submit" name="deinstall" value="'.htmlspecialchars(lang('Deinstall crontab'))."\">\n";
+@@ -146,6 +150,8 @@ class admin_asyncservice
+ 			echo '<p><input type="submit" name="install" value="'.htmlspecialchars(lang('Install crontab'))."\">\n".
+ 				htmlspecialchars(lang("for the times below (empty values count as '*', all empty = every minute)"))."</p>\n";
  		}
++*/
++		echo '<p>'.htmlspecialchars(lang('Installed crontab')).": /etc/cron.d/egroupware.cron\n";
 
  		echo "<hr><table border=0><tr>\n";
-diff --git a/api/src/Egw.php b/api/src/Egw.php
+ 		foreach ($units as $u => $ulabel)
+diff --git egroupware/api/src/Egw.php egroupware/api/src/Egw.php
+index 5c52f126f2..5360039799 100644
 --- egroupware/api/src/Egw.php
 +++ egroupware/api/src/Egw.php
-@@ -608,12 +608,14 @@ class Egw extends Egw\Base
+@@ -617,12 +617,14 @@ class Egw extends Egw\Base
  					_egw_log_exception($ex);
  				}
  			}
