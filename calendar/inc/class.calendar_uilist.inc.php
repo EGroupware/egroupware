@@ -13,7 +13,6 @@
 use EGroupware\Api;
 use EGroupware\Api\Link;
 use EGroupware\Api\Framework;
-use EGroupware\Api\Egw;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
 
@@ -284,6 +283,10 @@ class calendar_uilist extends calendar_ui
 			Api\Cache::setSession('calendar', 'calendar_list',
 				array_diff_key ($params, array_flip(array('rows', 'actions', 'action_links', 'placeholder_actions'))));
 		}
+
+		// release session to allow parallel requests to run
+		$GLOBALS['egw']->session->commit_session();
+
 		// do we need to query custom fields and which
 		// Check stored preference if selectcols isn't available (ie: first call)
 		$select_cols = $params['selectcols'] ? $params['selectcols'] : $GLOBALS['egw_info']['user']['preferences']['calendar']['nextmatch-calendar.list.rows'];
