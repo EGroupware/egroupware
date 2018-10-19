@@ -1625,7 +1625,7 @@ GROUP BY A.fs_id';
 			}
 		}
 		// now search via the database
-		if (count($ids) > 1) array_map(function(&$v) { $v = (int)$v; },$ids);
+		if (count($ids) > 1) $ids = array_map(function($v) { return (int)$v; }, $ids);
 		$query = 'SELECT fs_id,fs_dir,fs_name FROM '.self::TABLE.' WHERE fs_id'.
 			(count($ids) == 1 ? '='.(int)$ids[0] : ' IN ('.implode(',',$ids).')');
 		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
@@ -1913,7 +1913,7 @@ GROUP BY A.fs_id';
 				$id = $stat['ino'];
 			}
 		}
-		if (count($ids) >= 1) array_map(function(&$v) { $v = (int)$v; },$ids);
+		if (count($ids) >= 1) $ids = array_map(function($v) { return (int)$v; }, $ids);
 		$query = 'SELECT * FROM '.self::PROPS_TABLE.' WHERE (fs_id'.
 			(count($ids) == 1 ? '='.(int)implode('',$ids) : ' IN ('.implode(',',$ids).')').')'.
 			(!is_null($ns) ? ' AND prop_namespace=?' : '');
