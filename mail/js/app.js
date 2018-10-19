@@ -266,14 +266,11 @@ app.classes.mail = AppJS.extend(
 						that.compose_fieldExpander();
 					}
 				});
-				/*Trigger compose_resizeHandler after the CKEditor is fully loaded*/
+				/*Trigger compose_resizeHandler after the TinyMCE is fully loaded*/
 				jQuery('#mail-compose').on ('load',function() {
-					if (textAreaWidget && textAreaWidget.ckeditor)
+					if (textAreaWidget && textAreaWidget.tinymce)
 					{
-						textAreaWidget.ckeditor.on('instanceReady', function(){
-							that.compose_fieldExpander();
-							if (egwIsMobile()) jQuery(jQuery('iframe.cke_wysiwyg_frame')[0].contentWindow.document.body).css({margin:'0'});
-						});
+						textAreaWidget.tinymce.then(()=>{that.compose_resizeHandler()});
 					}
 					else
 					{
@@ -310,11 +307,9 @@ app.classes.mail = AppJS.extend(
 						// get the cursor to the top of the textarea
 						if (typeof plainText.node.setSelectionRange !='undefined' && !jQuery(plainText.node).is(":hidden")) plainText.node.setSelectionRange(0,0);
 					}
-					else
+					else if(textAreaWidget && textAreaWidget.tinymce)
 					{
-						textAreaWidget.ckeditor.on('instanceReady', function(e) {
-							this.focus();
-						});
+						textAreaWidget.tinymce.then(()=>{textAreaWidget.editor.focus()});
 					}
 				}
 				else if(to)
@@ -4364,7 +4359,7 @@ app.classes.mail = AppJS.extend(
 		// Do not resize compose dialog if it's running on mobile device
 		// in this case user would be able to edit mail body by scrolling down,
 		// which is more convenient on small devices. Also resize mailbody with
-		// ckeditor may causes performance regression, especially on devices with
+		// tinyMCE may causes performance regression, especially on devices with
 		// very limited resources and slow proccessor.
 		if (egwIsMobile()) return false;
 
@@ -4405,7 +4400,12 @@ app.classes.mail = AppJS.extend(
 				}
 				else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext')
 				{
-					textArea.ckeditor.resize('100%', bodySize);
+					if (textArea.editor)
+					{
+						jQuery(textArea.editor.editorContainer).height(bodySize);
+						jQuery(textArea.editor.iframeElement).height(bodySize - (textArea.editor.editorContainer.getElementsByClassName('tox-toolbar')[0].clientHeight +
+								textArea.editor.editorContainer.getElementsByClassName('tox-statusbar')[0].clientHeight));
+					}
 				}
 				else
 				{

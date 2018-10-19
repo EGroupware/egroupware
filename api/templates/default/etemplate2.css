@@ -2891,6 +2891,7 @@ a.chzn-single.et2_country-select span.img {
 
 }
 
+.tox-tinymce {display: flex !important;}
 div.eml {
 	position:absolute;
 	height: 100%;

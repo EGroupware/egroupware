@@ -39,7 +39,7 @@
 					<select id="ident_email_alias" span="all" class="et2_fullWidth"/>
 				</row>
 				<row>
-					<htmlarea expand_toolbar="false" height="200px" id="ident_signature" span="all" width="100%"/>
+					<htmlarea expand_toolbar="false" height="237px" id="ident_signature" span="all"/>
 				</row>
 			</rows>
 		</grid>

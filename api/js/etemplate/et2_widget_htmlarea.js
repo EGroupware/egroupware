@@ -5,17 +5,14 @@
  * @package etemplate
  * @subpackage api
  * @link http://www.egroupware.org
- * @author Nathan Gray
- * @copyright Nathan Gray 2012
+ * @author Hadi Nategh <hn@egroupware.org>
+ * @copyright Hadi Nategh <hn@egroupware.org>
  * @version $Id$
  */
 
 /*egw:uses
 	jsapi.jsapi; // Needed for egw_seperateJavaScript
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	/vendor/egroupware/ckeditor/ckeditor.js;
-	/vendor/egroupware/ckeditor/ckeditor.config;
-	/vendor/egroupware/ckeditor/ckeditor.adapters/jquery;
+	/api/js/tinymce/tinymce.min.js;
 	et2_core_baseWidget;
 */
 
@@ -24,8 +21,10 @@
  */
 var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2_IResizeable],
 {
-	modes: ['ascii','simple','extended','advanced'],
-
+	font_size_formats: {
+		pt: "8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
+		px:"8px 10px 12px 14px 18px 24px 36px 48px 72px"
+	},
 	attributes: {
 		'mode': {
 			'name': 'Mode',
@@ -43,26 +42,6 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			'default': et2_no_init,
 			'type': 'string'
 		},
-		'expand_toolbar': {
-			'name': 'Expand Toolbar',
-			'default': true,
-			'type':'boolean',
-			'description': 'Have the toolbar expanded (visible)'
-		},
-		'base_href': {	// seems not to be used anymore
-			'name': 'Image base path',
-			'default': et2_no_init,
-			'type': 'string',
-			'description': 'activates the browser for images at the path (relative to the docroot)'
-		},
-		'config': {
-			// internal default configuration
-			'name': 'Internal configuration',
-			'type':'any',
-			'default': et2_no_init,
-			'description': 'Internal configuration - managed by preferences & framework, passed in here',
-			'translate': 'no_lang'
-		},
 		value: {
 			name: "Value",
 			description: "The value of the widget",
@@ -74,10 +53,20 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			description: "Url to upload images dragged in or id of link_to widget to it's vfs upload. Can also be just a name for which content array contains a path to upload the picture.",
 			type: "string",
 			default: null
+		},
+		file_picker_callback: {
+			name: "File picker callback",
+			description: "Callback function to get called when file picker is clicked",
+			type: 'js',
+			default: et2_no_init
+		},
+		images_upload_handler: {
+			name: "Images upload handler",
+			description: "Callback function for handling image upload",
+			type: 'js',
+			default: et2_no_init
 		}
 	},
-
-	legacyOptions: ['mode','height','width','expand_toolbar','base_href'],
 
 	/**
 	 * Constructor
@@ -87,185 +76,163 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 	 * @memberOf et2_htmlarea
 	 */
 	init: function(_parent, _attrs) {
-		// _super.apply is responsible for the actual setting of the params (some magic)
 		this._super.apply(this, arguments);
-
-		// CK instance
-		this.ckeditor = null;
-
-		// Allow no child widgets
-		this.supportedWidgetClasses = [];
+		this.editor = null; // TinyMce editor instance
+		this.supportedWidgetClasses = []; // Allow no child widgets
 		this.htmlNode = jQuery(document.createElement("textarea"))
 			.css('height', this.options.height)
 			.addClass('et2_textbox_ro');
 		this.setDOMNode(this.htmlNode[0]);
 	},
 
-	transformAttributes: function(_attrs) {
-
-		// Check mode, some apps jammed everything in there
-		if(_attrs['mode'] && jQuery.inArray(_attrs['mode'], this.modes) < 0)
-		{
-			this.egw().debug("warn", "'%s' is an invalid mode for htmlarea '%s'. Valid options:", _attrs['mode'],_attrs['id'], this.modes);
-			var list = _attrs['mode'].split(',');
-			for(var i = 0; i < list.length && i < this.legacyOptions.length; i++)
-			{
-				_attrs[this.legacyOptions[i]] = list[i];
-			}
-		}
-		this._super.apply(this, arguments);
-	},
-
+	/**
+	 *
+	 * @returns {undefined}
+	 */
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
-		if(this.mode == 'ascii' || this.ckeditor != null) return;
+		if(this.mode == 'ascii' || this.editor != null) return;
 
-		var self = this;
-		if (!this.options.imageUpload)
+		// default settings for initialization
+		var settings = {
+			target: this.htmlNode[0],
+			body_id: this.dom + '_htmlarea',
+			menubar: false,
+			branding: false,
+			resize: false,
+			height: this.options.height,
+			width: this.options.width,
+			min_height: 100,
+			language: egw.preference('lang', 'common'),
+			paste_data_images: true,
+			browser_spellcheck: true,
+			images_upload_url: this.options.imageUpload,
+			file_picker_callback: jQuery.proxy(this._file_picker_callback, this),
+			images_upload_handler: jQuery.proxy(this._images_upload_handler, this),
+			init_instance_callback : jQuery.proxy(this._instanceIsReady, this),
+			plugins: [
+				"print preview fullpage searchreplace autolink directionality "+
+				"visualblocks visualchars fullscreen image link media template "+
+				"codesample table charmap hr pagebreak nonbreaking anchor toc "+
+				"insertdatetime advlist lists textcolor wordcount imagetools "+
+				"colorpicker textpattern help paste"
+			],
+			toolbar: "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
+					"link | alignleft aligncenter alignright alignjustify  | numlist "+
+					"bullist outdent indent  | removeformat | image",
+			block_formats: "Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;"+
+					"Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre",
+			font_formats: "Andale Mono=andale mono,times;Arial=arial,helvetica,"+
+					"sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book "+
+					"antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;"+
+					"Courier New=courier new,courier;Georgia=georgia,palatino;"+
+					"Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;"+
+					"Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,"+
+					"monaco;Times New Roman=times new roman,times;Trebuchet "+
+					"MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;"+
+					"Wingdings=wingdings,zapf dingbats",
+			fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+		};
+
+		// extend default settings with configured options and preferences
+		jQuery.extend(settings, this._extendedSettings());
+		this.tinymce = tinymce.init(settings);
+	},
+
+	/**
+	 *
+	 * @param {type} _callback
+	 * @param {type} _value
+	 * @param {type} _meta
+	 * @returns {unresolved}
+	 */
+	_file_picker_callback: function(_callback, _value, _meta) {
+		if (typeof this.file_picker_callback == 'function') return this.file_picker_callback.call(arguments, this);
+
+	},
+
+	/**
+	 *
+	 * @param {type} _blobInfo image blob info
+	 * @param {type} _success success callback
+	 * @param {type} _failure failure callback
+	 * @returns {}
+	 */
+	_images_upload_handler: function(_blobInfo, _success, _failure) {
+		if (typeof this.images_upload_handler == 'function') return this.images_upload_handler.call(arguments, this);
+	},
+
+	/**
+	 * Callback when instance is ready
+	 *
+	 * @param {type} _editor
+	 */
+	_instanceIsReady: function(_editor) {
+		console.log("Editor: " + _editor.id + " is now initialized.");
+		this.editor = _editor;
+		this.editor.execCommand('fontName', true, egw.preference('rte_font', 'common'));
+		this.editor.execCommand('fontSize',	true, egw.preference('rte_font_size', 'common')
+				+ egw.preference('rte_font_unit', 'common'));
+	},
+
+	/**
+	 *
+	 * @returns {et2_widget_htmlareaet2_htmlarea.et2_widget_htmlareaAnonym$1._extendedSettings.settings}
+	 */
+	_extendedSettings: function () {
+
+		var settings = {
+			fontsize_formats: this.font_size_formats[egw.preference('rte_font_unit', 'common')],
+		};
+
+		var mode = this.mode || egw.preference('rte_features', 'common');
+		switch (mode)
 		{
-			delete self.options.config.imageUploadUrl;
+			case 'simple':
+				settings.toolbar = "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
+					"alignleft aligncenter alignright alignjustify  | numlist "+
+					"bullist outdent indent"
+				break;
+			case 'extended':
+				settings.toolbar = "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
+					"link | alignleft aligncenter alignright alignjustify  | numlist "+
+					"bullist outdent indent  | removeformat | image"
+				break;
+			case 'advanced':
+				settings.toolbar = "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
+					"link | alignleft aligncenter alignright alignjustify  | numlist "+
+					"bullist outdent indent  | removeformat | image"
+				break;
 		}
-		else if (this.options.imageUpload[0] !== '/' && this.options.imageUpload.substr(0, 4) != 'http')
-		{
-			self.options.config.imageUploadUrl = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload")+
-						'&request_id='+self.getInstanceManager().etemplate_exec_id+'&widget_id='+this.options.imageUpload;
-			self.options.config.imageUploadUrl = self.options.config.imageUploadUrl.substr(egw.webserverUrl.length+1);
-		}
-		else
-		{
-			self.options.config.imageUploadUrl = this.options.imageUpload.substr(egw.webserverUrl.length+1);
-		}
-		try
-		{
-			this.ckeditor = CKEDITOR.replace(this.dom_id,jQuery.extend({},this.options.config,this.options));
-			this.ckeditor.setData(self.value);
-			delete self.value;
-		}
-		catch (e)
-		{
-			if(CKEDITOR.instances[this.dom_id])
-			{
-				CKEDITOR.instances[this.dom_id].destroy();
-			}
-			if(this.htmlNode.ckeditor)
-			{
-				this.ckeditor = CKEDITOR.replace(this.dom_id,this.options.config);
-				this.ckeditor.setData(self.value);
-				delete self.value;
-			}
-		}
-
-		if(this.ckeditor && this.options.config.preference_style)
-		{
-			var editor = this.ckeditor;
-			this.ckeditor.on('instanceReady', function(e) {
-
-				// Add in user font preferences
-				if (self.options.config.preference_style && !e.editor.getData())
-				{
-					e.editor.document.getBody().setHtml(self.options.config.preference_style);
-					delete self.options.config.preference_style;
-				}
-			});
-
-			// Drag & drop of images inline won't work, because of database
-			// field sizes.  For some reason FF ignored just changing the cursor
-			// when dragging, so we replace dropped images with error icon.
-			var replaceImgText = function(html) {
-				var ret = html.replace( /<img[^>]*src="(data:.*;base64,.*?)"[^>]*>/gi, function( img, src ){
-					return '';
-				});
-				return ret;
-			};
-
-			var chkImg = function(e) {
-				// don't execute code if the editor is readOnly
-				if (editor.readOnly)
-					return;
-
-				// allow data-URL, returning false to stop regular upload
-				if (!self.options.imageUpload)
-				{
-					// Remove the image from the text
-					setTimeout( function() {
-						editor.document.$.body.innerHTML = replaceImgText(editor.document.$.body.innerHTML);
-					},200);
-				}
-
-				// Supported file types for dropping on CKEditor imageUpload plugin
-				var supportedTypesByCKEditor = /image\/(jpeg|png|gif)/;
-
-				// Try to pass the image into the first et2_file that will accept it
-				if(e.data.$.dataTransfer && !CKEDITOR.fileTools.isTypeSupported(e.data.$.dataTransfer.files[0],supportedTypesByCKEditor))
-				{
-					self.getRoot().iterateOver(function(widget) {
-						if(widget.options.drop_target)
-						{
-							widget.set_value(e.data.$.dataTransfer.files,e.data.$);
-							return;
-						}
-					},e.data.$,et2_file);
-				}
-			};
-
-			editor.on( 'contentDom', function() {
-				editor.document.on('drop', chkImg);
-			});
-		}
-
+		return settings;
 	},
 
 	destroy: function() {
-		try
+		if (this.editor)
 		{
-			//this.htmlNode.ckeditorGet().destroy(true);
-			if (this.ckeditor) this.ckeditor.destroy(true);
-			this.ckeditor = null;
+			this.editor.destroy();
 		}
-		catch (e)
-		{
-			this.egw().debug("warn","Removing CKEDITOR: " + e.message, this,e);
-			// Finish it
-			delete CKEDITOR.instances[this.dom_id];
-		}
+		this.editor = null;
+		this.tinymce = null;
 		this.htmlNode.remove();
 		this.htmlNode = null;
 		this._super.apply(this, arguments);
 	},
 	set_value: function(_value) {
 		this._oldValue = _value;
-
-		try {
-			//this.htmlNode.ckeditorGet().setData(_value);
-			var ckeditor = CKEDITOR.instances[this.dom_id];
-			if (ckeditor)
-			{
-				ckeditor.setData(_value);
-			}
-			else
-			{
-				this.htmlNode.val(_value);
-				this.value = _value;
-			}
-		} catch (e) {
-			// CK editor not ready - callback will do it
+		if (this.editor)
+		{
+			this.editor.setContent(_value);
+		}
+		else
+		{
+			this.htmlNode.val(_value);
 			this.value = _value;
 		}
 	},
 
 	getValue: function() {
-		try
-		{
-			//return this.htmlNode.ckeditorGet().getData();
-			var ckeditor = CKEDITOR.instances[this.dom_id];
-			return ckeditor ? ckeditor.getData() : this.htmlNode.val();
-		}
-		catch (e)
-		{
-			// CK Error
-			this.egw().debug("error",e);
-			return null;
-		}
+		return this.editor ? this.editor.getContent() : this.htmlNode.val();
 	},
 
 	/**
@@ -280,26 +247,23 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
 			if (_height != 0)
 			{
-				if (this.ckeditor) // CKEDITOR HTML
+				if (this.editor) // TinyMCE HTML
 				{
 					var h = 0;
-					if (typeof this.ckeditor.container !='undefined' && this.ckeditor.container.$.clientHeight > 0)
+					if (typeof this.editor.iframeElement !='undefined' && this.editor.editorContainer.clientHeight > 0)
 					{
-						h = (this.ckeditor.container.$.clientHeight + _height) > 0 ?
-						this.ckeditor.container.$.clientHeight + _height: this.ckeditor.config.height;
-					}
-					else if (this.ckeditor.ui.space('contents'))
-					{
-						h = parseInt(this.ckeditor.ui.space('contents').getStyle('height')) + _height;
+						h = (this.editor.editorContainer.clientHeight + _height) > 0 ?
+						(this.editor.editorContainer.clientHeight) + _height: this.editor.settings.min_height;
 					}
 					else // fallback height size
 					{
-						h = this.ckeditor.config.height + _height;
+						h = this.editor.settings.min_height + _height;
 					}
-
-					this.ckeditor.resize('',h);
+					jQuery(this.editor.editorContainer).height(h);
+					jQuery(this.editor.iframeElement).height(h - (this.editor.editorContainer.getElementsByClassName('tox-toolbar')[0].clientHeight +
+							this.editor.editorContainer.getElementsByClassName('tox-statusbar')[0].clientHeight));
 				}
-				else // No CKEDITOR
+				else // No TinyMCE
 				{
 					this.htmlNode.height(this.htmlNode.height() + _height);
 				}
@@ -308,45 +272,3 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 	}
 });}).call(this);
 et2_register_widget(et2_htmlarea, ["htmlarea"]);
-
-jQuery.extend(et2_htmlarea,
-{
-	/**
-	 * Build VfsSelect widget for CKEditor Browse Server button
-	 * @param {array} _data
-	 */
-	buildVfsSelectForCKEditor: function(_data)
-	{
-		if (!_data) return;
-
-		// Don't rely only on app_name to fetch et2 object as app_name may not
-		// always represent current app of the window, e.g.: mail admin account.
-		// Try to fetch et2 from its template name.
-		var etemplate = jQuery('form').data('etemplate');
-		var et2 = {};
-		if (etemplate && etemplate.name && !app[egw(window).app_name()])
-		{
-			et2 = etemplate2.getByTemplate(etemplate.name)[0]['widgetContainer'];
-		}
-		else
-		{
-			et2 = app[egw(window).app_name()].et2;
-		}
-
-		var vfsSelect = et2_createWidget('vfs-select', {
-			id:'upload',
-			mode: 'open',
-			name: '',
-			button_caption:"Link",
-			button_label:"Link",
-			dialog_title: "Link file",
-			method: "ckeditor"
-		}, et2);
-		jQuery(vfsSelect.getDOMNode()).on('change', function (){
-			CKEDITOR.tools.callFunction(_data.funcNum, vfsSelect.get_value());
-		});
-
-		// start the file selector dialog
-		vfsSelect.click();
-	}
-});

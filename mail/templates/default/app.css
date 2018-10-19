@@ -608,9 +608,6 @@ div.mailDisplayHeaders > span:first-child,  div.mailPreviewHeaders > span:first-
 div.mailComposeHeaders > span:first-child {
 	width: 8em;
 }
-div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-child, div.mailComposeBody, div.mailPreviewHeaders > * {
-	margin-left: 3px;
-}
 div.mailDisplayHeaders div.mail_extraEmails
 {
 	display: inline-block;
@@ -955,8 +952,8 @@ img.smime_cert_unknownemail {
   box-shadow: none;
 }
 
-.et2_vbox.et2_box_widget.mailComposeBodySection {
-    margin-left: -3px;
+.et2_vbox.et2_box_widget.mailComposeBodySection .mailComposeHtmlContainer .tox.tox-tinymce{
+    width: 100%;
 }
 
 #mail-compose_subject {

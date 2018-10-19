@@ -17,43 +17,10 @@ use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
 /**
- * eTemplate htmlarea widget
+ * eTemplate htmleditor widget
  */
 class HtmlArea extends Etemplate\Widget
 {
-
-	protected $legacy_options = 'mode,height,width,expand_toolbar,base_href';
-
-	public $attrs = array(
-		'height' => '400px',
-	);
-
-	/**
-	 * Fill config options
-	 *
-	 * @param string $cname
-	 */
-	public function beforeSendToClient($cname)
-	{
-		$form_name = self::form_name($cname, $this->id);
-
-		$config = Api\Html\CkEditorConfig::get_ckeditor_config_array($this->attrs['mode'], $this->attrs['height'],
-			$this->attrs['expand_toolbar'],$this->attrs['base_href']
-		);
-		// User preferences
-		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
-		$font_size = Api\Html\CkEditorConfig::font_size_from_prefs();
-		$font_span = '<span style="width: 100%; display: inline; '.
-			($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').
-			'">&#8203;</span>';
-		if (empty($font) && empty($font_size)) $font_span = '';
-		if($font_span)
-		{
-			$config['preference_style'] = $font_span;
-		}
-		self::$request->modifications[$form_name]['config'] = $config;
-	}
-
 	/**
 	 * Validate input
 	 *
@@ -71,15 +38,35 @@ class HtmlArea extends Etemplate\Widget
 
 		if (!$this->is_readonly($cname, $form_name))
 		{
-			$value = self::get_array($content, $form_name);
-			// only purify for html, mode "ascii" is NO html and content get lost!
-			if ($this->attrs['mode'] != 'ascii')
-			{
-				$value = Api\Html\HtmLawed::purify($value, $this->attrs['validation_rules']);
-			}
+			$value = Api\Html\HtmLawed::purify(
+				self::get_array($content, $form_name),
+				$this->attrs['validation_rules']
+			);
 			$valid =& self::get_array($validated, $form_name, true);
 			if (true) $valid = $value;
 		}
+	}
+
+	/**
+	 * Get font size from preferences
+	 *
+	 * @param array $prefs =null default $GLOBALS['egw_info']['user']['preferences']
+	 * @param string &$size =null on return just size, without unit
+	 * @param string &$unit =null on return just unit
+	 * @return string font-size including unit
+	 */
+	public static function font_size_from_prefs(array $prefs=null, &$size=null, &$unit=null)
+	{
+		if (is_null($prefs)) $prefs = $GLOBALS['egw_info']['user']['preferences'];
+
+		$size = $prefs['common']['rte_font_size'];
+		$unit = $prefs['common']['rte_font_unit'];
+		if (substr($size, -2) == 'px')
+		{
+			$unit = 'px';
+			$size = (string)(int)$size;
+		}
+		return $size.($size?$unit:'');
 	}
 }
 Etemplate\Widget::registerWidget(__NAMESPACE__.'\\HtmlArea', 'htmlarea');

@@ -1130,10 +1130,10 @@ class mail_compose
 			$disableRuler = true;
 		}
 		$font_span = $font_part = '';
-		if($content['mimeType'] == 'html' /*&& trim($content['body'])==''*/) {
+		if($content['mimeType'] == 'html') {
 			// User preferences for style
 			$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
-			$font_size = Api\Html\CkEditorConfig::font_size_from_prefs();
+			$font_size = Etemplate\Widget\HtmlArea::font_size_from_prefs();
 			$font_part = '<span style="width:100%; display: inline; '.($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'">';
 			$font_span = $font_part.'&#8203;</span>';
 			if (empty($font) && empty($font_size)) $font_span = '';
@@ -1309,14 +1309,7 @@ class mail_compose
 			$_htmlConfig = Mail::$htmLawed_config;
 			Mail::$htmLawed_config['comment'] = 2;
 			Mail::$htmLawed_config['transform_anchor'] = false;
-			// it is intentional to use that simple-withimage configuration for the ckeditor
-			// and not the eGroupware wide pref to prevent users from trying things that will potentially not work
-			// or not work as expected, as a full featured editor that may be wanted in other apps
-			// is way overloading the "normal" needs for composing mails
-			$content['rtfEditorFeatures']='simple-withimage';//Api\Html\CkEditorConfig::get_ckeditor_config();
-			//$content['rtfEditorFeatures']='advanced';//Api\Html\CkEditorConfig::get_ckeditor_config();
 			$content['validation_rules']= json_encode(Mail::$htmLawed_config);
-			$etpl->setElementAttribute('mail_htmltext','mode',$content['rtfEditorFeatures']);
 			$etpl->setElementAttribute('mail_htmltext','validation_rules',$content['validation_rules']);
 			Mail::$htmLawed_config = $_htmlConfig;
 		}

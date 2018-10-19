@@ -621,12 +621,6 @@ div.mailPreviewHeaders > span:first-child {
 div.mailComposeHeaders > span:first-child {
   width: 8em;
 }
-div.mailDisplayHeaders > span:first-child,
-div.mailComposeHeaders > span:first-child,
-div.mailComposeBody,
-div.mailPreviewHeaders > * {
-  margin-left: 3px;
-}
 div.mailDisplayHeaders div.mail_extraEmails {
   display: inline-block;
   max-height: 1.3em;
@@ -943,8 +937,8 @@ img.smime_cert_unknownemail {
   border: none;
   box-shadow: none;
 }
-.et2_vbox.et2_box_widget.mailComposeBodySection {
-  margin-left: -3px;
+.et2_vbox.et2_box_widget.mailComposeBodySection .mailComposeHtmlContainer .tox.tox-tinymce {
+  width: 100%;
 }
 #mail-compose_subject {
   padding: 10px 0 10px 0;
@@ -2436,12 +2430,6 @@ div.mailPreviewHeaders > span:first-child {
 }
 div.mailComposeHeaders > span:first-child {
   width: 8em;
-}
-div.mailDisplayHeaders > span:first-child,
-div.mailComposeHeaders > span:first-child,
-div.mailComposeBody,
-div.mailPreviewHeaders > * {
-  margin-left: 3px;
 }
 div.mailDisplayHeaders div.mail_extraEmails {
   display: inline-block;
