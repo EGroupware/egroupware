@@ -37,7 +37,7 @@
 						</columns>
 						<rows>
 							<row>
-								<checkbox label="@label[$row]" id="acl[$row]" options="{$cont[right][$row]},0" span="all"/>
+								<checkbox label="@label[$row]" id="acl[$row]" options="{$cont['right'][$row]},0" span="all"/>
 							</row>
 						</rows>
 					</grid>
