@@ -622,7 +622,7 @@ class Widget
 			}
 			if (!is_numeric($c)) $c = self::chrs2num($c);
 			$col = self::num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
-			$col_ = self::num2chrs($c_-1);
+			if (is_numeric($c_)) $col_ = self::num2chrs($c_-1);
 			$row_cont = $cont[$row];
 			$col_row_cont = $cont[$col.$row];
 
