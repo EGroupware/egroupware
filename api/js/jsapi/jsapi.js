@@ -828,10 +828,6 @@ jQuery(function(){
 	});
 });
 
-jQuery(document).ready(function() {
-	jQuery('head').append('<link rel="manifest" href="/egroupware/pixelegg/manifest.json">');
-})
-
 // IE does not support ES6 therefore we need to use polyfill function
 Number.isInteger = Number.isInteger || function(value) {
   return typeof value === 'number' &&
