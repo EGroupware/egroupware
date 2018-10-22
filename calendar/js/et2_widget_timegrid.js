@@ -1602,6 +1602,17 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		this.owner.set_label('');
 		this.div.removeClass('calendar_TimeGridNoLabel');
 
+		// Check to see if it's our own calendar, with just us showing
+		if(typeof _owner == 'object' && _owner.length == 1 && _owner[0] == this.egw().user('account_id'))
+		{
+			var rowCount = 0;
+			this._parent.iterateOver(function(widget) {
+				if(!widget.disabled) rowCount++;
+			},this, et2_calendar_timegrid);
+			// Just us, show week number
+			if(rowCount == 1) _owner = false;
+		}
+
 		if(typeof _owner == 'string' && isNaN(_owner))
 		{
 			this.set_label('');
@@ -1610,7 +1621,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			// Label is empty, but give extra space for the owner name
 			this.div.removeClass('calendar_TimeGridNoLabel');
 		}
-		else if (!_owner || typeof _owner == 'object' && _owner.length)
+		else if (!_owner || typeof _owner == 'object' && _owner.length > 1)
 		{
 			// Don't show owners if more than one, show week number
 			this.owner.set_value('');
