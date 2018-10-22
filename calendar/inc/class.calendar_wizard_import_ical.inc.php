@@ -70,7 +70,7 @@ class calendar_wizard_import_ical
 		{
 			$content['text'] = $this->steps['wizard_step55'];
 			$content['step'] = 'wizard_step55';
-			foreach(array('skip_conflicts','remove_past','remove_future') as $field)
+			foreach(array('skip_conflicts','empty_before_import','remove_past','remove_future') as $field)
 			{
 				if(!$content[$field] && array_key_exists($field, $content['plugin_options']))
 				{

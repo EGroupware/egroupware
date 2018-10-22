@@ -144,18 +144,21 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 		$owner = $plugin_options['cal_owner'];
 
 		// Purge
-		$remove_past = new Api\DateTime();
-		$remove_future = new Api\DateTime();
-		$plugin_options = array_merge(array('remove_past' => 100, 'remove_future' => 365), $plugin_options);
-		foreach(array('remove_past','remove_future') as $date)
+		if($plugin_options['empty_before_import'])
 		{
-			${$date}->add( (($date == 'remove_past' ? -1 : 1) * (int)$plugin_options[$date]) . ' days');
+			$remove_past = new Api\DateTime();
+			$remove_future = new Api\DateTime();
+			$plugin_options = array_merge(array('remove_past' => 100, 'remove_future' => 365), $plugin_options);
+			foreach(array('remove_past','remove_future') as $date)
+			{
+				${$date}->add( (($date == 'remove_past' ? -1 : 1) * (int)$plugin_options[$date]) . ' days');
+			}
+			$this->purge_calendar(
+					$owner,
+					array('from' => $remove_past, 'to' => $remove_future),
+					$plugin_options['no_notification']
+			);
 		}
-		$this->purge_calendar(
-				$owner,
-				array('from' => $remove_past, 'to' => $remove_future),
-				$plugin_options['no_notification']
-		);
 
 		// User wants conflicting events to not be imported
 		if($_definition->plugin_options['skip_conflicts'])
