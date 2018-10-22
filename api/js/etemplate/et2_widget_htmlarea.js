@@ -29,7 +29,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		'mode': {
 			'name': 'Mode',
 			'description': 'One of {ascii|simple|extended|advanced}',
-			'default': 'simple',
+			'default': '',
 			'type': 'string'
 		},
 		'height': {
@@ -65,6 +65,12 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			description: "Callback function for handling image upload",
 			type: 'js',
 			default: et2_no_init
+		},
+		menubar: {
+			name: "Menubar",
+			description: "Display menubar at the top of the editor",
+			type: "boolean",
+			default: true
 		}
 	},
 
@@ -106,6 +112,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			language: egw.preference('lang', 'common'),
 			paste_data_images: true,
 			browser_spellcheck: true,
+			contextmenu: false,
 			images_upload_url: this.options.imageUpload,
 			file_picker_callback: jQuery.proxy(this._file_picker_callback, this),
 			images_upload_handler: jQuery.proxy(this._images_upload_handler, this),
@@ -181,20 +188,22 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 	 */
 	_extendedSettings: function () {
 
+		var rte_menubar = egw.preference('rte_menubar', 'common');
 		var settings = {
 			fontsize_formats: this.font_size_formats[egw.preference('rte_font_unit', 'common')],
+			menubar: parseInt(rte_menubar) && this.menubar ? true : typeof rte_menubar != 'undefined' ? false : this.menubar
 		};
 
 		var mode = this.mode || egw.preference('rte_features', 'common');
 		switch (mode)
 		{
 			case 'simple':
-				settings.toolbar = "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
+				settings.toolbar = "fontselect fontsizeselect | bold italic forecolor backcolor | "+
 					"alignleft aligncenter alignright alignjustify  | numlist "+
-					"bullist outdent indent"
+					"bullist outdent indent | link image"
 				break;
 			case 'extended':
-				settings.toolbar = "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
+				settings.toolbar = "fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
 					"link | alignleft aligncenter alignright alignjustify  | numlist "+
 					"bullist outdent indent  | removeformat | image"
 				break;

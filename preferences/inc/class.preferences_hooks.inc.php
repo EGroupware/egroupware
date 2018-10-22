@@ -71,8 +71,6 @@ class preferences_hooks
 			'br'	=> lang('br')
 		);
 
-		$rich_text_editor_skins = Api\Html\CkEditorConfig::getAvailableCKEditorSkins();
-
 		$account_sels = array(
 			'selectbox'     => lang('Selectbox'),
 			'primary_group' => lang('Selectbox with primary group and search'),
@@ -388,15 +386,18 @@ class preferences_hooks
 				'admin'  => False,
 				'forced' => 'br',
 			),
-			'rte_skin' => array(
+			'rte_menubar' => array(
 				'type'   => 'select',
-				'label'  => 'Rich text editor theme',
-				'name'   => 'rte_skin',
-				'values' => $rich_text_editor_skins,
-				'help'   => 'Select the theme (visualization) of the rich text editor.',
+				'label'  => 'Enable menubar',
+				'name'   => 'rte_menubar',
+				'values' => array(
+					'1' => lang('Yes'),
+					'0' => lang('No'),
+				),
+				'help'   => 'Enable/Disable menubar from top of the editor.',
 				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => 'moono',
+				'admin'  => '1',
+				'default' => '1',
 			),
 			'rte_features' => array(
 				'type'   => 'select',

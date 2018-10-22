@@ -87,7 +87,7 @@
 		</vbox>
 		<vbox class="mailComposeBodySection" width="100%">
 			<hbox disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
-				<htmlarea name="mail_htmltext" id="mail_htmltext" imageUpload="link_to" expand_toolbar="true" height="478px" width="100%" resize_ratio="0"/>
+				<htmlarea name="mail_htmltext" id="mail_htmltext" menubar="false" mode="simple" imageUpload="link_to" expand_toolbar="true" height="478px" width="100%" resize_ratio="0"/>
 			</hbox>
 			<hbox disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
 				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext" resize_ratio="0"/>
