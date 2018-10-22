@@ -9,9 +9,13 @@
 				<description value="Do not import conflicting events"/>
 				<checkbox id="skip_conflicts"/>
 			</hbox>
-			<description id="delete_title" value="Empty target calendar before importing" font_style="b" class="et2_bold"/>
-			<integer label="How many days to be removed in the past (default 100)" id="remove_past"/>
-			<integer label="How many days to be removed in the future (default 365)" id="remove_future"/>
+			<description/>
+			<hbox>
+				<description id="delete_title" value="Empty target calendar before importing" font_style="b" class="et2_bold"/>
+				<checkbox id="empty_before_import" onchange="var enabled = widget.getValue() == 'true'; var past = widget.getRoot().getWidgetById('remove_past'); var future = widget.getRoot().getWidgetById('remove_future');past.set_disabled(!enabled);future.set_disabled(!enabled);return true;"/>
+			</hbox>
+			<integer label="How many days to be removed in the past (default 100)" id="remove_past" disabled="!@empty_before_import"/>
+			<integer label="How many days to be removed in the future (default 365)" id="remove_future" disabled="!@empty_before_import"/>
 		</vbox>
 		<styles>
 			#importexport-wizardbox_delete_title {
