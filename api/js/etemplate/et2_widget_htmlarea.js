@@ -122,7 +122,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 				"visualblocks visualchars fullscreen image link media template "+
 				"codesample table charmap hr pagebreak nonbreaking anchor toc "+
 				"insertdatetime advlist lists textcolor wordcount imagetools "+
-				"colorpicker textpattern help paste"
+				"colorpicker textpattern help paste code"
 			],
 			toolbar: "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
 					"link | alignleft aligncenter alignright alignjustify  | numlist "+
@@ -210,7 +210,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			case 'advanced':
 				settings.toolbar = "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
 					"link | alignleft aligncenter alignright alignjustify  | numlist "+
-					"bullist outdent indent  | removeformat | image"
+					"bullist outdent indent  | removeformat code| image"
 				break;
 		}
 		return settings;
