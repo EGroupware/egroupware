@@ -100,17 +100,21 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		if(this.mode == 'ascii' || this.editor != null) return;
 		var imageUpload = '';
 
-		if (this.options.imageUpload[0] !== '/' && this.options.imageUpload.substr(0, 4) != 'http')
+		if (this.options.imageUpload && this.options.imageUpload[0] !== '/' && this.options.imageUpload.substr(0, 4) != 'http')
 		{
 			imageUpload = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload")+
 						'&request_id='+this.getInstanceManager().etemplate_exec_id+'&widget_id='+this.options.imageUpload+'&type=htmlarea';
 			imageUpload = imageUpload.substr(egw.webserverUrl.length+1);
 		}
-		else
+		else if (imageUpload)
 		{
 			imageUpload = this.options.imageUpload.substr(egw.webserverUrl.length+1);
 		}
-
+		else
+		{
+			imageUpload = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload")+
+						'&request_id='+this.getInstanceManager().etemplate_exec_id+'&type=htmlarea';
+		}
 		// default settings for initialization
 		var settings = {
 			target: this.htmlNode[0],

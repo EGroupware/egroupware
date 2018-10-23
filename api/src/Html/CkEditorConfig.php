@@ -522,14 +522,14 @@ class CkEditorConfig
 	 * It helps to get CKEditor Browse server button to open VfsSelect widget
 	 * in client side.
 	 * @todo Once the ckeditor allows to overrride the Browse Server button handler
-	 * we should remove this function and handle everything in htmlarea widget in
+	 * we should remove this function and handle everything in ckeditor widget in
 	 * client side.
 	 */
 	public function vfsSelectHelper()
 	{
 		$tmp = new \EGroupware\Api\Etemplate('api.vfsSelectUI');
 		$response = \EGroupware\Api\Json\Response::get();
-		$response->call('window.opener.et2_htmlarea.buildVfsSelectForCKEditor',
+		$response->call('window.opener.et2_ckeditor.buildVfsSelectForCKEditor',
 				array('funcNum' => $_GET['CKEditorFuncNum']));
 		$response->call('window.close');
 		$tmp->exec('',array());
