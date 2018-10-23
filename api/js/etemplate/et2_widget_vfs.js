@@ -933,7 +933,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			type: "string",
 			description: "Server side callback to process selected value(s) in \n\
 			app.class.method or class::method format.  The first parameter will \n\
-			be Method ID, the second the file list. 'ckeditor' is reserved and it \n\
+			be Method ID, the second the file list. 'download' is reserved and it \n\
 			means it should use download_baseUrl instead of path in value (no method\n\
 			 will be actually executed)."
 		},
@@ -1116,12 +1116,12 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 							files = _value.path;
 							break;
 						default:
-							if (self.options.method === 'ckeditor') _value.path = _data.content.download_baseUrl;
+							if (self.options.method === 'download') _value.path = _data.content.download_baseUrl;
 							files = _value.path+'/'+_value.name;
 							break;
 					}
 					self.value = files;
-					if (self.options.method && self.options.method !== 'ckeditor')
+					if (self.options.method && self.options.method !== 'download')
 					{
 						egw(window).json(
 							self.options.method,

@@ -340,7 +340,7 @@ jQuery.extend(et2_ckeditor,
 			button_caption:"Link",
 			button_label:"Link",
 			dialog_title: "Link file",
-			method: "ckeditor"
+			method: "download"
 		}, et2);
 		jQuery(vfsSelect.getDOMNode()).on('change', function (){
 			CKEDITOR.tools.callFunction(_data.funcNum, vfsSelect.get_value());

@@ -118,11 +118,11 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			images_upload_handler: jQuery.proxy(this._images_upload_handler, this),
 			init_instance_callback : jQuery.proxy(this._instanceIsReady, this),
 			plugins: [
-				"print preview fullpage searchreplace autolink directionality "+
-				"visualblocks visualchars fullscreen image link media template "+
+				"print fullpage searchreplace autolink directionality "+
+				"visualblocks visualchars image link media template "+
 				"codesample table charmap hr pagebreak nonbreaking anchor toc "+
 				"insertdatetime advlist lists textcolor wordcount imagetools "+
-				"colorpicker textpattern help paste code"
+				"colorpicker textpattern help paste code searchreplace"
 			],
 			toolbar: "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
 					"link | alignleft aligncenter alignright alignjustify  | numlist "+
@@ -147,6 +147,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 	},
 
 	/**
+	 * Callback function runs when the filepicker in image dialog is clicked
 	 *
 	 * @param {type} _callback
 	 * @param {type} _value
@@ -155,7 +156,37 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 	 */
 	_file_picker_callback: function(_callback, _value, _meta) {
 		if (typeof this.file_picker_callback == 'function') return this.file_picker_callback.call(arguments, this);
+		var callback = _callback;
 
+		// Don't rely only on app_name to fetch et2 object as app_name may not
+		// always represent current app of the window, e.g.: mail admin account.
+		// Try to fetch et2 from its template name.
+		var etemplate = jQuery('form').data('etemplate');
+		var et2 = {};
+		if (etemplate && etemplate.name && !app[egw(window).app_name()])
+		{
+			et2 = etemplate2.getByTemplate(etemplate.name)[0]['widgetContainer'];
+		}
+		else
+		{
+			et2 = app[egw(window).app_name()].et2;
+		}
+
+		var vfsSelect = et2_createWidget('vfs-select', {
+			id:'upload',
+			mode: 'open',
+			name: '',
+			button_caption:"Link",
+			button_label:"Link",
+			dialog_title: "Link file",
+			method: "download"
+		}, et2);
+		jQuery(vfsSelect.getDOMNode()).on('change', function (){
+			callback(vfsSelect.get_value(), {alt:vfsSelect.get_value()});
+		});
+
+		// start the file selector dialog
+		vfsSelect.click();
 	},
 
 	/**
@@ -208,9 +239,9 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 					"bullist outdent indent  | removeformat | image"
 				break;
 			case 'advanced':
-				settings.toolbar = "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
+				settings.toolbar = "undo redo| formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
 					"link | alignleft aligncenter alignright alignjustify  | numlist "+
-					"bullist outdent indent  | removeformat code| image"
+					"bullist outdent indent ltr rtl | removeformat code| image | searchreplace"
 				break;
 		}
 		return settings;

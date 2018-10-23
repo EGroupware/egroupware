@@ -526,7 +526,7 @@ class Vfs extends File
 			'app' => self::get_apps()
 		));
 
-		if ($content['method'] === 'ckeditor')
+		if ($content['method'] === 'download')
 		{
 			$download_baseUrl = \EGroupware\Api\Vfs::download_url($content['path']);
 			if ($download_baseUrl[0] == '/') $download_baseUrl = \EGroupware\Api\Egw::link($download_baseUrl);
