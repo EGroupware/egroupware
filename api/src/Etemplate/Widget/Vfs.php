@@ -140,12 +140,14 @@ class Vfs extends File
 	}
 
 	/**
-	 * Upload via dragging images into ckeditor
+	 * Upload via dragging images into ckeditor/htmlarea(tinymce)
 	 */
 	public static function ajax_htmlarea_upload()
 	{
 		$request_id = urldecode($_REQUEST['request_id']);
+		$type = $_REQUEST['type'];
 		$widget_id = $_REQUEST['widget_id'];
+		$file = $type == 'htmlarea' ? $_FILES['file'] : $_FILES['upload'];
 		if(!self::$request = Etemplate\Request::read($request_id))
 		{
 			$error = lang("Could not read session");
@@ -156,7 +158,7 @@ class Vfs extends File
 			// Can't use callback
 			$error = lang("Could not get template for file upload, callback skipped");
 		}
-		elseif (!isset($_FILES['upload']))
+		elseif (!isset($file))
 		{
 			$error = lang('No _FILES[upload] found!');
 		}
@@ -164,14 +166,14 @@ class Vfs extends File
 		{
 			$data = self::$request->content[$widget_id];
 			$path = self::store_file($path = (!is_array($data) && $data[0] == '/' ? $data :
-				self::get_vfs_path($data['to_app'].':'.$data['to_id'])).'/', $_FILES['upload']);
+				self::get_vfs_path($data['to_app'].':'.$data['to_id'])).'/', $file);
 
 			// store temp. vfs-path like links to be able to move it to correct location after entry is stored
 			if (!$data['to_id'] || is_array($data['to_id']))
 			{
 				Api\Link::link($data['to_app'], $data['to_id'], Api\Link::VFS_APPNAME, array(
-					'name' => $_FILES['upload']['name'],
-					'type' => $_FILES['upload']['type'],
+					'name' => $file['name'],
+					'type' => $file['upload']['type'],
 					'tmp_name' => Api\Vfs::PREFIX.$path,
 				));
 				self::$request->content = array_merge(self::$request->content, array($widget_id => $data));
@@ -180,17 +182,24 @@ class Vfs extends File
 		// switch regular JSON response handling off
 		Api\Json\Request::isJSONRequest(false);
 
-		$file = array(
-			"uploaded" => (int)empty($error),
-			"fileName" => Api\Html::htmlspecialchars($_FILES['upload']['name']),
-			"url" => Api\Framework::link(Api\Vfs::download_url($path)),
-			"error" => array(
-				"message" => $error,
-			)
-		);
+		if ($type == 'htmlarea')
+		{
+			$result = array ('location' => Api\Framework::link(Api\Vfs::download_url($path)));
+		}
+		else
+		{
+			$result = array(
+				"uploaded" => (int)empty($error),
+				"fileName" => Api\Html::htmlspecialchars($file['name']),
+				"url" => Api\Framework::link(Api\Vfs::download_url($path)),
+				"error" => array(
+					"message" => $error,
+				)
+			);
+		}
 
 		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode($file);
+		echo json_encode($result);
 
 		exit;
 	}

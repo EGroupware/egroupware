@@ -98,6 +98,18 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
 		if(this.mode == 'ascii' || this.editor != null) return;
+		var imageUpload = '';
+
+		if (this.options.imageUpload[0] !== '/' && this.options.imageUpload.substr(0, 4) != 'http')
+		{
+			imageUpload = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload")+
+						'&request_id='+this.getInstanceManager().etemplate_exec_id+'&widget_id='+this.options.imageUpload+'&type=htmlarea';
+			imageUpload = imageUpload.substr(egw.webserverUrl.length+1);
+		}
+		else
+		{
+			imageUpload = this.options.imageUpload.substr(egw.webserverUrl.length+1);
+		}
 
 		// default settings for initialization
 		var settings = {
@@ -113,9 +125,9 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			paste_data_images: true,
 			browser_spellcheck: true,
 			contextmenu: false,
-			images_upload_url: this.options.imageUpload,
+			images_upload_url: imageUpload,
 			file_picker_callback: jQuery.proxy(this._file_picker_callback, this),
-			images_upload_handler: jQuery.proxy(this._images_upload_handler, this),
+			images_upload_handler: this.options.images_upload_handler,
 			init_instance_callback : jQuery.proxy(this._instanceIsReady, this),
 			plugins: [
 				"print fullpage searchreplace autolink directionality "+
@@ -187,17 +199,6 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 
 		// start the file selector dialog
 		vfsSelect.click();
-	},
-
-	/**
-	 *
-	 * @param {type} _blobInfo image blob info
-	 * @param {type} _success success callback
-	 * @param {type} _failure failure callback
-	 * @returns {}
-	 */
-	_images_upload_handler: function(_blobInfo, _success, _failure) {
-		if (typeof this.images_upload_handler == 'function') return this.images_upload_handler.call(arguments, this);
 	},
 
 	/**
