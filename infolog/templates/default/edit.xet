@@ -113,7 +113,7 @@
 							</row>
 							<row >
 								<description value="Parent" font_style="1"/>
-								<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="et2_fullWidth"/>
+								<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="et2_fullWidth" query="app.infolog.parent_query" />
 							</row>
 							<row class="row">
 								<description value="Priority" for="info_priority"/>
