@@ -21,10 +21,6 @@
  */
 var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2_IResizeable],
 {
-	font_size_formats: {
-		pt: "8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
-		px:"8px 10px 12px 14px 18px 24px 36px 48px 72px"
-	},
 	attributes: {
 		'mode': {
 			'name': 'Mode',
@@ -219,14 +215,16 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 	},
 
 	/**
+	 * Takes all relevant preferences into account and set settings accordingly
 	 *
-	 * @returns {et2_widget_htmlareaet2_htmlarea.et2_widget_htmlareaAnonym$1._extendedSettings.settings}
+	 * @returns {object} returns a object including all settings
 	 */
 	_extendedSettings: function () {
 
 		var rte_menubar = egw.preference('rte_menubar', 'common');
+		var rte_toolbar = egw.preference('rte_toolbar', 'common');
 		var settings = {
-			fontsize_formats: this.font_size_formats[egw.preference('rte_font_unit', 'common')],
+			fontsize_formats: et2_htmlarea.FONT_SIZE_FORMATS[egw.preference('rte_font_unit', 'common')],
 			menubar: parseInt(rte_menubar) && this.menubar ? true : typeof rte_menubar != 'undefined' ? false : this.menubar
 		};
 
@@ -234,20 +232,25 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		switch (mode)
 		{
 			case 'simple':
-				settings.toolbar = "fontselect fontsizeselect | bold italic forecolor backcolor | "+
-					"alignleft aligncenter alignright alignjustify  | numlist "+
-					"bullist outdent indent | link image"
+				settings.toolbar = et2_htmlarea.TOOLBAR_SIMPLE;
 				break;
 			case 'extended':
-				settings.toolbar = "fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
-					"link | alignleft aligncenter alignright alignjustify  | numlist "+
-					"bullist outdent indent  | removeformat | image"
+				settings.toolbar = et2_htmlarera.TOOLBAR_EXTENDED;
 				break;
 			case 'advanced':
-				settings.toolbar = "undo redo| formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
-					"link | alignleft aligncenter alignright alignjustify  | numlist "+
-					"bullist outdent indent ltr rtl | removeformat code| image | searchreplace"
+				settings.toolbar = et2_htmlarea.TOOLBAR_ADVANCED;
 				break;
+		}
+
+		// take rte_toolbar into account if no mode restrictly set from template
+		if (rte_toolbar && !this.mode)
+		{
+			var toolbar_diff = et2_htmlarea.TOOLBAR_LIST.filter((i) => {return !(rte_toolbar.indexOf(i) > -1);});
+			settings.toolbar = et2_htmlarea.TOOLBAR_ADVANCED;
+			toolbar_diff.forEach((a) => {
+				let r = new RegExp(a);
+				settings.toolbar = settings.toolbar.replace(r, '');
+			});
 		}
 		return settings;
 	},
@@ -317,3 +320,45 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 	}
 });}).call(this);
 et2_register_widget(et2_htmlarea, ["htmlarea"]);
+
+// Static class stuff
+jQuery.extend(et2_htmlarea, {
+	/**
+	 * Array of toolbars
+	 * @constant
+	 */
+	TOOLBAR_LIST: ['undo', 'redo', 'formatselect', 'fontselect', 'fontsizeselect',
+		'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor', 'link',
+		'alignleft', 'aligncenter', 'alignright', 'alignjustify', 'numlist',
+		'bullist', 'outdent', 'indent', 'ltr', 'rtl', 'removeformat', 'code', 'image', 'searchreplace'
+	],
+	/**
+	 * arranged toolbars as simple mode
+	 * @constant
+	 */
+	TOOLBAR_SIMPLE: "fontselect fontsizeselect | bold italic forecolor backcolor | "+
+					"alignleft aligncenter alignright alignjustify  | numlist "+
+					"bullist outdent indent | link image",
+	/**
+	 * arranged toolbars as extended mode
+	 * @constant
+	 */
+	TOOLBAR_EXTENDED: "fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
+					"link | alignleft aligncenter alignright alignjustify  | numlist "+
+					"bullist outdent indent  | removeformat | image",
+	/**
+	 * arranged toolbars as advanced mode
+	 * @constant
+	 */
+	TOOLBAR_ADVANCED: "undo redo| formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
+					"link | alignleft aligncenter alignright alignjustify  | numlist "+
+					"bullist outdent indent ltr rtl | removeformat code| image | searchreplace",
+	/**
+	 * font size formats
+	 * @constant
+	 */
+	FONT_SIZE_FORMATS: {
+		pt: "8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
+		px:"8px 10px 12px 14px 18px 24px 36px 48px 72px"
+	}
+});

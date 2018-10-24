@@ -115,6 +115,24 @@ class preferences_hooks
 				$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'],
 				$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit']);
 		}
+		$rte_toolbar_list = array (
+			'undo', 'redo', 'formatselect', 'fontselect', 'fontsizeselect',
+			'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor',
+			'link', 'alignleft', 'aligncenter', 'alignright', 'alignjustify',
+			'numlist', 'bullist', 'outdent', 'indent', 'ltr', 'rtl',
+			'removeformat', 'code', 'image', 'searchreplace'
+		);
+		$rte_toolbar_selOptions = array();
+		foreach ($rte_toolbar_list as $toolbar)
+		{
+			$rte_toolbar_selOptions[$toolbar] = array (
+				'id' => $toolbar,
+				'label' => lang($toolbar),
+				'title' => lang($toolbar),
+				'icon' => Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url']).'/api/templates/default/images/htmlarea/'.$toolbar.'.png',
+				'app' => 'api'
+			);
+		}
 		// Settings array for this app
 		$settings = array(
 			array(
@@ -408,6 +426,21 @@ class preferences_hooks
 				'admin'  => false,
 				'default'=> 'extended'
 			),
+			'rte_toolbar' => array(
+				'type'	=> 'taglist',
+				'label'	=> 'Enabled features in toolbar',
+				'name'	=> 'rte_toolbar',
+				'values'=> '',
+				'help'	=> 'You may select features to be enabled in toolbar. Selecting any of the tools from here means seleted "Feature of the editor" preference would be ignored.',
+				'admin'	=> true,
+				'attributes' => array(
+					'allowFreeEntries' => false,
+					//'multiple' => 'toggle',
+					'editModeEnabled' => false,
+					'autocomplete_url' => ' ',
+					'select_options' => $rte_toolbar_selOptions
+				)
+			)
 		);
 		// disable thumbnails, if no size configured by admin
 		if (!$GLOBALS['egw_info']['server']['link_list_thumbnail']) unset($settings['link_list_thumbnail']);

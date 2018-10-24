@@ -37,6 +37,10 @@ class CkEditor extends Etemplate\Widget
 	{
 		$form_name = self::form_name($cname, $this->id);
 
+		Api\Framework::includeJS('/vendor/egroupware/ckeditor/ckeditor.js');
+		Api\Framework::includeJS('/vendor/egroupware/ckeditor/ckeditor.config.js');
+		Api\Framework::includeJS('/vendor/egroupware/ckeditor/ckeditor.adapters/jquery.js');
+
 		$config = Api\Html\CkEditorConfig::get_ckeditor_config_array($this->attrs['mode'], $this->attrs['height'],
 			$this->attrs['expand_toolbar'],$this->attrs['base_href']
 		);
