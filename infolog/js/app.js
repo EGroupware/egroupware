@@ -649,6 +649,30 @@ app.classes.infolog = AppJS.extend(
 	},
 
 	/**
+	 * Mess with the query for parent widget to exclude self
+	 *
+	 * @param {Object} request
+	 * @param {et2_link_entry} widget
+	 * @returns {boolean}
+	 */
+	parent_query: function(request, widget)
+	{
+		// No ID yet, no need to filter
+		if(!widget.getRoot().getArrayMgr('content').getEntry('info_id'))
+		{
+			return true;
+		}
+		if(!request.options)
+		{
+			request.options = {};
+		}
+		// Exclude self from results - no app needed since it's just one app
+		request.options.exclude = [widget.getRoot().getArrayMgr('content').getEntry('info_id')];
+
+		return true;
+	},
+
+	/**
 	 * View a list of timesheets for the linked infolog entry
 	 *
 	 * Only one infolog entry at a time is allowed, we just pick the first one

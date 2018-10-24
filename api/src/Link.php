@@ -755,7 +755,7 @@ class Link extends Link\Storage
 	 *
 	 * @param string $app app to search
 	 * @param string $pattern pattern to search
-	 * @param array& $options passed to callback: type, start, num_rows, filter; on return value for "total"
+	 * @param array& $options passed to callback: type, start, num_rows, filter, exclude; on return value for "total"
 	 * @return array with $id => $title pairs of matching entries of app
 	 */
 	static function query($app, $pattern, &$options = array())
@@ -777,6 +777,10 @@ class Link extends Link\Storage
 		if (!isset($options['total']))
 		{
 		       $options['total'] = count($result);
+		}
+		if (isset($options['exclude']))
+		{
+			$result = array_diff_key($result, array_flip($options['exclude']));
 		}
 		if (is_array($result) && (isset($options['start']) || (isset($options['num_rows']) && count($result) > $options['num_rows'])))
 		{
