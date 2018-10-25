@@ -597,7 +597,8 @@ class calendar_uilist extends calendar_ui
 			$this->get_rows($query,$events,$readonlys);
 			foreach($events as $key => $event)
 			{
-				if (!in_array($event['id'],$checked) && !in_array($event['id'].':'.$event['recur_date'], $checked)) unset($events[$key]);
+				$recur_date = Api\DateTime::to($event['recur_date'],'ts');
+				if (!in_array($event['id'],$checked) && !in_array($event['id'].':'.$recur_date, $checked)) unset($events[$key]);
 			}
 			$checked = array_values($events); // Clear keys
 		}
