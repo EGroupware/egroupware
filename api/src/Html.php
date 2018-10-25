@@ -442,6 +442,9 @@ class Html
 	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'),
 		$_height='400px', $_width='100%',$_start_path='',$_purify=true, $_focusToBody=false, $_executeJSAfterInit='')
 	{
+		//not used anymore but defined in function signature
+		unset ($_options);
+
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
 			return self::textarea($_name,$_content,'style="width: '.$_width.'; height: '.$_height.';" id="'.htmlspecialchars($_name).'"');
@@ -490,9 +493,31 @@ tinymce.init({
 			browser_spellcheck: true,
 			contextmenu: false,
 			file_picker_callback: function(_callback, _value, _meta){
+				var callback = _callback;
+				var attrs = {
+					menuaction: "filemanager.filemanager_select.select",
+					mode: "open",
+					method: "download_url",
+					path: "'. $_start_path.'"
+				};
 
-
-
+				// Open the filemanager select in a popup
+				var popup = egw(window).open_link(
+					egw().link("/index.php", attrs),
+					"link_existing",
+					"680x400"
+				);
+				if(popup)
+				{
+					// Safari and IE lose reference to global variables after window close
+					// Try to get updated data before window is closed then later we trigger
+					// change event on widget
+					egw().window.setTimeout(function(){
+						jQuery(popup).bind("unload",function(){
+							callback(this.selected_files, {alt:this.selected_files});
+						});
+					},1000);
+				}
 			},
 			init_instance_callback : function(_editor){
 				console.log(_editor);

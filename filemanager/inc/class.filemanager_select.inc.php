@@ -195,7 +195,15 @@ class filemanager_select
 
 					if ($content['method'] && $content['method'] != 'ckeditor_return')
 					{
-						$js = ExecMethod2($content['method'],$content['id'],$files);
+						if ($content['method'] == 'download_url' && !is_array($files))
+						{
+							$files =  Vfs::download_url($files);
+							if ($files[0] == '/') $files = Egw::link($files);
+						}
+						else
+						{
+							$js = ExecMethod2($content['method'],$content['id'],$files);
+						}
 					}
 					else if ($content['method'] == 'ckeditor_return')
 					{
