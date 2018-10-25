@@ -449,7 +449,7 @@ class addressbook_vcal extends addressbook_bo
 						{
 							$value = Api\Translation::convert(trim($value), $sysCharSet, $_charset);
 							$values[] = $value;
-							if (preg_match('/[^\x20-\x7F]/', $value))
+							if ($this->version == '2.1' && preg_match('/[^\x20-\x7F]/', $value))
 							{
 								if ($extra_charset_attribute || $this->productName == 'kde')
 								{
