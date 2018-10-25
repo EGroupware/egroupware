@@ -297,6 +297,12 @@ class Smime extends Horde_Crypt_Smime
 		}
 		if ($acc_smime['acc_smime_password'])
 		{
+			$pass = explode('[[smime_passphrase]]', $acc_smime['acc_smime_password']);
+			if (is_array($pass)) {
+				$acc_smime['acc_smime_password'] = $pass[0];
+				$passphrase = $pass[1];
+				Api\Cache::setSession('mail', 'smime_passphrase', $passphrase);
+			}
 			$extracted = self::extractCertPKCS12(
 					$acc_smime['acc_smime_password'],
 					$passphrase

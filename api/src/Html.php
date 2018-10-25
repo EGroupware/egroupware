@@ -479,6 +479,15 @@ var font_size_formats = {
 	pt: "8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
 	px:"8px 10px 12px 14px 18px 24px 36px 48px 72px"
 };
+var  language_code = {
+	bg: "bg_BG", ca: "ca",	cs: "cs", da: "da", de: "de",	en:"en_CA",
+	el:"el", "es-es":"es",	et: "et", eu: "eu" , fa: "fa_IR", fi: "fi",
+	fr: "fr_FR", hi:"",	hr:"hr", hu:"hu_HU", id: "id", it: "it", iw: "",
+	ja: "ja", ko: "ko_KR", lo: "", lt: "lt", lv: "lv",	nl: "nl", no: "nb_NO",
+	pl: "pl", pt: "pt_PT", "pt-br": "pt_BR", ru: "ru", sk: "sk", sl: "sl_SI",
+	sv: "sv_SE", th: "th_TH", tr: "tr_TR", uk: "en_GB", vi: "vi_VN", zh: "zh_CN",
+	"zh-tw": "zh_TW"
+};
 var name = "#"+"'.$_name.'".replace( /(:|\.|\[|\]|,|=|@)/g, "\\\$1" );
 var height = "'.$_height.'";
 var width = "'.$_width.'";
@@ -489,9 +498,9 @@ tinymce.init({
 			resize: false,
 			height: height.match(/%/) ? height : parseInt(height),
 			width: width.match(/%/) ? width : parseInt(width),
-			min_height: 100,
+			min_height: 200,
 			auto_focus: "'.$focusToBody.'",
-			language:"'. $GLOBALS['egw_info']['user']['preferences']['common']['lang'].'",
+			language: language_code["'. $GLOBALS['egw_info']['user']['preferences']['common']['lang'].'"],
 			browser_spellcheck: true,
 			contextmenu: false,
 			file_picker_callback: function(_callback, _value, _meta){

@@ -121,7 +121,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			height: this.options.height,
 			width: this.options.width,
 			min_height: 100,
-			language: egw.preference('lang', 'common'),
+			language: et2_htmlarea.LANGUAGE_CODE[egw.preference('lang', 'common')],
 			paste_data_images: true,
 			browser_spellcheck: true,
 			contextmenu: false,
@@ -360,5 +360,18 @@ jQuery.extend(et2_htmlarea, {
 	FONT_SIZE_FORMATS: {
 		pt: "8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
 		px:"8px 10px 12px 14px 18px 24px 36px 48px 72px"
+	},
+
+	/**
+	 * language code represention for TinyMCE lang code
+	 */
+	LANGUAGE_CODE: {
+		bg: "bg_BG", ca: "ca",	cs: "cs", da: "da", de: "de",	en:"en_CA",
+		el:"el", "es-es":"es",	et: "et", eu: "eu" , fa: "fa_IR", fi: "fi",
+		fr: "fr_FR", hi:"",	hr:"hr", hu:"hu_HU", id: "id", it: "it", iw: "",
+		ja: "ja", ko: "ko_KR", lo: "", lt: "lt", lv: "lv",	nl: "nl", no: "nb_NO",
+		pl: "pl", pt: "pt_PT", "pt-br": "pt_BR", ru: "ru", sk: "sk", sl: "sl_SI",
+		sv: "sv_SE", th: "th_TH", tr: "tr_TR", uk: "en_GB", vi: "vi_VN", zh: "zh_CN",
+		"zh-tw": "zh_TW"
 	}
 });
