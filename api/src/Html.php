@@ -13,7 +13,7 @@
  */
 
 namespace EGroupware\Api;
-
+use EGroupware\Api\Header\ContentSecurityPolicy;
 /**
  * Generates html with methods representing html-tags or higher widgets
  *
@@ -448,62 +448,82 @@ class Html
 		}
 
 		//include the ckeditor js file
-		Framework::includeJS('/vendor/egroupware/ckeditor/ckeditor.js');
+		Framework::includeJS('/api/js/tinymce/tinymce.min.js');
 
 		// run content through htmlpurifier
 		if ($_purify && !empty($_content))
 			$_content = self::purify($_content);
 
-		// By default the editor start expanded
-		$expanded = isset($_options['toolbar_expanded']) ?
-			$_options['toolbar_expanded'] == 'true' : true;
-
-		//Get the height in pixels from the pixels parameter
-		$pxheight = (strpos('px', $_height) === false) ?
-			(empty($_height) ? 400 : $_height) : str_replace('px', '', $_height);
-
 		// User preferences
 		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
-		$font_size = Html\CkEditorConfig::font_size_from_prefs();
-		$font_span = '<span '.($font||$font_size?'style=\"':'').($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'\">';
-		if (empty($font) && empty($font_size)) $font_span = '';
-
+		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
+		$font_size_unit = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit'];
+		$rte_menubar = $GLOBALS['egw_info']['user']['preferences']['common']['rte_menubar'];
+		$focusToBody = $_focusToBody ? "tinymce" : false;
+		ContentSecurityPolicy::add('script-src', 'unsafe-inline');
 		// we need to enable double encoding here, as ckEditor has to undo one level of encoding
 		// otherwise < and > chars eg. from html markup entered in regular (not source) input, will turn into html!
 		//error_log(__METHOD__.__LINE__.' '.Header\UserAgent::type().','.Header\UserAgent::version());
 		return self::textarea($_name,$_content,'id="'.htmlspecialchars($_name).'"',true).	// true = double encoding
 '
 <script type="text/javascript">
-window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/vendor/egroupware/ckeditor/";
+
 egw_LAB.wait(function() {
-	CKEDITOR.replace("'.$_name.'", '.Html\CkEditorConfig::get_ckeditor_config($_mode,
-		$pxheight, $expanded, $_start_path).');
-	CKEDITOR.addCss("body { margin: 5px; }");
-	CKEDITOR.instances["'.$_name.'"].on(
-		"instanceReady",
-		function (ev)
-		{
-			//alert("CKEditorLoad:"+"'.$_focusToBody.'");
-'.($_focusToBody?'
-			ev.editor.focus();':'').'
-			var d = ev.editor.document;
-			var r = new CKEDITOR.dom.range(d);
-			r.collapse(true);
-			r.selectNodeContents(d.getBody());
-			r.collapse('.($_focusToBody==='BOTTOM'?'false':'true').');
-			r.select();'.($font_span?'
-			//this stuff is needed, as the above places the caret just before the span tag
-			var sN = r.startContainer.getNextSourceNode();
-			//FF is selecting the span with getNextSourceNode, other browsers need to fetch it with getNext
-			r.selectNodeContents(((typeof sN.getName==="function") && sN.getName()=="span"?r.startContainer.getNextSourceNode():r.startContainer.getNextSourceNode().getNext()));
-			r.collapse(true);
-			r.select();'.'':'').'
-			ev.editor.resize("100%", '.str_replace('px', '', $pxheight).');
-'.($_executeJSAfterInit?$_executeJSAfterInit:'').'
-		}
-	);'.
-	(trim($_content) == '' && $font_span ? 'CKEDITOR.instances["'.$_name.'"].setData("'.$font_span.'&#8203;</span>");' : '').
-'});
+
+var imageUpload = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload")+"&type=htmlarea";
+imageUpload = imageUpload.substr(egw.webserverUrl.length+1);
+var font_size_formats = {
+	pt: "8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
+	px:"8px 10px 12px 14px 18px 24px 36px 48px 72px"
+};
+
+tinymce.init({
+			selector: "#'.$_name.'",
+			menubar: parseInt('. $rte_menubar.')? true : false,
+			branding: false,
+			resize: false,
+			height: parseInt("'.$_height.'"),
+			width: parseInt("'.$_width.'"),
+			min_height: 100,
+			auto_focus: "'.$focusToBody.'",
+			language:"'. $GLOBALS['egw_info']['user']['preferences']['common']['lang'].'",
+			browser_spellcheck: true,
+			contextmenu: false,
+			file_picker_callback: function(_callback, _value, _meta){
+
+
+
+			},
+			init_instance_callback : function(_editor){
+				console.log(_editor);
+				_editor.execCommand("fontName", true,"'.$font.'");
+				_editor.execCommand("fontSize",	true,"'.$font_size.$font_size_unit.'");
+			},
+			plugins: [
+				"print fullpage searchreplace autolink directionality "+
+				"visualblocks visualchars image link media template "+
+				"codesample table charmap hr pagebreak nonbreaking anchor toc "+
+				"insertdatetime advlist lists textcolor wordcount imagetools "+
+				"colorpicker textpattern help paste code searchreplace"
+			],
+			toolbar: "undo redo | formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
+					"link | alignleft aligncenter alignright alignjustify  | numlist "+
+					"bullist outdent indent  | removeformat code| image | searchreplace",
+			block_formats: "Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;"+
+					"Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre",
+			font_formats: "Andale Mono=andale mono,times;Arial=arial,helvetica,"+
+					"sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book "+
+					"antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;"+
+					"Courier New=courier new,courier;Georgia=georgia,palatino;"+
+					"Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;"+
+					"Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,"+
+					"monaco;Times New Roman=times new roman,times;Trebuchet "+
+					"MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;"+
+					"Wingdings=wingdings,zapf dingbats",
+			fontsize_formats:font_size_formats["'. $font_size_unit.'"],
+		});
+		'.($_executeJSAfterInit?$_executeJSAfterInit:'').'
+});
 </script>
 ';
 	}
