@@ -479,14 +479,16 @@ var font_size_formats = {
 	pt: "8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
 	px:"8px 10px 12px 14px 18px 24px 36px 48px 72px"
 };
-
+var name = "#"+"'.$_name.'".replace( /(:|\.|\[|\]|,|=|@)/g, "\\\$1" );
+var height = "'.$_height.'";
+var width = "'.$_width.'";
 tinymce.init({
-			selector: "#'.$_name.'",
+			selector: name,
 			menubar: parseInt('. $rte_menubar.')? true : false,
 			branding: false,
 			resize: false,
-			height: parseInt("'.$_height.'"),
-			width: parseInt("'.$_width.'"),
+			height: height.match(/%/) ? height : parseInt(height),
+			width: width.match(/%/) ? width : parseInt(width),
 			min_height: 100,
 			auto_focus: "'.$focusToBody.'",
 			language:"'. $GLOBALS['egw_info']['user']['preferences']['common']['lang'].'",
