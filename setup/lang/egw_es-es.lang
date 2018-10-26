@@ -150,6 +150,8 @@ click <a href="index.php">here</a> to return to setup.	setup	es-es	Pulse <a href
 click here	setup	es-es	Pulse aquí
 click here to re-run the installation tests	setup	es-es	Pulse aquí para volver a ejecutar las pruebas de instalación
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	es-es	direcciones ip o nombres de servidor separados por comas. El valor predeterminado es acceder desde cualquier sitio.
+commercial support	setup	es-es	Soporte comercial
+community forum	setup	es-es	Foro comunal
 complete path to aspell program	setup	es-es	Ruta completa al programa aspell
 completed	setup	es-es	Completado
 config password	setup	es-es	Contraseña de configuración
@@ -226,6 +228,7 @@ developers' table schema toy	setup	es-es	Juguete para el esquema de tablas de de
 did not find any valid db support!	setup	es-es	¡No se encontró ningún soporte válido para la base de datos!
 do you want persistent connections (higher performance, but consumes more resources)	setup	es-es	¿Conexiones persistentes? (mayor rendimiento, pero consume más recursos)
 do you want to manage homedirectory and loginshell attributes?	setup	es-es	¿Administrar el directorio personal y atributos de inicio de sesión?
+documentation	setup	es-es	Documentación
 does not exist	setup	es-es	no existe
 domain	setup	es-es	Dominio
 domain '%1' does not exist !!!	setup	es-es	¡¡El dominio '%1' NO existe!!
@@ -289,6 +292,7 @@ filename	setup	es-es	Nombre del fichero
 filesystem	setup	es-es	Sistema de archivos
 filesystem (default)	setup	es-es	Sistema de archivos (predeterminado)
 force selectbox	setup	es-es	Forzar cuadro de selección
+found, but unknown version	setup	es-es	Encontrado, pero versión desconocida
 give admin access to all installed apps	setup	es-es	Dar permiso de administración a todas las aplicaciones instaladas
 gives further options	setup	es-es	Da más opciones
 go back	setup	es-es	Volver
@@ -302,6 +306,7 @@ header password	setup	es-es	Contraseña del encabezado
 header username	setup	es-es	Usuario del encabezado
 header-password[,header-user(admin)]	setup	es-es	contraseña del encabezado[, usuario del encabezado (admin)]
 header.inc.php successful written.	setup	es-es	El fichero header.inc.php se ha escrito correctamente.
+help and support	setup	es-es	Ayuda y soporte
 historylog removed	setup	es-es	Se borró el registro del historial
 hooks deregistered	setup	es-es	Se borraron los "hooks" del registro
 hooks registered	setup	es-es	Se han registrado los "hooks"
@@ -345,6 +350,7 @@ invalid argument '%1' !!!	setup	es-es	¡El argumento '%1' no es válido!
 invalid ip address	setup	es-es	La dirección IP no es válida
 invalid mcrypt algorithm/mode combination	setup	es-es	La combinación del algoritmo mcrypt y el modo no es válida
 invalid password	setup	es-es	La contraseña no es correcta
+ip or url	setup	es-es	IP o URL
 is broken	setup	es-es	está roto
 is disabled	setup	es-es	está desactivado
 is in the webservers docroot	setup	es-es	en el raíz del servidor

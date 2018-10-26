@@ -30,7 +30,7 @@ add new alarm	calendar	es-es	Añadir nueva alarma
 add new participants or resource	calendar	es-es	Añadir nuevos participantes o recursos
 add timesheet entry	calendar	es-es	Añadir entrada en la hoja de tiempos
 added	calendar	es-es	Añadido
-added by synchronisation	calendar	es-es	añadido por sincronización
+added by synchronization	calendar	es-es	Añadido por sincronización
 after	calendar	es-es	Después
 after %1	calendar	es-es	Después de %1
 after current date	calendar	es-es	Después de la fecha actual
@@ -55,6 +55,7 @@ always	calendar	es-es	Siempre
 apply the action on the whole query, not only the shown events	calendar	es-es	Aplicar la acción en toda la consulta, NO sólo en los eventos mostrados
 apply the changes	calendar	es-es	Aplicar los cambios
 appointment settings	calendar	es-es	Ajustes de Citas
+at start of the event	calendar	es-es	al inicio del evento
 automatically purge old events after	admin	es-es	Purgar automáticamente eventos antiguos después de
 back half a month	calendar	es-es	Medio mes hacia atrás
 back one month	calendar	es-es	Un mes hacia atrás
@@ -150,7 +151,6 @@ delete this series of recurring events	calendar	es-es	Borrar esta serie de event
 deleted	calendar	es-es	Borrado
 deny resources reservation for private events	calendar	es-es	Denegar la reserva de recursos para eventos privados
 directory with documents to insert entries	calendar	es-es	Directorio con documentos para insertar entradas
-uninvited	calendar	es-es	Ya no está invitado
 display holidays or birthdays as events in dayview	calendar	es-es	Mostar festivos o cumpleaños como eventos en vista del día
 display in header	calendar	es-es	Mostar en encabezado
 display status of events	calendar	es-es	Mostrar estado de los eventos
@@ -355,8 +355,8 @@ not rejected	calendar	es-es	No rechazado
 nothing to update, version is already %1.	calendar	es-es	Nada que actualizar, la versión ya es la %1.
 notification messages for added events	calendar	es-es	Mensajes de notificación para eventos añadidos
 notification messages for canceled events	calendar	es-es	Mensajes de notificación para eventos cancelados
-notification messages for uninvited participants	calendar	es-es	Mensajes de notificación para participantes que dejan de ser invitados
 notification messages for modified events	calendar	es-es	Mensajes de notificación para eventos modificados
+notification messages for uninvited participants	calendar	es-es	Mensajes de notificación para participantes que dejan de ser invitados
 notification messages for your alarms	calendar	es-es	Mensajes de notificación para sus alarmas
 notification messages for your responses	calendar	es-es	Mensajes de notificación para sus respuestas
 notification settings	calendar	es-es	Configuración de notificaciones
@@ -517,8 +517,8 @@ this mail contains a meeting request	calendar	es-es	Este correo-e contiene una s
 this mail contains a reply to a meeting request	calendar	es-es	Este correo-e contiene una respuesta a una solicitud de reunión
 this message is sent for canceled or deleted events.	calendar	es-es	Este mensaje se envía cuando un evento se borra o se cancela.
 this message is sent for modified or moved events.	calendar	es-es	Este mensaje se envía al modificar o mover eventos.
-this message is sent to uninvited participants.	calendar	es-es	Este mensaje se envía a los participantes que dejan de estar invitados
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	es-es	Este mensaje se envía a cada participante de los eventos de los que usted es el dueño, quien ha solicitado notificaciones sobre nuevos eventos.<br>Puede usar ciertas variables a las que sustituyen los datos del evento. La primera línea es el asunto del correo electrónico.
+this message is sent to uninvited participants.	calendar	es-es	Este mensaje se envía a los participantes que dejan de estar invitados
 this message is sent when you accept, tentative accept or reject an event.	calendar	es-es	Este mensaje se envía cuando acepta, acepta temporalmente o rechaza un evento.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	es-es	Este mensaje se envía cuando pone una alarma para un evento concreto. Incluya toda la información necesaria.
 this module displays a planner calendar.	calendar	es-es	Este módulo muestra un calendario planificador.
@@ -548,6 +548,7 @@ tue	calendar	es-es	Mar
 two weeks	calendar	es-es	Dos semanas
 type of planner	calendar	es-es	Tipo de planificador
 unable to save	calendar	es-es	No se puede guardar
+uninvited	calendar	es-es	Ya no está invitado
 update timezones	common	es-es	Actualizar zonas horarias
 updated	calendar	es-es	Actualizado
 use end date	calendar	es-es	Usar fecha final

@@ -98,7 +98,8 @@ categorie	addressbook	es-es	categoría
 categorie added	addressbook	es-es	categoría añadida
 categorie delete	addressbook	es-es	categoría borrada
 categories, notes, ...	addressbook	es-es	Categorías, Notas, ...
-category tree	admin	es-es	Arbol de categorías
+category path	addressbook	es-es	Ruta de categoría
+category tree	admin	es-es	Arbol de categoría
 cell phone	addressbook	es-es	Teléfono móvil
 change all organisation members	addressbook	es-es	cambiar todos los miembros de la organización
 charset for the csv export	addressbook	es-es	Juego de caracteres para exportar a CSV
@@ -192,6 +193,7 @@ don't hide empty columns	addressbook	es-es	No ocultar las columnas vacías
 download	addressbook	es-es	Descargar
 download export file (uncheck to debug output in browser)	addressbook	es-es	Descargar fichero exportado (desmarcar para depurar la salida en el navegador)
 download this contact as vcard file	addressbook	es-es	descargar este contacto como fichero vCard
+duplicate warning	addressbook	es-es	Advertencia duplicada
 duplicates	addressbook	es-es	Duplicados
 duration	addressbook	es-es	Duración
 each category in its own field	addressbook	es-es	Cada categoría en su propio campo
@@ -262,7 +264,8 @@ global categories	addressbook	es-es	Categorías globales
 grant addressbook access	common	es-es	Conceder acceso a la libreta de direcciones
 group %1	addressbook	es-es	Grupo %1
 h	addressbook	es-es	h
-hide accounts from addressbook	addressbook	es-es	Ocultar las cuentas de la libreta de direcciones
+hide accounts from addressbook	addressbook	es-es	Ocultar las cuentas de usuario
+hide all accounts	addressbook	es-es	Ocultar todas las cuentas
 hides accounts completly from the adressbook.	addressbook	es-es	Oculta completamente las cuentas de la libreta de direcciones
 history logging	admin	es-es	Registro de historial
 home address	addressbook	es-es	Domicilio particular
@@ -454,6 +457,7 @@ tomorrow is %1's birthday.	common	es-es	¡Mañana es el cumpleaños de %1!
 translation	addressbook	es-es	Traducción
 two of: %1	addressbook	es-es	dos de: %1
 type	addressbook	es-es	Tipo
+un-delete	addressbook	es-es	Recuperar
 unique id (uid)	addressbook	es-es	ID único (UID)
 unique id<br />(to update existing records)	addressbook	es-es	ID único<br />(para actualizar los registros existentes)
 update a single entry by passing the fields.	addressbook	es-es	Actualizar una única entrada pasando los campos

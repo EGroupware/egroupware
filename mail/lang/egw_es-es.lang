@@ -24,6 +24,8 @@ add "%1" into whiltelisted domains	mail	es-es	Añadir "%1" a los dominios en la 
 add "%1" into whitelisted emails	mail	es-es	Añadir "%1" a los correos-e en la lista blanca
 add a new folder to %1:	mail	es-es	Añadir una carpeta nueva a %1
 add all my aliases	mail	es-es	Añadir todos mis alias
+add as new	mail	es-es	Añadir como nuevo
+add files as %1	mail	es-es	Añadir archivos como %1
 add folder	mail	es-es	Añadir carpeta
 add to addressbook	mail	es-es	añadir a la libreta de direcciones
 add your domain as "%1" in options to list of email providers and enable api.	mail	es-es	Añada su dominio como "% 1" en las opciones para listar los proveedores de correo electrónico y habilite la API.
