@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id ="admin.mainscreen_message.mainscreen" version="18.1">
+		<vbox>
+			<htmlarea id="html_mainscreen" height="500" width="100%" disabled="true"/>
+			<textbox id="text_mainscreen" disabled="$cont[html]"/>
+		</vbox>
+	</template>
+	<template id ="admin.mainscreen_message.loginscreen" version="18.1">
+		<vbox>
+			<htmlarea id="html_loginscreen" height="500" width="100%" disabled="!$cont[html]"/>
+			<textbox id="text_loginscreen" disabled="$cont[html]"/>
+		</vbox>
+	</template>
+	<template id="admin.mainscreen_message" template="" lang="" group="0" version="18.1">
+		<grid width="100%" height="600">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<select-lang id="lang" onchange="widget.getInstanceManager().submit()"/>
+					<checkbox id="html" onchange="widget.getInstanceManager().submit()" label="html/plaintext"/>
+				</row>
+				<row>
+					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="550">
+						<tabs>
+							<tab id="mainscreen" label="Main screen"/>
+							<tab id="loginscreen" label="Login screen"/>
+						</tabs>
+						<tabpanels>
+							<template id="admin.mainscreen_message.mainscreen"/>
+							<template id="admin.mainscreen_message.loginscreen"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+				<row>
+					<hbox span="all">
+						<button statustext="Save changes" label="Save" id="button[save]" image="save" background_image="1"/>
+						<button statustext="Apply changes" label="Apply" id="button[apply]" image="check" background_image="1"/>
+						<button statustext="Cancel changes" label="Cancel" id="button[cancel]" image="cancel" background_image="1"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
