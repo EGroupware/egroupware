@@ -52,6 +52,7 @@ all	infolog	it	Tutte
 all links and attachments	infolog	it	tutti i link links e gli allegati
 all other %1 fields are valid	infolog	it	Tutti gli altri %1 campi sono validi
 all projects	infolog	it	Tutti i progetti
+allow to save entries with due date in the past	infolog	it	Permetti di salvare voci con scadenza nel passato
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	it	pemette di impostare lo stato di una voce, es. impostare completato un ToDo finito (i valori dipendono dal tipo di voce)
 alternatives	infolog	it	Alternative
 always show them	infolog	it	Mostra sempre
@@ -65,6 +66,7 @@ attach a file	infolog	it	Allega un file
 attach file	infolog	it	Allega file
 attachments	infolog	it	Allegati
 attention: no contact with address %1 found.	infolog	it	Attenzione: non è stato trovato nessun contatto con indirizzo %1
+automatically check 'do not notify' for these types	infolog	it	Seleziona automaticamente la casella "Non avvisare" per queste tipologie di scheda attività
 back to main list	infolog	it	Torna all'elenco principale
 billed	infolog	it	fatturato
 both	infolog	it	entrambi
@@ -108,6 +110,7 @@ convert to a ticket	infolog	it	Converti in ticket
 copy of:	infolog	it	Copia di:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	it	Copia le tue modifiche negli appunti, %1ricarica la voce%2 e fondile.
 create new links	infolog	it	Crea nuovi links
+created	infolog	it	Creato
 creates a new field	infolog	it	crea un nuovo campo
 creates a new status with the given values	infolog	it	crea un nuovo stato col valore inserito
 creates a new typ with the given name	infolog	it	crea un nuovo tipo col valore inserito
