@@ -757,7 +757,12 @@ class Db
 		if (($this->readonly || $this->log_updates) && !preg_match('/^\(?(SELECT|SET|SHOW)/i', $Query_String))
 		{
 			if ($this->log_updates) error_log($Query_String.': '.function_backtrace());
-			if ($this->readonly) return 0;
+			if ($this->readonly)
+			{
+				$this->Error = 'Database is readonly';
+				$this->Errno = -2;
+				return 0;
+			}
 		}
 		if ($num_rows > 0)
 		{
