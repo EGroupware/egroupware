@@ -145,6 +145,7 @@ class addressbook_vcal extends addressbook_bo
 		{
 			if (($old_contact = $this->read($_abID)))
 			{
+				$contact['photo_unchanged'] = $old_contact['jpegphoto'] === $contact['jpegphoto'];
 				if ($merge)
 				{
 					foreach (array_keys($contact) as $key)
@@ -177,6 +178,8 @@ class addressbook_vcal extends addressbook_bo
 		}
 		else
     	{
+			// If photo is set, we want to update it
+			$contact['photo_unchanged'] = false;
     		if (is_array($contact['cat_id']))
 			{
 				$contact['cat_id'] = implode(',',$this->find_or_add_categories($contact['cat_id'], -1));
