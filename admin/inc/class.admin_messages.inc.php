@@ -22,8 +22,6 @@ class admin_messages
 {
 	var $public_functions = array('index' => True);
 
-	var $sections = array ('mainscreen', 'loginscreen');
-
 	const MAINSCREEN = 'mainscreen';
 	const LOGINSCREEN = 'loginscreen';
 
@@ -38,13 +36,14 @@ class admin_messages
 
 		if (!is_array($content))
 		{
-
-			$content = array(
+			$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+			$content = 	array_merge(array(
 				'html' => true,
-				'lang' => $GLOBALS['egw_info']['user']['preferences']['common']['lang']
-			);
+				'lang' => $lang
+			), $this->_getMessages($lang));
 		}
-		else {
+		else
+		{
 			list($button) = @each($content['button']);
 
 			if ($button)
@@ -53,7 +52,7 @@ class admin_messages
 				{
 					case 'apply':
 					case 'save':
-						foreach (self::$sections as $section)
+						foreach (array ('mainscreen', 'loginscreen') as $section)
 						{
 							$prefix = $content['html'] == true ? 'html_' : 'text_';
 							if ($content[$prefix.$section] && $content[$prefix.$section])
@@ -71,6 +70,10 @@ class admin_messages
 						), 'admin');
 				}
 			}
+			else if ($content['lang'])
+			{
+				$content = array_merge($content, $this->_getMessages($content['lang'], $content['html']));
+			}
 		}
 		$readonlys = array(
 			'tabs' => array(
@@ -79,5 +82,30 @@ class admin_messages
 			)
 		);
 		$tpl->exec('admin.admin_messages.index', $content, array(), $readonlys);
+	}
+
+	/**
+	 * Get messages content
+	 *
+	 * @param type $lang
+	 * @param type $html
+	 * @return array returns an array of content
+	 */
+	private function _getMessages ($lang, $html = true)
+	{
+		if ($html)
+		{
+			return array (
+				'html_mainscreen' => Api\Translation::read($lang, self::MAINSCREEN, self::MAINSCREEN.'_message'),
+				'html_loginscreen' => Api\Translation::read($lang, self::LOGINSCREEN, self::LOGINSCREEN.'_message'),
+			);
+		}
+		else
+		{
+			return array (
+				'text_mainscreen' => strip_tags(Api\Translation::read($lang, self::MAINSCREEN, self::MAINSCREEN.'_message')),
+				'text_loginscreen' => strip_tags(Api\Translation::read($lang, self::LOGINSCREEN, self::LOGINSCREEN.'_message'))
+			);
+		}
 	}
 }
