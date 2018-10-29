@@ -159,6 +159,25 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 	},
 
 	/**
+	 * set disabled
+	 *
+	 * @param {type} _value
+	 * @returns {undefined}
+	 */
+	set_disabled: function(_value)
+	{
+		this._super.apply(this, arguments);
+		if (_value)
+		{
+			jQuery(this.tinymce_container).css('display', 'none');
+		}
+		else
+		{
+			jQuery(this.tinymce_container).css('display', 'flex');
+		}
+	},
+
+	/**
 	 * Callback function runs when the filepicker in image dialog is clicked
 	 *
 	 * @param {type} _callback
@@ -212,6 +231,8 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		this.editor.execCommand('fontName', true, egw.preference('rte_font', 'common'));
 		this.editor.execCommand('fontSize',	true, egw.preference('rte_font_size', 'common')
 				+ egw.preference('rte_font_unit', 'common'));
+		if (!this.disabled) jQuery(this.editor.editorContainer).css('display', 'flex');
+		this.tinymce_container = this.editor.editorContainer;
 	},
 
 	/**
@@ -262,6 +283,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		}
 		this.editor = null;
 		this.tinymce = null;
+		this.tinymce_container = null;
 		this.htmlNode.remove();
 		this.htmlNode = null;
 		this._super.apply(this, arguments);
