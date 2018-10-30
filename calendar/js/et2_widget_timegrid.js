@@ -1603,14 +1603,14 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		this.div.removeClass('calendar_TimeGridNoLabel');
 
 		// Check to see if it's our own calendar, with just us showing
-		if(typeof _owner == 'object' && _owner.length == 1 && _owner[0] == this.egw().user('account_id'))
+		if(typeof _owner == 'object' && _owner.length == 1)
 		{
 			var rowCount = 0;
 			this._parent.iterateOver(function(widget) {
 				if(!widget.disabled) rowCount++;
 			},this, et2_calendar_timegrid);
 			// Just us, show week number
-			if(rowCount == 1) _owner = false;
+			if(rowCount == 1 || _owner.length == 1) _owner = false;
 		}
 
 		if(typeof _owner == 'string' && isNaN(_owner))
