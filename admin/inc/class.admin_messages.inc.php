@@ -55,10 +55,7 @@ class admin_messages
 						foreach (array ('mainscreen', 'loginscreen') as $section)
 						{
 							$prefix = $content['html'] == true ? 'html_' : 'text_';
-							if ($content[$prefix.$section] && $content[$prefix.$section])
-							{
-								Api\Translation::write($content['lang'], $section, $section.'_message',$content[$prefix.$section]);
-							}
+							Api\Translation::write($content['lang'], $section, $section.'_message',$content[$prefix.$section]);
 						}
 						Framework::message(lang('message has been updated'));
 						if ($button == 'apply') break;
