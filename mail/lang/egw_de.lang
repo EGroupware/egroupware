@@ -490,6 +490,7 @@ select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, 
 select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager anhängen.
 select files to upload	mail	de	Dateien anhängen.
 select multiple	mail	de	Mehrfachauswahl
+select or insert email address	mail	de	Wählen oder fügen Sie eine E-Mail-Adresse ein
 selected	mail	de	ausgewählt
 selected date range (with quicksearch)	mail	de	Datumsbereich (mit Schnellsuche)
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
