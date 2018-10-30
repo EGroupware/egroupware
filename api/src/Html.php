@@ -491,6 +491,7 @@ var  language_code = {
 var name = "#"+"'.$_name.'".replace( /(:|\.|\[|\]|,|=|@)/g, "\\\$1" );
 var height = "'.$_height.'";
 var width = "'.$_width.'";
+var value = jQuery(name).val();
 tinymce.init({
 			selector: name,
 			menubar: parseInt('. $rte_menubar.')? true : false,
@@ -534,6 +535,7 @@ tinymce.init({
 				console.log(_editor);
 				_editor.execCommand("fontName", true,"'.$font.'");
 				_editor.execCommand("fontSize",	true,"'.$font_size.$font_size_unit.'");
+				_editor.setContent(value);
 			},
 			plugins: [
 				"print fullpage searchreplace autolink directionality "+
