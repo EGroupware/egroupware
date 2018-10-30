@@ -23,7 +23,7 @@
 			</columns>
 			<rows>
 				<row>
-					<select-lang id="lang" onchange="widget.getInstanceManager().submit()"/>
+					<select id="lang" onchange="widget.getInstanceManager().submit()"/>
 					<checkbox id="html" onchange="widget.getInstanceManager().submit()" label="html/plaintext"/>
 				</row>
 				<row>

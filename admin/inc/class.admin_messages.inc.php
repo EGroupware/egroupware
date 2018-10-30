@@ -81,7 +81,8 @@ class admin_messages
 				self::LOGINSCREEN => !$acls[self::LOGINSCREEN]
 			)
 		);
-		$tpl->exec('admin.admin_messages.index', $content, array(), $readonlys);
+
+		$tpl->exec('admin.admin_messages.index', $content, array('lang' => Api\Translation::get_installed_langs()), $readonlys);
 	}
 
 	/**

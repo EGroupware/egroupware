@@ -95,7 +95,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		this._super.apply(this, arguments);
 		if(this.mode == 'ascii' || this.editor != null) return;
 		var imageUpload = '';
-
+		var self = this;
 		if (this.options.imageUpload && this.options.imageUpload[0] !== '/' && this.options.imageUpload.substr(0, 4) != 'http')
 		{
 			imageUpload = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload")+
@@ -130,7 +130,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			images_upload_handler: this.options.images_upload_handler,
 			init_instance_callback : jQuery.proxy(this._instanceIsReady, this),
 			plugins: [
-				"print fullpage searchreplace autolink directionality "+
+				"print searchreplace autolink directionality "+
 				"visualblocks visualchars image link media template "+
 				"codesample table charmap hr pagebreak nonbreaking anchor toc "+
 				"insertdatetime advlist lists textcolor wordcount imagetools "+
@@ -156,6 +156,15 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		// extend default settings with configured options and preferences
 		jQuery.extend(settings, this._extendedSettings());
 		this.tinymce = tinymce.init(settings);
+		// make sure value gets set in case of widget gets loaded by delay like
+		// inside an inactive tabs
+		this.tinymce.then(()=> {
+			self.set_value(self.htmlNode.val());
+			if (self.editor && self.editor.editorContainer)
+			{
+				jQuery(self.editor.editorContainer).height(self.options.height);
+			}
+		});
 	},
 
 	/**
