@@ -25,6 +25,7 @@ add "%1" into whitelisted emails	mail	de	E-Mailadresse "%1" zu Whitelist hinzuf�
 add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter:  %1
 add all my aliases	mail	de	Alle Alias Adressen hinzufügen
 add as new	mail	de	Neues Ticket erstellen
+add files as %1	mail	de	Dateien hinzufügen als %1
 add folder	mail	de	Ordner hinzufügen
 add this certificate into contact	mail	de	Dieses Zertifikat dem Kontakt hinzufügen
 add to addressbook	mail	de	zum Adressbuch hinzufügen
@@ -67,9 +68,12 @@ attach files	mail	de	Dateien anhängen
 attach users vcard at compose to every new mail	mail	de	Füge die vCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
 attachment	mail	de	Anhang
+attachment has been saved successfully.	mail	de	Anhang erfolgreich gespeichert.
 attachments	mail	de	Dateien
 authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r would you like to proceed?	mail	de	Wenn Sie alle ausgewählten Dateien als %1-Modus hinzufügen, werden auch alle in der Liste vorhandenen Anhänge in den %2-Modus geändert.  \n\r \n\r Wollen Sie fortfahren?
+be aware that all attachments will be sent as %1!	mail	de	Beachten Sie, dass alle Anhänge als %1 gesendet werden!
 before reply, visible during compose	mail	de	Vor dem zitierten Text, sichtbar während der Bearbeitung
 blacklisted mails are marked as spam	mail	de	E-Mailadressen die in die Blacklist eingetragen werden, werden als Spam markiert
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
@@ -80,6 +84,8 @@ canceled deletion due to user interaction	mail	de	Löschen durch Benutzer abgebr
 certificate info for email %1	mail	de	Zertifikat-Info für E-Mail %1
 change editor type	mail	de	Als HTML-Mail verfassen
 changed profile	mail	de	Profil geändert
+changing subject failed because of %1	mail	de	Ändern des Betreffs fehlgeschlagen wegen %1
+changing subject failed folder %1 does not exist	mail	de	Ändern des Betreffs fehlgeschlagen Ordner %1 existiert nicht
 check message against next rule also	mail	de	Nachricht auch gegen nächste Regel prüfen
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. manche Empfänger keine Bestätigung senden möchten.)
 check to save as calendar event on send	mail	de	Nach dem Versenden als Termin erstellen
@@ -107,6 +113,7 @@ copy to	mail	de	kopieren
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
 could not save the acl because some names are empty	mail	de	Konnte die Zugriffskontrollrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
 create new account	mail	de	Konto hinzufügen
+cross account forward attachment is not allowed!	mail	de	Weiterleitung als Anhang ist nicht Emailkonto-Übergreifend möglich!
 current folder	mail	de	Aktueller Ordner
 currently:	mail	de	Aktuell:
 date(newest first)	mail	de	Datum (neue zuerst)
@@ -394,8 +401,8 @@ prevent managing notifications	mail	de	Zugriff auf Benachrichtigungen deaktivier
 prevent managing vacation notice	mail	de	Zugriff auf die Abwesenheitsbenachrichtigung deaktivieren
 preview pane	mail	de	Mailvorschau
 primary profile	mail	de	Primäres Profil
-printview	mail	de	Druckansicht
 printing	mail	de	Drucke
+printview	mail	de	Druckansicht
 processing of file %1 failed. failed to meet basic restrictions.	mail	de	Das Verarbeiten der Datei %1 ist fehlgeschlagen. Grundlegende Voraussetzungen wurden nicht erfüllt.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	de	Vorschlagstext für eine Abwesenheitsnotiz (wenn noch kein eigener Benachrichtigungstext vorhanden ist)
 quicksearch	mail	de	Schnellsuche
@@ -449,6 +456,7 @@ rule priority position	mail	de	Priorität der Filterregel
 rule with priority	mail	de	Regel mit Priorität
 rules	mail	de	Filter Regeln
 save all	mail	de	Alle speichern
+save all attachments to filemanager	mail	de	Alle Anhänge im Dateimanager speichern
 save as calendar	mail	de	Als Termin speichern
 save as default	mail	de	Als Vorgabe speichern
 save as draft	mail	de	Als Entwurf speichern
