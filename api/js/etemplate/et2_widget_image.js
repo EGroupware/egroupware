@@ -360,9 +360,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 	 */
 	set_contact_id: function(_contact_id)
 	{
-		var params = {
-			id:''
-		};
+		var params = {};
 		var id = 'contact_id';
 
 		if (!_contact_id)
