@@ -214,7 +214,7 @@ class Bo extends So {
 					'setProperties' => array(
 						'fullName' => $GLOBALS['egw_info']['user']['account_fullname'],
 						'color' => $GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_user_color'],
-						'imageUrl' => $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=addressbook.addressbook_ui.photo&account_id='.$use_id,
+						'imageUrl' => $GLOBALS['egw_info']['server']['webserver_url'].'/api/avatar.php?account_id='.$use_id,
 						'uid' => $use_id
 					)
 				)

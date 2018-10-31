@@ -1496,8 +1496,7 @@ abstract class Framework extends Framework\Extra
 			foreach($key_pair as $account_id => $name)
 			{
 				$contact = $contact_obj->read('account:'.$account_id, true);
-				$accounts[] = array('value' => $account_id, 'label' => $name, 'icon' => self::link('/index.php', array(
-						'menuaction' => 'addressbook.addressbook_ui.photo',
+				$accounts[] = array('value' => $account_id, 'label' => $name, 'icon' => self::link('/api/avatar.php', array(
 						'contact_id' => $contact['id'],
 						'etag' => $contact['etag']
 					)));

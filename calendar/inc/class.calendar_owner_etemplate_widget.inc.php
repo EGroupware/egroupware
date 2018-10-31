@@ -70,8 +70,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 					'value' => ''.$account_id,
 					'label' => $account_name,
 					'app' => lang('api-accounts'),
-					'icon' => Api\Framework::link('/index.php', array(
-						'menuaction' => 'addressbook.addressbook_ui.photo',
+					'icon' => Api\Framework::link('/api/avatar.php', array(
 						'contact_id' => $contact['id'],
 						'etag' => $contact['etag'] ? $contact['etag'] : 1
 					))
@@ -244,8 +243,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 						case 'c':
 						case '':
 							$contact = $contacts_obj->read($type === '' ? 'account:'.$id : $id, true);
-							if (is_array($contact)) $value['icon'] = Api\Framework::link('/index.php', array(
-								'menuaction' => 'addressbook.addressbook_ui.photo',
+							if (is_array($contact)) $value['icon'] = Api\Framework::link('/api/avatar.php', array(
 								'contact_id' => $contact['id'],
 								'etag' => $contact['etag'] ? $contact['etag'] : 1
 							));

@@ -759,17 +759,16 @@ class Contacts extends Contacts\Storage
 	 * @param boolean $jpeg =false jpeg exists or not
 	 * @param string $default ='' image-name to use if !$jpeg, eg. 'template'
 	 * @param string $etag =null etag to set in url to allow caching with Expires header
-	 * @return string/array
+	 * @return string
 	 */
 	function photo_src($id,$jpeg,$default='',$etag=null)
 	{
 		//error_log(__METHOD__."($id, ..., etag=$etag) ".  function_backtrace());
-		return $jpeg || !$default ? array(
-			'menuaction' => 'addressbook.addressbook_ui.photo',
-			'contact_id' => $id,
+		return $jpeg || !$default ? Egw::link('/api/avatar.php', array(
+			'contact_id' => $id
 		)+(isset($etag) ? array(
 			'etag'       => $etag,
-		) : array()) : $default;
+		) : array())) : $default;
 	}
 
 	/**
@@ -2584,5 +2583,70 @@ class Contacts extends Contacts\Storage
 		}
 		//error_log(__METHOD__.'('.array2string($owner).') returning '.array2string($ctag));
 		return $ctag;
+	}
+
+	/**
+	 * download photo of the given ($_GET['contact_id'] or $_GET['account_id']) contact
+	 */
+	function photo()
+	{
+		ob_start();
+
+		$contact_id = isset($_GET['contact_id']) ? $_GET['contact_id'] :
+			(isset($_GET['account_id']) ? 'account:'.$_GET['account_id'] : 0);
+
+		if (substr($contact_id,0,8) == 'account:')
+		{
+			$contact_id = $GLOBALS['egw']->accounts->id2name(substr($contact_id,8),'person_id');
+		}
+
+		$contact = $this->read($contact_id);
+
+		if (!($contact) ||
+			empty($contact['jpegphoto']) &&                           // LDAP/AD (not updated SQL)
+			!(($contact['files'] & \EGroupware\Api\Contacts::FILES_BIT_PHOTO) && // new SQL in VFS
+				($size = filesize($url= \EGroupware\Api\Link::vfs_path('addressbook', $contact_id, \EGroupware\Api\Contacts::FILES_PHOTO)))))
+		{
+			if (is_array($contact))
+			{
+				echo \EGroupware\Api\avatar::lavatar(array(
+					'id' => $contact['id'],
+					'firstname' => $contact['n_given'],
+					'lastname' => $contact['n_family'])
+				);
+				exit();
+			}
+			Egw::redirect(\EGroupware\Api\Image::find('addressbook','photo'));
+		}
+
+		// use an etag over the image mapp
+		$etag = '"'.$contact_id.':'.$contact['etag'].'"';
+		if (!ob_get_contents())
+		{
+			header('Content-type: image/jpeg');
+			header('ETag: '.$etag);
+			// if etag parameter given in url, we can allow browser to cache picture via an Expires header
+			// different url with different etag parameter will force a reload
+			if (isset($_GET['etag']))
+			{
+				\EGroupware\Api\Session::cache_control(30*86400);	// cache for 30 days
+			}
+			// if servers send a If-None-Match header, response with 304 Not Modified, if etag matches
+			if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === $etag)
+			{
+				header("HTTP/1.1 304 Not Modified");
+			}
+			elseif(!empty($contact['jpegphoto']))
+			{
+				header('Content-length: '.bytes($contact['jpegphoto']));
+				echo $contact['jpegphoto'];
+			}
+			else
+			{
+				header('Content-length: '.$size);
+				readfile($url);
+			}
+			exit();
+		}
 	}
 }

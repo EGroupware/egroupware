@@ -361,7 +361,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 	set_contact_id: function(_contact_id)
 	{
 		var params = {
-			menuaction: 'addressbook.addressbook_ui.photo'
+			id:''
 		};
 		var id = 'contact_id';
 
@@ -383,7 +383,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 		params[id] = _contact_id;
 		this.image.addClass('et2_avatar');
 
-		var url = egw.link('/index.php',params);
+		var url = egw.link('/api/avatar.php',params);
 		this.set_src(url);
 	},
 

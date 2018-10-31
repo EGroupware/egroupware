@@ -79,7 +79,7 @@ class So
 		$color = $GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_user_color'];
 		$user_id = $GLOBALS['egw_info']['user']['account_id'];
 
-		$imageUrl = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=addressbook.addressbook_ui.photo&account_id='.$user_id;
+		$imageUrl = $GLOBALS['egw_info']['server']['webserver_url'].'/api/avatar.php?account_id='.$user_id;
 
 		if (!($result = self::db2id($query->fetchRow())) && $es_id)
 		{

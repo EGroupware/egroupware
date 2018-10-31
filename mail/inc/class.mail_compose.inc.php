@@ -3647,8 +3647,7 @@ class mail_compose
 							// Add just name for nice display, with title for hover
 							'name' => $contact['n_fn'],
 							'title' => $email,
-							'icon' => Egw::link('/index.php', array(
-								'menuaction' => 'addressbook.addressbook_ui.photo',
+							'icon' => Egw::link('/api/avatar.php', array(
 								'contact_id' => $contact['id'],
 								'etag' => $contact['etag']
 							))

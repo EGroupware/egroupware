@@ -400,7 +400,7 @@
 			var $user = jQuery('#egw_fw_userinfo .user');
 
 			var $avatar = jQuery('#egw_fw_userinfo .avatar img');
-			$avatar.attr('src', egw.webserverUrl + '/index.php?menuaction=addressbook.addressbook_ui.photo&account_id=' + egw.user('account_id'));
+			$avatar.attr('src', egw.webserverUrl + '/api/avatar.php?account_id=' + egw.user('account_id'));
 
 			var $sidebar = jQuery('#egw_fw_sidebar');
 			$sidebar.removeClass('avatarSubmenu');
