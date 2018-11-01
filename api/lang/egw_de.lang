@@ -475,6 +475,7 @@ enter filename to upload and attach, use [browse...] to search for it	common	de	
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre EGroupware erreichbar sein wird.<br>Beispiel: http://www.domain.de/egroupware   oder   /egroupware<br><b> KEINEN Slash "/" am ende</b>
 enter the new version number here (> old_version), empty for no update-file	common	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	common	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
+enter your file name	common	de	Dateiname
 entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gelöscht
 entry not found!	common	de	Eintrag nicht gefunden!
 entry saved	common	de	Eintrag gespeichert
