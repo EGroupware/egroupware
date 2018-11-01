@@ -77,6 +77,11 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 		// Reference to widget within dialog
 		this.widgets = null;
 
+		if(!_attrs.empty_label && !_attrs.readonly && _attrs.multiple)
+		{
+			_attrs.empty_label = this.egw().lang('Select user or group');
+		}
+
 		this._super.call(this, _parent, _attrs);
 
 		// Allow certain widgets inside this one
