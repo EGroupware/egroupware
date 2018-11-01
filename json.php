@@ -70,8 +70,11 @@ function ajax_exception_handler($e)
 // set our own exception handler, to not get the html from eGW's default one
 set_exception_handler('ajax_exception_handler');
 
-if (isset($_GET['menuaction']))
-{
+try {
+	if (!isset($_GET['menuaction']))
+	{
+		throw new InvalidArgumentException('Missing menuaction GET parameter', 998);
+	}
 	if (strpos($_GET['menuaction'],'::') !== false && strpos($_GET['menuaction'],'.') === false)	// static method name app_something::method
 	{
 		@list($className,$functionName,$handler) = explode('::',$_GET['menuaction']);
@@ -127,5 +130,13 @@ if (isset($_GET['menuaction']))
 	Json\Response::get();
 	exit();
 }
+// missing menuaction GET parameter or request:parameters object or unparsable JSON
+catch (\InvalidArgumentException $e) {
+	if (isset($json)) $json->isJSONRequest(false);	// no regular json request processing
 
-throw new Json\Exception($_SERVER['PHP_SELF'] . ' Invalid AJAX JSON Request');
+	// give a proper HTTP status 400 Bad Request with some JSON payload explaining the problem
+	http_response_code(400);
+	header('Content-Type: application/json');
+	echo json_encode(array('error' => $e->getMessage(), 'errno' => $e->getCode()));
+}
+// other exceptions are handled by our ajax_exception_handler sending them back as alerts to client-side

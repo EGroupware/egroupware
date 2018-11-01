@@ -54,23 +54,36 @@ class Request
 	 *
 	 * @param string menuaction to call
 	 * @param string $input_data is the RAW input data as it was received from the client
+	 * @throws \InvalidArgumentException if JSON can not be parsed (json_last_error())
+	 *  or did not contain request[parameters] array (999)
 	 */
 	public function parseRequest($menuaction, $input_data)
 	{
 		// Remember that we currently are in a JSON request - e.g. used in the redirect code
 		self::$_hadJSONRequest = true;
 
-		if (get_magic_quotes_gpc()) $input_data = stripslashes($input_data);
-
-		$json_data = json_decode($input_data,true);
-		if (is_array($json_data) && isset($json_data['request']) && isset($json_data['request']['parameters']) && is_array($json_data['request']['parameters']))
+		// no or empty payload is eg. used by dynamicly loading tree nodes (uses just GET parameters)
+		if (!isset($input_data) || $input_data === '')
 		{
-			//error_log(__METHOD__.__LINE__.array2string($json_data['request']).function_backtrace());
-			$parameters =& $json_data['request']['parameters'];
+			$parameters = array();
 		}
 		else
 		{
-			$parameters = array();
+			if (get_magic_quotes_gpc()) $input_data = stripslashes($input_data);
+
+			if (($json_data = json_decode($input_data,true)) === null && json_last_error() !== JSON_ERROR_NONE)
+			{
+				throw new \InvalidArgumentException('JSON '.json_last_error_msg(), json_last_error());
+			}
+			elseif (is_array($json_data) && isset($json_data['request']) && isset($json_data['request']['parameters']) && is_array($json_data['request']['parameters']))
+			{
+				//error_log(__METHOD__.__LINE__.array2string($json_data['request']).function_backtrace());
+				$parameters =& $json_data['request']['parameters'];
+			}
+			else
+			{
+				throw new \InvalidArgumentException('Missing request:parameters object', 999);
+			}
 		}
 		// do we have a single request or an array of queued requests
 		if ($menuaction == 'api.queue')
