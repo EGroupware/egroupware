@@ -246,7 +246,9 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 		this._selectAll = true;
 
 		// Run as a range if there's less then the max
-		if(Object.keys(this._registeredRows).length != this._total && this._total <= this.MAX_SELECTION)
+		if(egw.dataKnownUIDs(this._context._dataProvider.dataStorePrefix).length !== this._total &&
+				this._total <= this.MAX_SELECTION
+		)
 		{
 			this._selectRange(0, this._total);
 		}
@@ -556,7 +558,7 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 		for (var i = s; i <= e; i++)
 		{
 			if (typeof this._indexMap[i] !== "undefined" &&
-			    this._indexMap[i].uid)
+			    this._indexMap[i].uid && egw.dataGetUIDdata(this._indexMap[i].uid))
 			{
 				// Add the range to the "queryRanges"
 				if (naStart !== false)
@@ -569,7 +571,7 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 				// Select the element, unless flagged for exclusion
 				// Check for no_actions flag via data
 				var data = egw.dataGetUIDdata(this._indexMap[i].uid);
-				if(!data || data && data.data && !data.data.no_actions)
+				if(data && data.data && !data.data.no_actions)
 				{
 					this.setSelected(this._indexMap[i].uid, true);
 				}
