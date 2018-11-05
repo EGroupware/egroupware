@@ -67,6 +67,12 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			description: "Display menubar at the top of the editor",
 			type: "boolean",
 			default: true
+		},
+		statusbar: {
+			name: "Status bar",
+			description: "Enable/disable status bar on the bottom of ediotr",
+			type: "boolean",
+			default: true
 		}
 	},
 
@@ -116,6 +122,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			target: this.htmlNode[0],
 			body_id: this.dom + '_htmlarea',
 			menubar: false,
+			statusbar: this.options.statusbar,
 			branding: false,
 			resize: false,
 			height: this.options.height,
