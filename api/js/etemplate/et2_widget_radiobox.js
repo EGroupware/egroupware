@@ -132,15 +132,17 @@ var et2_radiobox = (function(){ "use strict"; return et2_inputWidget.extend(
 	getValue: function()
 	{
 		var val = this.options.value;	// initial value, when form is loaded
+		var values = [];
 		this.getRoot().iterateOver(function(radio)
 		{
+			values.push(radio.options.set_value);
 			if (radio.id == this.id && radio.input && radio.input.prop('checked'))
 			{
 				val = radio.options.set_value;
 			}
 		}, this, et2_radiobox);
 
-		return val == this.options.set_value ? this.options.set_value : null;
+		return val.indexOf(values) ? val : null;
 	},
 
 	/**
