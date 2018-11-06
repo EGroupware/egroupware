@@ -23,18 +23,18 @@
 			</columns>
 			<rows>
 				<row>
-					<select id="lang" onchange="widget.getInstanceManager().submit()"/>
+					<select id="lang" onchange="widget.getInstanceManager().submit()" statustext="Select language to define language based message. Language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page."/>
 					<checkbox id="html" onchange="widget.getInstanceManager().submit()" label="html/plaintext"/>
 				</row>
 				<row>
 					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="550">
 						<tabs>
-							<tab id="mainscreen" label="Main screen"/>
 							<tab id="loginscreen" label="Login screen"/>
+							<tab id="mainscreen" label="Main screen"/>
 						</tabs>
 						<tabpanels>
-							<template id="admin.mainscreen_message.mainscreen"/>
 							<template id="admin.mainscreen_message.loginscreen"/>
+							<template id="admin.mainscreen_message.mainscreen"/>
 						</tabpanels>
 					</tabbox>
 				</row>
