@@ -27,6 +27,9 @@
 						<menupopup type="select-bool" label="Change addressbook when updating" id="change_owner"/>
 					</menulist>
 				</row>
+				<row>
+					<checkbox label="Empty addressbook before importing" id="empty_addressbook"/>
+				</row>
 			</rows>
 		</grid>
 	</template>

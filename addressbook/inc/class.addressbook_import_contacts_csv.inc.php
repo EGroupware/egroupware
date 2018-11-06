@@ -43,6 +43,29 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	private $type_warned = false;
 
 	/**
+	 * To empty addressbook before importing, we actually keep track of
+	 * what's imported and delete the others to keep history.
+	 *
+	 * @var type
+	 */
+	private $ids = array();
+
+	/**
+	 * imports entries according to given definition object.
+	 * @param resource $_stream
+	 * @param string $_charset
+	 * @param definition $_definition
+	 */
+	public function import( $_stream, importexport_definition $_definition ) {
+		parent::import($_stream, $_definition);
+
+		if($_definition->plugin_options['empty_addressbook'])
+		{
+			$this->empty_addressbook($this->user, $this->ids);
+		}
+	}
+
+	/**
 	 * imports entries according to given definition object.
 	 * @param resource $_stream
 	 * @param string $_charset
@@ -302,6 +325,8 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 					unset($_data['owner']);
 				}
 
+				$this->ids[] = $_data['id'];
+
 				// Merge to deal with fields not in import record
 				$_data = array_merge($old, $_data);
 				$changed = $this->tracking->changed_fields($_data, $old);
@@ -334,6 +359,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 					if(!$result) {
 						$this->errors[$record_num] = $this->bocontacts->error;
 					} else {
+						$this->ids[] = $result;
 						$this->results[$_action]++;
 						// This does nothing (yet?) but update the identifier
 						$record->save($result);
@@ -343,6 +369,34 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 			default:
 				throw new Api\Exception('Unsupported action: '. $_action);
 
+		}
+	}
+
+
+	/**
+	 * Delete all contacts from the addressbook, except the given list
+	 *
+	 * @param int $addressbook Addressbook to clear
+	 * @param array $ids Contacts to keep
+	 */
+	protected function empty_addressbook($addressbook, $ids)
+	{
+		// Get all IDs in addressbook
+		$contacts = $this->bocontacts->search(array('owner' => $addressbook), true);
+		$contacts = array_column($contacts, 'id');
+
+		$delete = array_diff($contacts, $ids);
+
+		foreach($delete as $id)
+		{
+			if($this->dry_run || $this->bocontacts->delete($id))
+			{
+				$this->results['deleted']++;
+			}
+			else
+			{
+				$this->warnings[] = lang('Unable to delete') . ': ' . Api\Link::title('addressbook', $id);
+			}
 		}
 	}
 
