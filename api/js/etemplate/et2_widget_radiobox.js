@@ -142,7 +142,7 @@ var et2_radiobox = (function(){ "use strict"; return et2_inputWidget.extend(
 			}
 		}, this, et2_radiobox);
 
-		return val.indexOf(values) ? val : null;
+		return val && val.indexOf(values) ? val : null;
 	},
 
 	/**
