@@ -37,6 +37,31 @@ use EGroupware\Api\Etemplate;
  */
 class infolog_widget extends Etemplate\Widget\Entry
 {
+
+	/**
+	 * Array with a transformation description, based on attributes to modify.
+	 * @see etemplate_widget_transformer
+	 *
+	 * @var array
+	 */
+	protected static $transformation = array(
+		'type' => array(
+			'infolog-fields' => array(
+				'sel_options' => array('__callback__' => '_get_fields'),
+				'type' => 'select',
+				'no_lang' => true,
+				'options' => 'None',
+			),
+			'__default__' => array(
+				'options' => array(
+					'' => array('id' => '@value[@id]'),
+					// Others added automatically in constructor
+					'__default__' => array('type' => 'label', 'options' => ''),
+				),
+				'no_lang' => 1,
+			),
+		),
+	);
 	/**
 	 * exported methods of this class
 	 *
