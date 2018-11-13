@@ -109,10 +109,10 @@ abstract class Entry extends Transformer
 
 		$this->regex($attrs, $new_value);
 
-		$this->id = self::ID_PREFIX . $this->id . "[{$attrs['field']}]";
-
-
 		parent::beforeSendToClient($cname, $expand);
+
+		// Change this after parent::beforeSendToClient or it adds another layer
+		$this->id = self::ID_PREFIX . $this->id . "[{$attrs['field']}]";
 
 	}
 
