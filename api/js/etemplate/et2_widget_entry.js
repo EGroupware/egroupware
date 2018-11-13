@@ -53,6 +53,18 @@ var et2_entry = (function(){ "use strict"; return et2_valueWidget.extend(
 			type: 'string',
 			default: '2'
 		},
+		regex: {
+			name: 'Regular expression pattern',
+			description: 'Only used server-side in a preg_replace with regex_replace to modify the value',
+			default: et2_no_init,
+			type: 'string'
+		},
+		regex_replace: {
+			name: 'Regular expression replacement pattern',
+			description: 'Only used server-side in a preg_replace with regex to modify the value',
+			default: et2_no_init,
+			type: 'string'
+		},
 		value: {
 			type: 'any'
 		},
@@ -104,7 +116,7 @@ var et2_entry = (function(){ "use strict"; return et2_valueWidget.extend(
 	loadField: function() {
 		// Create widget of correct type
 		var attrs = {
-			id: this.id + '[' +this.options.field+']',
+			id: this.id + (this.options.field ? '[' +this.options.field+']' : ''),
 			type: 'label',
 			readonly: this.options.readonly
 		};
