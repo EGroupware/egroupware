@@ -15,6 +15,8 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
+use EGroupware\Api\Storage\Merge;
+
 /**
  * eTemplate  Entry widget
  *
@@ -35,7 +37,7 @@ abstract class Entry extends Transformer
 	 *
 	 * @var string|array
 	 */
-	protected $legacy_options = 'field';
+	protected $legacy_options = 'field,compare,alternate_fields,options'; // field, compare, alternate_fields
 
 	/**
 	 * Array with a transformation description, based on attributes to modify.
@@ -94,17 +96,24 @@ abstract class Entry extends Transformer
 		// Set the new value so transformer can find it.  Use prefix to avoid changing the original value
 		$new_value =& self::get_array(self::$request->content, self::ID_PREFIX .$this->id, true, false);
 		if (true) $new_value = $data;
+
+		// Check for missing field
+		if(!$attrs['field'] && !$attrs['alternate_fields'])
+		{
+			self::set_validation_error(self::ID_PREFIX . $this->id, lang('Unable to find field attribute'));
+			return;
+		}
+
+		// Field is reference to customfield?
+		$this->customfield($attrs, $new_value);
+
+		$this->regex($attrs, $new_value);
+
 		$this->id = self::ID_PREFIX . $this->id . "[{$attrs['field']}]";
 
-		$old_type = self::getElementAttribute($this->id, 'type');
 
 		parent::beforeSendToClient($cname, $expand);
 
-		// Check for conflict - more than one with same id/field and different type
-		if($old_type && $old_type != $this->type)
-		{
-			//self::set_validation_error($this->id, lang('%1, duplicate ID', $this));
-		}
 	}
 
 	/**
@@ -124,5 +133,94 @@ abstract class Entry extends Transformer
 	protected static function get_field_list()
 	{
 		return array();
+	}
+
+	/**
+	 * Using ID, field and alternate fields, find the one to use
+	 *
+	 * @param Array $attrs
+	 * @param Array $data
+	 * @return Reference into data array for value
+	 */
+	protected function &get_data_field($attrs, &$data)
+	{
+		$id = is_array($data) ? static::get_array($data, $this->id) : $data;
+
+		$value =& $data;
+		if(!is_array($value)) return $value;
+
+		foreach(array($attrs['field']) + explode(':',$attrs['alternate_fields']) as $field)
+		{
+			if($value[$field])
+			{
+				return $value[$field];
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Handle if field is a reference to a customfield, or a sub-field if the custom
+	 * field is an application entry.  Allowed forms are similar to merge:
+	 *	#customfield
+	 *	#customfield/n_fn
+	 *  #infolog_cf/#addressbook_cf/n_fn
+	 *  etc.
+	 *
+	 * @param Array $attrs Current field attributes
+	 * @param Array $data Current entry data
+	 */
+	protected function customfield($attrs, &$data)
+	{
+		list($app, $type) = explode('-',$attrs['type']);
+		$id = is_array($data) ? static::get_array($data, $this->id) : $data;
+		if(!$app || !$type || !$GLOBALS['egw_info']['apps'][$app] || !$id ||
+			// Simple CF, already there
+			$data[$attrs['field']]
+		)
+		{
+			return;
+		}
+
+		if(substr($attrs['field'], 0, 1) == '#' && $cfs = \EGroupware\Api\Storage\Customfields::get($app))
+		{
+			try
+			{
+				$classname = "{$app}_merge";
+				$merge = new $classname();
+				$replacement_field = '$$'.$attrs['field'].'$$';
+				$replacements = $merge->get_app_replacements($app, $id, $replacement_field);
+				$data[$attrs['field']] = $replacements[$replacement_field];
+			}
+			catch(\Exception $e)
+			{
+				$this->set_validation_error($this->id, $e->getMessage());
+			}
+		}
+	}
+
+	/**
+	 * Handle regex attribute that allows modifying the value via regex replace
+	 *
+	 * @param Array $attrs Current field attributes
+	 * @param Array $data Current entry data
+	 */
+	protected function regex($attrs, &$data)
+	{
+		$id = is_array($data) ? static::get_array($data, $this->id) : $data;
+		$value =& $this->get_data_field($attrs, $data);
+		if(!$attrs['regex'] || !$id || !$value)
+		{
+			return;
+		}
+		$regex = $attrs['regex'];
+		$replace = $attrs['regex_replace'];
+		if(!$replace)
+		{
+			$regex = explode(',', $attrs['regex']);
+			$replace = array_pop($regex);
+			$regex = implode(',', $regex);
+		}
+		$value = preg_replace($regex, $replace, $value);
 	}
 }

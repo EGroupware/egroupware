@@ -1437,7 +1437,7 @@ abstract class Merge
 	 * @param string $content
 	 * @return array
 	 */
-	protected function get_app_replacements($app, $id, $content, $prefix='')
+	public function get_app_replacements($app, $id, $content, $prefix='')
 	{
 		$replacements = array();
 		if($app == 'addressbook')
