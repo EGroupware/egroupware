@@ -139,6 +139,10 @@ class admin_account
 		$content['account_firstname'] = $content['n_given'];
 		$content['account_lastname'] = $content['n_family'];
 		$content['account_email'] = $content['email'];
+		if($content['account_passwd'] && $content['account_passwd'] !== $content['account_passwd_2'])
+		{
+			throw new Api\Exception\WrongUserinput('Passwords are not the same');
+		}
 		if (!empty($content['old_account']))
 		{
 			$old = array_diff_assoc($content['old_account'], $content);
@@ -146,6 +150,11 @@ class admin_account
 			if ($content['old_account']['account_groups'] != $content['account_groups'])
 			{
 				$old['account_groups'] = $content['old_account']['account_groups'];
+			}
+			if($content['account_passwd'])
+			{
+				// Don't put password into history
+				$old['account_passwd'] = '';
 			}
 		}
 		if ($content['deny_edit'] || $old === array())
