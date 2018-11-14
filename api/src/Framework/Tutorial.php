@@ -83,7 +83,7 @@ class Tutorial
 			);
 			foreach (isset($tutorials[$appName][$lang]) ? $tutorials[$appName][$lang] : $tutorials[$appName]['en'] as $v)
 			{
-				$v ['onclick'] = 'app[egw.app_name()].tutorial_videoOnClick("'.$v['src'].'")';
+				$v ['onclick'] = 'etemplate2.getByApplication("api")[0].widgetContainer.getWidgetById("src").set_value("'.$v['src'].'")';
 				array_push($list, $v);
 			}
 			$content = array (
