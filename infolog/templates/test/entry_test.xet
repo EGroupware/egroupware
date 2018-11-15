@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!--
+This template is used for client-side testing, and needs these custom fields to work properly:
+Infolog:
+	chgrs1, chrgs2 (int or float)
+	tracker (tracker entry)
+Tracker:
+	gender (selectbox with Male/Female)
+
+Include it into the normal edit template with:
+	<template id="infolog.entry_test" group="test"/>
+-->
+<overlay>
+	<template id="infolog.entry_test" lang="" group="0" version="1.9">
+		<vbox>
+		<!-- These are all the same -->
+		<description value="Contact's Email:"/>
+		<contact-value id="info_contact_email" value="info_contact" options="email"/>
+		<contact-value id="info_contact_email" value="info_contact" field="email"/>
+		<contact-value id="info_contact" options="email"/>
+		<hrule/>
+
+		<!-- These use some of the other attributes -->
+		<description value="Entry alternate field attribute using numeric custom fields #chrgs1 &amp; #chrgs2 and #date:"/>
+		<infolog-value id="info_id"  options=",,#chrgs1:#chrgs2" label="First non-empty:"/>
+		<infolog-value id="info_id" field="sum" alternate_fields="#chrgs1:#chrgs2" label="Sum:"/>
+		<infolog-value id="info_id" field="sum" options=",,#chrgs1:#chrgs2" label="Sum:"/>
+		<infolog-value id="info_id" field="sum" options=",,#chrgs1:-#chrgs2" label="Difference:"/>
+		<infolog-value id="regex" value="info_id" field="#date" regex="/(\d{2})(\d{2})-(\d{2})-(\d{2})/" regex_replace="\3 \4 \2" label="Regex replace:"/>
+		<hrule/>
+
+		<!-- Accessing other application info -->
+		<description value="Values from other applications using Infolog cf #tracker and Tracker cf #gender"/>
+		<infolog-value id="is_tracker_male" value="info_id" field="#tracker/#gender" label="Tracker gender cf:"/>
+		<tracker-value id="#tracker" field="#gender" compare="Male" class="bill_11m" label="Tracker gender is Male:"/>
+		<tracker-value id="#tracker" field="#gender" compare="Female" class="bill_11f" label="Tracker gender is Female:"/>
+		<hrule/>
+
+		<description value="A whole template based on modifier's town (Thorsby or Kaiserslautern)"/>
+		<contact-template label="infolog.entry_test.%s.locality" id="info_modifier_versicherung" field="adr_one_locality" value="info_modifier" span="all"/>
+
+		</vbox>
+	</template>
+	<template id="infolog.entry_test.Thorsby.locality">
+		<description value="THORSBY"/>
+	</template>
+	<template id="infolog.entry_test.Kaiserslautern.locality">
+		<description value="KAISERSLAUTERN"/>
+	</template>
+</overlay>
