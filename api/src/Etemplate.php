@@ -531,6 +531,7 @@ class Etemplate extends Etemplate\Widget\Template
 	public static function reset_request()
 	{
 		self::$request = Etemplate\Request::read();
+		self::$cache = array();
 	}
 	/**
 	 * Get template data as array

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!--
+This template is used in automated testing
+
+Most of these need the client side for full functionality, so this is also a
+list of patterns to test.
+
+-->
+<overlay>
+	<template id="api.entry_test_contact" template="" lang="" group="0" version="19.1">
+		<!-- Nice, unique ID with value and field specified -->
+		<contact-value id="widget" value="entry_id" field="email"/>
+
+		<!--No value attribute, will fallback to ID and succeed-->
+		<contact-value id="entry_id" field="n_fn"/>
+
+		<!--No value attribute, ID does not match anything in content, will fallback to ID and fail-->
+		<contact-value id="no_value" field="email"/>
+
+		<!-- These are all the same -->
+		<contact-value id="info_contact_email" value="info_contact" options="email"/>
+		<contact-value id="info_contact_email" value="info_contact" field="email"/>
+		<contact-value id="info_contact" options="email"/>
+
+	</template>
+</overlay>

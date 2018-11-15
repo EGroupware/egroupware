@@ -138,7 +138,12 @@ var et2_entry = (function(){ "use strict"; return et2_valueWidget.extend(
 		// If value was set, find the record explicitly.
 		if(typeof this.options.value == 'string')
 		{
-			widget.options.value = this.getRoot().getArrayMgr('content').getEntry(this.prefix+this.options.value + '['+this.options.field+']');
+			widget.options.value = this.getArrayMgr('content').getEntry(this.id+'['+this.options.field+']') ||
+					this.getRoot().getArrayMgr('content').getEntry(this.prefix+this.options.value + '['+this.options.field+']');
+		}
+		else if (this.options.field && this.options.value && this.options.value[this.options.field])
+		{
+			widget.options.value = this.options.value[this.options.field];
 		}
 		if(this.options.compare)
 		{
