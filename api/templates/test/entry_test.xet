@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!--
+This template is used in automated testing
+
+Most of these need the client side for full functionality, so this is also a
+list of patterns to test.
+
+-->
+<overlay>
+	<template id="api.entry_test" template="" lang="" group="0" version="19.1">
+		<!-- Nice, unique ID with value and field specified -->
+		<entry id="widget" value="entry_id" field="entry_field_1"/>
+
+		<!--No value attribute, will fallback to ID and succeed-->
+		<entry id="entry_id" field="entry_field_2"/>
+
+		<!--No value attribute, ID does not match anything in content, will fallback to ID and fail-->
+		<entry id="no_value" field="entry_field_3"/>
+
+		<!-- Checking compare - should render as X -->
+		<entry id="compare" value="entry_id" field="entry_num_2" compare="2"/>
+
+	</template>
+</overlay>

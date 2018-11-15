@@ -70,7 +70,8 @@ abstract class Entry extends Transformer
 		$attrs['id'] = $this->id;
 
 		$form_name = self::form_name($cname, $this->id);
-		$data_id = $attrs['value'] ? self::form_name($cname, $attrs['value']) : self::form_name($cname, self::ID_PREFIX . $this->id);
+		$prefixed_id = (substr($this->id, 0, 1) == self::ID_PREFIX ? $this->id : self::ID_PREFIX . $this->id);
+		$data_id = $attrs['value'] ? self::form_name($cname, $attrs['value']) : self::form_name($cname, $prefixed_id);
 
 		// No need to proceed
 		if(!$data_id) return;
@@ -94,8 +95,8 @@ abstract class Entry extends Transformer
 		}
 
 		// Set the new value so transformer can find it.  Use prefix to avoid changing the original value
-		$new_value =& self::get_array(self::$request->content, self::ID_PREFIX .$this->id, true, false);
-		if (true) $new_value = $data;
+		$new_value =& self::get_array(self::$request->content, $prefixed_id, true, false);
+		if ($data) $new_value = $data;
 
 		// Check for missing field
 		if(!$attrs['field'] && !$attrs['alternate_fields'])
@@ -109,10 +110,15 @@ abstract class Entry extends Transformer
 
 		$this->regex($attrs, $new_value);
 
+		// Change this before parent so client gets what it needs
+		// Client is expecting to find data with the prefix
+		if(substr($this->id, 0, 1) !== self::ID_PREFIX)
+		{
+			$this->id = self::ID_PREFIX . $this->id . "[{$attrs['field']}]";
+		}
+
 		parent::beforeSendToClient($cname, $expand);
 
-		// Change this after parent::beforeSendToClient or it adds another layer
-		$this->id = self::ID_PREFIX . $this->id . "[{$attrs['field']}]";
 
 	}
 
@@ -173,7 +179,8 @@ abstract class Entry extends Transformer
 	protected function customfield($attrs, &$data)
 	{
 		list($app, $type) = explode('-',$attrs['type']);
-		$id = is_array($data) ? static::get_array($data, $this->id) : $data;
+		$data_id = $attrs['value'] ?: $attrs['id'];
+		$id = is_array($data) ? static::get_array($data, $data_id) : $data;
 		if(!$app || !$type || !$GLOBALS['egw_info']['apps'][$app] || !$id ||
 			// Simple CF, already there
 			$data[$attrs['field']]
@@ -207,9 +214,10 @@ abstract class Entry extends Transformer
 	 */
 	protected function regex($attrs, &$data)
 	{
-		$id = is_array($data) ? static::get_array($data, $this->id) : $data;
+		$data_id = $attrs['value'] ?: $attrs['id'];
+		$id = is_array($data) ? static::get_array($data, $data_id) : $data;
 		$value =& $this->get_data_field($attrs, $data);
-		if(!$attrs['regex'] || !$id || !$value)
+		if(!$attrs['regex'] || !$value)
 		{
 			return;
 		}
@@ -221,6 +229,6 @@ abstract class Entry extends Transformer
 			$replace = array_pop($regex);
 			$regex = implode(',', $regex);
 		}
-		$value = preg_replace($regex, $replace, $value);
+		$data[$attrs['field']] = preg_replace($regex, $replace, $value);
 	}
 }
