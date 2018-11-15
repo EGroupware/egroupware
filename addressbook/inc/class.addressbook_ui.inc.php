@@ -1781,7 +1781,9 @@ window.egw_LAB.wait(function() {
 						}
 						$customfields = $this->read_customfields($ids,$selected_cfs);
 					}
-					if ($show_calendar && !empty($ids)) $calendar = $this->read_calendar($calendar_participants);
+					// TODO: we need to find out where the csv_export query has been used and try to clean up
+					// this columnselection condition statements.
+					if ($columselection && $show_calendar && !empty($ids)) $calendar = $this->read_calendar($calendar_participants);
 					// distributionlist memership for the entrys
 					//_debug_array($this->get_lists(Acl::EDIT));
 					if ($show_distributionlist && $available_distib_lists)
