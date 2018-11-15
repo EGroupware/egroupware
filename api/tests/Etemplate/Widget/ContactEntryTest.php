@@ -124,16 +124,3 @@ class EntryTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		return $element_id;
 	}
 }
-
-/**
- * Testable entry widget
- */
-class EntryTestWidget extends \EGroupware\Api\Etemplate\Widget\Entry
-{
-	public function get_entry($value, array $attrs)
-	{
-		$entry = EntryTest::getEntry($value, $attrs);
-
-		return $entry;
-	}
-}
