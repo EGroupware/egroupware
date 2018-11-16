@@ -4332,7 +4332,8 @@ app.classes.mail = AppJS.extend(
 				widget:{},
 				jQClass: '.mailComposeJQueryReplyto'
 			}};
-
+		var actions = egw.preference('toggledOnActions', 'mail');
+		actions = actions ? actions.split(',') : [];
 		for(var widget in widgets)
 		{
 			var expanderBtn = widget + '_expander';
@@ -4342,7 +4343,8 @@ app.classes.mail = AppJS.extend(
 
 			if (typeof widgets[widget].widget != 'undefined'
 					&& typeof widgets[expanderBtn].widget != 'undefined'
-					&& widgets[widget].widget.get_value().length == 0)
+					&& widgets[widget].widget.get_value().length == 0
+					&& actions.indexOf(expanderBtn)<0)
 			{
 				widgets[expanderBtn].widget.set_disabled(false);
 				jQuery(widgets[widget].jQClass).hide();
