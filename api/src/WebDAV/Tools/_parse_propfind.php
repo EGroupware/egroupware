@@ -51,12 +51,12 @@ class _parse_propfind
     var $error;
 
     /**
-     * found properties are collected here
+     * found properties are collected here or string "all" or "names"
      *
-     * @var array
+     * @var array|string
      * @access public
      */
-    var $props = false;
+    var $props = array();
 
     /**
      * found (CalDAV) filters are collected here
@@ -185,7 +185,7 @@ class _parse_propfind
         fclose($f_in);
 
         // if no input was parsed it was a request
-        if(!count($this->props)) $this->props = "all"; // default
+        if(is_array($this->props) && !count($this->props)) $this->props = "all"; // default
     }
 
 
