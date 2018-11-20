@@ -123,14 +123,12 @@ class addressbook_ui extends addressbook_bo
 	 *
 	 * @param array $_content =null submitted content
 	 * @param string $msg =null	message to show
-	 * @param boolean $do_email =false do an email-selection popup or the regular index-page
 	 */
-	function index($_content=null,$msg=null,$do_email=false)
+	function index($_content=null,$msg=null)
 	{
 		//echo "<p>uicontacts::index(".print_r($_content,true).",'$msg')</p>\n";
 		if (($re_submit = is_array($_content)))
 		{
-			$do_email = $_content['do_email'];
 
 			if (isset($_content['nm']['rows']['delete']))	// handle a single delete like delete with the checkboxes
 			{
@@ -159,7 +157,7 @@ class addressbook_ui extends addressbook_bo
 				{
 					$success = $failed = $action_msg = null;
 					if ($this->action($_content['nm']['action'],$_content['nm']['selected'],$_content['nm']['select_all'],
-						$success,$failed,$action_msg,$_content['do_email'] ? 'email' : 'index',$msg,$_content['nm']['checkboxes']))
+						$success,$failed,$action_msg,'index',$msg,$_content['nm']['checkboxes']))
 					{
 						$msg .= lang('%1 contact(s) %2',$success,$action_msg);
 						Framework::message($msg);
@@ -203,9 +201,7 @@ class addressbook_ui extends addressbook_bo
 				$msg = lang('List creation failed, no rights!');
 			}
 		}
-		$preserv = array(
-			'do_email' => $do_email,
-		);
+		$preserv = array();
 		$to = $_content['nm']['to'];
 		$content = array();
 		if($msg || $_GET['msg'])
@@ -213,7 +209,7 @@ class addressbook_ui extends addressbook_bo
 			Framework::message($msg ? $msg : $_GET['msg']);
 		}
 
-		$content['nm'] = Api\Cache::getSession('addressbook', $do_email ? 'email' : 'index');
+		$content['nm'] = Api\Cache::getSession('addressbook', 'index');
 		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
@@ -235,7 +231,6 @@ class addressbook_ui extends addressbook_bo
 				'filter2'        =>	'',			// IO filter2, if not 'no_filter2' => True
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 				'lettersearch'   => true,
-				'do_email'       => $do_email ? 1 : 0,
 				// using a positiv list now, as we constantly adding new columns in addressbook, but not removing them from default
 				'default_cols'   => 'type,n_fileas_n_given_n_family_n_family_n_given_org_name_n_family_n_given_n_fileas,'.
 					'number,org_name,org_unit,'.
@@ -244,7 +239,6 @@ class addressbook_ui extends addressbook_bo
 				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list,contact_id,owner,room',*/
 				'filter2_onchange' => "return app.addressbook.filter2_onchange();",
 				'filter2_tags'	=> true,
-				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
 				'row_id'         => 'id',
 				'row_modified'   => 'modified',
@@ -253,12 +247,8 @@ class addressbook_ui extends addressbook_bo
 				'favorites'      => true,
 			);
 
-			if ($do_email)
-			{
-				$content['nm']['filter2_onchange'] = 'app.addressbook.filter2_onchange_email();';
-			}
 			// use the state of the last session stored in the user prefs
-			if (($state = @unserialize($this->prefs[$do_email ? 'email_state' : 'index_state'])))
+			if (($state = @unserialize($this->prefs['index_state'])))
 			{
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
@@ -286,23 +276,9 @@ class addressbook_ui extends addressbook_bo
 			$sel_options['filter2'] = $this->get_lists(Acl::READ,array('' => lang('No distribution list')));
 			$sel_options['filter2']['add'] = lang('Add a new list').'...';	// put it at the end
 		}
-		if ($do_email)
-		{
-			if (!$re_submit)
-			{
-				$content['nm']['to'] = 'to'; // use 'bcc' if you want bcc as preselected standard mailaddress scope
-				$content['nm']['email_type'] = $this->prefs['distributionListPreferredMail'] ? $this->prefs['distributionListPreferredMail'] : 'email';
-				$content['nm']['search'] = '@';
-			}
-			else
-			{
-				$content['nm']['to'] = $to;
-				$content['nm']['email_type'] = $this->prefs['distributionListPreferredMail'] ? $this->prefs['distributionListPreferredMail'] : 'email';
-			}
-			$content['nm']['header_left'] = 'addressbook.email.left';
-		}
+
 		// Organisation stuff is not (yet) availible with ldap
-		elseif($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
+		if($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
 		{
 			$content['nm']['header_left'] = 'addressbook.index.left';
 		}
@@ -361,9 +337,9 @@ class addressbook_ui extends addressbook_bo
 		}
 		$content['nm']['grouped_view_label'] = $sel_options['grouped_view'][(string) $content['nm']['grouped_view']];
 
-		$this->tmpl->read($do_email ? 'addressbook.email' : 'addressbook.index');
-		return $this->tmpl->exec($do_email ? 'addressbook.addressbook_ui.emailpopup' : 'addressbook.addressbook_ui.index',
-			$content,$sel_options,array(),$preserv,$do_email ? 2 : 0);
+		$this->tmpl->read('addressbook.index');
+		return $this->tmpl->exec('addressbook.addressbook_ui.index',
+			$content,$sel_options,array(),$preserv);
 	}
 
 	/**
@@ -842,8 +818,6 @@ class addressbook_ui extends addressbook_bo
 			$actions['view']['default'] = false;
 			$actions['open']['default'] = true;
 		}
-		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
-
 		// Allow contacts to be dragged
 		/*
 		$actions['drag'] = array(
@@ -957,50 +931,6 @@ class addressbook_ui extends addressbook_bo
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualAddressbookIndexOrga');
 
 		return $rows;
-	}
-
-	/**
-	 * Email address-selection popup
-	 *
-	 * @param array $content =null submitted content
-	 * @param string $msg =null	message to show
-	 */
-	function emailpopup($content=null,$msg=null)
-	{
-		if (strpos($GLOBALS['egw_info']['flags']['java_script'],'addEmail') === false)
-		{
-			$handler = 'opener.addEmail(to,email)';
-			$GLOBALS['egw_info']['flags']['java_script'].= "
-<script>
-window.egw_LAB.wait(function() {
-	window.focus();
-
-	window.addEmail = function(email)
-	{
-		var to = 'to';
-		splitter = email.indexOf(' <');
-		namepart = email.substring(0,splitter);
-		emailpart = email.substring(splitter);
-		email = namepart.replace(/@/g,' ')+emailpart;
-
-		if (document.getElementById('exec[nm][to][cc]').checked == true)
-		{
-			to = 'cc';
-		}
-		else
-		{
-			if (document.getElementById('exec[nm][to][bcc]').checked == true)
-			{
-				to = 'bcc';
-			}
-		}
-		$handler;
-	};
-});
-</script>
-";
-		}
-		return $this->index($content,$msg,true);
 	}
 
 	/**
@@ -1160,7 +1090,7 @@ window.egw_LAB.wait(function() {
 	 * @param int &$success number of succeded actions
 	 * @param int &$failed number of failed actions (not enought permissions)
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 contacts 'deleted'
-	 * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
+	 * @param string/array $session_name 'index' or array with session-data depending if we are in the main list or the popup
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
 	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg, $checkboxes = NULL)
@@ -1552,8 +1482,7 @@ window.egw_LAB.wait(function() {
 	 */
 	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 	{
-		$do_email = $query['do_email'];
-		$what = $query['sitemgr_display'] ? $query['sitemgr_display'] : ($do_email ? 'email' : 'index');
+		$what = $query['sitemgr_display'] ? $query['sitemgr_display'] : 'index';
 
 		if (!$id_only && !$query['csv_export'])	// do NOT store state for csv_export or querying id's (no regular view)
 		{
@@ -1691,7 +1620,7 @@ window.egw_LAB.wait(function() {
 			}
 			else
 			{
-				$query['template'] = $do_email ? 'addressbook.email.rows' : 'addressbook.index.rows';
+				$query['template'] = 'addressbook.index.rows';
 			}
 			if($query['col_filter']['parent_id'])
 			{
@@ -1773,21 +1702,20 @@ window.egw_LAB.wait(function() {
 				$wildcard = $query['advanced_search']['meth_select'] == $wildcard ? $wildcard : '';
 				unset($query['advanced_search']['meth_select']);
 			}
-			//if ($do_email ) $email_only = array('id','owner','tid','n_fn','n_family','n_given','org_name','email','email_home');
+
 			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],$id_only,
 				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
 
-			// do we need to read the custom fields, depends on the column is enabled and customfields exist
-			// $query['csv_export'] allways needs to read ALL cf's
-			$columsel = $this->prefs['nextmatch-addressbook.'.($do_email ? 'email' : 'index').'.rows'];
+			// do we need to read the custom fields, depends on the column is enabled and customfields
+			$columsel = $this->prefs['nextmatch-addressbook.index.rows'];
 			$available_distib_lists=$this->get_lists(Acl::READ);
-			$columselection = $columsel && !$query['csv_export'] ? explode(',',$columsel) : array();
+			$columselection = $columsel ? explode(',',$columsel) : array();
 			$ids = $calendar_participants = array();
 			if (!$id_only && $rows)
 			{
-				$show_custom_fields = (!$columselection || in_array('customfields',$columselection) || $query['csv_export']) && $this->customfields;
-				$show_calendar = !$columselection || in_array('calendar_calendar',$columselection);
-				$show_distributionlist = !$columselection || in_array('distrib_lists',$columselection) || count($available_distib_lists);
+				$show_custom_fields = (in_array('customfields',$columselection)) && $this->customfields;
+				$show_calendar = in_array('calendar_calendar',$columselection);
+				$show_distributionlist = in_array('distrib_lists',$columselection) || count($available_distib_lists);
 				if ($show_calendar || $show_custom_fields || $show_distributionlist)
 				{
 					foreach($rows as $val)
@@ -1803,9 +1731,7 @@ window.egw_LAB.wait(function() {
 						}
 						$customfields = $this->read_customfields($ids,$selected_cfs);
 					}
-					// TODO: we need to find out where the csv_export query has been used and try to clean up
-					// this columnselection condition statements.
-					if ($columselection && $show_calendar && !empty($ids)) $calendar = $this->read_calendar($calendar_participants);
+					if ($show_calendar && !empty($ids)) $calendar = $this->read_calendar($calendar_participants);
 					// distributionlist memership for the entrys
 					//_debug_array($this->get_lists(Acl::EDIT));
 					if ($show_distributionlist && $available_distib_lists)

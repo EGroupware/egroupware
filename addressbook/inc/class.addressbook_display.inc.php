@@ -79,9 +79,7 @@ class addressbook_display extends addressbook_ui
 			//	'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 			//	'filter2_onchange' => "if(this.value=='add') { add_new_list(document.getElementById(form::name('filter')).value); this.value='';} else this.form.submit();",
 				'lettersearch'   => true,
-				'do_email'       => $do_email,
 				'default_cols'   => '!cat_id,contact_created_contact_modified',
-				'manual' => $do_email ? ' ' : false,	// space for the manual icon
 				'no_columnselection' => True,
 				'csv_fields'     => false,
 			);

@@ -97,7 +97,7 @@ class addressbook_favorite_portlet extends home_favorite_portlet
 				// Some processing to add values in for links and cats
 				$success = $failed = $action_msg = $msg = null;
 				if ($ui->action($values['nm']['action'],$values['nm']['selected'],$values['nm']['select_all'],
-						$success,$failed,$action_msg,$values['do_email'] ? 'email' : 'index',$msg,$values['nm']['checkboxes']))
+						$success,$failed,$action_msg,'index',$msg,$values['nm']['checkboxes']))
 				{
 					$msg .= lang('%1 contact(s) %2',$success,$action_msg);
 					Api\Json\Response::get()->apply('egw.message',array($msg,'success'));
