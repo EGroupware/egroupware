@@ -1753,10 +1753,11 @@ class mail_compose
 			}
 		}
 
+		$fromAddr = Mail::parseAddressList($addHeadInfo['FROM'])[0];
 		foreach((array)$headers['REPLY-TO'] as $val) {
 			$rfcAddr=Mail::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
-			if (!$_rfcAddr->valid) continue;
+			if (!$_rfcAddr->valid || ($_rfcAddr->mailbox == $fromAddr->mailbox && $_rfcAddr->host == $fromAddr->host)) continue;
 			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
 				continue;
 			}
