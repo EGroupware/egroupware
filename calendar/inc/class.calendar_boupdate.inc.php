@@ -1374,18 +1374,18 @@ class calendar_boupdate extends calendar_bo
 		// you should always update modification time (ctag depends on it!)
 		if ($updateTS)
 		{
-			$event['modified'] = $this->now;
-			$event['modifier'] = $this->user;
+			$event['modified'] = $save_event['modified'] = $this->now;
+			$event['modifier'] = $save_event['modifier'] = $this->user;
 		}
 
 		if (empty($event['id']) && (!isset($event['created']) || $event['created'] > $this->now))
 		{
-			$event['created'] = $this->now;
-			$event['creator'] = $this->user;
+			$event['created'] = $save_event['created'] = $this->now;
+			$event['creator'] = $save_event['creator'] = $this->user;
 		}
 		$set_recurrences = $old_event ? abs($event['recur_enddate'] - $old_event['recur_enddate']) > 1 : false;
 		$set_recurrences_start = 0;
-		if (($cal_id = $this->so->save($save_event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
+		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
 			$save_event['id'] = $cal_id;
 			// unset participants to enforce the default stati for all added recurrences
@@ -1410,7 +1410,7 @@ class calendar_boupdate extends calendar_bo
 		// Update history
 		$tracking = new calendar_tracking($this);
 		if (empty($event['id']) && !empty($cal_id)) $event['id']=$cal_id;
-		$tracking->track($event, $old_event);
+		$tracking->track($save_event, $old_event);
 
 		return $cal_id;
 	}
