@@ -35,6 +35,7 @@ Include it into the normal edit template with:
 		<infolog-value id="is_tracker_male" value="info_id" field="#tracker/#gender" label="Tracker gender cf:"/>
 		<tracker-value id="#tracker" field="#gender" compare="Male" class="bill_11m" label="Tracker gender is Male:"/>
 		<tracker-value id="#tracker" field="#gender" compare="Female" class="bill_11f" label="Tracker gender is Female:"/>
+		<contact-account value="info_modifier" id="info_modifier_fn" options="n_fn" label="Modifier full name:"/>
 		<hrule/>
 
 		<description value="A whole template based on modifier's town (Thorsby or Kaiserslautern)"/>
