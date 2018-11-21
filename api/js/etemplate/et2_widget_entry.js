@@ -155,9 +155,9 @@ var et2_entry = (function(){ "use strict"; return et2_valueWidget.extend(
 			var fields = this.options.alternate_fields.split(':');
 			for(var i = 0; i < fields.length; i++)
 			{
-				var value =  (fields[i][0] == "-")? this.getArrayMgr('content').getEntry(fields[i].replace('-',''))*-1:
-								this.getArrayMgr('content').getEntry(fields[i]);
-				sum += parseFloat(value);
+				var negate = (fields[i][0] == "-");
+				var value =  this.getArrayMgr('content').getEntry(fields[i].replace('-',''))
+				sum += typeof value === 'undefined' ? 0 : (parseFloat(value) * (negate ? -1 : 1));
 				if(value && this.options.field !== 'sum')
 				{
 					widget.options.value = value;
