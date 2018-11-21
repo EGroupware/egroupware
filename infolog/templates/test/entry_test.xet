@@ -9,9 +9,21 @@ Tracker:
 	gender (selectbox with Male/Female)
 
 Include it into the normal edit template with:
-	<template id="infolog.entry_test" group="test"/>
+	<template id="infolog.entry_test"/>
 -->
 <overlay>
+	<template id="infolog.entry_test.Thorsby.locality">
+		<vbox>
+			<description value="THORSBY"/>
+			<contact-account value="info_modifier" id="info_modifier_fn" options="n_fn" label="Modifier full name:"/>
+		</vbox>
+	</template>
+	<template id="infolog.entry_test.Kaiserslautern.locality">
+		<vbox>
+			<description value="KAISERSLAUTERN"/>
+			<contact-account value="info_modifier" id="info_modifier_fn" options="n_fn" label="Modifier full name:"/>
+		</vbox>
+	</template>
 	<template id="infolog.entry_test" lang="" group="0" version="1.9">
 		<vbox>
 		<!-- These are all the same -->
@@ -35,18 +47,11 @@ Include it into the normal edit template with:
 		<infolog-value id="is_tracker_male" value="info_id" field="#tracker/#gender" label="Tracker gender cf:"/>
 		<tracker-value id="#tracker" field="#gender" compare="Male" class="bill_11m" label="Tracker gender is Male:"/>
 		<tracker-value id="#tracker" field="#gender" compare="Female" class="bill_11f" label="Tracker gender is Female:"/>
-		<contact-account value="info_modifier" id="info_modifier_fn" options="n_fn" label="Modifier full name:"/>
 		<hrule/>
 
 		<description value="A whole template based on modifier's town (Thorsby or Kaiserslautern)"/>
 		<contact-template label="infolog.entry_test.%s.locality" id="info_modifier_versicherung" field="adr_one_locality" value="info_modifier" span="all"/>
 
 		</vbox>
-	</template>
-	<template id="infolog.entry_test.Thorsby.locality">
-		<description value="THORSBY"/>
-	</template>
-	<template id="infolog.entry_test.Kaiserslautern.locality">
-		<description value="KAISERSLAUTERN"/>
 	</template>
 </overlay>
