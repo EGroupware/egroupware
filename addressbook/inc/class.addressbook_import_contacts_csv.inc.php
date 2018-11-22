@@ -286,6 +286,13 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	 */
 	protected function action ( $_action, importexport_iface_egw_record &$record, $record_num = 0 ) {
 		$_data = $record->get_record_array();
+
+		// Make sure picture is loaded/updated
+		if($_data['jpegphoto'])
+		{
+			$_data['photo_unchanged'] = false;
+		}
+		
 		switch ($_action) {
 			case 'none' :
 				return true;

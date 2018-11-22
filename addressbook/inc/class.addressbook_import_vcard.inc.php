@@ -184,6 +184,11 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 		{
 			$record['cat_id'] = implode(',',$this->bocontacts->find_or_add_categories($record['cat_id'], -1));
 		}
+		// Make sure picture is loaded/updated
+		if($record['jpegphoto'])
+		{
+			$record['photo_unchanged'] = false;
+		}
 		return $record;
 	}
 
