@@ -1326,12 +1326,15 @@ class calendar_boupdate extends calendar_bo
 		// same with the alarms
 		if (isset($event['alarm']) && is_array($event['alarm']) && isset($event['start']))
 		{
+			// Expand group invitations so we don't lose individual alarms
+			$expanded = $event;
+			$this->enum_groups($expanded);
 			foreach($event['alarm'] as $id => &$alarm)
 			{
 				// remove alarms belonging to not longer existing or rejected participants
-				if ($alarm['owner'] && isset($event['participants']))
+				if ($alarm['owner'] && isset($expanded['participants']))
 				{
-					$status = $event['participants'][$alarm['owner']];
+					$status = $expanded['participants'][$alarm['owner']];
 					if (!isset($status) || calendar_so::split_status($status) === 'R')
 					{
 						unset($event['alarm'][$id]);
