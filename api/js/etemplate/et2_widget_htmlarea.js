@@ -246,7 +246,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		console.log("Editor: " + _editor.id + " is now initialized.");
 		// try to reserve focus state as running command on editor may steal the
 		// current focus.
-		var focusedEl = JQuery(':focus');
+		var focusedEl = jQuery(':focus');
 		this.editor = _editor;
 		this.editor.execCommand('fontName', true, egw.preference('rte_font', 'common'));
 		this.editor.execCommand('fontSize',	true, egw.preference('rte_font_size', 'common')
