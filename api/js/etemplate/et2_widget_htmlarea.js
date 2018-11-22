@@ -136,12 +136,13 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			file_picker_callback: jQuery.proxy(this._file_picker_callback, this),
 			images_upload_handler: this.options.images_upload_handler,
 			init_instance_callback : jQuery.proxy(this._instanceIsReady, this),
+			auto_focus: false,
 			plugins: [
-				"print searchreplace autolink directionality "+
-				"visualblocks visualchars image link media template "+
-				"codesample table charmap hr pagebreak nonbreaking anchor toc "+
-				"insertdatetime advlist lists textcolor wordcount imagetools "+
-				"colorpicker textpattern help paste code searchreplace"
+				"print searchreplace autolink directionality ",
+				"visualblocks visualchars image link media template ",
+				"codesample table charmap hr pagebreak nonbreaking anchor toc ",
+				"insertdatetime advlist lists textcolor wordcount imagetools ",
+				"colorpicker textpattern help paste code searchreplace tabfocus"
 			],
 			toolbar: "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
 					"link | alignleft aligncenter alignright alignjustify  | numlist "+
@@ -243,12 +244,17 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 	 */
 	_instanceIsReady: function(_editor) {
 		console.log("Editor: " + _editor.id + " is now initialized.");
+		// try to reserve focus state as running command on editor may steal the
+		// current focus.
+		var focusedEl = JQuery(':focus');
 		this.editor = _editor;
 		this.editor.execCommand('fontName', true, egw.preference('rte_font', 'common'));
 		this.editor.execCommand('fontSize',	true, egw.preference('rte_font_size', 'common')
 				+ egw.preference('rte_font_unit', 'common'));
 		if (!this.disabled) jQuery(this.editor.editorContainer).css('display', 'flex');
 		this.tinymce_container = this.editor.editorContainer;
+		// go back to reserved focused element
+		focusedEl.focus();
 	},
 
 	/**
