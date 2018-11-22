@@ -2710,6 +2710,9 @@ class HTTP_WebDAV_Server
 			!isset($_SERVER['HTTP_USER_AGENT']) ||
 			// current netdrive uses "NetDrive 2.5.8" as user-agent
 			stripos($_SERVER['HTTP_USER_AGENT'],'NetDrive') !== false ||
+			// Cyberduck or Mountain Duck WebDAV clients
+			stripos($_SERVER['HTTP_USER_AGENT'],'Cyberduck') !== false ||
+			stripos($_SERVER['HTTP_USER_AGENT'],'Mountain Duck') !== false ||
 			// OS X Finder (WebDAVFS/3.0.0 (03008000) Darwin/14.3.0 (x86_64))
 			stripos($_SERVER['HTTP_USER_AGENT'],'WebDAVFS') !== false && stripos($_SERVER['HTTP_USER_AGENT'],'Darwin'))
 		{
