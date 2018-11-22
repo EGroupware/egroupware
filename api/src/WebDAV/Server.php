@@ -2692,43 +2692,20 @@ class HTTP_WebDAV_Server
     }
 
     /**
-     * private minimalistic version of PHP urlencode()
-     *
-     * only blanks, percent and XML special chars must be encoded here
-     * full urlencode() encoding confuses some clients ...
+     * private URL encoding
+	 *
+	 * We use now full url-encoding as required by WebDAV RFC and many clients.
+	 * Formerly HTTP_WebDAV_Server used to encode only: " %&<>+"
      *
      * @param  string  URL to encode
      * @return string  encoded URL
-     * @todo check if other not explicitly named user-agents are happy with full url-encoding too and we can make it the default
      */
     public static function _urlencode($url)
     {
-		// cadaver (and probably all neon using agents) need a more complete url encoding
-		// otherwise special chars like "$,()'" in filenames do NOT work
-		if (strpos($_SERVER['HTTP_USER_AGENT'],'neon') !== false ||
-			// old netdrive does NOT use a User-Agent, but requires full urlencoding for non-ascii chars (eg. German Umlauts)
-			!isset($_SERVER['HTTP_USER_AGENT']) ||
-			// current netdrive uses "NetDrive 2.5.8" as user-agent
-			stripos($_SERVER['HTTP_USER_AGENT'],'NetDrive') !== false ||
-			// Cyberduck or Mountain Duck WebDAV clients
-			stripos($_SERVER['HTTP_USER_AGENT'],'Cyberduck') !== false ||
-			stripos($_SERVER['HTTP_USER_AGENT'],'Mountain Duck') !== false ||
-			// OS X Finder (WebDAVFS/3.0.0 (03008000) Darwin/14.3.0 (x86_64))
-			stripos($_SERVER['HTTP_USER_AGENT'],'WebDAVFS') !== false && stripos($_SERVER['HTTP_USER_AGENT'],'Darwin'))
-		{
-			return strtr(rawurlencode($url),array(
-				'%2F' => '/',
-				'%3A' => ':',
-			));
-		}
-		//error_log( __METHOD__."\n" .print_r($url,true));
-		return strtr($url, array(' '	=>	'%20',
-                                 '%'	=>	'%25',
-                                 '&'	=>	'%26',
-                                 '<'	=>	'%3C',
-                                 '>'	=>	'%3E',
-                                 '+'	=>	'%2B',
-                                 ));
+		return strtr(rawurlencode($url),array(
+			'%2F' => '/',
+			'%3A' => ':',
+		));
     }
 
     /**
