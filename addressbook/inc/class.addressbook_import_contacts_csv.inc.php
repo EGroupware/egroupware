@@ -292,7 +292,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 		{
 			$_data['photo_unchanged'] = false;
 		}
-
+		
 		switch ($_action) {
 			case 'none' :
 				return true;
