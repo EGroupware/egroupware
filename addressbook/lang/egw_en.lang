@@ -216,7 +216,7 @@ email & internet	addressbook	en	Email & Internet
 email (private)	addressbook	en	email (private)
 email addresses (comma separated) to send the contact data	addressbook	en	Email addresses, comma separated, to send the contact data.
 empty	admin	en	Empty
-empty addressbook before importing	addressbook	en	Empty addressbook before importing
+empty addressbook before importing	addressbook	en	Delete Addressbook entries Not in the CSV list
 empty for all	addressbook	en	Empty for all
 enable an extra private addressbook	addressbook	en	Extra private address book
 enclosure	addressbook	en	Enclosure
