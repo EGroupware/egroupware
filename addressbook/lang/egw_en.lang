@@ -103,6 +103,7 @@ categories, notes, ...	addressbook	en	Categories, Notes, ...
 category path	addressbook	en	Category path
 category tree	admin	en	Category tree
 cell phone	addressbook	en	Mobile phone
+change addressbook when updating	addressbook	en	Change addressbook when updating
 change all organisation members	addressbook	en	Change all organisation members
 charset for the csv export	addressbook	en	Charset for the CSV export
 charset for the vcard export	addressbook	en	Charset for the vCard export
@@ -215,6 +216,7 @@ email & internet	addressbook	en	Email & Internet
 email (private)	addressbook	en	email (private)
 email addresses (comma separated) to send the contact data	addressbook	en	Email addresses, comma separated, to send the contact data.
 empty	admin	en	Empty
+empty addressbook before importing	addressbook	en	Empty addressbook before importing
 empty for all	addressbook	en	Empty for all
 enable an extra private addressbook	addressbook	en	Extra private address book
 enclosure	addressbook	en	Enclosure

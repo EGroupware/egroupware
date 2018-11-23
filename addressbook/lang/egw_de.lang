@@ -103,6 +103,7 @@ categories, notes, ...	addressbook	de	Kategorien, Notizen, ...
 category path	addressbook	de	Kategorien Pfad
 category tree	admin	de	Kategoriebaum
 cell phone	addressbook	de	Mobiltelefon
+change addressbook when updating	addressbook	de	Zugehörigkeit zu Adressbuch bei der Aktualisierung ändern
 change all organisation members	addressbook	de	Alle Mitglieder der Organisation ändern
 charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
 charset for the vcard export	addressbook	de	Zeichensatz für den vCard Export
@@ -215,6 +216,7 @@ email & internet	addressbook	de	E-Mail & Internet
 email (private)	addressbook	de	E-Mail privat
 email addresses (comma separated) to send the contact data	addressbook	de	E-Mail Adressen (Komma getrennt) zum Senden der Kontaktdaten
 empty	admin	de	leere
+empty addressbook before importing	addressbook	de	Adressbuch Einträge löschen, die nicht in der CSV-Liste sind
 empty for all	addressbook	de	leer für alle
 enable an extra private addressbook	addressbook	de	Privates Adressbuch einschalten
 enclosure	addressbook	de	Einschluss
