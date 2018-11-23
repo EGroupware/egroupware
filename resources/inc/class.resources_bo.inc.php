@@ -725,9 +725,9 @@ class resources_bo
 		}
 		$list = array();
 		$data = $this->so->search($criteria,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
-		// maybe we need to check disponibility of the searched resources in the calendar if $pattern ['exec'] contains some extra args
+		// we need to check availability of the searched resources in the calendar if $pattern ['exec'] contains some extra args
 		$show_conflict=False;
-		if ($data && $options['exec'] && $GLOBALS['egw_info']['preferences']['calendar']['defaultresource_sel'] !== 'resources')
+		if ($data && $options['exec'])
 		{
 			// we'll use a cache for resources info taken from database
 			static $res_info_cache = array();

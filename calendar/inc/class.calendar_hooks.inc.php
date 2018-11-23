@@ -194,9 +194,8 @@ class calendar_hooks
 			'selected' => lang('Selected users/groups')
 		);
 		$defaultresource_sel = array(
-			'resources_conflict'    => lang('resources with conflict detection'),
-			'resources_without_conflict'    => lang('resources except conflicting ones'),
-			'resources'     => lang('resources')
+			'resources_conflict'    => lang('resources'),
+			'resources_without_conflict'    => lang('resources except conflicting ones')
 		);
 		$reset_stati_on_shifts = array(
 			'no'		=> lang('Never'),
