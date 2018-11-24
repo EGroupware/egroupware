@@ -523,8 +523,8 @@ class HTTP_WebDAV_Server_Filesystem extends HTTP_WebDAV_Server
             return "403 Forbidden";
         }
 
-		// for range requests we need to open with "r+" as "w" truncates the file!
-		$fp = fopen($fspath, empty($options['ranges']) ? "w" : "r+");
+		// for range requests we need to open with "c" as "w" truncates the file!
+		$fp = fopen($fspath, empty($options['ranges']) ? "w" : "c");
 
         return $fp;
     }
