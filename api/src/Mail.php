@@ -1730,7 +1730,10 @@ class Mail
 						$headerObject['ATTACHMENTS'][$mime_id]['uid']=$uid;
 						$headerObject['ATTACHMENTS'][$mime_id]['cid'] = $cid;
 						$headerObject['ATTACHMENTS'][$mime_id]['partID']=$mime_id;
-						if (!isset($headerObject['ATTACHMENTS'][$mime_id]['name']))$headerObject['ATTACHMENTS'][$mime_id]['name']=$part->getName();
+						if (!isset($headerObject['ATTACHMENTS'][$mime_id]['name']))
+						{
+							$headerObject['ATTACHMENTS'][$mime_id]['name']= $part->getName() ? $part->getName() : lang('forwarded message');
+						}
 						if (!strcasecmp($headerObject['ATTACHMENTS'][$mime_id]['name'],'winmail.dat') ||
 							$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=='application/ms-tnef')
 						{
