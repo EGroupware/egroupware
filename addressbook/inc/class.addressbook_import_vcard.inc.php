@@ -76,9 +76,9 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	protected $errors = array();
 
 	/**
-         * List of actions, and how many times that action was taken
-         */
-        protected $results = array();
+	* List of actions, and how many times that action was taken
+	*/
+	protected $results = array();
 
 	/**
 	 * imports entries according to given definition object.
@@ -343,7 +343,17 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	 * )
 	 */
 	public function get_options_etpl() {
-		// lets do it!
+		return array(
+			'name' => 'addressbook.import_vcard',
+			'content' => array(
+				'file_type' => 'vcard,ical,vcf',
+				'vcard_charset' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset']
+			),
+			'sel_options' => array(
+				'charset' => Api\Translation::get_installed_charsets()
+			),
+			'preserv' => array()
+		);
 	}
 
 	/**
