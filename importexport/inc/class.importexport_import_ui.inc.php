@@ -50,6 +50,12 @@ use EGroupware\Api\Etemplate;
 			Api\Header\ContentSecurityPolicy::add('script-src', "unsafe-inline");
 
 			$template = new Etemplate('importexport.import_dialog');
+			$preserve = array();
+
+			if($definition)
+			{
+				$definition_obj = new importexport_definition($content['definition']);
+			}
 
 			// Load application's translations
 			if($appname)
@@ -58,7 +64,6 @@ use EGroupware\Api\Etemplate;
 			}
 			if($content['import'] && $definition) {
 				try {
-					$definition_obj = new importexport_definition($content['definition']);
 					if($content['dry-run']) {
 						// Set this so plugin doesn't do any data changes
 						$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
@@ -69,6 +74,7 @@ use EGroupware\Api\Etemplate;
 						$options['fieldsep'] =
 							$content['delimiter'] == 'other' ? $content['other_delimiter'] : $content['delimiter'];
 					}
+					$options = array_merge($options, array_diff_key($content, array_flip(array('dry-run','file','import'))));
 					$definition_obj->plugin_options = $options;
 
 					$plugin = new $definition_obj->plugin;
@@ -216,6 +222,31 @@ use EGroupware\Api\Etemplate;
 			$data['no_notifications'] = true;	// switch notifications off by default
 
 			$sel_options = self::get_select_options($data);
+			$readonlys = array();
+
+			if(!$definition_obj && $sel_options['definition'] && !$data['definition'])
+			{
+				$definition_obj = new importexport_definition(key($sel_options['definition']));
+			}
+			if($definition_obj)
+			{
+				$plugin = new $definition_obj->plugin;
+				$options = $plugin->get_options_etpl($definition_obj);
+				if(is_array($options))
+				{
+					$data['plugin_options_template'] = $options['name'];
+					$data += (array)$options['content'];
+					$sel_options += (array)$options['sel_options'];
+					$readonlys += (array)$options['readonlys'];
+					$preserve += (array)$options['preserv'];
+				}
+				else
+				{
+					// Fallback for not returning anything - CSV
+					$data['plugin_options_template'] = "importexport.import_dialog.csv";
+					$data['file_type'] = 'csv';
+				}
+			}
 
 			$data['message'] = $this->message;
 			Framework::includeJS('.','importexport','importexport');

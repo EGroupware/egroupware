@@ -2,6 +2,25 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
+	<template id="importexport.import_dialog.csv" template="" lang="" group="0" version="1.9.005">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Delimiter"/>
+					<hbox no_lang="1" options="0,0">
+						<menulist>
+							<menupopup id="delimiter" no_lang="1" onchange="var _this = jQuery(this); var text = _this.parent().parent().find('input'); if(_this.val() =='other') {text.val('');text.show(); text.focus();} else {text.hide();}"/>
+						</menulist>
+						<textbox id="other_delimiter" size="2" maxlength="1" class="hide"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="importexport.import_dialog" template="" lang="" group="0" version="1.9.005">
 		<grid>
 			<columns>
@@ -22,21 +41,15 @@
 				<row>
 					<description value="Import definition"/>
 					<menulist>
-						<menupopup id="definition"/>
+						<menupopup id="definition" onchange="1"/>
 					</menulist>
 				</row>
 				<row>
-					<description value="Delimiter"/>
-					<hbox no_lang="1" options="0,0">
-						<menulist>
-							<menupopup id="delimiter" no_lang="1" onchange="var _this = jQuery(this); var text = _this.parent().parent().find('input'); if(_this.val() =='other') {text.val('');text.show(); text.focus();} else {text.hide();}"/>
-						</menulist>
-						<textbox id="other_delimiter" size="2" maxlength="1" class="hide"/>
-					</hbox>
-				</row>
-				<row>
 					<description value="Please select file to import"/>
-					<file id="file"/>
+					<file id="file" accept="@file_type"/>
+				</row>
+				<row disabled="!@plugin_options_template">
+					<template template="@plugin_options_template"/>
 				</row>
 				<row>
 					<box id="preview_box" span="all" class="preview">
