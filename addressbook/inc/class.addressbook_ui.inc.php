@@ -759,7 +759,7 @@ class addressbook_ui extends addressbook_bo
 			$this->prefs['document_dir'], $group, 'Insert in document', 'document_',
 			$this->prefs['default_document'], $this->config['contact_export_limit']
 		);
-		if (isset($GLOBALS['egw_info']['apps']['stylite']) && ($GLOBALS['egw_info']['user']['apps']['felamimail']||$GLOBALS['egw_info']['user']['apps']['mail']))
+		if ($GLOBALS['egw_info']['user']['apps']['felamimail']||$GLOBALS['egw_info']['user']['apps']['mail'])
 		{
 			$actions['mail'] = array(
 				'caption' => lang('Mail VCard'),
@@ -768,7 +768,8 @@ class addressbook_ui extends addressbook_bo
 				'onExecute' => 'javaScript:app.addressbook.adb_mail_vcard',
 				'enableClass' => 'contact_contact',
 				'hideOnDisabled' => true,
-				'hideOnMobile' => true
+				'hideOnMobile' => true,
+				'disableIfNoEPL' => true
 			);
 		}
 		++$group;

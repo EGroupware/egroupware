@@ -258,7 +258,7 @@ abstract class Ajax extends Api\Framework
 			'location' => 'framework_header',
 			'popup' => !$do_framework,
 		));
-		
+
 		$this->tpl->set_var($this->_get_header($extra));
 		$content = $this->tpl->fp('out','head').$content;
 
@@ -634,6 +634,10 @@ abstract class Ajax extends Api\Framework
 						{
 							$var['target'] = $item_link['target'];
 						}
+					}
+					if ($item_link['disableIfNoEPL'] && !$GLOBALS['egw_info']['apps']['stylite'])
+					{
+						$var['disableIfNoEPL'] = true;
 					}
 				}
 				else

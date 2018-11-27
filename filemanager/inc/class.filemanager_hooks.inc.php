@@ -41,16 +41,14 @@ class filemanager_hooks
 		{
 			$title = $GLOBALS['egw_info']['apps'][self::$appname]['title'] . ' '. lang('Menu');
 			$file = array();
-			if($GLOBALS['egw_info']['apps']['stylite'])
-			{
-				// add "file a file" (upload) dialog
-				$file[] = array(
-					'text' => 'File a file',
-					'link' => "javascript:app.filemanager.fileafile()",
-					'app'  => 'api',
-					'icon' => 'upload',
-				);
-			}
+			// add "file a file" (upload) dialog
+			$file[] = array(
+				'text' => 'File a file',
+				'link' => "javascript:app.filemanager.fileafile()",
+				'app'  => 'api',
+				'icon' => 'upload',
+				'disableIfNoEPL' => true
+			);
 			// add selection for available views, if we have more then one
 			if (count(filemanager_ui::init_views()) > 1)
 			{

@@ -824,7 +824,8 @@ class Nextmatch extends Etemplate\Widget
 			}
 			if (!empty($action['disableIfNoEPL']) && $action['disableIfNoEPL'] && !$GLOBALS['egw_info']['apps']['stylite'])
 			{
-				$action['enabled'] = false;
+				$action['enabled'] =
+				$action['hideOnDisabled'] = false;
 				$action['hint'] = Lang("This feature is only available in EPL version.");
 			}
 			else if(!empty($action['disableIfNoEPL']))

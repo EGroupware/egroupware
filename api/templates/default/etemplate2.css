@@ -2989,5 +2989,8 @@ tr.disableIfNoEPL {
     margin-right: 1px;
     border-radius: 1px;
 }
-
+.egw_fw_ui_sidemenu_listitem.disableIfNoEPL > * {
+    opacity: 0.5;
+    pointer-events: none;
+}
 .inactive_blur > * {opacity: 0.4; filter:blur(2px); pointer-events: none;}
