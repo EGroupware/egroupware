@@ -822,6 +822,15 @@ class Nextmatch extends Etemplate\Widget
 			{
 				continue;	// no need to send this action to client, specially document actions can be huge
 			}
+			if (!empty($action['disableIfNoEPL']) && $action['disableIfNoEPL'] && !$GLOBALS['egw_info']['apps']['stylite'])
+			{
+				$action['enabled'] = false;
+				$action['hint'] = Lang("This feature is only available in EPL version.");
+			}
+			else if(!empty($action['disableIfNoEPL']))
+			{
+				unset($action['disableIfNoEPL']);
+			}
 			// in case it's only selectbox  id => label pairs
 			if (!is_array($action)) $action = array('caption' => $action);
 			if ($default_attrs) $action += $default_attrs;

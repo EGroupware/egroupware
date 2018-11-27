@@ -95,6 +95,15 @@ function egwMenuImpl(_structure)
 
 	//Translate the given structure to the dhtmlx object structure
 	this._translateStructure(_structure, this.dhtmlxmenu.topId, 0);
+
+	// Add disableIfNoEPL class to the relevant action's DOM
+	for(var i in this.dhtmlxmenu.idPull)
+	{
+		if (this.dhtmlxmenu.userData[i+'_egw_menu'] && this.dhtmlxmenu.userData[i+'_egw_menu']['data']['disableIfNoEPL'])
+		{
+			this.dhtmlxmenu.idPull[i].className += ' disableIfNoEPL';
+		}
+	}
 }
 
 egwMenuImpl.prototype._translateStructure = function(_structure, _parentId, _idCnt)

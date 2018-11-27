@@ -198,6 +198,7 @@ function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultipl
 		this.set_onExecute(_onExecute);
 	}
 	this.hideOnMobile = false;
+	this.disableIfNoEPL = false;
 }
 
 /**
@@ -678,6 +679,11 @@ egwAction.prototype.set_hideOnDisabled = function(_value)
 egwAction.prototype.set_hideOnMobile = function(_value)
 {
 	this.hideOnMobile = _value;
+};
+
+egwAction.prototype.set_disableIfNoEPL = function(_value)
+{
+	this.disableIfNoEPL = _value;
 };
 
 egwAction.prototype.set_data = function(_value)

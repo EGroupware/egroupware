@@ -2965,3 +2965,29 @@ div.eml div.emlDelete:hover, div.eml div.emlEdit:hover  {
 }
 #api\.vfsSelectUI_app {width:177px}
 #api\.vfsSelectUI_name {padding-right: 4px;}
+
+tr.disableIfNoEPL {
+    box-shadow: inset 1px 1px 1px 1px #b9b9b9bf;
+}
+.disableIfNoEPL td {
+    opacity: 0.6;
+}
+.disableIfNoEPL:after {
+	content: 'EPL ONLY';
+    color: #ffffff;
+    position: absolute;
+    opacity: 0.5;
+    height: 10px;
+    background: rgb(6, 32, 56);
+    font-weight: bold;
+    padding: 2px;
+    line-height: 8px;
+    font-size: 7pt;
+    text-align: center;
+    right: 0;
+    margin-top: 2px;
+    margin-right: 1px;
+    border-radius: 1px;
+}
+
+.inactive_blur > * {opacity: 0.4; filter:blur(2px); pointer-events: none;}
