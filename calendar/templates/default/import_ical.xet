@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.import_ical" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+				<column width="180px"/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Charset of file"/>
+					<menulist class="width180">
+						<menupopup id="charset" no_lang="1"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.width180 select { width:150px;}
+		</styles>
+	</template>
+</overlay>

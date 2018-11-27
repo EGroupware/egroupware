@@ -346,7 +346,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 			'name' => 'addressbook.import_vcard',
 			'content' => array(
 				'file_type' => 'vcard,ical,vcf',
-				'vcard_charset' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset']
+				'charset' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset']
 			),
 			'sel_options' => array(
 				'charset' => Api\Translation::get_installed_charsets()
