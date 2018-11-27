@@ -279,7 +279,17 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 	 * )
 	 */
 	public function get_options_etpl() {
-		// lets do it!
+		return array(
+			'name' => 'addressbook.import_vcard',
+			'content' => array(
+				'file_type' => 'ical',
+				'charset' => $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset']
+			),
+			'sel_options' => array(
+				'charset' => Api\Translation::get_installed_charsets()
+			),
+			'preserv' => array()
+		);
 	}
 
 	/**
