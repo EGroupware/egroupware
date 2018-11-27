@@ -1010,7 +1010,7 @@ class mail_ui
 		);
 		$account = Mail\Account::read($this->mail_bo->profileID);
 		// spamTitan actions
-		if ($GLOBALS['egw_info']['apps']['stylite'] && $account->acc_spam_api)
+		if ($account->acc_spam_api)
 		{
 			$actions['spamfilter']['children'] = array_merge($actions['spamfilter']['children'], stylite_mail_spamtitan::getActions());
 		}
