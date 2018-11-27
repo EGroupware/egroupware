@@ -154,6 +154,14 @@ class calendar_tracking extends Api\Storage\Tracking
 			$old['participants'] = array();
 			$old = array_merge($old, $this->alter_participants($participants));
 		}
+		// Make sure dates are timestamps
+		foreach(array('start','end') as $date)
+		{
+			if(is_object($data[$date]) && is_a($data[$date], 'DateTime'))
+			{
+				$data[$date] = $data[$date]->format('ts');
+			}
+		}
 		parent::track($data,$old,$user,$deleted, $changed_fields);
 	}
 
