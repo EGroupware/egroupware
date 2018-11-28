@@ -803,7 +803,7 @@ class resources_bo
 			}
 		}
 		if (isset($res_info_cache)) {
-			$show_conflict= $GLOBALS['egw_info']['user']['preferences']['calendar']['defaultresource_sel'] === 'resources_conflict';
+			$show_conflict= $GLOBALS['egw_info']['user']['preferences']['calendar']['defaultresource_sel'] !== 'resources_without_conflict';
 			// if we have this array indexed on resource id it means non-bookable resource are removed and we are working for calendar
 			// so we'll loop on this one and not $data
 			foreach($res_info_cache as $id => $resource) {
