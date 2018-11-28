@@ -144,9 +144,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 				"insertdatetime advlist lists textcolor wordcount imagetools ",
 				"colorpicker textpattern help paste code searchreplace tabfocus"
 			],
-			toolbar: "formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
-					"link | alignleft aligncenter alignright alignjustify  | numlist "+
-					"bullist outdent indent  | removeformat | image",
+			toolbar: et2_htmlarea.TOOLBAR_SIMPLE,
 			block_formats: "Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;"+
 					"Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre",
 			font_formats: "Andale Mono=andale mono,times;Arial=arial,helvetica,"+
@@ -271,8 +269,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			menubar: parseInt(rte_menubar) && this.menubar ? true : typeof rte_menubar != 'undefined' ? false : this.menubar
 		};
 
-		var mode = this.mode || egw.preference('rte_features', 'common');
-		switch (mode)
+		switch (this.mode)
 		{
 			case 'simple':
 				settings.toolbar = et2_htmlarea.TOOLBAR_SIMPLE;

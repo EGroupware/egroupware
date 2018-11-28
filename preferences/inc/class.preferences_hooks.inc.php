@@ -116,11 +116,10 @@ class preferences_hooks
 				$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit']);
 		}
 		$rte_toolbar_list = array (
-			'undo', 'redo', 'formatselect', 'fontselect', 'fontsizeselect',
-			'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor',
+			'undo', 'redo', 'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor',
 			'link', 'alignleft', 'aligncenter', 'alignright', 'alignjustify',
 			'numlist', 'bullist', 'outdent', 'indent', 'ltr', 'rtl',
-			'removeformat', 'code', 'image', 'searchreplace'
+			'removeformat', 'code', 'image', 'searchreplace','formatselect', 'fontselect', 'fontsizeselect'
 		);
 		$rte_toolbar_selOptions = array();
 		foreach ($rte_toolbar_list as $toolbar)
@@ -132,6 +131,14 @@ class preferences_hooks
 				'icon' => Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url']).'/api/templates/default/images/htmlarea/'.$toolbar.'.png',
 				'app' => 'api'
 			);
+		}
+		
+		if (!$GLOBALS['egw_info']['user']['preferences']['common']['rte_toolbar'])
+		{
+			$GLOBALS['egw']->preferences->add('common', 'rte_toolbar', 'fontselect,fontsizeselect,bold,italic,forecolor,backcolor,'.
+				'alignleft,aligncenter,alignright,alignjustify,numlist,bullist'.
+				',outdent,indent,link,image', 'user');
+			$GLOBALS['egw']->preferences->save_repository(true);
 		}
 		// Settings array for this app
 		$settings = array(
@@ -416,15 +423,6 @@ class preferences_hooks
 				'xmlrpc' => True,
 				'admin'  => '1',
 				'default' => '1',
-			),
-			'rte_features' => array(
-				'type'   => 'select',
-				'label'  => 'Features of the editor',
-				'name'   => 'rte_features',
-				'values' => array('simple'=>'simple','extended'=>'regular','advanced'=>'everything'),
-				'help'   => 'How many toolbar buttons are available',
-				'admin'  => false,
-				'default'=> 'extended'
 			),
 			'rte_toolbar' => array(
 				'type'	=> 'taglist',
