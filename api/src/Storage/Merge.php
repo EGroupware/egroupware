@@ -1826,7 +1826,7 @@ abstract class Merge
 		}
 		// Apply HTML formatting to target document, if possible
 		// check if we can use the XSL extension, to not give a fatal error and rendering whole merge-print non-functional
-		if (class_exists(XSLTProcessor) && class_exists(DOMDocument) && $this->parse_html_styles)
+		if (class_exists('XSLTProcessor') && class_exists('DOMDocument') && $this->parse_html_styles)
 		{
 			try
 			{
