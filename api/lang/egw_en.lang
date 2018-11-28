@@ -99,6 +99,10 @@ afghanistan	common	en	AFGHANISTAN
 albania	common	en	ALBANIA
 algeria	common	en	ALGERIA
 align	common	en	Align
+aligncenter	common	en	Aligncenter
+alignjustify	common	en	Alignjustify
+alignleft	common	en	Alignleft
+alignright	common	en	Alignright
 alignment of label and input-field in table-cell	common	en	Alignment of label and input field in table cell
 alignment of the v/hbox containing table-cell	common	en	Alignment of the V/HBox containing table cell
 all	common	en	All
@@ -163,6 +167,7 @@ autosave default category	common	en	Auto-save default category.
 azerbaijan	common	en	AZERBAIJAN
 back	common	en	Back
 back to user login	common	en	Back to user login
+backcolor	common	en	Backcolor
 background color:	common	en	Background color:
 backup key	common	en	Backup Key
 backup/restore	common	en	Backup/Restore
@@ -204,6 +209,7 @@ brunei darussalam	common	en	BRUNEI DARUSSALAM
 bulgaria	common	en	BULGARIA
 bulgarian	common	en	Bulgarian
 burkina faso	common	en	BURKINA FASO
+bullist	common	en	Bullist
 burundi	common	en	BURUNDI
 calendar	common	en	Calendar
 calendars to sync in addition to personal calendar	groupdav	en	Calendars to sync in addition to personal calendar
@@ -283,6 +289,7 @@ close	common	en	Close
 close sidebox	common	en	Close side menu
 closes the window without saving the changes	common	en	Close without saving
 cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
+code	common	en	Code
 collection empty.	common	en	Collection empty.
 collection listing	common	en	Collection listing
 colombia	common	en	COLOMBIA
@@ -556,11 +563,15 @@ firstname	common	en	First name
 fixme!	common	en	FIXME!
 floating point	common	en	Floating point
 folder already exists.	common	en	Folder already exists!
+fontselect	common	en	Fontselect
+fontsizeselect	common	en	Fontsizeselect
 for more than one contact in a document use the tag pagerepeat!	preferences	en	Use the tag page repeat for more than one contact in a document!
 force	common	en	force
 force selectbox	common	en	Force select box
+forecolor	common	en	Forecolor
 foreign key	common	en	Foreign key
 forever	common	en	Forever
+formatselect	common	en	Formatselect
 formatted text (html)	common	en	Formatted text (HTML)
 found unconnected %1 %2!	admin	en	Found unconnected %1 %2!
 fr	common	en	Fr
@@ -664,6 +675,7 @@ import table-definitions from existing db-table	common	en	Import table definitio
 import xml	common	en	Import XML
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	en	In order to copy to clipboard, you need to allow Flash player by clicking on gray box.\nYou can permanently allow Flash player for EGroupware in your browser settings.
 increment version to not overwrite the existing template	common	en	Increment version to not overwrite the existing template.
+indent	common	en	Indent
 index/name of returned content (name of the template, link / method for image)	common	en	Index/name of returned content, name of the Template, link / method for image.
 indexed	common	en	Indexed.
 indexoptions	common	en	Index options
@@ -784,6 +796,7 @@ lost password	common	en	Lost password
 low	common	en	Low
 lowercase letters	common	en	lowercase letters
 lowest	common	en	Lowest
+ltr	common	en	Ltr
 luxembourg	common	en	LUXEMBOURG
 macau	common	en	MACAU
 macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
@@ -928,6 +941,7 @@ now	common	en	Now
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	en	Number of columns the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	common	en	Number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 numbers	common	en	numbers
+numlist	common	en	Numlist
 october	common	en	October
 of	common	en	of
 off	common	en	off
@@ -957,6 +971,7 @@ order to navigating by tab key through the form	common	en	Order to navigating by
 ordered list	common	en	Ordered list
 original	common	en	Original
 other	common	en	Other
+outdent	common	en	Outdent
 overflow	common	en	Overflow
 overview	common	en	Over view
 owner	common	en	Owner
@@ -1050,6 +1065,7 @@ read this list of methods.	common	en	Read this list of methods
 reading	common	en	Reading
 readonly	common	en	Read only
 readonly share	common	en	Readonly share
+redo	common	en	Redo
 refresh	common	en	Refresh
 register	common	en	Register
 regular	common	en	Regular
@@ -1060,6 +1076,7 @@ remove selected accounts	common	en	Remove selected accounts
 remove shortcut	common	en	Remove shortcut
 remove this link (not the entry itself)	common	en	Remove link
 removed (now) empty directory fs_id=%1	admin	en	Removed (now) empty directory fs_id=%1
+removeformat	common	en	Removeformat
 rename	common	en	Rename
 replace	common	en	Replace
 replace with	common	en	Replace with
@@ -1091,6 +1108,7 @@ romania	common	en	ROMANIA
 rotate left	common	en	Rotate left
 rotate right	common	en	Rotate right
 row...	common	en	Row...
+rtl	common	en	Rtl
 russian	common	en	Russian
 russian federation	common	en	RUSSIAN FEDERATION
 rwanda	common	en	RWANDA
@@ -1126,6 +1144,7 @@ search for '%1'	common	en	Search for '%1'
 search letter	common	en	Search letter
 search or select accounts	common	en	Search or select accounts
 search...	common	en	Search...
+searchreplace	common	en	Searchreplace
 second	common	en	Second
 section	common	en	Section
 securest	common	en	securest
@@ -1265,6 +1284,7 @@ starting up...	common	en	Starting up...
 status	common	en	Status
 store your public key in addressbook?	common	en	Store your public key in Addressbook?
 stretched	common	en	Stretched
+strikethrough	common	en	Strikethrough
 su	common	en	Su
 subject	common	en	Subject
 submit	common	en	Submit
@@ -1361,6 +1381,7 @@ uncheck all	common	en	Uncheck all
 unconnected nodes will be moved to %1.	admin	en	Unconnected nodes will be moved to %1.
 undefined	common	en	undefined
 underline	common	en	Underline
+undo	common	en	Undo
 unicode	common	en	Unicode
 unique	common	en	Unique
 united arab emirates	common	en	UNITED ARAB EMIRATES
