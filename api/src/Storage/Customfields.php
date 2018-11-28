@@ -216,7 +216,11 @@ class Customfields implements \IteratorAggregate
 
 			case 'select':
 			case 'radio':
-				if (count($field['values']) == 1 && isset($field['values']['@']))
+				if(!$field['values'])
+				{
+					error_log("{$field['app']} custom field '{$field['name']}' has no values" );
+				}
+				else if (count($field['values']) == 1 && isset($field['values']['@']))
 				{
 					$field['values'] = self::get_options_from_file($field['values']['@']);
 				}
@@ -259,6 +263,7 @@ class Customfields implements \IteratorAggregate
 				}
 				break;
 		}
+		restore_error_handler();
 		return $value;
 	}
 
