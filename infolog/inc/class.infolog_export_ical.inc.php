@@ -97,10 +97,21 @@ class infolog_export_ical extends infolog_export_csv {
 	}
 
 	/**
-	 * return html for options.
+	 * return array for options.
 	 *
+	 * @param $definition Specific definition
+	 *
+	 * @return array (
+	 * 		name 		=> string,
+	 * 		content		=> array,
+	 * 		sel_options	=> array,
+	 * 		readonlys	=> array,
+	 * 		preserv		=> array,
+	 * )
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl(importexport_definition &$definition = NULL)
+	{
+		return false;
 	}
 
 	/**

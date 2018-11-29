@@ -17,7 +17,8 @@ use EGroupware\Api\Acl;
 /**
  * export resources to CSV
  */
-class resources_export_csv implements importexport_iface_export_plugin {
+class resources_export_csv implements importexport_iface_export_plugin
+{
 
 	public function __construct()
 	{
@@ -31,11 +32,13 @@ class resources_export_csv implements importexport_iface_export_plugin {
 	 *
 	 * @param egw_record $_definition
 	 */
-	public function export( $_stream, importexport_definition $_definition) {
+	public function export( $_stream, importexport_definition $_definition)
+	{
 		$options = $_definition->plugin_options;
 
 		$selection = array();
-		if ($options['selection'] == 'search') {
+		if ($options['selection'] == 'search')
+		{
 			// ui selection with checkbox 'selected'
 			$query = Api\Cache::getSession('resources', 'get_rows');
 			$query['num_rows'] = -1;	// all
@@ -43,13 +46,14 @@ class resources_export_csv implements importexport_iface_export_plugin {
 			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			$this->bo->get_rows($query,$selection,$readonlys);
 		}
-		elseif ( $options['selection'] == 'all' || $options['selection'] == 'filter') {
+		elseif ( $options['selection'] == 'all' || $options['selection'] == 'filter')
+		{
 			$query = array(
 				'num_rows'	=> -1,
 				'filter2'	=> -3,  // Accessories & resources
 				'csv_export' => true,	// so get_rows method _can_ produce different content or not store state in the session
 			);	// all
-			
+
 			if($options['selection'] == 'filter')
 			{
 				$filter = $_definition->filter;
@@ -75,9 +79,11 @@ class resources_export_csv implements importexport_iface_export_plugin {
 					unset($query['col_filter'][$field]);
 				}
 			}
-			
+
 			$this->bo->get_rows($query,$selection,$readonlys);
-		} else {
+		}
+		else
+		{
 			$selection = explode(',',$options['selection']);
 		}
 
@@ -86,27 +92,35 @@ class resources_export_csv implements importexport_iface_export_plugin {
 
 		// Check if we need to load the custom fields
 		$need_custom = false;
-		foreach(Api\Storage\Customfields::get('resources') as $field => $settings) {
-			if($options['mapping']['#'.$field]) {
+		foreach(Api\Storage\Customfields::get('resources') as $field => $settings)
+		{
+			if($options['mapping']['#'.$field])
+			{
 				$need_custom = true;
 				break;
 			}
 		}
 
-		foreach ($selection as $record) {
+		foreach ($selection as $record)
+		{
 			if(!is_array($record) || !$record['res_id']) continue;
 
-			if($need_custom) {
+			if($need_custom)
+			{
 				$record = $this->bo->read($record['res_id']);
 			}
 			$resource = new resources_egw_record();
 			$resource->set_record($record);
 			$resource->long_description = strip_tags($resource->long_description);
-			if($options['convert']) {
+			if($options['convert'])
+			{
 				importexport_export_csv::convert($resource, resources_egw_record::$types, 'resources', $this->selects);
-			} else {
+			}
+			else
+			{
 				// Implode arrays, so they don't say 'Array'
-				foreach($resource->get_record_array() as $key => $value) {
+				foreach($resource->get_record_array() as $key => $value)
+				{
 					if(is_array($value)) $resource->$key = implode(',', $value);
 				}
  			}
@@ -122,7 +136,8 @@ class resources_export_csv implements importexport_iface_export_plugin {
 	 *
 	 * @return string name
 	 */
-	public static function get_name() {
+	public static function get_name()
+	{
 		return lang('Resources CSV export');
 	}
 
@@ -131,7 +146,8 @@ class resources_export_csv implements importexport_iface_export_plugin {
 	 *
 	 * @return string descriprion
 	 */
-	public static function get_description() {
+	public static function get_description()
+	{
 		return lang("Exports a list of resources to a CSV File.");
 	}
 
@@ -140,27 +156,40 @@ class resources_export_csv implements importexport_iface_export_plugin {
 	 *
 	 * @return string suffix
 	 */
-	public static function get_filesuffix() {
+	public static function get_filesuffix()
+	{
 		return 'csv';
 	}
 
-	public static function get_mimetype() {
+	public static function get_mimetype()
+	{
 		return 'text/csv';
 	}
 
 	/**
-	 * return html for options.
-	 * this way the plugin has all opportunities for options tab
+	 * Return array of settings for export dialog
 	 *
+	 * @param $definition Specific definition
+	 *
+	 * @return array (
+	 * 		name 		=> string,
+	 * 		content		=> array,
+	 * 		sel_options	=> array,
+	 * 		readonlys	=> array,
+	 * 		preserv		=> array,
+	 * )
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl(importexport_definition &$definition = NULL)
+	{
+		return false;
 	}
 
 	/**
 	 * returns selectors information
 	 *
 	 */
-	public function get_selectors_etpl() {
+	public function get_selectors_etpl()
+	{
 		return array(
 			'name'	=> 'importexport.export_csv_selectors',
 		);
@@ -170,9 +199,9 @@ class resources_export_csv implements importexport_iface_export_plugin {
 	 * Get selectbox values
 	 */
 	protected function get_selects()
-        {
+    {
 		$this->selects = array();
-        }
+    }
 
 	/**
 	 * Customize automatically generated filter fields
