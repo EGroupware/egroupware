@@ -21,13 +21,15 @@ class admin_export_users_csv implements importexport_iface_export_plugin
 	 *
 	 * @param egw_record $_definition
 	 */
-	public function export( $_stream, importexport_definition $_definition) {
+	public function export( $_stream, importexport_definition $_definition)
+	{
 		$options = $_definition->plugin_options;
 
 		$query = array(
 			'type'	=>	'accounts',
 		);
-		if($options['selection']['group_id']) {
+		if($options['selection']['group_id'])
+		{
 			$query['type'] = (int)$options['selection']['group_id'];
 		}
 		$selection = $GLOBALS['egw']->accounts->search($query);
@@ -41,15 +43,20 @@ class admin_export_users_csv implements importexport_iface_export_plugin
 		);
 
 		// $_record is an array, that's what search() returns
-		foreach ($selection as $_record) {
+		foreach ($selection as $_record)
+		{
 			$record = new admin_egw_user_record($_record);
-			if($options['convert']) {
+			if($options['convert'])
+			{
 				$never_expires = ($record->account_expires == -1);
 				importexport_export_csv::convert($record, admin_egw_user_record::$types, 'admin', $lookups);
 				if($never_expires) $record->account_expires = 'never';  // Has to be 'never' for admin_cmd_edit_user to parse it
-			} else {
+			}
+			else
+			{
 				// Implode arrays, so they don't say 'Array'
-				foreach($record->get_record_array() as $key => $value) {
+				foreach($record->get_record_array() as $key => $value)
+				{
 					if(is_array($value)) $record->$key = implode(',', $value);
 				}
  			}
@@ -63,7 +70,8 @@ class admin_export_users_csv implements importexport_iface_export_plugin
 	 *
 	 * @return string name
 	 */
-	public static function get_name() {
+	public static function get_name()
+	{
 		return lang('User CSV export');
 	}
 
@@ -72,7 +80,8 @@ class admin_export_users_csv implements importexport_iface_export_plugin
 	 *
 	 * @return string descriprion
 	 */
-	public static function get_description() {
+	public static function get_description()
+	{
 		return lang("Exports users into a CSV File. ");
 	}
 
@@ -81,21 +90,31 @@ class admin_export_users_csv implements importexport_iface_export_plugin
 	 *
 	 * @return string suffix
 	 */
-	public static function get_filesuffix() {
+	public static function get_filesuffix()
+	{
 		return 'csv';
 	}
 
-	public static function get_mimetype() {
-                return 'text/csv';
-        }
+	public static function get_mimetype()
+	{
+		return 'text/csv';
+	}
 
 	/**
-	 * return html for options.
-	 * this way the plugin has all opportunities for options tab
+	 * Return array of settings for export dialog
 	 *
-	 * @return string html
+	 * @param $definition Specific definition
+	 *
+	 * @return array (
+	 * 		name 		=> string,
+	 * 		content		=> array,
+	 * 		sel_options	=> array,
+	 * 		readonlys	=> array,
+	 * 		preserv		=> array,
+	 * )
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl(importexport_definition &$definition = NULL)
+	{
 		return false;
 	}
 
@@ -103,7 +122,8 @@ class admin_export_users_csv implements importexport_iface_export_plugin
 	 * returns slectors of this plugin via xajax
 	 *
 	 */
-	public function get_selectors_etpl() {
+	public function get_selectors_etpl()
+	{
 		return array(
 			'name'	=> 'admin.export_users_csv_selectors',
 			'preserv' => array('no_error_for_all'),
