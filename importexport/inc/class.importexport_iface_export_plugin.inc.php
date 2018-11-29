@@ -35,7 +35,7 @@
  * get_selector();  //returns array
  */
 interface importexport_iface_export_plugin {
-	
+
 	/**
 	 * exports entries according to given definition object.
 	 *
@@ -43,28 +43,28 @@ interface importexport_iface_export_plugin {
 	 * @param importexport_definition $_definition
 	 */
 	public function export($_stream, importexport_definition $_definition);
-	
+
 	/**
 	 * returns translated name of plugin
 	 *
 	 * @return string name
 	 */
 	public static function get_name();
-	
+
 	/**
 	 * returns translated (user) description of plugin
 	 *
 	 * @return string descriprion
 	 */
 	public static function get_description();
-	
+
 	/**
 	 * retruns file suffix for exported file (e.g. csv)
 	 *
 	 * @return string suffix
 	 */
 	public static function get_filesuffix();
-	
+
 	/**
 	 * returns mime type for exported file
 	 *
@@ -77,6 +77,8 @@ interface importexport_iface_export_plugin {
 	 * @abstract We can't deal with etemplate objects here, as an uietemplate
 	 * objects itself are scipt orientated and not "dialog objects"
 	 *
+	 * @param $definition Specific definition
+	 * 
 	 * @return array (
 	 * 		name 		=> string,
 	 * 		content		=> array,
@@ -85,8 +87,8 @@ interface importexport_iface_export_plugin {
 	 * 		preserv		=> array,
 	 * )
 	 */
-	public function get_options_etpl();
-	
+	public function get_options_etpl(importexport_definition &$definition=null);
+
 	/**
 	 * returns etemplate name for slectors of this plugin
 	 *

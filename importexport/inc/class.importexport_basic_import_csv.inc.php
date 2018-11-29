@@ -624,7 +624,8 @@ error_log("Searching for $custom_field = $value");
 	 * 		preserv		=> array,
 	 * )
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl(importexport_definition &$definition=null)
+	{
 		// lets do it!
 	}
 
