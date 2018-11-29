@@ -349,9 +349,19 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	 * return html for options.
 	 * this way the plugin has all opertunities for options tab
 	 *
-	 * @return string html
+	 * @param $definition Specific definition
+	 *
+	 * @return array (
+	 * 		name 		=> string,
+	 * 		content		=> array,
+	 * 		sel_options	=> array,
+	 * 		readonlys	=> array,
+	 * 		preserv		=> array,
+	 * )
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl(importexport_definition &$definition = NULL)
+	{
+		return false;
 	}
 
 	/**

@@ -124,13 +124,23 @@ class calendar_export_ical extends calendar_export_csv {
 	}
 
 	/**
-	 * return html for options.
+	 * Return array of settings for export dialog
 	 *
+	 * @param $definition Specific definition
+	 *
+	 * @return array (
+	 * 		name 		=> string,
+	 * 		content		=> array,
+	 * 		sel_options	=> array,
+	 * 		readonlys	=> array,
+	 * 		preserv		=> array,
+	 * )
 	 */
-	public function get_options_etpl($definition = null) {
-		unset($definition);	// not used, but required by function signature
+	public function get_options_etpl(importexport_definition &$definition = NULL)
+	{
+		return false;
 	}
-
+	
 	/**
 	 * returns selectors of this plugin
 	 *

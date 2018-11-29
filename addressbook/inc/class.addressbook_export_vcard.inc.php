@@ -16,7 +16,8 @@ use EGroupware\Api;
 /**
  * export addressbook contacts as vcard
  */
-class addressbook_export_vcard implements importexport_iface_export_plugin {
+class addressbook_export_vcard implements importexport_iface_export_plugin
+{
 
 
 	/**
@@ -24,7 +25,8 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 	 *
 	 * @param egw_record $_definition
 	 */
-	public function export( $_stream, importexport_definition $_definition) {
+	public function export( $_stream, importexport_definition $_definition)
+	{
 
 		$options = $_definition->plugin_options;
 		$this->uicontacts = new addressbook_ui();
@@ -33,7 +35,8 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 		// Addressbook defines its own export imits
 		$limit_exception = Api\Storage\Merge::is_export_limit_excepted();
 		$export_limit = Api\Storage\Merge::getExportLimit($app='addressbook');
-		if($export_limit == 'no' && !$limit_exception) {
+		if($export_limit == 'no' && !$limit_exception)
+		{
 			return;
 		}
 
@@ -41,7 +44,8 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 		$old_app = $GLOBALS['egw_info']['flags']['currentapp'];
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
 
-		if ($options['selection'] == 'search') {
+		if ($options['selection'] == 'search')
+		{
 			// uicontacts selection with checkbox 'use_all'
 			$query = Api\Cache::getSession('addressbook', 'index');
 			$query['num_rows'] = -1;	// all
@@ -50,22 +54,28 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 			$readonlys = null;
 			$this->uicontacts->get_rows($query,$this->selection,$readonlys, true);	// only return the ids
 		}
-		elseif ( $options['selection'] == 'all' ) {
-			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1') {
+		elseif ( $options['selection'] == 'all' )
+		{
+			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1')
+			{
 				$col_filter['account_id'] = null;
 			}
 			$this->selection = ExecMethod2('addressbook.addressbook_bo.search', array(), true, '', '','',false,'AND',false,$col_filter);
 			//$this->uicontacts->get_rows($query,$this->selection,$readonlys,true);
-		} else {
+		}
+		else
+		{
 			$this->selection = explode(',',$options['selection']);
 		}
 		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 
-		if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
+		if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception)
+		{
 			$this->selection = array_slice($this->selection, 0, $export_limit);
 		}
 
-		foreach ($this->selection as &$_contact) {
+		foreach ($this->selection as &$_contact)
+		{
 			if(is_array($_contact) && ($_contact['id'] || $_contact['contact_id']))
 			{
 				$_contact = $_contact[$_contact['id'] ? 'id' : 'contact_id'];
@@ -86,7 +96,8 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 	 *
 	 * @return string name
 	 */
-	public static function get_name() {
+	public static function get_name()
+	{
 		return lang('Addressbook vCard export');
 	}
 
@@ -95,7 +106,8 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 	 *
 	 * @return string descriprion
 	 */
-	public static function get_description() {
+	public static function get_description()
+	{
 		return lang("Exports contacts from your Addressbook into a vCard File.");
 	}
 
@@ -104,11 +116,13 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 	 *
 	 * @return string suffix
 	 */
-	public static function get_filesuffix() {
+	public static function get_filesuffix()
+	{
 		return 'vcf';
 	}
 
-	public static function get_mimetype() {
+	public static function get_mimetype()
+	{
 		return 'text/x-vcard';
 	}
 
@@ -126,19 +140,29 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 	}
 
 	/**
-	 * return html for options.
-	 * this way the plugin has all opertunities for options tab
+	 * Return array of settings for export dialog
 	 *
-	 * @return string html
+	 * @param $definition Specific definition
+	 *
+	 * @return array (
+	 * 		name 		=> string,
+	 * 		content		=> array,
+	 * 		sel_options	=> array,
+	 * 		readonlys	=> array,
+	 * 		preserv		=> array,
+	 * )
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl(importexport_definition &$definition = NULL)
+	{
+		return false;
 	}
 
 	/**
 	 * returns slectors of this plugin via xajax
 	 *
 	 */
-	public function get_selectors_etpl() {
+	public function get_selectors_etpl()
+	{
 		return array(
 			'name'		=> 'addressbook.export_vcard_selectors',
 			'content'	=> 'all',
