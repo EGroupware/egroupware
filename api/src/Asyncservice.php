@@ -366,7 +366,7 @@ class Asyncservice
 		//echo "<p>last_check_run(semaphore=".($semaphore?'True':'False').",release=".($release?'True':'False').")</p>\n";
 		if (($exists = $this->read('##last-check-run##')))
 		{
-			list(,$last_run) = each($exists);
+			$last_run = array_pop($exists);
 		}
 		//echo "last_run (from db)=<pre>"; print_r($last_run); echo "</pre>\n";
 
