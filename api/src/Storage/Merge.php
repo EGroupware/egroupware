@@ -780,7 +780,7 @@ abstract class Merge
 			//die("<pre>".htmlspecialchars($content)."</pre>\n");
 		}
 		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
-		if ($mimetype == 'text/plain' && count($ids) > 1)
+		if ($mimetype == 'text/plain' && $ids && count($ids) > 1)
 		{
 			// textdocuments are simple, they do not hold start and end, but they may have content before and after the $$pagerepeat$$ tag
 			// header and footer should not hold any $$ tags; if we find $$ tags with the header, we assume it is the pagerepeatcontent
