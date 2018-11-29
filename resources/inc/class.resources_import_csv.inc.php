@@ -236,7 +236,8 @@ class resources_import_csv extends importexport_basic_import_csv  {
 	 * 		preserv		=> array,
 	 * )
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl(importexport_definition &$definition=null)
+	{
 		// lets do it!
 	}
 

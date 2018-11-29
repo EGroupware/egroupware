@@ -25,7 +25,7 @@
  * has nothing to do with datatypes.
  */
 interface importexport_iface_import_plugin {
-	
+
 	/**
 	 * imports entries according to given definition object.
 	 *
@@ -44,33 +44,34 @@ interface importexport_iface_import_plugin {
 	 * @return String HTML preview
 	 */
 //	public function preview( $_stream, importexport_definition $_definition );
-	
+
 	/**
 	 * returns translated name of plugin
 	 *
 	 * @return string name
 	 */
 	public static function get_name();
-	
+
 	/**
 	 * returns translated (user) description of plugin
 	 *
 	 * @return string descriprion
 	 */
 	public static function get_description();
-	
+
 	/**
 	 * retruns file suffix(s) plugin can handle (e.g. csv)
 	 *
 	 * @return string suffix (comma seperated)
 	 */
 	public static function get_filesuffix();
-	
+
 	/**
 	 * return etemplate components for options.
 	 * @abstract We can't deal with etemplate objects here, as an uietemplate
 	 * objects itself are scipt orientated and not "dialog objects"
 	 *
+	 * @param $definition Specific definition
 	 * @return array (
 	 * 		name 		=> string,
 	 * 		content		=> array,
@@ -78,8 +79,8 @@ interface importexport_iface_import_plugin {
 	 * 		preserv		=> array,
 	 * )
 	 */
-	public function get_options_etpl();
-	
+	public function get_options_etpl(importexport_definition &$definition=null);
+
 	/**
 	 * returns etemplate name for slectors of this plugin
 	 *

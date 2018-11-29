@@ -422,7 +422,7 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 					if ($_data['pm_id'])
 					{
 						Link::link(TIMESHEET_APP,$_data['ts_id'],'projectmanager',$_data['pm_id']);
-						
+
 						// notify the link-class about the update, as other apps may be subscribed to it
 						Link::notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
 					}
@@ -515,7 +515,7 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	 * 		preserv		=> array,
 	 * )
 	 */
-	public function get_options_etpl()
+	public function get_options_etpl(importexport_definition &$definition=null)
 	{
 		// lets do it!
 	}

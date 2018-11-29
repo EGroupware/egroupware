@@ -292,7 +292,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 		{
 			$_data['photo_unchanged'] = false;
 		}
-		
+
 		switch ($_action) {
 			case 'none' :
 				return true;
@@ -446,7 +446,8 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	 * 		preserv		=> array,
 	 * )
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl(importexport_definition &$definition=null)
+	{
 		// lets do it!
 	}
 

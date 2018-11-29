@@ -19,7 +19,8 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 
 	private static $plugin_options = array(
 
-		'contact_owner'
+		'contact_owner',
+		'charset'
 	);
 
 	/**
@@ -341,12 +342,15 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	 * 		preserv		=> array,
 	 * )
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl(importexport_definition &$definition=null)
+	{
+		$charset = $definition->plugin_options['charset'];
+		if($charset == 'user') $charset = $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset'];
 		return array(
 			'name' => 'addressbook.import_vcard',
 			'content' => array(
 				'file_type' => 'vcard,ical,vcf',
-				'charset' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset']
+				'charset' => $charset
 			),
 			'sel_options' => array(
 				'charset' => Api\Translation::get_installed_charsets()
