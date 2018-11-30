@@ -2765,3 +2765,10 @@ function calendar_upgrade17_1()
 	Api\Preferences::change_preference('calendar', 'birthdays_as_events', $change);
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '17.1.001';
 }
+
+function calendar_upgrade17_1_001()
+{
+	// Update resources preference
+	Api\Preferences::change_preference('calendar', 'defaultresource_sel', 'resources_conflict', 'resources');
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '17.1.002';
+}
