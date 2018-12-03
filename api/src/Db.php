@@ -432,7 +432,7 @@ class Db
 	 */
 	protected function _connect($Host)
 	{
-		if (!$this->Link_ID)
+		if (!$this->Link_ID || $Host != $this->Link_ID->host)
 		{
 			$Database = $User = $Password = $Port = $Type = '';
 			foreach(array('Database','User','Password','Port','Type') as $name)
