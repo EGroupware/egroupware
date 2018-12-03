@@ -511,7 +511,7 @@ class Mailer extends Horde_Mime_Mail
 	 * @throws Exception\NotFound for no smtp account available
 	 * @throws Horde_Mime_Exception
 	 */
-	function send(Horde_Mail_Transport $transport=null, $resend=true, $flowed=null, array $opts = array())
+	function send($transport=null, $resend=true, $flowed=null, array $opts = array())
 	{
 		unset($resend);	// parameter is not used, but required by function signature
 
