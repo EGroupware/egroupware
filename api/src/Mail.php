@@ -6759,95 +6759,104 @@ class Mail
 				$basedir = $data = '';
 				$needTempFile = true;
 
-				// do not change urls for absolute images (thanks to corvuscorax)
-				if (substr($url, 0, 5) !== 'data:')
+				try
 				{
-					$filename = basename($url); // need to resolve all sort of url
-					if (($directory = dirname($url)) == '.') $directory = '';
-					$ext = pathinfo($filename, PATHINFO_EXTENSION);
-					$mimeType  = MimeMagic::ext2mime($ext);
-					if ( strlen($directory) > 1 && substr($directory,-1) != '/') { $directory .= '/'; }
-					$myUrl = $directory.$filename;
-					if ($myUrl[0]=='/') // local path -> we only allow path's that are available via http/https (or vfs)
+					// do not change urls for absolute images (thanks to corvuscorax)
+					if (substr($url, 0, 5) !== 'data:')
 					{
-						$basedir = ($_SERVER['HTTPS']?'https://':'http://'.$_SERVER['HTTP_HOST']);
-					}
-					// use vfs instead of url containing webdav.php
-					// ToDo: we should test if the webdav url is of our own scope, as we cannot handle foreign
-					// webdav.php urls as vfs
-					if (strpos($myUrl,'/webdav.php') !== false) // we have a webdav link, so we build a vfs/sqlfs link of it.
-					{
-						Vfs::load_wrapper('vfs');
-						list(,$myUrl) = explode('/webdav.php',$myUrl,2);
-						$basedir = 'vfs://default';
-						$needTempFile = false;
-					}
-
-					// If it is an inline image url, we need to fetch the actuall attachment
-					// content and later on to be able to store its content as temp file
-					if (strpos($myUrl, '/index.php?menuaction=mail.mail_ui.displayImage') !== false && $mail_bo)
-					{
-						$URI_params = array();
-						// Strips the url and store it into a temp for further procss
-						$tmp_url = html_entity_decode($myUrl);
-
-						parse_str(parse_url($tmp_url, PHP_URL_QUERY),$URI_params);
-						if ($URI_params['mailbox'] && $URI_params['uid'] && $URI_params['cid'])
+						$filename = basename($url); // need to resolve all sort of url
+						if (($directory = dirname($url)) == '.') $directory = '';
+						$ext = pathinfo($filename, PATHINFO_EXTENSION);
+						$mimeType  = MimeMagic::ext2mime($ext);
+						if ( strlen($directory) > 1 && substr($directory,-1) != '/') { $directory .= '/'; }
+						$myUrl = $directory.$filename;
+						if ($myUrl[0]=='/') // local path -> we only allow path's that are available via http/https (or vfs)
 						{
-							$mail_bo->reopen(base64_decode($URI_params['mailbox']));
-							$attachment = $mail_bo->getAttachmentByCID($URI_params['uid'], base64_decode($URI_params['cid']),base64_decode($URI_params['partID']),true);
-							$mail_bo->closeConnection();
-							if ($attachment)
+							$basedir = ($_SERVER['HTTPS']?'https://':'http://'.$_SERVER['HTTP_HOST']);
+						}
+						// use vfs instead of url containing webdav.php
+						// ToDo: we should test if the webdav url is of our own scope, as we cannot handle foreign
+						// webdav.php urls as vfs
+						if (strpos($myUrl,'/webdav.php') !== false) // we have a webdav link, so we build a vfs/sqlfs link of it.
+						{
+							Vfs::load_wrapper('vfs');
+							list(,$myUrl) = explode('/webdav.php',$myUrl,2);
+							$basedir = 'vfs://default';
+							$needTempFile = false;
+						}
+
+						// If it is an inline image url, we need to fetch the actuall attachment
+						// content and later on to be able to store its content as temp file
+						if (strpos($myUrl, '/index.php?menuaction=mail.mail_ui.displayImage') !== false && $mail_bo)
+						{
+							$URI_params = array();
+							// Strips the url and store it into a temp for further procss
+							$tmp_url = html_entity_decode($myUrl);
+
+							parse_str(parse_url($tmp_url, PHP_URL_QUERY),$URI_params);
+							if ($URI_params['mailbox'] && $URI_params['uid'] && $URI_params['cid'])
 							{
-								$data = $attachment->getContents();
-								$mimeType = $attachment->getType();
-								$filename = $attachment->getDispositionParameter('filename');
+								$mail_bo->reopen(base64_decode($URI_params['mailbox']));
+								$attachment = $mail_bo->getAttachmentByCID($URI_params['uid'], base64_decode($URI_params['cid']),base64_decode($URI_params['partID']),true);
+								$mail_bo->closeConnection();
+								if ($attachment)
+								{
+									$data = $attachment->getContents();
+									$mimeType = $attachment->getType();
+									$filename = $attachment->getDispositionParameter('filename');
+								}
 							}
 						}
-					}
 
-					if ( strlen($basedir) > 1 && substr($basedir,-1) != '/' && $myUrl[0]!='/') { $basedir .= '/'; }
-					if ($needTempFile && !$attachment && substr($myUrl,0,4) !== "http") $data = file_get_contents($basedir.urldecode($myUrl));
+						if ( strlen($basedir) > 1 && substr($basedir,-1) != '/' && $myUrl[0]!='/') { $basedir .= '/'; }
+						if ($needTempFile && !$attachment && substr($myUrl,0,4) !== "http") $data = file_get_contents($basedir.urldecode($myUrl));
+					}
+					if (substr($url,0,strlen('data:'))=='data:')
+					{
+						//error_log(__METHOD__.' ('.__LINE__.') '.' -> '.$i.': '.array2string($images[$i]));
+						// we only support base64 encoded data
+						$tmp = substr($url,strlen('data:'));
+						list($mimeType,$data_base64) = explode(';base64,',$tmp);
+						$data = base64_decode($data_base64);
+						// FF currently does NOT add any mime-type
+						if (strtolower(substr($mimeType, 0, 6)) != 'image/')
+						{
+							$mimeType = MimeMagic::analyze_data($data);
+						}
+						list($what,$exactly) = explode('/',$mimeType);
+						$needTempFile = true;
+						$filename = ($what?$what:'data').$imageC++.'.'.$exactly;
+					}
+					if ($data || $needTempFile === false)
+					{
+						if ($needTempFile)
+						{
+							$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+							$tmpfile = fopen($attachment_file,'w');
+							fwrite($tmpfile,$data);
+							fclose($tmpfile);
+						}
+						else
+						{
+							$attachment_file = $basedir.urldecode($myUrl);
+						}
+						// we use $attachment_file as base for cid instead of filename, as it may be image.png
+						// (or similar) in all cases (when cut&paste). This may lead to more attached files, in case
+						// we use the same image multiple times, but, if we do this, we should try to detect that
+						// on upload. filename itself is not sufficient to determine the sameness of images
+						$cid = 'cid:' . md5($attachment_file);
+						if ($_mailObject->AddEmbeddedImage($attachment_file, substr($cid, 4), urldecode($filename), $mimeType) !== null)
+						{
+							//$_html2parse = preg_replace("/".$images[1][$i]."=\"".preg_quote($url, '/')."\"/Ui", $images[1][$i]."=\"".$cid."\"", $_html2parse);
+							$_html2parse = str_replace($images[0][$i], $images[1][$i].'="'.$cid.'"', $_html2parse);
+						}
+					}
 				}
-				if (substr($url,0,strlen('data:'))=='data:')
+				catch(\Exception $e)
 				{
-					//error_log(__METHOD__.' ('.__LINE__.') '.' -> '.$i.': '.array2string($images[$i]));
-					// we only support base64 encoded data
-					$tmp = substr($url,strlen('data:'));
-					list($mimeType,$data_base64) = explode(';base64,',$tmp);
-					$data = base64_decode($data_base64);
-					// FF currently does NOT add any mime-type
-					if (strtolower(substr($mimeType, 0, 6)) != 'image/')
-					{
-						$mimeType = MimeMagic::analyze_data($data);
-					}
-					list($what,$exactly) = explode('/',$mimeType);
-					$needTempFile = true;
-					$filename = ($what?$what:'data').$imageC++.'.'.$exactly;
-				}
-				if ($data || $needTempFile === false)
-				{
-					if ($needTempFile)
-					{
-						$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
-						$tmpfile = fopen($attachment_file,'w');
-						fwrite($tmpfile,$data);
-						fclose($tmpfile);
-					}
-					else
-					{
-						$attachment_file = $basedir.urldecode($myUrl);
-					}
-					// we use $attachment_file as base for cid instead of filename, as it may be image.png
-					// (or similar) in all cases (when cut&paste). This may lead to more attached files, in case
-					// we use the same image multiple times, but, if we do this, we should try to detect that
-					// on upload. filename itself is not sufficient to determine the sameness of images
-					$cid = 'cid:' . md5($attachment_file);
-					if ($_mailObject->AddEmbeddedImage($attachment_file, substr($cid, 4), urldecode($filename), $mimeType) !== null)
-					{
-						//$_html2parse = preg_replace("/".$images[1][$i]."=\"".preg_quote($url, '/')."\"/Ui", $images[1][$i]."=\"".$cid."\"", $_html2parse);
-						$_html2parse = str_replace($images[0][$i], $images[1][$i].'="'.$cid.'"', $_html2parse);
-					}
+					// Something went wrong with this attachment.  Skip it.
+					error_log("Error adding inline attachment.  " . $e->getMessage());
+					error_log($e->getTraceAsString());
 				}
 				$attachments [] = array(
 					'name' => $filename,
