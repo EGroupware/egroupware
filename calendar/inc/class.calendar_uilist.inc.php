@@ -914,7 +914,6 @@ class calendar_uilist extends calendar_ui
 			),
 			'select_all' => array(
 				'caption' => 'Whole query',
-				'checkbox' => true,
 				'hint' => 'Apply the action on the whole query, NOT only the shown events',
 				'group' => ++$group,
 			),

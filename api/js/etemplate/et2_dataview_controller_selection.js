@@ -261,6 +261,8 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 			var entry = this._registeredRows[key];
 			this._updateEntryState(entry, entry.state);
 		}
+
+		this._selectAll = true;
 	},
 
 	getSelected: function () {
