@@ -5652,7 +5652,7 @@ class Mail
 			{
 				$structure = $mail->getStructure();
 				$isSmime = Mail\Smime::isSmime(($mimeType = $structure->getType())) || Mail\Smime::isSmime(($protocol=$structure->getContentTypeParameter('protocol')));
-				if ($isSmime)
+				if ($isSmime && !class_exists('mail_zpush', false))
 				{
 					return $this->resolveSmimeMessage($structure, array(
 						'uid' => $_uid,
@@ -5968,8 +5968,8 @@ class Mail
 				if ($_partID != '')
 				{
 					$mailStructureObject = $_headerObject->getStructure();
-					if (Mail\Smime::isSmime(($mimeType = $mailStructureObject->getType())) ||
-							Mail\Smime::isSmime(($protocol=$mailStructureObject->getContentTypeParameter('protocol'))))
+					if (!class_exists('mail_zpush', false) && (Mail\Smime::isSmime(($mimeType = $mailStructureObject->getType())) ||
+							Mail\Smime::isSmime(($protocol=$mailStructureObject->getContentTypeParameter('protocol')))))
 					{
 						$mailStructureObject = $this->resolveSmimeMessage($mailStructureObject, array(
 							'uid' => $_uid,
