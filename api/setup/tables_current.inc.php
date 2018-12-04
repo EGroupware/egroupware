@@ -255,10 +255,10 @@ $phpgw_baseline = array(
 			'contact_modifier' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'account id of the last modified'),
 			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'account id'),
 			'contact_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag of the changes'),
-			'contact_uid' => array('type' => 'ascii','precision' => '128','comment' => 'unique id of the contact'),
+			'contact_uid' => array('type' => 'ascii','precision' => '255','comment' => 'unique id of the contact'),
 			'adr_one_countrycode' => array('type' => 'ascii','precision' => '2','comment' => 'countrycode (business)'),
 			'adr_two_countrycode' => array('type' => 'ascii','precision' => '2','comment' => 'countrycode (private)'),
-			'carddav_name' => array('type' => 'ascii','precision' => '128','comment' => 'name part of CardDAV URL, if specified by client'),
+			'carddav_name' => array('type' => 'ascii','precision' => '260','comment' => 'name part of CardDAV URL, if specified by client'),
 			'contact_files' => array('type' => 'int','precision' => '1','default' => '0','comment' => '&1: photo, &2: pgp, &4: smime')
 		),
 		'pk' => array('contact_id'),

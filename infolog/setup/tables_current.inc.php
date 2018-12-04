@@ -39,15 +39,15 @@ $phpgw_baseline = array(
 			'info_datecompleted' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'timestamp of completion'),
 			'info_location' => array('type' => 'varchar','precision' => '255','comment' => 'textfield location'),
 			'info_custom_from' => array('type' => 'int','precision' => '1','comment' => 'tick-box to show infolog_from'),
-			'info_uid' => array('type' => 'ascii','precision' => '128','comment' => 'unique id of the infolog-entry'),
-			'caldav_name' => array('type' => 'ascii','precision' => '128','comment' => 'name part of CalDAV URL, if specified by client'),
+			'info_uid' => array('type' => 'ascii','precision' => '255','comment' => 'unique id of the infolog-entry'),
+			'caldav_name' => array('type' => 'ascii','precision' => '260','comment' => 'name part of CalDAV URL, if specified by client'),
 			'info_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag, not yet used'),
 			'info_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'timestamp of the creation date'),
 			'info_creator' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'account id of the creator')
 		),
 		'pk' => array('info_id'),
 		'fk' => array(),
-		'ix' => array('caldav_name','info_owner','info_datemodified','info_id_parent'),
+		'ix' => array('info_owner','info_datemodified','info_id_parent','caldav_name'),
 		'uc' => array()
 	),
 	'egw_infolog_extra' => array(

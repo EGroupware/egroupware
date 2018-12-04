@@ -1084,3 +1084,20 @@ function infolog_upgrade16_1_004()
 
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '17.1';
 }
+
+function infolog_upgrade17_1()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog','info_uid',array(
+		'type' => 'ascii',
+		'precision' => '255',
+		'comment' => 'unique id of the infolog-entry'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog','caldav_name',array(
+		'type' => 'ascii',
+		'precision' => '260',
+		'comment' => 'name part of CalDAV URL, if specified by client'
+	));
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '17.1.001';
+}
+
