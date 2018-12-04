@@ -216,7 +216,7 @@ var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 					tab_options.content = tab.id;
 				}
 				tabData[tab.prepend ? 'unshift' : 'push'].call(tabData, {
-					"id": tab.id,
+					"id": tab_id,
 					"label": this.egw().lang(tab.label),
 					"widget": null,
 					"widget_options": tab_options,
