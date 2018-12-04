@@ -499,3 +499,20 @@ function api_upgrade17_1_003()
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.004';
 }
 
+
+function api_upgrade17_1_004()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_uid',array(
+		'type' => 'ascii',
+		'precision' => '255',
+		'comment' => 'unique id of the contact'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','carddav_name',array(
+		'type' => 'ascii',
+		'precision' => '260',
+		'comment' => 'name part of CardDAV URL, if specified by client'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.005';
+}
+

@@ -13,7 +13,7 @@ $phpgw_baseline = array(
 	'egw_cal' => array(
 		'fd' => array(
 			'cal_id' => array('type' => 'auto','nullable' => False,'comment' => 'calendar id'),
-			'cal_uid' => array('type' => 'ascii','precision' => '128','nullable' => False,'comment' => 'unique id of event(-series)'),
+			'cal_uid' => array('type' => 'ascii','precision' => '255','nullable' => False,'comment' => 'unique id of event(-series)'),
 			'cal_owner' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'event owner / calendar'),
 			'cal_category' => array('type' => 'ascii','meta' => 'category','precision' => '64','comment' => 'category id(s)'),
 			'cal_modified' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'ts of last modification'),
@@ -31,8 +31,8 @@ $phpgw_baseline = array(
 			'cal_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'creation time of event'),
 			'cal_recurrence' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'default' => '0','comment' => 'cal_start of original recurrence for exception'),
 			'tz_id' => array('type' => 'int','precision' => '4','comment' => 'key into egw_cal_timezones'),
-			'cal_deleted' => array('type' => 'int','precision' => '8','meta' => 'timestamp','comment' => 'ts when event was deleted'),
-			'caldav_name' => array('type' => 'ascii','precision' => '128','comment' => 'name part of CalDAV URL, if specified by client'),
+			'cal_deleted' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'ts when event was deleted'),
+			'caldav_name' => array('type' => 'ascii','precision' => '260','comment' => 'name part of CalDAV URL, if specified by client'),
 			'range_start' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'startdate (of range)'),
 			'range_end' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'enddate (of range, UNTIL of RRULE)')
 		),

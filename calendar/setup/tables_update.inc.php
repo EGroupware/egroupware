@@ -2772,3 +2772,21 @@ function calendar_upgrade17_1_001()
 	Api\Preferences::change_preference('calendar', 'defaultresource_sel', 'resources_conflict', 'resources');
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '17.1.002';
 }
+
+function calendar_upgrade17_1_002()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_uid',array(
+		'type' => 'ascii',
+		'precision' => '255',
+		'nullable' => False,
+		'comment' => 'unique id of event(-series)'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','caldav_name',array(
+		'type' => 'ascii',
+		'precision' => '260',
+		'comment' => 'name part of CalDAV URL, if specified by client'
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '17.1.003';
+}
+
