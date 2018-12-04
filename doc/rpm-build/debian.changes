@@ -1,3 +1,31 @@
+egroupware-epl (17.1.20181204) hardy; urgency=low
+
+  * CalDAV/CardDAV: allow up to 255 char UIDs to support OutlookCalDAVSynchronizer
+  * Addressbook: private addressbook in newer installations could not be enabled
+  * Addressbook: allow specifying the charset when importing vcard
+  * Addressbook: add option to import that deletes contacts from addressbook that are not in the import list
+  * Calendar: remove option to skip resource detection, we always do it now.
+  * Calendar: allow specifying the charset when importing ical
+  * Calendar: fix alarm removed if user is only participant because of group invitation
+  * Calendar: fix missing week numbers on multiweek view and wrong scrolling
+  * Calendar: fix recurring events were left out of merge from list
+  * Calendar: add checkbox to turn on or off emptying calendar before iCal import
+  * Import/Export: allow import plugins to specify their own sub-templates
+  * Infolog: exclude current entry from parent select/search results to avoid loop
+  * Infolog: add missing transformation array for infolog-widget
+  * Api: fix radiobox not return current selected value but the first value
+  * CardDAV/Addressbook: fix missing wrapping of notes field
+  * Tracker: update actions (change options) when tracker or category is changed
+  * Tracker: fix context menu change options not disabling when there are no valid options
+  * Tracker: when copying a closed 100% complete ticket, reset status, percentage & resolution
+  * Tracker: fix changing categories blocks the dialog from further actions
+  * Collabora: do NOT create new versions for consecutive autosave
+  * Filemanager/Versioning: adding a default time of 5.5 minutes to create a new version
+  * WebDAV: fix updates with range requests eg. chunked uploades of huge files
+  * WebDAV: fix encoding for Cyberduck or Mountain Duck clients
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 04 Dec 2018 11:11:11 +0100
+
 egroupware-epl (17.1.20181018) hardy; urgency=low
 
   * Api: change default submit to async call and try to block user interfering with submitted popup until the response
