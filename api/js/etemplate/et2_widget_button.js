@@ -91,6 +91,7 @@ var et2_button = (function(){ "use strict"; return et2_baseWidget.extend([et2_II
 		{
 			this.image = jQuery(document.createElement("img"))
 				.addClass("et2_button et2_button_icon");
+			if (!this.options.readonly) this.image.addClass("et2_clickable");
 			this.setDOMNode(this.image[0]);
 			return;
 		}
