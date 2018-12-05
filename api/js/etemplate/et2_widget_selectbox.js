@@ -524,7 +524,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			// Value must be a real Array, not an object
 			this.input.val(typeof _value == 'object' && _value != null ? jQuery.map(_value,function(value,index){return [value];}) : _value);
 			this.input.trigger("liszt:updated");
-			this.value = this.input.val();
+			this.value = _value;
 			return;
 		}
 		if(this.input == null)
