@@ -251,7 +251,10 @@ class importexport_schedule_ui
 			}
 			if (($title = $definition->get_title()))
 			{
-				$options['definition'][$title] = $title;
+				$options['definition'][] = array(
+					'value' => $definition->get_identifier(),
+					'label' => $title
+				);
 			}
 			unset($definition);
 		}
