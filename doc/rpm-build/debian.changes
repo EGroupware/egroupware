@@ -1,3 +1,11 @@
+egroupware-epl (17.1.20181205) hardy; urgency=low
+
+  * SiteMgr: fix fatal error stalling EGroupware, if SiteMgr is installed
+  * eSync: fix S/Mime messages stall synchronisation, they are not (yet) correctly handled
+  * Versioning: when restoring directories also restore files and subdirectories (only for newly deleted directories!)
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 05 Dec 2018 10:20:49 +0100
+
 egroupware-epl (17.1.20181204) hardy; urgency=low
 
   * CalDAV/CardDAV: allow up to 255 char UIDs to support OutlookCalDAVSynchronizer
