@@ -34,50 +34,91 @@ class calendar_export_ical extends calendar_export_csv {
 		$limit_exception = Api\Storage\Merge::is_export_limit_excepted();
 		if (!$limit_exception) $export_limit = Api\Storage\Merge::getExportLimit('calendar');
 
-		if($options['selection'] == 'criteria')
+		switch($options['selection'])
 		{
-			$query = array(
-				'start' => $options['criteria']['start'],
-				'end'   => $options['criteria']['end'] ? strtotime('+1 day',$options['criteria']['end'])-1 : null,
-				'categories'	=> $options['categories'],
-				'daywise'       => false,
-				'users'         => $options['criteria']['owner'],
-				'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
-			);
-			if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
-				$query['offset'] = 0;
-				$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
-			}
-			$events =& $this->bo->search($query);
-		}
-		// Scheduled export will use 'all', which we don't allow through UI
-		elseif ($options['selection'] == 'search_results' || $options['selection'] == 'all')
-		{
-			$states = $this->bo->cal_prefs['saved_states'];
-			$query = Api\Cache::getSession('calendar', 'calendar_list');
-			$query['num_rows'] = -1;        // all
-			$query['start'] = 0;
-			$query['cfs'] = $cfs;
-			if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
-				$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
-			}
-			$ui = new calendar_uilist();
-			if($states['view'] == 'listview')
-			{
-				$unused = null;
-				$ui->get_rows($query, $events, $unused);
-			}
-			else
-			{
-				$query = Api\Cache::getSession('calendar', 'session_data');
-				$query['users'] = explode(',', $query['owner']);
-				$query['num_rows'] = -1;
+			case 'criteria':
+				$query = array(
+					'start' => $options['criteria']['start'],
+					'end'   => $options['criteria']['end'] ? strtotime('+1 day',$options['criteria']['end'])-1 : null,
+					'categories'	=> $options['categories'],
+					'daywise'       => false,
+					'users'         => $options['criteria']['owner'],
+					'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
+				);
+				if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
+					$query['offset'] = 0;
+					$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
+				}
+				$events =& $this->bo->search($query);
+				break;
 
-				$query['filter'] = 'custom';
-				$events = array();
+			case 'search_results':
+				$states = $this->bo->cal_prefs['saved_states'];
+				$query = Api\Cache::getSession('calendar', 'calendar_list');
+				$query['num_rows'] = -1;        // all
+				$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
+				$query['start'] = 0;
+				$query['cfs'] = $cfs;
+				if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception)
+				{
+					$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
+				}
+				$ui = new calendar_uilist();
+				if($states['view'] == 'listview')
+				{
+					$ui->get_rows($query, $events, $unused);
+				}
+				else
+				{
+					$query['filter'] = 'custom';
+					$events = array();
 
-				$ui->get_rows($query, $events, $unused);
-			}
+					$ui->get_rows($query, $events, $unused);
+				}
+				// Filter out extra things like sel_options
+				unset($events['sel_options']);
+				break;
+			case 'filter':
+				$fields = importexport_helper_functions::get_filter_fields($_definition->application, $this);
+				$filter = $_definition->filter;
+
+				if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception)
+				{
+					$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
+				}
+
+				// Handle ranges
+				foreach($filter as $field => $value)
+				{
+					if($field == 'filter' && $value)
+					{
+						$query['filter'] = $value;
+						continue;
+					}
+					if(!is_array($value) || (!$value['from'] && !$value['to']))
+					{
+						$query['query']["cal_$field"] = $value;
+						continue;
+					}
+
+					// Ranges are inclusive, so should be provided that way (from 2 to 10 includes 2 and 10)
+					if($value['from']) $query['sql_filter'][] = "cal_$field >= " . (int)$value['from'];
+					if($value['to']) $query['sql_filter'][] = "cal_$field <= " . (int)$value['to'];
+
+				}
+				if($query['sql_filter'] && is_array($query['sql_filter']))
+				{
+					// Set as an extra parameter
+					$sql_filter = implode(' AND ',$query['sql_filter']);
+				}
+				// Fall through
+
+			case 'all':
+				$events = $this->bo->search($query + array(
+					'offset' => 0,
+					'order' => 'cal_start',
+				),$sql_filter);
+				break;
 		}
 		// compile list of unique cal_id's, as iCal should contain whole series, not recurrences
 		// calendar_ical->exportVCal needs to read events again, to get them in server-time
@@ -140,14 +181,13 @@ class calendar_export_ical extends calendar_export_csv {
 	{
 		return false;
 	}
-	
+
 	/**
 	 * returns selectors of this plugin
 	 *
 	 */
 	public function get_selectors_etpl($definition = null) {
 		$data = parent::get_selectors_etpl($definition);
-		$data['content']['no_filter'] = true;
 		return $data;
 	}
 	/**
