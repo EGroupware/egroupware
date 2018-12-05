@@ -54,7 +54,7 @@ use EGroupware\Api\Etemplate;
 
 			if($definition)
 			{
-				$definition_obj = new importexport_definition($content['definition']);
+				$definition_obj = new importexport_definition($definition);
 			}
 
 			// Load application's translations
