@@ -27,7 +27,6 @@ egroupware-epl (17.1.20181204) hardy; urgency=low
   * Tracker: fix context menu change options not disabling when there are no valid options
   * Tracker: when copying a closed 100% complete ticket, reset status, percentage & resolution
   * Tracker: fix changing categories blocks the dialog from further actions
-  * Collabora: do NOT create new versions for consecutive autosave
   * Filemanager/Versioning: adding a default time of 5.5 minutes to create a new version
   * WebDAV: fix updates with range requests eg. chunked uploades of huge files
   * WebDAV: fix encoding for Cyberduck or Mountain Duck clients
