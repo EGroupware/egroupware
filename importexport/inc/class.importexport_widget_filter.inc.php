@@ -134,9 +134,9 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 						{
 							unset($field['values']['']);
 						}
-						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'empty_label', '');
-						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'tags', TRUE);
-						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'multiple', TRUE);
+						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'empty_label', array_key_exists('empty_label', $field ) ? $field['empty_label'] : '');
+						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'tags', array_key_exists('tags', $field ) ? $field['tags'] : TRUE);
+						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'multiple', array_key_exists('multiple', $field ) ? $field['multiple'] : TRUE);
 					}
 					else if( $GLOBALS['egw_info']['apps'][$field['type']])
 					{

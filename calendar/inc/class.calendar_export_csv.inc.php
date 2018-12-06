@@ -32,11 +32,72 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
 
+		$events = $this->get_events($_definition, $options);
+
+		$export_object = new importexport_export_csv($_stream, (array)$options);
+		if (!$limit_exception)
+		{
+			$export_object->export_limit = $export_limit;
+		}
+		$export_object->set_mapping($options['mapping']);
+		$convert_fields = calendar_egw_record::$types;
+
+		$record = new calendar_egw_record();
+		foreach ($events as $event)
+		{
+			// the condition below (2 lines) may only work on enum_recuring=false and using the iterator to test an recurring event on the given timerange
+			// Get rid of yearly recurring events that don't belong
+			//if($options['selection']['select'] == 'criteria' && ($event['start'] > $query['end'] || $event['end'] < $query['start'])) continue;
+			// Add in participants
+			if($options['mapping']['participants'])
+			{
+				if(is_array($event['participants']))
+				{
+					$event['participants'] = implode(", ",$this->bo->participants($event,true));
+				}
+				else
+				{
+					// Getting results from list already has participants formatted
+					$event['participants'] = str_replace("\n", ' ', $event['participants']);
+				}
+			}
+			if (is_array($event))
+			{
+				$record->set_record($event);
+				if($options['mapping']['recurrence'])
+				{
+					$rrule = calendar_rrule::event2rrule($event);
+					$record->recurrence = $rrule->__toString();
+				}
+
+				// Standard stuff
+				if($options['convert'])
+				{
+					importexport_export_csv::convert($record, $convert_fields, 'calendar', $this->selects);
+				}
+				else
+				{
+					// Implode arrays, so they don't say 'Array'
+					foreach($record->get_record_array() as $key => $value)
+					{
+						if(is_array($value)) $record->$key = implode(',', $value);
+					}
+	 			}
+				$export_object->export_record($record);
+			}
+		}
+		unset($record);
+		return $export_object;
+	}
+
+	protected function get_events(importexport_definition $_definition, $options = array())
+	{
 		$limit_exception = Api\Storage\Merge::is_export_limit_excepted();
 		if (!$limit_exception) $export_limit = Api\Storage\Merge::getExportLimit('calendar');
+
 		// Custom fields need to be specifically requested
 		$cfs = array();
-		foreach($options['mapping'] + (array)$_definition->filter as $key => $label) {
+		foreach((array)$options['mapping'] + (array)$_definition->filter as $key => $label) {
 			if($key[0] == '#') $cfs[] = substr($key,1);
 		}
 
@@ -102,12 +163,17 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				// Handle ranges
 				foreach($filter as $field => $value)
 				{
-					if($field == 'filter' && $value)
+					if($field == 'status_filter' && $value)
 					{
 						$query['filter'] = $value;
 						continue;
 					}
-					if(!is_array($value) || (!$value['from'] && !$value['to']))
+					else if($field == 'users' && $value)
+					{
+						// No cal_ prefix here
+						$query['users'] = $value;
+					}
+					else if(!is_array($value) || (!$value['from'] && !$value['to']))
 					{
 						$query['query']["cal_$field"] = $value;
 						continue;
@@ -131,61 +197,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				),$sql_filter);
 				break;
 		}
-
-		$export_object = new importexport_export_csv($_stream, (array)$options);
-		if (!$limit_exception)
-		{
-			$export_object->export_limit = $export_limit;
-		}
-		$export_object->set_mapping($options['mapping']);
-		$convert_fields = calendar_egw_record::$types;
-
-		$record = new calendar_egw_record();
-		foreach ($events as $event)
-		{
-			// the condition below (2 lines) may only work on enum_recuring=false and using the iterator to test an recurring event on the given timerange
-			// Get rid of yearly recurring events that don't belong
-			//if($options['selection']['select'] == 'criteria' && ($event['start'] > $query['end'] || $event['end'] < $query['start'])) continue;
-			// Add in participants
-			if($options['mapping']['participants'])
-			{
-				if(is_array($event['participants']))
-				{
-					$event['participants'] = implode(", ",$this->bo->participants($event,true));
-				}
-				else
-				{
-					// Getting results from list already has participants formatted
-					$event['participants'] = str_replace("\n", ' ', $event['participants']);
-				}
-			}
-			if (is_array($event))
-			{
-				$record->set_record($event);
-				if($options['mapping']['recurrence'])
-				{
-					$rrule = calendar_rrule::event2rrule($event);
-					$record->recurrence = $rrule->__toString();
-				}
-
-				// Standard stuff
-				if($options['convert'])
-				{
-					importexport_export_csv::convert($record, $convert_fields, 'calendar', $this->selects);
-				}
-				else
-				{
-					// Implode arrays, so they don't say 'Array'
-					foreach($record->get_record_array() as $key => $value)
-					{
-						if(is_array($value)) $record->$key = implode(',', $value);
-					}
-	 			}
-				$export_object->export_record($record);
-			}
-		}
-		unset($record);
-		return $export_object;
+		return $events;
 	}
 
 	/**
@@ -222,7 +234,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	{
 		return 'text/csv';
 	}
-	
+
 	/**
 	 * Return array of settings for export dialog
 	 *
@@ -305,7 +317,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			2 => lang('Normal'),
 			3 => lang('High')
 		);
-		$this->selects['filter'] = array(
+		$this->selects['status_filter'] = array(
 			'default'     => lang('Not rejected'),
 			'accepted'    => lang('Accepted'),
 			'unknown'     => lang('Invitations'),
@@ -333,13 +345,19 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		// Calendar SO doesn't support filtering by column, so we have to remove pretty much everything
 		unset($filters['recur_date']);
 
-		// Add in the status filter at the beginning
+		// Add in the  participant & status filters at the beginning
 		$filters = array_reverse($filters, true);
-		$filters['filter'] = array(
+		$filters['status_filter'] = array(
 			'type'	=> 'select',
-			'name'	=> 'filter',
+			'name'	=> 'status_filter',
 			'label'	=> lang('Filter'),
+			'multiple' => false
 		);
+		$filters['users'] = array(
+			'name' => 'users',
+			'label' => lang('Participant'),
+			'type' => 'calendar-owner',
+		) +  $filters['owner'];
 		$filters = array_reverse($filters, true);
 
 		foreach($filters as $field_name => &$settings)
