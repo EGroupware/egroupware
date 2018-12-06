@@ -143,6 +143,8 @@ function egw_exception_handler($e)
 	elseif($GLOBALS['egw_info']['flags']['no_exception_handler'] == 'basic_auth')
 	{
 		$error = str_replace(array("\r", "\n"), array('', ' | '), $e->getMessage());
+		// to long http header cause Nginx to reject the response with 502 upstream sent too big header while reading response header from upstream
+		if (strlen($error) > 256) $error = substr($error, 0, 256).' ...';
 		header('WWW-Authenticate: Basic realm="'.$headline.' '.$error.'"');
 		header('HTTP/1.1 401 Unauthorized');
 		header('X-WebDAV-Status: 401 Unauthorized', true);
