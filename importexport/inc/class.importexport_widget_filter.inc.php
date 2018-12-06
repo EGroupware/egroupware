@@ -117,7 +117,7 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 				default:
 					if(strpos($field['type'],'select') === 0)
 					{
-						if (count($field['values']) == 1 && isset($field['values']['@']))
+						if($field['values'] && count($field['values']) == 1 && isset($field['values']['@']))
 						{
 							$field['values'] = Api\Storage\Customfields::get_options_from_file($field['values']['@']);
 						}
