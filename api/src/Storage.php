@@ -378,7 +378,7 @@ class Storage extends Storage\Base
 	{
 		parent::get_rows($query,$rows,$readonlys,$join,$need_full_no_count,$only_keys,$extra_cols);
 
-		$selectcols = $query['selectcols'] ? explode(',',$query['selectcols']) : array();
+		$selectcols = $query['selectcols'] ? (is_string($query['selectcols']) ? explode(',',$query['selectcols']) :$query['selectcols']): array();
 
 		if ($rows && $this->customfields && (!$selectcols || in_array('customfields',$selectcols)))
 		{
