@@ -235,6 +235,11 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 			this.span[0],
 			this.options.href ? this.options.extra_link_target : '_blank'
 		);
+		// Add hover action button (Edit)
+		if (this.options.hover_action)
+		{
+			this._build_hover_action();
+		}
 		if(this.options.extra_link_popup || this.options.mime)
 		{
 			var href = this.options.href;
@@ -328,41 +333,50 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 			_nodes[0].setAttribute("class", _values["class"]);
 		}
 
-		// Add hover action button (Edit)
+		// Add hover action button (Edit), _data is nm's row data
 		if (this.options.hover_action)
 		{
-			var content = _data.content;
-			var widget = this;
-			this.span.on('mouseenter', jQuery.proxy(function(event) {
-					event.stopImmediatePropagation();
-					var self = this;
-					this.span.tooltip({
-						items: 'span.et2_label',
-						position: {my:"right top", at:"left top", collision:"flipfit"},
-						tooltipClass: "et2_email_popup",
-						content: function()
-						{
-							return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="'+egw.lang('Edit')+'"><img src="'
-									+egw.image("edit") +'"/></a>')
-								.on('click', function() {
-									widget.options.hover_action.call(self, self.widget, content);
-								});
-						},
-						close: function( event, ui )
-						{
-							ui.tooltip.hover(
-								function () {
-									jQuery(this).stop(true).fadeTo(400, 1);
-								},
-								function () {
-									jQuery(this).fadeOut("400", function(){	jQuery(this).remove();});
-								}
-							);
-						}
-					})
-					.tooltip("open");
-				}, {widget: this, span: this.span}));
+			this._build_hover_action(_data);
 		}
+	},
+
+	/**
+	 * Builds button for hover action
+	 * @param {object} _data
+	 */
+	_build_hover_action: function(_data)
+	{
+		var content = _data && _data.content ? _data.content: undefined;
+		var widget = this;
+		this.span.off().on('mouseenter', jQuery.proxy(function(event) {
+				event.stopImmediatePropagation();
+				var self = this;
+				this.span.tooltip({
+					items: 'span.et2_label',
+					position: {my:"right top", at:"left top", collision:"flipfit"},
+					tooltipClass: "et2_email_popup",
+					content: function()
+					{
+						return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="'+egw.lang('Edit')+'"><img src="'
+								+egw.image("edit") +'"/></a>')
+							.on('click', function() {
+								widget.options.hover_action.call(self, self.widget, content);
+							});
+					},
+					close: function( event, ui )
+					{
+						ui.tooltip.hover(
+							function () {
+								jQuery(this).stop(true).fadeTo(400, 1);
+							},
+							function () {
+								jQuery(this).fadeOut("400", function(){	jQuery(this).remove();});
+							}
+						);
+					}
+				})
+				.tooltip("open");
+			}, {widget: this, span: this.span}));
 	}
 }));}).call(this);
 et2_register_widget(et2_description, ["description", "label"]);
