@@ -42,7 +42,7 @@
 					<hbox>
 						<textbox id="field"/>
 						<description value="Contains(*)"/>
-						<textbox id="field_val" width="38%"/>
+						<textbox id="field_val"/>
 					</hbox>
 				</row>
 				<row>
