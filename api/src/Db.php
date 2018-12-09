@@ -1483,9 +1483,8 @@ class Db
 		{
 			$value = implode($glue,$value);
 		}
-		// only truncate string if length given and <= 255
-		// to not unnecessary truncate varchar(>255) as PostgreSQL uses text anyway and MySQL truncates itself silently (unless strict mode!)
-		if (!is_null($length) && $length <= 255 && mb_strlen($value) > $length)
+		// truncate to long strings for varchar(X) columns as PostgreSQL and newer MySQL/MariaDB given an error otherwise
+		if (!is_null($length) && mb_strlen($value) > $length)
 		{
 			$value = mb_substr($value, 0, $length);
 		}
