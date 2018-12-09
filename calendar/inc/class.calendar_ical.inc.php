@@ -848,8 +848,14 @@ class calendar_ical extends calendar_boupdate
 				{
 					if (substr($name, 0, 2) == '##')
 					{
-						if (($attr = json_decode($value, true)) && is_array($attr))
+						if ($value[0] === '{' && ($attr = json_decode($value, true)) && is_array($attr))
 						{
+							// check if attribute was stored compressed --> uncompress it
+							if (count($attr) === 1 && !empty($attr['gzcompress']))
+							{
+								$attr = json_decode(gzuncompress(base64_decode($attr['gzcompress'])), true);
+								if (!is_array($attr)) continue;
+							}
 							$vevent->setAttribute(substr($name, 2), $attr['value'], $attr['params'], true, $attr['values']);
 						}
 						else
@@ -2980,6 +2986,26 @@ class calendar_ical extends calendar_boupdate
 					}
 					$event['##'.$attributes['name']] = $attributes['params'] || count($attributes['values']) > 1 ?
 						json_encode($attributes) : $attributes['value'];
+
+					// check if json_encoded attribute is to big for our table
+					if (($attributes['params'] || count($attributes['values']) > 1) &&
+						strlen($event['##'.$attributes['name']]) >
+							Api\Db::get_column_attribute('cal_extra_value', 'egw_cal_extra', 'calendar', 'precision'))
+					{
+						// store content compressed (Outlook/Exchange HTML garbadge is very good compressable)
+						if (function_exist('gzcompress'))
+						{
+							$event['##'.$attributes['name']] = json_encode(array(
+								'gzcompress' => base64_encode(gzcompress($event['##'.$attributes['name']]))
+							));
+						}
+						// if that's not enough --> unset it, as truncating the json gives nothing
+						if (strlen($event['##'.$attributes['name']]) >
+							Api\Db::get_column_attribute('cal_extra_value', 'egw_cal_extra', 'calendar', 'precision'))
+						{
+							unset($event['##'.$attributes['name']]);
+						}
+					}
 					break;
 			}
 		}
