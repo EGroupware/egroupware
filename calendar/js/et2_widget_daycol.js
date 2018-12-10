@@ -417,7 +417,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		var holidays = et2_calendar_view.get_holidays(this,this.options.date.substring(0,4));
 		var holiday_list = [];
 		var holiday_pref = (egw.preference('birthdays_as_events','calendar')||'').split(',');
-		
+
 		// Show holidays as events on mobile or by preference
 		var holidays_as_events = egwIsMobile() || egw.preference('birthdays_as_events','calendar') === true ||
 				holiday_pref.indexOf('holiday') >= 0;
@@ -508,7 +508,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 				}
 			}
 		}
-		this.title.attr('title', holiday_list.join(','));
+		this.title.attr('title', holiday_list.join(', '));
 	},
 
 	/**
