@@ -1,26 +1,26 @@
 %1 records imported	infolog	tr	%1 kay?t ithal edildi.
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	tr	%1 kay?t okundu. (Henüz ithal edilmedi, %2geri%3 giderek ?thal Etme seçene?indeki tik i?aretini kald?rabilirsiniz.)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	tr	%1 kay?t okundu. (HenÃ¼z ithal edilmedi, %2geri%3 giderek ?thal Etme seÃ§ene?indeki tik i?aretini kald?rabilirsiniz.)
 accept	infolog	tr	Kabul Et
 action	infolog	tr	Eylem
 add	infolog	tr	ekle
 added	infolog	tr	Eklendi
-cancel	infolog	tr	Ýptal
-change	infolog	tr	Deðiþtir
+cancel	infolog	tr	Ä°ptal
+change	infolog	tr	DeÄŸiÅŸtir
 configuration	infolog	tr	Ayarlar
 contact	infolog	tr	?leti?im
 csv-fieldname	infolog	tr	CSV Alan-Ad?
 csv-filename	infolog	tr	CSV Dosya Ad?
-custom	infolog	tr	Özel
-custom fields	infolog	tr	Özel Alanlar
-days	infolog	tr	gün
+custom	infolog	tr	Ã–zel
+custom fields	infolog	tr	Ã–zel Alanlar
+days	infolog	tr	gÃ¼n
 deleted	infolog	tr	Silindi
-description	infolog	tr	Açýklama
+description	infolog	tr	AÃ§Ä±klama
 done	infolog	tr	tamam
 download	infolog	tr	?ndir
-duration	infolog	tr	Süre
-edit	infolog	tr	Düzenle
-empty for all	infolog	tr	Tamam? için bo?
-enddate	infolog	tr	BitiþTarih
+duration	infolog	tr	SÃ¼re
+edit	infolog	tr	DÃ¼zenle
+empty for all	infolog	tr	Tamam? iÃ§in bo?
+enddate	infolog	tr	BitiÅŸTarih
 fax	infolog	tr	Fax
 fieldseparator	infolog	tr	Alan ayrac?
 from	infolog	tr	Nereden
@@ -29,13 +29,13 @@ import next set	infolog	tr	S?radaki grubu ithal et
 link	infolog	tr	Link
 location	infolog	tr	Konum
 number of records to read (%1)	infolog	tr	Okunacak kay?t say?s? (1%)
-order	infolog	tr	Sýralama
-permission denied	infolog	tr	Ýzin verilmedi
+order	infolog	tr	SÄ±ralama
+permission denied	infolog	tr	Ä°zin verilmedi
 project	infolog	tr	Proje
 search for:	infolog	tr	Arama yap:
-startdate	infolog	tr	Baþlangýç tarihi
+startdate	infolog	tr	BaÅŸlangÄ±Ã§ tarihi
 startrecord	infolog	tr	Kaydetmeye ba?la
-test import (show importable records <u>only</u> in browser)	infolog	tr	?thal test (?thal edilebilecek ba?lant?lar? <u>sadece</u> görüntüle.
+test import (show importable records <u>only</u> in browser)	infolog	tr	?thal test (?thal edilebilecek ba?lant?lar? <u>sadece</u> gÃ¶rÃ¼ntÃ¼le.
 times	infolog	tr	Kere
-to many might exceed your execution-time-limit	infolog	tr	çok fazlas? execution-time-limit'inizi a?abilir!
-today	infolog	tr	Bugün
+to many might exceed your execution-time-limit	infolog	tr	Ã§ok fazlas? execution-time-limit'inizi a?abilir!
+today	infolog	tr	BugÃ¼n

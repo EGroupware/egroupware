@@ -1,7 +1,7 @@
-all users	importexport	tr	Tüm Kullanýcýlar
-charset of file	importexport	tr	Dosya Karakter Kümesi (char-set)
+all users	importexport	tr	TÃ¼m KullanÄ±cÄ±lar
+charset of file	importexport	tr	Dosya Karakter KÃ¼mesi (char-set)
 deleted	importexport	tr	Silindi
-export	importexport	tr	Ýhraç Et
+export	importexport	tr	Ä°hraÃ§ Et
 import	importexport	tr	?thal Et
-next run	importexport	tr	Sýradaki çalýþtýrma
-translation	importexport	tr	Tercüme
+next run	importexport	tr	SÄ±radaki Ã§alÄ±ÅŸtÄ±rma
+translation	importexport	tr	TercÃ¼me
