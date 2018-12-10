@@ -21,7 +21,7 @@
 				<column width="80" disabled="@no_distribution_list"/>
 				<column width="80"/>
 				<column width="50"/>
-				<column width="80"/>
+				<column width="80" disabled="@no_event_column"/>
 				<column width="120"/>
 			</columns>
 			<rows>
