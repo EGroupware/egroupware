@@ -627,6 +627,7 @@ div.mailDisplayHeaders div.mail_extraEmails {
   max-width: 50%;
   overflow: hidden;
   text-overflow: ellipsis;
+  vertical-align: top;
 }
 div.mailDisplayHeaders div.mail_extraEmails.visible {
   position: fixed;
@@ -652,6 +653,7 @@ div.mailPreviewHeaders div.mail_extraEmails {
   max-width: 50%;
   overflow: hidden;
   text-overflow: ellipsis;
+  vertical-align: top;
 }
 #mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
   width: 58%;
