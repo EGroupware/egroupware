@@ -1815,9 +1815,8 @@ class Contacts extends Contacts\Storage
 					'day'       => $d,
 					'month'     => $m,
 					'occurence' => 0,
-					'name'      => lang('Birthday').' '.($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']).' '.$pers['n_middle'].' '.
-						$pers['n_family'].
-						($GLOBALS['egw_info']['server']['hide_birthdays'] == 'age' ? ' '.($year - $y): '').
+					'name'      => implode(' ', array_filter(array(lang('Birthday'),($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']), $pers['n_middle'],
+						$pers['n_family'], ($GLOBALS['egw_info']['server']['hide_birthdays'] == 'age' ? ($year - $y): '')))).
 						($y && in_array($GLOBALS['egw_info']['server']['hide_birthdays'], array('','age')) ? ' ('.$y.')' : ''),
 					'birthyear' => $y,	// this can be used to identify birthdays from holidays
 				);
