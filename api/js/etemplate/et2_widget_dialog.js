@@ -586,7 +586,7 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 			dialog_type: typeof _type != 'undefined' ? _type : et2_dialog.QUESTION_MESSAGE,
 			icon: _icon,
 			value: _value,
-			width: false
+			width: 'auto'
 		}, parent);
 	},
 
