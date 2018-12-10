@@ -115,6 +115,7 @@ could not save the acl because some names are empty	mail	en	Could not save the A
 create new account	mail	en	create new account
 cross account forward attachment is not allowed!	mail	en	Cross account forward attachment is not allowed!
 current folder	mail	en	current Folder
+current subject	mail	en	Current subject
 currently:	mail	en	Currently:
 date(newest first)	mail	en	date(newest first)
 date(oldest first)	mail	en	date(oldest first)
@@ -334,6 +335,8 @@ message saved successfully.	mail	en	Message saved successfully.
 message send failed: %1	mail	en	Message send failed: %1
 message send successfully.	mail	en	Message send successfully.
 miscellaneous	mail	en	Miscellaneous
+modify subject	mail	en	Modify subject
+modify subject of this message	mail	en	Modify subject of this message
 move	mail	en	Move
 move folder	mail	en	Move Folder
 move selected mails to archive	mail	en	Move selected mails to archive
@@ -348,6 +351,7 @@ never display html emails	mail	en	never display html emails
 never show	mail	en	never show
 new mail notification	mail	en	New mail notification
 new message type	mail	en	New message type
+new subject	mail	en	New subject
 no (valid) send folder set in preferences	mail	en	No (valid) Send Folder set in preferences
 no access	mail	en	no access
 no action defined!	mail	en	No action defined!
