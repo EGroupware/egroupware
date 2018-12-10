@@ -27,6 +27,7 @@ add all my aliases	mail	es-es	Añadir todos mis alias
 add as new	mail	es-es	Añadir como nuevo
 add files as %1	mail	es-es	Añadir archivos como %1
 add folder	mail	es-es	Añadir carpeta
+add this certificate into contact	mail	es-es	Añadir este certificado en contacto
 add to addressbook	mail	es-es	añadir a la libreta de direcciones
 add your domain as "%1" in options to list of email providers and enable api.	mail	es-es	Añada su dominio como "% 1" en las opciones para listar los proveedores de correo electrónico y habilite la API.
 adding %1 to blacklisted email addresses failed because of %2	mail	es-es	La adición de %1 a las direcciones de correo-e en la lista negra ha fallado debido a %2
@@ -63,9 +64,11 @@ are you sure you want to delete all selected folders?	mail	es-es	¿Está seguro 
 are you sure you want to move folder %1 to folder %2?	mail	es-es	¿Está seguro de que desea mover la carpeta %1 a la carpeta %2?
 arrival	mail	es-es	Recibido
 ask for permission	mail	es-es	Solicitar permiso
+attach files	mail	es-es	Adjuntar archivos
 attach users vcard at compose to every new mail	mail	es-es	adjuntar VCard de los usuarios al componer a cada nuevo correo
 attach vcard	mail	es-es	Adjuntar vCard
 attachment	mail	es-es	Adjunto
+attachment has been saved successfully.	mail	es-es	El archivo adjunto se ha guardado exitosamente.
 attachments	mail	es-es	Adjuntos
 authentication	mail	es-es	Autenticación
 available personal email-accounts/profiles	mail	es-es	Cuentas de correo-e/perfiles personales disponibles
@@ -270,6 +273,7 @@ imap	mail	es-es	IMAP
 imap - incoming mail	mail	es-es	IMAP - correo entrante
 imap administration	mail	es-es	Administración de IMAP
 imap server	mail	es-es	Servidor IMAP
+imap timeout	mail	es-es	Tiempo de espera de IMAP
 import message	mail	es-es	importar mensaje
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	es-es	Falló la importación del mensaje %1. No se pudo guardar el mensaje en la carpeta %2 debido a: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	es-es	Falló la importación del mensaje %1. La carpeta destino %2 no existe.
@@ -288,6 +292,7 @@ junk folder	mail	es-es	Carpeta de correo basura
 keep a copy of the message in your inbox	mail	es-es	guardar una copia del mensaje en la bandeja de entrada
 kilobytes	mail	es-es	kilobytes
 later	mail	es-es	Más tarde
+learning as ham (not spam) failed because of %1	mail	es-es	El aprendizaje como ham (no spam) falló debido a %1
 learning as spam failed because of %1	mail	es-es	El aprendizaje como spam falló debido a %1
 less than	mail	es-es	menor que
 mail	common	es-es	Correo
@@ -309,9 +314,9 @@ matches regexp	mail	es-es	coincide con la expresión
 message body	mail	es-es	cuerpo del mensaje
 message learned as spam and moved to spam folder	mail	es-es	Mensaje aprendido como spam y movido a la carpeta de spam
 message preview area	mail	es-es	Área de previsualización de mensajes
-message saved successfully.	mail	es-es	Mensaje grabado exitosamente.
+message saved successfully.	common	es-es	Mensaje grabado exitosamente.
 message send failed: %1	mail	es-es	Error al enviar el mensaje: %1
-message send successfully.	mail	es-es	Mensaje enviado exitosamente.
+message send successfully.	admin	es-es	Mensaje enviado exitosamente.
 miscellaneous	mail	es-es	Misceláneo
 move	mail	es-es	Mover
 move folder	mail	es-es	Mover carpeta

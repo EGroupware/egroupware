@@ -87,7 +87,6 @@ admin username	admin	es-es	usuario del administrador
 administration	admin	es-es	Administración
 admins	admin	es-es	Administradores
 advanced options	admin	es-es	opciones avanzadas
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	es-es	¿Después de cuántos intentos fallidos de conexión debe bloquearse una cuenta? (por defecto, 3)
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	es-es	¿Después de cuántos intentos fallidos de conexión debe bloquearse una IP? (por defecto, 3)
 aliases	admin	es-es	Alias
 all applications	admin	es-es	Todas las aplicaciones
@@ -165,6 +164,7 @@ category %1 has been saved !	admin	es-es	La categoría %1 ha sido guardada
 category deleted.	admin	es-es	Se ha borrado la categoría
 category list	admin	es-es	Lista de categorías
 category saved.	admin	es-es	Se ha guardado la categoria
+certificate	admin	es-es	Cartificado
 change account_id	admin	es-es	Cambiar el campo account_id
 change acl rights	admin	es-es	cambiar permisos de ACL
 change config settings	admin	es-es	Cambiar opciones de configuración
@@ -184,7 +184,7 @@ click to select a color	admin	es-es	Pulse para seleccionar un color
 color	admin	es-es	Color
 command scheduled to run at %1	admin	es-es	El comando se ha planificado para ejecutarse a %1
 commercial: all sorts of companies	admin	es-es	Comercial: todo tipo de empresas
-config password or md5 hash from the header.inc.php	admin	es-es	Configurar contraseña o hash md5 del fichero header.inc.php
+config password or md5 hash from the header.inc.php	admin	es-es	Configurar contraseña o hash md5 de header.inc.php
 configuration saved.	admin	es-es	Configuración guardada.
 connection dropped by imap server.	admin	es-es	El servidor IMAP ha interrumpido la conexión
 continue	admin	es-es	Continuar
@@ -201,8 +201,8 @@ create new account	admin	es-es	Crear cuenta nueva
 create new identity	admin	es-es	Crear identidad nueva
 created	admin	es-es	Creado
 created with id #%1	admin	es-es	Creado con id nº %1
-creates / updates user accounts from csv file	admin	es-es	Crea o actualiza las cuentas de usuario desde un fichero CSV
-creates / updates user groups from csv file	admin	es-es	Crea o actualiza los grupos de usuarios desde un fichero CSV
+creates / updates user accounts from csv file	admin	es-es	Crea o actualiza las cuentas de usuario desde un archivo CSV
+creates / updates user groups from csv file	admin	es-es	Crea o actualiza los grupos de usuarios desde un archivo CSV
 creates a new field	admin	es-es	crea un campo nuevo
 crontab only (recomended)	admin	es-es	Sólo mediante crontab (recomendado)
 current hash	admin	es-es	Hash actual
@@ -262,12 +262,12 @@ deny all users access to preferences ?	admin	es-es	¿Denegar a todos los usuario
 description can not exceed 255 characters in length !	admin	es-es	¡La descripción no puede exceder de 255 caracteres de longitud!
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	es-es	¡La cuenta de destino nº %1 no existe y NO se renombra a sí misma! No se pueden mezclar cuentas, ya que violaría los contenidos únicos. Borre con transferencia de datos en lugar de esto.
 determines the order the fields are displayed	admin	es-es	determina el orden en que se muestran los campos
-disable	admin	es-es	Desactivar
-disable "auto completion" of the login form	admin	es-es	Desactivar completado automático en el formulario de inicio de sesión
-disable all	admin	es-es	Desactivar todo
-disable minifying of javascript and css files	admin	es-es	Deshabilitar minimizar javascript y ficheros CSS
-disable wysiwyg-editor	admin	es-es	desactivar editor WYSIWYG
-disabled (not recomended)	admin	es-es	desactivado (no se recomienda)
+disable	admin	es-es	Deshabilitar
+disable "auto completion" of the login form	admin	es-es	Deshabilitar completado automático en el formulario de inicio de sesión
+disable all	admin	es-es	Deshabilitar todo
+disable minifying of javascript and css files	admin	es-es	Deshabilitar la reducción de archivos javascript y CSS
+disable wysiwyg-editor	admin	es-es	Deshabilitar editor WYSIWYG
+disabled (not recomended)	admin	es-es	Deshabilitado (no se recomienda)
 display	admin	es-es	Mostrar
 displaying html messages is disabled	admin	es-es	Mostrar los mensajes en HTML está desactivado
 do not delete the category and return back to the list	admin	es-es	NO borrar la categoría y regresar a la lista
@@ -279,7 +279,7 @@ do you really want to reset the filter for the profile listing	admin	es-es	Realm
 do you want to delete all global subcategories ?	admin	es-es	¿Desea borrar todas las subcategorías globales?
 do you want to move all global subcategories one level down ?	admin	es-es	¿Desea mover todas las subcategorías globales un nivel hacia abajo?
 document root (default)	admin	es-es	Raíz de los documentos (Document root) (predeterminado)
-domainname	admin	es-es	nombre del dominio
+domainname	admin	es-es	Nombre del dominio
 down	admin	es-es	Abajo
 download csv	admin	es-es	Descargar CSV
 edit account	admin	es-es	Editar cuenta
@@ -454,6 +454,8 @@ ip	admin	es-es	IP
 jobs	admin	es-es	Trabajos
 kill	admin	es-es	Matar
 kill session	admin	es-es	Matar sesión
+kill these sessions	admin	es-es	Matar estas sesiones
+kill this session	admin	es-es	Matar esta sesión
 languages	admin	es-es	Idiomas
 last %1 logins	admin	es-es	Ultimos %1 inicios de sesión
 last %1 logins for %2	admin	es-es	Ultimos %1 inicios de sesión de %2
@@ -851,7 +853,9 @@ you must select at least one group member.	admin	es-es	Debe seleccionar al menos
 you need to enter install id and password!	admin	es-es	¡Necesita introducir el ID de instalación o la contraseña!
 you need to select as least one action!	admin	es-es	¡Necesita seleccionar al menos una acción!
 you need to select some users first!	admin	es-es	¡Necesita seleccionar antes algunos usuarios!
+you need to specify a forwarding address, when checking "%1"!	admin	es-es	¡Debe especificar una dirección de reenvío, al marcar "%1"!
 you will need to remove the subcategories before you can delete this category	admin	es-es	Deberá eliminar las subcategorías antes de poder borrar esta categoría
 your last submission was less then %1 days ago!	admin	es-es	¡Su último envío fue hace menos de %1 días!
+your message to  %1 was displayed.	admin	es-es	Su mensaje a %1 fue mostrado.
 your name	admin	es-es	Su nombre
 your session could not be verified.	admin	es-es	Su sesión no pudo ser verificada.
