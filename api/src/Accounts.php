@@ -434,7 +434,7 @@ class Accounts
 				$account['apps'][$app] = $data;
 			}
 		}
-		return json_encode($account);
+		return json_encode($account, JSON_PARTIAL_OUTPUT_ON_ERROR|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
 	}
 
 	/**
