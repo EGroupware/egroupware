@@ -1694,7 +1694,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			$sortResult = $sortResultwH;
 		}
-		$rowsFetched['rowsFetched'] = count($sortResult['header']);
+		$rowsFetched['rowsFetched'] = $sortResult['header'] ? count($sortResult['header']) : 0;
 		if (empty($rowsFetched['messages'])) $rowsFetched['messages'] = $rowsFetched['rowsFetched'];
 
 		//error_log(__METHOD__.__LINE__.' Rows fetched:'.$rowsFetched.' Data:'.array2string($sortResult));
