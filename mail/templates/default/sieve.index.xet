@@ -32,8 +32,8 @@
 				<column width="100%"/>
 			</columns>
 			<rows>
-				<row>
-					<buttononly class="$cont[hideIfSieveDisabled]" align="right" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=mail.mail_sieve.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+				<row class="nextmatch_header_row">
+					<buttononly class="$cont[hideIfSieveDisabled] et2_toolbar" align="left" id="add" onclick="window.open(egw::link('/index.php','menuaction=mail.mail_sieve.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 				</row>
 				<row>
 					<template id="rows"/>
