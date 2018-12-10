@@ -689,7 +689,7 @@ class Session
 	/**
     * Write or update (for logout) the access_log
 	*
-	* @param string|int $sessionid nummeric or PHP session id or 0 for unsuccessful logins
+	* @param string|int $sessionid nummeric or PHP session id or error-message for unsuccessful logins
 	* @param string $login ='' account_lid (evtl. with domain) or '' for setting the logout-time
 	* @param string $user_ip ='' ip to log
 	* @param int $account_id =0 numerical account_id
@@ -698,6 +698,13 @@ class Session
 	private function log_access($sessionid,$login='',$user_ip='',$account_id=0)
 	{
 		$now = time();
+
+		// if sessionid contains non-ascii chars (only happens for error-messages)
+		// --> transliterate it to ascii, as session_php only allows ascii chars
+		if (preg_match('/[^\x20-\x7f]/', $sessionid))
+		{
+			$sessionid = Translation::to_ascii($sessionid);
+		}
 
 		if ($login)
 		{
@@ -1421,10 +1428,16 @@ class Session
 	/**
 	 * Set action logged in access-log
 	 *
+	 * Non-ascii chars in $action get transliterate to ascii, as our session_action column allows only ascii.
+	 *
 	 * @param string $action
 	 */
 	public function set_action($action)
 	{
+		if (preg_match('/[^\x20-\x7f]/', $action))
+		{
+			$action = Translation::to_ascii($action);
+		}
 		$this->action = $action;
 	}
 
