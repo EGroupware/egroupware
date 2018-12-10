@@ -28,6 +28,16 @@
 					<taglist id="newsettings[geolocation_url]" maxSelection="1" empty_label="Select a map or write an URL"/>
 				</row>
 				<row>
+					<description value="Calendar integration" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Disable Last/Next Event column"/>
+					<select id="newsettings[disable_event_column]">
+						<option value="">Allow</option>
+						<option value="True">Disabled</option>
+					</select>
+				</row>
+				<row>
 					<description value="Allow users to maintain their own account-data" span="all" class="subHeader"/>
 				</row>
 				<row>

@@ -1763,9 +1763,9 @@ window.egw_LAB.wait(function() {
 			$ids = $calendar_participants = array();
 			if (!$id_only && $rows)
 			{
-				$show_custom_fields = (!$columselection || in_array('customfields',$columselection) || $query['csv_export']) && $this->customfields;
-				$show_calendar = !$columselection || in_array('calendar_calendar',$columselection);
-				$show_distributionlist = !$columselection || in_array('distrib_lists',$columselection) || count($available_distib_lists);
+				$show_custom_fields = (in_array('customfields',$columselection)) && $this->customfields;
+				$show_calendar = !$this->config['disable_event_column'] && in_array('calendar_calendar',$columselection);
+				$show_distributionlist = in_array('distrib_lists',$columselection) || count($available_distib_lists);
 				if ($show_calendar || $show_custom_fields || $show_distributionlist)
 				{
 					foreach($rows as $val)
@@ -1917,7 +1917,16 @@ window.egw_LAB.wait(function() {
 		$rows['no_distribution_list'] = (bool)$query['filter2'];
 
 		// disable customfields column, if we have no customefield(s)
-		if (!$this->customfields) $rows['no_customfields'] = true;
+		if (!$this->customfields)
+		{
+			$rows['no_customfields'] = true;
+		}
+
+		// Disable next/last date if so configured
+		if($this->config['disable_event_column'])
+		{
+			$rows['no_event_column'] = true;
+		}
 
 		$rows['order'] = $order;
 		$rows['call_popup'] = $this->config['call_popup'];
