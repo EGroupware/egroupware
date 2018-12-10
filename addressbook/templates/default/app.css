@@ -119,3 +119,5 @@ select#addressbook-index_col_filter\[tid\] {
 	float: right;
 	width: 134px;
 }
+.smime_section_border {border-top: 1px solid #e5e5e5;}
+.smime_section_border> * {padding-top: 10px;}

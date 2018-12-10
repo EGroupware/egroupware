@@ -176,7 +176,7 @@
 								<description value="Next date"/>
 								<link id="next_link"/>
 							</row>
-							<row valign="top">
+							<row valign="top" class="smime_section_border">
 								<description value="SMIME key"/>
 								<vfs-upload id="addressbook:$cont[id]:.files/smime-pubkey.crt" accept=".crt,.pem,application/x-x509-ca-cert,application/x-x509-user-cert" mime="/application\/(x-x509-(ca|user)|pkix)-cert/" callback="addressbook.addressbook_ui.pubkey_uploaded"/>
 							</row>
