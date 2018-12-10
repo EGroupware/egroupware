@@ -115,6 +115,7 @@ could not save the acl because some names are empty	mail	de	Konnte die Zugriffsk
 create new account	mail	de	Konto hinzufügen
 cross account forward attachment is not allowed!	mail	de	Weiterleitung als Anhang ist nicht Emailkonto-Übergreifend möglich!
 current folder	mail	de	Aktueller Ordner
+current subject	mail	de	Aktueller Betreff
 currently:	mail	de	Aktuell:
 date(newest first)	mail	de	Datum (neue zuerst)
 date(oldest first)	mail	de	Datum (alte zuerst)
@@ -334,6 +335,8 @@ message saved successfully.	mail	de	Nachricht wurde erfolgreich gespeichert.
 message send failed: %1	mail	de	Nachricht konnte nicht versendet werden: %1
 message send successfully.	mail	de	Nachricht wurde erfolgreich versendet.
 miscellaneous	mail	de	Verschiedenes
+modify subject	mail	de	Betreff ändern
+modify subject of this message	mail	de	Betreff dieser Nachricht ändern
 move	mail	de	Verschieben
 move folder	mail	de	Ordner verschieben
 move selected mails to archive	mail	de	Verschiebe ausgewählte Nachrichten in den konfigurierten Archiv Ordner
@@ -348,6 +351,7 @@ never display html emails	mail	de	niemals anzeigen
 never show	mail	de	Nie anzeigen
 new mail notification	mail	de	Benachrichtigung über neue E-Mails in:
 new message type	mail	de	Neue E-Mails verfassen als
+new subject	mail	de	Neuer Betreff
 no (valid) send folder set in preferences	mail	de	Es ist kein gültiger Gesendet-Ordner hinterlegt.
 no access	mail	de	Kein Zugriff
 no action defined!	mail	de	Keine Aktion ausgewählt!
