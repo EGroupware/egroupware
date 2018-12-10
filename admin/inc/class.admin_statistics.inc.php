@@ -5,9 +5,8 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2009-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-18 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -28,7 +27,7 @@ class admin_statistics
 	const CONFIG_INSTALL_TYPE = 'install_type_submit';
 
 	const SUBMIT_URL = 'https://www.egroupware.org/usage-statistic';
-	const STATISTIC_URL = 'http://www.egroupware.org/usage-statistic';
+	const STATISTIC_URL = 'https://www.egroupware.org/usage-statistic';
 
 	const SUBMISION_RATE = 2592000;	// 30 days
 
