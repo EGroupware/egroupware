@@ -1,65 +1,65 @@
 actions	setup	tr	Eylemler
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	tr	Otomatik oluşturulmuş kullanıcıları bu gruba ekle (Burası boş olursa 'Varsayılan' seçeneği kullanılacaktır.)
-admins	setup	tr	Yöneticiler
-all users	setup	tr	Tüm Kullanıcılar
-application title	setup	tr	Uygulama Başlığı
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	tr	FTP için 'application/octet-stream' yerine doğru mimetype kullanınız.
-authentication / accounts	setup	tr	Doğrulama / Hesaplar
-auto create account records for authenticated users	setup	tr	Giriş yapan kullanıcılar için kayıt tut.
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	tr	Otomatik oluÅŸturulmuÅŸ kullanÄ±cÄ±larÄ± bu gruba ekle (BurasÄ± boÅŸ olursa 'VarsayÄ±lan' seÃ§eneÄŸi kullanÄ±lacaktÄ±r.)
+admins	setup	tr	YÃ¶neticiler
+all users	setup	tr	TÃ¼m KullanÄ±cÄ±lar
+application title	setup	tr	Uygulama BaÅŸlÄ±ÄŸÄ±
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	tr	FTP iÃ§in 'application/octet-stream' yerine doÄŸru mimetype kullanÄ±nÄ±z.
+authentication / accounts	setup	tr	DoÄŸrulama / Hesaplar
+auto create account records for authenticated users	setup	tr	GiriÅŸ yapan kullanÄ±cÄ±lar iÃ§in kayÄ±t tut.
 bottom	setup	tr	taban
-cancel	setup	tr	İptal
-check ip address of all sessions	setup	tr	Bütün oturumların IP'leri kontrol et
+cancel	setup	tr	Ä°ptal
+check ip address of all sessions	setup	tr	BÃ¼tÃ¼n oturumlarÄ±n IP'leri kontrol et
 configuration	setup	tr	Ayarlar
-country selection	setup	tr	Ülke seçimi
-day	setup	tr	Gün
-default	setup	tr	Varsayılan
-default file system space per user/group ?	setup	tr	(Varsayılan) Kullanıcı/Grup disk alanı
-deny all users access to grant other users access to their entries ?	setup	tr	Bütün kullanıcıların diğer kullanıcıların girdilerine erişimini engelle ?
+country selection	setup	tr	Ãœlke seÃ§imi
+day	setup	tr	GÃ¼n
+default	setup	tr	VarsayÄ±lan
+default file system space per user/group ?	setup	tr	(VarsayÄ±lan) KullanÄ±cÄ±/Grup disk alanÄ±
+deny all users access to grant other users access to their entries ?	setup	tr	BÃ¼tÃ¼n kullanÄ±cÄ±larÄ±n diÄŸer kullanÄ±cÄ±larÄ±n girdilerine eriÅŸimini engelle ?
 download	setup	tr	?ndir
-enter the hostname of the machine on which this server is running	setup	tr	Bu sunucunun çalıştığı makinanın hostadı'nı giriniz.
-enter the site password for peer servers	setup	tr	Peer sunucular için site şifresi giriniz.
-enter the site username for peer servers	setup	tr	Peer sunucular için site kullanıcı adı giriniz.
-enter the title for your site	setup	tr	Site başlığını giriniz.
-enter your default ftp server	setup	tr	Varsayılan FTP sunucusunu giriniz
+enter the hostname of the machine on which this server is running	setup	tr	Bu sunucunun Ã§alÄ±ÅŸtÄ±ÄŸÄ± makinanÄ±n hostadÄ±'nÄ± giriniz.
+enter the site password for peer servers	setup	tr	Peer sunucular iÃ§in site ÅŸifresi giriniz.
+enter the site username for peer servers	setup	tr	Peer sunucular iÃ§in site kullanÄ±cÄ± adÄ± giriniz.
+enter the title for your site	setup	tr	Site baÅŸlÄ±ÄŸÄ±nÄ± giriniz.
+enter your default ftp server	setup	tr	VarsayÄ±lan FTP sunucusunu giriniz
 enter your http proxy server	setup	tr	HTTP Proxy sunucunuzu giriniz.
 enter your http proxy server port	setup	tr	HTTP Proxy sunucu portunuzu giriniz.
-force selectbox	setup	tr	Seçimn kurusunu mecburi tut
+force selectbox	setup	tr	SeÃ§imn kurusunu mecburi tut
 host information	setup	tr	Host bilgisi
-if no acl records for user or any group the user is a member of	setup	tr	ACL kaydı olmayan herhangi bir kullanıcı/grup bu grup üyesi sayılacaktır
-if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	tr	LDAP kullanıyorsanız, ev dizini ve erişim ayarlarını yönetmek ister misiniz?
-ldap accounts context	setup	tr	LDAP hesap içeriği
-ldap default homedirectory prefix (e.g. /home for /home/username)	setup	tr	LDAP varsayılan ev dizini öneki ( ör: /home/username için /home )
-ldap default shell (e.g. /bin/bash)	setup	tr	LDAP varsayılan kabul (ör: /bin/bash)
-ldap encryption type	setup	tr	LDAP şifreleme tipi
-ldap groups context	setup	tr	LDAP grup içeriği
-ldap host	setup	tr	LDAP hostları
-ldap root password	setup	tr	LDAP yönetici şifresi
+if no acl records for user or any group the user is a member of	setup	tr	ACL kaydÄ± olmayan herhangi bir kullanÄ±cÄ±/grup bu grup Ã¼yesi sayÄ±lacaktÄ±r
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	tr	LDAP kullanÄ±yorsanÄ±z, ev dizini ve eriÅŸim ayarlarÄ±nÄ± yÃ¶netmek ister misiniz?
+ldap accounts context	setup	tr	LDAP hesap iÃ§eriÄŸi
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	tr	LDAP varsayÄ±lan ev dizini Ã¶neki ( Ã¶r: /home/username iÃ§in /home )
+ldap default shell (e.g. /bin/bash)	setup	tr	LDAP varsayÄ±lan kabul (Ã¶r: /bin/bash)
+ldap encryption type	setup	tr	LDAP ÅŸifreleme tipi
+ldap groups context	setup	tr	LDAP grup iÃ§eriÄŸi
+ldap host	setup	tr	LDAP hostlarÄ±
+ldap root password	setup	tr	LDAP yÃ¶netici ÅŸifresi
 ldap rootdn	setup	tr	LDAP rootdn
-maximum account id (e.g. 65535 or 1000000)	setup	tr	Meksimum hesap id'si (ör: 65535 ya da 1000000)
-minimum account id (e.g. 500 or 100, etc.)	setup	tr	Minimum hesap id'si (ör 500 ya da 100)
+maximum account id (e.g. 65535 or 1000000)	setup	tr	Meksimum hesap id'si (Ã¶r: 65535 ya da 1000000)
+minimum account id (e.g. 500 or 100, etc.)	setup	tr	Minimum hesap id'si (Ã¶r 500 ya da 100)
 minute	setup	tr	Dakika
-modified	setup	tr	Değiştirilmiş
+modified	setup	tr	DeÄŸiÅŸtirilmiÅŸ
 month	setup	tr	Ay
 new	setup	tr	Yeni
-next run	setup	tr	Sıradaki çalıştırma
-no algorithms available	setup	tr	mevcut hiç algoritma yok
-no modes available	setup	tr	mevcut hiç mod yok
+next run	setup	tr	SÄ±radaki Ã§alÄ±ÅŸtÄ±rma
+no algorithms available	setup	tr	mevcut hiÃ§ algoritma yok
+no modes available	setup	tr	mevcut hiÃ§ mod yok
 ok	setup	tr	Tamam
 or	setup	tr	ya da
-password for smtp-authentication	setup	tr	SMTP doğrulaması için şifre
+password for smtp-authentication	setup	tr	SMTP doÄŸrulamasÄ± iÃ§in ÅŸifre
 path information	setup	tr	Yol bilgisi
 preferences	setup	tr	Ayarlar
-re-enter password	setup	tr	Şifreyi yeniden giriniz
-remove	setup	tr	Kaldır
-select where you want to store/retrieve user accounts	setup	tr	Kullanıcı hesaplarını saklamak istediğiniz yeri seçiniz
-selectbox	setup	tr	Seçim kutusu
-show 'powered by' logo on	setup	tr	'Powered by' logosunun gösterileceği yer
+re-enter password	setup	tr	Åifreyi yeniden giriniz
+remove	setup	tr	KaldÄ±r
+select where you want to store/retrieve user accounts	setup	tr	KullanÄ±cÄ± hesaplarÄ±nÄ± saklamak istediÄŸiniz yeri seÃ§iniz
+selectbox	setup	tr	SeÃ§im kutusu
+show 'powered by' logo on	setup	tr	'Powered by' logosunun gÃ¶sterileceÄŸi yer
 text entry	setup	tr	Metin Girdisi
 top	setup	tr	Maks
-use cookies to pass sessionid	setup	tr	Oturum id'sini taşımak için çerez kullan (cookie)
-use pure html compliant code (not fully working yet)	setup	tr	Saf HTML uyumlu kod kullan (henüz tam olarak çalışmamaktadır)
-user for smtp-authentication (leave it empty if no auth required)	setup	tr	SMTP doğrulaması için kullanılacak kullanıcı (Doğrulama gerekmiyorsa boş bırakınız)
-users choice	setup	tr	Kullanıcı Seçimleri
-version	setup	tr	Sürüm
-would you like to show each application's upgrade status ?	setup	tr	Her uygulamanın güncelleme durumunu görüntülemek ister misiniz?
+use cookies to pass sessionid	setup	tr	Oturum id'sini taÅŸÄ±mak iÃ§in Ã§erez kullan (cookie)
+use pure html compliant code (not fully working yet)	setup	tr	Saf HTML uyumlu kod kullan (henÃ¼z tam olarak Ã§alÄ±ÅŸmamaktadÄ±r)
+user for smtp-authentication (leave it empty if no auth required)	setup	tr	SMTP doÄŸrulamasÄ± iÃ§in kullanÄ±lacak kullanÄ±cÄ± (DoÄŸrulama gerekmiyorsa boÅŸ bÄ±rakÄ±nÄ±z)
+users choice	setup	tr	KullanÄ±cÄ± SeÃ§imleri
+version	setup	tr	SÃ¼rÃ¼m
+would you like to show each application's upgrade status ?	setup	tr	Her uygulamanÄ±n gÃ¼ncelleme durumunu gÃ¶rÃ¼ntÃ¼lemek ister misiniz?
 write	setup	tr	Yaz
