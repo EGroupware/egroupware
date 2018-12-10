@@ -2993,7 +2993,7 @@ class calendar_ical extends calendar_boupdate
 							Api\Db::get_column_attribute('cal_extra_value', 'egw_cal_extra', 'calendar', 'precision'))
 					{
 						// store content compressed (Outlook/Exchange HTML garbadge is very good compressable)
-						if (function_exist('gzcompress'))
+						if (function_exists('gzcompress'))
 						{
 							$event['##'.$attributes['name']] = json_encode(array(
 								'gzcompress' => base64_encode(gzcompress($event['##'.$attributes['name']]))
