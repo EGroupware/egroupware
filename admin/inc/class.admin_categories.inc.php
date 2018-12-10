@@ -156,9 +156,15 @@ class admin_categories
 					{
 
 						$data = $cats->id2name($content['id'],'data');
-						try {
-							$cats->edit($content);
-							$msg = lang('Category saved.');
+						unset($content['msg']);
+						if(!$content['parent'])
+						{
+							$content['parent'] = '0';
+						}
+						try
+						{
+							$cmd = new admin_cmd_category($appname, $content, $cats->read($content['id']));
+							$msg = $cmd->run();
 						}
 						catch (Api\Exception\WrongUserinput $e)
 						{
@@ -169,7 +175,9 @@ class admin_categories
 						$content['parent'] && self::$acl_add_sub ||
 						!$content['parent'] && self::$acl_add))
 					{
-						$content['id'] = $cats->add($content);
+						$cmd = new admin_cmd_category($appname, $content);
+						$cmd->run();
+						$content['id'] = $cmd->cat_id;
 						$msg = lang('Category saved.');
 					}
 					else
@@ -229,8 +237,8 @@ class admin_categories
 				case 'delete':
 					if (self::$acl_delete)
 					{
-						$cats->delete($content['id'],$delete_subs,!$delete_subs);
-						$msg = lang('Category deleted.');
+						$cmd = new admin_cmd_delete_category($content['id'], $delete_subs);
+						$msg = $cmd->run();
 
 						Framework::refresh_opener($msg, $refresh_app, $content['id'],'delete', $this->appname);
 						Framework::window_close();
@@ -402,11 +410,14 @@ class admin_categories
 				continue;
 			}
 
-			$row['level_spacer'] = str_repeat('&nbsp; &nbsp; ',$row['level']);
+			if($row['level'] >= 0)
+			{
+				$row['level_spacer'] = str_repeat('&nbsp; &nbsp; ',$row['level']);
+			}
 
 			if ($row['data']['icon']) $row['icon_url'] = self::icon_url($row['data']['icon']);
 
-			$row['subs'] = count($row['children']);
+			$row['subs'] = $row['children'] ? count($row['children']) : 0;
 
 			$row['class'] = 'level'.$row['level'];
 			if($row['owner'][0] > 0 && !$GLOBALS['egw_info']['user']['apps']['admin'] && $row['owner'][0] != $GLOBALS['egw_info']['user']['account_id'])
@@ -717,7 +728,8 @@ class admin_categories
 				{
 					if($cats->check_perms(Acl::DELETE, $id, (boolean)$GLOBALS['egw_info']['user']['apps']['admin']))
 					{
-						$cats->delete($id,$settings == 'sub',$settings != 'sub');
+						$cmd = new admin_cmd_delete_category($id, $settings == 'sub');
+						$cmd->run();
 						$success++;
 					}
 					else
@@ -746,7 +758,8 @@ class admin_categories
 						array_diff($data['owner'],$ids);
 					$data['owner'] = implode(',',array_unique($data['owner']));
 
-					if ($cats->edit($data))
+					$cmd = new admin_cmd_category($app, $data, array());
+					if ($cmd->run())
 					{
 						$success++;
 					}
