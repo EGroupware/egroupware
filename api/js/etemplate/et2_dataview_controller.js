@@ -36,6 +36,9 @@ var ET2_DATAVIEW_STEPSIZE = 50;
  */
 var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 
+	// Maximum concurrent data requests.  Additional ones are held in the queue.
+	CONCURRENT_REQUESTS: 5,
+
 	/**
 	 * Constructor of the et2_dataview_controller, connects to the grid
 	 * callback.
@@ -75,9 +78,13 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 		// Timer used for queing fetch requests
 		this._queueTimer = null;
 
-		// Array which contains all currently queued indices in the form of
+		// Array which contains all currently queued row indices in the form of
 		// an associative array
 		this._queue = {};
+
+		// Current concurrent requests we have
+		this._request_queue = [];
+		this._request_timeout = 0;
 
 		// Register the dataFetch callback
 		this._grid.setDataCallback(this._gridCallback, this);
@@ -173,6 +180,7 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 		{
 			range.top = range.bottom = 0;
 		}
+		this._request_queue = [];
 
 		// Require that range from the server
 		this._queueFetch(et2_bounds(range.top, clear ? 0 : range.bottom + 1), 0, true);
@@ -190,8 +198,12 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 		// Clear the grid
 		this._grid.clear();
 
-		// Clear the queue
+		// Clear the row queue
 		this._queue = {};
+
+		// Reset the request queue
+		this._request_queue = [];
+		this._request_timeout = 0;
 
 		// Update the data
 		this.update();
@@ -481,6 +493,17 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 		// Clear any still existing timer
 		this._clearTimer();
 
+		if(this._request_queue.length >= this.CONCURRENT_REQUESTS)
+		{
+			// Too many requests, wait until later
+			var self = this;
+			this._queueTimer = window.setTimeout(function () {
+				self._flushQueue(_isUpdate);
+				// Try again with increasing delay, to a max of 30s
+			}, Math.min(30000,ET2_DATAVIEW_FETCH_TIMEOUT*Math.pow( 2, this._request_timeout++)));
+			return;
+		}
+
 		// Mark all elements in a radius of ET2_DATAVIEW_STEPSIZE
 		var marked = {};
 		var r = _isUpdate ? 0 : Math.floor(ET2_DATAVIEW_STEPSIZE / 2);
@@ -577,10 +600,61 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 				ctx.prefix = this.dataStorePrefix;
 			}
 
-			// Call the callback
-			this._dataProvider.dataFetch(query, this._fetchCallback, ctx);
+			this._queueRequest(query, ctx);
 		}
+	},
 
+	/**
+	 * Queue a request for data
+	 * @param {Object} query
+	 * @param {Object} ctx
+	 */
+	_queueRequest: function _queueRequest(query, ctx)
+	{
+		this._request_queue.push({
+			query: query,
+			context: ctx,
+			status: 0
+		});
+
+		this._fetchQueuedRequest();
+	},
+
+	/**
+	 * Fetch data for a queued request, subject to rate limit
+	 */
+	_fetchQueuedRequest: function _fetchQueuedRequest()
+	{
+		// Check to see if there's room
+		var count = 0;
+		for (var i = 0; i < this._request_queue.length; i++)
+		{
+			if(this._request_queue[i].status > 0) count++;
+		}
+		// Too many requests, will try again after response is received
+		if(count >= this.CONCURRENT_REQUESTS || this._request_queue.length === 0)
+		{
+			return;
+		}
+		// Reset timeout timer
+		this._request_timeout = 0;
+
+		// The most recent is the one the user's most interested in
+		var request = null;
+		for(var i = this._request_queue.length - 1; i >= 0; i--)
+		{
+			if(this._request_queue[i].status == 0)
+			{
+				request = this._request_queue[i];
+				break;
+			}
+		}
+		if(request == null) return;
+
+		request.status = 1;
+
+		// Call the callback
+		this._dataProvider.dataFetch(request.query, this._fetchCallback, request.context);
 	},
 
 	_clearTimer: function () {
@@ -846,6 +920,18 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 	},
 
 	_fetchCallback: function (_response) {
+		// Remove answered request from queue
+		var request = null;
+		for(var i = 0; i < this.self._request_queue.length; i++)
+		{
+			if(this.self._request_queue[i].context == this)
+			{
+				request = this.self._request_queue[i];
+				this.self._request_queue.splice(i,1);
+				break;
+			}
+		}
+
 		this.self._lastModification = _response.lastModification;
 
 		// Do nothing if _response.order evaluates to false
@@ -903,6 +989,9 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 
 		// Schedule an invalidate, in case total is the same
 		this.self._grid.invalidate();
+
+		// Check if requests are waiting
+		this.self._fetchQueuedRequest();
 	},
 
 	/**
