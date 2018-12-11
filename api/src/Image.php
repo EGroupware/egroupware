@@ -31,7 +31,7 @@ class Image
 	 */
 	static function find($app,$image,$extension='',$_svg=false)
 	{
-		$svg = Header\UserAgent::mobile() ? null : $_svg; // ATM we use svg icons only for mobile theme
+		$svg = Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'modern' ? null : $_svg;
 		static $image_map_no_svg = null, $image_map_svg = null;
 		if (is_null($svg)) $svg = self::svg_usable ();
 		if ($svg)

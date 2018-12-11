@@ -983,7 +983,7 @@ abstract class Framework extends Framework\Extra
 			self::includeJS('/api/images.php', array(
 				'template' => $GLOBALS['egw_info']['server']['template_set'],
 				'etag' => md5(json_encode(Image::map($GLOBALS['egw_info']['server']['template_set']))),
-				'svg' => Header\UserAgent::mobile(),	// always load non-svg image map, ATM we use svg icons only for mobile theme
+				'svg' => Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'modern',
 			));
 			self::includeJS('/api/user.php', array(
 				'user' => $GLOBALS['egw_info']['user']['account_lid'],
