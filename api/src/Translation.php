@@ -260,7 +260,7 @@ class Translation
 
 	/**
 	 * Translates a phrase according to the given user's language preference,
-	 * which may be different from the current user.  
+	 * which may be different from the current user.
 	 *
 	 * @param int $account_id
 	 * @param string $message
@@ -826,14 +826,23 @@ class Translation
 	{
 		static $extra = array(
 			'&szlig;' => 'ss',
+			'&#776;'  => 'e',	// mb_convert_encoding return &#776; for all German umlauts
 		);
-		$entities = htmlentities($_str,ENT_QUOTES,self::charset());
+		if (function_exists('mb_convert_encoding'))
+		{
+			$entities = mb_convert_encoding($_str, 'html-entities', self::charset());
+		}
+		else
+		{
+			$entities = htmlentities($_str, ENT_QUOTES, self::charset());
+		}
 
 		$estr = str_replace(array_keys($extra),array_values($extra), $entities);
 		$ustr = preg_replace('/&([aAuUoO])uml;/','\\1e', $estr);	// replace german umlauts with the letter plus one 'e'
 		$astr = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1', $ustr);	// remove all types of accents
 
-		return preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','', $astr);	// remove all other entities
+		return preg_replace('/[^\x20-\x7f]/', '',					// remove all non-ascii
+			preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','', $astr));	// remove all other entities
 	}
 
 	/**
