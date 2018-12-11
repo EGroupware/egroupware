@@ -765,7 +765,7 @@ class calendar_uilist extends calendar_ui
 					if(!$event)
 					{
 						$failed++;
-						continue;
+						continue 2;	// +1 for switch
 					}
 					$timesheet = array(
 						'ts_title'		=>	$event['title'],

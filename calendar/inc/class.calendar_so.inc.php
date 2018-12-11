@@ -2888,42 +2888,42 @@ ORDER BY cal_user_type, cal_usre_id
 						if ($status != 'U')
 						{
 							unset($participants[$uid]);
-							continue;
+							continue 2;	// +1 for switch
 						}
 						break;
 					case 'accepted':
 						if ($status != 'A')
 						{
 							unset($participants[$uid]);
-							continue;
+							continue 2;	// +1 for switch
 						}
 						break;
 					case 'tentative':
 						if ($status != 'T')
 						{
 							unset($participants[$uid]);
-							continue;
+							continue 2;	// +1 for switch
 						}
 						break;
 					case 'rejected':
 						if ($status != 'R')
 						{
 							unset($participants[$uid]);
-							continue;
+							continue 2;	// +1 for switch
 						}
 						break;
 					case 'delegated':
 						if ($status != 'D')
 						{
 							unset($participants[$uid]);
-							continue;
+							continue 2;	// +1 for switch
 						}
 						break;
 					case 'default':
 						if ($status == 'R')
 						{
 							unset($participants[$uid]);
-							continue;
+							continue 2;	// +1 for switch
 						}
 						break;
 					default:

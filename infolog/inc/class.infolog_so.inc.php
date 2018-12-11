@@ -852,7 +852,7 @@ class infolog_so
 					{
 						case 'info_responsible':
 							$data = (int) $data;
-							if (!$data) continue;
+							if (!$data) continue 2;	// +1 for switch
 							$filtermethod .= ' AND ('.$this->responsible_filter($data)." OR $this->users_table.account_id IS NULL AND ".
 								$this->db->expression($this->info_table,array(
 									'info_owner' => $data > 0 ? $data : $GLOBALS['egw']->accounts->members($data,true)

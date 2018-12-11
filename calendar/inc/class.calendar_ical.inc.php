@@ -552,7 +552,7 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'CLASS':
-						if ($event['public']) continue;	// public is default, no need to export, fails CalDAVTester if added as default
+						if ($event['public']) continue 2;	// public is default, no need to export, fails CalDAVTester if added as default
 						$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
 						// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
 						if (!$event['public'] && $this->productManufacturer == 'groupdav')
@@ -699,7 +699,7 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'PRIORITY':
-						if (!$event['priority']) continue;	// 0=undefined is default, no need to export, fails CalDAVTester if our default is added
+						if (!$event['priority']) continue 2;	// 0=undefined is default, no need to export, fails CalDAVTester if our default is added
 						if ($this->productManufacturer == 'funambol' &&
 							(strpos($this->productName, 'outlook') !== false
 								|| strpos($this->productName, 'pocket pc') !== false))
@@ -713,7 +713,7 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'TRANSP':
-						if (!$event['non_blocking']) continue;	// OPAQUE is default, no need to export, fails CalDAVTester if added as default
+						if (!$event['non_blocking']) continue 2;	// OPAQUE is default, no need to export, fails CalDAVTester if added as default
 						if ($version == '1.0')
 						{
 							$attributes['TRANSP'] = ($event['non_blocking'] ? 1 : 0);
@@ -832,7 +832,7 @@ class calendar_ical extends calendar_boupdate
 								}
 								//Horde::logMessage("vCalendar $icalFieldName omitted due to maximum size $size",
 								//	__FILE__, __LINE__, PEAR_LOG_WARNING);
-								continue; // skip field
+								continue 2; // skip field
 							}
 							// truncate the value to size
 							$value = substr($value, 0, $size - 1);
@@ -1311,7 +1311,7 @@ class calendar_ical extends calendar_boupdate
 						switch ($key)
 						{
 							case 'participants_types':
-								continue;
+								continue 2;	// +1 for switch
 
 							case 'participants':
 								foreach ($event_info['stored_event']['participants'] as $uid => $status)
@@ -3009,11 +3009,11 @@ class calendar_ical extends calendar_boupdate
 								}
 								$status = 'U'; // keep the group
 							}
-							else continue; // can't find this group
+							else continue 2; // can't find this group
 						}
 						elseif (empty($searcharray))
 						{
-							continue;	// participants without email AND CN --> ignore it
+							continue 2;	// participants without email AND CN --> ignore it
 						}
 						elseif ((list($data) = $this->addressbook->search($searcharray,
 							array('id','egw_addressbook.account_id as account_id','n_fn'),
