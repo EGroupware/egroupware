@@ -2049,7 +2049,7 @@ class infolog_bo
 								. '()[location mismatch]: '
 								. $infoData['info_location'] . ' <> ' . $egwData['info_location']);
 						}
-						continue;
+						continue 2;	// +1 for switch
 					}
 				default:
 					if (!empty($egwData['info_des']))
@@ -2066,7 +2066,7 @@ class infolog_bo
 								. '()[description mismatch]: '
 								. $infoData['info_des'] . ' <> ' . $egwData['info_des']);
 						}
-						continue;
+						continue 2;	// +1 for switch
 					}
 					// no further criteria to match
 					$foundInfoLogs[$egwData['info_id']] = $egwData['info_id'];

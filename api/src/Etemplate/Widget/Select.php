@@ -174,7 +174,7 @@ class Select extends Etemplate\Widget
 				{
 					case 'select-account':
 						// If in allowed options, skip account check to support app-specific options
-						if(count($allowed) > 0 && in_array($val,$allowed)) continue;
+						if(count($allowed) > 0 && in_array($val, $allowed)) continue 2;	// +1 for switch
 
 						// validate accounts independent of options know to server
 						$account_type = $this->attrs['account_type'] ? $this->attrs['account_type'] : 'accounts';
