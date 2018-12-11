@@ -309,7 +309,7 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 	//Create the header div and set its "click" function and "hover" event
 	this.headerDiv = document.createElement("span");
 	this.headerDiv._position = _pos;
-	jQuery(this.headerDiv).addClass("egw_fw_ui_tab_header");
+	jQuery(this.headerDiv).attr('id', this.tag.appName+'-egw_fw_ui_tab_header').addClass("egw_fw_ui_tab_header");
 
 	//Create a new callback object and attach it to the header div
 	this.headerDiv._callbackObject = new egw_fw_class_callback(this, _callback);
