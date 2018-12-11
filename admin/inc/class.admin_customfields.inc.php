@@ -184,6 +184,8 @@ class admin_customfields
 			{
 				if(in_array($data['id'],$content['nm']['selected']))
 				{
+					$cmd = new admin_cmd_customfield($this->appname, array('id' => $data['id'],'name' => $name));
+					$cmd->run();
 					unset($this->fields[$name]);
 				}
 			}
@@ -313,7 +315,9 @@ class admin_customfields
 			switch($action)
 			{
 				case 'delete':
-					$this->so->delete($cf_id);
+					$field = $this->so->read($cf_id);
+					$cmd = new admin_cmd_customfield($this->appname, array('id' => $cf_id,'name' => $field['cf_name']));
+					$cmd->run();
 					Framework::refresh_opener('Deleted', 'admin', $cf_id /* Conflicts with Api\Accounts 'delete'*/);
 					Framework::window_close();
 					break;
@@ -355,7 +359,8 @@ class admin_customfields
 							$update_content[substr($key,3)] = $value;
 						}
 					}
-					Api\Storage\Customfields::update($update_content);
+					$cmd = new admin_cmd_customfield($this->appname, $update_content);
+					$cmd->run();
 					if(!$cf_id)
 					{
 						$this->fields = Api\Storage\Customfields::get($this->appname,true);
