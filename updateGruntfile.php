@@ -5,9 +5,8 @@
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Ralf Becker <rb@stylite.de>
- * @copyright (c) 2016 by Ralf Becker <rb@stylite.de>
- * @version $Id$
+ * @author Ralf Becker <rb@egroupware.org>
+ * @copyright (c) 2016-18 by Ralf Becker <rb@egroupware.org>
  */
 
 use EGroupware\Api\Framework;
@@ -15,6 +14,8 @@ use EGroupware\Api\Framework\Bundle;
 
 if (php_sapi_name() !== 'cli') die("This is a commandline ONLY tool!\n");
 
+// force a domain for MServer install
+$_REQUEST['domain'] = 'boulder.egroupware.org';
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'currentapp' => 'login',
@@ -38,6 +39,18 @@ if (!preg_match('/grunt\.initConfig\(({.+})\);/s', $content, $matches) ||
 
 $uglify =& $config['uglify'];
 
+// some files are not in a bundle, because loaded otherwise or are big enough themselfs
+$exclude = array(
+	// api/js/jsapi/egw.js loaded via own tag, and we must not load it twice!
+	'api/js/jsapi/egw.js',
+	// TinyMCE is loaded separate before the bundle
+	'api/js/tinymce/tinymce.min.js',
+	// ckeditor is loaded on demand only
+	'vendor/egroupware/ckeditor/ckeditor.js',
+	'vendor/egroupware/ckeditor/ckeditor.config.js',
+	'vendor/egroupware/ckeditor/ckeditor.adapters/jquery.js',
+);
+
 foreach(Bundle::all() as $name => $files)
 {
 	if ($name == '.ts') continue;	// ignore timestamp
@@ -48,15 +61,10 @@ foreach(Bundle::all() as $name => $files)
 		if ($path[0] == '/') $path = substr($path, 1);
 	});
 
-	// api/js/jsapi/egw.js loaded via own tag, and we must not load it twice!
-	if ($name == 'api' && ($key = array_search('api/js/jsapi/egw.js', $files)))
+	// some files are not in a bundle, because they are big enough themselfs
+	foreach($exclude as $file)
 	{
-		unset($files[$key]);
-	}
-	// ckeditor is loaded separate before the bundle
-	if ($name == 'api' && ($key = array_search('vendor/egroupware/ckeditor/ckeditor.js', $files)))
-	{
-		unset($files[$key]);
+		if (($key = array_search($file, $files))) unset($files[$key]);
 	}
 
 	//var_dump($name, $files);
@@ -80,7 +88,7 @@ foreach(Bundle::all() as $name => $files)
 
 // add css for all templates and themes
 $cssmin =& $config['cssmin'];
-$GLOBALS['egw_info']['flags']['currentapp'] = '*grunt*';	// to no find any app.css files
+$GLOBALS['egw_info']['flags']['currentapp'] = '*grunt*';	// to not find any app.css files
 $GLOBALS['egw_info']['server']['debug_minify'] = 'True';	// otherwise we would only get minified file
 foreach(array('pixelegg','jdots')/*array_keys(Framework::list_templates())*/ as $template)
 {
@@ -88,7 +96,7 @@ foreach(array('pixelegg','jdots')/*array_keys(Framework::list_templates())*/ as 
 	$tpl = Framework::factory();
 	$themes = $tpl->list_themes();
 	if ($template == 'pixelegg') $themes[] = 'fw_mobile';	// this is for mobile devices
-	foreach($themes as $theme)
+	foreach(array_keys($themes) as $theme)
 	{
 		// skip not working cssmin of pixelegg/traditional: Broken @import declaration of "../../etemplate/templates/default/etemplate2.css"
 		if ($template == 'pixelegg' && $theme == 'traditional') continue;

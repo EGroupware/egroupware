@@ -98,8 +98,7 @@ module.exports = function (grunt) {
 						"api/js/dhtmlxMenu/sources/dhtmlxmenu.js",
 						"api/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js",
 						"api/js/egw_action/egw_menu_dhtmlx.js",
-						"api/js/jquery/chosen/chosen.jquery.js",
-						"vendor/egroupware/ckeditor/config.js"
+						"api/js/jquery/chosen/chosen.jquery.js"
 					]
 				}
 			},
@@ -173,9 +172,10 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_widget_favorites.js",
 						"api/js/etemplate/et2_widget_html.js",
 						"api/js/etemplate/et2_widget_htmlarea.js",
+						"api/js/etemplate/et2_widget_ckeditor.js",
 						"api/js/etemplate/et2_widget_tabs.js",
-						"api/js/etemplate/et2_widget_toolbar.js",
 						"api/js/etemplate/et2_widget_timestamper.js",
+						"api/js/etemplate/et2_widget_toolbar.js",
 						"api/js/etemplate/et2_widget_tree.js",
 						"api/js/etemplate/et2_widget_historylog.js",
 						"api/js/etemplate/et2_widget_hrule.js",
@@ -187,6 +187,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_widget_progress.js",
 						"api/js/etemplate/et2_widget_portlet.js",
 						"api/js/etemplate/et2_widget_ajaxSelect.js",
+						"api/js/etemplate/vfsSelectUI.js",
 						"api/js/etemplate/et2_widget_vfs.js",
 						"api/js/etemplate/et2_widget_video.js",
 						"api/js/jquery/barcode/jquery-barcode.min.js",
@@ -195,8 +196,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_widget_itempicker.js",
 						"api/js/etemplate/et2_widget_script.js",
 						"api/js/etemplate/et2_core_legacyJSFunctions.js",
-						"api/js/etemplate/etemplate2.js",
-						"api/js/etemplate/vfsSelectUI.js"
+						"api/js/etemplate/etemplate2.js"
 					]
 				}
 			},
@@ -249,7 +249,7 @@ module.exports = function (grunt) {
 			},
 			notifications: {
 				files: {
-					"notifications/js/notificationajaxpopup.min.js":[
+					"notifications/js/notificationajaxpopup.min.js": [
 						"notifications/js/notificationajaxpopup.js"
 					]
 				}
@@ -277,6 +277,18 @@ module.exports = function (grunt) {
 						"projectmanager/js/app.js"
 					]
 				}
+			},
+			messenger: {
+				files: {
+					"messenger/js/app.min.js": [
+						"messenger/jsxc/lib/jquery.slimscroll.js",
+						"messenger/jsxc/lib/jquery.fullscreen.js",
+						"messenger/jsxc/lib/jsxc.dep.js",
+						"messenger/jsxc/jsxc.js",
+						"messenger/js/init.js",
+						"messenger/js/app.js"
+					]
+				}
 			}
 		},
 		cssmin: {
@@ -298,11 +310,12 @@ module.exports = function (grunt) {
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
+						"api/templates/default/css/flags.css",
+						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
 						"pixelegg/css/pixelegg.css",
 						"api/templates/default/print.css",
-						"pixelegg/print.css",
-						"api/templates/default/css/flags.css"
+						"pixelegg/print.css"
 					],
 					"pixelegg/css/mobile.min.css": [
 						"api/js/jquery/chosen/chosen.css",
@@ -315,11 +328,12 @@ module.exports = function (grunt) {
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
+						"api/templates/default/css/flags.css",
+						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
 						"pixelegg/css/mobile.css",
 						"api/templates/default/print.css",
-						"pixelegg/print.css",
-						"api/templates/default/css/flags.css"
+						"pixelegg/print.css"
 					],
 					"pixelegg/mobile/fw_mobile.min.css": [
 						"api/js/jquery/chosen/chosen.css",
@@ -332,6 +346,8 @@ module.exports = function (grunt) {
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
+						"api/templates/default/css/flags.css",
+						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
 						"pixelegg/mobile/fw_mobile.css",
 						"api/templates/default/print.css",
@@ -353,6 +369,24 @@ module.exports = function (grunt) {
 						"api/templates/default/print.css",
 						"pixelegg/print.css",
 						"api/templates/default/css/flags.css"
+					],
+					"pixelegg/css/modern.min.css": [
+						"api/js/jquery/chosen/chosen.css",
+						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
+						"vendor/egroupware/magicsuggest/magicsuggest.css",
+						"api/js/jquery/jpicker/css/jPicker-1.1.6.min.css",
+						"api/js/jquery/jquery-ui-timepicker-addon.css",
+						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
+						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
+						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
+						"api/js/etemplate/lib/jsdifflib/diffview.css",
+						"vendor/bower-asset/cropper/dist/cropper.min.css",
+						"api/templates/default/css/flags.css",
+						"api/templates/default/css/htmlarea.css",
+						"api/templates/default/etemplate2.css",
+						"pixelegg/css/modern.css",
+						"api/templates/default/print.css",
+						"pixelegg/print.css"
 					]
 				}
 			},
@@ -369,6 +403,8 @@ module.exports = function (grunt) {
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
+						"api/templates/default/css/flags.css",
+						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
 						"api/templates/default/def_tutorials.css",
 						"api/templates/default/default.css",
@@ -376,8 +412,7 @@ module.exports = function (grunt) {
 						"jdots/css/jdots.css",
 						"jdots/css/high-contrast.css",
 						"api/templates/default/print.css",
-						"jdots/print.css",
-						"api/templates/default/css/flags.css"
+						"jdots/print.css"
 					],
 					"jdots/css/jdots.min.css": [
 						"api/js/jquery/chosen/chosen.css",
@@ -390,14 +425,15 @@ module.exports = function (grunt) {
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
+						"api/templates/default/css/flags.css",
+						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
 						"api/templates/default/def_tutorials.css",
 						"api/templates/default/default.css",
 						"jdots/egw_fw.css",
 						"jdots/css/jdots.css",
 						"api/templates/default/print.css",
-						"jdots/print.css",
-						"api/templates/default/css/flags.css"
+						"jdots/print.css"
 					],
 					"jdots/css/orange-green.min.css": [
 						"api/js/jquery/chosen/chosen.css",
@@ -410,6 +446,8 @@ module.exports = function (grunt) {
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
+						"api/templates/default/css/flags.css",
+						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
 						"api/templates/default/def_tutorials.css",
 						"api/templates/default/default.css",
@@ -417,8 +455,7 @@ module.exports = function (grunt) {
 						"jdots/css/jdots.css",
 						"jdots/css/orange-green.css",
 						"api/templates/default/print.css",
-						"jdots/print.css",
-						"api/templates/default/css/flags.css"
+						"jdots/print.css"
 					]
 				}
 			}

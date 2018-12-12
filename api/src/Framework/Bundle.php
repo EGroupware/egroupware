@@ -145,8 +145,9 @@ class Bundle
 			$mod = filemtime(EGW_SERVER_ROOT.$path);
 			if ($mod > $max_modified) $max_modified = $mod;
 
-			// ckeditor must be included before bundled files, as they depend on it!
-			if (strpos($path,'/ckeditor/ckeditor.js') !== false)
+			// ckeditor of TinyMCE must be included before bundled files, as they depend on it!
+			if (strpos($path,'/ckeditor/ckeditor.js') !== false ||
+				strpos($path, '/tinymce/tinymce.min.js') !== false)
 			{
 				$to_include_first[] = $path . '?' . $mod;
 			}
@@ -234,8 +235,8 @@ class Bundle
 		// include choosen in api, as old eTemplate uses it and fail if it pulls in half of et2
 		$inc_mgr->include_js_file('/api/js/jquery/chosen/chosen.jquery.js');
 		// include CKEditor in api, as old eTemplate uses it too
-		$inc_mgr->include_js_file('/vendor/egroupware/ckeditor/ckeditor.js');
-		$inc_mgr->include_js_file('/vendor/egroupware/ckeditor/config.js');
+		//$inc_mgr->include_js_file('/vendor/egroupware/ckeditor/ckeditor.js');
+		//$inc_mgr->include_js_file('/vendor/egroupware/ckeditor/config.js');
 		$bundles['api'] = $inc_mgr->get_included_files();
 		self::urls($bundles['api'], $max_mod['api']);
 
@@ -254,6 +255,7 @@ class Bundle
 			'calendar' => '/calendar/js/app.js',
 			'mail' => '/mail/js/app.js',
 			'projectmanager' => '/projectmanager/js/app.js',
+			'messenger' => '/messenger/js/app.js',
 		) as $bundle => $file)
 		{
 			if (@file_exists(EGW_SERVER_ROOT.$file))
