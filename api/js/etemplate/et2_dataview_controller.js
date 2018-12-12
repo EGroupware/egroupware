@@ -84,7 +84,6 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 
 		// Current concurrent requests we have
 		this._request_queue = [];
-		this._request_timeout = 0;
 
 		// Register the dataFetch callback
 		this._grid.setDataCallback(this._gridCallback, this);
@@ -203,7 +202,6 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 
 		// Reset the request queue
 		this._request_queue = [];
-		this._request_timeout = 0;
 
 		// Update the data
 		this.update();
@@ -493,17 +491,6 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 		// Clear any still existing timer
 		this._clearTimer();
 
-		if(this._request_queue.length >= this.CONCURRENT_REQUESTS)
-		{
-			// Too many requests, wait until later
-			var self = this;
-			this._queueTimer = window.setTimeout(function () {
-				self._flushQueue(_isUpdate);
-				// Try again with increasing delay, to a max of 30s
-			}, Math.min(30000,ET2_DATAVIEW_FETCH_TIMEOUT*Math.pow( 2, this._request_timeout++)));
-			return;
-		}
-
 		// Mark all elements in a radius of ET2_DATAVIEW_STEPSIZE
 		var marked = {};
 		var r = _isUpdate ? 0 : Math.floor(ET2_DATAVIEW_STEPSIZE / 2);
@@ -614,6 +601,7 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 		this._request_queue.push({
 			query: query,
 			context: ctx,
+			// Start pending, set to 1 when request sent
 			status: 0
 		});
 
@@ -636,21 +624,36 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 		{
 			return;
 		}
-		// Reset timeout timer
-		this._request_timeout = 0;
+
+		// Keep at least 1 previous pending
+		var keep = 1;
 
 		// The most recent is the one the user's most interested in
 		var request = null;
 		for(var i = this._request_queue.length - 1; i >= 0; i--)
 		{
-			if(this._request_queue[i].status == 0)
+			// Only interested in pending requests (status 0)
+			if(this._request_queue[i].status != 0)
+			{
+				continue;
+			}
+			if(request == null)
 			{
 				request = this._request_queue[i];
-				break;
+			}
+			else if (keep > 0)
+			{
+				keep--;
+			}
+			else if (keep <= 0)
+			{
+				// Cancel pending, they've probably scrolled past.
+				this._request_queue.splice(i,1);
 			}
 		}
 		if(request == null) return;
 
+		// Request being sent
 		request.status = 1;
 
 		// Call the callback
