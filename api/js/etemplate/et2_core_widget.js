@@ -718,7 +718,7 @@ var et2_widget = (function(){ "use strict"; return ClassWithAttributes.extend(
 		// constructor if it is available
 		var constructor = typeof et2_registry[_nodeName] == "undefined" ?
 			et2_placeholder : et2_registry[_nodeName];
-		if (readonly && typeof et2_registry[_nodeName + "_ro"] != "undefined")
+		if (readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined")
 		{
 			constructor = et2_registry[_nodeName + "_ro"];
 		}

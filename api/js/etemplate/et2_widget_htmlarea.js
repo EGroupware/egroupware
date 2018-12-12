@@ -13,13 +13,13 @@
 /*egw:uses
 	jsapi.jsapi; // Needed for egw_seperateJavaScript
 	/api/js/tinymce/tinymce.min.js;
-	et2_core_baseWidget;
+	et2_core_editableWidget;
 */
 
 /**
  * @augments et2_inputWidget
  */
-var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2_IResizeable],
+var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([et2_IResizeable],
 {
 	attributes: {
 		'mode': {
@@ -87,7 +87,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		this._super.apply(this, arguments);
 		this.editor = null; // TinyMce editor instance
 		this.supportedWidgetClasses = []; // Allow no child widgets
-		this.htmlNode = jQuery(document.createElement("textarea"))
+		this.htmlNode = jQuery(document.createElement(this.options.readonly ? "div" : "textarea"))
 			.css('height', this.options.height)
 			.addClass('et2_textbox_ro');
 		this.setDOMNode(this.htmlNode[0]);
@@ -99,7 +99,12 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 	 */
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
-		if(this.mode == 'ascii' || this.editor != null) return;
+
+		this.init_editor();
+	},
+
+	init_editor: function() {
+		if(this.mode == 'ascii' || this.editor != null || this.options.readonly) return;
 		var imageUpload = '';
 		var self = this;
 		if (this.options.imageUpload && this.options.imageUpload[0] !== '/' && this.options.imageUpload.substr(0, 4) != 'http')
@@ -189,6 +194,34 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		else
 		{
 			jQuery(this.tinymce_container).css('display', 'flex');
+		}
+	},
+
+	set_readonly: function(_value)
+	{
+		if(this.options.readonly === _value) return;
+		var value = this.get_value();
+		this.options.readonly = _value;
+		if(this.options.readonly)
+		{
+			this.editor.remove();
+			this.htmlNode = jQuery(document.createElement(this.options.readonly ? "div" : "textarea"))
+				.css('height', this.options.height)
+				.addClass('et2_textbox_ro');
+			this.editor = null;
+			this.setDOMNode(this.htmlNode[0]);
+			this.set_value(value);
+		}
+		else
+		{
+			if(!this.editor)
+			{
+				this.htmlNode = jQuery(document.createElement("textarea"))
+					.css('height', this.options.height)
+					.val(value);
+				this.setDOMNode(this.htmlNode[0]);
+				this.init_editor();
+			}
 		}
 	},
 
@@ -315,13 +348,22 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		}
 		else
 		{
-			this.htmlNode.val(_value);
-			this.value = _value;
+			if(this.options.readonly)
+			{
+				this.htmlNode.empty().append(_value);
+			}
+			else
+			{
+				this.htmlNode.val(_value);
+			}
 		}
+		this.value = _value;
 	},
 
 	getValue: function() {
-		return this.editor ? this.editor.getContent() : this.htmlNode.val();
+		return this.editor ? this.editor.getContent() : (
+				this.options.readonly ? this.value : this.htmlNode.val()
+		);
 	},
 
 	/**

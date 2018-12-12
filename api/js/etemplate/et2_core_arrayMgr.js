@@ -426,7 +426,8 @@ var et2_readonlysArrayMgr = (function(){ "use strict"; return et2_arrayMgr.exten
 		// If the attribute is set, return that
 		if (typeof _attr != "undefined" && _attr !== null)
 		{
-			return et2_evalBool(_attr);
+			// Accept 'editable', but otherwise boolean
+			return this.expandName(_attr) === 'editable' ? 'editable' : et2_evalBool(_attr);
 		}
 
 		// Otherwise take into accounf whether the parent is readonly
