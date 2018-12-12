@@ -83,7 +83,6 @@ body {
 			.box_shadow_none;
 			.border_none;
 		}
-		tr.mail td img[src*="svg"] { .gradient_vertical (@gray_70, @gray_70);}
 
 		tr.mail div span {.box_shadow_none;}
 	} // Ende: Box mit Header und Liste
@@ -485,9 +484,6 @@ body {
 					button {
 						   .Complete_Button_Icon_normal;
 						   height: 27px;
-							   [src*="svg"]{
-								.gradient_vertical (@gray_90, @gray_90);
-										   }
 						   }
 				   button[id*="toolbar-composeasnew"],
 				   button[id*="toolbar-reply"],
@@ -1100,10 +1096,7 @@ input[type=button] {
     /* Elemente */
 	button {
 		height: 24px !important;
-		img[src$="svg"] {
-			.gradient_vertical (@gray_60, @gray_60);
-			background-color: @gray_100;
-		}
+		
 		span {
 			padding: 0;
 
@@ -1126,27 +1119,18 @@ input[type=button] {
 		&:focus {
 			background-color: @color_positive_action;
 			.gradient_vertical (@color_positive_action, @color_positive_action);
-			img[src$="svg"] {
-				.gradient_vertical (@color_positive_action, @color_positive_action);
-				background-color: @color_positive_action;
-			}
+
 		}
 		&:hover {
 			background-color: @color_positive_action;
 			.gradient_vertical (@color_positive_action, @color_positive_action);
-			img[src$="svg"] {
-				.gradient_vertical (@color_positive_action, @color_positive_action);
-				background-color: @color_positive_action;
-			}
+
 			color:white;
 		}
 		&:active {
 			background-color: @color_positive_action;
 			.gradient_vertical (@color_positive_action, @color_positive_action);
-			img[src$="svg"]{
-			   .gradient_vertical (@color_positive_action, @color_positive_action);
-			   background-color: @color_positive_action;
-			}
+
 		}
 	}
 
@@ -1155,29 +1139,20 @@ input[type=button] {
 						&:focus {
 			background-color: @color_negative_action;;
 			.gradient_vertical (@color_negative_action, @color_negative_action);
-					img[src$="svg"]{
-				   .gradient_vertical (@color_negative_action, @color_negative_action);
-				   background-color: @color_negative_action;
-				   }
+
 
 		}
 		&:hover {
 			background-color: @color_negative_action;
 			.gradient_vertical (@color_negative_action, @color_negative_action);
-					img[src$="svg"]{
-				   .gradient_vertical (@color_negative_action, @color_negative_action);
-				   background-color: @color_negative_action;
-				   }
+
 			color:white;
 
 		}
 		&:active {
 			background-color: @color_negative_action;;
 			.gradient_vertical (@color_negative_action, @color_negative_action);
-					img[src$="svg"]{
-				   .gradient_vertical (@color_negative_action, @color_negative_action);
-				   background-color: @color_negative_action;
-				   }
+
 
 		}
 	}
@@ -1188,26 +1163,17 @@ input[type=button] {
 		&:focus {
 			background-color: @egw_color_1_a;
 			.gradient_vertical (@egw_color_1_a, @egw_color_1_a);
-			img[src$="svg"] {
-				.gradient_vertical (@egw_color_1_a, @egw_color_1_a);
-				background-color: @egw_color_1_a;
-			}
+
 		}
 		&:hover {
 			background-color: @egw_color_1_a;
 			.gradient_vertical (@egw_color_1_a, @egw_color_1_a);
-			img[src$="svg"] {
-				.gradient_vertical (@egw_color_1_a, @egw_color_1_a);
-				background-color: @egw_color_1_a;
-			}
+
 		}
 		&:active {
 			background-color: @egw_color_1_a;
 			.gradient_vertical (@egw_color_1_a, @egw_color_1_a);
-			img[src$="svg"] {
-				.gradient_vertical (@egw_color_1_a, @egw_color_1_a);
-				background-color: @egw_color_1_a;
-			}
+
 		}
 	}
 }
