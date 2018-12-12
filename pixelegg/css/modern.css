@@ -6587,6 +6587,9 @@ form[id^="wiki-"] .dialogHeadbar {
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(51, 51, 153, 0.3);
 }
+#addressbook_sidebox_header {
+  border-left: 4px solid #333399 !important;
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #addressbook-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
   border-bottom-color: #333399;
@@ -6594,6 +6597,9 @@ form[id^="wiki-"] .dialogHeadbar {
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #admin_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(0, 115, 206, 0.3);
+}
+#admin_sidebox_header {
+  border-left: 4px solid #0073ce !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #admin-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
@@ -6603,6 +6609,9 @@ form[id^="wiki-"] .dialogHeadbar {
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #bookmarks_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(219, 0, 135, 0.3);
 }
+#bookmarks_sidebox_header {
+  border-left: 4px solid #db0087 !important;
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #bookmarks-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
   border-bottom-color: #db0087;
@@ -6610,6 +6619,9 @@ form[id^="wiki-"] .dialogHeadbar {
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #calendar_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(204, 0, 51, 0.3);
+}
+#calendar_sidebox_header {
+  border-left: 4px solid #CC0033 !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #calendar-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
@@ -6619,6 +6631,9 @@ form[id^="wiki-"] .dialogHeadbar {
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(249, 215, 48, 0.3);
 }
+#filemanager_sidebox_header {
+  border-left: 4px solid #F9d730 !important;
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #filemanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
   border-bottom-color: #F9d730;
@@ -6626,6 +6641,9 @@ form[id^="wiki-"] .dialogHeadbar {
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #infolog_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(255, 185, 54, 0.3);
+}
+#infolog_sidebox_header {
+  border-left: 4px solid #FFB936 !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #infolog-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
@@ -6635,6 +6653,9 @@ form[id^="wiki-"] .dialogHeadbar {
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(71, 178, 212, 0.3);
 }
+#mail_sidebox_header {
+  border-left: 4px solid #47b2d4 !important;
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #mail-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
   border-bottom-color: #47b2d4;
@@ -6642,6 +6663,9 @@ form[id^="wiki-"] .dialogHeadbar {
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #projectmanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(117, 222, 39, 0.3);
+}
+#projectmanager_sidebox_header {
+  border-left: 4px solid #75de27 !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #projectmanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
@@ -6651,6 +6675,9 @@ form[id^="wiki-"] .dialogHeadbar {
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #resources_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(0, 153, 102, 0.3);
 }
+#resources_sidebox_header {
+  border-left: 4px solid #009966 !important;
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #resources-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
   border-bottom-color: #009966;
@@ -6658,6 +6685,9 @@ form[id^="wiki-"] .dialogHeadbar {
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #timesheet_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(157, 21, 234, 0.3);
+}
+#timesheet_sidebox_header {
+  border-left: 4px solid #9d15ea !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #timesheet-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
@@ -6667,6 +6697,9 @@ form[id^="wiki-"] .dialogHeadbar {
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #tracker_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(0, 102, 102, 0.3);
 }
+#tracker_sidebox_header {
+  border-left: 4px solid #006666 !important;
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #tracker-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
   border-bottom-color: #006666;
@@ -6674,6 +6707,9 @@ form[id^="wiki-"] .dialogHeadbar {
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #wiki_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(121, 121, 121, 0.3);
+}
+#wiki_sidebox_header {
+  border-left: 4px solid #797979 !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #wiki-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
@@ -6726,4 +6762,19 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
   filter: none;
+}
+.egwGridView_scrollarea tr.row_category > td:first-child,
+.select-cat li {
+  border-left: 4px solid transparent;
+}
+.et2_taglist_category span[class*="cat_"] {
+  width: 4px;
+}
+.et2_taglist_category.et2_taglist_single span[class*="cat_"] {
+  height: 1.5em;
+  margin-bottom: -6px;
+  position: absolute;
+  margin-left: -8px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
