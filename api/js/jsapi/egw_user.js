@@ -183,7 +183,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						}
 						_callback.call(_context, data);
 					}
-					).sendRequest();
+					).sendRequest(false);
 			}
 			else
 			{
