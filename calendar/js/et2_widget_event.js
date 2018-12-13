@@ -81,7 +81,10 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				{
 					event.options.statustext_html = true;
 					event.set_statustext(event._tooltip());
-					return event.div.trigger('mouseenter');
+					if(event.statustext)
+					{
+						return event.div.trigger('mouseenter');
+					}
 				}
 				// Hacky to remove egw's tooltip border and let the mouse in
 				window.setTimeout(function() {
