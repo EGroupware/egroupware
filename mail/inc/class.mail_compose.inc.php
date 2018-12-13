@@ -504,7 +504,6 @@ class mail_compose
 			{
 				try
 				{
-					$GLOBALS['egw']->session->commit_session();
 					$success = $this->send($_content);
 					if ($success==false)
 					{
