@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.add" template="" lang="" group="0" version="19.1.000">
+		<grid width="100%">
+			<columns>
+				<column width="88"/>
+				<column width="130"/>
+				<column width="88"/>
+				<column width="130"/>
+				<column width="130"/>
+			</columns>
+			<rows>
+				<row class="dialogHeader" height="28">
+					<appicon/>
+					<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1" class="et2_fullWidth" span="4" blur="Title"/>
+				</row>
+				<row class="dialogHeader2" height="28">
+					<description for="start" value="Start" width="88"/>
+					<date-time id="start" needed="1" class="required" onchange="app.calendar.edit_start_change"/>
+					<description for="duration" value="Duration" id="calendar_edit_duration" />
+					<menulist>
+						<menupopup statustext="Duration of the meeting" class="et2_fullWidth" id="duration" no_lang="1" onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
+					</menulist>
+					<date-time id="end" onchange="app.calendar.edit_update_participant"/>
+				</row>
+			</rows>
+		</grid>
+		<hbox class="dialogFooterToolbar">
+			<button statustext="saves the changes made" label="Save" id="button[save]" image="save" background_image="1" />
+			<button statustext="Full edit dialog" label="Edit" id="button[edit]" image="edit" background_image="1"/>
+			<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+			<checkbox label="Always use full edit dialog" id="always_edit_dialog" statustext="Always use the full edit dialog, not this little dialog" onchange="debugger;egw.set_preference('calendar',widget.id,widget.get_value() ? 'edit' : 'add');"/>
+		</hbox>
+	</template>
+</overlay>

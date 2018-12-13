@@ -208,6 +208,10 @@ class calendar_uiforms extends calendar_ui
 				$cat = (int)$cat;
 			}
 		}
+		else
+		{
+			$cat_id = $this->cal_prefs['default_category'];
+		}
 		$duration = isset($_GET['duration']) ? (int)$_GET['duration'] : (int) $this->bo->cal_prefs['defaultlength']*60;
 		if(isset($_GET['end']))
 		{
@@ -634,6 +638,11 @@ class calendar_uiforms extends calendar_ui
 		{
 		case 'exception':	// create an exception in a recuring event
 			$msg = $this->_create_exception($event,$preserv);
+			break;
+		case 'edit':
+			// Going from add dialog to full edit dialog
+			unset($preserv['template']);
+			unset($event['template']);
 			break;
 
 		case 'copy':	// create new event with copied content, some content need to be unset to make a "new" event
@@ -1478,6 +1487,12 @@ class calendar_uiforms extends calendar_ui
 				'no_popup' => isset($_GET['no_popup']),
 				'template' => isset($_GET['template']) ? $_GET['template'] : (isset($_REQUEST['print']) ? 'calendar.print' : 'calendar.edit'),
 			);
+			if($preserv['template'] && ($registry = Link::get_registry('calendar', 'add')) && $registry['template'] == $preserv['template'] &&
+					$this->cal_prefs['new_event_dialog'] == 'edit')
+			{
+				// User wants full thing
+				unset($preserv['template']);
+			}
 			$cal_id = (int) $_GET['cal_id'];
 			if($_GET['action'])
 			{

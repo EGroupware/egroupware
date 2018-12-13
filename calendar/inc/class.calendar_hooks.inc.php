@@ -45,6 +45,7 @@ class calendar_hooks
 			),
 			'add'        => array(
 				'menuaction' => 'calendar.calendar_uiforms.edit',
+				'template' => 'calendar.add'
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
@@ -243,6 +244,14 @@ class calendar_hooks
 				'admin'  => False,
 				'default'=> '1',	// 1 = week
 			),*/
+			'new_event_dialog' => array(
+				'type'	=> 'select',
+				'label'	=> 'New event dialog',
+				'name'	=> 'new_event_dialog',
+				'values'=>	array('add' => lang('Quick add'), 'edit' => lang('Regular edit')),
+				'help'	=> 'Use quick add or full edit dialog when creating a new event',
+				'default'	=> 'add',
+			),
 			'multiple_weeks' => array(
 				'type'   => 'select',
 				'label'  => 'Weeks in multiple week view',
@@ -351,6 +360,16 @@ class calendar_hooks
 				'values'=>	$default_participants,
 				'help'	=> 'Participants automatically added to new events',
 				'default'	=> 'selected',
+				'xmlrpc' => False,
+				'admin'  => False
+			),
+			'default_category' => array(
+				'type'	=> 'multiselect',
+				'label'	=> 'New event category',
+				'name'	=> 'default_category',
+				'help'	=> 'Category automatically added to new events',
+				'values' => Api\Etemplate\Widget\Select::typeOptions('select-cat', ',,,calendar'),
+				'default'	=> '',
 				'xmlrpc' => False,
 				'admin'  => False
 			),

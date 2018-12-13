@@ -215,6 +215,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				this.state = content.data;
 				break;
 
+			case 'calendar.add':
 			case 'calendar.edit':
 				if (typeof content.data['conflicts'] == 'undefined')
 				{
@@ -223,9 +224,12 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					{
 						this.set_enddate_visibility();
 						this.check_recur_type();
-						this.edit_start_change();
-						this.et2.getWidgetById('recur_exception').set_disabled(!content.data.recur_exception ||
-							typeof content.data.recur_exception[0] == 'undefined');
+						this.edit_start_change(null, this.et2.getWidgetById('start'));
+						if(this.et2.getWidgetById('recur_exception'))
+						{
+							this.et2.getWidgetById('recur_exception').set_disabled(!content.data.recur_exception ||
+								typeof content.data.recur_exception[0] == 'undefined');
+						}
 					}
 					else
 					{
