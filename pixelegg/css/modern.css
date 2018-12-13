@@ -386,18 +386,11 @@
   }
   .et2_link_list td div.delete {
     visibility: hidden;
-    background-image: url("../images/close.png");
+    background-image: url("../images/delete.png");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 16px 16px;
-    background-color: #AE1D00;
+    background-size: 12px 12px;
     padding: 0px;
-  }
-  .et2_link_list td div.delete:hover {
-    background-color: #e12500 !important;
-  }
-  .et2_link_list td div.delete:active {
-    background-color: #e12500 !important;
   }
   .egw_tooltip {
     background-color: #ffffff;
@@ -6778,7 +6771,8 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
-img.et2_button_icon[src*="svg"] {
+img.et2_button_icon[src*="svg"],
+img.et2_button_icon[src*="svg"]:hover {
   background-color: transparent;
   background-image: none;
 }
