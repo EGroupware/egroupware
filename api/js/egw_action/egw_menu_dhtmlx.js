@@ -99,7 +99,9 @@ function egwMenuImpl(_structure)
 	// Add disableIfNoEPL class to the relevant action's DOM
 	for(var i in this.dhtmlxmenu.idPull)
 	{
-		if (this.dhtmlxmenu.userData[i+'_egw_menu'] && this.dhtmlxmenu.userData[i+'_egw_menu']['data']['disableIfNoEPL'])
+		if (this.dhtmlxmenu.userData[i+'_egw_menu'] &&
+				this.dhtmlxmenu.userData[i+'_egw_menu']['data'] &&
+				this.dhtmlxmenu.userData[i+'_egw_menu']['data']['disableIfNoEPL'])
 		{
 			this.dhtmlxmenu.idPull[i].className += ' disableIfNoEPL';
 		}
