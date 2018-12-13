@@ -110,7 +110,7 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 			"standards" : (document.selection ? "ie" : false ) );
 
 		var pos = 0;
-		var CK = CKEDITOR && CKEDITOR.instances[input.id] || false;
+		var tinymce = tinyMCE && tinyMCE.EditorManager.get(input.id) || false;
 
 		// Find cursor or selection
 		if (browser == "ie")
@@ -126,12 +126,9 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 		};
 
 		// If CKEDitor, update it
-		if(CKEDITOR && CKEDITOR.instances[input.id])
+		if(tinymce)
 		{
-			CKEDITOR.instances[input.id].insertText(text);
-			window.setTimeout(function() {
-				CKEDITOR.instances[input.id].focus();
-			}, 10);
+			tinymce.insertContent(text);
 		}
 		else
 		{
