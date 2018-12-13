@@ -308,7 +308,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 				settings.toolbar = et2_htmlarea.TOOLBAR_SIMPLE;
 				break;
 			case 'extended':
-				settings.toolbar = et2_htmlarera.TOOLBAR_EXTENDED;
+				settings.toolbar = et2_htmlarea.TOOLBAR_EXTENDED;
 				break;
 			case 'advanced':
 				settings.toolbar = et2_htmlarea.TOOLBAR_ADVANCED;
@@ -419,8 +419,8 @@ jQuery.extend(et2_htmlarea, {
 	 * arranged toolbars as simple mode
 	 * @constant
 	 */
-	TOOLBAR_SIMPLE: "undo redo|fontselect fontsizeselect | bold italic  removeformat forecolor backcolor | "+
-					"alignleft aligncenter alignright alignjustify  | numlist "+
+	TOOLBAR_SIMPLE: "undo redo|fontselect fontsizeselect | bold italic removeformat forecolor backcolor | "+
+					"alignleft aligncenter alignright alignjustify | numlist "+
 					"bullist outdent indent| link image pastetext",
 	/**
 	 * arranged toolbars as extended mode
@@ -428,13 +428,13 @@ jQuery.extend(et2_htmlarea, {
 	 */
 	TOOLBAR_EXTENDED: "fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
 					"link | alignleft aligncenter alignright alignjustify  | numlist "+
-					"bullist outdent indent  | removeformat | image",
+					"bullist outdent indent | removeformat | image",
 	/**
 	 * arranged toolbars as advanced mode
 	 * @constant
 	 */
 	TOOLBAR_ADVANCED: "undo redo| formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
-					"link | alignleft aligncenter alignright alignjustify  | numlist "+
+					"link | alignleft aligncenter alignright alignjustify | numlist "+
 					"bullist outdent indent ltr rtl | removeformat code| image | searchreplace",
 	/**
 	 * font size formats
