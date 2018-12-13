@@ -419,9 +419,9 @@ jQuery.extend(et2_htmlarea, {
 	 * arranged toolbars as simple mode
 	 * @constant
 	 */
-	TOOLBAR_SIMPLE: "fontselect fontsizeselect | bold italic forecolor backcolor | "+
+	TOOLBAR_SIMPLE: "undo redo|fontselect fontsizeselect | bold italic  removeformat forecolor backcolor | "+
 					"alignleft aligncenter alignright alignjustify  | numlist "+
-					"bullist outdent indent | link image",
+					"bullist outdent indent| link image pastetext",
 	/**
 	 * arranged toolbars as extended mode
 	 * @constant
