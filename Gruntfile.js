@@ -171,6 +171,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_extension_nextmatch.js",
 						"api/js/etemplate/et2_widget_favorites.js",
 						"api/js/etemplate/et2_widget_html.js",
+						"api/js/etemplate/et2_core_editableWidget.js",
 						"api/js/etemplate/et2_widget_htmlarea.js",
 						"api/js/etemplate/et2_widget_ckeditor.js",
 						"api/js/etemplate/et2_widget_tabs.js",
