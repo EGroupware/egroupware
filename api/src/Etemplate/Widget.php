@@ -335,9 +335,6 @@ class Widget
 	 */
 	public static function scanForWidgets()
 	{
-		//try fixing loading order by explicitly select widget to load first
-		class_exists(__NAMESPACE__.'\Widget\Select');
-
 		$widget_registry = Api\Cache::getInstance('etemplate', 'widget_registry');
 
 		if (!$widget_registry)	// not in instance cache --> rescan from filesystem
