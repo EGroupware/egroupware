@@ -65,6 +65,7 @@ all addressbooks	addressbook	en	All addressbooks
 all contacts	addressbook	en	All contacts
 all in one field	addressbook	en	All in one field
 all types	addressbook	en	All types
+allow	addressbook	en	Allow
 allow members of following groups to edit contact-data of accounts	addressbook	en	Allow members of following groups to edit contact-data of accounts
 allow users to maintain their own account-data	admin	en	Allow users to maintain their own account data
 alt. csv import	addressbook	en	Alt. CSV Import
@@ -92,6 +93,7 @@ business state	addressbook	en	Business state
 business street	addressbook	en	Business street
 business zip code	addressbook	en	Business postal code
 calendar fields:	addressbook	en	Calendar fields:
+calendar integration	addressbook	en	Calendar integration
 calendar uri	addressbook	en	Calendar URI
 can be changed via setup >> configuration	admin	en	Can be changed via Setup >> Configuration
 can't create dn %1	addressbook	en	Can't create dn %1
@@ -183,7 +185,8 @@ deletes the photo	addressbook	en	Deletes the photo
 department	common	en	Department
 departments	addressbook	en	Departments
 directory with documents to insert contacts	addressbook	en	Directory with documents to insert contacts
-disable Last/Next Event column	addressbook	en	Disable Last/Next Event column
+disable	addressbook	en	Disable
+disable last/next event column	addressbook	en	Disable Last/Next Event column
 display contact	addressbook	en	Display contact
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Display birthdays on the Home page.
 distribution list deleted	addressbook	en	Distribution list deleted
