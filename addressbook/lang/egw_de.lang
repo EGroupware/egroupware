@@ -65,6 +65,7 @@ all addressbooks	addressbook	de	Alle Adressbücher
 all contacts	addressbook	de	Alle Kontakte
 all in one field	addressbook	de	Alle Kategorien in einem Feld ausgeben
 all types	addressbook	de	Alle Typen
+allow	addressbook	de	erlauben
 allow members of following groups to edit contact-data of accounts	addressbook	de	Erlaube Mitgliedern der folgenden Gruppen die Kontaktdaten von Benutzern zu bearbeiten
 allow users to maintain their own account-data	admin	de	Erlaube Benutzern ihre eigenen Benutzerdaten zu verwalten
 alt. csv import	addressbook	de	Alt. CSV Import
@@ -92,6 +93,7 @@ business state	addressbook	de	Bundesland geschäftl.
 business street	addressbook	de	Straße geschäftl.
 business zip code	addressbook	de	PLZ geschäftl.
 calendar fields:	addressbook	de	Kalender Felder:
+calendar integration	addressbook	de	Kalender Integration
 calendar uri	addressbook	de	Kalender URI
 can be changed via setup >> configuration	admin	de	Kann über Setup >> Konfiguration geändert werden
 can't create dn %1	addressbook	de	dn %1 kann nicht erstellt werden
@@ -183,6 +185,8 @@ deletes the photo	addressbook	de	Löscht das Foto
 department	common	de	Abteilung
 departments	addressbook	de	Abteilungen
 directory with documents to insert contacts	addressbook	de	Verzeichnis mit Dokumenten zum Einfügen von Kontakten
+disable	addressbook	de	Deaktivieren
+disable last/next event column	addressbook	de	Spalte Letzer/nächster Termin deaktivieren
 display contact	addressbook	de	Kontakte Anzeigen
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	de	Zeigt auf der Startseite eine Geburtstags Erinnerung an. Die Startseite ist die Seite die Sie sehen, wenn Sie sich in der EGroupware anmelden oder auf das Startseiten Icon (Haus) klicken.
 distribution list deleted	addressbook	de	Verteiler gelöscht
