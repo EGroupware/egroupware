@@ -99,7 +99,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			"name": "Chunk size",
 			"type": "integer",
 			"default": 1024*1024,
-			"description": "Max chunk size, gets set from server-side PHP max_upload_size/2 (must be 2^N)"
+			"description": "Max chunk size, gets set from server-side PHP (max_upload_size-1M)/2"	// last chunk can be up to 2*chunk_size!
 		}
 	},
 

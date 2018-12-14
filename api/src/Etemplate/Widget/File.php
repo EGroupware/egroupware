@@ -190,7 +190,7 @@ class File extends Etemplate\Widget
 			{
 				// check if all the parts present, and create the final destination file
 				$new_file = self::createFileFromChunks($temp_dir, str_replace('/','_',$_POST['resumableFilename']),
-						$_POST['resumableChunkSize'], $_POST['resumableTotalSize']);
+						$_POST['resumableTotalSize']);
 			}
 			if( $new_file) {
 				$file['tmp_name'] = $new_file;
@@ -214,22 +214,23 @@ class File extends Etemplate\Widget
 	 * From Resumable samples - http://resumablejs.com/
 	 * @param string $temp_dir - the temporary directory holding all the parts of the file
 	 * @param string $fileName - the original file name
-	 * @param string $chunkSize - each chunk size (in bytes)
 	 * @param string $totalSize - original file size (in bytes)
 	 */
-	private static function createFileFromChunks($temp_dir, $fileName, $chunkSize, $totalSize) {
+	private static function createFileFromChunks($temp_dir, $fileName, $totalSize) {
 
 		// count all the parts of this file
-		$total_files = 0;
+		$total_files = $sum_size = 0;
 		foreach(scandir($temp_dir) as $file) {
 			if (stripos($file, $fileName) !== false) {
 				$total_files++;
+				$sum_size += filesize($temp_dir.'/'.$file);
 			}
 		}
 
 		// check that all the parts are present
 		// the size of the last part is between chunkSize and 2*$chunkSize
-		if ($total_files * $chunkSize >=  ($totalSize - $chunkSize + 1)) {
+		if ($sum_size >= $totalSize)
+		{
 			if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
 			{
 				$new_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'egw_');
@@ -341,7 +342,10 @@ class File extends Etemplate\Widget
 	}
 
 	/**
-	 * Set default chunk_size attribute to max_upload_size/2
+	 * Set default chunk_size attribute to (max_upload_size-1M)/2
+	 *
+	 * Last chunk can be 2*chunk_size, therefore we can only set max_upload_size/2
+	 * minus "some" for other transfered fields.
 	 *
 	 * @param string $cname
 	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
@@ -355,13 +359,7 @@ class File extends Etemplate\Widget
 		if (!is_numeric($unit)) $upload_max_filesize *= $unit == 'm' ? 1024*1024 : 1024;
 		if ($upload_max_filesize > 1024*1024)
 		{
-			// resumable chunkSize has to be 2^N
-			$n = 10;
-			while(1<<(1+$n) < $upload_max_filesize-1024*1024)
-			{
-				$n++;
-			}
-			self::setElementAttribute($form_name, 'chunk_size', 1 << $n);
+			self::setElementAttribute($form_name, 'chunk_size', ($upload_max_filesize-1024*1024)/2);
 		}
 	}
 }
