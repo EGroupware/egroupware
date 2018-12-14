@@ -1334,6 +1334,9 @@ class calendar_boupdate extends calendar_bo
 				// remove alarms belonging to not longer existing or rejected participants
 				if ($alarm['owner'] && isset($expanded['participants']))
 				{
+					// Don't auto-delete alarm if created by event owner
+					if($alarm['all'] && $alarm['owner'] == $event['owner']) continue;
+
 					$status = $expanded['participants'][$alarm['owner']];
 					if (!isset($status) || calendar_so::split_status($status) === 'R')
 					{
