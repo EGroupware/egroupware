@@ -79,7 +79,7 @@ class calendar_boupdate extends calendar_bo
 	 * @var array id => data
 	 */
 	protected static $tz_cache = array();
-	
+
 	/**
 	 * Constructor
 	 */
@@ -1334,6 +1334,9 @@ class calendar_boupdate extends calendar_bo
 				// remove alarms belonging to not longer existing or rejected participants
 				if ($alarm['owner'] && isset($expanded['participants']))
 				{
+					// Don't auto-delete alarm if for all users
+					if($alarm['all']) continue;
+
 					$status = $expanded['participants'][$alarm['owner']];
 					if (!isset($status) || calendar_so::split_status($status) === 'R')
 					{
