@@ -17,7 +17,7 @@ use EGroupware\Api\Etemplate;
 /**
  * eTemplate ajax select widget
  */
-class AjaxSelect extends \EGroupware\Api\Etemplate\Widget\Select
+class AjaxSelect extends Select
 {
 	/**
 	 * Constructor
