@@ -339,4 +339,29 @@ class File extends Etemplate\Widget
 			if($valid && !$this->attrs['multiple']) $valid = $valid[0];
 		}
 	}
+
+	/**
+	 * Set default chunk_size attribute to max_upload_size/2
+	 *
+	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 */
+	public function beforeSendToClient($cname, array $expand=null)
+	{
+		$form_name = self::form_name($cname, $this->id, $expand);
+
+		$upload_max_filesize = ini_get('upload_max_filesize');
+		$unit = strtolower(substr($upload_max_filesize, -1));
+		if (!is_numeric($unit)) $upload_max_filesize *= $unit == 'm' ? 1024*1024 : 1024;
+		if ($upload_max_filesize > 1024*1024)
+		{
+			// resumable chunkSize has to be 2^N
+			$n = 10;
+			while(1<<(1+$n) < $upload_max_filesize-1024*1024)
+			{
+				$n++;
+			}
+			self::setElementAttribute($form_name, 'chunk_size', 1 << $n);
+		}
+	}
 }

@@ -94,6 +94,12 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			"type": "string",
 			"default": '',
 			"description": "Define types of files that the server accepts. Multiple types can be seperated by comma and the default is to accept everything."
+		},
+		chunk_size: {
+			"name": "Chunk size",
+			"type": "integer",
+			"default": 1024*1024,
+			"description": "Max chunk size, gets set from server-side PHP max_upload_size/2 (must be 2^N)"
 		}
 	},
 
@@ -153,6 +159,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			onError: function(event, name, error) { return self.onError(event,name,error);},
 			beforeSend: function(form) { return self.beforeSend(form);},
 
+			chunkSize: this.options.chunk_size || 1024*1024,
 
 			target: egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\File::ajax_upload"),
 			query: function(file) {return self.beforeSend(file);},
