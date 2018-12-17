@@ -34,6 +34,7 @@
 					<description value="Disable Last/Next Event column"/>
 					<select id="newsettings[disable_event_column]">
 						<option value="">Allow</option>
+						<option value="contacts">Allow for contacts only</option>
 						<option value="True">Disabled</option>
 					</select>
 				</row>

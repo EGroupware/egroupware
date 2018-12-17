@@ -66,6 +66,7 @@ all contacts	addressbook	en	All contacts
 all in one field	addressbook	en	All in one field
 all types	addressbook	en	All types
 allow	addressbook	en	Allow
+allow for contacts only	addressbook	en	Allow for contacts only
 allow members of following groups to edit contact-data of accounts	addressbook	en	Allow members of following groups to edit contact-data of accounts
 allow users to maintain their own account-data	admin	en	Allow users to maintain their own account data
 alt. csv import	addressbook	en	Alt. CSV Import
