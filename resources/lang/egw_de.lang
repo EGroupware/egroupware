@@ -3,6 +3,7 @@
 %1 resource(s) %2	resources	de	%1 Ressource(n) %2
 %1 resource(s) %2, %3 failed	resources	de	%1 Ressource(n) %2, %3 fehlgeschlagen
 %1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	de	%1 Ressource(n) %2, %3 fehlgeschlagen wegen fehlender Rechte!
+%1 resource(s) View calendar	resources	de	Kalender Anzeigen von %1 Ressourcen
 accessories	resources	de	Zubehör
 accessories of	resources	de	Zubehör von
 accessories:	resources	de	Zubehör:
