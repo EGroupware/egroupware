@@ -1049,7 +1049,7 @@ body {
 }
 .egw_fw_ui_category_content .selectedTreeRow,
 .egw_fw_ui_category_content .selectedTreeRow_lor {
-  background-color: #ffc200;
+  background-color: #FFDD73;
   color: #1E1E1E;
   text-decoration: none;
 }
@@ -1117,7 +1117,7 @@ body {
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-to_tracker:hover,
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-disposition:hover,
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-to_calendar:hover {
-  background-color: #ffc200;
+  background-color: #FFDD73;
 }
 #mail-compose table.et2_grid {
   display: inline-block;
@@ -1627,7 +1627,7 @@ div#displayToolbar-menulist img {
 #mail-folder_management .selectedTreeRow,
 #mail-subscribe .selectedTreeRow_lor,
 #mail-folder_management .selectedTreeRow_lor {
-  background-color: #ffc200;
+  background-color: #FFDD73;
   color: #1E1E1E;
   text-decoration: none;
 }
@@ -2134,40 +2134,43 @@ input[type=button] {
 #mail-index_toolbar button[id*="toolbar-infolog"]:focus,
 #mail-index_toolbar button[id*="toolbar-tracker"]:focus,
 #mail-index_toolbar button[id*="toolbar-calendar"]:focus {
-  background-color: #ffc200;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #ffc200, #ffc200);
-  background-image: -ms-linear-gradient(top, #ffc200, #ffc200);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffc200), to(#ffc200));
-  background-image: -webkit-linear-gradient(top, #ffc200, #ffc200);
-  background-image: -o-linear-gradient(top, #ffc200, #ffc200);
-  background-image: linear-gradient(top, #ffc200, #ffc200);
+  background-color: #FFDD73;
+  background-color: #ffdd73;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjRkZERDczIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjRkZERDczIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: -ms-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFDD73), to(#FFDD73));
+  background-image: -webkit-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: -o-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: linear-gradient(top, #FFDD73, #FFDD73);
   background-repeat: repeat-x;
 }
 #mail-index_toolbar button[id*="toolbar-infolog"]:hover,
 #mail-index_toolbar button[id*="toolbar-tracker"]:hover,
 #mail-index_toolbar button[id*="toolbar-calendar"]:hover {
-  background-color: #ffc200;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #ffc200, #ffc200);
-  background-image: -ms-linear-gradient(top, #ffc200, #ffc200);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffc200), to(#ffc200));
-  background-image: -webkit-linear-gradient(top, #ffc200, #ffc200);
-  background-image: -o-linear-gradient(top, #ffc200, #ffc200);
-  background-image: linear-gradient(top, #ffc200, #ffc200);
+  background-color: #FFDD73;
+  background-color: #ffdd73;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjRkZERDczIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjRkZERDczIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: -ms-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFDD73), to(#FFDD73));
+  background-image: -webkit-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: -o-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: linear-gradient(top, #FFDD73, #FFDD73);
   background-repeat: repeat-x;
 }
 #mail-index_toolbar button[id*="toolbar-infolog"]:active,
 #mail-index_toolbar button[id*="toolbar-tracker"]:active,
 #mail-index_toolbar button[id*="toolbar-calendar"]:active {
-  background-color: #ffc200;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #ffc200, #ffc200);
-  background-image: -ms-linear-gradient(top, #ffc200, #ffc200);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffc200), to(#ffc200));
-  background-image: -webkit-linear-gradient(top, #ffc200, #ffc200);
-  background-image: -o-linear-gradient(top, #ffc200, #ffc200);
-  background-image: linear-gradient(top, #ffc200, #ffc200);
+  background-color: #FFDD73;
+  background-color: #ffdd73;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjRkZERDczIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjRkZERDczIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: -ms-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFDD73), to(#FFDD73));
+  background-image: -webkit-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: -o-linear-gradient(top, #FFDD73, #FFDD73);
+  background-image: linear-gradient(top, #FFDD73, #FFDD73);
   background-repeat: repeat-x;
 }
 /*AN / To*/

@@ -5796,10 +5796,6 @@ table.egwGridView_grid tbody tr.selected {
   /*background-color: @egw_color_1_e !important;*/
   background-color: rgba(255, 194, 0, 0.5);
 }
-table.egwGridView_grid tbody tr.focused {
-  background-image: url(../images/yellow-stripe-a.png);
-  background-repeat: repeat;
-}
 table.egwGridView_grid tbody td {
   border-bottom: 1px solid #E6E6E6;
   color: #000000;
