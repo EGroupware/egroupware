@@ -513,7 +513,7 @@ wrong admin-account or -password !!!	admin	zh	错误的管理员账户或密码�
 xml-rpc	admin	zh	XML-RPC
 you have entered an invalid expiration date	admin	zh	输入的有效期限无效
 you have to enter a name, to create a new field!!!	admin	zh	为创建一新字段域，您需要输入一个新字段名！
-you have to enter a name, to create a new type!!!	admin	zh	您必须输入名称来创建新类型！
+you have to enter a name, to create a new type!	admin	zh	您必须输入名称来创建新类型！
 you must add at least 1 permission or group to this account	admin	zh	必须至少为此帐户添加一个权限或组
 you must enter a group name.	admin	zh	必须输入组名称。
 you must enter a lastname	admin	zh	必须输入姓

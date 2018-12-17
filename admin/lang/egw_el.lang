@@ -447,7 +447,7 @@ would you like to show each application's upgrade status ?	admin	el	Θέλετε
 xml-rpc	admin	el	XML-RPC
 you have entered an invalid expiration date	admin	el	Εχετε εισάγει μια λάθοςημερομηνία λήξης
 you have to enter a name, to create a new field!!!	admin	el	Πρέπει να πληκτρολογήσετε ένα όνομα, για τη δημιουργία νέου πεδίου!!!
-you have to enter a name, to create a new type!!!	admin	el	Πρέπει να πληκτρολογήσετε ένα όνομα, για τη δημιουργία νέου τύπου!!!
+you have to enter a name, to create a new type!	admin	el	Πρέπει να πληκτρολογήσετε ένα όνομα, για τη δημιουργία νέου τύπου!
 you must add at least 1 permission or group to this account	admin	el	Πρέπει να προσθέσεις το λιγότερο 1 δικαίωμα ή ομάδα σ'αυτό τον λογαριασμό
 you must enter a group name.	admin	el	Πρέπει να εισάγετε ένα όνομα ομάδας
 you must enter a lastname	admin	el	Πρέπει να εισάγετε ένα επίθετο

@@ -648,7 +648,7 @@ you can only change the hash, if you set a random password or currently use plai
 you have entered an invalid expiration date	admin	ru	Вы ввели неправильную дату окончания
 you have no email address for your user set !!!	admin	ru	Вы не указали e-mail адрес для пользователя!
 you have to enter a name, to create a new field!!!	admin	ru	Введите имя для создания нового поля!
-you have to enter a name, to create a new type!!!	admin	ru	Введите имя для создания нового типа!
+you have to enter a name, to create a new type!	admin	ru	Введите имя для создания нового типа!
 you must add at least 1 permission or group to this account	admin	ru	Добавьте для данной учётной записи хотя бы одно разрешение или группу
 you must enter a group name.	admin	ru	Нужно ввести имя группы
 you must enter a lastname	admin	ru	Нужно ввести фамилию

@@ -575,7 +575,7 @@ xml-rpc	admin	pl	XML-RPC
 you have entered an invalid expiration date	admin	pl	Podałeś niewłaściwą datę wygaśnięcia
 you have no email address for your user set !!!	admin	pl	Nie masz ustawionego adresu email dla swojego użytkownika !!!
 you have to enter a name, to create a new field!!!	admin	pl	Powinienieś podać nazwę aby utworzyć pole!!!
-you have to enter a name, to create a new type!!!	admin	pl	Powinienieś podać nazwę aby utworzyć pole!!!
+you have to enter a name, to create a new type!	admin	pl	Powinienieś podać nazwę aby utworzyć pole!
 you must add at least 1 permission or group to this account	admin	pl	Musisz dodać do tego konta co najmniej jedno uprawnienie lub grupę
 you must enter a group name.	admin	pl	Musisz podać nazwę grupy
 you must enter a lastname	admin	pl	Musisz podać nazwisko

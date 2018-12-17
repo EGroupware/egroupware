@@ -965,7 +965,7 @@ you have entered an invalid expiration date	admin	sl	Vnesli ste napačen datum p
 you have no email address for your user set !!!	admin	sl	Nimate nastavljen e-poštni naslov za svojega uporabnika!
 you have received a new message on the	admin	sl	Prejeli ste novo sporočilo na
 you have to enter a name, to create a new field!!!	admin	sl	Za ustvarjanje novega polja morate vnesti ime!
-you have to enter a name, to create a new type!!!	admin	sl	Za ustvarjanje nove vrste morate vnesti ime!
+you have to enter a name, to create a new type!	admin	sl	Za ustvarjanje nove vrste morate vnesti ime!
 you must add at least 1 permission or group to this account	admin	sl	Skupini ali uporabniku morate dati vsaj eno dovoljenje
 you must enter a group name.	admin	sl	Vnesti morate ime skupine.
 you must enter a lastname	admin	sl	Vnesti morate priimek

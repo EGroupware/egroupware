@@ -241,6 +241,7 @@ delete selected entries	admin	de	Ausgewählte Einträge löschen
 delete the category	admin	de	Kategorie löschen
 delete the group	admin	de	Gruppe löschen
 delete the selected entries	admin	de	Die ausgewählten Einträge löschen
+delete this access control	admin	de	Diese Zugriffsrechte löschen?
 delete this account	admin	de	Diese Konto löschen
 delete this category	admin	de	Kategorie löschen
 delete this group	admin	de	Gruppe löschen
@@ -274,6 +275,7 @@ disable	admin	de	abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disable all	admin	de	Alle Video-Anleitungen deaktivieren
 disable minifying of javascript and css files	admin	de	Komprimierung von Javascript und CSS Dateien deaktivieren
+disable PGP encryption (Mailvelope)	admin	de	PGP-Verschlüsselung deaktivieren (Mailvelope)
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
 display	admin	de	anzeigen
@@ -333,6 +335,7 @@ enable the xmlrpc service	admin	de	xmlrpc Service einschalten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
 enabled - popup window	admin	de	Verfügbar, Popup-Fenster
 encrypted connection	admin	de	verschlüsselte Verbindung
+encryption	admin	de	Verschlüsselung
 encryption settings	admin	de	Verschlüsselungseinstellungen
 enter a description for the category	admin	de	Geben Sie eine Beschreibung für diese Kategorie ein
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session<br>Verschlüsselung (braucht mcrypt)
@@ -474,6 +477,7 @@ installed crontab	admin	de	Installierte Crontab
 instance	admin	de	Instanz
 interface	admin	de	Schnittstelle
 international use	admin	de	Internationale Benutzung
+invalid email	admin	en	Ungültige E-Mail-Adresse
 invalid argument '%1' !!!	admin	de	Ungültiges Argument "%1"!
 invalid formated date "%1"!	admin	de	Ungültig formatiertes Datum "%1"!
 invalid remote id or name "%1"!	admin	de	Ungültige RemoteID oder Name "%1"!
@@ -900,7 +904,7 @@ you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges A
 you have no email address for your user set !!!	admin	de	Sie haben noch keine E-Mail für den Benutzer vergeben.
 you have received a new message on the	admin	de	Sie haben eine neue Nachricht erhalten.
 you have to enter a name, to create a new field!!!	admin	de	Sie müssen einen Namen angeben um ein neues Feld anzulegen!!!
-you have to enter a name, to create a new type!!!	admin	de	Sie müssen einen Namen angeben um einen neuen Typ anzulegen!!!
+you have to enter a name, to create a new type!	admin	de	Sie müssen einen Namen angeben um einen neuen Typ anzulegen!
 you must add at least 1 permission or group to this account	admin	de	Sie müssen mindestens ein Zugriffsrecht oder eine Gruppe für diesen Benutzer angeben
 you must enter a group name.	admin	de	Sie müssen einen Gruppennamen angeben.
 you must enter a lastname	admin	de	Sie müssen einen Nachnamen angeben

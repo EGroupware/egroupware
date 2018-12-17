@@ -799,7 +799,6 @@ macao	common	ja	マカオ
 macedonia, the former yugoslav republic of	common	ja	マケドニア
 madagascar	common	ja	マダガスカル
 mail domain, eg. "%1"	common	ja	メール・ドメイン（例: "%1"）
-mailvelope addon installation faild! please try agian.	common	ja	Mailvelope addon installation faild! Please try agian.
 mailvelope addon installation failed! please try again.	common	ja	Mailvelope addon installation failed! Please try again.
 mailvelope addon installation succeded. now you may configure the options.	common	ja	Mailvelope addon installation succeded. Now you may configure the options.
 main category	common	ja	メイン・カテゴリ
@@ -1112,7 +1111,7 @@ Saint Helena, Ascension and Tristan da Cunha	common	ja	セントヘレナ
 saint kitts and nevis	common	ja	セントクリストファー・ネイビス
 saint lucia	common	ja	セントルシア
 Saint Martin (French part)	common	ja	サン・マルタン
-saint pierre and miquelon	common	ja	サンピエール島・ミクロン島 
+saint pierre and miquelon	common	ja	サンピエール島・ミクロン島
 saint vincent and the grenadines	common	ja	セントビンセント・グレナディーン
 samoa	common	ja	サモア
 san marino	common	ja	サンマリノ
@@ -1327,7 +1326,7 @@ the backup key has been deleted.	common	ja	バックアップ・キーを削除�
 the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	ja	ポップアップ・ブロックが検出されました。ポップアップを表示するには OK をクリックしてください。\n\n次回からこのメッセージを表示しないようにするには、ブラウザで %1 のポップアップ・ブロックを解除してください。
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	ja	ドキュメントにはプレース・ホルダー（例: {{%1}}）を埋め込むことができます。%1 プレース・ホルダー一覧 %2
 the following applications require upgrades	common	ja	次のアプリケーションのアップグレードが必要です
-the following document-types are supported:	preferences	ja	下記のドキュメント・タイプがサポートされます: 
+the following document-types are supported:	preferences	ja	下記のドキュメント・タイプがサポートされます:
 the mail server returned	common	ja	メール・サーバーの応答:
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	ja	同じ名前が既にシステムに存在します。別の名前を指定してください。
 they will be sub-folders in users home (%1 attribute).	common	ja	選択されたアドレス帳は、ユーザ・ホームのサブ・フォルダとなります（%1 属性）。

@@ -605,7 +605,7 @@ xml-rpc	admin	fi	XML-RPC
 you have entered an invalid expiration date	admin	fi	Virheellinen vanhenemispäivä!
 you have no email address for your user set !!!	admin	fi	Sähköpostiosoitetta ei ole määritelty käyttäjälle!
 you have to enter a name, to create a new field!!!	admin	fi	Sinun pitää antaa nimi luodaksesi kenttä!!!
-you have to enter a name, to create a new type!!!	admin	fi	Sinun pitää antaa nimi luodaksesi tyyppi!!!
+you have to enter a name, to create a new type!	admin	fi	Sinun pitää antaa nimi luodaksesi tyyppi!
 you must add at least 1 permission or group to this account	admin	fi	Lisää käyttäjätiliin ainakin yksi ACL-oikeus tai ryhmä.
 you must enter a group name.	admin	fi	Anna ryhmän nimi.
 you must enter a lastname	admin	fi	Anna sukunimi.

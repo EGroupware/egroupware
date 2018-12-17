@@ -460,7 +460,7 @@ would you like to show each application's upgrade status ?	admin	ca	Voleu mostra
 xml-rpc	admin	ca	XML-RPC
 you have entered an invalid expiration date	admin	ca	Heu introduït una data de caducitat incorrecta
 you have to enter a name, to create a new field!!!	admin	ca	Heu d'introduir un nom, per a crear un nou camp!!!
-you have to enter a name, to create a new type!!!	admin	ca	Heu d'introduir un nom, per crear un tipus nou!!!
+you have to enter a name, to create a new type!	admin	ca	Heu d'introduir un nom, per crear un tipus nou!
 you must add at least 1 permission or group to this account	admin	ca	Heu d'afegir com a mínim un permís o grup per a aquest compte
 you must enter a group name.	admin	ca	Heu d'introduir un nom de grup
 you must enter a lastname	admin	ca	Heu d'introduir els cognoms

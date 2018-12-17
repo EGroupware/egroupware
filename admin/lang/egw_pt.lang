@@ -455,7 +455,7 @@ would you like to show each application's upgrade status ?	admin	pt	Deseja exibi
 xml-rpc	admin	pt	XML-RPC
 you have entered an invalid expiration date	admin	pt	Inseriu uma data de expiração inválida
 you have to enter a name, to create a new field!!!	admin	pt	É necessário inserir um nome para criar um novo campo!!!
-you have to enter a name, to create a new type!!!	admin	pt	É necessário inserir um nome para criar um novo tipo!!!
+you have to enter a name, to create a new type!	admin	pt	É necessário inserir um nome para criar um novo tipo!
 you must add at least 1 permission or group to this account	admin	pt	É necessário adicionar pelo menos uma permissão ou grupo a esta conta
 you must enter a group name.	admin	pt	É necessário atribuir um nome ao grupo
 you must enter a lastname	admin	pt	É necessário inserir um apelido

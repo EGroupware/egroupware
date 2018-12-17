@@ -474,7 +474,7 @@ wrong admin-account or -password !!!	admin	hu	Érvénytelen adminisztrátor felh
 xml-rpc	admin	hu	XML-RPC
 you have entered an invalid expiration date	admin	hu	Érvénytelen lejárati időt adott meg
 you have to enter a name, to create a new field!!!	admin	hu	Meg kell adnia egy nevet, hogy az új mezőt létre lehessen hozni!!!
-you have to enter a name, to create a new type!!!	admin	hu	Meg kell adnia egy nevet, hogy az új típust létre lehessen hozni!!!
+you have to enter a name, to create a new type!	admin	hu	Meg kell adnia egy nevet, hogy az új típust létre lehessen hozni!
 you must add at least 1 permission or group to this account	admin	hu	Legalább egy engedélyt vagy csoportot hozzá kell adni a felhasználói hozzáféréshez
 you must enter a group name.	admin	hu	Meg kell adnia egy csoportnevet.
 you must enter a lastname	admin	hu	Meg kell adnia egy keresztnevet.

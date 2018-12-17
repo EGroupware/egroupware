@@ -464,7 +464,7 @@ would you like to show each application's upgrade status ?	admin	zh-tw	您希望
 xml-rpc	admin	zh-tw	XML-RPC
 you have entered an invalid expiration date	admin	zh-tw	您輸入了一個錯誤的、過期的日期
 you have to enter a name, to create a new field!!!	admin	zh-tw	要建立一個新欄位需要輸入名稱！
-you have to enter a name, to create a new type!!!	admin	zh-tw	您必須輸入一個名稱來新增類型！
+you have to enter a name, to create a new type!	admin	zh-tw	您必須輸入一個名稱來新增類型！
 you must add at least 1 permission or group to this account	admin	zh-tw	您必須至少授權此帳號一項權限或將此帳號歸於一個群組下。
 you must enter a group name.	admin	zh-tw	您必須輸入群組名稱
 you must enter a lastname	admin	zh-tw	您必須輸入使用者姓名

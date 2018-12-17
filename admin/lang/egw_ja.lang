@@ -152,7 +152,7 @@ backup directory %1 mounted as %2	admin	ja	Backup directory %1 mounted as %2
 backup files (needs ZipArchive)	admin	ja	バックアップ・ファイル（要ZipArchive）
 backup housekeeping	admin	ja	バックアップ・ハウス・キーピング
 backup now	admin	ja	今すぐバックアップ
-backup sets	admin	ja	バックアップ先: 
+backup sets	admin	ja	バックアップ先:
 bad login name or password.	admin	ja	ログイン名またはパスワードが不正です。
 bad or malformed request. server responded: %s	admin	ja	Bad or malformed request. %s
 bad request: %s	admin	ja	不正なリクエスト: %s
@@ -477,7 +477,7 @@ identity deleted	admin	ja	名称を削除しました
 identity saved.	admin	ja	名称を保存しました。
 idle	admin	ja	アイドル
 if different from email address	admin	ja	if different from EMail address
-if no acl records for user or any group the user is a member of	admin	ja	ユーザ/グループにACL権限が無い場合に加入するグループ: 
+if no acl records for user or any group the user is a member of	admin	ja	ユーザ/グループにACL権限が無い場合に加入するグループ:
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ja	If using LDAP, do you want to manage home directory and loginshell attributes?
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ja	LDAP 利用時のホームディレクトリとログインシェルの情報
 if using ssl or tls, you must have the php openssl extension loaded.	admin	ja	If using SSL or TLS, you must have the PHP openssl extension loaded.
@@ -827,7 +827,7 @@ that name has been used already	admin	ja	この名前は既に使われていま
 that server name has been used already !	admin	ja	That server name has been used already!
 the api is current	admin	ja	The API is current
 the api requires an upgrade	admin	ja	The API requires an upgrade
-the cumulated and anonymised data will be publically available:	admin	ja	これまでに蓄積された匿名データは下記URLで参照可能です: 
+the cumulated and anonymised data will be publically available:	admin	ja	これまでに蓄積された匿名データは下記URLで参照可能です:
 the groups must include the primary group	admin	ja	The groups must include the primary group.
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	ja	The IMAP server does not appear to support the authentication method selected. Contact your system administrator.
 the install id of an instance can be found under admin > site configuration	admin	ja	The install ID of an instance can be found under Admin > Site configuration
@@ -959,7 +959,7 @@ you have entered an invalid expiration date	admin	ja	You have entered an invalid
 you have no email address for your user set !!!	admin	ja	You have no email address set for your user!
 you have received a new message on the	admin	ja	You have received a new message on the
 you have to enter a name, to create a new field!!!	admin	ja	You have to enter a name, to create a new field!
-you have to enter a name, to create a new type!!!	admin	ja	You have to enter a name, to create a new type!
+you have to enter a name, to create a new type!	admin	ja	You have to enter a name, to create a new type!
 you must add at least 1 permission or group to this account	admin	ja	少なくとも１つの権限かグループを指定してください。
 you must enter a group name.	admin	ja	グループ名を入力してください。
 you must enter a lastname	admin	ja	姓を入力してください。

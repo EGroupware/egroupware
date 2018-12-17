@@ -893,7 +893,7 @@ you have entered an invalid expiration date	admin	sk	Zadali ste nesprávny čas 
 you have no email address for your user set !!!	admin	sk	Nemáte nastavenú žiadnu e-mailovú adresu pre vášho používateľa !!!
 you have received a new message on the	admin	sk	Obdržali ste novú správu ohľadom
 you have to enter a name, to create a new field!!!	admin	sk	Ak chcete vytvoriť nové pole, musíte zadať názov!!!
-you have to enter a name, to create a new type!!!	admin	sk	Ak chcete vytvoriť nový typ, musíte zadať názov!!!
+you have to enter a name, to create a new type!	admin	sk	Ak chcete vytvoriť nový typ, musíte zadať názov!
 you must add at least 1 permission or group to this account	admin	sk	Tomuto účtu musíte pridať aspoň 1 oprávnenie alebo skupinu
 you must enter a group name.	admin	sk	Musíte zadať názov skupiny
 you must enter a lastname	admin	sk	Musíte zadať priezvisko

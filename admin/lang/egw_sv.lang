@@ -458,7 +458,7 @@ would you like to show each application's upgrade status ?	admin	sv	Vill du visa
 xml-rpc	admin	sv	XML-RPC
 you have entered an invalid expiration date	admin	sv	Du har angivit ett ogiltigt förfallodatum
 you have to enter a name, to create a new field!!!	admin	sv	Du måste ange ett namn för att skapa nytt fält!
-you have to enter a name, to create a new type!!!	admin	sv	Du måste ange ett namn för att skapa ny typ!
+you have to enter a name, to create a new type!	admin	sv	Du måste ange ett namn för att skapa ny typ!
 you must add at least 1 permission or group to this account	admin	sv	Du måste ange minst en behörighet eller grupp till detta konto
 you must enter a group name.	admin	sv	Du måste ange ett gruppnamn
 you must enter a lastname	admin	sv	Du måste ange ett efternamn

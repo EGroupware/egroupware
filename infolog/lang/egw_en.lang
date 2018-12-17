@@ -532,7 +532,7 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	en	You can't delete one of the stock types!
 you have entered an invalid ending date	infolog	en	You have entered an invalid due date!
 you have entered an invalid starting date	infolog	en	You have entered an invalid starting date!
-you have to enter a name, to create a new typ!!!	infolog	en	You have to enter a name, to create a new type!
+you have to enter a name, to create a new type!	infolog	en	You have to enter a name, to create a new type!
 you must enter a subject or a description	infolog	en	You must enter a subject or a description.
 you need to select an entry for linking.	infolog	en	You need to select an entry for linking.
 you need to select some entries first	infolog	en	You need to select some entries first.

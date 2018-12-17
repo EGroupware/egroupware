@@ -693,6 +693,7 @@ insert row before	common	de	Zeile davor einfügen
 integer	common	de	Ganzzahl
 international	common	de	International
 introduction	common	de	Einführung
+invalid email	common	de	Ungültige E-Mail-Adresse
 invalid filename	common	de	Ungültiger Dateiname
 invalid ip address	common	de	Ungültige IP-Adresse
 invalid password	common	de	Ungültiges Passwort
@@ -790,8 +791,7 @@ macau	common	de	MACAU
 macedonia, the former yugoslav republic of	common	de	MAZEDONIEN, FRÜHERE JUGOSLAVISCHE REPUBLIK
 madagascar	common	de	MADAGASCAR
 mail domain, eg. "%1"	common	de	Mail Domain, z.B. "%1"
-mailvelope addon installation faild! please try agian.	common	de	Installation des Mailvelope Add-on gescheitert! Bitte versuchen Sie es erneut.
-mailvelope addon installation failed! please try again.	common	de	Installation der Mailvelope Erweiterung fehlgeschlagen! Bitte nochmal versuchen.
+mailvelope addon installation failed! please try again.	common	de	Installation des Mailvelope Add-on gescheitert! Bitte versuchen Sie es erneut.
 mailvelope addon installation succeded. now you may configure the options.	common	de	Installation der Mailvelope Erweiterung erfolgreich. Sie können jetzt Optionen konfigurieren.
 main category	common	de	Hauptkategorie
 main screen	common	de	Startseite

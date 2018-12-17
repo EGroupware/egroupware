@@ -704,6 +704,7 @@ insert row before	common	en	Insert row before
 integer	common	en	Integer
 international	common	en	International
 introduction	common	en	Introduction
+invalid email	common	en	Invalid email
 invalid filename	common	en	Invalid file name.
 invalid ip address	common	en	Invalid IP address.
 invalid password	common	en	Invalid password.
@@ -802,7 +803,6 @@ macau	common	en	MACAU
 macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	en	MADAGASCAR
 mail domain, eg. "%1"	common	en	Mail domain, eg. "%1"
-mailvelope addon installation faild! please try agian.	common	en	Mailvelope addon installation faild! Please try agian.
 mailvelope addon installation failed! please try again.	common	en	Mailvelope addon installation failed! Please try again.
 mailvelope addon installation succeded. now you may configure the options.	common	en	Mailvelope addon installation succeded. Now you may configure the options.
 main category	common	en	Main category

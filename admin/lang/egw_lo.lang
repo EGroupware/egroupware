@@ -559,7 +559,7 @@ xml-rpc	admin	lo	XML-RPC
 you have entered an invalid expiration date	admin	lo	ທ່ານມີການປ້ອນວັນໝົດອາຍຸບໍ່ຖືກຕ້ອງ
 you have no email address for your user set !!!	admin	lo	ທ່ານຍັງບໍ່ມີທີຢູ່ອີເມລສໍາລັບການຕັ້ງຄ່າຂອງທ່ານ !
 you have to enter a name, to create a new field!!!	admin	lo	ທ່ານມີການໃສ່ຊື່ໃນການສ້າງຟີລໃໝ່ !
-you have to enter a name, to create a new type!!!	admin	lo	ທ່ານມີການໃສ່ຊື່ໃນການສ້າງຮູບແບບໃໝ່ !
+you have to enter a name, to create a new type!	admin	lo	ທ່ານມີການໃສ່ຊື່ໃນການສ້າງຮູບແບບໃໝ່ !
 you must add at least 1 permission or group to this account	admin	lo	ທ່ານຕ້ອງໄດ້ເພີ່ມຢ່າງໜ້ອຍ 1 ສິດທິ ຫຼື ກຸ່ມໃຫ້ກັບບັນຊີນີ້
 you must enter a group name.	admin	lo	ທ່ານຕ້ອງໃສ່ຊື່ກຸ່ມ
 you must enter a lastname	admin	lo	ທ່ານຕ້ອງໃສ່ນາມສະກຸນ

@@ -524,7 +524,7 @@ wrong admin-account or -password !!!	admin	nl	Verkeerde beheerders account of -w
 xml-rpc	admin	nl	XML-RPC
 you have entered an invalid expiration date	admin	nl	U heeft u een ongeldige verloopdatum ingevoerd.
 you have to enter a name, to create a new field!!!	admin	nl	U moet een naam invullen om een nieuwe veld te creëeren!!!
-you have to enter a name, to create a new type!!!	admin	nl	U moet een naam invullen om een nieuwe type te creëeren!!!
+you have to enter a name, to create a new type!	admin	nl	U moet een naam invullen om een nieuwe type te creëeren!
 you must add at least 1 permission or group to this account	admin	nl	U moet op z'n minst 1 permissie of groep toewijzen aan dit account.
 you must enter a group name.	admin	nl	U moet een groepsnaam invoeren.
 you must enter a lastname	admin	nl	U moet een achternaam invoeren.

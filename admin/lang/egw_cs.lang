@@ -573,7 +573,7 @@ xml-rpc	admin	cs	XML-RPC
 you have entered an invalid expiration date	admin	cs	Zadal(a) jste neplatné datum expirace
 you have no email address for your user set !!!	admin	cs	Nenastavil(a) jste uživateli žádnou emailovou adresu !!!
 you have to enter a name, to create a new field!!!	admin	cs	Musíte zadat název pro vytvoření nové položky!!!
-you have to enter a name, to create a new type!!!	admin	cs	Musíte zadat název pro vytvoření nového typu!!!
+you have to enter a name, to create a new type!	admin	cs	Musíte zadat název pro vytvoření nového typu!
 you must add at least 1 permission or group to this account	admin	cs	Musíte zadat nejméně jedno oprávnění nebo skupinu k tomuto účtu
 you must enter a group name.	admin	cs	Musíte zadat jméno skupiny.
 you must enter a lastname	admin	cs	Musíte zadat příjmení

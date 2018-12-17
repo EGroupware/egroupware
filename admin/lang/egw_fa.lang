@@ -430,7 +430,7 @@ would you like to automaticaly load new langfiles (at login-time) ?	admin	fa	آ�
 would you like to show each application's upgrade status ?	admin	fa	آیا میخواهید وضعیت به روز رسانی هر کاربرد نمایش داده شود؟
 you have entered an invalid expiration date	admin	fa	شما تاریخ انقضای غیر معتبر وارد کردید
 you have to enter a name, to create a new field!!!	admin	fa	شما باید یک نام برای ساختن فیلد جدید وارد کنید!!!
-you have to enter a name, to create a new type!!!	admin	fa	شما باید یک نام برای ساختن نوع جدید وارد کنید!!!
+you have to enter a name, to create a new type!	admin	fa	شما باید یک نام برای ساختن نوع جدید وارد کنید!
 you must add at least 1 permission or group to this account	admin	fa	شما باید حداقل یک مجوز یا گروه به این حساب اضافه کنید
 you must enter a group name.	admin	fa	شما باید یک نام گروه وارد کنید
 you must enter a lastname	admin	fa	شما باید یک نام خانوادگی وارد کنید

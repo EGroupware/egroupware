@@ -516,7 +516,7 @@ wrong admin-account or -password !!!	admin	pt-br	Conta de administração ou -se
 xml-rpc	admin	pt-br	XML-RPC
 you have entered an invalid expiration date	admin	pt-br	A data de expiração digitada é inválida
 you have to enter a name, to create a new field!!!	admin	pt-br	Você precisa informar um nome para criar um novo campo!!!
-you have to enter a name, to create a new type!!!	admin	pt-br	Você precisa informar um novo para criar um novo tipo!!!
+you have to enter a name, to create a new type!	admin	pt-br	Você precisa informar um novo para criar um novo tipo!
 you must add at least 1 permission or group to this account	admin	pt-br	Você deve adicionar no mínimo uma permissão ou grupo para esta conta
 you must enter a group name.	admin	pt-br	Você deve digitar um nome de grupo.
 you must enter a lastname	admin	pt-br	Você deve digitar um sobrenome
