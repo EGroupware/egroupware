@@ -335,15 +335,16 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	{
 		$id = $record->get_identifier();
 
-		// Warn if there's no ID unless it's a dry_run because there probably won't be an ID then
-		if(!$this->dry_run && !$id)
-		{
-			$this->warnings[$import_csv->get_current_position()] .= "Unable to link, no identifier for record";
-			return;
-		}
 
 		foreach(self::$special_fields as $field => $desc) {
 			if(!$record->$field) continue;
+
+			// Warn if there's no ID unless it's a dry_run because there probably won't be an ID then
+			if(!$this->dry_run && !$id)
+			{
+				$this->warnings[$import_csv->get_current_position()] .= "Unable to link, no identifier for record";
+				return;
+			}
 			if(strpos($field, 'link') === 0) {
 				list($app, $app_id) = explode(':', $record->$field,2);
 
