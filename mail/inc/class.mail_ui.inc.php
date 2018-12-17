@@ -5104,15 +5104,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$response = Api\Json\Response::get();
 			if (isset($_messageList['msg']) && $_messageList['popup'])
 			{
-				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',$_messageList['msg'],lang(($flag[$_flag]?$flag[$_flag]:$_flag)),$folder),'mail', $_messageList['msg'], 'update');
+				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',$_messageList['msg'],lang(($flag[$_flag]?$flag[$_flag]:$_flag)),lang($folder)),'mail', $_messageList['msg'], 'update');
 			}
 			else if ((isset($_messageList['all']) && $_messageList['all']) || ($query['filter'] && ($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false)))
 			{
-				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang(($flag[$_flag]?$flag[$_flag]:$_flag)),$folder),'mail');
+				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang(($flag[$_flag]?$flag[$_flag]:$_flag)),lang($folder)),'mail');
 			}
 			else
 			{
-				$response->call('egw.message',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang(($flag[$_flag]?$flag[$_flag]:$_flag)),$folder));
+				$response->call('egw.message',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang(($flag[$_flag]?$flag[$_flag]:$_flag)),lang($folder)));
 			}
 		}
 	}
