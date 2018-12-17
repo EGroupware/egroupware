@@ -1764,7 +1764,7 @@ window.egw_LAB.wait(function() {
 			if (!$id_only && $rows)
 			{
 				$show_custom_fields = (in_array('customfields',$columselection)) && $this->customfields;
-				$show_calendar = !$this->config['disable_event_column'] && in_array('calendar_calendar',$columselection);
+				$show_calendar = $this->config['disable_event_column'] != 'True' && in_array('calendar_calendar',$columselection);
 				$show_distributionlist = in_array('distrib_lists',$columselection) || count($available_distib_lists);
 				if ($show_calendar || $show_custom_fields || $show_distributionlist)
 				{
@@ -1923,7 +1923,7 @@ window.egw_LAB.wait(function() {
 		}
 
 		// Disable next/last date if so configured
-		if($this->config['disable_event_column'])
+		if($this->config['disable_event_column'] == 'True')
 		{
 			$rows['no_event_column'] = true;
 		}

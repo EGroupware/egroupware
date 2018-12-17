@@ -1675,6 +1675,10 @@ class Contacts extends Contacts\Storage
 		foreach($uids as $id => $uid)
 		{
 			$type = is_numeric($uid[0]) ? 'u' : $uid[0];
+			if($GLOBALS['egw_info']['server']['disable_event_column'] == 'contacts' && $type == 'u')
+			{
+				continue;
+			}
 			$split_uids[$type][$id] = str_replace($type, '', $uid);
 		}
 
