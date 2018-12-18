@@ -1368,7 +1368,7 @@ class mail_compose
 		}
 
 		// set filemode icons for all attachments
-		foreach($content['attachments'] as &$attach)
+		foreach((array)$content['attachments'] as &$attach)
 		{
 			$attach['is_dir'] = is_dir($attach['file']);
 			$attach['filemode_icon'] = !is_dir($attach['file']) &&

@@ -1614,6 +1614,7 @@ $filter['range'] = "BETWEEN";// we support SINCE, BEFORE, BETWEEN and ON
 $filter['since'] = date("d-M-Y", $cutoffdate);
 $filter['before']= date("d-M-Y", $cutoffdate2);
 */
+		$sR = array();
 		try
 		{
 			if ($maxMessages > 75)
