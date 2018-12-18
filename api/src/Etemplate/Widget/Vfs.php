@@ -432,7 +432,7 @@ class Vfs extends File
 			if (isset($params['mime']))
 			{
 				$content['showmime'] = true;
-				list($content['mime']) = each($sel_options['mime']);
+				$content['mime'] = key($sel_options['mime']);
 			}
 		}
 		elseif(isset($content['action']))

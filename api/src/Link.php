@@ -364,7 +364,7 @@ class Link extends Link\Storage
 		{
 			reset($app2);
 			$link_id = True;
-			while ($link_id && list(,$link) = each($app2))
+			while ($link_id && $link = current($app2))
 			{
 				if (!is_array($link))	// check for unlink-marker
 				{
@@ -401,6 +401,7 @@ class Link extends Link\Storage
 						if (!($no_notify&1)) self::notify('link',$app1,$id1,$link['app'],$link['id'],$link_id);
 						break;
 				}
+				next($app2);
 			}
 			return $link_id;
 		}

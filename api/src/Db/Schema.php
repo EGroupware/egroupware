@@ -1077,7 +1077,7 @@ class Schema
 						break;
 					case 'array':
 					case 'object':
-						list(,$content) = @each($param);
+						$content = @current($param);
 						$do_pre = is_array($param) ? count($param) > 6 || is_array($content)&&count($content) : True;
 						$param = ($do_pre ? '<pre>' : '').print_r($param,True).($do_pre ? '</pre>' : '');
 						break;

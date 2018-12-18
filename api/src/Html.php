@@ -1297,7 +1297,7 @@ tinymce.init({
 					$image1 = $image2 = $image3 = "'".$_leafImage."'";
 					if (($next_item = array_slice($_folders, $n+1, 1, true)))
 					{
-						list($next_path) = each($next_item);
+						$next_path = key($next_item);
 						if (substr($next_path,0,strlen($path)+1) == $path.'/')
 						{
 							$image1 = $image2 = $image3 = '0';

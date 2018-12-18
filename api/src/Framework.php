@@ -779,7 +779,7 @@ abstract class Framework extends Framework\Extra
 	 */
 	protected static function _get_navbar_apps($svg=false)
 	{
-		list($first) = each($GLOBALS['egw_info']['user']['apps']);
+		$first = key($GLOBALS['egw_info']['user']['apps']);
 		if(is_array($GLOBALS['egw_info']['user']['apps']['admin']) && $first != 'admin')
 		{
 			$newarray['admin'] = $GLOBALS['egw_info']['user']['apps']['admin'];

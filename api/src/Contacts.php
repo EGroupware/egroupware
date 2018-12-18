@@ -1337,7 +1337,8 @@ class Contacts extends Contacts\Storage
 			if (!in_array($name,$this->org_fields)) continue;
 
 			arsort($values,SORT_NUMERIC);
-			list($value,$num) = each($values);
+			$value = key($values);
+			$num = current($values);
 			if ($value && $num / (double) count($contacts) >= $this->org_common_factor)
 			{
 				if (!in_array($name,$csvs))

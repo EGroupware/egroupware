@@ -1396,7 +1396,7 @@ class Session
 					else
 					{
 						reset($domains);
-						list($default_domain) = each($domains);
+						$default_domain = key($domains);
 					}
 					unset($domain_part);
 				}

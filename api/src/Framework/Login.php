@@ -119,7 +119,7 @@ class Login
 			if($last_loginid !== '')
 			{
 				reset($GLOBALS['egw_domain']);
-				list($default_domain) = each($GLOBALS['egw_domain']);
+				$default_domain = key($GLOBALS['egw_domain']);
 
 				if(!empty ($last_domain) && $last_domain != $default_domain)
 				{
