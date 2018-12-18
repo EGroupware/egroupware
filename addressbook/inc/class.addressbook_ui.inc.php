@@ -132,13 +132,13 @@ class addressbook_ui extends addressbook_bo
 
 			if (isset($_content['nm']['rows']['delete']))	// handle a single delete like delete with the checkboxes
 			{
-				list($id) = @each($_content['nm']['rows']['delete']);
+				$id = @key($_content['nm']['rows']['delete']);
 				$_content['nm']['action'] = 'delete';
 				$_content['nm']['selected'] = array($id);
 			}
 			if (isset($_content['nm']['rows']['document']))	// handle insert in default document button like an action
 			{
-				list($id) = @each($_content['nm']['rows']['document']);
+				$id = @key($_content['nm']['rows']['document']);
 				$_content['nm']['action'] = 'document';
 				$_content['nm']['selected'] = array($id);
 			}
@@ -172,12 +172,12 @@ class addressbook_ui extends addressbook_bo
 			}
 			if ($_content['nm']['rows']['infolog'])
 			{
-				list($org) = each($_content['nm']['rows']['infolog']);
+				$org = key($_content['nm']['rows']['infolog']);
 				return $this->infolog_org_view($org);
 			}
 			if ($_content['nm']['rows']['view'])	// show all contacts of an organisation
 			{
-				list($grouped_view) = each($_content['nm']['rows']['view']);
+				$grouped_view = key($_content['nm']['rows']['view']);
 			}
 			else
 			{
@@ -2315,7 +2315,7 @@ class addressbook_ui extends addressbook_bo
 		if ($content['id'])
 		{
 			// last and next calendar date
-			list(,$dates) = each($this->read_calendar(array($content['account_id'] ? $content['account_id'] : 'c'.$content['id']),false));
+			$dates = current($this->read_calendar(array($content['account_id'] ? $content['account_id'] : 'c'.$content['id']),false));
 			if(is_array($dates)) $content += $dates;
 		}
 
@@ -2651,7 +2651,7 @@ class addressbook_ui extends addressbook_bo
 
 		if(is_array($content))
 		{
-			list($button) = each($content['button']);
+			$button = key($content['button']);
 			switch ($content['toolbar'] ? $content['toolbar'] : $button)
 			{
 				case 'vcard':
@@ -2836,7 +2836,7 @@ class addressbook_ui extends addressbook_bo
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 
 		// last and next calendar date
-		if (!empty($content['id'])) list(,$dates) = each($this->read_calendar(array($content['account_id'] ? $content['account_id'] : 'c'.$content['id']),false));
+		if (!empty($content['id'])) $dates = current($this->read_calendar(array($content['account_id'] ? $content['account_id'] : 'c'.$content['id']),false));
 		if(is_array($dates)) $content += $dates;
 
 		// Disable importexport

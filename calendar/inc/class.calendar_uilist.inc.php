@@ -95,7 +95,7 @@ class calendar_uilist extends calendar_ui
 			{
 				if ($_content['nm']['rows'][$button])
 				{
-					list($id) = each($_content['nm']['rows'][$button]);
+					$id = key($_content['nm']['rows'][$button]);
 					$_content['nm']['action'] = $button;
 					$_content['nm']['selected'] = array($id);
 				}

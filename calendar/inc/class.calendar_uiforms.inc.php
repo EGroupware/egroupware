@@ -292,7 +292,7 @@ class calendar_uiforms extends calendar_ui
 		// delete a recur-exception
 		if ($content['recur_exception']['delete_exception'])
 		{
-			list($date) = each($content['recur_exception']['delete_exception']);
+			$date = key($content['recur_exception']['delete_exception']);
 			// eT2 converts time to
 			if (!is_numeric($date)) $date = Api\DateTime::to (str_replace('Z','', $date), 'ts');
 			unset($content['recur_exception']['delete_exception']);
@@ -317,7 +317,7 @@ class calendar_uiforms extends calendar_ui
 		// delete an alarm
 		if ($content['alarm']['delete_alarm'])
 		{
-			list($id) = each($content['alarm']['delete_alarm']);
+			$id = key($content['alarm']['delete_alarm']);
 			//echo "delete alarm $id"; _debug_array($content['alarm']['delete_alarm']);
 
 			if ($content['id'])
@@ -2097,7 +2097,7 @@ class calendar_uiforms extends calendar_ui
 		else
 		{
 			//_debug_array($event);
-			list($button) = each($event['button']);
+			$button = key($event['button']);
 			unset($event['button']);
 
 			// clear notification errors
@@ -2718,7 +2718,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		if ($_content)
 		{
-			list($button) = each($_content['button']);
+			$button = key($_content['button']);
 			unset($_content['button']);
 			if ($button != 'cancel')	// store changed Acl
 			{

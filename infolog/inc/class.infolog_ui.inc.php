@@ -887,7 +887,7 @@ class infolog_ui
 		{
 			if ($values['add'])
 			{
-				list($type) = each($values['add']);
+				$type = key($values['add']);
 				return $this->edit(0,$action,$action_id,$type,$called_as);
 			}
 			elseif ($values['cancel'] && $own_referer)
@@ -901,7 +901,9 @@ class infolog_ui
 			else
 			{
 				list($do,$do2) = each($values['main']);
-				list($do_id) = @each($do2);
+				$do = key($values['main']);
+				$do2 = current($values['main']);
+				$do_id = @key($do2);
 				switch((string)$do)
 				{
 					case 'close':

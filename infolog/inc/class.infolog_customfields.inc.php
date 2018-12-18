@@ -96,7 +96,7 @@ class infolog_customfields extends admin_customfields
 
 		if ($fields['delete'])
 		{
-			list($delete) = each($fields['delete']);
+			$delete = key($fields['delete']);
 			unset($fields['delete']);
 		}
 
@@ -180,7 +180,7 @@ class infolog_customfields extends admin_customfields
 
 		if ($status['delete'])
 		{
-			list($delete) = each($status['delete']);
+			$delete = key($status['delete']);
 			unset($status['delete']);
 		}
 
@@ -254,7 +254,7 @@ class infolog_customfields extends admin_customfields
 		unset($this->status[$content['type2']]);
 		unset($this->status['defaults'][$content['type2']]);
 		unset($this->group_owners[$content['type2']]);
-		list($content['type2']) = each($this->content_types);
+		$content['type2'] = key($this->content_types);
 
 		// save changes to repository
 		$this->save_repository();

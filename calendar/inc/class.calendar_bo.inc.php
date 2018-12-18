@@ -889,7 +889,7 @@ class calendar_bo
 		// check if the caller gave us enough information and if not read it from the DB
 		if (!isset($event['participants']) || !isset($event['start']) || !isset($event['end']))
 		{
-			list(,$event_read) = each($this->so->read($event['id']));
+			$event_read = current($this->so->read($event['id']));
 			if (!isset($event['participants']))
 			{
 				$event['participants'] = $event_read['participants'];
