@@ -869,12 +869,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				array_shift($content_type);
 				foreach ($content_type as $attribute)
 				{
-					trim($attribute);
 					list($key, $value) = explode('=', $attribute);
-					switch (strtolower($key))
+					switch (strtolower(trim($key)))
 					{
 						case 'charset':
-							$charset = strtoupper(substr($value,1,-1));
+							$charset = strtoupper(trim($value));
 					}
 				}
 			}
@@ -1078,12 +1077,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				array_shift($content_type);
 				foreach ($content_type as $attribute)
 				{
-					trim($attribute);
 					list($key, $value) = explode('=', $attribute);
-					switch (strtolower($key))
+					switch (strtolower(trim($key)))
 					{
 						case 'charset':
-							$charset = strtoupper(substr($value,1,-1));
+							$charset = strtoupper(trim($value));
 					}
 				}
 			}
