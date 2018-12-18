@@ -3461,9 +3461,9 @@ class calendar_ical extends calendar_boupdate
 		// sort by start datetime
 		uasort($events, function($a, $b)
 		{
-			$diff = $a['start'] < $b['start'];
+			$diff = $a['start'] - $b['start'];
 
-			return !$diff ? 0 : ($diff < 0 ? -1 : 1);
+			return $diff == 0 ? 0 : ($diff < 0 ? -1 : 1);
 		});
 
 		$fbdata = array();
