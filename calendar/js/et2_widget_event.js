@@ -1024,9 +1024,9 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 		var length = parent_owner.length;
 		for(var i = 0; i < length; i++ )
 		{
-			// Handle grouped resources like mailing lists, they won't match so
+			// Handle groups & grouped resources like mailing lists, they won't match so
 			// we need the list - pull it from sidebox owner
-			if(isNaN(parent_owner[i]) && options && options.find)
+			if((isNaN(parent_owner[i]) || parent_owner[i] < 0) && options && options.find)
 			{
 				var resource = options.find(function(element) {return element.id == parent_owner[i];}) || {};
 				if(resource && resource.resources)
@@ -1036,14 +1036,6 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 					continue;
 				}
 			}
-
-			if (parseInt(parent_owner[i]) < 0)
-			{
-				// Add in groups, if we can get them (this is syncronous)
-				egw.accountData(parent_owner[i],'account_id',true,function(members) {
-					parent_owner = parent_owner.concat(Object.keys(members));
-				});
-			}
 		}
 		var participants = jQuery.extend([],Object.keys(event.participants));
 		for(var i = 0; i < participants.length; i++ )
@@ -1052,10 +1044,19 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 			// Expand group invitations
 			if (parseInt(id) < 0)
 			{
-				// Add in groups, if we can get them (this is syncronous)
-				egw.accountData(id,'account_id',true,function(members) {
-					participants = participants.concat(Object.keys(members));
-				});
+				// Add in groups, if we can get them from options, great
+				var resource;
+				if(options && options.find && (resource = options.find(function(element) {return element.id === id;})) && resource.resources)
+				{
+					participants = participants.concat(resource.resources);
+				}
+				else
+				{
+					// Add in groups, if we can get them (this is asynchronous)
+					egw.accountData(id,'account_id',true,function(members) {
+						participants = participants.concat(Object.keys(members));
+					});
+				}
 			}
 			if(parent.options.owner == id ||
 				parent_owner.indexOf &&

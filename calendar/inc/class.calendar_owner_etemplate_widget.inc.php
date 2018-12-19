@@ -104,14 +104,44 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				$resource = array('app'=> 'api-accounts');
 			}
+			else if ($owner < 0)
+			{
+				// Add in group memberships as strings
+				$info['resources'] = array_map(function($a) { return ''.$a;},$GLOBALS['egw']->accounts->members($owner, true));
+			}
 			else
 			{
 				continue;
 			}
-			$sel_options[] = array('value' => $owner, 'label' => $label, 'app' => lang($resource['app'])) + $info;
+			$option = array('value' => $owner, 'label' => $label, 'app' => lang($resource['app'])) + $info;
+			$sel_option_index = $this->get_index($sel_options, 'value', $owner);
+			if($sel_option_index === false)
+			{
+				$sel_options[] = $option;
+			}
+			else
+			{
+				$sel_options[$sel_option_index] = array_merge($sel_options[$sel_option_index], $option);
+			}
 		}
 	}
 
+	/**
+	 * Get the index of an array (sel_options) containing the given value
+	 *
+	 * @param Array $array
+	 * @param string $key key we're checking to match value
+	 * @param string $value Value we're looking for
+	 * @return boolean|int Returns index
+	 */
+	private function get_index(&$array, $key, $value)
+	{
+		foreach($array as $_key => $_value)
+		{
+			if($_value[$key] === $value) return $_key;
+		}
+		return false;
+	}
 	/**
 	 * Validate input
 	 *
@@ -247,6 +277,10 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 								'contact_id' => $contact['id'],
 								'etag' => $contact['etag'] ? $contact['etag'] : 1
 							));
+							if($id < 0)
+							{
+								$value['resources'] = $GLOBALS['egw']->accounts->members($id, true);
+							}
 							break;
 						default :
 							// do nothing
