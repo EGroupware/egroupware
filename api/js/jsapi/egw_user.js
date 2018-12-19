@@ -156,6 +156,11 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						data[id] = accountData[account_id][_field][id];
 					}
 				}
+				else if (typeof accountData[account_id] === 'object')
+				{
+					// Add it to the list
+					accountData[_account_ids[i]].push({callback: _callback, context: _context});
+				}
 				else
 				{
 					continue;
@@ -168,9 +173,18 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 			{
 				egw.json('EGroupware\\Api\\Framework::ajax_account_data',[_account_ids, _field, _resolve_groups],
 					function(_data) {
+						var callbacks = [];
 						for(var account_id in _data)
 						{
-							if (typeof accountData[account_id] == 'undefined') accountData[account_id] = {};
+							if(accountData[account_id])
+							{
+								callbacks = callbacks.concat(accountData[account_id]);
+								accountData[account_id] = {};
+							}
+							else if (typeof accountData[account_id] == 'undefined')
+							{
+								accountData[account_id] = {};
+							}
 							data[account_id] = accountData[account_id][_field] = _data[account_id];
 						}
 						// If resolving for 1 group, cache the whole answer too
@@ -178,12 +192,33 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						if(_resolve_groups && _account_ids.length === 1 && _account_ids[0] < 0)
 						{
 							var group_id = _account_ids[0];
-							if (typeof accountData[group_id] === 'undefined') accountData[group_id] = {};
+							if(accountData[group_id])
+							{
+								callbacks = callbacks.concat(accountData[group_id]);
+								accountData[group_id] = {};
+							}
+							else if (typeof accountData[group_id] == 'undefined')
+							{
+								accountData[group_id] = {};
+							}
 							accountData[group_id][_field] = _data;
 						}
-						_callback.call(_context, data);
+						for(var i = 0; i < callbacks.length; i++)
+						{
+							if(typeof callbacks[i] !== 'object' || typeof callbacks[i].callback !== 'function') continue;
+							callbacks[i].callback.call(callbacks[i].context, data);
+						}
 					}
-					).sendRequest(false);
+				).sendRequest();
+				// Keep request so we know what we're waiting for
+				for(var i=0; i < _account_ids.length; ++i)
+				{
+					if(typeof accountData[_account_ids[i]] == 'undefined')
+					{
+						accountData[_account_ids[i]] = [];
+					}
+					accountData[_account_ids[i]].push({callback: _callback, context: _context});
+				}
 			}
 			else
 			{
