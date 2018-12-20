@@ -271,7 +271,6 @@ set new events to private	calendar	ca	Establir noves cites com a privades
 should new events created as private by default ?	calendar	ca	Establir noves cites com a privades per defecte?
 should the planner display an empty row for users or categories without any appointment.	calendar	ca	El planificador hauria de mostrar una fila buida per usuaris o categories sense cap cita.
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	ca	S'ha de mostrar l'estat de cada cita (acceptar, rebutjar, etc) entre claudàtors[] darrere del nom de cada participant?
-show default view on main screen	calendar	ca	Mostrar la vista predeterminada a la pantalla principal
 show empty rows in planner	calendar	ca	Mostra files buides al Planificador
 show list of upcoming events	calendar	ca	Mostrar la llista de properes cites
 show this month	calendar	ca	mostra aquest mes

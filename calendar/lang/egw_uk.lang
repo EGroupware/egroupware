@@ -143,7 +143,6 @@ set a year only for one-time / non-regular holidays.	calendar	uk	Вкажіть 
 set new events to private	calendar	uk	Встановлювати нові події як особисті.
 should new events created as private by default ?	calendar	uk	Чи повинні нові події створюватись як особисті?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	uk	Показувати відмітки учасників події (прийнято, відхилено,...) в дужках після кожного імені учасника?
-show default view on main screen	calendar	uk	Показувати вигляд по замовченню на основному екрані
 show list of upcoming events	calendar	uk	Показувати перелік найближчих подій
 single event	calendar	uk	Одиночна подія
 start date/time	calendar	uk	Число/Час початку

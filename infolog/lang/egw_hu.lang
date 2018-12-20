@@ -186,7 +186,7 @@ infolog - new subproject	infolog	hu	InfoLog - Új alprojekt
 infolog - subprojects from	infolog	hu	InfoLog - Alprojekt innen
 infolog entry deleted	infolog	hu	InfoLog bejegyzés törölve
 infolog entry saved	infolog	hu	InfoLog bejegyzés elmentve
-infolog filter for the main screen	infolog	hu	InfoLog szűrő a fő képernyőn
+InfoLog filter for the home screen	infolog	hu	InfoLog szűrő a fő képernyőn
 infolog list	infolog	hu	InfoLog lista
 infolog preferences	common	hu	InfoLog tulajdonságok
 infolog-fieldname	infolog	hu	InfoLog - Mezőnév
@@ -315,7 +315,7 @@ sender	infolog	hu	Feladó
 sets the status of this entry and its subs to done	infolog	hu	Bejegyzés és hozzátartozó albejegyzések állapotának megváltoztatása készre
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	hu	InfoLog megjelenítse-e az alfeladatokat, -hívásokat vagy -feljegyzéseket a normál nézetben. Az albejegyzéseket mindig el lehet érni a szülőn keresztül.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	hu	Infolog megjelenítse-e a hivatkozásokat más alkalmazáskhoz és/vagy állomány mellékleteket a normál nézetben.
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	hu	Az InfoLog megjelenik a Kezdőlapon egy szűrő alkalmazásával, listázva a feladatait stb. Akkor működik, ha nem választott ki egy alkalmazást Főképernyőnek (a beállításai között). Ha nem tudja, ez miről szól, akkor valószínűleg nem állította át és működni fog.
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	hu	Az InfoLog megjelenik a Kezdőlapon egy szűrő alkalmazásával, listázva a feladatait stb. Akkor működik, ha nem választott ki egy alkalmazást Főképernyőnek (a beállításai között). Ha nem tudja, ez miről szól, akkor valószínűleg nem állította át és működni fog.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	hu	Az InfoLog használja-e a teljes nevet (családi és keresztnév), vagy csak a bejelentkező nevet.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	hu	Az InfoLog lista megjelenítse-e az egyedi azonosítót, ami egy szám. Ez a szám alkalmas például jegy azonosító használatára (egyértelműbb, mint a megnevezés, tehát van értelme).
 should the infolog list show the column "last modified".	infolog	hu	Az InfoLog lista megjelenítse-e az "utolsó módosítás" oszlopot is.

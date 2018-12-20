@@ -96,7 +96,7 @@ infolog - new subproject	infolog	ko	인포로그 - 새 하위프로젝트
 infolog - subprojects from	infolog	ko	인포로그 - 서브프로젝트로부터
 infolog entry deleted	infolog	ko	인포로그 엔트리가 삭제됨
 infolog entry saved	infolog	ko	인포로그 엔트리가 저장됨
-infolog filter for the main screen	infolog	ko	메인화면의 인포로그 필터
+InfoLog filter for the home screen	infolog	ko	메인화면의 인포로그 필터
 infolog list	infolog	ko	인포로그 목록
 infolog preferences	common	ko	인포로그 설정
 infolog-fieldname	infolog	ko	인포로그 - 필드명

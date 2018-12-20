@@ -255,7 +255,6 @@ set a year only for one-time / non-regular holidays.	calendar	no	Sett kun ett å
 set new events to private	calendar	no	Sett nye oppføringer som private
 should new events created as private by default ?	calendar	no	Skal nye oppføringer som blir laget, være private som standard?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	no	Skal status på oppførings-deltakere(godta, avslå,...) bli vist som bokser etter hver deltakers navn ?
-show default view on main screen	calendar	no	Vis standardvisning på hovedskjermen
 show list of upcoming events	calendar	no	Vis liste av kommende oppføringer
 show this month	calendar	no	vis denne måneden
 show this week	calendar	no	vis denne uken

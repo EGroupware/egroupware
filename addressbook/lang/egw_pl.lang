@@ -349,7 +349,6 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	pl	Ustaw tylko pełną nazwę
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	pl	Czy kolumny: zdjęcie i adres domowy powinny być wyświetlane zawsze, nawet jeżeli są puste?
 show	addressbook	pl	Pokaż
-show birthday reminders on main screen	addressbook	pl	Pokazuj przypomnienia o urodzinach na głównym ekranie
 show infolog entries for this organisation	addressbook	pl	Pokaż wpisy InfoLog tej organizacji
 show the contacts of this organisation	addressbook	pl	Pokaż kontakty tej organizacji
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	pl	Wielkość okna 'popup' (szerokość na wysokość, np.: 400x300, jeśli chcesz z tego korzystać)

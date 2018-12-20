@@ -276,7 +276,6 @@ should new events created as private by default ?	calendar	bg	При добав�
 should the planner display an empty row for users or categories without any appointment.	calendar	bg	При работа с План да се показва ли празен ред за потребители или категории без ангажименти?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	bg	В скоби, след името на поканения за дадено събитие, ще се изписва неговия отговор (Приема, Отказва,...).
 show birthdays from addressbook	admin	bg	Показване на рождените дни от Адресния указател
-show default view on main screen	calendar	bg	Показване на изглед по подразбиране на началната страница
 show empty rows in planner	calendar	bg	Показва празни редове в Плана
 show list of upcoming events	calendar	bg	показва списък на наближаващите събития
 show only the date, not the year	admin	bg	Показване само на датата, без годината

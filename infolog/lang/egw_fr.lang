@@ -242,7 +242,7 @@ infolog csv import	infolog	fr	Infolog importation CSV
 infolog entry deleted	infolog	fr	InfoLog entrée supprimée
 infolog entry saved	infolog	fr	InfoLog entrée enregistrée
 infolog fields:	infolog	fr	Champs d'Infolog:
-infolog filter for the main screen	infolog	fr	InfoLog filtre pour l'écran principal
+InfoLog filter for the home screen	infolog	fr	InfoLog filtre pour l'écran principal
 infolog ical export	infolog	fr	Export Infolog en iCal
 infolog ical import	infolog	fr	Import Infolog en infolog
 infolog id	infolog	fr	Infolog ID
@@ -419,7 +419,7 @@ sets the status of this entry and its subs to done	infolog	fr	Fixer le statut de
 sets the status of this entry to done	infolog	fr	Fixer le statut de cette entrée à Fait
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	fr	InfoLog doit-il afficher les sous-tâches, -appels ou -notes dans la vue normale ou pas. Vous pouvez toujours voir les sous- via leurs parents.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	fr	InfoLog doit-il afficher les liens vers d'autres applications et/ou les attachements de fichiers dans la liste InfoLog (vue normale quand vous entrez dans InfoLog)
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	fr	InfoLog doit-il s'afficher sur l'écran principal et avec quel filtre. Ne fonctionne que si vous n'avez pas sélectionné une application pour l'écran principal (dans vos préférences)
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	fr	InfoLog doit-il s'afficher sur l'écran principal et avec quel filtre. Ne fonctionne que si vous n'avez pas sélectionné une application pour l'écran principal (dans vos préférences)
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	fr	InfoLog doit-il utiliser les noms complets (surnom et nom de famille) ou juste les noms de connexion.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	fr	InfoLog doit-il afficher un Id numérique unique qui peut être utilisé p.ex. comme Id de ticket.
 should the infolog list show the column "last modified".	infolog	fr	La liste InfoLog doit-elle afficher la colonne "dernière modification".

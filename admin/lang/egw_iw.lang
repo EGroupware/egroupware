@@ -81,7 +81,7 @@ category %1 has been saved !	admin	iw	!קטגוריה %1 נשמרה
 category list	admin	iw	רשימת קטגוריות
 change acl rights	admin	iw	שינוי הרשאות ברשימות גישה
 change config settings	admin	iw	שינוי הגדרות קונפיגורציה
-change main screen message	admin	iw	שינוי המסר במסך הראשי
+change login screen message	admin	iw	שינוי המסר במסך הראשי
 check ip address of all sessions	admin	iw	של כל המושבים IP בדוק כתובות
 check items to <b>%1</b> to %2 for %3	admin	iw	בדוק פריטים <br>ל%1</br>  ל%2 עבור %3
 click to select a color	admin	iw	הקלק לבחירת צבע
@@ -124,7 +124,7 @@ deny access to current sessions	admin	iw	מנע גישה למשתמשים נוכ
 deny access to error log	admin	iw	מנע גישה ליומן שגיאות
 deny access to global categories	admin	iw	מנע גישה לקטגוריות גלובליות
 deny access to groups	admin	iw	מנע גישה לקבוצות
-deny access to mainscreen message	admin	iw	מנע גישה למסר של מסך הראשי
+deny access to home screen message	admin	iw	מנע גישה למסר של מסך הראשי
 deny access to peer servers	admin	iw	מנע גישה לשרתים חברים
 deny access to phpinfo	admin	iw	phpinfo-מנע גישה ל
 deny access to site configuration	admin	iw	מנע גישה לקינפוג האתר
@@ -149,8 +149,6 @@ edit global category	admin	iw	ערוך קטגוריה גלובלית
 edit global category for %1	admin	iw	ערוך קטגוריה גלובלית עבור %1
 edit group	admin	iw	ערוך קבוצה
 edit group acl's	admin	iw	ערוך רשימת גישה של קבוצה
-edit login screen message	admin	iw	ערוך מסר של מסך הכניסה
-edit main screen message	admin	iw	עריך מסר של מסך הראשי
 edit peer server	admin	iw	ערוך שרת חבר
 edit table format	admin	iw	ערוך פורמט של טבלה
 edit this category	admin	iw	ערוך קטגוריה זו
@@ -255,7 +253,7 @@ login shell	admin	iw	כניסה shell
 login time	admin	iw	שעת הכניסה
 loginid	admin	iw	זיהוי כניסה
 mail settings	admin	iw	הגדרות דואר
-main screen message	admin	iw	מסר של מסך הראשי
+home screen message	admin	iw	מסר של מסך הראשי
 manager	admin	iw	מנהל
 maximum account id (e.g. 65535 or 1000000)	admin	iw	(זיהוי חשבון מירבי (לדוגמא: 65535 או 10000000
 maximum entries in click path history	admin	iw	כמות הרשומות המירבי בהסטוריה של הקלקות
@@ -311,7 +309,6 @@ read this list of methods.	admin	iw	.קרא רשימת מטודות זו
 remove	admin	iw	הסר
 remove all users from this group	admin	iw	הסר את כל המשתמשים מקבוצה זו
 remove all users from this group ?	admin	iw	?להסיר את כל המשתמשים מקבוצה זו
-return to admin mainscreen	admin	iw	חזרה למסך הראשי של ניהול
 return to view account	admin	iw	חזרה לתצוגת חשבון
 rows	admin	iw	שורות
 run asynchronous services	admin	iw	הרץ שירותים א-סנכרונים

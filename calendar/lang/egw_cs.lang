@@ -479,7 +479,6 @@ show also events just owned by selected user	calendar	cs	Zobrazit také událost
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	cs	Narozeniny zobrazovat jako celodenní neblokující událost a při přejetí ukazatele myši nad datem.
 show birthdays as events	calendar	cs	Narozeniny zobrazovat jako události
 show birthdays from addressbook	admin	cs	Zobrazit narozeniny z adresáře
-show default view on main screen	calendar	cs	Zobrazit výchozí pohled na hlavní obrazovce
 show empty rows in planner	calendar	cs	Zobrazit prázdné řádky v Plánovači
 show events that have been deleted	calendar	cs	Zobrazí odstraněné termíny
 show list of upcoming events	calendar	cs	zobrazit seznam nadcházejících událostí

@@ -255,7 +255,6 @@ set a year only for one-time / non-regular holidays.	calendar	da	Sæt et årstal
 set new events to private	calendar	da	Marker nye aftaler som private
 should new events created as private by default ?	calendar	da	Skal nye aftaler markeres private som standard?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	da	Skal status for deltagere (accepteret, forkastet...) vises i parentes efter hver deltagers navn?
-show default view on main screen	calendar	da	Vis standard visning på forsiden
 show list of upcoming events	calendar	da	vis liste over kommende aftaler
 show this month	calendar	da	vis denne måned
 show this week	calendar	da	vis denne uge

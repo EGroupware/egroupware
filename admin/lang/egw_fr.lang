@@ -184,7 +184,7 @@ change account_id	admin	fr	Changer l'ID du compte
 change acl rights	admin	fr	modifier les droits d'accès (ACL)
 change config settings	admin	fr	Modifier les paramètres de configuration
 change domain of email address and aliases	admin	fr	changer le domaine des adresses email et des alias
-change main screen message	admin	fr	Changer le message de l'écran principal
+change login screen message	admin	fr	Changer le message de l'écran principal
 change owner	admin	fr	Changer le propriétaire
 change password for %1	admin	fr	Changer le mot de passe pour %1
 change password hash to	admin	fr	Changer le cryptage du mot de passe pour
@@ -277,7 +277,7 @@ deny access to db backup and restore	admin	fr	Refuser l'accès à  Sauvegarde et
 deny access to error log	admin	fr	Refuser l'accès à la log d'erreurs
 deny access to global categories	admin	fr	Refuser l'accès aux catégories globales
 deny access to groups	admin	fr	Refuser l'accès aux groupes
-deny access to mainscreen message	admin	fr	Refuser l'accès au message de la page principale
+deny access to home screen message	admin	fr	Refuser l'accès au message de la page principale
 deny access to peer servers	admin	fr	Refuser l'accès aux serveurs pairs
 deny access to phpinfo	admin	fr	Refuser l'accès à phpinfo
 deny access to site configuration	admin	fr	Refuser  l'accès à la configuration du site
@@ -323,8 +323,6 @@ edit global category	admin	fr	Modifier la catégorie globale
 edit global category for %1	admin	fr	Modifier la catégorie globale pour %1
 edit group	admin	fr	Modifier le groupe
 edit group acl's	admin	fr	Modifier les autorisations d'accès du groupe (ACL)
-edit login screen message	admin	fr	Modifier le message de l'écran de connexion
-edit main screen message	admin	fr	Modifier le message de l'écran principal
 edit peer server	admin	fr	Modifier le Serveur Pair
 edit table format	admin	fr	Modifier le format de la table
 edit this category	admin	fr	Modifier cette catégorie
@@ -565,8 +563,8 @@ logoutime	admin	fr	Heure de déconnexion
 mail account	admin	fr	Compte email
 mail settings	admin	fr	Paramètres de messagerie
 main email-address	admin	fr	Adresse email principale
-main screen	admin	fr	Ecran principal
-main screen message	admin	fr	Message de l'écran principal
+home screen	admin	fr	Ecran principal
+home screen message	admin	fr	Message de l'écran principal
 manage mapping	admin	fr	Gestion des correspondances
 manage stationery templates	admin	fr	Gérer les modèles
 manager	admin	fr	Gestionnaire
@@ -702,7 +700,6 @@ removing access for groups may cause problems for data in this category.  are yo
 requested	admin	fr	Requis
 required pear class mail/mimedecode.php not found.	admin	fr	Classe PEAR class Mail/mimeDecode.php non trouvée.
 reset filter	admin	fr	Réinitialiser le filtre
-return to admin mainscreen	admin	fr	Revenir à l'écran principal d'administration
 return to view account	admin	fr	Revenir à l'affichage du compte
 rights	admin	fr	Droits
 route all mails to	admin	fr	Livrer tous les emails à

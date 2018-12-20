@@ -112,7 +112,7 @@ category saved.	admin	nl	Categorie opgeslagen.
 change account_id	admin	nl	Wijzig account_id
 change acl rights	admin	nl	Bewerk ACL-rechten
 change config settings	admin	nl	Bewerk configuratieinstellingen
-change main screen message	admin	nl	Bericht op start- of loginpagina wijzigen
+change login screen message	admin	nl	Bericht op start- of loginpagina wijzigen
 change password for %1	admin	nl	wijzig wachtwoord voor %1
 check acl for entries of not (longer) existing accounts	admin	nl	Controle ACL voor records van niet (meer) bestaande accounts
 check ip address of all sessions	admin	nl	Controleer IP-adressen van alle sessies
@@ -165,7 +165,7 @@ deny access to db backup and restore	admin	nl	Toegang tot DB backup en restore w
 deny access to error log	admin	nl	Toegang tot foutenlogboek weigeren
 deny access to global categories	admin	nl	Toegang tot algemene categorieën weigeren
 deny access to groups	admin	nl	Toegang tot groepen weigeren
-deny access to mainscreen message	admin	nl	Toegang tot berichtop startpagina weigeren
+deny access to home screen message	admin	nl	Toegang tot berichtop startpagina weigeren
 deny access to peer servers	admin	nl	Toegang tot peer-servers weigeren
 deny access to phpinfo	admin	nl	Toegang tot phpinfo weigeren
 deny access to site configuration	admin	nl	Toegang tot site configuratie weigeren
@@ -191,8 +191,6 @@ edit global category	admin	nl	Algemene catergorie bewerken
 edit global category for %1	admin	nl	Algemene catergorie bewerken voor %1
 edit group	admin	nl	Groep bewerken
 edit group acl's	admin	nl	groepsrechten bewerken
-edit login screen message	admin	nl	Bericht op loginpagina bewerken
-edit main screen message	admin	nl	Bericht startpagina bewerken
 edit peer server	admin	nl	Peer-server bewerken
 edit table format	admin	nl	Tabelformaat bewerken
 edit this category	admin	nl	deze categorie bewerken
@@ -327,7 +325,7 @@ login time	admin	nl	Logintijd
 loginid	admin	nl	LoginID
 mail settings	admin	nl	Mail instellingen
 main email-address	admin	nl	Hoofd emailadres
-main screen message	admin	nl	Boodschap op startpagina
+home screen message	admin	nl	Boodschap op startpagina
 manage mapping	admin	nl	Beheer de mappings
 manager	admin	nl	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	nl	Max. account id (bijv. 65535 of 100000)
@@ -397,7 +395,6 @@ remote instance saved	admin	nl	Afstandbeheer instantie opgeslagen
 remove	admin	nl	verwijderen
 remove all users from this group	admin	nl	Alle gebruikers uit deze groep verwijderen
 remove all users from this group ?	admin	nl	Alle gebruikers uit deze groep verwijderen?
-return to admin mainscreen	admin	nl	terug naar de startpagina van beheer
 return to view account	admin	nl	Terug naar accountweergave
 rights	admin	nl	Rechten
 route all mails to	admin	nl	Routeer alle emails naar

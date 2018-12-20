@@ -211,7 +211,6 @@ select all	addressbook	eu	Guztiak hautatu
 select the type of conversion	addressbook	eu	Hautatu bihurketa mota
 select the type of conversion:	addressbook	eu	Hautatu bihurketa mota:
 show	addressbook	eu	Bistaratu
-show birthday reminders on main screen	addressbook	eu	Erakutsi urtebetetze abisuak orri nagusian
 start	admin	eu	Hasiera
 startrecord	addressbook	eu	Erregistro hasera
 state	common	eu	Estatua

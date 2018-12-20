@@ -416,7 +416,6 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	nl	Geef alleen de volledig naam
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	nl	Moeten de kolommen foto en thuisadres altijd worden weergegeven, zelfs als ze leeg zijn?
 show	addressbook	nl	Toon
-show birthday reminders on main screen	addressbook	nl	Verjaardagsherinneringen weergeven op hoofdscherm
 show infolog entries for this organisation	addressbook	nl	InfoLog details van deze organisatie weergeven
 show the contacts of this organisation	addressbook	nl	Toon de contacten van deze organisatie
 similar contacts found:	addressbook	nl	Zelfde contacten gevonden:

@@ -162,7 +162,7 @@ infolog - new subproject	infolog	el	Infolog - Νέα υποκατηγορία σ
 infolog - subprojects from	infolog	el	Infolog - Υποκατηγορίες σχεδίων από
 infolog entry deleted	infolog	el	Infolog καταχώρηση διεγράφη
 infolog entry saved	infolog	el	Infolog καταχώρηση αποθηκεύτηκε
-infolog filter for the main screen	infolog	el	Infolog φίλτρο για τη βασική οθόνη
+InfoLog filter for the home screen	infolog	el	Infolog φίλτρο για τη βασική οθόνη
 infolog list	infolog	el	Infolog λίστα
 infolog preferences	common	el	Infolog προτιμήσεις
 infolog-fieldname	infolog	el	Infolog - Όνομα πεδίου
@@ -279,7 +279,7 @@ select to filter by responsible	infolog	el	Επιλογή φίλτρου σύμ�
 sets the status of this entry and its subs to done	infolog	el	Ορίζει την κατάσταση αυτής της καταχώρησης και των υποκατηγοριών της σε ολοκληρωμένη
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	el	Θα έπρεπε το InfoLog να εμφανίζει τις υπο-εργασίες, -κλήσεις ή -σημειώσεις στην κανονική εμφάνιση ή όχι. Μπορείτε πάντα να βλέπετε τις υποκατηγορίες μέσω των μητρικών τους.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	el	Θα έπρεπε το InfoLog να εμφανίζει τους συνδέσμους με άλλες εφαρμογές και/ή τις προσκολλήσεις αρχείου στην InfoLog λίστα (κανονική εμφάνιση όταν εισέρχεστε στο InfoLog).
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	el	Θα έπρεπε το InfoLog να εμφανίζεται στη βασική οθόνη και με ποιο φίλτρο.Λειτουργεί μόνο αν δεν επιλέξατε μία εφαρμογή για την βασική οθόνη (στις προτιμήσεις σας).
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	el	Θα έπρεπε το InfoLog να εμφανίζεται στη βασική οθόνη και με ποιο φίλτρο.Λειτουργεί μόνο αν δεν επιλέξατε μία εφαρμογή για την βασική οθόνη (στις προτιμήσεις σας).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	el	Θα έπρεπε το InfoLog να χρησιμοποιεί ολόκληρα ονόματα (επώνυμα και οικογενειακά ονόματα) ή μόνο τα ονόματα εισόδου.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει ένα μοναδικό νούμερο Id, το οποίο να μπορεί να χρησιμοποιείται π.χ. ως Id εισιτηρίου.
 should the infolog list show the column "last modified".	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει τη στήλη "τελευταία τροποποίηση".

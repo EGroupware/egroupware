@@ -92,7 +92,7 @@ category %1 has been saved !	admin	ca	S'ha guardat la categoria %1 !!
 category list	admin	ca	Llista de categories
 change acl rights	admin	ca	canviar permissos de LCA
 change config settings	admin	ca	Canviar opcions de configuració
-change main screen message	admin	ca	Canviar missatge de la pantalla principal
+change login screen message	admin	ca	Canviar missatge de la pantalla principal
 check ip address of all sessions	admin	ca	Comprovar l'adreça IP de totes les sessions
 check items to <b>%1</b> to %2 for %3	admin	ca	Comprovar elements de <b>%1</b> a %2 per a %3
 click to select a color	admin	ca	Pitjau per a seleccionar un color
@@ -139,7 +139,7 @@ deny access to db backup and restore	admin	ca	Denegar accés a la BBDD de còpia
 deny access to error log	admin	ca	Denegar accés al registre d'errors
 deny access to global categories	admin	ca	Denegar accés a les categories globals
 deny access to groups	admin	ca	Denegar accés a grups
-deny access to mainscreen message	admin	ca	Denegar accés al missatge de la pantalla principal
+deny access to home screen message	admin	ca	Denegar accés al missatge de la pantalla principal
 deny access to peer servers	admin	ca	Denegar accés als servidors parells
 deny access to phpinfo	admin	ca	Denegar accés a phpinfo
 deny access to site configuration	admin	ca	Denegar accés a la configuració del lloc
@@ -165,8 +165,6 @@ edit global category	admin	ca	Editar categoria global
 edit global category for %1	admin	ca	Editar categoria global per a %1
 edit group	admin	ca	Editar Grup
 edit group acl's	admin	ca	editar el grup de LCA
-edit login screen message	admin	ca	Editar missatge de la pantalla d'inici
-edit main screen message	admin	ca	Editar missatge de la pantalla principal
 edit peer server	admin	ca	Editar servidors parells
 edit table format	admin	ca	Editar format de taula
 edit this category	admin	ca	editar aquesta categoria
@@ -284,7 +282,7 @@ login time	admin	ca	Hora de Connexió
 loginid	admin	ca	ID de Connexió
 mail settings	admin	ca	Configuracions de Correu
 main email-address	admin	ca	Adreça de Correu Principal
-main screen message	admin	ca	Missatge de la Pantalla Principal
+home screen message	admin	ca	Missatge de la Pantalla Principal
 manager	admin	ca	Gestor
 maximum account id (e.g. 65535 or 1000000)	admin	ca	Màxim id de compte (ex. 65535 o 1000000)
 maximum entries in click path history	admin	ca	Nombre màxim d'entrades a l'historial de pulsacions de rutes
@@ -345,7 +343,6 @@ register application hooks	admin	ca	Registrar "hooks" de l'aplicació
 remove	admin	ca	esborrar
 remove all users from this group	admin	ca	Esborrar tots els usuaris d'aquest grup
 remove all users from this group ?	admin	ca	Esborrar tots els usuaris d'aquest grup ?
-return to admin mainscreen	admin	ca	tornar a la pantalla principal d'administració
 return to view account	admin	ca	Tornar a veure compte
 route all mails to	admin	ca	Direcciona tots els Correus a
 rows	admin	ca	Files

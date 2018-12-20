@@ -109,7 +109,7 @@ category saved.	admin	pt-br	Categoria salva.
 change account_id	admin	pt-br	Alterar id da conta
 change acl rights	admin	pt-br	Mudar direitos da ACL
 change config settings	admin	pt-br	Mudar parâmetros de configuração
-change main screen message	admin	pt-br	Alterar mensagem da tela principal
+change login screen message	admin	pt-br	Alterar mensagem da tela principal
 change password for %1	admin	pt-br	alterar senha para %1
 check acl for entries of not (longer) existing accounts	admin	pt-br	Verificar registros ACL para contas não mais existentes.
 check ip address of all sessions	admin	pt-br	Verificar endereço IP de todas sessões
@@ -162,7 +162,7 @@ deny access to db backup and restore	admin	pt-br	Negar acesso ao backup e restau
 deny access to error log	admin	pt-br	Negar acesso ao regsitro de erros
 deny access to global categories	admin	pt-br	Negar acesso as categorias globais
 deny access to groups	admin	pt-br	Negar acesso aos grupos
-deny access to mainscreen message	admin	pt-br	Negar acesso à mensagem da tela principal
+deny access to home screen message	admin	pt-br	Negar acesso à mensagem da tela principal
 deny access to peer servers	admin	pt-br	Negar acesso aos servidores remotos
 deny access to phpinfo	admin	pt-br	Negar acesso ao phpinfo
 deny access to site configuration	admin	pt-br	Negar acesso à configuração do site
@@ -188,8 +188,6 @@ edit global category	admin	pt-br	Editar categoria global
 edit global category for %1	admin	pt-br	Editar categoria global para %1
 edit group	admin	pt-br	Editar Grupo
 edit group acl's	admin	pt-br	Editar grupo ACL
-edit login screen message	admin	pt-br	Editar mensagem da tela de conexão
-edit main screen message	admin	pt-br	Editar mensagem da tela inicial
 edit peer server	admin	pt-br	Editar servidor parceiro
 edit table format	admin	pt-br	Editar formato de tabela
 edit this category	admin	pt-br	editar esta categoria
@@ -324,7 +322,7 @@ login time	admin	pt-br	Hora da conexão
 loginid	admin	pt-br	Código do usuário
 mail settings	admin	pt-br	Configurações de E-Mail
 main email-address	admin	pt-br	E-Mail principal
-main screen message	admin	pt-br	Mensagem da tela principal
+home screen message	admin	pt-br	Mensagem da tela principal
 manage mapping	admin	pt-br	Gerenciar mapeamento
 manager	admin	pt-br	Gerenciador
 maximum account id (e.g. 65535 or 1000000)	admin	pt-br	id máximo para contas (Exemplo: 65535 ou 1000000)
@@ -392,7 +390,6 @@ remote instance saved	admin	pt-br	Instância remota salva
 remove	admin	pt-br	remover
 remove all users from this group	admin	pt-br	Remover todos os usuários deste grupo
 remove all users from this group ?	admin	pt-br	Remover todos os usuários desse grupo?
-return to admin mainscreen	admin	pt-br	retornar à tela principal da Administração
 return to view account	admin	pt-br	retornar à visualização da conta
 rights	admin	pt-br	Direitos
 route all mails to	admin	pt-br	Remeter todos e-mails para

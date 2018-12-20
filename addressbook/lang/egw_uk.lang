@@ -126,7 +126,6 @@ record access	addressbook	uk	Доступи запису
 record owner	addressbook	uk	Власник запису
 repetition	addressbook	uk	Повторення
 select the type of conversion	addressbook	uk	Виберіть тип конверсії
-show birthday reminders on main screen	addressbook	uk	Показувати основному екрані нагадування про дні народження
 startrecord	addressbook	uk	Початковий запис
 state	common	uk	Область
 street	common	uk	Вулиця

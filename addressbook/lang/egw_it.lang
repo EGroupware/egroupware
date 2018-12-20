@@ -444,7 +444,6 @@ should the columns photo and home address always be displayed, even if they are 
 show	addressbook	it	Mostra
 show active accounts	addressbook	it	Mostra account attivi
 show all accounts	addressbook	it	Mostra tutti gli account
-show birthday reminders on main screen	addressbook	it	Visualizza i promemoria dei compleanni nella schermata principale
 show infolog entries for this organisation	addressbook	it	Mostra tutte le attività per questa organizzazione
 show the contacts of this organisation	addressbook	it	Mostra i contatti di questa organizzazione
 similar contacts found:	addressbook	it	Contatti simili trovati:

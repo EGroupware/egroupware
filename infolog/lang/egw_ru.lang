@@ -242,7 +242,7 @@ infolog csv import	infolog	ru	Bcgjhn в ИнфоЖурнал в формате C
 infolog entry deleted	infolog	ru	Запись Журнала удалена
 infolog entry saved	infolog	ru	Запись Журнала сохранена
 infolog fields:	infolog	ru	Поля ИнфоЖурнала:
-infolog filter for the main screen	infolog	ru	Фильтр Журнала для основного экрана
+InfoLog filter for the home screen	infolog	ru	Фильтр Журнала для основного экрана
 infolog ical export	infolog	ru	Экспорт ИнфоЖурнала в формате iCal
 infolog ical import	infolog	ru	Импорт в ИнфоЖурнале в формате iCal
 infolog id	infolog	ru	ID записи ИнфоЖурнала
@@ -417,7 +417,7 @@ sets the status of this entry and its subs to done	infolog	ru	Устанавли
 sets the status of this entry to done	infolog	ru	Устанавливает статус этой записи на "Выполнено"
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	ru	Должен ли Журнал показывает подзадания, -звонки или -заметки в нормальном виде или нет. Вы всегда можете посмотреть подэлементы через их родителей.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	ru	Должен ли Журнал показывать ссылки на другие приложения и/или прикрепленные файлы в списке Журнала (нормальный вид при входе в Журнал)
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	ru	Должен ли Журнал отображаться на основной странице и с каким фильтром. Работает только если Вы не выбрали приложение для основной страницы (в Ваших настройках).
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	ru	Должен ли Журнал отображаться на основной странице и с каким фильтром. Работает только если Вы не выбрали приложение для основной страницы (в Ваших настройках).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	ru	Должен ли Журнал использовать полные имена (имя и фамилия) или только имена для входа
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	ru	Должен ли список Журнала показывать уникальные числовые идентификаторы, которые могут быть использованы, например, как идентификаторы талонов
 should the infolog list show the column "last modified".	infolog	ru	Должен ли список Журнала показывать колонку "последнее изменение"

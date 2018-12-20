@@ -158,7 +158,7 @@ infolog - new subproject	infolog	pl	CRM Dziennik - Nowy podprojekt
 infolog - subprojects from	infolog	pl	CRM Dziennik - Podprojekt z
 infolog entry deleted	infolog	pl	Wpis nfoLog skasowany
 infolog entry saved	infolog	pl	Wpis InfoLog zapisany
-infolog filter for the main screen	infolog	pl	Filtr dziennika na stronę główną
+InfoLog filter for the home screen	infolog	pl	Filtr dziennika na stronę główną
 infolog list	infolog	pl	CRM Dziennik lista
 infolog preferences	common	pl	CRM Dziennik preferencje
 infolog-fieldname	infolog	pl	CRM Dziennik - Nazwa pola
@@ -277,7 +277,7 @@ sets the status of this entry and its subs to done	infolog	pl	Ustaw stan wpisu i
 schedule appointment	infolog	pl	Zaplanuj termin
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pl	Czy Dziennik CRM ma w domyślnym widoku wyświetlać wszystkie Zadania, Rozmowy i Notatki podrzędne? Możesz zawsze dotrzeć do nich poprzez ich <i>rodzica</i>.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pl	Czy Dziennik CRM powinien pokazywać odnośniki do innych aplikacji oraz/lub załączone pliki na liście zadań (domyślny widok gdy uruchamiany jest Dziennik CRM)?
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	pl	Czy Dziennik CRM powinien pokazywać zadania na głównym ekranie a jeżeli tak, to z jakim filtrem. Działa tylko, jeżeli nie wybrano aplikacji na główny ekran (we wspólnych ustawieniach).
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	pl	Czy Dziennik CRM powinien pokazywać zadania na głównym ekranie a jeżeli tak, to z jakim filtrem. Działa tylko, jeżeli nie wybrano aplikacji na główny ekran (we wspólnych ustawieniach).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	pl	Czy CRM - Dziennik ma używać pełnych danych osobowych (imię, nazwisko), czy tylko loginów.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pl	Czy na liście zadań Dziennika CRM pokazywać unikalny identyfikator numeryczny, który może być używany np. jako numer kolejny zadania?
 should the infolog list show the column "last modified".	infolog	pl	Czy na liście zadań Dziennika CRM pokazywać kolumnę "ostatnio zmodyfikowany"?

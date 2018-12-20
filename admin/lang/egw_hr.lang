@@ -80,7 +80,7 @@ category %1 has been saved !	admin	hr	Kategorija %1 je spremljena !
 category list	admin	hr	Lista kategorija
 change acl rights	admin	hr	promijeni ACL prava
 change config settings	admin	hr	Promijeni postavke konfiguracije
-change main screen message	admin	hr	Promijeni poruku na glavnom ekranu
+change login screen message	admin	hr	Promijeni poruku na glavnom ekranu
 check ip address of all sessions	admin	hr	Provijeri IP adresu svih sessions
 check items to <b>%1</b> to %2 for %3	admin	hr	Provijeri od <b>%1</b> do %2 za %3
 click to select a color	admin	hr	Izaberite boju
@@ -123,7 +123,7 @@ deny access to current sessions	admin	hr	Uskrati pristup trenutnoj session
 deny access to error log	admin	hr	Uskrati pristup evidenciji grešaka
 deny access to global categories	admin	hr	Uskrati pristup globalnim kategorijama
 deny access to groups	admin	hr	Uskrati pristup grupama
-deny access to mainscreen message	admin	hr	Uskrati pristup poruci na glavnom ekranu
+deny access to home screen message	admin	hr	Uskrati pristup poruci na glavnom ekranu
 deny access to peer servers	admin	hr	Uskrati pristup peer poslužiteljima
 deny access to phpinfo	admin	hr	Uskrati pristup u phpinfo
 deny access to site configuration	admin	hr	Uskrati pristup konfiguraciji stranica
@@ -148,8 +148,6 @@ edit global category	admin	hr	Uredi globalnu kategoriju
 edit global category for %1	admin	hr	Uredi globalnu kategoriju za %1
 edit group	admin	hr	Uredi grupu
 edit group acl's	admin	hr	Uredi grupin ACL's
-edit login screen message	admin	hr	Uredi poruku ekrana za prijavu
-edit main screen message	admin	hr	uredi poruku glavnog ekrana
 edit peer server	admin	hr	Uredi Peer poslužitelj
 edit table format	admin	hr	Uredi format tabela
 edit this category	admin	hr	uredi ovu kategoriju
@@ -256,7 +254,7 @@ login shell	admin	hr	Login shell
 login time	admin	hr	Vrijeme prijave
 loginid	admin	hr	LoginID
 mail settings	admin	hr	Postavke pošte
-main screen message	admin	hr	Poruka glavnog ekrana
+home screen message	admin	hr	Poruka glavnog ekrana
 manager	admin	hr	Upravitelj
 maximum account id (e.g. 65535 or 1000000)	admin	hr	Najveći indetitet korisničkog računa (npr. 65535 ili 1000000)
 maximum entries in click path history	admin	hr	Maximum entries in click path history
@@ -313,7 +311,6 @@ register application hooks	admin	hr	Register application hooks
 remove	admin	hr	Makni
 remove all users from this group	admin	hr	Ukloni sve korisnike iz ove grupe
 remove all users from this group ?	admin	hr	Da uklonim sve korisnike iz ove grupe?
-return to admin mainscreen	admin	hr	povratak na glavnu stranicu admin
 return to view account	admin	hr	Return to view account
 rows	admin	hr	Retci
 run asynchronous services	admin	hr	Run Asynchronous services

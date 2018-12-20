@@ -114,7 +114,7 @@ category saved.	admin	pl	Kategoria zapisana.
 change account_id	admin	pl	Zmień account_id
 change acl rights	admin	pl	zmiana prawa dostępu (ACL)
 change config settings	admin	pl	Zmiana ustawień
-change main screen message	admin	pl	Zmiana komunikatu na stronie głównej
+change login screen message	admin	pl	Zmiana komunikatu na stronie głównej
 change password for %1	admin	pl	Zmień hasło dla %1
 check acl for entries of not (longer) existing accounts	admin	pl	Sprawdź ACL dla wpisów nie istniejących (już) kont
 check ip address of all sessions	admin	pl	sprawdzanie adresu IP dla każdej sesji
@@ -171,7 +171,7 @@ deny access to db backup and restore	admin	pl	Odmów dostępu do kopii zapasowyc
 deny access to error log	admin	pl	Odmów dostępu do dziennika błędów
 deny access to global categories	admin	pl	Odmów dostpu do globalnych kategorii
 deny access to groups	admin	pl	Odmów dostępu do grup
-deny access to mainscreen message	admin	pl	Odmów dostepu do wiadomości menu głównego
+deny access to home screen message	admin	pl	Odmów dostepu do wiadomości menu głównego
 deny access to peer servers	admin	pl	Odmów dostępu do serwerów równorzędnych
 deny access to phpinfo	admin	pl	Odmów dostępu do PHPInfo
 deny access to site configuration	admin	pl	Odmów dostępu do konfiguracji portalu
@@ -197,8 +197,6 @@ edit global category	admin	pl	Edycja kategorii globalnej
 edit global category for %1	admin	pl	Edycja kategorii globalnej dla %1
 edit group	admin	pl	Edycja grupy
 edit group acl's	admin	pl	edytuj prawa dostępu grupy
-edit login screen message	admin	pl	Edycja wiadomości ekranu logowania
-edit main screen message	admin	pl	Edycja wiadomości na stronie głównej
 edit peer server	admin	pl	Edycja serwera równorzędnego
 edit table format	admin	pl	Edycja formatu tabeli
 edit this category	admin	pl	edytuj tę kategorię
@@ -349,7 +347,7 @@ logintime	admin	pl	Czas zalogowania
 logoutime	admin	pl	Czas wylogowania
 mail settings	admin	pl	Ustawienia email
 main email-address	admin	pl	Główny adres mailowy
-main screen message	admin	pl	Wiadomość na stronie gwnej
+home screen message	admin	pl	Wiadomość na stronie gwnej
 manage mapping	admin	pl	Zarządzaj mapowaniem
 manager	admin	pl	Menedżer
 maximum account id (e.g. 65535 or 1000000)	admin	pl	Maksymalny ID konta (np: 65535 lub 100000)
@@ -431,7 +429,6 @@ remove	admin	pl	usuń
 remove all users from this group	admin	pl	Usuwanie wszystkich użytkowników z grupy
 remove all users from this group ?	admin	pl	Usuń wszystkich użytkownikw z grupy ?
 requested	admin	pl	Żądany
-return to admin mainscreen	admin	pl	powrót do głównej strony administracji
 return to view account	admin	pl	Wróć do wyświetlania konta
 rights	admin	pl	Prawa
 route all mails to	admin	pl	Przesyłaj maile do

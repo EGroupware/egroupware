@@ -137,7 +137,6 @@ repetition	addressbook	tr	Tekrarlama
 select all	addressbook	tr	Tamam?n? seç
 select the type of conversion	addressbook	tr	Dönü?üm tipini seçiniz
 select the type of conversion:	addressbook	tr	Dönü?üm tipini seçiniz:
-show birthday reminders on main screen	addressbook	tr	Ana ekranda do?um günü uyar?lar?n? göster
 startrecord	addressbook	tr	Kaydetmeye ba?la
 state	common	tr	Durum
 street	common	tr	Cadde

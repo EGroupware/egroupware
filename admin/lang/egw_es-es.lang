@@ -169,7 +169,7 @@ change account_id	admin	es-es	Cambiar el campo account_id
 change acl rights	admin	es-es	cambiar permisos de ACL
 change config settings	admin	es-es	Cambiar opciones de configuración
 change domain of email address and aliases	admin	es-es	cambiar el dominio de la dirección de correo y alias
-change main screen message	admin	es-es	Cambiar mensaje de la pantalla principal
+change login screen message	admin	es-es	Cambiar mensaje de la pantalla principal
 change owner	admin	es-es	Cambiar el propietario
 change password for %1	admin	es-es	cambiar la contraseña para %1
 change password hash to	admin	es-es	Cambiar el hash de la contraseña a
@@ -251,7 +251,7 @@ deny access to db backup and restore	admin	es-es	Denegar acceso a copia y restau
 deny access to error log	admin	es-es	Denegar acceso al registro de errores
 deny access to global categories	admin	es-es	Denegar acceso a las categorías globales
 deny access to groups	admin	es-es	Denegar acceso a grupos
-deny access to mainscreen message	admin	es-es	Denegar acceso al mensaje de la pantalla principal
+deny access to home screen message	admin	es-es	Denegar acceso al mensaje de la pantalla principal
 deny access to peer servers	admin	es-es	Denegar acceso a servidores 'peer'
 deny access to phpinfo	admin	es-es	Denegar acceso a phpinfo
 deny access to site configuration	admin	es-es	Denegar acceso a la configuración del sitio
@@ -289,8 +289,6 @@ edit global category	admin	es-es	Editar categoría global
 edit global category for %1	admin	es-es	Editar categoría global para %1
 edit group	admin	es-es	Editar grupo
 edit group acl's	admin	es-es	Editar ACL de grupo
-edit login screen message	admin	es-es	Editar mensaje de la pantalla de inicio de sesión
-edit main screen message	admin	es-es	Editar mensaje de la pantalla principal
 edit peer server	admin	es-es	Editar servidor 'peer'
 edit table format	admin	es-es	Editar formato de tabla
 edit this category	admin	es-es	Editar esta categoría
@@ -507,7 +505,7 @@ logoutime	admin	es-es	Hora de fin de sesión
 mail account	admin	es-es	Cuenta de correo
 mail settings	admin	es-es	Configuración del correo.
 main email-address	admin	es-es	Dirección de correo principal
-main screen message	admin	es-es	Mensaje de la pantalla principal
+home screen message	admin	es-es	Mensaje de la pantalla principal
 manage mapping	admin	es-es	Gestión de mapeos
 manage stationery templates	admin	es-es	Gestionar plantillas preimpresas
 manager	admin	es-es	Administrador
@@ -633,7 +631,6 @@ remove all users from this group ?	admin	es-es	¿Borrar todos los usuarios de es
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	es-es	Eliminar el acceso a grupos puede causar problemas para los datos en esta categoría. ¿Está seguro? Los usuarios de estos grupos puede que ya no tengan acceso:
 requested	admin	es-es	Requerido
 reset filter	admin	es-es	restablecer filtro
-return to admin mainscreen	admin	es-es	volver a la pantalla principal de administración
 return to view account	admin	es-es	Volver a ver cuenta
 rights	admin	es-es	Derechos
 route all mails to	admin	es-es	dirigir todos los correos a

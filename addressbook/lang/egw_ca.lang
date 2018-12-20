@@ -276,7 +276,6 @@ select where you want to store / retrieve contacts	admin	ca	Seleccioneu quan vol
 selected contacts	addressbook	ca	Contactes selecionats
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	ca	Les columnes de fotografia i domicili han de mostrar-se sempre, fins i tot si estan buides.
 show	addressbook	ca	Mostra
-show birthday reminders on main screen	addressbook	ca	Mostrar recordatoris d'aniversaris a la pantalla principal
 show infolog entries for this organisation	addressbook	ca	Mostra informació de registre per aquesta organització
 show the contacts of this organisation	addressbook	ca	Mostra els contactes d'aquesta organització
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	ca	Mida de l'element emergent (WxH, p.ex.400x300, si un element emergent fos usat)

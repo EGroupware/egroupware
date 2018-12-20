@@ -432,7 +432,6 @@ show all status incl. rejected events	calendar	fi	Näytä kaikki tilat, myös to
 show all status, but rejected	calendar	fi	Näytä kaikki tilat, paitsi torjuttujen
 show also events just owned by selected user	calendar	fi	Näytä vain valitun käyttäjän tapahtumat
 show birthdays from addressbook	admin	fi	Näytä syntymäpäivät osoitekirjasta
-show default view on main screen	calendar	fi	Näytä oletusnäkymä etusivulla
 show empty rows in planner	calendar	fi	Näytä tyhjät rivit suunnitelunäkymässä
 show events that have been deleted	calendar	fi	Näytä poistetut tapahtumat
 show list of upcoming events	calendar	fi	Näytä tulevien tapahtumien luettelo

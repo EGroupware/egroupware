@@ -76,7 +76,7 @@ category %1 has been saved !	admin	da	Kategorien %1 er gemt!
 category list	admin	da	Vis kategori
 change acl rights	admin	da	ændre ACL rettigheder
 change config settings	admin	da	Ændre konfigurations indstillingerne
-change main screen message	admin	da	Ændre startside besked
+change login screen message	admin	da	Ændre startside besked
 check ip address of all sessions	admin	da	Kontrollere IP adresse for alle sessioner
 click to select a color	admin	da	Klik for at vælge en farve
 color	admin	da	Farve
@@ -116,7 +116,7 @@ deny access to current sessions	admin	da	Nægt adgang til nuværende sessions
 deny access to error log	admin	da	Nægt adgang til fejllog
 deny access to global categories	admin	da	Nægt adgang til globale kategorier
 deny access to groups	admin	da	Nægt adgang til grupper
-deny access to mainscreen message	admin	da	Nægt adgang til startside besked
+deny access to home screen message	admin	da	Nægt adgang til startside besked
 deny access to peer servers	admin	da	Nægt adgang til peer servere
 deny access to phpinfo	admin	da	Nægt adgang til PHPinfo
 deny access to site configuration	admin	da	Nægt adgang til site konfiguration
@@ -140,8 +140,6 @@ edit global category	admin	da	Redigér global kategori
 edit global category for %1	admin	da	Redigér global kategori til %1
 edit group	admin	da	Redigér gruppe
 edit group acl's	admin	da	redigér gruppe ACL
-edit login screen message	admin	da	Redigér  loginside besked
-edit main screen message	admin	da	Redigér startside besked
 edit peer server	admin	da	Redigér Peer server
 edit table format	admin	da	Redigér tabel format
 edit this category	admin	da	redigér denne kategori
@@ -248,7 +246,7 @@ login shell	admin	da	Login shell
 login time	admin	da	Login tid
 loginid	admin	da	LoginID
 mail settings	admin	da	Post indstillinger
-main screen message	admin	da	Startside besked
+home screen message	admin	da	Startside besked
 manager	admin	da	Håndtering
 maximum account id (e.g. 65535 or 1000000)	admin	da	Maksimum konto id (f.eks. 65535 eller 10000000)
 maximum entries in click path history	admin	da	Maksimum antal i klik sti historie
@@ -300,7 +298,6 @@ read this list of methods.	admin	da	Læs denne liste over metoder
 remove	admin	da	Fjern
 remove all users from this group	admin	da	Fjern alle brugere fra denne gruppe
 remove all users from this group ?	admin	da	Fjern alle brugere fra denne gruppe?
-return to admin mainscreen	admin	da	gå tilbage til admin startside
 return to view account	admin	da	Tilbage til konto visning
 rows	admin	da	Rækker
 save the category	admin	da	gem kategorien

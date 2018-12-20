@@ -259,7 +259,6 @@ set a year only for one-time / non-regular holidays.	calendar	fa	سال را ب�
 set new events to private	calendar	fa	تنظیم رویدادهای جدید به خصوصی
 should new events created as private by default ?	calendar	fa	نمایش رویدادهای جدید ایجاد شده بعنوان خصوصی بصورت پیش فرض؟
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	fa	آیا وضعیت رویداد همکاران(تأیید،رد و...) باید در کروشه بعد از نام هر همکار نمایش داده شود؟
-show default view on main screen	calendar	fa	نمایش نمای پیش فرض در صفحه اصلی
 show list of upcoming events	calendar	fa	نمایش فهرستی از رویدادهای آمدنی
 show this month	calendar	fa	نمایش این ماه
 show this week	calendar	fa	نمایش این هفته

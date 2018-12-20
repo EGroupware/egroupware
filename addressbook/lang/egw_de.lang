@@ -454,7 +454,6 @@ should the columns photo and home address always be displayed, even if they are 
 show	addressbook	de	Anzeigen
 show active accounts	addressbook	de	Zeigt nur aktive Benutzer an
 show all accounts	addressbook	de	Zeigt alle Benutzer an
-show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen
 show infolog entries for this organisation	addressbook	de	InfoLog Einträge dieser Organisation anzeigen
 show the contacts of this organisation	addressbook	de	Kontakte dieser Organisation anzeigen
 similar contacts found:	addressbook	de	Ähnliche Kontakte gefunden:

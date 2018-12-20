@@ -157,7 +157,6 @@ repetition	addressbook	ko	반복
 select all	addressbook	ko	모두 선택
 select the type of conversion	addressbook	ko	변환할 형식을 선택하세요
 select the type of conversion:	addressbook	ko	변환할 형식선택:
-show birthday reminders on main screen	addressbook	ko	주 화면에서 생일 알림을 표시
 start	admin	ko	시작
 startrecord	addressbook	ko	시작레코드
 state	common	ko	주

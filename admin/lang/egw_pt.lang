@@ -92,7 +92,7 @@ category %1 has been saved !	admin	pt	A categoria %1 foi guardada !
 category list	admin	pt	Lista de categorias
 change acl rights	admin	pt	Alterar direitos de ACL
 change config settings	admin	pt	Alterar configurações
-change main screen message	admin	pt	Alterar mensagem da página inicial
+change login screen message	admin	pt	Alterar mensagem da página inicial
 check ip address of all sessions	admin	pt	Verificar endereço IP de todas as sessões
 check items to <b>%1</b> to %2 for %3	admin	pt	Marcar items de <b>%1</b> a %2 para %3
 click to select a color	admin	pt	Clique aqui para seleccionar uma cor
@@ -137,7 +137,7 @@ deny access to db backup and restore	admin	pt	Negar acesso à cópia de seguran�
 deny access to error log	admin	pt	Negar acesso ao registo de erros
 deny access to global categories	admin	pt	Negar acesso às categorias gerais
 deny access to groups	admin	pt	Negar acesso aos grupos
-deny access to mainscreen message	admin	pt	Negar acesso à mensagem do ecrã principal
+deny access to home screen message	admin	pt	Negar acesso à mensagem do ecrã principal
 deny access to peer servers	admin	pt	Negar acesso aos servidores remotos
 deny access to phpinfo	admin	pt	Negar acesso à informação php
 deny access to site configuration	admin	pt	Negar acesso à configuração do sítio
@@ -162,8 +162,6 @@ edit global category	admin	pt	Editar categoria geral
 edit global category for %1	admin	pt	Editar categoria global para %1
 edit group	admin	pt	Editar grupos
 edit group acl's	admin	pt	Editar ACLs do grupo
-edit login screen message	admin	pt	Editar mensagem do ecrã de entrada
-edit main screen message	admin	pt	Editar mensagem da página inicial
 edit peer server	admin	pt	Editar servidor remoto
 edit table format	admin	pt	Editar formato de tabela
 edit this category	admin	pt	editar esta categoria
@@ -279,7 +277,7 @@ login time	admin	pt	Hora de acesso
 loginid	admin	pt	ID do utilizador
 mail settings	admin	pt	Configurações do correio electrónico
 main email-address	admin	pt	Endereço de correio electrónico principal
-main screen message	admin	pt	Mensagem da página inicial
+home screen message	admin	pt	Mensagem da página inicial
 manage mapping	admin	pt	Gerenciar mapeamento
 manager	admin	pt	Gestor
 maximum account id (e.g. 65535 or 1000000)	admin	pt	ID máximo para contas (Exemplo: 65535 ou 1000000)
@@ -341,7 +339,6 @@ register application hooks	admin	pt	Registar pontos de entrada de aplicações
 remove	admin	pt	remover
 remove all users from this group	admin	pt	Remover todos os utilizadores deste grupo
 remove all users from this group ?	admin	pt	Deseja remover todos os utilizadores deste grupo ?
-return to admin mainscreen	admin	pt	voltar ao ecrã de administração
 return to view account	admin	pt	Voltar à visualização de conta
 route all mails to	admin	pt	Encaminhar todas as mensagens para
 rows	admin	pt	Linhas

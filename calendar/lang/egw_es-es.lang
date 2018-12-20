@@ -492,7 +492,6 @@ show all status, but unknown	calendar	es-es	Mostrar todos los estados, excepto l
 show also events just owned by selected user	calendar	es-es	Mostrar también los eventos cuyo único propietario es el usuario seleccionado
 show birthdays as events	calendar	es-es	Mostrar cumpleaños como eventos
 show birthdays from addressbook	admin	es-es	Mostrar cumpleaños de la libreta de direcciones
-show default view on main screen	calendar	es-es	Mostrar la vista predeterminada en la pantalla principal
 show empty rows in planner	calendar	es-es	Mostrar filas vacías en el planificador
 show events that have been deleted	calendar	es-es	Mostrar los eventos que hayan sido borrados
 show list of upcoming events	calendar	es-es	Mostrar la lista de eventos próximos

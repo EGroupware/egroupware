@@ -92,7 +92,7 @@ category %1 has been saved !	admin	zh-tw	類別%1已儲存!
 category list	admin	zh-tw	分類清單
 change acl rights	admin	zh-tw	修改 ACL 權限
 change config settings	admin	zh-tw	改變組態設定
-change main screen message	admin	zh-tw	變更主畫面訊息
+change login screen message	admin	zh-tw	變更主畫面訊息
 check ip address of all sessions	admin	zh-tw	檢查所有連線的網路位址
 check items to <b>%1</b> to %2 for %3	admin	zh-tw	檢查%3的項目 <b>%1</b> 到 %2
 click to select a color	admin	zh-tw	選一個顏色
@@ -139,7 +139,7 @@ deny access to db backup and restore	admin	zh-tw	無法存取資料庫備份與�
 deny access to error log	admin	zh-tw	禁止存取錯誤紀錄
 deny access to global categories	admin	zh-tw	無法存取全域類別
 deny access to groups	admin	zh-tw	無法存取群組
-deny access to mainscreen message	admin	zh-tw	無法存取主畫面訊息
+deny access to home screen message	admin	zh-tw	無法存取主畫面訊息
 deny access to peer servers	admin	zh-tw	禁止存取對等伺服器
 deny access to phpinfo	admin	zh-tw	無法存取php資訊
 deny access to site configuration	admin	zh-tw	無法存取網站設定
@@ -165,8 +165,6 @@ edit global category	admin	zh-tw	編輯全區分類
 edit global category for %1	admin	zh-tw	編輯全域分類 %1
 edit group	admin	zh-tw	編輯群組
 edit group acl's	admin	zh-tw	編輯群組的ACL's
-edit login screen message	admin	zh-tw	編輯登入畫面訊息
-edit main screen message	admin	zh-tw	編輯主要畫面訊息
 edit peer server	admin	zh-tw	編輯點伺服器
 edit table format	admin	zh-tw	編輯表格格式
 edit this category	admin	zh-tw	編輯這個分類
@@ -286,7 +284,7 @@ login time	admin	zh-tw	登入時間
 loginid	admin	zh-tw	登入代碼
 mail settings	admin	zh-tw	郵件設定
 main email-address	admin	zh-tw	主要信箱
-main screen message	admin	zh-tw	主畫面訊息
+home screen message	admin	zh-tw	主畫面訊息
 manage mapping	admin	zh-tw	管理對應
 manager	admin	zh-tw	管理者
 maximum account id (e.g. 65535 or 1000000)	admin	zh-tw	使用者帳號編碼最大值﹝如：65535 或 1000000﹞
@@ -349,7 +347,6 @@ register application hooks	admin	zh-tw	註冊應用程式
 remove	admin	zh-tw	移除
 remove all users from this group	admin	zh-tw	移除此群組中所有的使用者
 remove all users from this group ?	admin	zh-tw	移除這個群組的所有使用者？
-return to admin mainscreen	admin	zh-tw	回到管理者主畫面
 return to view account	admin	zh-tw	回到帳號瀏覽
 route all mails to	admin	zh-tw	轉遞所有信件到
 rows	admin	zh-tw	列

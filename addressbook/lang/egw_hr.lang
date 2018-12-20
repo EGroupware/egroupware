@@ -136,7 +136,6 @@ select all	addressbook	hr	Označi Sve
 select the type of conversion	addressbook	hr	Izaberite vrstu konverzije
 select the type of conversion:	addressbook	hr	Izaberite vrstu konverzije:
 show	addressbook	hr	Show
-show birthday reminders on main screen	addressbook	hr	Pokaži rođendanske podsjetnike na glavnom ekranu
 startrecord	addressbook	hr	Početni tzapis
 state	common	hr	Županija
 street	common	hr	Ulica

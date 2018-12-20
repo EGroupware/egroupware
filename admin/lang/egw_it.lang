@@ -172,7 +172,7 @@ change account_id	admin	it	Cambia ID Account
 change acl rights	admin	it	Cambia i permessi ACL
 change config settings	admin	it	Cambia le impostazioni di configurazione
 change domain of email address and aliases	admin	it	modifica dominio dell'indirizzo email e degli alias
-change main screen message	admin	it	Cambia il messaggio della schermata principale
+change login screen message	admin	it	Cambia il messaggio della schermata principale
 change owner	admin	it	Cambia proprietario
 change password for %1	admin	it	Cambia password per %1
 change password hash to	admin	it	Cambia hash della password a
@@ -259,7 +259,7 @@ deny access to db backup and restore	admin	it	Nega accesso a backup e ripristino
 deny access to error log	admin	it	Nega l'accesso all'error log
 deny access to global categories	admin	it	Nega l'accesso alle categorie globali
 deny access to groups	admin	it	Nega l'accesso ai gruppi
-deny access to mainscreen message	admin	it	Nega l'accesso a messaggio di benvenuto
+deny access to home screen message	admin	it	Nega l'accesso a messaggio di benvenuto
 deny access to peer servers	admin	it	Nega l'accesso ai peer servers
 deny access to phpinfo	admin	it	Nega l'accesso al phpinfo
 deny access to site configuration	admin	it	Nega l'accesso alla configurazione del sito
@@ -302,8 +302,6 @@ edit global category	admin	it	Modifica la categoria globale
 edit global category for %1	admin	it	Modifica la categoria globale per %1
 edit group	admin	it	Modifica Gruppo
 edit group acl's	admin	it	modifica le ACL del gruppo
-edit login screen message	admin	it	Modifica il messaggio della schermata di login
-edit main screen message	admin	it	Modifica il messaggio della schermata principale
 edit peer server	admin	it	Modifica Peer Server
 edit table format	admin	it	Modifica il formato della tabella
 edit this category	admin	it	modifica questa categoria
@@ -535,7 +533,7 @@ lowercase email addresses	admin	it	Rendere indirizzi email in minuscolo
 mail account	admin	it	Account posta elettronica
 mail settings	admin	it	Impostazioni Posta
 main email-address	admin	it	Indirizzo email Principale
-main screen message	admin	it	Messaggio nella schermata principale
+home screen message	admin	it	Messaggio nella schermata principale
 manage mapping	admin	it	Gestisci la mappatura
 manage stationery templates	admin	it	Amministra i modelli
 manager	admin	it	Manager
@@ -668,7 +666,6 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	it	Richiesto
 required pear class mail/mimedecode.php not found.	admin	it	Non è stata trovata la classe PEAR Mail/mimeDecode.php
 reset filter	admin	it	Reimposta filtro
-return to admin mainscreen	admin	it	ritorna alla pagina principale di amministrazione
 return to view account	admin	it	Ritorna alla visualizzazone dell'account
 rights	admin	it	Diritti
 route all mails to	admin	it	Indirizza tutte le mail a

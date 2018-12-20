@@ -147,7 +147,6 @@ sat	calendar	lv	Sestdiena
 scheduling conflict	calendar	lv	Pretrunas plānošana
 select resources	calendar	lv	Iezīmē resursus
 set a year only for one-time / non-regular holidays.	calendar	lv	Uzstādi tikai gadu vienas reizes/neregulārām brīvdienām
-show default view on main screen	calendar	lv	Rādīt noklusējuma skatu galvenajā logā
 show list of upcoming events	calendar	lv	Rādīt gaidāmo notikumu sarakstu
 single event	calendar	lv	atsevišķs notikums
 start date/time	calendar	lv	Sākums datums/laiks

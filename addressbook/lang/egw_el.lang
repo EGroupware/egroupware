@@ -287,7 +287,6 @@ select where you want to store / retrieve contacts	admin	el	Επιλέξτε π�
 selected contacts	addressbook	el	επιλεγμένες επαφές
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	el	Επιθυμείτε να εμφανίζονται πάντα οι στήλες φωτογραφίας και διεύθυνσης οικίας, ακόμα και αν είναι κενές.
 show	addressbook	el	Εμφάνιση
-show birthday reminders on main screen	addressbook	el	Εμφάνιση υπενθυμίσεων γενεθλίων στην κεντρική οθόνη
 show infolog entries for this organisation	addressbook	el	Παρουσίαση των InfoLog καταχωρήσεων για αυτόν τον οργανισμό
 show the contacts of this organisation	addressbook	el	Εμφανίστε τις επαφές αυτού του οργανισμού
 start	admin	el	Έναρξη

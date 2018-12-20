@@ -195,10 +195,10 @@ class infolog_hooks
 			/* disabled until we have a home app again
 			'homeShowEvents' => array(
 				'type'   => 'select',
-				'label'  => 'InfoLog filter for the main screen',
+				'label'  => 'InfoLog filter for the home screen',
 				'name'   => 'homeShowEvents',
 				'values' => $show_home,
-				'help'   => 'Should InfoLog show up on the main screen and with which filter. Works only if you dont selected an application for the main screen (in your preferences).',
+				'help'   => 'Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).',
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> 'responsible-open-today',

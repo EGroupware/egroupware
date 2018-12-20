@@ -248,7 +248,7 @@ infolog csv import	infolog	cs	Import ze souboru CSV
 infolog entry deleted	infolog	cs	Záznam InfoLogu smazán
 infolog entry saved	infolog	cs	Záznam InfoLogu uložen
 infolog fields:	infolog	cs	Pole Úkolů:
-infolog filter for the main screen	infolog	cs	Filtr InfoLogu pro hlavní obrazovku
+InfoLog filter for the home screen	infolog	cs	Filtr InfoLogu pro hlavní obrazovku
 infolog ical export	infolog	cs	Export do souboru iCal
 infolog ical import	infolog	cs	Import ze souboru iCal
 infolog id	infolog	cs	Identifikace úkolu
@@ -428,7 +428,7 @@ sets the status of this entry and its subs to done	infolog	cs	Nastavit stav záz
 sets the status of this entry to done	infolog	cs	Nastaví stav tohoto záznamu na hotovo
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	cs	Má InfoLog zobrazovat Pod-úkoly, -hovory nebo -poznámky v normálním zobrazení nebo ne? Podpoložky můžete vždy zobrazit přes jejich rodiče.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	cs	Má InfoLog zobrazovat odkazy na ostatní aplikace nebo připojené soubory v seznamu InfoLogu nebo ne (normální zobrazení při vstupu do InfoLogu)?
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	cs	Má se InfoLog zobrazovat na hlavní obrazovce a se kterým filtrem? Volba funguje jen v případě, že nevyberete v předvolbách pro hlavní obrazovku nějakou aplikaci.
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	cs	Má se InfoLog zobrazovat na hlavní obrazovce a se kterým filtrem? Volba funguje jen v případě, že nevyberete v předvolbách pro hlavní obrazovku nějakou aplikaci.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	cs	Má InfoLog používat jména a příjmení nebo jen přihlašovací jména?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	cs	Má seznam InfoLogu zobrazovat unikátní číselná Id, která se dají požívat např. jako ticket Id?
 should the infolog list show the column "last modified".	infolog	cs	Má seznam InfoLogu zobrazovat sloupec "naposledy změněno"?

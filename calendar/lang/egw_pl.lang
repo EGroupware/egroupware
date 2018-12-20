@@ -365,7 +365,6 @@ show all status incl. rejected events	calendar	pl	Pokaż wszystkie statusy, łą
 show all status, but rejected	calendar	pl	Pokaż wszystkie statusy oprócz odrzuconych
 show also events just owned by selected user	calendar	pl	Pokaż też zdarzenia będące własnością wybranego użytkownika
 show birthdays from addressbook	admin	pl	Pokazuj urodziny z książki adresowej
-show default view on main screen	calendar	pl	Pokazuj widok domyślny na głównym ekranie
 show empty rows in planner	calendar	pl	Pokazuj puste wiersze w widoku planowania grupowego
 show list of upcoming events	calendar	pl	Pokaż listę nadchodzących zdarzeń
 show only accepted events	calendar	pl	Pokaż tylko zaakceptowane zdarzenia

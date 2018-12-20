@@ -291,7 +291,6 @@ select where you want to store / retrieve contacts	admin	hu	Válassza ki, hol sz
 selected contacts	addressbook	hu	kiválasztott kapcsolatok
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	hu	A fotó és az otthoni cím oszlopok mindig megjelenítésre kerüljenek, még akkor is, ha üresek?
 show	addressbook	hu	Mutat
-show birthday reminders on main screen	addressbook	hu	Születésnapi emlékeztetők megjelenítése a főképernyőn
 show infolog entries for this organisation	addressbook	hu	Jelenítse meg ehhez a szervezethez tartozó InfoLog bejegyzéseket
 show the contacts of this organisation	addressbook	hu	Jelenítse meg az ehhez a szervezethez tartozó kapcsolatokat
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	hu	A felugró ablak mérete (SzélességXMagasság, pl. 400x300, ha a felugró ablak van használatban)

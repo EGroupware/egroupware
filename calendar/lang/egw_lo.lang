@@ -321,7 +321,6 @@ show all status incl. rejected events	calendar	lo	ສະແດງສະຖານ
 show all status, but rejected	calendar	lo	ສະແດງສະຖານະທັງໜົດ, ແຕ່ຖືກປະຕິເສດ
 show also events just owned by selected user	calendar	lo	ສະແດງເຫດການທີ່ຖືກນໍາໃຊ້ໂດຍຜູ້ໃຊ້ທີ່ຖືກເລືອກເຊັ່ນກັນ
 show birthdays from addressbook	admin	lo	ສະແດງວັນເກີດຈາກປື້ມທີ່ຢູ່
-show default view on main screen	calendar	lo	ສະແດງຄ່າເລີ້ມຕົ້ນເທິງໜ້າຈໍຫຼັກ
 show empty rows in planner	calendar	lo	ສະແດງແຖວທີ່ຫວ່າງໃນແຜນນີ້
 show list of upcoming events	calendar	lo	ສະແດງລາຍຊື່ຂອງກິດຈະກໍາທີ່ຈະມາເຖິງ
 show only accepted events	calendar	lo	ສະແດງສະເພາະກິດຈະກໍາທີ່ໄດ້ຮັບການຍອມຮັບ

@@ -195,7 +195,7 @@ infolog - new subproject	infolog	nl	InfoLog - Nieuw subproject
 infolog - subprojects from	infolog	nl	InfoLog - Subprojecten van
 infolog entry deleted	infolog	nl	InfoLog verwijderd
 infolog entry saved	infolog	nl	InfoLog opgeslagen
-infolog filter for the main screen	infolog	nl	InfoLog filter tbv de voorpagina
+InfoLog filter for the home screen	infolog	nl	InfoLog filter tbv de voorpagina
 infolog list	infolog	nl	InfoLog lijst
 infolog preferences	common	nl	InfoLog voorkeuren
 infolog-fieldname	infolog	nl	InfoLog-veldnaam
@@ -330,7 +330,7 @@ sender	infolog	nl	Afzender
 sets the status of this entry and its subs to done	infolog	nl	Zet de status van dit item en de onderliggende op gedaan
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	nl	Moet InfoLog subtaken, -telefoongesprekken of -notities standaard weergeven, ja of nee. U kunt altijd sub's weergeven via de bovenliggende infolog ?
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	nl	Moet InfoLog de links naar andere toepassingen en/of bestanden in de InfoLog lijst (normale weergave als u InfoLog start).
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	nl	Moet InfoLog op de voorpagina getoond worden en met welk filter. Werkt alleen indien u geen toepassing voor de voorpagina heeft gekozen (in uw voorkeuren).
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	nl	Moet InfoLog op de voorpagina getoond worden en met welk filter. Werkt alleen indien u geen toepassing voor de voorpagina heeft gekozen (in uw voorkeuren).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	nl	Moet InfoLog volledige namen (voor- en achternaam) gebruiken of alleen gebruikersnamen?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	nl	Moet de InfoLog lijst een uniek nummer tonen dat bijvoorbeeld als ticket ID gebruik kan worden?
 should the infolog list show the column "last modified".	infolog	nl	Moet de InfoLog lijst de kolom "laatst gewijzigd" tonen?

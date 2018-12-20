@@ -446,7 +446,6 @@ should the columns photo and home address always be displayed, even if they are 
 show	addressbook	sk	Ukázať
 show active accounts	addressbook	sk	Ukázať aktívne účty
 show all accounts	addressbook	sk	Ukázať všetky účty
-show birthday reminders on main screen	addressbook	sk	Pripomínať narodeniny na hlavnej stránke
 show infolog entries for this organisation	addressbook	sk	Zobraziť položky Záznamníka pre túto organizáciu
 show the contacts of this organisation	addressbook	sk	Zobraziť kontakty v tejto organizácii
 similar contacts found:	addressbook	sk	Našli sa podobné kontakty:

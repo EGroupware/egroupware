@@ -471,7 +471,6 @@ show all status, but rejected	calendar	fr	Afficher tous les statuts, sauf les re
 show all status, but unknown	calendar	fr	Afficher tous les statuts, sauf les "pas de réponse"
 show also events just owned by selected user	calendar	fr	Afficher aussi les événements dont l'utilisateur est seulement propriétaire
 show birthdays from addressbook	admin	fr	Afficher tous les anniversaires du carnet d'adresses
-show default view on main screen	calendar	fr	Afficher la vue par défaut sur l'écran principal
 show empty rows in planner	calendar	fr	Afficher les lignes vides dans le planificateur
 show events that have been deleted	calendar	fr	Afficher les événements qui ont été supprimés.
 show list of upcoming events	calendar	fr	Afficher la liste des événements à venir

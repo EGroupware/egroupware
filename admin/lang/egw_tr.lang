@@ -75,7 +75,7 @@ category %1 has been saved !	admin	tr	Kategori %1 kaydedildi !
 category list	admin	tr	Kategori listesi
 change acl rights	admin	tr	ACL haklarını değiştir
 change config settings	admin	tr	Sistem ayarlarını değiştir
-change main screen message	admin	tr	Ana ekran mesajını değiştir
+change login screen message	admin	tr	Ana ekran mesajını değiştir
 check ip address of all sessions	admin	tr	Bütün oturumların IP'leri kontrol et
 check items to <b>%1</b> to %2 for %3	admin	tr	%3 ögelerini <b>%1</b>den %2'ye kadar seç
 click to select a color	admin	tr	Renk seçmek için tıklayın
@@ -112,7 +112,7 @@ deny access to current sessions	admin	tr	Etkin oturumlara erişimi engelle
 deny access to error log	admin	tr	Hata kütüğüne erişimi engelle
 deny access to global categories	admin	tr	Genel kategorilere erişimi engelle
 deny access to groups	admin	tr	Gruplara erişimi engelle
-deny access to mainscreen message	admin	tr	Ana ekran mesajına erişimi engelle
+deny access to home screen message	admin	tr	Ana ekran mesajına erişimi engelle
 deny access to peer servers	admin	tr	Peer sunucularına erişimi engelle
 deny access to phpinfo	admin	tr	phpinfo'ya erişimi engelle
 deny access to site configuration	admin	tr	Site ayarlarına erişimi engelle
@@ -134,8 +134,6 @@ edit global category	admin	tr	Genel kategori düzenle
 edit global category for %1	admin	tr	%1 için genel kategori düzenle
 edit group	admin	tr	Grup düzenle
 edit group acl's	admin	tr	Grup ACL ayarlarını düzenle
-edit login screen message	admin	tr	Sistem giriş mesajını düzenle
-edit main screen message	admin	tr	Ana ekran mesajını düzenle
 edit peer server	admin	tr	Peer Sunucu düzenle
 edit table format	admin	tr	Tablo düzenini düzenle
 edit this category	admin	tr	bu kategoriyi düzenle
@@ -231,7 +229,7 @@ login shell	admin	tr	Giriş kabuğu
 login time	admin	tr	Giriş zamanı
 loginid	admin	tr	Kullanıcı Adı
 mail settings	admin	tr	Mail ayarları
-main screen message	admin	tr	Ana ekran mesajı
+home screen message	admin	tr	Ana ekran mesajı
 manager	admin	tr	Yönetici
 maximum account id (e.g. 65535 or 1000000)	admin	tr	Meksimum hesap id'si (ör: 65535 ya da 1000000)
 maximum entries in click path history	admin	tr	Yol kayıtlarındaki maksimum kayıt #
@@ -279,7 +277,6 @@ register application hooks	admin	tr	Uygulama bağlantılarını kaydet
 remove	admin	tr	Kaldır
 remove all users from this group	admin	tr	Bu gruptaki tüm kullanıcıları kaldır
 remove all users from this group ?	admin	tr	Bu gruptaki tüm kullanıcıları kaldır ?
-return to admin mainscreen	admin	tr	yönetici anaekranına geri dön
 return to view account	admin	tr	Hesap görüntülemeye geri dön
 run asynchronous services	admin	tr	Asenkron servisleri çalıştır
 save the category	admin	tr	kategoriyi kaydet

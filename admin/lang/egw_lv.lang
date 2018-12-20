@@ -81,7 +81,7 @@ category %1 has been saved !	admin	lv	Kategorija %1 tika saglabāta!
 category list	admin	lv	Kategoriju saraksts
 change acl rights	admin	lv	mainīt ACL tiesības
 change config settings	admin	lv	Mainīt konfigurācijas iestatījumus
-change main screen message	admin	lv	Mainīt galvenā loga ziņojumu
+change login screen message	admin	lv	Mainīt galvenā loga ziņojumu
 check ip address of all sessions	admin	lv	Pārbaudīt IP adresi visām sesijām
 check items to <b>%1</b> to %2 for %3	admin	lv	Pārbaudīt vienības <b>%1</b> to %2 for %3
 click to select a color	admin	lv	Noklikšķini, lai izvēlētos krāsu
@@ -124,7 +124,7 @@ deny access to current sessions	admin	lv	Liegt pieeju tagadējām sesijām
 deny access to error log	admin	lv	Liegt pieeju kļūdas paziņojuma logam
 deny access to global categories	admin	lv	Liegt pieeju vispārējām kategorijām
 deny access to groups	admin	lv	Liegt pieeju grupām
-deny access to mainscreen message	admin	lv	Liegt pieeju galvenā loga ziņojumam
+deny access to home screen message	admin	lv	Liegt pieeju galvenā loga ziņojumam
 deny access to peer servers	admin	lv	Liegt pieeju vienādranga serveriem
 deny access to phpinfo	admin	lv	LIegt pieeju PHP informācijai
 deny access to site configuration	admin	lv	Liegt pieeju vietnes(site) konfigurācijai
@@ -149,8 +149,6 @@ edit global category	admin	lv	Rediģēt vispārējo kategoriju
 edit global category for %1	admin	lv	Rediģēt vispārējo kategoriju %1
 edit group	admin	lv	Rediģēt  grupu
 edit group acl's	admin	lv	rediģēt  ACL grupu
-edit login screen message	admin	lv	Rediģēt autorizācijas loga ziņojumu
-edit main screen message	admin	lv	Rediģēt galvenā loga ziņojumu
 edit peer server	admin	lv	Rediģēt vienādranga serveri
 edit table format	admin	lv	Rediģēt tabulas formātu
 edit this category	admin	lv	rediģēt  šo kategoriju
@@ -255,7 +253,7 @@ login shell	admin	lv	Autorizācijas aile
 login time	admin	lv	Autorizācijas laiks
 loginid	admin	lv	Autorizācijas ID
 mail settings	admin	lv	Sūtījumu uzstādījumi
-main screen message	admin	lv	Galvenā loga ziņojums
+home screen message	admin	lv	Galvenā loga ziņojums
 manager	admin	lv	Pārvaldnieks
 maximum account id (e.g. 65535 or 1000000)	admin	lv	Maksimālais kontu ID (piem.65535 vai 1000000)
 members	admin	lv	Locekļi
@@ -305,7 +303,6 @@ read this list of methods.	admin	lv	Izlasi šo metožu sarakstu
 remove	admin	lv	Izdzēst
 remove all users from this group	admin	lv	Izmest visus lietotājus no šīs grupas
 remove all users from this group ?	admin	lv	Vai izmest visus lietotājus no šīs grupas?
-return to admin mainscreen	admin	lv	Atgriezties uz administratora galveno logu
 return to view account	admin	lv	Atgriezties, lai redzētu kontu
 rows	admin	lv	Rindas
 run asynchronous services	admin	lv	Palaist asinhronos pakalpojumus

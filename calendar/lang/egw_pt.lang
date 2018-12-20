@@ -286,7 +286,6 @@ set a year only for one-time / non-regular holidays.	calendar	pt	Definir um Ano 
 set new events to private	calendar	pt	Definir novos eventos com acesso privado
 should new events created as private by default ?	calendar	pt	Deseja que os novos eventos sejam criados como privados por omissão?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	pt	Deseja que o estado dos participantes do evento (aceite, rejeitado, ...) seja exibido entre parenteses depois do nome de cada participante ?
-show default view on main screen	calendar	pt	Exibir visualização por omissão no ecrã principal
 show list of upcoming events	calendar	pt	Exibir lista de próximos eventos
 show this month	calendar	pt	Exibir este mês
 show this week	calendar	pt	Exibir esta semana

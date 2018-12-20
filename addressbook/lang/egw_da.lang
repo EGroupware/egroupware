@@ -154,7 +154,6 @@ select all	addressbook	da	Vælg alle
 select the type of conversion	addressbook	da	Vælg type af konvertering
 select the type of conversion:	addressbook	da	Vælg type af konvertering:
 show	addressbook	da	Vis
-show birthday reminders on main screen	addressbook	da	Påmind om fødselsdage på forsiden
 start	admin	da	Start
 startrecord	addressbook	da	Start postering
 state	common	da	Land

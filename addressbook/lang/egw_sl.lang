@@ -485,7 +485,6 @@ should the columns photo and home address always be displayed, even if they are 
 show	addressbook	sl	Prikaži
 show active accounts	addressbook	sl	Pokaži aktivne račune
 show all accounts	addressbook	sl	Prikaži vse račune
-show birthday reminders on main screen	addressbook	sl	Prikaži opomnike rojstnih dni v glavnem oknu
 show infolog entries for this organisation	addressbook	sl	Prikaži vnose InfoDnevnika za to organizacijo
 show the contacts of this organisation	addressbook	sl	Prikaži kontakte za to organizacijo
 similar contacts found:	addressbook	sl	Podobni kontakti:

@@ -218,7 +218,6 @@ set a year only for one-time / non-regular holidays.	calendar	ko	1회만 있거�
 set new events to private	calendar	ko	새 개인 이벤트 설정
 should new events created as private by default ?	calendar	ko	새로 생성되는 이벤트는 개인 - 기본 으로 하시겠습니까?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	ko	이벤트-참가자의 상황이 각 참가자이름 이후에 괄호로 표시하시겠습니까? ( 승락, 거부, 등)
-show default view on main screen	calendar	ko	기본보기로 주화면 보기
 show list of upcoming events	calendar	ko	예정된 이벤트 목록 보기
 show this month	calendar	ko	이번달보기
 show this week	calendar	ko	이번주보기

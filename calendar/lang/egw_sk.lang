@@ -548,7 +548,6 @@ show also events just owned by selected user	calendar	sk	Zobraziť aj udalosti, 
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	sk	Zobraziť narodeniny ako celodenné neblokujúce udalosti, tak ako aj pri presune kurzoru myši nad dátum.
 show birthdays as events	calendar	sk	Zobraziť narodeniny ako udalosti
 show birthdays from addressbook	admin	sk	Zobraziť narodeniny z Adresára
-show default view on main screen	calendar	sk	Zobraziť predvolený pohľad na hlavnej stránke
 show empty rows in planner	calendar	sk	Zobraziť prázdne riadky v plánovači
 show events that have been deleted	calendar	sk	Zobraziť odstránené udalosti
 show list of upcoming events	calendar	sk	Zobraz zoznam nadchádzajúcich udalostí

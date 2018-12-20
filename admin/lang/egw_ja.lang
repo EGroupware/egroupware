@@ -184,7 +184,7 @@ change acl rights	admin	ja	ACL 権限を変更する
 change config settings	admin	ja	環境設定を変更
 |change domain of email address and aliases	admin	ja	電子メール・アドレスのドメインと別名を変更
 change domain of email address and aliases	admin	ja	電子メール・アドレスのドメインと別名を変更
-change main screen message	admin	ja	メイン画面のメッセージを変更
+change login screen message	admin	ja	メイン画面のメッセージを変更
 change owner	admin	ja	所有者を変更
 change password for %1	admin	ja	%1 のパスワードを変更
 change password hash to	admin	ja	パスワード・ハッシュを変更:
@@ -281,7 +281,7 @@ deny access to db backup and restore	admin	ja	DB バックアップ/復元への
 deny access to error log	admin	ja	エラー・ログへのアクセスを拒否
 deny access to global categories	admin	ja	グローバルカテゴリへのアクセスを拒否
 deny access to groups	admin	ja	グループへのアクセスを拒否
-deny access to mainscreen message	admin	ja	メイン画面メッセージ変更へのアクセスを拒否
+deny access to home screen message	admin	ja	メイン画面メッセージ変更へのアクセスを拒否
 deny access to peer servers	admin	ja	ピア・サーバへのアクセスを拒否
 deny access to phpinfo	admin	ja	PHP情報へのアクセスを拒否
 deny access to site configuration	admin	ja	サイト環境設定へのアクセスを拒否
@@ -324,8 +324,6 @@ edit global category	admin	ja	グローバルカテゴリを編集
 edit global category for %1	admin	ja	%1のグローバルカテゴリを編集
 edit group	admin	ja	グループを編集
 edit group acl's	admin	ja	グループ ACL を編集
-edit login screen message	admin	ja	ログイン画面のメッセージを編集
-edit main screen message	admin	ja	メイン画面のメッセージを編集
 edit peer server	admin	ja	ピア・サーバを編集
 edit table format	admin	ja	テーブル書式を編集
 edit this category	admin	ja	このカテゴリを編集
@@ -575,7 +573,7 @@ lowercase email addresses	admin	ja	電子メール・アドレス（小文字）
 mail account	admin	ja	メール・アカウント
 mail settings	admin	ja	電子メール設定
 main email-address	admin	ja	メイン電子メール・アドレス
-main screen message	admin	ja	メイン画面メッセージ
+home screen message	admin	ja	メイン画面メッセージ
 maintainer	admin	ja	保守担当者
 manage mapping	admin	ja	マッピング管理
 manage stationery templates	admin	ja	Manage stationery templates
@@ -714,7 +712,6 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	ja	リクエスト済み
 required pear class mail/mimedecode.php not found.	admin	ja	Required PEAR class Mail/mimeDecode.php not found.
 reset filter	admin	ja	フィルターをリセット
-return to admin mainscreen	admin	ja	管理者メイン画面に戻る
 return to view account	admin	ja	アカウント表示に戻る
 rights	admin	ja	権限
 route all mails to	admin	ja	Route all Mails to

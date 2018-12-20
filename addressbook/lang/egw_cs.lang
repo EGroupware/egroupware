@@ -435,7 +435,6 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	cs	Nastavit jen celé jméno
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	cs	Mají být sloupce fotografie a domovská adresa vždy zobrazeny i když jsou prázdné
 show	addressbook	cs	Zobrazit
-show birthday reminders on main screen	addressbook	cs	Zobrazit upomínky na narozeniny na hlavní obrazovce
 show infolog entries for this organisation	addressbook	cs	Zobrazit záznamy InfoLogu pro tuto organizaci
 show the contacts of this organisation	addressbook	cs	Zobrazit kontakty této organizace
 similar contacts found:	addressbook	cs	Nalezeny podobné kontakty:

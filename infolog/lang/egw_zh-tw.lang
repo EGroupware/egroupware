@@ -176,7 +176,7 @@ infolog - new subproject	infolog	zh-tw	記事本 - 新增附屬專案
 infolog - subprojects from	infolog	zh-tw	記事本 - 附屬專案自
 infolog entry deleted	infolog	zh-tw	記事本資料刪除了
 infolog entry saved	infolog	zh-tw	記事本資料儲存了
-infolog filter for the main screen	infolog	zh-tw	首頁的記事本顯示規則
+InfoLog filter for the home screen	infolog	zh-tw	首頁的記事本顯示規則
 infolog list	infolog	zh-tw	記事本清單
 infolog preferences	common	zh-tw	記事本設定
 infolog-fieldname	infolog	zh-tw	記事本 - 欄位名稱
@@ -300,7 +300,7 @@ select to filter by responsible	infolog	zh-tw	依據負責人過濾
 sets the status of this entry and its subs to done	infolog	zh-tw	設定這筆資料與附屬項目的狀態為完成
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	zh-tw	記事本需要在一般瀏覽中顯示附屬任務，聯絡清單或是記事嗎？您可以在原始事件中看到附屬的資訊。
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	zh-tw	記事本是否要顯示與其他應用程式的連結與/或附加檔案（通常會在進入記事本時看到）。
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	zh-tw	首頁要依據指定的規則顯示記事本嗎？如果您沒有設定預設的應用程式（偏好中）就會顯示。
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	zh-tw	首頁要依據指定的規則顯示記事本嗎？如果您沒有設定預設的應用程式（偏好中）就會顯示。
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	zh-tw	記事本使用全名或是登入名稱？
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	zh-tw	記事清單是否要顯示唯一的編號，其他功能可能會需要，例如傳票編號。
 should the infolog list show the column "last modified".	infolog	zh-tw	記事本清單要顯示異動日期欄位嗎？

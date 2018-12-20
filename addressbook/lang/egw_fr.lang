@@ -431,7 +431,6 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	fr	Définir seulement le nom complet
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	fr	Est-ce que les colonnes photo et adresse privée doivent toujours être affichés, même s'ils sont vides.
 show	addressbook	fr	Afficher
-show birthday reminders on main screen	addressbook	fr	Montrer les rappels d'anniversaires sur la page principale
 show infolog entries for this organisation	addressbook	fr	Montre les entrées InfoLog pour cette organisation
 show the contacts of this organisation	addressbook	fr	Montrer les contacts de l'organisation
 similar contacts found:	addressbook	fr	Contacts similaires trouvés :

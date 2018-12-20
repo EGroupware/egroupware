@@ -176,7 +176,7 @@ infolog - new subproject	infolog	bg	Дневник - Нов подпроект
 infolog - subprojects from	infolog	bg	Дневник - Подпроект от
 infolog entry deleted	infolog	bg	Записът е изтрит от Дневника
 infolog entry saved	infolog	bg	Записът е запазен в Дневника
-infolog filter for the main screen	infolog	bg	Филтър за главния екран на Дневника
+InfoLog filter for the home screen	infolog	bg	Филтър за главния екран на Дневника
 infolog list	infolog	bg	Дневник - списък
 infolog preferences	common	bg	Дневник - настройки
 infolog-fieldname	infolog	bg	Дневник - име на поле
@@ -298,7 +298,7 @@ select to filter by responsible	infolog	bg	филтър по отговорни
 sets the status of this entry and its subs to done	infolog	bg	Маркира записа заедно с под-зап. като Изпълнени
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	bg	Дневникът да показва ли Под-задачите, -обажданията -бележките в стандартния изглед или не. Тези елементи винаги могат да бъдат показани чрез "родителите" им.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	bg	Дневникът да показва ли връзките към други приложения и/или приложените файлове в "Дневник-списък" (стандартния изглед при влизане в Дневник)?
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	bg	Да се показва ли Дневникът на главния екран и с какъв филтър. Работи само, ако не сте избрали приложение за главния екран (в настройките)?
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	bg	Да се показва ли Дневникът на главния екран и с какъв филтър. Работи само, ако не сте избрали приложение за главния екран (в настройките)?
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	bg	Да се използват ли пълните имена (име, презиме и фамилия) или само потребителските имена?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	bg	В списъка на Дневника да се показва ли уникалния цифров идентификатор, който може да се използва примерно като No. на етикет?
 should the infolog list show the column "last modified".	infolog	bg	Да се показва ли в списъка на Дневника колоната "последно изменен"?

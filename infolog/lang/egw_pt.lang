@@ -222,7 +222,7 @@ infolog csv import	infolog	pt	Importação CSV Infolog
 infolog entry deleted	infolog	pt	Registo do acesso à informação eliminado
 infolog entry saved	infolog	pt	Registo do acesso à informação guardado
 infolog fields:	infolog	pt	Infolog campos:
-infolog filter for the main screen	infolog	pt	Filtro do acesso à informação para o ecrã principal
+InfoLog filter for the home screen	infolog	pt	Filtro do acesso à informação para o ecrã principal
 infolog ical export	infolog	pt	Infolog iCal export
 infolog ical import	infolog	pt	Importação Infolog iCal
 infolog id	infolog	pt	Infolog ID
@@ -386,7 +386,7 @@ sets the status of this entry and its subs to done	infolog	pt	Configura o estado
 sets the status of this entry to done	infolog	pt	Define o status desta entrada para done
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pt	O acesso à informação deve ou não exibir sub-tarefas, chamadas ou notas na visualização normal? Pode sempre vê-las através dos respectivos elementos principais.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pt	O acesso à informação deve exibir as ligações a outras aplicações e/ou aos anexos de ficheiros na lista do acesso à informação (na visualização normal ao entrar no acesso à informação)?
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	pt	O acesso à informação deve ser exibido no ecrã principal? Com que filtro? Está opção só será possível, se não seleccionar uma aplicação para o ecrã principal (nas suas preferências).
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	pt	O acesso à informação deve ser exibido no ecrã principal? Com que filtro? Está opção só será possível, se não seleccionar uma aplicação para o ecrã principal (nas suas preferências).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	pt	O acesso à informação deve utilizar nomes completos (nome próprio e apelido) ou apenas nomes de utilizador?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pt	A lista de acesso à informação deve exibir uma ID numérica única, que possa ser utilizada, por exemplo, como uma ID de bilhete?
 should the infolog list show the column "last modified".	infolog	pt	A lista de acesso à informação deve ou não exibir a coluna "última modificação"?

@@ -285,7 +285,6 @@ should new events created as private by default ?	calendar	zh	默认新增的事
 should the planner display an empty row for users or categories without any appointment.	calendar	zh	计划应该为没有任何约会的用户或类别显示一个空白行。
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	zh	事件参与者的状态(接受，拒绝...)应该显示在每个参与者名字后面的方括号里吗？
 show birthdays from addressbook	admin	zh	从通讯录显示生日
-show default view on main screen	calendar	zh	在主窗口显示默认视图
 show empty rows in planner	calendar	zh	在计划中显示空白行
 show list of upcoming events	calendar	zh	显示即将到来的事件列表
 show only the date, not the year	admin	zh	只显示日期，不显示年份

@@ -309,7 +309,6 @@ select where you want to store / retrieve contacts	admin	bg	Къде желае�
 selected contacts	addressbook	bg	избраните контакти
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	bg	Да се показват ли колоните за снимка и личен (домашен) адрес, независимо дали са празни или не.
 show	addressbook	bg	Покажи
-show birthday reminders on main screen	addressbook	bg	Напомняне за рождени дни на главния екран
 show infolog entries for this organisation	addressbook	bg	Показване на записите в Дневника за тази организация
 show the contacts of this organisation	addressbook	bg	Показване на контактите на тази организация
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	bg	Размер на "изскачащия" прозорец (ШxВ, напр. 400x300), ако ще се използва такъв

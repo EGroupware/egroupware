@@ -107,7 +107,7 @@ category saved.	admin	zh	类别已保存。
 change account_id	admin	zh	更改帐户 ID
 change acl rights	admin	zh	更改 ACL 权限
 change config settings	admin	zh	更改配置设定
-change main screen message	admin	zh	更改主页面信息
+change login screen message	admin	zh	更改主页面信息
 change password for %1	admin	zh	更改%1的密码
 check acl for entries of not (longer) existing accounts	admin	zh	检查 ACL (长期)不是现有的帐户条目
 check ip address of all sessions	admin	zh	检查所有 sessions 的 IP 地址
@@ -160,7 +160,7 @@ deny access to db backup and restore	admin	zh	拒绝访问数据库备份与恢�
 deny access to error log	admin	zh	拒绝对错误日志的访问
 deny access to global categories	admin	zh	拒绝对全局类别的访问
 deny access to groups	admin	zh	拒绝对用户组的访问
-deny access to mainscreen message	admin	zh	拒绝访问主界面信息
+deny access to home screen message	admin	zh	拒绝访问主界面信息
 deny access to peer servers	admin	zh	拒绝访问对等服务器
 deny access to phpinfo	admin	zh	拒绝对 phpinfo 的访问
 deny access to site configuration	admin	zh	拒绝对站点配置的访问
@@ -186,8 +186,6 @@ edit global category	admin	zh	编辑全局类别
 edit global category for %1	admin	zh	为%1编辑全局类别
 edit group	admin	zh	编辑组
 edit group acl's	admin	zh	编辑群组 ACL 的
-edit login screen message	admin	zh	编辑登录窗口信息
-edit main screen message	admin	zh	编辑主窗口信息
 edit peer server	admin	zh	编辑对等服务器
 edit table format	admin	zh	编辑表单格式
 edit this category	admin	zh	编辑该类别
@@ -321,7 +319,7 @@ login time	admin	zh	登录时间
 loginid	admin	zh	登录名
 mail settings	admin	zh	邮件设置
 main email-address	admin	zh	主要信箱
-main screen message	admin	zh	主窗口信息
+home screen message	admin	zh	主窗口信息
 manage mapping	admin	zh	管理匹配
 manager	admin	zh	管理器
 maximum account id (e.g. 65535 or 1000000)	admin	zh	最大帐户 id 数 (例如：65535 或 1000000)
@@ -390,7 +388,6 @@ remove	admin	zh	移除
 remove all users from this group	admin	zh	删除该组所有用户
 remove all users from this group ?	admin	zh	删除该组所有用户？
 requested	admin	zh	请求
-return to admin mainscreen	admin	zh	返回系统管理主窗口
 return to view account	admin	zh	返回到查看账户
 route all mails to	admin	zh	路由所有信件到
 rows	admin	zh	行

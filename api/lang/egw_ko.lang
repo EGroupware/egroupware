@@ -175,7 +175,7 @@ low	common	ko	낮음
 lowest	common	ko	가장낮은 (lowest)
 mail domain, eg. "%1"	common	ko	메일 도메인, 예. "%1"
 main category	common	ko	기본 분류
-main screen	common	ko	기본 화면
+home screen	common	ko	기본 화면
 maintainer	common	ko	관리자
 march	common	ko	3월
 max number of icons in navbar	common	ko	네비게이션바의 최대 아이콘 갯수

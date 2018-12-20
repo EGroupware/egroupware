@@ -301,7 +301,6 @@ select where you want to store / retrieve contacts	admin	zh-tw	選擇您希望�
 selected contacts	addressbook	zh-tw	選擇的聯絡人
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	zh-tw	照片與家中住址的欄位是否要一直顯示，即使是空白。
 show	addressbook	zh-tw	顯示
-show birthday reminders on main screen	addressbook	zh-tw	在主畫面顯示生日提示
 show infolog entries for this organisation	addressbook	zh-tw	顯示這個組織的相關記事
 show the contacts of this organisation	addressbook	zh-tw	顯示這個組織的聯絡人
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	zh-tw	彈出視窗大小（寬X高，例如 400x300 ，會在需要彈出視窗時使用這個設定）

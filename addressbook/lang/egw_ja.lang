@@ -454,7 +454,6 @@ should the columns photo and home address always be displayed, even if they are 
 show	addressbook	ja	表示
 show active accounts	addressbook	ja	アクティブ・アカウントを表示
 show all accounts	addressbook	ja	全アカウントを表示
-show birthday reminders on main screen	addressbook	ja	メイン画面に誕生日情報を表示
 show infolog entries for this organisation	addressbook	ja	この組織・団体のインフォログ項目を表示
 show the contacts of this organisation	addressbook	ja	この組織・団体のコンタクトを表示
 similar contacts found:	addressbook	ja	似通ったコンタクトが見つかりました:

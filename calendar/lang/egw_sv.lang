@@ -323,7 +323,6 @@ show all status incl. rejected events	calendar	sv	Visa alla statuser inkl. avbö
 show all status, but rejected	calendar	sv	Visa alla statuser utom avböjda
 show also events just owned by selected user	calendar	sv	Visa även evenemang som ägs av just den valda användaren
 show birthdays from addressbook	admin	sv	Visa födelsedagar från adressboken
-show default view on main screen	calendar	sv	Visa standard vy på Startsidan?
 show empty rows in planner	calendar	sv	Visa tomma rader i planeraren
 show list of upcoming events	calendar	sv	Visa lista på kommande händelser?
 show only accepted events	calendar	sv	Visa bara accepterade händelser

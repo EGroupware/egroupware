@@ -156,7 +156,6 @@ set a year only for one-time / non-regular holidays.	calendar	iw	.קבע שנה 
 set new events to private	calendar	iw	קבע אירועים חדשים כפרטיים
 should new events created as private by default ?	calendar	iw	?האם ליצור אירועים חדשים כפרטיים כברירת מחדל
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	iw	?האם להציג את סטטוס של משתתפי האירוע (קיבל, דחה, ...) בסוגריים אחרי השם של כל משתתף
-show default view on main screen	calendar	iw	הצג תצוגת ברירת המחדל במסך הראשי
 show list of upcoming events	calendar	iw	הצג רשימה של אירועים מתקרבים
 single event	calendar	iw	אירוע בודד
 start date/time	calendar	iw	תאריך/שעת התחלה

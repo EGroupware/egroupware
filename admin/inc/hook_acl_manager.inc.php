@@ -68,7 +68,7 @@ $GLOBALS['acl_manager']['admin']['global_categorie'] = array(
 );	// added and working ralfbecker
 
 $GLOBALS['acl_manager']['admin']['mainscreen_messa'] = array(
-	'name' => 'Deny access to mainscreen message',
+	'name' => 'Deny access to home screen message',
 	'rights' => array(
 		'Main screen message' => 1,
 		'Login message'       => 2

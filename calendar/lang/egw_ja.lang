@@ -473,7 +473,7 @@ reset participant stati on event shifts	calendar	ja	イベントの移動の際�
 resources	calendar	ja	リソース
 resources except conflicting ones	calendar	ja	リソース（予約衝突検出を行なわない）
 resources with conflict detection	calendar	ja	リソース（予約衝突検出を行なう）
-restrict add category to	calendar	ja	カテゴリの追加を制限: 
+restrict add category to	calendar	ja	カテゴリの追加を制限:
 restrict set status to	calendar	ja	状態の設定を制限:
 rights	calendar	ja	権限
 role	calendar	ja	ロール
@@ -516,7 +516,6 @@ show also events just owned by selected user	calendar	ja	選択されたユー�
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	ja	誕生日等を終日イベントとして表示するかどうかを指定します。
 show birthdays as events	calendar	ja	誕生日/祝祭日をイベントとして表示
 show birthdays from addressbook	admin	ja	アドレス帳を参照して誕生日を表示
-show default view on main screen	calendar	ja	主画面にカレンダーを表示
 show empty rows in planner	calendar	ja	予定表に空行を表示
 show events that have been deleted	calendar	ja	削除済みイベントを表示
 show list of upcoming events	calendar	ja	直近のイベント一覧を表示
@@ -555,7 +554,7 @@ test import (show importable records <u>only</u> in browser)	calendar	ja	イン�
 the apple ical apps use this color to display events from this calendar.	calendar	ja	Apple iCal アプリは、カレンダーにイベントを表示する際にこの色を使用します。
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	ja	ドキュメントにはプレース・ホルダー（例: {{%1}}）を埋め込むことができ、ドキュメント保存時に実データで置換されます。
 the exceptions are deleted together with the series.	calendar	ja	繰返しイベントおよび例外を削除しました。
-the following document-types are supported:	calendar	ja	下記のドキュメント・タイプがサポートされます: 
+the following document-types are supported:	calendar	ja	下記のドキュメント・タイプがサポートされます:
 the original series will be terminated today and a new series be created.	calendar	ja	元の繰返しイベントは本日終了し、新規繰返しイベントが作成されます。
 the resource you selected is already overbooked:	calendar	ja	指定されたリソースは既に重複予約されています:
 this day is shown as first day in the week or month view.	calendar	ja	週表示/月表示で、先頭に表示される曜日を指定します。

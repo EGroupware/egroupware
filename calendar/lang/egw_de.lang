@@ -504,7 +504,6 @@ show also events just owned by selected user	calendar	de	Zeige zusätzlich Termi
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	de	Zeige Geburtstage als ganztägiges nicht-blockierendes Ereignis an, zusätzlich zum Tooltip auf dem Datum
 show birthdays as events	calendar	de	Zeige Geburtstage als Termine an
 show birthdays from addressbook	admin	de	Zeige Geburtstage vom Adressbuch
-show default view on main screen	calendar	de	Kalenderansicht auf der Startseite anzeigen
 show empty rows in planner	calendar	de	Zeige leere Zeilen im Planer
 show events that have been deleted	calendar	de	Zeige gelöschte Termine
 show list of upcoming events	calendar	de	Zeige eine Liste der kommenden Termine

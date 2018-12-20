@@ -164,7 +164,6 @@ select all	addressbook	fa	انتخاب همه
 select the type of conversion	addressbook	fa	نوع تبدیل را انتخاب کنید
 select the type of conversion:	addressbook	fa	نوع تبدیل را انتخاب کنید:
 show	addressbook	fa	نمایش
-show birthday reminders on main screen	addressbook	fa	نمایش یادآور روز تولد در صفحه اصلی
 start	admin	fa	شروع
 startrecord	addressbook	fa	رکورد شروع
 state	common	fa	استان

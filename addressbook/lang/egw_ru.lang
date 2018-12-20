@@ -388,7 +388,6 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	ru	Определить только полное имя
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	ru	Всегда отображать поля фото и домашнего адреса, даже если они пусты
 show	addressbook	ru	Показать
-show birthday reminders on main screen	addressbook	ru	Показывать напоминания о Днях рождения на главной странице
 show infolog entries for this organisation	addressbook	ru	Показать записи ИнфоЖурнала для этой организации
 show the contacts of this organisation	addressbook	ru	Показать контакты этой организации
 similar contacts found:	addressbook	ru	Похожие контакты найдены:

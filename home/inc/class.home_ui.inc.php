@@ -54,7 +54,7 @@ class home_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('home');
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'home';
 
-		// Main screen message
+		//  home screen message
 		Api\Translation::add_app('mainscreen');
 		$greeting = Api\Translation::translate('mainscreen_message',false,'');
 

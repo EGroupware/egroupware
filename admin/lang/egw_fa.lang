@@ -86,7 +86,7 @@ category %1 has been saved !	admin	fa	دسته %1 ذخیره شد
 category list	admin	fa	فهرست دسته
 change acl rights	admin	fa	تغییر حقوق دسترسی
 change config settings	admin	fa	تغییر تنظیمات پیکربندی
-change main screen message	admin	fa	تغییر پیام صفحه اصلی
+change login screen message	admin	fa	تغییر پیام صفحه اصلی
 check ip address of all sessions	admin	fa	بازرسی نشانی IP  تمام نشستها
 check items to <b>%1</b> to %2 for %3	admin	fa	بررسی موارد در <b>%1</b> به %2 برای %3
 click to select a color	admin	fa	برای انتخاب رنگ کلیک کنید
@@ -130,7 +130,7 @@ deny access to db backup and restore	admin	fa	ممنوعیت دسترسی به �
 deny access to error log	admin	fa	ممنوعیت دسترسی به ثبت خطا
 deny access to global categories	admin	fa	ممنوعیت دسترسی به دسته های عمومی
 deny access to groups	admin	fa	ممنوعیت دسترسی به گروهها
-deny access to mainscreen message	admin	fa	ممنوعیت دسترسی به پیام صفحه اصلی
+deny access to home screen message	admin	fa	ممنوعیت دسترسی به پیام صفحه اصلی
 deny access to peer servers	admin	fa	ممنوعیت دسترسی به کارگزارهای کمکی
 deny access to phpinfo	admin	fa	ممنوعیت دسترسی به اطلاعات php
 deny access to site configuration	admin	fa	ممنوعیت دسترسی به پیکربندی سایت
@@ -155,8 +155,6 @@ edit global category	admin	fa	ویراستن دسته عمومی
 edit global category for %1	admin	fa	ویراستن دسته عمومی برای %1
 edit group	admin	fa	ویراستن گروه
 edit group acl's	admin	fa	ویراستن حقوق دسترسی گروه
-edit login screen message	admin	fa	ویراستن پیام صفحه ورود
-edit main screen message	admin	fa	ویراستن پیام صفحه اصلی
 edit peer server	admin	fa	ویراستن کارگزار کمکی
 edit table format	admin	fa	ویراستن قالب جدول
 edit this category	admin	fa	ویراستن این دسته
@@ -264,7 +262,7 @@ login time	admin	fa	زمان ورود
 loginid	admin	fa	شناسه ورود
 mail settings	admin	fa	تنظیمات رایانامه
 main email-address	admin	fa	نشانی رایانامه اصلی
-main screen message	admin	fa	پیام صفحه اصلی
+home screen message	admin	fa	پیام صفحه اصلی
 manager	admin	fa	مدیر
 maximum account id (e.g. 65535 or 1000000)	admin	fa	حداکثر شناسه حساب (مثلا:65535 یا 1000000)
 maximum entries in click path history	admin	fa	حداکثر ورودیها در مسیر تاریخچه
@@ -321,7 +319,6 @@ register application hooks	admin	fa	ثبت گیرهای کاربرد
 remove	admin	fa	حذف
 remove all users from this group	admin	fa	حذف همه کاربران از این گروه
 remove all users from this group ?	admin	fa	همه کاربران از این گروه حذف شوند؟
-return to admin mainscreen	admin	fa	بازگشت به صفحه اصلی مدیر
 return to view account	admin	fa	بازگشت برای دیدن حساب
 route all mails to	admin	fa	همه رایانامه ها را مسیر دهی کن به
 rows	admin	fa	سطور

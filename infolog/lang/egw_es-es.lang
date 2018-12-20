@@ -228,7 +228,7 @@ infolog csv import	infolog	es-es	Importación CSV del Registro
 infolog entry deleted	infolog	es-es	Se ha borrado la entrada del registro
 infolog entry saved	infolog	es-es	Se ha guardado la entrada en el registro
 infolog fields:	infolog	es-es	Campos del registro:
-infolog filter for the main screen	infolog	es-es	Filtro para el registro en la pantalla principal
+InfoLog filter for the home screen	infolog	es-es	Filtro para el registro en la pantalla principal
 infolog id	infolog	es-es	ID del Registro
 infolog list	infolog	es-es	Lista del registro
 infolog preferences	common	es-es	Preferencias del registro
@@ -387,7 +387,7 @@ sets the status of this entry and its subs to done	infolog	es-es	Pone el estado 
 sets the status of this entry to done	infolog	es-es	Establecer el estado de esta entrada a Hecho
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	es-es	¿Mostrar las Subtareas (llamadas o notas) en la vista normal? Siempre puede ver estos subtipos a través de su tipo superior.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	es-es	¿Deben mostrarse los enlaces a otras aplicaciones y/o los ficheros adjuntos en la lista del registro (la vista normal al entrar en el registro)?
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	es-es	¿Debe mostrarse el Registro en la pantalla principal, y con qué filtro? Sólo funciona si no selecciona una aplicación para la pantalla principal (en sus preferencias).
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	es-es	¿Debe mostrarse el Registro en la pantalla principal, y con qué filtro? Sólo funciona si no selecciona una aplicación para la pantalla principal (en sus preferencias).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	es-es	¿Usar nombres completos (apellido y nombre de la familia), o sólo los nombres de usuario?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	es-es	¿Mostrar una lista con un id numérico único, que se pueda usar como id de ticket?
 should the infolog list show the column "last modified".	infolog	es-es	¿Debe mostrar el Registro la columna "última modificación"?

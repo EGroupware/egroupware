@@ -251,7 +251,7 @@ infolog csv import	infolog	it	Importazione CSV Attività
 infolog entry deleted	infolog	it	Voce Attività cancellata
 infolog entry saved	infolog	it	Voce Attività salvata
 infolog fields:	infolog	it	Campi Attività
-infolog filter for the main screen	infolog	it	Filtro Attività per la schermata principale
+InfoLog filter for the home screen	infolog	it	Filtro Attività per la schermata principale
 infolog ical export	infolog	it	Esportazione iCal Attività
 infolog ical import	infolog	it	importazione iCal Attività
 infolog id	infolog	it	ID Attività
@@ -432,7 +432,7 @@ sets the status of this entry and its subs to done	infolog	it	Imposta lo stato d
 sets the status of this entry to done	infolog	it	Imposta lo stato di questa voce in completato
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	it	Attività deve visualizzare ToDo-, chiamate- o note- secondarie nella vista normale oppure no. Potrai sempre visualizzare le secondarie attraverso le principali.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	it	Attività deve mostrare i link ad altre apllicazioni e/o gli allegati nell'elenco Attività (vista normale quando entri in Attività).
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	it	Attività deve apparire nella schermata principale e con quale filtro. Funziona solo se non hai selezionato un'applicazione per la schermata principale (nelle tue preferenze).
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	it	Attività deve apparire nella schermata principale e con quale filtro. Funziona solo se non hai selezionato un'applicazione per la schermata principale (nelle tue preferenze).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	it	Attività deve usare i nomi completi (nome e cognome) o solo il nome utente.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	it	L'elenco Attività deve mostrare un ID numerico univoco, che può essere usato ad esempio come Id ticket.
 should the infolog list show the column "last modified".	infolog	it	L'elenco Attività deve mostrare la colonna "ultima modifica".

@@ -71,7 +71,7 @@ category saved.	admin	id	Kategori disimpan.
 change account_id	admin	id	Ubah account_id
 change acl rights	admin	id	Ubah Hak-hak ACL
 change config settings	admin	id	Ubah seting konfigurasi
-change main screen message	admin	id	Ubah pesan pada layar utama
+change login screen message	admin	id	Ubah pesan pada layar utama
 children	admin	id	Children
 click to select a color	admin	id	Klik untuk memilih warna
 color	admin	id	Warna
@@ -122,8 +122,6 @@ edit global category	admin	id	Edit kategori global
 edit global category for %1	admin	id	Edit kategori global untuk %1
 edit group	admin	id	Edit Kelompok
 edit group acl's	admin	id	edit ACL kelompok
-edit login screen message	admin	id	Edit pesan layar <em>login</em>
-edit main screen message	admin	id	Edit pesan layar utama
 edit peer server	admin	id	Edit Peer Server
 edit table format	admin	id	Edit format Tabel
 edit this category	admin	id	edit kategori ini
@@ -207,7 +205,7 @@ logintime	admin	id	Logintime
 logoutime	admin	id	Logoutime
 mail settings	admin	id	Pengaturan Mail
 main email-address	admin	id	Alamat eMail Utama
-main screen message	admin	id	Pesan layar utama
+home screen message	admin	id	Pesan layar utama
 manage mapping	admin	id	Mengelola pemetaan
 manager	admin	id	Manajer
 members	admin	id	Anggota

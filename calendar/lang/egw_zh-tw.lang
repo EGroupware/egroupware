@@ -279,7 +279,6 @@ set new events to private	calendar	zh-tw	設定新事件為私人的
 should new events created as private by default ?	calendar	zh-tw	預設新增的事件是私人的？
 should the planner display an empty row for users or categories without any appointment.	calendar	zh-tw	規劃圖中，沒有任何約會的使用者或類別是否要顯示空的資料列。
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	zh-tw	在每個參與者名稱的後面需要顯示該參與者的狀態(接受、拒絕、...)嗎？
-show default view on main screen	calendar	zh-tw	在主要畫面顯示預設瀏覽
 show empty rows in planner	calendar	zh-tw	在規劃圖顯示空白列
 show list of upcoming events	calendar	zh-tw	顯示即將到來的行程
 show this month	calendar	zh-tw	顯示這個月

@@ -92,7 +92,7 @@ category %1 has been saved !	admin	sv	Kategori %1 har sparats
 category list	admin	sv	Kategorilista
 change acl rights	admin	sv	Ändra ACL behörigheter
 change config settings	admin	sv	Ändra inställningar
-change main screen message	admin	sv	Ändra Startsidans meddelande
+change login screen message	admin	sv	Ändra Startsidans meddelande
 check ip address of all sessions	admin	sv	Kontrollera IP adress på alla sessioner
 check items to <b>%1</b> to %2 for %3	admin	sv	Kontrollera punkterna till <b>%1</b> till %2 för %3
 click to select a color	admin	sv	Klicka för att välja färg
@@ -137,7 +137,7 @@ deny access to db backup and restore	admin	sv	Neka åtkomst till backup och åte
 deny access to error log	admin	sv	Neka åtkomst till felloggen
 deny access to global categories	admin	sv	Neka åtkomst till globala kategorier
 deny access to groups	admin	sv	Neka åtkomst till grupper
-deny access to mainscreen message	admin	sv	Neka åtkomst till meddelandet på Startsidan
+deny access to home screen message	admin	sv	Neka åtkomst till meddelandet på Startsidan
 deny access to peer servers	admin	sv	Neka åtkomst till peer servers
 deny access to phpinfo	admin	sv	Neka åtkomst till phpinfo
 deny access to site configuration	admin	sv	Neka åtkomst till sajt alternativ
@@ -162,8 +162,6 @@ edit global category	admin	sv	Ändra global kategori
 edit global category for %1	admin	sv	Ändra global kategori för %1
 edit group	admin	sv	Ändra grupp
 edit group acl's	admin	sv	Ändra gruppens ACL:er?
-edit login screen message	admin	sv	Ändra inloggningsformulärets meddelande
-edit main screen message	admin	sv	Ändra Startsidans meddelande
 edit peer server	admin	sv	Ändra peer server
 edit table format	admin	sv	Ändra tabellformat
 edit this category	admin	sv	Ändra denna kategori
@@ -282,7 +280,7 @@ login time	admin	sv	Inloggningstid
 loginid	admin	sv	Inloggnings ID
 mail settings	admin	sv	E-post alternativ
 main email-address	admin	sv	Standard e-postadress
-main screen message	admin	sv	Meddelande på Startsidan
+home screen message	admin	sv	Meddelande på Startsidan
 manager	admin	sv	Hanterare
 maximum account id (e.g. 65535 or 1000000)	admin	sv	Högsta konto ID (ex. 65535 eller 1000000)
 maximum entries in click path history	admin	sv	Maximalt antal poster i klick historik
@@ -344,7 +342,6 @@ remove	admin	sv	Radera
 remove all users from this group	admin	sv	Radera alla användare från gruppen
 remove all users from this group ?	admin	sv	Radera alla användare från gruppen
 requested	admin	sv	Begärt
-return to admin mainscreen	admin	sv	Återgå till Startsida för administration
 return to view account	admin	sv	Återgå till att titta på kontot
 route all mails to	admin	sv	Länka all e-post till
 rows	admin	sv	Rader

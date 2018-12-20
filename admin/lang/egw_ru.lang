@@ -127,7 +127,7 @@ change account_id	admin	ru	Сменить идентификатор учётн�
 change acl rights	admin	ru	Сменить права ACL
 change config settings	admin	ru	Сменить настройки конфигурации
 change domain of email address and aliases	admin	ru	Сменить домен email адреса и псевдонимов
-change main screen message	admin	ru	Сменить сообщение на главной странице
+change login screen message	admin	ru	Сменить сообщение на главной странице
 change owner	admin	ru	Сменить владельца
 change password for %1	admin	ru	Сменить пароль на %1
 change password hash to	admin	ru	Сменить хэш пароля на
@@ -196,7 +196,7 @@ deny access to db backup and restore	admin	ru	Закрыть доступ к р�
 deny access to error log	admin	ru	Закрыть доступ к журналу ошибок
 deny access to global categories	admin	ru	Закрыть доступ к общим категориям
 deny access to groups	admin	ru	Закрыть доступ к группам
-deny access to mainscreen message	admin	ru	Закрыть доступ к сообщению главной страницы
+deny access to home screen message	admin	ru	Закрыть доступ к сообщению главной страницы
 deny access to peer servers	admin	ru	Закрыть доступ к равноправным серверам
 deny access to phpinfo	admin	ru	Закрыть доступ к информации php
 deny access to site configuration	admin	ru	Закрыть доступ к конфигурации сайта
@@ -226,8 +226,6 @@ edit global category	admin	ru	Редактировать общую катего
 edit global category for %1	admin	ru	Редактировать общую категорию для %1
 edit group	admin	ru	Редактировать группу
 edit group acl's	admin	ru	Редактировать ACL-права доступа группы
-edit login screen message	admin	ru	Редактировать сообщение при входе в систему
-edit main screen message	admin	ru	Редактировать сообщение главной страницы
 edit peer server	admin	ru	Редактировать равноправный сервер
 edit table format	admin	ru	Редактировать формат таблицы
 edit this category	admin	ru	Редактировать эту категорию
@@ -395,7 +393,7 @@ logoutime	admin	ru	Время отключения
 mail account	admin	ru	Учётная запись почты
 mail settings	admin	ru	Установки почты
 main email-address	admin	ru	Основной адрес электронной почты
-main screen message	admin	ru	Сообщение главной страницы
+home screen message	admin	ru	Сообщение главной страницы
 manage mapping	admin	ru	Управлять сопоставлением
 manager	admin	ru	Менеджер
 maximum account id (e.g. 65535 or 1000000)	admin	ru	Максимальный идентификатор учётной записи (например: 65535 или 1000000)
@@ -492,7 +490,6 @@ remove all users from this group	admin	ru	Удалить всех пользов
 remove all users from this group ?	admin	ru	Удалить всех пользователей из этой группы?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	ru	Удаление группового доступа может создать проблемы для данных этой категории. Вы уверены? Пользователи этих групп могут потерять доступ:
 requested	admin	ru	Запрошен
-return to admin mainscreen	admin	ru	Вернуться к главной странице приложения «Администратор»
 return to view account	admin	ru	Вернуться к просмотру учётных записей
 rights	admin	ru	Права
 route all mails to	admin	ru	Направлять всю почту к

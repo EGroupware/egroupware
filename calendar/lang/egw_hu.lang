@@ -300,7 +300,6 @@ should new events created as private by default ?	calendar	hu	Alapértelmezésk�
 should the planner display an empty row for users or categories without any appointment.	calendar	hu	A tervező megjelenítsen egy üres sort a találkozókkal nem rendelkező felhasználók vagy kategóriák számára?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	hu	Az esemény résztvevök státusza (elfogad, elutasít, ...) megjeleníthetö minden résztvevö neve után?
 show birthdays from addressbook	admin	hu	Születésnapok megjelenítse a címjegyzék alalpján
-show default view on main screen	calendar	hu	Alapértelmezett nézet megjelenítése a főképernyőn
 show empty rows in planner	calendar	hu	Üres sorok megjelenítése a Tervezőben
 show list of upcoming events	calendar	hu	Megmutatja a bejövő események listáját
 show only the date, not the year	admin	hu	Dátum megjelenítése év nélkül

@@ -558,7 +558,6 @@ show also events just owned by selected user	calendar	sl	Prikaži tudi dogodke, 
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	sl	Prikaži rojstne dneve kot celodnevne neblokirajoče dogodke, kot tudi prek miškinega miška datuma.
 show birthdays as events	calendar	sl	Pokaži rojstne dneve kot dogodke
 show birthdays from addressbook	admin	sl	Prikaži rojstni dan iz adresarja
-show default view on main screen	calendar	sl	Prikaži privzeti pogled na glavni strani
 show empty rows in planner	calendar	sl	Prikaži prazne vrstice v načrtovalcu
 show events that have been deleted	calendar	sl	Prikaži dogodke, ki so bili izbrisani
 show list of upcoming events	calendar	sl	Prikaži prihajajoče dogodke

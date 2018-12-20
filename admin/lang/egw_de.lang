@@ -172,7 +172,7 @@ change account_id	admin	de	Änderung der account_id
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
 change domain of email address and aliases	admin	de	ändert Domain von E-Mail-Adressen oder Aliase
-change main screen message	admin	de	Nachricht der Startseite ändern
+change login screen message	admin	de	Nachricht der Startseite ändern
 change owner	admin	de	Besitzer ändern
 change password for %1	admin	de	Ändern des Passworts für %1
 change password hash to	admin	de	Passwort Verschlüsselung ändern in
@@ -260,7 +260,7 @@ deny access to db backup and restore	admin	de	Zugriff auf DB Datensicherung und 
 deny access to error log	admin	de	Zugriff auf Fehlerprotokoll verbieten
 deny access to global categories	admin	de	Zugriff auf globalen Kategorien verbieten
 deny access to groups	admin	de	Zugriff auf Benutzergruppen verbieten
-deny access to mainscreen message	admin	de	Zugriff auf Startseiten-Nachricht verbieten
+deny access to home screen message	admin	de	Zugriff auf Startseiten-Nachricht verbieten
 deny access to peer servers	admin	de	Zugriff auf Serververbund verbieten
 deny access to phpinfo	admin	de	Zugriff auf phpinfo verbieten
 deny access to site configuration	admin	de	Zugriff auf Konfiguration der Anwendung verbieten
@@ -304,8 +304,6 @@ edit global category	admin	de	Globale Kategorie bearbeiten
 edit global category for %1	admin	de	Globale Kategorie für %1 bearbeiten
 edit group	admin	de	Gruppe bearbeiten
 edit group acl's	admin	de	Gruppen-ACLs bearbeiten
-edit login screen message	admin	de	Nachricht der Login-Seite bearbeiten
-edit main screen message	admin	de	Nachricht der Startseite bearbeiten
 edit peer server	admin	de	Server in Serververbund bearbeiten
 edit table format	admin	de	Tabellenformat bearbeiten
 edit this category	admin	de	Diese Kategorie bearbeiten
@@ -540,7 +538,7 @@ lowercase email addresses	admin	de	E-Mail-Adressen mit Kleinbuchstaben
 mail account	admin	de	E-Mail Konto
 mail settings	admin	de	E-Mail-Einstellungen
 main email-address	admin	de	Stamm-E-Mail-Adresse
-main screen message	admin	de	Nachricht der Startseite
+home screen message	admin	de	Nachricht der Startseite
 manage mapping	admin	de	Feldzuordnung verwalten
 manage stationery templates	admin	de	Briefpapiervorlagen verwalten
 manager	admin	de	Manager
@@ -673,7 +671,6 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	de	angefordert
 required pear class mail/mimedecode.php not found.	admin	de	Die benötigte PEAR-Klasse Mail/mimeDecode.php wurde nicht gefunden.
 reset filter	admin	de	Filter zurücksetzen
-return to admin mainscreen	admin	de	zum Administrationsmenü zurückkehren
 return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
 rights	admin	de	Rechte
 route all mails to	admin	de	Alle E-Mails senden an

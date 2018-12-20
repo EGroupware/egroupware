@@ -150,7 +150,7 @@ infolog - new subproject	infolog	ca	Tasques i Notes - Nou Subprojecte
 infolog - subprojects from	infolog	ca	Tasques i Notes- Subprojectes de
 infolog entry deleted	infolog	ca	Entrada de Tasques i Notes esborrada
 infolog entry saved	infolog	ca	Entrada de Tasques i notes desada
-infolog filter for the main screen	infolog	ca	Filtre de Tasques i Notes per la pàgina d'inici
+InfoLog filter for the home screen	infolog	ca	Filtre de Tasques i Notes per la pàgina d'inici
 infolog list	infolog	ca	Llista de Tasques i Notes
 infolog preferences	common	ca	Preferències de Tasques i Notes
 infolog-fieldname	infolog	ca	Tasques i Notes - Nom de Camp
@@ -260,7 +260,7 @@ select to filter by responsible	infolog	ca	selecciona filtrar per responsable
 sets the status of this entry and its subs to done	infolog	ca	Estableix l'estat d'aquesta entrada i les seves subtasques com a fetes.
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	ca	S'han de mostrar les Subtasques, (subtrucades o subnotes) a la visualització normal? Podeu veure sempre els subtipus a través del seu tipus pare.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	ca	Tasques i Notes hauria de mostrar els enllaços a altres aplicacions i/o els fitxers adjunts dins la llista de Tasques i Notes (vista normal quan entres a Tasques i Notes).
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	ca	Tasques i Notes hauria de mostrar-se a la pàgina d'inici i amb quin filtre. Funciona només si no seleccioneu una aplicació per la pantalla d'inici (en les vostres preferències).
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	ca	Tasques i Notes hauria de mostrar-se a la pàgina d'inici i amb quin filtre. Funciona només si no seleccioneu una aplicació per la pantalla d'inici (en les vostres preferències).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	ca	Fem servir noms complets (cognom i nom de pila), o només els noms d'usuari de l'aplicació?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	ca	La llista de Tasques i Notes ha de mostrar un únic Id numèric, que pot ser utilitzat p.e. com ticket Id.
 should the infolog list show the column "last modified".	infolog	ca	La llista de Tasques i Notes ha de mostrar la columna "darrera modificació".

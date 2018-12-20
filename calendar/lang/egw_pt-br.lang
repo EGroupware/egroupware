@@ -382,7 +382,6 @@ should new events created as private by default ?	calendar	pt-br	Novos eventos c
 should the planner display an empty row for users or categories without any appointment.	calendar	pt-br	O Organizador deverá exibir uma linha vazia para usuários ou categorias sem nenhum compromisso.
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	pt-br	O status de cada participante (aceito, rejeitado, ...) deve ser mostrado entre parenteses logo após o nome do mesmo?
 show birthdays from addressbook	admin	pt-br	Exibir aniversários da Agenda
-show default view on main screen	calendar	pt-br	Exibir visualização padrão na tela principal
 show empty rows in planner	calendar	pt-br	Exibir linhas vazias no Organizador
 show list of upcoming events	calendar	pt-br	Exibir a lista de eventos futuros
 show only the date, not the year	admin	pt-br	Exibir apenas a data, não o ano

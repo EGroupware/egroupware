@@ -455,7 +455,6 @@ should the columns photo and home address always be displayed, even if they are 
 show	addressbook	en	Show
 show active accounts	addressbook	en	Show active accounts
 show all accounts	addressbook	en	Show all accounts
-show birthday reminders on main screen	addressbook	en	Birthday reminders
 show infolog entries for this organisation	addressbook	en	Show InfoLog entries for this organisation
 show the contacts of this organisation	addressbook	en	Show contacts of this organisation
 similar contacts found:	addressbook	en	Similar contacts found:

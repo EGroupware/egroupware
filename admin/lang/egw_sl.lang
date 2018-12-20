@@ -188,7 +188,7 @@ change account_id	admin	sl	Spremeni ID računa
 change acl rights	admin	sl	Spremeni pravice ACL
 change config settings	admin	sl	Spremeni konfiguracijske nastavitve
 change domain of email address and aliases	admin	sl	spremenite domeno e-poštnega naslova in vzdevkov
-change main screen message	admin	sl	Spremeni besedilo osnovnega zaslona
+change login screen message	admin	sl	Spremeni besedilo osnovnega zaslona
 change owner	admin	sl	Spremeni lastnika
 change password for %1	admin	sl	Spremeni geslo z %1
 change password hash to	admin	sl	Spremeni geslo za
@@ -283,7 +283,7 @@ deny access to db backup and restore	admin	sl	Prepreči dostop do arhiviranja po
 deny access to error log	admin	sl	Prepreči dostop do seznama napak
 deny access to global categories	admin	sl	Prepreči dostop do globalnih kategorij
 deny access to groups	admin	sl	Prepreči dostop do skupin
-deny access to mainscreen message	admin	sl	Prepreči dostop do sporočila za začetni zaslon
+deny access to home screen message	admin	sl	Prepreči dostop do sporočila za začetni zaslon
 deny access to peer servers	admin	sl	Prepreči dostop do vzporednih strežnikov
 deny access to phpinfo	admin	sl	Prepreči dostop do phpinfo
 deny access to site configuration	admin	sl	Prepreči dostop do konfiguracije strežnika
@@ -331,8 +331,6 @@ edit global category	admin	sl	Urejanje globalne kategorije
 edit global category for %1	admin	sl	Urejanje globalne kategorije za %1
 edit group	admin	sl	Urejanje skupine
 edit group acl's	admin	sl	Uredi skupinske ACL
-edit login screen message	admin	sl	Uredi sporočila prijavnega zaslona
-edit main screen message	admin	sl	Uredi sporočila osnovnega zaslona
 edit peer server	admin	sl	Urejanje vzporednega strežnika
 edit table format	admin	sl	Urejanje formata tabel
 edit this category	admin	sl	Uredi to kategorijo
@@ -581,8 +579,8 @@ lowercase email addresses	admin	sl	male črke - poštni naslovi
 mail account	admin	sl	E-poštni račun
 mail settings	admin	sl	Nastavitve E-pošte
 main email-address	admin	sl	Glavni E-naslov
-main screen	admin	sl	Glavni zaslon
-main screen message	admin	sl	Sporočilo osnovnega zaslona
+home screen	admin	sl	Glavni zaslon
+home screen message	admin	sl	Sporočilo osnovnega zaslona
 manage mapping	admin	sl	Upravljaj mapiranje
 manage stationery templates	admin	sl	Upravljajte pisalne predloge
 manager	admin	sl	Upravitelj
@@ -725,7 +723,6 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	sl	Zahtevano
 required pear class mail/mimedecode.php not found.	admin	sl	Zahtevani PEAR razred Pošta / mimeDecode.php ni mogoče najti.
 reset filter	admin	sl	Ponastavi filter
-return to admin mainscreen	admin	sl	Vrni se na oskrbnikov zaslon
 return to view account	admin	sl	Vrni se na pregled računa
 rights	admin	sl	Pravice
 route all mails to	admin	sl	Preusmeri vso pošto na

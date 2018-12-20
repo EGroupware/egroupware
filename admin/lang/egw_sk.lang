@@ -172,7 +172,7 @@ change account_id	admin	sk	Zmeniť ID účtu
 change acl rights	admin	sk	Zmeniť prístupové práva (ACL)
 change config settings	admin	sk	Zmeniť voľby nastanení
 change domain of email address and aliases	admin	sk	zmeniť doménu e-mailových adries a aliasov
-change main screen message	admin	sk	Zmeniť text na hlavnej stránke
+change login screen message	admin	sk	Zmeniť text na hlavnej stránke
 change owner	admin	sk	Zmeniť vlastníka
 change password for %1	admin	sk	zmeniť heslo pre %1
 change password hash to	admin	sk	Zmeniť hešované heslo na
@@ -258,7 +258,7 @@ deny access to db backup and restore	admin	sk	Zakáž prístup k zálohe a obnov
 deny access to error log	admin	sk	Zakáž prístup do chybových záznamov
 deny access to global categories	admin	sk	Zakáž prístup do globálnych kategórií
 deny access to groups	admin	sk	Zakáž prístup do skupín
-deny access to mainscreen message	admin	sk	Zakáž prístup do textu správy na hlavnej stránke
+deny access to home screen message	admin	sk	Zakáž prístup do textu správy na hlavnej stránke
 deny access to peer servers	admin	sk	Zakáž prístup k peer serverom
 deny access to phpinfo	admin	sk	Zakáž prístup do phpinfo
 deny access to site configuration	admin	sk	Zakáž prístup do nastavení stránky
@@ -299,8 +299,6 @@ edit global category	admin	sk	Upraviť globálnu kategóriu
 edit global category for %1	admin	sk	Upraviť globálnu kategóriu pre %1
 edit group	admin	sk	Upraviť skupinu
 edit group acl's	admin	sk	upraviť prístupové práva (ACL) skupiny
-edit login screen message	admin	sk	Upraviť text správy prihlasovacej stránky
-edit main screen message	admin	sk	Upraviť text správy hlavnej stránky
 edit peer server	admin	sk	Upraviť peer server
 edit table format	admin	sk	Upraviť formát tabuľky
 edit this category	admin	sk	uprav túto kategóriu
@@ -532,7 +530,7 @@ logoutime	admin	sk	Čas odhlásenia
 mail account	admin	sk	Poštový účet
 mail settings	admin	sk	Nastavenia Pošty
 main email-address	admin	sk	Hlavná E-mailová adresa
-main screen message	admin	sk	Text správy hlavnej stránky
+home screen message	admin	sk	Text správy hlavnej stránky
 manage mapping	admin	sk	Správa mapovania
 manager	admin	sk	Správca
 manual entry	admin	sk	Ručná položka
@@ -664,7 +662,6 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	sk	Vyžiadané
 required pear class mail/mimedecode.php not found.	admin	sk	Nenašla sa požadovaná trieda PEAR Mail / mimeDecode.php
 reset filter	admin	sk	Vynulovať filter
-return to admin mainscreen	admin	sk	návrat do správcovej hlavnej stránky
 return to view account	admin	sk	Návrat na zobrazenie účtov
 rights	admin	sk	Oprávnenia
 route all mails to	admin	sk	Všetky správy smerovať cez

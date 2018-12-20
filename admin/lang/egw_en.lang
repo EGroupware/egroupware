@@ -172,7 +172,7 @@ change account_id	admin	en	Change account ID
 change acl rights	admin	en	Change ACL rights
 change config settings	admin	en	Change config settings
 change domain of email address and aliases	admin	en	change domain of email address and aliases
-change main screen message	admin	en	Change main screen message
+change login screen message	admin	en	Change login screen message
 change owner	admin	en	Change owner
 change password for %1	admin	en	Change password for %1
 change password hash to	admin	en	Change password hash to
@@ -260,7 +260,7 @@ deny access to db backup and restore	admin	en	Deny access to DB backup and resto
 deny access to error log	admin	en	Deny access to error log
 deny access to global categories	admin	en	Deny access to global categories
 deny access to groups	admin	en	Deny access to groups
-deny access to mainscreen message	admin	en	Deny access to main screen message
+deny access to home screen message	admin	en	Deny access to home screen message
 deny access to peer servers	admin	en	Deny access to peer servers
 deny access to phpinfo	admin	en	Deny access to phpinfo
 deny access to site configuration	admin	en	Deny access to site configuration
@@ -304,8 +304,6 @@ edit global category	admin	en	Edit global category
 edit global category for %1	admin	en	Edit global category for %1
 edit group	admin	en	Edit group
 edit group acl's	admin	en	Edit group ACL's
-edit login screen message	admin	en	Edit login screen message
-edit main screen message	admin	en	Edit main screen message
 edit peer server	admin	en	Edit Peer Server
 edit table format	admin	en	Edit table format
 edit this category	admin	en	Edit this category
@@ -540,7 +538,7 @@ lowercase email addresses	admin	en	Lowercase EMail addresses
 mail account	admin	en	Mail account
 mail settings	admin	en	Mail settings
 main email-address	admin	en	Main email address
-main screen message	admin	en	Main screen message
+home screen message	admin	en	Home screen message
 manage mapping	admin	en	Manage mapping
 manage stationery templates	admin	en	Manage stationery templates
 manager	admin	en	Manager
@@ -673,8 +671,6 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	en	Requested
 required pear class mail/mimedecode.php not found.	admin	en	Required PEAR class Mail/mimeDecode.php not found.
 reset filter	admin	en	Reset filter
-return to admin mainscreen	admin	en	Return to admin main screen
-return to view account	admin	en	Return to view account
 rights	admin	en	Rights
 route all mails to	admin	en	Route all Mails to
 rows	admin	en	Rows

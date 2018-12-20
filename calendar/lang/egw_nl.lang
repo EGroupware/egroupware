@@ -325,7 +325,6 @@ should new events created as private by default ?	calendar	nl	Moeten nieuwe afsp
 should the planner display an empty row for users or categories without any appointment.	calendar	nl	Moet de planner een lege regel weergeven voor gebruikers of categorieën zonder enige afspraak.
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	nl	Moet de status van de afspraak-deelnemers (accepteren, afwijzen, ...) worden weergegeven tussen haakjes achter elke de namen van de deelnemers?
 show birthdays from addressbook	admin	nl	Toon verjaardagen vanuit het adresboek
-show default view on main screen	calendar	nl	Geeft standaard overzicht weer op beginscherm
 show empty rows in planner	calendar	nl	Toon lege regels in de planner
 show list of upcoming events	calendar	nl	Lijst weergeven van toekomstige afspraken
 show only the date, not the year	admin	nl	Toon alleen de datum, niet het jaar

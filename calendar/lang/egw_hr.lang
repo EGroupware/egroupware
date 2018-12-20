@@ -155,7 +155,6 @@ set a year only for one-time / non-regular holidays.	calendar	hr	Set a Year only
 set new events to private	calendar	hr	Postavi nove događaju u privatno
 should new events created as private by default ?	calendar	hr	Trebaju li se nove obvezei postaviti kao privatne?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	hr	Da li bi se status sudionika obveze (prihvaćen, odbijen, ...) trebao prikazati nakon imena sudionika u zagradama?
-show default view on main screen	calendar	hr	Prikaži početno postavljeni prikaz na glavnom ekranu
 show list of upcoming events	calendar	hr	Prikaži listu dolazećih obvezama
 single event	calendar	hr	jedna obveza
 start date/time	calendar	hr	Datum/vrijeme početka

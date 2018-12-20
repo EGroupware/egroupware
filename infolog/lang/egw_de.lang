@@ -252,7 +252,7 @@ infolog csv import	infolog	de	InfoLog CSV Import
 infolog entry deleted	infolog	de	InfoLog Eintrag gelöscht
 infolog entry saved	infolog	de	InfoLog Eintrag gespeichert
 infolog fields:	infolog	de	InfoLog Felder
-infolog filter for the main screen	infolog	de	InfoLog Filter für Startseite
+InfoLog filter for the home screen	infolog	de	InfoLog Filter für Startseite
 infolog ical export	infolog	de	InfoLog -> iCal Export
 infolog ical import	infolog	de	InfoLog <- iCal Import
 infolog id	infolog	de	InfoLog ID
@@ -433,7 +433,7 @@ sets the status of this entry and its subs to done	infolog	de	Setzt den Status d
 sets the status of this entry to done	infolog	de	Setzt den Status für diesen InfoLog auf erledigt
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog auf der Startseite angezeigt werden und mit welchem Filter. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	de	Soll InfoLog auf der Startseite angezeigt werden und mit welchem Filter. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	de	Soll InfoLog den vollen Namen (Vor- und Familienname) oder nur die Benutzerkennung verwenden.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	de	Soll die InfoLog Liste eine eindeutige Nummer anzeigen, die z.B. als Ticketnummer verwendet werden kann.
 should the infolog list show the column "last modified".	infolog	de	Soll die InfoLog Liste die Spalte "Zuletzt geändert" anzeigen.

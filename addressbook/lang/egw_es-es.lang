@@ -418,7 +418,6 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	es-es	Establecer sólo el nombre completo
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	es-es	¿Mostrar las columnas de foto y domicilio particular, incluso si están vacías?
 show	addressbook	es-es	Mostrar
-show birthday reminders on main screen	addressbook	es-es	Mostrar recordatorios de cumpleaños en la pantalla principal
 show infolog entries for this organisation	addressbook	es-es	Mostrar las entradas del Registro de notas y tareas para esta organización
 show the contacts of this organisation	addressbook	es-es	Mostrar los contactos de esta organización
 similar contacts found:	addressbook	es-es	Contactos similares encontrados:

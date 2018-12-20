@@ -254,7 +254,6 @@ set a year only for one-time / non-regular holidays.	calendar	eu	Urtero errepika
 set new events to private	calendar	eu	Gertakari berriak pribatu moduan jarri
 should new events created as private by default ?	calendar	eu	Pribatu moduan sortu gertakariak?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	eu	Gertakari-patehartzaile baten egoera izenarekin batera agertu beharko litzateke edo partehartzaile izenaren ondoren?
-show default view on main screen	calendar	eu	Ikuspegi lehenetsia erakutsi pantaila nagusian
 show list of upcoming events	calendar	eu	Datozen gertakarien zerrenda erakutsi
 show this month	calendar	eu	Hilabete hau erakutsi
 show this week	calendar	eu	Aste hau erakutsi

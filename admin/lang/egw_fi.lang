@@ -115,7 +115,7 @@ category saved.	admin	fi	Kategoria tallennettu.
 change account_id	admin	fi	Vaihda account_id
 change acl rights	admin	fi	Muuta ACL -oikeuksia
 change config settings	admin	fi	Muuta asetuksia
-change main screen message	admin	fi	Vaihda päänäytön viesti
+change login screen message	admin	fi	Vaihda päänäytön viesti
 change owner	admin	fi	Vaihda omistaja
 change password for %1	admin	fi	Vaihda salasana %1
 change password hash to	admin	fi	Muuta salasana hash:
@@ -177,7 +177,7 @@ deny access to db backup and restore	admin	fi	Estä pääsy tietokannan varmuusk
 deny access to error log	admin	fi	Estä pääsy virhelokiin
 deny access to global categories	admin	fi	Estä pääsy yleisiin kategorioihin
 deny access to groups	admin	fi	Estä pääsy ryhmiin
-deny access to mainscreen message	admin	fi	Estä pääsy päänäytön viestiin
+deny access to home screen message	admin	fi	Estä pääsy päänäytön viestiin
 deny access to peer servers	admin	fi	Estä pääsy rinnakkaispalvelimille
 deny access to phpinfo	admin	fi	Estä pääsy phpsysinfoon
 deny access to site configuration	admin	fi	Estä pääsy palvelun asetuksiin
@@ -206,8 +206,6 @@ edit global category	admin	fi	Muokkaa yleistä kategoriaa
 edit global category for %1	admin	fi	Muokkaa yleistä kategoriaa %1:lle
 edit group	admin	fi	Muokkaa ryhmää
 edit group acl's	admin	fi	Muokkaa ryhmän ACL-oikeuksia
-edit login screen message	admin	fi	Muokkaa kirjautumisnäytön viestiä
-edit main screen message	admin	fi	Muokkaa päänäytön viestiä
 edit peer server	admin	fi	Muokkaa rinnakkaispalvelinta
 edit table format	admin	fi	Muokkaa taulukon muotoa
 edit this category	admin	fi	Muokkaa tätä kategoriaa
@@ -367,7 +365,7 @@ logintime	admin	fi	Kirjautumisaika
 logoutime	admin	fi	Uloskirjautumisaika
 mail settings	admin	fi	Sähköpostiasetukset
 main email-address	admin	fi	Pääsähköpostiosoite
-main screen message	admin	fi	Päänäytön viesti
+home screen message	admin	fi	Päänäytön viesti
 manage mapping	admin	fi	Valitse kentät
 manager	admin	fi	Hallinnoija
 maximum account id (e.g. 65535 or 1000000)	admin	fi	Suurin tunnus-id (esim. 65535 tai 1000000)
@@ -457,7 +455,6 @@ remove	admin	fi	Poista
 remove all users from this group	admin	fi	Poista käyttäjät ryhmästä
 remove all users from this group ?	admin	fi	Poistetaanko kaikki käyttäjät tästä ryhmästä?
 requested	admin	fi	Vaadittu
-return to admin mainscreen	admin	fi	Takaisin hallinnan päänäyttöön
 return to view account	admin	fi	Palaa käyttäjätilin tietoihin
 rights	admin	fi	ACL -oikeudet
 route all mails to	admin	fi	Reititä kaikki viestit

@@ -168,7 +168,6 @@ select all	addressbook	no	Velg alle
 select the type of conversion	addressbook	no	Velg konverteringstype
 select the type of conversion:	addressbook	no	Velg konverterings type:
 show	addressbook	no	Vis
-show birthday reminders on main screen	addressbook	no	Vis fødselsdags-påminnelse på hovedskjerm
 start	admin	no	Start
 startrecord	addressbook	no	Startrekke
 state	common	no	Fylke

@@ -455,7 +455,6 @@ show all status, but rejected	calendar	ru	Показывать события в
 show all status, but unknown	calendar	ru	Показывать события всех статусов, кроме неизвестных
 show also events just owned by selected user	calendar	ru	Показывать также события, владельцем которых является выбранный пользователь
 show birthdays from addressbook	admin	ru	Показывать в адресной книге дни рождений
-show default view on main screen	calendar	ru	Показать вид по умолчанию на главном экране
 show empty rows in planner	calendar	ru	Показывать пустые строки в планировщике
 show events that have been deleted	calendar	ru	Показывать события, даже удаленные
 show list of upcoming events	calendar	ru	Показать список приближающихся событий

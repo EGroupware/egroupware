@@ -30,7 +30,7 @@
 					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="550">
 						<tabs>
 							<tab id="loginscreen" label="Login screen"/>
-							<tab id="mainscreen" label="Main screen"/>
+							<tab id="mainscreen" label="Home screen"/>
 						</tabs>
 						<tabpanels>
 							<template id="admin.mainscreen_message.loginscreen"/>

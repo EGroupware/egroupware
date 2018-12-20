@@ -331,7 +331,6 @@ selected contacts	addressbook	pt-br	contatos selecionados
 send emailcopy to receiver	addressbook	pt-br	Enviar cópia de e-mail para o receptor
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	pt-br	As colunas de fotos e endereço residencial deverão ser exibidas sempre, mesmo se estiverem vazias.
 show	addressbook	pt-br	Exibir
-show birthday reminders on main screen	addressbook	pt-br	Exibir lembrete de aniversários na tela principal
 show infolog entries for this organisation	addressbook	pt-br	Exibir entrada de Tarefas para esta organização
 show the contacts of this organisation	addressbook	pt-br	Exibir os contatos desta organização
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	pt-br	Tamanho do popup (Largura x Altura, exemplo: 400x300, se um popup for usado)

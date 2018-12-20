@@ -78,7 +78,7 @@ category %1 has been saved !	admin	ko	%1 카테고리가 저장되었습니다!
 category list	admin	ko	카테고리 목록
 change acl rights	admin	ko	ACL 권한 변경
 change config settings	admin	ko	구성 설정 변경
-change main screen message	admin	ko	주 화면 메세지 변경
+change login screen message	admin	ko	주 화면 메세지 변경
 check ip address of all sessions	admin	ko	모든 세션에 ip 주소 확인
 check items to <b>%1</b> to %2 for %3	admin	ko	** %3의 항목을 <b>%1</b>에서 %2로 체크
 click to select a color	admin	ko	클릭해서 색깔을 선택
@@ -119,7 +119,7 @@ deny access to current sessions	admin	ko	거부된 접근을 현재 세션으로
 deny access to error log	admin	ko	거부된 접근을 에러 로그로
 deny access to global categories	admin	ko	거부된 접근을 전역 카테고리로
 deny access to groups	admin	ko	거부된 접근을 그룹으로
-deny access to mainscreen message	admin	ko	거부된 접근을 주 화면 메세지로
+deny access to home screen message	admin	ko	거부된 접근을 주 화면 메세지로
 deny access to peer servers	admin	ko	거부된 접근을 피어 서버로
 deny access to phpinfo	admin	ko	거부된 접근을 phpinfo로
 deny access to site configuration	admin	ko	거부된 접근을 사이트 구성으로
@@ -140,8 +140,6 @@ edit global category	admin	ko	전역 카테고리 편집
 edit global category for %1	admin	ko	%1의 전역 카테고리 편집
 edit group	admin	ko	그룹 편집
 edit group acl's	admin	ko	그룹의 ACL을 편집
-edit login screen message	admin	ko	접속화면 메세지 편집
-edit main screen message	admin	ko	주 화면 메세지 편집
 edit peer server	admin	ko	피어 서버 편집
 edit table format	admin	ko	테이블 형식 편집
 edit this category	admin	ko	이 카테고리를 편집
@@ -241,7 +239,7 @@ login shell	admin	ko	로그인 쉘
 login time	admin	ko	접속 시간
 loginid	admin	ko	접속ID
 mail settings	admin	ko	메일 설정
-main screen message	admin	ko	주 화면 메세지
+home screen message	admin	ko	주 화면 메세지
 manager	admin	ko	관리자
 maximum account id (e.g. 65535 or 1000000)	admin	ko	최대 계정ID  (예 65535 나 1000000)
 maximum entries in click path history	admin	ko	경로 기록의 최대 항목
@@ -292,7 +290,6 @@ register application hooks	admin	ko	응용프로그램 훅(hooks) 등록
 remove	admin	ko	삭제
 remove all users from this group	admin	ko	이 그룹의 모든 사용자를 삭제
 remove all users from this group ?	admin	ko	이 그룹의 모든 사용자를 삭제?
-return to admin mainscreen	admin	ko	관리자 주화면으로 돌아가기
 return to view account	admin	ko	계정 보기로 돌아가기
 rows	admin	ko	줄
 run asynchronous services	admin	ko	비동기 서비스 실행

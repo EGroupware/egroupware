@@ -306,7 +306,6 @@ select where you want to store / retrieve contacts	admin	zh	选择你想要在�
 selected contacts	addressbook	zh	选择的联系人
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	zh	照片与家庭地址列将会始终显示，即使它们是空的。
 show	addressbook	zh	显示
-show birthday reminders on main screen	addressbook	zh	在主窗口显示生日提示
 show infolog entries for this organisation	addressbook	zh	显示这个组织的相关记事
 show the contacts of this organisation	addressbook	zh	显示这个组织的联系人
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	zh	弹出视窗大小 (宽X高，例如：400x300，如果选择了使用弹出窗口)

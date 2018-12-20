@@ -145,7 +145,6 @@ select all	addressbook	lv	Iezīmēt visus
 select the type of conversion	addressbook	lv	Iezīmēt sarunas veidu
 select the type of conversion:	addressbook	lv	Izvēlēties sarunas veidu:
 show	addressbook	lv	Rādīt
-show birthday reminders on main screen	addressbook	lv	Rādīt dzimšanas dienu atgādinājumus galvenajā lapā
 startrecord	addressbook	lv	Sākuma ieraksts
 state	common	lv	Štats
 street	common	lv	Iela

@@ -501,7 +501,6 @@ show also events just owned by selected user	calendar	it	Mostra anche gli eventi
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	it	Mostra i compleanni come eventi non bloccanti che occupano tutta la giornata come pure al passaggio del mouse sulla data
 show birthdays as events	calendar	it	Mostra i compleanni come eventi
 show birthdays from addressbook	admin	it	Mostra compleanni dalla rubrica
-show default view on main screen	calendar	it	Mostra la vista prefedinita sulla maschera principale
 show empty rows in planner	calendar	it	Mostra righe vuote nel pianificatore
 show events that have been deleted	calendar	it	Mostra eventi eliminati
 show list of upcoming events	calendar	it	Visualizza la lista degli eventi imminenti

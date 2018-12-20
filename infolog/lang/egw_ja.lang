@@ -263,7 +263,7 @@ infolog csv import	infolog	ja	インフォログ CSV インポート
 infolog entry deleted	infolog	ja	インフォログ項目を削除しました
 infolog entry saved	infolog	ja	インフォログ項目を保存しました
 infolog fields:	infolog	ja	インフォログ項目:
-infolog filter for the main screen	infolog	ja	メイン画面用インフォログ・フィルター
+InfoLog filter for the home screen	infolog	ja	メイン画面用インフォログ・フィルター
 infolog ical export	infolog	ja	インフォログ iCal エクスポート
 infolog ical import	infolog	ja	インフォログ iCal インポート
 infolog id	infolog	ja	インフォログ ID
@@ -461,7 +461,7 @@ sets the status of this entry and its subs to done	infolog	ja	この項目と全
 sets the status of this entry to done	infolog	ja	この項目の状態を完了に設定
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	ja	インフォログの通常表示時に、サブ・タスク,電話,ノートを表示すべきか否かを指定します。サブ項目は親項目を通じていつでも表示できます。
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	ja	インフォログの一覧表示で、他のアプリケーションに対するリンク、および添付ファイルを表示すべきか否かを指定します。
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	ja	ホームにインフォログ（＋フィルター）を表示すべきか否かを指定します。共通設定でホーム画面に表示するアプリケーションを選択していない場合に限り有効。
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	ja	ホームにインフォログ（＋フィルター）を表示すべきか否かを指定します。共通設定でホーム画面に表示するアプリケーションを選択していない場合に限り有効。
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	ja	インフォログで、フルネームを表示すべきか、あるいはログイン名を表示すべきかを指定します。
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	ja	インフォログ一覧で固有IDを表示すべきか否かを指定します。固有IDはチケットID等に使用されます。
 should the infolog list show the column "last modified".	infolog	ja	インフォログの一覧表示で、最終更新日を表示すべきか否かを指定します。

@@ -100,7 +100,7 @@ category list	admin	hu	Kategórialista
 category saved.	admin	hu	Kategória mentve.
 change acl rights	admin	hu	ACL jogok változtatása
 change config settings	admin	hu	Beállítások megváltoztatása
-change main screen message	admin	hu	Főképernyőn megjelenő üzenet változtatása
+change login screen message	admin	hu	Főképernyőn megjelenő üzenet változtatása
 check ip address of all sessions	admin	hu	Összes session IP cím ellenőrzése
 check items to <b>%1</b> to %2 for %3	admin	hu	Tételek ellenőrzése <b>%1</b> to %2 for %3
 click to select a color	admin	hu	Színválasztás
@@ -147,7 +147,7 @@ deny access to db backup and restore	admin	hu	Adatbázis mentés/helyreállítá
 deny access to error log	admin	hu	A hibanaplóhoz történő hozzáférés tiltása
 deny access to global categories	admin	hu	Az általános kategóriákhoz történő hozzáférés tiltása
 deny access to groups	admin	hu	A csoportokhoz történő hozzáférés tiltása
-deny access to mainscreen message	admin	hu	Kezdőképernyő üzenetéhez történő hozzáférés tiltása
+deny access to home screen message	admin	hu	Kezdőképernyő üzenetéhez történő hozzáférés tiltása
 deny access to peer servers	admin	hu	Peer szerverhez  történő hozzáférés tiltása
 deny access to phpinfo	admin	hu	A phpinfo()-hoz történő hozzáférés tiltása
 deny access to site configuration	admin	hu	A webhely beállításaihoz történő hozzáférés tiltása
@@ -173,8 +173,6 @@ edit global category	admin	hu	Általános kategória szerkesztése
 edit global category for %1	admin	hu	%1 általános kategória szerkesztése
 edit group	admin	hu	Csoport módosítása
 edit group acl's	admin	hu	csoport ACL szerkesztése
-edit login screen message	admin	hu	Bejelentkezési képernyőn megjelenő üzenet szerkesztése
-edit main screen message	admin	hu	Főképernyőn megjelenő üzenet szerkesztése
 edit peer server	admin	hu	Peer szerver szerkesztése
 edit table format	admin	hu	Táblázatos formátum szerkesztése
 edit this category	admin	hu	kategória szerkesztése
@@ -294,7 +292,7 @@ login time	admin	hu	Belépés ideje
 loginid	admin	hu	LoginID
 mail settings	admin	hu	eMail beállítások
 main email-address	admin	hu	Fő emailcím
-main screen message	admin	hu	Főképernyőn megjelenő szöveg
+home screen message	admin	hu	Főképernyőn megjelenő szöveg
 manager	admin	hu	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	hu	Legnagyobb felhasználói azonosító (pl. 65535 vagy 1000000)
 maximum entries in click path history	admin	hu	Útvonal látogatottság bejegyzések maximális száma
@@ -356,7 +354,6 @@ register application hooks	admin	hu	Regisztrálja az alkalmazás visszacsatolás
 remove	admin	hu	eltávolítás
 remove all users from this group	admin	hu	Csoport összes felhasználójának törlése
 remove all users from this group ?	admin	hu	Összes felhasználó eltávolítása ebből a csoportból?
-return to admin mainscreen	admin	hu	visszatérés az adminisztrációs főképernyőre
 return to view account	admin	hu	Visszatérés a hozzáférések megjelenítéséhez
 rights	admin	hu	Hozzáférés
 route all mails to	admin	hu	Összes email irányítása ide:

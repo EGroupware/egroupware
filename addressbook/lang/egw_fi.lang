@@ -377,7 +377,6 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	fi	Ainoastaan koko nimi
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	fi	Näytetäänkö kuva- ja kotiosoitesarake aina, vaikka ne olisivat tyhjiä?
 show	addressbook	fi	Näytä
-show birthday reminders on main screen	addressbook	fi	Näytä syntymäpäivämuistutukset etusivulla
 show infolog entries for this organisation	addressbook	fi	Näytä InfoLogin merkinnät tästä organisaatiosta
 show the contacts of this organisation	addressbook	fi	Näytä tämän organisaation yhteystiedot
 similar contacts found:	addressbook	fi	Sama yhteystieto löydetty:

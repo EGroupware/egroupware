@@ -246,7 +246,7 @@ infolog csv import	infolog	sk	CSV import Záznamníka
 infolog entry deleted	infolog	sk	Záznam bol odstránený
 infolog entry saved	infolog	sk	Záznam bol uložený
 infolog fields:	infolog	sk	Polia Záznamníka:
-infolog filter for the main screen	infolog	sk	Filter Záznamníka pre hlavnú stránku
+InfoLog filter for the home screen	infolog	sk	Filter Záznamníka pre hlavnú stránku
 infolog ical export	infolog	sk	Export Záznamníka - iCal
 infolog ical import	infolog	sk	Import Záznamníka - iCal
 infolog id	infolog	sk	ID Záznamníka
@@ -426,7 +426,7 @@ sets the status of this entry and its subs to done	infolog	sk	Nastaví stav záz
 sets the status of this entry to done	infolog	sk	Nastaví stav položky na hotovo
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sk	Má Záznamník zobrazovať Podúlohy, Podhovory alebo Podpoznámky v normálnom zobrazení alebo nie? Vždy ešte môžete zobraziť Podradené záznamy cez ich rodičovský záznam.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	sk	Má Záznamník zobrazovať v zozname odkazy na iné aplikácie a/alebo súbory v prílohe (v normálnom pohľade, keď otvoríte Záznamník)?
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	sk	Zobrazovať Záznamník na hlavnej stránke? Ak áno, s akým filtrom? Táto voľba funguje len v prípade, ak ste už nevybrali konkrétnu aplikáciu pre hlavnú stránku (vo vašich predvoľbách).
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	sk	Zobrazovať Záznamník na hlavnej stránke? Ak áno, s akým filtrom? Táto voľba funguje len v prípade, ak ste už nevybrali konkrétnu aplikáciu pre hlavnú stránku (vo vašich predvoľbách).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	sk	Má Záznamník používať plné mená (meno, priezvisko) alebo iba používateľské mená?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	sk	Má sa v zozname Záznamníka zobrazovať jedinečné číselné ID, ktoré môže byť použité napr. ako ID problému?
 should the infolog list show the column "last modified".	infolog	sk	Zobrazovať v zozname Záznamníka aj stĺpec "Naposledy zmenené"?

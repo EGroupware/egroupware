@@ -71,7 +71,7 @@ category %1 has been saved !	admin	eu	%1 kategoria gorde da
 category list	admin	eu	Kategorien zerrenda
 change acl rights	admin	eu	ACLko baimenak aldatu
 change config settings	admin	eu	Konfigurazio aukerak aldatu
-change main screen message	admin	eu	Pantaila nagusiko mezua aldatu
+change login screen message	admin	eu	Pantaila nagusiko mezua aldatu
 check ip address of all sessions	admin	eu	Saio guztietako IPa begiratu
 click to select a color	admin	eu	Egin klik kolore bat aukeratzeko
 color	admin	eu	Kolorea
@@ -108,7 +108,7 @@ deny access to current sessions	admin	eu	Baimena ukatu momentuko saioetara
 deny access to error log	admin	eu	Baimena ukatu erroreen erregistroetara
 deny access to global categories	admin	eu	Baimena ukatu kategoria orokorretara
 deny access to groups	admin	eu	Baimena ukatu taldeetara
-deny access to mainscreen message	admin	eu	Baimena ukatu pantaila nagusiko mezura
+deny access to home screen message	admin	eu	Baimena ukatu pantaila nagusiko mezura
 deny access to peer servers	admin	eu	Baimena ukatu peer zerbitzarira
 deny access to phpinfo	admin	eu	Baimena ukatu phpinfora
 deny access to site configuration	admin	eu	Baimena ukatu lekuaren konfigurazioara
@@ -128,8 +128,6 @@ edit global category	admin	eu	Kategoria orokorra editatu
 edit global category for %1	admin	eu	Kategoria orokorra editatu %1entzako
 edit group	admin	eu	Taldea editatu
 edit group acl's	admin	eu	Taldearen ACLa editatu
-edit login screen message	admin	eu	Saioa hasteko pantailaren mezua editatu
-edit main screen message	admin	eu	Pantaila nagusiko mezua editatu
 edit peer server	admin	eu	Peer zerbitzaria editatu
 edit table format	admin	eu	Taularen formatua editatu
 edit this category	admin	eu	Kategoria hau editatu
@@ -211,7 +209,7 @@ login shell	admin	eu	Saio hasierako shell-a
 login time	admin	eu	Saio hasierarako sarrera ordua
 mail settings	admin	eu	Posta elektronikoaren konfigurazioa
 main email-address	admin	eu	Helbide elektroniko nagusia
-main screen message	admin	eu	Pantaila nagusiko mezua
+home screen message	admin	eu	Pantaila nagusiko mezua
 manager	admin	eu	Administratzailea
 maximum entries in click path history	admin	eu	Historian egon daitezkeen sarrera kopuru maximoa
 members	admin	eu	Kideak
@@ -266,7 +264,6 @@ register application hooks	admin	eu	Aplikazioaren hooks-ak erregistratu
 remove	admin	eu	ezabatu
 remove all users from this group	admin	eu	Talde honetako erabiltzaile guztiak ezabatu
 remove all users from this group ?	admin	eu	Talde honetako erabiltzaile guztiak ezabatu?
-return to admin mainscreen	admin	eu	administrazioko pantaila nagusira itzuli
 return to view account	admin	eu	Kontua berriz ere ikusi
 route all mails to	admin	eu	e-posta guztiak zuzendu
 run asynchronous services	admin	eu	Zerbitzu asinkromoak exekutatu

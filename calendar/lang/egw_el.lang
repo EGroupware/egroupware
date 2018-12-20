@@ -268,7 +268,6 @@ set a year only for one-time / non-regular holidays.	calendar	el	Καθορίσ�
 set new events to private	calendar	el	Καθορίστε νέα γεγονότα για ιδιωτικοποίηση
 should new events created as private by default ?	calendar	el	Θα έπρεπε τα νέα γεγονότα προκαθορισμένα να δημιουργούνται ως ιδιαίτερα;
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	el	Θα έπρεπε η κατάσταση του γεγονότος-συμμετεχόντων (αποδέχομαι, απορρίπτω,...)να εμφανίζεται σε παρένθεση δίπλα από το όνομα του κάθε συμμετέχοντος;
-show default view on main screen	calendar	el	Παρουσιάστε προκαθορισμένη εμφάνιση στην κύρια οδόνη
 show list of upcoming events	calendar	el	Παρουσιάστε τη λίστα των επερχόμενων γεγονότων
 show this month	calendar	el	Παρουσιάστε αυτό το μήνα
 show this week	calendar	el	Παρουσιάστε αυτήν την εβδομάδα

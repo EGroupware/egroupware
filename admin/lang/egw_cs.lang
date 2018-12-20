@@ -113,7 +113,7 @@ category saved.	admin	cs	Kategorie byla uložena.
 change account_id	admin	cs	Změnit ID účtu
 change acl rights	admin	cs	změnit ACL práva
 change config settings	admin	cs	Změnít konfigurační nastavení
-change main screen message	admin	cs	Změnit zprávu na hlavní obrazovce
+change login screen message	admin	cs	Změnit zprávu na hlavní obrazovce
 change password for %1	admin	cs	změnit heslo pro %1
 check acl for entries of not (longer) existing accounts	admin	cs	Zkontrolovat ACL zda neobsahují záznamy již zrušených účtů
 check ip address of all sessions	admin	cs	Kontrolovat IP adresy všech relací
@@ -170,7 +170,7 @@ deny access to db backup and restore	admin	cs	Zablokovat přístup k záloze a o
 deny access to error log	admin	cs	Zablokovat přístup k chybovém protokolu
 deny access to global categories	admin	cs	Zablokovat přístup ke globálním kategoriím
 deny access to groups	admin	cs	Zablokovat přístup ke skupinám
-deny access to mainscreen message	admin	cs	Zablokovat přístup ke zprávě na hlavní obrazovce
+deny access to home screen message	admin	cs	Zablokovat přístup ke zprávě na hlavní obrazovce
 deny access to peer servers	admin	cs	Zablokovat přístup k peer serverům
 deny access to phpinfo	admin	cs	Zablokovat přístup k phpinfo
 deny access to site configuration	admin	cs	Zablokovat přístup k nastavení webu
@@ -196,8 +196,6 @@ edit global category	admin	cs	Editovat globální kategorii
 edit global category for %1	admin	cs	Editovat globální kategorii pro %1
 edit group	admin	cs	Editovat skupinu
 edit group acl's	admin	cs	editovat skupinová ACL
-edit login screen message	admin	cs	Editovat zprávu na přihlašovací obrazovce
-edit main screen message	admin	cs	Editovat zprávu na hlavní obrazovce
 edit peer server	admin	cs	Editovat peer server
 edit table format	admin	cs	Editovat formát tabulky
 edit this category	admin	cs	editovat tuto kategorii
@@ -347,7 +345,7 @@ logintime	admin	cs	Čas přihlášení
 logoutime	admin	cs	Čas odhlášení
 mail settings	admin	cs	Nastavení pošty
 main email-address	admin	cs	Hlavní e-mailová adresa
-main screen message	admin	cs	Zpráva na hlavní obrazovce
+home screen message	admin	cs	Zpráva na hlavní obrazovce
 manage mapping	admin	cs	Spravovat mapování
 manager	admin	cs	Správce
 maximum account id (e.g. 65535 or 1000000)	admin	cs	Maximální id účtu (např. 65535 nebo 1000000)
@@ -429,7 +427,6 @@ remove	admin	cs	odstranit
 remove all users from this group	admin	cs	Odstranit všechny uživatele z této skupiny
 remove all users from this group ?	admin	cs	Odstranit všechny uživatele z této skupiny ?
 requested	admin	cs	Požadovaný
-return to admin mainscreen	admin	cs	návrat na hlavní stránku administrace
 return to view account	admin	cs	Návrat na zobrazení účtu
 rights	admin	cs	Práva
 route all mails to	admin	cs	Směrovat všechny zprávy na

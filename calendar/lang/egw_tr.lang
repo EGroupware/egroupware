@@ -142,7 +142,6 @@ set a year only for one-time / non-regular holidays.	calendar	tr	Yılı sadece b
 set new events to private	calendar	tr	Yeni etkinlikleri özel olarak ayarla
 should new events created as private by default ?	calendar	tr	Yeni etkinlikler varsayılan olarak 'özel' mi olmalı?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	tr	Bir etkinlik katılımcısının kabul/red bilgisi her katılımcı isminden sonra parantez içinde gösterilmeli midir?
-show default view on main screen	calendar	tr	Ana ekranda varsayılan görünümü görüntüle
 show list of upcoming events	calendar	tr	Yaklaşan Etkinlikleri görüntüle
 single event	calendar	tr	tek etkinlik
 start date/time	calendar	tr	Başlangıç Tarih/Zaman

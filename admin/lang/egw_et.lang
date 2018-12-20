@@ -52,7 +52,7 @@ can change password	admin	et	Võib muuta parooli
 categories list	admin	et	Kategooriate nimekiri
 category list	admin	et	Kategooria nimekiri
 change acl rights	admin	et	muuda ACL Õigusi
-change main screen message	admin	et	Muuda pealehe sõnumit
+change login screen message	admin	et	Muuda pealehe sõnumit
 click to select a color	admin	et	Kliki valimaks värvi
 color	admin	et	Värv
 country	admin	et	Riik
@@ -82,7 +82,7 @@ deny access to db backup and restore	admin	et	Keela ligipääs DB tagavara ja ta
 deny access to error log	admin	et	Keela ligipääs vea logile
 deny access to global categories	admin	et	Keela ligipääs globaalsetele gategooriatele
 deny access to groups	admin	et	Keela ligipääs gruppidele
-deny access to mainscreen message	admin	et	Keela ligipääs pealehe sõnumile
+deny access to home screen message	admin	et	Keela ligipääs pealehe sõnumile
 deny access to phpinfo	admin	et	Keela ligipääs phpinfo-le
 deny access to user accounts	admin	et	Keela ligipääs kasutaja kontodele
 disable	admin	et	Keela
@@ -98,8 +98,6 @@ edit email settings	admin	et	muuda email setinguid
 edit global category	admin	et	Muuda globaalset kategooriat
 edit group	admin	et	Muuda Gruppi
 edit group acl's	admin	et	muuda grupi ACL'e
-edit login screen message	admin	et	Muuda sisselogimise akna teadet
-edit main screen message	admin	et	Muuda pealehe sõnumit
 edit table format	admin	et	Muuda Tabeli formaati
 edit this category	admin	et	muuda seda kategooriat
 edit this group	admin	et	muuda seda gruppi

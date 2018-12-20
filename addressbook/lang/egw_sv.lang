@@ -255,7 +255,6 @@ select the type of conversion:	addressbook	sv	Välj konverteringstyp
 select where you want to store / retrieve contacts	admin	sv	Välj var du vill spara / hämta kontakter
 selected contacts	addressbook	sv	Valda kontakter
 show	addressbook	sv	Visa
-show birthday reminders on main screen	addressbook	sv	Visa födelsedagspåminelse på Startsidan
 show infolog entries for this organisation	addressbook	sv	Visa organisationens InfoLogg poster
 show the contacts of this organisation	addressbook	sv	Visa organisationens kontakter
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	sv	Popup storlek (WxH, ex.400x300, on popup används)

@@ -262,7 +262,7 @@ infolog encryption requires epl subscription	infolog	sl	Šifriranje InfoLog zaht
 infolog entry deleted	infolog	sl	Vnos InfoDnevnika je bil izbrisan
 infolog entry saved	infolog	sl	Vnos InfoDnevnika je bil shranjen
 infolog fields:	infolog	sl	Polja InfoLog:
-infolog filter for the main screen	infolog	sl	Filter InfoDnevnika za uvodni zaslon
+InfoLog filter for the home screen	infolog	sl	Filter InfoDnevnika za uvodni zaslon
 infolog ical export	infolog	sl	Infolog iCal izvoz
 infolog ical import	infolog	sl	Infolog iCal uvoz
 infolog id	infolog	sl	InfoLog ID
@@ -451,7 +451,7 @@ sets the status of this entry and its subs to done	infolog	sl	Nastavi status teg
 sets the status of this entry to done	infolog	sl	Nastavi status tega vnosa za dokončanje
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sl	Ali naj InfoDnevnik prikaže podrejena opravila - klice ali opombe - v splošnem oknu? Podrejena opravila lahko vedno vidite preko njihovih nadrejenih opravil?
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	sl	Ali naj InfoDnevnik prikaže povezave do drugih aplikacij in/ali datotečne povezave v seznamu InfoDnevnik (splošni pogled, ko vstopite v InfoDnevnik)?
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	sl	Ali naj se InfoDnevnik prikaže v uvodnem zaslonu in s katerim filtrom. Deluje samo, če v nastavitveh za uvodni zaslon ne izberete aplikacije.
+Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	sl	Ali naj se InfoDnevnik prikaže v uvodnem zaslonu in s katerim filtrom. Deluje samo, če v nastavitveh za uvodni zaslon ne izberete aplikacije.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	sl	Ali naj InfoDnevnik uporabi polna imena (ime in priimek) ali samo uporabniška imena?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	sl	Ali naj se InfoDnevnik prikaže številčno šifro, ki se lahko uporabi kot šifra opravila?
 should the infolog list show the column "last modified".	infolog	sl	Ali naj se InfoDnevnik prikaže stolpec "Zadnjič spremenjeno"?

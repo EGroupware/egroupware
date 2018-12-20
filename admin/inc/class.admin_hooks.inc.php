@@ -90,7 +90,7 @@ class admin_hooks
 
 			if (!$GLOBALS['egw']->acl->check('mainscreen_messa',1,'admin') || !$GLOBALS['egw']->acl->check('mainscreen_messa',2,'admin'))
 			{
-				$file['Change Main Screen Message'] = Egw::link('/index.php','menuaction=admin.admin_messages.index');
+				$file['Change Login Screen Message'] = Egw::link('/index.php','menuaction=admin.admin_messages.index');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('current_sessions',1,'admin'))

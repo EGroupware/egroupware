@@ -140,7 +140,6 @@ select all	addressbook	iw	בחר הכל
 select the type of conversion	addressbook	iw	בחר את סוג ההמרה
 select the type of conversion:	addressbook	iw	:בחר את סוג ההמרה
 show	addressbook	iw	הצג
-show birthday reminders on main screen	addressbook	iw	הצג תזכרות ימי הולדת במסך הראשי
 startrecord	addressbook	iw	רשומה מתחלת
 state	common	iw	מדינה
 street	common	iw	רחוב

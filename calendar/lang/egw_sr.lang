@@ -242,7 +242,6 @@ should invitations you rejected still be shown in your calendar ?<br>you can onl
 should new events created as private by default ?	calendar	sr	Da li bi novi doga&#273;aji trebali podrazumevano da budu privatni?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sr	Da li bi nelogovani korisnici trebalo da vide Va&#353; status zauze&#263;a?Mo&#382;ete postaviti ekstra lozinku, razli&#269;itu od Va&#353;e normalne, za za&#353;titu ovih informacija.Informacija o zauze&#263;u je u iCal formatu i samo uklju&#269;uje vreme kada ste zauzeti.Ne uklju&#269;uje naziv doga&#273;aja, opis ili lokaciju.Putanja do informacije o Va&#353;em zauze&#263;u je %1.
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	sr	Da li se status u&#269;esnika doga&#273;aja (prihvatio, odbio...) prikazuje u zagradama posle imena svakoga u&#269;esnika?
-show default view on main screen	calendar	sr	prika&#382;i podrazumevani prikaz na ulaznoj masci
 show invitations you rejected	calendar	sr	Prika&#382;i pozive koje ste odbili
 show list of upcoming events	calendar	sr	prika&#382;e listu budu&#263;ih doga&#273;aja
 show this month	calendar	sr	prika&#382;i ovaj mesec
