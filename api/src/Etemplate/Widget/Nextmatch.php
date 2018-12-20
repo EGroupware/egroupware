@@ -368,6 +368,8 @@ class Nextmatch extends Etemplate\Widget
 			Api\Json\Response::get()->apply('egw_app_header', array($GLOBALS['egw_info']['flags']['app_header']));
 		}
 
+		$GLOBALS['egw']->session->commit_session();
+
 		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
 		$row_modified = $value['row_modified'];
 
