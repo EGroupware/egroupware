@@ -133,6 +133,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			height: this.options.height,
 			width: this.options.width,
 			min_height: 100,
+			convert_urls: false,
 			language: et2_htmlarea.LANGUAGE_CODE[egw.preference('lang', 'common')],
 			paste_data_images: true,
 			browser_spellcheck: true,
