@@ -118,6 +118,7 @@ class resources_bo
 		if ($this->debug) _debug_array($query);
 		$read_onlys = 'res_id,name,short_description,quantity,useable,bookable,buyable,cat_id,location,storage_info';
 
+		$GLOBALS['egw']->session->commit_session();
 		$filter = array();
 		$join = '';
 		$extra_cols = array();

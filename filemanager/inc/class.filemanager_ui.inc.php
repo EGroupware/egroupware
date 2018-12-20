@@ -908,6 +908,7 @@ class filemanager_ui
 			$rows = array();
 			return 0;
 		}
+		$GLOBALS['egw']->session->commit_session();
 		$rows = $dir_is_writable = array();
 		$vfs_options = $this->get_vfs_options($query);
 		foreach(Vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],$vfs_options,true) as $path => $row)

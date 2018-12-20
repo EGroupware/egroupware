@@ -336,6 +336,8 @@ class infolog_ui
 			$query['filter'] = $query['search'] = $query['cat_id'] = '';
 			$query['col_filter'] = array('info_id_parent' => $query['col_filter']['info_id_parent']);
 		}
+
+		$GLOBALS['egw']->session->commit_session();
 		$orginal_colfilter = $query['col_filter'];
 		if (isset($parent_id)) $query['col_filter']['info_id_parent'] = (string)$parent_id;
 

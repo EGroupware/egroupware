@@ -1500,6 +1500,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			$old_state = Api\Cache::getSession('addressbook', $what);
 		}
+		$GLOBALS['egw']->session->commit_session();
 		if (!isset($this->grouped_views[(string) $query['grouped_view']]) || strpos($query['grouped_view'],':') === false)
 		{
 			// we don't have a grouped view, unset the according col_filters

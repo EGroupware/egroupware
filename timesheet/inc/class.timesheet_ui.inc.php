@@ -552,6 +552,8 @@ class timesheet_ui extends timesheet_bo
 		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
 		if (!$id_only && !$query_in['csv_export']) Api\Cache::setSession(TIMESHEET_APP, 'index', $query_in);
 
+		$GLOBALS['egw']->session->commit_session();
+
 		// Refresh actions (undelete needs this)
 		$query_in['actions'] = $this->get_actions($query_in);
 
