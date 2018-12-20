@@ -2533,7 +2533,7 @@ class mail_compose
 				$_mailObject->setOpenPgpBody($_formData['body']);
 				break;
 			default:
-				$body = $this->convertHTMLToText($_formData['body'],false);
+				$body = $this->convertHTMLToText($_formData['body'],false, false, true, true);
 
 				if ($attachment_links) $body .= $attachment_links;
 

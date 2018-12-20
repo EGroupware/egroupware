@@ -225,9 +225,10 @@ class Html
 	 * @param string $displayCharset : charset to use; should be a valid charset
 	 * @param bool $stripcrl :  flag to indicate for the removal of all crlf \r\n
 	 * @param bool $stripalltags : flag to indicate wether or not to strip $_html from all remaining tags
+	 * @param bool $noRepEmailAddr = false, if true email addresses will be intact
 	 * @return text $_html : the modified text.
 	 */
-	static function convertHTMLToText($_html,$displayCharset=false,$stripcrl=false,$stripalltags=true)
+	static function convertHTMLToText($_html,$displayCharset=false,$stripcrl=false,$stripalltags=true,$noRepEmailAddr = false)
 	{
 		// assume input isHTML, but test the input anyway, because,
 		// if it is not, we may not want to strip whitespace
@@ -348,7 +349,7 @@ class Html
 		$_html = preg_replace('~</t(d|h)>\s*<t(d|h)[^>]*>~si',' - ',$_html);
 		$_html = preg_replace('~<img[^>]+>~s','',$_html);
 		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
-		self::replaceEmailAdresses($_html);
+		if (!$noRepEmailAddr) self::replaceEmailAdresses($_html);
 		//convert hrefs to description -> URL
 		//$_html = preg_replace('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','[$2 -> $1]',$_html);
 		$_html = preg_replace_callback('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*?)</a>~si','self::transform_url2text',$_html);
