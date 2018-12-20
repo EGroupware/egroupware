@@ -1627,12 +1627,12 @@ class mail_compose
 		return 1;
 	}
 
-	function convertHTMLToText(&$_html,$sourceishtml = true, $stripcrl=false)
+	function convertHTMLToText(&$_html,$sourceishtml = true, $stripcrl=false, $noRepEmailAddr = false)
 	{
 		$stripalltags = true;
 		// third param is stripalltags, we may not need that, if the source is already in ascii
 		if (!$sourceishtml) $stripalltags=false;
-		return Api\Mail\Html::convertHTMLToText($_html,$this->displayCharset,$stripcrl,$stripalltags);
+		return Api\Mail\Html::convertHTMLToText($_html,$this->displayCharset,$stripcrl,$stripalltags, $noRepEmailAddr);
 	}
 
 	function generateRFC822Address($_addressObject)
