@@ -63,6 +63,7 @@ addvcard	addressbook	de	vCard hinzufügen
 advanced search	addressbook	de	Erweiterte Suche
 all addressbooks	addressbook	de	Alle Adressbücher
 all contacts	addressbook	de	Alle Kontakte
+allow for contacts only	addressbook	de	Nur für Kontakte erlauben
 all in one field	addressbook	de	Alle Kategorien in einem Feld ausgeben
 all types	addressbook	de	Alle Typen
 allow	addressbook	de	erlauben
