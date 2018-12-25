@@ -1626,7 +1626,7 @@ class Vfs
 			return 'Error creating zip file';
 		}
 
-		error_log("Total files: " . $total_files . " Peak memory to zip: " . self::hsize(memory_get_peak_usage(true)));
+		//error_log("Total files: " . $total_files . " Peak memory to zip: " . self::hsize(memory_get_peak_usage(true)));
 
 		// Stop any buffering
 		while(ob_get_level() > 0)
