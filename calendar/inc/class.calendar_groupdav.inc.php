@@ -869,7 +869,6 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				array_shift($content_type);
 				foreach ($content_type as $attribute)
 				{
-					trim($attribute);
 					list($key, $value) = explode('=', $attribute);
 					switch (strtolower(trim($key)))
 					{
