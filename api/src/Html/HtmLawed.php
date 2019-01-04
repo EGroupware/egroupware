@@ -400,8 +400,11 @@ function hl_email_tag_transform($element, $attribute_array=0)
 			if (!preg_match('/^cid:.*/',$attribute_array['src']))
 			{
 				$url = explode('/', preg_replace('/^(http|https):\/\//','',$attribute_array['src']));
+				$domains = is_array($GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains']) ?
+						$GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains'] :
+						array();
 				if ($GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs'] != 1
-						&& !in_array($url[0], $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains']))
+						&& !in_array($url[0], $domains))
 				{
 					//the own webserver url is not external, so it should be allowed
 					if (empty($GLOBALS['egw_info']['server']['webserver_url'])||!preg_match("$^".$GLOBALS['egw_info']['server']['webserver_url'].".*$",$attribute_array['src']))
