@@ -310,11 +310,13 @@ class Nextmatch extends Etemplate\Widget
 				$filters = $valid_filters[$form_name];
 			}
 			// Avoid empty arrays, they cause problems with db filtering
-			foreach((array)$filters['col_filter'] as $col => $val)
-			{
-				if(is_array($val) && count($val) == 0)
+			if (is_array($filters['col_filter'])) {
+				foreach((array)$filters['col_filter'] as $col => $val)
 				{
-					unset($filters['col_filter'][$col]);
+					if(is_array($val) && count($val) == 0)
+					{
+						unset($filters['col_filter'][$col]);
+					}
 				}
 			}
 			//error_log($this . " Valid filters: " . array2string($filters));

@@ -815,7 +815,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	{
 		return isset($event['participants'][$user]) ||
 			// for group-invitations we need to check memberships of $user too
-			array_intersect(array_keys($event['participants']), $GLOBALS['egw']->accounts->memberships($user, true));
+			array_intersect(array_keys($event['participants']), (array)$GLOBALS['egw']->accounts->memberships($user, true));
 	}
 
 	/**
