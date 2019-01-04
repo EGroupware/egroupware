@@ -5607,9 +5607,9 @@ class Mail
 				}
 			}
 		}
-		//error_log(__METHOD__.' ('.__LINE__.') '."[$this->icServer->ImapServerId][$_folder][$_uid][".(empty($_partID)?'NIL':$_partID)."]");
 		if (!$_stream)
 		{
+			error_log(__METHOD__.' ('.__LINE__.') '."[$this->icServer->ImapServerId][$_folder][$_uid][".(empty($_partID)?'NIL':$_partID)."]");
 			$rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)] = $body;
 		}
 		return $body;
