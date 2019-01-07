@@ -320,6 +320,10 @@ class Nextmatch extends Etemplate\Widget
 			}
 			//error_log($this . " Valid filters: " . array2string($filters));
 		}
+		else
+		{
+			$template = null;	// get_rows method requires null, not false
+		}
 
 		if (true) $value = $value_in = array_merge($value, $filters);
 
