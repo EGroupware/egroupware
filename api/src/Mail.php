@@ -4675,7 +4675,7 @@ class Mail
 			switch($part->getPrimaryType())
 			{
 				case 'multipart':
-					if ($part->getDisposition() == 'attachment') continue;
+					if ($part->getDisposition() == 'attachment') continue 2;	// +1 for switch
 					switch($part->getSubType())
 					{
 						case 'alternative':
@@ -5609,7 +5609,7 @@ class Mail
 		}
 		if (!$_stream)
 		{
-			error_log(__METHOD__.' ('.__LINE__.') '."[$this->icServer->ImapServerId][$_folder][$_uid][".(empty($_partID)?'NIL':$_partID)."]");
+			//error_log(__METHOD__.' ('.__LINE__.') '."[{$this->icServer->ImapServerId}][$_folder][$_uid][".(empty($_partID)?'NIL':$_partID)."]");
 			$rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)] = $body;
 		}
 		return $body;
