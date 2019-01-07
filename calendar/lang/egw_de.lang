@@ -26,6 +26,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	de	Befehle
 actions...	calendar	de	Aktionen...
 add alarm	calendar	de	Alarm zufügen
+add appointments via shortened dialog or complete edit window	calendar	de	Termine hinzufügen über verkürzten Dialog oder komplettes Bearbeiten-Fenster
 add current view as favorite	calendar	de	Ansicht als Favorit zufügen
 add new alarm	calendar	de	Neuen Alarm erstellen
 add new participants or resource	calendar	de	Neue(n) Teilnehmer oder Ressource auswählen
@@ -54,6 +55,7 @@ allow booking requests from any user when creating events?	calendar	de	Erlaube B
 allow users to prevent change notifications ('do not notify')	calendar	de	Erlaube Benutzern Benachrichtigungen über Änderungen zu unterdrücken ('Nicht benachrichtigen')
 allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeiten
 always	calendar	de	Immer
+always use full edit dialog	calendar	de	Immer das komplette Bearbeiten-Fenster verwenden
 apply the action on the whole query, not only the shown events	calendar	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Termine
 apply the changes	calendar	de	Übernimmt die Änderungen
 appointment settings	calendar	de	Einstellungen der Terminverwaltung
@@ -430,6 +432,7 @@ private and global public	calendar	de	Privat und Global öffentlich
 private and group public	calendar	de	Privat und Gruppen öffentlich
 private only	calendar	de	nur private
 quantity	calendar	de	Menge
+quick add	calendar	de	schnelles Hinzufügen
 range fields	calendar	de	Feldbereich
 re-edit event	calendar	de	Termin erneut bearbeiten
 receive email updates	calendar	de	Empfange E-Mail-Updates
@@ -441,6 +444,7 @@ recurrence	calendar	de	Wiederholung
 recurrence enddate	calendar	de	Enddatum der Wiederholung
 recurrences and conflict check	calendar	de	Wiederholungen und Konfliktprüfung
 recurring event	calendar	de	Wiederholender Termin
+regular edit	calendar	de	reguläres Bearbeiten
 reject	calendar	de	Absagen
 rejected	calendar	de	Abgesagt
 repeat days	calendar	de	Wiederholungstage
@@ -595,6 +599,7 @@ update timezones	common	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
 use given criteria:	calendar	de	Kriterien benutzen:
+use quick add or full edit dialog when creating a new event	calendar	de	Wollen Sie den verkürzten Dialog zum schnellen Hinzufügen oder das vollständigen Bearbeiten-Fenster verwenden, wenn Sie ein neues Ereignis erstellen.
 use range-views to optimise calendar queries?	calendar	de	Sollen spezielle Bereichs-Ansichten verwendet werden, um Kalenderabfragen zu optimieren?
 use side menu to filter participants	calendar	de	Zum Filtern von Teilnehmern, bitte Seitenmenu verwenden
 use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Pop-up

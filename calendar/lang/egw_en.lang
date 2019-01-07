@@ -26,6 +26,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	en	Actions
 actions...	calendar	en	Actions...
 add alarm	calendar	en	Add alarm
+add appointments via shortened dialog or complete edit window	calendar	en	Add appointments via shortened dialog or complete edit window
 add current view as favorite	calendar	en	Add current view as favorite
 add new alarm	calendar	en	Add new alarm
 add new participants or resource	calendar	en	Add new participants or resource
@@ -54,6 +55,7 @@ allow booking requests from any user when creating events?	calendar	en	Allow boo
 allow users to prevent change notifications ('do not notify')	calendar	en	Allow users to prevent change notifications 'Do not notify'
 allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
+always use full edit dialog	calendar	en	Always use full edit dialog
 apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events.
 apply the changes	calendar	en	Apply the changes
 appointment settings	calendar	en	Appointment settings
@@ -432,6 +434,7 @@ private and global public	calendar	en	Private and global public
 private and group public	calendar	en	Private and group public
 private only	calendar	en	Private only
 quantity	calendar	en	Quantity
+quick add	calendar	en	Quick add
 range fields	calendar	en	Range fields
 re-edit event	calendar	en	Re-edit event
 receive email updates	calendar	en	Receive email updates
@@ -443,6 +446,7 @@ recurrence	calendar	en	Recurrence
 recurrence enddate	calendar	en	Recurrence end date
 recurrences and conflict check	calendar	en	Recurrences and conflict check
 recurring event	calendar	en	Recurring event
+regular edit	calendar	en	Regular edit
 reject	calendar	en	Reject
 rejected	calendar	en	Rejected
 repeat days	calendar	en	Repeat days
@@ -597,6 +601,7 @@ update timezones	common	en	Update time zones
 updated	calendar	en	Updated
 use end date	calendar	en	Use end date
 use given criteria:	calendar	en	Use given criteria:
+use quick add or full edit dialog when creating a new event	calendar	en	Use quick add or full edit dialog when creating a new event
 use range-views to optimise calendar queries?	calendar	en	Use range-views to optimise calendar queries?
 use side menu to filter participants	calendar	en	Use side menu to filter participants
 use the selected time and close the popup	calendar	en	Use the selected time and close the popup

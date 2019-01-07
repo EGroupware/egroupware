@@ -245,14 +245,6 @@ class calendar_hooks
 				'admin'  => False,
 				'default'=> '1',	// 1 = week
 			),*/
-			'new_event_dialog' => array(
-				'type'	=> 'select',
-				'label'	=> 'New event dialog',
-				'name'	=> 'new_event_dialog',
-				'values'=>	array('add' => lang('Quick add'), 'edit' => lang('Regular edit')),
-				'help'	=> 'Use quick add or full edit dialog when creating a new event',
-				'default'	=> 'add',
-			),
 			'multiple_weeks' => array(
 				'type'   => 'select',
 				'label'  => 'Weeks in multiple week view',
@@ -448,6 +440,14 @@ class calendar_hooks
 				'no_lang'=> true,
 				'xmlrpc' => False,
 				'admin'  => False
+			),
+			'new_event_dialog' => array(
+				'type'	=> 'select',
+				'label'	=> 'Add appointments via shortened dialog or complete edit window',
+				'name'	=> 'new_event_dialog',
+				'values'=>	array('add' => lang('Quick add'), 'edit' => lang('Regular edit')),
+				'help'	=> 'Use quick add or full edit dialog when creating a new event',
+				'default'	=> 'add',
 			),
 			'limit_des_lines' => array(
 				'type'   => 'input',

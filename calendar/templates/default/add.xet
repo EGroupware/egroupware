@@ -31,7 +31,7 @@
 			<button statustext="saves the changes made" label="Save" id="button[save]" image="save" background_image="1" />
 			<button statustext="Full edit dialog" label="Edit" id="button[edit]" image="edit" background_image="1"/>
 			<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-			<checkbox label="Always use full edit dialog" id="always_edit_dialog" statustext="Always use the full edit dialog, not this little dialog" onchange="debugger;egw.set_preference('calendar',widget.id,widget.get_value() ? 'edit' : 'add');"/>
+			<checkbox label="Always use full edit dialog" id="new_event_dialog" statustext="Always use the full edit dialog, not this little dialog" onchange="egw.set_preference('calendar',widget.id,widget.get_value() ? 'edit' : 'add');"/>
 		</hbox>
 	</template>
 </overlay>
