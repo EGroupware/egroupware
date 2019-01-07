@@ -388,14 +388,14 @@ class filemanager_ui
 					'row_modified'   => 'mtime',
 					'parent_id'      => 'dir',
 					'is_parent'      => 'is_dir',
-					'favorites'      => true,
-					'placeholder_actions' => array('mkdir','paste','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
+					'favorites'      => true
 				);
 				$content['nm']['path'] = static::get_home_dir();
 			}
 			$content['nm']['actions'] = static::get_actions();
 			$content['nm']['home_dir'] = static::get_home_dir();
 			$content['nm']['view'] = $GLOBALS['egw_info']['user']['preferences']['filemanager']['nm_view'];
+			$content['nm']['placeholder_actions'] = array('mkdir','paste','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink');
 
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 
