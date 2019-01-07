@@ -50,7 +50,7 @@
 	<template id="filemanager.index.header_row" template="" lang="" group="0" version="1.9.002">
 		<buttononly id="home" statustext="Go to your home directory" image="gohome" background_image="true" onclick="app.filemanager.change_dir('~',widget);"/>
 		<buttononly id="up" statustext="Up" image="goup" background_image="true" onclick="app.filemanager.change_dir('..',widget);"/>
-		<vfs-name id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
+		<vfs-path id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
 		<buttononly statustext="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" image="list_tile" background_image="true"/>
 	</template>
 	<template id="filemanager.index.header_right" template="" lang="" group="0" version="1.9.003">

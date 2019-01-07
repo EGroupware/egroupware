@@ -112,7 +112,7 @@ app.classes.filemanager = AppJS.extend(
 				var new_options = this.et2.getArrayMgr('sel_options').getEntry('new');
 				new_widget.set_select_options(new_options);
 			}
-			else
+			else if (new_widget)
 			{
 				new_widget.set_disabled(true);
 			}

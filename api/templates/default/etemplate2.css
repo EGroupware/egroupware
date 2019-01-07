@@ -890,6 +890,41 @@ ul.et2_link_string {
   height: 16px;
   display: inline-block;
 }
+div.et2_vfs {
+	position: relative;
+	overflow: hidden;
+}
+div.et2_vfs ul {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	padding: 0px;
+	margin: 1px;
+	margin-right: 4px;
+	display:flex;
+	justify-content: flex-start;
+	flex-flow: row nowrap;
+	/* This hides the higher level directories if overflow */
+	direction: rtl;
+}
+div.et2_vfs li {
+	direction: ltr;
+	border-right: 1px solid silver;
+	display: inline-block;
+	padding: 4px;
+	padding-right: 6px;
+	flex: none;
+}
+div.et2_vfs li:hover {
+	background-color: green;
+}
+div.et2_vfs li img {
+	height: 16px;
+	float: left;
+	margin: 0px;
+	margin-left: 3px;
+	margin-right: 5px;
+}
 .et2_link_list tr:hover div.delete, .et2_vfs tr:hover div.delete {
   visibility: visible;
 }

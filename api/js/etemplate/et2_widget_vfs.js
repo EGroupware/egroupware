@@ -261,6 +261,134 @@ et2_register_widget(et2_vfsName, ["vfs-name"]);
  * vfs-name
  * filename automatically urlencoded on return (urldecoded on display to user)
  *
+ * @augments et2_textbox
+ */
+var et2_vfsPath = (function(){ "use strict"; return et2_vfsName.extend(
+{
+	/**
+	 * Constructor
+	 *
+	 * @memberOf et2_vfsName
+	 */
+	init: function()
+	{
+		this.div = jQuery(document.createElement("div"))
+			.addClass('et2_vfs');
+		this.span = jQuery(document.createElement("ul"))
+			.appendTo(this.div);
+		this._super.apply(this, arguments);
+	},
+	createInputWidget: function()
+	{
+		this._super.apply(this, arguments);
+
+		this.div.prepend(this.input);
+		this.setDOMNode(this.div[0]);
+
+		this.input.on('focus', function() {
+				this.input.val(this.options.value);
+				this.span.hide();
+			}.bind(this))
+			.on('focusout', function() {
+				// Can't use show() because it uses the wrong display
+				this.span.css('display', 'flex');
+				this.input.val('');
+			}.bind(this));
+	},
+	change: function(_node)
+	{
+		if(this.input.val())
+		{
+			this.set_value(this.input.val());
+		}
+		return this._super.apply(this, arguments);
+	},
+
+	set_value: function(_value)
+	{
+		if(_value.path)
+		{
+			_value = _value.path;
+		}
+		try
+		{
+			_value = egw.decodePath(_value);
+		} catch (e)
+		{
+			_value = 'Error! ' + _value;
+		}
+		if(_value === this.options.value && this._oldValue !== et2_no_init) return;
+
+		var path_parts = _value.split('/');
+		if(_value === '/') path_parts = [''];
+		var path = "/";
+		var text = '';
+		this.span.empty().css('display', 'flex');
+		this.input.val('');
+		for(var i = 0; i < path_parts.length; i++)
+		{
+			path += (path=='/'?'':'/')+path_parts[i];
+			text = egw.decodePath(path_parts[i]);
+
+			var image = path=='/' ? this.egw().image('navbar','api') : this.egw().image(text);
+
+			// Nice human-readable stuff for apps
+			if(path_parts[1] == 'apps')
+			{
+				if(i === 1)
+				{
+					text = this.egw().lang('applications');
+				}
+				else if( i === 2)
+				{
+					text = this.egw().lang(path_parts[2]);
+					image = this.egw().image('navbar',path_parts[2].toLowerCase());
+				}
+				else if(!isNaN(text))
+				{
+					var link_title = this.egw().link_title(path_parts[2],path_parts[3],
+						function(title) {
+							if(!title) return;
+							jQuery('li',this.span).first().text(title);
+						}, this
+					);
+					if(link_title && typeof link_title !== 'undefined') text = link_title;
+				}
+
+			}
+			var self = this;
+			var node = jQuery(document.createElement("li"))
+				.addClass("vfsPath et2_clickable")
+				.text(text)
+				//.attr('title', egw.decodePath(path))
+				.click({data:path, egw: this.egw()}, function(e) {
+					e.data.egw.open({path: e.data.data, type:'httpd/unix-directory'}, "file");
+				})
+				.prependTo(this.span);
+			if(image)
+			{
+				node.prepend(this.egw().image_element(image));
+			}
+			jQuery(this.getDOMNode()).append(this.span);
+		}
+
+		if(this.isAttached() && this.options.value !== _value)
+		{
+			this._oldValue = this.options.value;
+			this.options.value = _value;
+			this.change();
+		}
+	},
+	getValue: function() {
+		return egw.encodePath(this.options.value);
+	}
+});}).call(this);
+et2_register_widget(et2_vfsPath, ["vfs-path"]);
+
+/**
+ * vfs-name
+ * filename automatically urlencoded on return (urldecoded on display to user)
+ *
  * @augments et2_textbox_ro
  */
 var et2_vfsName_ro = (function(){ "use strict"; return et2_textbox_ro.extend(
