@@ -56,6 +56,7 @@ allow users to prevent change notifications ('do not notify')	calendar	de	Erlaub
 allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeiten
 always	calendar	de	Immer
 always use full edit dialog	calendar	de	Immer das komplette Bearbeiten-Fenster verwenden
+always use the full edit dialog, not this little dialog	calendar	de	Verwende immer das komplette Bearbeiten-Fenster, anstatt dem verkürzten Dialog.
 apply the action on the whole query, not only the shown events	calendar	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Termine
 apply the changes	calendar	de	Übernimmt die Änderungen
 appointment settings	calendar	de	Einstellungen der Terminverwaltung

@@ -56,6 +56,7 @@ allow users to prevent change notifications ('do not notify')	calendar	en	Allow 
 allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
 always use full edit dialog	calendar	en	Always use full edit dialog
+always use the full edit dialog, not this little dialog	calendar	en	Always use the full edit dialog, not this little dialog
 apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events.
 apply the changes	calendar	en	Apply the changes
 appointment settings	calendar	en	Appointment settings
