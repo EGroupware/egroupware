@@ -416,6 +416,11 @@ class Vfs extends File
 				}
 			}
 		}
+		//handle VFS full path
+		if ($params['path'][0] != '/' && substr($params['path'], 0, 13) == Api\Vfs::PREFIX)
+		{
+			$params['path'] = substr($params['path'], 13);
+		}
 
 		if (!is_array($content))
 		{
