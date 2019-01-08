@@ -108,7 +108,7 @@ foreach(array('_COOKIE','_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VAR
 if (isset($GLOBALS['egw_info']) && isset($GLOBALS['egw_info']['flags']) &&
 	isset($GLOBALS['egw_info']['flags']['currentapp']) && !preg_match('/^[A-Za-z0-9_-]+$/',$GLOBALS['egw_info']['flags']['currentapp']))
 {
-	error_log(__FILE__.': '.__LINE__.' Invalid $GLOBALS[egw_info][flags][currentapp]='.array2string($GLOBALS['egw_info']['flags']['currentapp']).', $_SERVER[REQUEST_URI]='.array2string($_SERVER[REQUEST_URI]));
+	error_log(__FILE__.': '.__LINE__.' Invalid $GLOBALS[egw_info][flags][currentapp]='.array2string($GLOBALS['egw_info']['flags']['currentapp']).', $_SERVER[REQUEST_URI]='.array2string($_SERVER['REQUEST_URI']));
 	die('Invalid $GLOBALS[egw_info][flags][currentapp]!');
 }
 
