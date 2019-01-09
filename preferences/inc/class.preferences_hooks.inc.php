@@ -86,6 +86,8 @@ class preferences_hooks
 			'lastall'   => lang('Lastname').', '.lang('Firstname').' ['.lang('username').']',
 			'allfirst'  => '['.lang('username').'] '.lang('Firstname').' '.lang('Lastname'),
 			'all'       => '['.lang('username').'] '.lang('Lastname').','.lang('Firstname'),
+			'firstgroup'=> lang('Firstname').' '.lang('Lastname').' ('.lang('primary group').')',
+			'lastgroup' => lang('Lastname').', '.lang('Firstname').' ('.lang('primary group').')',
 		);
 
 		if ($hook_data['setup'])	// called via setup
@@ -132,7 +134,7 @@ class preferences_hooks
 				'app' => 'api'
 			);
 		}
-		
+
 		if (!$GLOBALS['egw_info']['user']['preferences']['common']['rte_toolbar'])
 		{
 			$GLOBALS['egw']->preferences->add('common', 'rte_toolbar', 'fontselect,fontsizeselect,bold,italic,forecolor,backcolor,'.

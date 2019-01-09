@@ -325,10 +325,12 @@ class Accounts
 		{
 			case 'firstname':
 			case 'firstall':
+			case 'firstgroup':
 				$order = 'account_firstname,account_lastname';
 				break;
 			case 'lastname':
 			case 'lastall':
+			case 'firstgroup':
 				$order = 'account_lastname,account_firstname';
 				break;
 			default:
@@ -491,6 +493,14 @@ class Accounts
 				break;
 			case 'allfirst':
 				$name = '['.$lid.'] ' . $firstname . ' ' . $lastname;
+				break;
+			case 'firstgroup':
+				$group = Accounts::id2name($lid, 'account_primary_group');
+				$name = $firstname . ' ' . $lastname . ($is_group ? '' : ' ('.Accounts::id2name($group).')');
+				break;
+			case 'lastgroup':
+				$group = Accounts::id2name($lid, 'account_primary_group');
+				$name = $lastname . $delimiter . $firstname . ($is_group ? '' : ' ('.Accounts::id2name($group).')');
 				break;
 			case 'all':
 				/* fall through */
