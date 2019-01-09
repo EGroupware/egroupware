@@ -1374,7 +1374,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 						params[app_registry.add_app].push( links[n].app);
 						params[app_registry.add_id].push( links[n].id);
 					}
-					egw.open('','calendar','add',params);
+					app.calendar.add(params);
 				}
 
 			},true);
@@ -1882,7 +1882,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				minute: target.dataset.minute || 0,
 				owner: this.options.owner
 			};
-			this.egw().open(null, 'calendar', 'add', options, '_blank');
+			app.calendar.add(options);
 			return false;
 		}
 	},

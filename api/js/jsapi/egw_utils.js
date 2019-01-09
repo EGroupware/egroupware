@@ -150,6 +150,10 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 	var utils = {
 
 		ajaxUrl: function(_menuaction) {
+			if(_menuaction.indexOf('menuaction=') >= 0)
+			{
+				return _menuaction;
+			}
 			return this.webserverUrl + '/json.php?menuaction=' + _menuaction;
 		},
 
@@ -271,7 +275,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		storeWindow: function(appname, popup)
 		{
 			if (popup.opener && popup.opener.framework) popup.opener.framework.popups_garbage_collector();
-			
+
 			// Don't store if it has no name
 			if(!popup.name || ['_blank'].indexOf(popup.name) >= 0)
 			{

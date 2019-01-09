@@ -2160,11 +2160,11 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				}
 				var row = jQuery(_ev.target).closest('.calendar_plannerRowWidget');
 				var data = row.length ? row[0].dataset : {};
-				this.egw().open(null, 'calendar', 'add', jQuery.extend({
+				app.calendar.add(jQuery.extend({
 					start: date.toJSON(),
 					hour: date.getUTCHours(),
 					minute: date.getUTCMinutes()
-				},data) , '_blank');
+				},data));
 				return false;
 			}
 			return result;
@@ -2187,11 +2187,11 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		{
 			// Default handler to open a new event at the selected time
 			// TODO: Determine date / time more accurately from position
-			this.egw().open(null, 'calendar', 'add', {
+			app.calendar.add({
 				date: _ev.target.dataset.date || this.options.start_date.toJSON(),
 				hour: _ev.target.dataset.hour || this.options.day_start,
 				minute: _ev.target.dataset.minute || 0
-			} , '_blank');
+			});
 			return false;
 		}
 	},

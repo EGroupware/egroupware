@@ -44,8 +44,7 @@ class calendar_hooks
 				'ajax'=>'true'
 			),
 			'add'        => array(
-				'menuaction' => 'calendar.calendar_uiforms.edit',
-				'template' => 'calendar.add'
+				'menuaction' => 'calendar.calendar_uiforms.ajax_add',
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',

@@ -14,7 +14,7 @@
 			<rows>
 				<row class="dialogHeader" height="28">
 					<appicon/>
-					<textbox id="title" size="75" maxlength="255" tabindex="1" class="et2_fullWidth" span="4" blur="Title"/>
+					<textbox id="title" size="75" maxlength="255" tabindex="1" class="et2_fullWidth" span="4" blur="Title" needed="true"/>
 				</row>
 				<row class="dialogHeader2" height="28">
 					<description for="start" value="Start" width="88"/>
@@ -28,9 +28,9 @@
 			</rows>
 		</grid>
 		<hbox class="dialogFooterToolbar">
-			<button statustext="saves the changes made" label="Save" id="button[save]" image="save" background_image="1" />
-			<button statustext="Full edit dialog" label="Edit" id="button[edit]" image="edit" background_image="1"/>
-			<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+			<button statustext="saves the changes made" label="Save" id="button[save]" image="save" background_image="1" onclick="return app.calendar.add_dialog_save(ev, widget); "/>
+			<button statustext="Full edit dialog" label="Edit" id="button[edit]" image="edit" background_image="1" onclick="return app.calendar.add_dialog_edit(ev, widget);"/>
+			<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="jQuery(widget.getInstanceManager().DOMContainer.parentNode).dialog('close');" image="cancel" background_image="1"/>
 			<checkbox label="Always use full edit dialog" id="new_event_dialog" statustext="Always use the full edit dialog, not this little dialog" onchange="egw.set_preference('calendar',widget.id,widget.get_value() ? 'edit' : 'add');"/>
 		</hbox>
 	</template>

@@ -33,6 +33,7 @@ class calendar_uiforms extends calendar_ui
 {
 	var $public_functions = array(
 		'freetimesearch'  => True,
+		'ajax_add' => true,
 		'edit' => true,
 		'process_edit' => true,
 		'export' => true,
@@ -90,6 +91,10 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 
+		if($_GET['title'])
+		{
+			$title = $_GET['title'];
+		}
 		if (isset($_GET['owner']))
 		{
 			$owner = $_GET['owner'];
@@ -1448,6 +1453,18 @@ class calendar_uiforms extends calendar_ui
 	public function uid_title_cmp($uid1, $uid2)
 	{
 		return strnatcasecmp($this->get_title($uid1), $this->get_title($uid2));
+	}
+
+	public function ajax_add($event=null)
+	{
+		// This tells etemplate to send as JSON response, not full
+		// This avoids errors from trying to send header again
+		if(Api\Json\Request::isJSONRequest())
+		{
+			$GLOBALS['egw']->framework->response = Api\Json\Response::get();
+		}
+
+		$this->edit();
 	}
 
 	/**

@@ -1088,7 +1088,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 					minute: _ev.target.dataset.minute || 0,
 					owner: this.options.owner
 				};
-				this.egw().open(null, 'calendar', 'add', options, '_blank');
+				app.calendar.add(options);
 				return false;
 			}
 			// Header, all day non-blocking
@@ -1104,7 +1104,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 					non_blocking: true,
 					owner: this.options.owner
 				}
-				this.egw().open(null, 'calendar', 'add', options, '_blank');
+				app.calendar.add(options);
 				return false;
 			}
 		}

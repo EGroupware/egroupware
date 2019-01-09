@@ -216,6 +216,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				break;
 
 			case 'calendar.add':
+				// Fall through to get all the edit stuff too
 			case 'calendar.edit':
 				if (typeof content.data['conflicts'] == 'undefined')
 				{
@@ -1622,6 +1623,131 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		nm_action(_action, _senders,false,{ids:[id]});
 
 		_action.data.url = backup_url;	// restore url
+	},
+
+	/**
+	 * Open a smaller dialog/popup to add a new entry
+	 *
+	 * This is opened inside a dialog widget, not a popup.  This causes issues
+	 * with the submission, handling of the response, and cleanup.
+	 *
+	 * @param {Object} options Array of values for new
+	 * @param {et2_calendar_event} event Placeholder showing where new event goed
+	 */
+	add: function(options, event)
+	{
+		if(this.egw.preference('new_event_dialog', 'calendar') === 'edit')
+		{
+			// Set this to open the add template in a popup
+			//options.template = 'calendar.add';
+			return this.egw.open(null, 'calendar', 'add', options, '_blank', 'calendar');
+		}
+
+		// Open dialog to use as target
+		var add_dialog = et2_dialog.show_dialog(null, '', ' ', null, [], et2_dialog.PLAIN_MESSAGE, this.egw);
+
+
+		// Call the server, get it into the dialog
+		options = jQuery.extend({template: 'calendar.add'}, this.egw.link_get_registry('calendar','add'), options);
+		this.egw.json(
+			this.egw.link('/json.php', options),
+			//menuaction + options.join('&'),
+			[options],
+			function(data) {
+				if(data.type) return false;
+				var content = {
+					html: data[0],
+					js: ''
+				};
+
+				egw_seperateJavaScript(content);
+
+				// Check for right template in the response
+				if(content.html.indexOf('calendar-add') <= 0) return false;
+
+				// Insert the content
+				jQuery(add_dialog.div).append(content.html);
+
+				// Run the javascript code
+				jQuery(add_dialog.div).append(content.js);
+
+				// Re-position after load
+				jQuery('form', add_dialog.div).one('load', function() {
+					// Hide close button
+					jQuery(".ui-dialog-titlebar-close", add_dialog.div.parent()).hide();
+
+					// Position by event
+					add_dialog.div.dialog('widget').position({
+						my: 'center top', at: event ? 'bottom' : 'center', of: event ? event.node : window,
+						collision: 'flipfit'
+					});
+				});
+			}
+		).sendRequest();
+
+		add_dialog.div.dialog({
+		  close: function( ev, ui ) {
+			  // Wait a bit to make sure etemplate button finishes processing, or it will error
+			  window.setTimeout(function() {
+				var template = etemplate2.getById('calendar-add');
+				if(template)
+				{
+					template.clear();
+				}
+				this.dialog.destroy();
+				if(this.event)
+				{
+					this.event.destroy();
+				}
+			  }.bind({dialog: add_dialog, event: event}), 100);
+		  }
+		});
+	},
+
+	/**
+	 * Callback for save button in add dialog
+	 *
+	 * @param {Event} event
+	 * @param {et2_button} widget
+	 * @returns {Boolean}
+	 */
+	add_dialog_save: function(event, widget)
+	{
+		// Close the dialog
+		jQuery(widget.getInstanceManager().DOMContainer.parentNode).dialog('close');
+
+		// Mess with opener so update opener in response works
+		window.opener = window;
+		window.setTimeout(function() {window.opener = null;},1000);
+
+		// Proceed with submit
+		return true;
+	},
+
+
+	/**
+	 * Callback for edit button in add dialog
+	 *
+	 * @param {Event} event
+	 * @param {et2_button} widget
+	 * @returns {Boolean}
+	 */
+	add_dialog_edit: function(event, widget)
+	{
+		var title=widget.getRoot().getWidgetById('title');
+		if(title && !title.get_value())
+		{
+			title.set_value(title.egw().lang('Event'));
+		}
+
+		// Open regular edit
+		egw.open(null,'calendar','edit',widget.getInstanceManager().getValues(widget.getRoot()));
+
+		// Close the dialog
+		jQuery(widget.getInstanceManager().DOMContainer.parentNode).dialog('close');
+
+		// Do not submit this etemplate
+		return false;
 	},
 
 	/**
@@ -3609,6 +3735,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 		// Avoid home portlets using our templates, and get them right
 		if(_et2.uniqueId.indexOf('portlet') === 0) return;
+		if(_et2.uniqueId === 'calendar-add') return;
 
 		// Flag to make sure we don't hide non-view templates
 		var view_et2 = false;

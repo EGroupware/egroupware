@@ -558,7 +558,7 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			{
 				if(!options[key]) delete options[key];
 			}
-			this.egw().open(null, 'calendar', 'add', options, '_blank');
+			app.calendar.add(options, this.drag_create.event);
 
 			// Wait a bit, having these stops the click
 			window.setTimeout(jQuery.proxy(function() {
@@ -567,10 +567,6 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 				this.drag_create.parent = null;
 				if(this.drag_create.event)
 				{
-					if(this.drag_create.event.destroy)
-					{
-						this.drag_create.event.destroy();
-					}
 					this.drag_create.event = null;
 				}
 			},this),100);
