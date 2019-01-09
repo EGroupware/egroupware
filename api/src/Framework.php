@@ -404,7 +404,7 @@ abstract class Framework extends Framework\Extra
 	{
 		$var = Array(
 			'img_root'       => $GLOBALS['egw_info']['server']['webserver_url'] . $this->template_dir.'/images',
-			'version'        => $GLOBALS['egw_info']['server']['versions']['phpgwapi']
+			'version'        => $GLOBALS['egw_info']['server']['versions']['api']
 		);
 		$var['page_generation_time'] = '';
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
@@ -421,9 +421,13 @@ abstract class Framework extends Framework\Extra
 			}
 			$var['page_generation_time'] .= '</span></div>';
 		}
+		if (empty($GLOBALS['egw_info']['server']['versions']['maintenance_release']))
+		{
+			$GLOBALS['egw_info']['server']['versions']['maintenance_release'] = Api\Framework::api_version();
+		}
 		$var['powered_by'] = '<a href="http://www.egroupware.org/" target="_blank">'.
 			lang('Powered by').' EGroupware '.
-			$GLOBALS['egw_info']['server']['versions']['api'].'</a>';
+			$GLOBALS['egw_info']['server']['versions']['maintenance_release'].'</a>';
 
 		return $var;
 	}

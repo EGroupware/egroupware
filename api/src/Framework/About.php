@@ -112,8 +112,10 @@ EGroupware can be integrated easily into existing authentication solutions such 
 
 		// fill content array for eTemplate
 		$changelog = null;
+		Api\Framework::api_version($changelog);
 		$content = array(
-			'apiVersion'	=> '<p>'.lang('EGroupware version').' <b>'.Api\Framework::api_version($changelog).'</b></p>',
+			'apiVersion'	=> '<p>'.lang('EGroupware version').
+				' <b>'.$GLOBALS['egw_info']['server']['versions']['maintenance_release'].'</b></p>',
 			'applications'	=> $apps,
 			'text_content'  => $text_content,
 			'changelog'     => file_exists($changelog) ? file_get_contents($changelog) : 'not available',
