@@ -366,7 +366,7 @@ class Vfs
 	}
 
 	/**
-	 * Check if file is hidden: name starts with a '.' or is Thumbs.db
+	 * Check if file is hidden: name starts with a '.' or is Thumbs.db or _gsdata_
 	 *
 	 * @param string $path
 	 * @param boolean $allow_versions =false allow .versions or .attic
@@ -376,7 +376,8 @@ class Vfs
 	{
 		$file = self::basename($path);
 
-		return $file[0] == '.' && (!$allow_versions || !in_array($file, array('.versions', '.attic'))) || $file == 'Thumbs.db';
+		return $file[0] == '.' && (!$allow_versions || !in_array($file, array('.versions', '.attic'))) ||
+			$file == 'Thumbs.db' || $file == '_gsdata_';
 	}
 
 	/**
