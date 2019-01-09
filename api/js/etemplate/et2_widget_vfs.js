@@ -273,7 +273,7 @@ var et2_vfsPath = (function(){ "use strict"; return et2_vfsName.extend(
 	init: function()
 	{
 		this.div = jQuery(document.createElement("div"))
-			.addClass('et2_vfs');
+			.addClass('et2_vfsPath');
 		this.span = jQuery(document.createElement("ul"))
 			.appendTo(this.div);
 		this._super.apply(this, arguments);

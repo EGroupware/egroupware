@@ -890,11 +890,11 @@ ul.et2_link_string {
   height: 16px;
   display: inline-block;
 }
-div.et2_vfs {
+div.et2_vfsPath {
 	position: relative;
 	overflow: hidden;
 }
-div.et2_vfs ul {
+div.et2_vfsPath ul {
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -907,7 +907,7 @@ div.et2_vfs ul {
 	/* This hides the higher level directories if overflow */
 	direction: rtl;
 }
-div.et2_vfs li {
+div.et2_vfsPath li {
 	direction: ltr;
 	border-right: 1px solid silver;
 	display: inline-block;
@@ -915,10 +915,10 @@ div.et2_vfs li {
 	padding-right: 6px;
 	flex: none;
 }
-div.et2_vfs li:hover {
+div.et2_vfsPath li:hover {
 	background-color: green;
 }
-div.et2_vfs li img {
+div.et2_vfsPath li img {
 	height: 16px;
 	float: left;
 	margin: 0px;
