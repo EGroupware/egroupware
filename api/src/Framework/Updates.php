@@ -84,7 +84,7 @@ class Updates
 	 */
 	public static function notification()
 	{
-		$api = self::api_version();
+		$api = preg_replace('/ ?EPL$/', '', self::api_version());
 		$api_major = $matches = null;
 		if (preg_match('/^(\d+\.\d+)\./', $api, $matches))
 		{

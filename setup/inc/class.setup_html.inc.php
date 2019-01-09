@@ -158,7 +158,8 @@ class setup_html
 		}
 
 		$GLOBALS['setup_tpl']->set_var('lang_version',lang('version'));
-		if (!isset($GLOBALS['setup_info']) || !isset($GLOBALS['setup_info']['api']))
+		if (!isset($GLOBALS['setup_info']) || !isset($GLOBALS['setup_info']['api']) ||
+			!isset($GLOBALS['setup_info']['api']['versions']) || !isset($GLOBALS['setup_info']['api']['versions']['maintenance_release']))
 		{
 			include(EGW_SERVER_ROOT.'/api/setup/setup.inc.php');
 		}
@@ -166,7 +167,10 @@ class setup_html
 		{
 			$setup_info = $GLOBALS['setup_info'];
 		}
-		$GLOBALS['setup_tpl']->set_var('pgw_ver', $setup_info['api']['version']);
+		$GLOBALS['setup_tpl']->set_var('pgw_ver', $nologoutbutton ?
+			(double)$setup_info['api']['version'] :	// without login only show main version, not maintenance release
+			$setup_info['api']['versions']['maintenance_release']);
+
 		$GLOBALS['setup_tpl']->set_var(array(
 			'logoutbutton'  => $btn_logout,
 			'indexbutton'   => $index_btn,
