@@ -216,6 +216,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				break;
 
 			case 'calendar.add':
+				this.et2.getWidgetById('title').input.select();
 				// Fall through to get all the edit stuff too
 			case 'calendar.edit':
 				if (typeof content.data['conflicts'] == 'undefined')
@@ -1640,7 +1641,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		{
 			// Set this to open the add template in a popup
 			//options.template = 'calendar.add';
-			return this.egw.open(null, 'calendar', 'add', options, '_blank', 'calendar');
+			return this.egw.open(null, 'calendar', 'edit', options, '_blank', 'calendar');
 		}
 
 		// Open dialog to use as target
@@ -1648,7 +1649,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 
 		// Call the server, get it into the dialog
-		options = jQuery.extend({template: 'calendar.add'}, this.egw.link_get_registry('calendar','add'), options);
+		options = jQuery.extend({menuaction: 'calendar.calendar_uiforms.ajax_add', template: 'calendar.add'}, options);
 		this.egw.json(
 			this.egw.link('/json.php', options),
 			//menuaction + options.join('&'),

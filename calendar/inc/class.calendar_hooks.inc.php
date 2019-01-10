@@ -43,12 +43,10 @@ class calendar_hooks
 				'view' => 'listview',
 				'ajax'=>'true'
 			),
-			'add'        => array(
-				'menuaction' => 'calendar.calendar_uiforms.ajax_add',
-			),
+			// If calendar is not loaded, load it first, then add
+			'add'        => 'javascript:var promise = framework.setActiveApp(framework.getApplicationByName(\'calendar\')); if(promise) {promise.then(function() {et2_call(\'app.calendar.add\',params);});} else { app.calendar.add(params);}',
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
-			'add_popup'  => '850x590',
 			'file_access' => 'calendar.calendar_bo.file_access',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
 			'mime' => array(
