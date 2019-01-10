@@ -122,6 +122,7 @@ date(oldest first)	mail	en	date(oldest first)
 deactive	mail	en	Deactive
 default sorting order	mail	en	Default sorting order
 default your name and email	common	en	default your name and email
+defines what to show as identity label on mail folder header	common	en	Defines what to show as identity label on mail folder header
 delete folder	mail	en	Delete Folder
 delete folder %1 ?	mail	en	DELETE Folder %1 ?
 delete this acl	mail	en	Delete this ACL
@@ -268,6 +269,7 @@ html	mail	en	html
 html mode	mail	en	HTML mode
 identity	mail	en	Identity
 identity+signature	mail	en	Identity+Signature
+identity label	mail	en	Identity label
 if	mail	en	IF
 if authentication required	mail	en	if authentication required
 if different from email address	mail	en	if different from EMail address

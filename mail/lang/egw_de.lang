@@ -122,6 +122,7 @@ date(oldest first)	mail	de	Datum (alte zuerst)
 deactive	mail	de	Deaktiviert
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
 default your name and email	common	de	z.B. Ihr Name und Ihre Mail-Adresse
+defines what to show as identity label on mail folder header	common	de	Definiert, was im Kopf des E-Mail-Postfach angezeigt werden soll.
 delete folder	mail	de	Ordner löschen
 delete folder %1 ?	mail	de	Ordner %1 löschen?
 delete this acl	mail	de	Zugriffsrechte löschen
@@ -268,6 +269,7 @@ html	mail	de	HTML
 html mode	mail	de	HTML Modus
 identity	mail	de	Identität
 identity+signature	mail	de	Identität+Signatur
+identity label	mail	de	Anzeige E-Mail Profil im Seitenmenü
 if	mail	de	Wenn
 if authentication required	mail	de	wenn Benutzeranmeldung erforderlich ist
 if different from email address	mail	de	falls abweichend zur E-Mailadresse
