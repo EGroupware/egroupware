@@ -2196,7 +2196,9 @@ class calendar_uiforms extends calendar_ui
 						else
 						{
 							$event['id'] = $event['old']['id'];
-							$msg[] = lang('Not enough rights to update the event!');
+							// disable "warning" that we have no rights to store any modifications
+							// as that confuses our users, who only want to accept or reject
+							//$msg[] = lang('Not enough rights to update the event!');
 						}
 					}
 					else
