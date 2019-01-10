@@ -180,8 +180,17 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 					return;
 				}
 				url = '/index.php';
-				// Copy, not get a reference, or we'll change the registry
-				params = jQuery.extend({},app_registry[type]);
+				if(typeof app_registry[type] === 'object')
+				{
+					// Copy, not get a reference, or we'll change the registry
+					params = jQuery.extend({},app_registry[type]);
+				}
+				else if (typeof app_registry[type] === 'string' && app_registry[type].indexOf('javascript:') === 0)
+				{
+					// JavaScript, just pass it on
+					url = app_registry[type];
+					params = {};
+				}
 				if (type == 'view' || type == 'edit')	// add id parameter for type view or edit
 				{
 					params[app_registry[type+'_id']] = id;
@@ -203,7 +212,16 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				}
 				popup = app_registry[type+'_popup'];
 			}
-			return this.open_link(this.link(url, params), target, popup, target_app, _check_popup_blocker);
+			if(url.indexOf('javascript:') === 0)
+			{
+				// Add parameters into javascript
+				url = 'javascript:var params = '+ JSON.stringify(params) + '; '+ url.substr(11);
+			}
+			else
+			{
+				url = this.link(url, params);
+			}
+			return this.open_link(url, target, popup, target_app, _check_popup_blocker);
 		},
 
 		/**
