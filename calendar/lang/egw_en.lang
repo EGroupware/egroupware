@@ -160,8 +160,6 @@ delete this series of recurring events	calendar	en	Delete this series of recurri
 deleted	calendar	en	Deleted.
 deny resources reservation for private events	calendar	en	Deny resources reservation for private events
 directory with documents to insert entries	calendar	en	Directory with documents to insert entries
-utilities	calendar	en	Utilities
-uninvited	calendar	en	uninvited.
 display holidays or birthdays as events in dayview	calendar	en	Display holidays or birthdays as events in dayview
 display in header	calendar	en	Display in header
 display status of events	calendar	en	Display status of events
@@ -212,6 +210,7 @@ error: you can't shift a series from the past!	calendar	en	Error: You can't shif
 event	common	en	Event
 event deleted	calendar	en	Event deleted.
 event details follow	calendar	en	Event details follow
+event has been deleted by organizer!	calendar	en	Event has been deleted by organizer!
 event saved	calendar	en	Event saved.
 event will occupy the whole day	calendar	en	Event will occupy the whole day
 events	common	en	Events
@@ -614,6 +613,7 @@ user or group	calendar	en	User or group
 user selectable css file for the calendar setup	calendar	en	User selectable CSS file for the calendar setup
 users + groups: inviting both always requires an invite grant	admin	en	Users + groups: inviting both always requires an invite grant
 using already existing event on server.	calendar	en	Using already existing event on server.
+utilities	calendar	en	Utilities
 view exception	calendar	en	View exception
 view series	calendar	en	View series
 view settings	calendar	en	View settings
