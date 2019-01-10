@@ -87,7 +87,8 @@ class admin_cmd_edit_preferences extends admin_cmd
 				$prefs->add($this->app, $name, $value, in_array($this->pref, array('default', 'forced')) ? $this->pref : 'user');
 			}
 		}
-		$prefs->save_repository(true, $this->pref);
+		$prefs->save_repository(true, $this->pref == 'group' ? 'user' : $this->pref);
+
 		return lang('Preferences saved.');
 	}
 

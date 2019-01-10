@@ -334,7 +334,9 @@ class preferences_settings
 		{
 			if ($content['is_admin'])
 			{
-				self::admin_cmd_run($content, $values, $GLOBALS['egw']->preferences->get_account_id(), $type, $appname);
+				if (($account_id = $GLOBALS['egw']->preferences->get_account_id()) < 0 && $type == 'user') $type = 'group';
+
+				self::admin_cmd_run($content, $values, $account_id, $type, $appname);
 			}
 			else
 			{
