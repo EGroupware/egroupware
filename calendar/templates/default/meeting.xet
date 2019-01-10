@@ -3,9 +3,9 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="calendar.meeting" template="" lang="" group="0" version="1.9.002">
-		<description id="msg" class="message leftPad5"/>
-		<grid border="0">
+		<grid border="0" width="100%">
 			<columns>
+				<column/>
 				<column/>
 				<column/>
 				<column/>
@@ -19,6 +19,7 @@
 					<button label="Tentative" id="button[tentativ]" class="leftPad5"/>
 					<button label="Reject" id="button[reject]" class="leftPad5"/>
 					<buttononly statustext="Edit event in calendar" label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
+					<description id="error" class="meetingRequestError" align="right"/>
 				</row>
 				<row disabled="!@ics_method=reply">
 					<description value="This mail contains a reply to a meeting request" class="meetingRequestMessage"/>
@@ -26,6 +27,7 @@
 					<description/>
 					<description/>
 					<description/>
+					<description id="error" class="meetingRequestError" align="right"/>
 				</row>
 				<row disabled="!@ics_method=cancel">
 					<description value="This mail cancels a meeting" class="meetingRequestMessage"/>
@@ -33,6 +35,7 @@
 					<description/>
 					<description/>
 					<description/>
+					<description id="error" class="meetingRequestError" align="right"/>
 				</row>
 			</rows>
 		</grid>
@@ -104,7 +107,11 @@ table.meetingRequest {
  padding: 3px;
 }
 
-
+.meetingRequestError {
+	color: red;
+	font-style: italic;
+	font-size: 120%;
+}
 
 		</styles>
 	</template>

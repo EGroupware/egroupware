@@ -2022,7 +2022,7 @@ class calendar_uiforms extends calendar_ui
 							}
 							else
 							{
-								$msg = lang('Status already applied');
+								$event['error'] = lang('Status already applied');
 							}
 						}
 						break;
@@ -2033,17 +2033,17 @@ class calendar_uiforms extends calendar_ui
 						if (strtolower($ical_method) == 'response' && isset($existing_event['participants'][$user]) &&
 							$status != 'U' && isset($this->bo->verbose_status[$status]))
 						{
-							$msg = lang('You already replied to this invitation with').': '.lang($this->bo->verbose_status[$status]);
+							$event['error'] = lang('You already replied to this invitation with').': '.lang($this->bo->verbose_status[$status]);
 						}
 						else
 						{
-							$msg = lang('Using already existing event on server.');
+							$event['error'] = lang('Using already existing event on server.');
 						}
 						$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 						$user_and_memberships[] = $user;
 						if (!array_intersect(array_keys($event['participants']), $user_and_memberships))
 						{
-							$msg .= ($msg ? "\n" : '').lang('You are not invited to that event!');
+							$event['error'] .= ($event['error'] ? "\n" : '').lang('You are not invited to that event!');
 							if ($event['id'])
 							{
 								$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
@@ -2070,11 +2070,28 @@ class calendar_uiforms extends calendar_ui
 			$event['recure'] = $this->bo->recure2string($event);
 			$event['all_participants'] = implode(",\n",$this->bo->participants($event, true));
 
+			// EGroupware event has been deleted, dont let user resurect it by accepting again
+			if ($existing_event && $existing_event['deleted'] && strtolower($ical_method) !== 'cancel')
+			{
+				// check if this is an EGroupware event or has an external organizer
+				foreach($existing_event['participants'] as $uid => $status)
+				{
+					$quantity = $role = null;
+					calendar_so::split_status($status, $quantity, $role);
+					if (!is_numeric($uid) && $role == 'CHAIR') break;
+				}
+				if (!(!is_numeric($uid) && $role == 'CHAIR'))
+				{
+					$event['error'] = lang('Event has been deleted by organizer!');
+					$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
+						$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
+				}
+			}
 			// ignore events in the past (for recurring events check enddate!)
-			if ($this->bo->date2ts($event['start']) < $this->bo->now_su &&
+			elseif ($this->bo->date2ts($event['start']) < $this->bo->now_su &&
 				(!$event['recur_type'] || $event['recur_enddate'] && $event['recur_enddate'] < $this->bo->now_su))
 			{
-				$msg = lang('Requested meeting is in the past!');
+				$event['error'] = lang('Requested meeting is in the past!');
 				$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
 					$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
 			}

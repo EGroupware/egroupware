@@ -328,7 +328,6 @@ class calendar_so
 		{
 			// We want only the parents to match
 			$where['cal_uid'] = $ids;
-			$where[] = 'cal_deleted IS NULL';
 			if ($read_recurrence)
 			{
 				$where['cal_recurrence'] = $recur_date;
