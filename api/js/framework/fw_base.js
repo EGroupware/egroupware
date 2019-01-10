@@ -726,10 +726,9 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		if (_app != this.activeApp)
 		{
 			// tab not yet loaded, load it now
-			if (!_app.browser.currentLocation && !_app.browser.iframe)
+			if (!_app.browser || !_app.browser.currentLocation && !_app.browser.iframe)
 			{
-				this.applicationTabNavigate(_app, _app.indexUrl);
-				return;
+				return this.applicationTabNavigate(_app, _app.indexUrl);
 			}
 			this.activeApp = _app;
 

@@ -269,7 +269,7 @@
 		 */
 		setActiveApp: function(_app)
 		{
-			this._super.apply(this, arguments);
+			var result = this._super.apply(this, arguments);
 
 			if (_app == _app.parentFw.activeApp)
 			{
@@ -296,6 +296,8 @@
 				framework.getToggleSidebarState();
 				framework.activeApp.browser.callResizeHandler();
 			}
+
+			return result;
 		},
 
 		/**
