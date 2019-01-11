@@ -5938,6 +5938,11 @@ button,
   cursor: pointer;
   color: #004e7d;
 }
+input[type=submit] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 input[type=submit]:hover,
 input[type=button]:hover,
 input[type=reset]:hover,
