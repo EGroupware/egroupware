@@ -43,6 +43,12 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 
 	};
 
+	/**
+	 * Store callbacks if we get multiple requests for the same data before the
+	 * answer comes back
+	 */
+	var callbacks = {};
+
 	return {
 		/**
 		 * Set data of current user
@@ -156,10 +162,10 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						data[id] = accountData[account_id][_field][id];
 					}
 				}
-				else if (typeof accountData[account_id] === 'object')
+				else if (typeof callbacks[account_id] === 'object')
 				{
 					// Add it to the list
-					accountData[_account_ids[i]].push({callback: _callback, context: _context});
+					callbacks[_account_ids[i]].push({callback: _callback, context: _context});
 				}
 				else
 				{
@@ -173,15 +179,15 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 			{
 				egw.json('EGroupware\\Api\\Framework::ajax_account_data',[_account_ids, _field, _resolve_groups],
 					function(_data) {
-						var callbacks = [];
+						var callback_list = [];
 						for(var account_id in _data)
 						{
-							if(accountData[account_id])
+							if(callbacks[account_id])
 							{
-								callbacks = callbacks.concat(accountData[account_id]);
-								accountData[account_id] = {};
+								callback_list = callback_list.concat(callbacks[account_id]);
+								delete callbacks[account_id];
 							}
-							else if (typeof accountData[account_id] == 'undefined')
+							if (typeof accountData[account_id] === 'undefined')
 							{
 								accountData[account_id] = {};
 							}
@@ -192,32 +198,32 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						if(_resolve_groups && _account_ids.length === 1 && _account_ids[0] < 0)
 						{
 							var group_id = _account_ids[0];
-							if(accountData[group_id])
+							if(callbacks[group_id])
 							{
-								callbacks = callbacks.concat(accountData[group_id]);
-								accountData[group_id] = {};
+								callback_list = callback_list.concat(callbacks[group_id]);
+								delete callbacks[group_id];
 							}
-							else if (typeof accountData[group_id] == 'undefined')
+							if (typeof accountData[group_id] === 'undefined')
 							{
 								accountData[group_id] = {};
 							}
 							accountData[group_id][_field] = _data;
 						}
-						for(var i = 0; i < callbacks.length; i++)
+						for(var i = 0; i < callback_list.length; i++)
 						{
-							if(typeof callbacks[i] !== 'object' || typeof callbacks[i].callback !== 'function') continue;
-							callbacks[i].callback.call(callbacks[i].context, data);
+							if(typeof callback_list[i] !== 'object' || typeof callback_list[i].callback !== 'function') continue;
+							callback_list[i].callback.call(callback_list[i].context, data);
 						}
 					}
 				).sendRequest();
 				// Keep request so we know what we're waiting for
 				for(var i=0; i < _account_ids.length; ++i)
 				{
-					if(typeof accountData[_account_ids[i]] == 'undefined')
+					if(typeof callbacks[_account_ids[i]] === 'undefined')
 					{
-						accountData[_account_ids[i]] = [];
+						callbacks[_account_ids[i]] = [];
 					}
-					accountData[_account_ids[i]].push({callback: _callback, context: _context});
+					callbacks[_account_ids[i]].push({callback: _callback, context: _context});
 				}
 			}
 			else
