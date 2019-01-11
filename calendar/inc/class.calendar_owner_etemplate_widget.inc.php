@@ -270,7 +270,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		}
 		else
 		{
-			$label = Link::title('api-accounts',$id);
+			$label = Link::title('api-accounts',$id) ?: Api\Accounts::username($id);
 		}
 		return $label;
 	}
