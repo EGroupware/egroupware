@@ -485,6 +485,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 						}
 					}
 					if(participant && label_index !== false && status_to_show.indexOf(participant.substr(0,1)) >= 0 ||
+						!participant && label_index !== false ||
 						this.options.filter === 'owner' && event.owner === user)
 					{
 						if(typeof rows[label_index] === 'undefined')
