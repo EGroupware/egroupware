@@ -85,6 +85,10 @@
 					<description value="Quota limit warning in MegaByte (recommended value is 30 MB)."/>
 					<textbox id="newsettings[quota_limit_warning]"/>
 				</row>
+				<row>
+					<description value="Default value for remembering S/MIME passphrase in minutes"/>
+					<textbox id="newsettings[smime_pass_exp]"/>
+				</row>
 			</rows>
 		</grid>
 	</template>

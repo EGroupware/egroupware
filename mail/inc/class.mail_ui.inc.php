@@ -3203,6 +3203,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.'));
 			}
 			Framework::message($e->getMessage());
+			$configs = Api\Config::read('mail');
 			// do NOT include any default CSS
 			$smimeHtml = $this->get_email_header().
 			'<div class="smime-message">'.lang("This message is smime encrypted and password protected.").'</div>'.
@@ -3212,7 +3213,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
 						'<input type="submit" value="'.lang("submit").'"/>'.
 						'<div style="margin-top:10px;position:relative;text-align:center;margin-left:-15px;">'.
-							lang("Remember the password for ").'<input name="smime_pass_exp" type="number" max="60" min="1" placeholder="10" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
+							lang("Remember the password for ").
+								'<input name="smime_pass_exp" type="number" max="480" min="1" placeholder="'.
+								(is_array($configs) && $configs['smime_pass_exp'] ? $configs['smime_pass_exp'] : "10").
+								'" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
 						'</div>'.
 					'</div>'.
 			'</form>';
