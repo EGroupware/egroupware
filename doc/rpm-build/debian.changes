@@ -1,3 +1,21 @@
+egroupware-epl (17.1.20190111) hardy; urgency=low
+
+  * Api: show maintenance release as version-number everywhere
+  * Api: truncate varchar for all DB types now, as MariaDB 10.3 also errors on to big content
+  * Api/Filemanager/WebDAV: fix SQL error if login error or WebDAV path contains non-ascii chars
+  * Calendar/CalDAV: store huge iCal attributes compressed to fix stalled sync of Outlook/Exchange events
+  * Calendar/Mail: tell user if an event has been already already deleted when viewing a meeting request
+  * Mobile theme: Fix inconsistent styling of submit buttons on login page, when browsing with Safari
+  * Filemanager: fix missing empty directory context actions
+  * Filemanager: treat GoodSync _gsdata_ directory as hidden / not shown by default
+  * Filemanager/EPL/GoodSync: ignore _gsdata_ directory for versioning and subscriptions
+  * Mail: implement new preference to configure mail identity label shown as mail folder header
+  * Addressbook: add site configuration to disable Last/Next Event column
+  * Projectmanager: move format for ID generation from config to settings to allow eg. group-specific IDs
+  * Extended changelog: https://help.egroupware.org/t/new-features-preferences-or-other-important-things-since-release-of-17-1/73323
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 11 Jan 2019 10:59:40 +0100
+
 egroupware-epl (17.1.20181205) hardy; urgency=low
 
   * SiteMgr: fix fatal error stalling EGroupware, if SiteMgr is installed
