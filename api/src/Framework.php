@@ -423,7 +423,7 @@ abstract class Framework extends Framework\Extra
 		}
 		if (empty($GLOBALS['egw_info']['server']['versions']['maintenance_release']))
 		{
-			$GLOBALS['egw_info']['server']['versions']['maintenance_release'] = Api\Framework::api_version();
+			$GLOBALS['egw_info']['server']['versions']['maintenance_release'] = self::api_version();
 		}
 		$var['powered_by'] = '<a href="http://www.egroupware.org/" target="_blank">'.
 			lang('Powered by').' EGroupware '.
