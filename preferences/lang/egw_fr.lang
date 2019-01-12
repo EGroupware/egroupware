@@ -25,6 +25,7 @@ charset for the csv export/import	preferences	fr	Jeu de caractères
 click to select a color	preferences	fr	Cliquez pour sélectionner une couleur
 color	preferences	fr	Couleur
 country	preferences	fr	Pays
+currency	preferences	fr	Devise
 custom login box color, defaults to above color darkened	preferences	fr	Couleur de la boîte de connexion personnalisée, par défaut, plus sombre
 custom sidebar menu active color, defaults to above color darkened	preferences	fr	Couleur de la sélection active sur le menu latéral, par défaut, plus sombre
 dark moono theme	preferences	fr	Thème Dark Moono
@@ -58,6 +59,7 @@ enter your old password	preferences	fr	Entrez votre ancien mot de passe
 error	preferences	fr	Erreur
 failed to change password.	preferences	fr	Erreur lors du changement de mot de passe.
 features of the editor	preferences	fr	Fonctionnalités de l'éditeur
+firstname	preferences	fr	Prénom
 font size unit	preferences	fr	Unité de taille de police
 forced preferences	preferences	fr	Préférences forcées
 formatting & general settings	preferences	fr	Formats et paramètres principaux
@@ -81,16 +83,19 @@ interface/template selection	preferences	fr	Sélection de l'interface/modèle
 just clicking on the line, like a checkbox	preferences	fr	cliquer juste sur la ligne, comme sur un case à cocher
 kama theme	preferences	fr	Thème Kama
 language	preferences	fr	Langue
+lastname	preferences	fr	Nom
 look & feel	preferences	fr	Ergonomie
 lowercase letters	preferences	fr	lettres minuscules
 max matches per page	preferences	fr	Nombre max d'occurences par page
 max number of icons in navbar	preferences	fr	Nombre maximal d'icônes de la barre de navigation
 moono color theme	preferences	fr	Couleur de thème Moono
 moono theme (default)	preferences	fr	Thème Moono (défaut)
+no	preferences	fr	Non
 no default	preferences	fr	Pas de défaut
 no user-selection at all	common	fr	L'utilisateur n'a rien sélectionné.
 note: this feature does *not* change your email password. this will	preferences	fr	note: cette fonctionnalité ne change *pas* votre mot de passe de compte EMail. Ceci devra
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	fr	Note: cette fonctionnalité ne change PAS votre mot de passe de compte EMail. Ceci devra être fait manuellement.
+nothing to save.	preferences	fr	Rien à sauvegarder.
 notification settings	preferences	fr	Paramètres de notification
 number format	preferences	fr	Format de nombre
 numbers	preferences	fr	nombres
@@ -105,6 +110,7 @@ please select timezones, you want to be able to quickly switch between. switch i
 please select your timezone.	preferences	fr	Chosir votre fuseau horaire
 please, select a new theme	preferences	fr	SVP, choisissez un nouveau thème
 popup with search	preferences	fr	Ouvre une fenêtre Popup avec la recherche
+preferences	preferences	fr	Préférences
 preferences saved.	preferences	fr	Préférences enregistrées.
 pt: points (1/72 inch)	preferences	fr	pt: points (1/72 pouces)
 px: display pixels	preferences	fr	px: affiche des pixels
@@ -132,6 +138,7 @@ show navigation bar as	preferences	fr	Afficher la barre de navigation comme
 show number of current users	preferences	fr	Afficher le nombre d'utilisateurs courants
 show text on navigation icons	preferences	fr	Montrer le texte sur les icônes de navigation
 show_more_apps	common	fr	Montrer plus d'Applications
+site configuration	preferences	fr	Configuration du site
 special characters	preferences	fr	caractères spéciaux
 spellchecker language	addressbook	fr	Language de correcteur orthographique
 text editor settings	preferences	fr	Paramètre de l'éditeur de texte
@@ -147,14 +154,17 @@ theme (colors/fonts) selection	preferences	fr	Sélection de thème (couleurs/pol
 this server is located in the %1 timezone	preferences	fr	Ce serveur est situé dans le fuseau horaire %1
 thousands separator is only used for displaying and not for editing numbers.	preferences	fr	Le séparateur des milliers est utilisé seulement pour afficher et non pour modifier les nombres.
 time format	preferences	fr	Format d'heure
+time zone	preferences	fr	Fuseau horaire
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	fr	Unité des tailles de polices affichées : soit "px" comme pour les des pages web, soit "pt" comme pour les traitements de texte
 uppercase letters	preferences	fr	lettres majuscules
 use default	preferences	fr	Utiliser le défaut
+username	preferences	fr	Nom d'utilisateur
 users choice	preferences	fr	Choix des utilisateurs
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fr	Si vous dites Oui, les boutons Accueil et Déconnexion sont présentés comme des applications dans la barre de navigation.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans EGroupware.
 write prefs for the specified application.	preferences	fr	Ecrire les préférences pour l'apllication spécifiée.
+yes	preferences	fr	Oui
 you can show the applications as icons only, icons with app-name or both.	preferences	fr	Vous pouvez montrer les applications comme des icônes seulement, des icônes avec le nom de l'application ou les deux.
 you can show the linked entries with icons only, icons with app-name or both.	common	fr	Monter les applications avec des icônes seulement, icônes avec des noms d'application ou les deux.
 you do not have permission to set acl's in this mode!	preferences	fr	Vous n'avez pas les droits pour régler les ACLs dans ce mode!

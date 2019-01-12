@@ -4,7 +4,6 @@
 %1 accounts being activated	admin	fr	%1 comptes activés
 %1 acl entries deleted.	admin	fr	%1 entrées ACL supprimées.
 %1 acl records of not (longer) existing accounts deleted.	admin	fr	%1 entrées ACL supprimées, qui étaient associées à des comptes n'existant plus.
-%1 acl records of not (longer) existing api\accounts deleted.	admin	fr	%1 entrées ACL supprimées, qui étaient associées à des comptes n'existant plus.
 %1 api\categories of not (longer) existing api\accounts deleted.	admin	fr	%1 catégories supprimées, qui étaient associées à des comptes n'existant plus.
 %1 categories of not (longer) existing accounts deleted.	admin	fr	%1 catégories supprimées, qui étaient associées à des comptes n'existant plus.
 %1 category(s) %2	admin	fr	%1 catégorie(s) %2
@@ -19,6 +18,7 @@
 %1 rights for %2 and applications %3	admin	fr	Droits en %1 pour %2 et l'application %3.
 %1 run rights for applications	admin	fr	% droits d'exécution des applications
 %1 sessions killed	admin	fr	%1 session(s) tuée(s).
+%1 site configuration	admin	fr	%1 configuration du site
 %1 user %2	admin	fr	%1 utilisateur %2
 (de)activate mail accounts	admin	fr	(dés)activer les comptes email
 (default no, leave it off if you dont use it)	admin	fr	(Non par défaut, ne pas modifier si vous ne l'utilisez pas)
@@ -49,6 +49,7 @@ account preferences	admin	fr	Préférences de compte
 account saved.	admin	fr	Compte enregistré.
 account-id's have to be integers!	admin	fr	Les ID de compte doivent être des entiers!
 acl added.	admin	fr	ACL ajouté.
+acl csv export	admin	fr	Export CSV des ACL
 acl deleted.	admin	fr	ACL supprimé.
 acl entry deleted.	admin	fr	Entrée ACL supprimée.
 acl entry not found!	admin	fr	Entrée ACL non trouvée !
@@ -97,14 +98,13 @@ admin username	admin	fr	Nom d'utilisateur de l'administrateur
 administration	admin	fr	Administration
 admins	admin	fr	Administrateurs
 advanced options	admin	fr	Options avancées
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué (3 par défaut) ?
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée (3 par défaut) ?
 aliases	admin	fr	Alias
 all	admin	fr	Tout
+all acls	admin	fr	Tous les ACLs
 all applications	admin	fr	Toutes les applications
 all categories	admin	fr	Toutes les catégories
 all groups	admin	fr	Tous les groupes
-all languages	admin	fr	Toutes les langues
 all records and account information will be lost!	admin	fr	Tous les enregistrements et informations sur les comptes vont être perdus!
 all users	admin	fr	Tous les utilisateurs
 allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette application
@@ -180,6 +180,7 @@ category %1 has been saved !	admin	fr	La catégorie %1 a été enregistrée !
 category deleted.	admin	fr	Catégorie supprimée.
 category list	admin	fr	Liste de catégories
 category saved.	admin	fr	Catégorie enregistrée.
+certificate	admin	fr	Certificat
 change account_id	admin	fr	Changer l'ID du compte
 change acl rights	admin	fr	modifier les droits d'accès (ACL)
 change config settings	admin	fr	Modifier les paramètres de configuration
@@ -228,6 +229,7 @@ creates a new field	admin	fr	Créer un nouveau champ
 crontab only (recomended)	admin	fr	crontab seulement (recommandé)
 ctrl	admin	fr	Ctrl
 current hash	admin	fr	Clé cryptée actuelle
+custom	admin	fr	Personnalisé
 custom fields	admin	fr	Champs personnalisés
 custom translation	admin	fr	Traduction personnalisée
 cyrus imap server	admin	fr	Serveur Cyrus IMAP
@@ -243,6 +245,7 @@ debug	admin	fr	Debug
 default	admin	fr	défaut
 default file system space per user	admin	fr	Espace disque par utilisateur (par défaut)
 default file system space per user/group ?	admin	fr	Espace disque par utilisateur/groupe (par défaut) ?
+default preferences	admin	fr	Préférences par défaut
 deinstall crontab	admin	fr	Désinstaller le crontab
 delete	admin	fr	Supprimer
 delete account	admin	fr	Supprimer le compte
@@ -287,7 +290,6 @@ deny all users access to grant other users access to their entries ?	admin	fr	Re
 deny all users access to preferences ?	admin	fr	Refuser à tous les utilisateurs l'accès aux préférences
 description can not exceed 255 characters in length !	admin	fr	La description ne peut dépasser 255 caractères de long !
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	fr	Le compte de destination #%1 existe déjà et ne peut être renommé !  Impossible de fusionner les comptes, cela violerait les contraintes d'intégrité.  Essayez plutôt de supprimer avec transfert de données
-destination account #%1 does exist and is not renamed itself! can not merge api\accounts, it will violate unique contains. delete with transfer of data instead.	admin	fr	Le compte de destination #%1 existe déjà et ne peut être renommé !  Impossible de fusionner les comptes, cela violerait les contraintes d'intégrité.  Essayez plutôt de supprimer avec transfert de données
 determines the order the fields are displayed	admin	fr	Détermine l'ordre d'affichage des champs
 disable	admin	fr	Désactiver
 disable "auto completion" of the login form	admin	fr	Désactiver l'auto-complétion dans le formulaire de login
@@ -301,6 +303,7 @@ displayed length of input field (set rows=1 to limit length)	admin	fr	longueur a
 displaying html messages is disabled	admin	fr	L'affichage des messages html est désactivé.
 displaying plain messages is disabled	admin	fr	L'affichage des texte brut est désactivé.
 do not delete the category and return back to the list	admin	fr	Ne PAS supprimer la catégorie et retourner à la liste
+do not generate email addresses	admin	fr	Ne pas générer les adresses email
 do not offer introduction video	admin	fr	Ne pas proposer la vidéo d'introduction
 do not validate certificate	admin	fr	ne pas valider le certificat
 do you also want to delete all global subcategories ?	admin	fr	Voulez-vous aussi supprimer toutes les sous-catégories globales ?
@@ -309,6 +312,7 @@ do you really want to reset the filter for the profile listing	admin	fr	Voulez-v
 do you want to delete all global subcategories ?	admin	fr	Voulez-vous supprimer toutes les sous-catégories globales ?
 do you want to move all global subcategories one level down ?	admin	fr	Voulez-vous déplacer toutes les sous-catégories globales un niveau plus bas ?
 document root (default)	admin	fr	Racine des documents (défaut)
+documentation	admin	fr	Documentation
 domainname	admin	fr	Nom de domaine
 done	admin	fr	Terminé
 down	admin	fr	Bas
@@ -425,12 +429,14 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 forbid users to create identities	admin	fr	Interdire aux utilisateurs de créer des identités
 force selectbox	admin	fr	Forcer la boîte de sélection
 force users to change their password regularily?(empty for no,number for after that number of days	admin	fr	Définir la récurrence du changement forcé de mot de passe. Définir le nombre de jours. Vide = Non
+forced preferences	admin	fr	Préférences forcées
 forward also to	admin	fr	Transférer aussi à
 forward email's to	admin	fr	Transférer les emails à
 forward emails to	admin	fr	Transférer le emails à
 forward only	admin	fr	Seulement transférer
 full name	admin	fr	Nom complet
 general	admin	fr	Général
+generate certificate	admin	fr	Générer le Certificat
 git clone	admin	fr	Git clone
 global	admin	fr	Global
 global categories	common	fr	Catégories globales
@@ -491,6 +497,7 @@ importance	admin	fr	Importance
 in mbyte	admin	fr	en Mo
 inactive	admin	fr	Inactif
 inbound	admin	fr	Entrant
+inbox	admin	fr	Boîtes de réception
 initial	admin	fr	Initial
 install crontab	admin	fr	Installer le crontab
 install id	admin	fr	ID d'installation
@@ -504,12 +511,14 @@ international use	admin	fr	Usage internationnal
 invalid argument '%1' !!!	admin	fr	Argument invalide '%1' !!!
 invalid formated date "%1"!	admin	fr	Date formatée invalide "%1" !
 invalid remote id or name "%1"!	admin	fr	ID distante ou nom "%1" invalide !
+invalid type "%1"!	admin	fr	Type  "%1"! invalide !
 invalid value "%1" use yes or no!	admin	fr	Valeur "%1" invalide utiliser oui ou non
 ip	admin	fr	IP
 jobs	admin	fr	Travaux
 kill	admin	fr	Tuer
 kill session	admin	fr	Tuer la session
-language	admin	fr	Langue
+kill these sessions	admin	fr	Tuer ces sessions
+kill this session	admin	fr	Tuer cette session
 languages	admin	fr	Langues
 last %1 logins	admin	fr	Dernières %1 connexions
 last %1 logins for %2	admin	fr	Dernières %1 connexions pour %2
@@ -560,6 +569,7 @@ login-status	admin	fr	Statut de connexion
 loginid	admin	fr	Identifiant de l'utilisateur
 logintime	admin	fr	Heure de connexion
 logoutime	admin	fr	Heure de déconnexion
+lowercase email addresses	admin	fr	Adresse email en minuscule
 mail account	admin	fr	Compte email
 mail settings	admin	fr	Paramètres de messagerie
 main email-address	admin	fr	Adresse email principale
@@ -612,6 +622,7 @@ no supported imap authentication method could be found.	admin	fr	Il n'a été tr
 non profit: clubs, associations, ...	admin	fr	Sans but lucratif : clubs, associations, ...
 none	admin	fr	aucun
 note: ssl available only if php is compiled with curl support	admin	fr	Note: SSL disponible si PHP est compilé avec le support de CURL
+nothing to save.	admin	fr	Rien à sauvegarder.
 notification mail	admin	fr	Email de notification
 notify user by email	admin	fr	Notifier l'utilisateur par email
 notifying account "%1" %2 failed!	admin	fr	Echec de la notification du compte "%1" %2 !
@@ -677,7 +688,9 @@ port	admin	fr	port
 postfix with ldap	admin	fr	Postfix avec support LDAP
 postpone for	admin	fr	Reporter à
 preferences	admin	fr	Préférences
+preferences saved.	admin	fr	Préférences enregistrées.
 primary group	admin	fr	Groupe primaire
+private	admin	fr	Privé
 profile access rights	admin	fr	Droits d'accès du profil
 profile is active	admin	fr	Le profil est actif
 profile list	admin	fr	Liste des profils
@@ -686,6 +699,7 @@ qmaildotmode	admin	fr	qmaildotmode
 quota settings	admin	fr	Paramètres de quota
 quota size in mbyte	admin	fr	Taille des quota en Mo
 re-enter password	admin	fr	Entrez à nouveau le mot de passe
+read	admin	fr	Lire
 read this list of methods.	admin	fr	Lisez cette liste de méthodes.
 register application hooks	admin	fr	Inscrire les dépendances
 reject passwords containing part of username or full name (3 or more characters long)	admin	fr	Rejeter les mots de passe contenant une partie du nom complet ou du login (3 caractères ou plus)
@@ -717,7 +731,6 @@ search accounts	admin	fr	Chercher des comptes
 search categories	admin	fr	Chercher des catégories
 search groups	admin	fr	Chercher des groupes
 search peer servers	admin	fr	Chercher des serveurs Pairs
-section	admin	fr	Section
 secure connection	admin	fr	Connexion sécurisée
 security	admin	fr	Sécurité
 select accounts for which the custom field should be visible	admin	fr	Sélectionner les comptes pour lesquels le champ personnalisé devrait être visible.
@@ -855,6 +868,9 @@ up	admin	fr	Haut
 update	admin	fr	Mettre à jour
 update current email address:	admin	fr	Mettre à jour l'adresse email actuelle :
 updated	admin	fr	Mis à jour
+upload your background image or enter the url	admin	fr	Uploader le fonds d'écran ou entrer l'URL
+upload your certificate .p12/.pfx file	admin	fr	Uploader votre certificat .p12/.pfx
+upload your favicon or enter the url	admin	fr	Uploader votre icone ou entrer l'URL
 uppercase, lowercase, number, special char	admin	fr	Majuscule, minuscule, nombre, caractère spécial
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	fr	URL de l'installation d'EGroupware, ex. http://domaine.com/egroupware
 usage	admin	fr	Usage
@@ -910,6 +926,7 @@ would you like to automaticaly load new langfiles (at login-time) ?	admin	fr	Vou
 would you like to show each application's upgrade status ?	admin	fr	Voudriez-vous montrer l'état de mise à jour de chaque application ?
 wrong account type: %1 is no %2 !!!	admin	fr	Type de compte incorrect: %1 n'est PAS %2 !
 wrong admin-account or -password !!!	admin	fr	Compte ou mot de passe admin incorrect !
+wrong credentials to access the header.inc.php file!	admin	fr	Mauvais login ou mot de passe pour accéder au fichier header.inc.php !
 xml-rpc	admin	fr	XML-RPC
 year	admin	fr	Année
 yes	admin	fr	oui
