@@ -150,9 +150,11 @@ class calendar_uiforms extends calendar_ui
 		}
 		else
 		{
+			$ts = new Api\DateTime();
+			$ts->setUser();
 			$start = $this->bo->date2ts(array(
 				'full' => isset($_GET['date']) && (int) $_GET['date'] ? (int) $_GET['date'] : $this->date,
-				'hour' => (int) (isset($_GET['hour']) ? $_GET['hour'] : $this->bo->cal_prefs['workdaystarts']),
+				'hour' => (int) (isset($_GET['hour']) ? $_GET['hour'] : ($ts->format('H')+1)),
 				'minute' => (int) $_GET['minute'],
 			));
 		}
