@@ -163,6 +163,15 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 					"MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;"+
 					"Wingdings=wingdings,zapf dingbats",
 			fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+			setup : function(ed)
+            {
+                ed.on('init', function()
+                {
+                    this.getDoc().body.style.fontSize = egw.preference('rte_font_size', 'common')
+				+ egw.preference('rte_font_unit', 'common');
+                    this.getDoc().body.style.fontFamily = egw.preference('rte_font', 'common');
+                });
+            }
 		};
 
 		// extend default settings with configured options and preferences
@@ -280,9 +289,6 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 		// current focus.
 		var focusedEl = jQuery(':focus');
 		this.editor = _editor;
-		this.editor.execCommand('fontName', true, egw.preference('rte_font', 'common'));
-		this.editor.execCommand('fontSize',	true, egw.preference('rte_font_size', 'common')
-				+ egw.preference('rte_font_unit', 'common'));
 		if (!this.disabled) jQuery(this.editor.editorContainer).css('display', 'flex');
 		this.tinymce_container = this.editor.editorContainer;
 		// go back to reserved focused element
