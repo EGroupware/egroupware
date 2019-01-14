@@ -1172,6 +1172,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			name: this.options.name,
 			method: this.options.method
 		};
+		attrs.recentPaths = this._getRecentPaths();
 		var callback = _callback || this._buildDialog;
 		egw(window).json(
 			'EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_vfsSelect_content',
@@ -1248,6 +1249,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 							files = _value.path+'/'+_value.name;
 							break;
 					}
+					self._setRecentPaths(_value.path);
 					self.value = files;
 					if (self.options.method && self.options.method !== 'download')
 					{
@@ -1304,6 +1306,28 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		this.dialog.div.on('load', function(e) {
 			app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');
 		});
+	},
+
+	/**
+	 * Set recent path into sessionStorage
+	 * @param {string} _path
+	 */
+	_setRecentPaths: function (_path)
+	{
+		var recentPaths = egw.getSessionItem('api', 'vfsRecentPaths') ?
+			egw.getSessionItem('api', 'vfsRecentPaths').split(',') : [];
+		if (recentPaths.indexOf(_path) == -1) recentPaths.push(_path);
+		egw.setSessionItem('api', 'vfsRecentPaths', recentPaths);
+	},
+
+	/**
+	 * Get recent paths from sessionStorage
+	 * @returns {Array} returns an array of recent paths
+	 */
+	_getRecentPaths: function ()
+	{
+		return egw.getSessionItem('api', 'vfsRecentPaths') ?
+			egw.getSessionItem('api', 'vfsRecentPaths').split(',') : [];
 	},
 
 	/**

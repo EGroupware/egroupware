@@ -470,6 +470,22 @@ class Vfs extends File
 			$favorites = \EGroupware\Api\Framework\Favorites::get_favorites('filemanager');
 			$n = 0;
 			$content['dir'] = array();
+			//check for recent paths and add them to the top of favorites list
+			if (is_array($params['recentPaths']))
+			{
+				foreach($params['recentPaths'] as $p)
+				{
+					$mime = \EGroupware\Api\Vfs::mime_content_type($p);
+					$content['dir'][$n] = array(
+						'name' => $p,
+						'path' => $p,
+						'mime' => $mime,
+						'is_dir' => true
+					);
+					++$n;
+				}
+			}
+			
 			foreach($favorites as $favorite)
 			{
 				$path = $favorite['state']['path'];
