@@ -34,54 +34,7 @@ class admin_cmds
 	{
 		Api\Cache::setSession('admin', 'cmds', $query);
 
-		$total = admin_cmd::get_rows($query,$rows,$readonlys);
-
-		if (!$rows) return array();
-
-		$async = new Api\Asyncservice();
-		foreach($rows as &$row)
-		{
-			try {
-				$cmd = admin_cmd::instanciate($row);
-				$row['title'] = $cmd->__tostring();	// we call __tostring explicit, as a cast to string requires php5.2+
-			}
-			catch (Exception $e) {
-				$row['title'] = $e->getMessage();
-			}
-
-			$row['value'] = $cmd->value;
-
-			if(method_exists($cmd, 'summary'))
-			{
-				$row['data'] = $cmd->summary();
-			}
-			else
-			{
-				$row['data'] = !($data = json_php_unserialize($row['data'])) ? '' :
-					json_encode($data+(empty($row['rrule'])?array():array('rrule' => $row['rrule'])),
-						JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
-			}
-			if($row['rrule'])
-			{
-				$rrule = calendar_rrule::event2rrule(calendar_rrule::parseRrule($row['rrule'],true)+array(
-					'start' => time(),
-					'tzid'=> Api\DateTime::$server_timezone->getName()
-				));
-				$row['rrule'] = ''.$rrule;
-			}
-			if(!$row['scheduled'] && $cmd && $cmd->async_job_id)
-			{
-				$job = $async->read($cmd->async_job_id);
-
-				$row['scheduled'] = $job ? $job[$cmd->async_job_id]['next'] : null;
-			}
-			if ($row['status'] == admin_cmd::scheduled)
-			{
-				$row['class'] = 'AllowDelete';
-			}
-		}
-		//_debug_array($rows);
-		return $total;
+		return admin_cmd::get_rows($query,$rows,$readonlys);
 	}
 
 	/**
