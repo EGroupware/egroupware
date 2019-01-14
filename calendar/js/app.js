@@ -504,7 +504,15 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		switch(action.id)
 		{
 			case 'add':
-				return egw.open(null,"calendar","add", {start: app.calendar.state.first});
+				// Default date/time to start of next hour
+				var tempDate = new Date();
+				if(tempDate.getMinutes() !== 0)
+				{
+					tempDate.setHours(tempDate.getHours()+1);
+					tempDate.setMinutes(0);
+				}
+				var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),tempDate.getHours(),-tempDate.getTimezoneOffset(),0);
+				return egw.open(null,"calendar","add", {start: today});
 			case 'weekend':
 				this.update_state({weekend: action.checked});
 				break;
