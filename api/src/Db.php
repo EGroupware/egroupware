@@ -1492,10 +1492,11 @@ class Db
 		// for boolean types, causing it to return "true" or "false" and not a quoted string like "'1'"!
 		if (is_bool($value)) $value = (string)$value;
 
-		// MySQL and MariaDB before 10.1 need 4-byte utf8 chars replaced with our default utf8 charset
+		// MySQL and MariaDB not 10.1 need 4-byte utf8 chars replaced with our default utf8 charset
 		// (MariaDB 10.1 does the replacement automatic, 10.0 cuts everything off behind and MySQL gives an error)
+		// (MariaDB 10.3 gives an error too: Incorrect string value: '\xF0\x9F\x98\x8A\x0AW...')
 		// Changing charset to utf8mb4 requires schema update, shortening of some indexes and probably have negative impact on performace!
-		if (substr($this->Type, 0, 5) == 'mysql' && $this->ServerInfo['version'] < 10.1)
+		if (substr($this->Type, 0, 5) == 'mysql')
 		{
 			$value = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $value);
 		}
