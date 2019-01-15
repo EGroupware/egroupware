@@ -149,6 +149,9 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		includeJS: function(_jsFiles, _callback, _context, _prefix)
 		{
+			// use egw_LAB object of correct window, not always the main window
+			var egw_LAB = (this.window || window).egw_LAB;
+
 			// Also allow including a single javascript file
 			if (typeof _jsFiles === 'string')
 			{

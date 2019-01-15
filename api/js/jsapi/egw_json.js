@@ -84,7 +84,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		// Function which is currently used to display alerts -- may be replaced by
 		// some API function.
 		this.alertHandler = function(_message, _details) {
-			alert(_message);
+			// we need to use the alert function of the window of the request, not just the main window
+			(this.egw ? this.egw.window : window).alert(_message);
 
 			if (_details)
 			{
@@ -175,7 +176,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 			// Load files first
 			var js_files = [];
-			for (var i = data.response.length - 1; i > 0; --i)
+			for (var i = data.response.length - 1; i >= 0; --i)
 			{
 				var res = data.response[i];
 				if(res.type == 'js' && typeof res.data == 'string')
