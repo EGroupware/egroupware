@@ -899,27 +899,46 @@ div.et2_vfsPath ul {
 	top: 0px;
 	left: 0px;
 	padding: 0px;
-	margin: 1px;
+	margin: 0px;
 	margin-right: 4px;
 	display:flex;
 	justify-content: flex-start;
 	flex-flow: row nowrap;
 	/* This hides the higher level directories if overflow */
 	direction: rtl;
+	height: 100%;
 }
 div.et2_vfsPath li {
 	direction: ltr;
-	border-right: 1px solid silver;
-	display: inline-block;
-	padding: 4px;
-	padding-right: 6px;
-	flex: none;
+    display: inline-block;
+    padding-right: 5px;
+    flex: none;
+    padding-top: 6px;
+	color: #26537C;
+	border-radius: 5px 0px 0px 5px;
+}
+li.vfsPath.et2_clickable:last-child:hover {
+    background: #c0c0c054;
+}
+li.vfsPath.et2_clickable:first-child {
+    font-weight: bold;
+}
+li.vfsPath.et2_clickable:not(:first-child):after {
+	content: ' ';
+    background-image: url(images/egw_action/arrow_left.png);
+    width: 8px;
+    height: 8px;
+    background-size: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 5px;
+    display: inline-block;
 }
 div.et2_vfsPath li:hover {
-	background-color: green;
+	text-decoration: underline;
 }
 div.et2_vfsPath li img {
-	height: 16px;
+	height: 12px;
 	float: left;
 	margin: 0px;
 	margin-left: 3px;
