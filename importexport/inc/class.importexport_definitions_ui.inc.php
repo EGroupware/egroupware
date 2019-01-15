@@ -597,6 +597,9 @@ class importexport_definitions_ui
 			unset($content['button']);
 			$content['wizard_content'] = $this->wizard_content_template;
 			$this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv,2);
+
+			// Make sure JS is loaded - Framework won't send it
+			Api\Framework::include_css_js_response();
 		}
 		else
 		{
