@@ -3954,7 +3954,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$error='';
 		$created = false;
 		$response = Api\Json\Response::get();
-		$del = $this->mail_bo->getHierarchyDelimiter(flase);
+		$del = $this->mail_bo->getHierarchyDelimiter(false);
 		if (strpos($_new, $del) !== FALSE)
 		{
 			return $response->call('egw.message', lang('failed to rename %1 ! Reason: %2 is not allowed!',$_parent, $del));
