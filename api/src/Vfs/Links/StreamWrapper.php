@@ -423,6 +423,25 @@ class StreamWrapper extends LinksParent
 	}
 
 	/**
+	 * Method called for symlink()
+	 *
+	 * Reimplemented to really create (not just fake) an entry directory on the fly
+	 *
+	 * @param string $target
+	 * @param string $link
+	 * @return boolean true on success false on error
+	 */
+	static function symlink($target,$link)
+	{
+		$parent = new \EGroupware\Api\Vfs\Links\LinksParent();
+		if (!$parent->url_stat($dir = Vfs::dirname($link),0) && parent::check_extended_acl($dir,Vfs::WRITABLE))
+		{
+			$parent->mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
+		}
+		return parent::symlink($target,$link);
+	}
+
+	/**
 	 * Register this stream-wrapper
 	 */
 	public static function register()
