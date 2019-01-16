@@ -2613,6 +2613,7 @@ class Contacts extends Contacts\Storage
 		{
 			if (is_array($contact))
 			{
+				header('Content-type: image/jpeg');
 				echo \EGroupware\Api\avatar::lavatar(array(
 					'id' => $contact['id'],
 					'firstname' => $contact['n_given'],
