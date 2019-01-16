@@ -907,7 +907,25 @@ div.et2_vfsPath ul {
 	/* This hides the higher level directories if overflow */
 	direction: rtl;
 	height: 100%;
+	overflow-y: hidden;
+    overflow-x: auto;
+    padding-bottom: 13px;
+    max-width: 92%;
+    margin-right: 7%;
 }
+div.et2_vfsPath ul::-webkit-scrollbar {
+      background: transparent;
+      overflow-y: hidden;
+      width: 1px;
+}
+
+div.et2_vfsPath ul::-webkit-scrollbar-thumb {
+    background: transparent;
+    width: 1px;
+    border-radius: 0px;
+    height: 1px;
+}
+
 div.et2_vfsPath li {
 	direction: ltr;
     display: inline-block;
