@@ -997,6 +997,9 @@
   .et2_nowrap > label > * {
     padding-left: 5px;
   }
+  .et2_vfsPath input.et2_textbox.et2_vfs {
+    background-image: url(../images/edit.png);
+  }
   /*#################################### ET2 SEARCHBOX #####################################################*/
   .et2_searchbox button.et2_button {
     background-image: url(../images/search.png);

@@ -912,6 +912,9 @@ div.et2_vfsPath ul {
     padding-bottom: 13px;
     max-width: 92%;
     margin-right: 7%;
+	background-image: url(images/egw_action/focused_hatching.svg);
+    background-position: left;
+	background-size: 16px;
 }
 div.et2_vfsPath ul::-webkit-scrollbar {
       background: transparent;
@@ -958,6 +961,15 @@ li.vfsPath.et2_clickable:not(:first-child):after {
     margin-left: 5px;
     display: inline-block;
 }
+.et2_vfsPath input.et2_textbox.et2_vfs {
+    background-image: url(images/edit.png);
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position: center;
+    background-position-x: 98%;
+    padding-right: 30px;
+}
+
 div.et2_vfsPath li:hover {
 	text-decoration: underline;
 }
