@@ -265,6 +265,14 @@ et2_register_widget(et2_vfsName, ["vfs-name"]);
  */
 var et2_vfsPath = (function(){ "use strict"; return et2_vfsName.extend(
 {
+	attributes: {
+		noicon: {
+			type: "boolean",
+			description: "suppress folder icons",
+			default: true
+		}
+	},
+
 	/**
 	 * Constructor
 	 *
@@ -365,7 +373,7 @@ var et2_vfsPath = (function(){ "use strict"; return et2_vfsName.extend(
 					e.data.egw.open({path: egw.encodePath(e.data.data), type:'httpd/unix-directory'}, "file");
 				})
 				.prependTo(this.span);
-			if(image)
+			if(image && !this.options.noicon)
 			{
 				node.prepend(this.egw().image_element(image));
 			}

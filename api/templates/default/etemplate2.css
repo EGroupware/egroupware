@@ -923,6 +923,12 @@ li.vfsPath.et2_clickable:last-child:hover {
 li.vfsPath.et2_clickable:first-child {
     font-weight: bold;
 }
+li.vfsPath.et2_clickable:last-child:before {
+    content: '/';
+    width: 5px;
+    padding-left: 10px;
+    padding-right: 2px;
+}
 li.vfsPath.et2_clickable:not(:first-child):after {
 	content: ' ';
     background-image: url(images/egw_action/arrow_left.png);
