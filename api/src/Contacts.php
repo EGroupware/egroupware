@@ -1698,35 +1698,37 @@ class Contacts extends Contacts\Storage
 		$calendars = array();
 		$bocal = new calendar_bo();
 		$type_field = $type=='u' ? 'account_id' : 'contact_id';
-		$sql = 'SELECT n_fn,org_name,'.$type_field.' AS user_id,
+		$concat_start_id_recurrance = $this->db->concat('cal_start',"':'",'egw_cal_user.cal_id',"':'",'cal_recur_date');
+		$now = $this->db->unix_timestamp('NOW()');
+		$sql = "SELECT n_fn,org_name,$type_field AS user_id,
 			(
-				select concat(cal_start,":",egw_cal_user.cal_id,":",cal_recur_date)
-				from egw_cal_user
-				JOIN egw_cal_dates on egw_cal_dates.cal_id=egw_cal_user.cal_id and (cal_recur_date=0 or cal_recur_date=cal_start)
-				JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id AND egw_cal.cal_deleted IS NULL
-				WHERE cal_user_type="'.$type.'" and cal_user_id='.$type_field.' and cal_start < unix_timestamp(now())';
-		if ( !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected'])
-		{
-			$sql .= ' AND egw_cal_user.cal_status != "R"';
-		}
-		$sql .= '
-				order by cal_start DESC Limit 1
-			) as last_event,
-			(
-				select concat(cal_start,":",egw_cal_user.cal_id,":",cal_recur_date)
+				SELECT $concat_start_id_recurrance
 				FROM egw_cal_user
 				JOIN egw_cal_dates on egw_cal_dates.cal_id=egw_cal_user.cal_id and (cal_recur_date=0 or cal_recur_date=cal_start)
 				JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id AND egw_cal.cal_deleted IS NULL
-				WHERE cal_user_type="'.$type.'" and cal_user_id='.$type_field.' and cal_start > unix_timestamp(now())';
+				WHERE cal_user_type='$type' and cal_user_id=$type_field and cal_start < $now";
 		if ( !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected'])
 		{
-			$sql .= ' AND egw_cal_user.cal_status != "R"';
+			$sql .= " AND egw_cal_user.cal_status != 'R'";
+		}
+		$sql .= "
+				order by cal_start DESC Limit 1
+			) as last_event,
+			(
+				SELECT $concat_start_id_recurrance
+				FROM egw_cal_user
+				JOIN egw_cal_dates on egw_cal_dates.cal_id=egw_cal_user.cal_id and (cal_recur_date=0 or cal_recur_date=cal_start)
+				JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id AND egw_cal.cal_deleted IS NULL
+				WHERE cal_user_type='$type' and cal_user_id=$type_field and cal_start > $now";
+		if ( !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected'])
+		{
+			$sql .= " AND egw_cal_user.cal_status != 'R'";
 		}
 		$sql .= 'order by cal_recur_date ASC, cal_start ASC Limit 1
 
 			) as next_event
 			FROM egw_addressbook
-			WHERE '.$type_field.' IN ('.implode(',', array_map(array($this->db, 'quote'), $uids)).')';
+			WHERE '.$this->db->expression('egw_addressbook', array($type_field => $uids));
 
 
 		$contacts =& $this->db->query($sql, __LINE__, __FILE__);
