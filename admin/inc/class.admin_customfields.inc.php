@@ -280,6 +280,13 @@ class admin_customfields
 	}
 
 	/**
+	 * Check selectbox values to match regular expression in et2_widget_selectbox.js: _is_multiple_regexp
+	 *
+	 * If values do not match, comma-separated values are not split by comma!
+	 */
+	const CHECK_MULTISELCT_VALUE = '/^[0-9A-Za-z\/_ -]+$/';
+
+	/**
 	 * Edit/Create Custom fields with type
 	 *
 	 * @author Ralf Becker <ralfbecker-AT-outdoor-training.de>
@@ -346,6 +353,14 @@ class admin_customfields
 							{
 								list($var_raw,$value) = explode('=',trim($line),2);
 								$var = trim($var_raw);
+								if (!preg_match(self::CHECK_MULTISELCT_VALUE, $var))
+								{
+									Api\Etemplate::set_validation_error('cf_values',
+										lang('Invalide value "%1", use only:', $var)."\n".
+											preg_replace('/^.*\[([^]]+)\].*$/', '$1', self::CHECK_MULTISELCT_VALUE));
+									$action = 'apply';	// do not close the window to show validation error
+									if (!$cf_id) break 2;	// only stop storing of new CFs
+								}
 								$values[$var] = trim($value)==='' ? $var : $value;
 							}
 						}
