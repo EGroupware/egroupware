@@ -2616,14 +2616,12 @@ class Contacts extends Contacts\Storage
 			if (is_array($contact))
 			{
 				header('Content-type: image/jpeg');
-				echo \EGroupware\Api\avatar::lavatar(array(
+				$contact['jpegphoto'] =  \EGroupware\Api\avatar::lavatar(array(
 					'id' => $contact['id'],
 					'firstname' => $contact['n_given'],
 					'lastname' => $contact['n_family'])
 				);
-				exit();
 			}
-			Egw::redirect(\EGroupware\Api\Image::find('addressbook','photo'));
 		}
 
 		// use an etag over the image mapp
@@ -2655,5 +2653,6 @@ class Contacts extends Contacts\Storage
 			}
 			exit();
 		}
+		Egw::redirect(\EGroupware\Api\Image::find('addressbook','photo'));
 	}
 }
