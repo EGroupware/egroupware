@@ -3084,3 +3084,7 @@ tr.disableIfNoEPL {
     pointer-events: none;
 }
 .inactive_blur > * {opacity: 0.4; filter:blur(2px); pointer-events: none;}
+
+.et2_editable {
+	cursor: url(images/cursor_editable.png), pointer;
+}
