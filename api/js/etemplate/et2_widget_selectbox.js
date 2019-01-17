@@ -466,7 +466,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	/**
 	 * Regular expression, to check string-value contains multiple comma-separated values
 	 */
-	_is_multiple_regexp: /^[,0-9A-Za-z/_-]+$/,
+	_is_multiple_regexp: /^[,0-9A-Za-z/_ -]+$/,
 
 	/**
 	 * Regular expression and replace value for escaping values in jQuery selectors used to find options
