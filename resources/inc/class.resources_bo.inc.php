@@ -596,7 +596,7 @@ class resources_bo
 			'deleted' => null
 		);
 		$only_keys = 'res_id,name';
-		$data = $this->so->search(array(),$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
+		$data = $this->so->search(array(),$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',false,$filter);
 		if(is_array($data) && $data)
 		{
 			foreach($data as $resource)
