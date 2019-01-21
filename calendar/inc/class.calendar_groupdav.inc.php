@@ -797,7 +797,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			// not for included exceptions (Lightning): $master['recur_exception'][] = $recurrence['start'];
 		}
 		// only add master if we are not expanding and current user participates in master (and not just some exceptions)
-		if (!$expand && $master && (!$user || self::isParticipant($master, $user)))
+		// also need to add master, if we have no (other) $events eg. birthday noone every accepted/rejected
+		if (!$expand && $master && (!$user || self::isParticipant($master, $user) || !$events))
 		{
 			$events = array_merge(array($master), $events);
 		}
@@ -814,8 +815,9 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	public static function isParticipant(array $event, $user)
 	{
 		return isset($event['participants'][$user]) ||
-			// for group-invitations we need to check memberships of $user too
-			array_intersect(array_keys($event['participants']), $GLOBALS['egw']->accounts->memberships($user, true));
+			// for users and group-invitations we need to check memberships of $user too
+			$user > 0 && array_intersect(array_keys($event['participants']),
+				(array)$GLOBALS['egw']->accounts->memberships($user, true));
 	}
 
 	/**
