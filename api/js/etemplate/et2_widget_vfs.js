@@ -293,7 +293,8 @@ var et2_vfsPath = (function(){ "use strict"; return et2_vfsName.extend(
 		this.div.prepend(this.input);
 		this.setDOMNode(this.div[0]);
 		this.span.on('wheel', function(e){
-			this.scrollLeft = this.scrollLeft - (e.originalEvent.wheelDelta/10);
+			var delta = e.originalEvent.deltaY > 0 ? 30 : -30;
+			this.scrollLeft = this.scrollLeft - delta;
 		});
 		this.input.on('focus', function() {
 				this.input.val(this.options.value);
