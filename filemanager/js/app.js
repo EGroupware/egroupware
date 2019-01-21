@@ -586,7 +586,7 @@ app.classes.filemanager = AppJS.extend(
 						}
 					}
 				}
-				self._do_action('createdir', dir, true, path);	// true=synchronous request
+				self._do_action('createdir', egw.encodePathComponent(dir), true, path);	// true=synchronous request
 				self.change_dir((path == '/' ? '' : path)+'/'+ dir);
 			}
 		},this.egw.lang('New directory'),this.egw.lang('Create directory'));
