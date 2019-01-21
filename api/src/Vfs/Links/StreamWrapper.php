@@ -84,7 +84,7 @@ class StreamWrapper extends LinksParent
 		}
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
-		list(,$apps,$app,$id,$rel_path) = explode('/',$path,5);
+		list(,$apps,$app,$id,$rel_path) = array_pad(explode('/',$path,5), 5, null);
 
 		if ($apps != 'apps')
 		{
@@ -182,7 +182,7 @@ class StreamWrapper extends LinksParent
 		// if entry directory does not exist --> return fake directory
 		elseif (!($ret = parent::url_stat($url,$flags)) && $eacl_check)
 		{
-			list(,/*$apps*/,/*$app*/,$id,$rel_path) = explode('/', Vfs::parse_url($url, PHP_URL_PATH), 5);
+			list(,/*$apps*/,/*$app*/,$id,$rel_path) = array_pad(explode('/', Vfs::parse_url($url, PHP_URL_PATH), 5),5,null);
 			if ($id && !isset($rel_path))
 			{
 				$ret = array(
@@ -434,7 +434,7 @@ class StreamWrapper extends LinksParent
 	static function symlink($target,$link)
 	{
 		$parent = new \EGroupware\Api\Vfs\Links\LinksParent();
-		if (!$parent->url_stat($dir = Vfs::dirname($link),0) && parent::check_extended_acl($dir,Vfs::WRITABLE))
+		if (!$parent->url_stat($dir = Vfs::dirname($link),0) && self::check_extended_acl($dir,Vfs::WRITABLE))
 		{
 			$parent->mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
