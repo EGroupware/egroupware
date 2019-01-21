@@ -233,6 +233,10 @@ var et2_dataview_container = (function(){ "use strict"; return Class.extend(et2_
 		{
 			this._height = 0;
 
+			// Setting this before measuring height helps with issues getting the
+			// wrong height due to margins & collapsed borders
+			this.tr.css('display','block');
+
 			// Increment the height value for each visible container node
 			for (var i = 0; i < this._nodes.length; i++)
 			{
@@ -241,6 +245,7 @@ var et2_dataview_container = (function(){ "use strict"; return Class.extend(et2_
 					this._height += this._nodeHeight(this._nodes[i][0]);
 				}
 			}
+			this.tr.css('display','');
 		}
 
 		return this._height === false ? 0 : this._height;

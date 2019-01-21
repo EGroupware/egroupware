@@ -1584,9 +1584,6 @@ div.message.floating {
 .select-cat li{
 	border-left: 6px solid transparent;
 }
-.et2_nextmatch .egwGridView_grid, .et2_nextmatch .egwGridView_outer {
-	border-collapse: separate;
-}
 .et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.row_category td:first-child > div {
 	margin-left:-6px;
 	margin-right: 2px;
