@@ -208,6 +208,9 @@ a.et2_url.url {
 .et2_email > span.noemail {
 	display: none;
 }
+.et2_email a:not(:first-child) {
+	margin-left: 1em;
+}
 /**
  * Button widget - text only, and icon
  */

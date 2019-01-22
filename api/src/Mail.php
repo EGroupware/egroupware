@@ -1777,6 +1777,16 @@ class Mail
 				//error_log(__METHOD__.' ('.__LINE__.') '.$headerObject['SUBJECT'].'->'.array2string($_headerObject->getEnvelope()->__get('from')));
 				if(is_array($headerObject['FROM']) && $headerObject['FROM'][0]) {
 					$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0],true);
+					if (count($headerObject['FROM'])>1)
+					{
+						$ki=0;
+						foreach($headerObject['FROM'] as $k => $add)
+						{
+							if ($k==0) continue;
+							$retValue['header'][$sortOrder[$uid]]['additional_from_addresses'][$ki] = self::decode_header($add,true);
+							$ki++;
+						}
+					}
 				}
 				if(is_array($headerObject['REPLY-TO']) && $headerObject['REPLY-TO'][0]) {
 					$retValue['header'][$sortOrder[$uid]]['reply_to_address'] = self::decode_header($headerObject['REPLY-TO'][0],true);

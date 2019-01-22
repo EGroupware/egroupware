@@ -2013,6 +2013,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				$data["fromaddress"] = $header['sender_address'];
 			}
+			$data['additionalfromaddress'] = $header['additional_from_addresses'];
 			if (in_array("ccaddress", $cols))
 			{
 				$data['ccaddress'] = $header['cc_addresses'];
