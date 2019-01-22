@@ -648,13 +648,14 @@ div.mailPreviewHeaders div.mail_extraEmails {
 	vertical-align: top;
 }
 #mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
-  width: 58%;
+  width: 90%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
-#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject > span {
+#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject > span:not(:first-child) {
   white-space: nowrap;
+  display: inline;
 }
 #mail-index_mail-index-header_right {
   display: inline-flex;
