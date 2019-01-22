@@ -802,7 +802,7 @@ abstract class Tracking
 				$notification->set_message($body_cache['text'], 'plain');
 				// add our own signature to distinguish between original message and reply
 				// part. (e.g.: in OL there's no reply quote)
-				$body_cache['html'] = "<span style='display:none;'>----- origianl message -----</span>"."\r\n".$body_cache['html'];
+				$body_cache['html'] = "<span style='display:none;'>-----".lang('original message')."-----</span>"."\r\n".$body_cache['html'];
 				$notification->set_message($body_cache['html'], 'html');
 				$notification->set_sender($sender);
 				$notification->set_subject($subject);
