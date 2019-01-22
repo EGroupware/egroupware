@@ -369,6 +369,7 @@ class Link extends Link\Storage
 				if (!is_array($link))	// check for unlink-marker
 				{
 					//echo "<b>link='$link' is no array</b><br>\n";
+					next($app2);
 					continue;
 				}
 				if (is_array($id1) || !$id1)		// create link only in $id1 array
