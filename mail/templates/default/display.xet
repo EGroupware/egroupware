@@ -12,7 +12,9 @@
 			<hbox>
 				<hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM" width="70%">
 					<description value="From"/>
-					<url-email id="FROM" readonly="true"/>
+					<hbox id="FROM" class="mail_extraEmails">
+					</hbox>
+					<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 				</hbox>
 				<hbox class="mailDisplayHeaders" align="right" width="30%">
 					<description value="Date"/>

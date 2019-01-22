@@ -13,7 +13,9 @@
 				</box>
 				<hbox width="100%" id="mailPreviewHeadersFrom" class="mailPreviewHeaders">
 					<description value="From"/>
-					<url-email id="previewFromAddress" contact_plus = "true" readonly="true"/>
+					<hbox id="additionalFromAddress" class="mail_extraEmails">
+					</hbox>
+					<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 				</hbox>
 				<hbox id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
 					<description value="Subject"/>

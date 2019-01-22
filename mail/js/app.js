@@ -1006,7 +1006,6 @@ app.classes.mail = AppJS.extend(
 
 			// Widget ID:data key map of widgets we can directly set from cached data
 			var data_widgets = {
-				'previewFromAddress':	'fromaddress',
 				'previewDate':			'date',
 				'previewSubject':		'subject'
 			};
@@ -1051,6 +1050,7 @@ app.classes.mail = AppJS.extend(
 			// TO addresses have the first one split out, not all together
 			// list of keys:
 			var expand_content = [
+				{build_children: true, data_one: 'fromaddress', data: 'additionalfromaddress', widget: 'additionalFromAddress', line: 'mailPreviewHeadersFrom'},
 				{build_children: true, data_one: 'toaddress', data: 'additionaltoaddress', widget: 'additionalToAddress', line: 'mailPreviewHeadersTo'},
 				{build_children: true, data: 'ccaddress', widget: 'additionalCCAddress', line: 'mailPreviewHeadersCC'},
 				{build_children: false, data: 'attachmentsBlock', widget:'previewAttachmentArea', line: 'mailPreviewHeadersAttachments'}
