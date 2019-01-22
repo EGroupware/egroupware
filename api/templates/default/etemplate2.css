@@ -912,9 +912,7 @@ div.et2_vfsPath ul {
     padding-bottom: 13px;
     max-width: 92%;
     margin-right: 7%;
-	background-image: url(images/egw_action/focused_hatching.svg);
-    background-position: left;
-	background-size: 16px;
+	background-color: #e2e2e24f;
 }
 div.et2_vfsPath ul::-webkit-scrollbar {
       background: transparent;
@@ -937,6 +935,7 @@ div.et2_vfsPath li {
     padding-top: 6px;
 	color: #26537C;
 	border-radius: 5px 0px 0px 5px;
+	cursor: url(images/mouse_scroll.png) 20 1 , pointer;
 }
 li.vfsPath.et2_clickable:last-child:hover {
     background: #c0c0c054;
