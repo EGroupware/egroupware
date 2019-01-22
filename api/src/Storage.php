@@ -536,6 +536,12 @@ class Storage extends Storage\Base
 		// check if we order by a custom field --> join cf table for given cf and order by it's value
 		if (strpos($order_by,self::CF_PREFIX) !== false)
 		{
+			// if $order_by contains more then order by columns (eg. group by) split it off before
+			if (($pos = stripos($order_by, 'order by')) !== false)
+			{
+				$group_by = substr($order_by, 0, $pos+9);
+				$order_by = substr($order_by, $pos+9);
+			}
 			// fields to order by, as cutomfields may have names with spaces, we examine each order by criteria
 			$fields2order = explode(',',$order_by);
 			foreach($fields2order as $v)
@@ -577,6 +583,11 @@ class Storage extends Storage\Base
 					}
 					$join .= $this->extra_join_order.' AND extra_order.'.$this->extra_key.'='.$this->db->quote($key);
 				}
+			}
+			// add group by again
+			if (isset($group_by))
+			{
+				$order_by = $group_by.$order_by;
 			}
 		}
 		// check if we filter by a custom field
