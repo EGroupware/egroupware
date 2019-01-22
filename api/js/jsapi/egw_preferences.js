@@ -83,15 +83,26 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 *
 		 * Server will silently ignore setting preferences, if user has no right to do so!
 		 *
+		 * Preferences are only send to server, if they are changed!
+		 *
 		 * @param {string} _app application name or "common"
 		 * @param {string} _name name of the pref
 		 * @param {string} _val value of the pref, null, undefined or "" to unset it
-		 * @param {function} _callback Function passed along to the queue, called after preference is set server-side
+		 * @param {function} _callback Function passed along to the queue, called after preference is set server-side,
+		 *	IF the preference is changed / has a value different from the current one
 		 */
 		set_preference: function(_app, _name, _val, _callback)
 		{
 			// if there is no change, no need to submit it to server
-			if (typeof prefs[_app] != 'undefined' && prefs[_app][_name] === _val) return;
+			if (typeof prefs[_app] != 'undefined')
+			{
+				var current = prefs[_app][_name];
+				var setting = _val;
+				// to compare objects we serialize them
+				if (typeof current == 'object') current = JSON.stringify(current);
+				if (typeof setting == 'object') setting = JSON.stringify(setting);
+				if (setting === current) return;
+			}
 
 			this.jsonq('EGroupware\\Api\\Framework::ajax_set_preference',[_app, _name, _val], _callback);
 
