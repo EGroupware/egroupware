@@ -50,13 +50,13 @@ class importexport_export_ui {
 		$preserv = array();
 
 		$et = new Etemplate(self::_appname. '.export_dialog');
-		$_appname = $_content['appname'] ? $_content['appname'] : $_GET['appname'];
-		$_definition = $_content['definition'] ? $_content['definition'] : $_GET['definition'];
-		$_plugin = $_content['plugin'] ? $_content['plugin'] : $_GET['plugin'];
+		$_appname = $_content['appname'] ? $_content['appname'] : $_REQUEST['appname'];
+		$_definition = $_content['definition'] ? $_content['definition'] : $_REQUEST['definition'];
+		$_plugin = $_content['plugin'] ? $_content['plugin'] : $_REQUEST['plugin'];
 		// Select all from context menu, means use all search results, not just selected
-		if($_GET['select_all'] == 'true') $_GET['selection'] = 'search';
-		$_selection = $_content['selection'] ? $_content['selection'] : $_GET['selection'];
-		if($_GET['selection'] || $_content['selection_passed']) $content['selection_passed'] = $preserv['selection_passed'] = true;
+		if($_REQUEST['select_all'] == 'true') $_REQUEST['selection'] = 'search';
+		$_selection = $_content['selection'] ? $_content['selection'] : $_REQUEST['selection'];
+		if($_REQUEST['selection'] || $_content['selection_passed']) $content['selection_passed'] = $preserv['selection_passed'] = true;
 
 		// Check global setting
 		if(!Api\Storage\Merge::is_export_limit_excepted()) {
@@ -65,7 +65,7 @@ class importexport_export_ui {
 				die(lang('Admin disabled exporting'));
 			}
 		}
-			//error_log(__FILE__.__FUNCTION__. '::$_GET[\'appname\']='. $_appname. ',$_GET[\'definition\']='. $_definition. ',$_GET[\'plugin\']='.$_plugin. ',$_GET[\'selection\']='.$_selection);
+			//error_log(__FILE__.__FUNCTION__. '::$_REQUEST[\'appname\']='. $_appname. ',$_REQUEST[\'definition\']='. $_definition. ',$_REQUEST[\'plugin\']='.$_plugin. ',$_REQUEST[\'selection\']='.$_selection);
 		// if appname is given and valid, list available definitions (if no definition is given)
 		$readonlys['appname'] = (!empty($_appname) && $GLOBALS['egw']->acl->check('run',1,$_appname));
 		$content['appname'] = $_appname;
@@ -89,10 +89,11 @@ class importexport_export_ui {
 			try {
 				$definition = new importexport_definition($identifier);
 			} catch (Exception $e) {
+				error_log(__CLASS__.__METHOD__.'()'.$e->getMessage());
 				// permission error
 				continue;
 			}
-			if ($title = $definition->get_title()) {
+			if (($title = $definition->get_title())) {
 				$sel_options['definition'][$definition->get_identifier()] = $title;
 			}
 			unset($definition);
@@ -418,7 +419,7 @@ class importexport_export_ui {
 	}
 
 	public function ajax_get_plugin_description($_plugin) {
-		$_respone = Api\Json\Response::get();
+		$_response = Api\Json\Response::get();
 
 		$plugin_object = new $_plugin;
 		if (is_a($plugin_object, 'importexport_iface_export_plugin')) {
