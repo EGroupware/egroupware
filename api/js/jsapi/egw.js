@@ -302,7 +302,17 @@
 				{
 					// Resize popup when et2 load is done
 					jQuery(node).on('load', function() {
-						window.setTimeout(resize_popup, 50);
+						if(typeof CKEDITOR !== 'undefined' && Object.keys(CKEDITOR.instances).length)
+						{
+							CKEDITOR.once('instanceReady',function() {
+								// Trigger a resize again once CKEDITOR is ready
+								window.resizeTo(egw_getWindowOuterWidth(), egw_getWindowOuterHeight() );
+							});
+						}
+						else
+						{
+							window.setTimeout(resize_popup, 50);
+						}
 					});
 				}
 				var et2 = new etemplate2(node, "EGroupware\\Api\\Etemplate::ajax_process_content");
