@@ -334,6 +334,7 @@ abstract class admin_cmd
 	 */
 	function delete()
 	{
+		$this->cancel_periodic_job();
 		if ($this->status != admin_cmd::scheduled) return false;
 
 		$this->status = admin_cmd::deleted;
@@ -1087,7 +1088,7 @@ abstract class admin_cmd
 	 *
 	 * @return boolean true if job was canceled, false otherwise
 	 */
-	protected function cancel_periodic_job()
+	public function cancel_periodic_job()
 	{
 		$async = new Api\Asyncservice();
 		$job_id = empty($this->async_job_id) ? self::PERIOD_ASYNC_ID_PREFIX.$this->id : $this->async_job_id;
