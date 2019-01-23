@@ -587,7 +587,10 @@ abstract class admin_cmd
 			}
 			foreach($labels as $class => &$label)
 			{
-				$label = $class::name();
+				if(class_exists($class))
+				{
+					$label = $class::name();
+				}
 			}
 
 			// sort them alphabetic

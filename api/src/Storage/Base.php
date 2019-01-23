@@ -1643,6 +1643,7 @@ class Base
 		}
 		if (!$order) $order = current($cols);
 
+		$this->search_return_iterator = true;
 		if (($search =& $this->search(array(),($key_col ? $key_col.',' : 'DISTINCT ').implode(',',$value_col),$order,'','',false,'AND',false,$filter)))
 		{
 			if (preg_match('/AS ([a-z_0-9]+)$/i',$key_col,$matches))
@@ -1670,6 +1671,7 @@ class Base
 				if ($data) $ret[$row[$key_col]] = $data;
 			}
 		}
+		$this->search_return_iterator = false;
 		return $cache[$cache_key] =& $ret;
 	}
 
