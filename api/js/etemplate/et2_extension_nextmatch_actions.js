@@ -120,7 +120,47 @@ function nm_action(_action, _senders, _target, _ids)
 			break;
 
 		case 'popup':
-			egw.open_link(url,target,_action.data.width+'x'+_action.data.height);
+
+			// Accoring to microsoft, IE 10/11 can only accept a url with 2083 caharacters
+			// therefore we need to send request to compose window with POST method
+			// instead of GET. We create a temporary <Form> and will post emails.
+			// ** WebServers and other browsers also have url length limit:
+			// Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k
+			if (url.length > 2083)
+			{
+				var $tmpForm = jQuery(document.createElement('form'));
+				var $tmpSubmitInput = jQuery(document.createElement('input')).attr({type:"submit"});
+				var params = url.split('&');
+				url = params[0];
+				for (var i=1;i<params.length;i++)
+				{
+					var values = params[i].split('=');
+					switch (values[0])
+					{
+						case 'cd':
+						case 'tz':
+						case 'menuaction':
+						case 'hasupdate':
+							url = url + '&' + values.join('=');
+							break;
+					}
+					$tmpForm.append(jQuery(document.createElement('input')).attr({name:values[0], type:"text", value: values[1]}));
+				}
+				var postRequest = true;
+			}
+
+			var popup_window = egw.open_link(url,target,_action.data.width+'x'+_action.data.height);
+
+			if (postRequest)
+			{
+				popup_window.name = popup_window.name ? popup_window.name : 'postRequest';
+				// Set the temporary form's attributes
+				$tmpForm.attr({target:popup_window.name, action:url, method:"post"})
+						.append($tmpSubmitInput).appendTo('body');
+				$tmpForm.submit();
+				// Remove the form after submit
+				$tmpForm.remove();
+			}
 			break;
 
 		case 'long_task':
