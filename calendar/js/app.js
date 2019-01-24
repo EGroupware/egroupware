@@ -2349,18 +2349,23 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				row_index = 0;
 
 				// Set rows that need it
+				var was_disabled = [];
 				grid.iterateOver(function(widget) {
-					var was_disabled = false;
+					was_disabled[row_index] = false;
 					if(row_index < value.length)
 					{
-						was_disabled = widget.options.disabled;
+						was_disabled[row_index] = widget.options.disabled;
 						widget.set_disabled(false);
 					}
 					else
 					{
 						widget.set_disabled(true);
-						return;
 					}
+					row_index++;
+				},this, et2_calendar_view);
+				row_index = 0;
+				grid.iterateOver(function(widget) {
+					if(row_index >= value.length) return;
 					if(widget.set_show_weekend)
 					{
 						widget.set_show_weekend(view.show_weekend(state.state));
@@ -2382,13 +2387,14 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						window.setTimeout(jQuery.proxy(widget.set_header_classes, widget),0);
 
 						// If disabled while the daycols were loaded, they won't load their events
-						for(var day = 0; was_disabled && day < widget.day_widgets.length; day++)
+						for(var day = 0; was_disabled[row_index] && day < widget.day_widgets.length; day++)
 						{
 							egw.dataStoreUID(
 									widget.day_widgets[day].registeredUID,
 								egw.dataGetUIDdata(widget.day_widgets[day].registeredUID).data
 							);
 						}
+						widget.set_owner(value[row_index].owner);
 
 						// Hide loader
 						widget.loader.hide();
