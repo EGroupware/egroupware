@@ -306,13 +306,12 @@
 						{
 							CKEDITOR.once('instanceReady',function() {
 								// Trigger a resize again once CKEDITOR is ready
-								window.resizeTo(egw_getWindowOuterWidth(), egw_getWindowOuterHeight() );
+								window.setTimeout(function() {
+									window.resizeTo(egw_getWindowOuterWidth(), egw_getWindowOuterHeight());
+								},100);
 							});
 						}
-						else
-						{
-							window.setTimeout(resize_popup, 50);
-						}
+						window.setTimeout(resize_popup, 50);
 					});
 				}
 				var et2 = new etemplate2(node, "EGroupware\\Api\\Etemplate::ajax_process_content");
