@@ -1776,7 +1776,7 @@ class Db
 
 		if ($cached_table !== $table || is_null($cached_columns))
 		{
-			$db = isset($this) ? $this : $GLOBALS['egw']->db;
+			$db = isset($this) && is_a($this, __CLASS__) ? $this : $GLOBALS['egw']->db;
 			$table_def = $db->get_table_definitions($app,$table);
 			$cached_columns = is_array($table_def) ? $table_def['fd'] : false;
 		}
