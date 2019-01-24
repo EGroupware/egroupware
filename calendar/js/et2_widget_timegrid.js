@@ -1610,7 +1610,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				if(!widget.disabled) rowCount++;
 			},this, et2_calendar_timegrid);
 			// Just us, show week number
-			if(rowCount == 1 || _owner.length == 1) _owner = false;
+			if(rowCount == 1 && _owner.length == 1 && _owner[0] == egw.user('account_id') || rowCount != 1) _owner = false;
 		}
 
 		if(typeof _owner == 'string' && isNaN(_owner))
