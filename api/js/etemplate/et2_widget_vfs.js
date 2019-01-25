@@ -1310,8 +1310,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		this.dialog.template.etemplate_exec_id = et2.etemplate_exec_id;
 
 		app.vfsSelectUI.et2 = this.dialog.template.widgetContainer;
-		// Keep the dialog always at the top, seems CKEDITOR dialogs have very
-		// high z-index set.
+		// Keep the dialog always at the top
 		this.dialog.div.parent().css({"z-index": 100000});
 		app.vfsSelectUI.vfsSelectWidget = this;
 		this.dialog.div.on('load', function(e) {

@@ -77,14 +77,6 @@ class filemanager_select
 		if (!is_array($content))
 		{
 			$content = array();
-			// recover from a failed upload in CkEditor, eg. > max_uploadsize
-			if ($_GET['failed_upload'] && $_GET['msg'])
-			{
-				$content['msg'] = $_GET['msg'];
-				$_GET['mode'] = 'open';
-				$_GET['method'] = 'ckeditor_return';
-				$_GET['CKEditorFuncNum'] = Api\Cache::getSession('filemanager','ckeditorfuncnum');
-			}
 			$content['mode'] = $_GET['mode'];
 			if (!in_array($content['mode'],array('open','open-multiple','saveas','select-dir')))
 			{
@@ -97,18 +89,6 @@ class filemanager_select
 			}
 			$content['name'] = (string)$_GET['name'];
 			$content['method'] = $_GET['method'];
-			if ($content['method'] == 'ckeditor_return')
-			{
-				if (isset($_GET['CKEditorFuncNum']) && is_numeric($_GET['CKEditorFuncNum']))
-				{
-					Api\Cache::setSession('filemanager','ckeditorfuncnum',
-						$content['ckeditorfuncnum'] = $_GET['CKEditorFuncNum']);
-				}
-				else
-				{
-					throw new Api\Exception\WrongParameter("chkeditor_return has been specified as a method but some parameters are missing or invalid.");
-				}
-			}
 			$content['id']     = $_GET['id'];
 			$content['label'] = isset($_GET['label']) ? $_GET['label'] : lang('Open');
 			if (($content['options-mime'] = isset($_GET['mime'])))
@@ -193,31 +173,16 @@ class filemanager_select
 							break;
 					}
 
-					if ($content['method'] && $content['method'] != 'ckeditor_return')
+					if ($content['method'] == 'download_url' && !is_array($files))
 					{
-						if ($content['method'] == 'download_url' && !is_array($files))
-						{
 							$files =  Vfs::download_url($files);
 							if ($files[0] == '/') $files = Egw::link($files);
-						}
-						else
-						{
-							$js = ExecMethod2($content['method'],$content['id'],$files);
-						}
 					}
-					else if ($content['method'] == 'ckeditor_return')
+					else
 					{
-						$download_url = Vfs::download_url(Vfs::concat($content['path'],$content['name']));
-						if ($download_url[0] == '/') $download_url = Egw::link($download_url);
-
-						$response = Api\Json\Response::get();
-						$response->apply('window.opener.CKEDITOR.tools.callFunction', array(
-							$content['ckeditorfuncnum'],
-							str_replace("'", "\\'", $download_url)
-						));
-						Framework::window_close();
-						exit();
+						$js = ExecMethod2($content['method'],$content['id'],$files);
 					}
+
 					if(Api\Json\Response::isJSONResponse())
 					{
 						$response = Api\Json\Response::get();
@@ -345,18 +310,6 @@ class filemanager_select
 			'options-mime' => $sel_options['mime'],
 			'old_path' => $content['path'],
 		);
-
-		if (isset($content['ckeditorfuncnum']))
-		{
-			$preserve['ckeditorfuncnum'] = $content['ckeditorfuncnum'];
-			$preserve['ckeditor'] = $content['ckeditor'];
-		}
-
-		// tell framework we need inline javascript for ckeditor_return
-		if ($content['method'] == 'ckeditor_return')
-		{
-			Api\Header\ContentSecurityPolicy::add('script-src', 'unsafe-inline');
-		}
 		$tpl->exec('filemanager.filemanager_select.select',$content,$sel_options,$readonlys,$preserve,2);
 	}
 

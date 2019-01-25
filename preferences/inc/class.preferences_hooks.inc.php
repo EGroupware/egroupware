@@ -108,12 +108,12 @@ class preferences_hooks
 			{
 				if (substr($prefs->{$type}['common']['rte_font_size'], -2) == 'px')
 				{
-					Api\Html\CkEditorConfig::font_size_from_prefs($prefs->{$type}, $prefs->{$type}['common']['rte_font_size'],
+					Api\Etemplate\Widget\HtmlArea::font_size_from_prefs($prefs->{$type}, $prefs->{$type}['common']['rte_font_size'],
 						$prefs->{$type}['common']['rte_font_unit']);
 					$prefs->save_repository(false, $type);
 				}
 			}
-			Api\Html\CkEditorConfig::font_size_from_prefs($GLOBALS['egw_info']['user']['preferences'],
+			Api\Etemplate\Widget\HtmlArea::font_size_from_prefs($GLOBALS['egw_info']['user']['preferences'],
 				$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'],
 				$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit']);
 		}
@@ -376,7 +376,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Default font',
 				'name'   => 'rte_font',
-				'values' => Api\Html\CkEditorConfig::$font_options,
+				'values' => Api\Etemplate\Widget\HtmlArea::$font_options,
 				'help'   => 'Automatically start with this font',
 				'xmlrpc' => True,
 				'admin'  => false,
@@ -386,7 +386,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Font size unit',
 				'name'   => 'rte_font_unit',
-				'values' => array_map('lang', Api\Html\CkEditorConfig::$font_unit_options),
+				'values' => array_map('lang', Api\Etemplate\Widget\HtmlArea::$font_unit_options),
 				'help'   => 'Unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.',
 				'default'=> 'pt',
 				'xmlrpc' => True,
@@ -397,7 +397,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Default font size',
 				'name'   => 'rte_font_size',
-				'values' => Api\Html\CkEditorConfig::$font_size_options,
+				'values' => Api\Etemplate\Widget\HtmlArea::$font_size_options,
 				'help'   => 'Automatically start with this font size',
 				'xmlrpc' => True,
 				'admin'  => false,

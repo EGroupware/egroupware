@@ -140,7 +140,7 @@ class Vfs extends File
 	}
 
 	/**
-	 * Upload via dragging images into ckeditor/htmlarea(tinymce)
+	 * Upload via dragging images into htmlarea(tinymce)
 	 */
 	public static function ajax_htmlarea_upload()
 	{
@@ -485,7 +485,7 @@ class Vfs extends File
 					++$n;
 				}
 			}
-			
+
 			foreach($favorites as $favorite)
 			{
 				$path = $favorite['state']['path'];

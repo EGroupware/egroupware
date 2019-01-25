@@ -13,7 +13,6 @@ audio effect	preferences	sl	Zvočni učinek
 audio effect enables|disables sound effects used in the theme	preferences	sl	Zvočni učinek omogoča | onemogoči zvočne učinke, ki se uporabljajo v predlogi
 automatically start with this font	preferences	sl	Samodejno zaženite s to pisavo
 automatically start with this font size	preferences	sl	Samodejno začnite s to velikostjo pisave
-bootstrap theme for ckeditor	preferences	sl	Predloga Bootstrap za CKEditor
 br	preferences	sl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sl	Spremeni geslo uporabniku tako, da podate staro in novo geslo. Če se operacija uspešno izvede, vrne TRUE, drugače pa FALSE.
 change password	preferences	sl	Spremeni geslo

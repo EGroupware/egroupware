@@ -180,9 +180,6 @@ class admin_mail
 	 */
 	public function add(array $content=array(), $msg='', $msg_type='success')
 	{
-		// otherwise we cant switch to ckeditor in edit
-		Api\Html\CkEditorConfig::set_csp_script_src_attrs();
-
 		$tpl = new Etemplate('admin.mailwizard');
 		if (empty($content['account_id']))
 		{

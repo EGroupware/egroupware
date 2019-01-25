@@ -111,9 +111,7 @@ class infolog_hooks
 			$file = Array(
 				'Site configuration' => Egw::link('/index.php',array(
 					'menuaction' => 'infolog.infolog_ui.admin',
-					// As long as CKEditor needs CSP exceptions, this needs to
-					// load in an iframe
-					'ajax' => 'false',
+					'ajax' => 'true',
 				)),
 				'Global Categories'  => Egw::link('/index.php',array(
 					'menuaction' => 'admin.admin_categories.index',

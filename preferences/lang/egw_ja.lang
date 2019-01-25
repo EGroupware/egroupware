@@ -13,7 +13,6 @@ audio effect	preferences	ja	オーディオ効果
 audio effect enables|disables sound effects used in the theme	preferences	ja	テーマで使うオーディオ効果を有効化/無効化します。
 automatically start with this font	preferences	ja	このフォントで開始
 automatically start with this font size	preferences	ja	このフォント・サイズで開始
-bootstrap theme for ckeditor	preferences	ja	Bootstrap Theme for CKEditor
 br	preferences	ja	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	ja	新旧パスワードを設定してパスワードを変更します（TRUE=成功, FALSE=失敗）。
 change password	preferences	ja	パスワード変更

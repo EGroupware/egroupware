@@ -13,7 +13,6 @@ audio effect	preferences	es-es	Efecto de audio
 audio effect enables|disables sound effects used in the theme	preferences	es-es	El efecto de audio habilita|deshabilita los efectos de sonido usados en el tema
 automatically start with this font	preferences	es-es	Comenzar automáticamente con esta tipografía
 automatically start with this font size	preferences	es-es	Comenzar automáticamente con este tamaño de tipografía
-bootstrap theme for ckeditor	preferences	es-es	Tema Bootstrap para CKEditor
 br	preferences	es-es	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	es-es	Cambia la contraseña de un usuario pasando la contraseña anterior y la nueva. Si es correcto, devuelve TRUE, y si no, FALSE.
 change password	preferences	es-es	Cambiar contraseña

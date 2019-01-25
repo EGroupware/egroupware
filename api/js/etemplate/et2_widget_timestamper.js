@@ -125,7 +125,7 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 			pos = input.selectionStart;
 		};
 
-		// If CKEDitor, update it
+		// If tinymce, update it
 		if(tinymce)
 		{
 			tinymce.insertContent(text);

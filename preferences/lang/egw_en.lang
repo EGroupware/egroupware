@@ -13,7 +13,6 @@ audio effect	preferences	en	Audio effect
 audio effect enables|disables sound effects used in the theme	preferences	en	Audio effect enables|disables sound effects used in the theme
 automatically start with this font	preferences	en	Automatically start with this font
 automatically start with this font size	preferences	en	Automatically start with this font size
-bootstrap theme for ckeditor	preferences	en	Bootstrap Theme for CKEditor
 br	preferences	en	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	en	Change a user password by passing the old and new passwords.  Returns TRUE on success, FALSE on failure.
 change password	preferences	en	Change password

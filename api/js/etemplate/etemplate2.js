@@ -36,7 +36,6 @@
 	et2_widget_favorites;
 	et2_widget_html;
 	et2_widget_htmlarea;
-	et2_widget_ckeditor;
 	et2_widget_tabs;
 	et2_widget_taglist;
 	et2_widget_timestamper;
@@ -646,8 +645,6 @@ etemplate2.prototype.autocomplete_fixer = function ()
 	if (form)
 	{
 		// Stop submit propagation in order to not fire other possible submit events
-		// for instance, CKEditor has its own submit event handler which we do not want to
-		// fire that on submit
 		form.onsubmit = function(e){e.stopPropagation();};
 
 		// Firefox give a security warning when transmitting to "about:blank" from a https site

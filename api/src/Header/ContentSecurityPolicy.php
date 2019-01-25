@@ -22,7 +22,7 @@ class ContentSecurityPolicy
 	/**
 	 * Additional attributes or urls for CSP beside always added "self"
 	 *
-	 *	- "script-src 'self' 'unsafe-eval'" allows only self and eval (eg. ckeditor), but forbids inline scripts, onchange, etc
+	 *	- "script-src 'self' 'unsafe-eval'" allows only self and eval, but forbids inline scripts, onchange, etc
 	 *	- "connect-src 'self'" allows ajax requests only to self
 	 *	- "style-src 'self' 'unsafe-inline'" allows only self and inline style, which we need
 	 *	- "frame-src 'self' manual.egroupware.org" allows frame and iframe content only for self or manual.egroupware.org

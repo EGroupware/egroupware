@@ -13,7 +13,6 @@ audio effect	preferences	cs	Zvukové efekty
 audio effect enables|disables sound effects used in the theme	preferences	cs	Povolí, nebo zakáže použití zvukových efektů použitých v tématu.
 automatically start with this font	preferences	cs	Automaticky začínat s tímto typem písma
 automatically start with this font size	preferences	cs	Automaticky začínat s touto velikostí písma
-bootstrap theme for ckeditor	preferences	cs	Výchozí téma pro FCK Editor
 br	preferences	cs	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	cs	Mění uživatelské heslo po zadání starého a nového hesla. Vrací TRUE je-li vše v pořádku, FALSE při chybě.
 change password	preferences	cs	Změna hesla

@@ -13,7 +13,6 @@ audio effect	preferences	fr	Effet audio
 audio effect enables|disables sound effects used in the theme	preferences	fr	Effets Audio : active|désactive les effets sonores utilisés dans le thème
 automatically start with this font	preferences	fr	Démarrer automatiquement avec cette police
 automatically start with this font size	preferences	fr	Démarrer automatiquement avec cette taille de police
-bootstrap theme for ckeditor	preferences	fr	Thème Bootstrap pour le CKEditor
 br	preferences	fr	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fr	Change un mot de passe en fournissant l'ancien et le nouveau mot de passe. Retourne TRUE en cas de réussite, FALSE en cas d'échec.
 change password	preferences	fr	Changer votre mot de passe

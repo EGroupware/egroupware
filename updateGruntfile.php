@@ -45,10 +45,6 @@ $exclude = array(
 	'api/js/jsapi/egw.js',
 	// TinyMCE is loaded separate before the bundle
 	'api/js/tinymce/tinymce.min.js',
-	// ckeditor is loaded on demand only
-	'vendor/egroupware/ckeditor/ckeditor.js',
-	'vendor/egroupware/ckeditor/ckeditor.config.js',
-	'vendor/egroupware/ckeditor/ckeditor.adapters/jquery.js',
 );
 
 foreach(Bundle::all() as $name => $files)

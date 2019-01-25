@@ -13,7 +13,6 @@ audio effect	preferences	de	Audio Effect
 audio effect enables|disables sound effects used in the theme	preferences	de	Audio Effekte (Sound) für das Thema aktivieren|deaktivieren.
 automatically start with this font	preferences	de	Startet automatisch mit dieser Schrift
 automatically start with this font size	preferences	de	Startet automatisch mit dieser Schriftgröße
-bootstrap theme for ckeditor	preferences	de	Bootstrap Schema für den CKEditor
 br	preferences	de	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	de	Ändern Sie Ihr Passwort, indem Sie Ihr altes und neues Passwort angeben. Es wird TRUE zurückgegeben für eine erfolgreiche Änderung und FALSE wenn es nicht erfolgreich war.
 change password	preferences	de	Passwort ändern

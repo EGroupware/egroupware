@@ -184,7 +184,6 @@ blue moono theme	common	cs	téma modrý měsíc
 blurtext	common	cs	rozmazaný text
 bold	common	cs	Tučné
 bolivia	common	cs	BOLÍVIE
-bootstrap theme for ckeditor	common	cs	výchozí téma pro fckeditor
 border	common	cs	Okraj
 border-line-thickness for the table-tag	common	cs	Tloušťka okraje pro tag tabulky
 bosnia and herzegovina	common	cs	BOSNA A HERCEGOVINA
@@ -637,7 +636,6 @@ html	common	cs	HTML
 html link to the current record	common	cs	HTML odkaz na současný záznam
 hungary	common	cs	MAĎARSKO
 iceland	common	cs	ISLAND
-icy-orange theme for ckeditor	common	cs	téma ledový pomeranč pro fckeditor
 id	common	cs	ID
 iespell not detected. click ok to go to download page.	common	cs	ieSpell nebyl nalezen. Klikněte na OK pro přesun na stránku ke stažení.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	cs	pokud je položka zakázaná, je zobrazena prázdná buňka tabulky pro (dočasné) odstranění položky/buňky
@@ -918,7 +916,6 @@ numbers	common	cs	čísla
 october	common	cs	říjen
 of	common	cs	z
 off	common	cs	vypnout
-office-2013 theme for ckeditor	common	cs	téma Office 2013 pro fckeditor
 ok	common	cs	OK
 old value	common	cs	Stará hodnota
 oman	common	cs	OMÁN

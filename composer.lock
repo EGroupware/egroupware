@@ -322,40 +322,6 @@
             "time": "2018-03-04 13:23:48"
         },
         {
-            "name": "egroupware/ckeditor",
-            "version": "v4.9.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/EGroupware/ckeditor.git",
-                "reference": "cd542e5b23f750f074a13228e1c8c783021ebd77"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/ckeditor/zipball/cd542e5b23f750f074a13228e1c8c783021ebd77",
-                "reference": "cd542e5b23f750f074a13228e1c8c783021ebd77",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+",
-                "LGPL-2.1+",
-                "MPL-1.1+"
-            ],
-            "authors": [
-                {
-                    "name": "CKSource",
-                    "homepage": "http://cksource.com"
-                }
-            ],
-            "description": "Compiled version of CKEditor customized for EGroupware project.",
-            "homepage": "https://github.com/EGroupware/ckeditor",
-            "time": "2018-05-08 13:42:32"
-        },
-        {
             "name": "egroupware/magicsuggest",
             "version": "2.1.5",
             "source": {

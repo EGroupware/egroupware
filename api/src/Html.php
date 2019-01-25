@@ -404,9 +404,6 @@ class Html
 	{
 		// this one is for testing how it will turn out, if you do not have the device or agent ready at your fingertips
 		// if (stripos($_SERVER[HTTP_USER_AGENT],'mozilla') !== false) return false;
-
-		// CKeditor will doublecheck availability for us, but its fallback does not look nice, and you will get
-		// no conversion of html content to plain text, so we provide a check for known USER_AGENTS to fail the test
 		return true;
 	}
 
@@ -538,7 +535,7 @@ tinymce.init({
 				_editor.setContent(value);
 			},
 			plugins: [
-				"print fullpage searchreplace autolink directionality "+
+				"print searchreplace autolink directionality "+
 				"visualblocks visualchars image link media template "+
 				"codesample table charmap hr pagebreak nonbreaking anchor toc "+
 				"insertdatetime advlist lists textcolor wordcount imagetools "+

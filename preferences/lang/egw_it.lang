@@ -13,7 +13,6 @@ audio effect	preferences	it	Avviso sonoro
 audio effect enables|disables sound effects used in the theme	preferences	it	L'impostazione dell'effetto sonoro abilita/disabilita i suoni usati nel tema
 automatically start with this font	preferences	it	Comincia automaticamente con questo font
 automatically start with this font size	preferences	it	Comincia automaticamente con questa dimensione font
-bootstrap theme for ckeditor	preferences	it	Tema Bootstrap per l'editor ckeditor
 br	preferences	it	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	it	Modifica la password di un utente passando la vecchia e nuova password. Restituisce TRUE se ha successo, FALSE se fallisce.
 change password	preferences	it	Cambia password

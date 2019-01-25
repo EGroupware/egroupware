@@ -7590,8 +7590,6 @@ form[id^="wiki-"] .dialogHeadbar {
     /**************************************/
     /*************** SLIDESWITCH **********/
     /***************************************/
-    /*************** CKEDITOR **************/
-    /***************************************/
   }
   body .egw_fw_mobile_popup_container {
     background: transparent;
@@ -8896,20 +8894,6 @@ form[id^="wiki-"] .dialogHeadbar {
   body .et2_checkbox_slideSwitch.notification_check input {
     width: 100% !important;
     height: 100% !important;
-  }
-  body .cke_inner .cke_toolbox .cke_toolbox_main {
-    height: 30px;
-    white-space: nowrap;
-    display: inline-block;
-    overflow-y: hidden;
-    width: 100%;
-  }
-  body .cke_inner .cke_toolbox .cke_toolbox_main .cke_toolbar {
-    display: inline-block;
-    float: none;
-  }
-  body .cke_inner .cke_toolbox .cke_toolbox_collapser {
-    height: auto;
   }
   body .entry_id {
     position: absolute;

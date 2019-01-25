@@ -22,6 +22,54 @@ use EGroupware\Api;
 class HtmlArea extends Etemplate\Widget
 {
 	/**
+	 * font families
+	 * @var type array
+	 */
+	public static $font_options = array(
+		'arial, helvetica, sans-serif' => 'Arial',
+		'Comic Sans MS, cursive' => 'Comic Sans MS',
+		'Courier New, Courier, monospace' => 'Courier New',
+		'Georgia, serif' => 'Georgia',
+		'Lucida Sans Unicode, Lucida Grande, sans-serif' => 'Lucida Sans Unicode',
+		'Tahoma, Geneva, sans-serif' => 'Tahoma',
+		'times new roman, times, serif' => 'Times New Roman',
+		'Trebuchet MS, Helvetica, sans-serif' => 'Trebuchet MS',
+		'Verdana, Geneva, sans-serif' => 'Verdana'
+	);
+
+	/**
+	 * font size options
+	 * @var type array
+	 */
+	public static $font_size_options = array(
+		8  => '8',
+		9  => '9',
+		10 => '10',
+		11 => '11',
+		12 => '12',
+		14 => '14',
+		16 => '16',
+		18 => '18',
+		20 => '20',
+		22 => '22',
+		24 => '24',
+		26 => '26',
+		28 => '28',
+		36 => '36',
+		48 => '48',
+		72 => '72',
+	);
+
+	/**
+	 * font unit options
+	 * @var type array
+	 */
+	public static $font_unit_options = array(
+		'pt' => 'pt: points (1/72 inch)',
+		'px' => 'px: display pixels',
+	);
+
+	/**
 	 * Validate input
 	 *
 	 * Input is run throught HTMLpurifier, to make sure users can NOT enter javascript or other nasty stuff (XSS!).
