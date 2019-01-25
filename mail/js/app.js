@@ -4306,7 +4306,7 @@ app.classes.mail = AppJS.extend(
 	edit_account: function(_action, _senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
-		this.egw.open_link('mail.mail_wizard.edit&acc_id='+acc_id, '_blank', '720x500');
+		this.egw.open_link('mail.mail_wizard.edit&acc_id='+acc_id, '_blank', '740x500');
 	},
 
 	/**
