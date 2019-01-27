@@ -29,6 +29,7 @@ use EGroupware\Api;
  * 	'no_cat'         => True// I  disable the cat-selectbox
  *	'cat_app'        =>     // I  application the cat's should be from, default app in get_rows
  *	'cat_is_select'  =>     // I  true||'no_lang' use selectbox instead of category selection, default null
+ *	'cat_is_multiple'=>     // I  Use muliple select (tags=true) for category filter, default false
  * 	'template'       =>		// I  template to use for the rows, if not set via options
  * 	'header_left'    =>		// I  template to show left of the range-value, left-aligned (optional)
  * 	'header_right'   =>		// I  template to show right of the range-value, right-aligned (optional)

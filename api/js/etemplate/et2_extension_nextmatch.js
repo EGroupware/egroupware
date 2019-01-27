@@ -2489,12 +2489,13 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 
 		// Add category
 		if(!settings.no_cat) {
+			var multiple = (this.nextmatch.options.settings.cat_is_multiple ? true : false );
 			if (typeof settings.cat_id_label == 'undefined') settings.cat_id_label = '';
 			this.category = this._build_select('cat_id', settings.cat_is_select ?
 			'select' : 'select-cat', settings.cat_id, settings.cat_is_select !== true, {
-				multiple: false,
+				multiple: multiple,
 				tags: true,
-				class: "select-cat"
+				class: "select-cat et2_selectbox_single_row"
 			});
 		}
 
