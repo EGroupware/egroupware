@@ -392,12 +392,12 @@ abstract class admin_cmd
 			}
 		}
 		// install an async job, if we saved a scheduled job
-		if ($this->status == admin_cmd::scheduled)
+		if ($this->status == admin_cmd::scheduled && empty($this->rrule))
 		{
 			admin_cmd::_set_async_job();
 		}
 		// schedule periodic execution, if we have an rrule
-		elseif (!empty($this->rrule))
+		elseif (!empty($this->rrule) && $this->status != admin_cmd::deleted)
 		{
 			$this->set_periodic_job();
 		}
