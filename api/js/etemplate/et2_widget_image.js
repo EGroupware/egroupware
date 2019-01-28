@@ -525,7 +525,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 	{
 		this._super.apply(this,arguments);
 		var self = this;
-		if (this.options.editable)
+		if (this.options.contact_id && this.options.editable)
 		{
 			egw(window).json(
 				'addressbook.addressbook_ui.ajax_noPhotoExists',
