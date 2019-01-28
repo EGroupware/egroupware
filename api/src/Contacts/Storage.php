@@ -603,6 +603,10 @@ class Storage
 	*/
 	function read($contact_id)
 	{
+		if (empty($contact_id))
+		{
+			return false;	// no need to pass to backend, will fail anyway
+		}
 		if (!is_array($contact_id) && substr($contact_id,0,8) == 'account:')
 		{
 			$contact_id = array('account_id' => (int) substr($contact_id,8));
