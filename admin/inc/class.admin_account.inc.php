@@ -183,6 +183,8 @@ class admin_account
 
 			// only record real changes
 			if (isset($content['old_account']) &&
+				// currently LDAP (and probably also AD and UCS) can not skip unchanged fields!
+				get_class($GLOBALS['egw']->accounts->backend) === 'EGroupware\\Api\\Accounts\\Sql' &&
 				(!isset($content[$c_name]) && $c_name !== 'account_expires' || // account_expires is not set when empty!
 				$content['old_account'][$a_name] == $content[$c_name]))
 			{
