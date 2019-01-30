@@ -950,10 +950,10 @@ class Ldap
 	{
 		$name = Api\Ldap::quote(Api\Translation::convert($_name,Api\Translation::charset(),'utf-8'));
 
-		if ($which == 'account_lid' && $account_type !== 'u') // groups only support account_lid
+		if (in_array($which, array('account_lid','account_email')) && $account_type !== 'u') // groups only support account_(lid|email)
 		{
-
-			$sri = ldap_search($this->ds, $this->group_context, '(&(cn=' . $name . ')(objectclass=posixgroup))', array('gidNumber'));
+			$attr = $which == 'account_lid' ? 'cn' : static::MAIL_ATTR;
+			$sri = ldap_search($this->ds, $this->group_context, '(&('.$attr.'=' . $name . ')(objectclass=posixgroup))', array('gidNumber'));
 			$allValues = ldap_get_entries($this->ds, $sri);
 
 			if (@$allValues[0]['gidnumber'][0])
@@ -966,7 +966,8 @@ class Ldap
 			'account_email' => static::MAIL_ATTR,
 			'account_fullname' => 'cn',
 		);
-		if (!isset($to_ldap[$which]) || $account_type === 'g') {
+		if (!isset($to_ldap[$which]) || $account_type === 'g')
+		{
 		    return False;
 		}
 
