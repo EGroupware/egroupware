@@ -196,7 +196,7 @@ class Credentials
 			// Remove special x char added to the end for \0 trimming escape.
 			if ($type == self::SMIME && substr($password, -1) === 'x') $password = substr($password, 0, -1);
 
-			foreach(self::$type2prefix as $pattern => $prefix)
+			foreach(static::$type2prefix as $pattern => $prefix)
 			{
 				if ($row['cred_type'] & $pattern)
 				{
@@ -807,7 +807,7 @@ class Credentials
 
 	/**
 	 * Get the current Db object, from either setup or egw
-	 * 
+	 *
 	 * @return Db
 	 */
 	static public function get_db()

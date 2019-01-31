@@ -213,16 +213,12 @@ class StreamWrapper implements StreamWrapperIface
 			$path = self::symlinkCache_resolve($path,$do_symlink);
 		}
 		// setting default user, passwd and domain, if it's not contained int the url
-		static $defaults=null;
-		if (is_null($defaults))
-		{
-			$defaults = array(
-				'user' => $GLOBALS['egw_info']['user']['account_lid'],
-				'pass' => urlencode($GLOBALS['egw_info']['user']['passwd']),
-				'host' => $GLOBALS['egw_info']['user']['domain'],
-				'home' => str_replace(array('\\\\','\\'),array('','/'),$GLOBALS['egw_info']['user']['homedirectory']),
-			);
-		}
+		$defaults = array(
+			'user' => $GLOBALS['egw_info']['user']['account_lid'],
+			'pass' => urlencode($GLOBALS['egw_info']['user']['passwd']),
+			'host' => $GLOBALS['egw_info']['user']['domain'],
+			'home' => str_replace(array('\\\\','\\'),array('','/'),$GLOBALS['egw_info']['user']['homedirectory']),
+		);
 		$parts = array_merge(Vfs::parse_url($path),$defaults);
 		if (!$parts['host']) $parts['host'] = 'default';	// otherwise we get an invalid url (scheme:///path/to/something)!
 

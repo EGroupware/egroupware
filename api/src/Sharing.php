@@ -105,6 +105,7 @@ class Sharing
         $path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
 		list(, $token/*, $path*/) = preg_split('|[/?]|', $path_info, 3);
 
+		list($token, $pw_session) = explode(':', $token);
 		return $token;
 	}
 
@@ -523,6 +524,9 @@ class Sharing
 		$table_def = static::$db->get_table_definitions(false,static::TABLE);
 		$extra = array_intersect_key($extra, $table_def['fd']);
 
+		// Check if path is mounted somewhere that needs a password
+		static::path_needs_password($path);
+
 		// check if file has been shared before, with identical attributes
 		if (($share = static::$db->select(static::TABLE, '*', $extra+array(
 				'share_path' => $path,
@@ -775,5 +779,33 @@ class Sharing
 		if (is_array($share)) $share = $share['share_token'];
 
 		return Framework::getUrl(Framework::link('/share.php')).'/'.$share;
+	}
+
+	/**
+	 * Check to see if the path has a password required for it's mounting (eg: Samba)
+	 * we need to deal with it specially.  In general, we just throw an exception
+	 * if the mount has $pass in it.
+	 *
+	 * @param string $path
+	 *
+	 * @throws WrongParameter if you try to share a path that needs a password
+	 */
+	public static function path_needs_password($path)
+	{
+		$mounts = array_reverse(Vfs::mount());
+		$parts = Vfs::parse_url($path);
+
+		foreach($mounts as $mounted => $url)
+		{
+			if(($mounted == $parts['path'] || $mounted.'/' == substr($parts['path'],0,strlen($mounted)+1)) && strpos($url, '$pass') !== FALSE)
+			{
+				throw new Exception\WrongParameter(
+					'Cannot share a file that needs a password. (' .
+					$path . ' mounted from '. $url . ')'
+				);
+			}
+		}
+
+		return false;
 	}
 }
