@@ -1613,6 +1613,8 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			if(rowCount == 1 && _owner.length == 1 && _owner[0] == egw.user('account_id') || rowCount != 1) _owner = false;
 		}
 
+		var day_count = this.day_list.length ? this.day_list.length :
+				this._calculate_day_list(this.options.start_date, this.options.end_date, this.options.show_weekend).length;
 		if(typeof _owner == 'string' && isNaN(_owner))
 		{
 			this.set_label('');
@@ -1621,7 +1623,10 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			// Label is empty, but give extra space for the owner name
 			this.div.removeClass('calendar_TimeGridNoLabel');
 		}
-		else if (!_owner || typeof _owner == 'object' && _owner.length > 1)
+		else if (!_owner || typeof _owner == 'object' && _owner.length > 1 ||
+			// Single owner, single day
+			_owner.length === 1 && day_count === 1
+		)
 		{
 			// Don't show owners if more than one, show week number
 			this.owner.set_value('');
