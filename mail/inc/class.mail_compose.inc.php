@@ -3592,6 +3592,7 @@ class mail_compose
 			$filter['cols_to_search'] = array('n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id', 'etag');
 			$cols = array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id', 'etag');
 			$contacts = $contacts_obj->search($search_str, $cols, 'n_fn', '', '%', false, 'OR', array(0,100), $filter);
+			$cfs_type_email = Api\Storage\Customfields::get_email_cfs('addressbook');
 			// additionally search the accounts, if the contact storage is not the account storage
 			if ($showAccounts && $contacts_obj->so_accounts)
 			{
@@ -3616,7 +3617,8 @@ class mail_compose
 
 		if(is_array($contacts)) {
 			foreach($contacts as $contact) {
-				foreach(array($contact['email'],$contact['email_home']) as $email) {
+				$cf_emails = (array)array_values(array_values($contacts_obj->read_customfields($contact['id'], $cfs_type_email))[0]);
+				foreach(array_merge(array($contact['email'],$contact['email_home']), $cf_emails) as $email) {
 					// avoid wrong addresses, if an rfc822 encoded address is in addressbook
 					//$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
 					$rfcAddr = Mail::parseAddressList($email);

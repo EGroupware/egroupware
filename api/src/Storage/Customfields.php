@@ -503,6 +503,28 @@ class Customfields implements \IteratorAggregate
 	}
 
 	/**
+	 * Return names of custom fields containing url-email
+	 *
+	 * @param string $app
+	 * @return array of url-email fields
+	 */
+	public static function get_email_cfs($app)
+	{
+		$fields = array();
+		if (($cfs = self::get($app, true)))
+		{
+			foreach($cfs as $name => $data)
+			{
+				if ($data['type'] == 'url-email')
+				{
+					$fields[] = $name;
+				}
+			}
+		}
+		return $fields;
+	}
+
+	/**
 	 * Initialise our db
 	 *
 	 * We use a reference here (no clone), as we no longer use Api\Db::row() or Api\Db::next_record()!
