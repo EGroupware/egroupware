@@ -1,3 +1,4 @@
+
 /**
  * EGroupware: CSS with less preprocessor
 
@@ -227,4 +228,19 @@ select#admin-mailaccount_ident_id {
     filter: initial;
     /* IE 6-9 */
   }
+
+/* asig_fkar_patch ===> */
+
+#admin-mailaccount-permissions_ews_tabs .th {
+  border-bottom: none;
+}
+#admin-mailaccount-permissions_ews_tabs .et2_tabheader {
+  display: none;
+}
+#admin-mailaccount-permissions_ews_tabs #admin-mailaccount-permissions_ews_permissions .th {
+  visibility: collapse;
+}
+
+/* asig_fkar_patch <=== */
+
 }
