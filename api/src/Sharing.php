@@ -105,7 +105,7 @@ class Sharing
         $path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
 		list(, $token/*, $path*/) = preg_split('|[/?]|', $path_info, 3);
 
-		list($token, $pw_session) = explode(':', $token);
+		list($token) = explode(':', $token);
 		return $token;
 	}
 
