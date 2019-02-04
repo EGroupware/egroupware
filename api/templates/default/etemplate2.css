@@ -938,7 +938,7 @@ div.et2_vfsPath li {
     padding-top: 6px;
 	color: #26537C;
 	border-radius: 5px 0px 0px 5px;
-	cursor: url(images/mouse_scroll.png) 20 1 , pointer;
+	cursor: url(images/mouse_scroll_lr.svg) 20 1 , pointer;
 }
 li.vfsPath.et2_clickable:last-child:hover {
     background: #c0c0c054;
@@ -3085,5 +3085,5 @@ tr.disableIfNoEPL {
 .inactive_blur > * {opacity: 0.4; filter:blur(2px); pointer-events: none;}
 
 .et2_editable {
-	cursor: url(images/cursor_editable.png), pointer;
+	cursor: url(images/cursor_editable.svg), pointer;
 }
