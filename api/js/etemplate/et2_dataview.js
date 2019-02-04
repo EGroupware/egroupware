@@ -170,7 +170,10 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 			_w = _w - (this.thead.find('tr').outerWidth() - this.thead.find('tr').innerWidth());
 
 			// Rebuild the column stylesheets
-			this.columnMgr.setTotalWidth(_w - this.scrollbarWidth);
+			/* asig_fkar_patch ===> */
+			/* "-10" added by asig for next match to fit in iframe */
+			this.columnMgr.setTotalWidth(_w - this.scrollbarWidth - 10);
+			/* asig_fkar_patch <=== */
 			this._updateColumns();
 		}
 
