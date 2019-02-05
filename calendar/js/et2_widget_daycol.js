@@ -69,6 +69,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			.css('width',this.options.width)
 			.css('left', this.options.left);
 		this.title = jQuery(document.createElement('div'))
+			.addClass('et2_clickable et2_link')
 			.appendTo(this.header);
 		this.user_spacer = jQuery(document.createElement('div'))
 			.addClass("calendar_calDayColHeader_spacer")
@@ -245,7 +246,8 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 				jQuery.datepicker.formatDate('d',formatDate));
 		}
 		this.title
-			.attr("data-date", new_date);
+			.attr("data-date", new_date)
+			.toggleClass('et2_label', !!this.options.label);
 		this.header
 			.attr('data-date',new_date)
 			.attr('data-whole_day',true);
