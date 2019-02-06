@@ -95,6 +95,12 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		"other": {
 			"ignore": true,
 			"type": "any"
+		},
+		value_class: {
+			name: "Value class",
+			type: "string",
+			default: "",
+			description: "Allow to set a custom css class combined with selected value. (e.g. cat_23)"
 		}
 	},
 
@@ -298,7 +304,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 					option.addClass('et2_country-select flag-'+_value.toLowerCase())
 					break;
 			}
-
+			if (this.value_class != '') option.addClass(this.value_class+_value);
 		}
 		if (typeof _title != "undefined" && _title)
 		{
@@ -545,13 +551,14 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			this.set_select_options(this.options.select_options);
 		}
 		// select-cat set/unset right cat_ color for selected value
-		if (this._type == 'select-cat' && this.options.tags) {
-			var chosen = this.input.siblings();
-			this.input.removeClass('cat_'+this._oldValue);
-			this.input.addClass('cat_'+this.value);
+		if ((this._type == 'select-cat' || this.value_class) && this.options.tags) {
+			var chosen = this.input.next();
+			var prefix_c = this.value_class ? this.value_class : 'cat_';
+			this.input.removeClass(prefix_c+this._oldValue);
+			this.input.addClass(prefix_c+this.value);
 			if (chosen.length > 0) {
-				chosen.removeClass('cat_'+this._oldValue);
-				chosen.addClass('cat_'+this.value);
+				chosen.removeClass(prefix_c+this._oldValue);
+				chosen.addClass(prefix_c+this.value);
 			}
 		}
 		if (this._type == 'select-country' && this.options.tags)

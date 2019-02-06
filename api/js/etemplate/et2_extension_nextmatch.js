@@ -2494,7 +2494,8 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 			'select' : 'select-cat', settings.cat_id, settings.cat_is_select !== true, {
 				multiple: false,
 				tags: true,
-				class: "select-cat"
+				class: "select-cat",
+				value_class: settings.cat_id_class
 			});
 		}
 
@@ -2509,7 +2510,8 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 			settings.filter2_no_lang, {
 				multiple: false,
 				tags: settings.filter2_tags,
-				class: "select-cat"
+				class: "select-cat",
+				value_class: settings.filter2_class
 			});
 		}
 
