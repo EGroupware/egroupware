@@ -303,10 +303,10 @@ class addressbook_bo extends Api\Contacts
 			}
 			else
 			{
-				$criteria['contact_email'][] = $recipient = strtolower($recipient);
+				$criteria['contact_email_home'][] = $criteria['contact_email'][] = $recipient = strtolower($recipient);
 			}
 		}
-		foreach($this->search($criteria, array('account_id', 'contact_email', 'contact_pubkey', 'contact_id'),
+		foreach($this->search($criteria, array('account_id', 'contact_email', 'contact_email_home', 'contact_pubkey', 'contact_id'),
 			'', '', '', false, 'OR', false, null) as $contact)
 		{
 			// first check for file and second for pubkey field (LDAP, AD or old SQL)
@@ -315,7 +315,14 @@ class addressbook_bo extends Api\Contacts
 				$contact['email'] = strtolower($contact['email']);
 				if (empty($criteria['account_id']) || in_array($contact['email'], $recipients))
 				{
-					$result[$contact['email']] = $content;
+					if (in_array($contact['email_home'], $recipients))
+					{
+						$result[$contact['email_home']] = $content;
+					}
+					else
+					{
+						$result[$contact['email']] = $content;
+					}
 				}
 				else
 				{

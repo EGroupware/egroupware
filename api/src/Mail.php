@@ -7552,8 +7552,9 @@ class Mail
 				'signed'		=> true
 			));
 			// check for email address if both signer email address and
-			// email address of sender are the same.
-			if (is_array($from) && strcasecmp($from[0], $cert->email) != 0)
+			// email address of sender are the same. It also takes  subjectAltName emails into account.
+			if (is_array($from) && strcasecmp($from[0], $cert->email) != 0
+					&& stripos($metadata['certDetails']['extensions']['subjectAltName'],$from[0]) === false)
 			{
 				$metadata['unknownemail'] = true;
 				$metadata['msg'] .= ' '.lang('Email address of signer is different from the email address of sender!');
