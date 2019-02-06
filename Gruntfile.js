@@ -196,13 +196,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_widget_script.js",
 						"api/js/etemplate/et2_core_legacyJSFunctions.js",
 						"api/js/etemplate/etemplate2.js",
-						"api/js/etemplate/vfsSelectUI.js",
-						/* asig_fkar_patch ===> */
-						"api/js/etemplate/et2_widget_currency.js",
-						"/vendor/vakata/jstree/dist/jstree.js",
-						"api/js/etemplate/et2_widget_actree.js"
-						/* asig_fkar_patch <=== */
-
+						"api/js/etemplate/vfsSelectUI.js"
 					]
 				}
 			},
