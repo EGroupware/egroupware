@@ -8,7 +8,7 @@
 	"config": {
 	},
 	"require": {
-		"php": ">=7.1,<=8.0.0alpha1",
+		"php": ">=7.0,<=8.0.0alpha1",
 		"fxp/composer-asset-plugin":"1.2.2",
 		"pear-pear.horde.org/horde_imap_client": "^2.29.7",
 		"pear-pear.horde.org/horde_nls": "^2.0.3",
