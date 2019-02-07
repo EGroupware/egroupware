@@ -293,9 +293,21 @@ abstract class Merge
 		foreach($ignore_acl ? Customfields::get('addressbook', true) : $this->contacts->customfields as $name => $field)
 		{
 			$name = '#'.$name;
+			if(!$contact[$name])
+			{
+				$replacements['$$'.($prefix ? $prefix.'/':'').$name] = '';
+				continue;
+			}
+			// Format date cfs per user Api\Preferences
+			if($this->mimetype !== 'application/x-yaml' && $contact[$name] &&
+					($field['type'] == 'date' || $field['type'] == 'date-time'))
+			{
+				$this->date_fields[] = '#'.$name;
+				$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = Api\DateTime::to($contact[$name], $field['type'] == 'date' ? true : '');
+			}
 			$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] =
 				// use raw data for yaml, no user-preference specific formatting
-				$this->mimetype == 'application/x-yaml' ? (string)$contact[$name] :
+				$this->mimetype == 'application/x-yaml' || $field['type'] == 'htmlarea' ? (string)$contact[$name] :
 				Customfields::format($field, (string)$contact[$name]);
 		}
 
@@ -895,7 +907,7 @@ abstract class Merge
 			// some general replacements: current user, date and time
 			if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
 			{
-				$replacements += $this->contact_replacements($user,'user');
+				$replacements += $this->contact_replacements($user,'user', false, $content);
 				$replacements['$$user/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'account_primary_group'));
 			}
 			$replacements['$$date$$'] = Api\DateTime::to('now',true);

@@ -57,7 +57,7 @@ class Merge extends Api\Storage\Merge
 	 */
 	protected function get_replacements($id,&$content=null,$ignore_acl=false)
 	{
-		if (!($replacements = $this->contact_replacements($id,'',$ignore_acl)))
+		if (!($replacements = $this->contact_replacements($id,'',$ignore_acl, $content)))
 		{
 			return false;
 		}
