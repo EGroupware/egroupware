@@ -23,6 +23,8 @@ find ${@-.} -name '*.php' -exec ${PHP:-php} -l {} \; 2>&1 | \
 	# exclude several known problems, to be able to find new ones
 	# exclude old / not used PEAR Autoloader giving PHP Fatal error:  Method PEAR_Autoloader::__call() must take exactly 2 arguments
 	grep -v 'vendor/pear-pear.php.net/PEAR/PEAR/Autoloader.php' | \
+	# exclude PEAR tests giving PHP Parse error:  syntax error, unexpected 'new' (T_NEW)
+	grep -v 'vendor/pear/pear/tests/' | \
 	# exclude composer conditional included autoload_static.php, as it requires PHP 5.6+
 	grep -v 'vendor/composer/autoload_static.php' | \
 	# exclude vendor/phpunit it shows many PHP Parse errors in PHP < 7.0
