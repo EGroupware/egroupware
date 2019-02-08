@@ -1583,7 +1583,7 @@ div.message.floating {
 	border-left: 6px solid transparent;
 }
 .egwGridView_scrollarea tr.row_category > td:first-child,
-.select-cat li{
+.select-cat li,.et2_selectbox .chzn-results li, .et2_selectbox ul.chzn-choices li.search-choice{
 	border-left: 6px solid transparent;
 }
 .et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.row_category td:first-child > div {

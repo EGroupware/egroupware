@@ -10,6 +10,8 @@ matrix:
   fast_finish: true
   allow_failures:
     - php: master
+    # allow 7.3 to fail, as pear.php.net is down and it has no cache with missing PEAR packages yet :(
+    - php: 7.3
 
 services:
   - memcached

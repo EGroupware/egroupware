@@ -580,6 +580,14 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			// Value must be a real Array, not an object
 			this.input.val(typeof _value == 'object' && _value != null ? jQuery.map(_value,function(value,index){return [value];}) : _value);
 			this.input.trigger("liszt:updated");
+			var self = this;
+			if (this._type == 'listbox' && this.value_class != '')
+			{
+				var chosen = this.input.next();
+				chosen.find('.search-choice-close').each((i,v)=>{
+					jQuery(v).parent().addClass(self.value_class + self.options.select_options[v.rel]['value']);
+				});
+			}
 			this.value = _value;
 			return;
 		}
@@ -771,6 +779,11 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 
 			// Properly size chosen, even if on a hidden tab
 			var size = egw.getHiddenDimensions(this.input);
+			if (this._type == 'listbox' && this.value_class != '')
+			{
+				var self = this;
+				this.input.find('option').each((i,v) => {jQuery(v).addClass(self.value_class+v.value)});
+			}
 			this.input.chosen({
 				inherit_select_classes: true,
 				search_contains: true,
