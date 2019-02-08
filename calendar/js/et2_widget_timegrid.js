@@ -944,6 +944,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 			// Position
 			day.set_left((day_width * i) + 'px');
+			day.title.removeClass('blue_title');
 			if(this.daily_owner)
 			{
 				// Each 'day' is the same date, different user
@@ -951,11 +952,21 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				day.set_date(this.day_list[0], false);
 				day.set_owner(this.options.owner[i]);
 				day.set_label(this._get_owner_name(this.options.owner[i]));
+				day.title.addClass('blue_title');
 			}
 			else
 			{
-				// Go back to self-calculated date by clearing the label
-				day.set_label('');
+				// Show user name in day header even if only one
+				if(this.day_list.length === 1)
+				{
+					day.set_label(this._get_owner_name(this.options.owner));
+					day.title.addClass('blue_title');
+				}
+				else
+				{
+					// Go back to self-calculated date by clearing the label
+					day.set_label('');
+				}
 				day.set_id(this.day_list[i]);
 				day.set_date(this.day_list[i], this.value[this.day_list[i]] || false);
 				day.set_owner(this.options.owner);
@@ -1610,9 +1621,11 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				if(!widget.disabled) rowCount++;
 			},this, et2_calendar_timegrid);
 			// Just us, show week number
-			if(rowCount == 1 || _owner.length == 1) _owner = false;
+			if(rowCount == 1 && _owner.length == 1 && _owner[0] == egw.user('account_id') || rowCount != 1) _owner = false;
 		}
 
+		var day_count = this.day_list.length ? this.day_list.length :
+				this._calculate_day_list(this.options.start_date, this.options.end_date, this.options.show_weekend).length;
 		if(typeof _owner == 'string' && isNaN(_owner))
 		{
 			this.set_label('');
@@ -1621,7 +1634,10 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			// Label is empty, but give extra space for the owner name
 			this.div.removeClass('calendar_TimeGridNoLabel');
 		}
-		else if (!_owner || typeof _owner == 'object' && _owner.length > 1)
+		else if (!_owner || typeof _owner == 'object' && _owner.length > 1 ||
+			// Single owner, single day
+			_owner.length === 1 && day_count === 1
+		)
 		{
 			// Don't show owners if more than one, show week number
 			this.owner.set_value('');
