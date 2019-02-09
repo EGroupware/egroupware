@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b4b995d8bbe2321ab01c7ac08ef711e",
+    "content-hash": "5e0a8dbafab54221dead2232b5a37a1e",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -439,16 +439,16 @@
         },
         {
             "name": "fxp/composer-asset-plugin",
-            "version": "v1.2.2",
+            "version": "v1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fxpio/composer-asset-plugin.git",
-                "reference": "60bc94db574103dfc73acb907fa79c6dfc86c96e"
+                "reference": "0d07328eef6e6f3753aa835fd2faef7fed1717bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fxpio/composer-asset-plugin/zipball/60bc94db574103dfc73acb907fa79c6dfc86c96e",
-                "reference": "60bc94db574103dfc73acb907fa79c6dfc86c96e",
+                "url": "https://api.github.com/repos/fxpio/composer-asset-plugin/zipball/0d07328eef6e6f3753aa835fd2faef7fed1717bf",
+                "reference": "0d07328eef6e6f3753aa835fd2faef7fed1717bf",
                 "shasum": ""
             },
             "require": {
@@ -456,19 +456,22 @@
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "composer/composer": "^1.0.0"
+                "composer/composer": "^1.6.0"
             },
             "type": "composer-plugin",
             "extra": {
                 "class": "Fxp\\Composer\\AssetPlugin\\FxpAssetPlugin",
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
                     "Fxp\\Composer\\AssetPlugin\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -491,7 +494,7 @@
                 "npm",
                 "package"
             ],
-            "time": "2016-10-12T08:03:45+00:00"
+            "time": "2018-07-02T11:37:17+00:00"
         },
         {
             "name": "npm-asset/as-jqplot",
@@ -1449,36 +1452,6 @@
             "description": "These classes provide functionality useful for all kind of applications."
         },
         {
-            "name": "pear-pear.php.net/Math_BigInteger",
-            "version": "1.0.3",
-            "dist": {
-                "type": "file",
-                "url": "https://pear.php.net/get/Math_BigInteger-1.0.3.tgz",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "ext-pcre": "*",
-                "php": ">=4.2.0.0"
-            },
-            "replace": {
-                "pear-pear/math_biginteger": "== 1.0.3.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "license": [
-                "MIT"
-            ],
-            "description": "Supports base-2, base-10, base-16, and base-256 numbers.  Uses the GMP or BCMath extensions, if available, and an internal implementation, otherwise."
-        },
-        {
             "name": "pear/archive_tar",
             "version": "1.4.6",
             "source": {
@@ -1698,17 +1671,66 @@
             "time": "2016-04-16T00:49:33+00:00"
         },
         {
-            "name": "pear/pear",
-            "version": "v1.10.7",
+            "name": "pear/math_biginteger",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/pear/pear-core.git",
-                "reference": "334c2323ac35849c44534e2ba5b85c3ca5146ab0"
+                "url": "https://github.com/pear/Math_BigInteger.git",
+                "reference": "33d4357543037a458fad3e8c837a01b93104e592"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/pear-core/zipball/334c2323ac35849c44534e2ba5b85c3ca5146ab0",
-                "reference": "334c2323ac35849c44534e2ba5b85c3ca5146ab0",
+                "url": "https://api.github.com/repos/pear/Math_BigInteger/zipball/33d4357543037a458fad3e8c837a01b93104e592",
+                "reference": "33d4357543037a458fad3e8c837a01b93104e592",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=4.2.0"
+            },
+            "suggest": {
+                "ext-bcmath": "Allows using the BCMath extension internally for computation. Faster than native implementation.",
+                "ext-gmp": "Allows using the GNU Multiple Precision extension internally for computation. If you are doing a lot of computation this is the recommended extension."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Math_": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Wigginton",
+                    "email": "terrafrost@php.net"
+                }
+            ],
+            "description": "Pure-PHP arbitrary precission integer arithmetic library. If GMP or BCMath are available they are used.",
+            "homepage": "https://github.com/pear/Math_BigInteger",
+            "keywords": [
+                "arbitrary",
+                "bcmath",
+                "gmp",
+                "integer",
+                "precision"
+            ],
+            "time": "2016-04-12T05:46:52+00:00"
+        },
+        {
+            "name": "pear/pear",
+            "version": "v1.10.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/pear-core.git",
+                "reference": "f287dd85d11d7336489d7d742c6452922f39340f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/pear-core/zipball/f287dd85d11d7336489d7d742c6452922f39340f",
+                "reference": "f287dd85d11d7336489d7d742c6452922f39340f",
                 "shasum": ""
             },
             "require": {
@@ -1790,7 +1812,7 @@
                 }
             ],
             "description": "This is the definitive source of PEAR's core files.",
-            "time": "2018-12-05T19:51:15+00:00"
+            "time": "2019-02-07T18:59:54+00:00"
         },
         {
             "name": "pear/pear_exception",

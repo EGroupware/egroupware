@@ -9,13 +9,14 @@
 	},
 	"require": {
 		"php": ">=7.0,<=8.0.0alpha1",
-		"fxp/composer-asset-plugin":"1.2.2",
+		"fxp/composer-asset-plugin":"^1.2.2",
 		"pear-pear.horde.org/horde_imap_client": "^2.29.7",
 		"pear-pear.horde.org/horde_nls": "^2.0.3",
 		"pear-pear.horde.org/horde_mail": "^2.1.2",
 		"pear-pear.horde.org/horde_smtp": "^1.3.0",
 		"pear-pear.horde.org/horde_compress": "^2.0.8",
 		"pear-pear.horde.org/horde_icalendar": "^2.1.1",
+		"pear/math_biginteger": "^1.0.2",
 		"pear-pear.horde.org/horde_mapi": "^1.0.0",
 		"pear-pear.horde.org/horde_managesieve": "^1.0.2",
 		"pear-pear.horde.org/horde_crypt": "^2.7.9",
@@ -33,6 +34,9 @@
 		"npm-asset/gridster":"0.5.*",
 		"adldap2/adldap2": "=4.0.4",
 		"egroupware/magicsuggest": "^2.1"
+	},
+	"replace": {
+		"pear-pear.php.net/Math_BigInteger": "^1.0.2"
 	},
 	"require-dev": {
 	}
