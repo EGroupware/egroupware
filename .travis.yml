@@ -4,14 +4,13 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - master
+# none of our dependencies allow 8.0
+#  - master
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - php: master
-    # allow 7.3 to fail, as pear.php.net is down and it has no cache with missing PEAR packages yet :(
-    - php: 7.3
+#  allow_failures:
+#    - php: master
 
 services:
   - memcached
