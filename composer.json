@@ -16,15 +16,14 @@
 		"pear-pear.horde.org/horde_smtp": "^1.3.0",
 		"pear-pear.horde.org/horde_compress": "^2.0.8",
 		"egroupware/icalendar": "^2.1.9",
-		"pear/math_biginteger": "^1.0.2",
-		"pear-pear.horde.org/horde_mapi": "^1.0.0",
+		"pear-pear.horde.org/horde_mapi": "^1.0.9",
 		"pear-pear.horde.org/horde_managesieve": "^1.0.2",
 		"pear-pear.horde.org/horde_crypt": "^2.7.9",
 		"pear/pear": "*",
 		"pear/auth_sasl": "*",
-		"egroupware/xml_feed_parser": "dev-master",
+		"pear/xml_feed_parser": "dev-master",
 		"pear/log": "*",
-		"egroupware/text_diff": "*",
+		"pear/text_diff": "^1.2.2",
 		"bower-asset/jquery": "^1.12.4",
 		"bower-asset/fastclick":"1.0.*",
 		"bower-asset/jquery-touchswipe": "1.6.*",
@@ -34,9 +33,6 @@
 		"npm-asset/gridster":"0.5.*",
 		"adldap2/adldap2": "=4.0.4",
 		"egroupware/magicsuggest": "^2.1"
-	},
-	"replace": {
-		"pear-pear.php.net/Math_BigInteger": "^1.0.2"
 	},
 	"require-dev": {
 	}
