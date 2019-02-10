@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7c8682bcee05d3c6a55fc06dc2f6774",
+    "content-hash": "2c2fc3d6c62df7bc2dc4f95c6939de33",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -452,86 +452,6 @@
             "description": "Compiled version of magicsuggest customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/magicsuggest",
             "time": "2018-06-21T13:36:37+00:00"
-        },
-        {
-            "name": "egroupware/text_diff",
-            "version": "v1.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/EGroupware/text_diff.git",
-                "reference": "d12474df481bb89f52b02ba0e3fae504ce5d6d51"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/text_diff/zipball/d12474df481bb89f52b02ba0e3fae504ce5d6d51",
-                "reference": "d12474df481bb89f52b02ba0e3fae504ce5d6d51",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "Text/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "description": "Engine for performing and rendering text diffs",
-            "homepage": "http://pear.php.net/package/Text_Diff",
-            "keywords": [
-                "PEAR",
-                "diff",
-                "text"
-            ],
-            "time": "2017-03-08T15:07:59+00:00"
-        },
-        {
-            "name": "egroupware/xml_feed_parser",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/EGroupware/xml_feed_parser.git",
-                "reference": "0bf52e32984ac50a40cdc44661cf2c6358660228"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/xml_feed_parser/zipball/0bf52e32984ac50a40cdc44661cf2c6358660228",
-                "reference": "0bf52e32984ac50a40cdc44661cf2c6358660228",
-                "shasum": ""
-            },
-            "require": {
-                "pear/log": "*",
-                "pear/pear_exception": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "suggest": {
-                "ext-tidy": "May require the tidy PHP extension"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "XML": "./"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                "./"
-            ],
-            "license": [
-                "PHP-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "James Stewart",
-                    "email": "james@jystewart.net",
-                    "role": "Lead"
-                }
-            ],
-            "description": "More info available on: http://pear.php.net/package/XML_Feed_Parser",
-            "time": "2019-02-07T15:02:02+00:00"
         },
         {
             "name": "fxp/composer-asset-plugin",
@@ -1076,21 +996,21 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Mapi",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mapi-1.0.8.tgz",
+                "url": "https://pear.horde.org/get/Horde_Mapi-1.0.9.tgz",
                 "reference": null,
                 "shasum": null
             },
             "require": {
+                "ext-bcmath": "*",
                 "pear-pear.horde.org/horde_date": "<3.0.0.0",
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
-                "pear-pear.php.net/math_biginteger": "<2.0.0.0",
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_mapi": "== 1.0.8.0"
+                "pear-horde/horde_mapi": "== 1.0.9.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1732,55 +1652,6 @@
             "time": "2016-04-16T00:49:33+00:00"
         },
         {
-            "name": "pear/math_biginteger",
-            "version": "v1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pear/Math_BigInteger.git",
-                "reference": "33d4357543037a458fad3e8c837a01b93104e592"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pear/Math_BigInteger/zipball/33d4357543037a458fad3e8c837a01b93104e592",
-                "reference": "33d4357543037a458fad3e8c837a01b93104e592",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcre": "*",
-                "php": ">=4.2.0"
-            },
-            "suggest": {
-                "ext-bcmath": "Allows using the BCMath extension internally for computation. Faster than native implementation.",
-                "ext-gmp": "Allows using the GNU Multiple Precision extension internally for computation. If you are doing a lot of computation this is the recommended extension."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Math_": "./"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jim Wigginton",
-                    "email": "terrafrost@php.net"
-                }
-            ],
-            "description": "Pure-PHP arbitrary precission integer arithmetic library. If GMP or BCMath are available they are used.",
-            "homepage": "https://github.com/pear/Math_BigInteger",
-            "keywords": [
-                "arbitrary",
-                "bcmath",
-                "gmp",
-                "integer",
-                "precision"
-            ],
-            "time": "2016-04-12T05:46:52+00:00"
-        },
-        {
             "name": "pear/pear",
             "version": "v1.10.8",
             "source": {
@@ -1968,6 +1839,86 @@
             "time": "2015-07-20T20:05:12+00:00"
         },
         {
+            "name": "pear/text_diff",
+            "version": "v1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Text_Diff.git",
+                "reference": "d12474df481bb89f52b02ba0e3fae504ce5d6d51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Text_Diff/zipball/d12474df481bb89f52b02ba0e3fae504ce5d6d51",
+                "reference": "d12474df481bb89f52b02ba0e3fae504ce5d6d51",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Text/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "description": "Engine for performing and rendering text diffs",
+            "homepage": "http://pear.php.net/package/Text_Diff",
+            "keywords": [
+                "PEAR",
+                "diff",
+                "text"
+            ],
+            "time": "2017-03-08T15:07:59+00:00"
+        },
+        {
+            "name": "pear/xml_feed_parser",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/XML_Feed_Parser.git",
+                "reference": "61a3426e1c332e5536c87bd4a0a0dd97d864c72a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/XML_Feed_Parser/zipball/61a3426e1c332e5536c87bd4a0a0dd97d864c72a",
+                "reference": "61a3426e1c332e5536c87bd4a0a0dd97d864c72a",
+                "shasum": ""
+            },
+            "require": {
+                "pear/log": "*",
+                "pear/pear_exception": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "ext-tidy": "May require the tidy PHP extension"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "XML": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "James Stewart",
+                    "email": "james@jystewart.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/XML_Feed_Parser",
+            "time": "2014-02-20T19:24:07+00:00"
+        },
+        {
             "name": "pear/xml_util",
             "version": "v1.4.3",
             "source": {
@@ -2028,7 +1979,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "php": 15,
-        "egroupware/xml_feed_parser": 20
+        "pear/xml_feed_parser": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -225,7 +225,7 @@ Further contributed applications are available as separate packages.
 Summary: The EGroupware core
 Group: Web/Database
 Requires: %{php} >= 5.6.0
-Requires: %{php}-mbstring %{php}-gd %{extra_requires} %{cron} zip %{php}-json %{php}-xsl
+Requires: %{php}-mbstring %{php}-gd %{extra_requires} %{cron} zip %{php}-json %{php}-xsl %{php}-bcmath
 Provides: egw-core %{version}
 Provides: egw-addressbook %{version}
 %if 0%{?suse_version}
