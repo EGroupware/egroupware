@@ -40,10 +40,6 @@
         {
             "type": "pear",
             "url": "https://pear.horde.org"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/egroupware/z-push"
         }
     ],
 	"config": {
