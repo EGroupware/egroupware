@@ -304,7 +304,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 					option.addClass('et2_country-select flag-'+_value.toLowerCase())
 					break;
 			}
-			if (this.value_class != '') option.addClass(this.value_class+_value);
+			if (this.options.value_class != '') option.addClass(this.options.value_class+_value);
 		}
 		if (typeof _title != "undefined" && _title)
 		{
@@ -551,9 +551,9 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			this.set_select_options(this.options.select_options);
 		}
 		// select-cat set/unset right cat_ color for selected value
-		if ((this._type == 'select-cat' || this.value_class) && this.options.tags) {
+		if ((this._type == 'select-cat' || this.options.value_class) && this.options.tags) {
 			var chosen = this.input.next();
-			var prefix_c = this.value_class ? this.value_class : 'cat_';
+			var prefix_c = this.options.value_class ? this.options.value_class : 'cat_';
 			this.input.removeClass(prefix_c+this._oldValue);
 			this.input.addClass(prefix_c+this.value);
 			if (chosen.length > 0) {
@@ -581,11 +581,11 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			this.input.val(typeof _value == 'object' && _value != null ? jQuery.map(_value,function(value,index){return [value];}) : _value);
 			this.input.trigger("liszt:updated");
 			var self = this;
-			if (this._type == 'listbox' && this.value_class != '')
+			if (this._type == 'listbox' && this.options.value_class != '')
 			{
 				var chosen = this.input.next();
 				chosen.find('.search-choice-close').each((i,v)=>{
-					jQuery(v).parent().addClass(self.value_class + self.options.select_options[v.rel]['value']);
+					jQuery(v).parent().addClass(self.options.value_class + self.options.select_options[v.rel]['value']);
 				});
 			}
 			this.value = _value;
@@ -779,10 +779,10 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 
 			// Properly size chosen, even if on a hidden tab
 			var size = egw.getHiddenDimensions(this.input);
-			if (this._type == 'listbox' && this.value_class != '')
+			if (this._type == 'listbox' && this.options.value_class != '')
 			{
 				var self = this;
-				this.input.find('option').each((i,v) => {jQuery(v).addClass(self.value_class+v.value)});
+				this.input.find('option').each((i,v) => {jQuery(v).addClass(self.options.value_class+v.value)});
 			}
 			this.input.chosen({
 				inherit_select_classes: true,
