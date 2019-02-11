@@ -40,6 +40,10 @@
         {
             "type": "pear",
             "url": "https://pear.horde.org"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/egroupware/z-push"
         }
     ],
 	"config": {
@@ -78,15 +82,16 @@
 		"npm-asset/gridster":"0.5.*",
 		"adldap2/adldap2": "=4.0.4",
 		"egroupware/magicsuggest": "^2.1",
-		"oomphinc/composer-installers-extender": "^1.1"
+		"oomphinc/composer-installers-extender": "^1.1",
+		"egroupware/collabora": "self.version",
+		"egroupware/projectmanager": "self.version",
+		"egroupware/tracker": "self.version",
+		"egroupware/z-push-dev": "self.version",
+		"egroupware/activesync": "self.version"
 	},
 	"require-dev": {
 	},
 	"suggests": {
-		"egroupware/collabora": "EGroupware Collabora Online Office integration",
-		"egroupware/projectmanager": "EGroupware project-management application",
-		"egroupware/tracker": "EGroupware bug-tracker and helpdesk application",
-		"egroupware/activesync": "EGroupware support for ActiveSync protocol using z-Push",
 		"ext-opcache": "Opcode cache to speed up PHP",
 		"ext-apcu": "Used for in-memory caching",
 		"ext-tidy": "Used for tidying up docx templates",

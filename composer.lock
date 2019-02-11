@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d65b5fb3aa3658979b72a7778519bfd2",
+    "content-hash": "8ba30842ff4409d096c99b176dc91912",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -441,6 +441,87 @@
             "time": "2018-08-27T06:10:37+00:00"
         },
         {
+            "name": "egroupware/activesync",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/activesync.git",
+                "reference": "c66c7aba1aa0e91a8b51a5e4e9bd497f4979e906"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/c66c7aba1aa0e91a8b51a5e4e9bd497f4979e906",
+                "reference": "c66c7aba1aa0e91a8b51a5e4e9bd497f4979e906",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version",
+                "egroupware/z-push-dev": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware support for ActiveSync protocol using z-Push",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-11T19:28:25+00:00"
+        },
+        {
+            "name": "egroupware/collabora",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/collabora.git",
+                "reference": "a60471241919dee913e914dd6268655d513b7f4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/a60471241919dee913e914dd6268655d513b7f4c",
+                "reference": "a60471241919dee913e914dd6268655d513b7f4c",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware integration for Collabora Online Office",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-11T15:45:44+00:00"
+        },
+        {
             "name": "egroupware/icalendar",
             "version": "2.1.9",
             "source": {
@@ -537,6 +618,115 @@
             "description": "Compiled version of magicsuggest customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/magicsuggest",
             "time": "2018-06-21T10:14:03+00:00"
+        },
+        {
+            "name": "egroupware/projectmanager",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/projectmanager.git",
+                "reference": "efdc86567e95f26bdfa368fa2b3f67a408ccc723"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/efdc86567e95f26bdfa368fa2b3f67a408ccc723",
+                "reference": "efdc86567e95f26bdfa368fa2b3f67a408ccc723",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware project-management application",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-11T17:06:23+00:00"
+        },
+        {
+            "name": "egroupware/tracker",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/tracker.git",
+                "reference": "832bd24336470e674a840293df03a6b614f0f5cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/832bd24336470e674a840293df03a6b614f0f5cc",
+                "reference": "832bd24336470e674a840293df03a6b614f0f5cc",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware bug-tracker and helpdesk application",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-11T17:08:08+00:00"
+        },
+        {
+            "name": "egroupware/z-push-dev",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/z-push.git",
+                "reference": "d7d88a13dcba4af4f8d494d8a62c653c3a53829a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/z-push/zipball/d7d88a13dcba4af4f8d494d8a62c653c3a53829a",
+                "reference": "d7d88a13dcba4af4f8d494d8a62c653c3a53829a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "license": [
+                "AGPL-3.0"
+            ],
+            "description": "Z-Push is an open-source application to synchronize ActiveSync compatible devices",
+            "homepage": "http://z-push.org/",
+            "support": {
+                "source": "https://github.com/EGroupware/z-push/tree/master",
+                "issues": "https://github.com/EGroupware/z-push/issues"
+            },
+            "time": "2019-02-11T19:26:21+00:00"
         },
         {
             "name": "fxp/composer-asset-plugin",
@@ -2105,7 +2295,12 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "php": 15
+        "php": 15,
+        "egroupware/collabora": 20,
+        "egroupware/projectmanager": 20,
+        "egroupware/tracker": 20,
+        "egroupware/z-push-dev": 20,
+        "egroupware/activesync": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
