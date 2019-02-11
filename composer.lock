@@ -446,12 +446,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
-                "reference": "c66c7aba1aa0e91a8b51a5e4e9bd497f4979e906"
+                "reference": "fdd13f949319a7197ce751310d8a65ca3eacf01e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/c66c7aba1aa0e91a8b51a5e4e9bd497f4979e906",
-                "reference": "c66c7aba1aa0e91a8b51a5e4e9bd497f4979e906",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/fdd13f949319a7197ce751310d8a65ca3eacf01e",
+                "reference": "fdd13f949319a7197ce751310d8a65ca3eacf01e",
                 "shasum": ""
             },
             "require": {
@@ -479,7 +479,7 @@
             ],
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-02-11T19:28:25+00:00"
+            "time": "2019-02-11T20:00:06+00:00"
         },
         {
             "name": "egroupware/collabora",
@@ -947,10 +947,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Compress",
-            "version": "2.2.1",
+            "version": "2.2.2",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Compress-2.2.1.tgz",
+                "url": "https://pear.horde.org/get/Horde_Compress-2.2.2.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -962,7 +962,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_compress": "== 2.2.1.0"
+                "pear-horde/horde_compress": "== 2.2.2.0"
             },
             "type": "pear-library",
             "autoload": {
