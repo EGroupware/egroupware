@@ -111,7 +111,7 @@ class Html
 						$match[4] = "&gt;";
 					}
 					//error_log(__METHOD__.__LINE__.array2string($match));
-					return $match[1]."<a href=\"http://www".$match[2].$match[3]."\" target=\"_blank\">"."www".$match[2].$match[3]."</a>".$match[4];
+					return $match[1] == "" ? "" : $match[1]."<a href=\"http://www".$match[2].$match[3]."\" target=\"_blank\">"."www".$match[2].$match[3]."</a>".$match[4];
 				}, $result3 );
 		}
 		return $result4;
