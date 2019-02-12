@@ -41,12 +41,12 @@ class admin_customtranslation
 			//_debug_array($_content);
 			if (isset($_content['button']))
 			{
-				list($action) = each($_content['button']);
+				$action = key($_content['button']);
 				unset($_content['button']);
 			}
 			elseif($_content['rows']['delete'])
 			{
-				list($action) = each($_content['rows']['delete']);
+				$action = key($_content['rows']['delete']);
 				unset($_content['rows']['delete']);
 			}
 			switch($action)

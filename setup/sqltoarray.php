@@ -193,7 +193,7 @@ if($submit || $showall)
 		$tables = $setup_info[$appname]['tables'];
 		$i = 0;
 		$tbls = count($tables);
-		while(list($key,$table) = @each($tables))
+		foreach($tables as $key => $table)
 		{
 			$i++;
 			if($i == $tbls)
@@ -241,7 +241,7 @@ else
 		}
 	}
 
-	while(list($key,$data) = @each($setup_info))
+	foreach($setup_info as $key => $data)
 	{
 		if($data['tables'])
 		{

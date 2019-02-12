@@ -110,7 +110,7 @@ class module_calendar_month extends Module
 		$cat = createobject('phpgwapi.categories','','calendar');
 		$cats = $cat->return_array('all',0,False,'','cat_name','',True);
 		$cat_ids = array();
-		while (list(,$category) = @each($cats))
+		foreach($cats as $category)
 		{
 			$cat_ids[$category['id']] = $GLOBALS['egw']->strip_html($category['name']);
 		}

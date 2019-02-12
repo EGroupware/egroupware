@@ -2368,7 +2368,8 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			return False;
 		}
-		list($alarm_id,$job) = each($jobs);
+		$alarm_id = key($jobs);
+		$job = current($jobs);
 		$alarm         = $job['data'];	// text, enabled
 		$alarm['id']   = $alarm_id;
 		$alarm['time'] = $job['next'];

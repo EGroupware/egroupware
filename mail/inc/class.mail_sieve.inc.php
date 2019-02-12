@@ -152,7 +152,7 @@ class mail_sieve
 			else
 			{
 				$this->restoreSessionData();
-				list($button) = @each($content['button']);
+				$button = @key($content['button']);
 				unset ($content['button']);
 
 				switch($button)
@@ -271,7 +271,7 @@ class mail_sieve
 		else
 		{
 			$this->restoreSessionData();
-			list($button) = @each($content['button']);
+			$button = @key($content['button']);
 
 			//$ruleID is calculated by priority from the selected rule and is an unique ID
 			$content['ruleID'] = $ruleID = ($this->rulesByID['priority'] -1) / 2;
@@ -583,7 +583,7 @@ class mail_sieve
 				else
 				{
 					$this->restoreSessionData();
-					list($button) = @each($content['button']);
+					$button = @key($content['button']);
 					unset ($content['button']);
 
 					switch($button)

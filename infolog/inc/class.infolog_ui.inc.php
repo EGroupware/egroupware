@@ -765,7 +765,7 @@ class infolog_ui
 			{
 				if(isset($values['nm']['rows'][$button]))
 				{
-					list($id) = @each($values['nm']['rows'][$button]);
+					$id = @key($values['nm']['rows'][$button]);
 					$values['nm']['multi_action'] = $button;
 					$values['nm']['selected'] = array($id);
 					break; // Only one can come per submit
@@ -885,47 +885,6 @@ class infolog_ui
 		}
 		unset($values['nm']['rows']['checked']);	// not longer used, but hides button actions
 
-		if ($values['add'] || $values['cancel'] || isset($values['main']))
-		{
-			if ($values['add'])
-			{
-				$type = key($values['add']);
-				return $this->edit(0,$action,$action_id,$type,$called_as);
-			}
-			elseif ($values['cancel'] && $own_referer)
-			{
-				unset($values['nm']['multi_action']);
-				unset($values['nm']['action_id']);
-				unset($values['nm']['rows']);
-				Api\Cache::setSession('infolog', $values['nm']['session_for'].'session_data', $values['nm']);
-				$this->tmpl->location($own_referer);
-			}
-			else
-			{
-				list($do,$do2) = each($values['main']);
-				$do = key($values['main']);
-				$do2 = current($values['main']);
-				$do_id = @key($do2);
-				switch((string)$do)
-				{
-					case 'close':
-						$closesingle=true;
-					case 'close_all':
-						$this->close($do_id,$called_as,$closesingle);
-						break;
-					case 'view':
-						$value = array();
-						$action = 'sp';
-						$action_id = $do_id;
-						break;
-					default:
-						$value = array();
-						$action = '';
-						$action_id = 0;
-						break;
-				}
-			}
-		}
 		switch ($action)
 		{
 			case 'sp':
@@ -1749,7 +1708,7 @@ class infolog_ui
 			$referer   = $content['referer'];   unset($content['referer']);
 			$no_popup  = $content['no_popup'];  unset($content['no_popup']);
 
-			list($button) = @each($content['button']);
+			$button = @key($content['button']);
 			if (!$button && $action) $button = $action;	// action selectbox
 			//info_cc expects an comma separated string
 			//error_log(__METHOD__.__LINE__.array2string($content));

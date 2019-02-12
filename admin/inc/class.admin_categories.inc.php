@@ -139,7 +139,7 @@ class admin_categories
 			}
 			else
 			{
-				list($button) = each($content['button']);
+				$button = key($content['button']);
 				unset($content['button']);
 			}
 			unset($content['delete']);
@@ -535,17 +535,6 @@ class admin_categories
 		elseif($content['nm']['action'])
 		{
 			$appname = $content['nm']['appname'];
-			// Old buttons
-			foreach(array('delete') as $button)
-			{
-				if(isset($content['nm']['rows'][$button]))
-				{
-					list($id) = @each($content['nm']['rows'][$button]);
-					$content['nm']['action'] = $button;
-					$content['nm']['selected'] = array($id);
-					break; // Only one can come per submit
-				}
-			}
 			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
 			{
 				$msg = lang('You need to select some entries first!');

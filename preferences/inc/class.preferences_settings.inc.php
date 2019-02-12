@@ -70,7 +70,7 @@ class preferences_settings
 			//error_log(__METHOD__."(".array2string($content).")");
 			if ($content['button'])
 			{
-				list($button) = each($content['button']);
+				$button = key($content['button']);
 				$appname = $content['old_appname'] ? $content['old_appname'] : 'common';
 				switch($button)
 				{

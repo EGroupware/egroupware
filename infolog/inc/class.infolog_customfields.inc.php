@@ -223,7 +223,7 @@ class infolog_customfields extends admin_customfields
 		$this->status['defaults'][$typ] = empty($default) ? $name : $default;
 		if (!isset($this->status[$typ][$this->status['defaults'][$typ]]))
 		{
-			list($this->status['defaults'][$typ]) = @each($this->status[$typ]);
+			$this->status['defaults'][$typ] = @key($this->status[$typ]);
 		}
 	}
 

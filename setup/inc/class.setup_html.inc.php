@@ -73,7 +73,7 @@ class setup_html
 		$GLOBALS['header_template']->set_var('domain','');
 
 		$setting = $_POST['setting'];
-		while($setting && list($k,$v) = @each($setting))
+		foreach($setting as $k => $v)
 		{
 			if(strtoupper($k) == 'HEADER_ADMIN_PASSWORD')
 			{
@@ -258,8 +258,8 @@ class setup_html
 			else
 			{
 				reset($GLOBALS['egw_domain']);
-				$default_domain = each($GLOBALS['egw_domain']);
-				$GLOBALS['setup_tpl']->set_var('default_domain_zero',$default_domain[0]);
+				$default_domain = key($GLOBALS['egw_domain']);
+				$GLOBALS['setup_tpl']->set_var('default_domain_zero',$default_domain);
 
 				/* Use BLOCK B_single_domain inside of login_stage_header */
 				$GLOBALS['setup_tpl']->parse('V_single_domain','B_single_domain');

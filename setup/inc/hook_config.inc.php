@@ -68,7 +68,7 @@ function encryptalgo($config)
 		$found = False;
 
 		$out = '';
-		while(list($key,$value) = each($algos))
+		foreach($algos as $key => $value)
 		{
 			$found = True;
 			/* Only show each once - seems this is a problem in some installs */
@@ -114,7 +114,7 @@ function encryptmode($config)
 		$found = False;
 
 		$out = '';
-		while(list($key,$value) = each($modes))
+		foreach($modes as $key => $value)
 		{
 			$found = True;
 			/* Only show each once - seems this is a problem in some installs */

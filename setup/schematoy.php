@@ -242,9 +242,12 @@
 				}
 
 				$s = '<option value="">&nbsp;</option>';
-				while(is_array($test) && list(,$versionnumber) = each($test))
+				if(is_array($test))
 				{
-					$s .= '<option value="' . $versionnumber . '">' . $versionnumber . '</option>';
+					foreach($test as $versionnumber)
+					{
+						$s .= '<option value="' . $versionnumber . '">' . $versionnumber . '</option>';
+					}
 				}
 				$GLOBALS['setup_tpl']->set_var('select_version',$s);
 

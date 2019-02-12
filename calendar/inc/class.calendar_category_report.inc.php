@@ -245,7 +245,7 @@ class calendar_category_report extends calendar_ui{
 		}
 		else
 		{
-			list($button) = @each($content['button']);
+			$button = @key($content['button']);
 			$result = $categories = $content_rows = array ();
 			$users = array_keys($GLOBALS['egw']->accounts->search(array('type'=>'accounts', active=>true)));
 

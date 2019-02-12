@@ -96,7 +96,7 @@ else
 {
 	$newheader = $GLOBALS['egw_setup']->header->generate($GLOBALS['egw_info'],$GLOBALS['egw_domain']);
 
-	list($action) = @each($_POST['action']);
+	$action = @key($_POST['action']);
 	switch($action)
 	{
 		case 'download':
@@ -331,7 +331,7 @@ function show_header_form($validation_errors)
 	}
 	// set domain and password for the continue button
 	@reset($GLOBALS['egw_domain']);
-	list($firstDomain) = @each($GLOBALS['egw_domain']);
+	$firstDomain = @key($GLOBALS['egw_domain']);
 
 	$setup_tpl->set_var(array(
 		'FormDomain' => $firstDomain,

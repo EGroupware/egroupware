@@ -106,13 +106,13 @@ class filemanager_select
 					}
 				}
 
-				list($content['mime']) = each($sel_options['mime']);
+				$content['mime'] = key($sel_options['mime']);
 				error_log(array2string($content['options-mime']));
 			}
 		}
 		elseif(isset($content['button']))
 		{
-			list($button) = each($content['button']);
+			$button = key($content['button']);
 			unset($content['button']);
 			switch($button)
 			{
@@ -207,7 +207,7 @@ class filemanager_select
 		}
 		elseif(isset($content['apps']))
 		{
-			list($app) = each($content['apps']);
+			$app = key($content['apps']);
 			if ($app == 'home') $content['path'] = filemanager_ui::get_home_dir();
 		}
 

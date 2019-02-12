@@ -1980,7 +1980,7 @@ class addressbook_ui extends addressbook_bo
 	{
 		if (is_array($content))
 		{
-			list($button) = @each($content['button']);
+			$button = @key($content['button']);
 			unset($content['button']);
 			$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 			$content['owner'] = (string) (int) $content['owner'];

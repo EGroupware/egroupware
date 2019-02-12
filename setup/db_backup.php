@@ -40,7 +40,7 @@ $asyncservice = new Api\Asyncservice();
 // download a backup, has to be before any output !!!
 if ($_POST['download'])
 {
-	list($file) = each($_POST['download']);
+	$file = key($_POST['download']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
 	while (@ob_end_clean()) {}      // end all active output buffering
 	ini_set('zlib.output_compression',0);   // switch off zlib.output_compression, as this would limit downloads in size to memory_limit
@@ -167,7 +167,7 @@ if ($_POST['upload'] && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['e
 // delete a backup
 if ($_POST['delete'])
 {
-	list($file) = each($_POST['delete']);
+	$file = key($_POST['delete']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
 
 	if (unlink($file)) $setup_tpl->set_var('error_msg',lang("backup '%1' deleted",$file));
@@ -175,7 +175,7 @@ if ($_POST['delete'])
 // rename a backup
 if ($_POST['rename'])
 {
-	list($file) = each($_POST['rename']);
+	$file = key($_POST['rename']);
 	$new_name = $_POST['new_name'][$file];
 	if (!empty($new_name))
 	{
@@ -191,7 +191,7 @@ if ($_POST['rename'])
 // restore a backup
 if ($_POST['restore'])
 {
-	list($file) = each($_POST['restore']);
+	$file = key($_POST['restore']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
 
 	if (is_resource($f = $db_backup->fopen_backup($file,true)))
@@ -223,7 +223,7 @@ if ($_POST['schedule'])
 // cancel a scheduled backup
 if (is_array($_POST['cancel']))
 {
-	list($id) = each($_POST['cancel']);
+	$id = key($_POST['cancel']);
 	$asyncservice->cancel_timer($id);
 }
 // list scheduled backups

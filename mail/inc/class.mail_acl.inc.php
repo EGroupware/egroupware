@@ -205,7 +205,7 @@ class mail_acl
 		}
 		else
 		{
-			list($button) = @each($content['button']);
+			$button = @key($content['button']);
 			if (!empty ($content['grid']['delete']))
 			{
 				$button = 'delete';

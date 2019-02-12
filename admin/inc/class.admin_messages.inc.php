@@ -44,7 +44,7 @@ class admin_messages
 		}
 		else
 		{
-			list($button) = @each($content['button']);
+			$button = @key($content['button']);
 
 			if ($button)
 			{

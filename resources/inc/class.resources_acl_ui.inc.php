@@ -180,7 +180,7 @@ class resources_acl_ui
 		{
 			$cats = new Categories($content['owner'] ? $content['owner'] : Categories::GLOBAL_ACCOUNT,'resources');
 
-			list($button) = each($content['button']);
+			$button = key($content['button']);
 			unset($content['button']);
 
 			$refresh_app = 'admin';

@@ -312,7 +312,7 @@ class mail_ui
 		}
 		else
 		{
-			list($button) = @each($content['button']);
+			$button = @key($content['button']);
 			switch ($button)
 			{
 				case 'save':
@@ -2097,7 +2097,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$rawheaders 	= "";
 		// create it new, with good line breaks
 		reset($newRawHeaders);
-		while(list($key,$value) = @each($newRawHeaders)) {
+		foreach($newRawHeaders as $value)
+		{
 			$rawheaders .= wordwrap($value, 90, "\n     ");
 		}
 

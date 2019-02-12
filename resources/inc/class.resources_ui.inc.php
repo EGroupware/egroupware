@@ -419,7 +419,7 @@ class resources_ui
 	{
 		if (is_array($content))
 		{
-			list($button) = @each($content['button']);
+			$button = @key($content['button']);
 			unset($content['button']);
 			switch($button)
 			{

@@ -363,7 +363,7 @@ class admin_mail
 	{
 		if (isset($content['button']))
 		{
-			list($button) = each($content['button']);
+			$button = key($content['button']);
 			unset($content['button']);
 			switch($button)
 			{
@@ -484,7 +484,7 @@ class admin_mail
 
 		if (isset($content['button']))
 		{
-			list($button) = each($content['button']);
+			$button = key($content['button']);
 			unset($content['button']);
 			switch($button)
 			{
@@ -512,7 +512,7 @@ class admin_mail
 			$readonlys['button[manual]'] = true;
 		}
 		// set default ssl and port
-		if (!isset($content['acc_sieve_ssl'])) list($content['acc_sieve_ssl']) = each(self::$ssl_types);
+		if (!isset($content['acc_sieve_ssl'])) $content['acc_sieve_ssl'] = key(self::$ssl_types);
 		if (empty($content['acc_sieve_port'])) $content['acc_sieve_port'] = $sieve_ssl2port[$content['acc_sieve_ssl']];
 
 		// check smtp connection
@@ -579,7 +579,7 @@ class admin_mail
 			// not connected, and default ssl/port --> reset again to secure settings
 			if ($data == $sieve_ssl2port)
 			{
-				list($content['acc_sieve_ssl']) = each(self::$ssl_types);
+				$content['acc_sieve_ssl'] = key(self::$ssl_types);
 				$content['acc_sieve_port'] = $sieve_ssl2port[$content['acc_sieve_ssl']];
 			}
 		}
@@ -621,7 +621,7 @@ class admin_mail
 
 		if (isset($content['button']))
 		{
-			list($button) = each($content['button']);
+			$button = key($content['button']);
 			unset($content['button']);
 			switch($button)
 			{
@@ -643,7 +643,7 @@ class admin_mail
 		if (!isset($content['acc_smtp_username'])) $content['acc_smtp_username'] = $content['acc_imap_username'];
 		if (!isset($content['acc_smtp_password'])) $content['acc_smtp_password'] = $content['acc_imap_password'];
 		// set default ssl
-		if (!isset($content['acc_smtp_ssl'])) list($content['acc_smtp_ssl']) = each(self::$ssl_types);
+		if (!isset($content['acc_smtp_ssl'])) $content['acc_smtp_ssl'] = key(self::$ssl_types);
 		if (empty($content['acc_smtp_port'])) $content['acc_smtp_port'] = $smtp_ssl2port[$content['acc_smtp_ssl']];
 
 		// check smtp connection
@@ -837,7 +837,7 @@ class admin_mail
 				$content['accounts'] = iterator_to_array(Mail\Account::search($content['called_for']));
 				if ($content['accounts'])
 				{
-					list($content['acc_id']) = each($content['accounts']);
+					$content['acc_id'] = key($content['accounts']);
 					//error_log(__METHOD__.__LINE__.'.'.array2string($content['acc_id']));
 					// test if the "to be selected" acccount is imap or not
 					if (count($content['accounts'])>1 && Mail\Account::is_multiple($content['acc_id']))
@@ -847,7 +847,7 @@ class admin_mail
 							//try to select the first account that is of type imap
 							if (!$account->is_imap())
 							{
-								list($content['acc_id']) = each($content['accounts']);
+								$content['acc_id'] = key($content['accounts']);
 								//error_log(__METHOD__.__LINE__.'.'.array2string($content['acc_id']));
 							}
 						}
@@ -951,7 +951,7 @@ class admin_mail
 
 		if (isset($content['button']))
 		{
-			list($button) = each($content['button']);
+			$button = key($content['button']);
 			unset($content['button']);
 			switch($button)
 			{

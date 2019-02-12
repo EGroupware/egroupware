@@ -98,7 +98,7 @@ class timesheet_favorite_portlet extends home_favorite_portlet
 		// the etemplate exec to fire again.
 		if (is_array($content) && isset($content['nm']['rows']['document']))  // handle insert in default document button like an action
 		{
-			list($id) = @each($content['nm']['rows']['document']);
+			$id = @key($content['nm']['rows']['document']);
 			$content['nm']['action'] = 'document';
 			$content['nm']['selected'] = array($id);
 		}

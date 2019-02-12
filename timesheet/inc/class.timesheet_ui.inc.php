@@ -161,7 +161,7 @@ class timesheet_ui extends timesheet_bo
 			}
 			if ($content['ts_duration'] > 0) unset($content['end_time']);
 			// now we only deal with start (date+time) and duration
-			list($button) = @each($content['button']);
+			$button = @key($content['button']);
 			$view = $content['view'];
 			$referer = $content['referer'];
 			$content['ts_project_blur'] = $content['pm_id'] ? Link::title('projectmanager', $content['pm_id']) : '';
@@ -878,7 +878,7 @@ class timesheet_ui extends timesheet_bo
 		if ($_GET['msg']) $msg = $_GET['msg'];
 		if ($content['nm']['rows']['delete'])
 		{
-			list($ts_id) = each($content['nm']['rows']['delete']);
+			$ts_id = key($content['nm']['rows']['delete']);
 			if ($this->delete($ts_id))
 			{
 				$msg = lang('Entry deleted');
@@ -890,7 +890,7 @@ class timesheet_ui extends timesheet_bo
 		}
 		if (is_array($content) && isset($content['nm']['rows']['document']))  // handle insert in default document button like an action
 		{
-			list($id) = @each($content['nm']['rows']['document']);
+			$id = @key($content['nm']['rows']['document']);
 			$content['nm']['action'] = 'document';
 			$content['nm']['selected'] = array($id);
 		}
@@ -1238,7 +1238,7 @@ class timesheet_ui extends timesheet_bo
 
 		if (is_array($content))
 		{
-			list($button) = @each($content['button']);
+			$button = @key($content['button']);
 			unset ($content['button']);
 
 			switch($button)
@@ -1274,7 +1274,7 @@ class timesheet_ui extends timesheet_bo
 		}
 		if (isset($content['statis']['delete']))
 		{
-			list($id) = each($content['statis']['delete']);
+			$id = key($content['statis']['delete']);
 			if (isset($this->status_labels_config[$id]))
 			{
 				unset($this->status_labels_config[$id]);

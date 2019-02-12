@@ -773,7 +773,7 @@ class setup_process
 		$sColumns = null;
 		$GLOBALS['egw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['egw_setup']->oProc, $tablename, $sColumns);
 
-		while(list($key,$tbldata) = each($GLOBALS['egw_setup']->oProc->m_oTranslator->sCol))
+		foreach($GLOBALS['egw_setup']->oProc->m_oTranslator->sCol as $key => $tbldata)
 		{
 			$arr .= $tbldata;
 		}

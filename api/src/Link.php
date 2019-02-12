@@ -986,7 +986,7 @@ class Link extends Link\Storage
 		if (count($names) > 1)
 		{
 			$id = explode(':',$id);
-			while (list($n,$name) = each($names))
+			foreach($names as $n => $name)
 			{
 				$view[$name] = $id[$n];
 			}

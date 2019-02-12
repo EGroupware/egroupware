@@ -568,7 +568,7 @@ function do_editchangelog()
 		$revision = null;
 		if (substr($branch_url, -4) == '.git')
 		{
-			list($path) = each($modules);
+			$path = key($modules);
 			$changelog .= get_changelog_from_git($path, $config['editchangelog'], $last_tag);
 		}
 		else

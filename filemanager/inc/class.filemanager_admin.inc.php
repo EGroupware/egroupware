@@ -113,11 +113,11 @@ class filemanager_admin extends filemanager_ui
 				{
 					if (($unmount = $content['mounts']['umount']))
 					{
-						list($path) = @each($content['mounts']['umount']);
+						$path = @key($content['mounts']['umount']);
 					}
 					else
 					{
-						list($path) = @each($content['mounts']['disable']);
+						$path = @key($content['mounts']['disable']);
 					}
 					if (!in_array($path, self::$protected_path) && $path != '/')
 					{

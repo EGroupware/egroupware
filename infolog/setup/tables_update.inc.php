@@ -199,8 +199,7 @@ function infolog_upgrade0_9_15_003()
 	{
 		$links[$GLOBALS['egw_setup']->oProc->f(1)] = $GLOBALS['egw_setup']->oProc->f(0);
 	}
-	reset($links);
-	while (list($info_id,$link_id) = each($links))
+	foreach($links as $info_id => $link_id)
 	{
 		$GLOBALS['egw_setup']->oProc->query("UPDATE phpgw_infolog SET info_link_id=$link_id WHERE info_id=$info_id");
 	}

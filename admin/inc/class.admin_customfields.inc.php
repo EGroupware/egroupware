@@ -318,7 +318,7 @@ class admin_customfields
 		// Update based on info returned from template
 		if (is_array($content))
 		{
-			list($action) = @each($content['button']);
+			$action = @key($content['button']);
 			switch($action)
 			{
 				case 'delete':

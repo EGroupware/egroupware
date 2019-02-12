@@ -66,7 +66,7 @@ class admin_cmds
 		}
 		elseif ($content['nm']['rows']['delete'])
 		{
-			list($id) = each($content['nm']['rows']['delete']);
+			$id = key($content['nm']['rows']['delete']);
 			unset($content['nm']['rows']);
 
 			if (($cmd = admin_cmd::read($id)))
@@ -162,7 +162,7 @@ class admin_cmds
 			}
 			elseif($content['remote']['button'])
 			{
-				list($button) = each($content['remote']['button']);
+				$button = key($content['remote']['button']);
 				unset($content['remote']['button']);
 				switch($button)
 				{

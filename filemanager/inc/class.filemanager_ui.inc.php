@@ -525,7 +525,7 @@ class filemanager_ui
 		{
 			if ($content['button'])
 			{
-				list($button) = each($content['button']);
+				$button = key($content['button']);
 				unset($content['button']);
 			}
 			switch($button)
@@ -1108,7 +1108,8 @@ class filemanager_ui
 			//_debug_array($content);
 			$path =& $content['path'];
 
-			list($button) = @each($content['button']); unset($content['button']);
+			$button = @key($content['button']);
+			unset($content['button']);
 			if(!$button && $content['sudo'])
 			{
 				// Button to stop sudo is not in button namespace
@@ -1263,7 +1264,7 @@ class filemanager_ui
 			{
 				if ($content['eacl']['delete'])
 				{
-					list($ino_owner) = each($content['eacl']['delete']);
+					$ino_owner = key($content['eacl']['delete']);
 					list(, $owner) = explode('-',$ino_owner,2);	// $owner is a group and starts with a minus!
 					$msg .= Vfs::eacl($path,null,$owner) ? lang('ACL deleted.') : lang('Error deleting the ACL entry!');
 				}

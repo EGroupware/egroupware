@@ -287,7 +287,7 @@ class calendar_uiforms extends calendar_ui
 		// (add, edit, update, delete)
 		$update_type = $content['id'] ? ($content['recur_type'] == MCAL_RECUR_NONE ? 'update' : 'edit') : 'add';
 
-		list($button) = @each($content['button']);
+		$button = @key($content['button']);
 		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
 		unset($content['button']); unset($content['action']);
 
@@ -2042,7 +2042,8 @@ class calendar_uiforms extends calendar_ui
 						// first participant is the one replying (our iCal parser adds owner first!)
 						$parts = $event['participants'];
 						unset($parts[$existing_event['owner']]);
-						list($event['ical_sender_uid'], $event['ical_sender_status']) = each($parts);
+						$event['ical_sender_uid'] = key($parts);
+						$event['ical_sender_status'] = current($parts);
 						$quantity = $role = null;
 						calendar_so::split_status($event['ical_sender_status'], $quantity, $role);
 
