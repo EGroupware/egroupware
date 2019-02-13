@@ -5,11 +5,10 @@
  * @link www.egroupware.org
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -202,7 +201,6 @@ class addressbook_ui extends addressbook_bo
 			}
 		}
 		$preserv = array();
-		$to = $_content['nm']['to'];
 		$content = array();
 		if($msg || $_GET['msg'])
 		{
@@ -2574,7 +2572,6 @@ class addressbook_ui extends addressbook_bo
 	 */
 	public function ajax_check_values($values, $name, $own_id=0)
 	{
-		$matches = null;
 		$fields = explode(',',$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields']);
 		$threshold = (int)$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'];
 
