@@ -287,7 +287,7 @@ abstract class Merge
 			$name = '#'.$name;
 			if(!$contact[$name])
 			{
-				$replacements['$$'.($prefix ? $prefix.'/':'').$name] = '';
+				$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = '';
 				continue;
 			}
 			// Format date cfs per user Api\Preferences
