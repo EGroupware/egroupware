@@ -1107,7 +1107,7 @@
             "version": "2.0.8",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Exception-2.0.8.tgz"
+                "url": "https://pear.horde.org/get/Horde_Exception-2.0.8.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_translation": "<3.0.0.0",
@@ -1419,7 +1419,7 @@
             "version": "2.0.6",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Secret-2.0.6.tgz"
+                "url": "https://pear.horde.org/get/Horde_Secret-2.0.6.tgz"
             },
             "require": {
                 "ext-hash": "*",
@@ -1511,7 +1511,7 @@
             "version": "1.6.3",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Stream-1.6.3.tgz"
+                "url": "https://pear.horde.org/get/Horde_Stream-1.6.3.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -1539,7 +1539,7 @@
             "version": "2.0.4",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Stream_Filter-2.0.4.tgz"
+                "url": "https://pear.horde.org/get/Horde_Stream_Filter-2.0.4.tgz"
             },
             "require": {
                 "php": "<8.0.0.0"
@@ -1623,7 +1623,7 @@
             "version": "2.0.3",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Text_Flowed-2.0.3.tgz"
+                "url": "https://pear.horde.org/get/Horde_Text_Flowed-2.0.3.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_util": "<3.0.0.0",
