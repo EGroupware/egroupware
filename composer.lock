@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c2fc3d6c62df7bc2dc4f95c6939de33",
+    "content-hash": "4c10fb21466095cae16f8950efa4d357",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -322,6 +322,167 @@
             "time": "2018-03-04T13:23:48+00:00"
         },
         {
+            "name": "composer/installers",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0"
+            },
+            "replace": {
+                "roundcube/plugin-installer": "*",
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "^4.8.36"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Composer\\Installers\\Plugin",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\Installers\\": "src/Composer/Installers"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "https://composer.github.io/installers/",
+            "keywords": [
+                "Craft",
+                "Dolibarr",
+                "Eliasis",
+                "Hurad",
+                "ImageCMS",
+                "Kanboard",
+                "Lan Management System",
+                "MODX Evo",
+                "Mautic",
+                "Maya",
+                "OXID",
+                "Plentymarkets",
+                "Porto",
+                "RadPHP",
+                "SMF",
+                "Thelia",
+                "WolfCMS",
+                "agl",
+                "aimeos",
+                "annotatecms",
+                "attogram",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "cockpit",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "dokuwiki",
+                "drupal",
+                "eZ Platform",
+                "elgg",
+                "expressionengine",
+                "fuelphp",
+                "grav",
+                "installer",
+                "itop",
+                "joomla",
+                "kohana",
+                "laravel",
+                "lavalite",
+                "lithium",
+                "magento",
+                "majima",
+                "mako",
+                "mediawiki",
+                "modulework",
+                "modx",
+                "moodle",
+                "osclass",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "puppet",
+                "pxcms",
+                "reindex",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "sydes",
+                "symfony",
+                "typo3",
+                "wordpress",
+                "yawik",
+                "zend",
+                "zikula"
+            ],
+            "time": "2018-08-27T06:10:37+00:00"
+        },
+        {
+            "name": "egroupware/activesync",
+            "version": "17.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/activesync.git",
+                "reference": "3fb453e09c4d1471f8588cd6a5b4871e1195215f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/3fb453e09c4d1471f8588cd6a5b4871e1195215f",
+                "reference": "3fb453e09c4d1471f8588cd6a5b4871e1195215f",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version",
+                "egroupware/z-push-dev": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware support for ActiveSync protocol using z-Push",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-14T09:09:39+00:00"
+        },
+        {
             "name": "egroupware/ckeditor",
             "version": "v4.9.2",
             "source": {
@@ -354,6 +515,46 @@
             "description": "Compiled version of CKEditor customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/ckeditor",
             "time": "2018-05-08T13:42:32+00:00"
+        },
+        {
+            "name": "egroupware/collabora",
+            "version": "17.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/collabora.git",
+                "reference": "39f0b29da18708ae743dd1b2451a55a977cd811f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/39f0b29da18708ae743dd1b2451a55a977cd811f",
+                "reference": "39f0b29da18708ae743dd1b2451a55a977cd811f",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware integration for Collabora Online Office",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-14T09:07:46+00:00"
         },
         {
             "name": "egroupware/icalendar",
@@ -452,6 +653,112 @@
             "description": "Compiled version of magicsuggest customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/magicsuggest",
             "time": "2018-06-21T13:36:37+00:00"
+        },
+        {
+            "name": "egroupware/projectmanager",
+            "version": "17.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/projectmanager.git",
+                "reference": "0cef63a49e70247cc8fde176ec6c4ecbce4b73a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/0cef63a49e70247cc8fde176ec6c4ecbce4b73a0",
+                "reference": "0cef63a49e70247cc8fde176ec6c4ecbce4b73a0",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware project-management application",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-14T09:06:18+00:00"
+        },
+        {
+            "name": "egroupware/tracker",
+            "version": "17.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/tracker.git",
+                "reference": "ef89ce67311865b2167f55aa83d96f89a3b797f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/ef89ce67311865b2167f55aa83d96f89a3b797f4",
+                "reference": "ef89ce67311865b2167f55aa83d96f89a3b797f4",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware bug-tracker and helpdesk application",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-14T09:07:00+00:00"
+        },
+        {
+            "name": "egroupware/z-push-dev",
+            "version": "17.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/z-push.git",
+                "reference": "3361dcbe5a197914ee41096fed112984e2514af5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/z-push/zipball/3361dcbe5a197914ee41096fed112984e2514af5",
+                "reference": "3361dcbe5a197914ee41096fed112984e2514af5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0"
+            ],
+            "description": "Z-Push is an open-source application to synchronize ActiveSync compatible devices",
+            "homepage": "http://z-push.org/",
+            "time": "2018-04-11T07:05:40+00:00"
         },
         {
             "name": "fxp/composer-asset-plugin",
@@ -627,6 +934,48 @@
             ],
             "description": "JavaScript library for DOM operations",
             "homepage": "http://jquery.com"
+        },
+        {
+            "name": "oomphinc/composer-installers-extender",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oomphinc/composer-installers-extender.git",
+                "reference": "ca1c4b16b0905c81d1e77e608f36a2eff1a56f56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oomphinc/composer-installers-extender/zipball/ca1c4b16b0905c81d1e77e608f36a2eff1a56f56",
+                "reference": "ca1c4b16b0905c81d1e77e608f36a2eff1a56f56",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "composer/installers": "^1.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "OomphInc\\ComposerInstallersExtender\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "OomphInc\\ComposerInstallersExtender\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stephen Beemsterboer",
+                    "email": "stephen@oomphinc.com",
+                    "homepage": "https://github.com/balbuf"
+                }
+            ],
+            "description": "Extend the composer/installers plugin to accept any arbitrary package type.",
+            "homepage": "http://www.oomphinc.com/",
+            "time": "2017-03-31T16:57:39+00:00"
         },
         {
             "name": "pear-pear.horde.org/Horde_Compress",
@@ -1873,16 +2222,16 @@
         },
         {
             "name": "pear/xml_feed_parser",
-            "version": "dev-master",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/XML_Feed_Parser.git",
-                "reference": "61a3426e1c332e5536c87bd4a0a0dd97d864c72a"
+                "reference": "d8ad454742acba786738b39cbcc7c10f7b57adbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/XML_Feed_Parser/zipball/61a3426e1c332e5536c87bd4a0a0dd97d864c72a",
-                "reference": "61a3426e1c332e5536c87bd4a0a0dd97d864c72a",
+                "url": "https://api.github.com/repos/pear/XML_Feed_Parser/zipball/d8ad454742acba786738b39cbcc7c10f7b57adbe",
+                "reference": "d8ad454742acba786738b39cbcc7c10f7b57adbe",
                 "shasum": ""
             },
             "require": {
@@ -1916,7 +2265,7 @@
                 }
             ],
             "description": "More info available on: http://pear.php.net/package/XML_Feed_Parser",
-            "time": "2014-02-20T19:24:07+00:00"
+            "time": "2019-02-11T14:09:14+00:00"
         },
         {
             "name": "pear/xml_util",
@@ -1979,12 +2328,24 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "php": 15,
-        "pear/xml_feed_parser": 20
+        "egroupware/collabora": 20,
+        "egroupware/projectmanager": 20,
+        "egroupware/tracker": 20,
+        "egroupware/z-push-dev": 20,
+        "egroupware/activesync": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6,<=8.0.0alpha1"
+        "php": ">=5.6,<=8.0.0alpha1",
+        "ext-mysqli": "*",
+        "ext-pdo": "*",
+        "ext-gd": "*",
+        "ext-json": "*",
+        "ext-xml": "*",
+        "ext-xsl": "*",
+        "ext-openssl": "*",
+        "ext-session": "*"
     },
     "platform-dev": []
 }
