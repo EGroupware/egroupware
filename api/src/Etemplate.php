@@ -241,7 +241,6 @@ class Etemplate extends Etemplate\Widget\Template
 				$GLOBALS['egw']->framework->response->generic("data", array($content));
 				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+Framework::get_extra());
 				Framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
-				self::$request = null;
 				return;
 			}
 			// let framework know, if we are a popup or not ('popup' not true, which is allways used by index.php!)
