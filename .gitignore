@@ -18,6 +18,10 @@
 /pixelegg/js/fw_pixelegg.min.js.map
 /pixelegg/mobile/fw_mobile.min.css
 /pixelegg/mobile/fw_mobile.min.css.map
+/pixelegg/css/traditional.min.css
+/pixelegg/css/traditional.min.css.map
+/notifications/js/notificationajaxpopup.min.js
+/notifications/js/notificationajaxpopup.min.js.map
 /nbproject/private/Auf Branch master
 /activesync/
 /acadmin/
@@ -31,6 +35,7 @@
 /authors.txt
 /authors.xml
 /bookmarks/
+/collabora/
 /courseprotocol/
 /ecoman/
 /esyncpro/

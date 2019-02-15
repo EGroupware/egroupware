@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7c8682bcee05d3c6a55fc06dc2f6774",
+    "content-hash": "4c10fb21466095cae16f8950efa4d357",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -322,6 +322,167 @@
             "time": "2018-03-04T13:23:48+00:00"
         },
         {
+            "name": "composer/installers",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0"
+            },
+            "replace": {
+                "roundcube/plugin-installer": "*",
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "^4.8.36"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Composer\\Installers\\Plugin",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\Installers\\": "src/Composer/Installers"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "https://composer.github.io/installers/",
+            "keywords": [
+                "Craft",
+                "Dolibarr",
+                "Eliasis",
+                "Hurad",
+                "ImageCMS",
+                "Kanboard",
+                "Lan Management System",
+                "MODX Evo",
+                "Mautic",
+                "Maya",
+                "OXID",
+                "Plentymarkets",
+                "Porto",
+                "RadPHP",
+                "SMF",
+                "Thelia",
+                "WolfCMS",
+                "agl",
+                "aimeos",
+                "annotatecms",
+                "attogram",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "cockpit",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "dokuwiki",
+                "drupal",
+                "eZ Platform",
+                "elgg",
+                "expressionengine",
+                "fuelphp",
+                "grav",
+                "installer",
+                "itop",
+                "joomla",
+                "kohana",
+                "laravel",
+                "lavalite",
+                "lithium",
+                "magento",
+                "majima",
+                "mako",
+                "mediawiki",
+                "modulework",
+                "modx",
+                "moodle",
+                "osclass",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "puppet",
+                "pxcms",
+                "reindex",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "sydes",
+                "symfony",
+                "typo3",
+                "wordpress",
+                "yawik",
+                "zend",
+                "zikula"
+            ],
+            "time": "2018-08-27T06:10:37+00:00"
+        },
+        {
+            "name": "egroupware/activesync",
+            "version": "17.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/activesync.git",
+                "reference": "3fb453e09c4d1471f8588cd6a5b4871e1195215f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/3fb453e09c4d1471f8588cd6a5b4871e1195215f",
+                "reference": "3fb453e09c4d1471f8588cd6a5b4871e1195215f",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version",
+                "egroupware/z-push-dev": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware support for ActiveSync protocol using z-Push",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-14T09:09:39+00:00"
+        },
+        {
             "name": "egroupware/ckeditor",
             "version": "v4.9.2",
             "source": {
@@ -354,6 +515,46 @@
             "description": "Compiled version of CKEditor customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/ckeditor",
             "time": "2018-05-08T13:42:32+00:00"
+        },
+        {
+            "name": "egroupware/collabora",
+            "version": "17.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/collabora.git",
+                "reference": "39f0b29da18708ae743dd1b2451a55a977cd811f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/39f0b29da18708ae743dd1b2451a55a977cd811f",
+                "reference": "39f0b29da18708ae743dd1b2451a55a977cd811f",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware integration for Collabora Online Office",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-14T09:07:46+00:00"
         },
         {
             "name": "egroupware/icalendar",
@@ -454,84 +655,110 @@
             "time": "2018-06-21T13:36:37+00:00"
         },
         {
-            "name": "egroupware/text_diff",
-            "version": "v1.2.2",
+            "name": "egroupware/projectmanager",
+            "version": "17.1.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/EGroupware/text_diff.git",
-                "reference": "d12474df481bb89f52b02ba0e3fae504ce5d6d51"
+                "url": "https://github.com/EGroupware/projectmanager.git",
+                "reference": "0cef63a49e70247cc8fde176ec6c4ecbce4b73a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/text_diff/zipball/d12474df481bb89f52b02ba0e3fae504ce5d6d51",
-                "reference": "d12474df481bb89f52b02ba0e3fae504ce5d6d51",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "Text/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "description": "Engine for performing and rendering text diffs",
-            "homepage": "http://pear.php.net/package/Text_Diff",
-            "keywords": [
-                "PEAR",
-                "diff",
-                "text"
-            ],
-            "time": "2017-03-08T15:07:59+00:00"
-        },
-        {
-            "name": "egroupware/xml_feed_parser",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/EGroupware/xml_feed_parser.git",
-                "reference": "0bf52e32984ac50a40cdc44661cf2c6358660228"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/xml_feed_parser/zipball/0bf52e32984ac50a40cdc44661cf2c6358660228",
-                "reference": "0bf52e32984ac50a40cdc44661cf2c6358660228",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/0cef63a49e70247cc8fde176ec6c4ecbce4b73a0",
+                "reference": "0cef63a49e70247cc8fde176ec6c4ecbce4b73a0",
                 "shasum": ""
             },
             "require": {
-                "pear/log": "*",
-                "pear/pear_exception": "*"
+                "egroupware/egroupware": "self.version"
             },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "suggest": {
-                "ext-tidy": "May require the tidy PHP extension"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "XML": "./"
-                }
-            },
+            "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                "./"
-            ],
             "license": [
-                "PHP-3.0"
+                "GPL-2.0-or-later"
             ],
             "authors": [
                 {
-                    "name": "James Stewart",
-                    "email": "james@jystewart.net",
-                    "role": "Lead"
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
                 }
             ],
-            "description": "More info available on: http://pear.php.net/package/XML_Feed_Parser",
-            "time": "2019-02-07T15:02:02+00:00"
+            "description": "EGroupware project-management application",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-14T09:06:18+00:00"
+        },
+        {
+            "name": "egroupware/tracker",
+            "version": "17.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/tracker.git",
+                "reference": "ef89ce67311865b2167f55aa83d96f89a3b797f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/ef89ce67311865b2167f55aa83d96f89a3b797f4",
+                "reference": "ef89ce67311865b2167f55aa83d96f89a3b797f4",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware bug-tracker and helpdesk application",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-02-14T09:07:00+00:00"
+        },
+        {
+            "name": "egroupware/z-push-dev",
+            "version": "17.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/z-push.git",
+                "reference": "3361dcbe5a197914ee41096fed112984e2514af5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/z-push/zipball/3361dcbe5a197914ee41096fed112984e2514af5",
+                "reference": "3361dcbe5a197914ee41096fed112984e2514af5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0"
+            ],
+            "description": "Z-Push is an open-source application to synchronize ActiveSync compatible devices",
+            "homepage": "http://z-push.org/",
+            "time": "2018-04-11T07:05:40+00:00"
         },
         {
             "name": "fxp/composer-asset-plugin",
@@ -707,6 +934,48 @@
             ],
             "description": "JavaScript library for DOM operations",
             "homepage": "http://jquery.com"
+        },
+        {
+            "name": "oomphinc/composer-installers-extender",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oomphinc/composer-installers-extender.git",
+                "reference": "ca1c4b16b0905c81d1e77e608f36a2eff1a56f56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oomphinc/composer-installers-extender/zipball/ca1c4b16b0905c81d1e77e608f36a2eff1a56f56",
+                "reference": "ca1c4b16b0905c81d1e77e608f36a2eff1a56f56",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "composer/installers": "^1.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "OomphInc\\ComposerInstallersExtender\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "OomphInc\\ComposerInstallersExtender\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stephen Beemsterboer",
+                    "email": "stephen@oomphinc.com",
+                    "homepage": "https://github.com/balbuf"
+                }
+            ],
+            "description": "Extend the composer/installers plugin to accept any arbitrary package type.",
+            "homepage": "http://www.oomphinc.com/",
+            "time": "2017-03-31T16:57:39+00:00"
         },
         {
             "name": "pear-pear.horde.org/Horde_Compress",
@@ -1076,21 +1345,21 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Mapi",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mapi-1.0.8.tgz",
+                "url": "https://pear.horde.org/get/Horde_Mapi-1.0.9.tgz",
                 "reference": null,
                 "shasum": null
             },
             "require": {
+                "ext-bcmath": "*",
                 "pear-pear.horde.org/horde_date": "<3.0.0.0",
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
-                "pear-pear.php.net/math_biginteger": "<2.0.0.0",
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_mapi": "== 1.0.8.0"
+                "pear-horde/horde_mapi": "== 1.0.9.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1732,55 +2001,6 @@
             "time": "2016-04-16T00:49:33+00:00"
         },
         {
-            "name": "pear/math_biginteger",
-            "version": "v1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pear/Math_BigInteger.git",
-                "reference": "33d4357543037a458fad3e8c837a01b93104e592"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pear/Math_BigInteger/zipball/33d4357543037a458fad3e8c837a01b93104e592",
-                "reference": "33d4357543037a458fad3e8c837a01b93104e592",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcre": "*",
-                "php": ">=4.2.0"
-            },
-            "suggest": {
-                "ext-bcmath": "Allows using the BCMath extension internally for computation. Faster than native implementation.",
-                "ext-gmp": "Allows using the GNU Multiple Precision extension internally for computation. If you are doing a lot of computation this is the recommended extension."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Math_": "./"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jim Wigginton",
-                    "email": "terrafrost@php.net"
-                }
-            ],
-            "description": "Pure-PHP arbitrary precission integer arithmetic library. If GMP or BCMath are available they are used.",
-            "homepage": "https://github.com/pear/Math_BigInteger",
-            "keywords": [
-                "arbitrary",
-                "bcmath",
-                "gmp",
-                "integer",
-                "precision"
-            ],
-            "time": "2016-04-12T05:46:52+00:00"
-        },
-        {
             "name": "pear/pear",
             "version": "v1.10.8",
             "source": {
@@ -1968,6 +2188,86 @@
             "time": "2015-07-20T20:05:12+00:00"
         },
         {
+            "name": "pear/text_diff",
+            "version": "v1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Text_Diff.git",
+                "reference": "d12474df481bb89f52b02ba0e3fae504ce5d6d51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Text_Diff/zipball/d12474df481bb89f52b02ba0e3fae504ce5d6d51",
+                "reference": "d12474df481bb89f52b02ba0e3fae504ce5d6d51",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Text/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "description": "Engine for performing and rendering text diffs",
+            "homepage": "http://pear.php.net/package/Text_Diff",
+            "keywords": [
+                "PEAR",
+                "diff",
+                "text"
+            ],
+            "time": "2017-03-08T15:07:59+00:00"
+        },
+        {
+            "name": "pear/xml_feed_parser",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/XML_Feed_Parser.git",
+                "reference": "d8ad454742acba786738b39cbcc7c10f7b57adbe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/XML_Feed_Parser/zipball/d8ad454742acba786738b39cbcc7c10f7b57adbe",
+                "reference": "d8ad454742acba786738b39cbcc7c10f7b57adbe",
+                "shasum": ""
+            },
+            "require": {
+                "pear/log": "*",
+                "pear/pear_exception": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "ext-tidy": "May require the tidy PHP extension"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "XML": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "James Stewart",
+                    "email": "james@jystewart.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/XML_Feed_Parser",
+            "time": "2019-02-11T14:09:14+00:00"
+        },
+        {
             "name": "pear/xml_util",
             "version": "v1.4.3",
             "source": {
@@ -2028,12 +2328,24 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "php": 15,
-        "egroupware/xml_feed_parser": 20
+        "egroupware/collabora": 20,
+        "egroupware/projectmanager": 20,
+        "egroupware/tracker": 20,
+        "egroupware/z-push-dev": 20,
+        "egroupware/activesync": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6,<=8.0.0alpha1"
+        "php": ">=5.6,<=8.0.0alpha1",
+        "ext-mysqli": "*",
+        "ext-pdo": "*",
+        "ext-gd": "*",
+        "ext-json": "*",
+        "ext-xml": "*",
+        "ext-xsl": "*",
+        "ext-openssl": "*",
+        "ext-session": "*"
     },
     "platform-dev": []
 }

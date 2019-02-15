@@ -1,4 +1,41 @@
 {
+	"name": "egroupware/egroupware",
+	"description": "EGroupware extends a classic groupware with an integreted CRM-system, a secure file-server and Collabora Online Office.",
+	"keywords": [
+		"groupware",
+		"webmail",
+		"address-book",
+		"calendar",
+		"caldav-server",
+		"carddav-server",
+		"project-management",
+		"php",
+		"javascript",
+		"collaboration"
+	],
+	"type": "project",
+	"homepage": "https://www.egroupware.org/",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+        {
+            "name": "Ralf Becker",
+            "email": "rb@egroupware.org"
+        },
+        {
+            "name": "Hadi Nategh",
+            "email": "hn@egroupware.org"
+        },
+        {
+            "name": "Nathan Gray",
+            "email": "ng@egroupware.org"
+        }
+    ],
+	"support": {
+		"forum": "https://help.egroupware.org",
+		"wiki": "https://wiki.egroupware.org",
+		"source": "https://github.com/egroupware/egroupware",
+		"issuses": "https://my.egroupware."
+	},
 	"repositories": [
         {
             "type": "pear",
@@ -9,6 +46,14 @@
 	},
 	"require": {
 		"php": ">=5.6,<=8.0.0alpha1",
+		"ext-mysqli":"*",
+		"ext-pdo":"*",
+		"ext-gd":"*",
+		"ext-json":"*",
+		"ext-xml":"*",
+		"ext-xsl":"*",
+		"ext-openssl":"*",
+		"ext-session":"*",
 		"fxp/composer-asset-plugin":"^1.2.2",
 		"pear-pear.horde.org/horde_imap_client": "^2.29.7",
 		"pear-pear.horde.org/horde_nls": "^2.0.3",
@@ -16,15 +61,14 @@
 		"pear-pear.horde.org/horde_smtp": "^1.3.0",
 		"pear-pear.horde.org/horde_compress": "^2.0.8",
 		"egroupware/icalendar": "^2.1.9",
-		"pear/math_biginteger": "^1.0.2",
-		"pear-pear.horde.org/horde_mapi": "^1.0.0",
+		"pear-pear.horde.org/horde_mapi": "^1.0.9",
 		"pear-pear.horde.org/horde_managesieve": "^1.0.2",
 		"pear-pear.horde.org/horde_crypt": "^2.7.9",
 		"pear/pear": "*",
 		"pear/auth_sasl": "*",
-		"egroupware/xml_feed_parser": "dev-master",
+		"pear/xml_feed_parser": "^1.0.5",
 		"pear/log": "*",
-		"egroupware/text_diff": "*",
+		"pear/text_diff": "^1.2.2",
 		"bower-asset/jquery": "^1.12.4",
 		"bower-asset/fastclick":"1.0.*",
 		"bower-asset/jquery-touchswipe": "1.6.*",
@@ -34,11 +78,30 @@
 		"npm-asset/gridster":"0.5.*",
 		"adldap2/adldap2": "=4.0.4",
 		"egroupware/ckeditor": "^4",
-		"egroupware/magicsuggest": "^2.1"
-	},
-	"replace": {
-		"pear-pear.php.net/Math_BigInteger": "^1.0.2"
+		"egroupware/magicsuggest": "^2.1",
+		"oomphinc/composer-installers-extender": "^1.1",
+		"egroupware/collabora": "self.version",
+		"egroupware/projectmanager": "self.version",
+		"egroupware/tracker": "self.version",
+		"egroupware/z-push-dev": "self.version",
+		"egroupware/activesync": "self.version"
 	},
 	"require-dev": {
+	},
+	"suggests": {
+		"ext-opcache": "Opcode cache to speed up PHP",
+		"ext-apcu": "Used for in-memory caching",
+		"ext-tidy": "Used for tidying up docx templates",
+		"ext-bz2": "Used for compressing backups",
+		"ext-zip": "Used for backup and downloading of multiple files",
+		"ext-mbstring": "Used for charset conversation and Unicode support",
+		"ext-mhash": "Used for password hashing",
+		"ext-ldap": "Required to access LDAP or ActiveDirectory"
+	},
+	"extra": {
+		"installer-types": ["egroupware-app"],
+		"installer-paths": {
+			"{$name}/": ["type:egroupware-app"]
+		}
 	}
 }
