@@ -4,6 +4,8 @@
  * Install / update EGroupware - Command line interface
  *
  * Usage: install-cli.php [-v|--verbose] [--use-prerelease] (master|bugfix|release|<branch>|<tag>)
+ *        install-cli.php --git <arguments>	# runs git with given arguments in all app-dirs
+ *                                          # e.g. tag -a 17.1.20190214 -m 'tagging release'
  *
  * EGroupware main directory should be either git cloned:
  *
@@ -44,7 +46,7 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling setup-cli 
 error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 
 // parse arguments
-$verbose = $use_prerelease = false;
+$verbose = $use_prerelease = $run_git = false;
 
 $argv = $_SERVER['argv'];
 $cmd  = array_shift($argv);
@@ -70,13 +72,18 @@ foreach($argv as $n => $arg)
 			case '--help':
 				usage();
 
+			case '--git':
+				$run_git = true;
+				unset($argv[$n]);
+				break 2;	// no further argument processing, as they are for git
+
 			default:
 				usage("Unknown argument '$arg'!");
 		}
 	}
 }
 
-if (count($argv) > 1) usage("Too many arguments!");
+if (!$run_git && count($argv) > 1) usage("Too many arguments!");
 
 function usage($err=null)
 {
@@ -86,7 +93,8 @@ function usage($err=null)
 	{
 		echo "$err\n\n";
 	}
-	die("Usage: $cmd [-v|--verbose] [--use-prerelease] (master|bugfix|release|<branch>|<tag>)\n\n");
+	die("Usage:\t$cmd [-v|--verbose] [--use-prerelease] (master|bugfix|release|<branch>|<tag>)\n".
+		"\t$cmd --git <arguments>\t	runs git with given arguments in all app-dirs, e.g. tag -a 17.1.20190214 -m 'tagging release'\n");
 }
 
 $bins = array(
@@ -109,11 +117,16 @@ foreach($bins as $name => $binaries)
 			continue 2;
 		}
 	}
-	$output = null;
+	$output = $ret = null;
 	if (($bin = exec('which '.$name, $output, $ret)) && !$ret &&
 		(file_exists($bin)) && is_executable($bin))
 	{
 		$bins[$name] = $$name = $bin;
+	}
+	// check if we can just run it, because it's in the path
+	elseif (exec($name.' -v', $output, $ret) && !$ret)
+	{
+		$bins[$name] = $$name = $num;
 	}
 	else
 	{
@@ -137,15 +150,25 @@ if (!extension_loaded('curl')) die("Required PHP extesion 'curl' missing! You ne
 
 // check if we are on a git clone
 $output = array();
-if (!$git || !file_exists(__DIR__.'/.git') || !is_dir(__DIR__.'/.git') ||
-	!exec($git.' branch --no-color', $output, $ret) || $ret)
+if (!file_exists(__DIR__.'/.git') || !is_dir(__DIR__.'/.git'))
+{
+	error_log("Could not identify git branch (you need to use git clone or composer create-project --prefer-source --keep-vcs egroupware/egroupware)!");
+	exit(1);
+}
+
+// should we only run a git command
+if ($run_git)
+{
+	exit (run_git($argv));
+}
+
+if (!exec($git.' branch --no-color', $output, $ret) || $ret)
 {
 	foreach($output as $line)
 	{
 		error_log($line);
 	}
-	error_log("Could not identify git branch (you need to use git clone or composer create-project --prefer-source --keep-vcs egroupware/egroupware)!");
-	exit(1);
+	exit($ret);
 }
 foreach($output as $line)
 {
@@ -235,6 +258,36 @@ if ($npm && $grunt)
 
 	if ($verbose) echo "$grunt\n";
 	system($grunt);
+}
+
+/**
+ * Run git command with given arguments in install-dir and all app-dirs
+ *
+ * cd and git command is echoed to stderr
+ *
+ * @param array $argv
+ * @return int exit-code of last git command, breaks on first non-zero exit-code
+ */
+function run_git(array $argv)
+{
+	global $git;
+
+	$git_cmd = $git.' '.implode(' ', array_map('escapeshellarg', $argv));
+
+	$ret = 0;
+	foreach(scandir(__DIR__) as $dir)
+	{
+		if ($dir !== '..' && file_exists(__DIR__.'/'.$dir.'/.git'))
+		{
+			$cmd = ($dir !== '.' ? "cd $dir; " : '').$git_cmd;
+
+			error_log("\n>>> ".$cmd."\n");
+			system($cmd, $ret);
+			// break if command is not successful
+			if ($ret) return $ret;
+		}
+	}
+	return $ret;
 }
 
 /**
