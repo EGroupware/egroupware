@@ -215,7 +215,7 @@ foreach(scandir(__DIR__) as $dir)
 		{
 			$cmd .= "; $git pull --rebase";
 		}
-		$cmd .= "; test -z $($git stash list) || echo $git stash pop";
+		$cmd .= "; test -z \"$($git stash list)\" || $git stash pop";
 		if ($verbose) echo "$cmd\n";
 		system($cmd);
 	}
