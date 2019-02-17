@@ -3,13 +3,17 @@
 /**
  * Install / update EGroupware - Command line interface
  *
- * Usage: install-cli.php [-v|--verbose] [--use-prerelease] (master|bugfix|release|<branch>|<tag>)
- *        install-cli.php --git <arguments>	# runs git with given arguments in all app-dirs
- *                                          # e.g. tag -a 17.1.20190214 -m 'tagging release'
+ * Usage:
+ *
+ * - install-cli.php [-v|--verbose] [--use-prerelease] [(master|bugfix|release|<branch>|<tag>)]
+ *   you can use composer install arguments like: --ignore-platform-reqs --no-dev
+ *
+ * - install-cli.php --git(-apps) <arguments>
+ *   runs git with given arguments (in main- and) all app-dirs, e.g. tag -a 17.1.20190214 -m 'tagging release'
  *
  * EGroupware main directory should be either git cloned:
  *
- *	git clone -b <branch> https://github.com/EGroupware/egroupware [<target>]
+ *	git clone [-b <branch>] https://github.com/EGroupware/egroupware [<target>]
  *
  * or created via composer create-project
  *
@@ -47,6 +51,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 
 // parse arguments
 $verbose = $use_prerelease = $run_git = false;
+$composer_args = [];
 
 $argv = $_SERVER['argv'];
 $cmd  = array_shift($argv);
@@ -73,12 +78,15 @@ foreach($argv as $n => $arg)
 				usage();
 
 			case '--git':
-				$run_git = true;
+			case '--git-apps':
+				$run_git = $arg;
 				unset($argv[$n]);
 				break 2;	// no further argument processing, as they are for git
 
-			default:
-				usage("Unknown argument '$arg'!");
+			default:	// pass unknown arguments to composer install
+				$composer_args[] = $arg;
+				unset($argv[$n]);
+				break;
 		}
 	}
 }
@@ -159,7 +167,7 @@ if (!file_exists(__DIR__.'/.git') || !is_dir(__DIR__.'/.git'))
 // should we only run a git command
 if ($run_git)
 {
-	exit (run_git($argv));
+	exit (run_git($argv, $run_git === '--git'));
 }
 
 if (!exec($git.' branch --no-color', $output, $ret) || $ret)
@@ -245,7 +253,7 @@ foreach(scandir(__DIR__) as $dir)
 }
 
 // update composer managed dependencies
-$cmd = $composer.' install';
+$cmd = $composer.' install '.implode(' '.$composer_args);
 if ($verbose) echo "$cmd\n";
 system($cmd);
 
@@ -261,14 +269,15 @@ if ($npm && $grunt)
 }
 
 /**
- * Run git command with given arguments in install-dir and all app-dirs
+ * Run git command with given arguments all app-dirs and (optional) install-dir
  *
  * cd and git command is echoed to stderr
  *
  * @param array $argv
+ * @param booelan $main_too =true true: run in main-dir too, false: only app-dirs
  * @return int exit-code of last git command, breaks on first non-zero exit-code
  */
-function run_git(array $argv)
+function run_git(array $argv, $main_too=true)
 {
 	global $git;
 
@@ -277,7 +286,8 @@ function run_git(array $argv)
 	$ret = 0;
 	foreach(scandir(__DIR__) as $dir)
 	{
-		if ($dir !== '..' && file_exists(__DIR__.'/'.$dir.'/.git'))
+		if (!($dir === '..' || $dir === '.' && !$main_too ||
+			!file_exists(__DIR__.'/'.$dir.'/.git')))
 		{
 			$cmd = ($dir !== '.' ? "cd $dir; " : '').$git_cmd;
 
