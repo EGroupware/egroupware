@@ -6,8 +6,7 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author RalfBecker@outdoor-training.de
- * @copyright (c) 2009-17 by Ralf Becker <rb@egroupware.org>
- * @version $Id$
+ * @copyright (c) 2009-19 by Ralf Becker <rb@egroupware.org>
  */
 
 if (php_sapi_name() !== 'cli')	// security precaution: forbit calling setup-cli as web-page
@@ -51,11 +50,10 @@ $config = array(
 	'clamscan' => trim(`which clamscan`),
 	'freshclam' => trim(`which freshclam`),
 	'git' => trim(`which git`),
-	'mr'  => trim(`which mr`),
 	'gpg' => trim(`which gpg`),
 	'editor' => trim(`which vi`),
 	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
-	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --ignore-platform-reqs --no-dev' : '',
+	'composer' => trim(`which composer.phar`),
 	'after-checkout' => 'rm -rf */source */templates/*/source',
 	'packager' => 'build@egroupware.org',
 	'obs' => '/home/stylite/obs/stylite-epl-trunk',
@@ -322,15 +320,14 @@ function do_checkout()
 		$cmd = $config['git'].' clone '.(!empty($config['branch']) ? ' -b '.$config['branch'] : '').
 			' git@github.com:EGroupware/egroupware.git '.$config['checkoutdir'];
 		run_cmd($cmd);
-		run_cmd('mr up');	// need to run mr up twice for new checkout, because chained .mrconfig wont run first time (because not there yet!)
 	}
 	elseif (!is_dir($config['checkoutdir']) || !is_writable($config['checkoutdir']))
 	{
-		throw new Exception("svn checkout directory '{$config['checkoutdir']} exists and is NO directory or NOT writable!");
+		throw new Exception("checkout directory '{$config['checkoutdir']} exists and is NO directory or NOT writable!");
 	}
 	chdir($config['checkoutdir']);
 
-	run_cmd('mr up');
+	run_cmd('./install-php --ignore-platform-reqs --no-dev');
 }
 
 /**
@@ -350,10 +347,58 @@ function do_tag()
 
 	if (empty($config['tag'])) return;	// otherwise we copy everything in svn root!
 
-	echo "Creating tag $config[tag]\n";
+	echo "Creating tag and pushing $config[tag]\n";
 
-	$cmd = $config['mr'].' tag '.escapeshellarg($config['tag']).' '.escapeshellarg('Creating '.$config['tag']);
-	run_cmd($cmd);
+	run_cmd('./install-cli.php --git tag '.escapeshellarg($config['tag']).' '.escapeshellarg('Creating '.$config['tag']));
+
+	// push tags in all apps (not main-dir!)
+	run_cmd('./install-cli.php --git-app push origin '.$config['tag']);
+
+	// checkout tag, update composer.{json,lock}, move tag to include them
+	run_cmd($config['git'].' checkout '.$config['tag']);
+	update_composer_json_version($config['tag']);
+	// might require more then one run, as pushed tags need to be picked up by packagist
+	$output = $ret = null;
+	$timeout = 10;
+	for($try=1; $try < 10 && run_cmd($config['composer'].' update egroupware/\*', $output, 2); ++$try)
+	{
+		echo "$try. retry in $timeout seconds ...\n";
+		sleep($timeout);
+	}
+	run_cmd($config['git'].' commit -m '.escapeshellarg('Updating dependencies for '.$config['tag']).' composer.{json,lock}');
+	run_cmd($config['git'].' tag -f '.escapeshellarg($config['tag']).' -m '.escapeshellarg('Updating dependencies for '.$config['tag']));
+}
+
+/**
+ * Update composer.json with version number (or add it after "name" if not yet there)
+ *
+ * @param string $version
+ * @throws Exception on error
+ */
+function update_composer_json_version($version)
+{
+	global $config;
+
+	if (!($json = file_get_contents($path=$config['checkoutdir'].'/composer.json')))
+	{
+		throw new Exception("Can NOT read $path to update with new version!");
+	}
+	if (preg_match('/"version":\s*"[^"]+"/', $json))
+	{
+		$json = preg_replace('/"version":\s*"[^"]+"/', '"version": "'.$version.'"', $json);
+	}
+	elseif (preg_replace('/^(\s*)"name":\s*"[^"]+",$/m', $json))
+	{
+		$json = preg_replace('/^(\s*)"name":\s*"[^"]+",$/m', '$0'."\n".'$1"version": "'.$version.'",', $json);
+	}
+	else
+	{
+		throw new Exception("Failed to add new version to $path!");
+	}
+	if (!file_put_contents($path, $json))
+	{
+		throw new Exception("Can NOT update $path with new version!");
+	}
 }
 
 /**
@@ -363,14 +408,13 @@ function do_release()
 {
 	global $config,$verbose;
 
-	// push local changes to Github incl. tags
+	// push local changes to Github incl. tag (tags of apps are already pushed by do_tag)
 	if ($verbose) echo "Pushing changes and tags\n";
 	chdir($config['checkoutdir']);
-	run_cmd($config['mr']. ' up');		// in case someone else pushed something
-	chdir($config['checkoutdir']);
-	run_cmd($config['git'].' push');	// regular commits like changelog
+	run_cmd($config['git'].' push');
 	$tag = config_translate('tag');
-	run_cmd($config['mr']. ' push origin '.$tag);	// pushing tags in all apps
+	run_cmd($config['git'].' push origin '.$tag);
+	chdir($config['checkoutdir']);
 
 	if (empty($config['github_user']) || empty($config['github_token']))
 	{
@@ -1206,7 +1250,7 @@ function do_svncheckout()
 	// do composer install to fetch dependencies
 	if ($config['composer'])
 	{
-		run_cmd($config['composer']);
+		run_cmd($config['composer'].' install --ignore-platform-reqs --no-dev');
 	}
 	// run after-checkout command(s), eg. to purge source directories
 	run_cmd($config['after-checkout']);
@@ -1284,11 +1328,17 @@ function do_svntag()
 }
 
 /**
- * Runs given shell command, exists with error-code after echoing the output of the failed command (if not already running verbose)
+ * Runs given shell command
+ *
+ * If command return non-zero exit-code:
+ * 1) output is echoed, if not already running verbose
+ * 2a) if exit-code is contained in $no_bailout --> return it
+ * 2b) otherwise throws with $cmd as message and exit-code
  *
  * @param string $cmd
  * @param array& $output=null $output of command, only if !$verbose !!!
  * @param int|array $no_bailout =null exit code(s) to NOT bail out
+ * @throws Exception on non-zero exit-code not matching $no_bailout
  * @return int exit code of $cmd
  */
 function run_cmd($cmd,array &$output=null,$no_bailout=null)
