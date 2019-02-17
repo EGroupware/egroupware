@@ -5,7 +5,7 @@
  *
  * Usage:
  *
- * - install-cli.php [-v|--verbose] [--use-prerelease] [(master|bugfix|release|<branch>|<tag>)]
+ * - install-cli.php [-v|--verbose] [--use-prerelease] [<composer-args>] [(master|bugfix|release|<branch>|<tag>)]
  *   you can use composer install arguments like: --ignore-platform-reqs --no-dev
  *
  * - install-cli.php --git(-apps) <arguments>
@@ -101,8 +101,10 @@ function usage($err=null)
 	{
 		echo "$err\n\n";
 	}
-	die("Usage:\t$cmd [-v|--verbose] [--use-prerelease] (master|bugfix|release|<branch>|<tag>)\n".
-		"\t$cmd --git <arguments>\t	runs git with given arguments in all app-dirs, e.g. tag -a 17.1.20190214 -m 'tagging release'\n");
+	die("Usage:\t$cmd [-v|--verbose] [--use-prerelease] [<composer-args>] (master|bugfix|release|<branch>|<tag>)\n".
+		"\t\nyou can use composer install arguments like: --ignore-platform-reqs --no-dev\n".
+		"\t$cmd --git(-apps) <arguments>\n".
+		"\truns git with given arguments (in main- and) all app-dirs, e.g. tag -a 17.1.20190214 -m 'tagging release'\n\n");
 }
 
 $bins = array(
