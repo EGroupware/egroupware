@@ -249,13 +249,20 @@ foreach(scandir(__DIR__) as $dir)
 			$cmd .= "; $git pull --rebase";
 		}
 		$cmd .= "; test -z \"$($git stash list)\" || $git stash pop";
-		if ($verbose) echo "$cmd\n";
+		if ($verbose)
+		{
+			echo "$cmd\n";
+		}
+		elseif ($dir !== '.')
+		{
+			echo $dir.': ';
+		}
 		system($cmd);
 	}
 }
 
 // update composer managed dependencies
-$cmd = $composer.' install '.implode(' '.$composer_args);
+$cmd = $composer.' install '.implode(' ', $composer_args);
 if ($verbose) echo "$cmd\n";
 system($cmd);
 
