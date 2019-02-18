@@ -407,6 +407,34 @@ class Storage extends Storage\Base
 	}
 
 	/**
+	 * Return criteria array for a given search pattern
+	 *
+	 * Reimplemented to handle search in custom-fields by ORing with a sub-query
+	 * returning all auto-ids of custom-fields matching the search-criteria
+	 *
+	 * @param string $_pattern search pattern incl. * or ? as wildcard, if no wildcards used we append and prepend one!
+	 * @param string &$wildcard ='' on return wildcard char to use, if pattern does not already contain wildcards!
+	 * @param string &$op ='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
+	 * @param string $extra_col =null extra column to search
+	 * @param array $search_cols =array() List of columns to search.  If not provided, all columns in $this->db_cols will be considered
+	 * @return array or column => value pairs
+	 */
+	public function search2criteria($_pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols = array())
+	{
+		$pattern = $wildcard.$_pattern.$wildcard;
+
+		$criteria = parent::search2criteria($_pattern, $wildcard, $op, $extra_col, $search_cols);
+
+		$criteria[0] = '('.$criteria[0].' OR '.
+			$this->table_name.'.'.$this->autoinc_id.' IN (SELECT '.$this->autoinc_id.
+			' FROM '.$this->extra_table.' WHERE '.$this->extra_value.' '.
+			$this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.
+			$GLOBALS['egw']->db->quote($pattern).'))';
+
+		return $criteria;
+	}
+
+	/**
 	 * searches db for rows matching searchcriteria
 	 *
 	 * Reimplemented to search, order and filter by custom fields
@@ -440,10 +468,12 @@ class Storage extends Storage\Base
 		{
 			$only_keys = $this->table_name.'.*';
 		}
-		// if string given as criteria --> search in all (or $this->columns_to_search) columns including custom fields
+		$extra_join_added = $join && strpos($join, $this->extra_join) !== false;
 		if ($criteria && is_string($criteria))
 		{
-			$criteria = $this->search2criteria($criteria,$wildcard,$op);
+			$extra_join_added = true;	// we have NOT added the join, as we use a sub-query and therefore not need it
+
+			$criteria = $this->search2criteria($criteria, $wildcard, $op);
 		}
 		if ($criteria && is_array($criteria))
 		{
@@ -471,7 +501,6 @@ class Storage extends Storage\Base
 				unset($criteria[$this->autoinc_id]);
 			}
 			// replace ambiguous column with (an exact match of) table_name.column
-			$extra_join_added = $join && strpos($join, $this->extra_join) !== false;
 			foreach($criteria as $name => $val)
 			{
 				// only add extra_join, if we really need it
@@ -709,24 +738,6 @@ class Storage extends Storage\Base
 			}
 		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
-	}
-
-	/**
-	 * Get a default list of columns to search
-	 *
-	 * Reimplemented to search custom fields by default.
-	 *
-	 * @return array of column names
-	 */
-	protected function get_default_search_columns()
-	{
-		$cols = parent::get_default_search_columns();
-		if ($this->customfields && !isset($this->columns_to_search))
-		{
-			$cols[] = $this->extra_table.'.'.$this->extra_value;
-		}
-		//error_log(__METHOD__."() this->columns_to_search=".array2string($this->columns_to_search).' returning '.array2string($cols));
-		return $cols;
 	}
 
 	/**
