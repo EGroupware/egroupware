@@ -272,10 +272,6 @@ class Storage
 
 			// remove some columns, absolutly not necessary to search in sql
 			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),$this->sql_cols_not_to_search);
-			if ($this->customfields)	// add custom fields, if configured
-			{
-				$this->columns_to_search[] = Sql::EXTRA_TABLE.'.'.Sql::EXTRA_VALUE;
-			}
 		}
 		if ($this->user)
 		{

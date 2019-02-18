@@ -761,17 +761,8 @@ class calendar_so
 		{
 			$columns = array('cal_title','cal_description','cal_location');
 
-			$wildcard = $op = null;
-			if(!is_null($params['cfs']))
-			{
-				$custom = Api\Storage\Customfields::get('calendar');
-				if($custom)
-				{
-					$columns[] = 'cal_extra_value';
-					$join .= " LEFT JOIN {$this->extra_table} ON {$this->extra_table}.cal_id = {$this->cal_table}.cal_id ";
-				}
-			}
-			$so_sql = new Api\Storage\Base('calendar', $this->cal_table, $this->db);
+			$wildcard = '%'; $op = null;
+			$so_sql = new Api\Storage('calendar', $this->cal_table, $this->extra_table, '', 'cal_extra_name', 'cal_extra_value', 'cal_id', $this->db);
 			$where = $so_sql->search2criteria($params['query'], $wildcard, $op, null, $columns);
 
 			// Searching - restrict private to own or private grant
