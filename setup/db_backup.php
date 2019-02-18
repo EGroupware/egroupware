@@ -123,11 +123,12 @@ if($_POST['backup'])
 {
 	if (is_resource($f = $db_backup->fopen_backup()))
 	{
-		echo '<p align="center">'.lang('backup started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
+		echo '<p align="center">'.lang('backup started, this might take a few minutes ...')."</p>\n";
+		$starttime = microtime(true);
 		$db_backup->backup($f);
 		if(is_resource($f))
 			fclose($f);
-		$setup_tpl->set_var('error_msg',lang('backup finished'));
+		$setup_tpl->set_var('error_msg', lang('backup finished').': '. number_format(microtime(true)-$starttime, 1).'s');
 
 		/* Remove old backups. */
 		$cleaned_files = array();
