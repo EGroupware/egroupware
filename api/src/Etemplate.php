@@ -201,6 +201,13 @@ class Etemplate extends Etemplate\Widget\Template
 			'currentapp' => $currentapp,
 		);
 
+		if($data['content']['nm']['rows'] && is_array($data['content']['nm']['rows']))
+		{
+			// Deep copy rows so we don't lose them when request is set to null
+			// (some content by reference)
+			$data['content']['nm'] = self::deep_copy($data['content']['nm']);
+		}
+
 		// Info required to load the etemplate client-side
 		$dom_id = str_replace('.','-',$this->dom_id);
 		$load_array = array(
@@ -241,6 +248,10 @@ class Etemplate extends Etemplate\Widget\Template
 				$GLOBALS['egw']->framework->response->generic("data", array($content));
 				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+Framework::get_extra());
 				Framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
+
+				// Really important to run this or weird things happen
+				// See https://help.egroupware.org/t/nextmatch-wert-im-header-ausgeben/73412/11
+				self::$request=null;
 				return;
 			}
 			// let framework know, if we are a popup or not ('popup' not true, which is allways used by index.php!)
@@ -623,6 +634,36 @@ class Etemplate extends Etemplate\Widget\Template
 		}
 		return $old;
 	}
+
+	/**
+	 * Deep copy array to make sure there are no references
+	 *
+	 * @param Array $array
+	 * @return Array
+	 */
+	public static function deep_copy($source)
+	{
+		$arr = array();
+
+		foreach ($source as $key => $element)
+		{
+			if (is_array($element))
+			{
+				$arr[$key] = static::deep_copy($element);
+			}
+			else if (is_object($element))
+			{
+				// make an object copy
+				$arr[$key] = clone $element;
+			}
+			else
+			{
+				$arr[$key] = $element;
+			}
+		}
+		return $arr;
+	}
+
 
 	/**
 	 * Debug callback just outputting content
