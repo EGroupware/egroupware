@@ -137,8 +137,8 @@ class Url extends Etemplate\Widget
 	public static function ajax_contact($_email)
 	{
 		$email = \EGroupware\Api\Mail::stripRFC822Addresses(array($_email));
-		$result = $GLOBALS['egw']->contacts->search($email[0]);
-
+		$result = $GLOBALS['egw']->contacts->search(array('contact_email'=>$email[0], 'contact_email_home' => $email[0]), array('email','email_home'),
+			'', '', '', false, 'OR', false);
 		\EGroupware\Api\Json\Response::data($result ? true : false);
 	}
 }

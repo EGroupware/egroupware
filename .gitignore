@@ -8,18 +8,9 @@
 /calendar/js/app.min.js.map
 /mail/js/app.min.js
 /mail/js/app.min.js.map
-/pixelegg/css/mobile.min.css
-/pixelegg/css/mobile.min.css.map
-/pixelegg/css/pixelegg.min.css
-/pixelegg/css/pixelegg.min.css.map
-/pixelegg/js/fw_mobile.min.js
-/pixelegg/js/fw_mobile.min.js.map
-/pixelegg/js/fw_pixelegg.min.js
-/pixelegg/js/fw_pixelegg.min.js.map
-/pixelegg/mobile/fw_mobile.min.css
-/pixelegg/mobile/fw_mobile.min.css.map
-/pixelegg/css/traditional.min.css
-/pixelegg/css/traditional.min.css.map
+/pixelegg/css/*.min.*
+/pixelegg/js/*.min.*
+/pixelegg/mobile/*.min.*
 /notifications/js/notificationajaxpopup.min.js
 /notifications/js/notificationajaxpopup.min.js.map
 /nbproject/private/Auf Branch master

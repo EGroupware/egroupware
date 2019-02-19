@@ -103,7 +103,7 @@ if($GLOBALS['error'] && is_array($newsettings))
 }
 else
 {
-	foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'*',false,__LINES__,__FILES__) as $row)
+	foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'*',false,__LINES__,__FILE__) as $row)
 	{
 		$GLOBALS['current_config'][$row['config_name']] = $row['config_value'];
 	}

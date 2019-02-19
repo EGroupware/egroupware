@@ -1056,16 +1056,16 @@ class Base
 	 * Parse an array of search criteria into something that can be passed on
 	 * to the DB
 	 *
-	 * @param array $criteria
+	 * @param array $_criteria
 	 * @param string $wildcard ='' appended befor and after each criteria
 	 * @param boolean $empty =false False=empty criteria are ignored in query, True=empty have to be empty in row
 	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
 	 * @return Array
 	 * @throws Api\Db\Exception
 	 */
-	protected function parse_search(Array $criteria, $wildcard, $empty, $op)
+	protected function parse_search(Array $_criteria, $wildcard, $empty, $op)
 	{
-		$criteria = $this->data2db($criteria);
+		$criteria = $this->data2db($_criteria);
 		foreach($criteria as $col => $val)
 		{
 			if (is_int($col))
@@ -1351,9 +1351,17 @@ class Base
 					$op = 'OR';
 					break;
 			}
+			$search_token = $wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token).$wildcard;
 			$token_filter = ' '.call_user_func_array(array($GLOBALS['egw']->db,'concat'),$columns).' '.
 				$this->db->capabilities['case_insensitive_like'] . ' ' .
-				$GLOBALS['egw']->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token).$wildcard);
+				$GLOBALS['egw']->db->quote($search_token);
+
+			// if we have customfields and this is Api\Storage (not Api\Storage\Base)
+			if (is_a($this, __NAMESPACE__))
+			{
+				// add custom-field search: OR id IN (SELECT id FROM extra_table WHERE extra_value LIKE '$search_token')
+				$token_filter .= $this->cf_match($search_token);
+			}
 
 			// Compare numeric token as equality for numeric columns
 			// skip user-wildcards (*,?) in is_numeric test, but not SQL wildcards, which get escaped and give sql-error
@@ -1376,10 +1384,10 @@ class Base
 				}
 				if(count($numeric_filter) > 0)
 				{
-					$token_filter = '(' . $token_filter . ' OR ' . implode(' OR ', $numeric_filter) . ')';
+					$token_filter .= ' OR ' . implode(' OR ', $numeric_filter);
 				}
 			}
-			$criteria[$op][] = $token_filter;
+			$criteria[$op][] = '('.$token_filter.')';
 
 			$token = strtok($break);
 		}
