@@ -407,31 +407,37 @@ class Storage extends Storage\Base
 	}
 
 	/**
-	 * Return criteria array for a given search pattern
+	 * Return SQL fragment to search custom-fields for given $pattern
 	 *
-	 * Reimplemented to handle search in custom-fields by ORing with a sub-query
-	 * returning all auto-ids of custom-fields matching the search-criteria
+	 * To be or-ed to query for $_pattern in regular columns of main-table.
 	 *
 	 * @param string $_pattern search pattern incl. * or ? as wildcard, if no wildcards used we append and prepend one!
-	 * @param string &$wildcard ='' on return wildcard char to use, if pattern does not already contain wildcards!
-	 * @param string &$op ='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
-	 * @param string $extra_col =null extra column to search
-	 * @param array $search_cols =array() List of columns to search.  If not provided, all columns in $this->db_cols will be considered
-	 * @return array or column => value pairs
+	 * @return string with SQL fragment running on main table: "id IN (SELECT id FROM extra-table WHERE extra_value like '$pattern')"
 	 */
-	public function search2criteria($_pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols = array())
+	public function cf_match($_pattern)
 	{
-		$pattern = $wildcard.$_pattern.$wildcard;
+		static $private_cfs=null;
 
-		$criteria = parent::search2criteria($_pattern, $wildcard, $op, $extra_col, $search_cols);
+		if (!$this->customfields) return '';	// no custom-fields --> no search
 
-		$criteria[0] = '('.$criteria[0].' OR '.
-			$this->table_name.'.'.$this->autoinc_id.' IN (SELECT '.$this->autoinc_id.
+		$sql = ' OR '.$this->table_name.'.'.$this->autoinc_id.' IN (SELECT '.$this->autoinc_id.
 			' FROM '.$this->extra_table.' WHERE '.$this->extra_value.' '.
 			$this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.
-			$GLOBALS['egw']->db->quote($pattern).'))';
+			$GLOBALS['egw']->db->quote($_pattern);
 
-		return $criteria;
+		// check if there are private cfs not available to current user --> filter by available cfs
+		if (!isset($private_cfs))
+		{
+			$private_cfs = array_diff_key(
+				Storage\Customfields::get($this->app, true, null, $this->db),	// true: get private cfs too
+				$this->customfields);
+			//error_log(__METHOD__."() private_cfs=".array2string($private_cfs));
+		}
+		if ($private_cfs)
+		{
+			$sql .= ' AND '.$this->db->expression($this->extra_table, array($this->extra_key => array_keys($this->customfields)));
+		}
+		return $sql.')';
 	}
 
 	/**
