@@ -203,9 +203,12 @@ class Etemplate extends Etemplate\Widget\Template
 
 		if($data['content']['nm']['rows'] && is_array($data['content']['nm']['rows']))
 		{
-			// Deep copy rows so we don't lose them when request is set to null
-			// (some content by reference)
-			$data['content']['nm'] = self::deep_copy($data['content']['nm']);
+			// Api\Storage::search() returns (historically) a reference!
+			// We need to un-reference the rows here, so they are not lost,
+			// if we have to set self::$request=null; to force the destructor.
+			$rows = $data['content']['nm'];
+			unset($data['content']['nm']);
+			$data['content']['nm'] = $rows;
 		}
 
 		// Info required to load the etemplate client-side
@@ -251,7 +254,8 @@ class Etemplate extends Etemplate\Widget\Template
 
 				// Really important to run this or weird things happen
 				// See https://help.egroupware.org/t/nextmatch-wert-im-header-ausgeben/73412/11
-				self::$request=null;
+				// this forces the constructor to run immediatly, while it otherwise would run to late by the garbadge collector
+				self::$request = null;
 				return;
 			}
 			// let framework know, if we are a popup or not ('popup' not true, which is allways used by index.php!)
@@ -634,36 +638,6 @@ class Etemplate extends Etemplate\Widget\Template
 		}
 		return $old;
 	}
-
-	/**
-	 * Deep copy array to make sure there are no references
-	 *
-	 * @param Array $array
-	 * @return Array
-	 */
-	public static function deep_copy($source)
-	{
-		$arr = array();
-
-		foreach ($source as $key => $element)
-		{
-			if (is_array($element))
-			{
-				$arr[$key] = static::deep_copy($element);
-			}
-			else if (is_object($element))
-			{
-				// make an object copy
-				$arr[$key] = clone $element;
-			}
-			else
-			{
-				$arr[$key] = $element;
-			}
-		}
-		return $arr;
-	}
-
 
 	/**
 	 * Debug callback just outputting content
