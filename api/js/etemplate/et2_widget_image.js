@@ -363,6 +363,8 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 		var params = {};
 		var id = 'contact_id';
 
+		this.image.addClass('et2_avatar');
+
 		if (!_contact_id)
 		{
 			_contact_id = this.egw().user('account_id');
@@ -378,8 +380,15 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 			_contact_id = _contact_id.replace('contact:', '');
 		}
 
+		// if our src (incl. cache-buster) already includes the correct id, use that one
+		if (this.options.src && this.options.src.match("(&|\\?)contact_id="+_contact_id+"(&|\\$)"))
+		{
+			return;
+		}
+
+		// we have only the id, so we need to bypass caching with a cache-buster
 		params[id] = _contact_id;
-		this.image.addClass('et2_avatar');
+		params._cache = (new Date).getTime();
 
 		var url = egw.link('/api/avatar.php',params);
 		this.set_src(url);
