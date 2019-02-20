@@ -147,13 +147,17 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		// Don't error about an abort
 		if(_err !== 'abort')
 		{
-			this.egw.message.call(this.egw, this.egw.lang('A request to the EGroupware server returned with an error')+': '+_xmlhttp.statusText+' ('+_xmlhttp.status+
-				")\n\n"+this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).')+"\n"+
+			this.egw.message.call(this.egw,
+				this.egw.lang('A request to the EGroupware server returned with an error')+
+				': '+_xmlhttp.statusText+' ('+_xmlhttp.status+")\n\n"+
+				this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).')+"\n"+
 				this.egw.lang('If the error persists, contact your administrator for help and ask to check the error-log of the webserver.')+
-				"\n\nURL: "+this.url+"\n"+(_xmlhttp.getAllResponseHeaders() ? _xmlhttp.getAllResponseHeaders().match(/^Date:.*$/mi)[0]:'')+
+				"\n\nURL: "+this.url+"\n"+
+				(_xmlhttp.getAllResponseHeaders() ? (_xmlhttp.getAllResponseHeaders().match(/^Date:.*$/mi) ? _xmlhttp.getAllResponseHeaders().match(/^Date:.*$/mi)[0]:''):'')+
 				// if EGroupware send JSON payload with error, errno show it here too
 				(_err === 'error' && _xmlhttp.status === 400 && typeof _xmlhttp.responseJSON === 'object' && _xmlhttp.responseJSON.error ?
-				"\nError: "+_xmlhttp.responseJSON.error+' ('+_xmlhttp.responseJSON.errno+')' : ''));
+				"\nError: "+_xmlhttp.responseJSON.error+' ('+_xmlhttp.responseJSON.errno+')' : '')
+			);
 
 			this.egw.debug('error', 'Ajax request to', this.url, ' failed: ', _err, _xmlhttp.status, _xmlhttp.statusText, _xmlhttp.responseJSON);
 
