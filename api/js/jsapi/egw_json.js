@@ -131,6 +131,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			dataType: 'json',
 			type: method,
 			success: this.handleResponse,
+			jsonp: false,
 			error: error || this.handleError
 		});
 
