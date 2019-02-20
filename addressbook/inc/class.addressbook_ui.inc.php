@@ -2511,8 +2511,7 @@ window.egw_LAB.wait(function() {
 
 		// allow other apps to add tabs to addressbook edit
 		$preserve = $content;
-		unset($preserve['jpegphoto']);
-		$content['jpegphoto'] = !empty($content['jpegphoto']);	// unused and messes up json encoding (not utf-8)
+		unset($preserve['jpegphoto'], $content['jpegphoto']);	// unused and messes up json encoding (not utf-8)
 		$this->tmpl->setElementAttribute('tabs', 'add_tabs', true);
 		$tabs =& $this->tmpl->getElementAttribute('tabs', 'tabs');
 		if (($first_call = !isset($tabs)))
