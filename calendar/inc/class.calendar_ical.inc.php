@@ -2874,6 +2874,8 @@ class calendar_ical extends calendar_boupdate
 					}
 					// fall throught
 				case 'ATTENDEE':
+					// work around Ligthning sending @ as %40
+					$attributes['value'] = str_replace('%40', '@', $attributes['value']);
 					if (isset($attributes['params']['PARTSTAT']))
 				    {
 				    	$attributes['params']['STATUS'] = $attributes['params']['PARTSTAT'];
@@ -2919,8 +2921,6 @@ class calendar_ical extends calendar_boupdate
 					{
 						$email = $attributes['value'];
 					}
-					// work around Ligthning sending @ as %40
-					$email = str_replace('%40', '@', $email);
 					// try X-EGROUPWARE-UID, but only if it resolves to same email (otherwise we are in trouble if different EGw installs talk to each other)
 					if (!$uid && !empty($attributes['params']['X-EGROUPWARE-UID']) &&
 						($res_info = $this->resource_info($attributes['params']['X-EGROUPWARE-UID'])) &&
