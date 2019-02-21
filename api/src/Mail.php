@@ -4772,11 +4772,13 @@ class Mail
 	 * @param Horde_Mime_Part $_structure if given use structure for parsing
 	 * @param string $_htmlMode how to display a message, html, plain text, ...
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @param Horde_Mime_Part& $partCalendar =null on return text/calendar part, if one was contained or false
 	 * @return array containing the desired part
 	 */
-	function getMultipartRelated($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen = false)
+	function getMultipartRelated($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen=false, &$partCalendar=null)
 	{
-		return $this->getMultipartMixed($_uid, $_structure, $_htmlMode, $_preserveSeen);
+		$skip = array();
+		return $this->getMultipartMixed($_uid, $_structure, $_htmlMode, $_preserveSeen, $skip, $partCalendar);
 	}
 
 	/**
@@ -4970,7 +4972,7 @@ class Mail
 						break;
 
 					case 'related':
-						$bodyParts = $this->getMultipartRelated($_uid, $_structure, $this->htmlOptions, $_preserveSeen);
+						$bodyParts = $this->getMultipartRelated($_uid, $_structure, $this->htmlOptions, $_preserveSeen, $calendar_part);
 						break;
 				}
 				return self::normalizeBodyParts($bodyParts);
