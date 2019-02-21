@@ -835,6 +835,16 @@ class calendar_groupdav extends Api\CalDAV\Handler
 
 		if (!$prefix) $user = null;	// /infolog/ does not imply setting the current user (for new entries it's done anyway)
 
+		// work around missing handling / racecondition in Lightning, if event already exists on server,
+		// but Lightning has not yet synced with the server: Lightning just retries the PUT, not GETing the event
+		// --> for now we ignore the If-None-Match: "*" as the lesser of two evils ;)
+		if (self::get_agent() === 'lightning' && isset($_SERVER['HTTP_IF_NONE_MATCH']) &&
+			in_array($_SERVER['HTTP_IF_NONE_MATCH'], array('*', '"*"')))
+		{
+			unset($_SERVER['HTTP_IF_NONE_MATCH']);
+			$workaround_lightning_if_none_match = true;
+		}
+
 		// fix for iCal4OL using WinHTTP only supporting a certain header length
 		if (isset($_SERVER['HTTP_IF_SCHEDULE']) && !isset($_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH']))
 		{
@@ -920,7 +930,9 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				// Work around problems with Outlook CalDAV Synchroniser (https://caldavsynchronizer.org/)
 				// - always sends all participants back with status NEEDS-ACTION --> resets status of all participant, if user has edit rights
 				// --> allow full updates only for organizer
-				self::get_agent() == 'caldavsynchronizer' && $oldEvent['owner'] != $user)
+				self::get_agent() == 'caldavsynchronizer' && $oldEvent['owner'] != $user ||
+				// we ignored Lightings If-None-Match: "*" --> do not overwrite event, just change status
+				!empty($workaround_lightning_if_none_match))
 			{
 				$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 				$user_and_memberships[] = $user;
