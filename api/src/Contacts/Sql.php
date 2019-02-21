@@ -520,7 +520,7 @@ class Sql extends Api\Storage
 			if (isset($filter['owner']))
 			{
 				// no grants for selected owner/addressbook
-				if (!($filter['owner'] = array_intersect((array)$filter['owner'],array_keys($this->grants))))
+				if (!array_intersect((array)$filter['owner'],array_keys($this->grants)))
 				{
 					if (!isset($groupmember_sql)) return false;
 					$filter[] = substr($groupmember_sql,4);
