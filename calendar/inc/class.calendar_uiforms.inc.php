@@ -1457,7 +1457,7 @@ class calendar_uiforms extends calendar_ui
 		return strnatcasecmp($this->get_title($uid1), $this->get_title($uid2));
 	}
 
-	public function ajax_add($event=null)
+	public function ajax_add()
 	{
 		// This tells etemplate to send as JSON response, not full
 		// This avoids errors from trying to send header again
@@ -1989,7 +1989,7 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
-	 * Display for FMail an iCal meeting request and allow to accept, tentative or reject it or a reply and allow to apply it
+	 * Display iCal meeting request for EMail app and allow to accept, tentative or reject it or a reply and allow to apply it
 	 *
 	 * @todo Handle situation when user is NOT invited, but eg. can view that mail ...
 	 * @param array $event = null; special usage if $event is array('event'=>null,'msg'=>'','useSession'=>true) we
@@ -2174,7 +2174,7 @@ class calendar_uiforms extends calendar_ui
 							break;
 						}
 					}
-					// do we need to update the event itself
+					// do we need to update the event itself (user-status is reset to old in event_changed!)
 					elseif (self::event_changed($event, $event['old']))
 					{
 						// check if we are allowed to update the event
@@ -2275,20 +2275,32 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * Check if an event changed and need to be updated
 	 *
-	 * @param array $_a
-	 * @param array $_b
+	 * We are reseting (keeping) status of system users to old value, as they might have been updated!
+	 *
+	 * @param array& $_event invitation, on return user status changed to the one from old $old
+	 * @param array $_old existing event on server
 	 * @return boolean true if there are some changes, false if not
 	 */
-	function event_changed($_a, $_b)
+	function event_changed(array &$_event, array $_old)
 	{
 		static $keys_to_check = array('start', 'end', 'title', 'description', 'location', 'participants',
 			'recur_type', 'recur_data', 'recur_interval', 'recur_exception');
 
-		$a = array_intersect_key($_a, array_flip($keys_to_check));
-		$b = array_intersect_key($_b, array_flip($keys_to_check));
+		// only compare certain fields, taking account unset, null or '' values
+		$event = array_intersect_key($_event+array('recur_exception'=>array()), array_flip($keys_to_check));
+		$old = array_intersect_key(array_diff($_old, array(null, '')), array_flip($keys_to_check));
 
-		$ret = $a != $b;
-		error_log(__METHOD__."() returning ".array2string($ret)." diff=".array2string(array_diff_key($a, $b)));
+		// keep the status of existing participants (users)
+		foreach($old['participants'] as $uid => $status)
+		{
+			if (is_numeric($uid) && $uid > 0)
+			{
+				$event['participants'][$uid] = $_event['participants'][$uid] = $status;
+			}
+		}
+
+		$ret = $event != $old;
+		//error_log(__METHOD__."() returning ".array2string($ret)." diff=".array2string(array_udiff_assoc($event, $old, function($a, $b) { return (int)($a != $b); })));
 		return $ret;
 	}
 
@@ -2318,8 +2330,8 @@ class calendar_uiforms extends calendar_ui
 				'icon_recur' => $conflict['recur_type'] != MCAL_RECUR_NONE ? 'recur' : '',
 				'text_recur' => $conflict['recur_type'] != MCAL_RECUR_NONE ? lang('Recurring event') : ' ',
 			);
-				$allConflicts += array_intersect_key((array)$conflict['participants'],$event['participants']);
-			}
+			$allConflicts += array_intersect_key((array)$conflict['participants'],$event['participants']);
+		}
 		$content = $event + array(
 			'conflicts' => array_values($conflicts),	// conflicts have id-start as key
 		);
