@@ -234,9 +234,8 @@ function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $pre
  *			"egroupware" => "git@github.com:EGroupware/egroupware.git"),
  *		"git@github.com:EGroupware/tracker.git" => array(
  *			"egroupware/tracker" => "git@github.com:EGroupware/tracker.git"),
- *		"svn+ssh://stylite@svn.stylite.de/stylite" => array(
- *			"egroupware/stylite] => svn+ssh://stylite@svn.stylite.de/stylite/branches/14.2/stylite",
- *			"egroupware/esyncpro] => svn+ssh://stylite@svn.stylite.de/stylite/branches/14.2/esyncpro",
+ *		"git@github.com:EGroupware/epl" => array(
+ *			"egroupware/stylite" => git@github.com:EGroupware/epl"),
  */
 function get_modules_per_repo()
 {
@@ -248,35 +247,21 @@ function get_modules_per_repo()
 	{
 		throw new Exception("checkout directory '{$config['checkoutdir']} does NOT exists or is NO directory!");
 	}
-	if (!($mrconfig = file_get_contents($path=$config['checkoutdir'].'/.mrconfig')))
-	{
-		throw new Exception("$path not found!");
-	}
-	$module = $baseurl = null;
 	$modules = array();
-	foreach(explode("\n", $mrconfig) as $line)
+	foreach(scandir($config['checkoutdir']) as $module)
 	{
-		$matches = null;
-		if (isset($baseurl))
+		if ($module === '..' || !file_exists($config['checkoutdir'].'/'.$module.'/.git'))
 		{
-			$line = str_replace("\${EGW_REPO_BASE:-\$(git config --get remote.origin.url|sed 's|/egroupware.git||')}", $baseurl, $line);
+			continue;
 		}
-		if ($line && $line[0] == '[' && preg_match('/^\[([^]]*)\]/', $line, $matches))
+		$output = $matches = null;
+		run_cmd($cmd='cd '.$config['checkoutdir'].'/'.$module.'; '.$config['git'].' remote -v', $output);
+		if (!preg_match('/^origin\s+(.*)\s+\(push\)$/m', implode("\n", $output), $matches))
 		{
-			if (in_array($matches[1], array('DEFAULT', 'vendor/egroupware/ckeditor', 'api/src/Accounts/Ads', 'phpgwapi/js/ckeditor', 'phpgwapi/inc/adldap')))
-			{
-				$module = null;
-				continue;
-			}
-			$module = (string)$matches[1];
+			throw new Exception("Could not parse output of ".implode("\n", $output));
 		}
-		elseif (isset($module) && preg_match('/^checkout\s*=\s*(git\s+clone\s+(-b\s+[0-9.]+\s+)?((git|http)[^ ]+)|svn\s+checkout\s+((svn|http)[^ ]+))/', $line, $matches))
-		{
-			$repo = $url = substr($matches[1], 0, 3) == 'svn' ? $matches[5] : $matches[3];
-			if (substr($matches[1], 0, 3) == 'svn') $repo = preg_replace('#/(trunk|branches)/.*$#', '', $repo);
-			$modules[$repo][$config['aliasdir'].($module ? '/'.$module : '')] = $url;
-			if ($module === '' && !isset($baseurl)) $baseurl = str_replace('/egroupware.git', '', $url);
-		}
+		$repo = $matches[1];
+		$modules[$repo][$config['aliasdir'].($module !== '.' ? '/'.$module : '')] = $repo;
 	}
 	if ($verbose) print_r($modules);
 	return $modules;
@@ -354,19 +339,27 @@ function do_tag()
 	// push tags in all apps (not main-dir!)
 	run_cmd('./install-cli.php --git-apps push origin '.escapeshellarg($config['tag']));
 
+	// tag and push stuff now in vendor
+	foreach(array('z-push-dev', 'adodb-php') as $package)
+	{
+		run_cmd("cd vendor/egroupware/$package; git tag ".escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
+		run_cmd("cd vendor/egroupware/$package; git push origin ".escapeshellarg($config['tag']));
+	}
+
 	// checkout tag, update composer.{json,lock}, move tag to include them
 	run_cmd($config['git'].' checkout '.$config['tag']);
 	update_composer_json_version($config['tag']);
 	// might require more then one run, as pushed tags need to be picked up by packagist
 	$output = $ret = null;
-	$timeout = 10;
-	for($try=1; $try < 10 && run_cmd($config['composer'].' update --ignore-platform-reqs --no-dev egroupware/\*', $output, 2); ++$try)
+	$timeout = $retries = 10;
+	$cmd = $config['composer'].' update --ignore-platform-reqs --no-dev egroupware/\*';
+	for($try=1; $try <= $retries && run_cmd($cmd, $output, $try < $retries ? 2 : null); ++$try)
 	{
-		echo "$try. retry in $timeout seconds ...\n";
+		error_log("Retry $try/$retries in $timeout seconds ...");
 		sleep($timeout);
 	}
 	run_cmd($config['git'].' commit -m '.escapeshellarg('Updating dependencies for '.$config['tag']).' composer.{json,lock}');
-	run_cmd($config['git'].' tag -f '.escapeshellarg($config['tag']).' -m '.escapeshellarg('Updating dependencies for '.$config['tag']));
+	run_cmd($config['git'].' tag -f '.escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
 }
 
 /**
