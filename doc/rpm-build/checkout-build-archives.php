@@ -349,10 +349,10 @@ function do_tag()
 
 	echo "Creating tag and pushing $config[tag]\n";
 
-	run_cmd('./install-cli.php --git tag '.escapeshellarg($config['tag']).' '.escapeshellarg('Creating '.$config['tag']));
+	run_cmd('./install-cli.php --git tag '.escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
 
 	// push tags in all apps (not main-dir!)
-	run_cmd('./install-cli.php --git-app push origin '.$config['tag']);
+	run_cmd('./install-cli.php --git-apps push origin '.escapeshellarg($config['tag']));
 
 	// checkout tag, update composer.{json,lock}, move tag to include them
 	run_cmd($config['git'].' checkout '.$config['tag']);
@@ -360,7 +360,7 @@ function do_tag()
 	// might require more then one run, as pushed tags need to be picked up by packagist
 	$output = $ret = null;
 	$timeout = 10;
-	for($try=1; $try < 10 && run_cmd($config['composer'].' update egroupware/\*', $output, 2); ++$try)
+	for($try=1; $try < 10 && run_cmd($config['composer'].' update --ignore-platform-reqs --no-dev egroupware/\*', $output, 2); ++$try)
 	{
 		echo "$try. retry in $timeout seconds ...\n";
 		sleep($timeout);
