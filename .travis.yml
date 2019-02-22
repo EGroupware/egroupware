@@ -25,7 +25,7 @@ sudo: required
 
 before_script:
   - sudo apt-get update -qq
-  - sudo apt-get install -y myrepos libpcre3-dev
+  - sudo apt-get install -y libpcre3-dev
   - case $(phpenv version-name) in
     "5.6")
        yes "" | pecl install memcache;
@@ -56,9 +56,7 @@ before_script:
     esac
   #- php -m
   - php -i
-  - sed 's/^update = git stash -q/update = \#git stash -q/g' .mrconfig
-  - mr --trust-all --stats up
-  - (cd activesync; mr --trust-all --stats up)
+  - php install-cli.php
   # create data directory
   - sudo mkdir /var/lib/egroupware
   - sudo chown travis /var/lib/egroupware
