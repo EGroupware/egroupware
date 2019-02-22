@@ -15,11 +15,6 @@
 /notifications/js/notificationajaxpopup.min.js.map
 /nbproject/private/Auf Branch master
 /activesync/
-/acadmin/
-/acclients/
-/acgroups/
-/achelper/
-/acorders/
 /api/js/ckeditor/
 /api/src/Db/ADOdb/
 /archive/
@@ -36,7 +31,6 @@
 /eworkflow/
 /groups/
 /header.inc.php
-/infolog/
 /jdots/
 /licenses/
 /managementserver/
