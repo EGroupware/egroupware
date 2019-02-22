@@ -586,10 +586,12 @@ abstract class Handler
 		// send Location header only on success AND if we dont use caldav_name as path-attribute or
 		if ((is_bool($retval) ? $retval : $retval[0] === '2') && (!$path_attr_is_name ||
 			// POST with add-member query parameter
-			$_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['add-member'])))
+			$_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['add-member'])) ||
+			// in case we choose to use a different name for the resourece, give the client a hint
+			basename($path) !== $this->new_id)
 		{
 			$path = preg_replace('|(.*)/[^/]*|', '\1/', $path);
-			header('Location: '.$this->base_uri.$path.$this->get_path($entry));
+			header('Location: '.$this->base_uri.$path.$this->new_id);
 		}
 	}
 

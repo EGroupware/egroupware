@@ -2874,6 +2874,8 @@ class calendar_ical extends calendar_boupdate
 					}
 					// fall throught
 				case 'ATTENDEE':
+					// work around Ligthning sending @ as %40
+					$attributes['value'] = str_replace('%40', '@', $attributes['value']);
 					if (isset($attributes['params']['PARTSTAT']))
 				    {
 				    	$attributes['params']['STATUS'] = $attributes['params']['PARTSTAT'];
