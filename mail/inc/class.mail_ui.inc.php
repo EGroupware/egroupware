@@ -2987,7 +2987,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			// retrieve all embedded attachments at once
 			// avoids to fetch heavy winmail.dat content
 			// for each file.
-			$attachments = $this->mail_bo->getTnefAttachments($p['uid'],$p['part']);
+			$attachments = $this->mail_bo->getTnefAttachments($p['uid'],$p['part'], false, $p['mailbox']);
 		}
 
 		foreach((array)$ids as $id)
@@ -3107,7 +3107,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$this->mail_bo->reopen($mailbox);
 		if ($attachments[0]['is_winmail'] && $attachments[0]['is_winmail']!='null')
 		{
-			$tnefAttachments = $this->mail_bo->getTnefAttachments($message_id, $attachments[0]['partID'],true);
+			$tnefAttachments = $this->mail_bo->getTnefAttachments($message_id, $attachments[0]['partID'],true, $mailbox);
 		}
 		foreach($attachments as $file)
 		{
