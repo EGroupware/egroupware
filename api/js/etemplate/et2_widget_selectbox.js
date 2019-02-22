@@ -860,7 +860,9 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				{
 					this._appendOptionElement(typeof _options[key].value != 'undefined'  ? _options[key].value : key,
 						_options[key]["label"] ? _options[key]["label"] : "",
-						_options[key]["title"] ? _options[key]["title"] : "");
+						_options[key]["title"] ? _options[key]["title"] : "",
+						'',
+						_options[key]["class"] ? _options[key]["class"] : "");
 				}
 			}
 			else
