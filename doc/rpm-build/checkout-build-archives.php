@@ -327,7 +327,7 @@ function do_checkout()
 	}
 	chdir($config['checkoutdir']);
 
-	run_cmd('./install.php --ignore-platform-reqs --no-dev');
+	run_cmd('./install-cli.php --ignore-platform-reqs --no-dev');
 }
 
 /**
