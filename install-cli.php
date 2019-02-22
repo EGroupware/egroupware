@@ -227,28 +227,30 @@ else
 echo "Updating to: $target\n";
 
 // Update EGroupware itself and further apps installed via git
+$failed = array();
+$succieded = 0;
 foreach(scandir(__DIR__) as $dir)
 {
 	if ($dir !== '..' && file_exists(__DIR__.'/'.$dir.'/.git') &&
 		// these apps / dirs are managed by composer, no need to run manual updates
 		!in_array($dir, ['vendor', 'activesync', 'collabora', 'projectmanager', 'tracker']))
 	{
-		$cmd = "cd $dir ; $git stash -q";
+		$cmd = "cd $dir ; $git stash -q ; ";
 		// switch message about detached head off for release-channel/tags
 		if (preg_match('/^\d+\.\d+\.\d{8}/', $target))
 		{
-			$cmd .= "; $git config advice.detachedHead false";
+			$cmd .= "$git config advice.detachedHead false ; ";
 		}
 		if ($branch != $target)
 		{
-			$cmd .= "; $git checkout $target";
+			$cmd .= "$git checkout $target && ";
 		}
 		// no need to pull for release-channel/tags
 		if (!preg_match('/^\d+\.\d+\.\d{8}/', $target))
 		{
-			$cmd .= "; $git pull --rebase";
+			$cmd .= "$git pull --rebase && ";
 		}
-		$cmd .= "; test -z \"$($git stash list)\" || $git stash pop";
+		$cmd .= "(test -z \"$($git stash list)\" || $git stash pop)";
 		if ($verbose)
 		{
 			echo "$cmd\n";
@@ -257,24 +259,49 @@ foreach(scandir(__DIR__) as $dir)
 		{
 			echo $dir.': ';
 		}
-		system($cmd);
+		run_cmd($cmd, $dir === '.' ? 'egroupware' : $dir);
 	}
 }
 
 // update composer managed dependencies
 $cmd = $composer.' install '.implode(' ', $composer_args);
-if ($verbose) echo "$cmd\n";
-system($cmd);
+run_cmd($cmd, 'composer');
 
 // update npm dependencies and run grunt to minify javascript and css
 if ($npm && $grunt)
 {
-	$cmd = $npm.' install';
-	if ($verbose) echo "$cmd\n";
-	system($cmd);
+	run_cmd($npm.' install', 'npm');
 
-	if ($verbose) echo "$grunt\n";
-	system($grunt);
+	run_cmd($grunt, 'grunt');
+}
+
+echo "\n$succieded tasks successful run".
+	($failed ? ', '.count($failed).' failed: '.implode(', ', $failed) : '')."\n\n";
+exit(count($failed));
+
+/**
+ * Run a command and collect number of succieded or failed command
+ *
+ * @param string $cmd comamnd to run
+ * @param string $name task name to report on failure
+ * @return int exit code of command
+ */
+function run_cmd($cmd, $name)
+{
+	global $verbose, $failed, $succieded;
+
+	if ($verbose) echo "$cmd\n";
+	$ret = null;
+	system($cmd, $ret);
+	if ($ret == 0)
+	{
+		$succieded++;
+	}
+	else
+	{
+		$failed[] = $name;
+	}
+	return $ret;
 }
 
 /**
@@ -327,6 +354,7 @@ function get_latest_release($prerelease=false, $return_name=true)
 	}
 	return null;
 }
+
 /**
  * Sending a Github API request
  *
