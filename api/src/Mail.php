@@ -5915,12 +5915,13 @@ class Mail
 	 * @param int $_uid the uid of the message
 	 * @param string $_partID the id of the part, which holds the attachment
 	 * @param boolean $_stream =false flag to indicate if the attachment is to be fetched or returned as filepointer
+	 * @param string $_folder =null folder to use if not current folder
 	 *
 	 * @return array returns an array of all resolved embeded attachments from winmail.dat
 	 */
-	function getTnefAttachments ($_uid, $_partID, $_stream=false)
+	function getTnefAttachments ($_uid, $_partID, $_stream=false, $_folder=null)
 	{
-		$tnef_data = $this->getAttachment($_uid, $_partID,0,false);
+		$tnef_data = $this->getAttachment($_uid, $_partID,0,false, false , $_folder);
 		$tnef_parts = $this->tnef_decoder($tnef_data['attachment']);
 		$attachments = array();
 		if ($tnef_parts)
