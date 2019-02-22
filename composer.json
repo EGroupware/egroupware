@@ -83,7 +83,8 @@
 		"egroupware/projectmanager": "self.version",
 		"egroupware/tracker": "self.version",
 		"egroupware/z-push-dev": "self.version",
-		"egroupware/activesync": "self.version"
+		"egroupware/activesync": "self.version",
+		"egroupware/adodb-php": "self.version"
 	},
 	"require-dev": {
 	},

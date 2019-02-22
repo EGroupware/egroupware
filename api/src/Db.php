@@ -7,8 +7,7 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id$
+ * @copyright (c) 2003-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api;
@@ -17,7 +16,6 @@ if(empty($GLOBALS['egw_info']['server']['db_type']))
 {
 	$GLOBALS['egw_info']['server']['db_type'] = 'mysql';
 }
-include_once(__DIR__.'/Db/ADOdb/adodb.inc.php');
 
 /**
  * Database abstraction library

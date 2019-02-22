@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff35ca28d0f9f612f15f203f1b3e80fe",
+    "content-hash": "0129834b90f9bcd8da3186b801634419",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -480,6 +480,60 @@
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
             "time": "2019-02-11T20:00:06+00:00"
+        },
+        {
+            "name": "egroupware/adodb-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/ADOdb.git",
+                "reference": "7b7fbf591a41e4553932ed5069824bf0412df9b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/ADOdb/zipball/7b7fbf591a41e4553932ed5069824bf0412df9b3",
+                "reference": "7b7fbf591a41e4553932ed5069824bf0412df9b3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.2 || ^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "adodb.inc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "John Lim",
+                    "email": "jlim@natsoft.com",
+                    "role": "Author"
+                },
+                {
+                    "name": "Damien Regad",
+                    "role": "Current maintainer"
+                },
+                {
+                    "name": "Mark Newnham",
+                    "role": "Developer"
+                }
+            ],
+            "description": "ADOdb is a PHP database abstraction layer library",
+            "homepage": "http://adodb.org/",
+            "keywords": [
+                "abstraction",
+                "database",
+                "layer",
+                "library",
+                "php"
+            ],
+            "time": "2019-02-22T10:09:08+00:00"
         },
         {
             "name": "egroupware/collabora",
@@ -2300,7 +2354,8 @@
         "egroupware/projectmanager": 20,
         "egroupware/tracker": 20,
         "egroupware/z-push-dev": 20,
-        "egroupware/activesync": 20
+        "egroupware/activesync": 20,
+        "egroupware/adodb-php": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
