@@ -211,7 +211,7 @@ etemplate2.prototype.clear = function()
 	jQuery(this.DOMContainer).empty();
 
 	// Remove self from the index
-	for(name in this.templates)
+	for(var name in this.templates)
 	{
 		if(typeof etemplate2._byTemplate[name] == "undefined") continue;
 		for(var i = 0; i < etemplate2._byTemplate[name].length; i++)
