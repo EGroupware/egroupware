@@ -7254,6 +7254,9 @@ class Mail
 			// Check and fix long header fields
 			$message = self::_checkAndfixLongHeaderFields($message);
 
+			// Default charset to utf-8, not us-ascii which Horde chooses
+			Horde_Mime_Part::$defaultCharset = 'utf-8';
+
 			$structure = Horde_Mime_Part::parseMessage($message);
 			//error_log(__METHOD__.__LINE__.'#'.$structure->getPrimaryType().'#');
 			if ($force8bitOnPrimaryPart&&$structure->getPrimaryType()=='text')
