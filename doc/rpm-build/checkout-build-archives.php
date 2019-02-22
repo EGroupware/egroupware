@@ -327,7 +327,7 @@ function do_checkout()
 	}
 	chdir($config['checkoutdir']);
 
-	run_cmd('./install-php --ignore-platform-reqs --no-dev');
+	run_cmd('./install.php --ignore-platform-reqs --no-dev');
 }
 
 /**
@@ -414,7 +414,8 @@ function do_release()
 	run_cmd($config['git'].' push');
 	$tag = config_translate('tag');
 	run_cmd($config['git'].' push origin '.$tag);
-	chdir($config['checkoutdir']);
+	// checkout release-branch again (we are on the tag!)
+	run_cmd($config['git'].' checkout '.$config['version']);
 
 	if (empty($config['github_user']) || empty($config['github_token']))
 	{
