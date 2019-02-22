@@ -246,8 +246,9 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	 * @param {string} _label label of option
 	 * @param {string} _title title attribute of option
 	 * @param {node} dom_element parent of new option
+	 * @param {string} _class specify classes of option
 	 */
-	_appendOptionElement: function(_value, _label, _title, dom_element) {
+	_appendOptionElement: function(_value, _label, _title, dom_element, _class) {
 		if(_value == "" && (_label == null || _label == "")) {
 			return;	// empty_label is added in set_select_options anyway, ignoring it here to not add it twice
 		}
@@ -260,6 +261,9 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		var option = jQuery(document.createElement("option"))
 			.attr("value", _value)
 			.text(_label+"");
+
+		option.addClass(_class);
+
 		if (this.options.tags && this._type == 'select-cat')
 		{
 			option.addClass('cat_'+_value);
