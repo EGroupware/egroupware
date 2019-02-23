@@ -7,22 +7,41 @@
   https://software.opensuse.org/download.html?project=server%3AeGroupWare&package=egroupware-epl
 
 ### Installing EGroupware 17.1 from Github:
-* cd /path/to/your/docroot
-* git clone -b 17.1 https://github.com/EGroupware/egroupware.git # or git@github.com:EGroupware/egroupware.git for ssh
-* cd egroupware
 * install composer.phar from https://getcomposer.org/download/
-* install myrepos (mr) from https://myrepos.branchable.com/ or your distribution package manager
-* add a line /path/to/egroupware/.mrconfig to your ~/.mrtrust, to allow running composer.phar and git clone -b 17.1
-* mr up
-* enable further / non-default EGroupware apps by uncommenting them in .mrconfig and run mr up
+* optional: for minified JavaScript and CSS install nodejs and grunt
+```
+apt/yum/zypper install nodejs
+npm install -g grunt-cli
+```
+* install EGroupware and dependencies
+```
+cd /path/to/your/docroot
+git clone -b 17.1 https://github.com/EGroupware/egroupware.git # or git@github.com:EGroupware/egroupware.git for ssh
+cd egroupware
+./install-cli.php
+```
+* install further EGroupware apps by cloning them into your egroupware directory eg.
+```
+cd /path/to/your/egroupware
+git clone -b 17.1 https://github.com/EGroupware/registration.git
+```
 * continue installation at http://localhost/egroupware/setup/
-* to get minified JavaScript and CSS you need to install nodejs and grunt, if you have not already done so
-* install nodejs from your distribution package manager
-* npm install -g grunt-cli # installs grunt command globally, if you have not already done so
-* npm install # installs required npm/grunt modules into node_modules/ dir
-* run grunt manually after every update, or better uncomment grunt steps in .mrconfig
 
-### Switching a git installation from master or 16.1 to 17.1:
+### Keeping EGroupware up to date:
+```
+./install-cli.php [<change-channel>]
+setup/setup-cli.php # will tell you if a schema-update is necessary
+```
+install-cli.php supports the following "channels":
+- release: taged maintenance releases only eg. 17.1.20190222
+- bugfix:  release-branch incl. latest bugfixes eg. 17.1, if you are currently on 17.1.20190222
+- <branch>:switch to given branch 
+- master:  latest development for next release
+To change the channel, call install-cli.php <channel-to-update-to>.
+
+
+### Switching a git installation from 16.1 to 17.1:
+(Only necessary for 16.1, 17.1+ use: install-cli.php <new-channel>
 ```
 for d in . * activesync/vendor/z-push/z-push api/src/Db/ADOdb ; do [ -d $d/.git ] && (echo $d; cd $d; git checkout 17.1); done
 ```
