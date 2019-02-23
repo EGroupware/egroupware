@@ -251,11 +251,7 @@ foreach(scandir(__DIR__) as $dir)
 			$cmd .= "$git pull --rebase && ";
 		}
 		$cmd .= "(test -z \"$($git stash list)\" || $git stash pop)";
-		if ($verbose)
-		{
-			echo "$cmd\n";
-		}
-		elseif ($dir !== '.')
+		if ($dir !== '.' && !$verbose)
 		{
 			echo $dir.': ';
 		}
