@@ -41,7 +41,7 @@ install-cli.php supports the following "channels":
 To change the channel, call install-cli.php <channel-to-update-to>.
 
 ### Switching a git installation from 16.1 to 17.1:
-(Only necessary for 16.1, 17.1+ use: install-cli.php <new-channel>
+(Only necessary for 16.1 or older, for 17.1+ use: install-cli.php <new-channel>!)
 ```
 for d in . * activesync/vendor/z-push/z-push api/src/Db/ADOdb ; do [ -d $d/.git ] && (echo $d; cd $d; git checkout 17.1); done
 ```
