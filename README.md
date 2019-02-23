@@ -44,6 +44,7 @@ install-cli.php supports the following "channels":
 - bugfix:  release-branch incl. latest bugfixes eg. 17.1, if you are currently on 17.1.20190222
 - \<branch\>: switch to given branch 
 - master:  latest development for next release
-To change the channel, call install-cli.php <channel-to-update-to>.
+
+To change the channel, call ```install-cli.php <channel-to-update-to>```.
 
 For further instalation instructions see our wiki.
