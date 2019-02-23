@@ -29,16 +29,16 @@ git clone -b 17.1 https://github.com/EGroupware/registration.git
 
 ### Keeping EGroupware up to date:
 ```
+cd /path/to/your/egroupware
 ./install-cli.php [<change-channel>]
 setup/setup-cli.php # will tell you if a schema-update is necessary
 ```
 install-cli.php supports the following "channels":
 - release: taged maintenance releases only eg. 17.1.20190222
 - bugfix:  release-branch incl. latest bugfixes eg. 17.1, if you are currently on 17.1.20190222
-- <branch>:switch to given branch 
+- \<branch\>: switch to given branch 
 - master:  latest development for next release
 To change the channel, call install-cli.php <channel-to-update-to>.
-
 
 ### Switching a git installation from 16.1 to 17.1:
 (Only necessary for 16.1, 17.1+ use: install-cli.php <new-channel>
