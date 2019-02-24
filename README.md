@@ -22,14 +22,14 @@ npm install -g grunt-cli
 * install EGroupware and dependencies
 ```
 cd /path/to/your/docroot
-git clone -b 17.1 https://github.com/EGroupware/egroupware.git # or git@github.com:EGroupware/egroupware.git for ssh
+git clone https://github.com/EGroupware/egroupware.git # or git@github.com:EGroupware/egroupware.git for ssh
 cd egroupware
 ./install-cli.php
 ```
 * install further EGroupware apps by cloning them into your egroupware directory eg.
 ```
 cd /path/to/your/egroupware
-git clone -b 17.1 https://github.com/EGroupware/registration.git
+git clone https://github.com/EGroupware/registration.git
 ```
 * continue installation at http://localhost/egroupware/setup/
 
