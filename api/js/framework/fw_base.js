@@ -858,11 +858,12 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	/**
 	 * get popups based on application name and regexp
 	 * @param {string} _app app name
-	 * @param {regexp} regex regular expression to check against location.href url
+	 * @param {regexp|object} regex regular expression to check against location.href url or
+	 * an object containing window property to be checked against
 	 *
 	 * @returns {Array} returns array of windows object
 	 */
-	popups_get: function(_app, regex)
+	popups_get: function(_app, param)
 	{
 		var popups = [];
 		for (var i=0; i < this.popups.length; i++)
@@ -872,17 +873,28 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 			}
 		}
-		if (regex)
+		if (param)
 		{
 			for (var j=0; j < popups.length; j++)
 			{
-				if (!popups[j].location.href.match(regex))
+				if (typeof param === 'object' && !(param instanceof RegExp))
 				{
-					popups.splice(j,1);
+					var key = Object.keys(param)[0];
+					if (!popups[j][key].match(param[key]))
+					{
+						delete(popups[j]);
+					}
+				}
+				else
+				{
+					if (!popups[j].location.href.match(param))
+					{
+						delete(popups[j]);
+					}
 				}
 			}
 		}
-		return popups;
+		return popups.flat();
 	},
 
 	/**
