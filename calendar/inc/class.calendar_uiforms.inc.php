@@ -2678,9 +2678,9 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				html::content_header('event.ics','text/calendar',bytes($ical));
+				Api\Header\Content::type('event.ics','text/calendar',bytes($ical));
 				echo $ical;
-				common::egw_exit();
+				exit();
 			}
 		}
 		if (is_array($content))
@@ -2700,9 +2700,9 @@ class calendar_uiforms extends calendar_ui
 			else
 			{
 				$ical =& $boical->exportVCal($events,'2.0','PUBLISH',false);
-				html::content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
+				Api\Header\Content::type($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
 				echo $ical;
-				common::egw_exit();
+				exit();
 			}
 		}
 		if (!is_array($content))
@@ -2717,7 +2717,7 @@ class calendar_uiforms extends calendar_ui
 		$content['msg'] = $msg;
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Export');
-		$etpl = new etemplate_new('calendar.export');
+		$etpl = new Etemplate('calendar.export');
 		$etpl->exec('calendar.calendar_uiforms.export',$content);
     }
 
