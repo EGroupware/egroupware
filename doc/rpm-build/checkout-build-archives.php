@@ -343,7 +343,7 @@ function do_tag()
 	foreach(array('z-push-dev', 'adodb-php') as $package)
 	{
 		run_cmd("cd vendor/egroupware/$package; git tag -f ".escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
-		run_cmd("cd vendor/egroupware/$package; git push -t origin ".escapeshellarg($config['tag']));
+		run_cmd("cd vendor/egroupware/$package; git push -f origin ".escapeshellarg($config['tag']));
 	}
 
 	// checkout tag, update composer.{json,lock}, move tag to include them
