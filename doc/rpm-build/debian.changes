@@ -1,3 +1,30 @@
+egroupware-epl (17.1.20190222) hardy; urgency=low
+
+  * All apps: improved speed when searching with (many) custom-fields
+  * Install: non-package installs use now install-cli.php and composer, instead of myrepos (mr)
+  * Mail: meeting-request was not shown inside multipart/related
+  * CardDAV/Addressbook: fix accounts not synced for preference account-selection "groupmembers"
+  * CalDAV: work around Lighning not having synced event before accepting
+  * Calendar/Email: multiple users of external meeting request no longer overwrite each other status when accepting
+  * Addressbook: fix photo was lost when non-admin user edited own account
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 22 Feb 2019 12:53:35 +0100
+
+egroupware-epl (17.1.20190214) hardy; urgency=low
+
+  * Calendar/CalDAV: fix yearly recurring events stalling sync
+  * All apps: fix linking of filemanager files to entries, if there is no file yet
+  * Api: update dependencies and install PEAR packages now through Composer
+  * Mail: fix not working sending and receiving smime signed messages where certificates have more than 1 domain registered (subjectAltName)
+  * Mail: take user's cutomfields type of email into account when searching for contacts in Compose -> TO field.
+  * Mail: add default value settings for S/MIME passphrase expiration in site configurations
+  * Import/Export: fix export to csv fails because of URL length limit
+  * Resources - Fix resources not displayed in calendar if there's more than 20 in a category
+  * Addressbook/PostgreSQL: fix SQL error when last/next date column is enabled
+  * Tracker - fix ticket list custom date filter did not appear properly
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 14 Feb 2019 11:12:46 +0100
+
 egroupware-epl (17.1.20190111) hardy; urgency=low
 
   * Api: show maintenance release as version-number everywhere
