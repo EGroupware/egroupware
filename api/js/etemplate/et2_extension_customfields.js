@@ -53,6 +53,13 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 			'name': 'sub app name',
 			'type': "string",
 			'description': "Name of sub application"
+		},
+		// Allow onchange so you can put handlers on the sub-widgets
+		'onchange': {
+			"name": "onchange",
+			"type": "string",
+			"default": et2_no_init,
+			"description": "JS code which is executed when the value changes."
 		}
 	},
 
@@ -208,6 +215,11 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 				};
 				// Can't have a required readonly, it will warn & be removed later, so avoid the warning
 				if(attrs.readonly === true) delete attrs.needed;
+
+				if(this.options.onchange)
+				{
+					attrs.onchange = this.options.onchange;
+				}
 
 				if(this[setup_function]) {
 					var no_skip = this[setup_function].call(this, field_name, field, attrs);
