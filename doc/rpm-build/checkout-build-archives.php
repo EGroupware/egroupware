@@ -6,8 +6,7 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author RalfBecker@outdoor-training.de
- * @copyright (c) 2009-17 by Ralf Becker <rb@egroupware.org>
- * @version $Id$
+ * @copyright (c) 2009-19 by Ralf Becker <rb@egroupware.org>
  */
 
 if (php_sapi_name() !== 'cli')	// security precaution: forbit calling setup-cli as web-page
@@ -51,11 +50,10 @@ $config = array(
 	'clamscan' => trim(`which clamscan`),
 	'freshclam' => trim(`which freshclam`),
 	'git' => trim(`which git`),
-	'mr'  => trim(`which mr`),
 	'gpg' => trim(`which gpg`),
 	'editor' => trim(`which vi`),
 	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
-	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --ignore-platform-reqs --no-dev' : '',
+	'composer' => trim(`which composer.phar`),
 	'after-checkout' => 'rm -rf */source */templates/*/source',
 	'packager' => 'build@egroupware.org',
 	'obs' => '/home/stylite/obs/stylite-epl-trunk',
@@ -236,9 +234,8 @@ function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $pre
  *			"egroupware" => "git@github.com:EGroupware/egroupware.git"),
  *		"git@github.com:EGroupware/tracker.git" => array(
  *			"egroupware/tracker" => "git@github.com:EGroupware/tracker.git"),
- *		"svn+ssh://stylite@svn.stylite.de/stylite" => array(
- *			"egroupware/stylite] => svn+ssh://stylite@svn.stylite.de/stylite/branches/14.2/stylite",
- *			"egroupware/esyncpro] => svn+ssh://stylite@svn.stylite.de/stylite/branches/14.2/esyncpro",
+ *		"git@github.com:EGroupware/epl" => array(
+ *			"egroupware/stylite" => git@github.com:EGroupware/epl"),
  */
 function get_modules_per_repo()
 {
@@ -250,35 +247,21 @@ function get_modules_per_repo()
 	{
 		throw new Exception("checkout directory '{$config['checkoutdir']} does NOT exists or is NO directory!");
 	}
-	if (!($mrconfig = file_get_contents($path=$config['checkoutdir'].'/.mrconfig')))
-	{
-		throw new Exception("$path not found!");
-	}
-	$module = $baseurl = null;
 	$modules = array();
-	foreach(explode("\n", $mrconfig) as $line)
+	foreach(scandir($config['checkoutdir']) as $module)
 	{
-		$matches = null;
-		if (isset($baseurl))
+		if ($module === '..' || !file_exists($config['checkoutdir'].'/'.$module.'/.git'))
 		{
-			$line = str_replace("\${EGW_REPO_BASE:-\$(git config --get remote.origin.url|sed 's|/egroupware.git||')}", $baseurl, $line);
+			continue;
 		}
-		if ($line && $line[0] == '[' && preg_match('/^\[([^]]*)\]/', $line, $matches))
+		$output = $matches = null;
+		run_cmd($cmd='cd '.$config['checkoutdir'].'/'.$module.'; '.$config['git'].' remote -v', $output);
+		if (!preg_match('/^origin\s+(.*)\s+\(push\)$/m', implode("\n", $output), $matches))
 		{
-			if (in_array($matches[1], array('DEFAULT', 'vendor/egroupware/ckeditor', 'api/src/Accounts/Ads', 'phpgwapi/js/ckeditor', 'phpgwapi/inc/adldap')))
-			{
-				$module = null;
-				continue;
-			}
-			$module = (string)$matches[1];
+			throw new Exception("Could not parse output of ".implode("\n", $output));
 		}
-		elseif (isset($module) && preg_match('/^checkout\s*=\s*(git\s+clone\s+(-b\s+[0-9.]+\s+)?((git|http)[^ ]+)|svn\s+checkout\s+((svn|http)[^ ]+))/', $line, $matches))
-		{
-			$repo = $url = substr($matches[1], 0, 3) == 'svn' ? $matches[5] : $matches[3];
-			if (substr($matches[1], 0, 3) == 'svn') $repo = preg_replace('#/(trunk|branches)/.*$#', '', $repo);
-			$modules[$repo][$config['aliasdir'].($module ? '/'.$module : '')] = $url;
-			if ($module === '' && !isset($baseurl)) $baseurl = str_replace('/egroupware.git', '', $url);
-		}
+		$repo = $matches[1];
+		$modules[$repo][$config['aliasdir'].($module !== '.' ? '/'.$module : '')] = $repo;
 	}
 	if ($verbose) print_r($modules);
 	return $modules;
@@ -322,15 +305,14 @@ function do_checkout()
 		$cmd = $config['git'].' clone '.(!empty($config['branch']) ? ' -b '.$config['branch'] : '').
 			' git@github.com:EGroupware/egroupware.git '.$config['checkoutdir'];
 		run_cmd($cmd);
-		run_cmd('mr up');	// need to run mr up twice for new checkout, because chained .mrconfig wont run first time (because not there yet!)
 	}
 	elseif (!is_dir($config['checkoutdir']) || !is_writable($config['checkoutdir']))
 	{
-		throw new Exception("svn checkout directory '{$config['checkoutdir']} exists and is NO directory or NOT writable!");
+		throw new Exception("checkout directory '{$config['checkoutdir']} exists and is NO directory or NOT writable!");
 	}
 	chdir($config['checkoutdir']);
 
-	run_cmd('mr up');
+	run_cmd('./install-cli.php --ignore-platform-reqs --no-dev');
 }
 
 /**
@@ -350,10 +332,66 @@ function do_tag()
 
 	if (empty($config['tag'])) return;	// otherwise we copy everything in svn root!
 
-	echo "Creating tag $config[tag]\n";
+	echo "Creating tag and pushing $config[tag]\n";
 
-	$cmd = $config['mr'].' tag '.escapeshellarg($config['tag']).' '.escapeshellarg('Creating '.$config['tag']);
-	run_cmd($cmd);
+	run_cmd('./install-cli.php --git tag -f '.escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
+
+	// push tags in all apps (not main-dir!)
+	run_cmd('./install-cli.php --git-apps push -f origin '.escapeshellarg($config['tag']));
+
+	// tag and push stuff now in vendor
+	foreach(array('z-push-dev', 'adodb-php') as $package)
+	{
+		run_cmd("cd vendor/egroupware/$package; git tag -f ".escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
+		run_cmd("cd vendor/egroupware/$package; git push -t origin ".escapeshellarg($config['tag']));
+	}
+
+	// checkout tag, update composer.{json,lock}, move tag to include them
+	run_cmd($config['git'].' checkout '.$config['tag']);
+	update_composer_json_version($config['tag']);
+	// might require more then one run, as pushed tags need to be picked up by packagist
+	$output = $ret = null;
+	$timeout = $retries = 10;
+	$cmd = $config['composer'].' update --ignore-platform-reqs --no-dev egroupware/\*';
+	for($try=1; $try <= $retries && run_cmd($cmd, $output, $try < $retries ? 2 : null); ++$try)
+	{
+		error_log("Retry $try/$retries in $timeout seconds ...");
+		sleep($timeout);
+	}
+	run_cmd($config['git'].' commit -m '.escapeshellarg('Updating dependencies for '.$config['tag']).' composer.{json,lock}');
+	run_cmd($config['git'].' tag -f '.escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
+}
+
+/**
+ * Update composer.json with version number (or add it after "name" if not yet there)
+ *
+ * @param string $version
+ * @throws Exception on error
+ */
+function update_composer_json_version($version)
+{
+	global $config;
+
+	if (!($json = file_get_contents($path=$config['checkoutdir'].'/composer.json')))
+	{
+		throw new Exception("Can NOT read $path to update with new version!");
+	}
+	if (preg_match('/"version":\s*"[^"]+"/', $json))
+	{
+		$json = preg_replace('/"version":\s*"[^"]+"/', '"version": "'.$version.'"', $json);
+	}
+	elseif (preg_replace('/^(\s*)"name":\s*"[^"]+",$/m', $json))
+	{
+		$json = preg_replace('/^(\s*)"name":\s*"[^"]+",$/m', '$0'."\n".'$1"version": "'.$version.'",', $json);
+	}
+	else
+	{
+		throw new Exception("Failed to add new version to $path!");
+	}
+	if (!file_put_contents($path, $json))
+	{
+		throw new Exception("Can NOT update $path with new version!");
+	}
 }
 
 /**
@@ -363,14 +401,14 @@ function do_release()
 {
 	global $config,$verbose;
 
-	// push local changes to Github incl. tags
+	// push local changes to Github incl. tag (tags of apps are already pushed by do_tag)
 	if ($verbose) echo "Pushing changes and tags\n";
 	chdir($config['checkoutdir']);
-	run_cmd($config['mr']. ' up');		// in case someone else pushed something
-	chdir($config['checkoutdir']);
-	run_cmd($config['git'].' push');	// regular commits like changelog
+	run_cmd($config['git'].' push');
 	$tag = config_translate('tag');
-	run_cmd($config['mr']. ' push origin '.$tag);	// pushing tags in all apps
+	run_cmd($config['git'].' push -f origin '.$tag);
+	// checkout release-branch again (we are on the tag!)
+	run_cmd($config['git'].' checkout '.$config['version']);
 
 	if (empty($config['github_user']) || empty($config['github_token']))
 	{
@@ -568,7 +606,7 @@ function do_editchangelog()
 		$revision = null;
 		if (substr($branch_url, -4) == '.git')
 		{
-			$path = key($modules);
+			list($path) = each($modules);
 			$changelog .= get_changelog_from_git($path, $config['editchangelog'], $last_tag);
 		}
 		else
@@ -1206,7 +1244,7 @@ function do_svncheckout()
 	// do composer install to fetch dependencies
 	if ($config['composer'])
 	{
-		run_cmd($config['composer']);
+		run_cmd($config['composer'].' install --ignore-platform-reqs --no-dev');
 	}
 	// run after-checkout command(s), eg. to purge source directories
 	run_cmd($config['after-checkout']);
@@ -1284,11 +1322,17 @@ function do_svntag()
 }
 
 /**
- * Runs given shell command, exists with error-code after echoing the output of the failed command (if not already running verbose)
+ * Runs given shell command
+ *
+ * If command return non-zero exit-code:
+ * 1) output is echoed, if not already running verbose
+ * 2a) if exit-code is contained in $no_bailout --> return it
+ * 2b) otherwise throws with $cmd as message and exit-code
  *
  * @param string $cmd
  * @param array& $output=null $output of command, only if !$verbose !!!
  * @param int|array $no_bailout =null exit code(s) to NOT bail out
+ * @throws Exception on non-zero exit-code not matching $no_bailout
  * @return int exit code of $cmd
  */
 function run_cmd($cmd,array &$output=null,$no_bailout=null)
