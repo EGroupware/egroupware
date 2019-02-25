@@ -195,9 +195,9 @@ class Sharing
 
 		// check password, if required
 		if ($share['share_passwd'] && (empty($_SERVER['PHP_AUTH_PW']) ||
-			!(Api\Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt') ||
-				Api\Header\Authenticate::decode_password($_SERVER['PHP_AUTH_PW']) &&
-					Api\Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt'))))
+			!(Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt') ||
+				Header\Authenticate::decode_password($_SERVER['PHP_AUTH_PW']) &&
+					Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt'))))
 		{
 			$realm = 'EGroupware share '.$share['share_token'];
 			header('WWW-Authenticate: Basic realm="'.$realm.'"');
