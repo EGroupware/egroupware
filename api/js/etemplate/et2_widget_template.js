@@ -58,6 +58,12 @@ var et2_template = (function(){ "use strict"; return et2_DOMWidget.extend(
 			name: "URL of template",
 			type: "string",
 			description: "full URL to load template incl. cache-buster"
+		},
+		"onload": {
+			"name": "onload",
+			"type": "js",
+			"default": et2_no_init,
+			"description": "JS code which is executed after the template is loaded."
 		}
 	},
 
@@ -185,6 +191,33 @@ var et2_template = (function(){ "use strict"; return et2_DOMWidget.extend(
 
 	getDOMNode: function() {
 		return this.div;
+	},
+
+	attachToDOM: function() {
+		if (this.div)
+		{
+			jQuery(this.div)
+				.off('.et2_template')
+				.bind("load.et2_template", this, function(e) {
+					e.data.load.call(e.data, this);
+				});
+		}
+
+		this._super.apply(this,arguments);
+	},
+
+	/**
+	 * Called after the template is fully loaded to handle any onload handlers
+	 */
+	load: function() {
+		if(typeof this.options.onload == 'function')
+		{
+			// Make sure function gets a reference to the widget
+			var args = Array.prototype.slice.call(arguments);
+			if(args.indexOf(this) == -1) args.push(this);
+
+			return this.options.onload.apply(this, args);
+		}
 	},
 
 	/**

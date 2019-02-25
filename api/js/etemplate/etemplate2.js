@@ -543,6 +543,16 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et
 
 				jQuery(this.DOMContainer).trigger('load', this);
 
+				if(this.templates[this.name].attributes.onload)
+				{
+					var onload = et2_checkType(this.templates[this.name].attributes.onload.value,'js','onload');
+					if (typeof onload === 'string')
+					{
+						onload = et2_compileLegacyJS(onload, this, this.widgetContainer, this.widgetContainer);
+					}
+					onload.call(this.widgetContainer);
+				}
+
 				// Profiling
 				if(egw.debug_level() >= 4)
 				{
