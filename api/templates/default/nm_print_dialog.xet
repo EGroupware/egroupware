@@ -7,6 +7,7 @@
 			<description value="Columns to print"/>
 			<select id="columns" rows="8" selected_first="false"/>
 			<integer id="row_count" label="How many rows to print"/>
+			<checkbox id="orientation" toggle_on="Portrait" toggle_off="Landscape" selected_value="portrait" unselected_value="landscape"/>
 		</vbox>
 	</template>
 </overlay>

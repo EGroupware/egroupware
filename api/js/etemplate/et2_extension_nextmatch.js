@@ -2140,6 +2140,31 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				return;
 			}
 
+			// Set CSS for orientation
+			this.div.addClass(value.orientation);
+			this.egw().set_preference(app,pref+'_orientation',value.orientation);
+
+
+			// Try to tell browser about orientation
+			var css = '@page { size: '+ value.orientation + '; }',
+			head = document.head || document.getElementsByTagName('head')[0],
+			style = document.createElement('style');
+
+			style.type = 'text/css';
+			style.media = 'print';
+
+			if (style.styleSheet){
+			  style.styleSheet.cssText = css;
+			} else {
+			  style.appendChild(document.createTextNode(css));
+			}
+
+			head.appendChild(style);
+			this.orientation_style = style;
+
+			// Trigger resize, so we can fit on a page
+			this.dynheight.outerNode.css('max-width',this.div.css('max-width'));
+
 			// Handle columns
 			this.set_columns(value.columns);
 			this.egw().set_preference(app,pref,value.columns);
@@ -2257,7 +2282,8 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			value: {
 				content: {
 					row_count: Math.min(100,total),
-					columns: this.egw().preference(pref,app) || columns_selected
+					columns: this.egw().preference(pref,app) || columns_selected,
+					orientation: this.egw().preference(pref+'_orientation',app)
 				},
 				sel_options: {
 					columns: columns
@@ -2274,7 +2300,9 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 	 */
 	afterPrint: function() {
 
-		this.div.removeClass('print');
+		this.div.removeClass('print landscape portrait');
+		jQuery(this.orientation_style).remove();
+		delete this.orientation_style;
 
 		// Put scrollbar back
 		jQuery('.egwGridView_scrollarea',this.div).css('overflow-y','');
