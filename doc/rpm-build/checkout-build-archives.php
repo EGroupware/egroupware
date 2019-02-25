@@ -334,16 +334,16 @@ function do_tag()
 
 	echo "Creating tag and pushing $config[tag]\n";
 
-	run_cmd('./install-cli.php --git tag '.escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
+	run_cmd('./install-cli.php --git tag -f '.escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
 
 	// push tags in all apps (not main-dir!)
-	run_cmd('./install-cli.php --git-apps push origin '.escapeshellarg($config['tag']));
+	run_cmd('./install-cli.php --git-apps push -f origin '.escapeshellarg($config['tag']));
 
 	// tag and push stuff now in vendor
 	foreach(array('z-push-dev', 'adodb-php') as $package)
 	{
-		run_cmd("cd vendor/egroupware/$package; git tag ".escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
-		run_cmd("cd vendor/egroupware/$package; git push origin ".escapeshellarg($config['tag']));
+		run_cmd("cd vendor/egroupware/$package; git tag -f ".escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
+		run_cmd("cd vendor/egroupware/$package; git push -t origin ".escapeshellarg($config['tag']));
 	}
 
 	// checkout tag, update composer.{json,lock}, move tag to include them
@@ -406,7 +406,7 @@ function do_release()
 	chdir($config['checkoutdir']);
 	run_cmd($config['git'].' push');
 	$tag = config_translate('tag');
-	run_cmd($config['git'].' push origin '.$tag);
+	run_cmd($config['git'].' push -f origin '.$tag);
 	// checkout release-branch again (we are on the tag!)
 	run_cmd($config['git'].' checkout '.$config['version']);
 
