@@ -228,12 +228,6 @@ app.classes.mail = AppJS.extend(
 				this.smimeAttachmentsCheckerInterval();
 				break;
 			case 'mail.compose':
-				// Set password field of file sharing to empty in
-				// initialization because safari does not respect
-				// autocomplete-off attribute. This hack should be
-				// removed once the issue is solved.
-				var password = this.et2.getWidgetById('password');
-				if (password) password.set_value('');
 				var composeToolbar = this.et2.getWidgetById('composeToolbar');
 				if (composeToolbar._actionManager.getActionById('pgp') &&
 					composeToolbar._actionManager.getActionById('pgp').checked ||
