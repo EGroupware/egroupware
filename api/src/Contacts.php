@@ -970,7 +970,7 @@ class Contacts extends Contacts\Storage
 		{
 			foreach(array_keys($contact) as $field)
 			{
-				if (!in_array($field,$this->own_account_acl) && !in_array($field,array('id','owner','account_id','modified','modifier')))
+				if (!in_array($field,$this->own_account_acl) && !in_array($field,array('id','owner','account_id','modified','modifier', 'photo_unchanged')))
 				{
 					// user is not allowed to change that
 					if ($old)
