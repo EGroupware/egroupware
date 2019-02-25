@@ -261,7 +261,7 @@ class Etemplate extends Etemplate\Widget\Template
 			echo $GLOBALS['egw']->framework->header();
 			if ($output_mode != 2 && !$GLOBALS['egw_info']['flags']['nonavbar'])
 			{
-				parse_navbar();
+				$GLOBALS['egw']->framework->navbar();
 			}
 			else	// mark popups as such, by enclosing everything in div#popupMainDiv
 			{

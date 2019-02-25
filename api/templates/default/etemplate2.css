@@ -555,9 +555,13 @@ for printing
 .et2_nextmatch.print  > div {
 	height: auto !important;
 }
-.et2_nextmatch.print {
+.et2_nextmatch.print.landscape {
 	/* This is fairly arbitrary, but makes it fit in Chrome and Firefox*/
-	max-width: 700pt !important;
+	max-width: 710pt !important;
+}
+.et2_nextmatch.print.portrait {
+	/* This is fairly arbitrary, but makes it fit in Chrome and Firefox*/
+	max-width: 570pt !important;
 }
 /**
  * Diff widget
