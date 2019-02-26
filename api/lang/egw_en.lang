@@ -741,6 +741,7 @@ kuwait	common	en	KUWAIT
 kyrgyzstan	common	en	KYRGYZSTAN
 label	common	en	Label
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	en	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
+landscape	common	en	Landscape
 lang	common	en	Lang
 language	common	en	Language
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	en	Language short (eg. 'en' for English) for language dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
@@ -1029,6 +1030,7 @@ pm	common	en	pm
 poland	common	en	POLAND
 popup	common	en	Popup
 popup with search	common	en	popup with search
+portrait	common	en	Portrait
 portugal	common	en	PORTUGAL
 postal	common	en	Postal
 powered by	common	en	Powered by

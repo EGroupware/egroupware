@@ -730,6 +730,7 @@ kuwait	common	de	KUWAIT
 kyrgyzstan	common	de	KYRGYZSTAN
 label	common	de	Beschriftung
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	de	Beschriftung:[bold][italic] Text:[len][,max] Zahlen:[min][,[max][,len]] mehrz.Text:[Zeilen][,Spalten] Radiok.:Wert Templ.:[IndexInContent] Auswahl:[mehrzeilig] Datum:[Format: zB. 'Y-m-d']
+landscape	common	de	Querformat
 lang	common	de	Sprache
 language	common	de	Sprache
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	de	Kürzel der Sprache (zb. 'en' für Englisch) für sprachabhängige Templates ('' ließt die bevorzugte Sprache, benutze 'default' für das Standard Template '')
@@ -1016,6 +1017,7 @@ pm	common	de	Nachmittag
 poland	common	de	POLEN
 popup	common	de	Pop-up
 popup with search	common	de	weitere Teilnehmer suchen
+portrait	common	de	Hochformat
 portugal	common	de	PORTUGAL
 postal	common	de	Postadresse
 powered by	common	de	Powered by
