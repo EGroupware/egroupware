@@ -1018,14 +1018,13 @@ body {
   margin: 3px 5px 0 0;
 }
 #mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
-  width: 90%;
+  width: 58%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
-#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject > span:not(:first-child) {
+#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject > span {
   white-space: nowrap;
-  display: inline;
 }
 /*##############################################
 #            #                               #
@@ -2209,8 +2208,8 @@ div.mailPreviewHeaders img.et2_button_icon {
 }
 /* Button after field*/
 #mail-index_mailPreviewHeadersAttachments img.et2_button_icon {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   background-color: inherit;
 }
 /*######################################################*/
