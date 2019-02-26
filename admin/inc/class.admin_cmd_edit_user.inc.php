@@ -79,16 +79,16 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		}
 		if (!$data['account_lastname'] && (!$this->account || !is_null($data['account_lastname'])))
 		{
-			throw new Api\Exception\WrongUserinput(lang('You must enter a lastname'),9);
+			throw new Api\Exception\WrongUserinput(lang('You must enter a lastname'), 13);
 		}
 		if (!is_null($data['account_lid']) && ($id = admin_cmd::$accounts->name2id($data['account_lid'],'account_lid','u')) &&
 			(string)$id !== (string)$data['account_id'])
 		{
-			throw new Api\Exception\WrongUserinput(lang('That loginid has already been taken'),999);
+			throw new Api\Exception\WrongUserinput(lang('That loginid has already been taken'), 11);
 		}
 		if (isset($data['account_passwd_2']) && $data['account_passwd'] != $data['account_passwd_2'])
 		{
-			throw new Api\Exception\WrongUserinput(lang('The two passwords are not the same'),0);
+			throw new Api\Exception\WrongUserinput(lang('The two passwords are not the same'), 12);
 		}
 		$expires = self::_parse_expired($data['account_expires'],(boolean)$this->account);
 		if ($expires === 0)	// deactivated
