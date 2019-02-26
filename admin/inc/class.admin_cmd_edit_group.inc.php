@@ -63,16 +63,16 @@ class admin_cmd_edit_group extends admin_cmd
 		);
 		if (!$data['account_lid'] && (!$this->account || !is_null($data['account_lid'])))
 		{
-			throw new Api\Exception\WrongUserinput(lang('You must enter a group name.'),9);
+			throw new Api\Exception\WrongUserinput(lang('You must enter a group name.'), 17);
 		}
 		if (!is_null($data['account_lid']) && ($id = admin_cmd::$accounts->name2id($data['account_lid'],'account_lid','g')) &&
 			$id !== $data['account_id'])
 		{
-			throw new Api\Exception\WrongUserinput(lang('That loginid has already been taken'),999);
+			throw new Api\Exception\WrongUserinput(lang('That loginid has already been taken'), 11);
 		}
 		if (!$data['account_members'] && !$this->account)
 		{
-			throw new Api\Exception\WrongUserinput(lang('You must select at least one group member.'),9);
+			throw new Api\Exception\WrongUserinput(lang('You must select at least one group member.'), 18);
 		}
 		if ($data['account_members'])
 		{

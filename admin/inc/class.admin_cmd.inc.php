@@ -473,7 +473,7 @@ abstract class admin_cmd
 		if (!(class_exists($class = 'EGroupware\\'.$data['type']) ||	// namespaced class
 			class_exists($class = $data['type'])) || $data['type'] == 'admin_cmd')
 		{
-			throw new Api\Exception\WrongParameter(lang('Unknown command %1!',$class),0);
+			throw new Api\Exception\WrongParameter(lang('Unknown command %1!',$class), 10);
 		}
 		$cmd = new $class($data);
 
@@ -481,7 +481,7 @@ abstract class admin_cmd
 		{
 			return $cmd;
 		}
-		throw new Api\Exception\WrongParameter(lang('%1 is no command!',$class),0);
+		throw new Api\Exception\WrongParameter(lang('%1 is no command!',$class), 10);
 	}
 
 	/**
@@ -793,8 +793,8 @@ abstract class admin_cmd
 	 * @param string|int $account account_id or account_lid
 	 * @param boolean $allow_only_user =null true=only user, false=only groups, default both
 	 * @return int/array account_id
-	 * @throws Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$account),15);
-	 * @throws Api\Exception\WrongUserinput(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only_user?lang('user'):lang('group')),15);
+	 * @throws Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$account), 15);
+	 * @throws Api\Exception\WrongUserinput(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only_user?lang('user'):lang('group')), 16);
 	 */
 	static function parse_account($account,$allow_only_user=null)
 	{
@@ -803,11 +803,11 @@ abstract class admin_cmd
 		if (!($type = admin_cmd::$accounts->exists($account)) ||
 			!is_numeric($id=$account) && !($id = admin_cmd::$accounts->name2id($account)))
 		{
-			throw new Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$account),15);
+			throw new Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$account), 15);
 		}
 		if (!is_null($allow_only_user) && $allow_only_user !== ($type == 1))
 		{
-			throw new Api\Exception\WrongUserinput(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only_user?lang('user'):lang('group')),15);
+			throw new Api\Exception\WrongUserinput(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only_user?lang('user'):lang('group')), 16);
 		}
 		if ($type == 2 && $id > 0) $id = -$id;	// groups use negative id's internally, fix it, if user given the wrong sign
 
@@ -820,8 +820,8 @@ abstract class admin_cmd
 	 * @param string|int|array $accounts array or comma-separated account_id's or account_lid's
 	 * @param boolean $allow_only_user =null true=only user, false=only groups, default both
 	 * @return array of account_id's or null if none specified
-	 * @throws Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$account),15);
-	 * @throws Api\Exception\WrongUserinput(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only?lang('user'):lang('group')),15);
+	 * @throws Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$account), 15);
+	 * @throws Api\Exception\WrongUserinput(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only?lang('user'):lang('group')), 16);
 	 */
 	static function parse_accounts($accounts,$allow_only_user=null)
 	{
