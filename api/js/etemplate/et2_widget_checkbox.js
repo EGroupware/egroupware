@@ -56,13 +56,15 @@ var et2_checkbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			"name": "Toggle on caption",
 			"type": "string",
 			"default": "",
-			"description": "String caption to show for ON status"
+			"description": "String caption to show for ON status",
+			"translate": true
 		},
 		"toggle_off": {
 			"name": "Toggle off caption",
 			"type": "string",
 			"default": "",
-			"description": "String caption to show OFF status"
+			"description": "String caption to show OFF status",
+			"translate": true
 		}
 	},
 
