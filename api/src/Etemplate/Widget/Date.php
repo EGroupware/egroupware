@@ -179,7 +179,7 @@ class Date extends Transformer
 				$valid = (string)$value === '' ? '' : (int)$value;
 			}
 
-			if (!empty($this->attrs['min']))
+			if (!empty($this->attrs['min']) && !empty($value))
 			{
 				if(is_numeric($this->attrs['min']))
 				{
@@ -203,7 +203,7 @@ class Date extends Transformer
 					$value = $min;
 				}
 			}
-			if (!empty($this->attrs['max']))
+			if (!empty($this->attrs['max']) && !empty($value))
 			{
 				if(is_numeric($this->attrs['max']))
 				{
