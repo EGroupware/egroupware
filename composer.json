@@ -84,7 +84,8 @@
 		"egroupware/tracker": "self.version",
 		"egroupware/z-push-dev": "self.version",
 		"egroupware/activesync": "self.version",
-		"egroupware/adodb-php": "self.version"
+		"egroupware/adodb-php": "self.version",
+		"pear-pear.horde.org/Horde_Text_Diff": "^2.2"
 	},
 	"require-dev": {
 	},

@@ -18,6 +18,8 @@ use EGroupware\Api;
 // explicitly reference classes still in phpgwapi or otherwise outside api
 use notifications;
 
+use Text_Diff_Renderer_unified;
+
 /**
  * Abstract base class for trackering:
  *  - logging all modifications of an entry
@@ -450,6 +452,19 @@ abstract class Tracking
 					//error_log(__METHOD__."() $i: historylog->add('$name',data['$this->id_field']={$data[$this->id_field]},".array2string($added[$i]).','.array2string($removed[$i]));
 					$this->historylog->add($name,$data[$this->id_field],$added[$i],$removed[$i]);
 				}
+			}
+			else if (is_string($data[$name]) && is_string($old[$name]) && (
+					strpos($data[$name], PHP_EOL) !== FALSE || strpos($old[$name], PHP_EOL) !== FALSE))
+			{
+				// Multiline string, just store diff
+				$diff = new \Text_Diff('auto', array(explode("\n",$data[$name]), explode("\n",$old[$name])));
+				$renderer = new \Text_Diff_Renderer_unified();
+				$this->historylog->add(
+					$status,
+					$data[$this->id_field],
+					$renderer->render($diff),
+					'***diff***'
+				);
 			}
 			else
 			{
