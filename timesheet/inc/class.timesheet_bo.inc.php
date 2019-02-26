@@ -167,7 +167,6 @@ class timesheet_bo extends Api\Storage
 	{
 		parent::__construct(TIMESHEET_APP,'egw_timesheet',self::EXTRA_TABLE,'','ts_extra_name','ts_extra_value','ts_id');
 
-		if ($this->customfields) $this->columns_to_search[] = self::EXTRA_TABLE.'.ts_extra_value';
 		$this->config_data = Api\Config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
 
