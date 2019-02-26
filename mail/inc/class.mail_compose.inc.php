@@ -323,6 +323,7 @@ class mail_compose
 		if ($appendix_data['emails'])
 		{
 			try {
+				if ($appendix_data['emails']['processedmail_id']) $_content['processedmail_id'] .= ','.$appendix_data['emails']['processedmail_id'];
 				$attched_uids = $this->_get_uids_as_attachments($appendix_data['emails']['ids'], $_content['serverID']);
 				if (is_array($attched_uids))
 				{

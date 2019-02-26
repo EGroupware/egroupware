@@ -644,7 +644,7 @@ app.classes.mail = AppJS.extend(
 						for(var j = 1; j < _elems.length; j++)
 						settings.id = settings.id + ',' + _elems[j].id;
 					}
-					return egw.openWithinWindow("mail", "setCompose", {data:{emails:{ids:settings.id}}}, settings, /mail.mail_compose.compose/);
+					return egw.openWithinWindow("mail", "setCompose", {data:{emails:{ids:settings.id, processedmail_id:settings.id}}}, settings, /mail.mail_compose.compose/);
 				}
 				else
 				{
