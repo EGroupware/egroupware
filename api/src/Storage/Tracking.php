@@ -463,7 +463,7 @@ abstract class Tracking
 					strpos($data[$name], PHP_EOL) !== FALSE || strpos($old[$name], PHP_EOL) !== FALSE))
 			{
 				// Multiline string, just store diff
-				$diff = new \Text_Diff('auto', array(explode("\n",$data[$name]), explode("\n",$old[$name])));
+				$diff = new \Text_Diff('auto', array(explode("\n",$old[$name]), explode("\n",$data[$name])));
 				$renderer = new \Text_Diff_Renderer_unified();
 				$this->historylog->add(
 					$status,
