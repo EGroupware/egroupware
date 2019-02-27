@@ -260,6 +260,17 @@ class History
 					$row[$field] = explode(Tracking::ONE2N_SEPERATOR,$row[$field]);
 				}
 			}
+			if ($row['history_old_value'] !== Tracking::DIFF_MARKER && (
+				$this->needs_diff($row['history_status'], $row['history_old_value']) ||
+				$this->needs_diff($row['history_status'], $row['history_old_value'])
+			))
+			{
+				// Larger text stored with full old / new value - calculate diff and just send that
+				$diff = new \Text_Diff('auto', array(explode("\n",$row['history_new_value']), explode("\n",$row['history_old_value'])));
+				$renderer = new \Text_Diff_Renderer_unified();
+				$row['history_new_value'] = $renderer->render($diff);
+				$row['history_old_value'] = Tracking::DIFF_MARKER;
+			}
 			// Get information needed for proper display
 			if($row['history_appname'] == 'filemanager')
 			{
@@ -296,5 +307,11 @@ class History
 		), array(), true);	// true = no permission check
 
 		return $total;
+	}
+
+	protected function needs_diff($name, $value)
+	{
+		return $name == 'note' || $name == 'description' ||
+			($value && (strlen($value) > 50 || strstr($value, "\n") !== FALSE));
 	}
 }
