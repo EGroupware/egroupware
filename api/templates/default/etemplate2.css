@@ -13,7 +13,7 @@
 /*@import url("../../js/jquery/blueimp/css/blueimp-gallery.min.css");*/
 /*@import url("../../js/dhtmlxtree/codebase/dhtmlxtree.css");*/
 /*@import url("../../js/egw_action/test/skins/dhtmlxmenu_egw.css");*/
-/*@import url("../../js/etemplate/lib/jsdifflib/diffview.css");*/
+/*@import url("../../../vendor/bower-asset/diff2html/dist/diff2html.css");*/
 /*@import url("../../../vendor/bower-asset/cropper/dist/cropper.min.css");*/
 /*@import url("css/flags.css");*/
 /*@import url("css/htmlarea.css");*/
@@ -567,9 +567,27 @@ for printing
 /**
  * Diff widget
  */
+div.diff {
+	width: 100%;
+}
 .diff thead,
-.author {
+.author,
+.d2h-file-header,
+.d2h-file-info,
+.d2h-info,
+.diff .d2h-cntx
+{
   display: none;
+}
+.d2h-file-diff {
+	white-space:normal;
+}
+.diff .d2h-file-diff {
+	overflow-x: hidden;
+}
+.ui-widget-content .d2h-file-diff {
+	overflow-x: visible;
+	overflow-y: visible;
 }
 .diff .ui-icon {
   margin-top: -16px;
