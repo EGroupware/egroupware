@@ -152,6 +152,7 @@ function run_command(admin_cmd $cmd)
 				break;
 
 			case '--try-run':	// only run checks
+			case '--dry-run':	// only run checks
 				$dry_run = true;
 				break;
 
@@ -177,7 +178,8 @@ function run_command(admin_cmd $cmd)
 	}
 	//_debug_array($cmd);
 	try {
-		print_r($cmd->run($time, true, $skip_checks, $dry_run));
+		$msg = $cmd->run($time, true, $skip_checks, $dry_run);
+		if (!is_bool($msg) && $msg) print_r($msg);
 
 		// cli can NOT clear instance cache of APC(u), as cli uses different shared memory then webserver
 		// --> we use a webservice call to clear cache (might fail if no domain in specified in webserver_url or on command line)
@@ -327,6 +329,7 @@ function usage($action=null,$ret=0)
 	echo "  Change/set the password for a given user\n";
 	echo "--delete-user admin-account[@domain],admin-password,account-to-delete[,account-to-move-data]\n";
 	echo "	Deletes a user from EGroupware. It's data can be moved to an other user or it get deleted too.\n";
+	echo "	You can use '--not-existing' for accounts-to-delete, to delete all no (longer) existing users and groups.\n";
 	echo "--edit-group admin-account[@domain],admin-password,group[=new-group-name],email[,members,...]\n";
 	echo "	Edit or add a group to EGroupware. If you specify members, they *replace* the exiting members!\n";
 	echo "--delete-group admin-account[@domain],admin-password,group-to-delete\n";
