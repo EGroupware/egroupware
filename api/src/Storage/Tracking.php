@@ -192,6 +192,12 @@ abstract class Tracking
 	const ONE2N_SEPERATOR = '~|~';
 
 	/**
+	 * Marker for change stored as unified diff, not old/new value
+	 * Diff is in the new value, marker in old value
+	 */
+	const DIFF_MARKER = '***diff***';
+
+	/**
 	 * Config name for custom notification message
 	 */
 	const CUSTOM_NOTIFICATION = 'custom_notification';
@@ -463,7 +469,7 @@ abstract class Tracking
 					$status,
 					$data[$this->id_field],
 					$renderer->render($diff),
-					'***diff***'
+					self::DIFF_MARKER
 				);
 			}
 			else
