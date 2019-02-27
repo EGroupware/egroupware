@@ -8,7 +8,6 @@
  * Copyright (C) 2000, 2001 Joseph Engo
  * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
  * @package api
- * @version $Id$
  */
 
 namespace EGroupware\Api;
@@ -865,6 +864,9 @@ class Translation
 					break;
 				case 'windows-1250':
 					$from = 'iso-8859-2';
+					break;
+				case 'windows-1253':
+					$from = 'iso-8859-7';
 					break;
 				case 'windows-1257':
 					$from = 'iso-8859-13';
