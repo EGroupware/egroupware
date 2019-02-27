@@ -13,8 +13,8 @@
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
 	/vendor/bower-asset/jquery-ui/jquery-ui.js;
-	lib/jsdifflib/difflib;
-	lib/jsdifflib/diffview;
+	/vendor/bower-asset/diff2html/dist/diff2html.min.js;
+	/vendor/bower-asset/diff2html/dist/diff2html-ui.min.js;
 	et2_core_valueWidget;
 */
 
@@ -29,6 +29,11 @@ var et2_diff = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		"value": {
 			"type": "any"
 		}
+	},
+
+	diff_options: {
+		"inputFormat":"diff",
+		"matching": "words"
 	},
 
 	/**
@@ -48,51 +53,13 @@ var et2_diff = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 
 	set_value: function(value) {
 		jQuery(this.div).empty();
-		if(typeof value['old'] == 'string' && typeof value['new'] == 'string') {
-			// Build diff
-			var old_text = difflib.stringAsLines(value['old'].toString());
-			var new_text = difflib.stringAsLines(value['new'].toString());
-			var sm = new difflib.SequenceMatcher(old_text, new_text);
-			var opcodes = sm.get_opcodes();
-			var view = diffview.buildView({
-				baseTextLines: old_text,
-				newTextLines: new_text,
-				opcodes: opcodes,
-				baseTextName: '',//this.egw().lang('Old value'),
-				newTextName: '',//this.egw().lang('New value'),
-				viewType: 1
-			});
-			jQuery(this.div).append(view);
-			if(this.mini) {
-				view = jQuery(view);
-				this.minify(view);
-				var self = this;
-				jQuery('<span class="ui-icon ui-icon-circle-plus">&nbsp;</span>')
-					.appendTo(self.div)
-					.css("cursor", "pointer")
-					.click({diff: view, div: self.div}, function(e) {
-						var diff = e.data.diff;
-						var div = e.data.div;
-						self.un_minify(diff);
-						var dialog_div = jQuery('<div>')
-							.append(diff);
-						dialog_div.dialog({
-							title: self.options.label,
-							width: 'auto',
-							autoResize: true,
-							modal: true,
-							buttons: [{text: self.egw().lang('ok'), click: function() {jQuery(this).dialog("close");}}],
-							close: function(event, ui) {
-								// Need to destroy the dialog, etemplate widget needs divs back where they were
-								dialog_div.dialog("destroy");
-								self.minify(this);
-
-								// Put it back where it came from, or et2 will error when clear() is called
-								diff.prependTo(div);
-							}
-						});
-					});
-			}
+		if(typeof value == 'string') {
+			jQuery(this.div).append(
+					Diff2Html.getPrettyHtml(
+						value,
+						this.diff_options
+					)
+			);
 		}
 		else if(typeof value != 'object')
 		{
