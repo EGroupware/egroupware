@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -35,13 +35,13 @@ class admin_cmd_change_account_id extends admin_cmd
 	}
 
 	/**
-	 * Query changes from all apps
+	 * Query account columns from all apps
 	 *
 	 * Apps mark columns containing account-ids in "meta" attribute as (account|user|group)[-(abs|commasep|serialized)]
 	 *
 	 * @return array appname => array( table => array(column(s)))
 	 */
-	private function get_changes()
+	public static function get_account_colums()
 	{
 		// happens if one used "root_admin" and config-password
 		if (empty($GLOBALS['egw_info']['apps']))
@@ -135,7 +135,7 @@ class admin_cmd_change_account_id extends admin_cmd
 				throw new Api\Exception\WrongUserinput(lang("Group #%1 must have negative sign!", $from),19);
 			}
 		}
-		$columns2change = $this->get_changes();
+		$columns2change = self::get_account_colums();
 		$total = 0;
 		foreach($columns2change as $app => $data)
 		{

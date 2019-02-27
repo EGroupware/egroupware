@@ -5,9 +5,8 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 /**
@@ -40,7 +39,8 @@ class admin_cmd_check_acl extends admin_cmd
 
 		admin_cmd::_instanciate_accounts();
 		$deleted = 0;
-		if (($all_accounts = admin_cmd::$accounts->search(array('type'=>'both'))))
+		// get all accounts: users+groups and also non-active ones (not yet deleted!)
+		if (($all_accounts = admin_cmd::$accounts->search(array('type'=>'both','active'=>false))))
 		{
 			$ids = array();
 			foreach($all_accounts as $account)
