@@ -225,7 +225,7 @@ var et2_button = (function(){ "use strict"; return et2_baseWidget.extend([et2_II
 		{
 			this.options.readonly = _ro;
 
-			if (this.image)
+			if (this.options.image || this.options.ro_image)
 			{
 				this.update_image();
 			}
