@@ -261,8 +261,8 @@ class History
 				}
 			}
 			if ($row['history_old_value'] !== Tracking::DIFF_MARKER && (
-				$this->needs_diff($row['history_status'], $row['history_old_value']) ||
-				$this->needs_diff($row['history_status'], $row['history_old_value'])
+				static::needs_diff($row['history_status'], $row['history_old_value']) ||
+				static::needs_diff($row['history_status'], $row['history_old_value'])
 			))
 			{
 				// Larger text stored with full old / new value - calculate diff and just send that
@@ -309,7 +309,7 @@ class History
 		return $total;
 	}
 
-	protected function needs_diff($name, $value)
+	protected static function needs_diff($name, $value)
 	{
 		return $name == 'note' || $name == 'description' ||
 			($value && (strlen($value) > 50 || strstr($value, "\n") !== FALSE));
