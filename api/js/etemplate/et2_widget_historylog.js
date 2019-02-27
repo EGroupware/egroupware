@@ -500,19 +500,11 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			{
 				// Large text value - span both columns, and show a nice diff
 				var jthis = jQuery(this);
-				if(i == self.NEW_VALUE)
+				if(i === self.NEW_VALUE)
 				{
 					// Diff widget
 					widget = self.diff.widget;
 					nodes = self.diff.nodes.clone();
-
-					if (typeof _data[self.columns[self.NEW_VALUE].id] == "string")
-					{
-						value = _data[self.columns[i].id] = {
-							'old': _data[self.columns[i+1].id],
-							'new': value
-						};
-					}
 
 					// Skip column 4
 					jthis.parents("td").attr("colspan", 2)
@@ -571,7 +563,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			this.egw().debug("warn", "Crazy diff value", value);
 			return false;
 		}
-		return columnName == 'note' || columnName == 'description' || (value && (value.length > 50 || value.match(/\n/g)));
+		return value=== '***diff***';
 	},
 
 	resize: function (_height)

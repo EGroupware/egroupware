@@ -85,7 +85,8 @@
 		"egroupware/z-push-dev": "self.version",
 		"egroupware/activesync": "self.version",
 		"egroupware/adodb-php": "self.version",
-		"pear-pear.horde.org/Horde_Text_Diff": "^2.2"
+		"pear-pear.horde.org/Horde_Text_Diff": "^2.2",
+		"bower-asset/diff2html": "^2.7"
 	},
 	"require-dev": {
 	},
