@@ -1,5 +1,6 @@
 {
 	"name": "egroupware/egroupware",
+	"version": "dev-master",
 	"description": "EGroupware extends a classic groupware with an integreted CRM-system, a secure file-server and Collabora Online Office.",
 	"keywords": [
 		"groupware",
@@ -40,7 +41,7 @@
         {
             "type": "pear",
             "url": "https://pear.horde.org"
-        }
+		}
     ],
 	"config": {
 	},
@@ -64,16 +65,17 @@
 		"pear-pear.horde.org/horde_mapi": "^1.0.9",
 		"pear-pear.horde.org/horde_managesieve": "^1.0.2",
 		"pear-pear.horde.org/horde_crypt": "^2.7.9",
+		"pear-pear.horde.org/horde_text_diff": "^2.2",
 		"pear/pear": "*",
 		"pear/auth_sasl": "*",
 		"pear/xml_feed_parser": "^1.0.5",
 		"pear/log": "*",
-		"pear/text_diff": "^1.2.2",
 		"bower-asset/jquery": "^1.12.4",
 		"bower-asset/fastclick":"1.0.*",
 		"bower-asset/jquery-touchswipe": "1.6.*",
 		"bower-asset/jquery-ui":"=1.11.2",
 		"bower-asset/cropper":"2.3.*",
+		"bower-asset/diff2html": "^2.7",
 		"npm-asset/as-jqplot" : "1.0.*",
 		"npm-asset/gridster":"0.5.*",
 		"adldap2/adldap2": "=4.0.4",
@@ -105,5 +107,7 @@
 		"installer-paths": {
 			"{$name}/": ["type:egroupware-app"]
 		}
-	}
+	},
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

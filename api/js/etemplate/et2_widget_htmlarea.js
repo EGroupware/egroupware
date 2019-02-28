@@ -22,18 +22,18 @@
 var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([et2_IResizeable],
 {
 	attributes: {
-		'mode': {
+		mode: {
 			'name': 'Mode',
 			'description': 'One of {ascii|simple|extended|advanced}',
 			'default': '',
 			'type': 'string'
 		},
-		'height': {
+		height: {
 			'name': 'Height',
 			'default': et2_no_init,
 			'type': 'string'
 		},
-		'width': {
+		width: {
 			'name': 'Width',
 			'default': et2_no_init,
 			'type': 'string'
@@ -214,7 +214,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 		this.options.readonly = _value;
 		if(this.options.readonly)
 		{
-			this.editor.remove();
+			if (this. editor) this.editor.remove();
 			this.htmlNode = jQuery(document.createElement(this.options.readonly ? "div" : "textarea"))
 				.css('height', this.options.height)
 				.addClass('et2_textbox_ro');
@@ -227,7 +227,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			if(!this.editor)
 			{
 				this.htmlNode = jQuery(document.createElement("textarea"))
-					.css('height', this.options.height)
+					.css('height', (this.options.editable_height ? this.options.editable_height : this.options.height))
 					.val(value);
 				this.setDOMNode(this.htmlNode[0]);
 				this.init_editor();

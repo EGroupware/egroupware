@@ -41,6 +41,11 @@ var et2_editableWidget = (function(){ "use strict"; return et2_inputWidget.exten
 			type: "string",
 			default: et2_no_init,
 			description: "Additional parameters passed to save_callback"
+		},
+		editable_height: {
+			name: "Editable height",
+			description: "Set height for widget while in edit mode",
+			type: "string"
 		}
 	},
 

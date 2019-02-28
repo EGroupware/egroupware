@@ -8,7 +8,6 @@
  * Copyright (C) 2000, 2001 Joseph Engo
  * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
  * @package api
- * @version $Id$
  */
 
 namespace EGroupware\Api;
@@ -852,10 +851,14 @@ class Translation
 	 * @param string|boolean $from charset $data is in or False if it should be detected
 	 * @param string|boolean $to charset to convert to or False for the system-charset the converted string
 	 * @param boolean $check_to_from =true internal to bypass all charset replacements
-	 * @return string|array converted string(s) from $data
+	 * @return NULL|string|array converted string(s) from $data
 	 */
 	static function convert($data,$from=False,$to=False,$check_to_from=true)
 	{
+		if (empty($data))
+		{
+			return $data;	// no need for any charset conversation (NULL, '', 0, '0', array())
+		}
 		if ($check_to_from)
 		{
 			if ($from) $from = strtolower($from);
@@ -901,6 +904,9 @@ class Translation
 				case 'windows-1250':
 					$from = 'iso-8859-2';
 					break;
+				case 'windows-1253':
+					$from = 'iso-8859-7';
+					break;
 				case 'windows-1257':
 					$from = 'iso-8859-13';
 					break;
@@ -923,7 +929,8 @@ class Translation
 		{
 			foreach($data as $key => $str)
 			{
-				$ret[$key] = self::convert($str,$from,$to,false);	// false = bypass the above checks, as they are already done
+				$ret[$key] = empty($str) ? $str :	// do NOT convert null to '' (other empty values need no conversation too)
+					self::convert($str,$from,$to,false);	// false = bypass the above checks, as they are already done
 			}
 			return $ret;
 		}

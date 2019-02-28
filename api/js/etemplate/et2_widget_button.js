@@ -168,7 +168,7 @@ var et2_button = (function(){ "use strict"; return et2_baseWidget.extend([et2_II
 		if(!this.isInTree() || !this.options.background_image && this.image == null) return;
 
 		if (typeof _image == 'undefined')
-			_image = this.options.readonly ? this.options.ro_image : this.options.image;
+			_image = this.options.readonly ? (this.options.ro_image || this.options.image) : this.options.image;
 
 		// Silently blank for percentages instead of warning about missing image - use a progress widget
 		if(_image.match(/^[0-9]+\%$/))
@@ -225,7 +225,7 @@ var et2_button = (function(){ "use strict"; return et2_baseWidget.extend([et2_II
 		{
 			this.options.readonly = _ro;
 
-			if (this.image)
+			if (this.options.image || this.options.ro_image)
 			{
 				this.update_image();
 			}

@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0129834b90f9bcd8da3186b801634419",
+    "content-hash": "2b00ad598700859fd0600f10fd8967bb",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -113,6 +113,22 @@
                 "web",
                 "zoom"
             ]
+        },
+        {
+            "name": "bower-asset/diff2html",
+            "version": "v2.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rtfpessoa/diff2html.git",
+                "reference": "2512e72f32b709a3dc0615a2d5b32183dd0b3b6a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rtfpessoa/diff2html/zipball/2512e72f32b709a3dc0615a2d5b32183dd0b3b6a",
+                "reference": "2512e72f32b709a3dc0615a2d5b32183dd0b3b6a",
+                "shasum": ""
+            },
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/fastclick",
@@ -771,15 +787,12 @@
                 "php": ">=5.4.0"
             },
             "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "AGPL-3.0"
             ],
             "description": "Z-Push is an open-source application to synchronize ActiveSync compatible devices",
             "homepage": "http://z-push.org/",
-            "support": {
-                "source": "https://github.com/EGroupware/z-push/tree/master",
-                "issues": "https://github.com/EGroupware/z-push/issues"
-            },
             "time": "2019-02-11T19:26:21+00:00"
         },
         {
@@ -1685,6 +1698,37 @@
             "description": "Support classes not tied to Horde but is used by it. These classes can be used outside of Horde as well."
         },
         {
+            "name": "pear-pear.horde.org/Horde_Text_Diff",
+            "version": "2.2.0",
+            "dist": {
+                "type": "file",
+                "url": "https://pear.horde.org/get/Horde_Text_Diff-2.2.0.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "pear-pear.horde.org/horde_exception": "<3.0.0.0",
+                "pear-pear.horde.org/horde_util": "<3.0.0.0",
+                "php": "<8.0.0.0"
+            },
+            "replace": {
+                "pear-horde/horde_text_diff": "== 2.2.0.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "LGPL-2.1"
+            ],
+            "description": "A text-based diff engine and renderers for multiple diff output formats."
+        },
+        {
             "name": "pear-pear.horde.org/Horde_Text_Flowed",
             "version": "2.0.3",
             "dist": {
@@ -2210,39 +2254,6 @@
             "time": "2015-07-20T20:05:12+00:00"
         },
         {
-            "name": "pear/text_diff",
-            "version": "v1.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pear/Text_Diff.git",
-                "reference": "d12474df481bb89f52b02ba0e3fae504ce5d6d51"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pear/Text_Diff/zipball/d12474df481bb89f52b02ba0e3fae504ce5d6d51",
-                "reference": "d12474df481bb89f52b02ba0e3fae504ce5d6d51",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "Text/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "description": "Engine for performing and rendering text diffs",
-            "homepage": "http://pear.php.net/package/Text_Diff",
-            "keywords": [
-                "PEAR",
-                "diff",
-                "text"
-            ],
-            "time": "2017-03-08T15:07:59+00:00"
-        },
-        {
             "name": "pear/xml_feed_parser",
             "version": "v1.0.5",
             "source": {
@@ -2347,9 +2358,8 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "php": 15,
         "egroupware/collabora": 20,
         "egroupware/projectmanager": 20,
         "egroupware/tracker": 20,
@@ -2357,7 +2367,7 @@
         "egroupware/activesync": 20,
         "egroupware/adodb-php": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.0,<=8.0.0alpha1",
