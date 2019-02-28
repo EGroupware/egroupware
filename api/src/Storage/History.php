@@ -266,8 +266,8 @@ class History
 			))
 			{
 				// Larger text stored with full old / new value - calculate diff and just send that
-				$diff = new \Text_Diff('auto', array(explode("\n",$row['history_old_value']), explode("\n",$row['history_new_value'])));
-				$renderer = new \Text_Diff_Renderer_unified();
+				$diff = new \Horde_Text_Diff('auto', array(explode("\n",$row['history_old_value']), explode("\n",$row['history_new_value'])));
+				$renderer = new \Horde_Text_Diff_Renderer_Unified();
 				$row['history_new_value'] = $renderer->render($diff);
 				$row['history_old_value'] = Tracking::DIFF_MARKER;
 			}
