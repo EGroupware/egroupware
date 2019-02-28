@@ -473,7 +473,9 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 				widget = undefined;
 				value = _data['share_email'];
 			}
-			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined')
+			// Get widget from list, unless it needs a diff widget
+			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined' && i < self.NEW_VALUE ||
+					i >= self.NEW_VALUE &&!self._needsDiffWidget(_data['status'], _data[self.columns[self.OLD_VALUE].id]))
 			{
 				widget = self.fields[_data.status].widget;
 				if(!widget._children.length)
@@ -585,6 +587,12 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 				// in order to update the height with new value
 				this.div.trigger('resize.' +this.options.value.app + this.options.value.id);
 			}
+		}
+		// Resize diff widgets to match new space
+		if(this.dataview)
+		{
+			var columns = this.dataview.getColumnMgr().columnWidths;
+			jQuery('.diff', this.div).parent().width(columns[this.NEW_VALUE] + columns[this.OLD_VALUE]);
 		}
 	}
 });}).call(this);

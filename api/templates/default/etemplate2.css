@@ -585,6 +585,9 @@ div.diff {
 .diff .d2h-file-diff {
 	overflow-x: hidden;
 }
+.ui-widget-content .d2h-code-line-ctn {
+	white-space:normal;
+}
 .ui-widget-content .d2h-file-diff {
 	overflow-x: visible;
 	overflow-y: visible;

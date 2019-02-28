@@ -82,7 +82,7 @@ var et2_diff = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		jQuery('<span class="ui-icon ui-icon-circle-plus">&nbsp;</span>')
 			.appendTo(self.div)
 			.css("cursor", "pointer")
-			.click({diff: view, div: self.div}, function(e) {
+			.click({diff: view, div: self.div, label: self.options.label}, function(e) {
 				var diff = e.data.diff;
 				var div = e.data.div;
 				self.un_minify(diff);
@@ -90,11 +90,18 @@ var et2_diff = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 					.append(diff);
 
 				dialog_div.dialog({
-					title: self.options.label,
+					title: e.data.label,
 					width: 'auto',
 					autoResize: true,
 					modal: true,
 					buttons: [{text: self.egw().lang('ok'), click: function() {jQuery(this).dialog("close");}}],
+					open: function() {
+						if(jQuery(this).parent().height() > jQuery(window).height())
+						{
+							jQuery(this).height(jQuery(window).height() *0.7);
+						}
+						jQuery(this).dialog({position: "center"});
+					},
 					close: function(event, ui) {
 						// Need to destroy the dialog, etemplate widget needs divs back where they were
 						dialog_div.dialog("destroy");
