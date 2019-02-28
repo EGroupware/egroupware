@@ -70,7 +70,6 @@
 		"pear/auth_sasl": "*",
 		"pear/xml_feed_parser": "^1.0.5",
 		"pear/log": "*",
-		"pear/text_diff": "^1.2.2",
 		"bower-asset/jquery": "^1.12.4",
 		"bower-asset/fastclick":"1.0.*",
 		"bower-asset/jquery-touchswipe": "1.6.*",
