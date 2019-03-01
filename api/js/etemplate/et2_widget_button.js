@@ -196,7 +196,7 @@ var et2_button = (function(){ "use strict"; return et2_baseWidget.extend([et2_II
 				{
 					this.image.attr("src", src);
 				}
-				else if (this.options.background_image)
+				else if (this.options.background_image && this.btn)
 				{
 					this.btn.css("background-image","url("+src+")");
 					this.btn.addClass('et2_button_with_image');
