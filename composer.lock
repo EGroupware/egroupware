@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b00ad598700859fd0600f10fd8967bb",
+    "content-hash": "6b5e48d4c7a990d1eefd0217bc9f1bec",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -787,12 +787,15 @@
                 "php": ">=5.4.0"
             },
             "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "AGPL-3.0"
             ],
             "description": "Z-Push is an open-source application to synchronize ActiveSync compatible devices",
             "homepage": "http://z-push.org/",
+            "support": {
+                "source": "https://github.com/EGroupware/z-push/tree/master",
+                "issues": "https://github.com/EGroupware/z-push/issues"
+            },
             "time": "2019-02-11T19:26:21+00:00"
         },
         {

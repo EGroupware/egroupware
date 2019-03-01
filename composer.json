@@ -75,7 +75,6 @@
 		"bower-asset/jquery-touchswipe": "1.6.*",
 		"bower-asset/jquery-ui":"=1.11.2",
 		"bower-asset/cropper":"2.3.*",
-		"bower-asset/diff2html": "^2.7",
 		"npm-asset/as-jqplot" : "1.0.*",
 		"npm-asset/gridster":"0.5.*",
 		"adldap2/adldap2": "=4.0.4",
@@ -87,7 +86,7 @@
 		"egroupware/z-push-dev": "self.version",
 		"egroupware/activesync": "self.version",
 		"egroupware/adodb-php": "self.version",
-		"pear-pear.horde.org/Horde_Text_Diff": "^2.2",
+		"pear-pear.horde.org/horde_text_diff": "^2.2",
 		"bower-asset/diff2html": "^2.7"
 	},
 	"require-dev": {
