@@ -260,6 +260,17 @@ class History
 					$row[$field] = explode(Tracking::ONE2N_SEPERATOR,$row[$field]);
 				}
 			}
+			if ($row['history_old_value'] !== Tracking::DIFF_MARKER && (
+				static::needs_diff($row['history_status'], $row['history_old_value']) ||
+				static::needs_diff($row['history_status'], $row['history_old_value'])
+			))
+			{
+				// Larger text stored with full old / new value - calculate diff and just send that
+				$diff = new \Horde_Text_Diff('auto', array(explode("\n",$row['history_old_value']), explode("\n",$row['history_new_value'])));
+				$renderer = new \Horde_Text_Diff_Renderer_Unified();
+				$row['history_new_value'] = $renderer->render($diff);
+				$row['history_old_value'] = Tracking::DIFF_MARKER;
+			}
 			// Get information needed for proper display
 			if($row['history_appname'] == 'filemanager')
 			{
@@ -296,5 +307,13 @@ class History
 		), array(), true);	// true = no permission check
 
 		return $total;
+	}
+
+	protected static function needs_diff($name, $value)
+	{
+		return $name == 'note' ||	// Addressbook
+			strpos($name, 'description') !== false ||	// Calendar, Records, Timesheet, ProjectManager, Resources
+			$name == 'De' ||	// Tracker, InfoLog
+			($value && (strlen($value) > 200 || strstr($value, "\n") !== FALSE));
 	}
 }

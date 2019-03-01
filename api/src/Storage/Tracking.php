@@ -18,6 +18,7 @@ use EGroupware\Api;
 // explicitly reference classes still in phpgwapi or otherwise outside api
 use notifications;
 
+
 /**
  * Abstract base class for trackering:
  *  - logging all modifications of an entry
@@ -188,6 +189,12 @@ abstract class Tracking
 	 *
 	 */
 	const ONE2N_SEPERATOR = '~|~';
+
+	/**
+	 * Marker for change stored as unified diff, not old/new value
+	 * Diff is in the new value, marker in old value
+	 */
+	const DIFF_MARKER = '***diff***';
 
 	/**
 	 * Config name for custom notification message
@@ -450,6 +457,19 @@ abstract class Tracking
 					//error_log(__METHOD__."() $i: historylog->add('$name',data['$this->id_field']={$data[$this->id_field]},".array2string($added[$i]).','.array2string($removed[$i]));
 					$this->historylog->add($name,$data[$this->id_field],$added[$i],$removed[$i]);
 				}
+			}
+			else if (is_string($data[$name]) && is_string($old[$name]) && (
+					strpos($data[$name], PHP_EOL) !== FALSE || strpos($old[$name], PHP_EOL) !== FALSE))
+			{
+				// Multiline string, just store diff
+				$diff = new \Horde_Text_Diff('auto', array(explode("\n",$old[$name]), explode("\n",$data[$name])));
+				$renderer = new \Horde_Text_Diff_Renderer_Unified();
+				$this->historylog->add(
+					$status,
+					$data[$this->id_field],
+					$renderer->render($diff),
+					self::DIFF_MARKER
+				);
 			}
 			else
 			{

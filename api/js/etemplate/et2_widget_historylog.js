@@ -473,7 +473,9 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 				widget = undefined;
 				value = _data['share_email'];
 			}
-			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined')
+			// Get widget from list, unless it needs a diff widget
+			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined' && (i < self.NEW_VALUE ||
+					i >= self.NEW_VALUE &&!self._needsDiffWidget(_data['status'], _data[self.columns[self.OLD_VALUE].id])))
 			{
 				widget = self.fields[_data.status].widget;
 				if(!widget._children.length)
@@ -500,19 +502,11 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			{
 				// Large text value - span both columns, and show a nice diff
 				var jthis = jQuery(this);
-				if(i == self.NEW_VALUE)
+				if(i === self.NEW_VALUE)
 				{
 					// Diff widget
 					widget = self.diff.widget;
 					nodes = self.diff.nodes.clone();
-
-					if (typeof _data[self.columns[self.NEW_VALUE].id] == "string")
-					{
-						value = _data[self.columns[i].id] = {
-							'old': _data[self.columns[i+1].id],
-							'new': value
-						};
-					}
 
 					// Skip column 4
 					jthis.parents("td").attr("colspan", 2)
@@ -571,7 +565,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			this.egw().debug("warn", "Crazy diff value", value);
 			return false;
 		}
-		return columnName == 'note' || columnName == 'description' || (value && (value.length > 50 || value.match(/\n/g)));
+		return value=== '***diff***';
 	},
 
 	resize: function (_height)
@@ -593,6 +587,12 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 				// in order to update the height with new value
 				this.div.trigger('resize.' +this.options.value.app + this.options.value.id);
 			}
+		}
+		// Resize diff widgets to match new space
+		if(this.dataview)
+		{
+			var columns = this.dataview.getColumnMgr().columnWidths;
+			jQuery('.et2_diff', this.div).parent().width(columns[this.NEW_VALUE] + columns[this.OLD_VALUE]);
 		}
 	}
 });}).call(this);
