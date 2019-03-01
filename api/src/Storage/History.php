@@ -311,7 +311,9 @@ class History
 
 	protected static function needs_diff($name, $value)
 	{
-		return $name == 'note' || $name == 'description' ||
-			($value && (strlen($value) > 50 || strstr($value, "\n") !== FALSE));
+		return $name == 'note' ||	// Addressbook
+			strpos($name, 'description') !== false ||	// Calendar, Records, Timesheet, ProjectManager, Resources
+			$name == 'De' ||	// Tracker, InfoLog
+			($value && (strlen($value) > 200 || strstr($value, "\n") !== FALSE));
 	}
 }

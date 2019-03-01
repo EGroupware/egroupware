@@ -516,3 +516,57 @@ function api_upgrade17_1_004()
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.005';
 }
 
+
+/**
+ * Store multiline history content as diff
+ *
+ * Benchmark on Ralf's Laptop (OS X)
+ * - auto/Native: 66k rows in 15mins
+ *
+ * @return string new version
+ */
+function api_upgrade17_1_005()
+{
+	$renderer = new Horde_Text_Diff_Renderer_Unified();
+	$start = microtime(true);
+	$junk_size = 200;	// 2*200*160KB = 64MB
+	$total = $saved = 0;
+	do {
+		$n = 0;
+		foreach($GLOBALS['egw_setup']->db->select('egw_history_log', 'history_id,history_new_value,history_old_value', array(
+			'history_old_value != '.$GLOBALS['egw_setup']->db->quote(Api\Storage\Tracking::DIFF_MARKER),
+			// if one is empty, no need to store diff
+			"(LENGTH(history_new_value) > 0 AND LENGTH(history_old_value) > 0)",
+			"(history_status LIKE '%description' OR history_status='De' OR history_status='note'".
+				" OR LENGTH(history_new_value) > 200 OR LENGTH(history_old_value) > 200)",
+		), __LINE__, __FILE__, 0, 'ORDER BY history_id', false, $junk_size) as $row)
+		{
+			// use OS diff command for big texts, if available
+			$diff = new Horde_Text_Diff('auto', array(
+				explode("\n", $row['history_old_value']),
+				explode("\n", $row['history_new_value']),
+			));
+			$diff_str = $renderer->render($diff);
+
+			$saved += strlen($row['history_old_value'])+strlen($row['history_new_value'])
+				-strlen($diff_str)-strlen(Api\Storage\Tracking::DIFF_MARKER);
+
+			$GLOBALS['egw_setup']->db->update('egw_history_log', array(
+				'history_new_value' => $diff_str,
+				'history_old_value' => Api\Storage\Tracking::DIFF_MARKER,
+			), array(
+				'history_id' => $row['history_id'],
+			), __LINE__, __FILE__);
+
+			$n++;
+			$total++;
+		}
+	}
+	while($n == $junk_size);
+	$saved = number_format($saved/(1024.0*1024.0), 1);
+	$time = number_format((microtime(true)-$start)/60, 1);
+	echo "$total history-records converted in $time minutes to diff with a total of $saved MB saved\n";
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.006';
+}
+
