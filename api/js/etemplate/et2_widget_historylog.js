@@ -474,8 +474,8 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 				value = _data['share_email'];
 			}
 			// Get widget from list, unless it needs a diff widget
-			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined' && i < self.NEW_VALUE ||
-					i >= self.NEW_VALUE &&!self._needsDiffWidget(_data['status'], _data[self.columns[self.OLD_VALUE].id]))
+			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined' && (i < self.NEW_VALUE ||
+					i >= self.NEW_VALUE &&!self._needsDiffWidget(_data['status'], _data[self.columns[self.OLD_VALUE].id])))
 			{
 				widget = self.fields[_data.status].widget;
 				if(!widget._children.length)
