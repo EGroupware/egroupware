@@ -567,22 +567,22 @@ for printing
 /**
  * Diff widget
  */
-div.diff {
+div.et2_diff {
 	width: 100%;
 }
-.diff thead,
+.et2_diff thead,
 .author,
 .d2h-file-header,
 .d2h-file-info,
 .d2h-info,
-.diff .d2h-cntx
+.et2_diff .d2h-cntx
 {
   display: none;
 }
 .d2h-file-diff {
 	white-space:normal;
 }
-.diff .d2h-file-diff {
+.et2_diff .d2h-file-diff {
 	overflow-x: hidden;
 }
 .ui-widget-content .d2h-code-line-ctn {
@@ -592,10 +592,23 @@ div.diff {
 	overflow-x: visible;
 	overflow-y: visible;
 }
-.diff .ui-icon {
+.et2_diff .ui-icon {
   margin-top: -16px;
   float: right;
 }
+.et2_diff .d2h-del, .et2_diff.d2h-del.d2h-change, .et2_diff .d2h-file-diff .d2h-del.d2h-change  {
+	background-color: #ffeef0;
+}
+.et2_diff .d2h-code-line del, .et2_diff .d2h-code-side-line del {
+	background-color: #fdb8c0;
+}
+.et2_diff .d2h-ins, .et2_diff.d2h-ins.d2h-change, .et2_diff .d2h-file-diff .d2h-ins.d2h-change {
+	background-color: #e6ffed;
+}
+.et2_diff .d2h-code-line ins, .et2_diff .d2h-code-side-line ins {
+	background-color: #acf2bd;
+}
+
 /** Display a loading icon **/
 .loading {
   background-position: center;

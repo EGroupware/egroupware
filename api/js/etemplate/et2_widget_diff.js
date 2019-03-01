@@ -47,7 +47,7 @@ var et2_diff = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		// included via etemplate2.css
 		//this.egw().includeCSS('../../../vendor/bower-asset/dist/dist2html.css');
 		this.div = document.createElement("div");
-		jQuery(this.div).addClass('diff');
+		jQuery(this.div).addClass('et2_diff');
 	},
 
 	set_value: function(value) {
@@ -100,7 +100,7 @@ var et2_diff = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 						{
 							jQuery(this).height(jQuery(window).height() *0.7);
 						}
-						jQuery(this).dialog({position: "center"});
+						jQuery(this).addClass('et2_diff').dialog({position: "center"});
 					},
 					close: function(event, ui) {
 						// Need to destroy the dialog, etemplate widget needs divs back where they were
