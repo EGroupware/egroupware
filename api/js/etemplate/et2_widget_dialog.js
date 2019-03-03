@@ -657,10 +657,11 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 	 * @param {widget} _senders widget that has been clicked
 	 * @param {String} _dialogMsg message shows in dialog box
 	 * @param {String} _titleMsg message shows as a title of the dialog box
+	 * @param {Bool} _postSubmit true: use postSubmit instead of submit
 	 *
 	 * @description submit the form contents including the button that has been pressed
 	 */
-	confirm: function(_senders,_dialogMsg, _titleMsg)
+	confirm: function(_senders,_dialogMsg, _titleMsg, _postSubmit)
 	{
 		var senders = _senders;
 		var buttonId = _senders.id;
@@ -671,7 +672,14 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 		{
 			if (button_id == et2_dialog.YES_BUTTON )
 			{
-				senders.getRoot().getInstanceManager().submit(buttonId);
+				if (_postSubmit)
+				{
+					senders.getRoot().getInstanceManager().postSubmit(buttonId);
+				}
+				else
+				{
+					senders.getRoot().getInstanceManager().submit(buttonId);
+				}
 			}
 		};
 		et2_dialog.show_dialog(callbackDialog, egw.lang(dialogMsg), egw.lang(titleMsg), {},
@@ -771,7 +779,7 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 						.text(response.data)
 						.appendTo(log);
 
-					totals.failed++
+					totals.failed++;
 
 					// Ask to retry / ignore / abort
 					et2_createWidget("dialog", {

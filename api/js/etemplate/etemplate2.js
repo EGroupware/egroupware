@@ -670,6 +670,54 @@ etemplate2.prototype.autocomplete_fixer = function ()
 	}
 };
 
+etemplate2.prototype._set_button = function (button, values)
+{
+	if (typeof button == 'string')
+	{
+		button = this.widgetContainer.getWidgetById(button);
+	}
+	// Button parameter used for submit buttons in datagrid
+	// TODO: This should probably go in nextmatch's getValues(), along with selected rows somehow.
+	// I'm just not sure how.
+	if(button && !values.button)
+	{
+		values.button = {};
+		var path = button.getPath();
+		var target = values;
+		for(var i = 0; i < path.length; i++)
+		{
+			if(!values[path[i]]) values[path[i]] = {};
+			target = values[path[i]];
+		}
+		if(target != values || button.id.indexOf('[') != -1 && path.length == 0)
+		{
+			var indexes = button.id.split('[');
+			if (indexes.length > 1)
+			{
+				indexes = [indexes.shift(), indexes.join('[')];
+				indexes[1] = indexes[1].substring(0,indexes[1].length-1);
+				var children = indexes[1].split('][');
+				if(children.length)
+				{
+					indexes = jQuery.merge([indexes[0]], children);
+				}
+			}
+			var idx = '';
+			for(var i = 0; i < indexes.length; i++)
+			{
+				idx = indexes[i];
+				if(!target[idx] || target[idx]['$row_cont']) target[idx] = i < indexes.length -1 ? {} : true;
+				target = target[idx];
+			}
+		}
+		else if (typeof values.button == 'undefined' || jQuery.isEmptyObject(values.button))
+		{
+			delete values.button;
+			values[button.id] = true;
+		}
+	}
+};
+
 /**
  * Submit form via ajax
  *
@@ -712,50 +760,7 @@ etemplate2.prototype.submit = function(button, async, no_validation, _container)
 
 	if (canSubmit)
 	{
-		if (typeof button == 'string')
-		{
-			button = this.widgetContainer.getWidgetById(button);
-		}
-		// Button parameter used for submit buttons in datagrid
-		// TODO: This should probably go in nextmatch's getValues(), along with selected rows somehow.
-		// I'm just not sure how.
-		if(button && !values.button)
-		{
-			values.button = {};
-			var path = button.getPath();
-			var target = values;
-			for(var i = 0; i < path.length; i++)
-			{
-				if(!values[path[i]]) values[path[i]] = {};
-				target = values[path[i]];
-			}
-			if(target != values || button.id.indexOf('[') != -1 && path.length == 0)
-			{
-				var indexes = button.id.split('[');
-				if (indexes.length > 1)
-				{
-					indexes = [indexes.shift(), indexes.join('[')];
-					indexes[1] = indexes[1].substring(0,indexes[1].length-1);
-					var children = indexes[1].split('][');
-					if(children.length)
-					{
-						indexes = jQuery.merge([indexes[0]], children);
-					}
-				}
-				var idx = '';
-				for(var i = 0; i < indexes.length; i++)
-				{
-					idx = indexes[i];
-					if(!target[idx] || target[idx]['$row_cont']) target[idx] = i < indexes.length -1 ? {} : true;
-					target = target[idx];
-				}
-			}
-			else if (typeof values.button == 'undefined' || jQuery.isEmptyObject(values.button))
-			{
-				delete values.button;
-				values[button.id] = true;
-			}
-		}
+		if (button) this._set_button(button, values);
 
 		// Create the request object
 		if (this.menuaction)
@@ -786,8 +791,10 @@ etemplate2.prototype.submit = function(button, async, no_validation, _container)
  *
  * Only use this one if you need it, use the ajax submit() instead.
  * It ensures eT2 session continues to exist on server by unbinding unload handler and rebinding it.
+ *
+ * @param {(et2_button|string)} button button widget or string with id
  */
-etemplate2.prototype.postSubmit = function()
+etemplate2.prototype.postSubmit = function(button)
 {
 	// Get the form values
 	var values = this.getValues(this.widgetContainer);
@@ -803,6 +810,8 @@ etemplate2.prototype.postSubmit = function()
 
 	if (canSubmit)
 	{
+		if (button) this._set_button(button, values);
+
 		// unbind our session-destroy handler, as we are submitting
 		this.unbind_unload();
 
