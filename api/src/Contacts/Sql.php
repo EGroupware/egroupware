@@ -532,7 +532,7 @@ class Sql extends Api\Storage
 					$filter['private'] = 0;
 				}
 				// if multiple addressbooks (incl. current owner) are searched, we need full acl filter
-				elseif(count($filter['owner']) > 1)
+				elseif(is_array($filter['owner']) && count($filter['owner']) > 1)
 				{
 					$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 						" OR contact_private=0 AND $this->table_name.contact_owner IN (".
