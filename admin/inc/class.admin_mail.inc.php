@@ -840,7 +840,7 @@ class admin_mail
 					$content['acc_id'] = key($content['accounts']);
 					//error_log(__METHOD__.__LINE__.'.'.array2string($content['acc_id']));
 					// test if the "to be selected" acccount is imap or not
-					if (count($content['accounts'])>1 && Mail\Account::is_multiple($content['acc_id']))
+					if (is_array($content['accounts']) && count($content['accounts'])>1 && Mail\Account::is_multiple($content['acc_id']))
 					{
 						try {
 							$account = Mail\Account::read($content['acc_id'], $content['called_for']);
@@ -1334,7 +1334,7 @@ class admin_mail
 		}
 		Framework::message($msg ? $msg : (string)$_GET['msg'], $msg_type);
 
-		if (count($content['account_id']) > 1)
+		if (is_array($content['account_id']) && count($content['account_id']) > 1)
 		{
 			$tpl->setElementAttribute('account_id', 'multiple', true);
 			$readonlys['button[multiple]'] = true;
