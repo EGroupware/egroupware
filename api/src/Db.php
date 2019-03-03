@@ -1567,7 +1567,7 @@ class Db
 					$maxlength = in_array($column_definitions[$col]['type'], array('varchar','ascii')) ? $column_definitions[$col]['precision'] : null;
 				}
 				// dont use IN ( ), if there's only one value, it's slower for MySQL
-				if (is_array($data) && count($data) == 1)
+				if (is_array($data) && count($data) <= 1)
 				{
 					$data = array_shift($data);
 				}
