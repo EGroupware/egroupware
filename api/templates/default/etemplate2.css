@@ -2123,6 +2123,7 @@ div.ui-dialog div.ui-dialog-content > div[id] {
 }
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image, .nextmatch_header_row .et2_button {
 	width: 24px;
+	height: 24px;
 	background-position: center;
 	background-size: 16px 16px;
 	padding-left: 0;

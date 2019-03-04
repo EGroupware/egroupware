@@ -2569,7 +2569,7 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 			{
 				definition = egw.preference('nextmatch-export-definition', this.nextmatch.egw().getAppName());
 			}
-			var button = et2_createWidget("buttononly", {id: "export", "label": "Export", image:"phpgwapi/filesave"}, this);
+			var button = et2_createWidget("buttononly", {id: "export", "statustext": "Export", image: "download", "background_image": true}, this);
 			jQuery(button.getDOMNode())
 				.click(this.nextmatch, function(event) {
 					egw_openWindowCentered2( egw.link('/index.php', {
