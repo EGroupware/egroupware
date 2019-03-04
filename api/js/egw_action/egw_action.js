@@ -865,9 +865,9 @@ function egwActionManager(_parent, _id)
  */
 function egwActionImplementation()
 {
-	this.doRegisterAction = function() {throw "Abstract function call: registerAction"};
-	this.doUnregisterAction = function() {throw "Abstract function call: unregisterAction"};
-	this.doExecuteImplementation = function() {throw "Abstract function call: executeImplementation"};
+	this.doRegisterAction = function() {throw "Abstract function call: registerAction";};
+	this.doUnregisterAction = function() {throw "Abstract function call: unregisterAction";};
+	this.doExecuteImplementation = function() {throw "Abstract function call: executeImplementation";};
 	this.type = "";
 }
 
@@ -952,7 +952,7 @@ egwActionLink.prototype.set_actionId = function(_value)
 	this.actionObj = this.manager.getActionById(_value);
 
 	if (!this.actionObj)
-		throw "Action object with id '"+_value+"' does not exist!"
+		throw "Action object with id '"+_value+"' does not exist!";
 };
 
 /** egwActionObject Object **/
@@ -1104,7 +1104,7 @@ egwActionObject.prototype.addObject = function(_id, _interface, _flags)
  *
  * @param {number} _index Position where the object will be inserted, "false" will add it
  * 	to the end of the list.
- * @param {string}/object _id Id of the object which will be created or the object
+ * @param {string|object} _id Id of the object which will be created or the object
  * 	that will be added.
  * @param {object} _iface if _id was an string, _iface defines the interface which
  * 	will be connected to the newly generated object.
@@ -1142,7 +1142,7 @@ egwActionObject.prototype.insertObject = function(_index, _id, _iface, _flags)
 	}
 	else
 	{
-		throw "Error while adding new element to the ActionObjects!"
+		throw "Error while adding new element to the ActionObjects!";
 	}
 
 	return obj;
@@ -2116,8 +2116,8 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 			(
 				(actionLinks[k].actionObj.allowOnMultiple === true) ||
 				(actionLinks[k].actionObj.allowOnMultiple == "only" && _objs.length > 1) ||
-				(actionLinks[k].actionObj.allowOnMultiple == false && _objs.length == 1 ||
-				(typeof actionLinks[k].actionObj.allowOnMultiple === 'number' && _objs.length == actionLinks[k].actionObj.allowOnMultiple))
+				(actionLinks[k].actionObj.allowOnMultiple == false && _objs.length === 1) ||
+				(typeof actionLinks[k].actionObj.allowOnMultiple === 'number' && _objs.length == actionLinks[k].actionObj.allowOnMultiple)
 			);
 		if (!egwIsMobile()) actionLinks[k].actionObj.hideOnMobile = false;
 		actionLinks[k].visible = actionLinks[k].visible && !actionLinks[k].actionObj.hideOnMobile &&
