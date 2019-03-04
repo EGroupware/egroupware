@@ -7270,10 +7270,10 @@ div[id^="filemanager-"] .search.nm-mob-header,
 form[id^="filemanager-"] .search.nm-mob-header,
 div[id^="filemanager-"] .dialogHeadbar,
 form[id^="filemanager-"] .dialogHeadbar {
-  background-color: #F9d730;
+  background-color: #CC6633;
 }
 #filemanager_sidebox_header {
-  border-left: 6px solid #F9d730 !important;
+  border-left: 6px solid #CC6633 !important;
 }
 div[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
