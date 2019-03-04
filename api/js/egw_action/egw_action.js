@@ -662,9 +662,9 @@ egwAction.prototype.set_enabled = function(_value)
 };
 
 /**
- * The allowOnMultiple property may be true, false or "only"
+ * The allowOnMultiple property may be true, false, "only" (> 1) or number of select, eg. 2
  *
- * @param {(boolean|string)} _value
+ * @param {(boolean|string|number)} _value
  */
 egwAction.prototype.set_allowOnMultiple = function(_value)
 {
@@ -2116,7 +2116,8 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 			(
 				(actionLinks[k].actionObj.allowOnMultiple === true) ||
 				(actionLinks[k].actionObj.allowOnMultiple == "only" && _objs.length > 1) ||
-				(actionLinks[k].actionObj.allowOnMultiple == false && _objs.length == 1)
+				(actionLinks[k].actionObj.allowOnMultiple == false && _objs.length == 1 ||
+				(typeof actionLinks[k].actionObj.allowOnMultiple === 'number' && _objs.length == actionLinks[k].actionObj.allowOnMultiple))
 			);
 		if (!egwIsMobile()) actionLinks[k].actionObj.hideOnMobile = false;
 		actionLinks[k].visible = actionLinks[k].visible && !actionLinks[k].actionObj.hideOnMobile &&
