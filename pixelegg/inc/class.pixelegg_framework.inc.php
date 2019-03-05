@@ -177,10 +177,6 @@ div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,
 .ui-datepicker div.ui-timepicker-div div.ui_tpicker_hour_slider span.ui-slider-handle,
 .ui-widget-header {background-color: $sidebox_color;}
 ";
-				if ($GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'traditional')
-				{
-					$ret['app_css'] .= ".dialogFooterToolbar {background-color: $color !important;}";
-				}
 			}
 			else
 			/* Mobile theme custom colors*/

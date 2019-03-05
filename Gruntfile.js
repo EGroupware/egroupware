@@ -353,23 +353,6 @@ module.exports = function (grunt) {
 						"api/templates/default/print.css",
 						"pixelegg/print.css"
 					],
-					"pixelegg/css/traditional.min.css": [
-						"api/js/jquery/chosen/chosen.css",
-						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
-						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/jpicker/css/jPicker-1.1.6.min.css",
-						"api/js/jquery/jquery-ui-timepicker-addon.css",
-						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
-						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
-						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
-						"api/js/etemplate/lib/jsdifflib/diffview.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/etemplate2.css",
-						"pixelegg/css/traditional.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css",
-						"api/templates/default/css/flags.css"
-					],
 					"pixelegg/css/modern.min.css": [
 						"api/js/jquery/chosen/chosen.css",
 						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",

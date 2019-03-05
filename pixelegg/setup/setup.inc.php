@@ -26,7 +26,8 @@ $GLOBALS['egw_info']['template']['pixelegg']['windowed'] = true;
 
 // specify (different) labels for default themes
 $GLOBALS['egw_info']['template']['pixelegg']['themes'] = array(
-	'pixelegg' => 'Standard',
+	'modern' => 'Standard',
+	'pixelegg' => 'Monochrome',
 	'mobile'   => 'Compact',
 );
 
