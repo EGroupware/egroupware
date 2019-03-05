@@ -4,13 +4,13 @@
 <overlay>
 	<template id ="admin.mainscreen_message.mainscreen" version="18.1">
 		<vbox>
-			<htmlarea id="html_mainscreen" height="500" width="100%" disabled="!$cont[html]"/>
+			<htmlarea id="html_mainscreen" height="500" width="100%" disabled="!$cont[html]" valid_children="+body[style]"/>
 			<textbox id="text_mainscreen" disabled="$cont[html]" rows="25" cols="70" class="et2_fullWidth" multiline="true" height="500"/>
 		</vbox>
 	</template>
 	<template id ="admin.mainscreen_message.loginscreen" version="18.1">
 		<vbox>
-			<htmlarea id="html_loginscreen" height="500" width="100%" disabled="!$cont[html]"/>
+			<htmlarea id="html_loginscreen" height="500" width="100%" disabled="!$cont[html]" valid_children="+body[style]"/>
 			<textbox id="text_loginscreen" disabled="$cont[html]" rows="25" cols="70" class="et2_fullWidth" multiline="true" height="500"/>
 		</vbox>
 	</template>

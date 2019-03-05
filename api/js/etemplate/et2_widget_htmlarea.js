@@ -70,9 +70,15 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 		},
 		statusbar: {
 			name: "Status bar",
-			description: "Enable/disable status bar on the bottom of ediotr",
+			description: "Enable/disable status bar on the bottom of editor",
 			type: "boolean",
 			default: true
+		},
+		valid_children: {
+			name: "Valid children",
+			description: "Enables to control what child tag is allowed or not allowed of the present tag. For instance: +body[style], makes style tag allowed inside body",
+			type: "string",
+			default: ""
 		}
 	},
 
@@ -143,6 +149,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			images_upload_handler: this.options.images_upload_handler,
 			init_instance_callback : jQuery.proxy(this._instanceIsReady, this),
 			auto_focus: false,
+			valid_children : this.options.valid_children,
 			plugins: [
 				"print searchreplace autolink directionality ",
 				"visualblocks visualchars image link media template ",
