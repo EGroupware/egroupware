@@ -6581,6 +6581,19 @@ form[id^="wiki-"] .dialogHeadbar {
 #wiki_sidebox_header {
   border-left: 6px solid #797979 !important;
 }
+div[id^="ranking-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="ranking-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="ranking-"] .plus_button,
+form[id^="ranking-"] .plus_button,
+div[id^="ranking-"] .search.nm-mob-header,
+form[id^="ranking-"] .search.nm-mob-header,
+div[id^="ranking-"] .dialogHeadbar,
+form[id^="ranking-"] .dialogHeadbar {
+  background-color: #404040;
+}
+#ranking_sidebox_header {
+  border-left: 6px solid #404040 !important;
+}
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(51, 51, 153, 0.3);
 }
@@ -6711,6 +6724,17 @@ form[id^="wiki-"] .dialogHeadbar {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #wiki-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-bottom: 4px solid;
   border-bottom-color: #797979;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #ranking_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(64, 64, 64, 0.3);
+}
+#ranking_sidebox_header {
+  border-left: 4px solid #404040 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #ranking-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #404040;
   border-bottom-width: 4px !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {

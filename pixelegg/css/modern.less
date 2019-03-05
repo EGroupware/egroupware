@@ -124,7 +124,7 @@
 	border-bottom-color: @tracker-color;
 	border-bottom-width: 4px !important;
 }
-//Wiki
+// Wiki
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #wiki_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
 	background-color: fade(@wiki-color, 30%);
 }
@@ -134,7 +134,16 @@
 	border-bottom-color: @wiki-color;
 	border-bottom-width: 4px !important;
 }
-
+// Ranking
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #ranking_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@ranking-color, 30%);
+}
+#ranking_sidebox_header {border-left:4px solid @ranking-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #ranking-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @ranking-color;
+	border-bottom-width: 4px !important;
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {filter: none;}
 
 #egw_fw_sidebar {
