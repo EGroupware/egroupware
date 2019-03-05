@@ -353,7 +353,7 @@ module.exports = function (grunt) {
 						"api/templates/default/print.css",
 						"pixelegg/print.css"
 					],
-					"pixelegg/css/modern.min.css": [
+					"pixelegg/css/monochrome.min.css": [
 						"api/js/jquery/chosen/chosen.css",
 						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
@@ -367,7 +367,7 @@ module.exports = function (grunt) {
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
-						"pixelegg/css/modern.css",
+						"pixelegg/css/monochrome.css",
 						"api/templates/default/print.css",
 						"pixelegg/print.css"
 					]
