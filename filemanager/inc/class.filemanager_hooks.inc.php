@@ -236,15 +236,21 @@ class filemanager_hooks
 		}
 		$editorLink = self::getEditorLink();
 		$mimes = array();
-		foreach ($editorLink['mime'] as $mime => $value)
-		{
-			$mimes[$mime] = lang('%1 file', strtoupper($value['ext'])).' ('.$mime.')';
 
-			if (!empty($value['extra_extensions']))
+		if (is_array($editorLink['mime'])){
+
+			foreach ($editorLink['mime'] as $mime => $value)
 			{
-				$mimes[$mime] .= ', '.strtoupper(implode(', ', $value['extra_extensions']));
+				$mimes[$mime] = lang('%1 file', strtoupper($value['ext'])).' ('.$mime.')';
+
+				if (!empty($value['extra_extensions']))
+				{
+					$mimes[$mime] .= ', '.strtoupper(implode(', ', $value['extra_extensions']));
+				}
 			}
+
 		}
+
 		asort($mimes);
 		$settings += array (
 			'sections.2' => array(
