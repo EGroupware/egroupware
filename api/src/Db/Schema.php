@@ -165,16 +165,22 @@ class Schema
 			$columns = implode('-',$columns);
 			if ($ignore_length_limit) $columns = preg_replace('/\(\d+\)/', '', $columns);
 		}
-		foreach($indexs as $index)
-		{
-			if (is_array($index))
+		
+		if(is_array($indexs)){
+
+			foreach($indexs as $index)
 			{
-				unset($index['options']);
-				$index = implode('-',$index);
+				if (is_array($index))
+				{
+					unset($index['options']);
+					$index = implode('-',$index);
+				}
+				if ($ignore_length_limit) $index = preg_replace('/\(\d+\)/', '', $index);
+				if ($columns == $index) return true;
 			}
-			if ($ignore_length_limit) $index = preg_replace('/\(\d+\)/', '', $index);
-			if ($columns == $index) return true;
+
 		}
+
 		return false;
 	}
 
