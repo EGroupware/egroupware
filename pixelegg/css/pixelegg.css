@@ -1,4 +1,15 @@
 /**
+ * EGroupware: pixelegg standard theme
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+/**
  * EGroupware: Stylite Pixelegg template
  *
  * Please do NOT change css-files directly, instead change less-files and compile them!
@@ -6406,3 +6417,392 @@ span.egw_tutorial_title {
 /*@import "../less/layout_nextmatch.less";*/
 /*@import "../less/layout_footer.less";*/
 /*@import "../less/layout_dialog.less";*/
+/**
+ *
+ * Mobile FW - Applications colors
+ *
+ * Please do NOT change *.css directly, instead change *.less and compile it!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package Mobile Framework
+ * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
+ */
+div[id^="addressbook-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="addressbook-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="addressbook-"] .plus_button,
+form[id^="addressbook-"] .plus_button,
+div[id^="addressbook-"] .search.nm-mob-header,
+form[id^="addressbook-"] .search.nm-mob-header,
+div[id^="addressbook-"] .dialogHeadbar,
+form[id^="addressbook-"] .dialogHeadbar {
+  background-color: #333399;
+}
+#addressbook_sidebox_header {
+  border-left: 6px solid #333399 !important;
+}
+div[id^="admin-"] .plus_button,
+form[id^="admin-"] .plus_button,
+div[id^="admin-"] .search.nm-mob-header,
+form[id^="admin-"] .search.nm-mob-header,
+div[id^="admin-"] .dialogHeadbar,
+form[id^="admin-"] .dialogHeadbar {
+  background-color: #0073ce;
+}
+#admin_sidebox_header {
+  border-left: 6px solid #0073ce !important;
+}
+div[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="bookmarks-"] .plus_button,
+form[id^="bookmarks-"] .plus_button,
+div[id^="bookmarks-"] .search.nm-mob-header,
+form[id^="bookmarks-"] .search.nm-mob-header,
+div[id^="bookmarks-"] .dialogHeadbar,
+form[id^="bookmarks-"] .dialogHeadbar {
+  background-color: #db0087;
+}
+#bookmarks_sidebox_header {
+  border-left: 6px solid #db0087 !important;
+}
+div[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="calendar-"] .plus_button,
+form[id^="calendar-"] .plus_button,
+div[id^="calendar-"] .search.nm-mob-header,
+form[id^="calendar-"] .search.nm-mob-header,
+div[id^="calendar-"] .dialogHeadbar,
+form[id^="calendar-"] .dialogHeadbar {
+  background-color: #CC0033;
+}
+#calendar_sidebox_header {
+  border-left: 6px solid #CC0033 !important;
+}
+div[id^="filemanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="filemanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="filemanager-"] .plus_button,
+form[id^="filemanager-"] .plus_button,
+div[id^="filemanager-"] .search.nm-mob-header,
+form[id^="filemanager-"] .search.nm-mob-header,
+div[id^="filemanager-"] .dialogHeadbar,
+form[id^="filemanager-"] .dialogHeadbar {
+  background-color: #CC6633;
+}
+#filemanager_sidebox_header {
+  border-left: 6px solid #CC6633 !important;
+}
+div[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="infolog-"] .plus_button,
+form[id^="infolog-"] .plus_button,
+div[id^="infolog-"] .search.nm-mob-header,
+form[id^="infolog-"] .search.nm-mob-header,
+div[id^="infolog-"] .dialogHeadbar,
+form[id^="infolog-"] .dialogHeadbar {
+  background-color: #FFB936;
+}
+#infolog_sidebox_header {
+  border-left: 6px solid #FFB936 !important;
+}
+div[id^="mail-"] .plus_button,
+form[id^="mail-"] .plus_button,
+div[id^="mail-"] .search.nm-mob-header,
+form[id^="mail-"] .search.nm-mob-header,
+div[id^="mail-"] .dialogHeadbar,
+form[id^="mail-"] .dialogHeadbar {
+  background-color: #47b2d4;
+}
+#mail_sidebox_header {
+  border-left: 6px solid #47b2d4 !important;
+}
+div[id^="projectmanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="projectmanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="projectmanager-"] .plus_button,
+form[id^="projectmanager-"] .plus_button,
+div[id^="projectmanager-"] .search.nm-mob-header,
+form[id^="projectmanager-"] .search.nm-mob-header,
+div[id^="projectmanager-"] .dialogHeadbar,
+form[id^="projectmanager-"] .dialogHeadbar {
+  background-color: #75de27;
+}
+#projectmanager_sidebox_header {
+  border-left: 6px solid #75de27 !important;
+}
+div[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="resources-"] .plus_button,
+form[id^="resources-"] .plus_button,
+div[id^="resources-"] .search.nm-mob-header,
+form[id^="resources-"] .search.nm-mob-header,
+div[id^="resources-"] .dialogHeadbar,
+form[id^="resources-"] .dialogHeadbar {
+  background-color: #009966;
+}
+#resources_sidebox_header {
+  border-left: 6px solid #009966 !important;
+}
+div[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="timesheet-"] .plus_button,
+form[id^="timesheet-"] .plus_button,
+div[id^="timesheet-"] .search.nm-mob-header,
+form[id^="timesheet-"] .search.nm-mob-header,
+div[id^="timesheet-"] .dialogHeadbar,
+form[id^="timesheet-"] .dialogHeadbar {
+  background-color: #9d15ea;
+}
+#timesheet_sidebox_header {
+  border-left: 6px solid #9d15ea !important;
+}
+div[id^="tracker-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="tracker-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="tracker-"] .plus_button,
+form[id^="tracker-"] .plus_button,
+div[id^="tracker-"] .search.nm-mob-header,
+form[id^="tracker-"] .search.nm-mob-header,
+div[id^="tracker-"] .dialogHeadbar,
+form[id^="tracker-"] .dialogHeadbar {
+  background-color: #006666;
+}
+#tracker_sidebox_header {
+  border-left: 6px solid #006666 !important;
+}
+div[id^="wiki-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="wiki-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="wiki-"] .plus_button,
+form[id^="wiki-"] .plus_button,
+div[id^="wiki-"] .search.nm-mob-header,
+form[id^="wiki-"] .search.nm-mob-header,
+div[id^="wiki-"] .dialogHeadbar,
+form[id^="wiki-"] .dialogHeadbar {
+  background-color: #797979;
+}
+#wiki_sidebox_header {
+  border-left: 6px solid #797979 !important;
+}
+div[id^="ranking-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="ranking-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="ranking-"] .plus_button,
+form[id^="ranking-"] .plus_button,
+div[id^="ranking-"] .search.nm-mob-header,
+form[id^="ranking-"] .search.nm-mob-header,
+div[id^="ranking-"] .dialogHeadbar,
+form[id^="ranking-"] .dialogHeadbar {
+  background-color: #404040;
+}
+#ranking_sidebox_header {
+  border-left: 6px solid #404040 !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(51, 51, 153, 0.3);
+}
+#addressbook_sidebox_header {
+  border-left: 4px solid #333399 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #addressbook-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #333399;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #admin_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(0, 115, 206, 0.3);
+}
+#admin_sidebox_header {
+  border-left: 4px solid #0073ce !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #admin-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #0073ce;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #bookmarks_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(219, 0, 135, 0.3);
+}
+#bookmarks_sidebox_header {
+  border-left: 4px solid #db0087 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #bookmarks-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #db0087;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #calendar_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(204, 0, 51, 0.3);
+}
+#calendar_sidebox_header {
+  border-left: 4px solid #CC0033 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #calendar-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #CC0033;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(204, 102, 51, 0.3);
+}
+#filemanager_sidebox_header {
+  border-left: 4px solid #CC6633 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #filemanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #CC6633;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #infolog_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(255, 185, 54, 0.3);
+}
+#infolog_sidebox_header {
+  border-left: 4px solid #FFB936 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #infolog-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #FFB936;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(71, 178, 212, 0.3);
+}
+#mail_sidebox_header {
+  border-left: 4px solid #47b2d4 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #mail-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #47b2d4;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #projectmanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(117, 222, 39, 0.3);
+}
+#projectmanager_sidebox_header {
+  border-left: 4px solid #75de27 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #projectmanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #75de27;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #resources_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(0, 153, 102, 0.3);
+}
+#resources_sidebox_header {
+  border-left: 4px solid #009966 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #resources-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #009966;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #timesheet_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(157, 21, 234, 0.3);
+}
+#timesheet_sidebox_header {
+  border-left: 4px solid #9d15ea !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #timesheet-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #9d15ea;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #tracker_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(0, 102, 102, 0.3);
+}
+#tracker_sidebox_header {
+  border-left: 4px solid #006666 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #tracker-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #006666;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #wiki_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(121, 121, 121, 0.3);
+}
+#wiki_sidebox_header {
+  border-left: 4px solid #797979 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #wiki-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #797979;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #ranking_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(64, 64, 64, 0.3);
+}
+#ranking_sidebox_header {
+  border-left: 4px solid #404040 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #ranking-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-bottom: 4px solid;
+  border-bottom-color: #404040;
+  border-bottom-width: 4px !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
+  filter: none;
+}
+#egw_fw_sidebar #egw_fw_sidemenu.egw_fw_sidebar_toggleOn .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active {
+  margin-left: 3px;
+  padding-top: 3px;
+}
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_icon {
+  filter: none;
+}
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active {
+  border-top-left-radius: 5px;
+}
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active:hover {
+  border-radius: 5px 0px 0px 0px;
+}
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active:active {
+  border-radius: 5px 0px 0px 0px;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active {
+  padding-bottom: 4px;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_cats {
+  background-image: url(../images/topmenu_items/category.svg);
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_password {
+  background-image: url(../images/topmenu_items/password.svg);
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_search {
+  background-image: url(../images/topmenu_items/search.svg);
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_prefs {
+  background-image: url(../images/topmenu_items/setup.svg);
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home {
+  background-image: url(../images/topmenu_items/home.svg);
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_acl {
+  background-image: url(../images/topmenu_items/access.svg);
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {
+  background-color: transparent;
+  background-image: none;
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
+  filter: none;
+}
+.egwGridView_scrollarea tr.row_category > td:first-child,
+.select-cat li,
+.et2_selectbox .chzn-results li,
+.et2_selectbox ul.chzn-choices li.search-choice {
+  border-left: 4px solid transparent;
+}
+.et2_taglist_category span[class*="cat_"] {
+  width: 4px;
+}
+.et2_taglist_category.et2_taglist_single span[class*="cat_"] {
+  height: 1.5em;
+  margin-bottom: -6px;
+  position: absolute;
+  margin-left: -8px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+img.et2_button_icon[src*="svg"],
+img.et2_button_icon[src*="svg"]:hover {
+  background-color: transparent;
+  background-image: none;
+}

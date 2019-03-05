@@ -1,53 +1,227 @@
 /**
- * EGroupware: Stylite Pixelegg template
+ * EGroupware: pixelegg standard theme
  *
  * Please do NOT change css-files directly, instead change less-files and compile them!
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @author Hadi Nategh <hn@stylite.de>
  * @package pixelegg
  * @version $Id$
  */
-/**
- * addapted from orginal styles.php
- */
-/**
- * All app_* files are now again in $app/templates/default/app.less&css and will be included independent
- *
- * If some settings are Pixelegg template specific, please create $app/templates/pixelegg.less&css
- * files AND include ../default/app.less from there
-*/
-/**
- * not sure about these files, in general it is not a good idea to replace
- * files from other projects, was we need to update them regulary.
- * Would be a lot better to include their css files and only overwrite
- * neccesarry settings
- */
-@import "../less/etemplate2.less";
-// print ausgabe
-@import "../less/print.less";
-@import "../less/jquery-ui.less";
-@import "../less/magicsuggest.less";
-@import "../less/traditional.less";
+@import "monochrome.less";
+@import "../less/app_colors.less";
 
-/**
- * layout_*.less files are Pixelegg template specific
- */
-@import "../less/layout_definitions.less";
+// Addressbook
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@addressbook-color, 30%);
+}
+#addressbook_sidebox_header {border-left:4px solid @addressbook-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #addressbook-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @addressbook-color;
+	border-bottom-width: 4px !important;
+}
+// Admin
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #admin_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@admin-color, 30%);
+}
+#admin_sidebox_header {border-left:4px solid @admin-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #admin-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @admin-color;
+	border-bottom-width: 4px !important;
+}
+// Bookmarks
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #bookmarks_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@bookmarks-color, 30%);
+}
+#bookmarks_sidebox_header {border-left:4px solid @bookmarks-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #bookmarks-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @bookmarks-color;
+	border-bottom-width: 4px !important;
+}
 
+// Calendar
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #calendar_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@calendar-color, 30%);
+}
+#calendar_sidebox_header {border-left:4px solid @calendar-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #calendar-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @calendar-color;
+	border-bottom-width: 4px !important;
+}
+// Filemanager
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@filemanager-color, 30%);
+}
+#filemanager_sidebox_header {border-left:4px solid @filemanager-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #filemanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @filemanager-color;
+	border-bottom-width: 4px !important;
+}
+// Infolog
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #infolog_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@infolog-color, 30%);
+}
+#infolog_sidebox_header {border-left:4px solid @infolog-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #infolog-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @infolog-color;
+	border-bottom-width: 4px !important;
+}
+// Mail
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@mail-color, 30%);
+}
+#mail_sidebox_header {border-left:4px solid @mail-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #mail-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @mail-color;
+	border-bottom-width: 4px !important;
+}
+// Projectmanager
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #projectmanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@projectmanager-color, 30%);
+}
+#projectmanager_sidebox_header {border-left:4px solid @projectmanager-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #projectmanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @projectmanager-color;
+	border-bottom-width: 4px !important;
+}
+// Resources
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #resources_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@resources-color, 30%);
+}
+#resources_sidebox_header {border-left:4px solid @resources-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #resources-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @resources-color;
+	border-bottom-width: 4px !important;
+}
 
-/*@import "../less/layout_buttons_global.less";*/
-/*@import "../less/layout_chosen.less";*/
-/*@import "../less/layout_messages.less";*/
-/*@import "../less/layout_content_elements.less";*/
-/*@import "../less/layout_table.less";*/
-/*@import "../less/layout_loginPage.less";*/
-/*@import "../less/layout_raster.less";*/
-/*@import "../less/layout_nextmatch.less";*/
-/*@import "../less/layout_footer.less";*/
-/*@import "../less/layout_dialog.less";*/
+// Timesheet
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #timesheet_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@timesheet-color, 30%);
+}
+#timesheet_sidebox_header {border-left:4px solid @timesheet-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #timesheet-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @timesheet-color;
+	border-bottom-width: 4px !important;
+}
+// Tracker
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #tracker_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@tracker-color, 30%);
+}
+#tracker_sidebox_header {border-left:4px solid @tracker-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #tracker-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @tracker-color;
+	border-bottom-width: 4px !important;
+}
+// Wiki
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #wiki_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@wiki-color, 30%);
+}
+#wiki_sidebox_header {border-left:4px solid @wiki-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #wiki-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @wiki-color;
+	border-bottom-width: 4px !important;
+}
+// Ranking
+#egw_fw_sidemenu.egw_fw_sidebar_toggleOn #ranking_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@ranking-color, 30%);
+}
+#ranking_sidebox_header {border-left:4px solid @ranking-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #ranking-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-bottom: 4px solid;
+	border-bottom-color: @ranking-color;
+	border-bottom-width: 4px !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {filter: none;}
 
-//
-//
-//
+#egw_fw_sidebar {
+	#egw_fw_sidemenu.egw_fw_sidebar_toggleOn {
+		.egw_fw_ui_scrollarea_outerdiv {
+			.egw_fw_ui_sidemenu_entry_header_active {
+				margin-left: 3px;
+				padding-top: 3px;
+			}
+		}
+	}
+	#egw_fw_sidemenu{
+		.egw_fw_ui_scrollarea_outerdiv {
+			.egw_fw_ui_sidemenu_entry_icon {
+				filter: none;
+			}
+			.egw_fw_ui_sidemenu_entry_header_active {
+				border-top-left-radius: 5px;
+				&:hover {
+					border-radius: 5px 0px 0px 0px;
+				}
+				&:active {
+					border-radius: 5px 0px 0px 0px;
+				}
+			}
+		}
+	}
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active {padding-bottom: 4px;}
+
+#egw_fw_header {
+	#egw_fw_topmenu {
+		#egw_fw_topmenu_items {
+			ul a#topmenu_cats {
+				background-image: url(../images/topmenu_items/category.svg);
+			}
+			ul a#topmenu_password {
+				background-image: url(../images/topmenu_items/password.svg);
+			}
+			ul a#topmenu_search {
+				background-image: url(../images/topmenu_items/search.svg);
+			}
+			ul a#topmenu_prefs {
+				background-image: url(../images/topmenu_items/setup.svg);
+			}
+			ul a#topmenu_home {
+				background-image: url(../images/topmenu_items/home.svg);
+			}
+			ul a#topmenu_acl {
+				background-image: url(../images/topmenu_items/access.svg);
+			}
+		}
+	}
+}
+
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {
+	background-color : transparent;
+	background-image: none;
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
+	filter: none;
+}
+
+.egwGridView_scrollarea tr.row_category > td:first-child, .select-cat li,
+.et2_selectbox .chzn-results li, .et2_selectbox ul.chzn-choices li.search-choice{
+    border-left: 4px solid transparent;
+}
+
+.et2_taglist_category span[class*="cat_"] {width:4px;}
+.et2_taglist_category.et2_taglist_single span[class*="cat_"] {
+    height: 1.5em;
+    margin-bottom: -6px;
+    position: absolute;
+    margin-left: -8px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+img.et2_button_icon[src*="svg"], img.et2_button_icon[src*="svg"]:hover {
+	background-color: transparent;
+	background-image: none;
+}
