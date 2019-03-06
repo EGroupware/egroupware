@@ -2172,7 +2172,6 @@ input[type=button]:hover {
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   background-color: #b3e4a6;
-  background-size: 16px 16px;
 }
 button.et2_button_text:active,
 input[type=button]:active {
