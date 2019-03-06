@@ -6,7 +6,7 @@
 	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
 <g>
 	<g>
-		<path fill="#696969" stroke="#E6E6E6" stroke-miterlimit="10" d="M19,2.5H5v27h22v-19h-8V2.5z M21.676,2.5H21v6h6V7.525L21.676,2.5z"
+		<path fill="#696969" d="M19,2.5H5v27h22v-19h-8V2.5z M21.676,2.5H21v6h6V7.525L21.676,2.5z"
 			/>
 	</g>
 </g>

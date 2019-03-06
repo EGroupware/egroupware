@@ -4,5 +4,5 @@
 <?xml-stylesheet type="text/css" href="../less/svg.css" ?>
 <svg version="1.1" id="pixelegg_arrow_down" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="18px" height="18px" viewBox="-12 -12 54 54" enable-background="new 0 0 64 64" xml:space="preserve">
-<polygon fill="#696969" stroke="#E6E6E6" stroke-miterlimit="10" points="1.75,5 1.749,5 16,28.49 30.251,5 "/>
+<polygon fill="#696969" points="1.75,5 1.749,5 16,28.49 30.251,5 "/>
 </svg>

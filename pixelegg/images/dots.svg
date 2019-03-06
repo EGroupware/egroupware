@@ -4,8 +4,8 @@
 <?xml-stylesheet type="text/css" href="../less/svg.css" ?>
 <svg version="1.1" id="pixelegg_dots" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
-<circle fill="#696969" stroke="#e6e6e6" stroke-miterlimit="10" cx="16.419" cy="4.306" r="3.458"/>
-<circle fill="#696969" stroke="#e6e6e6" stroke-miterlimit="10" cx="16.419" cy="15.94" r="3.458"/>
-<path fill="#696969" stroke="#e6e6e6" stroke-miterlimit="10" d="M19.864,27.721c0,1.911-1.55,3.459-3.459,3.459
+<circle fill="#696969" cx="16.419" cy="4.306" r="3.458"/>
+<circle fill="#696969" cx="16.419" cy="15.94" r="3.458"/>
+<path fill="#696969" d="M19.864,27.721c0,1.911-1.55,3.459-3.459,3.459
 	c-1.91,0-3.458-1.548-3.458-3.459c0-1.907,1.548-3.457,3.458-3.457C18.314,24.264,19.864,25.813,19.864,27.721z"/>
 </svg>

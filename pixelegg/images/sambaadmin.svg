@@ -4,7 +4,7 @@
 <?xml-stylesheet type="text/css" href="../less/svg.css" ?>
 <svg version="1.1" id="pixelegg_sambaadmin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
-<path fill-rule="evenodd" clip-rule="evenodd" fill="#696969" stroke="#E6E6E6" stroke-miterlimit="10" d="M27.5,9.5
+<path fill-rule="evenodd" clip-rule="evenodd" fill="#696969" d="M27.5,9.5
 	c-0.952,0-1.813-0.383-2.444-1H8v5h18h1c1.104,0,2,0.896,2,2v1v9v1c0,1.104-0.896,2-2,2h-1H6.944c-0.631,0.617-1.492,1-2.444,1
 	C2.567,29.5,1,27.934,1,26s1.567-3.5,3.5-3.5c0.952,0,1.813,0.383,2.444,1H24v-5H6H5c-1.104,0-2-0.896-2-2v-1v-9v-1
 	c0-1.104,0.896-2,2-2h1h19.056c0.631-0.617,1.492-1,2.444-1C29.433,2.5,31,4.067,31,6S29.433,9.5,27.5,9.5z"/>

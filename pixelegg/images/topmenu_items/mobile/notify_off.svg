@@ -30,5 +30,5 @@
 			C26.759,0.177,26.277,0,25.781,0L25.781,0z"/>
 	</g>
 </g>
-<line fill="none" stroke="#616463" stroke-linecap="round" stroke-linejoin="bevel" stroke-miterlimit="10" x1="1.594" y1="30.438" x2="30.531" y2="1.175"/>
+<line fill="none" stroke-linecap="round" stroke-linejoin="bevel" x1="1.594" y1="30.438" x2="30.531" y2="1.175"/>
 </svg>

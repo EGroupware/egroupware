@@ -7,13 +7,13 @@
 <g>
 	<g>
 		<g>
-			<path fill="#696969" stroke="#E6E6E6" stroke-miterlimit="10" d="M7.617,1.495c0,0-3.182-0.531-4.242,0.529
+			<path fill="#696969" d="M7.617,1.495c0,0-3.182-0.531-4.242,0.529
 				c-1.061,1.061-0.53,4.243-0.53,4.243L8.678,12.1l4.773-4.772L7.617,1.495z"/>
 		</g>
 	</g>
 	
-		<circle fill-rule="evenodd" clip-rule="evenodd" fill="#696969" stroke="#E6E6E6" stroke-width="0.75" stroke-miterlimit="10" cx="5.056" cy="3.889" r="1.125"/>
+		<circle fill-rule="evenodd" clip-rule="evenodd" fill="#696969" stroke-width="0.75" cx="5.056" cy="3.889" r="1.125"/>
 </g>
-<polygon fill-rule="evenodd" clip-rule="evenodd" fill="#696969" stroke="#E6E6E6" stroke-miterlimit="10" points="11.617,2.552 
+<polygon fill-rule="evenodd" clip-rule="evenodd" fill="#696969" points="11.617,2.552 
 	16.372,7.307 8.904,14.921 3.917,9.934 3.917,30.639 27.896,30.639 27.896,2.552 "/>
 </svg>

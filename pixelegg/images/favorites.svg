@@ -4,7 +4,7 @@
 <?xml-stylesheet type="text/css" href="../less/svg.css" ?>
 <svg version="1.1" id="pixelegg_star" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
-<path fill-rule="evenodd" clip-rule="evenodd" fill="#696969" stroke="#e6e6e6" stroke-miterlimit="10" d="M30.194,12.042
+<path fill-rule="evenodd" clip-rule="evenodd" fill="#696969" d="M30.194,12.042
 	c0,0-3.288,4.354-7.375,7.422c-0.003-0.012,0.003-0.008,0,0l0.277,0.908c1.671,5.563,1.774,9.413,1.774,9.413l-8.856-5.383
 	c0,0-0.012,0.005-0.015,0.005c-0.006,0-0.023-0.009-0.031-0.011c-4.323,2.991-8.84,5.389-8.84,5.389s0.366-4.755,2.034-10.31
 	c0.003,0.002,0.002-0.009,0,0c-4.084-3.063-7.357-7.433-7.357-7.433l9.758-0.887L16,1.396l4.436,9.758L30.194,12.042z"/>

@@ -6,13 +6,13 @@
 	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
 <g>
 	<g>
-		<path fill="#696969" stroke="#e6e6e6" stroke-width="0.75" stroke-miterlimit="10" d="M7.902,1v4.554h22.809V1H7.902z M7.902,18.275
+		<path fill="#696969" stroke-width="0.75" d="M7.902,1v4.554h22.809V1H7.902z M7.902,18.275
 			h22.809v-4.553H7.902V18.275z M7.902,31h22.809v-4.555H7.902V31z"/>
 	</g>
 </g>
 <g>
 	<g>
-		<path fill="#696969" stroke="#e6e6e6" stroke-width="0.75" stroke-miterlimit="10" d="M1,1v4.554h4.475V1H1z M1,18.275h4.475v-4.553
+		<path fill="#696969" stroke-width="0.75" d="M1,1v4.554h4.475V1H1z M1,18.275h4.475v-4.553
 			H1V18.275z M1,31h4.475v-4.555H1V31z"/>
 	</g>
 </g>
