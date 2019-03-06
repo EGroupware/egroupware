@@ -12,25 +12,20 @@
  * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
 @import (reference) "definitions.less";
-//##############################################################################################################
 
-/*dhtml Submenu ##########################################################*/
 div.dhtmlxMenu_egw_SubLevelArea_Polygon{
-
     table.dhtmlxMebu_SubLevelArea_Tbl{
-
         tr.sub_item  {
-
-
-                td.sub_item_icon{
-                                img[src*="svg"]{background-color: @gray_100; .gradient_vertical (@gray_90, @gray_90);}
-                                .img_filter_gray;
-                                }
-        }
-
-        tr.sub_item_selected  {
-            background-color: @egw_color_1_a !important;
-            background-image: none !important;}
-    }
-
+			td.sub_item_icon {
+				.img_filter_gray;
+			}
+		}
+		tr.sub_item_selected  {
+			td.sub_item_icon {
+				.img_filter_gray;
+			}
+			background-color: @egw_color_1_a !important;
+			background-image: none !important;
+		}
+	}
 }

@@ -28,7 +28,7 @@ $GLOBALS['egw_info'] = array(
 
 include '../header.inc.php';
 
-$content = json_encode(Api\Image::map(preg_match('/^[a-z0-9_-]+$/i',$_GET['template']) ? $_GET['template'] : null, $_GET['svg']),
+$content = json_encode(Api\Image::map(preg_match('/^[a-z0-9_-]+$/i',$_GET['template']) ? $_GET['template'] : null),
 	JSON_FORCE_OBJECT |	// export empty php-arrays as empty objects, not empty arrays
 	JSON_UNESCAPED_SLASHES | // do not escape slashes, smaller and better readable
 	(!empty($_GET['debug']) ? JSON_PRETTY_PRINT : 0));

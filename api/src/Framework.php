@@ -777,11 +777,9 @@ abstract class Framework extends Framework\Extra
 	 *
 	 * This is similar to the former common::navbar() method - though it returns the vars and does not place them in global scope.
 	 *
-	 * @param boolean $svg =false should svg images be returned or not:
-	 *	true: always return svg, false: never return svg (current default), null: browser dependent, see svg_usable()
 	 * @return array
 	 */
-	protected static function _get_navbar_apps($svg=false)
+	protected static function _get_navbar_apps()
 	{
 		$first = key($GLOBALS['egw_info']['user']['apps']);
 		if(is_array($GLOBALS['egw_info']['user']['apps']['admin']) && $first != 'admin')
@@ -833,7 +831,7 @@ abstract class Framework extends Framework\Extra
 
 				$icon = isset($data['icon']) ?  $data['icon'] : 'navbar';
 				$icon_app = isset($data['icon_app']) ? $data['icon_app'] : $app;
-				$apps[$app]['icon']  = $apps[$app]['icon_hover']  = Image::find($icon_app,Array($icon,'nonav'),'',$svg);
+				$apps[$app]['icon']  = $apps[$app]['icon_hover']  = Image::find($icon_app,Array($icon,'nonav'),'');
 			}
 		}
 
@@ -986,11 +984,7 @@ abstract class Framework extends Framework\Extra
 			));
 			self::includeJS('/api/images.php', array(
 				'template' => $GLOBALS['egw_info']['server']['template_set'],
-				'etag' => md5(json_encode(Image::map($GLOBALS['egw_info']['server']['template_set']))),
-				'svg' => Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'pixelegg' ||
-					// if theme was set to something else before and we default to "pixelegg", we need it here too
-					$GLOBALS['egw_info']['server']['template_set'] == 'pixelegg' &&
-						$GLOBALS['egw_info']['user']['preferences']['common']['theme'] !== 'monochrome',
+				'etag' => md5(json_encode(Image::map($GLOBALS['egw_info']['server']['template_set'])))
 			));
 			self::includeJS('/api/user.php', array(
 				'user' => $GLOBALS['egw_info']['user']['account_lid'],

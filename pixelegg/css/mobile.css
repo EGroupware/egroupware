@@ -71,11 +71,11 @@
   table.egwGridView_grid img.et2_appicon {
     /*filter grey*/
     filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(0%);
-    -o-filter: grayscale(100%);
-    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    -moz-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    -ms-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    -o-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
     /*filter: url(grayscale.svg);  Firefox 4+ */
     filter: gray;
     /* IE 6-9 */
@@ -174,14 +174,14 @@
     background-repeat: repeat-x;
   }
   img.et2_button_icon[src*="svg"]:hover {
-    background-color: #1aa200;
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMWFhMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMWFhMjAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-    background-image: -moz-linear-gradient(top, #1aa200, #1aa200);
-    background-image: -ms-linear-gradient(top, #1aa200, #1aa200);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1aa200), to(#1aa200));
-    background-image: -webkit-linear-gradient(top, #1aa200, #1aa200);
-    background-image: -o-linear-gradient(top, #1aa200, #1aa200);
-    background-image: linear-gradient(top, #1aa200, #1aa200);
+    background-color: #b3e4a6;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjNlNGE2IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYjNlNGE2IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+    background-image: -moz-linear-gradient(top, #b3e4a6, #b3e4a6);
+    background-image: -ms-linear-gradient(top, #b3e4a6, #b3e4a6);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b3e4a6), to(#b3e4a6));
+    background-image: -webkit-linear-gradient(top, #b3e4a6, #b3e4a6);
+    background-image: -o-linear-gradient(top, #b3e4a6, #b3e4a6);
+    background-image: linear-gradient(top, #b3e4a6, #b3e4a6);
     background-repeat: repeat-x;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -264,14 +264,14 @@
     fill: red !important;
   }
   span.et2_file_span:hover {
-    background-color: #189800 !important;
+    background-color: #ace29e !important;
     color: #000000 !important;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
   }
   span.et2_file_span:active {
-    background-color: #1aa200 !important;
+    background-color: #b3e4a6 !important;
   }
   div.et2_file input.et2_file_upload {
     background-color: #FFFFFF !important;
@@ -288,7 +288,7 @@
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    background-color: #1aa200 !important;
+    background-color: #b3e4a6 !important;
   }
   /* Gantt widget */
   .et2_gantt .gantt_task_line {
@@ -658,7 +658,7 @@
     -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-    background-color: #1aa200;
+    background-color: #b3e4a6;
   }
   /*################################################################
 *
@@ -735,7 +735,7 @@
   }
   .et2_dropdown button.ui-corner-left:active,
   .et2_dropdown button.ui-state-default:active {
-    background-color: #1aa200;
+    background-color: #b3e4a6;
   }
   .et2_dropdown button.ui-state-hover {
     background-color: #E6E6E6;
@@ -1253,7 +1253,7 @@ option:checked {
   background-color: transparent;
 }
 .ui-icon-close:active {
-  background-color: #fecc44 !important;
+  background-color: #fff0c7 !important;
 }
 span.ui-icon-close {
   margin-top: 0px;
@@ -1284,7 +1284,7 @@ span.ui-icon-close {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
-  background-color: #fecc44 !important;
+  background-color: #fff0c7 !important;
 }
 /*###########################################*/
 /*Menu */
@@ -1522,20 +1522,20 @@ div#ui-datepicker-div {
   background-color: #679FD2;
 }
 .ui-datepicker button.ui-datepicker-current .ui-state-hover {
-  background-color: #1aa200 !important;
+  background-color: #b3e4a6 !important;
 }
 .ui-datepicker button.ui-datepicker-current .ui-state-hover:active {
-  background-color: #1aa200;
+  background-color: #b3e4a6;
 }
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current:active {
-  background-color: #1aa200;
+  background-color: #b3e4a6;
 }
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-close:hover {
-  background-color: #f5b301 !important;
+  background-color: #ffdb7a !important;
   color: #000000;
 }
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-close:active {
-  background-color: #fecc44 !important;
+  background-color: #fff0c7 !important;
   color: #373737;
 }
 .ui-widget-overlay,
@@ -2160,7 +2160,7 @@ input[type=button]:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: #1aa200;
+  background-color: #b3e4a6;
   background-size: 16px 16px;
 }
 button.et2_button_text:active,
@@ -2272,7 +2272,7 @@ button[id="calendar-edit_button[delete]"]:hover,
 button[id="timesheet-edit_button[delete]"]:hover,
 button[id="displayToolbar-delete"]:hover,
 button.et2_button_delete:hover {
-  background-color: #b81f00 !important;
+  background-color: #ff8f78 !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2309,7 +2309,7 @@ button[id="calendar-edit_button[delete]"]:active,
 button[id="timesheet-edit_button[delete]"]:active,
 button[id="displayToolbar-delete"]:active,
 button.et2_button_delete:active {
-  background-color: #e12500 !important;
+  background-color: #ffb1a1 !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2362,7 +2362,7 @@ button[id*="apply"]:hover,
 button[id*="copy"]:hover,
 button[id*="edit_button[edit]"]:hover,
 button.et2_button:hover {
-  background-color: #189800;
+  background-color: #ace29e;
   color: #000000;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -2373,7 +2373,7 @@ button[id*="apply"]:active,
 button[id*="copy"]:active,
 button[id*="edit_button[edit]"]:active,
 button.et2_button:active {
-  background-color: #1aa200;
+  background-color: #b3e4a6;
 }
 button[id*="add"]:not([id*='addressbook']) img[url*="svg"] {
   background-color: #b4b4b4 !important;
@@ -2388,17 +2388,17 @@ button[id*="add"]:not([id*='addressbook']) img[url*="svg"] {
   fill: red !important;
 }
 button[id*="add"]:not([id*='addressbook']):hover {
-  background-color: #189800 !important;
+  background-color: #ace29e !important;
   color: #000000 !important;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
 }
 button[id*="add"]:not([id*='addressbook']):active {
-  background-color: #1aa200 !important;
+  background-color: #b3e4a6 !important;
 }
 button#filemanager-select_button[ok]:active {
-  background-color: #1aa200;
+  background-color: #b3e4a6;
 }
 #passwordchange {
   background-image: url('../images/cancel.png') !important;
@@ -2428,13 +2428,13 @@ button#filemanager-select_button[ok]:active {
   height: 24px;
 }
 #passwordchange:hover {
-  background-color: #1aa200 !important;
+  background-color: #b3e4a6 !important;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 #passwordchange:active {
-  background-color: #1aa200 !important;
+  background-color: #b3e4a6 !important;
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -2450,7 +2450,7 @@ button#cancel:hover,
 #cancel:hover,
 button.et2_button_cancel:hover,
 button.et2_button_question:hover {
-  background-color: #f5b301 !important;
+  background-color: #ffdb7a !important;
   color: #000000;
 }
 button[id*="cancel"]:active,
@@ -2459,7 +2459,7 @@ button#cancel:active,
 #cancel:active,
 button.et2_button_cancel:active,
 button.et2_button_question:active {
-  background-color: #fecc44 !important;
+  background-color: #fff0c7 !important;
   color: #373737;
 }
 /* et2_box_widget ###*/
@@ -2495,7 +2495,7 @@ button#cancel {
 }
 button[id="cancel"]:hover,
 button#cancel:hover {
-  background-color: #f5b301 !important;
+  background-color: #ffdb7a !important;
   color: #000000;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -2503,7 +2503,7 @@ button#cancel:hover {
 }
 button[id="cancel"]:active,
 button#cancel:active {
-  background-color: #fecc44 !important;
+  background-color: #fff0c7 !important;
   color: #000000;
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -2537,13 +2537,13 @@ button#cancel:active {
   height: 24px;
 }
 #passwordcancel:hover {
-  background-color: #f5b301 !important;
+  background-color: #ffdb7a !important;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 #passwordcancel:active {
-  background-color: #fecc44 !important;
+  background-color: #fff0c7 !important;
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -2600,7 +2600,7 @@ button[id="add"] {
   height: 24px;
 }
 button[id="add"]:active {
-  background-color: #1aa200 !important;
+  background-color: #b3e4a6 !important;
 }
 /*Button Ende #######################################################*/
 /**
@@ -2949,34 +2949,33 @@ table.table_passord_change td:first-child {
  * @package pixelegg
  * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
-/*dhtml Submenu ##########################################################*/
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
   /*filter grey*/
   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-  -webkit-filter: grayscale(100%);
-  -moz-filter: grayscale(100%);
-  -ms-filter: grayscale(0%);
-  -o-filter: grayscale(100%);
-  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -moz-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -ms-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -o-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
   /*filter: url(grayscale.svg);  Firefox 4+ */
   filter: gray;
   /* IE 6-9 */
 }
-div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {
-  background-color: #000000;
-  background-color: #1e1e1e;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMUUxRTFFIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMUUxRTFFIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #1E1E1E, #1E1E1E);
-  background-image: -ms-linear-gradient(top, #1E1E1E, #1E1E1E);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1E1E1E), to(#1E1E1E));
-  background-image: -webkit-linear-gradient(top, #1E1E1E, #1E1E1E);
-  background-image: -o-linear-gradient(top, #1E1E1E, #1E1E1E);
-  background-image: linear-gradient(top, #1E1E1E, #1E1E1E);
-  background-repeat: repeat-x;
-}
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected {
   background-color: #ffc200 !important;
   background-image: none !important;
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected td.sub_item_icon {
+  /*filter grey*/
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+  -webkit-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -moz-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -ms-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -o-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  /*filter: url(grayscale.svg);  Firefox 4+ */
+  filter: gray;
+  /* IE 6-9 */
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -3212,11 +3211,11 @@ td.etemplate_tab_active.th {
   /*filter grey*/
   /*filter grey*/
   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-  -webkit-filter: grayscale(100%);
-  -moz-filter: grayscale(100%);
-  -ms-filter: grayscale(0%);
-  -o-filter: grayscale(100%);
-  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -moz-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -ms-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -o-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
   /*filter: url(grayscale.svg);  Firefox 4+ */
   filter: gray;
   /* IE 6-9 */
@@ -3604,7 +3603,7 @@ td.lettersearch {
 }
 #egwpopup input#egwpopup_ok_button:active,
 #egwpopup button#desktop_perms:active {
-  background-color: #1aa200 !important;
+  background-color: #b3e4a6 !important;
 }
 #egwpopup #egwpopup_list::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -4151,7 +4150,7 @@ td.message span.message {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home {
   margin-left: 0px;
-  background-image: url(../images/topmenu_items/home.png);
+  background-image: url(../images/topmenu_items/home.svg);
   background-repeat: no-repeat;
   background-size: 16px;
   padding-left: 20px;
@@ -4161,43 +4160,43 @@ td.message span.message {
   background-repeat: no-repeat;
   background-size: 16px;
   padding-left: 20px;
-  background-image: url(../images/topmenu_items/setup.png);
+  background-image: url(../images/topmenu_items/setup.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_acl {
   background-repeat: no-repeat;
   background-size: 16px;
   padding-left: 20px;
-  background-image: url(../images/topmenu_items/access.png);
+  background-image: url(../images/topmenu_items/access.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_cats {
   background-repeat: no-repeat;
   background-size: 16px;
   padding-left: 20px;
-  background-image: url(../images/topmenu_items/category.png);
+  background-image: url(../images/topmenu_items/category.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_password {
   background-repeat: no-repeat;
   background-size: 16px;
   padding-left: 20px;
-  background-image: url(../images/topmenu_items/password.png);
+  background-image: url(../images/topmenu_items/password.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_manual {
   background-repeat: no-repeat;
   background-size: 16px;
   padding-left: 20px;
-  background-image: url(../images/topmenu_items/help.png);
+  background-image: url(../images/topmenu_items/help.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_search {
   background-repeat: no-repeat;
   background-size: 16px;
   padding-left: 20px;
-  background-image: url(../images/topmenu_items/search.png);
+  background-image: url(../images/topmenu_items/search.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_logout {
   background-repeat: no-repeat;
   background-size: 16px;
   padding-left: 20px;
-  background-image: url(../images/topmenu_items/logout.png);
+  background-image: url(../images/topmenu_items/logout.svg);
 }
 /* ###################################################
    Slide Effekt
@@ -4365,11 +4364,11 @@ td.message span.message {
   margin: 5px 1px 0 1em;
   /*filter grey*/
   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-  -webkit-filter: grayscale(100%);
-  -moz-filter: grayscale(100%);
-  -ms-filter: grayscale(0%);
-  -o-filter: grayscale(100%);
-  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -moz-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -ms-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -o-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
   /*filter: url(grayscale.svg);  Firefox 4+ */
   filter: gray;
   /* IE 6-9 */
@@ -4773,11 +4772,11 @@ td.message span.message {
   /*filter grey*/
   /*filter grey*/
   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-  -webkit-filter: grayscale(100%);
-  -moz-filter: grayscale(100%);
-  -ms-filter: grayscale(0%);
-  -o-filter: grayscale(100%);
-  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -moz-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -ms-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -o-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
   /*filter: url(grayscale.svg);  Firefox 4+ */
   filter: gray;
   /* IE 6-9 */
@@ -5451,11 +5450,11 @@ div#topmenu_info_update img {
 .standartTreeImage {
   /*filter grey*/
   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-  -webkit-filter: grayscale(100%);
-  -moz-filter: grayscale(100%);
-  -ms-filter: grayscale(0%);
-  -o-filter: grayscale(100%);
-  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -moz-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -ms-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  -o-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+  filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
   /*filter: url(grayscale.svg);  Firefox 4+ */
   filter: gray;
   /* IE 6-9 */
@@ -6757,11 +6756,11 @@ span.egw_tutorial_title {
     margin: 5px 1px 0 1em;
     /*filter grey*/
     filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(0%);
-    -o-filter: grayscale(100%);
-    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    -moz-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    -ms-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    -o-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
     /*filter: url(grayscale.svg);  Firefox 4+ */
     filter: gray;
     /* IE 6-9 */
@@ -7084,11 +7083,11 @@ span.egw_tutorial_title {
     /*filter grey*/
     /*filter grey*/
     filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(0%);
-    -o-filter: grayscale(100%);
-    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    -moz-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    -ms-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    -o-filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
+    filter: grayscale(100%) brightness(100%) contrast(1%) saturate(0%);
     /*filter: url(grayscale.svg);  Firefox 4+ */
     filter: gray;
     /* IE 6-9 */

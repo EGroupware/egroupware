@@ -789,7 +789,7 @@ abstract class Ajax extends Api\Framework
 	 */
 	public function navbar_apps()
 	{
-		$apps = parent::_get_navbar_apps(Api\Image::svg_usable());	// use svg if usable in browser
+		$apps = parent::_get_navbar_apps();
 
 		//Add its sidebox width to each app
 		foreach ($apps as $app => &$data)

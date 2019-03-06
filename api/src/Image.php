@@ -25,24 +25,12 @@ class Image
 	 * @param string $app
 	 * @param string|array $image one or more image-name in order of precedence
 	 * @param string $extension ='' extension to $image, makes sense only with an array
-	 * @param boolean $_svg =false should svg images be returned or not:
-	 *	true: always return svg, false: never return svg (current default), null: browser dependent, see svg_usable()
+	 *
 	 * @return string url of image or null if not found
 	 */
-	static function find($app,$image,$extension='',$_svg=false)
+	static function find($app,$image,$extension='')
 	{
-		$svg = Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'pixelegg' ? null : $_svg;
-		static $image_map_no_svg = null, $image_map_svg = null;
-		if (is_null($svg)) $svg = self::svg_usable ();
-		if ($svg)
-		{
-			$image_map =& $image_map_svg;
-		}
-		else
-		{
-			$image_map =& $image_map_no_svg;
-		}
-		if (is_null($image_map)) $image_map = self::map(null, $svg);
+		$image_map = self::map(null);
 
 		// array of images in descending precedence
 		if (is_array($image))
@@ -107,18 +95,6 @@ class Image
 	}
 
 	/**
-	 * Does browser support svg
-	 *
-	 * All non IE and IE 9+
-	 *
-	 * @return boolean
-	 */
-	public static function svg_usable()
-	{
-		return Header\UserAgent::type() !== 'msie' || Header\UserAgent::version() >= 9;
-	}
-
-	/**
 	 * Scan filesystem for images of all apps
 	 *
 	 * For each application and image-name (without extension) one full path is returned.
@@ -127,32 +103,25 @@ class Image
 	 * VFS image directory is treated like an application named 'vfs'.
 	 *
 	 * @param string $template_set =null 'default', 'idots', 'jerryr', default is template-set from user prefs
-	 * @param boolean $svg =null prefer svg images, default for all browsers but IE<9
+	 *
 	 * @return array of application => image-name => full path
 	 */
-	public static function map($template_set=null, $svg=null)
+	public static function map($template_set=null)
 	{
 		if (is_null($template_set))
 		{
 			$template_set = $GLOBALS['egw_info']['server']['template_set'];
 		}
-		if (is_null($svg))
-		{
-			$svg = self::svg_usable();
-		}
 
-		$cache_name = 'image_map_'.$template_set.($svg ? '_svg' : '').(Header\UserAgent::mobile() ? '_mobile' : '');
+		$cache_name = 'image_map_'.$template_set.'_svg'.(Header\UserAgent::mobile() ? '_mobile' : '');
 		if (($map = Cache::getInstance(__CLASS__, $cache_name)))
 		{
 			return $map;
 		}
 		//$starttime = microtime(true);
 
-		// priority: : PNG->JPG->GIF
-		$img_types = array('png','jpg','gif','ico');
-
-		// if we want svg, prepend it to img-types
-		if ($svg) array_unshift ($img_types, 'svg');
+		// priority: : SVG->PNG->JPG->GIF->ICO
+		$img_types = array('svg','png','jpg','gif','ico');
 
 		$map = array();
 		foreach(scandir(EGW_SERVER_ROOT) as $app)
