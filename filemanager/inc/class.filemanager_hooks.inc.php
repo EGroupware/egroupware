@@ -237,9 +237,8 @@ class filemanager_hooks
 		$editorLink = self::getEditorLink();
 		$mimes = array();
 
-		if (is_array($editorLink['mime'])){
 
-			foreach ($editorLink['mime'] as $mime => $value)
+			foreach ((array)$editorLink['mime'] as $mime => $value)
 			{
 				$mimes[$mime] = lang('%1 file', strtoupper($value['ext'])).' ('.$mime.')';
 
@@ -248,8 +247,6 @@ class filemanager_hooks
 					$mimes[$mime] .= ', '.strtoupper(implode(', ', $value['extra_extensions']));
 				}
 			}
-
-		}
 
 		asort($mimes);
 		$settings += array (
