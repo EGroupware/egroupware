@@ -235,18 +235,14 @@ class filemanager_hooks
 		$editorLink = self::getEditorLink();
 		$mimes = array();
 
-		if (is_array($editorLink['mime'])){
+		foreach ((array)$editorLink['mime'] as $mime => $value)
+		{
+			$mimes[$mime] = lang('%1 file', strtoupper($value['ext'])).' ('.$mime.')';
 
-			foreach ($editorLink['mime'] as $mime => $value)
+			if (!empty($value['extra_extensions']))
 			{
-				$mimes[$mime] = lang('%1 file', strtoupper($value['ext'])).' ('.$mime.')';
-
-				if (!empty($value['extra_extensions']))
-				{
-					$mimes[$mime] .= ', '.strtoupper(implode(', ', $value['extra_extensions']));
-				}
+				$mimes[$mime] .= ', '.strtoupper(implode(', ', $value['extra_extensions']));
 			}
-
 		}
 
 		$merge_open_handler = array ('download' => lang('download'), 'collabora' => 'Collabora');
