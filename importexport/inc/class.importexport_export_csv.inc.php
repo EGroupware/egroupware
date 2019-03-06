@@ -32,7 +32,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	 * @var array array with conversions to be done in form: egw_field_name => conversion_string
 	 */
 	protected  $conversion = array();
-	
+
 	/**
 	 * @var Current record being processed
 	 */
@@ -42,22 +42,22 @@ class importexport_export_csv implements importexport_iface_export_record
 	 * @var array holding the current record
 	 */
 	protected $record_array = array();
-	
+
 	/**
 	 * @var translation holds (charset) Api\Translation object
 	 */
 	protected $translation;
-	
+
 	/**
 	 * @var string charset of csv file
 	 */
 	protected $csv_charset;
-	
+
 	/**
 	 * @var int holds number of exported records
 	 */
 	protected $num_of_records = 0;
-	
+
 	/**
 	 * @var int holds max. number of records allowed to be exported
 	 */
@@ -67,7 +67,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	 * @var stream stream resource of csv file
 	 */
 	protected  $handle;
-	
+
 	/**
 	 * @var array csv specific options
 	 */
@@ -85,7 +85,7 @@ class importexport_export_csv implements importexport_iface_export_record
 		'date'		=> array(),
 		'select-cat'	=> array('cat_id')
 	);
-	
+
 	/**
 	 * Cache of parsed custom field parameters
 	 */
@@ -116,7 +116,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			if($this->export_limit == 'no') throw new Api\Exception\NoPermission\Admin('Export disabled');
 		}
 	}
-	
+
 	/**
 	 * sets field mapping
 	 *
@@ -136,7 +136,7 @@ class importexport_export_csv implements importexport_iface_export_record
 		}
 		$this->mapping = $_mapping;
 	}
-	
+
 	/**
 	 * Sets conversion.
 	 * @see importexport_helper_functions::conversion.
@@ -146,7 +146,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	public function set_conversion( array $_conversion) {
 		$this->conversion = $_conversion;
 	}
-	
+
 	/**
 	 * exports a record into resource of handle
 	 *
@@ -156,7 +156,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	public function export_record( importexport_iface_egw_record $_record ) {
 		$this->record = $_record;
 		$this->record_array = $_record->get_record_array();
-		
+
 		// begin with fieldnames ?
 		if ($this->num_of_records == 0 && $this->csv_options['begin_with_fieldnames'] ) {
 			if($this->csv_options['begin_with_fieldnames'] == 'label') {
@@ -198,12 +198,12 @@ class importexport_export_csv implements importexport_iface_export_record
 		if($this->export_limit && $this->num_of_records >= $this->export_limit) {
 			return;
 		}
-		
+
 		// do conversions
 		if ( !empty( $this->conversion )) {
 			$this->record_array = importexport_helper_functions::conversion( $this->record_array, $this->conversion );
 		}
-		
+
 		// do fieldmapping
 		if ( !empty( $this->mapping ) ) {
 			$record_data = $this->record_array;
@@ -212,7 +212,7 @@ class importexport_export_csv implements importexport_iface_export_record
 				$this->record_array[$csv_field] = $record_data[$egw_field];
 			}
 		}
-		
+
 		self::fputcsv( $this->handle, $this->record_array, $this->csv_options['delimiter'], $this->csv_options['enclosure'] );
 		$this->num_of_records++;
 	}
@@ -322,7 +322,8 @@ class importexport_export_csv implements importexport_iface_export_record
 				if(is_array($record->$name)) {
 					$names = array();
 					foreach($record->$name as $_name) {
-						$names[] = lang($selects[$name][$_name]);
+						$option = $selects[$name][$_name];
+						$names[] = lang(is_array($option) && $option['label'] ? $option['label'] : $option);
 					}
 					$record->$name = implode(', ', $names);
 				} else {
@@ -445,7 +446,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	 * @return
 	 */
 	public function __destruct() {
-		
+
 	}
 
 	/**
@@ -466,12 +467,12 @@ class importexport_export_csv implements importexport_iface_export_record
 			$writeDelimiter = true;
 		}
 		$string .= "\n";
-		
+
 		// do charset translation
 		$string = $this->translation->convert( $string, $this->translation->charset(), $this->csv_charset );
-		
+
 		fwrite($filePointer, $string);
-			
+
 	}
 } // end  export_csv_record
 ?>
