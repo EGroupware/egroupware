@@ -57,6 +57,7 @@
 				</div>
 
 			</div>
+			<div id="egw_fw_sidebar_r"></div>
 		</div>
 		<div id="egw_fw_footer">{powered_by}</div>
 
