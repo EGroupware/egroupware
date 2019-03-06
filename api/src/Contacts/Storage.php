@@ -102,7 +102,7 @@ class Storage
 	 *
 	 * @var array
 	 */
-	var $grants;
+	var $grants = array();
 
 	/**
 	 *  userid of current user
