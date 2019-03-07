@@ -1,5 +1,6 @@
 *.old
 *.old.xet
+*.old.lang
 /api/js/etemplate/etemplate2.min.js
 /api/js/etemplate/etemplate2.min.js.map
 /api/js/jsapi.min.js
@@ -8,20 +9,16 @@
 /calendar/js/app.min.js.map
 /mail/js/app.min.js
 /mail/js/app.min.js.map
-/pixelegg/css/mobile.min.css
-/pixelegg/css/mobile.min.css.map
-/pixelegg/css/pixelegg.min.css
-/pixelegg/css/pixelegg.min.css.map
-/pixelegg/js/fw_mobile.min.js
-/pixelegg/js/fw_mobile.min.js.map
-/pixelegg/js/fw_pixelegg.min.js
-/pixelegg/js/fw_pixelegg.min.js.map
-/pixelegg/mobile/fw_mobile.min.css
-/pixelegg/mobile/fw_mobile.min.css.map
+/notifications/js/*.min.js
+/notifications/js/*.min.js.map
+/pixelegg/css/*.min.css
+/pixelegg/css/*.min.css.map
+/pixelegg/js/*.min.js
+/pixelegg/js/*.min.js.map
+/pixelegg/mobile/*.min.css
+/pixelegg/mobile/*.min.css.map
 /nbproject/private/Auf Branch master
 /activesync/
-/api/js/ckeditor/
-/api/src/Db/ADOdb/
 /archive/
 /authors.txt
 /authors.xml
@@ -33,6 +30,7 @@
 /eventmgr/
 /ewawi/
 /eworkflow/
+/collabora/
 /groups/
 /header.inc.php
 /jdots/
