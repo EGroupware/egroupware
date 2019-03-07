@@ -275,7 +275,7 @@ disable	admin	en	Disable
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
 disable all	admin	en	Disable all
 disable minifying of javascript and css files	admin	en	Disable minifying of javascript and CSS files
-disable PGP encryption (Mailvelope)	admin	en	Disable PGP encryption (Mailvelope)
+disable pgp encryption (mailvelope)	admin	en	Disable PGP encryption (Mailvelope)
 disable wysiwyg-editor	admin	en	Disable WYSIWYG-editor
 disabled (not recomended)	admin	en	Disabled (not recommended)
 display	admin	en	Display
@@ -430,6 +430,7 @@ hash	admin	en	Hash
 hide php information	admin	en	Hide php information
 hide sidebox video tutorials	admin	en	Hide sidebox video tutorials
 home directory	admin	en	Home directory
+home screen message	admin	en	Home screen message
 host information	admin	en	Host information
 hostname or ip	admin	en	Hostname or IP
 hour<br>(0-23)	admin	en	Hour<br>(0-23)
@@ -475,8 +476,8 @@ installed crontab	admin	en	Installed crontab
 instance	admin	en	Instance
 interface	admin	en	Interface
 international use	admin	en	International use
-invalid email	admin	en	Invalid email
 invalid argument '%1' !!!	admin	en	Invalid argument '%1' !!!
+invalid email	admin	en	Invalid email
 invalid formated date "%1"!	admin	en	Invalid formated date "%1"!
 invalid remote id or name "%1"!	admin	en	Invalid remote ID or name "%1"!
 invalid value "%1" use yes or no!	admin	en	Invalid value "%1" use yes or no!
@@ -538,7 +539,6 @@ lowercase email addresses	admin	en	Lowercase EMail addresses
 mail account	admin	en	Mail account
 mail settings	admin	en	Mail settings
 main email-address	admin	en	Main email address
-home screen message	admin	en	Home screen message
 manage mapping	admin	en	Manage mapping
 manage stationery templates	admin	en	Manage stationery templates
 manager	admin	en	Manager
