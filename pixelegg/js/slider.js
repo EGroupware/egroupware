@@ -20,6 +20,7 @@ function show_pixelegg_header(_toggle, _delay)
 	jQuery(_toggle).parent().removeClass("slidedown");
 	jQuery(_toggle).parent().addClass("slideup");
 	jQuery('#egwpopup, .egwpopup_message.egwpopup_expanded').css({top:'90px', height:'calc(100% - 130px)'});
+	jQuery('#egw_fw_basecontainer').addClass('slideIsUp');
 }
 
 //closed = Topmenu is gone
@@ -48,6 +49,7 @@ function hide_pixelegg_header(_toggle, _delay)
 	jQuery(_toggle).parent().removeClass("slideup");
 	jQuery(_toggle).parent().addClass("slidedown");
 	jQuery('#egwpopup, .egwpopup_message.egwpopup_expanded').css({top:'45px', height:'calc(100% - 85px)'});
+	jQuery('#egw_fw_basecontainer').removeClass('slideIsUp');
 }
 
 /*
@@ -106,7 +108,7 @@ egw_LAB.wait(function() {
 				egw_getFramework().notifyTabChange();
 			},1000);
 		});
-
+		jQuery('#egw_fw_basecontainer').addClass('slideIsUp');
 		// hide header, if pref says it is not shown
 		if (egw.preference('pixelegg_header_hidden')) {
 			setTimeout(function(){hide_pixelegg_header(jQuery('#slidetoggle'),0)},1);
