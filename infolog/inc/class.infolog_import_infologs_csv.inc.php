@@ -15,6 +15,10 @@ use EGroupware\Api\Link;
 
 /**
  * class import_csv for infolog
+ *
+ * This does not follow the others (extending importexport_basic_import_csv
+ * since we have some fancy things going on with the type / status lookups.
+ * It could probably be replaced or update to match.
  */
 class infolog_import_infologs_csv implements importexport_iface_import_plugin
 {
@@ -217,6 +221,14 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 			if(!$record['info_status'] && $record['info_type'])
 			{
 				$record['info_status'] = $this->boinfolog->status['defaults'][$record['info_type']];
+			}
+
+			if($_definition->plugin_options['override_values'])
+			{
+				$egw_record = new infolog_egw_record();
+				$egw_record->set_record($record);
+				$this->set_overrides($_definition, $egw_record);
+				$record = $egw_record->get_record_array();
 			}
 
 			// Set owner, unless it's supposed to come from CSV file
@@ -431,6 +443,40 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 			}
 		}
 		return $result;
+	}
+
+	/**
+	 * Handle setting specific values from the definition on every record
+	 *
+	 *
+	 * @param importexport_definition $_definition
+	 * @param importexport_iface_egw_record $record
+	 */
+	protected function set_overrides(importexport_definition &$_definition, importexport_iface_egw_record &$record)
+	{
+		$overrides = $_definition->plugin_options['override_values'];
+
+		// Set the record field, with some type checks
+		$set = function($record, $field, $value)
+		{
+			if(is_array($record->$field))
+			{
+				array_unshift($record->$field, $value['value']);
+			}
+			else
+			{
+				$record->$field = $value['value'];
+			}
+		};
+
+		// Set category
+		if($overrides['cat_id'] && $record::$types['select-cat'])
+		{
+			foreach($record::$types['select-cat'] as $field)
+			{
+				$set($record, $field, $overrides['cat_id']);
+			}
+		}
 	}
 
 	/**

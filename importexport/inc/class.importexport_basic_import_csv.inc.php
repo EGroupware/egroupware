@@ -41,7 +41,8 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 					'action' => insert,
 					'last' => true,
 				),*/
-
+		'override_values'	// Array of values specified that override what's in the file
+		//	'col_id' => array('value' => ...)
 	);
 
 	/**
@@ -88,6 +89,11 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	 * @var int
 	 */
 	protected $user = null;
+
+	/**
+	 * Application field types (from egw_record)
+	 */
+	protected $types = array();
 
 	/**
 	 * Maximum number of errors or warnings before aborting
@@ -161,11 +167,12 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 		// Record class name
 		$app = $_definition->application;
 		$record_class = isset(static::$record_class) ? static::$record_class : "{$app}_egw_record";
+		$this->types = $record_class::$types;
 
 		// Needed for categories to work right
         $GLOBALS['egw_info']['flags']['currentapp'] = $app;
 
-		$this->init($_definition);
+		$this->init($_definition, $import_csv);
 
 		while ( $record = $import_csv->get_record() ) {
 			$success = false;
@@ -174,11 +181,15 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
 
-			$warning = importexport_import_csv::convert($record, $record_class::$types, $app, $this->lookups, $_definition->plugin_options['convert']);
-				if($warning) $this->warnings[$import_csv->get_current_position()] = $warning;
+			$warning = importexport_import_csv::convert($record, $this->types, $app, $this->lookups, $_definition->plugin_options['convert']);
+			if($warning) $this->warnings[$import_csv->get_current_position()] = $warning;
 
 			$egw_record = new $record_class();
 			$egw_record->set_record($record);
+			if($_definition->plugin_options['override_values'])
+			{
+				$this->set_overrides($_definition, $egw_record);
+			}
 			$success = $this->import_record($egw_record, $import_csv);
 
 			if($success)
@@ -210,7 +221,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	/**
 	 * Stub to hook into import initialization - set lookups, etc.
 	 */
-	protected function init(importexport_definition &$definition)
+	protected function init(importexport_definition &$definition, importexport_import_csv &$import_csv = null)
 	{
 	}
 
@@ -322,6 +333,40 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	 * @return bool success or not
 	 */
 	protected abstract function action ( $_action, importexport_iface_egw_record &$record, $record_num = 0 );
+
+	/**
+	 * Handle setting specific values from the definition on every record
+	 *
+	 *
+	 * @param importexport_definition $_definition
+	 * @param importexport_iface_egw_record $record
+	 */
+	protected function set_overrides(importexport_definition &$_definition, importexport_iface_egw_record &$record)
+	{
+		$overrides = $_definition->plugin_options['override_values'];
+
+		// Set the record field, with some type checks
+		$set = function($record, $field, $value)
+		{
+			if(is_array($record->$field))
+			{
+				array_unshift($record->$field, $value['value']);
+			}
+			else
+			{
+				$record->$field = $value['value'];
+			}
+		};
+
+		// Set category
+		if($overrides['cat_id'] && $record::$types['select-cat'])
+		{
+			foreach($record::$types['select-cat'] as $field)
+			{
+				$set($record, $field, $overrides['cat_id']);
+			}
+		}
+	}
 
 	/**
 	 * Handle special fields

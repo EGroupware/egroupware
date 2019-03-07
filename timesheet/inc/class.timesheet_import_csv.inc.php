@@ -17,31 +17,8 @@ use EGroupware\Api\Link;
 /**
  * class import_csv for timesheet
  */
-class timesheet_import_csv implements importexport_iface_import_plugin
+class timesheet_import_csv extends importexport_basic_import_csv
 {
-	private static $plugin_options = array(
-		'fieldsep', 		// char
-		'charset', 			// string
-		'update_cats', 			// string {override|add} overides record
-								// with cat(s) from csv OR add the cat from
-								// csv file to exeisting cat(s) of record
-		'num_header_lines', // int number of header lines
-		'field_conversion', // array( $csv_col_num => conversion)
-		'field_mapping',	// array( $csv_col_num => adb_filed)
-		'conditions',		/* => array containing condition arrays:
-				'type' => exists, // exists
-				'string' => '#kundennummer',
-				'true' => array(
-					'action' => update,
-					'last' => true,
-				),
-				'false' => array(
-					'action' => insert,
-					'last' => true,
-				),*/
-
-	);
-
 	public static $special_fields = array(
 		'addressbook'     => 'Link to Addressbook, use nlast,nfirst[,org] or contact_id from addressbook',
 		'link_1'      => '1. link: appname:appid the entry should be linked to, eg.: addressbook:123',
@@ -50,21 +27,11 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	);
 
 	/**
-	 * actions wich could be done to data entries
-	 */
-	protected static $actions = array( 'none', 'update', 'insert', 'delete', );
-
-	/**
 	 * conditions for actions
 	 *
 	 * @var array
 	 */
 	protected static $conditions = array( 'exists' );
-
-	/**
-	 * @var definition
-	 */
-	private $definition;
 
 	/**
 	 * @var business object
@@ -77,72 +44,20 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	protected $tracking;
 
 	/**
-	 * @var bool
-	 */
-	private $dry_run = false;
-
-	/**
-	 * @var int
-	 */
-	private $user = null;
-
-	/**
-	 * List of import warnings
-	 */
-	protected $warnings = array();
-
-	/**
-	 * List of import errors
-	 */
-	protected $errors = array();
-
-	/**
-	* List of actions, and how many times that action was taken
-	*/
-	protected $results = array();
-
-	/**
-	 * imports entries according to given definition object.
-	 * @param resource $_stream
-	 * @param string $_charset
+	 * Initialize for import
+	 *
 	 * @param definition $_definition
 	 */
-	public function import( $_stream, importexport_definition $_definition )
+	protected function init( importexport_definition $_definition, importexport_import_csv &$import_csv )
 	{
-		$import_csv = new importexport_import_csv( $_stream, array(
-			'fieldsep' => $_definition->plugin_options['fieldsep'],
-			'charset' => $_definition->plugin_options['charset'],
-		));
-
-		$this->definition = $_definition;
-
-		$this->user = $GLOBALS['egw_info']['user']['account_id'];
-
-		// dry run?
-		$this->dry_run = isset( $_definition->plugin_options['dry_run'] ) ? $_definition->plugin_options['dry_run'] :  false;
-
 		// fetch the bo
 		$this->bo = new timesheet_bo();
 
 		// Get the tracker for changes
 		$this->tracking = new timesheet_tracking($this->bo);
 
-		// set FieldMapping.
-		$import_csv->mapping = $_definition->plugin_options['field_mapping'];
-
-		// set FieldConversion
-		$import_csv->conversion = $_definition->plugin_options['field_conversion'];
-
 		// Add extra conversions
 		$import_csv->conversion_class = $this;
-
-		//check if file has a header lines
-		if ( isset( $_definition->plugin_options['num_header_lines'] ) && $_definition->plugin_options['num_header_lines'] > 0) {
-			$import_csv->skip_records($_definition->plugin_options['num_header_lines']);
-		} elseif(isset($_definition->plugin_options['has_header_line']) && $_definition->plugin_options['has_header_line']) {
-			// First method is preferred
-			$import_csv->skip_records(1);
-		}
 
 		// set Owner
 		$plugin_options = $_definition->plugin_options;
@@ -150,220 +65,211 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 			$_definition->plugin_options['record_owner'] : $this->user;
 		$_definition->plugin_options = $plugin_options;
 
-		// Used to try to automatically match names to account IDs
-		$addressbook = new Api\Contacts\Storage();
-
 		// For converting human-friendly lookups
-		$categories = new Api\Categories('timesheet');
-		$lookups = array(
+		$this->lookups = array(
 			'ts_status'	=> $this->bo->status_labels
 		);
 
 		// Status need leading spaces removed
-		foreach($lookups['ts_status'] as $id => &$label)
+		foreach($this->lookups['ts_status'] as $id => &$label)
 		{
 			$label = str_replace('&nbsp;', '',trim($label));
-			if($label == '') unset($lookups['ts_status'][$id]);
+			if($label == '') unset($this->lookups['ts_status'][$id]);
 		}
+	}
 
-		// Start counting successes
-		$count = 0;
-		$this->results = array();
-
-		// Failures
-		$this->errors = array();
-
-		while ( $record = $import_csv->get_record() )
+	/**
+	 *Import a single record
+	 *
+ 	 * You don't need to worry about mappings or translations, they've been done already.
+	 * You do need to handle the conditions and the actions taken.
+	 *
+	 * Updates the count of actions taken
+	 *
+	 * @return boolean success
+	 */
+	protected function import_record(importexport_iface_egw_record &$record, &$import_csv)
+	{
+		// Automatically handle text Api\Categories without explicit Api\Translation
+		foreach(array('ts_status','cat_id') as $field)
 		{
-			$success = false;
-
-			// don't import empty records
-			if( count( array_unique( $record ) ) < 2 ) continue;
-
-			$result = importexport_import_csv::convert($record, timesheet_egw_record::$types, 'timesheet', $lookups, $_definition->plugin_options['convert']);
-			if($result) $this->warnings[$import_csv->get_current_position()] = $result;
-
-			// Automatically handle text Api\Categories without explicit Api\Translation
-			foreach(array('ts_status','cat_id') as $field)
+			if(!is_numeric($record->$field))
 			{
-				if(!is_numeric($record[$field]))
+				$translate_key = 'translate'.(substr($field,0,2) == 'ts' ? substr($field,2) : '_cat_id');
+				if(!is_null($this->lookups[$field]) && ($key = array_search($record->$field, $this->lookups[$field])))
 				{
-					$translate_key = 'translate'.(substr($field,0,2) == 'ts' ? substr($field,2) : '_cat_id');
-					if(!is_null($lookups[$field]) && ($key = array_search($record[$field], $lookups[$field])))
-					{
-						$record[$field] = $key;
-					}
-					elseif(array_key_exists($translate_key, $_definition->plugin_options))
-					{
-						$t_field = $_definition->plugin_options[$translate_key];
-						switch ($t_field)
-						{
-							case '':
-							case '0':
-								// Skip that field
-								unset($record[$field]);
-								break;
-							case '~skip~':
-								continue 2;
-							default:
-								if(strpos($t_field, 'add') === 0)
-								{
-									// Check for a parent
-									list($name, $parent_name) = explode('~',$t_field);
-									if($parent_name)
-									{
-										$parent = importexport_helper_functions::cat_name2id($parent_name);
-									}
-
-									if($field == 'cat_id')
-									{
-										$record[$field] = importexport_helper_functions::cat_name2id($record[$field], $parent);
-									}
-									elseif ($field == 'ts_status')
-									{
-										end($this->bo->status_labels);
-										$id = key($this->bo->status_labels)+1;
-										$this->bo->status_labels[$id] = $record[$field];
-										$this->bo->status_labels_config[$id] = array(
-											'name'   => $record[$field],
-											'parent' => $parent,
-											'admin'  => false
-										);
-										Api\Config::save_value('status_labels',$this->bo->status_labels_config,TIMESHEET_APP);
-										$lookups[$field][$id] = $name;
-										$record[$field] = $id;
-									}
-								}
-								elseif(!is_null($lookups[$field]) && ($key = array_search($t_field, $lookups[$field])))
-								{
-									$record[$field] = $key;
-								}
-								else
-								{
-									$record[$field] = $t_field;
-								}
-								break;
-						}
-					}
+					$record->$field = $key;
 				}
-			}
-
-			// Set creator, unless it's supposed to come from CSV file
-			if($_definition->plugin_options['owner_from_csv'] && $record['ts_owner'])
-			{
-				if(!is_numeric($record['ts_owner']))
+				elseif(array_key_exists($translate_key, $_definition->plugin_options))
 				{
-					// Automatically handle text owner without explicit Api\Translation
-					$new_owner = importexport_helper_functions::account_name2id($record['ts_owner']);
-					if($new_owner == '')
+					$t_field = $_definition->plugin_options[$translate_key];
+					switch ($t_field)
 					{
-						$this->errors[$import_csv->get_current_position()] = lang(
-							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
-							$record['ts_owner'],
-							Api\Accounts::username($_definition->plugin_options['record_owner']),
-							lang($this->bo->field2label['ts_owner'])
-						);
-						$record['ts_owner'] = $_definition->plugin_options['record_owner'];
-					}
-					else
-					{
-						$record['ts_owner'] = $new_owner;
-					}
-				}
-			}
-			elseif ($_definition->plugin_options['record_owner'])
-			{
-				$record['ts_owner'] = $_definition->plugin_options['record_owner'];
-			}
-
-			// Check account IDs
-			foreach(array('ts_modifier') as $field)
-			{
-				if($record[$field] && !is_numeric($record[$field]))
-				{
-					// Try an automatic conversion
-					$account_id = importexport_helper_functions::account_name2id($record[$field]);
-					if($account_id && strtoupper(Api\Accounts::username($account_id)) == strtoupper($record[$field]))
-					{
-						$record[$field] = $account_id;
-					}
-					else
-					{
-						$this->errors[$import_csv->get_current_position()] = lang(
-							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
-							$record[$field],
-							Api\Accounts::username($_definition->plugin_options['record_owner']),
-							$this->bo->field2label[$field] ? lang($this->bo->field2label[$field]) : $field
-						);
-					}
-				}
-			}
-
-			// Special values
-			if ($record['addressbook'] && !is_numeric($record['addressbook']))
-			{
-				list($lastname,$firstname,$org_name) = explode(',',$record['addressbook']);
-				$record['addressbook'] = self::addr_id($lastname,$firstname,$org_name);
-			}
-			if ($record['pm_id'] && !is_numeric($record['pm_id']))
-			{
-				$pms = Link::query('projectmanager',$record['pm_id']);
-				$record['pm_id'] = key($pms);
-			}
-
-			if ( $_definition->plugin_options['conditions'] )
-			{
-				foreach ( $_definition->plugin_options['conditions'] as $condition )
-				{
-					$results = array();
-					switch ( $condition['type'] )
-					{
-						// exists
-						case 'exists' :
-							if($record[$condition['string']])
+						case '':
+						case '0':
+							// Skip that field
+							unset($record->$field);
+							break;
+						case '~skip~':
+							continue 2;
+						default:
+							if(strpos($t_field, 'add') === 0)
 							{
-								$results = $this->bo->search(array($condition['string'] => $record[$condition['string']]));
+								// Check for a parent
+								list($name, $parent_name) = explode('~',$t_field);
+								if($parent_name)
+								{
+									$parent = importexport_helper_functions::cat_name2id($parent_name);
+								}
+
+								if($field == 'cat_id')
+								{
+									$record->$field = importexport_helper_functions::cat_name2id($record->$field, $parent);
+								}
+								elseif ($field == 'ts_status')
+								{
+									end($this->bo->status_labels);
+									$id = key($this->bo->status_labels)+1;
+									$this->bo->status_labels[$id] = $record->$field;
+									$this->bo->status_labels_config[$id] = array(
+										'name'   => $record->$field,
+										'parent' => $parent,
+										'admin'  => false
+									);
+									Api\Config::save_value('status_labels',$this->bo->status_labels_config,TIMESHEET_APP);
+									$lookups[$field][$id] = $name;
+									$record->$field = $id;
+								}
 							}
-
-							if ( is_array( $results ) && count( array_keys( $results )) >= 1 )
+							elseif(!is_null($lookups[$field]) && ($key = array_search($t_field, $lookups[$field])))
 							{
-								// apply action to all records matching this exists condition
-								$action = $condition['true'];
-								foreach ( (array)$results as $result )
-								{
-									$record['ts_id'] = $result['ts_id'];
-									if ( $_definition->plugin_options['update_cats'] == 'add' )
-									{
-										if ( !is_array( $result['cat_id'] ) ) $result['cat_id'] = explode( ',', $result['cat_id'] );
-										if ( !is_array( $record['cat_id'] ) ) $record['cat_id'] = explode( ',', $record['cat_id'] );
-										$record['cat_id'] = implode( ',', array_unique( array_merge( $record['cat_id'], $result['cat_id'] ) ) );
-									}
-									$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
-								}
+								$record->$field = $key;
 							}
 							else
 							{
-								$action = $condition['false'];
-								$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
+								$record->$field = $t_field;
 							}
 							break;
-
-						// not supported action
-						default :
-							die('condition / action not supported!!!');
-							break;
 					}
-					if ($action['last']) break;
 				}
 			}
-			else
-			{
-				// unconditional insert
-				$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
-			}
-			if($success) $count++;
 		}
-		return $count;
+
+			// Set creator, unless it's supposed to come from CSV file
+		if($_definition->plugin_options['owner_from_csv'] && $record->ts_owner)
+		{
+			if(!is_numeric($record->ts_owner))
+			{
+				// Automatically handle text owner without explicit Api\Translation
+				$new_owner = importexport_helper_functions::account_name2id($record->ts_owner);
+				if($new_owner == '')
+				{
+					$this->errors[$import_csv->get_current_position()] = lang(
+						'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
+						$record->ts_owner,
+						Api\Accounts::username($_definition->plugin_options['record_owner']),
+						lang($this->bo->field2label['ts_owner'])
+					);
+					$record->ts_owner = $_definition->plugin_options['record_owner'];
+				}
+				else
+				{
+					$record->ts_owner = $new_owner;
+				}
+			}
+		}
+		elseif ($_definition->plugin_options['record_owner'])
+		{
+			$record->ts_owner = $_definition->plugin_options['record_owner'];
+		}
+
+		// Check account IDs
+		foreach(array('ts_modifier') as $field)
+		{
+			if($record->$field && !is_numeric($record->$field))
+			{
+				// Try an automatic conversion
+				$account_id = importexport_helper_functions::account_name2id($record->$field);
+				if($account_id && strtoupper(Api\Accounts::username($account_id)) == strtoupper($record->$field))
+				{
+					$record->$field = $account_id;
+				}
+				else
+				{
+					$this->errors[$import_csv->get_current_position()] = lang(
+						'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
+						$record->$field,
+						Api\Accounts::username($_definition->plugin_options['record_owner']),
+						$this->bo->field2label[$field] ? lang($this->bo->field2label[$field]) : $field
+					);
+				}
+			}
+		}
+
+		// Special values
+		if ($record->addressbook && !is_numeric($record->addressbook))
+		{
+			list($lastname,$firstname,$org_name) = explode(',',$record->addressbook);
+			$record->addressbook = self::addr_id($lastname,$firstname,$org_name);
+		}
+		if ($record->pm_id && !is_numeric($record->pm_id))
+		{
+			$pms = Link::query('projectmanager',$record->pm_id);
+			$record->pm_id = key($pms);
+		}
+
+		if ( $_definition->plugin_options['conditions'] )
+		{
+			foreach ( $_definition->plugin_options['conditions'] as $condition )
+			{
+				$results = array();
+				switch ( $condition['type'] )
+				{
+					// exists
+					case 'exists' :
+						if($record->$condition['string'])
+						{
+							$results = $this->bo->search(array($condition['string'] => $record->$condition['string']));
+						}
+
+						if ( is_array( $results ) && count( array_keys( $results )) >= 1 )
+						{
+							// apply action to all records matching this exists condition
+							$action = $condition['true'];
+							foreach ( (array)$results as $result )
+							{
+								$record->ts_id = $result['ts_id'];
+								if ( $_definition->plugin_options['update_cats'] == 'add' )
+								{
+									if ( !is_array( $result['cat_id'] ) ) $result['cat_id'] = explode( ',', $result['cat_id'] );
+									if ( !is_array( $record->cat_id ) ) $record->cat_id = explode( ',', $record->cat_id );
+									$record->cat_id = implode( ',', array_unique( array_merge( $record->cat_id, $result['cat_id'] ) ) );
+								}
+								$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
+							}
+						}
+						else
+						{
+							$action = $condition['false'];
+							$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
+						}
+						break;
+
+					// not supported action
+					default :
+						die('condition / action not supported!!!');
+						break;
+				}
+				if ($action['last']) break;
+			}
+		}
+		else
+		{
+			// unconditional insert
+			$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
+		}
+
+		return $success;
 	}
 
 	/**
@@ -373,8 +279,9 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	 * @param array $_data tracker data for the action
 	 * @return bool success or not
 	 */
-	private function action ( $_action, $_data, $record_num = 0 )
+	protected function action ( $_action, importexport_iface_egw_record &$record, $record_num = 0 )
 	{
+		$_data = $record->get_record_array();
 		$result = true;
 		switch ($_action)
 		{

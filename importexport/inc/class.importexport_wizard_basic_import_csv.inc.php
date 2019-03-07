@@ -34,7 +34,8 @@ class importexport_wizard_basic_import_csv
 		'wizard_step30' => 'importexport.wizard_basic_import_csv.sample_file',
 		'wizard_step40' => 'importexport.wizard_basic_import_csv.choosesepncharset',
 		'wizard_step50' => 'importexport.wizard_basic_import_csv.fieldmapping',
-		'wizard_step55' => 'importexport.wizard_basic_import_csv.conditions'
+		'wizard_step55' => 'importexport.wizard_basic_import_csv.conditions',
+		'wizard_step65' => 'importexport.wizard_basic_import_csv.overrides'
 	);
 
 
@@ -64,6 +65,8 @@ class importexport_wizard_basic_import_csv
 			'wizard_step40' => lang('Choose seperator and charset'),
 			'wizard_step50' => lang('Manage mapping'),
 			'wizard_step55' => lang('Edit conditions'),
+			// Many apps have step 60 as choose owner
+			'wizard_step65' => lang('Set import values'),
 		);
 	}
 
@@ -437,6 +440,58 @@ class importexport_wizard_basic_import_csv
 		// Leave room for heading
 		array_unshift($content['conditions'], false);
 		$preserv['conditions'] = $content['conditions'];
+
+		unset ($preserv['button']);
+		return $this->step_templates[$content['step']];
+	}
+
+	/**
+	 * Many apps put step60 as choose owner
+	 */
+	public function wizard_step65(&$content, &$sel_options, &$readonlys, &$preserv)
+	{
+		if($this->debug) error_log(__METHOD__ . '->$content '.print_r($content,true));
+
+		// return from step65
+		if ($content['step'] == 'wizard_step65')
+		{
+			switch (array_search('pressed', $content['button']))
+			{
+				case 'next':
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
+				case 'previous' :
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],-1);
+				case 'finish':
+					return 'wizard_finish';
+				default :
+					return $this->wizard_step65($content,$sel_options,$readonlys,$preserv);
+					break;
+			}
+		}
+		// init step65
+		$content['text'] = $this->steps['wizard_step65'];
+		$content['step'] = 'wizard_step65';
+
+		if(!$content['override_values'] && $content['plugin_options']['override_values']) {
+			$content['override_values'] = $content['plugin_options']['override_values'];
+		}
+		$preserv = $content;
+
+		foreach($content['field_mapping'] as $field) {
+			$sel_options['string'][$field] = $this->mapping_fields[$field];
+			if(!$sel_options['string'][$field])
+			{
+				foreach($this->mapping_fields as $fields)
+				{
+					if(is_array($fields) && $fields[$field])
+					{
+						$sel_options['string'][$field] = $fields[$field];
+					}
+				}
+			}
+		}
+
+		$preserv['override_values'] = $content['override_values'];
 
 		unset ($preserv['button']);
 		return $this->step_templates[$content['step']];
