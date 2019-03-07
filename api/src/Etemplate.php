@@ -259,14 +259,17 @@ class Etemplate extends Etemplate\Widget\Template
 			{
 				$GLOBALS['egw_info']['flags']['nonavbar'] = $output_mode == 2 ? 'popup' : false;
 			}
-			echo $GLOBALS['egw']->framework->header();
-			if ($output_mode != 2 && !$GLOBALS['egw_info']['flags']['nonavbar'])
+			if ($output_mode != 1)
 			{
-				$GLOBALS['egw']->framework->navbar();
-			}
-			else	// mark popups as such, by enclosing everything in div#popupMainDiv
-			{
-				echo '<div id="popupMainDiv" class="popupMainDiv">'."\n";
+				echo $GLOBALS['egw']->framework->header();
+				if ($output_mode != 2 && !$GLOBALS['egw_info']['flags']['nonavbar'])
+				{
+					$GLOBALS['egw']->framework->navbar();
+				}
+				else	// mark popups as such, by enclosing everything in div#popupMainDiv
+				{
+					echo '<div id="popupMainDiv" class="popupMainDiv">'."\n";
+				}
 			}
 			// Send any accumulated json responses - after flush to avoid sending the buffer as a response
 			if(Json\Response::isJSONResponse())
@@ -277,6 +280,14 @@ class Etemplate extends Etemplate\Widget\Template
 			$form = '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container" data-etemplate="'.
 				htmlspecialchars(Json\Response::json_encode($load_array), ENT_COMPAT, Translation::charset(), true).'"></form>'."\n".
 				'<iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"></iframe>';
+
+			// output mode 1 - return html
+			if ($output_mode == 1)
+			{
+				ob_end_clean();
+				self::$request = null;
+				return $form;
+			}
 			echo $form;
 
 			if ($output_mode == 2)
@@ -285,7 +296,6 @@ class Etemplate extends Etemplate\Widget\Template
 				echo $GLOBALS['egw']->framework->footer();
 			}
 			ob_flush();
-			if ($output_mode == 1)	return $form;
 		}
 		self::$request = null;
 	}
