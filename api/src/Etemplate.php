@@ -648,7 +648,7 @@ class Etemplate extends Etemplate\Widget\Template
 	/**
 	 * Deep copy array to make sure there are no references
 	 *
-	 * @param Array $array
+	 * @param Array $source
 	 * @return Array
 	 */
 	public static function deep_copy($source)
