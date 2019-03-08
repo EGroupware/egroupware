@@ -1038,6 +1038,11 @@ abstract class Merge
 				$charset = 'utf-8';	// xml files --> always use utf-8
 				break;
 
+			case 'application/rtf':
+			case 'text/rtf':
+				$charset = 'iso-8859-1';	// rtf seems to user iso-8859-1 or equivalent windows charset, not utf-8
+				break;
+
 			case 'text/html':
 				$is_xml = true;
 				$matches = null;
