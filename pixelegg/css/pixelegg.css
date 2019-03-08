@@ -6735,7 +6735,8 @@ form[id^="ranking-"] .dialogHeadbar {
   border-bottom-color: #404040;
   border-bottom-width: 4px !important;
 }
-#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon,
+.standartTreeImage {
   filter: none;
 }
 #egw_fw_sidebar #egw_fw_sidemenu.egw_fw_sidebar_toggleOn .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active {
