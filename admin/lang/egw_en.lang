@@ -830,7 +830,7 @@ upload your background image or enter the url	admin	en	Upload your background im
 upload your certificate .p12/.pfx file	admin	en	Upload your certificate .p12/.pfx file
 upload your favicon or enter the url	admin	en	Upload your favicon or enter the URL
 upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	en	Upload your header logo or enter the URL (leave it empty if it is the same as login logo)
-upload your logo or enter the url	admin	en	Upload your logo or enter the URL (leave it empty if it is the same as login logo)
+upload your logo or enter the url	admin	en	Upload your logo or enter the URL
 uppercase, lowercase, number, special char	admin	en	Uppercase, lowercase, number, special char
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the EGroupware installation, e.g. http://domain.com/egroupware
 usage	admin	en	Usage

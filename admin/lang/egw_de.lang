@@ -831,7 +831,7 @@ upload your background image or enter the url	admin	de	Laden Sei ein Hintergrund
 upload your certificate .p12/.pfx file	admin	de	Zertifikat hochladen (.p12/.pfx-Datei)
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein
 upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	de	Laden Sie Ihr Header-Logo hoch oder geben Sie die URL ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
-upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Sie eine URL dafür ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
+upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Sie eine URL dafür ein
 uppercase, lowercase, number, special char	admin	de	Großbuchstaben, kleine Buchstaben, Zahlen, Sonderzeichen
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	de	URL der EGroupware Installation, z.B. http://domain.com/egroupware
 usage	admin	de	Einsatz
