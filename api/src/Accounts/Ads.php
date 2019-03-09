@@ -149,8 +149,16 @@ class Ads
 				$base_dn_parts[] = 'DC='.$dc;
 			}
 			$base_dn = implode(',', $base_dn_parts);
+
+			// check if a port is specified as host[:port] and pass it correctly to adLDAP
+			$matches = null;
+			if (preg_match('/:(\d+)/', $host=$config['ads_host'], $matches))
+			{
+				$port = $matches[1];
+				$host = preg_replace('/:(\d+)/', '', $config['ads_host']);
+			}
 			$options = array(
-				'domain_controllers' => preg_split('/[ ,]+/', $config['ads_host']),
+				'domain_controllers' => preg_split('/[ ,]+/', $host),
 				'base_dn' => $base_dn ? $base_dn : null,
 				'account_suffix' => '@'.$config['ads_domain'],
 				'admin_username' => $config['ads_admin_user'],
@@ -159,6 +167,8 @@ class Ads
 				'use_ssl' => $config['ads_connection'] == 'ssl',
 				'charset' => Api\Translation::charset(),
 			);
+			if (isset($port)) $options['ad_port'] = $port;
+
 			$adldap[$config['ads_domain']] = new adLDAP($options);
 			if (self::$debug) error_log(__METHOD__."() new adLDAP(".array2string($options).") returned ".array2string($adldap[$config['ads_domain']]).' '.function_backtrace());
 		}
