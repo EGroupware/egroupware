@@ -63,18 +63,25 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			$accounts += $accounts_type;
 		}
 		$sel_options += array_map(
-			function($account_id, $account_name) {
-				$contact_obj = new Api\Contacts();
-				$contact = $contact_obj->read('account:'.$account_id, true);
-				return array(
+			function($account_id, $account_name)
+			{
+				$data = array(
 					'value' => ''.$account_id,
 					'label' => $account_name,
 					'app' => lang('api-accounts'),
-					'icon' => Api\Framework::link('/api/avatar.php', array(
-						'contact_id' => $contact['id'],
-						'etag' => $contact['etag'] ? $contact['etag'] : 1
-					))
 				);
+				if ($account_id > 0)
+				{
+					$contact_obj = new Api\Contacts();
+					if (($contact = $contact_obj->read('account:'.$account_id, true)))
+					{
+						$data['icon'] = Api\Framework::link('/api/avatar.php', array(
+							'contact_id' => $contact['id'],
+							'etag' => $contact['etag'] ? $contact['etag'] : 1
+						));
+					}
+				}
+				return $data;
 			},
 			array_keys($accounts), $accounts
 		);
@@ -308,7 +315,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 	 */
 	public static function get_owner_label($id)
 	{
-		static $bo;
+		static $bo=null;
 		if(!$bo) $bo = new calendar_bo();
 
 		$id = ''.$id;

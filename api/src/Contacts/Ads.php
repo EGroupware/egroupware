@@ -177,7 +177,10 @@ class Ads extends Ldap
 			!is_array($_contact_id) && substr($_contact_id,0,8) == 'account:')
 		{
 			$account_id = (int)(is_array($_contact_id) ? $_contact_id['account_id'] : substr($_contact_id,8));
-			$_contact_id = $GLOBALS['egw']->accounts->id2name($account_id, 'person_id');
+			if ($account_id < 0 || !($_contact_id = $GLOBALS['egw']->accounts->id2name($account_id, 'person_id')))
+			{
+				return false;
+			}
 		}
 		$contact_id = !is_array($_contact_id) ? $_contact_id :
 			(isset ($_contact_id['id']) ? $_contact_id['id'] : $_contact_id['uid']);
