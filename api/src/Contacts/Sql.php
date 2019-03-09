@@ -146,8 +146,9 @@ class Sql extends Api\Storage
 					$filter[] = $this->table_name.'.contact_owner != 0';	// in case there have been accounts in sql previously
 				}
 				$filter[] = "(".$this->table_name.".contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+					(!$this->grants ? ')' :
 					" OR contact_private=0 AND ".$this->table_name.".contact_owner IN (".
-					implode(',',array_keys($this->grants))."))";
+					implode(',',array_keys($this->grants))."))");
 			}
 			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== 'none')
 			{
@@ -527,7 +528,7 @@ class Sql extends Api\Storage
 					unset($filter['owner']);
 				}
 				// for an owner filter, which does NOT include current user, filter out private entries
-				elseif (!in_array($GLOBALS['egw_info']['user']['account_id'],$filter['owner']))
+				elseif (!in_array($GLOBALS['egw_info']['user']['account_id'], (array)$filter['owner']))
 				{
 					$filter['private'] = 0;
 				}
@@ -546,8 +547,9 @@ class Sql extends Api\Storage
 					$filter[] = $this->table_name.'.contact_owner != 0';	// in case there have been accounts in sql previously
 				}
 				$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
-					" OR contact_private=0 AND $this->table_name.contact_owner IN (".
-					implode(',',array_keys($this->grants)).") $groupmember_sql OR $this->table_name.contact_owner IS NULL)";
+					($this->grants ? " OR contact_private=0 AND $this->table_name.contact_owner IN (".
+						implode(',',array_keys($this->grants)).")" : '').
+					$groupmember_sql." OR $this->table_name.contact_owner IS NULL)";
 			}
 		}
 		if (isset($filter['list']))
