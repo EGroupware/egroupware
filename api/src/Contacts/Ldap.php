@@ -382,6 +382,7 @@ class Ldap
 	 * Return LDAP filter for (multiple) contact ids
 	 *
 	 * @param array|string $ids
+	 * @throws Api\Exception\AssertionFailed if $contact_id is no valid GUID (for ADS!)
 	 * @return string
 	 */
 	protected function ids_filter($ids)
@@ -809,7 +810,13 @@ class Ldap
 			{
 				if (in_array($egwSearchKey, array('id','contact_id')))
 				{
-					$searchFilter .= $this->ids_filter($searchValue);
+					try {
+						$searchFilter .= $this->ids_filter($searchValue);
+					}
+					// catch and ignore exception caused by id not being a valid GUID
+					catch(Api\Exception\AssertionFailed $e) {
+						unset($e);
+					}
 					continue;
 				}
 				foreach($this->schema2egw as $mapping)
