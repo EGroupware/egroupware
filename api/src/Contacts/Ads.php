@@ -150,6 +150,7 @@ class Ads extends Ldap
 	 * Return LDAP filter for contact id
 	 *
 	 * @param string $contact_id
+	 * @throws Api\Exception\AssertionFailed if $contact_id is no valid GUID
 	 * @return string
 	 */
 	protected function id_filter($contact_id)
