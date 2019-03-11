@@ -829,6 +829,10 @@ abstract class Framework extends Framework\Extra
 					$apps[$app]['target'] = '';
 				}
 
+				// take status flag into account as we might use it on client-side.
+				// for instance: applications with status 5 will run in background
+				$apps[$app]['status'] = $data['status'];
+
 				$icon = isset($data['icon']) ?  $data['icon'] : 'navbar';
 				$icon_app = isset($data['icon_app']) ? $data['icon_app'] : $app;
 				$apps[$app]['icon']  = $apps[$app]['icon_hover']  = Image::find($icon_app,Array($icon,'nonav'),'');

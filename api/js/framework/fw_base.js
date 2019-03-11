@@ -75,12 +75,13 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		var restore = new Object;
 		var restore_count = 0;
 
-		var mkRestoreEntry = function(_app, _pos, _url, _active) {
+		var mkRestoreEntry = function(_app, _pos, _url, _active, _status) {
 			return {
 				'app': _app,
 				'position': _pos,
 				'url': _url,
-				'active': _active
+				'active': _active,
+				status: _status
 			};
 		};
 
@@ -108,7 +109,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				baseUrl, internalName);
 
 			//Create a sidebox menu entry for each application
-			if (!app.noNavbar)
+			if (!app.noNavbar && app.status != 5)
 			{
 				this.appData.sidemenuEntry = this.sidemenuUi.addEntry(
 					this.appData.displayName, this.appData.icon,
@@ -122,7 +123,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			}
 
 			//If the opened field is set, add the application to the restore array.
-			if ((typeof app.opened != 'undefined') && (app.opened !== false))
+			if ((typeof app.opened != 'undefined') && (app.opened !== false) || app.status == 5)
 			{
 				defaultApp = null;
 
@@ -131,7 +132,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 					url = app.openOnce;
 
 				restore[this.appData.appName] = mkRestoreEntry(this.appData, app.opened,
-					url, app.active ? 1 : 0);
+					url, app.active ? 1 : 0, app.status);
 				restore_count += 1;
 			}
 
@@ -155,17 +156,18 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	 * @param {bool} _hidden specifies, whether the application should be set active
 	 *   after opening the tab
 	 * @param {int} _pos
+	 * @param {status} _status
 	 *
 	 * @return {Deferred|null} Deferred Promise, will be resolved when the tab is loaded
 	 */
-	applicationTabNavigate: function(_app, _url, _hidden, _pos)
+	applicationTabNavigate: function(_app, _url, _hidden, _pos, _status)
 	{
 		//Default the post parameter to -1
 		if (typeof _pos == 'undefined')
 			_pos = -1;
 
 		//Create the tab for that application
-		this.createApplicationTab(_app, _pos);
+		this.createApplicationTab(_app, _pos, _status);
 
 		// Response
 		var deferred = new jQuery.Deferred();
@@ -212,6 +214,11 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		{
 			deferred = _app.browser.browse(_url);
 			this.setActiveApp(_app);
+		}
+		// load application with status 5 as it will run in the background
+		else if (_status == 5)
+		{
+			deferred = _app.browser.browse(_url);
 		}
 		else
 		{
@@ -473,7 +480,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	 * @param {int} _pos
 	 * Checks whether the application already owns a tab and creates one if it doesn't exist
 	 */
-	createApplicationTab: function(_app, _pos)
+	createApplicationTab: function(_app, _pos, _status)
 	{
 		//Default the pos parameter to -1
 		if (typeof _pos == 'undefined')
@@ -488,7 +495,8 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 			//Set the tab closeable if there's more than one tab
 			this.tabsUi.setCloseable(this.tabsUi.tabs.length > 1);
-
+			// Do not show tab header if the app is with status 5, means run in background
+			if (_status == 5) _app.tab.hideTabHeader(true);
 
 		}
 	},

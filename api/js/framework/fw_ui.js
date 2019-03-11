@@ -469,6 +469,14 @@ egw_fw_ui_tab.prototype.hide = function()
 };
 
 /**
+ * hide tab header only
+ */
+egw_fw_ui_tab.prototype.hideTabHeader = function()
+{
+	jQuery(this.headerDiv).hide();
+};
+
+/**
  * Removes this tab and all its content.
  */
 egw_fw_ui_tab.prototype.remove = function()

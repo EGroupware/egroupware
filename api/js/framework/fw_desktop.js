@@ -250,7 +250,7 @@
 			for (var i = 0; i < sorted_restore.length; i++)
 				this.applicationTabNavigate(
 					sorted_restore[i].app, sorted_restore[i].url, i != 0,
-					sorted_restore[i].position);
+					sorted_restore[i].position, sorted_restore[i]['status']);
 
 			//Set the current state of the tabs and activate TabChangeNotification.
 			this.serializedTabState = egw.jsonEncode(this.assembleTabList());
