@@ -100,3 +100,6 @@ div#infolog-edit_infolog-edit-description {
 	width: 150px;
 }
 #infolog_edit_info_responsible_chzn { width:99% !important;}
+#infolog-edit_clean_history {
+	display: none;
+}

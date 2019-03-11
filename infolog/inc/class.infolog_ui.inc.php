@@ -1835,6 +1835,13 @@ class infolog_ui
 							$content = array_merge($content,$to_write);
 						}
 					}
+
+					// Need to purge description history after encryption?
+					if($content['clean_history'])
+					{
+						$history = new Api\Storage\History('infolog');
+						$record_count = $history->delete_field($info_id, 'De');
+					}
 				}
 				elseif ($button == 'delete' && $info_id > 0)
 				{

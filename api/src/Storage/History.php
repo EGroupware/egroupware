@@ -86,6 +86,27 @@ class History
 	}
 
 	/**
+	 * Delete history log of a certain field
+	 * @param string $record_id ID of the record
+	 * @param string $status Field name / ID
+	 */
+	function delete_field($record_id, $status)
+	{
+		$where = array(
+			'history_appname' => $this->appname,
+			'history_status' => $status
+		);
+
+		if (is_array($record_id) || is_numeric($record_id))
+		{
+			$where['history_record_id'] = $record_id;
+		}
+		$this->db->delete(self::TABLE,$where,__LINE__,__FILE__);
+
+		return $this->db->affected_rows();
+	}
+
+	/**
 	 * Add a history record, if $new_value != $old_value
 	 *
 	 * @param string $status 2 letter code: eg. $this->types: C=Created, D=Deleted, E=Edited
