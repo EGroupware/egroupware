@@ -7,7 +7,7 @@
  * @subpackage etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-18 by RalfBecker@outdoor-training.de
+ * @copyright 2002-19 by RalfBecker@outdoor-training.de
  */
 
 namespace EGroupware\Api\Etemplate\Widget;
@@ -763,6 +763,43 @@ class Nextmatch extends Etemplate\Widget
 	}
 
 	/**
+	 * Merges actions together with positions based on group parameter
+	 *
+	 * @param array $actions
+	 * @param array $actions2
+	 * @return array
+	 */
+	static function merge_actions_by_group(array $actions, array $actions2)
+	{
+		//error_log(__METHOD__.'('.array2string($actions).', '.array2string($actions2).')');
+
+		//return array_merge_recursive($actions, $actions2);
+		foreach($actions2 as $name => $action)
+		{
+			// overwrite existing action of given name or append action without group
+			if (isset($actions[$name]) || !isset($action['group']))
+			{
+				$actions[$name] = $action;
+			}
+			// find position to insert action
+			else
+			{
+				$n = 0;
+				foreach($actions as $a)
+				{
+					if ($a['group'] > $action['group']) break;
+					++$n;
+				}
+				$actions = array_merge(array_slice($actions, 0, $n),
+					array($name => $action),
+					array_slice($actions, $n, count($actions)-$n));
+			}
+		}
+		//error_log(__METHOD__.'() returning '.array2string($actions));
+		return $actions;
+	}
+
+	/**
 	 * Default maximum length for context submenus, longer menus are put as a "More" submenu
 	 */
 	const DEFAULT_MAX_MENU_LENGTH = 14;
@@ -816,6 +853,19 @@ class Nextmatch extends Etemplate\Widget
 	{
 		//echo "<p>".__METHOD__."(\$actions, '$template_name', '$prefix', \$action_links, $max_length) \$actions="; _debug_array($actions);
 		$first_level = !$action_links;	// add all first level actions
+
+		if ($first_level)
+		{
+			// allow other apps to add actions
+			foreach(Api\Hooks::process(array(
+				'location' => 'add_row_actions',
+				'template_name' => $template_name,
+			), array('policy'), true) as $app => $data)
+			{
+				// todo: place new items based on group
+				if ($data) $actions = self::merge_actions_by_group((array)$actions, $data);
+			}
+		}
 
 		//echo "actions="; _debug_array($actions);
 		$egw_actions = array();
@@ -1053,7 +1103,6 @@ class Nextmatch extends Etemplate\Widget
 		return $cat_actions;
 	}
 
-
 	/**
 	 * Validate input
 	 *
@@ -1091,7 +1140,6 @@ class Nextmatch extends Etemplate\Widget
 		{
 			$validated += $content[$value[$preserve['action_var']].'_popup'];
 		}
-
 
 		// Save current column settings as default, clear, or force (admins only)
 		if($GLOBALS['egw_info']['user']['apps']['admin'] && $app && $value['selectcols'])

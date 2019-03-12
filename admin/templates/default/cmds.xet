@@ -5,51 +5,63 @@
 	<template id="admin.cmds.rows" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%">
 			<columns>
-				<column width="30%" minWidth="300"/>
-				<column/>
-				<column/>
-				<column/>
-				<column width="120"/>
-				<column width="120"/>
-				<column width="120"/>
-				<column width="30%" minWidth="120"/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
+				<column width="20%" minWidth="300"/> <!-- Title -->
+				<column width="200"/>                <!-- Application -->
+				<column width="200"/>                <!-- Account -->
+				<column width="200"/>                <!-- Type -->
+				<column width="200"/>                <!-- Requested -->
+				<column width="15%" minWidth="120"/> <!-- Comment -->
+				<column width="120"/>                <!-- Scheduled -->
+				<column width="80"/>                 <!-- Periodic -->
+				<column/>                            <!-- Remote -->
+				<column width="200"/>                <!-- Created/or -->
+				<column width="15%" minWidth="120"/> <!-- Status/Error -->
+				<column width="200"/>                <!-- Mofified/r -->
 			</columns>
 			<rows>
 				<row class="th">
 					<nextmatch-header label="Title" id="title"/>
+					<nextmatch-filterheader type="select-app" empty_label="Application" id="app"/>
+					<nextmatch-accountfilter empty_label="Account" id="account"/>
 					<nextmatch-filterheader empty_label="Type" id="type"/>
 					<nextmatch-accountfilter empty_label="Requested" id="requested"/>
 					<nextmatch-header label="Comment" id="comment"/>
-					<nextmatch-sortheader label="Scheduled" id="scheduled"/>
+					<nextmatch-sortheader label="Scheduled" id="cmd_scheduled"/>
 					<nextmatch-filterheader empty_label="Periodic" id="periodic"/>
 					<nextmatch-filterheader options="Remote" id="remote_id"/>
-					<nextmatch-sortheader label="Created" id="created"/>
-					<nextmatch-accountfilter empty_label="Creator" id="creator"/>
+					<vbox>
+						<nextmatch-sortheader label="Created" id="cmd_created"/>
+						<nextmatch-accountfilter empty_label="Creator" id="creator"/>
+					</vbox>
 					<nextmatch-filterheader empty_label="Status" id="status"/>
-					<nextmatch-sortheader label="Modified" id="modified"/>
-					<nextmatch-accountfilter options="Modifier" id="modifier"/>
+					<vbox>
+						<nextmatch-sortheader label="Modified" id="cmd_modified"/>
+						<nextmatch-accountfilter options="Modifier" id="modifier"/>
+					</vbox>
 				</row>
 				<row class="row $row_cont[class]">
 					<description id="${row}[title]" statustext="$row_cont[data]"/>
+					<select-app id="${row}[app]" readonly="true"/>
+					<select-account id="${row}[account]" readonly="true"/>
 					<select id="${row}[type]" readonly="true"/>
 					<url-email id="${row}[requested_email]" readonly="true" statustext="$row_cont[comment]"/>
 					<description id="${row}[comment]"/>
 					<date-time id="${row}[scheduled]" readonly="true"/>
 					<description id="${row}[rrule]"/>
 					<select id="${row}[remote_id]" readonly="true"/>
-					<date-time id="${row}[created]" readonly="true"/>
-					<select-account id="${row}[creator]" readonly="true" statustext="$row_cont[creator_email]"/>
+					<vbox>
+						<date-time id="${row}[created]" readonly="true"/>
+						<select-account id="${row}[creator]" readonly="true" statustext="$row_cont[creator_email]"/>
+					</vbox>
 					<vbox>
 						<select id="${row}[status]" readonly="true"/>
 						<description id="${row}[error]" class="redItalic"/>
 						<description id="${row}[value]"/>
 					</vbox>
-					<date-time id="${row}[modified]" readonly="true"/>
-					<select-account id="${row}[modifier]" readonly="true" statustext="$row_cont[modifier_email]"/>
+					<vbox>
+						<date-time id="${row}[modified]" readonly="true"/>
+						<select-account id="${row}[modifier]" readonly="true" statustext="$row_cont[modifier_email]"/>
+					</vbox>
 				</row>
 			</rows>
 		</grid>
