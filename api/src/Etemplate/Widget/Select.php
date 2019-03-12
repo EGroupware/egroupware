@@ -605,7 +605,9 @@ class Select extends Etemplate\Widget
 						// These are extra info for easy dealing with categories
 						// client side, without extra loading
 						'main'  => (int)$cat['main'],
-						'children'	=> $cat['children']
+						'children'	=> $cat['children'],
+						//add different class per level to allow different styling for each category level:
+						'class' => "cat_level". $cat['level']
 					);
 					// Send data too
 					if(is_array($cat['data']))
