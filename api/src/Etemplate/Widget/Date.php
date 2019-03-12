@@ -22,8 +22,8 @@ use EGroupware\Api;
  *
  * Deals with date and time.  Overridden to handle date-houronly as a transform
  *
- * Supported attributes: dataformat[,mode]
- *  dataformat: '' = timestamps or automatic conversation, or eg. 'Y-m-d H:i:s' for 2002-12-31 23:59:59
+ * Supported attributes: data_format[,mode]
+ *  data_format: '' = timestamps or automatic conversation, or eg. 'Y-m-d H:i:s' for 2002-12-31 23:59:59
  *  mode: &1 = year is int-input not selectbox, &2 = show a [Today] button, (html-UI always uses jscal and dont care for &1+&2)
  *           &4 = 1min steps for time (default is 5min, with fallback to 1min if value is not in 5min-steps),
  *           &8 = dont show time for readonly and type date-time if time is 0:00,
@@ -50,7 +50,7 @@ class Date extends Transformer
 	 *
 	 * @var string|array
 	 */
-	protected $legacy_options = 'dataformat,mode';
+	protected $legacy_options = 'data_format,mode';
 
 
 	/**
@@ -107,9 +107,9 @@ class Date extends Transformer
 	{
 		if (!$value) return $value;	// otherwise we will get current date or 1970-01-01 instead of an empty value
 
-		if ($this->attrs['dataformat'])
+		if ($this->attrs['data_format'])
 		{
-			$date = Api\DateTime::createFromFormat($this->attrs['dataformat'], $value, Api\DateTime::$user_timezone);
+			$date = Api\DateTime::createFromFormat($this->attrs['data_format'], $value, Api\DateTime::$user_timezone);
 		}
 		else
 		{
@@ -162,7 +162,7 @@ class Date extends Transformer
 					$date = null;
 					$value = '';
 					// this is not really a user error, but one of the clientside engine
-					self::set_validation_error($form_name,lang("'%1' is not a valid date !!!", $value).' '.$this->dataformat);
+					self::set_validation_error($form_name,lang("'%1' is not a valid date !!!", $value).' '.$this->data_format);
 				}
 			}
 
@@ -232,19 +232,19 @@ class Date extends Transformer
 				// Not null, blank
 				$value = '';
 			}
-			elseif ($date && empty($this->attrs['dataformat']))	// integer timestamp
+			elseif ($date && empty($this->attrs['data_format']))	// integer timestamp
 			{
 				$valid = $date->format('ts');
 			}
 			// string with formatting letters like for php's date() method
-			elseif ($date && ($valid = $date->format($this->attrs['dataformat'])))
+			elseif ($date && ($valid = $date->format($this->attrs['data_format'])))
 			{
 				// Nothing to do here
 			}
 			else
 			{
 				// this is not really a user error, but one of the clientside engine
-				self::set_validation_error($form_name,lang("'%1' is not a valid date !!!", $value).' '.$this->dataformat);
+				self::set_validation_error($form_name,lang("'%1' is not a valid date !!!", $value).' '.$this->data_format);
 			}
 			//error_log("$this : ($valid)" . Api\DateTime::to($valid));
 		}
