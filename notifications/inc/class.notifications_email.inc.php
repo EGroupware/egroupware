@@ -90,8 +90,6 @@ class notifications_email implements notifications_iface {
 	 */
 	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false, $_data = false)
 	{
-		unset ($_data);
-
 		$body_plain = $_messages['plain'].$this->render_links($_links, false, $this->preferences->external_mailclient);
 		$body_html = "<html><body>\n".$_messages['html'].$this->render_links($_links, true, $this->preferences->external_mailclient)."</body>\n</html>\n";
 
@@ -105,6 +103,10 @@ class notifications_email implements notifications_iface {
 		//error_log(__METHOD__.__LINE__."preparing notification message via email.".array2string($this->mail));
 
 		$this->mail->setFrom($this->sender->account_email, $this->sender->account_fullname);
+
+		if ( $_data && isset( $_data['reply_to'] ) ) {
+			$this->mail->addAddress($_data['reply_to'], '', 'replyto');
+		}
 
 		$this->mail->addHeader('Subject', trim($_subject)); // trim the subject to avoid strange wrong encoding problem
 		if ($_messages['html'])
