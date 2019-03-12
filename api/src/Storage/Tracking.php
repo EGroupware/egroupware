@@ -304,6 +304,7 @@ abstract class Tracking
 	 *  - 'subject' string subject line for the notification of $data,$old, defaults to link-title
 	 *  - 'link' string of link to view $data
 	 *  - 'sender' sender of email
+	 *  - 'reply_to' reply to of email
 	 *  - 'skip_notify' array of email addresses that should _not_ be notified
 	 *  - CUSTOM_NOTIFICATION string notification body message.  Merge print placeholders are allowed.
 	 * @param array $data current entry
@@ -787,6 +788,7 @@ abstract class Tracking
 
 			// get rest of notification message
 			$sender = $this->get_sender($data,$old,true,$receiver);
+			$reply_to = $this->get_reply_to($data,$old);
 			$subject = $this->get_subject($data,$old,$deleted,$receiver);
 			$link = $this->get_notification_link($data,$old,$receiver);
 			$attachments = $this->get_attachments($data,$old,$receiver);
@@ -825,6 +827,7 @@ abstract class Tracking
 				$body_cache['html'] = "<span style='display:none;'>-----".lang('original message')."-----</span>"."\r\n".$body_cache['html'];
 				$notification->set_message($body_cache['html'], 'html');
 				$notification->set_sender($sender);
+				$notification->set_reply_to($reply_to);
 				$notification->set_subject($subject);
 				$notification->set_links(array($link));
 				$notification->set_popupdata($link['app'], $link);
@@ -913,6 +916,23 @@ abstract class Tracking
 		}
 		//echo "<p>".__METHOD__."()='".htmlspecialchars($sender)."'</p>\n";
 		return $sender;
+	}
+
+	/**
+	 * Get reply to address
+	 *
+	 * The default implementation prefers depending on what is returned by get_config('reply_to').
+	 *
+	 * @param int $user account_lid of user
+	 * @param array $data
+	 * @param array $old
+	 * @return string or null
+	 */
+	protected function get_reply_to($data,$old)
+	{
+		$reply_to = $this->get_config('reply_to',$data,$old);
+		
+		return $reply_to;
 	}
 
 	/**
