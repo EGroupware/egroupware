@@ -591,7 +591,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		this.createInputWidget();
 		var self = this;
-		
+
 		jQuery(this.getInstanceManager().DOMContainer).on('clear', function(){
 			// We need to unbind events to prevent a second triggerd event handler
 			// (eg. setting a project in infolog edit dialog) when the widget gets cleared.
@@ -1226,6 +1226,12 @@ var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 			"type": "string",
 			"default": "view",
 			"description": "Hook used for displaying link (view/edit/add)"
+		},
+		"target_app": {
+			"name": "Target application",
+			"type": "string",
+			"default": "",
+			"description": "Optional parameter to be passed to egw().open in order to open links in specified application"
 		}
 	},
 	legacyOptions: ["only_app"],
@@ -1298,7 +1304,10 @@ var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		{
 			this.link.addClass("et2_link");
 			this.link.click( function(e){
-				self.egw().open(_value, "", self.options.link_hook,_value.extra_args,_value.app,_value.app);
+				if( !self.options.target_app ){
+					self.options.target_app = _value.app;
+				}
+				self.egw().open(_value, "", self.options.link_hook,_value.extra_args,_value.app, self.options.target_app);
 				e.stopImmediatePropagation();
 			});
 		}
@@ -1653,6 +1662,12 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 			type: "boolean",
 			"default": false,
 			description: "Does NOT allow user to enter data, just displays existing data"
+		},
+		"target_app": {
+			"name": "Target application",
+			"type": "string",
+			"default": "",
+			"description": "Optional parameter to be passed to egw().open in order to open links in specified application "
 		}
 	},
 
@@ -1933,7 +1948,10 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 					}
 					else
 					{
-						self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,_link_data.app);
+						if( !self.options.target_app ){
+							self.options.target_app = _link_data.app;
+						}
+						self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,self.options.target_app);
 					}
 				});
 			}
