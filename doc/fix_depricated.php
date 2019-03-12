@@ -1,17 +1,14 @@
 #!/usr/bin/php -qC
 <?php
 /**
- * EGroupware - fix in 5.3 depricated (in 6 not longer existing) functions and constructs
+ * EGroupware - fix deprecated PHP functions and constructs
  *
  * The depricated warnings fill up the log files, as they can not be swichted off in the logs.
- * The biggest issue are posix regular expressions (ereg, split, ereg_replace) and
- * php4 assignment of objects (specially new obj()) by reference.
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author RalfBecker@outdoor-training.de
- * @copyright 2009/10 by RalfBecker@outdoor-training.de
- * @version $Id$
+ * @copyright 2009-19 by RalfBecker@outdoor-training.de
  */
 
 if (php_sapi_name() !== 'cli')	// security precaution: forbit calling as web-page
@@ -23,7 +20,7 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling as web-pag
  * Fix depricated stuff in a given file
  *
  * @param string $file filename
- * @param boolean $replace_file=false replace existing file if modifications are necessary, otherwise .php53 file is created
+ * @param boolean $replace_file =false replace existing file if modifications are necessary, otherwise .php53 file is created
  * @return boolean false on error
  */
 function fix_depricated($file,$replace_file=false)
@@ -33,12 +30,42 @@ function fix_depricated($file,$replace_file=false)
 	global $prog;
 	if (basename($file) == $prog) return true;	// dont fix ourself ;-)
 
+	// match "variables" like: $var, $obj->attr, $arr['key']
+	$variable = '\$[a-z_0-9\[\]\'>-]+';
+
+	// list($key) = each($array); --> $key = key($array);
+	if (preg_match("/each\(($variable)\);/i", $lines))
+	{
+		$lines = preg_replace("/list\(($variable)\)\s+=\s+@?each\(($variable)\);/i", '$1 = key($2);', $lines);
+
+		// list($key, $val) = each($array); --> $key = key($array); $val = current($array);
+		if (preg_match("/[^=]+=\s+@?each\(($variable)\);/i", $lines))
+		{
+			$lines = preg_replace("/^(\s)*list\(($variable),\s*($variable)\)\s+=\s+@?each\(($variable)\);/mi",
+				'$1$2 = key($4);$1$3 = current($4);', $lines);
+
+			$matches = null;
+			if (preg_match_all("/^[^=]+=\s+@?each\(($variable)\);/i", $lines, $matches, PREG_PATTERN_ORDER))
+			{
+				error_log("Unfixed each(...) constructs: ", implode(' ', $matches[0]));
+			}
+		}
+	}
+
+	// count($non_array) --> is_array($non_array) && count($non_array)
+	/* commented as (in most cases) unnecessary, if argument is garantied to be an array
+	if (preg_match('/count\((\$[a-z_0-9]+)\)/i', $lines))
+	{
+		$lines = preg_replace('/count\((\$[a-z_0-9]+)\)/i', 'is_array($1) && $0', $lines);
+	}*/
+
 	// PHP Deprecated:  Assigning the return value of new by reference is deprecated
 	if (preg_match('/= *& *new /m',$lines))
 	{
 		$lines = preg_replace('/= *& *new /','= new ',$lines);
 	}
 	// PHP Deprecated:  Function split() is deprecated
+	$matches = null;
 	if (preg_match_all('/[= \t(]+spliti? *\\(("[^"]*"|\'[^\']*\'),/m',$lines,$matches))
 	{
 		$replace = array();
@@ -96,7 +123,6 @@ function fix_depricated($file,$replace_file=false)
 		foreach($matches[1] as $key => $pattern)
 		{
 			$full_pattern = $matches[0][$key];
-			$other = $matches[2][$key];
 
 			// simple replace --> use str_replace()
 			if (preg_quote($pattern) == $pattern)
@@ -129,13 +155,14 @@ function fix_depricated($file,$replace_file=false)
 
 	if ($lines != $orig)
 	{
-		file_put_contents($file.'53',$lines);
-		system('/usr/bin/php -l '.$file.'53',$ret);
-		system('/usr/bin/diff -u '.$file.' '.$file.'53');
+		file_put_contents($file.'.new',$lines);
+		$ret = null;
+		system('/usr/bin/php -l '.$file.'.new',$ret);
+		system('/usr/bin/diff -u '.$file.' '.$file.'.new');
 		if (!$ret && $replace_file)
 		{
 			unlink($file);
-			rename($file.'53',$file);
+			rename($file.'.new',$file);
 		}
 		return !$ret;
 	}
@@ -146,7 +173,7 @@ function fix_depricated($file,$replace_file=false)
  * Loop recursive through directory and call fix_depricated for each php file
  *
  * @param string $dir
- * @param boolean $replace_file=false replace existing file if modifications are necessary, otherwise .php53 file is created
+ * @param boolean $replace_file =false replace existing file if modifications are necessary, otherwise .php53 file is created
  * @return boolean false on error
  */
 function fix_depricated_recursive($dir,$replace_file=false)
@@ -174,7 +201,7 @@ function fix_depricated_recursive($dir,$replace_file=false)
 /**
  * Give usage
  *
- * @param string $error=null
+ * @param string $error =null
  */
 function usage($error=null)
 {
