@@ -1123,6 +1123,7 @@ class infolog_ui
 			'no_notifications' => array(
 				'caption' => 'Do not notify',
 				'checkbox' => true,
+				'confirm_mass_selection' => "You are going to change %1 entries: Are you sure you want to send notifications about this change?",
 				'hint' => 'Do not notify of these changes',
 				'group' => $group,
 			),
@@ -1132,6 +1133,7 @@ class infolog_ui
 				'group' => ++$group,
 				'icon' => 'edit',
 				'disableClass' => 'rowNoEdit',
+				'confirm_mass_selection' => true,
 				'children' => array(
 					'type' => array(
 						'caption' => 'Type',
@@ -1187,6 +1189,7 @@ class infolog_ui
 				'icon' => 'done',
 				'group' => $group,
 				'disableClass' => 'rowNoClose',
+				'confirm_mass_selection' => true,
 			),
 			'close_all' => array(
 				'caption' => 'Close all',
@@ -1195,6 +1198,7 @@ class infolog_ui
 				'hint' => 'Sets the status of this entry and its subs to done',
 				'allowOnMultiple' => false,
 				'disableClass' => 'rowNoCloseAll',
+				'confirm_mass_selection' => true,
 			),
 			'print' => array(
 				'caption' => 'Print',
@@ -1283,6 +1287,7 @@ class infolog_ui
 			'group' => ++$group,
 			'disableClass' => 'rowNoDelete',
 			'onExecute' => 'javaScript:app.infolog.confirm_delete',
+			'confirm_mass_selection' => true,
 		);
 		if ($query['col_filter']['info_status'] == 'deleted')
 		{
@@ -1291,6 +1296,7 @@ class infolog_ui
 				'group' => $group,
 				'icon' => 'revert',
 				'disableClass' => 'rowNoUndelete',
+				'confirm_mass_selection' => true,
 			);
 		}
 		$actions['info_drop_mail'] = array(

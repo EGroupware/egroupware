@@ -34,6 +34,7 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 	action.checkbox = false;
 	action.radioGroup = 0;
 	action.checked = false;
+	action.confirm_mass_selection = null;
 	action.shortcut = null;
 
 	action.set_default = function(_value) {
@@ -59,6 +60,16 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 
 	action.set_checked = function(_value) {
 		action.checked = _value;
+	};
+
+	/**
+	 * Set either a confirmation prompt, or TRUE to indicate that this action
+	 * cares about large selections and to ask the confirmation prompt(s)
+	 * 
+	 * @param {String|Boolean} _value
+	 */
+	action.set_confirm_mass_selection = function(_value) {
+		action.confirm_mass_selection = _value;
 	};
 
 	// Allow checkbox to be set from context using the given function

@@ -269,8 +269,8 @@ egwAction.prototype.getActionsByAttr = function(_attr, _val)
 {
 	var _actions = [];
 
-	// If the current action object has the given attr AND value, return it
-	if (typeof this[_attr] != "undefined" && this[_attr] === _val)
+	// If the current action object has the given attr AND value, or no value was provided, return it
+	if (typeof this[_attr] != "undefined" && (this[_attr] === _val || typeof _val === "undefined" && this[_attr] !== null))
 	{
 		_actions.push(this);
 	}
@@ -589,11 +589,82 @@ egwAction.prototype.setDefaultExecute = function(_value)
  */
 egwAction.prototype.execute = function(_senders, _target)
 {
-	if (typeof _target == "undefined")
+	if (typeof _target === "undefined")
 	{
 		_target = null;
 	}
 
+	if(!this._check_confirm_mass_selections(_senders, _target))
+	{
+		this._check_confirm(_senders, _target);
+	}
+};
+
+/**
+ * If this action needs to confirm mass selections (attribute confirm_mass_selection = true),
+ * check for any checkboxes that have a confirmation prompt (confirm_mass_selection is a string)
+ * and are unchecked.  We then show the prompt, and set the checkbox to their answer.
+ *
+ * * This is only considered if there are more than 20 entries selected.
+ *
+ * * Only the first confirmation prompt / checkbox action will be used, others
+ *		will be ignored.
+ *
+ * @param {type} _senders
+ * @param {type} _target
+ * @returns {Boolean}
+ */
+egwAction.prototype._check_confirm_mass_selections = function(_senders, _target)
+{
+	var obj_manager = egw_getObjectManager(this.getManager().parent.id, false);
+	if (!obj_manager)
+	{
+		return false;
+	}
+
+	// Action needs to care about mass selection - check for parent that cares too
+	var confirm_mass_needed = false;
+	var action = this;
+	while(action && action !== obj_manager.manager && !confirm_mass_needed)
+	{
+		confirm_mass_needed = action.confirm_mass_selection;
+		action = action.parent;
+	}
+	if(!confirm_mass_needed) return false;
+
+	// Check for confirm mass selection checkboxes
+	var confirm_mass_selections = obj_manager.manager.getActionsByAttr("confirm_mass_selection");
+	confirm_mass_needed = _senders.length > 20;
+	var self = this;
+
+	// Find & show prompt
+	for (var i = 0; confirm_mass_needed && i < confirm_mass_selections.length; i++)
+	{
+		var check = confirm_mass_selections[i];
+		if(check.checkbox === false || check.checked === true) continue;
+
+		// Show the mass selection prompt
+		var msg = egw.lang(check.confirm_mass_selection, obj_manager.getAllSelected() ? egw.lang('all') : _senders.length);
+		var callback = function(_button)
+		{
+			// YES = unchecked, NO = checked
+			check.set_checked(_button === et2_dialog.NO_BUTTON);
+			if(_button !== et2_dialog.CANCEL_BUTTON)
+			{
+				self._check_confirm(self, _senders, _target);
+			}
+		};
+		et2_dialog.show_dialog(callback, msg, self.data.hint, {}, et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.QUESTION_MESSAGE);
+		return true;
+	}
+	return false;
+};
+
+/**
+ * Check to see if action needs to be confirmed by user before we do it
+ */
+egwAction.prototype._check_confirm = function(_senders, _target)
+{
 	// check if actions needs to be confirmed first
 	if (this.data && (this.data.confirm || this.data.confirm_multiple) && this.onExecute.fcnt != window.nm_action &&
 		typeof et2_dialog != 'undefined')	// let old eTemplate run it's own confirmation from nextmatch_action.js
