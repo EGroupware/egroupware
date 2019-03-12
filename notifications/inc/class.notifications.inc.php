@@ -113,6 +113,12 @@ class notifications {
 	protected $sender;
 
 	/**
+	 * email address for reply to
+	 * @var string
+	 */
+	protected $reply_to;
+
+	/**
 	 * holds notification subject
 	 * @var string
 	 */
@@ -227,6 +233,16 @@ class notifications {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Set reply_to for the current notification
+	 *
+	 * @param $_reply_to string for email address to reply to
+	 */
+	public function set_reply_to($_reply_to) {
+		$this->reply_to = $_reply_to;
+		return true;
 	}
 
 	/**
@@ -550,6 +566,8 @@ class notifications {
 							if (!empty($this->popupsubject)) $lsubject = $this->popupsubject;
 							if ($this->popup_links) $llinks = $this->popup_links;
 							if (is_array($this->popup_data)) $popup_data = $this->popup_data;
+						} elseif ($backend == 'email') {
+							if (!empty($this->reply_to)) $popup_data = array( 'reply_to' => $this->reply_to );
 						}
 						$obj->send($this->prepend_message($messages, $prepend_message), $lsubject, $llinks, $this->attachments, $popup_data);
 
