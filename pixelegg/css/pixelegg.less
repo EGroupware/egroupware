@@ -215,8 +215,8 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
     border-left: 4px solid transparent;
 }
 
-.et2_taglist_category span[class*="cat_"] {width:4px;}
-.et2_taglist_category.et2_taglist_single span[class*="cat_"] {
+.et2_taglist_category span[class*="cat_"]:not([class*="cat_level"]) {width:4px;}
+.et2_taglist_category.et2_taglist_single span[class*="cat_"]:not([class*="cat_level"]) {
     height: 1.5em;
     margin-bottom: -6px;
     position: absolute;
