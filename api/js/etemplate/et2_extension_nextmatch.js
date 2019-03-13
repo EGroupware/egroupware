@@ -3355,6 +3355,14 @@ et2_register_widget(et2_nextmatch_sortheader, ['nextmatch-sortheader']);
  */
 var et2_nextmatch_filterheader = (function(){ "use strict"; return et2_selectbox.extend([et2_INextmatchHeader, et2_IResizeable],
 {
+	attributes: {
+		"widget_type": {
+			"name": "Actual type",
+			"type": "string",
+			"description": "The actual type of widget you should use",
+			"no_lang": 1
+		}
+	},
 	/**
 	 * Override to add change handler
 	 *
