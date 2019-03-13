@@ -7533,6 +7533,7 @@ class Mail
 			$envelope = $this->getMessageEnvelope($params['uid'], '', false, $params['mailbox']);
 			$from = $this->stripRFC822Addresses($envelope['FROM']);
 			$message_parts = $this->smime->extractSignedContents($message);
+			$cert_email = strtolower($cert->email);
 			//$f = $message_parts->_headers->getHeader('from');
 			$metadata = array_merge ($metadata, array (
 				'verify'		=> $cert->verify,
@@ -7540,12 +7541,12 @@ class Mail
 				'certDetails'	=> $this->smime->parseCert($cert->cert),
 				'msg'			=> $cert->msg,
 				'certHtml'		=> $this->smime->certToHTML($cert->cert),
-				'email'			=> $cert->email,
+				'email'			=> $cert_email,
 				'signed'		=> true
 			));
 			// check for email address if both signer email address and
 			// email address of sender are the same. It also takes  subjectAltName emails into account.
-			if (is_array($from) && strcasecmp($from[0], $cert->email) != 0
+			if (is_array($from) && strcasecmp($from[0], $cert_email) != 0
 					&& stripos($metadata['certDetails']['extensions']['subjectAltName'],$from[0]) === false)
 			{
 				$metadata['unknownemail'] = true;
@@ -7553,8 +7554,8 @@ class Mail
 			}
 
 			$AB_bo   = new \addressbook_bo();
-			$certkey = $AB_bo->get_smime_keys($cert->email);
-			if (!is_array($certkey) || strcasecmp(trim($certkey[$cert->email]), trim($cert->cert)) != 0) $metadata['addtocontact'] = true;
+			$certkey = $AB_bo->get_smime_keys($cert_email);
+			if (!is_array($certkey) || strcasecmp(trim($certkey[$cert_email]), trim($cert->cert)) != 0) $metadata['addtocontact'] = true;
 		}
 		else // only encrypted message
 		{
