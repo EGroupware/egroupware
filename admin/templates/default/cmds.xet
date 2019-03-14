@@ -21,7 +21,7 @@
 			<rows>
 				<row class="th">
 					<nextmatch-header label="Title" id="title"/>
-					<nextmatch-filterheader widget_type="select-app" empty_label="Application" id="app"/>
+					<nextmatch-customfilter type="select-app" empty_label="Application" id="app"/>
 					<nextmatch-accountfilter empty_label="Account" id="account"/>
 					<nextmatch-filterheader empty_label="Type" id="type"/>
 					<nextmatch-accountfilter empty_label="Requested" id="requested"/>
