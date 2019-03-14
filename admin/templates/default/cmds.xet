@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
 <overlay>
 	<template id="admin.cmds.rows" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%">
@@ -21,8 +20,8 @@
 			<rows>
 				<row class="th">
 					<nextmatch-header label="Title" id="title"/>
-					<nextmatch-customfilter type="select-app" empty_label="Application" id="app"/>
-					<nextmatch-accountfilter empty_label="Account" id="account"/>
+					<nextmatch-customfilter type="select-app" empty_label="All applications" id="app"/>
+					<nextmatch-accountfilter empty_label="All accounts" id="account"/>
 					<nextmatch-filterheader empty_label="Type" id="type"/>
 					<nextmatch-accountfilter empty_label="Requested" id="requested"/>
 					<nextmatch-header label="Comment" id="comment"/>

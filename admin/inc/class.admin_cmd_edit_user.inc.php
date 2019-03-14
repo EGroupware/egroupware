@@ -225,6 +225,18 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	}
 
 	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * Reading them from admin.account template
+	 *
+	 * @return array
+	 */
+	function get_change_labels()
+	{
+		return $this->change_labels_from_template('admin.account');
+	}
+
+	/**
 	 * parse the expired string and return the expired date as timestamp
 	 *
 	 * @param string $str date, 'never', 'already' or '' (=dont change, or default of never of new Api\Accounts)

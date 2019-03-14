@@ -86,4 +86,24 @@ class admin_cmd_config extends admin_cmd
 		return lang('%1 site configuration',
 			lang($this->appname ? $this->appname : $this->app));
 	}
+
+	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * Reading them from admin.account template
+	 *
+	 * @return array
+	 */
+	function get_change_labels()
+	{
+		$labels = [];
+		foreach($this->change_labels_from_template(($this->appname ? $this->appname : $this->app).'.config') as $id => $label)
+		{
+			if (strpos($id, 'newsettings[') === 0)
+			{
+				$labels[substr($id, 12, -1)] = $label;
+			}
+		}
+		return $labels;
+	}
 }

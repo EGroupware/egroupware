@@ -1295,4 +1295,57 @@ abstract class admin_cmd
 	{
 		return Api\Auth::randomstring($len);
 	}
+
+	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * @return array
+	 */
+	function get_change_labels()
+	{
+		return [];
+	}
+
+	/**
+	 * Read change labels from descriptions in template:
+	 * - <description value="Expires" for="account_expires"/>
+	 * - <description value="Label"/>\n<widget id="id"/>
+	 * - <checkbox id="account_status" selected_value="A" label="Account active"/>
+	 * @param type $name
+	 */
+	protected function change_labels_from_template($name)
+	{
+		$labels = [];
+		$matches = null;
+		if (($path = Api\Etemplate::relPath($name)) &&
+			($tpl = file_get_contents(Api\Etemplate::rel2path($path))))
+		{
+			if (preg_match_all('/<description.*value="([^"]+)".*\n?.*(for|id)="([^"]+)"/sU', $tpl, $matches, PREG_PATTERN_ORDER))
+			{
+				foreach($matches[1] as $key => $name)
+				{
+					$id = $matches[3][$key];
+					$label= $matches[1][$key];
+					if (!empty($id) && !empty($label))
+					{
+						$labels[$id] = $label;
+					}
+				}
+			}
+			if (preg_match_all('/<(checkbox).*(label|id)="([^"]+)".*(label|id)="([^"]+)"/', $tpl, $matches, PREG_PATTERN_ORDER))
+			{
+				foreach($matches[2] as $key => $name)
+				{
+					$id = $name === 'id' ? $matches[3][$key] : $matches[5][$key];
+					$label= $name === 'id' ? $matches[5][$key] : $matches[3][$key];
+					if (!empty($id) && !empty($label))
+					{
+						$labels[$id] = $label;
+					}
+				}
+			}
+		}
+		error_log(__METHOD__."($name) path=$path returning ".json_encode($labels));
+		return $labels;
+	}
 }

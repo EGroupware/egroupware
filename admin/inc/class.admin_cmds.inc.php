@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007-18 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
@@ -34,6 +34,12 @@ class admin_cmds
 	{
 		Api\Cache::setSession('admin', 'cmds', $query);
 
+		// show also old api
+		if ($query['col_filter']['app'] === 'api')
+		{
+			$query['col_filter']['app'] = ['api', 'phpgwapi'];
+		}
+
 		return admin_cmd::get_rows($query,$rows,$readonlys);
 	}
 
@@ -60,9 +66,9 @@ class admin_cmds
 					'sort' => 'DESC',
 					'row_id' => 'id',
 					'default_cols' => 'title,created,creator,status',
-					'actions' => self::cmd_actions(),
 				);
 			}
+			$content['nm']['actions'] = self::cmd_actions();
 		}
 		elseif ($content['nm']['rows']['delete'])
 		{
