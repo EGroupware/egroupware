@@ -174,7 +174,7 @@ class admin_account
 			'changepassword', 'anonymous', 'mustchangepassword',
 			'account_passwd', 'account_passwd_2',
 			'account_primary_group',
-			'account_expires',
+			'account_expires', 'account_status',
 			'homedirectory', 'loginshell',
 			'requested', 'requested_email', 'comment',	// admin_cmd documentation (EPL)
 		) as $c_name => $a_name)
@@ -194,7 +194,8 @@ class admin_account
 			switch($a_name)
 			{
 				case 'account_expires':
-					$account[$a_name] = $content[$c_name] ? $content[$c_name] :
+				case 'account_status':
+					$account['account_expires'] = $content['account_expires'] ? $content['account_expires'] :
 						($content['account_status'] ? 'never' : 'already');
 					break;
 
