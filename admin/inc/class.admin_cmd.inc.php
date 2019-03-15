@@ -1344,6 +1344,18 @@ abstract class admin_cmd
 					}
 				}
 			}
+			if (preg_match_all('/<(int|float).*(label|id)="([^"]+)".*(label|id)="([^"]+)"/', $tpl, $matches, PREG_PATTERN_ORDER))
+			{
+				foreach($matches[2] as $key => $name)
+				{
+					$id = $name === 'id' ? $matches[3][$key] : $matches[5][$key];
+					$label= $name === 'id' ? $matches[5][$key] : $matches[3][$key];
+					if (!empty($id) && !empty($label))
+					{
+						$labels[$id] = $label;
+					}
+				}
+			}
 		}
 		error_log(__METHOD__."($name) path=$path returning ".json_encode($labels));
 		return $labels;

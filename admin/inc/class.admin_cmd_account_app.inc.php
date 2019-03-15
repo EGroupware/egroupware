@@ -58,6 +58,13 @@ class admin_cmd_account_app extends admin_cmd
 
 		$apps = admin_cmd::parse_apps($this->apps);
 
+		$old_rights = (array)$GLOBALS['egw']->acl->get_app_list_for_id('run', Egroupware\Api\Acl::READ, $account_id);
+		$new_rights = $this->allow ?
+			$old_rights + array($apps) :
+			array_diff($old_rights, $apps);
+
+		$this->set = $new_rights;
+		$this->old = $old_rights;
 		if ($check_only) return true;
 
 		//echo "account=$this->account, account_id=$account_id, apps: ".implode(', ',$apps)."\n";
