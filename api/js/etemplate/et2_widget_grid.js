@@ -50,6 +50,18 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 			"type": "string",
 			"default": et2_no_init,
 			"description": "PHP function called when user sorts the grid.  Setting this enables sorting the grid rows.  The callback will be passed the ID of the grid and the new order of the rows."
+		},
+		sortable_containment: {
+			name: "Sortable bounding area",
+			type: "string",
+			default: "",
+			description: "Defines bounding area for sortable items"
+		},
+		sortable_connectWith: {
+			name: "Sortable connectWith element",
+			type: "string",
+			default: "",
+			description: "Defines other sortable areas that should be connected to sort list"
 		}
 	},
 
@@ -924,6 +936,8 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 			// Header does not participate in sorting
 			items: "tr:not(.th)",
 			distance: 15,
+			containment: this.options.sortable_containment,
+			connectWith: this.options.sortable_connectWith,
 			stop: function(event, ui) {
 				self.egw(window).json(sortable,[self.tbody.sortable("toArray"), self.id],
 					null,
