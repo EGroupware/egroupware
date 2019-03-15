@@ -1833,6 +1833,15 @@ ul[id$='favorites_popup_state'] span.filter_value {
 		height: auto !important;
 		width: auto !important;
 	}
+	/** Show tab labels full width, with a little extra space */
+	.et2_tabbox .et2_tabflag {
+		width: 100%;
+		padding-top: 1em;
+		margin-bottom: 0.5em;
+	}
+	.et2_tabs {
+		overflow: visible;
+	}
 }
 /**
  * Grid / nextmatch Hierarchy

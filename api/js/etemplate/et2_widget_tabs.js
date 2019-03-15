@@ -21,7 +21,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_IInput,et2_IResizeable],
+var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_IInput,et2_IResizeable,et2_IPrint],
 {
 	attributes: {
 		'tabs': {
@@ -451,7 +451,7 @@ var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 	},
 
 	getDOMNode: function(_sender) {
-		if (_sender == this)
+		if (_sender === this || typeof _sender === 'undefined')
 		{
 			return this.container[0];
 		}
@@ -518,6 +518,43 @@ var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 		{
 			this.set_height(this.tabContainer.height());
 		}
+	},
+
+	/**
+	 * Set up for printing
+	 *
+	 * @return {undefined|Deferred} Return a jQuery Deferred object if not done setting up
+	 *  (waiting for data)
+	 */
+	beforePrint: function()
+	{
+		// Remove the "active" flag from all tabs-flags
+		jQuery(".et2_tabflag", this.flagContainer).removeClass("active");
+
+		// Remove height limit
+		this.tabContainer.css("height", '');
+
+		// Show all enabled tabs
+		for (var i = 0; i < this.tabData.length; i++)
+		{
+			var entry = this.tabData[i];
+			if(entry.hidden) continue;
+			entry.flagDiv.insertBefore(entry.contentDiv);
+			entry.contentDiv.show();
+		}
+	},
+
+	/**
+	 * Reset after printing
+	 */
+	afterPrint: function()
+	{
+		for (var i = 0; i < this.tabData.length; i++)
+		{
+			var entry = this.tabData[i];
+			entry.flagDiv.appendTo(this.flagContainer);
+		}
+		this.setActiveTab(this.get_active_tab());
 	}
 });}).call(this);
 et2_register_widget(et2_tabbox, ["tabbox"]);

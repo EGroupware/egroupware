@@ -1090,13 +1090,15 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	},
 
 	/**
-	 * Print function prints the active window
+	 * Print function prints the active window, or the provided window
 	 */
-	print: function()
+	print: function(_window)
 	{
-		if (this.activeApp && this.activeApp.appName != 'manual')
+		if (_window || this.activeApp && this.activeApp.appName != 'manual')
 		{
-			var appWindow = this.egw_appWindow(this.activeApp.appName);
+			var appWindow = _window || this.egw_appWindow(this.activeApp.appName);
+			var content = (_window && appWindow === _window) ?
+				_window.document : this.activeApp.tab.contentDiv;
 			if (appWindow)
 			{
 				appWindow.focus();
@@ -1104,8 +1106,8 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				// et2 available, let its widgets prepare
 				var deferred = [];
 				var et2_list = [];
-				jQuery('.et2_container',this.activeApp.tab.contentDiv).each(function() {
-					var et2 = etemplate2.getById(this.id);
+				jQuery('.et2_container',content).each(function() {
+					var et2 = appWindow.etemplate2.getById(this.id);
 					if(et2 && jQuery(et2.DOMContainer).filter(':visible').length)
 					{
 						deferred = deferred.concat(et2.print());
@@ -1124,12 +1126,12 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 						egw.loading_prompt(app.appName,true,egw.lang('please wait...'),app.browser.baseDiv, egwIsMobile()?'horizental':'spinner');
 
 						// Give framework a chance to deal, then reset the etemplates
-						window.setTimeout(function() {
+						appWindow.setTimeout(function() {
 							for(var i = 0; i < et2_list.length; i++)
 							{
 								et2_list[i].widgetContainer.iterateOver(function(_widget) {
 									_widget.afterPrint();
-								},et2_list[i],et2_IPrint);
+								},et2_list[i],appWindow.et2_IPrint);
 							}
 							egw.loading_prompt(app.appName,false);
 						},100);
