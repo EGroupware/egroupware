@@ -1307,6 +1307,16 @@ abstract class admin_cmd
 	}
 
 	/**
+	 * Return widget types (indexed by field key) for changes
+	 * Used by historylog widget to show the changes the command recorded.
+	 */
+	function get_change_widgets()
+	{
+		// TODO: Some kind of regex?
+		return [];
+	}
+
+	/**
 	 * Read change labels from descriptions in template:
 	 * - <description value="Expires" for="account_expires"/>
 	 * - <description value="Label"/>\n<widget id="id"/>

@@ -233,7 +233,28 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	 */
 	function get_change_labels()
 	{
-		return $this->change_labels_from_template('admin.account');
+		$labels = $this->change_labels_from_template('admin.account');
+		$labels += array(
+			'account_firstname' => 'First name',
+			'account_lastname' => 'Last name',
+			'account_email' => 'Email',
+			'account_passwd_2' => false
+		);
+		return $labels;
+	}
+
+	/**
+	 * Return list of widgets to use for displaying changes
+	 */
+	function get_change_widgets() {
+		$widgets = parent::get_change_widgets();
+
+		$widgets += array(
+			'account_primary_group' => 'select-account',
+			'account_groups' => 'select-account',
+			'account_expires' => 'date-time'
+		);
+		return $widgets;
 	}
 
 	/**
