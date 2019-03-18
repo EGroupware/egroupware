@@ -17,7 +17,7 @@ egw_LAB.wait(function()
 	{
 		// check if the browser supports ES6 and try to warn user
 		try {
-			Symbol();
+			Function ("() => {};");
 		}
 		catch (exception){
 			alert(egw.lang('Your browser is not new enough (JS ES6 compatible), you may experience some of the feautres not working.'));
