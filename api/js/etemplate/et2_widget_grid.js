@@ -62,6 +62,12 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 			type: "string",
 			default: "",
 			description: "Defines other sortable areas that should be connected to sort list"
+		},
+		sortable_recieveCallback: {
+			name: "Sortable receive callback",
+			type: "string",
+			default: et2_no_init,
+			description: "Defines sortable receive callback function"
 		}
 	},
 
@@ -944,6 +950,11 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 					self,
 					true
 				).sendRequest();
+			},
+			receive: function (event, ui) {
+				if (typeof self.options.sortable_recieveCallback == 'function') {
+					self.options.sortable_recieveCallback.call(self, event,ui);
+				}
 			}
 		});
 	},
