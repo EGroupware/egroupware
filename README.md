@@ -1,9 +1,9 @@
 # EGroupware
-| Branch | Status | Composer |
-| ------ | ------ | -------- |
-| master | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=master)](https://travis-ci.org/EGroupware/egroupware) | [![Dependency Status](https://www.versioneye.com/user/projects/57527deb7757a00041b3a25e/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57527deb7757a00041b3a25e) |
-| 17.1 | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=17.1)](https://travis-ci.org/EGroupware/egroupware) | [![Dependency Status](https://www.versioneye.com/user/projects/57527deb7757a00041b3a25e/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57527deb7757a00041b3a25e) |
-| 16.1 | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=16.1)](https://travis-ci.org/EGroupware/egroupware) | [![Dependency Status](https://www.versioneye.com/user/projects/57527e0c7757a0003bd4aecb/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57527deb7757a00041b3a25e) |
+| Branch | Status | Tools | Usage |
+| ------ | ------ | ----- | ----- |
+| master | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=master)](https://travis-ci.org/EGroupware/egroupware) | <img src="https://discourse-cdn-sjc1.com/business4/uploads/travis_ci/original/1X/e8f4998fa50cfd83f42adedbde4b9cca3c80e168.png" width="108" alt="Travis CI"/> | runs unit-tests after each commit |
+| 17.1 | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=17.1)](https://travis-ci.org/EGroupware/egroupware) | [![Scrutinizer CI](https://scrutinizer-ci.com/images/logo.png)](https://scrutinizer-ci.com/g/EGroupware/egroupware/) scrutinizer | runs static analysis on our codebase |
+| 16.1 | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=16.1)](https://travis-ci.org/EGroupware/egroupware) | <img src="https://p14.zdusercontent.com/attachment/1015988/zGiHOaPFC0e9nG4PJWXZH1Ibe?token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..i_vov1AU7X1qzPu3nYPL-Q.tdgDtQMrCCHEACS4aXPcYTKf8BeQUVGohG0-UFeEnJwC_d4KvmSz4EaV2NpQmQ9B-m-3Sj9EyfxNVW6XSOksFBd-QZz2CLu5il0ko2KdvC4YjEGFQkmPJOAPfVQfwXcZkg08eaX-4aluvvwBQQv5oXRbCVVX-lMtYE_1OPBTYPRZoBEWEnIlCGix05vC82EOvqzQ2Ht9lGpwfFLMfawIT5l-sCi5vAluKBJKR2pkduFqq3DD_E1Y2YqPA3utD3zDfcU5Zb4Qqd1pfkES3_9L3CnluMmIKG6bY5aFDyLPPUE.KENm6nkdraKqs2JzQIwHpQ" width="110" alt="BrowserStack"/> | manual testing with unusual browser versions or platforms |
 
 ### Default and prefered installation method for EGroupware is via your package manager:
 
