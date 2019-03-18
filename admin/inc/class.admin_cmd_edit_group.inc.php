@@ -131,4 +131,34 @@ class admin_cmd_edit_group extends admin_cmd
 		return lang('%1 group %2',$this->account ? lang('Edit') : lang('Add'),
 			admin_cmd::display_account($this->account ? $this->account : $this->set['account_lid']));
 	}
+
+
+	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * Reading them from admin.account template
+	 *
+	 * @return array
+	 */
+	function get_change_labels()
+	{
+		$labels = $this->change_labels_from_template('stylite.group.edit');
+		unset($labels['${row}[run]']);
+		$labels += array(
+			'account_members' => 'Members',
+		);
+		return $labels;
+	}
+
+	/**
+	 * Return list of widgets to use for displaying changes
+	 */
+	function get_change_widgets() {
+		$widgets = parent::get_change_widgets();
+
+		$widgets += array(
+			'account_members' => 'select-account',
+		);
+		return $widgets;
+	}
 }
