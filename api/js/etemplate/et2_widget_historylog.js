@@ -43,6 +43,12 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			"type": "string",
 			"default": "status",
 			"description": "The history widget is traditionally named 'status'.  If you name another widget in the same template 'status', you can use this attribute to re-name the history widget.  "
+		},
+		"columns": {
+			"name": "columns",
+			"type": "string",
+			"default": "user_ts,owner,status,new_value,old_value",
+			"description": "Columns to display.  Default is user_ts,owner,status,new_value,old_value"
 		}
 	},
 
@@ -69,6 +75,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 
 		this.innerDiv = jQuery(document.createElement("div"))
 			.appendTo(this.div);
+		this.options.columns = this.options.columns.split(',');
 	},
 
 	set_status_id: function(_new_id) {
@@ -151,7 +158,13 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 		var dataview_columns = [];
 		for (var i = 0; i < this.columns.length; i++)
 		{
-			dataview_columns[i] = {"id": this.columns[i].id, "caption": this.columns[i].caption, "width":this.columns[i].width};
+			dataview_columns[i] = {
+					"id": this.columns[i].id,
+					"caption": this.columns[i].caption,
+					"width":this.columns[i].width,
+					"visibility":this.options.columns.indexOf(this.columns[i].id) < 0 ?
+						ET2_COL_VISIBILITY_INVISIBLE : ET2_COL_VISIBILITY_VISIBLE
+			};
 		}
 		this.dataview.setColumns(dataview_columns);
 
@@ -165,8 +178,30 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			null
 		);
 
-		// Trigger the initial update
-		this.controller.update();
+		var total = typeof this.options.value.total !== "undefined" ?
+			this.options.value.total : 0;
+
+		// This triggers an invalidate, which updates the grid
+		this.dataview.grid.setTotalCount(total);
+
+		// Insert any data sent from server, so invalidate finds data already
+		if(this.options.value.rows && this.options.value.num_rows)
+		{
+			this.controller.loadInitialData(
+				this.options.value.dataStorePrefix,
+				this.options.value.row_id,
+				this.options.value.rows
+			);
+			// Remove, to prevent duplication
+			delete this.options.value.rows;
+			// This triggers an invalidate, which updates the grid
+			this.dataview.grid.setTotalCount(total);
+		}
+		else
+		{
+			// Trigger the initial update
+			this.controller.update();
+		}
 
 		// Write something inside the column headers
 		for (var i = 0; i < this.columns.length; i++)
