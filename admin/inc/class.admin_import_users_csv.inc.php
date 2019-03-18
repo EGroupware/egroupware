@@ -179,7 +179,7 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 				}
 			} else {
 				// unconditional insert
-				$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
+				$success = $this->action( 'create', $record, $import_csv->get_current_position() );
 			}
 			if($success) $count++;
 		}
