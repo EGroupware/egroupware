@@ -264,7 +264,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						/**
 						 * resolve given data whilst the condition met
 						 */
-						const resolveData = function(_d, condition, action) {
+						var resolveData = function(_d, condition, action) {
 							var whilst = function (_d) {
 								return condition(_d) ? action(condition(_d)).then(whilst) : Promise.resolve(_d);
 							}
@@ -274,7 +274,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						/**
 						 * get data promise
 						 */
-						const getData = function(_match)
+						var getData = function(_match)
 						{
 							var match = _match;
 							return new Promise(function(resolve)

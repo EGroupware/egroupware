@@ -186,7 +186,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 		this.tinymce = tinymce.init(settings);
 		// make sure value gets set in case of widget gets loaded by delay like
 		// inside an inactive tabs
-		this.tinymce.then(()=> {
+		this.tinymce.then(function() {
 			self.set_value(self.htmlNode.val());
 			if (self.editor && self.editor.editorContainer)
 			{
@@ -332,9 +332,9 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 		// take rte_toolbar into account if no mode restrictly set from template
 		if (rte_toolbar && !this.mode)
 		{
-			var toolbar_diff = et2_htmlarea.TOOLBAR_LIST.filter((i) => {return !(rte_toolbar.indexOf(i) > -1);});
+			var toolbar_diff = et2_htmlarea.TOOLBAR_LIST.filter(function(i){return !(rte_toolbar.indexOf(i) > -1);});
 			settings.toolbar = et2_htmlarea.TOOLBAR_ADVANCED;
-			toolbar_diff.forEach((a) => {
+			toolbar_diff.forEach(function(a){
 				let r = new RegExp(a);
 				settings.toolbar = settings.toolbar.replace(r, '');
 			});

@@ -20,46 +20,46 @@
 	 * time range label today
 	 * @type Number
 	 */
-	const TIME_LABEL_TODAY = 0;
+	var TIME_LABEL_TODAY = 0;
 
 	/**
 	 * time range label yesterday
 	 * @type Number
 	 */
-	const TIME_LABEL_YESTERDAY = 1;
+	var TIME_LABEL_YESTERDAY = 1;
 
 	/**
 	 * time range label this month
 	 * @type Number
 	 */
-	const TIME_LABEL_THIS_MONTH = 2;
+	var TIME_LABEL_THIS_MONTH = 2;
 
 	/**
 	 * time range label last month
 	 * @type Number
 	 */
-	const TIME_LABEL_LAST_MONTH = 3;
+	var TIME_LABEL_LAST_MONTH = 3;
 
 	/**
 	 * Heigh priorority action for notifing about an entry.
 	 * Action: It pops up the entry once
 	 * @type Number
 	 */
-	const EGW_PR_NOTIFY_HEIGH = 1;
+	var EGW_PR_NOTIFY_HEIGH = 1;
 
 	/**
 	 * Medium priority for notifing about an entry
 	 * Action: Not defined
 	 * @type Number
 	 */
-	const EGW_PR_NOTIFY_MEDIUM = 2;
+	var EGW_PR_NOTIFY_MEDIUM = 2;
 
 	/**
 	 * Low priority for notifing about an entry
 	 * Action: Not defined
 	 * @type Number
 	 */
-	const EGW_PR_NOTIFY_LOW = 3;
+	var EGW_PR_NOTIFY_LOW = 3;
 
 	/**
 	 * Interval set by user

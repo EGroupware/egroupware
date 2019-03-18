@@ -1939,7 +1939,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		}
 
 		// But merge into email can handle several
-		Promise.all(promises.map(p => p.catch(e => e)))
+		Promise.all(promises.map(function(p){p.catch(function(e){console.log(e)})}))
 			.then(function(values) {
 				// Process document after all shares created
 				return nm_action(_action, _senders, _target);

@@ -586,7 +586,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			if (this._type == 'listbox' && this.options.value_class != '')
 			{
 				var chosen = this.input.next();
-				chosen.find('.search-choice-close').each((i,v)=>{
+				chosen.find('.search-choice-close').each(function(i,v){
 					jQuery(v).parent().addClass(self.options.value_class + self.options.select_options[v.rel]['value']);
 				});
 			}
@@ -784,7 +784,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			if (this._type == 'listbox' && this.options.value_class != '')
 			{
 				var self = this;
-				this.input.find('option').each((i,v) => {jQuery(v).addClass(self.options.value_class+v.value)});
+				this.input.find('option').each(function(i,v) {jQuery(v).addClass(self.options.value_class+v.value)});
 			}
 			this.input.chosen({
 				inherit_select_classes: true,
