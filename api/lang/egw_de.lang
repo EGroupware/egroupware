@@ -570,7 +570,6 @@ french southern territories	common	de	FRANZÖSISCHEN SÜD- und ANTARKTISGEBIETE
 friday	common	de	Freitag
 ftp	common	de	FTP
 fullname	common	de	Vor- und Nachname
-fullscreen	api	de	Vollbild
 fullscreen mode	common	de	Vollbild Modus
 gabon	common	de	GABUN
 gambia	common	de	GAMBIA
@@ -631,6 +630,7 @@ hold [%1] key to select text eg. to copy it	common	de	Zum Kopieren [%1]-Taste be
 holy see (vatican city state)	common	de	VATICAN
 home	common	de	Home
 home email	common	de	private E-Mail
+home screen	common	de	Startseite
 honduras	common	de	HONDURAS
 hong kong	common	de	HONG KONG
 horizontal rule	common	de	Waagrechte Linie
@@ -794,7 +794,6 @@ mail domain, eg. "%1"	common	de	Mail Domain, z.B. "%1"
 mailvelope addon installation failed! please try again.	common	de	Installation des Mailvelope Add-on gescheitert! Bitte versuchen Sie es erneut.
 mailvelope addon installation succeded. now you may configure the options.	common	de	Installation der Mailvelope Erweiterung erfolgreich. Sie können jetzt Optionen konfigurieren.
 main category	common	de	Hauptkategorie
-home screen	common	de	Startseite
 maintainer	common	de	Maintainer
 malawi	common	de	MALAWI
 malaysia	common	de	MALAYSIA
@@ -1000,7 +999,6 @@ philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
 pitcairn	common	de	PITCAIRN
 placeholders	common	de	Platzhalter
-play/pause	api	de	Abspielen/Pause
 please %1 by hand	common	de	Bitte %1 per Hand
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
@@ -1363,6 +1361,7 @@ uncheck all	common	de	Alle abwählen
 unconnected nodes will be moved to %1.	admin	de	Nicht Verbundene Knoten werden nach %1 verschoben.
 undefined	common	de	unbestimmt
 underline	common	de	Unterstrichen
+undo	common	de	Rückgängig
 unicode	common	de	Unicode
 unique	common	de	Unique
 united arab emirates	common	de	VEREINIGTEN ARABISCHEN EMIRATE
@@ -1406,7 +1405,6 @@ version	common	de	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefüllt)
 vertical alignment of row	common	de	vertikale Ausrichtung der Zeile
 vfs upload directory	common	de	Dateimanager Upload Verzeichnis
-video tutorials	api	de	Video-Anleitungen
 viet nam	common	de	VIETNAM
 view	common	de	Anzeigen
 view linked %1 entries	common	de	Verknüpfte %1 Einträge anzeigen
@@ -1480,6 +1478,7 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	de	Sie m
 you tried to automatically size a flex column, which always takes the rest of the space	common	de	Sie versuchen die Breite einer Flexiblen Spalte zu ändern, diese nimmt immer den Rest des verfügbaren Platzes ein.
 you will not be able to send or receive encrypted mails before completing that step!	common	de	Sie werden KEINE verschlüsselten Mail sender oder empfangen können, bevor Sie nicht diesen Schritt beendet haben!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	de	Ihr Browser ist nicht auf dem neuesten Stand (JavaScript ES6 kompatibel), einige der Funktionen werden nicht funktionieren.
 your code is incorrect !!!	common	de	Ihr Code ist nicht richtig!!!
 your key has been restored successfully.	common	de	Ihr Schlüssel wurde erfolgreich wiederhergestellt.
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>

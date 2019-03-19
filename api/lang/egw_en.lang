@@ -102,9 +102,9 @@ align	common	en	Align
 aligncenter	common	en	Aligncenter
 alignjustify	common	en	Alignjustify
 alignleft	common	en	Alignleft
-alignright	common	en	Alignright
 alignment of label and input-field in table-cell	common	en	Alignment of label and input field in table cell
 alignment of the v/hbox containing table-cell	common	en	Alignment of the V/HBox containing table cell
+alignright	common	en	Alignright
 all	common	en	All
 all addressbooks	groupdav	en	All addressbooks
 all categories	common	en	All categories
@@ -207,8 +207,8 @@ browser %1 %2 is not recommended. you may experience issues and not working feat
 brunei darussalam	common	en	BRUNEI DARUSSALAM
 bulgaria	common	en	BULGARIA
 bulgarian	common	en	Bulgarian
-burkina faso	common	en	BURKINA FASO
 bullist	common	en	Bullist
+burkina faso	common	en	BURKINA FASO
 burundi	common	en	BURUNDI
 calendar	common	en	Calendar
 calendars to sync in addition to personal calendar	groupdav	en	Calendars to sync in addition to personal calendar
@@ -641,6 +641,7 @@ hold [%1] key to select text eg. to copy it	common	en	Hold [%1] key to select te
 holy see (vatican city state)	common	en	HOLY SEE (VATICAN CITY STATE)
 home	common	en	Home
 home email	common	en	Home email
+home screen	common	en	Home screen
 honduras	common	en	HONDURAS
 hong kong	common	en	HONG KONG
 horizontal rule	common	en	Horizontal ruler
@@ -806,7 +807,6 @@ mail domain, eg. "%1"	common	en	Mail domain, eg. "%1"
 mailvelope addon installation failed! please try again.	common	en	Mailvelope addon installation failed! Please try again.
 mailvelope addon installation succeded. now you may configure the options.	common	en	Mailvelope addon installation succeded. Now you may configure the options.
 main category	common	en	Main category
-home screen	common	en	Home screen
 maintainer	common	en	Maintainer
 malawi	common	en	MALAWI
 malaysia	common	en	MALAYSIA
@@ -1087,8 +1087,8 @@ required directory "%1" created.	admin	en	Required directory "%1" created.
 required directory "%1" has wrong mode %2 instead of %3!	admin	en	Required directory "%1" has wrong mode %2 instead of %3!
 required directory "%1" not found!	admin	en	Required directory "%1" not found!
 reset	common	en	Reset
-reset all user's column preferences	common	en	Reset all user's column preferences
 reset all to default	common	en	Reset all to default
+reset all user's column preferences	common	en	Reset all user's column preferences
 resource calendars	groupdav	en	Resource calendars
 resource type	common	en	Resource type
 resources	common	en	Resources
@@ -1498,6 +1498,7 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	en	You n
 you tried to automatically size a flex column, which always takes the rest of the space	common	en	You tried to automatically size a flex column, which always takes the rest of the space.
 you will not be able to send or receive encrypted mails before completing that step!	common	en	You will NOT be able to send or receive encrypted mails before completing that step!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You have no permission to access application  %1 !
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	en	Your browser is not up-to-date (JavaScript ES6 compatible), you may experience some of the features not working.
 your code is incorrect !!!	common	en	Code is incorrect!
 your key has been restored successfully.	common	en	Your key has been restored successfully.
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>

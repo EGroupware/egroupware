@@ -2,10 +2,9 @@
  * EGroupware login page javascript
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package etemplate
+ * @package login
  * @subpackage api
- * @link http://www.egroupware.org
- * @version $Id$
+ * @link https://www.egroupware.org
  */
 
 /* if login page is not in top window, set top windows location to it */
@@ -20,13 +19,13 @@ egw_LAB.wait(function()
 			Function ("() => {};");
 		}
 		catch (exception){
-			alert(egw.lang('Your browser is not new enough (JS ES6 compatible), you may experience some of the feautres not working.'));
+			alert(egw.lang('Your browser is not up-to-date (JavaScript ES6 compatible), you may experience some of the features not working.'));
 		}
 
 		// lock the device orientation in portrait view
 		if (screen.orientation && typeof screen.orientation.lock == 'function') screen.orientation.lock('portrait');
 		jQuery('.closeBtn').click(function (){
-			setTimeout(function(){jQuery('.loginMessageBox').slideUp("slow")},100);
+			setTimeout(function(){jQuery('.loginMessageBox').slideUp("slow");},100);
 		});
 		function do_social(_data)
 		{
