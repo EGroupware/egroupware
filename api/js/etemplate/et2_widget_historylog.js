@@ -364,6 +364,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 						{
 							delete attrs['select_options'];
 						}
+						attrs.id = i;
 						var child = et2_createWidget(typeof field[i] == 'string' ? field[i] : 'select', attrs, widget);
 						child.transformAttributes(attrs);
 					}
@@ -585,7 +586,8 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 					var box = jQuery(widget.getDOMNode()).clone();
 					for(var j = 0; j < widget._children.length; j++)
 					{
-						widget._children[j].setDetachedAttributes(nodes[j], {value:value[j]});
+						var id = widget._children[j].id;
+						widget._children[j].setDetachedAttributes(nodes[j], {value:value[id]});
 						box.append(nodes[j]);
 					}
 					nodes = box;
