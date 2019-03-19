@@ -74,7 +74,6 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 
 		this.innerDiv = jQuery(document.createElement("div"))
 			.appendTo(this.div);
-		this.options.columns = this.options.columns.split(',');
 	},
 
 	set_status_id: function(_new_id) {
@@ -146,6 +145,14 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			get_rows: 'EGroupware\\Api\\Storage\\History::get_rows'
 		};
 
+		// Warn if status_id is the same as history id, that causes overlap and missing labels
+		if(this.options.status_id === this.id)
+		{
+			this.egw().debug("warn", "status_id attribute should not be the same as historylog ID");
+		}
+		var _columns = typeof this.options.columns === "string" ?
+			this.options.columns.split(',') : this.options.columns;
+
 		// Create the dynheight component which dynamically scales the inner
 		// container.
 		this.dynheight = new et2_dynheight(this.div.parent(),
@@ -155,13 +162,15 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 		// Create the outer grid container
 		this.dataview = new et2_dataview(this.innerDiv, this.egw());
 		var dataview_columns = [];
+		var _columns = typeof this.options.columns === "string" ?
+			this.options.columns.split(',') : this.options.columns;
 		for (var i = 0; i < this.columns.length; i++)
 		{
 			dataview_columns[i] = {
 					"id": this.columns[i].id,
 					"caption": this.columns[i].caption,
 					"width":this.columns[i].width,
-					"visibility":this.options.columns.indexOf(this.columns[i].id) < 0 ?
+					"visibility":_columns.indexOf(this.columns[i].id) < 0 ?
 						ET2_COL_VISIBILITY_INVISIBLE : ET2_COL_VISIBILITY_VISIBLE
 			};
 		}
@@ -374,6 +383,12 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			if(widget == null)
 			{
 				widget = et2_createWidget(typeof field == 'string' ? field : 'select', attrs, this);
+			}
+
+			if(!widget.instanceOf(et2_IDetachedDOM))
+			{
+				this.egw().debug("warn", this, "Invalid widget " + field + " for " + key + ".  Status widgets must implement et2_IDetachedDOM.");
+				continue;
 			}
 
 			// Parse / set legacy options
