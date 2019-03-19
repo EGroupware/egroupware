@@ -1360,7 +1360,7 @@ abstract class admin_cmd
 						if (!empty($widget->id))
 						{
 							if (!empty($widget->attrs['label'])) $label = $widget->attrs['label'];
-							$labels[$widget->id] = $label;
+							if (!empty($label)) $labels[$widget->id] = $label;
 							$label = null;
 						}
 						break;
