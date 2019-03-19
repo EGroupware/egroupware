@@ -1391,7 +1391,7 @@ abstract class admin_cmd
 					case 'grid': case 'columns': case 'column': case 'rows': case 'row':
 					case 'template': case 'tabbox': case 'tabs': case 'tab':
 					// No need for these
-					case 'textbox': case 'int': case 'float':
+					case 'textbox': case 'int': case 'float': case 'select':
 					// ignore widgets that can't go in the historylog
 					case 'button': case 'taglist-thumbnail':
 						break;
