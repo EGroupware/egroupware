@@ -1354,7 +1354,7 @@ abstract class admin_cmd
 					case 'grid': case 'columns': case 'column': case 'rows': case 'row':
 					case 'template': case 'tabbox': case 'tabs': case 'tab':
 					// ignore buttons too
-					case 'button':
+					case 'button': case 'buttononly':
 						break;
 					default:
 						if (!empty($widget->id))
@@ -1393,7 +1393,7 @@ abstract class admin_cmd
 					// No need for these
 					case 'textbox': case 'int': case 'float': case 'select':
 					// ignore widgets that can't go in the historylog
-					case 'button': case 'taglist-thumbnail':
+					case 'button': case 'buttononly': case 'taglist-thumbnail':
 						break;
 					// config templates have options in the template
 					case 'option':
