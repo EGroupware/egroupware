@@ -107,4 +107,51 @@ class admin_cmd_category extends admin_cmd
 			$this->old ? lang('edited') : lang('added')
 		);
 	}
+
+	/**
+	 * Get name of eTemplate used to make the change to derive UI for history
+	 *
+	 * @return string|null etemplate name
+	 */
+	protected function get_etemplate_name()
+	{
+		return 'admin.categories.edit';
+	}
+
+
+	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * @return array
+	 */
+	function get_change_labels()
+	{
+		$labels = parent::get_change_labels();
+		// Never seems to be in old value, so don't show it
+		$labels['icon_url'] = False;
+		// Just for internal use, no need to show it
+		$labels['main'] = False;
+
+		return $labels;
+	}
+
+	/**
+	 * Return widget types (indexed by field key) for changes
+	 *
+	 * Used by historylog widget to show the changes the command recorded.
+	 */
+	function get_change_widgets()
+	{
+		$widgets = parent::get_change_widgets();
+		unset($widgets['data[icon]']);
+		$widgets['data'] = array(
+			// Categories have non-standard image location, so image widget can't find them
+			// without being given the full path, which we don't have
+			'icon' => 'description',
+			'color' => 'colorpicker'
+		);
+		$widgets['parent'] = 'select-cat';
+		$widgets['owner'] = 'select-account';
+		return $widgets;
+	}
 }
