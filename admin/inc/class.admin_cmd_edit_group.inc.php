@@ -132,6 +132,17 @@ class admin_cmd_edit_group extends admin_cmd
 			admin_cmd::display_account($this->account ? $this->account : $this->set['account_lid']));
 	}
 
+	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * Reading them from admin.account template
+	 *
+	 * @return array
+	 */
+	function get_etemplate_name()
+	{
+		return ($GLOBALS['egw_info']['apps']['stylite'] ? 'stylite' : 'groups').'.group.edit';
+	}
 
 	/**
 	 * Return (human readable) labels for keys of changes
@@ -142,23 +153,90 @@ class admin_cmd_edit_group extends admin_cmd
 	 */
 	function get_change_labels()
 	{
-		$labels = $this->change_labels_from_template('stylite.group.edit');
+		$labels = parent::get_change_labels();
 		unset($labels['${row}[run]']);
-		$labels += array(
-			'account_members' => 'Members',
-		);
+
+		$labels['account_members'] = 'Members';
+
 		return $labels;
+	}
+	/**
+	 * Return widget types (indexed by field key) for changes
+	 *
+	 * Used by historylog widget to show the changes the command recorded.
+	 */
+	function get_change_widgets()
+	{
+		$widgets = parent::get_change_widgets();
+
+		$widgets['account_id'] = 'integer';	// normaly not displayed
+		$widgets['run'] = 'select-app';
+
+		return $widgets;
 	}
 
 	/**
-	 * Return list of widgets to use for displaying changes
+	 * Return the whole object-data as array, it's a cast of the object to an array
+	 *
+	 * Reimplement to supress data not relevant for groups, but historically stored
+	 *
+	 * @todo Fix command to store it's data in a more sane way, like we use it.
+	 * @return array
 	 */
-	function get_change_widgets() {
-		$widgets = parent::get_change_widgets();
+	function as_array()
+	{
+		$data = parent::as_array();
 
-		$widgets += array(
-			'account_members' => 'select-account',
-		);
-		return $widgets;
+		// for some reason old is stored under set
+		if (isset($data['set']['old']))
+		{
+			$data['old'] = $data['set']['old'];
+			unset($data['set']['old']);
+		}
+		if (!empty($data['set']['old_run']))
+		{
+			$data['old']['run'] = $data['set']['old_run'];
+			usort($data['old']['run'], function($a, $b)
+			{
+				return strcasecmp(lang($a), lang($b));
+			});
+			unset($data['set']['old_run']);
+		}
+		if (!empty($data['set']['apps']))
+		{
+			$data['set']['run'] = array_diff(array_map(function($data)
+			{
+				return $data['run'] ? $data['appname'] : null;
+			}, $data['set']['apps']), [null]);
+			usort($data['set']['run'], function($a, $b)
+			{
+				return strcasecmp(lang($a), lang($b));
+			});
+			unset($data['set']['apps']);
+		}
+
+		// remove values not relevant to groups
+		foreach(['old', 'set'] as $name)
+		{
+			$data[$name] = array_diff_key($data[$name], array_flip([
+				'account_pwd', 'account_status', 'account_type',
+				'account_expires', 'account_primary_group',
+				'account_lastlogin', 'account_lastloginfrom',
+				'account_lastpwd_change', 'members-active',
+				'account_firstname', 'account_lastname', 'account_fullname',
+			]));
+		}
+
+		// remove unchanged values (null == '' and arrays might not be sorted)
+		foreach($data['set'] as $name => $value)
+		{
+			if ($data['old'][$name] == $value ||
+				is_array($value) && count($value) == count(array_intersect($value, $data['old'][$name])))
+			{
+				unset($data['old'][$name], $data['set'][$name]);
+			}
+		}
+		return $data;
 	}
+
 }
