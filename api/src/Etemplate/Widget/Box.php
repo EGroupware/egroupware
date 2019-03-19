@@ -38,7 +38,7 @@ class Box extends Etemplate\Widget
 	 * Reimplemented because grids and boxes can have an own namespace.
 	 * GroupBox has no namespace!
 	 *
-	 * @param string $method_name
+	 * @param string|callable $method_name or function($cname, $expand, $widget)
 	 * @param array $params =array('') parameter(s) first parameter has to be cname!
 	 * @param boolean $respect_disabled =false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
@@ -63,6 +63,12 @@ class Box extends Etemplate\Widget
 		if (method_exists($this, $method_name))
 		{
 			call_user_func_array(array($this, $method_name), $params);
+		}
+		// allow calling with a function or closure --> call it with widget as first param
+		elseif (is_callable($method_name))
+		{
+			$params[2] = $this;
+			call_user_func_array($method_name, $params);
 		}
 
 		// Expand children

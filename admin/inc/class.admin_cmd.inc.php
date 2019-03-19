@@ -1297,77 +1297,122 @@ abstract class admin_cmd
 	}
 
 	/**
+	 * Get name of eTemplate used to make the change to derive UI for history
+	 *
+	 * @return string|null etemplate name
+	 */
+	protected function get_etemplate_name()
+	{
+		return null;
+	}
+
+	/**
+	 * Return eTemplate used to make the change to derive UI for history
+	 *
+	 * @return Api\Etemplate|null
+	 */
+	protected function get_etemplate()
+	{
+		static $tpl = null;	// some caching to not instanciate it twice
+
+		if (!isset($tpl))
+		{
+			$name = $this->get_etemplate_name();
+			if (empty($name))
+			{
+				$tpl = false;
+			}
+			else
+			{
+				$tpl = Api\Etemplate::instance($name);
+			}
+		}
+		return $tpl ? $tpl : null;
+	}
+
+	/**
 	 * Return (human readable) labels for keys of changes
 	 *
 	 * @return array
 	 */
 	function get_change_labels()
 	{
-		return [];
+		$labels = [];
+		$label = null;
+		if (($tpl = $this->get_etemplate()))
+		{
+			$tpl->run(function($cname, $expand, $widget) use (&$labels, &$label)
+			{
+				switch($widget->type)
+				{
+					// remember label from last description widget
+					case 'description':
+						if (!empty($widget->attrs['value'])) $label = $widget->attrs['value'];
+						break;
+					// ignore non input-widgets
+					case 'hbox': case 'vbox': case 'box': case 'groupbox':
+					case 'grid': case 'columns': case 'column': case 'rows': case 'row':
+					case 'template': case 'tabbox': case 'tabs': case 'tab':
+					// ignore buttons too
+					case 'button':
+						break;
+					default:
+						if (!empty($widget->id))
+						{
+							if (!empty($widget->attrs['label'])) $label = $widget->attrs['label'];
+							$labels[$widget->id] = $label;
+							$label = null;
+						}
+						break;
+				}
+				unset($cname, $expand);
+			}, ['', []]);
+		}
+		return $labels;
 	}
 
 	/**
 	 * Return widget types (indexed by field key) for changes
+	 *
 	 * Used by historylog widget to show the changes the command recorded.
 	 */
 	function get_change_widgets()
 	{
-		// TODO: Some kind of regex?
-		return [];
-	}
-
-	/**
-	 * Read change labels from descriptions in template:
-	 * - <description value="Expires" for="account_expires"/>
-	 * - <description value="Label"/>\n<widget id="id"/>
-	 * - <checkbox id="account_status" selected_value="A" label="Account active"/>
-	 * @param type $name
-	 */
-	protected function change_labels_from_template($name)
-	{
-		$labels = [];
-		$matches = null;
-		if (($path = Api\Etemplate::relPath($name)) &&
-			($tpl = file_get_contents(Api\Etemplate::rel2path($path))))
+		$widgets = [];
+		$last_select = null;
+		if (($tpl = $this->get_etemplate()))
 		{
-			if (preg_match_all('/<description.*value="([^"]+)".*\n?.*(for|id)="([^"]+)"/sU', $tpl, $matches, PREG_PATTERN_ORDER))
+			$tpl->run(function($cname, $expand, $widget) use (&$widgets, &$last_select)
 			{
-				foreach($matches[1] as $key => $name)
+				switch($widget->type)
 				{
-					$id = $matches[3][$key];
-					$label= $matches[1][$key];
-					if (!empty($id) && !empty($label))
-					{
-						$labels[$id] = $label;
-					}
+					// ignore non input-widgets
+					case 'hbox': case 'vbox': case 'box': case 'groupbox':
+					case 'grid': case 'columns': case 'column': case 'rows': case 'row':
+					case 'template': case 'tabbox': case 'tabs': case 'tab':
+					// ignore buttons too
+					case 'button':
+						break;
+					// config templates have options in the template
+					case 'option':
+						if (!is_array($widgets[$last_select])) $widgets[$last_select] = [];
+						$widgets[$last_select][(string)$widget->attrs['value']] = $widget->attrs['#text'];
+						break;
+					default:
+						$last_select = null;
+						if (!empty($widget->id))
+						{
+							$widgets[$widget->id] = $widget->type;
+							if (in_array($widget->type, ['select']))
+							{
+								$last_select = $widget->id;
+							}
+						}
+						break;
 				}
-			}
-			if (preg_match_all('/<(checkbox).*(label|id)="([^"]+)".*(label|id)="([^"]+)"/', $tpl, $matches, PREG_PATTERN_ORDER))
-			{
-				foreach($matches[2] as $key => $name)
-				{
-					$id = $name === 'id' ? $matches[3][$key] : $matches[5][$key];
-					$label= $name === 'id' ? $matches[5][$key] : $matches[3][$key];
-					if (!empty($id) && !empty($label))
-					{
-						$labels[$id] = $label;
-					}
-				}
-			}
-			if (preg_match_all('/<(int|float).*(label|id)="([^"]+)".*(label|id)="([^"]+)"/', $tpl, $matches, PREG_PATTERN_ORDER))
-			{
-				foreach($matches[2] as $key => $name)
-				{
-					$id = $name === 'id' ? $matches[3][$key] : $matches[5][$key];
-					$label= $name === 'id' ? $matches[5][$key] : $matches[3][$key];
-					if (!empty($id) && !empty($label))
-					{
-						$labels[$id] = $label;
-					}
-				}
-			}
+				unset($cname, $expand);
+			}, ['', []]);
 		}
-		error_log(__METHOD__."($name) path=$path returning ".json_encode($labels));
-		return $labels;
+		return $widgets;
 	}
 }

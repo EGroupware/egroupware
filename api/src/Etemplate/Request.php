@@ -91,7 +91,10 @@ class Request
 	 *
 	 * @var array
 	 */
-	protected $data=array();
+	protected $data=[
+		'content' => [],
+		'readonlys' => [],
+	];
 	/**
 	 * Flag if data has been modified and therefor need to be stored again in the session
 	 *

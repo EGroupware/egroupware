@@ -2985,7 +2985,7 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 			value[_widget.id] = _widget._oldValue = _widget.getValue();
 			var mgr = new et2_arrayMgr(value);
 			jQuery.extend(true, this.nextmatch.activeFilters,mgr.data);
-		}
+		};
 		if(sub_header.instanceOf(et2_inputWidget))
 		{
 			bind_change.call(this, sub_header);

@@ -60,7 +60,7 @@ class Grid extends Box
 	 * - row run method checks now for each child (arbitrary widget) if it the column's key is included in $columns_disabled
 	 * - as a grid can contain other grid's as direct child, we have to backup and initialise $columns_disabled in grid run!
 	 *
-	 * @param string $method_name
+	 * @param string|callable $method_name or function($cname, $expand, $widget)
 	 * @param array $params =array('') parameter(s) first parameter has to be the cname, second $expand!
 	 * @param boolean $respect_disabled =false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 * @param array $columns_disabled=array() disabled columns
@@ -98,6 +98,12 @@ class Grid extends Box
 		if (method_exists($this, $method_name))
 		{
 			call_user_func_array(array($this, $method_name), $params);
+		}
+		// allow calling with a function or closure --> call it with widget as first param
+		elseif (is_callable($method_name))
+		{
+			$params[2] = $this;
+			call_user_func_array($method_name, $params);
 		}
 		//foreach($this->children as $n => $child)
 		$repeat_child = null;

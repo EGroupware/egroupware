@@ -225,36 +225,13 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	}
 
 	/**
-	 * Return (human readable) labels for keys of changes
+	 * Get name of eTemplate used to make the change to derive UI for history
 	 *
-	 * Reading them from admin.account template
-	 *
-	 * @return array
+	 * @return string|null etemplate name
 	 */
-	function get_change_labels()
+	function get_etemplate_name()
 	{
-		$labels = $this->change_labels_from_template('admin.account');
-		$labels += array(
-			'account_firstname' => 'First name',
-			'account_lastname' => 'Last name',
-			'account_email' => 'Email',
-			'account_passwd_2' => false
-		);
-		return $labels;
-	}
-
-	/**
-	 * Return list of widgets to use for displaying changes
-	 */
-	function get_change_widgets() {
-		$widgets = parent::get_change_widgets();
-
-		$widgets += array(
-			'account_primary_group' => 'select-account',
-			'account_groups' => 'select-account',
-			'account_expires' => 'date-time'
-		);
-		return $widgets;
+		return 'admin.account';
 	}
 
 	/**

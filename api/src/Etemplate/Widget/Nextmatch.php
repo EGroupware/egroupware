@@ -1204,7 +1204,7 @@ class Nextmatch extends Etemplate\Widget
 	 *
 	 * Reimplemented to add namespace, and make sure row template gets included
 	 *
-	 * @param string $method_name
+	 * @param string|callable $method_name or function($cname, $expand, $widget)
 	 * @param array $params =array('') parameter(s) first parameter has to be cname, second $expand!
 	 * @param boolean $respect_disabled =false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */

@@ -210,12 +210,83 @@ class admin_cmd_delete_account extends admin_cmd
 	}
 
 	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * Reading them from admin.account template
+	 *
+	 * @return array
+	 */
+	function get_etemplate_name()
+	{
+		return $this->is_user ? 'admin.account':
+			($GLOBALS['egw_info']['apps']['stylite'] ? 'stylite' : 'groups').'.group.edit';
+	}
+
+	/**
+	 * Return widget types (indexed by field key) for changes
+	 *
+	 * Used by historylog widget to show the changes the command recorded.
+	 */
+	function get_change_labels()
+	{
+		$widgets = parent::get_change_labels();
+
+		$widgets['account_id'] = 'numerical ID';	// normaly not displayed
+
+		return $widgets;
+	}
+
+	/**
+	 * Return widget types (indexed by field key) for changes
+	 *
+	 * Used by historylog widget to show the changes the command recorded.
+	 */
+	function get_change_widgets()
+	{
+		$widgets = parent::get_change_widgets();
+
+		$widgets['account_id'] = 'integer';	// normaly not displayed
+
+		return $widgets;
+	}
+
+	/**
+	 * Return the whole object-data as array, it's a cast of the object to an array
+	 *
+	 * Reimplement to supress data not relevant for groups, but historically stored
+	 *
+	 * @return array
+	 */
+	function as_array()
+	{
+		$data = parent::as_array();
+
+		if (!$this->is_user)
+		{
+			$data['old'] = array_diff_key($data['old'], array_flip([
+				'account_pwd', 'account_status',
+				'account_expires', 'account_primary_group',
+				'account_lastlogin', 'account_lastloginfrom',
+				'account_lastpwd_change', 'members-active',
+				'account_firstname', 'account_lastname', 'account_fullname',
+			]));
+		}
+		unset($data['old']['account_type']);
+
+		return $data;
+	}
+
+	/**
+	}
 	 * Return a title / string representation for a given command, eg. to display it
 	 *
 	 * @return string
 	 */
 	function __tostring()
 	{
-		return lang('Delete account %1',admin_cmd::display_account($this->account));
+		return lang('Delete account %1',
+			// use own data to display deleted name of user/group
+			$this->old['account_lid'] ? ($this->is_user ? lang('User') : lang('Group')).' '.$this->old['account_lid'] :
+			admin_cmd::display_account($this->account));
 	}
 }

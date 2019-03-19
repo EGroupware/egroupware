@@ -88,16 +88,26 @@ class admin_cmd_config extends admin_cmd
 	}
 
 	/**
+	 * Get name of eTemplate used to make the change to derive UI for history
+	 *
+	 * @return string|null etemplate name
+	 */
+	function get_etemplate_name()
+	{
+		return ($this->appname ? $this->appname : $this->app).'.config';
+	}
+
+	/**
 	 * Return (human readable) labels for keys of changes
 	 *
-	 * Reading them from admin.account template
+	 * Reimplemented to get ride of "newsettins" namespace
 	 *
 	 * @return array
 	 */
 	function get_change_labels()
 	{
 		$labels = [];
-		foreach($this->change_labels_from_template(($this->appname ? $this->appname : $this->app).'.config') as $id => $label)
+		foreach(parent::get_change_labels() as $id => $label)
 		{
 			if (strpos($id, 'newsettings[') === 0)
 			{
@@ -105,5 +115,25 @@ class admin_cmd_config extends admin_cmd
 			}
 		}
 		return $labels;
+	}
+
+	/**
+	 * Return widgets for keys of changes
+	 *
+	 * Reimplemented to get ride of "newsettins" namespace
+	 *
+	 * @return array
+	 */
+	function get_change_widgets()
+	{
+		$widgets = [];
+		foreach(parent::get_change_widgets() as $id => $widget)
+		{
+			if (strpos($id, 'newsettings[') === 0)
+			{
+				$widgets[substr($id, 12, -1)] = $widget;
+			}
+		}
+		return $widgets;
 	}
 }

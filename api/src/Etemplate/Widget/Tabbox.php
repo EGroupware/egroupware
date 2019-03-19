@@ -38,7 +38,7 @@ class Tabbox extends Etemplate\Widget
 	 * Overridden here to apply readonlys for the tabbox to disabled on the tab
 	 * content.  This prevents running the method on disabled tabs.
 	 *
-	 * @param string $method_name
+	 * @param string|callable $method_name or function($cname, $expand, $widget)
 	 * @param array $params =array('') parameter(s) first parameter has to be the cname, second $expand!
 	 * @param boolean $respect_disabled =false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
@@ -91,7 +91,7 @@ class Tabbox extends Etemplate\Widget
 				}
 			}
 		}
-		
+
 		if($respect_disabled && $readonlys)
 		{
 			foreach($this->children[1]->children as $tab)
