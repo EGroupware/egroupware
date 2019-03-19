@@ -264,7 +264,7 @@ var et2_color_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2
 
 	setDetachedAttributes: function(_nodes, _values)
 	{
-		this.span = jQuery(_nodes[0]);
+		this.$node = jQuery(_nodes[0]);
 		if(typeof _values["value"] != 'undefined')
 		{
 			this.set_value(_values["value"]);
