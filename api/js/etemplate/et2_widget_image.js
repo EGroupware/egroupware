@@ -260,6 +260,11 @@ var et2_image = (function(){ "use strict"; return expose(et2_baseWidget.extend([
 		{
 			this.set_src(_values["src"]);
 		}
+		// Not valid, but we'll deal
+		if (_values["value"])
+		{
+			this.setValue(_values["value"]);
+		}
 
 		if (_values["label"])
 		{
