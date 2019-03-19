@@ -7,16 +7,15 @@
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @copyright 2012 Nathan Gray
- * @version $Id$
  */
 
 /*egw:uses
-        /vendor/bower-asset/jquery/dist/jquery.js;
-        /vendor/bower-asset/jquery-ui/jquery-ui.js;
-        et2_core_valueWidget;
+	/vendor/bower-asset/jquery/dist/jquery.js;
+	/vendor/bower-asset/jquery-ui/jquery-ui.js;
+	et2_core_valueWidget;
 
 	// Include the grid classes
-        et2_dataview;
+	et2_dataview;
 */
 
 /**
@@ -529,7 +528,8 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			else if ((
 				// Already parsed & cached
 				typeof _data[self.columns[self.NEW_VALUE].id] == "object" &&
-				typeof _data[self.columns[self.NEW_VALUE].id].new != "undefined") ||
+				typeof _data[self.columns[self.NEW_VALUE].id] != "undefined" &&
+				_data[self.columns[self.NEW_VALUE].id] !== null) ||	// typeof null === 'object'
 				// Large old value
 				self._needsDiffWidget(_data['status'], _data[self.columns[self.OLD_VALUE].id]) ||
 				// Large new value
@@ -560,7 +560,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			else
 			{
 				// No widget fallback - display actual value
-				nodes = '<span>'+ value + '</span>';
+				nodes = jQuery('<span>').text(value === null ? '' : value);
 			}
 			if(widget)
 			{
@@ -600,7 +600,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			this.egw().debug("warn", "Crazy diff value", value);
 			return false;
 		}
-		return value=== '***diff***';
+		return value === '***diff***';
 	},
 
 	resize: function (_height)
