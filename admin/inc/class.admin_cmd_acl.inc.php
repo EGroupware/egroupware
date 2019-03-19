@@ -118,4 +118,36 @@ class admin_cmd_acl extends admin_cmd
 			$location
 		);
 	}
+
+	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * @return array
+	 */
+	function get_change_labels()
+	{
+		$labels = parent::get_change_labels();
+		$labels[get_class($this)] = lang('ACL');
+		return $labels;
+	}
+
+
+	/**
+	 * Return widget types (indexed by field key) for changes
+	 *
+	 * Used by historylog widget to show the changes the command recorded.
+	 */
+	function get_change_widgets()
+	{
+		$widgets = parent::get_change_widgets();
+		// Specify app to get bitwise permissions, since it's not always admin
+		$widgets[get_class($this)] = 'select-bitwise';
+
+		// Get select options for this app, slide them in via modifications
+		// since historylog doesn't do attributes on value widgets
+		Api\Etemplate::setElementAttribute('history['.get_class($this).']', 'select_options',
+				Api\Etemplate\Widget\Select::typeOptions('select-bitwise', ','.$this->app)
+		);
+		return $widgets;
+	}
 }
