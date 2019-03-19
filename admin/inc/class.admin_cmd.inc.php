@@ -1396,7 +1396,16 @@ abstract class admin_cmd
 					// config templates have options in the template
 					case 'option':
 						if (!is_array($widgets[$last_select])) $widgets[$last_select] = [];
-						$widgets[$last_select][(string)$widget->attrs['value']] = $widget->attrs['#text'];
+						$label = (string)$widget->attrs['#text'];
+						// translate "{something} {else}" type options
+						if (strpos($label, '{') !== false)
+						{
+							$label = preg_replace_callback('/{([^}]+)}/', function($matches)
+							{
+								return lang($matches[1]);
+							}, $label);
+						}
+						$widgets[$last_select][(string)$widget->attrs['value']] = $label;
 						break;
 					default:
 						$last_select = null;
