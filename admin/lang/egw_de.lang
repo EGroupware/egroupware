@@ -275,7 +275,7 @@ disable	admin	de	abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disable all	admin	de	Alle Video-Anleitungen deaktivieren
 disable minifying of javascript and css files	admin	de	Komprimierung von Javascript und CSS Dateien deaktivieren
-disable PGP encryption (Mailvelope)	admin	de	PGP-Verschlüsselung deaktivieren (Mailvelope)
+disable pgp encryption (mailvelope)	admin	de	PGP-Verschlüsselung deaktivieren (Mailvelope)
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
 display	admin	de	anzeigen
@@ -430,6 +430,7 @@ hash	admin	de	Hash-Wert
 hide php information	admin	de	PHP-Informationen ausblenden
 hide sidebox video tutorials	admin	de	Video-Anleitungen im Seitenmenü nicht anzeigen
 home directory	admin	de	Benutzerverzeichnis
+home screen message	admin	de	Nachricht der Startseite
 host information	admin	de	Host-Information
 hostname or ip	admin	de	Hostname oder IP
 hour<br>(0-23)	admin	de	Stunde<br>(0-23)
@@ -475,8 +476,8 @@ installed crontab	admin	de	Installierte Crontab
 instance	admin	de	Instanz
 interface	admin	de	Schnittstelle
 international use	admin	de	Internationale Benutzung
-invalid email	admin	en	Ungültige E-Mail-Adresse
 invalid argument '%1' !!!	admin	de	Ungültiges Argument "%1"!
+invalid email	admin	de	Ungültige E-Mail-Adresse
 invalid formated date "%1"!	admin	de	Ungültig formatiertes Datum "%1"!
 invalid remote id or name "%1"!	admin	de	Ungültige RemoteID oder Name "%1"!
 invalid value "%1" use yes or no!	admin	de	Ungültiger Wert "%1". Verwenden Sie Ja oder Nein (yes/no)
@@ -538,7 +539,6 @@ lowercase email addresses	admin	de	E-Mail-Adressen mit Kleinbuchstaben
 mail account	admin	de	E-Mail Konto
 mail settings	admin	de	E-Mail-Einstellungen
 main email-address	admin	de	Stamm-E-Mail-Adresse
-home screen message	admin	de	Nachricht der Startseite
 manage mapping	admin	de	Feldzuordnung verwalten
 manage stationery templates	admin	de	Briefpapiervorlagen verwalten
 manager	admin	de	Manager
@@ -671,7 +671,6 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	de	angefordert
 required pear class mail/mimedecode.php not found.	admin	de	Die benötigte PEAR-Klasse Mail/mimeDecode.php wurde nicht gefunden.
 reset filter	admin	de	Filter zurücksetzen
-return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
 rights	admin	de	Rechte
 route all mails to	admin	de	Alle E-Mails senden an
 rows	admin	de	Zeilen
@@ -868,7 +867,7 @@ using data from mozilla ispdb for provider %1	admin	de	Benutzer Mozilla ISPDB f�
 vacation messages with start- and end-date require an admin account to be set	admin	de	Abwesenheitsnotizen mit Start- und Enddatum benötigen einen gesetzten Administrator Benutzer!
 vacation notice	admin	de	Abwesenheitsnotiz
 value for column %1 is not unique!	admin	de	Wert für die Spalte %1 ist nicht eindeutig!
-vfs directory "%1" not found!	admin	de	VFS Verzeichnis "%1" nicht gefunden!
+vfs directory "%1" not found!	admin	de	VFS-Verzeichnis "%1" nicht gefunden!
 view access log	admin	de	Zugangsprotokoll anzeigen
 view account	admin	de	Benutzerkonto anzeigen
 view category	admin	de	Kategorie anzeigen
