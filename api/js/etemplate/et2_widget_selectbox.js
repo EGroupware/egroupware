@@ -576,6 +576,19 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				selected.addClass('et2_country-select flag-'+ _value.toLowerCase());
 			}
 		}
+		if(this._type == "select-bitwise" && _value && !isNaN(_value) && this.options.select_options)
+		{
+			var new_value = [];
+			for(var index in this.options.select_options)
+			{
+				var right = this.options.select_options[index].value;
+				if(!!(_value & right))
+				{
+					new_value.push(right);
+				}
+			}
+			_value = new_value;
+		}
 		this._oldValue = this.value;
 		if(this.input !== null && (this.options.tags || this.options.search))
 		{
@@ -1040,7 +1053,7 @@ et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-ca
 	"select-percent", 'select-priority',
 	'select-country', 'select-state', 'select-year', 'select-month',
 	'select-day', 'select-dow', 'select-hour', 'select-number', 'select-app',
-	'select-lang', 'select-bool', 'select-timezone' ]);
+	'select-lang', 'select-bool', 'select-timezone', 'select-bitwise' ]);
 
 // Static class stuff
 jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
@@ -1563,6 +1576,20 @@ var et2_selectbox_ro = (function(){ "use strict"; return et2_selectbox.extend([e
 	set_value: function(_value) {
 		this.value = _value;
 
+		if(this._type == "select-bitwise" && _value && !isNaN(_value) && this.options.select_options)
+		{
+			var new_value = [];
+			for(var index in this.options.select_options)
+			{
+				var option = this.options.select_options[index];
+				var right = option && option.value ? option.value : index;
+				if(!!(_value & right))
+				{
+					new_value.push(right);
+				}
+			}
+			_value = new_value;
+		}
 		if(typeof _value == "string")
 		{
 			_value = _value.match(this._is_multiple_regexp) !== null ? _value.split(',') : [_value];
@@ -1661,7 +1688,7 @@ et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select_ro"
 	"select-percent_ro", 'select-priority_ro', 'select-access_ro',
 	'select-country_ro', 'select-state_ro', 'select-year_ro', 'select-month_ro',
 	'select-day_ro', 'select-dow_ro', 'select-hour_ro', 'select-number_ro', 'select-app_ro',
-	'select-lang_ro', 'select-bool_ro', 'select-timezone_ro' ]);
+	'select-lang_ro', 'select-bool_ro', 'select-timezone_ro', 'select-bitwise_ro' ]);
 
 /**
  * Widget class which represents a single option inside a selectbox

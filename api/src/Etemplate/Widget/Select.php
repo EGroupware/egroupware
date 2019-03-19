@@ -255,6 +255,15 @@ class Select extends Etemplate\Widget
 							$value = self::$request->preserv[$unavailable_name];
 						}
 					}
+				case 'select-bitwise':
+					// Sum up into a single value
+					$sum = 0;
+					foreach((array) $value as $val)
+					{
+						$sum += $val;
+					}
+					$value = $sum;
+
 			}
 			if (isset($value))
 			{
@@ -783,6 +792,25 @@ class Select extends Etemplate\Widget
 					$options = $type ? Api\DateTime::getTimezones() : Api\DateTime::getUserTimezones($value);
 				}
 				break;
+			case 'select-bitwise':
+				// type = app name
+				$options = $form_name ? self::selOptions($form_name) : array();
+				$new_value = array();
+				$i = 0;
+				$appname = $type ? $type : ($widget && $widget->attrs['appname'] ?
+					self::expand_name($widget->attrs['appname'], 0, 0,'','',self::$cont) : '');
+				if($appname)
+				{
+					$options += (array)Api\Hooks::single(array('location' => 'acl_rights'), $appname);
+				}
+				foreach((array)$options as $right => $name)
+				{
+					if(!!($value & $right))
+					{
+						$new_value[] = $right;
+					}
+				}
+				$value = $new_value;
 		}
 		if ($rows > 1 || $readonly)
 		{
