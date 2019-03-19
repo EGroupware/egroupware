@@ -796,7 +796,6 @@ class Select extends Etemplate\Widget
 				// type = app name
 				$options = $form_name ? self::selOptions($form_name) : array();
 				$new_value = array();
-				$i = 0;
 				$appname = $type ? $type : ($widget && $widget->attrs['appname'] ?
 					self::expand_name($widget->attrs['appname'], 0, 0,'','',self::$cont) : '');
 				if($appname)
