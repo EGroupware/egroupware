@@ -1390,8 +1390,10 @@ abstract class admin_cmd
 					case 'hbox': case 'vbox': case 'box': case 'groupbox':
 					case 'grid': case 'columns': case 'column': case 'rows': case 'row':
 					case 'template': case 'tabbox': case 'tabs': case 'tab':
-					// ignore buttons too
-					case 'button':
+					// No need for these
+					case 'textbox': case 'int': case 'float':
+					// ignore widgets that can't go in the historylog
+					case 'button': case 'taglist-thumbnail':
 						break;
 					// config templates have options in the template
 					case 'option':
