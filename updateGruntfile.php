@@ -44,7 +44,7 @@ $exclude = array(
 	// api/js/jsapi/egw.js loaded via own tag, and we must not load it twice!
 	'api/js/jsapi/egw.js',
 	// TinyMCE is loaded separate before the bundle
-	'api/js/tinymce/tinymce.min.js',
+	'vendor/tinymce/tinymce/tinymce.min.js',
 );
 
 foreach(Bundle::all() as $name => $files)
