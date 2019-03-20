@@ -12,7 +12,7 @@
 
 /*egw:uses
 	jsapi.jsapi; // Needed for egw_seperateJavaScript
-	/api/js/tinymce/tinymce.min.js;
+	/vendor/tinymce/tinymce/tinymce.min.js;
 	et2_core_editableWidget;
 */
 
@@ -141,6 +141,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			min_height: 100,
 			convert_urls: false,
 			language: et2_htmlarea.LANGUAGE_CODE[egw.preference('lang', 'common')],
+			language_url: egw.webserverUrl+'/api/js/tinymce/langs/'+et2_htmlarea.LANGUAGE_CODE[egw.preference('lang', 'common')]+'.js',
 			paste_data_images: true,
 			browser_spellcheck: true,
 			contextmenu: false,
