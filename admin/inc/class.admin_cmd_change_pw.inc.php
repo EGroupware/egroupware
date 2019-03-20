@@ -46,7 +46,7 @@ class admin_cmd_change_pw extends admin_cmd
 	 */
 	protected function exec($check_only=false)
 	{
-		$account_id = admin_cmd::parse_account($this->account,true);	// true = user, no group
+		$this->account = admin_cmd::parse_account($this->account,true);	// true = user, no group
 		// check creator is still admin and not explicitly forbidden to edit Api\Accounts
 		if ($this->creator) $this->_check_admin('account_access',16);
 
@@ -54,7 +54,7 @@ class admin_cmd_change_pw extends admin_cmd
 
 		$auth = new Api\Auth;
 
-		if (!$auth->change_password(null, $this->password, $account_id))
+		if (!$auth->change_password(null, $this->password, $this->account))
 		{
 			// as long as the Api\Auth class is not throwing itself ...
 			throw new Exception(lang('Error changing the password for %1 !!!',$this->account),99);
