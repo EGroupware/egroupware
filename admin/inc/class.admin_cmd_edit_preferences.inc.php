@@ -109,4 +109,83 @@ class admin_cmd_edit_preferences extends admin_cmd
 		}
 		return lang('Preferences').' '.self::display_account($this->account);
 	}
+
+	/**
+	 * Get settings from various hooks
+	 *
+	 * @return array
+	 */
+	protected function settings()
+	{
+		static $settings = null;
+
+		if (!isset($settings))
+		{
+			Api\Translation::add_app('preferences');
+			$settings = Api\Preferences::settings($this->app, $this->pref, $this->account);
+		}
+		return $settings;
+	}
+
+	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * @return array
+	 */
+	function get_change_labels()
+	{
+		$labels = [];
+		foreach($this->settings() as $setting)
+		{
+			if (in_array($setting['type'], ['section', 'subsection']))
+			{
+				continue;
+			}
+			$labels[$setting['name']] = preg_replace('|<br[ /]*>|i', "\n", $setting['label']);
+		}
+		return $labels;
+	}
+
+	/**
+	 * Return widget types (indexed by field key) for changes
+	 *
+	 * Used by historylog widget to show the changes the command recorded.
+	 */
+	function get_change_widgets()
+	{
+		$widgets = [];
+		foreach($this->settings() as $setting)
+		{
+			switch ($setting['type'])
+			{
+				// ignore the following
+				case 'section': case 'subsection':
+				case 'int': case 'integer': case 'textbox': case 'textarea':
+				case 'password': case 'input':
+				case 'vfs_file': case 'vfs_dir': case 'vfs_dirs':
+					break;
+
+				case 'color':
+					$widgets[$setting['name']] = 'colorpicker';
+					break;
+
+				case 'check':
+					$setting['type'] = 'select';
+					$setting['values'] = array('1' => lang('yes'), '0' => lang('no'));
+					// fall through
+				default:
+					if (!empty($setting['values']) && is_array($setting['values']))
+					{
+						$widgets[$setting['name']] = $setting['values'];
+					}
+					else
+					{
+						$widgets[$setting['name']] = $setting['type'];
+					}
+					break;
+			}
+		}
+		//error_log(__METHOD__."() returning ".json_encode($widgets));
+		return $widgets;
+	}
 }

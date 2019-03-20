@@ -361,7 +361,7 @@ class preferences_settings
 	 * @param array &$sel_options
 	 * @param array &$readonlys
 	 * @param array &$types on return setting-name => setting-type
-	 * @param etemplate $tpl
+	 * @param Api\Etemplate|etemplate $tpl
 	 * @throws Api\Exception\WrongParameter
 	 * @return array content
 	 */
@@ -641,39 +641,8 @@ class preferences_settings
 			Api\Translation::add_app('preferences');	// we need the prefs translations too
 		}
 
-		// make type available, to hooks from Egw\Applications can use it, eg. activesync
-		$hook_data = array(
-			'location' => 'settings',
-			'type' => $type,
-			'account_id' => $account_id,
-		);
-		$GLOBALS['type'] = $type;	// old global variable
+		$this->settings = Api\Preferences::settings($appname, $type, $account_id);
 
-		// calling app specific settings hook
-		$settings = Api\Hooks::single($hook_data, $this->appname);
-		// it either returns the settings or save it in $GLOBALS['settings'] (deprecated!)
-		if (isset($settings) && is_array($settings) && $settings)
-		{
-			$this->settings = array_merge($this->settings, $settings);
-		}
-		elseif(isset($GLOBALS['settings']) && is_array($GLOBALS['settings']) && $GLOBALS['settings'])
-		{
-			$this->settings = array_merge($this->settings, $GLOBALS['settings']);
-		}
-		else
-		{
-			return False;	// no settings returned
-		}
-
-		// calling settings hook all apps can answer (for a specific app)
-		$hook_data['location'] = 'settings_'.$this->appname;
-		foreach(Api\Hooks::process($hook_data, $this->appname,true) as $settings)
-		{
-			if (isset($settings) && is_array($settings) && $settings)
-			{
-				$this->settings = array_merge($this->settings,$settings);
-			}
-		}
 		/* Remove ui-only settings */
 		if($this->xmlrpc)
 		{

@@ -1002,4 +1002,53 @@ class Preferences
 		error_log(__METHOD__."($category,$charset) lang=$lang, country=$country, country_from_lang=$country_from_lang: Could not set local!");
 		return false;	// should not happen, as the 'C' local should at least be available everywhere
 	}
+
+	/**
+	 * Get preferences by calling various hooks to supply them
+	 *
+	 * @param string $_appname appname or 'common'
+	 * @param string $type ='user' 'default', 'forced', 'user' or 'group'
+	 * @param int|string $account_id =null account_id for user or group prefs, or "forced" or "default"
+	 * @return array
+	 */
+	public static function settings($_appname, $type='user', $account_id=null)
+	{
+		$all_settings = [];
+		$appname = $_appname == 'common' ? 'preferences' : $_appname;
+
+		// make type available, to hooks from applications can use it, eg. activesync
+		$hook_data = array(
+			'location' => 'settings',
+			'type' => $type,
+			'account_id' => $account_id,
+		);
+		$GLOBALS['type'] = $type;	// old global variable
+
+		// calling app specific settings hook
+		$settings = Hooks::single($hook_data, $appname);
+		// it either returns the settings or save it in $GLOBALS['settings'] (deprecated!)
+		if (isset($settings) && is_array($settings) && $settings)
+		{
+			$all_settings = array_merge($all_settings, $settings);
+		}
+		elseif(isset($GLOBALS['settings']) && is_array($GLOBALS['settings']) && $GLOBALS['settings'])
+		{
+			$all_settings = array_merge($all_settings, $GLOBALS['settings']);
+		}
+		else
+		{
+			return False;	// no settings returned
+		}
+
+		// calling settings hook all apps can answer (for a specific app)
+		$hook_data['location'] = 'settings_'.$appname;
+		foreach(Hooks::process($hook_data, $appname,true) as $settings)
+		{
+			if (isset($settings) && is_array($settings) && $settings)
+			{
+				$all_settings = array_merge($all_settings,$settings);
+			}
+		}
+		return $all_settings;
+	}
 }
