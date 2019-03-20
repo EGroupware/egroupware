@@ -91,8 +91,12 @@ class admin_cmd_customfield extends admin_cmd
 		{
 			if(array_key_exists($key, $old) && $old[$key] == $value)
 			{
-				unset($set[$key]);
-				unset($old[$key]);
+				// Need to keep these 2 in set so we can tell if it was deleted
+				if(!in_array($key, array('id','name')))
+				{
+					unset($set[$key]);
+					unset($old[$key]);
+				}
 			}
 		}
 		$this->set = $set;
@@ -118,5 +122,90 @@ class admin_cmd_customfield extends admin_cmd
 			return lang('Customfield \'%1\' added', $this->field);
 		}
 		return lang('Customfield \'%1\' modified', $this->field);
+	}
+
+	/**
+	 * Return the whole object-data as array, it's a cast of the object to an array
+	 *
+	 * @return array
+	 */
+	function as_array()
+	{
+		$array = parent::as_array();
+		$stringify = function($_values)
+		{
+			if (is_array($_values))
+			{
+				$values = '';
+				foreach($_values as $var => $value)
+				{
+					$values .= (!empty($values) ? "\n" : '').$var.'='.$value;
+				}
+				return $values;
+			}
+			return $_values;
+		};
+		$array['set']['values'] = $stringify($array['set']['values']);
+		$array['old']['values'] = $stringify($array['old']['values']);
+		return $array;
+	}
+
+	/**
+	 * Get name of eTemplate used to make the change to derive UI for history
+	 *
+	 * @return string|null etemplate name
+	 */
+	protected function get_etemplate_name()
+	{
+		return 'admin.customfield_edit';
+	}
+
+
+	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * @return array
+	 */
+	function get_change_labels()
+	{
+		$labels = parent::get_change_labels();
+
+		foreach($labels as $id => $label)
+		{
+			if(strpos($id, 'cf_') === 0)
+			{
+				$labels[substr($id, 3)] = $label;
+				unset($labels[$id]);
+			}
+		}
+		$labels['app'] = 'Application';
+		return $labels;
+	}
+
+	/**
+	 * Return widget types (indexed by field key) for changes
+	 *
+	 * Used by historylog widget to show the changes the command recorded.
+	 */
+	function get_change_widgets()
+	{
+		$widgets = parent::get_change_widgets();
+		foreach($widgets as $id => $type)
+		{
+			if(strpos($id, 'cf_') === 0)
+			{
+				$widgets[substr($id, 3)] = $type;
+				unset($widgets[$id]);
+			}
+		}
+		$widgets['private'] = 'select-account';
+		$widgets['type2'] = array(
+			'n' => 'Contact' // Addressbook doesn't define it's normal type
+		);
+		foreach(Api\Config::get_content_types($this->app) as $type => $entry)
+		{
+			$widgets['type2'][$type] = is_array($entry) ? $entry['name'] : $entry;
+		}
+		return $widgets;
 	}
 }
