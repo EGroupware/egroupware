@@ -587,7 +587,8 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 					for(var j = 0; j < widget._children.length; j++)
 					{
 						var id = widget._children[j].id;
-						widget._children[j].setDetachedAttributes(nodes[j], {value:value[id]});
+						var widget_value = value ? value[id] || "" : "";
+						widget._children[j].setDetachedAttributes(nodes[j], {value:widget_value});
 						box.append(nodes[j]);
 					}
 					nodes = box;
@@ -612,7 +613,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 	 * @returns {Boolean}
 	 */
 	_needsDiffWidget: function(columnName, value) {
-		if(typeof value !== "string")
+		if(typeof value !== "string" && value)
 		{
 			this.egw().debug("warn", "Crazy diff value", value);
 			return false;
