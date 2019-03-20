@@ -152,11 +152,11 @@ class admin_categories
 				case 'apply':
 					if(is_array($content['owner'])) $content['owner'] = implode(',',$content['owner']);
 					if($content['owner'] == '') $content['owner'] = 0;
+					unset($content['msg']);
 					if ($content['id'] && self::$acl_edit)
 					{
 
 						$data = $cats->id2name($content['id'],'data');
-						unset($content['msg']);
 						if(!$content['parent'])
 						{
 							$content['parent'] = '0';
