@@ -332,8 +332,8 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 		// From app
 		for(var key in this.options.value['status-widgets'])
 		{
-			var field = this.options.value['status-widgets'][key];
-			var attrs = {'readonly': true, 'id': key};
+			var attrs = jQuery.extend({'readonly': true, 'id': key}, this.getArrayMgr('modifications').getEntry(key));
+			var field = attrs.type || this.options.value['status-widgets'][key];
 			var options = null;
 			var widget = null;
 			if(typeof field == 'object')
