@@ -17,6 +17,8 @@ use EGroupware\Api;
  * @property-read string $app app whos category to change (Categories->app_name)
  * @property-read array $set category data to set, value of null or "" to remove
  * @property-read array $old old values to record
+ * @property-read int $cat_id Category ID
+ * @property-read string $cat_name Category name at the time of the change
  */
 class admin_cmd_category extends admin_cmd
 {

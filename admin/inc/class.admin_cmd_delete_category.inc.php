@@ -15,7 +15,10 @@ use EGroupware\Api;
  * setup command: delete EGw category
  *
  * @property-read string $app app whos category to delete (Categories->app_name)
+ * @property-read array $set category data to set, value of null or "" to remove
+ * @property-read array $old old values to record
  * @property-read int $cat_id category ID to delete
+ * @property-read string $cat_name Category name at the time of the change
  * @property-read boolean $subs Delete subs as well
  */
 class admin_cmd_delete_category extends admin_cmd
