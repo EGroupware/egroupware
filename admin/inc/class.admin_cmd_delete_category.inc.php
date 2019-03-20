@@ -59,6 +59,10 @@ class admin_cmd_delete_category extends admin_cmd
 	protected function exec($check_only=false)
 	{
 		$cats = new Api\Categories('',$this->app);
+		if(!$this->old && $this->cat_id)
+		{
+			$this->old = $cats->read($this->cat_id);
+		}
 		if ($check_only)
 		{
 			return true;
@@ -79,5 +83,54 @@ class admin_cmd_delete_category extends admin_cmd
 	function __tostring()
 	{
 		return lang('Category \'%1\' deleted' , $this->data['cat_name']);
+	}
+
+
+	/**
+	 * Get name of eTemplate used to make the change to derive UI for history
+	 *
+	 * @return string|null etemplate name
+	 */
+	protected function get_etemplate_name()
+	{
+		return 'admin.categories.edit';
+	}
+
+	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * @return array
+	 */
+	function get_change_labels()
+	{
+		$labels = parent::get_change_labels();
+		// Never seems to be in old value, so don't show it
+		$labels['icon_url'] = False;
+		// Just for internal use, no need to show it
+		$labels['main'] = $labels['app_name'] = $labels['level'] = False;
+
+		return $labels;
+	}
+
+	/**
+	 * Return widget types (indexed by field key) for changes
+	 *
+	 * Used by historylog widget to show the changes the command recorded.
+	 */
+	function get_change_widgets()
+	{
+		$widgets = parent::get_change_widgets();
+		unset($widgets['data[icon]']);
+		unset($widgets['data[color]']);
+		$widgets['data'] = array(
+			// Categories have non-standard image location, so image widget can't find them
+			// without being given the full path, which we don't have
+			'icon' => 'description',
+			'color' => 'colorpicker'
+		);
+		$widgets['parent'] = 'select-cat';
+		$widgets['owner'] = 'select-account';
+		$widgets['appname'] = 'select-app';
+		return $widgets;
 	}
 }

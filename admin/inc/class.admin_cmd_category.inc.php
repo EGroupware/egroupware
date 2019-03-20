@@ -75,6 +75,9 @@ class admin_cmd_category extends admin_cmd
 		// store the cat
 		$this->cat_id = $this->set['id'] ? $cats->edit($this->set) : $cats->add($this->set);
 
+		// Put this there for posterity, if it gets deleted later
+		$this->cat_name = Api\Categories::id2name($this->cat_id);
+
 		// Clean data for history
 		$set =& $this->set;
 		$old =& $this->old;
@@ -101,9 +104,15 @@ class admin_cmd_category extends admin_cmd
 	 */
 	function __tostring()
 	{
+		$current_name = Api\Categories::id2name($this->cat_id);
+		if($current_name !== $this->cat_name)
+		{
+			$current_name = $this->cat_name . ($current_name == '--' ?
+					'' : " ($current_name)");
+		}
 		return lang('%1 category \'%2\' %3',
 			lang($this->app),
-			Api\Categories::id2name($this->cat_id),
+			$current_name,
 			$this->old ? lang('edited') : lang('added')
 		);
 	}
@@ -130,7 +139,7 @@ class admin_cmd_category extends admin_cmd
 		// Never seems to be in old value, so don't show it
 		$labels['icon_url'] = False;
 		// Just for internal use, no need to show it
-		$labels['main'] = False;
+		$labels['main'] = $labels['app_name'] = $labels['level'] = False;
 
 		return $labels;
 	}
@@ -144,6 +153,7 @@ class admin_cmd_category extends admin_cmd
 	{
 		$widgets = parent::get_change_widgets();
 		unset($widgets['data[icon]']);
+		unset($widgets['data[color]']);
 		$widgets['data'] = array(
 			// Categories have non-standard image location, so image widget can't find them
 			// without being given the full path, which we don't have
@@ -152,6 +162,7 @@ class admin_cmd_category extends admin_cmd
 		);
 		$widgets['parent'] = 'select-cat';
 		$widgets['owner'] = 'select-account';
+		$widgets['appname'] = 'select-app';
 		return $widgets;
 	}
 }
