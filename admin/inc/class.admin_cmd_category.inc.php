@@ -79,8 +79,8 @@ class admin_cmd_category extends admin_cmd
 		$this->cat_name = Api\Categories::id2name($this->cat_id);
 
 		// Clean data for history
-		$set =& $this->set;
-		$old =& $this->old;
+		$set = $this->set;
+		$old = $this->old;
 		unset($old['last_mod']);
 		unset($set['old_parent'], $set['base_url'], $set['last_mod'], $set['all_cats'], $set['no_private']);
 		foreach($set as $key => $value)
