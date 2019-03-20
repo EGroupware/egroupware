@@ -255,6 +255,7 @@ class Select extends Etemplate\Widget
 							$value = self::$request->preserv[$unavailable_name];
 						}
 					}
+					break;
 				case 'select-bitwise':
 					// Sum up into a single value
 					$sum = 0;
@@ -263,7 +264,7 @@ class Select extends Etemplate\Widget
 						$sum += $val;
 					}
 					$value = $sum;
-
+					break;
 			}
 			if (isset($value))
 			{
