@@ -343,7 +343,7 @@ class Select extends Etemplate\Widget
 					self::$request->sel_options[$form_name] = array_merge(self::$request->sel_options[$form_name], $type_options);
 
 					// if no_lang was modified, forward modification to the client
-					if ($no_lang != $this->attr['no_lang'])
+					if ($no_lang != $this->attrs['no_lang'])
 					{
 						self::setElementAttribute($form_name, 'no_lang', $no_lang);
 					}
@@ -834,11 +834,9 @@ class Select extends Etemplate\Widget
 	{
 		$apps = array();
 		$parts = explode(":", $type2);
-		if (is_array($parts))
-		{
-			$exceptions = explode(";", $parts[1]);
-			$type2 = $parts[0];
-		}
+		$exceptions = explode(";", $parts[1]);
+		$type2 = $parts[0];
+
 		foreach ($GLOBALS['egw_info']['apps'] as $app => $data)
 		{
 			if ($type2 == 'enabled' && (!$data['enabled'] || !$data['status'] || $data['status'] == 3 || in_array($app, $exceptions)))
@@ -897,6 +895,7 @@ class Select extends Etemplate\Widget
 		{
 			$longnames = 1;
 		}
+		$info = '';
 		switch ($longnames)
 		{
 			case 2:
