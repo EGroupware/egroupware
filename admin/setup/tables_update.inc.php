@@ -11,8 +11,6 @@
  * @subpackage setup
  */
 
-use EGroupware\Api;
-
 function admin_upgrade1_2()
 {
 	return $GLOBALS['setup_info']['admin']['currentver'] = '1.4';
@@ -241,5 +239,33 @@ function admin_upgrade17_1()
 	}
 
 	return $GLOBALS['setup_info']['admin']['currentver'] = '18.1';
+}
+
+/**
+ * Update admin_cmd_config to use "store_as_api" instead of "app"="phpgwapi" and "appname"
+ *
+ * @return string
+ */
+function admin_upgrade18_1()
+{
+	// fill cmd_account/app from
+	foreach($GLOBALS['egw_setup']->db->select('egw_admin_queue', 'cmd_id,cmd_app,cmd_data', array(
+			'cmd_app' => 'phpgwapi',
+			'cmd_type' => 'admin_cmd_config',
+		), __LINE__, __FILE__, false, '', 'admin') as $row)
+	{
+		$data = json_php_unserialize($row['cmd_data']);
+		$data['store_as_api'] = $row['cmd_app'] === 'phpgwapi';
+		$row['cmd_app'] = !empty($data['appname']) ? $data['appname'] : 'setup';
+		unset($data['appname']);
+
+		$cmd_id = $row['cmd_id'];
+		unset($row['cmd_id']);
+		$row['cmd_data'] = json_encode($data);
+		$GLOBALS['egw_setup']->db->update('egw_admin_queue', $row,
+			array('cmd_id' => $cmd_id), __LINE__, __FILE__, 'admin');
+	}
+
+	return $GLOBALS['setup_info']['admin']['currentver'] = '18.1.001';
 }
 

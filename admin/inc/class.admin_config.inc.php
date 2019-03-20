@@ -195,8 +195,8 @@ class admin_config
 			}, ARRAY_FILTER_USE_KEY);
 			if ($set)
 			{
-				$cmd = new admin_cmd_config($config_appname, $set, $old,
-					(array)$_content['admin_cmd']+array('appname' => $_appname));
+				$cmd = new admin_cmd_config($_appname, $set, $old,
+					(array)$_content['admin_cmd'], $config_appname === 'phpgwapi');
 				$msg = $cmd->run();
 			}
 			else

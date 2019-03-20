@@ -1378,11 +1378,13 @@ abstract class admin_cmd
 	 */
 	function get_change_widgets()
 	{
+		static $selectboxes = ['select', 'listbox', 'menupopup', 'taglist'];
+
 		$widgets = [];
 		$last_select = null;
 		if (($tpl = $this->get_etemplate()))
 		{
-			$tpl->run(function($cname, $expand, $widget) use (&$widgets, &$last_select)
+			$tpl->run(function($cname, $expand, $widget) use (&$widgets, &$last_select, $selectboxes)
 			{
 				switch($widget->type)
 				{
@@ -1391,7 +1393,7 @@ abstract class admin_cmd
 					case 'grid': case 'columns': case 'column': case 'rows': case 'row':
 					case 'template': case 'tabbox': case 'tabs': case 'tab':
 					// No need for these
-					case 'textbox': case 'int': case 'float': case 'select':
+					case 'textbox': case 'int': case 'float':
 					// ignore widgets that can't go in the historylog
 					case 'button': case 'buttononly': case 'taglist-thumbnail':
 						break;
@@ -1414,7 +1416,7 @@ abstract class admin_cmd
 						if (!empty($widget->id))
 						{
 							$widgets[$widget->id] = $widget->type;
-							if (in_array($widget->type, ['select']))
+							if (in_array($widget->type, $selectboxes))
 							{
 								$last_select = $widget->id;
 							}
@@ -1423,6 +1425,9 @@ abstract class admin_cmd
 				}
 				unset($cname, $expand);
 			}, ['', []]);
+
+			// remove pure selectboxes, as they would show nothing without having options
+			$widgets = array_diff($widgets, $selectboxes);
 		}
 		return $widgets;
 	}

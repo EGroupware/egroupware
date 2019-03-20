@@ -14,8 +14,8 @@ use EGroupware\Api;
 /**
  * setup command: change EGw configuration
  *
- * @property-read string $app app whos config to change (egw_config.config_app)
- * @property-read string $appname app name whos config is changed (some apps store their config under app="phpgwapi")
+ * @property-read string $app app whos config to change
+ * @property-read boolean $store_as_api some apps store their config under app="phpgwapi"
  * @property-read array $set config data to set, value of null or "" to remove
  * @property-read array $old old values to record
  */
@@ -27,14 +27,20 @@ class admin_cmd_config extends admin_cmd
 	//const SETUP_CLI_CALLABLE = true;	// need to check how to parse arguments
 
 	/**
+	 * Name to use if $this->store_as_api is set
+	 */
+	const STORE_AS_API = 'phpgwapi';
+
+	/**
 	 * Constructor
 	 *
 	 * @param array|string $data data array or app whos config to change
 	 * @param array $set =null config data to set, value of null or "" to remove
 	 * @param array $old =null old values to record
 	 * @param array $other =null values for keys "requested", "requested_email", "comment", etc
+	 * @param boolean $store_as_api =false true: store under "phpgwapi"
 	 */
-	function __construct($data, array $set=null, array $old=null, $other=null)
+	function __construct($data, array $set=null, array $old=null, array $other=null, $store_as_api=false)
 	{
 		if (!is_array($data))
 		{
@@ -42,8 +48,18 @@ class admin_cmd_config extends admin_cmd
 				'app' => $data,
 				'set' => $set,
 				'old' => $old,
+				'store_as_api' => $store_as_api,
 			)+(array)$other;
 		}
+
+		// fix depreated use of app="phpwapi" or appname!=app
+		if ($data['app'] === self::STORE_AS_API || !empty($data['appname']))
+		{
+			$data['store_as_api'] = true;
+			$data['app'] = !empty($data['appname']) ? $data['appname'] : 'setup';
+			unset($data['appname']);
+		}
+
 		//echo __CLASS__.'::__construct()'; _debug_array($domain);
 		admin_cmd::__construct($data);
 	}
@@ -63,7 +79,7 @@ class admin_cmd_config extends admin_cmd
 			return true;	// no specific checks exist
 		}
 
-		$config = new Api\Config($this->app);
+		$config = new Api\Config($this->store_as_api ? self::STORE_AS_API : $this->app);
 		$config->read_repository();
 
 		// store the config
@@ -83,8 +99,7 @@ class admin_cmd_config extends admin_cmd
 	 */
 	function __tostring()
 	{
-		return lang('%1 site configuration',
-			lang($this->appname ? $this->appname : $this->app));
+		return lang('site configuration').': '.lang($this->app);
 	}
 
 	/**
@@ -94,7 +109,7 @@ class admin_cmd_config extends admin_cmd
 	 */
 	function get_etemplate_name()
 	{
-		return ($this->appname ? $this->appname : $this->app).'.config';
+		return $this->app.'.config';
 	}
 
 	/**
@@ -127,11 +142,20 @@ class admin_cmd_config extends admin_cmd
 	function get_change_widgets()
 	{
 		$widgets = [];
+
+		// get selectbox options from "config" hook
+		$ret = Api\Hooks::single('config', $this->app);
+		if (is_array($ret) && isset($ret['sel_options']))
+		{
+			$widgets = $ret['sel_options'];
+		}
+
+		// get widgets from eTemplate (with newsettings namespace!)
 		foreach(parent::get_change_widgets() as $id => $widget)
 		{
 			if (strpos($id, 'newsettings[') === 0)
 			{
-				$widgets[substr($id, 12, -1)] = $widget;
+				$widgets[$id=substr($id, 12, -1)] = $widget;
 			}
 		}
 		return $widgets;
