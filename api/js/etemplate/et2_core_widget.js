@@ -700,7 +700,7 @@ var et2_widget = (function(){ "use strict"; return ClassWithAttributes.extend(
 					var entry = modifications.getRoot().getEntry(_node.getAttribute("id"));
 				}
 			}
-			if(entry && entry.type)
+			if(entry && entry.type && typeof entry.type === 'string')
 			{
 				_nodeName = attributes["type"] = entry.type;
 			}
