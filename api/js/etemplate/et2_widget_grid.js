@@ -63,11 +63,29 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 			default: "",
 			description: "Defines other sortable areas that should be connected to sort list"
 		},
+		sortable_placeholder: {
+			name: "Sortable placeholder",
+			type: "string",
+			default: "",
+			description: "Defines sortable placeholder"
+		},
+		sortable_cancel: {
+			name: "Sortable cancel class",
+			type: "string",
+			default: "",
+			description: "Defines sortable cancel which prevents sorting the matching element"
+		},
 		sortable_recieveCallback: {
 			name: "Sortable receive callback",
-			type: "string",
+			type: "js",
 			default: et2_no_init,
 			description: "Defines sortable receive callback function"
+		},
+		sortable_startCallback: {
+			name: "Sortable start callback",
+			type: "js",
+			default: et2_no_init,
+			description: "Defines sortable start callback function"
 		}
 	},
 
@@ -942,9 +960,11 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 			// Header does not participate in sorting
 			items: "tr:not(.th)",
 			distance: 15,
+			cancel: this.options.sortabl_cancel,
+			placeholder: this.options.sortable_placeholder,
 			containment: this.options.sortable_containment,
 			connectWith: this.options.sortable_connectWith,
-			stop: function(event, ui) {
+			update: function(event, ui) {
 				self.egw(window).json(sortable,[self.tbody.sortable("toArray"), self.id],
 					null,
 					self,
@@ -954,6 +974,11 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 			receive: function (event, ui) {
 				if (typeof self.options.sortable_recieveCallback == 'function') {
 					self.options.sortable_recieveCallback.call(self, event,ui);
+				}
+			},
+			start: function (event, ui) {
+				if (typeof self.options.sortable_startCallback == 'function') {
+					self.options.sortable_startCallback.call(self, event,ui);
 				}
 			}
 		});
