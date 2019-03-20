@@ -960,7 +960,7 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 			// Header does not participate in sorting
 			items: "tr:not(.th)",
 			distance: 15,
-			cancel: this.options.sortabl_cancel,
+			cancel: this.options.sortable_cancel,
 			placeholder: this.options.sortable_placeholder,
 			containment: this.options.sortable_containment,
 			connectWith: this.options.sortable_connectWith,
