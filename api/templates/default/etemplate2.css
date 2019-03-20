@@ -575,12 +575,15 @@ div.et2_diff {
 .d2h-file-header,
 .d2h-file-info,
 .d2h-info,
-.et2_diff .d2h-cntx
+.et2_diff:not(.ui-dialog-content) .d2h-cntx
 {
   display: none;
 }
 .d2h-file-diff {
 	white-space:normal;
+}
+.et2_diff .d2h-file-wrapper {
+	margin: 0px;
 }
 .et2_diff .d2h-file-diff {
 	overflow-x: hidden;
