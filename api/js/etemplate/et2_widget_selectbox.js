@@ -302,8 +302,8 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 					option.addClass('cat_'+_value);
 					break;
 				case 'select-country':
-				//	jQuery(document.createElement("span")).addClass('et2_country-select').appenTo(option);
-					option.addClass('et2_country-select flag-'+_value.toLowerCase())
+					// jQuery(document.createElement("span")).addClass('et2_country-select').appenTo(option);
+					option.addClass('et2_country-select flag-'+_value.toLowerCase());
 					break;
 			}
 			if (this.options.value_class != '') option.addClass(this.options.value_class+_value);
@@ -797,7 +797,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			if (this._type == 'listbox' && this.options.value_class != '')
 			{
 				var self = this;
-				this.input.find('option').each(function(i,v) {jQuery(v).addClass(self.options.value_class+v.value)});
+				this.input.find('option').each(function(i,v) {jQuery(v).addClass(self.options.value_class+v.value);});
 			}
 			this.input.chosen({
 				inherit_select_classes: true,
