@@ -237,9 +237,7 @@ class HTTP_WebDAV_Server
         $this->uri      = $uri . $path_info;
 
         // set path
-        // $_SERVER['PATH_INFO'] is already urldecoded
-        //$this->path = self::_urldecode($path_info);
-        // quote '#' (e.g. OpenOffice uses this for lock-files)
+        // Vfs stores %, # and ? urlencoded, we do the encoding here on a central place
         $this->path = strtr($path_info,array(
         	'%' => '%25',
         	'#' => '%23',
@@ -2185,7 +2183,13 @@ class HTTP_WebDAV_Server
         $http_header_host = preg_replace("/:80$/", "", $this->_SERVER["HTTP_HOST"]);
 
         $url  = parse_url($this->_SERVER["HTTP_DESTINATION"]);
-        $path = urldecode($url["path"]);
+        // Vfs stores %, # and ? urlencoded, we do the encoding here on a central place
+        $path = strtr(self::_urldecode($url["path"]), array(
+            '%' => '%25',
+            '#' => '%23',
+            '?' => '%3F',
+        ));
+		//error_log(__METHOD__."(".array2string($what).") parse_url(HTTP_DESTINATION=".array2string($this->_SERVER["HTTP_DESTINATION"]).")=".array2string($url)." --> ".array2string($path));
 
         if (isset($url["host"])) {
             // TODO check url scheme, too
