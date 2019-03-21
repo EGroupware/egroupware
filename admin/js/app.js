@@ -134,8 +134,8 @@ app.classes.admin = AppJS.extend(
 	load: function(_url)
 	{
 		if (this.iframe && this.iframe.getDOMNode().contentDocument.location.href
-			.match(/menuaction=admin.admin_statistics.submit/) &&
-			!_url.match(/statistics=(postpone|canceled|submitted)/))
+			.match(/menuaction=admin.admin_statistics.submit/) && ( !_url ||
+			!_url.match(/statistics=(postpone|canceled|submitted)/)))
 		{
 			this.egw.message(this.egw.lang('Please submit (or postpone) statistic first'), 'info');
 			return;	// do not allow to leave statistics submit
@@ -359,13 +359,12 @@ app.classes.admin = AppJS.extend(
 		var link = _widget.getUserData(_id, 'link');
 
 		this.groups.set_disabled(true);
-		this.nm.set_disabled(false);
 
 		if (_id == '/accounts' || _id.substr(0, 8) == '/groups/')
 		{
 			this.load();
 			var parts = _id.split('/');
-			this.et2.getWidgetById('nm').applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
+			this.nm.applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
 		}
 		else if (_id === '/groups')
 		{
