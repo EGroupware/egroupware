@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -175,7 +174,14 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		 * @return {string}
 		 */
 		decodePath: function(_path) {
-			return decodeURIComponent(_path);
+			try {
+				return decodeURIComponent(_path);
+			}
+			catch(e) {
+				// ignore decoding errors, as they usually only mean _path is not encoded
+				egw.debug("error", "decodePath('"+_path+"'): "+e.stack);
+			}
+			return _path;
 		},
 
 		/**
@@ -196,7 +202,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		/**
 		 * Encode vfs special chars removing /
 		 *
-		 * //'%' => '%25',	// % should be encoded, but easily leads to double encoding, therefore better NOT encodig it
+		 * '%' => '%25',
 		 * '#' => '%23',
 		 * '?' => '%3F',
 		 * '/' => '',	// better remove it completly
@@ -205,7 +211,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		 * @return {string}
 		 */
 		encodePathComponent: function(_comp) {
-			return _comp.replace(/#/g,'%23').replace(/\?/g,'%3F').replace(/\//g,'');
+			return _comp.replace(/%/g,'%25').replace(/#/g,'%23').replace(/\?/g,'%3F').replace(/\//g,'');
 		},
 
 		/**
