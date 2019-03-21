@@ -235,6 +235,21 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	}
 
 	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * @return array
+	 */
+	function get_change_labels()
+	{
+		$labels = parent::get_change_labels();
+		$labels += array(
+			'account_lastname' => 'lastname',
+			'account_firstname' => 'firstname'
+		);
+		return $labels;
+	}
+
+	/**
 	 * parse the expired string and return the expired date as timestamp
 	 *
 	 * @param string $str date, 'never', 'already' or '' (=dont change, or default of never of new Api\Accounts)

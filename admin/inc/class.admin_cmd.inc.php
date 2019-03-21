@@ -39,6 +39,7 @@ use EGroupware\Api\Acl;
  * @property string|NULL $comment comment, eg. reasoning why change was requested
  * @property-read int|NULL $errno Numerical error-code or NULL on success
  * @property-read string|NULL $error Error message or NULL on success
+ * @property-read string|NULL $result Result message indicating what happened, or NULL on failure
  * @property-read int $id $id of command/row in egw_admin_queue table
  * @property-read string $uid uuid of command (necessary if command is send to a remote system to execute)
  * @property int|NULL $remote_id id of remote system, if command is not meant to run on local system
@@ -248,6 +249,7 @@ abstract class admin_cmd
 				$this->status = admin_cmd::failed;
 			}
 		}
+		$this->result = $ret;
 		if (!$dont_save && !$dry_run && !$this->save($set_modifier))
 		{
 			throw new Api\Db\Exception(lang('Error saving the command!'));
@@ -1430,5 +1432,18 @@ abstract class admin_cmd
 			$widgets = array_diff($widgets, $selectboxes);
 		}
 		return $widgets;
+	}
+
+	/**
+	 * Get the result of executing the command.
+	 * Should be some kind of success or results message indicating what was done.
+	 */
+	public function get_result()
+	{
+		if($this->result)
+		{
+			return $this->result;
+		}
+		return static::$stati[ $this->status ];
 	}
 }
