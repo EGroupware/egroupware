@@ -297,7 +297,7 @@ div#filemanager-file_tabs span.ui-icon-search:active {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  background-color: #1aa200;
+  background-color: #b3e4a6;
 }
 div#filemanager-file_tabs #filemanager-file_filemanager-file-eacl {
   /*Owner*/
@@ -329,7 +329,7 @@ div#stylite-filemanager-upload .et2_file input {
   background-color: #0C5DA5;
 }
 div#stylite-filemanager-upload .et2_file input:hover {
-  background-color: #189800 !important;
+  background-color: #ace29e !important;
   color: #ffc200;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -342,7 +342,7 @@ div#stylite-filemanager-upload .et2_file input:hover {
   border-top-left-radius: 10px;
 }
 div#stylite-filemanager-upload .et2_file input:active {
-  background-color: #1aa200 !important;
+  background-color: #b3e4a6 !important;
 }
 div#stylite-filemanager-upload .et2_file div.progress {
   width: 0px;
@@ -377,14 +377,14 @@ div#stylite-filemanager-upload .dialogFooterToolbar button {
   height: 24px;
 }
 div#stylite-filemanager-upload .dialogFooterToolbar button:hover {
-  background-color: #f5b301 !important;
+  background-color: #ffdb7a !important;
   color: #000000;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 div#stylite-filemanager-upload .dialogFooterToolbar button:active {
-  background-color: #fecc44 !important;
+  background-color: #fff0c7 !important;
   color: #000000;
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);

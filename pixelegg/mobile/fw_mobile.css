@@ -7218,10 +7218,10 @@ div[id^="addressbook-"] .search.nm-mob-header,
 form[id^="addressbook-"] .search.nm-mob-header,
 div[id^="addressbook-"] .dialogHeadbar,
 form[id^="addressbook-"] .dialogHeadbar {
-  background-color: #333399;
+  background-color: #003366;
 }
 #addressbook_sidebox_header {
-  border-left: 6px solid #333399 !important;
+  border-left: 6px solid #003366 !important;
 }
 div[id^="admin-"] .plus_button,
 form[id^="admin-"] .plus_button,
@@ -7229,10 +7229,10 @@ div[id^="admin-"] .search.nm-mob-header,
 form[id^="admin-"] .search.nm-mob-header,
 div[id^="admin-"] .dialogHeadbar,
 form[id^="admin-"] .dialogHeadbar {
-  background-color: #0073ce;
+  background-color: #0099CC;
 }
 #admin_sidebox_header {
-  border-left: 6px solid #0073ce !important;
+  border-left: 6px solid #0099CC !important;
 }
 div[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -7242,10 +7242,10 @@ div[id^="bookmarks-"] .search.nm-mob-header,
 form[id^="bookmarks-"] .search.nm-mob-header,
 div[id^="bookmarks-"] .dialogHeadbar,
 form[id^="bookmarks-"] .dialogHeadbar {
-  background-color: #db0087;
+  background-color: #ff9933;
 }
 #bookmarks_sidebox_header {
-  border-left: 6px solid #db0087 !important;
+  border-left: 6px solid #ff9933 !important;
 }
 div[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -7281,10 +7281,10 @@ div[id^="infolog-"] .search.nm-mob-header,
 form[id^="infolog-"] .search.nm-mob-header,
 div[id^="infolog-"] .dialogHeadbar,
 form[id^="infolog-"] .dialogHeadbar {
-  background-color: #FFB936;
+  background-color: #660033;
 }
 #infolog_sidebox_header {
-  border-left: 6px solid #FFB936 !important;
+  border-left: 6px solid #660033 !important;
 }
 div[id^="mail-"] .plus_button,
 form[id^="mail-"] .plus_button,
@@ -7292,10 +7292,10 @@ div[id^="mail-"] .search.nm-mob-header,
 form[id^="mail-"] .search.nm-mob-header,
 div[id^="mail-"] .dialogHeadbar,
 form[id^="mail-"] .dialogHeadbar {
-  background-color: #47b2d4;
+  background-color: #006699;
 }
 #mail_sidebox_header {
-  border-left: 6px solid #47b2d4 !important;
+  border-left: 6px solid #006699 !important;
 }
 div[id^="projectmanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="projectmanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -7305,10 +7305,10 @@ div[id^="projectmanager-"] .search.nm-mob-header,
 form[id^="projectmanager-"] .search.nm-mob-header,
 div[id^="projectmanager-"] .dialogHeadbar,
 form[id^="projectmanager-"] .dialogHeadbar {
-  background-color: #75de27;
+  background-color: #339933;
 }
 #projectmanager_sidebox_header {
-  border-left: 6px solid #75de27 !important;
+  border-left: 6px solid #339933 !important;
 }
 div[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -7318,10 +7318,10 @@ div[id^="resources-"] .search.nm-mob-header,
 form[id^="resources-"] .search.nm-mob-header,
 div[id^="resources-"] .dialogHeadbar,
 form[id^="resources-"] .dialogHeadbar {
-  background-color: #009966;
+  background-color: #CC3333;
 }
 #resources_sidebox_header {
-  border-left: 6px solid #009966 !important;
+  border-left: 6px solid #CC3333 !important;
 }
 div[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -7331,10 +7331,10 @@ div[id^="timesheet-"] .search.nm-mob-header,
 form[id^="timesheet-"] .search.nm-mob-header,
 div[id^="timesheet-"] .dialogHeadbar,
 form[id^="timesheet-"] .dialogHeadbar {
-  background-color: #9d15ea;
+  background-color: #330066;
 }
 #timesheet_sidebox_header {
-  border-left: 6px solid #9d15ea !important;
+  border-left: 6px solid #330066 !important;
 }
 div[id^="tracker-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="tracker-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -7344,10 +7344,10 @@ div[id^="tracker-"] .search.nm-mob-header,
 form[id^="tracker-"] .search.nm-mob-header,
 div[id^="tracker-"] .dialogHeadbar,
 form[id^="tracker-"] .dialogHeadbar {
-  background-color: #006666;
+  background-color: #009966;
 }
 #tracker_sidebox_header {
-  border-left: 6px solid #006666 !important;
+  border-left: 6px solid #009966 !important;
 }
 div[id^="wiki-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="wiki-"] .nm_favorites_div .et2_dropdown button:nth-child(2),

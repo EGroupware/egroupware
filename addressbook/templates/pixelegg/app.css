@@ -282,7 +282,7 @@ select#addressbook-index_col_filter\[tid\] {
     -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-    background-color: #1aa200;
+    background-color: #b3e4a6;
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget img:last-child {
     margin-right: 5px;
@@ -348,10 +348,10 @@ select#addressbook-index_col_filter\[tid\] {
     padding-right: 100em;
   }
   button#tracker-index-addressbook_add:active {
-    background-color: #1aa200;
+    background-color: #b3e4a6;
   }
   button#tracker-index-addressbook_add:hover {
-    background-color: #189800 !important;
+    background-color: #ace29e !important;
     color: #ffc200;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -364,7 +364,7 @@ select#addressbook-index_col_filter\[tid\] {
     border-top-left-radius: 10px;
   }
   button#tracker-index-addressbook_add:active {
-    background-color: #1aa200 !important;
+    background-color: #b3e4a6 !important;
   }
   div.addressbook_edit_general_picture img {
     top: -4px;

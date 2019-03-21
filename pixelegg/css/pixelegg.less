@@ -160,6 +160,9 @@
 	}
 	#egw_fw_sidemenu{
 		.egw_fw_ui_scrollarea_outerdiv {
+			.egw_fw_ui_sidemenu_entry_header {
+				border-left:4px solid @default-color;
+			}
 			.egw_fw_ui_sidemenu_entry_icon {
 				filter: none;
 			}
@@ -175,7 +178,12 @@
 		}
 	}
 }
-#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active {padding-bottom: 4px;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active {
+	padding-bottom: 4px;
+	border-bottom: 4px solid;
+	border-bottom-color: @default-color;
+	border-bottom-width: 4px !important;
+}
 
 #egw_fw_header {
 	#egw_fw_topmenu {

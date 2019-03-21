@@ -1114,14 +1114,14 @@ body {
   background-color: white !important;
 }
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-send {
-  background-color: #189800;
+  background-color: #ace29e;
   color: #FFFFFF;
 }
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-send:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: #189800;
+  background-color: #ace29e;
 }
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-send:disabled {
   background-color: rgba(12, 93, 165, 0.2) !important;
@@ -1313,7 +1313,7 @@ body {
 #mail-display .et2_toolbar button[id*="toolbar-header"]:active,
 #mail-display #mail-display_toolbar button[id*="toolbar-header"]:active,
 #mail-display mail-display_displayToolbar button[id*="toolbar-header"]:active {
-  background-color: #1aa200;
+  background-color: #b3e4a6;
 }
 #mail-display .et2_toolbar button[id*="toolbar-unflagged"]:active,
 #mail-display #mail-display_toolbar button[id*="toolbar-unflagged"]:active,
@@ -1321,7 +1321,7 @@ body {
 #mail-display .et2_toolbar button[id*="toolbar-delete"]:active,
 #mail-display #mail-display_toolbar button[id*="toolbar-delete"]:active,
 #mail-display mail-display_displayToolbar button[id*="toolbar-delete"]:active {
-  background-color: #e12500;
+  background-color: #ffb1a1;
 }
 #mail-display .et2_toolbar button[id*="toolbar-infolog"]:active,
 #mail-display #mail-display_toolbar button[id*="toolbar-infolog"]:active,
@@ -1460,7 +1460,7 @@ body {
 #mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-header"]:hover,
 #mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-header"]:hover,
 #mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-header"]:hover {
-  background-color: #1aa200;
+  background-color: #b3e4a6;
 }
 #mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-composeasnew"]:active,
 #mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-composeasnew"]:active,
@@ -1483,7 +1483,7 @@ body {
 #mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-header"]:active,
 #mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-header"]:active,
 #mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-header"]:active {
-  background-color: #1aa200;
+  background-color: #b3e4a6;
 }
 #mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:hover,
 #mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:hover,
@@ -1491,7 +1491,7 @@ body {
 #mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-delete"]:hover,
 #mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-delete"]:hover,
 #mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-delete"]:hover {
-  background-color: #e12500;
+  background-color: #ffb1a1;
 }
 #mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:active,
 #mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:active,
@@ -1499,7 +1499,7 @@ body {
 #mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-delete"]:active,
 #mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-delete"]:active,
 #mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-delete"]:active {
-  background-color: #e12500;
+  background-color: #ffb1a1;
 }
 #mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-infolog"]:hover,
 #mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-infolog"]:hover,
@@ -2057,14 +2057,14 @@ input[type=button] {
 #mail-index_toolbar button[id*="toolbar-print"]:focus,
 #mail-index_toolbar button[id*="toolbar-save"]:focus,
 #mail-index_toolbar button[id*="toolbar-header"]:focus {
-  background-color: #189800;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #189800, #189800);
-  background-image: -ms-linear-gradient(top, #189800, #189800);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#189800), to(#189800));
-  background-image: -webkit-linear-gradient(top, #189800, #189800);
-  background-image: -o-linear-gradient(top, #189800, #189800);
-  background-image: linear-gradient(top, #189800, #189800);
+  background-color: #ace29e;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWNlMjllIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWNlMjllIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ace29e, #ace29e);
+  background-image: -ms-linear-gradient(top, #ace29e, #ace29e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ace29e), to(#ace29e));
+  background-image: -webkit-linear-gradient(top, #ace29e, #ace29e);
+  background-image: -o-linear-gradient(top, #ace29e, #ace29e);
+  background-image: linear-gradient(top, #ace29e, #ace29e);
   background-repeat: repeat-x;
 }
 #mail-index_toolbar button[id*="toolbar-composeasnew"]:hover,
@@ -2075,14 +2075,14 @@ input[type=button] {
 #mail-index_toolbar button[id*="toolbar-print"]:hover,
 #mail-index_toolbar button[id*="toolbar-save"]:hover,
 #mail-index_toolbar button[id*="toolbar-header"]:hover {
-  background-color: #189800;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #189800, #189800);
-  background-image: -ms-linear-gradient(top, #189800, #189800);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#189800), to(#189800));
-  background-image: -webkit-linear-gradient(top, #189800, #189800);
-  background-image: -o-linear-gradient(top, #189800, #189800);
-  background-image: linear-gradient(top, #189800, #189800);
+  background-color: #ace29e;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWNlMjllIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWNlMjllIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ace29e, #ace29e);
+  background-image: -ms-linear-gradient(top, #ace29e, #ace29e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ace29e), to(#ace29e));
+  background-image: -webkit-linear-gradient(top, #ace29e, #ace29e);
+  background-image: -o-linear-gradient(top, #ace29e, #ace29e);
+  background-image: linear-gradient(top, #ace29e, #ace29e);
   background-repeat: repeat-x;
   color: white;
 }
@@ -2094,54 +2094,51 @@ input[type=button] {
 #mail-index_toolbar button[id*="toolbar-print"]:active,
 #mail-index_toolbar button[id*="toolbar-save"]:active,
 #mail-index_toolbar button[id*="toolbar-header"]:active {
-  background-color: #189800;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #189800, #189800);
-  background-image: -ms-linear-gradient(top, #189800, #189800);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#189800), to(#189800));
-  background-image: -webkit-linear-gradient(top, #189800, #189800);
-  background-image: -o-linear-gradient(top, #189800, #189800);
-  background-image: linear-gradient(top, #189800, #189800);
+  background-color: #ace29e;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWNlMjllIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWNlMjllIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ace29e, #ace29e);
+  background-image: -ms-linear-gradient(top, #ace29e, #ace29e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ace29e), to(#ace29e));
+  background-image: -webkit-linear-gradient(top, #ace29e, #ace29e);
+  background-image: -o-linear-gradient(top, #ace29e, #ace29e);
+  background-image: linear-gradient(top, #ace29e, #ace29e);
   background-repeat: repeat-x;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:focus,
 #mail-index_toolbar button[id*="toolbar-delete"]:focus {
-  background-color: #AE1D00;
-  background-color: #ae1d00;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: -ms-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#AE1D00), to(#AE1D00));
-  background-image: -webkit-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: -o-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: linear-gradient(top, #AE1D00, #AE1D00);
+  background-color: #ff866e;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmY4NjZlIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmY4NjZlIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ff866e, #ff866e);
+  background-image: -ms-linear-gradient(top, #ff866e, #ff866e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ff866e), to(#ff866e));
+  background-image: -webkit-linear-gradient(top, #ff866e, #ff866e);
+  background-image: -o-linear-gradient(top, #ff866e, #ff866e);
+  background-image: linear-gradient(top, #ff866e, #ff866e);
   background-repeat: repeat-x;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:hover,
 #mail-index_toolbar button[id*="toolbar-delete"]:hover {
-  background-color: #AE1D00;
-  background-color: #ae1d00;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: -ms-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#AE1D00), to(#AE1D00));
-  background-image: -webkit-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: -o-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: linear-gradient(top, #AE1D00, #AE1D00);
+  background-color: #ff866e;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmY4NjZlIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmY4NjZlIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ff866e, #ff866e);
+  background-image: -ms-linear-gradient(top, #ff866e, #ff866e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ff866e), to(#ff866e));
+  background-image: -webkit-linear-gradient(top, #ff866e, #ff866e);
+  background-image: -o-linear-gradient(top, #ff866e, #ff866e);
+  background-image: linear-gradient(top, #ff866e, #ff866e);
   background-repeat: repeat-x;
   color: white;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:active,
 #mail-index_toolbar button[id*="toolbar-delete"]:active {
-  background-color: #AE1D00;
-  background-color: #ae1d00;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: -ms-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#AE1D00), to(#AE1D00));
-  background-image: -webkit-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: -o-linear-gradient(top, #AE1D00, #AE1D00);
-  background-image: linear-gradient(top, #AE1D00, #AE1D00);
+  background-color: #ff866e;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmY4NjZlIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmY4NjZlIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ff866e, #ff866e);
+  background-image: -ms-linear-gradient(top, #ff866e, #ff866e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ff866e), to(#ff866e));
+  background-image: -webkit-linear-gradient(top, #ff866e, #ff866e);
+  background-image: -o-linear-gradient(top, #ff866e, #ff866e);
+  background-image: linear-gradient(top, #ff866e, #ff866e);
   background-repeat: repeat-x;
 }
 #mail-index_toolbar button[id*="toolbar-infolog"]:focus,
