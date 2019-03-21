@@ -102,10 +102,13 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 						// Bind on click tap, because we need to update history size
 						// after a rezise happend and history log was not the active tab
 						e.data.div.bind("click.history",{"history": e.data.history, div: tabs.tabData[i].flagDiv}, function(e){
-							e.data.history.dynheight.update(function(_w, _h)
+							if(e.data.history && e.data.history.dynheight)
 							{
-								e.data.history.dataview.resize(_w, _h);
-							});
+								e.data.history.dynheight.update(function(_w, _h)
+								{
+									e.data.history.dataview.resize(_w, _h);
+								});
+							}
 						});
 
 						if (typeof e.data.history.dataview == "undefined") e.data.history.finishInit();
