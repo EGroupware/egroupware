@@ -35,7 +35,7 @@
     //SIDE AREA
     #egw_fw_sidemenu {
         position: absolute;
-        top: 3px;
+        top: 1px;
         bottom: 4px;
         left: 4px;
         right: 8px;
@@ -47,51 +47,36 @@
         // SIDE AREA
         .egw_fw_ui_scrollarea_outerdiv{
             .background_color_5_gray;
-			border-radius: 5px;
-
             //####################################################
             // AREA for
             // DRAG AND DROP
             div.ui-sortable {
-
 				div {
 					padding: 3px 0 1px 3px;
 					cursor: pointer;
 				}
 			}
-
-
             //####################################################
             // All Tabs
             // DRAG AND DROP
             .egw_fw_ui_sidemenu_entry_header {
-                                            display: block;
-                                            margin: 0 0;
-                                            /*padding: 0px 5px 5px 10px;*/
-
-                                            &:hover {
-                                                .background_color_15_gray;
-                                                .rounded(5px);
-                                            }
-
-                                            &:active {.box_shadow_standard_light_inset;}
-
-
-                                            h1 {
-                                                margin: 0 0 10px 0;
-                                                padding-top: 0.4em;
-                                                padding-left: 3em;
-                                                .color_40_gray;
-                                                /*font-size: 12px;*/
-                                                .fontsize_l;
-                                                line-height: 17px;
-                                            }
-
-                                            object {background-color: @gray_0; .dimension_width_height_m;}
-
-                                        }
-
-
+				display: block;
+				margin: 0 0;
+				&:hover {
+					.background_color_15_gray;
+				}
+				&:active {.box_shadow_standard_light_inset;}
+				h1 {
+					margin: 0 0 10px 0;
+					padding-top: 0.4em;
+					padding-left: 3em;
+					.color_40_gray;
+					/*font-size: 12px;*/
+					.fontsize_l;
+					line-height: 17px;
+				}
+				object {background-color: @gray_0; .dimension_width_height_m;}
+			}
 
             //       ####################################
             //     ####                                 #
@@ -108,21 +93,20 @@
                 background-image: url("../images/clear.png");
                 background-position: 95% -3000px;
                 background-repeat: no-repeat;
-
                 .background_color_0_gray;
-                .border_radius ( 0px, 0px, 0px, 27px );
                 .bordered (@gray_30, @gray_30, @gray_30, @gray_30);
-
                 margin: 0 0 0 0;
                 border-bottom: none;
                 height: 33px;
-
-
                 img {padding-left: 9px; padding-top: 7px; height: 18px;}
-
-                h1 {text-transform: uppercase;font-size: 1.4em;.color_100_gray;padding-top: .8em;}
-
-                &:active {.box_shadow_standard_light_active; .border_radius ( 5px, 0px, 0px, 27px );}
+                h1 {
+					text-transform: uppercase;
+					font-size: 1.4em;
+					.color_100_gray;
+					padding-top: 0;
+					line-height: 33px;
+				}
+                &:active {}
 				&:hover {
 					img {
 						content: url(../images/reload.png);
@@ -145,7 +129,6 @@
                 }
 
                 .egw_fw_ui_ajaxloader {margin-top: -26px;}
-
             }
 
             //####################################################
@@ -171,14 +154,9 @@
             //   ##       &:nth-last-of-type(-n+3)   ##
             //    #####################################
 
-
-
-
-
             .egw_fw_ui_sidemenu_entry_content {
                 display: block;
                 background-image: none;
-                .border_radius (0, 0, 27px, 0);
                 border-color: @gray_30;
                 border-style: solid;
                 border-width: 1px;
@@ -188,7 +166,6 @@
                 // rounded Corner on bottom
                 &:nth-last-of-type(-n+3)   {
                     .background_color_0_gray;
-                    .border_radius (0, 0, 24px, 0);
                     border-color: @gray_30;
 					border-right: 0px;
 					margin-bottom: 10px;
@@ -202,7 +179,7 @@
                 // *letztes Element   */
                 // has round corners
                 div.egw_fw_ui_category:nth-last-of-type(-n+3) {
-                    .border_radius (0, 0, 15px, 0);
+
                 }
 
                 //###################################################
@@ -217,8 +194,6 @@
                     background-color: @gray_10;
 
                     /*background-color: @egw_color_2_d;*/
-
-                    .border_radius(3px,3px,3px,3px);
 
                     h1 {
                         margin: 5px 0px 3px 5px;
@@ -255,23 +230,15 @@
                 .egw_fw_ui_category_active {
                     border-bottom-width: 0px;
                     margin-top: 4px;
-
                     background-color: @egw_color_2_a;
-
-                    /*.background-color-50-gray;*/
                     .color_5_gray;
-                    .border_radius(3px,3px,3px,3px) !important;
-
                     h1 {
                         background-image:url(../images/arrow_down_white.png);
                         line-height: 1em;
                         font-size: 12px;
-
 						a {
 							color: #FFF;
-
 							img {.dimension_width_height_s;}
-
 							&:hover {
 								padding: 5px 30px 5px 0px;
 								width: 200px;
@@ -294,16 +261,16 @@
             }
 
             .egw_fw_ui_sidemenu_entry_icon {
-                                        display: inline-block;
-                                        .dimension_height_m;
+				display: inline-block;
+				.dimension_height_m;
 
-                                        padding-left: 0;
-                                        padding-right: 0px;
-                                        float: left;
+				padding-left: 0;
+				padding-right: 0px;
+				float: left;
 
-                                        /*filter grey*/
-                                        .img_filter_gray;
-                                    }
+				/*filter grey*/
+				.img_filter_gray;
+			}
         }
 
 
@@ -331,7 +298,7 @@
 		height: 30px;
 		position: relative;
 		z-index: 1;
-		top: 5px;
+		top: 8px;
 		margin-top: 0;
 		margin-bottom: -30px;
 		float: right;
@@ -380,10 +347,12 @@
 		}
 	}
 	#egw_fw_sidemenu.egw_fw_sidebar_toggleOn {
+		top:-1px;
 		/* toggler button*/
 		#egw_fw_toggler {
 			margin: 1px auto 4px;
 			float:none;
+			top: 5px;
 			span {
 				background-color: #b4b4b4;
 				transition: all 0.3s;
