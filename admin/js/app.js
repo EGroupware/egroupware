@@ -270,7 +270,24 @@ app.classes.admin = AppJS.extend(
 				// not a user or group, eg. categories
 				else if (!_id)
 				{
-					this.load();
+					// Try just refreshing the nextmatch
+					if(this.nm)
+					{
+						this.nm.refresh();
+					}
+					if(this.groups)
+					{
+						this.groups.refresh();
+					}
+					if(this.et2 && this.et2.getWidgetById('nm') && this.nm !== this.et2.getWidgetById('nm'))
+					{
+						this.et2.getWidgetById('nm').refresh();
+					}
+					else
+					{
+						// Load something else
+						this.load();
+					}
 					return false;	// --> no regular refresh needed
 				}
 		}
