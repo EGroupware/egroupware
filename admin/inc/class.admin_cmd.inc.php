@@ -39,7 +39,7 @@ use EGroupware\Api\Acl;
  * @property string|NULL $comment comment, eg. reasoning why change was requested
  * @property-read int|NULL $errno Numerical error-code or NULL on success
  * @property-read string|NULL $error Error message or NULL on success
- * @property-read string|NULL $result Result message indicating what happened, or NULL on failure
+ * @property array|string|NULL $result Result message indicating what happened, or NULL on failure
  * @property-read int $id $id of command/row in egw_admin_queue table
  * @property-read string $uid uuid of command (necessary if command is send to a remote system to execute)
  * @property int|NULL $remote_id id of remote system, if command is not meant to run on local system
@@ -1442,7 +1442,7 @@ abstract class admin_cmd
 	{
 		if($this->result)
 		{
-			return $this->result;
+			return is_array($this->result) ? implode("\n", $this->result) : $this->result;
 		}
 		return lang("Command was run %1 on %2",
 				static::$stati[ $this->status ],
