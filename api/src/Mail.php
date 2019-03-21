@@ -5647,7 +5647,8 @@ class Mail
 		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 
-		if (!(is_object($_uid) || is_array($_uid))){
+		if (!(is_object($_uid) || is_array($_uid)))
+		{
 			$_uid = (array)$_uid;
 		}
 
