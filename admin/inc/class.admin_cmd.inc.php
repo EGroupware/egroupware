@@ -1444,6 +1444,8 @@ abstract class admin_cmd
 		{
 			return $this->result;
 		}
-		return static::$stati[ $this->status ];
+		return lang("Command was run %1 on %2",
+				static::$stati[ $this->status ],
+				Api\DateTime::to($this->created));
 	}
 }
