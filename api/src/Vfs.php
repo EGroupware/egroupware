@@ -1,14 +1,13 @@
 <?php
 /**
- * eGroupWare API: VFS - static methods to use the new eGW virtual file system
+ * EGroupware API: VFS - static methods to use the new eGW virtual file system
  *
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id$
+ * @copyright (c) 2008-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api;
@@ -1618,7 +1617,7 @@ class Vfs
 		$zip->setArchiveComment(lang('Created by %1', $GLOBALS['egw_info']['user']['account_lid']) . ' ' .DateTime::to());
 
 		// Record total for debug, not available after close()
-		$total_files = $zip->numFiles;
+		//$total_files = $zip->numFiles;
 
 		$result = $zip->close();
 		if(!$result || !filesize($zip_file))
@@ -1863,7 +1862,7 @@ class Vfs
 	 * @var array
 	 */
 	static public $encode = array(
-		//'%' => '%25',	// % should be encoded, but easily leads to double encoding, therefore better NOT encodig it
+		'%' => '%25',
 		'#' => '%23',
 		'?' => '%3F',
 		'/' => '',	// better remove it completly

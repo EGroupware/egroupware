@@ -4,9 +4,8 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 /**
@@ -246,7 +245,8 @@ app.classes.filemanager = AppJS.extend(
 		{
 			for(etemplate_name in this.path_widget) break;
 		}
-		return this.path_widget[etemplate_name] ? this.path_widget[etemplate_name].get_value() : null;
+		var path_widget = this.path_widget[etemplate_name];
+		return path_widget ? path_widget.get_value.apply(path_widget) : null;
 	},
 
 	/**
@@ -317,10 +317,6 @@ app.classes.filemanager = AppJS.extend(
 		}
 	},
 
-
-
-
-
 	/**
 	 * Finish callback for file a file dialog, to get the overwrite / rename prompt
 	 *
@@ -378,8 +374,8 @@ app.classes.filemanager = AppJS.extend(
 			if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
 			{
 				var buttons = [
-					{text: this.egw.lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true, image: 'check',},
-					{text: this.egw.lang("Rename"), id:"rename", image: 'edit',},
+					{text: this.egw.lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true, image: 'check'},
+					{text: this.egw.lang("Rename"), id:"rename", image: 'edit'},
 					{text: this.egw.lang("Cancel"), id:"cancel"}
 				];
 				if (_data.uploaded[file].confirm === "is_dir")
@@ -587,7 +583,7 @@ app.classes.filemanager = AppJS.extend(
 					}
 				}
 				self._do_action('createdir', egw.encodePathComponent(dir), true, path);	// true=synchronous request
-				self.change_dir((path == '/' ? '' : path)+'/'+ dir);
+				self.change_dir((path == '/' ? '' : path)+'/'+ egw.encodePathComponent(dir));
 			}
 		},this.egw.lang('New directory'),this.egw.lang('Create directory'));
 	},

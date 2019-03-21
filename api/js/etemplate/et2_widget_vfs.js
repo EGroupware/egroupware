@@ -7,8 +7,7 @@
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2012
- * @version $Id$
-*/
+ */
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
@@ -321,13 +320,6 @@ var et2_vfsPath = (function(){ "use strict"; return et2_vfsName.extend(
 		{
 			_value = _value.path;
 		}
-		try
-		{
-			_value = egw.decodePath(_value);
-		} catch (e)
-		{
-			_value = 'Error! ' + _value;
-		}
 		if(_value === this.options.value && this._oldValue !== et2_no_init) return;
 
 		var path_parts = _value.split('/');
@@ -391,7 +383,7 @@ var et2_vfsPath = (function(){ "use strict"; return et2_vfsName.extend(
 		}
 	},
 	getValue: function() {
-		return egw.encodePath(this.options.value);
+		return this.options ? this.options.value : null;
 	}
 });}).call(this);
 et2_register_widget(et2_vfsPath, ["vfs-path"]);
@@ -959,6 +951,9 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 
 	/**
 	 * A file upload is finished, update the UI
+	 *
+	 * @param {object} file
+	 * @param {string|object} response
 	 */
 	finishUpload: function(file, response) {
 		var result = this._super.apply(this, arguments);
@@ -1113,7 +1108,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			name: "button icon",
 			type: "string",
 			default: "check",
-			description: "Custom icon to show on submit button.",
+			description: "Custom icon to show on submit button."
 		},
 		"name": {
 			name:"File name",
@@ -1131,7 +1126,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		"extra_buttons": {
 			name: "extra action buttons",
 			type: "any",
-			description: "Extra buttons passed to dialog. It's co-related to method.",
+			description: "Extra buttons passed to dialog. It's co-related to method."
 		}
 	},
 
@@ -1298,7 +1293,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		var et2 = {};
 		if (etemplate && etemplate.name && !app[egw(window).app_name()])
 		{
-			et2 = etemplate2.getByTemplate(etemplate.name)[0]
+			et2 = etemplate2.getByTemplate(etemplate.name)[0];
 		}
 		else
 		{
