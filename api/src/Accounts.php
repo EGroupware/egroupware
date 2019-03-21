@@ -644,7 +644,7 @@ class Accounts
 				if (!$data['person_id']) $data['person_id'] = $old['person_id'];
 
 				// Include previous contact information to avoid blank history rows
-				$contact = $GLOBALS['egw']->contacts->read($data['person_id']) + array(
+				$contact = (array)$GLOBALS['egw']->contacts->read($data['person_id']) + array(
 					'n_given'    => $data['account_firstname'],
 					'n_family'   => $data['account_lastname'],
 					'email'      => $data['account_email'],
