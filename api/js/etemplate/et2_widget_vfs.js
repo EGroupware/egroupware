@@ -7,8 +7,7 @@
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2012
- * @version $Id$
-*/
+ */
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
@@ -808,6 +807,9 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 
 	/**
 	 * A file upload is finished, update the UI
+	 *
+	 * @param {object} file
+	 * @param {string|object} response
 	 */
 	finishUpload: function(file, response) {
 		var result = this._super.apply(this, arguments);
@@ -962,7 +964,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			name: "button icon",
 			type: "string",
 			default: "check",
-			description: "Custom icon to show on submit button.",
+			description: "Custom icon to show on submit button."
 		},
 		"name": {
 			name:"File name",
@@ -980,7 +982,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		"extra_buttons": {
 			name: "extra action buttons",
 			type: "any",
-			description: "Extra buttons passed to dialog. It's co-related to method.",
+			description: "Extra buttons passed to dialog. It's co-related to method."
 		}
 	},
 
@@ -1145,7 +1147,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		var et2 = {};
 		if (etemplate && etemplate.name && !app[egw(window).app_name()])
 		{
-			et2 = etemplate2.getByTemplate(etemplate.name)[0]
+			et2 = etemplate2.getByTemplate(etemplate.name)[0];
 		}
 		else
 		{

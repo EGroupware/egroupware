@@ -185,9 +185,10 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
         }
 
         $dest         = $this->base . $options["dest"];
-        $destdir      = dirname($dest);
+        $destdir      = Vfs::dirname($dest);
 
         if (!file_exists($destdir) || !is_dir($destdir)) {
+			//error_log(__METHOD__."(".array2string($options).", $del) file_exists('$destdir')=".array2string(file_exists($destdir)).", is_dir('$destdir')=".array2string(is_dir($destdir)));
             return "409 Conflict";
         }
 
