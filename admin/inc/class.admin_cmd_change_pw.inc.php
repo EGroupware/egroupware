@@ -14,6 +14,8 @@ use EGroupware\Api;
 
 /**
  * admin command: change the password of a given user
+ *
+ * @property int $account Account ID
  */
 class admin_cmd_change_pw extends admin_cmd
 {
