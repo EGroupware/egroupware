@@ -42,7 +42,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	}
 
 	/**
-	 * change the password of a given user
+	 * change the account of a given user
 	 *
 	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
