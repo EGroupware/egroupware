@@ -360,28 +360,6 @@ body {
 		height: 24px;
 	}
 
-	button[id*="toolbar-composeasnew"],
-	button[id*="toolbar-reply"],
-	button[id*="toolbar-reply_all"],
-	button[id*="toolbar-forward"],
-	button[id*="toolbar-print"],
-	button[id*="toolbar-save"],
-	button[id*="toolbar-header"]{
-		&:active {background-color: @color_positive_action_active;}
-	}
-
-	button[id*="toolbar-unflagged"],
-	button[id*="toolbar-delete"]{
-		&:active {background-color: @color_negative_action_active;}
-	}
-
-	button[id*="toolbar-infolog"],
-	button[id*="toolbar-tracker"],
-	button[id*="toolbar-calendar"] {
-		&:active {background-color: .background_color_15_gray;}
-	}
-
-
 	span.ui-state-default {
 		float: left;
 		background-image: none;
@@ -1074,77 +1052,7 @@ input[type=button] {
 			img {
 				.dimension_width_height_s ;
 				padding: 0px;
-
 			}
-		}
-	}
-
-	button[id*="toolbar-composeasnew"],
-	button[id*="toolbar-reply"],
-	button[id*="toolbar-reply_all"],
-	button[id*="toolbar-forward"],
-	button[id*="toolbar-flagged"],
-	button[id*="toolbar-print"],
-	button[id*="toolbar-save"],
-	button[id*="toolbar-header"] {
-		&:focus {
-			background-color: @color_positive_action;
-			.gradient_vertical (@color_positive_action, @color_positive_action);
-
-		}
-		&:hover {
-			background-color: @color_positive_action;
-			.gradient_vertical (@color_positive_action, @color_positive_action);
-
-			color:white;
-		}
-		&:active {
-			background-color: @color_positive_action;
-			.gradient_vertical (@color_positive_action, @color_positive_action);
-
-		}
-	}
-
-	button[id*="toolbar-unflagged"],
-	button[id*="toolbar-delete"]{
-						&:focus {
-			background-color: @color_negative_action;;
-			.gradient_vertical (@color_negative_action, @color_negative_action);
-
-
-		}
-		&:hover {
-			background-color: @color_negative_action;
-			.gradient_vertical (@color_negative_action, @color_negative_action);
-
-			color:white;
-
-		}
-		&:active {
-			background-color: @color_negative_action;;
-			.gradient_vertical (@color_negative_action, @color_negative_action);
-
-
-		}
-	}
-
-	button[id*="toolbar-infolog"],
-	button[id*="toolbar-tracker"],
-	button[id*="toolbar-calendar"] {
-		&:focus {
-			background-color: @egw_color_1_e;
-			.gradient_vertical (@egw_color_1_e, @egw_color_1_e);
-
-		}
-		&:hover {
-			background-color: @egw_color_1_e;
-			.gradient_vertical (@egw_color_1_e, @egw_color_1_e);
-
-		}
-		&:active {
-			background-color: @egw_color_1_e;
-			.gradient_vertical (@egw_color_1_e, @egw_color_1_e);
-
 		}
 	}
 }
