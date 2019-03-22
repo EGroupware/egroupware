@@ -90,7 +90,12 @@ class admin_cmd_account_app extends admin_cmd
 	 */
 	function __tostring()
 	{
+		$apps = $this->apps;
+		foreach($apps as &$app)
+		{
+			$app = lang($app);
+		}
 		return lang('%1 rights for %2 and applications %3',$this->allow ? lang('Grant') : lang('Remove'),
-			admin_cmd::display_account($this->account),implode(', ',$this->apps));
+			admin_cmd::display_account($this->account),implode(', ',$apps));
 	}
 }

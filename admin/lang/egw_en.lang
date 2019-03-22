@@ -13,7 +13,7 @@
 %1 log entries deleted.	admin	en	%1 log entries deleted.
 %1 not found or not executable !!!	admin	en	%1 not found or not executable!
 %1 phrases saved.	admin	en	%1 phrases saved.
-%1 rights for %2 and applications %3	admin	en	%1 rights for %2 and applications %3 .
+%1 rights for %2 and applications %3	admin	en	%1 rights for %2 and application(s) %3 .
 %1 run rights for applications	admin	en	%1 run rights for applications
 %1 sessions killed	admin	en	%1 sessions killed.
 %1 user %2	admin	en	%1 user %2
