@@ -253,14 +253,10 @@
     fill: red !important;
   }
   span.et2_file_span:hover {
-    background-color: #ace29e !important;
     color: #000000 !important;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
-  }
-  span.et2_file_span:active {
-    background-color: #b3e4a6 !important;
   }
   div.et2_file input.et2_file_upload {
     background-color: #FFFFFF !important;
@@ -2145,11 +2141,9 @@ button.et2_button_text:hover,
 input[type=button]:hover {
   /*background-color: @gray_30;*/
   text-shadow: 0px 0px;
-  color: #FFFFFF;
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: #b3e4a6;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
 }
 button.et2_button_text:active,
 input[type=button]:active {
@@ -2247,8 +2241,6 @@ button.et2_button_delete {
   background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
-  /*background-color: @color-negative-action !important;*/
-  /*color: @gray_0 !important;*/
 }
 input[type="submit"][id*="delete"]:hover,
 input[type="button"][id*="delete"]:hover,
@@ -2260,7 +2252,6 @@ button[id="calendar-edit_button[delete]"]:hover,
 button[id="timesheet-edit_button[delete]"]:hover,
 button[id="displayToolbar-delete"]:hover,
 button.et2_button_delete:hover {
-  background-color: #ff8f78 !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2285,7 +2276,6 @@ button.et2_button_delete:hover {
   background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
-  color: #FFFFFF !important;
 }
 input[type="submit"][id*="delete"]:active,
 input[type="button"][id*="delete"]:active,
@@ -2297,7 +2287,6 @@ button[id="calendar-edit_button[delete]"]:active,
 button[id="timesheet-edit_button[delete]"]:active,
 button[id="displayToolbar-delete"]:active,
 button.et2_button_delete:active {
-  background-color: #ffb1a1 !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2322,72 +2311,12 @@ button.et2_button_delete:active {
   background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
-  color: #FFFFFF;
 }
 /* ########################################################################################
  * Content Element
  * Button edit + save + apply + copy => color-positive-action // green
  *
  ######################################################################################## */
-button[id*="save"] img[url*="svg"],
-button[id*="apply"] img[url*="svg"],
-button[id*="copy"] img[url*="svg"],
-button[id*="edit_button[edit]"] img[url*="svg"],
-button.et2_button img[url*="svg"] {
-  background-color: #b4b4b4;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjQjRCNEI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjQjRCNEI0IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #B4B4B4, #B4B4B4);
-  background-image: -ms-linear-gradient(top, #B4B4B4, #B4B4B4);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#B4B4B4), to(#B4B4B4));
-  background-image: -webkit-linear-gradient(top, #B4B4B4, #B4B4B4);
-  background-image: -o-linear-gradient(top, #B4B4B4, #B4B4B4);
-  background-image: linear-gradient(top, #B4B4B4, #B4B4B4);
-  background-repeat: repeat-x;
-  fill: red;
-}
-button[id*="save"]:hover,
-button[id*="apply"]:hover,
-button[id*="copy"]:hover,
-button[id*="edit_button[edit]"]:hover,
-button.et2_button:hover {
-  background-color: #ace29e;
-  color: #000000;
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-}
-button[id*="save"]:active,
-button[id*="apply"]:active,
-button[id*="copy"]:active,
-button[id*="edit_button[edit]"]:active,
-button.et2_button:active {
-  background-color: #b3e4a6;
-}
-button[id*="add"]:not([id*='addressbook']) img[url*="svg"] {
-  background-color: #b4b4b4 !important;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjQjRCNEI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjQjRCNEI0IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=) !important;
-  background-image: -moz-linear-gradient(top, #B4B4B4, #B4B4B4) !important;
-  background-image: -ms-linear-gradient(top, #B4B4B4, #B4B4B4) !important;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#B4B4B4), to(#B4B4B4)) !important;
-  background-image: -webkit-linear-gradient(top, #B4B4B4, #B4B4B4) !important;
-  background-image: -o-linear-gradient(top, #B4B4B4, #B4B4B4) !important;
-  background-image: linear-gradient(top, #B4B4B4, #B4B4B4) !important;
-  background-repeat: repeat-x !important;
-  fill: red !important;
-}
-button[id*="add"]:not([id*='addressbook']):hover {
-  background-color: #ace29e !important;
-  color: #000000 !important;
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
-}
-button[id*="add"]:not([id*='addressbook']):active {
-  background-color: #b3e4a6 !important;
-}
-button#filemanager-select_button[ok]:active {
-  background-color: #b3e4a6;
-}
 #passwordchange {
   background-image: url('../images/cancel.png') !important;
   /*.border_normal;*/
@@ -2432,24 +2361,6 @@ button#filemanager-select_button[ok]:active {
  * Button cancel /  => color-cancel-action // yellow
  *
  ######################################################################################## */
-button[id*="cancel"]:hover,
-button[id*="importexport-wizardbox_button[previous]"]:hover,
-button#cancel:hover,
-#cancel:hover,
-button.et2_button_cancel:hover,
-button.et2_button_question:hover {
-  background-color: #ffdb7a !important;
-  color: #000000;
-}
-button[id*="cancel"]:active,
-button[id*="importexport-wizardbox_button[previous]"]:active,
-button#cancel:active,
-#cancel:active,
-button.et2_button_cancel:active,
-button.et2_button_question:active {
-  background-color: #fff0c7 !important;
-  color: #373737;
-}
 /* et2_box_widget ###*/
 /*div.et2_box_widget .et2_button_text:last_child,*/
 button[id="cancel"],
@@ -2483,7 +2394,6 @@ button#cancel {
 }
 button[id="cancel"]:hover,
 button#cancel:hover {
-  background-color: #ffdb7a !important;
   color: #000000;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -2491,7 +2401,6 @@ button#cancel:hover {
 }
 button[id="cancel"]:active,
 button#cancel:active {
-  background-color: #fff0c7 !important;
   color: #000000;
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -2586,9 +2495,6 @@ button[id="add"] {
   background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
-}
-button[id="add"]:active {
-  background-color: #b3e4a6 !important;
 }
 /*Button Ende #######################################################*/
 /**
@@ -5850,7 +5756,7 @@ input[type=button]:hover,
 input[type=reset]:hover,
 button:hover,
 .egwbutton:hover {
-  background-color: #d9d9d9;
+  background-color: #d9d9d9 !important;
   background-image: none;
   border: outset 1px #b9d5e3;
   color: #004e7d;

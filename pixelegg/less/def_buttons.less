@@ -134,21 +134,12 @@
     margin-left: 3em;
     background-color: @gray_10;
     .Complete_Button_text_icon_before;
-    /*background-color: @color-negative-action !important;*/
-    /*color: @gray_0 !important;*/
-
-            &:hover {
-
-                background-color: @color_negative_action_hover !important;
-                .Complete_Button_text_icon_before;
-                color: @gray_0 !important;;
-            }
-            &:active {
-
-                background-color: @color_negative_action_active !important;
-                .Complete_Button_text_icon_before;
-                color: @gray_0;
-            }
+	&:hover {
+		.Complete_Button_text_icon_before;
+	}
+	&:active {
+		.Complete_Button_text_icon_before;
+	}
 }
 
 /* ########################################################################################
@@ -157,15 +148,11 @@
  *
  ######################################################################################## */
 .Complete_Button_cancel{
-
-                background-image:url('../images/cancel.png') !important;
-                .Complete_Button_text_icon_before;
-                content: "ID missing";
-
-
-                &:hover {background-color: @color_cancel_action_hover !important; color: @gray_100; .box_shadow_standard_light_hover;}
-                &:active {background-color: @color_cancel_action_active !important; color: @gray_100; .box_shadow_standard_light_inset;}
-
+	background-image:url('../images/cancel.png') !important;
+	.Complete_Button_text_icon_before;
+	content: "ID missing";
+	&:hover { color: @gray_100; .box_shadow_standard_light_hover;}
+	&:active { color: @gray_100; .box_shadow_standard_light_inset;}
 }
 
 /* ########################################################################################
@@ -175,16 +162,12 @@
  ######################################################################################## */
 
 .Complete_Button_save_apply_copy{
-
-                img[url*="svg"]{.gradient_vertical (@gray_30, @gray_30); fill: red;}
-
-
-                &:hover {
-                    background-color: @color_positive_action;
-                    color: @gray_100;
-                    .box_shadow_standard_light_hover;
-                }
-                &:active {background-color: @color_positive_action_active;}
+	img[url*="svg"]{.gradient_vertical (@gray_30, @gray_30); fill: red;}
+	&:hover {
+		color: @gray_100;
+		.box_shadow_standard_light_hover;
+	}
+	&:active {}
 }
 
 

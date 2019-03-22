@@ -77,13 +77,9 @@ input[type=button] {
         &:hover{
             /*background-color: @gray_30;*/
             text-shadow: 0px 0px;
-            color: @gray_0;
-            .box_shadow_standard_light_hover;
-            background-color: @color_positive_action_active;
+            .box_shadow_standard_light_hover !important;
            }
-
         &:active {.box_shadow_standard_light_active !important;}
-
 }
 
 /* ########################################################################################
@@ -129,22 +125,6 @@ button.et2_button_delete
  *
  ######################################################################################## */
 
-button[id*="save"],
-button[id*="apply"],
-button[id*="copy"],
-button[id*="edit_button[edit]"],
-button.et2_button{
-
-	.Complete_Button_save_apply_copy;
-}
-
-button[id*="add"]:not([id*='addressbook']) {
-	.Complete_Button_save_apply_copy !important;
-}
-button#filemanager-select_button[ok]{
-    &:active {background-color: @color_positive_action_active;}
-}
-
 // Password change
 #passwordchange {
      background-image:url('../images/cancel.png') !important;
@@ -163,18 +143,6 @@ button#filemanager-select_button[ok]{
  * Button cancel /  => color-cancel-action // yellow
  *
  ######################################################################################## */
-
-button[id*="cancel"],
-button[id*="importexport-wizardbox_button[previous]"],
-button#cancel,
-#cancel,
-button.et2_button_cancel,
-button.et2_button_question{
-
-                &:hover  { background-color: @color_cancel_action_hover !important; color: @gray_100; }
-                &:active { background-color: @color_cancel_action_active !important; color: @gray_80; }
-}
-
 
 /* et2_box_widget ###*/
 /*div.et2_box_widget .et2_button_text:last_child,*/
@@ -207,10 +175,8 @@ button.add {
 }
 
 button[id="add"]{
-                background-image:url('../images/add.png') !important;
-                .Complete_Button_text_icon_before;
-
-                &:active {background-color: @color_positive_action_active !important;}
+	background-image:url('../images/add.png') !important;
+	.Complete_Button_text_icon_before;
 }
 
 
