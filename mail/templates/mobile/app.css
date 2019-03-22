@@ -1113,20 +1113,6 @@ body {
 #mail-compose .et2_toolbar button.toolbar_toggled:hover {
   background-color: white !important;
 }
-#mail-compose #mail-compose_composeToolbar button#composeToolbar-send {
-  background-color: #336666;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg version='1.1' id='Ebene_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='32px' height='32px' viewBox='0 0 32 32' enable-background='new 0 0 32 32' xml:space='preserve'%3e%3cg%3e%3cg%3e%3cpath fill='%23ffffff' d='M30.51,15.694L18.196,3.229c-1.235-1.252-3.241-1.252-4.478,0L1.404,15.694 c-1.236,1.253-1.236,3.283,0,4.536h7.428v6.428c0,1.77,1.418,3.204,3.167,3.204h7.915c1.751,0,3.168-1.435,3.168-3.204V20.23 h7.428C31.748,18.978,31.748,16.947,30.51,15.694z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e ") !important;
-  color: #FFFFFF;
-}
-#mail-compose #mail-compose_composeToolbar button#composeToolbar-send:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: #ace29e;
-}
-#mail-compose #mail-compose_composeToolbar button#composeToolbar-send:disabled {
-  background-color: rgba(12, 93, 165, 0.2) !important;
-}
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-to_infolog:hover,
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-to_tracker:hover,
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-disposition:hover,
@@ -1439,90 +1425,6 @@ body {
   -moz-border-radius: 3px;
   border-radius: 3px;
   height: 27px;
-}
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-composeasnew"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-composeasnew"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-composeasnew"]:hover,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-reply"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-reply"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-reply"]:hover,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-reply_all"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-reply_all"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-reply_all"]:hover,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-forward"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-forward"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-forward"]:hover,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-print"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-print"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-print"]:hover,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-save"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-save"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-save"]:hover,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-header"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-header"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-header"]:hover {
-  background-color: #b3e4a6;
-}
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-composeasnew"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-composeasnew"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-composeasnew"]:active,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-reply"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-reply"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-reply"]:active,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-reply_all"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-reply_all"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-reply_all"]:active,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-forward"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-forward"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-forward"]:active,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-print"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-print"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-print"]:active,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-save"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-save"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-save"]:active,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-header"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-header"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-header"]:active {
-  background-color: #b3e4a6;
-}
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:hover,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-delete"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-delete"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-delete"]:hover {
-  background-color: #ffb1a1;
-}
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:active,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-delete"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-delete"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-delete"]:active {
-  background-color: #ffb1a1;
-}
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-infolog"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-infolog"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-infolog"]:hover,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-tracker"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-tracker"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-tracker"]:hover,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-calendar"]:hover,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-calendar"]:hover,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-calendar"]:hover {
-  background-color: #ffc200;
-}
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-infolog"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-infolog"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-infolog"]:active,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-tracker"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-tracker"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-tracker"]:active,
-#mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-calendar"]:active,
-#mail-display #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-calendar"]:active,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button[id*="toolbar-calendar"]:active {
-  background-color: .background_color_15_gray;
 }
 #mail-display .mailDisplayAttachments {
   max-height: 12%;
@@ -2301,11 +2203,10 @@ div.mailComposeHeaderSection > table {
   -o-transition: all 0.1s ease-out;
   transition: all 0.1s ease-out;
 }
-#mail-index_button\[mailcreate\] {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg version='1.1' id='pixelegg_add' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='32px' height='32px' viewBox='0 0 32 32' enable-background='new 0 0 32 32' xml:space='preserve'%3e%3cg%3e%3cg%3e%3cpath fill='%23ffffff' d='M16.047,3.851c-7.17,0-12.982,7.812-12.982,12.981 c0-4.924-2.046,12.981,12.982,12.981c7.169,0,12.981-5.812,12.981-12.981C29.028,9.662,23.216,3.851,16.047,3.851z M24.714,18.998 h-6.502v6.5h-4.333v-6.5h-6.5v-4.333h6.5v-6.5h4.333v6.5h6.502V18.998z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e") !important;
-  background: #336666;
-  background-size: 16px 16px;
-  background-position: 4px center;
+#mail-index_button\[mailcreate\],
+#composeToolbar-send {
+  color: #5B5B5B;
+  background-color: white;
 }
 /* import */
 /* tablets and smartphones  */
