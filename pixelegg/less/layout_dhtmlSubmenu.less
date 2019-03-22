@@ -14,10 +14,16 @@
 @import (reference) "definitions.less";
 
 div.dhtmlxMenu_egw_SubLevelArea_Polygon{
+	background: white;
+	border: 1px solid transparent;
+	border-radius: 2px;
     table.dhtmlxMebu_SubLevelArea_Tbl{
         tr.sub_item  {
 			td.sub_item_icon {
 				.img_filter_gray;
+			}
+			td.sub_item_hk div.sub_item_hk {
+				color: #373f3f;
 			}
 		}
 		tr.sub_item_selected  {
@@ -26,6 +32,9 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon{
 			}
 			background-color: @egw_color_1_a !important;
 			background-image: none !important;
+		}
+		div.sub_sep {
+			border-top: 1px solid #E6E6E6;
 		}
 	}
 }

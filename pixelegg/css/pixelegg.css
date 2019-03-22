@@ -2948,6 +2948,11 @@ table.table_passord_change td:first-child {
  * @package pixelegg
  * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
+div.dhtmlxMenu_egw_SubLevelArea_Polygon {
+  background: white;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
   /*filter grey*/
   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
@@ -2959,6 +2964,9 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
   /*filter: url(grayscale.svg);  Firefox 4+ */
   filter: gray;
   /* IE 6-9 */
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_hk div.sub_item_hk {
+  color: #373f3f;
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected {
   background-color: #ffc200 !important;
@@ -2975,6 +2983,9 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
   /*filter: url(grayscale.svg);  Firefox 4+ */
   filter: gray;
   /* IE 6-9 */
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_sep {
+  border-top: 1px solid #E6E6E6;
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -6750,9 +6761,6 @@ form[id^="ranking-"] .dialogHeadbar {
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {
   background-color: transparent;
   background-image: none;
-}
-div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
-  filter: none;
 }
 .egwGridView_scrollarea tr.row_category > td:first-child,
 .select-cat li,
