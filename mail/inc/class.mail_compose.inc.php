@@ -3590,7 +3590,7 @@ class mail_compose
 			$search_str = implode(' +', $search);	// tell contacts/so_sql to AND search patterns
 			//error_log(__METHOD__.__LINE__.$_searchString);
 			$filter = $showAccounts ? array() : array('account_id' => null);
-			$filter['cols_to_search'] = array('n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id', 'etag');
+			$filter['cols_to_search'] = array('n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id');
 			$cols = array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home', 'contact_id', 'etag');
 			$contacts = $contacts_obj->search($search_str, $cols, 'n_fn', '', '%', false, 'OR', array(0,100), $filter);
 			$cfs_type_email = Api\Storage\Customfields::get_email_cfs('addressbook');
