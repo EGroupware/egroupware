@@ -5646,8 +5646,14 @@ class Mail
 			$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		if (!(is_object($_uid) || is_array($_uid))) $uid = (array)$_uid;
-		$uidsToFetch->add($uid);
+
+		if (!(is_object($_uid) || is_array($_uid)))
+		{
+			$_uid = (array)$_uid;
+		}
+
+		$uidsToFetch->add($_uid);
+
 		try
 		{
 			$_fquery = new Horde_Imap_Client_Fetch_Query();
