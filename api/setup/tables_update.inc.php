@@ -516,3 +516,21 @@ function api_upgrade17_1_004()
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.005';
 }
 
+/**
+ * Create /templates and subdirectories, if they dont exist
+ *
+ * They are create as part of the installation for new installations and allways exist in EPL.
+ * If they dont exist, you can not save the preferences of the concerned applications, unless
+ * you either manually create the directory or remove the path from the default preferences.
+ *
+ * Rerun the 16.1.002 update, as (unnecessary) transaction prevented creation on install
+ * with PHP MySQLi driver and probably all other drivers supporting transactions.
+ *
+ * @return string
+ */
+function api_upgrade17_1_005()
+{
+	api_upgrade16_1_002();
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.007'; // skip 17.1.006!
+}
