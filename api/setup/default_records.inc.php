@@ -195,7 +195,7 @@ foreach($dirs as $path => $id)
 		'fs_comment' => null,
 		'fs_content' => null,
 	);
-	$GLOBALS['egw_setup']->db->insert('egw_sqlfs',$nrow,false,__LINE__,__FILE__,'phpgwapi');
+	$GLOBALS['egw_setup']->db->insert('egw_sqlfs', $nrow, false, __LINE__, __FILE__, 'api');
 }
 // PostgreSQL seems to require to update the sequenz, after manually inserting id's
 $oProc->UpdateSequence('egw_sqlfs','fs_id');

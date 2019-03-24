@@ -516,6 +516,48 @@ function api_upgrade17_1_004()
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.005';
 }
 
+/**
+ * Create /templates and subdirectories, if they dont exist
+ *
+ * They are create as part of the installation for new installations and allways exist in EPL.
+ * If they dont exist, you can not save the preferences of the concerned applications, unless
+ * you either manually create the directory or remove the path from the default preferences.
+ *
+ * Rerun the 16.1.002 update, as (unnecessary) transaction prevented creation on install
+ * with PHP MySQLi driver and probably all other drivers supporting transactions.
+ *
+ * @return string
+ */
+function api_upgrade17_1_005()
+{
+	api_upgrade16_1_002();
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.007';
+}
+
+/**
+ * 17.1.006 used previously set after what is now the 17.9.001 update
+ *
+ * @return string
+ */
+function api_upgrade17_1_006()
+{
+	api_upgrade16_1_002();
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.9.002';
+}
+
+/**
+ * Update 17.1 --> 19, can be moved, if more 17.1 updates necessary
+ *
+ * @return string
+ */
+function api_upgrade17_1_007()
+{
+	api_upgrade16_1_002();
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.9.001';
+}
 
 /**
  * Store multiline history content as diff
@@ -525,7 +567,7 @@ function api_upgrade17_1_004()
  *
  * @return string new version
  */
-function api_upgrade17_1_005()
+function api_upgrade17_9_001()
 {
 	$renderer = new Horde_Text_Diff_Renderer_Unified();
 	$start = microtime(true);
@@ -565,8 +607,8 @@ function api_upgrade17_1_005()
 	while($n == $junk_size);
 	$saved = number_format($saved/(1024.0*1024.0), 1);
 	$time = number_format((microtime(true)-$start)/60, 1);
-	echo "$total history-records converted in $time minutes to diff with a total of $saved MB saved\n";
+	if ($total) echo "$total history-records converted in $time minutes to diff with a total of $saved MB saved\n";
 
-	return $GLOBALS['setup_info']['api']['currentver'] = '17.1.006';
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.9.002';
 }
 
