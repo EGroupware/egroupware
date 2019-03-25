@@ -7594,7 +7594,7 @@ class Mail
 
 		$params  = array (
 			'type'      => 'message',
-			'pubkey'    => $certkey[$acc_smime['acc_smime_username']],
+			'pubkey'    => $certkey[strtolower($acc_smime['acc_smime_username'])],
 			'privkey'   => $acc_smime['pkey'],
 			'passphrase'=> $_passphrase
 		);
