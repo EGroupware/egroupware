@@ -2041,3 +2041,6 @@ table#mail-index_previewAttachmentArea::-webkit-scrollbar-thumb {
 table#mail-index_previewAttachmentArea::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+#mail-index_nm.et2_nextmatch .egwGridView_outer thead tr {
+  border-left: 12px solid #B4B4B4;
+}

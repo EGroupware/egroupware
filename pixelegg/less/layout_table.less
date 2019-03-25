@@ -77,14 +77,10 @@ table.egwGridView_outer{
                 background-position: -200px;
                 font-weight: normal;
                 padding: 3px 1px 3px 4px;
-                border-color: @gray_30;
-                border-left: 1px solid white;
-                border-top: 0px solid transparent;
-                border-right: 1px solid white;
-                border-bottom: 0px solid transparent;
+                border: 1px solid @gray_30;
                 vertical-align: middle;
                 overflow: auto;
-				background: rgb(224, 224, 224);
+				.background_color_10_gray;
                 &:hover {
                     .background_color_25_gray;
                     .color_0_gray;
@@ -114,9 +110,10 @@ table.egwGridView_outer{
                 padding: 0;
                 text-align: center;
                 background-image: none;
+				border-right: none;
                 /*width: 32px !important;*/
 				vertical-align: bottom;
-				.background_color_0_gray;
+				.background_color_10_gray;
                 &:hover{
                     cursor: pointer;
                 }

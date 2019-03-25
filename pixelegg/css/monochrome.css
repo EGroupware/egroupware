@@ -512,6 +512,9 @@
   .et2_nextmatch {
     background-color: transparent;
   }
+  .et2_nextmatch .egwGridView_outer thead tr > th:first-child {
+    border-left: 6px solid #B4B4B4;
+  }
   .et2_nextmatch .nextmatch_header {
     padding: 0;
     border: none;
@@ -4302,12 +4305,9 @@ td.message span.message {
   margin-left: 0px;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url(../images/close_button.png);
-  background-size: 10px 10px;
+  background-image: url(../images/close.svg);
+  background-size: 6px 6px;
   position: absolute;
-}
-#egw_fw_main #egw_fw_tabs .egw_fw_ui_tab_close_button :hover {
-  background-image: url(../images/close_button_hover.png);
 }
 #egw_fw_main .egw_fw_ui_tab_header_hover {
   background-color: #FFDD73;
@@ -5452,14 +5452,10 @@ table.egwGridView_outer thead tr th {
   background-position: -200px;
   font-weight: normal;
   padding: 3px 1px 3px 4px;
-  border-color: #B4B4B4;
-  border-left: 1px solid white;
-  border-top: 0px solid transparent;
-  border-right: 1px solid white;
-  border-bottom: 0px solid transparent;
+  border: 1px solid #B4B4B4;
   vertical-align: middle;
   overflow: auto;
-  background: #e0e0e0;
+  background-color: #f0f0f0;
 }
 table.egwGridView_outer thead tr th:hover {
   background-color: #bfbfbf;
@@ -5490,9 +5486,10 @@ table.egwGridView_outer thead tr th.optcol {
   padding: 0;
   text-align: center;
   background-image: none;
+  border-right: none;
   /*width: 32px !important;*/
   vertical-align: bottom;
-  background-color: #ffffff;
+  background-color: #f0f0f0;
 }
 table.egwGridView_outer thead tr th.optcol:hover {
   cursor: pointer;
