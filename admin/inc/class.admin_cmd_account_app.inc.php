@@ -14,6 +14,11 @@ use EGroupware\Api;
 
 /**
  * admin command: give or remove run rights from a given account and application
+ *
+ * @property boolean $allow True for permission being added, false for a permission
+ *	being removed
+ * @property string[] $apps List of application names that we're modifying
+ *	permissions for.
  */
 class admin_cmd_account_app extends admin_cmd
 {
