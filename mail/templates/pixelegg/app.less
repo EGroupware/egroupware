@@ -1077,14 +1077,14 @@ div.mailPreviewHeaders img.et2_button_icon {
 
 #mail-index_previewAttachmentArea {
 	//	background-color:#efefdf;
-	.background_color_10_gray;
-	border-color: @gray_10;
-	.border_normal;
+	.background_color_5_gray;
 	max-height: 3.6em;
+	border: none;
 	//	filter: Alpha(opacity=100);
 
 	img {.dimension_width_height_s;}
 	td{padding: 2px;}
+	max-width: 80%;
 
 }
 #mail-index_previewAttachmentArea.noContent {
@@ -1093,7 +1093,13 @@ div.mailPreviewHeaders img.et2_button_icon {
 
 /* Button after field*/
 #mail-index_mailPreviewHeadersAttachments {
-	img.et2_button_icon {.dimension_width_height_s; background-color: inherit;}
+	padding-top: 5px;
+	img.et2_button_icon {
+		.dimension_width_height_s;
+		.background_color_5_gray;
+		left: -6px;
+		top: 1px;
+	}
 }
 
 /*######################################################*/
@@ -1180,4 +1186,24 @@ div.mailComposeHeaderSection > table {
 #mail-index_button\[mailcreate\], #composeToolbar-send {
 	color: #5B5B5B;
 	background-color: white;
+}
+
+/* width */
+table#mail-index_previewAttachmentArea::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+table#mail-index_previewAttachmentArea::-webkit-scrollbar-track {
+  background: #f2f2f2;
+}
+
+/* Handle */
+table#mail-index_previewAttachmentArea::-webkit-scrollbar-thumb {
+  background: #c1c2c1;
+}
+
+/* Handle on hover */
+table#mail-index_previewAttachmentArea::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
