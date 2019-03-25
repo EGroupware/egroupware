@@ -160,53 +160,81 @@
     /*quick*/
     #topmenu_info_quick_add {
 
-    // ##############################################################################
-    // quick_add
-    // Fist you see an ADD Icon, via Mouseover it expand right, to an select field
+		// ##############################################################################
+		// quick_add
+		// Fist you see an ADD Icon, via Mouseover it expand right, to an select field
 
-    span#quick_add {
-        /*border: 1px solid rgba(0, 0, 0, 0.15);*/
-        /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
-        float: right;
-        padding: 0.5em;
-        position: fixed;
-        right: 80px;
-        top: 5px;
+		span#quick_add {
+			/*border: 1px solid rgba(0, 0, 0, 0.15);*/
+			/*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
+			float: right;
+			padding: 0.5em;
+			position: fixed;
+			right: 80px;
+			top: 5px;
 
-        background-image: url(../images/add.png);
-        background-repeat: no-repeat;
-        background-size: 20px 20px;
-        background-position: 4px 4px;
+			background-image: url(../images/add.png);
+			background-repeat: no-repeat;
+			background-size: 20px 20px;
+			background-position: 4px 4px;
 
-        .border_radius_button_normal;
-        .dimension_width_height_s;
+			.border_radius_button_normal;
+			.dimension_width_height_s;
 
-        &:before {
-            content: " ";
-            font-size: 2em;
-            color: @egw_color_2_a;
-            line-height: 0.6em;
-            background-color: white;
-        }
+			&:before {
+				content: " ";
+				font-size: 2em;
+				color: @egw_color_2_a;
+				line-height: 0.6em;
+				background-color: white;
+			}
 
-        &:hover {.box_shadow_standard_light_hover;}
-        &:focus {.box_shadow_standard_light_inset;}
-    }
+			&:hover {.box_shadow_standard_light_hover;}
+			&:focus {.box_shadow_standard_light_inset;}
+		}
 
-    // ##############################################################################
-    // quick_add selectbox
-    // ADD different APPs
-    select#quick_add_selectbox {
+		// ##############################################################################
+		// quick_add selectbox
+		// ADD different APPs
 
-        visibility: hidden;
-        border: medium none;
-        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-        position: relative !important;
-        right: 1px !important;
-        top: -3px;
-        left: 35px;
+		.chzn-container {
+			position: fixed;
+			right: 15px !important;
+			top: 40px;
+			width: 160px !important;
+			background: @gray_0;
+			&:before {
+				content: '';
+				position: absolute;
+				bottom: 50%;
+				left: 42%;
+				width: 0;
+				height: 0;
+				border-left: 15px solid transparent;
+				border-right: 15px solid transparent;
+				border-bottom: 12px solid #aaa;
+				margin-bottom: 12px;
+				margin-left: 0px;
+			}
+			&:after {
+				content: '';
+				position: absolute;
+				bottom: 50%;
+				left: 42%;
+				width: 0;
+				height: 0;
+				border-left: 15px solid transparent;
+				border-right: 15px solid transparent;
+				border-bottom: 12px solid #ffffff;
+				margin-bottom: 11px;
+			}
+		}
 
-    }
+
+
+		select#quick_add_selectbox {
+			visibility: hidden;
+		}
 
     }
 

@@ -124,56 +124,33 @@ egw_LAB.wait(function() {
 	jQuery('#quick_add').on({
 		mouseover: function(ev){
 			// do NOT react on bubbeling events from contained selectbox
-			if (ev.relatedTarget && ev.relatedTarget.id != 'quick_add_selectbox' && ev.target.id !='quick_add_selectbox')
+			var $select = jQuery('#quick_add_selectbox');
+			var $chosen_div = $select.next();
+			if ($chosen_div.hasClass('chzn-container'))
 			{
-				jQuery(this).css({
-					transition: "0.2s ease-out 0s",
-					width: "166px",
-					'border-top-left-radius': "20px",
-					'background-color': "#0B5FA4"
-				});
-				jQuery('select', this).css({
-					transition: "0.1s linear 0.2s",
-					visibility: "visible",
-					width:"120px"
-				});
+				$chosen_div.show();
 			}
+			else
+			{
+				$select.chosen({
+					disable_search: true
+				});
+				 $chosen_div = $select.next();
+			}
+			$select.trigger('liszt:open');
+			$select.on('liszt:hiding_dropdown', function(e){
+				$chosen_div.hide();
+			});
 			ev.stopPropagation();
 		},
 		mouseout: function(ev){
 			// do NOT react on bubbeling events from contained selectbox
 			if (ev.target && ev.relatedTarget && ev.target.id != 'quick_add_selectbox'
-					&& ev.relatedTarget.id != 'quick_add'
-					&& ev.relatedTarget.id !='quick_add_selectbox'
-					&& ev.relatedTarget.tagName != "OPTION")
+					&& !jQuery(ev.relatedTarget).hasClass('chzn-container'))
 			{
-				jQuery(this).css({
-					transition: "0.6s ease-out 0s",
-					width: "16px",
-					'border-top-left-radius': "0px",
-					'background-color': "transparent"
-				});
-				jQuery('select', this).css({
-					transition: "0s linear 0s",
-					visibility: "hidden",
-					width:"10px"
-				});
+				 jQuery('#quick_add_selectbox').next().hide();
 			}
 			ev.stopPropagation();
-		},
-		focusout: function (ev)
-		{
-			jQuery(this).css({
-					transition: "0.6s ease-out 0s",
-					width: "16px",
-					'border-top-left-radius': "0px",
-					'background-color': "transparent"
-			});
-			jQuery('select', this).css({
-				transition: "0s linear 0s",
-				visibility: "hidden",
-				width:"10px"
-			});
 		}
 	});
 
