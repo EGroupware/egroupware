@@ -7028,10 +7028,10 @@ div[id^="admin-"] .search.nm-mob-header,
 form[id^="admin-"] .search.nm-mob-header,
 div[id^="admin-"] .dialogHeadbar,
 form[id^="admin-"] .dialogHeadbar {
-  background-color: #0099CC;
+  background-color: #333333;
 }
 #admin_sidebox_header {
-  border-left: 6px solid #0099CC !important;
+  border-left: 6px solid #333333 !important;
 }
 div[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -7117,10 +7117,10 @@ div[id^="resources-"] .search.nm-mob-header,
 form[id^="resources-"] .search.nm-mob-header,
 div[id^="resources-"] .dialogHeadbar,
 form[id^="resources-"] .dialogHeadbar {
-  background-color: #CC3333;
+  background-color: #003333;
 }
 #resources_sidebox_header {
-  border-left: 6px solid #CC3333 !important;
+  border-left: 6px solid #003333 !important;
 }
 div[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
