@@ -32,6 +32,13 @@ class History
 	 */
 	var $db;
 	const TABLE = 'egw_history_log';
+
+	/**
+	 * PGP begin / end flags so we can handle them specially
+	 */
+	const BEGIN_PGP = '-----BEGIN PGP MESSAGE-----';
+	const END_PGP = '-----END PGP MESSAGE-----';
+
 	/**
 	 * App.name this class is instanciated for / working on
 	 *
@@ -330,8 +337,24 @@ class History
 		return $total;
 	}
 
-	protected static function needs_diff($name, $value)
+	/**
+	 * Check to see if we would rather store a unified diff of the changes rather
+	 * than full old and new values.  We don't care for small text values, but
+	 * any long or multi-line values will be diff-ed.
+	 *
+	 * We do not store a diff of encrypted values, since that winds up as nonsense.
+	 *
+	 * @param string $name Field name, used to do some decision making
+	 * @param string $value Value, either old or new
+	 * @return boolean
+	 */
+	public static function needs_diff($name, $value)
 	{
+		// No diff on encrypted content
+		if(strpos($value, static::BEGIN_PGP) == 0 && strpos($value, static::END_PGP) !== FALSE)
+		{
+			return false;
+		}
 		return $name == 'note' ||	// Addressbook
 			strpos($name, 'description') !== false ||	// Calendar, Records, Timesheet, ProjectManager, Resources
 			$name == 'De' ||	// Tracker, InfoLog

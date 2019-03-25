@@ -460,7 +460,7 @@ abstract class Tracking
 				}
 			}
 			else if (is_string($data[$name]) && is_string($old[$name]) && (
-					strpos($data[$name], PHP_EOL) !== FALSE || strpos($old[$name], PHP_EOL) !== FALSE))
+					$this->historylog->needs_diff ($name, $data[$name]) || $this->historylog->needs_diff ($name, $old[$name])))
 			{
 				// Multiline string, just store diff
 				$diff = new \Horde_Text_Diff('auto', array(explode("\n",$old[$name]), explode("\n",$data[$name])));
@@ -931,7 +931,7 @@ abstract class Tracking
 	protected function get_reply_to($data,$old)
 	{
 		$reply_to = $this->get_config('reply_to',$data,$old);
-		
+
 		return $reply_to;
 	}
 
