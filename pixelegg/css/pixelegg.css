@@ -5129,6 +5129,9 @@ td.message span.message {
   border-bottom: 12px solid #ffffff;
   margin-bottom: 11px;
 }
+#egw_fw_topmenu_info_items #topmenu_info_quick_add .chzn-container .chzn-single span {
+  display: none;
+}
 #egw_fw_topmenu_info_items #topmenu_info_quick_add select#quick_add_selectbox {
   visibility: hidden;
 }

@@ -125,6 +125,7 @@ egw_LAB.wait(function() {
 		mouseover: function(ev){
 			// do NOT react on bubbeling events from contained selectbox
 			var $select = jQuery('#quick_add_selectbox');
+			if (!$select.children()[0]['value']) $select.children()[0].text = '';
 			var $chosen_div = $select.next();
 			if ($chosen_div.hasClass('chzn-container'))
 			{
@@ -133,7 +134,8 @@ egw_LAB.wait(function() {
 			else
 			{
 				$select.chosen({
-					disable_search: true
+					disable_search: true,
+					display_selected_options: false
 				});
 				 $chosen_div = $select.next();
 			}
