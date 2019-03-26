@@ -7,7 +7,7 @@
 
 @media print {
 
-#divLogo,#divAppIconBar,#tdSidebox,#divStatusBar,#sideboxdragarea,.noPrint,#topmenu, #egw_message {
+#divLogo,#divAppIconBar,#tdSidebox,#divStatusBar,#sideboxdragarea,.noPrint,#topmenu,#egw_message,#egw_fw_sidebar_r {
 	display:none;
 }
 
