@@ -130,6 +130,8 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	 */
 	protected function import_record(importexport_iface_egw_record &$record, &$import_csv)
 	{
+		// Reset BO data for new record
+		$this->bocontacts->data = array();
 
 		// Set owner, unless it's supposed to come from CSV file
 		if($this->definition->plugin_options['owner_from_csv'] && $record->owner) {

@@ -90,6 +90,9 @@ class timesheet_import_csv extends importexport_basic_import_csv
 	 */
 	protected function import_record(importexport_iface_egw_record &$record, &$import_csv)
 	{
+		// Reset BO data for new record
+		$this->bo->data = array();
+		
 		// Automatically handle text Api\Categories without explicit Api\Translation
 		foreach(array('ts_status','cat_id') as $field)
 		{

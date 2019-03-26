@@ -181,6 +181,10 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 		{
 			$success = false;
 
+
+			// Reset BO data for new record
+			$this->boinfolog->data = array();
+
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
