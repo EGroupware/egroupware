@@ -2585,11 +2585,12 @@ button[id="add"] {
  */
 .chzn-container-single .chzn-single {
   border: 1px solid #e5e5e5;
-  border-radius: 0;
+  border-radius: 3px;
   background: none !important;
   box-shadow: none !important;
   color: #26537C;
-  height: 22px;
+  height: 21px;
+  top: -2px;
 }
 .chzn-container-single .et2_country-select.chzn-single span {
   display: inline-block;
