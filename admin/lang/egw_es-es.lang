@@ -17,6 +17,7 @@
 %1 run rights for applications	admin	es-es	derecho de ejecución %1 para aplicaciones
 %1 sessions killed	admin	es-es	Se han matado %1 sesiones
 %1 user %2	admin	es-es	%1 usuario %2
+(de)activate mail accounts	admin	es-es	(des)activar cuentas de correo
 (default no, leave it off if you dont use it)	admin	es-es	(por defecto, No, desactivar si no se usa)
 (no subject)	admin	es-es	(Sin asunto)
 (stored password will not be shown here)	admin	es-es	(las claves guardadas no se mostrarán aquí)
@@ -233,6 +234,7 @@ delete selected entries	admin	es-es	Suprimir las entradas seleccionadas
 delete the category	admin	es-es	Suprimir la categoría
 delete the group	admin	es-es	Suprimir el grupo
 delete the selected entries	admin	es-es	Suprimir las entradas seleccionadas
+delete this access control	admin	es-es	Suprimir este control de acceso
 delete this account	admin	es-es	Suprimir esta cuenta
 delete this category	admin	es-es	Suprimir esta categoría
 delete this group	admin	es-es	Suprimir este grupo
@@ -317,8 +319,9 @@ enable the soap service	admin	es-es	Activar el servicio soap
 enable the xmlrpc service	admin	es-es	Activar el servicio xmlrpc
 enabled - hidden from navbar	admin	es-es	Habilitado - Esconder de la barra de navegación
 enabled - popup window	admin	es-es	Habilitado - Ventana emergente
-encrypted connection	admin	es-es	conexión cifrada
-encryption settings	admin	es-es	configuración del cifrado
+encrypted connection	admin	es-es	Conexión cifrada
+encryption	admin	es-es	Cifrado
+encryption settings	admin	es-es	Configuración del cifrado
 enter a description for the category	admin	es-es	introduzca una descripción para esta categoría
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	es-es	Introduzca un texto aleatorio para el cifrado <br> de la sesión (requiere mcrypt)
 enter the background color for the login page	admin	es-es	Introduzca el color de fondo para la página de inicio de sesión
@@ -405,6 +408,7 @@ group name	admin	es-es	Nombre del grupo
 hash	admin	es-es	Hash
 hide php information	admin	es-es	Ocultar información de PHP
 home directory	admin	es-es	Directorio personal
+home screen message	admin	es-es	Mensaje de la pantalla principal
 host information	admin	es-es	Información del servidor
 hour<br>(0-23)	admin	es-es	Hora<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	es-es	¿Qué tamaño deben tener las miniaturas para las imágenes vinculadas (máximo en pixels)?
@@ -502,10 +506,10 @@ login-status	admin	es-es	Estado de la sesión
 loginid	admin	es-es	LoginID
 logintime	admin	es-es	Hora de inicio de sesión
 logoutime	admin	es-es	Hora de fin de sesión
+lowercase email addresses	admin	es-es	Direcciones de correo-e en minúsculas
 mail account	admin	es-es	Cuenta de correo
 mail settings	admin	es-es	Configuración del correo.
 main email-address	admin	es-es	Dirección de correo principal
-home screen message	admin	es-es	Mensaje de la pantalla principal
 manage mapping	admin	es-es	Gestión de mapeos
 manage stationery templates	admin	es-es	Gestionar plantillas preimpresas
 manager	admin	es-es	Administrador
@@ -631,7 +635,6 @@ remove all users from this group ?	admin	es-es	¿Borrar todos los usuarios de es
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	es-es	Eliminar el acceso a grupos puede causar problemas para los datos en esta categoría. ¿Está seguro? Los usuarios de estos grupos puede que ya no tengan acceso:
 requested	admin	es-es	Requerido
 reset filter	admin	es-es	restablecer filtro
-return to view account	admin	es-es	Volver a ver cuenta
 rights	admin	es-es	Derechos
 route all mails to	admin	es-es	dirigir todos los correos a
 rows	admin	es-es	Filas

@@ -3,6 +3,7 @@
 %1 copied - the copy can now be edited	common	de	%1 Kopie - Diese Kopie kann jetzt bearbeitet werden
 %1 directories %2 found!	admin	de	%1 Verzeichnisse %2 gefunden!
 %1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
+%1 email(s) added into %2	api	de	%1 E-Mail-Adresse(n) in %2 hinzugefügt
 %1 entries found, select one ...	common	de	%1 Einträge gefunden, einen auswählen ...
 %1 etemplates deleted	common	de	%1 eTemplate(s) gelöscht
 %1 etemplates for application '%2' dumped to '%3'	common	de	%1 eTemplate(s) für die Anwendung '%2' nach '%3' geschrieben
@@ -570,6 +571,7 @@ french southern territories	common	de	FRANZÖSISCHEN SÜD- und ANTARKTISGEBIETE
 friday	common	de	Freitag
 ftp	common	de	FTP
 fullname	common	de	Vor- und Nachname
+fullscreen	api	de	Vollbild
 fullscreen mode	common	de	Vollbild Modus
 gabon	common	de	GABUN
 gambia	common	de	GAMBIA
@@ -999,6 +1001,7 @@ philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
 pitcairn	common	de	PITCAIRN
 placeholders	common	de	Platzhalter
+play/pause	api	de	Wiedergabe/Pause
 please %1 by hand	common	de	Bitte %1 per Hand
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an !!!

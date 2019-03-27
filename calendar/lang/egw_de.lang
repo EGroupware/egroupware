@@ -63,6 +63,7 @@ appointment settings	calendar	de	Einstellungen der Terminverwaltung
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	de	Als Alternative können Sie auch einen %1MySQL Dump herunterladen%2 und diesen von Hand in die Datenbank Tabelle egw_cal_timezones importieren.
 at start of the event	calendar	de	am Beginn des Termins
 automatically purge old events after	admin	de	Bereinigt bzw. löscht alte Termine automatisch nach
+available for the first entry inside each day of week or daily table inside the selected range:	calendar	de	Verfügbar für den ersten Eintrag innerhalb eines jeden Tages oder für die Liste innerhalb des ausgewählten Bereichs:
 back half a month	calendar	de	einen halben Monat zurück
 back one month	calendar	de	einen Monat zurück
 back one year	calendar	de	ein Jahr zurück
@@ -96,12 +97,14 @@ canceled	calendar	de	Abgesagt
 category %1 removed because of missing rights	calendar	de	Kategorie %1 entfernt wegen fehlender Rechte
 category acl	common	de	Kategorie Rechte
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	de	Kategorie Rechte beschränken nur das Hinzufügen einer Kategorie zu einem Termin oder das Ändern des Status eines Teilnehmers. Sie ändern NICHT die Sichtbarkeit eines Termins!
+category automatically added to new events	calendar	de	Kategorie, die automatisch zu neuen Veranstaltungen hinzugefügt wird.
 chair	calendar	de	Vorsitz
 change history	calendar	de	Änderungshistorie
 change your status	calendar	de	Eigenen Status ändern
 charset of file	calendar	de	Zeichensatz der Datei
 check all	calendar	de	Alle auswählen
 choose a category	calendar	de	Wählen Sie eine Kategorie
+choose owner of imported data	calendar	de	Eigentümer der importierten Daten auswählen
 close the window	calendar	de	Schließt das Fenster
 compose a mail to all participants after the event is saved	calendar	de	Schreibe eine E-Mail an alle Teilnehmer, nachdem der Termin gespeichert wurde.
 configuration settings	calendar	de	Einstellungen der Konfiguration
@@ -131,6 +134,7 @@ custom_2	common	de	frei / besetzt
 daily	calendar	de	Täglich
 daily tables	calendar	de	Tabellen für tägliche Einträge
 data exchange settings	calendar	de	Einstellungen für den Datenaustausch
+date for the day of the week	calendar	de	Datum für den Tag
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	de	Tagesdatum, erste Zeile der Tagesübersicht
 day	calendar	de	Tag
 day of week tables	calendar	de	Tabellen für die Wochenansicht
@@ -361,9 +365,11 @@ monthly (by day)	calendar	de	Monatlich (nach Wochentag)
 monthview	calendar	de	Monatsansicht
 multiple week view	calendar	de	Mehrwochenansicht
 name of current user, all other contact fields are valid too	calendar	de	Name des aktuellen Benutzers, alle anderen Kontakt Felder sind weiterhin gültig
+name of the week (ex: monday)	calendar	de	Name des Wochentags (z.B. Montag)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	de	Name der Woche (ab Montag), verfügbar für den ersten Eintrag für jeden Tag der Woche oder für die tägliche Tabelle innerhalb des ausgewählten Zeitraums.
 needs action	calendar	de	Zu erledigen
 new	calendar	de	Neu
+new event category	calendar	de	Neue Termin-Kategorie
 new event participants	calendar	de	Teilnehmerauswahl für neue Termine
 new search with the above parameters	calendar	de	neue Suche mit den obigen Parametern
 no automatic purging	admin	de	Keine automatische Bereinigung alter Termine
@@ -407,6 +413,7 @@ one week	calendar	de	eine Woche
 one year	calendar	de	ein Jahr
 only group-events	calendar	de	nur Gruppentermine
 only recurrences until %1 (excluding) have been checked!	calendar	de	Wiederholungen wurden nur bis %1 (ausschließlich) überprüft!
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	de	Nur von wenigen vollständig konformen Clients (z.B. von Apple) unterstützt. Wenn eine URL eingegeben werden muss, wird sie höchstwahrscheinlich nicht unterstützt!
 only the initial date of that recurring event is checked!	calendar	de	Nur das Startdatum diese wiederholenden Termins wird geprüft!
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	de	Wird nur bei der Erstanzeige des Kalenders benutzt, danach immer die zuletzt ausgewählte Anzeige
 open todo's:	calendar	de	unerledigte Aufgaben:
@@ -417,6 +424,7 @@ owner too	calendar	de	Auch Besitzer
 participant names by type	calendar	de	Teilnehmernamen nach Typ
 participant table	calendar	de	Tabelle der Teilnehmer
 participants	calendar	de	Teilnehmer
+participants automatically added to new events	calendar	de	Teilnehmer, die automatisch zu neuen Terminen hinzugefügt werden.
 participants uninvited from an event	calendar	de	Ausgeladene Teilnehmer eines Termins
 participants, resources, ...	calendar	de	Teilnehmer, Ressourcen
 password for not loged in users to your freebusy information?	calendar	de	Ihr Passwort, um nicht angemeldeten Benutzern Zugang zu Ihrer Terminverfügbarkeit zu gewähren.
@@ -545,6 +553,7 @@ tag to mark positions for address labels	calendar	de	Kennzeichnet die Position f
 tentative	calendar	de	Vorläufige Zusage
 test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an)
 the apple ical apps use this color to display events from this calendar.	calendar	de	Die Apple iCal Anwendung benutzt diese Farbe zur Anzeige von Terminen dieses Kalenders
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	de	Das Dokument kann Platzhalter wie {{%1}} enthalten, die durch die Daten ersetzt werden sollen.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den Daten ersetzt werden (%1komplette Liste der Platzhalter%2)
 the exceptions are deleted together with the series.	calendar	de	Die Ausnahmen werden mit der Terminserie gelöscht
 the following document-types are supported:	calendar	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
@@ -633,6 +642,7 @@ weekview	calendar	de	Wochenansicht
 weekview with weekend	calendar	de	Wochenansicht mit Wochenende
 weekview without weekend	calendar	de	Wochenansicht ohne Wochenende
 what should links to the calendar events display in other applications.	calendar	de	Was soll der Link-Titel zusätzlich enthalten bei der Anzeige von Verknüpfungen?
+when changing the month	calendar	de	Bei Monatswechsel
 when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	de	Wenn ausgewählt werden Geburts- und/oder Feiertage als Ereignisse in Ihrem Kalender angezeigt. Bitte beachten Sie, dass diese Option nur die Erscheinung innerhalb von EGroupware verändert, nicht aber die Informationen, die via iCal oder über andere Kalender-Schnittstellen gesendet werden.
 which view to show on home page	calendar	de	Welche Ansicht soll auf der Startseite angezeigt werden
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	de	Ab der hier eingestellten Anzahl von Benutzern wird die nach Benutzern aufgeteilte Tages- und Wochenansicht in einer Ansicht zusammengefasst
