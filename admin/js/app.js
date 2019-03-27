@@ -132,7 +132,7 @@ app.classes.admin = AppJS.extend(
 	load: function(_url)
 	{
 		if (this.iframe && this.iframe.getDOMNode().contentDocument.location.href
-			.match(/menuaction=admin.admin_statistics.submit/) && ( !_url ||
+			.match(/menuaction=admin.admin_statistics.submit.+required=true/) && ( !_url ||
 			!_url.match(/statistics=(postpone|canceled|submitted)/)))
 		{
 			this.egw.message(this.egw.lang('Please submit (or postpone) statistic first'), 'info');
@@ -172,6 +172,12 @@ app.classes.admin = AppJS.extend(
 			else
 			{
 				this.iframe.set_src(_url);
+			}
+			var m = _url.match(/menuaction=([^&]+)(?:.*appname=(\w+))?/);
+			if(m && m.length >= 2)
+			{
+				var app = m[2] ? m[2] : m[1].split('.')[0];
+				this.tree.set_value('/apps/'+app+'/'+m[1]);
 			}
 		}
 		else
