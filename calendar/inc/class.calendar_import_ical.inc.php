@@ -160,6 +160,8 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 			);
 		}
 
+		$calendar_ical->event_callback = array($this, 'event_callback');
+
 		// User wants conflicting events to not be imported
 		if($_definition->plugin_options['skip_conflicts'])
 		{
@@ -177,6 +179,18 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 		return $calendar_ical->events_imported;
 	}
 
+	/**
+	 * Do some modification on each event
+	 */
+	public function event_callback(&$event)
+	{
+		// Check & apply value overrides
+		foreach((array)$this->definition->plugin_options['override_values'] as $field => $settings)
+		{
+			$event[$field] = $settings['value'];
+		}
+		return true;
+	}
 
 	/**
 	 * Add a warning message about conflicting events

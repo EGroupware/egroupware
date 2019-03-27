@@ -16,6 +16,7 @@
 			</hbox>
 			<integer label="How many days to be removed in the past (default 100)" id="remove_past" disabled="!@empty_before_import"/>
 			<integer label="How many days to be removed in the future (default 365)" id="remove_future" disabled="!@empty_before_import"/>
+			<select-cat id="override_values[category][value]" label="Category" empty_label="From file" options=",,,@application"/>
 		</vbox>
 		<styles>
 			#importexport-wizardbox_delete_title {

@@ -159,6 +159,16 @@ class calendar_ical extends calendar_boupdate
 	var $logfile="/tmp/log-vcal";
 
 	/**
+	 * Event callback
+	 * If set, this will be called on each discovered event so it can be
+	 * modified.  Event is passed by reference, return true to keep the event
+	 * or false to skip it.
+	 *
+	 * @var callable
+	 */
+	var $event_callback = null;
+
+	/**
 	 * Conflict callback
 	 * If set, conflict checking will be enabled, and the event as well as
 	 * conflicts are passed as parameters to this callback
@@ -1177,6 +1187,16 @@ class calendar_ical extends calendar_boupdate
 		foreach ($events as $event)
 		{
 			if (!is_array($event)) continue; // the iterator may return false
+
+			// Run event through callback
+			if($this->event_callback && is_callable($this->event_callback))
+			{
+				if(!call_user_func_array($this->event_callback, array(&$event)))
+				{
+					// Callback cancelled event
+					continue;
+				}
+			}
 			++$this->events_imported;
 
 			if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
