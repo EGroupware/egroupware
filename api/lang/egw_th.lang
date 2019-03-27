@@ -1,189 +1,189 @@
-%1 email addresses inserted	common	th	แทรกที่อยู่อีเมลจำนวน %1 ที่อยู่
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	th	%1eGroupware%2 เป็นซอฟต์แวร์ผ่านเว็บที่รับผู้ใชในบริสัททั้งหลายได้้ เขียนโดยภาษา %3PHP%4
-00 (disable)	admin	th	00 ปิดการใช้
+%1 email addresses inserted	common	th	เนเธ—เธฃเธเธ—เธตเนเธญเธขเธนเนเธญเธตเน€เธกเธฅเธเธณเธเธงเธ %1 เธ—เธตเนเธญเธขเธนเน
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	th	%1eGroupware%2 เน€เธเนเธเธเธญเธเธ•เนเนเธงเธฃเนเธเนเธฒเธเน€เธงเนเธเธ—เธตเนเธฃเธฑเธเธเธนเนเนเธเนเธเธเธฃเธดเธชเธฑเธ—เธ—เธฑเนเธเธซเธฅเธฒเธขเนเธ”เนเน เน€เธเธตเธขเธเนเธ”เธขเธ เธฒเธฉเธฒ %3PHP%4
+00 (disable)	admin	th	00 เธเธดเธ”เธเธฒเธฃเนเธเน
 13 (ntp)	admin	th	13 (ntp)
 80 (http)	admin	th	80 (http)
-about	common	th	เรือง
-about %1	common	th	เรือง %1
-account has been created	common	th	สร้างบัญชีเสร็จแล้ว
-account has been deleted	common	th	ลบบัญชีเสร็จแล้ว
-account has been updated	common	th	แก้ไขบัญชีเสร็จแล้ว
-account is expired	common	th	บัญชีหมกอายุ
-action	common	th	การกระทำ
-add	common	th	เพิ่ม
-add %1 category for	common	th	เพิ่ม %1 ประเภทสำหรับ
-add category	common	th	เพิ่มประเภท
-add sub	common	th	เพิ่มประเภทอยู่ภายใต้
-addressbook	common	th	สมุดช่องทางการติดต่อ
-admin	common	th	บริหาร
-administration	common	th	การบริหาร
-afghanistan	common	th	อัฟกานิสถาน
-algeria	common	th	แอลจีเรีย
-all	common	th	ทั้งหมด
-american samoa	common	th	หมู่เกาะซามัวของสหรัฐฯ
-antarctica	common	th	บริเวณขั้วโลกใต้
-apply	common	th	มีผล
-april	common	th	เมษายน
-are you sure you want to delete these entries ?	common	th	แน่ใจไหมว่าอยากลบข้อเหล่านี้
-are you sure you want to delete this entry ?	common	th	แน่ใจไหมว่าอยากลบข้อนี้
-argentina	common	th	อาร์เจนตินา
-august	common	th	สิงหาคม
-author	common	th	ผู้เขียน
-autohide sidebox menus	common	th	ให้เมนูข้างๆเก็บตัวอัตโนมัติ
-automatically hide the sidebox menus?	common	th	ให้เมนูข้างๆเก็บตัวอัตโนมัติไหม
-back	common	th	กลับไป
-back to user login	common	th	กลับไปถึงหน้าเข้า
-bad login or password	common	th	รหัสผ่านหรือขื่อไม่ถูก
-calendar	common	th	ปฏิทิน
-cancel	common	th	ยกเลิก
-categories	common	th	ประเภท
-categories for	common	th	ประเภทของ
-category	common	th	ประเภท
-category %1 has been added !	common	th	เพิ่มประเภท %1 เสร็จแล้
-category %1 has been updated !	common	th	แก้ไขประเภท %1 เสร็จแล้
-change	common	th	เปลียน
+about	common	th	เน€เธฃเธทเธญเธ
+about %1	common	th	เน€เธฃเธทเธญเธ %1
+account has been created	common	th	เธชเธฃเนเธฒเธเธเธฑเธเธเธตเน€เธชเธฃเนเธเนเธฅเนเธง
+account has been deleted	common	th	เธฅเธเธเธฑเธเธเธตเน€เธชเธฃเนเธเนเธฅเนเธง
+account has been updated	common	th	เนเธเนเนเธเธเธฑเธเธเธตเน€เธชเธฃเนเธเนเธฅเนเธง
+account is expired	common	th	เธเธฑเธเธเธตเธซเธกเธเธญเธฒเธขเธธ
+action	common	th	เธเธฒเธฃเธเธฃเธฐเธ—เธณ
+add	common	th	เน€เธเธดเนเธก
+add %1 category for	common	th	เน€เธเธดเนเธก %1 เธเธฃเธฐเน€เธ เธ—เธชเธณเธซเธฃเธฑเธ
+add category	common	th	เน€เธเธดเนเธกเธเธฃเธฐเน€เธ เธ—
+add sub	common	th	เน€เธเธดเนเธกเธเธฃเธฐเน€เธ เธ—เธญเธขเธนเนเธ เธฒเธขเนเธ•เน
+addressbook	common	th	เธชเธกเธธเธ”เธเนเธญเธเธ—เธฒเธเธเธฒเธฃเธ•เธดเธ”เธ•เนเธญ
+admin	common	th	เธเธฃเธดเธซเธฒเธฃ
+administration	common	th	เธเธฒเธฃเธเธฃเธดเธซเธฒเธฃ
+afghanistan	common	th	เธญเธฑเธเธเธฒเธเธดเธชเธ–เธฒเธ
+algeria	common	th	เนเธญเธฅเธเธตเน€เธฃเธตเธข
+all	common	th	เธ—เธฑเนเธเธซเธกเธ”
+american samoa	common	th	เธซเธกเธนเนเน€เธเธฒเธฐเธเธฒเธกเธฑเธงเธเธญเธเธชเธซเธฃเธฑเธเธฏ
+antarctica	common	th	เธเธฃเธดเน€เธงเธ“เธเธฑเนเธงเนเธฅเธเนเธ•เน
+apply	common	th	เธกเธตเธเธฅ
+april	common	th	เน€เธกเธฉเธฒเธขเธ
+are you sure you want to delete these entries ?	common	th	เนเธเนเนเธเนเธซเธกเธงเนเธฒเธญเธขเธฒเธเธฅเธเธเนเธญเน€เธซเธฅเนเธฒเธเธตเน
+are you sure you want to delete this entry ?	common	th	เนเธเนเนเธเนเธซเธกเธงเนเธฒเธญเธขเธฒเธเธฅเธเธเนเธญเธเธตเน
+argentina	common	th	เธญเธฒเธฃเนเน€เธเธเธ•เธดเธเธฒ
+august	common	th	เธชเธดเธเธซเธฒเธเธก
+author	common	th	เธเธนเนเน€เธเธตเธขเธ
+autohide sidebox menus	common	th	เนเธซเนเน€เธกเธเธนเธเนเธฒเธเนเน€เธเนเธเธ•เธฑเธงเธญเธฑเธ•เนเธเธกเธฑเธ•เธด
+automatically hide the sidebox menus?	common	th	เนเธซเนเน€เธกเธเธนเธเนเธฒเธเนเน€เธเนเธเธ•เธฑเธงเธญเธฑเธ•เนเธเธกเธฑเธ•เธดเนเธซเธก
+back	common	th	เธเธฅเธฑเธเนเธ
+back to user login	common	th	เธเธฅเธฑเธเนเธเธ–เธถเธเธซเธเนเธฒเน€เธเนเธฒ
+bad login or password	common	th	เธฃเธซเธฑเธชเธเนเธฒเธเธซเธฃเธทเธญเธเธทเนเธญเนเธกเนเธ–เธนเธ
+calendar	common	th	เธเธเธดเธ—เธดเธ
+cancel	common	th	เธขเธเน€เธฅเธดเธ
+categories	common	th	เธเธฃเธฐเน€เธ เธ—
+categories for	common	th	เธเธฃเธฐเน€เธ เธ—เธเธญเธ
+category	common	th	เธเธฃเธฐเน€เธ เธ—
+category %1 has been added !	common	th	เน€เธเธดเนเธกเธเธฃเธฐเน€เธ เธ— %1 เน€เธชเธฃเนเธเนเธฅเน
+category %1 has been updated !	common	th	เนเธเนเนเธเธเธฃเธฐเน€เธ เธ— %1 เน€เธชเธฃเนเธเนเธฅเน
+change	common	th	เน€เธเธฅเธตเธขเธ
 charset	common	th	UTF-8
-check installation	common	th	ตรวจการติตตั้ง
-choose the category	common	th	เลือกประเภท
-choose the parent category	common	th	เลือกประเภทเป็นแม่
-clear	common	th	ลบให้ว่าง
-clear form	common	th	ลบแบบฟอร์มให้ว่าง
-click	common	th	คลิก
-close	common	th	ปิด
-company	common	th	บริสัท
-copy	common	th	ถ่าย
-create	common	th	สร้าง
-created by	common	th	สร้างโดย
-currency	common	th	เงินตรา
-current	common	th	ปัจจุบัน
-current users	common	th	ผู้ใช้ปัจจุบัน
-date	common	th	วันที่
-date due	common	th	วันที่กำหนด
-december	common	th	ธันวาคม
-delete	common	th	ลบ
-description	common	th	คำอธิบาย
-detail	common	th	รายละเอียด
-details	common	th	รายละเอียด
-domain	common	th	โดเมน
-done	common	th	เสร็จแลัว
-e-mail	common	th	อีเมล
-edit	common	th	แก้ไข
-edit %1 category for	common	th	แก้ไข %1 ประเภทสำหรับ
-edit categories	common	th	แก้ไขประเภท
-edit category	common	th	แก้ไขประเภท
-email	common	th	อีเมล
-end date	common	th	วันที่เสร็จ
-end time	common	th	เวลาที่เสร็จ
-entry has been deleted sucessfully	common	th	ลบขัอเสร็จแล้ว
-entry updated sucessfully	common	th	แก้ไขข้อเสร็จแล้ว
-error	common	th	ผิดพลาด
-fax number	common	th	เบอร์แฟกซ์
-february	common	th	กุมภาพันธ์
-first name	common	th	ขื่อ
-first page	common	th	หน้าแรก
-firstname	common	th	ขื่อ
-fixme!	common	th	นี่ผิด แก้ซิ
-friday	common	th	วันศุกร์
-fullname	common	th	ชื่อนามสกุล
-general menu	common	th	เมนูทั่วไป
-group	common	th	กลุ่ม
-group has been added	common	th	เพิ่มกลุมเสร็จแล้ว
-group has been deleted	common	th	ลบกลุมเสร็จแล้ว
-group has been updated	common	th	แก้กลุมเสร็จแล้ว
-group name	common	th	ชื่อกลุ่ม
-groups	common	th	กลุ่ม
-help	common	th	ช่วยเหลือ
-high	common	th	สูง
-highest	common	th	สูงสุด
-home	common	th	โฮม
-home email	common	th	อีเมลบ้าน
-india	common	th	อินเดีย
-indonesia	common	th	อินโดนิเซีย
-international	common	th	นานาชาติ
-invalid password	common	th	รหัสผ่านไม่ถูก
-italic	common	th	เอียง
-january	common	th	มกราคม
-july	common	th	กรกฎาคม
-june	common	th	มิถุนายน
-language	common	th	ภาษา
-last name	common	th	นามสกุล
-last page	common	th	หน้าสุดท้าย
-lastname	common	th	นามสกุล
-list	common	th	รายการ
-login	common	th	เข้าระบบ
-loginid	common	th	ชื่อเล่น
-logout	common	th	ออกจากระบบ
-low	common	th	ตำ่
-lowest	common	th	ตำ่สุด
-maintainer	common	th	ผู้ดูแล
-march	common	th	มีนาคม
-may	common	th	พฤษภาคม
-medium	common	th	กลาง
-menu	common	th	เมนู
-message	common	th	ข้อความ
-monday	common	th	วันจันทร์
-name	common	th	ชื่อ
-never	common	th	ไม่มีวัน
-october	common	th	ดุลาคม
-ok	common	th	ตกลง
-old value	common	th	ค่าเก่า
-other	common	th	อื่นๆ
-owner	common	th	เจ้าของ
-parcel	common	th	กลองไปรษณีย์
-password	common	th	รหัสผ่าน
-password could not be changed	common	th	เปลียนรหัสผ่านไม่ได้
-password has been updated	common	th	แก้รหัสผ่านแล้ว
-personal	common	th	ส่วนตัว
-phone number	common	th	เบอร์โทร
-please wait...	common	th	รอสักครู่
-postal	common	th	ทางไปรษณีย
-preferences	common	th	ค่านิยม
-print	common	th	ปริ๊นต์
-private	common	th	ส่วนตัว
-read	common	th	อ่าน
-rename	common	th	ตั้งชื่อใหม่
-saturday	common	th	วันเสาร์
-save	common	th	เก็บ
-search	common	th	ค้นหา
-select	common	th	เลือก
-select category	common	th	เลือกประเภท
-select date	common	th	เลือกวันที่
-select group	common	th	เลือกกลุ่ม
-select one	common	th	เลือกข้อเดียว
-select user	common	th	เลือกผู้ใช้
-send	common	th	ส่ง
-september	common	th	กันยายน
-server name	common	th	ชื่อเซอฟ์เวอร์
-setup	common	th	การติตตั้ง และ ตั้งค่า
-show all	common	th	แสดงทั้งหมด
-show all categorys	common	th	แสดงทุกประเภท
-show menu	common	th	แสดงเมนู
-start date	common	th	เริ่มวันที่
-start time	common	th	เริ่มเวลา
-subject	common	th	หัวข้อ
-sunday	common	th	วันอาทิตย์
-thursday	common	th	วันพฤหัสฯ
-time	common	th	เวลา
-time zone	common	th	เขตเวลาของโลก
-time zone offset	common	th	เขตเวลาของโลกต่างกับของเซอรฟ์เวอร์
-title	common	th	หัวข้อ
-to	common	th	ถึง
-today	common	th	วันนี้
-todays date, eg. "%1"	common	th	วันนี้วันที่เท่าไหร่ เช่น "%1"
-total	common	th	รวมทั้งหมด
-tuesday	common	th	วันอังคาร
-update	common	th	แก้ไข
-user	common	th	ผู้ใช้
-user accounts	common	th	บัญชีผู้ใช้
-user groups	common	th	กลุ่มผู้ใช้
-username	common	th	ชื่อผู้ใช้
-users	common	th	ผู้ใช้
-users choice	common	th	ผู้ใช้เลือก
-view	common	th	วิว
-wednesday	common	th	วันพุธ
-welcome	common	th	ยินดีตอนรับ
-which groups	common	th	กลุ่มไหนบ้าง
-work email	common	th	อีเมลบริสัท
-written by:	common	th	เขียนโดย
-year	common	th	ปี
-yes	common	th	ใช่
+check installation	common	th	เธ•เธฃเธงเธเธเธฒเธฃเธ•เธดเธ•เธ•เธฑเนเธ
+choose the category	common	th	เน€เธฅเธทเธญเธเธเธฃเธฐเน€เธ เธ—
+choose the parent category	common	th	เน€เธฅเธทเธญเธเธเธฃเธฐเน€เธ เธ—เน€เธเนเธเนเธกเน
+clear	common	th	เธฅเธเนเธซเนเธงเนเธฒเธ
+clear form	common	th	เธฅเธเนเธเธเธเธญเธฃเนเธกเนเธซเนเธงเนเธฒเธ
+click	common	th	เธเธฅเธดเธ
+close	common	th	เธเธดเธ”
+company	common	th	เธเธฃเธดเธชเธฑเธ—
+copy	common	th	เธ–เนเธฒเธข
+create	common	th	เธชเธฃเนเธฒเธ
+created by	common	th	เธชเธฃเนเธฒเธเนเธ”เธข
+currency	common	th	เน€เธเธดเธเธ•เธฃเธฒ
+current	common	th	เธเธฑเธเธเธธเธเธฑเธ
+current users	common	th	เธเธนเนเนเธเนเธเธฑเธเธเธธเธเธฑเธ
+date	common	th	เธงเธฑเธเธ—เธตเน
+date due	common	th	เธงเธฑเธเธ—เธตเนเธเธณเธซเธเธ”
+december	common	th	เธเธฑเธเธงเธฒเธเธก
+delete	common	th	เธฅเธ
+description	common	th	เธเธณเธญเธเธดเธเธฒเธข
+detail	common	th	เธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”
+details	common	th	เธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”
+domain	common	th	เนเธ”เน€เธกเธ
+done	common	th	เน€เธชเธฃเนเธเนเธฅเธฑเธง
+e-mail	common	th	เธญเธตเน€เธกเธฅ
+edit	common	th	เนเธเนเนเธ
+edit %1 category for	common	th	เนเธเนเนเธ %1 เธเธฃเธฐเน€เธ เธ—เธชเธณเธซเธฃเธฑเธ
+edit categories	common	th	เนเธเนเนเธเธเธฃเธฐเน€เธ เธ—
+edit category	common	th	เนเธเนเนเธเธเธฃเธฐเน€เธ เธ—
+email	common	th	เธญเธตเน€เธกเธฅ
+end date	common	th	เธงเธฑเธเธ—เธตเนเน€เธชเธฃเนเธ
+end time	common	th	เน€เธงเธฅเธฒเธ—เธตเนเน€เธชเธฃเนเธ
+entry has been deleted sucessfully	common	th	เธฅเธเธเธฑเธญเน€เธชเธฃเนเธเนเธฅเนเธง
+entry updated sucessfully	common	th	เนเธเนเนเธเธเนเธญเน€เธชเธฃเนเธเนเธฅเนเธง
+error	common	th	เธเธดเธ”เธเธฅเธฒเธ”
+fax number	common	th	เน€เธเธญเธฃเนเนเธเธเธเน
+february	common	th	เธเธธเธกเธ เธฒเธเธฑเธเธเน
+first name	common	th	เธเธทเนเธญ
+first page	common	th	เธซเธเนเธฒเนเธฃเธ
+firstname	common	th	เธเธทเนเธญ
+fixme!	common	th	เธเธตเนเธเธดเธ” เนเธเนเธเธด
+friday	common	th	เธงเธฑเธเธจเธธเธเธฃเน
+fullname	common	th	เธเธทเนเธญเธเธฒเธกเธชเธเธธเธฅ
+general menu	common	th	เน€เธกเธเธนเธ—เธฑเนเธงเนเธ
+group	common	th	เธเธฅเธธเนเธก
+group has been added	common	th	เน€เธเธดเนเธกเธเธฅเธธเธกเน€เธชเธฃเนเธเนเธฅเนเธง
+group has been deleted	common	th	เธฅเธเธเธฅเธธเธกเน€เธชเธฃเนเธเนเธฅเนเธง
+group has been updated	common	th	เนเธเนเธเธฅเธธเธกเน€เธชเธฃเนเธเนเธฅเนเธง
+group name	common	th	เธเธทเนเธญเธเธฅเธธเนเธก
+groups	common	th	เธเธฅเธธเนเธก
+help	common	th	เธเนเธงเธขเน€เธซเธฅเธทเธญ
+high	common	th	เธชเธนเธ
+highest	common	th	เธชเธนเธเธชเธธเธ”
+home	common	th	เนเธฎเธก
+home email	common	th	เธญเธตเน€เธกเธฅเธเนเธฒเธ
+india	common	th	เธญเธดเธเน€เธ”เธตเธข
+indonesia	common	th	เธญเธดเธเนเธ”เธเธดเน€เธเธตเธข
+international	common	th	เธเธฒเธเธฒเธเธฒเธ•เธด
+invalid password	common	th	เธฃเธซเธฑเธชเธเนเธฒเธเนเธกเนเธ–เธนเธ
+italic	common	th	เน€เธญเธตเธขเธ
+january	common	th	เธกเธเธฃเธฒเธเธก
+july	common	th	เธเธฃเธเธเธฒเธเธก
+june	common	th	เธกเธดเธ–เธธเธเธฒเธขเธ
+language	common	th	เธ เธฒเธฉเธฒ
+last name	common	th	เธเธฒเธกเธชเธเธธเธฅ
+last page	common	th	เธซเธเนเธฒเธชเธธเธ”เธ—เนเธฒเธข
+lastname	common	th	เธเธฒเธกเธชเธเธธเธฅ
+list	common	th	เธฃเธฒเธขเธเธฒเธฃ
+login	common	th	เน€เธเนเธฒเธฃเธฐเธเธ
+loginid	common	th	เธเธทเนเธญเน€เธฅเนเธ
+logout	common	th	เธญเธญเธเธเธฒเธเธฃเธฐเธเธ
+low	common	th	เธ•เธณเน
+lowest	common	th	เธ•เธณเนเธชเธธเธ”
+maintainer	common	th	เธเธนเนเธ”เธนเนเธฅ
+march	common	th	เธกเธตเธเธฒเธเธก
+may	common	th	เธเธคเธฉเธ เธฒเธเธก
+medium	common	th	เธเธฅเธฒเธ
+menu	common	th	เน€เธกเธเธน
+message	common	th	เธเนเธญเธเธงเธฒเธก
+monday	common	th	เธงเธฑเธเธเธฑเธเธ—เธฃเน
+name	common	th	เธเธทเนเธญ
+never	common	th	เนเธกเนเธกเธตเธงเธฑเธ
+october	common	th	เธ”เธธเธฅเธฒเธเธก
+ok	common	th	เธ•เธเธฅเธ
+old value	common	th	เธเนเธฒเน€เธเนเธฒ
+other	common	th	เธญเธทเนเธเน
+owner	common	th	เน€เธเนเธฒเธเธญเธ
+parcel	common	th	เธเธฅเธญเธเนเธเธฃเธฉเธ“เธตเธขเน
+password	common	th	เธฃเธซเธฑเธชเธเนเธฒเธ
+password could not be changed	common	th	เน€เธเธฅเธตเธขเธเธฃเธซเธฑเธชเธเนเธฒเธเนเธกเนเนเธ”เน
+password has been updated	common	th	เนเธเนเธฃเธซเธฑเธชเธเนเธฒเธเนเธฅเนเธง
+personal	common	th	เธชเนเธงเธเธ•เธฑเธง
+phone number	common	th	เน€เธเธญเธฃเนเนเธ—เธฃ
+please wait...	common	th	เธฃเธญเธชเธฑเธเธเธฃเธนเน
+postal	common	th	เธ—เธฒเธเนเธเธฃเธฉเธ“เธตเธข
+preferences	common	th	เธเนเธฒเธเธดเธขเธก
+print	common	th	เธเธฃเธดเนเธเธ•เน
+private	common	th	เธชเนเธงเธเธ•เธฑเธง
+read	common	th	เธญเนเธฒเธ
+rename	common	th	เธ•เธฑเนเธเธเธทเนเธญเนเธซเธกเน
+saturday	common	th	เธงเธฑเธเน€เธชเธฒเธฃเน
+save	common	th	เน€เธเนเธ
+search	common	th	เธเนเธเธซเธฒ
+select	common	th	เน€เธฅเธทเธญเธ
+select category	common	th	เน€เธฅเธทเธญเธเธเธฃเธฐเน€เธ เธ—
+select date	common	th	เน€เธฅเธทเธญเธเธงเธฑเธเธ—เธตเน
+select group	common	th	เน€เธฅเธทเธญเธเธเธฅเธธเนเธก
+select one	common	th	เน€เธฅเธทเธญเธเธเนเธญเน€เธ”เธตเธขเธง
+select user	common	th	เน€เธฅเธทเธญเธเธเธนเนเนเธเน
+send	common	th	เธชเนเธ
+september	common	th	เธเธฑเธเธขเธฒเธขเธ
+server name	common	th	เธเธทเนเธญเน€เธเธญเธเนเน€เธงเธญเธฃเน
+setup	common	th	เธเธฒเธฃเธ•เธดเธ•เธ•เธฑเนเธ เนเธฅเธฐ เธ•เธฑเนเธเธเนเธฒ
+show all	common	th	เนเธชเธ”เธเธ—เธฑเนเธเธซเธกเธ”
+show all categorys	common	th	เนเธชเธ”เธเธ—เธธเธเธเธฃเธฐเน€เธ เธ—
+show menu	common	th	เนเธชเธ”เธเน€เธกเธเธน
+start date	common	th	เน€เธฃเธดเนเธกเธงเธฑเธเธ—เธตเน
+start time	common	th	เน€เธฃเธดเนเธกเน€เธงเธฅเธฒ
+subject	common	th	เธซเธฑเธงเธเนเธญ
+sunday	common	th	เธงเธฑเธเธญเธฒเธ—เธดเธ•เธขเน
+thursday	common	th	เธงเธฑเธเธเธคเธซเธฑเธชเธฏ
+time	common	th	เน€เธงเธฅเธฒ
+time zone	common	th	เน€เธเธ•เน€เธงเธฅเธฒเธเธญเธเนเธฅเธ
+time zone offset	common	th	เน€เธเธ•เน€เธงเธฅเธฒเธเธญเธเนเธฅเธเธ•เนเธฒเธเธเธฑเธเธเธญเธเน€เธเธญเธฃเธเนเน€เธงเธญเธฃเน
+title	common	th	เธซเธฑเธงเธเนเธญ
+to	common	th	เธ–เธถเธ
+today	common	th	เธงเธฑเธเธเธตเน
+todays date, eg. "%1"	common	th	เธงเธฑเธเธเธตเนเธงเธฑเธเธ—เธตเนเน€เธ—เนเธฒเนเธซเธฃเน เน€เธเนเธ "%1"
+total	common	th	เธฃเธงเธกเธ—เธฑเนเธเธซเธกเธ”
+tuesday	common	th	เธงเธฑเธเธญเธฑเธเธเธฒเธฃ
+update	common	th	เนเธเนเนเธ
+user	common	th	เธเธนเนเนเธเน
+user accounts	common	th	เธเธฑเธเธเธตเธเธนเนเนเธเน
+user groups	common	th	เธเธฅเธธเนเธกเธเธนเนเนเธเน
+username	common	th	เธเธทเนเธญเธเธนเนเนเธเน
+users	common	th	เธเธนเนเนเธเน
+users choice	common	th	เธเธนเนเนเธเนเน€เธฅเธทเธญเธ
+view	common	th	เธงเธดเธง
+wednesday	common	th	เธงเธฑเธเธเธธเธ
+welcome	common	th	เธขเธดเธเธ”เธตเธ•เธญเธเธฃเธฑเธ
+which groups	common	th	เธเธฅเธธเนเธกเนเธซเธเธเนเธฒเธ
+work email	common	th	เธญเธตเน€เธกเธฅเธเธฃเธดเธชเธฑเธ—
+written by:	common	th	เน€เธเธตเธขเธเนเธ”เธข
+year	common	th	เธเธต
+yes	common	th	เนเธเน
