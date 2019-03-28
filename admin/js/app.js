@@ -173,12 +173,6 @@ app.classes.admin = AppJS.extend(
 			{
 				this.iframe.set_src(_url);
 			}
-			var m = _url.match(/menuaction=([^&]+)(?:.*appname=(\w+))?/);
-			if(m && m.length >= 2)
-			{
-				var app = m[2] ? m[2] : m[1].split('.')[0];
-				this.tree.set_value('/apps/'+app+'/'+m[1]);
-			}
 		}
 		else
 		{
