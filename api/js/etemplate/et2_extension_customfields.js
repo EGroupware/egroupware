@@ -493,11 +493,11 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 	},
 
 	 _setup_date: function(field_name, field, attrs) {
-		attrs.data_format = 'Y-m-d';
+		attrs.data_format = field.values && field.values.format ? field.values.format : 'Y-m-d';
 		return true;
 	},
 	_setup_date_time: function(field_name, field, attrs) {
-		attrs.data_format = 'Y-m-d H:i:s';
+		attrs.data_format = field.values && field.values.format ? field.values.format : 'Y-m-d H:i:s';
 		return true;
 	},
 	_setup_htmlarea: function(field_name, field, attrs) {
