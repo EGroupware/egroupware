@@ -61,7 +61,22 @@ var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_co
 		// Copy the given parameters
 		this._actionLinks = _actionLinks;
 		this._execId = _execId;
-		this._widgetId = _widget.id;
+
+		// Get full widget ID, including path
+		var id = _widget.getArrayMgr('content').getPath();
+
+		if(typeof id == 'string')
+		{
+			this._widgetId = id;
+		}
+		else if (id.length === 1)
+		{
+			this._widgetId = id[0];
+		}
+		else
+		{
+			this._widgetId = id.shift() + '[' + id.join('][') +  ']';
+		}
 		this._parentId = _parentId;
 		this._rowProvider = _rowProvider;
 
