@@ -111,10 +111,17 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 							}
 						});
 
-						if (typeof e.data.history.dataview == "undefined") e.data.history.finishInit();
-						e.data.history.dynheight.update(function(_w, _h) {
-							e.data.history.dataview.resize(_w, _h);
-						});
+						if (typeof e.data.history.dataview == "undefined")
+						{
+							e.data.history.finishInit();
+							if(e.data.history.dynheight)
+							{
+								e.data.history.dynheight.update(function(_w, _h) {
+									e.data.history.dataview.resize(_w, _h);
+								});
+							}
+						}
+
 					};
 					tabs.tabData[i].flagDiv.bind("click.history",{"history": this, div: tabs.tabData[i].flagDiv}, handler);
 
