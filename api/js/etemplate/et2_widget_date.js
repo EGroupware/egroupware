@@ -1055,9 +1055,21 @@ var et2_date_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_
 			this.date = new Date(_value);
 			this.date = new Date(this.date.valueOf() + (this.date.getTimezoneOffset()*60*1000));
 		}
-		else if(typeof _value == 'string' && isNaN(_value))
+		else if(typeof _value == 'string' && (isNaN(_value) ||
+			this.options.data_format && this.options.data_format.substr(0,3) === 'Ymd'))
 		{
 			try {
+				// data_format is not handled server-side for custom-fields in nextmatch
+				// as parseDateTime requires a separate between date and time, we fix the value here
+				switch (this.options.data_format)
+				{
+					case 'Ymd':
+					case 'YmdHi':
+					case 'YmdHis':
+						_value = _value.substr(0, 4)+'-'+_value.substr(4, 2)+'-'+_value.substr(6, 2)+' '+
+							(_value.substr(8, 2) || '00')+':'+(_value.substr(10, 2) || '00')+':'+(_value.substr(12, 2) || '00');
+						break;
+				}
 				// parseDateTime to handle string PHP: DateTime local date/time format
 				var parsed = (typeof jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value) !='undefined')?
 							jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value):
