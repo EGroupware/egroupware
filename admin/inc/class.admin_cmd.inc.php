@@ -512,9 +512,9 @@ abstract class admin_cmd
 			$query['col_filter'][] = 'cmd_rrule IS NOT NULL';
 		}
 		unset($query['col_filter']['periodic']);
-		if($query['parent_id'])
+		if($query['col_filter']['parent'])
 		{
-			$query['col_filter']['parent'] = (int)$query['parent_id'];
+			$query['col_filter']['parent'] = (int)$query['col_filter']['parent'];
 		}
 
 		$total = admin_cmd::$sql->get_rows($query,$rows,$readonlys);
