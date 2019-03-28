@@ -300,11 +300,11 @@ class Customfields extends Transformer
 			case 'date-time':
 				if (!empty($field['values']['format']))
 				{
-					$widget->attrs['dataformat'] = $field['values']['format'];
+					$widget->attrs['data_format'] = $field['values']['format'];
 				}
 				else
 				{
-					$widget->attrs['dataformat'] = $type == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s';
+					$widget->attrs['data_format'] = $type == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s';
 				}
 				if($field['values']['min']) $widget->attrs['min'] = $field['values']['min'];
 				if($field['values']['max']) $widget->attrs['min'] = $field['values']['max'];
