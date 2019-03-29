@@ -662,7 +662,7 @@ class Sql extends Api\Storage
 		}
 		foreach($GLOBALS['egw']->categories->return_all_children($cat_id) as $cat)
 		{
-			$cat_filter[] = $this->db->concat("','",cat_id,"','")." $not LIKE '%,$cat,%'";
+			$cat_filter[] = $this->db->concat("','", 'cat_id', "','")." $not LIKE '%,$cat,%'";
 		}
 		$cfilter = '('.implode(' OR ',$cat_filter).')';
 		if(!empty($not))
