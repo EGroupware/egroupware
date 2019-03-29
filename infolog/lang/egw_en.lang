@@ -363,6 +363,7 @@ prefix for sub-entries (default: re:)	infolog	en	Prefix for sub-entries (default
 price	infolog	en	Price
 pricelist	infolog	en	Price list
 primary link	infolog	en	Primary link
+print this infolog	infolog	en	Print this infolog
 priority	infolog	en	Priority
 private	infolog	en	Private
 printing...	infolog	en	Printing...

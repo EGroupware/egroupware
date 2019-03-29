@@ -107,6 +107,7 @@ contact cf	infolog	de	Kontakt CF
 contact fields	infolog	de	Kontaktfelder
 contactfield	infolog	de	Kontaktfelder
 convert to a ticket	infolog	de	In ein Ticket umwandeln
+copy this infolog	infolog	de	Diesen InfoLog-Eintrag kopieren
 copy of:	infolog	de	Kopie von:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	de	Kopieren Sie ihre Änderungen in die Zwischenablage, %1laden den Eintrag neu%2 und fügen diese wieder ein.
 create new links	infolog	de	Neue Verknüpfung erzeugen
@@ -202,6 +203,7 @@ execute a further action for this entry	infolog	de	Eine weitere Aktion für dies
 existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
 export definition to use for nextmatch export	infolog	de	Exportdefinition für Listenexport
+export ical	infolog	de	Export im iCal Format
 exports in ical format.	infolog	de	Export im iCal Format
 exports infolog entries into a csv file.	infolog	de	Exportiert InfoLog Einträge in eine CSV Datei
 favorites	infolog	de	Favoriten
@@ -363,6 +365,7 @@ prefix for sub-entries (default: re:)	infolog	de	Präfix für Untereinträge (Vo
 price	infolog	de	Preis
 pricelist	infolog	de	Preisliste
 primary link	infolog	de	Primäre Verknüpfung
+print this infolog	infolog	de	Diesen InfoLog-drucken
 printing...	infolog	de	Drucke...
 priority	infolog	de	Priorität
 private	infolog	de	Privat

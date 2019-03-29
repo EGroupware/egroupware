@@ -3,6 +3,7 @@
 %1 copied - the copy can now be edited	common	de	%1 Kopie - Diese Kopie kann jetzt bearbeitet werden
 %1 directories %2 found!	admin	de	%1 Verzeichnisse %2 gefunden!
 %1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
+%1 email(s) added into %2	common	de	%1 E-Mail-Adresse(n) in %2 hinzugefügt
 %1 entries found, select one ...	common	de	%1 Einträge gefunden, einen auswählen ...
 %1 etemplates deleted	common	de	%1 eTemplate(s) gelöscht
 %1 etemplates for application '%2' dumped to '%3'	common	de	%1 eTemplate(s) für die Anwendung '%2' nach '%3' geschrieben
@@ -275,6 +276,7 @@ click here to upload the file	common	de	hier klicken um die Datei hochzuladen
 click or mouse over to show menus	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen.
 click or mouse over to show menus?	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen?
 click this image on the navbar: %1	common	de	Klicken Sie auf dieses Symbol in der Navigation: %1
+click to open colorpicker	common	de	Farbauswahl
 click to order after that criteria	common	de	anklicken um nach diesem Kriterium zu sortieren
 clickable path	common	de	anklickbarer Pfad
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	de	Geräte die kein explicites Limit setzen, verwenden die angegebene Anzahl Tage. Ein zu hohes Limit kann bei einigen Geräte zu Problemen führen.

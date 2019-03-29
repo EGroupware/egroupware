@@ -231,6 +231,7 @@ flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	Folder
 folder %1 %2 failed because of %3!	mail	en	Folder %1 %2 failed because of %3!
 folder %1 %2 failed!	mail	en	Folder %1 %2 failed!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	en	Folder %1 has been created successfully, although the subscription failed because of %2
 folder %1 is moving to folder %2	mail	en	Folder %1 is moving to folder %2
 folder management	mail	en	Folder Management
 folder management ...	mail	en	Folder Management ...

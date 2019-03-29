@@ -231,6 +231,7 @@ flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ordner
 folder %1 %2 failed because of %3!	mail	de	Ordner %1 %2 fehlgeschlagen, da %3!
 folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	de	Ordner %1 wurde erfolgreich angelegt, obwohl das Abonnieren fehlgeschlagen ist, weil: %2
 folder %1 is moving to folder %2	mail	de	Ordner %1 wird in den Ordner %2 verschoben
 folder management	mail	de	Ordner-Verwaltung
 folder management ...	mail	de	Ordner-Verwaltung ...
