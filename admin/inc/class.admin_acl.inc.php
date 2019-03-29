@@ -356,10 +356,13 @@ class admin_acl
 				}
 				else
 				{
-					$right_list = Api\Hooks::single(array('location' => 'acl_rights'), $app);
+					$right_list = Api\Hooks::single(array(
+						'location' => 'acl_rights',
+						'owner' => $location,
+					), $app);
 				}
 				$current = (int)$acl->get_specific_rights_for_account($account_id,$location,$app);
-				foreach((array)$right_list as $right => $name)
+				foreach(array_keys((array)$right_list) as $right)
 				{
 					$have_it = !!($current & $right);
 					$set_it = !!($rights & $right);
