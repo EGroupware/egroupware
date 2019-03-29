@@ -63,6 +63,7 @@ appointment settings	calendar	en	Appointment settings
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	en	As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.
 at start of the event	calendar	en	at start of the event
 automatically purge old events after	admin	en	Automatically purge old events after
+available for the first entry inside each day of week or daily table inside the selected range:	calendar	en	Available for the first entry inside each day of week or daily table inside the selected range:
 back half a month	calendar	en	Back half a month
 back one month	calendar	en	Back one month
 back one year	calendar	en	Back one year
@@ -96,12 +97,14 @@ canceled	calendar	en	Canceled
 category %1 removed because of missing rights	calendar	en	Category %1 removed because of missing rights
 category acl	common	en	Category ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	en	Category ACL only restrict adding a category to an event or changing status of a participant. It does NOT change the visibility of an event!
+category automatically added to new events	calendar	en	Category automatically added to new events
 chair	calendar	en	Chair
 change history	calendar	en	Change history
 change your status	calendar	en	Change your status
 charset of file	calendar	en	Charset of file
 check all	calendar	en	Check all
 choose a category	calendar	en	Choose a category
+choose owner of imported data	calendar	en	Choose owner of imported data
 close the window	calendar	en	Close the window
 compose a mail to all participants after the event is saved	calendar	en	Compose a mail to all participants after the event is saved.
 configuration settings	calendar	en	Configuration settings
@@ -131,6 +134,7 @@ custom_2	common	en	Free/Busy
 daily	calendar	en	Daily
 daily tables	calendar	en	Daily tables
 data exchange settings	calendar	en	Data exchange settings
+date for the day of the week	calendar	en	Date for the day of the week
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.
 day	calendar	en	Day
 day of week tables	calendar	en	Day of week tables
@@ -314,7 +318,7 @@ interval	calendar	en	Interval
 invalid email-address "%1" for user %2	calendar	en	Invalid email address "%1" for user %2 .
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	en	Invalid owner ID: %1.  Might be a bad field translation. Used %2 instead.
 invitations	calendar	en	Invitations
-invite	calendar	en	Invite
+invite	common	en	Invite
 it can not read timezones from sqlite database %1!	calendar	en	It can NOT read timezones from sqlite database %1!
 just me	calendar	en	Just me
 keep exceptions	calendar	en	Keep exceptions
@@ -361,9 +365,11 @@ monthly (by day)	calendar	en	Monthly -by day
 monthview	calendar	en	Month view
 multiple week view	calendar	en	Multiple week view
 name of current user, all other contact fields are valid too	calendar	en	Name of current user, all other contact fields are valid too
+name of the day of the week (ex: monday)	calendar	en	Name of the day of the week (ex: Monday)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Name of the week, eg: Monday, available for the first entry inside each day of week or daily table inside the selected range.
 needs action	calendar	en	Needs action
 new	calendar	en	New
+new event category	calendar	en	New event category
 new event participants	calendar	en	New event participants
 new search with the above parameters	calendar	en	New search with the above parameters
 no automatic purging	admin	en	No automatic purging
@@ -407,6 +413,7 @@ one week	calendar	en	One week
 one year	calendar	en	One year
 only group-events	calendar	en	Only group events
 only recurrences until %1 (excluding) have been checked!	calendar	en	Only recurrences until %1 (excluding) have been checked!
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	en	Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!
 only the initial date of that recurring event is checked!	calendar	en	Only the initial date of that recurring event is checked!
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	en	Only used for first viewing of calendar, afterwards last selected view is used.
 open todo's:	calendar	en	Open ToDo's:
@@ -417,6 +424,7 @@ owner too	calendar	en	Owner too
 participant names by type	calendar	en	Participant names by type
 participant table	calendar	en	Participant table
 participants	calendar	en	Participants
+participants automatically added to new events	calendar	en	Participants automatically added to new events
 participants uninvited from an event	calendar	en	Participants uninvited from an event
 participants, resources, ...	calendar	en	Participants, Resources, ...
 password for not loged in users to your freebusy information?	calendar	en	Password for not logged in users to your Free/Busy information
@@ -545,6 +553,7 @@ tag to mark positions for address labels	calendar	en	Tag to mark positions for a
 tentative	calendar	en	Tentative
 test import (show importable records <u>only</u> in browser)	calendar	en	Test import, show importable records <u>only</u> in browser.
 the apple ical apps use this color to display events from this calendar.	calendar	en	The Apple iCal Apps use this color to display events from this calendar.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	en	The document can contain placeholder like {{%1}}, to be replaced with the data.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	en	The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).
 the exceptions are deleted together with the series.	calendar	en	The exceptions are deleted together with the series.
 the following document-types are supported:	calendar	en	The following document-types are supported:
@@ -633,6 +642,7 @@ weekview	calendar	en	Weekview
 weekview with weekend	calendar	en	Weekview with weekend
 weekview without weekend	calendar	en	Weekview without weekend
 what should links to the calendar events display in other applications.	calendar	en	What should links to the calendar events display in other applications.
+when changing the month	calendar	en	When changing the month
 when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	en	When selected, birthdays and/or holidays will be displayed as events in your calendar. Please note that this option only changes the appearance inside of EGroupware, but does not change the information being sent via iCal or other calendar interfaces.
 which view to show on home page	calendar	en	Which view to show on home page
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	en	Minimum number of users for showing day and week views as consolidated. Default = 5

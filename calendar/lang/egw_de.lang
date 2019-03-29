@@ -318,7 +318,7 @@ interval	calendar	de	Intervall
 invalid email-address "%1" for user %2	calendar	de	Ungültige E-Mail-Adresse "%1" für Benutzer %2
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	de	Ungültige ID des Besitzer: %1. Evt. haben Sie eine falsche Feld Zuordnung erstellt. Es wird %2 verwendet.
 invitations	calendar	de	Einladungen
-invite	calendar	de	Einladen
+invite	common	de	Einladen
 it can not read timezones from sqlite database %1!	calendar	de	Es ist NICHT möglich die Zeitzonen der sqlite Datenbank %1 zu lesen!
 just me	calendar	de	Nur ich
 keep exceptions	calendar	de	Ausnahmen behalten
@@ -365,7 +365,7 @@ monthly (by day)	calendar	de	Monatlich (nach Wochentag)
 monthview	calendar	de	Monatsansicht
 multiple week view	calendar	de	Mehrwochenansicht
 name of current user, all other contact fields are valid too	calendar	de	Name des aktuellen Benutzers, alle anderen Kontakt Felder sind weiterhin gültig
-name of the week (ex: monday)	calendar	de	Name des Wochentags (z.B. Montag)
+name of the day of the week (ex: monday)	calendar	de	Name des Wochentags (z.B. Montag)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	de	Name der Woche (ab Montag), verfügbar für den ersten Eintrag für jeden Tag der Woche oder für die tägliche Tabelle innerhalb des ausgewählten Zeitraums.
 needs action	calendar	de	Zu erledigen
 new	calendar	de	Neu
