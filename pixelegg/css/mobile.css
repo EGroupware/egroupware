@@ -3406,13 +3406,8 @@ h6 {
  * @version $Id$
  */
 .lettersearch {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid #B4B4B4;
+  background: #f8f8f8;
   text-align: center;
   cursor: pointer;
 }
@@ -3421,13 +3416,8 @@ h6 {
   color: #ffffff;
 }
 .lettersearch_active {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid #B4B4B4;
+  background: #f8f8f8;
   text-align: center;
   cursor: pointer;
   background-color: #b3b3b3 !important;
@@ -5538,12 +5528,13 @@ table.egwGridView_outer thead tr th.optcol:hover {
 }
 table.egwGridView_outer thead tr th.optcol span.selectcols {
   height: 9px;
-  padding: 4px 10px 0px 2px;
+  padding: 4px 14px 0px 2px;
   margin-top: 4px;
   background-image: url(../images/selectcols.svg);
   background-repeat: no-repeat;
   background-size: 10px 10px;
   display: inline-block;
+  background-position: top;
 }
 table.egwGridView_outer > tbody > tr {
   /*Elements inside td*/
