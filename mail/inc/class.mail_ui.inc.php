@@ -5431,13 +5431,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				if ($_copyOrMove=='copy')
 				{
-					$msg = lang('copied %1 message(s) from %2 to %3',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($messageList)),$folder,$targetFolder);
+					$msg = lang('copied %1 message(s) from %2 to %3',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($messageList)),lang($folder),lang($targetFolder));
 					if ($_return) return $msg;
 					$response->call('egw.message',$msg);
 				}
 				else
 				{
-					$msg = lang('moved %1 message(s) from %2 to %3',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($messageList)),$folder,$targetFolder);
+					$msg = lang('moved %1 message(s) from %2 to %3',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($messageList)),lang($folder),lang($targetFolder));
 					if ($_return) return $msg;
 					$response->call('egw.refresh',$msg,'mail',$messageListForRefresh,'delete');
 				}
