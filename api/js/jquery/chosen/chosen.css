@@ -57,6 +57,7 @@
   margin-right: 26px;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding-top: 4px;
 }
 .chzn-container-single .chzn-single-with-deselect span {
   margin-right: 38px;
@@ -89,7 +90,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: url('chosen-sprite.png') no-repeat 0px 2px;
+  background: url('chosen-sprite.png') no-repeat 0px 4px;
 }
 .chzn-container-single .chzn-search {
   position: relative;
@@ -420,7 +421,7 @@
 /* @end */
 
 /**
- * Egw customizations for Chosen widget 
+ * Egw customizations for Chosen widget
  */
 .chzn-container {
 	display: inline-block;
