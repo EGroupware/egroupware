@@ -929,7 +929,7 @@ class calendar_merge extends Api\Storage\Merge
 		echo '</table></td></tr>';
 		echo '<tr><td colspan="2">Available for the first entry inside each day of week or daily table inside the selected range:</td></tr>';
 		echo '<tr><td>{{day/date}}</td><td colspan="3">'.lang('Date for the day of the week').'</td></tr>';
-		echo '<tr><td>{{day/name}}</td><td colspan="3">'.lang('Name of the week (ex: Monday)').'</td></tr>';
+		echo '<tr><td>{{day/name}}</td><td colspan="3">'.lang('Name of the day of the week (ex: Monday)').'</td></tr>';
 		echo '<tr><td>{{day/birthdays}}</td><td colspan="3">'.lang('Birthdays').'</td></tr>';
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
