@@ -3340,7 +3340,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if(($singleBodyPart['mimeType'] == 'text/html' || $singleBodyPart['mimeType'] == 'text/plain') &&
 				strtoupper($singleBodyPart['charSet']) != 'UTF-8')
 			{
-				$singleBodyPart['body'] = preg_replace($sar,$rar,$singleBodyPart['body']);
+				// check if client set a wrong charset and content is utf-8 --> use utf-8
+				if (preg_match('//u', $singleBodyPart['body']))
+				{
+					$singleBodyPart['charSet'] = 'UTF-8';
+				}
+				else
+				{
+					$singleBodyPart['body'] = preg_replace($sar,$rar,$singleBodyPart['body']);
+				}
 			}
 			//error_log(__METHOD__.__LINE__.'reports:'.$singleBodyPart['charSet']);
 			if ($singleBodyPart['charSet']=='us-ascii')
