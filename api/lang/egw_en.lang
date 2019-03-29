@@ -281,6 +281,7 @@ click here to upload the file	common	en	Upload the file
 click or mouse over to show menus	common	en	Click or mouse over to show menus.
 click or mouse over to show menus?	common	en	Click or mouse over to show menus.
 click this image on the navbar: %1	common	en	Click this image on the navbar: %1
+click to open colorpicker	common	en	Click to open colorpicker
 click to order after that criteria	common	en	Order after criteria
 clickable path	common	en	Clickable path
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	en	Clients not explicitly stating a limit get limited to these many days. A too high limit may cause problems with some clients.
@@ -432,6 +433,7 @@ done	common	en	Done
 dos international	common	en	DOS International
 download	common	en	Download
 download link	common	en	Download link
+drag markers to pick a color	common	en	Drag markers to pick a color
 drop a table - this can not be undone	common	en	Drop a table - this can NOT be undone
 drop table	common	en	Drop table
 dump4setup	common	en	Dump4Setup
@@ -484,7 +486,7 @@ enter the new version number here (has to be > old_version)	common	en	Enter new 
 enter your file name	common	en	Enter your file name
 entry has been deleted sucessfully	common	en	Entry has been deleted successfully.
 entry not found!	common	en	Entry not found!
-entry saved	common	en	Entry saved.
+entry saved	common	en	Entry saved
 entry updated sucessfully	common	en	Entry updated successfully.
 epl only	common	en	EPL only
 equatorial guinea	common	en	EQUATORIAL GUINEA

@@ -14,8 +14,11 @@
 			</columns>
 			<rows>
 				<row>
+					<hbox>
 					<description id="appname"/>
-					<description value="-  type"/>
+					<description value=" - "/>
+					<description value="type"/>
+					</hbox>
 					<menulist>
 						<menupopup id="types" no_lang="1" onchange="1"/>
 					</menulist>
