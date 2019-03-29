@@ -3416,8 +3416,11 @@ h6 {
  * @package pixelegg
  * @version $Id$
  */
+table.nextmatch_lettersearch {
+  margin-bottom: 6px;
+}
 .lettersearch {
-  border: 1px solid #B4B4B4;
+  border: 1px solid #E6E6E6;
   background: #f8f8f8;
   text-align: center;
   cursor: pointer;
@@ -3427,7 +3430,7 @@ h6 {
   color: #ffffff;
 }
 .lettersearch_active {
-  border: 1px solid #B4B4B4;
+  border: 1px solid #E6E6E6;
   background: #f8f8f8;
   text-align: center;
   cursor: pointer;
@@ -3436,6 +3439,7 @@ h6 {
 }
 td.lettersearch {
   background-image: none;
+  width: 3%;
 }
 /*.nextmatch_header table {
         border: none !important;

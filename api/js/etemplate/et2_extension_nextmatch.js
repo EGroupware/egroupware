@@ -2591,6 +2591,7 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 		if(this.nextmatch.options.settings.lettersearch || current_letter)
 		{
 			this.lettersearch = jQuery(document.createElement("table"))
+				.addClass('nextmatch_lettersearch')
 				.css("width", "100%")
 				.appendTo(this.div);
 			var tbody = jQuery(document.createElement("tbody")).appendTo(this.lettersearch);
