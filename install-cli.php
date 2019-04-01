@@ -231,9 +231,9 @@ $failed = array();
 $succieded = 0;
 foreach(scandir(__DIR__) as $dir)
 {
-	if ($dir !== '..' && file_exists(__DIR__.'/'.$dir.'/.git') &&
+	if ($dir !== '..' && file_exists(__DIR__.'/'.$dir.'/.git'))
 		// these apps / dirs are managed by composer, no need to run manual updates
-		!in_array($dir, ['vendor', 'activesync', 'collabora', 'projectmanager', 'tracker']))
+		//!in_array($dir, ['vendor', 'activesync', 'collabora', 'projectmanager', 'tracker']))
 	{
 		$cmd = "cd $dir ; $git stash -q ; ";
 		// switch message about detached head off for release-channel/tags
