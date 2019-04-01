@@ -459,8 +459,7 @@ Hide subsequent headers in week view with non-consolidated owners
 	border-bottom: 1px solid silver;
 	white-space: nowrap;
 	overflow: hidden;
-	color: white;
-	background: #2D6393;
+	background-color: white;
 }
 .hideDayColHeader .calendar_calDayColHeader > div[data-date] {
 	position:fixed;
@@ -468,8 +467,8 @@ Hide subsequent headers in week view with non-consolidated owners
 	z-index: 100;
 }
 .blue_title {
-    color: white;
-    background: #2D6393;
+    color: white !important;
+    background: #2D6393 !important;
 }
 
 /* Seperate long and short day names */
