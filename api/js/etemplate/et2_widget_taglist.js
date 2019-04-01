@@ -1020,7 +1020,7 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 	 */
 	set_value: function(value)
 	{
-		if(!value) return this._super.call(this, value);
+		if(!value) return this._super.call(this, value || []);
 
 		var values = jQuery.isArray(value) ? jQuery.extend([], value) : [value];
 		for(var i=0; i < values.length; ++i)
@@ -1079,7 +1079,7 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 							// object then calls set_value of the widget taglist, and at the end
 							// re-set the maxSelection option again.
 							if (this.options.maxSelection) this.taglist.setMaxSelection(null);
-							this.taglist.setValue([{id:v,label:label}]);
+							this.taglist.setValue([{id:id, label:label || '#'+id}]);
 							this.set_value(values);
 							this.taglist.setMaxSelection(this.options.maxSelection);
 						}
