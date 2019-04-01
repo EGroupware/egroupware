@@ -200,24 +200,9 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		this.innerDiv = jQuery(document.createElement("div"))
 			.appendTo(this.div);
 
-		// Find the parent container, either a tab or the main container
-		var parent = this;
-		do {
-			parent = parent._parent;
-		} while (parent != this.getRoot() && parent._type != 'tabbox');
-		if(parent === this.getRoot())
-		{
-			parent = this.getInstanceManager().DOMContainer;
-		}
-		else
-		{
-			// Tab defers loading its tabs until later, but we need a parent now
-			parent = this._parent.getDOMNode() || this.getInstanceManager().DOMContainer;
-		}
-
 		// Create the dynheight component which dynamically scales the inner
 		// container.
-		this.dynheight = new et2_dynheight(parent, this.innerDiv, 100);
+		this.dynheight = this._getDynheight(this);
 
 		// Create the outer grid container
 		this.dataview = new et2_dataview(this.innerDiv, this.egw());
@@ -293,6 +278,12 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
+
+		if(!this.dynheight)
+		{
+		debugger;
+			this.dynheight = this._getDynheight(this);
+		}
 
 		// Register handler for dropped files, if possible
 		if(this.options.settings.row_id)
@@ -717,6 +708,43 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		{
 			return this.options.onselect.call(this, this.getSelection().ids, this);
 		}
+	},
+
+	/**
+	 * Create the dynamic height so nm fills all available space
+	 *
+	 * @returns {undefined}
+	 */
+	_getDynheight: function() {
+		// Find the parent container, either a tab or the main container
+		var parent = this;
+		do {
+			parent = parent._parent;
+		} while (parent != this.getRoot() && parent._type != 'tabbox');
+
+		// No tabs, take the whole thing
+		if(parent === this.getRoot())
+		{
+			parent = this.getInstanceManager().DOMContainer;
+			return new et2_dynheight(parent, this.innerDiv, 100);
+		}
+
+		// Find the tab index
+		for(var i = 0; i < parent.tabData.length; i++)
+		{
+			// Find the tab
+			if(parent.tabData[i].contentDiv.has(this.div).length)
+			{
+				return new et2_dynheight(parent.tabData[i].contentDiv, this.innerDiv, 100);
+			}
+		}
+		// Deferred loading of tabs
+		if(parent.isInTree())
+		{
+			return new et2_dynheight(parent.tabContainer, this.innerDiv, 100);
+		}
+
+		return false;
 	},
 
 	/**
@@ -1773,6 +1801,10 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		jQuery.when.apply(null, promise).done(
 			jQuery.proxy(function() {
 				parse.call(this, template);
+				if(!this.dynheight)
+				{
+					this.dynheight = this._getDynheight(this);
+				}
 				this.dynheight.initialized = false;
 				this.resize();
 			}, this)
