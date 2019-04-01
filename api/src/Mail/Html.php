@@ -404,6 +404,7 @@ class Html
 		$_html = str_replace('#greater#than#','>',$_html);
 		//error_log(__METHOD__.__LINE__.' Charset:'.$displayCharset.' -> '.$_html);
 		$_html = Api\Translation::convert($_html, $displayCharset, 'utf-8');
+		$_html = html_entity_decode($_html, ENT_COMPAT, 'utf-8');
 		//error_log(__METHOD__.__LINE__.' Charset:'.$displayCharset.' After html_entity_decode: -> '.$_html);
 		//self::replaceEmailAdresses($_html);
 		$pos = strpos($_html, 'blockquote');
