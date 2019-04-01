@@ -1058,15 +1058,20 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 				{
 					values[i] = {
 						id: v,
-						label: label
+						label: label || '#'+v
 					};
 				}
-				else if (!this.deferred_loading)	// call set_value again, after result has arrived from server
+				else
 				{
+					delete this.options.value;
 					this.deferred_loading++;
-					this.egw().link_title('api-accounts', v, function(label) {
+					this.egw().link_title('api-accounts', v, jQuery.proxy(function(idx, id, label) {
 						this.deferred_loading--;
-						if (label)
+						values[idx] = {
+							id: id,
+							label: label || '#'+id
+						};
+						if (!this.deferred_loading)
 						{
 							// Seems the magic suggest can not deal with broken taglist value
 							// like selected value with no label set and maxSelection set. This
@@ -1078,7 +1083,7 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 							this.set_value(values);
 							this.taglist.setMaxSelection(this.options.maxSelection);
 						}
-					}, this);
+					}, this, i, v));
 				}
 			}
 		}
