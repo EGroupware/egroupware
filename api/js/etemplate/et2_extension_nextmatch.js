@@ -1798,17 +1798,20 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		template.loadingFinished(promise);
 
 		// Wait until template (& children) are done
-		jQuery.when.apply(null, promise).done(
-			jQuery.proxy(function() {
-				parse.call(this, template);
-				if(!this.dynheight)
-				{
-					this.dynheight = this._getDynheight(this);
-				}
-				this.dynheight.initialized = false;
-				this.resize();
-			}, this)
-		);
+		if(!this.options.disabled)
+		{
+			jQuery.when.apply(null, promise).done(
+				jQuery.proxy(function() {
+					parse.call(this, template);
+					if(!this.dynheight)
+					{
+						this.dynheight = this._getDynheight(this);
+					}
+					this.dynheight.initialized = false;
+					this.resize();
+				}, this)
+			);
+		}
 	},
 
 	// Some accessors to match conventions
