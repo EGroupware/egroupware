@@ -1699,6 +1699,11 @@ class Mail
 							$this->fetchPartContents($uid, $_structure, false,true);
 							$headerObject['BODYPREVIEW']=trim(str_replace(array("\r\n","\r","\n"),' ',mb_substr(Mail\Html::convertHTMLToText($_structure->getContents()),0,((int)$_fetchPreviews<300?300:$_fetchPreviews))));
 							$charSet = $part->getCharset();
+							// check if client set a wrong charset and content is utf-8 --> use utf-8
+							if (strtolower($charSet) !='utf-8' && preg_match('//u', $headerObject['BODYPREVIEW']))
+							{
+								$charSet['charSet'] = 'UTF-8';
+							}
 							// add line breaks to $bodyParts
 							//error_log(__METHOD__.' ('.__LINE__.') '.' Charset:'.$bodyParts[$i]['charSet'].'->'.$bodyParts[$i]['body']);
 							$headerObject['BODYPREVIEW']  = Translation::convert_jsonsafe($headerObject['BODYPREVIEW'], $charSet);
