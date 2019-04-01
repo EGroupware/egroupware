@@ -200,10 +200,24 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		this.innerDiv = jQuery(document.createElement("div"))
 			.appendTo(this.div);
 
+		// Find the parent container, either a tab or the main container
+		var parent = this;
+		do {
+			parent = parent._parent;
+		} while (parent != this.getRoot() && parent._type != 'tabbox');
+		if(parent === this.getRoot())
+		{
+			parent = this.getInstanceManager().DOMContainer;
+		}
+		else
+		{
+			// Tab defers loading its tabs until later, but we need a parent now
+			parent = this._parent.getDOMNode() || this.getInstanceManager().DOMContainer;
+		}
+
 		// Create the dynheight component which dynamically scales the inner
 		// container.
-		this.dynheight = new et2_dynheight(this.getInstanceManager().DOMContainer,
-				this.innerDiv, 100);
+		this.dynheight = new et2_dynheight(parent, this.innerDiv, 100);
 
 		// Create the outer grid container
 		this.dataview = new et2_dataview(this.innerDiv, this.egw());
