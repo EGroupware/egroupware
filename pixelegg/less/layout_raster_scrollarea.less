@@ -37,6 +37,7 @@
     width: 100%;
     height: 12px;
     z-index: 2;
+	display: none !important;
 }
 
 .egw_fw_ui_scrollarea_button_up.egw_fw_ui_scrollarea_button_hover,
@@ -48,6 +49,17 @@
 .egw_fw_ui_scrollarea_button_disabled
 {
     display: none !important;
+}
+
+#egw_fw_sidemenu.egw_fw_ui_scrollarea_enabled {
+	top: 7px !important;
+	#egw_fw_toggler {top:1px;}
+	.egw_fw_ui_sidemenu_entry_header_active {
+		position: fixed;
+		top: 50px;
+		background: white;
+		z-index: 1;
+	}
 }
 
 .egw_fw_ui_scrollarea_button_up, .egw_fw_ui_scrollarea_button_down

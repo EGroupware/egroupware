@@ -840,8 +840,6 @@ function egw_fw_ui_scrollarea(_contDiv)
 	this.buttonsVisible = true;
 	this.mouseOver = false;
 	this.scrollTime = 0.0;
-	this.btnUpEnabled = true;
-	this.btnDownEnabled = true;
 
 	//Wrap a new "scroll" div around the content of the content div
 	this.scrollDiv = document.createElement("div");
@@ -927,38 +925,25 @@ function egw_fw_ui_scrollarea(_contDiv)
 
 egw_fw_ui_scrollarea.prototype.setScrollPos = function(_pos)
 {
+	var $activeHeader =  jQuery('.egw_fw_ui_sidemenu_entry_header_active');
 	if (this.buttonsVisible)
 	{
 		if (_pos <= 0)
 		{
-			if (this.btnUpEnabled)
-				jQuery(this.btnUp).addClass("egw_fw_ui_scrollarea_button_disabled");
-			if (!this.btnDownEnabled)
-				jQuery(this.btnDown).removeClass("egw_fw_ui_scrollarea_button_disabled");
-			this.btnDownEnabled = true;
-			this.btnUpEnabled = false;
-
+			if (window.framework) jQuery(framework.sidemenuDiv).removeClass("egw_fw_ui_scrollarea_enabled");
 			_pos = 0;
 		}
 		else if (_pos >= this.maxScrollPos)
 		{
-			if (this.btnDownEnabled)
-				jQuery(this.btnDown).addClass("egw_fw_ui_scrollarea_button_disabled");
-			if (!this.btnUpEnabled)
-				jQuery(this.btnUp).removeClass("egw_fw_ui_scrollarea_button_disabled");
-			this.btnDownEnabled = false;
-			this.btnUpEnabled = true;
-
 			_pos = this.maxScrollPos;
 		}
 		else
 		{
-			if (!this.btnUpEnabled)
-				jQuery(this.btnUp).removeClass("egw_fw_ui_scrollarea_button_disabled");
-			if (!this.btnDownEnabled)
-				jQuery(this.btnDown).removeClass("egw_fw_ui_scrollarea_button_disabled");
-			this.btnUpEnabled = true;
-			this.btnDownEnabled = true;
+			if (egw.preference('toggleSidebar',framework.activeApp.appName) != 'on')
+			{
+				$activeHeader.width($activeHeader.width());
+				if (window.framework) jQuery(framework.sidemenuDiv).addClass("egw_fw_ui_scrollarea_enabled");
+			}
 		}
 
 		this.scrollPos = _pos;
