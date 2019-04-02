@@ -336,7 +336,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			var toolbar_diff = et2_htmlarea.TOOLBAR_LIST.filter(function(i){return !(rte_toolbar.indexOf(i) > -1);});
 			settings.toolbar = et2_htmlarea.TOOLBAR_ADVANCED;
 			toolbar_diff.forEach(function(a){
-				let r = new RegExp(a);
+				var r = new RegExp(a);
 				settings.toolbar = settings.toolbar.replace(r, '');
 			});
 		}
