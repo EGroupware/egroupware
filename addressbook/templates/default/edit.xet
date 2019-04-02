@@ -409,7 +409,7 @@
 				<row class="dialogOperators">
 					<description value="Addressbook"/>
 					<menulist class="et2_fullWidth">
-						<menupopup class="owner" statustext="Addressbook the contact should be saved to" id="owner" no_lang="1"/>
+						<menupopup class="owner" statustext="Addressbook the contact should be saved to" id="owner" no_lang="1" onchange="widget.getInstanceManager().submit(null,false,true); return false;" />
 					</menulist>
 					<description/>
 					<description value="own sorting"/>
