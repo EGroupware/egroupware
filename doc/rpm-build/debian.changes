@@ -1,3 +1,23 @@
+egroupware-epl (17.1.20190402) hardy; urgency=low
+
+  * Collabora: egroupware-collabora-key package allowing to install supported Collabora container on-site
+  * Api: When printing lists ask for print orientation and size columns to fit
+  * Mail: fix S/MIME fails with addresses not written in lowercase
+  * Mail: fix opening a forwarded mail as attachment into an existing compose dialog fails
+  * Mail: check non-utf8 body, if it might be utf-8, to display readable
+  * All apps: fix custom-field display for date-time and custom data_format like YmdHi
+  * Api/Filemanager: create in non EPL missing /templates and app-sub-directores
+  * Filemanager/WebDAV: handle url-special chars like %, # and ? correctly
+  * Filemanager/EPL/GoodSync: also ignore temp. files (no _gsdata_ used)
+  * LDAP/AD/UCS: fixed sending mails to groups used as distribution lists
+  * ActiveDirectory: fix "not a valid GUID" error, when getting an avatar of a group
+  * Addressbook: fix photos not imported via Import / Export
+  * Addressbook: move photo change flag from import into vcal so it's always set if needed
+  * Setup: fix failed/partial restores for charsets not utf-8
+  * Timesheet: fix SQL error searching, if there are custom-fields
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 02 Apr 2019 11:18:30 +0200
+
 egroupware-epl (17.1.20190222) hardy; urgency=low
 
   * All apps: improved speed when searching with (many) custom-fields
