@@ -87,6 +87,13 @@ input, select, textarea {
 	color: black;
 }
 
+/**
+ * Hide buttons and dialog footers
+ */
+.dialogFooterToolbar, .et2_button {
+	display: none;
+}
+
 } /* @media print */
 
 @media screen {
