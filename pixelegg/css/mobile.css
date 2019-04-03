@@ -4382,7 +4382,7 @@ td.message span.message {
   margin: 0 0;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header:hover {
-  background-color: #d9d9d9;
+  background-color: rgba(153, 204, 255, 0.4);
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header:active {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -6132,6 +6132,7 @@ span.egw_tutorial_title {
   background-repeat: no-repeat;
   background-position: -2px;
   border-radius: 5px;
+  display: block !important;
 }
 [id^="egw_tutorial_"][id$="_play"].egw_tutorial_playBtn,
 #home-tutorial_play.egw_tutorial_playBtn {
