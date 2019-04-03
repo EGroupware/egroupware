@@ -202,7 +202,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 		// Create the dynheight component which dynamically scales the inner
 		// container.
-		this.dynheight = this._getDynheight(this);
+		this.dynheight = this._getDynheight();
 
 		// Create the outer grid container
 		this.dataview = new et2_dataview(this.innerDiv, this.egw());
@@ -281,8 +281,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 		if(!this.dynheight)
 		{
-		debugger;
-			this.dynheight = this._getDynheight(this);
+			this.dynheight = this._getDynheight();
 		}
 
 		// Register handler for dropped files, if possible
@@ -717,31 +716,16 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 	 */
 	_getDynheight: function() {
 		// Find the parent container, either a tab or the main container
-		var parent = this;
-		do {
-			parent = parent._parent;
-		} while (parent != this.getRoot() && parent._type != 'tabbox');
+		var tab = this.get_tab_info();
 
-		// No tabs, take the whole thing
-		if(parent === this.getRoot())
+		if(!tab)
 		{
-			parent = this.getInstanceManager().DOMContainer;
-			return new et2_dynheight(parent, this.innerDiv, 100);
+			return new et2_dynheight(this.getInstanceManager().DOMContainer, this.innerDiv, 100);
 		}
 
-		// Find the tab index
-		for(var i = 0; i < parent.tabData.length; i++)
+		else if (tab && tab.contentDiv)
 		{
-			// Find the tab
-			if(parent.tabData[i].contentDiv.has(this.div).length)
-			{
-				return new et2_dynheight(parent.tabData[i].contentDiv, this.innerDiv, 100);
-			}
-		}
-		// Deferred loading of tabs
-		if(parent.isInTree())
-		{
-			return new et2_dynheight(parent.tabContainer, this.innerDiv, 100);
+			return new et2_dynheight(tab.contentDiv, this.innerDiv, 100);
 		}
 
 		return false;
@@ -1808,7 +1792,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				parse.call(this, template);
 				if(!this.dynheight)
 				{
-					this.dynheight = this._getDynheight(this);
+					this.dynheight = this._getDynheight();
 				}
 				this.dynheight.initialized = false;
 				this.resize();
@@ -2324,11 +2308,14 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 		var base_url = this.getInstanceManager().template_base_url;
 		if (base_url.substr(base_url.length - 1) == '/') base_url = base_url.slice (0, -1);	// otherwise we generate a url //api/templates, which is wrong
+		var tab = this.get_tab_info();
+		// Get title for print dialog from settings or tab, if available
+		var title = this.options.settings.label ? this.options.settings.label : (tab ? tab.label : '');
 		var dialog = et2_createWidget("dialog",{
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
 			callback: callback,	// return false to prevent dialog closing
 			buttons: et2_dialog.BUTTONS_OK_CANCEL,
-			title: this.egw().lang('Print'),
+			title: this.egw().lang('Print') + ' ' + this.egw().lang(title),
 			template:this.egw().link(base_url+'/api/templates/default/nm_print_dialog.xet'),
 			value: {
 				content: {
