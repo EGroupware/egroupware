@@ -249,6 +249,42 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 	},
 
 	/**
+	 * Get data for the tab this widget is on.
+	 *
+	 * Will return null if the widget is not on a tab or tab data containing
+	 * - id
+	 * - label
+	 * - widget (top level widget)
+	 * - contentDiv (jQuery object for the div the tab content is in)
+	 *
+	 * @returns {Object|null} Data for tab the widget is on
+	 */
+	get_tab_info: function() {
+		var parent = this;
+		do {
+			parent = parent._parent;
+		} while (parent !== this.getRoot() && parent._type !== 'tabbox');
+
+		// No tab
+		if(parent === this.getRoot())
+		{
+			return null;
+		}
+
+		// Find the tab index
+		for(var i = 0; i < parent.tabData.length; i++)
+		{
+			// Find the tab
+			if(parent.tabData[i].contentDiv.has(this.div).length)
+			{
+				return parent.tabData[i];
+			}
+		}
+		// On a tab, but we couldn't find it?  This gives best result so far.
+		return this._parent.get_tab_info();
+	},
+
+	/**
 	 * Set the parent DOM node of this element.  Takes a wider variety of types
 	 * than setParentDOMNode(), and matches the set_<attribute> naming convention.
 	 *
