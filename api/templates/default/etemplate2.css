@@ -3026,7 +3026,15 @@ a.chzn-single.et2_country-select span.img {
     color: transparent;
     top: -4px;
 }
-
+.et2_nextmatch .chzn-container-single a.chzn-single.et2_country-select span.img {
+	padding-top: 0;
+}
+.et2_nextmatch .chzn-container-single a.chzn-single.et2_country-select span{
+	padding-top: 4px;
+}
+.chzn-container-single .chzn-single.et2_country-select span {
+	padding-top: 0;
+}
 .et2_avatar {
 
 }
