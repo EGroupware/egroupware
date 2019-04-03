@@ -2867,7 +2867,7 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
   color: #373f3f;
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected {
-  background-color: #ffc200 !important;
+  background-color: rgba(153, 204, 255, 0.4) !important;
   background-image: none !important;
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_sep {
