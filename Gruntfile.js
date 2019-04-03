@@ -313,6 +313,7 @@ module.exports = function (grunt) {
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
+						"api/templates/default/def_tutorials.css",
 						"pixelegg/css/pixelegg.css",
 						"api/templates/default/print.css",
 						"pixelegg/print.css"
@@ -367,6 +368,7 @@ module.exports = function (grunt) {
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
+						"api/templates/default/def_tutorials.css",
 						"pixelegg/css/monochrome.css",
 						"api/templates/default/print.css",
 						"pixelegg/print.css"
