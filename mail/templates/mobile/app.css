@@ -1062,12 +1062,12 @@ body {
 }
 .egw_fw_ui_category_content .selectedTreeRow,
 .egw_fw_ui_category_content .selectedTreeRow_lor {
-  background-color: #FFDD73;
+  background-color: rgba(102, 153, 204, 0.7);
   color: #1E1E1E;
   text-decoration: none;
 }
 .egw_fw_ui_category_content .standartTreeRow_lor {
-  background-color: rgba(103, 159, 210, 0.2);
+  background-color: rgba(153, 204, 255, 0.4);
   color: #1E1E1E;
   text-decoration: none;
 }
@@ -1117,7 +1117,7 @@ body {
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-to_tracker:hover,
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-disposition:hover,
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-to_calendar:hover {
-  background-color: #FFDD73;
+  background-color: rgba(153, 204, 255, 0.4);
 }
 #mail-compose table.et2_grid {
   display: inline-block;
@@ -1501,13 +1501,13 @@ div#displayToolbar-menulist img {
 #mail-folder_management .selectedTreeRow,
 #mail-subscribe .selectedTreeRow_lor,
 #mail-folder_management .selectedTreeRow_lor {
-  background-color: #FFDD73;
+  background-color: rgba(102, 153, 204, 0.7);
   color: #1E1E1E;
   text-decoration: none;
 }
 #mail-subscribe .standartTreeRow_lor,
 #mail-folder_management .standartTreeRow_lor {
-  background-color: rgba(103, 159, 210, 0.2);
+  background-color: rgba(153, 204, 255, 0.4);
   color: #1E1E1E;
   text-decoration: none;
 }

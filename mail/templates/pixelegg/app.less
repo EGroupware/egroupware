@@ -158,9 +158,9 @@ body {
 	}
 
 	// color - selected tree item
-	.selectedTreeRow, .selectedTreeRow_lor {background-color: @egw_color_1_e; color: @gray_90;text-decoration: none;}
+	.selectedTreeRow, .selectedTreeRow_lor {background-color: @color_selected_row; color: @gray_90;text-decoration: none;}
 
-	.standartTreeRow_lor {background-color: rgba(103, 159, 210, 0.2); color: @gray_90;text-decoration: none;}
+	.standartTreeRow_lor {background-color: @color_hover_row; color: @gray_90;text-decoration: none;}
 } // Ende Sidebox
 
 /* ##################################################################################
@@ -223,7 +223,7 @@ body {
 		button#composeToolbar-to_tracker:hover,
 		button#composeToolbar-disposition:hover,
 		button#composeToolbar-to_calendar:hover {
-			background-color: @egw_color_1_e;;
+			background-color: @color_hover_row;;
 		}
 	} // Toolbar Ende
 
@@ -591,9 +591,9 @@ div#displayToolbar-menulist {
 		}
 	}
 	// color - selected tree item
-	.selectedTreeRow,.selectedTreeRow_lor {background-color: @egw_color_1_e; color: @gray_90;text-decoration: none;}
+	.selectedTreeRow,.selectedTreeRow_lor {background-color: @color_selected_row; color: @gray_90;text-decoration: none;}
 	// color - hover over standard tree item
-	.standartTreeRow_lor {background-color: rgba(103, 159, 210, 0.2); color: @gray_90;text-decoration: none;}
+	.standartTreeRow_lor {background-color: @color_hover_row; color: @gray_90;text-decoration: none;}
 } // #mail-subscribe
 
 .mail_subscription_header, .mail_folder_management_header

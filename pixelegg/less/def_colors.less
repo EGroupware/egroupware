@@ -17,6 +17,9 @@
  // Basic colour
 // CI EGW
 
+@egw_color_select: #6699CC;
+@egw_color_hover: #99CCFF;
+
 // Orange
 @egw_color_1 : rgb(255, 194, 0); // #ffc200
 
@@ -149,10 +152,10 @@
 @color_active_row : fade(@egw_color_1_a, 1%);
 
 // not in use
-@color_selected_row : @egw_color_1_e;
+@color_selected_row : fade(@egw_color_select,70%);
 
 // Mouse over
-@color_hover_row : fade(@egw_color_2_e, 20%);
+@color_hover_row : fade(@egw_color_hover, 40%);
 
 
 /* Dialog Button panel Background Color*/

@@ -201,8 +201,7 @@ table.egwGridView_grid{
 		tr.th:hover {background: transparent;}
         tr.selected{
             background-image: none;
-            /*background-color: @egw_color_1_e !important;*/
-            background-color: fade(@color_active_row, 50%);
+            background-color: @color_selected_row;
         }
 
         // is active
@@ -289,7 +288,7 @@ table.egwGridView_grid{
 
             span.high {color: red;}
 
-            span.urgent {color: red; background-color: @egw_color_1_e;}
+            span.urgent {color: red; background-color: @color_hover_row;}
 
             span.low {color: @gray_80;}
 

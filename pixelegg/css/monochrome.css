@@ -359,7 +359,7 @@
     cursor: pointer;
   }
   .et2_link_list tr:hover {
-    background-color: rgba(103, 159, 210, 0.2);
+    background-color: rgba(153, 204, 255, 0.4);
   }
   .et2_link_list tr:active {
     background-color: rgba(255, 194, 0, 0.01);
@@ -1054,13 +1054,13 @@
  * @version $Id$
  */
 #uical_select_resource {
-  background-color: #FFDD73;
+  background-color: rgba(153, 204, 255, 0.4);
 }
 .uiaccountselection .primary_group {
-  background-color: #FFDD73;
+  background-color: rgba(153, 204, 255, 0.4);
 }
 option:checked {
-  background-color: #FFDD73;
+  background-color: rgba(153, 204, 255, 0.4);
 }
 .ui-tooltip {
   padding: 8px;
@@ -3056,7 +3056,7 @@ tr.dialogHeader4 .et2_label {
 .et2_tabflag:hover,
 .etemplate_tab > div:hover,
 .etemplate_tab_active > div:hover {
-  background-color: #f0f0f0;
+  background-color: rgba(153, 204, 255, 0.4);
   border: none;
   border-bottom: 3px solid #696969;
   border-top-left-radius: 5px;
@@ -4213,7 +4213,7 @@ td.message span.message {
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
   /*.background_color_20_gray ;*/
-  background-color: #FFDD73;
+  background-color: rgba(153, 204, 255, 0.4);
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
   /*font-size: 100%;*/
@@ -4265,7 +4265,7 @@ td.message span.message {
   /*aktive Objekte*/
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active:hover {
-  background-color: #bfbfbf;
+  background-color: #ffffff;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active img.egw_fw_ui_tab_icon {
   display: inline-block;
@@ -4305,7 +4305,7 @@ td.message span.message {
   position: absolute;
 }
 #egw_fw_main .egw_fw_ui_tab_header_hover {
-  background-color: #FFDD73;
+  background-color: rgba(153, 204, 255, 0.4);
 }
 #egw_fw_main .egw_fw_ui_tab_content {
   width: 100%;
@@ -4745,7 +4745,7 @@ td.message span.message {
 }
 .egw_fw_ui_sidemenu_listitem:hover {
   color: #000000;
-  background-color: #FFDD73;
+  background-color: rgba(153, 204, 255, 0.4);
 }
 .egw_fw_ui_sidemenu_listitem img.egw_fw_ui_sidemenu_listitem_icon {
   /*display: none;*/
@@ -5587,15 +5587,14 @@ table.egwGridView_grid tbody {
   /*multiple choise*/
 }
 table.egwGridView_grid tbody tr:hover {
-  background: rgba(103, 159, 210, 0.2);
+  background: rgba(153, 204, 255, 0.4);
 }
 table.egwGridView_grid tbody tr.th:hover {
   background: transparent;
 }
 table.egwGridView_grid tbody tr.selected {
   background-image: none;
-  /*background-color: @egw_color_1_e !important;*/
-  background-color: rgba(255, 194, 0, 0.5);
+  background-color: rgba(102, 153, 204, 0.7);
 }
 table.egwGridView_grid tbody td {
   border-bottom: 1px solid #E6E6E6;
@@ -5653,19 +5652,19 @@ table.egwGridView_grid > tr > td span.high {
 }
 table.egwGridView_grid > tr > td span.urgent {
   color: red;
-  background-color: #FFDD73;
+  background-color: rgba(153, 204, 255, 0.4);
 }
 table.egwGridView_grid > tr > td span.low {
   color: #373737;
 }
 table.egwGridView_grid tr.subentry {
-  background: rgba(255, 221, 115, 0.2);
+  background: rgba(102, 153, 204, 0.2);
 }
 table.egwGridView_grid tr.subentry:hover {
-  background: #FFDD73 !important;
+  background: rgba(102, 153, 204, 0.7) !important;
 }
 table.egwGridView_grid tr.drop-hover {
-  background: #FFDD73 !important;
+  background: rgba(102, 153, 204, 0.7) !important;
 }
 table.egwGridView_grid span.arrow {
   -moz-user-select: none;

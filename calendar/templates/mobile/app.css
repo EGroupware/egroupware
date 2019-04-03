@@ -2634,7 +2634,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-color: #FFDD73;
 }
 #calendar-sidebox_date .ui-datepicker-calendar .ui-state-hover {
-  background-color: rgba(103, 159, 210, 0.2);
+  background-color: rgba(153, 204, 255, 0.4);
 }
 #calendar-sidebox_date .ui-datepicker-header .ui-datepicker-next.ui-state-hover {
   right: 2px;
