@@ -16,6 +16,10 @@
   /* It doesn't really work smaller than this */
   border: solid 1px #e6e6e6;
 }
+.ms-ctn .ms-res-item-active,
+.ms-res-ctn .ms-res-item-active {
+  background-color: rgba(153, 204, 255, 0.4);
+}
 .ms-ctn .ms-trigger {
   border-left: none;
 }

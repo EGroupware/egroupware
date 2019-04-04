@@ -1570,6 +1570,10 @@ div#ui-datepicker-div {
   /* It doesn't really work smaller than this */
   border: solid 1px #e6e6e6;
 }
+.ms-ctn .ms-res-item-active,
+.ms-res-ctn .ms-res-item-active {
+  background-color: rgba(153, 204, 255, 0.4);
+}
 .ms-ctn .ms-trigger {
   border-left: none;
 }
@@ -2552,6 +2556,13 @@ button[id="add"] {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+}
+.chzn-container .chzn-results li {
+  color: #1E1E1E;
+}
+.chzn-container .chzn-results li.highlighted {
+  background: rgba(153, 204, 255, 0.4);
+  color: #000000;
 }
 /* @end */
 /* @group Multi Chosen */
