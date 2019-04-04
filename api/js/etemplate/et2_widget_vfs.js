@@ -295,6 +295,16 @@ var et2_vfsPath = (function(){ "use strict"; return et2_vfsName.extend(
 			var delta = e.originalEvent.deltaY > 0 ? 30 : -30;
 			this.scrollLeft = this.scrollLeft - delta;
 		});
+		this.span.on('mouseover', function (e){
+			if (this.scrollWidth > this.clientWidth)
+			{
+				jQuery(this).addClass('scrollable');
+			}
+			else
+			{
+				jQuery(this).removeClass('scrollable');
+			}
+		});
 		this.input.on('focus', function() {
 				this.input.val(this.options.value);
 				this.span.hide();
