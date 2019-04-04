@@ -41,7 +41,7 @@ spl_autoload_register(function($class)
 	$parts = explode('\\', $class);
 	if (array_shift($parts) != 'EGroupware') return;	// not our prefix
 
-	$app = lcfirst(array_shift($parts));
+	$app = strtolower(array_shift($parts));
 	$base = EGW_INCLUDE_ROOT.'/'.$app.'/src/';
 	$path = $base.implode('/', $parts).'.php';
 
