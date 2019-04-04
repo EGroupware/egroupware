@@ -485,26 +485,7 @@ abstract class Merge
 		}
 
 		// Get or create the share
-		// Check if some other process created the share (with custom options)
-		// and put it in the session cache for us
-		$path = "$app::$id";
-		$session = \EGroupware\Api\Cache::getSession(Api\Sharing::class, $path);
-		if($session && $session['share_path'] == $path)
-		{
-			$share = $session;
-		}
-		else
-		{
-			// Need to create the share here.
-			// No way to know here if it should be writable, or who it's going to
-			$mode = /* ?  ? Sharing::WRITABLE :*/ Api\Sharing::READONLY;
-			$recipients = array();
-			$extra = array();
-
-			//$extra['share_writable'] |=  ($mode == Sharing::WRITABLE ? 1 : 0);
-
-			$share = \EGroupware\Stylite\Link\Sharing::create($path, $mode, NULL, $recipients, $extra);
-		}
+		$share = $this->create_share($app, $id, $content);
 
 		if($share)
 		{
@@ -512,6 +493,37 @@ abstract class Merge
 		}
 
 		return $replacements;
+	}
+
+	/**
+	 * Create a share for an entry
+	 *
+	 * @param string $app
+	 * @param string $id
+	 * @param string $path
+	 * @param type $content
+	 * @return type
+	 */
+	protected function create_share($app, $id, &$content)
+	{
+		// Check if some other process created the share (with custom options)
+		// and put it in the session cache for us
+		$path = "$app::$id";
+		$session = \EGroupware\Api\Cache::getSession(Api\Sharing::class, $path);
+		if($session && $session['share_path'] == $path)
+		{
+			return $session;
+		}
+
+		// Need to create the share here.
+		// No way to know here if it should be writable, or who it's going to
+		$mode = /* ?  ? Sharing::WRITABLE :*/ Api\Sharing::READONLY;
+		$recipients = array();
+		$extra = array();
+
+		//$extra['share_writable'] |=  ($mode == Sharing::WRITABLE ? 1 : 0);
+
+		return \EGroupware\Stylite\Link\Sharing::create($path, $mode, NULL, $recipients, $extra);
 	}
 
 	/**
