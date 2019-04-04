@@ -330,7 +330,11 @@ else
 			else
 			{
 				list($forward,$extra_vars) = explode('?',$forward,2);
-				$extra_vars .= ($extra_vars ? '&' : '').'cd=yes';
+				// only append cd=yes, if there is not already a cd value!
+				if (strpos($extra_vars, 'cd=') === false)
+				{
+					$extra_vars .= ($extra_vars ? '&' : '').'cd=yes';
+				}
 			}
 
 			if(strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']) === false) {
