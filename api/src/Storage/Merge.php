@@ -1524,7 +1524,7 @@ abstract class Merge
 				break;
 			default:
 				$app = str_replace('_merge','',get_class($this));
-				if(!in_array($app, $GLOBALS['egw_info']['apps']))
+				if(!in_array($app, array_keys($GLOBALS['egw_info']['apps'])))
 				{
 					$app = false;
 				}
