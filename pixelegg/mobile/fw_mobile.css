@@ -7116,10 +7116,10 @@ div[id^="projectmanager-"] .search.nm-mob-header,
 form[id^="projectmanager-"] .search.nm-mob-header,
 div[id^="projectmanager-"] .dialogHeadbar,
 form[id^="projectmanager-"] .dialogHeadbar {
-  background-color: #339933;
+  background-color: #669999;
 }
 #projectmanager_sidebox_header {
-  border-left: 6px solid #339933 !important;
+  border-left: 6px solid #669999 !important;
 }
 div[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),

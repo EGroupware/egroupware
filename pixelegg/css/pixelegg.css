@@ -6333,10 +6333,10 @@ div[id^="projectmanager-"] .search.nm-mob-header,
 form[id^="projectmanager-"] .search.nm-mob-header,
 div[id^="projectmanager-"] .dialogHeadbar,
 form[id^="projectmanager-"] .dialogHeadbar {
-  background-color: #339933;
+  background-color: #669999;
 }
 #projectmanager_sidebox_header {
-  border-left: 6px solid #339933 !important;
+  border-left: 6px solid #669999 !important;
 }
 div[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -6437,7 +6437,7 @@ form[id^="ranking-"] .dialogHeadbar {
   background-color: #ff9933 !important;
 }
 #egw_fw_sidebar #egw_fw_sidemenu #projectmanager_sidebox_content .egw_fw_ui_category_active {
-  background-color: #339933 !important;
+  background-color: #669999 !important;
 }
 #egw_fw_sidebar #egw_fw_sidemenu #ranking_sidebox_content .egw_fw_ui_category_active {
   background-color: #404040 !important;
@@ -6545,18 +6545,18 @@ form[id^="ranking-"] .dialogHeadbar {
   border-top-width: 4px !important;
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #projectmanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
-  background-color: rgba(51, 153, 51, 0.3);
+  background-color: rgba(102, 153, 153, 0.3);
 }
 #projectmanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
-  border-top: 4px solid #339933 !important;
+  border-top: 4px solid #669999 !important;
   border-left: 1px solid silver !important;
 }
 #projectmanager_sidebox_header {
-  border-left: 4px solid #339933 !important;
+  border-left: 4px solid #669999 !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #projectmanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-top: 4px solid;
-  border-top-color: #339933;
+  border-top-color: #669999;
   border-top-width: 4px !important;
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #resources_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
