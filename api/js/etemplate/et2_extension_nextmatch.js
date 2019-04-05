@@ -2305,7 +2305,37 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				window.setTimeout(function() {defer.resolve();}, 0);
 			}
 		},this);
+		var value = {
+			content: {
+				row_count: Math.min(100,total),
+				columns: this.egw().preference(pref,app) || columns_selected,
+				orientation: this.egw().preference(pref+'_orientation',app)
+			},
+			sel_options: {
+				columns: columns
+			}
+		};
+		this._create_print_dialog.call(this, value, callback);
 
+		return defer;
+	},
+
+	/**
+	 * Create and show the print dialog, which calls the provided callback when
+	 * done.  Broken out for overriding if needed.
+	 *
+	 * @param {Object} value Current settings and preferences, passed to the dialog for
+	 *	the template
+	 * @param {Object} value.content
+	 * @param {Object} value.sel_options
+	 *
+	 * @param {function(int, Object)} callback - Process the dialog response,
+	 *  format things according to the specified orientation and fetch any needed
+	 *  rows.
+	 *
+	 */
+	_create_print_dialog: function _create_print_dialog(value, callback)
+	{
 		var base_url = this.getInstanceManager().template_base_url;
 		if (base_url.substr(base_url.length - 1) == '/') base_url = base_url.slice (0, -1);	// otherwise we generate a url //api/templates, which is wrong
 		var tab = this.get_tab_info();
@@ -2317,19 +2347,8 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			buttons: et2_dialog.BUTTONS_OK_CANCEL,
 			title: this.egw().lang('Print') + ' ' + this.egw().lang(title),
 			template:this.egw().link(base_url+'/api/templates/default/nm_print_dialog.xet'),
-			value: {
-				content: {
-					row_count: Math.min(100,total),
-					columns: this.egw().preference(pref,app) || columns_selected,
-					orientation: this.egw().preference(pref+'_orientation',app)
-				},
-				sel_options: {
-					columns: columns
-				}
-			}
+			value: value
 		});
-
-		return defer;
 	},
 
 	/**
