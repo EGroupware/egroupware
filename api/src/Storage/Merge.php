@@ -500,9 +500,8 @@ abstract class Merge
 	 *
 	 * @param string $app
 	 * @param string $id
-	 * @param string $path
-	 * @param type $content
-	 * @return type
+	 * @param String $content
+	 * @return \EGroupware\Api\Sharing
 	 */
 	protected function create_share($app, $id, &$content)
 	{
