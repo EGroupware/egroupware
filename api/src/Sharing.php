@@ -366,7 +366,7 @@ class Sharing
 		if(!$share) $share = $this->share;
 		list($app, $id) = explode('::', $share['share_path']);
 		return $share && $share['share_path'] &&
-				$app && $id && $app !== 'vfs' ;//&& array_key_exists($app, $GLOBALS['egw_info']['apps']);
+				$app && $id && !in_array($app, array('filemanager', 'vfs')) ;//&& array_key_exists($app, $GLOBALS['egw_info']['apps']);
 	}
 
 	public function need_session()

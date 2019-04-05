@@ -198,6 +198,11 @@ class Sharing extends \EGroupware\Api\Sharing
 	{
 		if (!isset(self::$db)) self::$db = $GLOBALS['egw']->db;
 
+		// Parent puts the application as a prefix.  If we're coming from there, pull it off
+		if(strpos($path, 'filemanager::') === 0)
+		{
+			list(,$path) = explode('::', $path);
+		}
 		if (empty($name)) $name = $path;
 
 		$path2tmp =& Api\Cache::getSession(__CLASS__, 'path2tmp');
