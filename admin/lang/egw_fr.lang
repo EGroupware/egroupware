@@ -735,8 +735,6 @@ requested	admin	fr	Requis
 required pear class mail/mimedecode.php not found.	admin	fr	Classe PEAR class Mail/mimeDecode.php non trouvée.
 reset filter	admin	fr	Réinitialiser le filtre
 return to admin mainscreen	admin	fr	Revenir à l'écran principal d'administration
-return to view account	admin	fr	Revenir à l'affichage du compte
-
 rights	admin	fr	Droits
 route all mails to	admin	fr	Livrer tous les emails à
 rows	admin	fr	Lignes

@@ -35,13 +35,13 @@ account %1 %2	admin	de	Benutzerkonto %1 %2
 account '%1' deleted.	admin	de	Konto '%1' gelöscht.
 account '%1' not found !!!	admin	de	Mailkonto '%1' nicht gefunden !
 account active	admin	de	Konto aktiv
-account deleted.	admin	de	Mailkonto gelöscht.
+account deleted.	admin	de	Mail-Konto gelöscht.
 account has been created	common	de	Konto wurde erstellt
 account has been deleted	common	de	Konto wurde gelöscht
 account has been updated	common	de	Konto wurde aktualisiert
 account id	admin	de	Benutzerkonto ID
 account list	admin	de	Benutzerkonten anzeigen
-account not found!	common	de	Mailkonto nicht gefunden!
+account not found!	common	de	Mail-Konto nicht gefunden!
 account permissions	admin	de	Zugriffsrechte
 account preferences	admin	de	Einstellungen der Benutzerkonten
 account saved.	admin	de	Mailkonto gespeichert.
@@ -81,7 +81,7 @@ add user	admin	de	Neuen Benutzer erstellen
 add user or group	admin	de	Benutzer oder Gruppen eingeben
 admin dn	admin	de	Admin DN
 admin email	admin	de	E-Mail-Administration
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	de	E-Mail-Adressen der Administratoren (mit Komma getrennt) die über eine Sperre benachrichtigt werden sollen ('leer' für keine Benachrichtigung)
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	de	E-Mail-Adressen der Administratoren (mit Komma getrennt), die über eine Sperre benachrichtigt werden sollen ('leer' für keine Benachrichtigung)
 admin name	admin	de	Name des Administrators
 admin password	admin	de	Admin Passwort
 admin queue and history	admin	de	Admin Queue und Historie
@@ -89,8 +89,8 @@ admin username	admin	de	Administrator Benutzername
 administration	admin	de	Administration
 admins	admin	de	Administratoren
 advanced options	admin	de	erweiterte Einstellungen
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	de	Nach wievielen erfolglosen Anmeldeversuchen soll ein Benutzerkonto gesperrt werden (Vorgabe 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	de	Nach wievielen erfolglosen Anmeldeversuchen soll eine IP-Adresse gesperrt werden (Vorgabe 15)?
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	de	Nach wie vielen erfolglosen Anmeldeversuchen soll ein Benutzerkonto gesperrt werden (Vorgabe 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	de	Nach wie vielen erfolglosen Anmeldeversuchen soll eine IP-Adresse gesperrt werden (Vorgabe 15)?
 aliases	admin	de	E-Mail-Alias
 all applications	admin	de	Alle Anwendungen
 all categories	admin	de	Alle Kategorien
@@ -204,7 +204,7 @@ country	admin	de	Land
 country selection	admin	de	Länderauswahl
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	de	CRAM-MD5 oder DIGEST-MD5 erfordert, das das Auth_SASL Packet installiert ist.
 create group	admin	de	Erstelle Gruppe
-create new account	admin	de	Neues Mailkonto erstellen
+create new account	admin	de	Neues Mail-Konto erstellen
 create new identity	admin	de	Neue Identität erstellen
 created	admin	de	Erstellt
 created with id #%1	admin	de	erstellt mit der ID #%1
@@ -367,7 +367,7 @@ error connecting to imap server: [%s] %s.	admin	de	Fehler beim Verbinden mit dem
 error deleting entry!	admin	de	Fehler beim Löschen des Eintrags
 error deleting log entry!	admin	de	Fehler beim Löschen des Protokolleintrags!
 error saving	admin	de	Fehler beim Speichern
-error saving account!	admin	de	Fehler beim Speichern des Mailkontos!
+error saving account!	admin	de	Fehler beim Speichern des Mail-Kontos!
 error saving the command!	admin	de	Fehler beim Speichern des Befehls!
 error saving the entry!!!	admin	de	Fehler beim Speichern !
 error saving to db:	admin	de	Fehler beim Speichern in der Datenbank:
@@ -384,7 +384,7 @@ exports groups into a csv file.	admin	de	Benutzergruppen in eine CSV-Datei expor
 exports users into a csv file.	admin	de	Benutzer in eine CSV-Datei exportieren.
 failed to change password for account "%1"!	admin	de	Fehler beim Ändern des Passwortes für Benutzer "%1"!
 failed to change password.	admin	de	Ändern des Passwortes nicht möglich.
-failed to delete account!	admin	de	Fehler beim Löschen des Mailkontos!
+failed to delete account!	admin	de	Fehler beim Löschen des Mail-Kontos!
 failed to mount backup directory!	admin	de	Konnte Datensicherungsverzeichnis nicht mounten!
 failed to save user!	admin	de	Speichern dieses Benutzers ist nicht möglich.
 fallback (after each pageview)	admin	de	Ausweichmöglichkeit (nach jedem Seitenaufbau)
@@ -400,7 +400,7 @@ for the times above	admin	de	für die oben angegebenen Zeiten
 for the times below (empty values count as '*', all empty = every minute)	admin	de	für die darunter angegebenen Zeiten (leere Felder zählen als "*", alles leer = jede Minute)
 forbid users to create identities	admin	de	Anwender dürfen keine Identitäten anlegen
 force selectbox	admin	de	Auswahl erzwingen
-force users to change their password regularily?(empty for no,number for after that number of days	admin	de	Erzwinge das ändern von Passwörtern durch den Benutzer nach X Tagen. (leer für nein, eine positive Zahl für alle X Tage)
+force users to change their password regularily?(empty for no,number for after that number of days	admin	de	Erzwinge das Ändern von Passwörtern durch den Benutzer nach X Tagen. (leer für nein, eine positive Zahl für alle X Tage)
 forward also to	admin	de	zusätzlich weiterleiten
 forward email's to	admin	de	E-Mails weiterleiten an
 forward emails to	admin	de	E-Mails weiterleiten an
@@ -419,7 +419,7 @@ group '%1' deleted.	admin	de	Gruppe '%1' wurde gelöscht.
 group ?	admin	de	Gruppe ?
 group csv export	admin	de	CSV Export von Gruppen
 group csv import	admin	de	CSV Import von Gruppen
-group excepted from above export limit (admins are always excepted)	admin	de	Gruppen die vom oben angegeben Exportlimit ausgenommen sind (Administratoren sind immer ausgenommen)
+group excepted from above export limit (admins are always excepted)	admin	de	Gruppen, die vom oben angegeben Exportlimit ausgenommen sind (Administratoren sind immer ausgenommen)
 group has been added	common	de	Gruppe wurde hinzugefügt
 group has been deleted	common	de	Gruppe wurde gelöscht
 group has been updated	common	de	Gruppe wurde aktualisiert
@@ -536,7 +536,7 @@ loginid	admin	de	Login-ID
 logintime	admin	de	Anmeldezeit
 logoutime	admin	de	Abmeldezeit
 lowercase email addresses	admin	de	E-Mail-Adressen mit Kleinbuchstaben
-mail account	admin	de	E-Mail Konto
+mail account	admin	de	E-Mail-Konto
 mail settings	admin	de	E-Mail-Einstellungen
 main email-address	admin	de	Stamm-E-Mail-Adresse
 main screen message	admin	de	Nachricht der Startseite
@@ -568,7 +568,7 @@ new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leer l
 next run	admin	de	nächste Ausführung
 no algorithms available	admin	de	Kein Algorithmus verfügbar
 no alternate email address	admin	de	keine zusätzlichen E-Mail-Adressen
-no default account found!	admin	de	Kein Standard Mailkonto gefunden!
+no default account found!	admin	de	Kein Standard Mail-Konto gefunden!
 no encryption	admin	de	keine Verschlüsselung
 no forwarding email address	admin	de	keine Weiterleitungsadresse definiert
 no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank!
@@ -615,7 +615,7 @@ password to unlock encrypted p12	admin	de	Passwort zum Entsperren von verschlüs
 password updated	admin	de	Passwort aktualisiert
 passwords and/or attributes of %1 accounts changed	admin	de	Passwörter und/oder Attribute von %1 Benutzern geändert
 passwords require a minimum number of characters	admin	de	Passworte benötigen diese Mindestanzahl Zeichen
-passwords requires this number of different character classes	admin	de	Passworte benötigen mindestens soviele Zeichenklassen
+passwords requires this number of different character classes	admin	de	Passworte benötigen mindestens so viele Zeichenklassen
 path information	admin	de	Pfad-Information
 peer server list	admin	de	Liste der Server im Verbund
 peer servers	admin	de	Server-Verbund
@@ -795,7 +795,7 @@ this application is current	admin	de	Diese Anwendung ist aktuell
 this application requires an upgrade	admin	de	Diese Anwendung benötigt ein Upgrade
 this category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenwärtig als übergeordnete Kategorie benutzt.
 this controls exports and merging.	admin	de	Steuert den Export und den Merge Print von Dokumenten
-this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	de	Das ist KEIN persönliches Mailkonto!\n\nDas Konto wird für ALLE Benutzer gelöscht!\n\nSind Sie wirklich sicher, dass Sie das wollen?
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	de	Das ist KEIN persönliches Mail-Konto!\n\nDas Konto wird für ALLE Benutzer gelöscht!\n\nSind Sie wirklich sicher, dass Sie das wollen?
 this php has no imap support compiled in!!	admin	de	Dieses PHP hat keine IMAP Unterstützung!!!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	de	Zeit nach der Anwendungsdaten der Sitzung gelöscht werden in Sekunden (Vorgabe 86400 = 1 Tag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	de	Zeit nach der Sitzungen verfallen (Vorgabe 14400 = 4 Stunden)
@@ -834,7 +834,7 @@ upload your certificate .p12/.pfx file	admin	de	Zertifikat hochladen (.p12/.pfx-
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein
 upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	de	Laden Sie Ihr Header-Logo hoch oder geben Sie die URL ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
 upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Sie eine URL dafür ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
-uppercase, lowercase, number, special char	admin	de	Großbuchstaben, kleine Buchstaben, Zahlen, Sonderzeichen
+uppercase, lowercase, number, special char	admin	de	Großbuchstaben, Kleinbuchstaben, Zahlen, Sonderzeichen
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	de	URL der EGroupware Installation, z.B. http://domain.com/egroupware
 usage	admin	de	Einsatz
 use cookies to pass sessionid	admin	de	Sitzungs-ID in einem Cookie speichern
@@ -847,7 +847,7 @@ use smtp auth	admin	de	SMTP Authentifizierung benutzen
 use theme	admin	de	Benutztes Farbschema
 use tls authentication	admin	de	TLS Authentifizierung benutzen
 use tls encryption	admin	de	TLS Verschlüsselung benutzen
-use users email-address (as seen in useraccount)	admin	de	Benutzt E-Mail Adresse des Benutzers (Die unter seinem Mailkonto angezeigt wird)
+use users email-address (as seen in useraccount)	admin	de	Benutzt E-Mail Adresse des Benutzers (Die unter seinem Mail-Konto angezeigt wird)
 user accounts	admin	de	Benutzerkonten
 user can edit forwarding address	admin	de	Anwender können ihre Weiterleitungsadresse bearbeiten
 user csv export	admin	de	CSV Export von Benutzern
@@ -879,7 +879,7 @@ view sessions	admin	de	Sitzungen anzeigen
 view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
 virtual mail manager	admin	de	Virtual MAIL ManaGeR
-warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	de	Benutzer warnen, dass Ihr Passwort in X Tagen abläuft? Der Wert hier gibt an, ab wieviel Tagen vorher die Benutzer einmal pro Sitzung gewarnt werden. Die hier eingetragene Zahl sollte kleiner sein, als der Wert der für das Erzwingen des Änderns von Passwörtern alle Y Tage verwendet wird. Diese Option ist nur wirksam, wenn das Erzwingen von Passwortänderungen alle Y Tage aktiviert ist. (leer für nein, eine positive Zahl für Warnung ab X Tagen bevor das Passwort abläuft)
+warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	de	Benutzer warnen, dass Ihr Passwort in X Tagen abläuft? Der Wert hier gibt an, ab wie viel Tagen vorher die Benutzer einmal pro Sitzung gewarnt werden. Die hier eingetragene Zahl sollte kleiner sein, als der Wert der für das Erzwingen des Änderns von Passwörtern alle Y Tage verwendet wird. Diese Option ist nur wirksam, wenn das Erzwingen von Passwortänderungen alle Y Tage aktiviert ist. (leer für nein, eine positive Zahl für Warnung ab X Tagen bevor das Passwort abläuft)
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	de	Wir erheben diese Daten zu ausschliesslich statistischen Zwecken, um einen Überblick über den weltweiten Einsatz von EGroupware zu gewinnen.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	de	Wir speichern keine Herkunftsdaten oder Informationen, die einen Rückschluss auf Ihre Identität ermöglichen würden.
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?

@@ -83,7 +83,7 @@ cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Verzeichnis navigieren, Sie können aber das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis konfigurieren.
 default document to insert entries	filemanager	de	Standarddokument zum Einfügen von Daten
 defines how to open a merge print document	filemanager	de	Definiert, wie ein Seriendruckdokument geöffnet wird.
-delete all older versions and deleted files older then %s days	filemanager	de	Lösche alle alten Versionen und gelösche Dateien älter als %s Tage
+delete all older versions and deleted files older then %s days	filemanager	de	Lösche alle alten Versionen und gelöschte Dateien älter als %s Tage
 delete these files or directories?	filemanager	de	Diese Dateien oder Verzeichnisse löschen?
 delete these shares?	filemanager	de	Diese Freigaben löschen?
 delete this extended acl?	filemanager	de	Diese erweiterten Zugriffrechte löschen?
@@ -127,7 +127,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	de	Beispiel: {{NELF role}} - Wenn das Feld "role" nicht leer ist, dann wird der Inhalt des Feldes "role" in eine neue Zeile geschrieben.
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	de	Beispiel: {{nenvlf role}} - Wenn das Feld "role" nicht leer ist, dann wird eine neue Zeile angelegt ohne den Inhalt des Feldes "role" einzufügen.
 excludes selected mime types	filemanager	de	Schließt ausgewählte Mime-Typen aus
-excludes selected mime types from being opened by editor	filemanager	de	Schließt ausgewählte Mime-Typen vom Öffnen durch den Editor aus. Diese Dokument-Typen werden entweder im Browser geöffnet oder bzw. heruntergeladen.
+excludes selected mime types from being opened by editor	filemanager	de	Schließt ausgewählte Mime-Typen vom Öffnen durch den Editor aus. Diese Dokument-Typen werden entweder im Browser geöffnet oder heruntergeladen.
 executable	filemanager	de	Ausführbar
 expires	filemanager	de	Läuft ab
 export definition to use for nextmatch export	filemanager	de	Exportdefinition für den nextmatch Export
@@ -140,7 +140,7 @@ file	common	de	Datei
 file %1 already exists	filemanager	de	Es gibt schon eine Datei %1
 file %1 could not be created.	filemanager	de	Die Datei %1 konnte nicht erzeugt werden
 file %1 may be too big. contact your systemadministrator for further info	filemanager	de	Die Datei %1 ist eventuell zu gross. Kontaktieren Sie Ihren Systemadministrator für weiterreichende Informationen.
-file a file is only available with an epl subscription.	filemanager	de	Datei ablegen ist nur mit einem EPL Vertrag verfügbar.
+file a file is only available with an epl subscription.	filemanager	de	Datei ablegen ist nur mit einem EPL-Vertrag verfügbar.
 file deleted.	filemanager	de	Datei gelöscht
 file names cannot contain "%1"	filemanager	de	Dateinamen dürfen "%1" nicht enthalten
 file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunden!
@@ -262,7 +262,7 @@ show link "your home directory" in side box menu?	filemanager	de	Möchten Sie de
 show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Home Verzeichnis" innerhalb des Seitenmenüs angezeigt bekommen?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe
-some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	de	Einige Funktionalitäten benötigen Superuser-Rechte, bitte loggen sie sich hier als Dateimanager Superuser ein - zulässige Benutzer werden im Setup festgelegt.
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	de	Einige Funktionalitäten benötigen Superuser-Rechte. Bitte loggen sie sich hier als Dateimanager Superuser ein (Zulässige Benutzer werden im Setup festgelegt).
 sqlfs statistics	filemanager	de	sqlFS Statistik
 start search	filemanager	de	Suche starten
 startfolder	filemanager	de	Anfangsordner

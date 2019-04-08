@@ -79,7 +79,6 @@ company name	addressbook	el	Ονομα εταιρίας
 configuration	common	el	Διαμόρφωση
 contact	common	el	Επαφή
 contact application	admin	el	Αίτηση επαφής
-contact copied	addressbook	el	Επαφή αντιγράφηκε
 contact deleted	addressbook	el	Επαφή διεγράφη
 contact fields to show	addressbook	el	Πεδία επαφών προς προβολή
 contact fields:	addressbook	el	Πεδία επαφών:
@@ -154,6 +153,7 @@ exported	addressbook	el	εξήχθη
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	el	Εξάγει επαφές από το βιβλίο διευθύνσεών σας σε CSV αρχείο.CSV σημαίνει 'Comma Seperated Values'. Παρολαυτά στην καρτέλα Επιλογές μπορείτε επίσης να διαλέξετε και άλλους διαχωριστήρες.
 extra	addressbook	el	Επιπλέον
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	el	Απέτυχε η αλλαγή του-των μέλους(η) του %1 οργανισμού (ανεπαρκή δικαιώματα)!!!
+favorites	addressbook	el	Αγαπημένα
 fax	addressbook	el	Fax
 fax number	common	el	Αριθμός Fax
 field %1 has been added !	addressbook	el	Το πεδίο %1 προστέθηκε !
@@ -167,6 +167,7 @@ for read only ldap	admin	el	Για ανάγνωση μόνο LDAP
 full name	addressbook	el	Πλήρες όνομα
 general	admin	el	Γενικά
 general fields:	addressbook	el	Γενικά πεδία:
+general settings	addressbook	el	Γενικές ρυθμίσεις
 geo	addressbook	el	GEO
 global categories	addressbook	el	Παγκόσμιες κατηγορίες
 grant addressbook access	common	el	Πρόσβαση στο βιβλίο Διευθύνσεων
@@ -183,7 +184,7 @@ home phone	addressbook	el	Τηλέφωνο οικίας
 home state	addressbook	el	Νομός οικίας
 home street	addressbook	el	Διεύθυνση οικίας
 home zip code	addressbook	el	Τ.Κ. οικίας
-icon	addressbook	el	Εικόνα
+icon	addressbook	el	Εικoνίδιο
 if accounts are already in ldap	admin	el	αν οι λογαριασμοί είναι ακόμα στο LDAP
 import	addressbook	el	Εισαγωγή
 import contacts	addressbook	el	Εισαγωγή επαφών
@@ -250,6 +251,7 @@ pager	common	el	Αριθμός μπίπερ
 parcel	addressbook	el	Πακέτο
 participants	addressbook	el	Συμμετέχοντες
 permission denied !!!	addressbook	el	Άδεια απορρίπτεται !!!
+pgp key	addressbook	el	Κλειδί PGP
 phone number	common	el	Αριθμός τηλεφώνου
 phone numbers	common	el	Αριθμοί τηλεφώνων
 photo	addressbook	el	Φωτογραφία
