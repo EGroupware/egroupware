@@ -3,7 +3,7 @@
 %1 copied - the copy can now be edited	common	de	%1 Kopie - Diese Kopie kann jetzt bearbeitet werden
 %1 directories %2 found!	admin	de	%1 Verzeichnisse %2 gefunden!
 %1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
-%1 email(s) added into %2	common	de	%1 E-Mail-Adresse(n) in %2 hinzugefügt
+%1 email(s) added into %2	api	de	%1 E-Mail-Adresse(n) in %2 hinzugefügt
 %1 entries found, select one ...	common	de	%1 Einträge gefunden, einen auswählen ...
 %1 etemplates deleted	common	de	%1 eTemplate(s) gelöscht
 %1 etemplates for application '%2' dumped to '%3'	common	de	%1 eTemplate(s) für die Anwendung '%2' nach '%3' geschrieben
@@ -100,8 +100,12 @@ afghanistan	common	de	AFGHANISTAN
 albania	common	de	ALBANIEN
 algeria	common	de	ALGERIEN
 align	common	de	Ausrichtung
+aligncenter	common	de	Zentriert ausrichten
+alignjustify	common	de	Blocksatz
+alignleft	common	de	Linksbündig ausrichten
 alignment of label and input-field in table-cell	common	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
 alignment of the v/hbox containing table-cell	common	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
+alignright	common	de	Rechtsbündig ausrichten
 all	common	de	alle
 all addressbooks	groupdav	de	Alle Adressbücher
 all categories	common	de	Alle Kategorien
@@ -203,6 +207,7 @@ browser %1 %2 is not recommended. you may experience issues and not working feat
 brunei darussalam	common	de	BRUNEI DARUSSALAM
 bulgaria	common	de	BULGARIEN
 bulgarian	common	de	Bulgarisch
+bullist	common	de	Aufzählung
 burkina faso	common	de	BURKINA FASO
 burundi	common	de	BURUNDI
 calendar	common	de	Kalender
@@ -284,6 +289,7 @@ close	common	de	Schließen
 close sidebox	common	de	Seitenmenü schließen
 closes the window without saving the changes	common	de	schließt das Fenster ohne zu speichern
 cocos (keeling) islands	common	de	COCOS INSELN
+code	common	de	Quelltext
 collection empty.	common	de	Collection ist leer
 collection listing	common	de	Auflistung der Collection
 colombia	common	de	KOLUMBIEN
@@ -427,6 +433,7 @@ done	common	de	erledigt
 dos international	common	de	DOS International
 download	common	de	Herunterladen
 download link	common	de	Link zum Herunterladen
+drag markers to pick a color	common	de	Zur Farbauswahl den Marker bewegen
 drop a table - this can not be undone	common	de	Tabelle löschen (drop) - NICHT rückgängig zu machen
 drop table	common	de	Tabelle löschen
 dump4setup	common	de	Dump4Setup
@@ -789,6 +796,7 @@ lost password	common	de	Anmeldepasswort vergessen
 low	common	de	Niedrig
 lowercase letters	common	de	Kleinbuchstaben
 lowest	common	de	Niedrigste
+ltr	common	de	Von links nach rechts
 luxembourg	common	de	LUXEMBURG
 macau	common	de	MACAU
 macedonia, the former yugoslav republic of	common	de	MAZEDONIEN, FRÜHERE JUGOSLAVISCHE REPUBLIK
@@ -931,6 +939,7 @@ now	common	de	Jetzt
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	common	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
 numbers	common	de	Nummern
+numlist	common	de	Nummerierte Liste
 october	common	de	Oktober
 of	common	de	von
 off	common	de	Keine
@@ -1054,6 +1063,7 @@ read this list of methods.	common	de	Diese Liste der Methoden lesen.
 reading	common	de	lesen
 readonly	common	de	nur lesen
 readonly share	common	de	Nur lesende Freigabe
+redo	common	de	Wiederholen
 refresh	common	de	Aktualisierung
 register	common	de	Registrieren
 regular	common	de	Normal
@@ -1064,6 +1074,7 @@ remove selected accounts	common	de	Ausgewählte Benutzer entfernen
 remove shortcut	common	de	Abkürzung entfernen
 remove this link (not the entry itself)	common	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
 removed (now) empty directory fs_id=%1	admin	de	Leeres Verzeichnis fs_id=%1 wurde jetzt gelöscht
+removeformat	common	de	Formatierung entfernen
 rename	common	de	Umbenennen
 replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
@@ -1095,6 +1106,7 @@ romania	common	de	RUMÄNIEN
 rotate left	common	de	Links drehen
 rotate right	common	de	Rechts drehen
 row...	common	de	Zeile...
+rtl	common	de	Von rechts nach links
 russian	common	de	Russisch
 russian federation	common	de	RUSSISCHE FÖDERATION
 rwanda	common	de	RWANDA
@@ -1130,6 +1142,7 @@ search for '%1'	common	de	Suche nach '%1'
 search letter	common	de	Suche nach Buchstaben
 search or select accounts	common	de	Suchen und auswählen von Benutzern
 search...	common	de	Suchen...
+searchreplace	common	de	Suchen und ersetzen
 second	common	de	Sekunden
 section	common	de	Sektion
 securest	common	de	sicherste
@@ -1210,6 +1223,9 @@ settings saved.	common	de	Einstellungen gespeichert.
 setup	common	de	Setup
 setup main menu	common	de	Setup Hauptmenü
 seychelles	common	de	SEYCHELLEN
+share	api	de	Teilen
+share files	api	de	Dateien teilen
+share link	api	de	Link teilen
 shift	common	de	Shift
 shift ⇧	common	de	Umschalten ⇧
 should the form be submitted or any custom javascript be executed	common	de	Soll das Formular abgeschickt werden oder beliebiges JavaScript ausgeführt werden
@@ -1269,6 +1285,7 @@ starting up...	common	de	Starte...
 status	common	de	Status
 store your public key in addressbook?	common	de	Öffentlichen Schlüssel im Adressbuch speichern?
 stretched	common	de	ausgedehnt
+strikethrough	common	de	Durchgestrichen
 su	common	de	So
 subject	common	de	Betreff
 submit	common	de	Absenden
@@ -1444,6 +1461,7 @@ work email	common	de	geschäftliche E-Mail
 working days	common	de	Werktage
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	de	Arbeitet zuverlässig für eine Gesamtgröße von 1-2 MB, kann auch für 5-10 MB funktionieren, wird wahrscheinlich für >10MB fehlschlagen
 would you like to display the page generation time at the bottom of every window?	common	de	Möchten Sie die Zeit zur Erstellung der Seite am Ende jedes Fensters anzeigen?
+writable	api	de	Beschreibbar
 writable share	common	de	Beschreibbare Freigabe
 write <app>/setup/tables_current.inc.php	common	de	schreibt <app>/setup/tables_current.inc.php
 write langfile	common	de	Sprachdatei

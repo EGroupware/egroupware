@@ -8,14 +8,19 @@
 %1 etemplates for application '%2' dumped to '%3'	common	fr	%1 eTemplates pour l'Application '%2' écrits dans '%3'
 %1 etemplates found	common	fr	%1 eTemplate(s) trouvé(s).
 %1 file	common	fr	%1 fichier
+%1 files	api	fr	%1 fichiers
 %1 is not executable by the webserver !!!	common	fr	%1 n'est pas exécutable par le serveur web !
 %1 matches on search criteria	common	fr	%1 occurences sur les critères de recherche
 %1 more...	common	fr	%1 plus...
 %1 new etemplates imported for application '%2'	common	fr	%1 eTemplate(s) importé(s) pour l'Application '%2'
 %1 not implemented for %2!	common	fr	%1 pas implémenté pour %2 !
 %1 proxy of %2	common	fr	%1 proxy sur %2
+%1 selected	api	fr	%1 séléctionné
 %1 setting "%2" = %3 disallows access via http!	admin	fr	%1 paramètres "%2" = "%3" désactive l'accès via http !
+%1 share link	api	fr	%1 Lien de partage
+%1 successful uploaded.	api	fr	%1 uploadé avec succès
 %1 to sync	groupdav	fr	%1 à synchroniser
+%1' han an invalid format !!!	api	fr	%1 a un format invalide !
 %1, duplicate id	common	fr	%1, ID en doublon
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	fr	%1Choisissez un autre répertoire%2<br />ou faites en sorte que le serveur web puisse écrire dans %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fr	%1EGroupware%2 est un progiciel de collaboration multi-utilisateur basé sur le web et écrit en %3PHP%4.
@@ -33,6 +38,7 @@
 '%1' is not a valid timezone!	common	fr	'%1' n'est pas une timezone valide !
 '%1' is not allowed ('%2')!	common	fr	'%1' n'est PAS permis ('%2') !
 '%1' is not allowed%2)!	common	fr	'%1' n'est PAS permis '%2' !
+(no subject)	api	fr	(sans objet)
 (session restored in %1 seconds)	common	fr	Session restaurée en %1 secondes
 00 (disable)	admin	fr	00 (non actif)
 1 day	common	fr	1 Jour
@@ -48,6 +54,7 @@
 80 (http)	admin	fr	80 (http)
 a pattern to be searched for	common	fr	Chaine de caractères à rechercher
 a request to the egroupware server returned with an error	common	fr	Une requête au serveur EGroupware a retourné une erreur
+abcdefghijklmnopqrstuvwxyz	common	fr	ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abort	common	fr	Annuler
 about	common	fr	A propos de
 about %1	common	fr	A propos de %1
@@ -60,7 +67,9 @@ account contactdata	common	fr	Données de contact du compte
 account has been created	common	fr	Le compte a été créé
 account has been deleted	common	fr	Le compte a été supprimé
 account has been updated	common	fr	Le compte a été mis à jour
+account id	api	fr	Compte
 account is expired	common	fr	Le compte a expiré
+account not found!	api	fr	Compte non trouvé !
 accounts	common	fr	Comptes
 acl	common	fr	Liste de Contrôle d'Accès
 action	common	fr	Action
@@ -88,9 +97,13 @@ add to clipboard	common	fr	Ajouter au presse-papier
 add user to responsibles	groupdav	fr	rattacher un utilisateur à des responsables
 add user to responsibles, removing evtl. previous category user	groupdav	fr	rattacher un utilisateur à des responsables, éventuellement supprimer les anciennes catégories de l'utilisateur
 add your domain as "%1" in options to list of email providers and enable api.	common	fr	Ajouter votre domaine comme "%1" dans les option pour lister les fournisseurs et activer les API.
+address line 2	api	fr	ligne d'adresse 2
+address line 2 (private)	api	fr	ligne d'adresse 2 (privée)
 addressbook	common	fr	Carnet d'adresses
 addressbooks to sync in addition to personal addressbook	groupdav	fr	Carnets d'adresses à synchroniser en plus du carnet personnel
 admin	common	fr	Admin
+admin settings	api	fr	Réglages Admin
+admin settings for %1	common	fr	Réglages Admin pour %1
 administration	common	fr	Administration
 advanced search	common	fr	Recherche avancée
 afghanistan	common	fr	AFGHANISTAN
@@ -109,7 +122,6 @@ all languages	common	fr	Toutes les langues
 all operations save the template!	common	fr	Toutes les opérations sauvegardent le template !
 all users	common	fr	Tous les utilisateurs
 allowed file type: %1	common	fr	Type de fichier autorisé : %1
-alphabet	common	fr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alt	common	fr	Alt
 alternate style-sheet:	common	fr	Feuille de style alternative:
 am	common	fr	matin
@@ -138,6 +150,7 @@ apply the action on the whole query, not only the shown entries	common	fr	Appliq
 april	common	fr	Avril
 are you sure you want to delete these entries ?	common	fr	Etes-vous sûr de vouloir supprimer ces entrées ?
 are you sure you want to delete this entry ?	common	fr	Etes-vous sûr de vouloir supprimer cette entrée ?
+are you sure you want to logout?	common	fr	Etes-vous sûr de vouloir vous déconnecter ?
 are you sure, you would like to delete the backup key?	common	fr	Etes-vous sûr de vouloir supprimer la clé de sauvegarde ?
 argentina	common	fr	ARGENTINE
 armenia	common	fr	ARMENIE
@@ -160,9 +173,11 @@ autosave default category	common	fr	Enregistrement automatique dans catégorie p
 azerbaijan	common	fr	AZERBAIDJAN
 back	common	fr	Retour
 back to user login	common	fr	Retour au Login utilisateur
+backcolor	common	fr	Couleur de fond
 background color:	common	fr	Couleur de fond:
 backup key	common	fr	Clé de sauvegarde
 backup/restore	common	fr	Sauvegarde/Restauration
+backup/restore ...	common	fr	Sauvegarde/Restauration...
 backupdir '%1' is not writeable by the webserver	common	fr	Le serveur web ne peut pas écrire dans le répertoire de sauvegarde '%1'
 bad login or password	common	fr	Mauvais login ou mot de passe
 bahamas	common	fr	BAHAMAS
@@ -178,6 +193,7 @@ belize	common	fr	BELIZE
 benin	common	fr	BENIN
 bermuda	common	fr	BERMUDES
 bhutan	common	fr	BOUTAN
+birthday	api	fr	Anniversaire
 blocked, too many attempts	common	fr	Accès refusé car trop de tentatives infructueuses
 blue moono theme	common	fr	thème blue moono
 blurtext	common	fr	texteFlou
@@ -379,6 +395,8 @@ deletes the etemplate spez. above	common	fr	Supprime l'eTemplate spécifié ci-d
 deletes this column	common	fr	Supprime cette colonne.
 deletes this index	common	fr	Supprime cet index.
 denmark	common	fr	DANEMARK
+department	api	fr	Département
+departments	api	fr	Départements
 description	common	fr	Description
 detail	common	fr	Détail
 details	common	fr	Détails
@@ -386,6 +404,7 @@ diable the execution a bugfixscript for internet explorer 5.5 and higher to show
 direction left to right	common	fr	Direction de gauche à droite
 directory	common	fr	Répertoire
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fr	Ce répertoire n'existe pas, n'est pas lisible par le serveur web ou n'est pas relatif au "document root" !
+directory successfully created.	api	fr	Répertoire créé avec succès.
 disable internet explorer png-image-bugfix	common	fr	Désactiver png-image-bugfix d'Internet Explorer
 disable slider effects	common	fr	Désactiver les effets de glisse
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	Désactiver les effets de glisse animés lors de l´affichage ou le masquage des menus de la page? Les utilisateurs d'Opera et Konqueror devraient sûrement en avoir besoin.
@@ -418,8 +437,11 @@ done	common	fr	Fait
 dos international	common	fr	DOS International
 download	common	fr	Télécharger
 download link	common	fr	Lien de téléchargement
+drafts	api	fr	Brouillons
 drop a table - this can not be undone	common	fr	Supprimer une table - ceci ne peut PAS être annulé
 drop table	common	fr	Supprimer la table (drop)
+dtd content	api	fr	Contenu DTD
+dtd result	api	fr	Résultat DTD
 dump4setup	common	fr	Dump4Setup
 duration	common	fr	Durée
 e-mail	common	fr	email
@@ -428,6 +450,7 @@ eastern european	common	fr	Européen occidental
 ecuador	common	fr	EQUATEUR
 edit	common	fr	Modifier
 edit %1 category for	common	fr	Modifier la catégorie %1 pour
+edit avatar	common	fr	Modifier l'avatar
 edit categories	common	fr	Modifier les catégories
 edit category	common	fr	Modifier la catégorie
 edit embeded css styles or of the applications app.css file	common	fr	modifier les feuilles de style CSS imbriquées ou celle de app.css
@@ -450,14 +473,18 @@ egroupware: login blocked for user '%1', ip %2	common	fr	EGroupware: login bloqu
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
 element role title	common	fr	Titre du rôle
-email	common	fr	E-mail
+email	common	fr	Email
+email (private)	api	fr	email (privé)
 email-address of the user, eg. "%1"	common	fr	Adresse e-mail de l'utilisateur, p.ex. "%1"
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	fr	Styles CSS incorporés, p.e. '.rouge { fond: rouge; }' (notez le '.' avant le nom de la classe) ou '@import url(...)' (les noms de classe sont globaux pour la page entière!)
+empty	api	fr	vide
 empty file	common	fr	Fichier vide
+empty file %1 ignored.	api	fr	Le fichier vide %1 ignoré.
 enable javascript onchange submit	common	fr	Activer la soumission sur changement en JavaScript
 enable logging	groupdav	fr	Activer la journalisation
 enabled	common	fr	Activé
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	fr	Activer la journalisation du CalDAV/CardDAV pour diagnostiquer les problèmes de synchronisation
+end	api	fr	Fin
 end date	common	fr	Date de fin
 end time	common	fr	Heure de fin
 enter '' for an empty default, nothing mean no default	common	fr	Entrez '' pour une valeur par défaut vide, rien signifie pas de valeur par défaut
@@ -466,6 +493,7 @@ enter filename to upload and attach, use [browse...] to search for it	common	fr	
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´EGroupware.<br>Exemple: http://www.domain.com/egroupware   ou   /egroupware<br><b>Pas de slash final</b>
 enter the new version number here (> old_version), empty for no update-file	common	fr	Entrez le nouveau numéro de version ici (> ancienne_version), vide pour aucun fichier de mise à jour
 enter the new version number here (has to be > old_version)	common	fr	Entrez le nouveau numéro de version ici (doit être > à la vieille_version)
+enter your file name	common	fr	Entrer le nom du fichier
 entry has been deleted sucessfully	common	fr	Entrée supprimée avec succès
 entry not found!	common	fr	Entrée non trouvée !
 entry saved	common	fr	Entrée enregistrée
@@ -479,8 +507,10 @@ error create parent directory %1!	common	fr	Errreur à la création du dossier p
 error creating %1 %2 directory	common	fr	Erreur à la création du répertoire %1 %2
 error deleting %1 %2 directory	common	fr	Erreur à la suppression du répertoire %1 %2
 error deleting %1!	common	fr	Erreur à la suppression de %1 !
+error log	api	fr	Journal d'erreur
 error renaming %1 %2 directory	common	fr	Erreur au renommage du répertoire %1 %2
 error uploading file!	filemanager	fr	Erreur à l'upload du fichier !
+error while creating directory.	api	fr	Erreur à la création du répertoire.
 error: template not found !!!	common	fr	Erreur : Template non trouvé !
 error: webserver is not allowed to write into '%1' !!!	common	fr	Erreur: le serveur web n'est pas autorisé à écrire dans '%1' !!!
 error: while saving !!!	common	fr	Erreur lors de l'enregistrement !
@@ -512,6 +542,7 @@ falkland islands (malvinas)	common	fr	ILES FALKLAND (MALOUINES)
 faroe islands	common	fr	ILES FAROE
 favorite queries	common	fr	Requêtes en favoris
 favorites	common	fr	Favoris
+fax (private)	api	fr	fax (privé)
 fax number	common	fr	Numéro de fax
 features of the editor?	common	fr	Fonctionnalités de l'éditeur
 february	common	fr	Février
@@ -520,15 +551,17 @@ field must not be empty !!!	common	fr	Le champ ne doit pas être vide !
 fields	common	fr	Champs
 fiji	common	fr	FIDJI
 file	common	fr	Fichier
+file %1 already exists	api	fr	Le fichier  %1 existe déjà
 file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	fr	Le fichier %1 n'a pas de contenu dans le système de fichiers physique %2 --> échec de la suppression du fichier !
 file %1 has no content in physical filesystem %2 --> file removed!	admin	fr	Le fichier %1 n'a pas de contenu dans le système de fichiers physique %2 --> fichier supprimé !
 file %1 has no content in physical filesystem %2!	admin	fr	Le fichier %1 n'a pas de contenu dans le système de fichiers physique %2
 file '%1' not found!	common	fr	Fichier  '%1'  non trouvé !
 file contains more than one etemplate, last one is shown !!!	common	fr	Le fichier contient plus d'un eTemplate, le dernier est affiché !!!
 file information	common	fr	Informations du fichier
-file is of wrong type (%1 != %2)!	common	fr	Le fichier est de mauvais type (%1 != %2) !
+file is of wrong type (%1 != %2)!	common	fr	Le fichier est d'un mauvais type (%1 != %2) !
 file too large.  maximum %1	common	fr	Le fichier est trop volumineux. Maximum %1
 file writen	common	fr	Fichier écrit
+filemanager	api	fr	Gestionnaire de fichiers
 files	common	fr	Fichiers
 files without content in physical filesystem will be removed.	admin	fr	Les fichiers sans contenu dans le système de fichier physique seront supprimés.
 fileupload	common	fr	UploadFichier
@@ -547,6 +580,7 @@ force selectbox	common	fr	Forcer la boîte de sélection
 foreign key	common	fr	Clé étrangère
 forever	common	fr	Toujours
 formatted text (html)	common	fr	Texte Formaté (HTML)
+forwarded message	api	fr	message transféré
 found unconnected %1 %2!	admin	fr	%1 %2 non connectés !
 fr	common	fr	Fr
 france	common	fr	FRANCE
@@ -554,13 +588,17 @@ french guiana	common	fr	GUYANNE FRANCAISE
 french polynesia	common	fr	POLYNESIE FRANCAISE
 french southern territories	common	fr	TERRITOIRES FRANCAIS DU SUD
 friday	common	fr	Vendredi
+from	api	fr	De
 ftp	common	fr	FTP
+full name	api	fr	nom complet
 fullname	common	fr	Nom complet
+fullscreen	api	fr	Plein écran
 fullscreen mode	common	fr	Mode plein écran
 gabon	common	fr	GABON
 gambia	common	fr	GAMBIE
 general fields:	preferences	fr	Champs généraux :
 general menu	common	fr	Menu Général
+geo	api	fr	géo
 georgia	common	fr	GEORGIE
 german	common	fr	Allemand
 germany	common	fr	ALLEMAGNE
@@ -581,6 +619,7 @@ grid	common	fr	Grille
 grid column attributes	common	fr	Attributs de la colonne dans la grille
 grid row attributes	common	fr	Attributs de la ligne dans la grille
 group	common	fr	Groupe
+group %1	api	fr	Groupe %1
 group access	common	fr	Accès par groupe
 group has been added	common	fr	Le groupe a été ajouté
 group has been deleted	common	fr	Le groupe a été supprimé
@@ -614,6 +653,8 @@ history log	common	fr	Historique
 holy see (vatican city state)	common	fr	VATICAN
 home	common	fr	Accueil
 home email	common	fr	email privé
+home phone	api	fr	téléphone domicile
+home screen	common	fr	Ecran principal
 honduras	common	fr	HONDURAS
 hong kong	common	fr	HONG KONG
 horizontal rule	common	fr	Règle horizontale
@@ -644,7 +685,10 @@ import	common	fr	Importer
 import an etemplate from a xml-file	common	fr	import an eTemplate from a xml-file
 import table-definitions from existing db-table	common	fr	Importer les définitions de table depuis la table de base de données existante
 import xml	common	fr	Importer XML
+importance	api	fr	importance
+inbox	api	fr	Boîte de réception
 increment version to not overwrite the existing template	common	fr	incrémente la version pour ne pas écraser le modèle existant
+indent	common	fr	Indenter
 index/name of returned content (name of the template, link / method for image)	common	fr	index/nom du contenu renvoyé (nom du Template, Lien / Méthode pour Image)
 indexed	common	fr	Indexé.
 indexoptions	common	fr	Options d'Index
@@ -670,9 +714,11 @@ insert new row after this one	common	fr	Insérer une nouvelle ligne après celle
 insert new row in front of first line	common	fr	Insérer une nouvelle ligne devant la première ligne
 insert row after	common	fr	Insérer une ligne après
 insert row before	common	fr	Insérer une ligne avant
+install	common	fr	Installer
 integer	common	fr	Nombre entier
 international	common	fr	International
 introduction	common	fr	Introduction
+invalid email	common	fr	Email invalide
 invalid filename	common	fr	Nom de fichier invalide
 invalid ip address	common	fr	Adresse IP invalide
 invalid password	common	fr	Mot de passe invalide
@@ -693,6 +739,7 @@ jordan	common	fr	JORDANIE
 july	common	fr	Juillet
 jun	common	fr	Jun
 june	common	fr	Juin
+junk	api	fr	Indésirable
 justify center	common	fr	Centrer
 justify full	common	fr	Justifier
 justify left	common	fr	Aligner à Gauche
@@ -710,6 +757,7 @@ kuwait	common	fr	KOWAIT
 kyrgyzstan	common	fr	KYRGYZSTAN
 label	common	fr	Label
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	fr	Label:[gras][italique] Texte:[longueur][,max] Nombres:[min][,[max][,longueur]] T.aire:[lignes][,colonnes] Radiob.:valeur H.Règle:[largeur] Templ.:[IndexDansContenu] Sélect:[multiselection] Date:[valeurs: p.e. 'A-m-j']
+landscape	common	fr	Paysage
 lang	common	fr	Langue
 language	common	fr	Langue
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	fr	raccourci-langue (p.e. 'en' pour english) pour le template dépendant d'un langage ('' lit vos préférences pour le langage ou la valeur par défaut, utiliser 'default' pour lire le template par défaut '')
@@ -717,6 +765,7 @@ language_direction_rtl	common	fr	language_direction_rtl
 lao peoples democratic republic	common	fr	LAOS, REPUBLIQUE DEMOCRATIQUE DES PEUPLES DU
 last	common	fr	Dernier
 last modified	common	fr	Dernière modification
+last modified by	api	fr	Dernière modification par
 last name	common	fr	Nom
 last name of the user, eg. "%1"	common	fr	Nom de l'utilisateur, p.ex. "%1"
 last page	common	fr	Dernière page
@@ -751,6 +800,7 @@ load	common	fr	Charger
 load this template into the editor	common	fr	Charger ce template dans l'éditeur
 loading	common	fr	chargement
 local	common	fr	Local
+location	api	fr	Localisation
 location calendars	groupdav	fr	Localisations des calendriers
 locations	common	fr	Localisations
 logging / debuging	groupdav	fr	Journalisation / débogage
@@ -766,11 +816,11 @@ luxembourg	common	fr	LUXEMBOURG
 macau	common	fr	MACAU
 macedonia, the former yugoslav republic of	common	fr	MACEDONIE, PRECEDEMMENT REPUBLIQUE YOUGOSLAVE DE
 madagascar	common	fr	MADAGASCAR
+mail	api	fr	email
 mail domain, eg. "%1"	common	fr	Domaine email, p.ex. "%1"
 mailvelope addon installation failed! please try again.	common	fr	Echec à l'installation de l'addon Mailvelope ! Veuillez essayer à nouveau.
 mailvelope addon installation succeded. now you may configure the options.	common	fr	Succès de l'installation de l'addon Mailvelope. Vous pouvez maintenant configurer les options.
 main category	common	fr	Catégorie principale
-home screen	common	fr	Ecran principal
 maintainer	common	fr	Mainteneur
 malawi	common	fr	MALAWI
 malaysia	common	fr	MALAYSIE
@@ -801,6 +851,8 @@ minute	common	fr	Minute
 minutes	common	fr	Minutes
 missing: %1	common	fr	Manquant : %1
 mo	common	fr	Mo
+mobile phone	api	fr	téléhpone portable
+mobile phone (private)	api	fr	téléhpone portable (privé)
 modifier	preferences	fr	Editeur
 moldova, republic of	common	fr	MOLDAVIE, REPUBLIQUE DE
 monaco	common	fr	MONACO
@@ -815,6 +867,7 @@ more	common	fr	Plus
 more than 1 match for '%1'	common	fr	Plusieurs résultats pour  '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	fr	Plus d'un fichier actif %1, désactivation %2 anciennes révisions !
 morocco	common	fr	MAROC
+move	common	fr	déplacer
 moved %1 children from directory fs_id=%2 to %3	admin	fr	Déplacement %1 enfants du répertoire fs_id=%2 vers %3
 moved unconnected %1 %2 to %3.	admin	fr	Déplacement de %1 non connectés %2 vers %3.
 mozambique	common	fr	MOZAMBIQUE
@@ -837,9 +890,12 @@ netherlands antilles	common	fr	ANTILLES HOLLANDAISES
 never	common	fr	Jamais
 new	common	fr	Nouveau
 new caledonia	common	fr	NOUVELLE CALEDONIE
+new directory	api	fr	Nouveau répertoire
+new egroupware release %1 available	common	fr	La nouvelle version %1 de EGroupware est disponible
 new entry added sucessfully	common	fr	Nouvelle entrée ajoutée avec succès
 new favorite	common	fr	Nouveau favoris
 new main category	common	fr	Nouvelle catégorie principale
+new password	api	fr	Nouveau mot de passe
 new search	common	fr	Nouvelle recherche
 new table created	common	fr	Nouvelle table créée
 new value	common	fr	Nouvelle valeur
@@ -868,6 +924,7 @@ no filters	common	fr	Pas de filtre
 no history for this record	common	fr	Pas d'historique pour cet enregistrement
 no key for recipient:	common	fr	Pas de clé pour le destinataire :
 no matches found	common	fr	Aucune occurrence trouvée.
+no results match	common	fr	Aucun résultat
 no rights to export more than %1 entries!	common	fr	Pas de droits pour exporter plus que %1 éléments !
 no row to swap with !!!	common	fr	Aucune ligne à échanger !
 no savant2 template directories were found in:	common	fr	Pas de dossier modèle Savant2 n'a été trouvé dans :
@@ -905,6 +962,7 @@ october	common	fr	Octobre
 of	common	fr	de
 off	common	fr	désactivé
 ok	common	fr	OK
+old password	api	fr	Ancien mot de passe
 old value	common	fr	Ancienne valeur
 oman	common	fr	OMAN
 on *nix systems please type: %1	common	fr	Sur les systèmes *nix SVP tapez: %1
@@ -927,8 +985,13 @@ options	common	fr	Options
 or	common	fr	OU
 order to navigating by tab key through the form	common	fr	Ordre pour la navigation avec la touche tab à travers le formulaire
 ordered list	common	fr	Liste ordonnées (numéros)
+organisation	api	fr	Organisation
+organization	api	fr	organisation
 original	common	fr	Original
+original message	api	fr	message d'origine
 other	common	fr	Autre
+other phone	api	fr	autre téléphone
+outbox	api	fr	Boîte d'envoi
 overflow	common	fr	Débordement
 overview	common	fr	Vue d'ensemble
 owner	common	fr	Propriétaire
@@ -936,6 +999,7 @@ ownership	common	fr	Propriété
 padding	common	fr	Remplissage
 page	common	fr	Page
 page was generated in %1 seconds	common	fr	La page a été générée en %1 secondes
+pager	api	fr	pager
 pakistan	common	fr	PAKISTAN
 palau	common	fr	PALAU
 palestinian territory, occupied	common	fr	PALESTINE, TERRITOIRE OCCUPE
@@ -945,6 +1009,7 @@ paraguay	common	fr	PARAGUAY
 parcel	common	fr	Colis
 parent category	common	fr	Catégorie parente
 parent is a '%1' !!!	common	fr	le parent est un '%1' !
+participants	api	fr	Participants
 password	common	fr	Mot de passe
 password contains only %1 of required %2 character classes: no %3	common	fr	le mot de passe contient seulement %1 sur %2 classes de caractères nécessaires : pas de %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	fr	le mot de passe contient "%1" ce qui est une partie de votre nom d'utilisateur ou non complet (3 caractères ou plus)
@@ -958,6 +1023,7 @@ password must have at least %1 characters	common	fr	Le mot de passe doit conteni
 paste	common	fr	Coller
 path	common	fr	Chemin
 path to user and group files has to be outside of the webservers document-root!!!	common	fr	Le chemin vers les fichiers des utilisateurs et groupes DOIT ETRE EN DEHORS de la racine des documents du serveur web!!!
+permission denied !!!	api	fr	Permission refusée !!!
 permission denied!	common	fr	Permission refusée !
 permissions to the files/users directory	common	fr	Permissions sur le répertoire fichiers/utilisateurs
 permisson denied!	common	fr	Permission refusée !
@@ -969,8 +1035,10 @@ pgp encryption	common	fr	Cryptage PGP
 pgp encryption installation	common	fr	Installation du Cryptage PGP
 philippines	common	fr	PHILIPPINES
 phone number	common	fr	numéro de téléphone
+photo	api	fr	photo
 pitcairn	common	fr	PITCAIRN
 placeholders	common	fr	Balises
+play/pause	api	fr	Lecture/Pause
 please %1 by hand	common	fr	Veuillez %1 à la main
 please enter a name	common	fr	Veuillez saisir un nom !
 please enter table-name first !!!	common	fr	SVP entrez le nom de la table d'abord !
@@ -979,12 +1047,15 @@ please run setup to become current	common	fr	Veuillez exécuter le setup pour vo
 please select	common	fr	Veuillez sélectionner
 please set your global preferences	common	fr	Veuillez définir vos préférences globales !
 please set your preferences for this application	common	fr	Veuillez définir vos préférences pour cette application
+please type %1 more characters	common	fr	Veuillez taper %1 caractères de plus
+please type 1 more character	common	fr	Veuillez taper 1 caractère de plus
 please wait...	common	fr	Veuillez patienter...
 please, check back with us shortly.	common	fr	Veuillez revenir bientôt afin de vérifier avec nous.
 pm	common	fr	Après-midi
 poland	common	fr	POLOGNE
 popup	common	fr	Popup
 popup with search	common	fr	Ouvre une fenêtre Popup avec la recherche
+portrait	common	fr	Portrait
 portugal	common	fr	PORTUGAL
 postal	common	fr	Code postal
 powered by	common	fr	Motorisé par
@@ -993,13 +1064,17 @@ precision	common	fr	Précision
 preference	common	fr	Préférence
 preferences	common	fr	Préférences
 preferences for the %1 template set	preferences	fr	Préférences pour le template %1
+preferred phone	api	fr	téléphone préféré
+prefix	api	fr	préfixe
 prev	common	fr	Préc.
+previous	common	fr	Précédent
 previous page	common	fr	Page précédente
 primary group	common	fr	groupe initial
 primary key	common	fr	Clé primaire
 primary key for the table, gets automaticaly indexed	common	fr	Clé primaire pour la table, est automatiquement indexée
 primary style-sheet:	common	fr	Feuille de style primaire:
 print	common	fr	Imprimer
+print current view	api	fr	Imprimer la vue courante
 priority	common	fr	Priorité
 private	common	fr	Privé
 programs	common	fr	Programmes
@@ -1007,6 +1082,7 @@ project	common	fr	Projet
 properties	common	fr	Propriétés
 protocol is required	common	fr	Le protocole est requis
 public	common	fr	public
+public key	api	fr	clé publique
 puerto rico	common	fr	PUERTO RICO
 qatar	common	fr	QATAR
 radiobutton	common	fr	BoutonRadio
@@ -1018,6 +1094,7 @@ read this list of methods.	common	fr	Lisez cette liste de méthodes.
 reading	common	fr	Lecture
 readonly	common	fr	Lecture seule
 readonly share	common	fr	Dossier en lecture seule
+redo	common	fr	Refaire
 refresh	common	fr	Rafraîchir
 register	common	fr	S'enregistrer
 regular	common	fr	Régulier
@@ -1029,6 +1106,7 @@ remove shortcut	common	fr	Supprimer le raccourci
 remove this link (not the entry itself)	common	fr	Enlever ce lien (pas l'entrée elle-même)
 removed (now) empty directory fs_id=%1	admin	fr	Répertoire vide fs_id=%1 a été supprimé (maintenant)
 rename	common	fr	Renommer
+repetition	api	fr	Répétition
 replace	common	fr	Remplacer
 replace with	common	fr	Remplacer par
 requests and full responses to files directory	common	fr	Requêtes et réponses complète sur les répertoires de fichiers
@@ -1037,6 +1115,7 @@ required	common	fr	Nécessaire
 required directory "%1" created.	admin	fr	Répertoire nécessaire "%1" créé.
 required directory "%1" not found!	admin	fr	Répertoire nécessaire "%1" non trouvé !
 reset	common	fr	Reset
+reset all to default	common	fr	Remettre tout à la valeur par défaut
 reset all user's column preferences	common	fr	Réinitialiser toutes les préférences de colonne des utilisateurs
 resource calendars	groupdav	fr	Calendrier de ressource
 resource type	common	fr	Type de ressource
@@ -1053,7 +1132,10 @@ returns savely, without deleting	common	fr	Revient de manière sûre, sans effac
 returns struct of users application access	common	fr	Retourne une structure d'accès aux applications des utilisateurs
 reunion	common	fr	REUNION
 right	common	fr	Droite
+role	api	fr	Rôle
 romania	common	fr	ROUMANIE
+rotate left	common	fr	Pivoter à gauche
+rotate right	common	fr	Pivoter à droite
 row...	common	fr	Ligne...
 russian	common	fr	Russe
 russian federation	common	fr	FEDERATION DE RUSSIE
@@ -1090,6 +1172,7 @@ search for '%1'	common	fr	Recherche de '%1'
 search letter	common	fr	Chercher sur une lettre
 search or select accounts	common	fr	Rechercher ou sélectionner des comptes
 search...	common	fr	Rechercher...
+searchreplace	common	fr	Rechercher/remplacer
 second	common	fr	seconde
 section	common	fr	Section
 securest	common	fr	Test de sécurité
@@ -1109,6 +1192,7 @@ select an app to search in	common	fr	Choisissez une application dans laquelle re
 select an application	common	fr	Choisissez une application
 select an application, (*) = uninstalled	common	fr	Choisissez une application, (*) = non installée
 select an entry to link with	common	fr	Choisissez une entrée à lier
+select an opened dialog	common	fr	Sélectionner une boîte de dialogue ouverte
 select an table of the application	common	fr	Choisissez une table pour l'application
 select application	common	fr	Choisissez une application
 select application to search	common	fr	Sélectionnez une application à chercher
@@ -1142,6 +1226,7 @@ select the default width for the application windows	common	fr	Choisissez la lar
 select the indexed columns in their desired order	common	fr	Sélectionnez la colonne indexée dans leur ordre désiré
 select this etemplate to delete it	common	fr	choisissez cet eTemplate pour l'effacer
 select user	common	fr	Sélectionner l'utilisateur
+select user or group	api	fr	Sélectioner un utilisateur ou groupe
 select which accounts to show	common	fr	sélectionnez quels comptes à afficher
 select which values to show	common	fr	sélectionnez les valeurs à afficher
 select work email address	common	fr	Sélectionner l'email professionnel
@@ -1150,7 +1235,9 @@ selectbox	common	fr	Boîte de sélection
 selection	common	fr	Sélection
 send	common	fr	Envoyer
 send succeeded to %1	common	fr	Envoi réussi vers %1
+sender	api	fr	émetteur
 senegal	common	fr	SENEGAL
+sent	api	fr	Envoyés
 september	common	fr	Septembre
 serbia	common	fr	Serbie
 server %1 has been added	common	fr	Le serveur %1 a été ajouté
@@ -1165,9 +1252,13 @@ set these columns as the default	common	fr	Définir ces colonnes par défaut
 set user as only responsible user, but keeping groups	groupdav	fr	définir l'utilisateur comme l'unique responsable, mais garder les groupes
 set user as only responsible, removing all existing responsibles	groupdav	fr	définir l'utilisateur comme l'unique responsable, et supprimer les autres responsables existant
 sets today as date	common	fr	Fixe la date à aujourd'hui
+settings saved.	common	fr	Paramètres enregistrés.
 setup	common	fr	Setup
 setup main menu	common	fr	Menu principal du Setup
 seychelles	common	fr	SEYCHELLES
+share	api	fr	Partager
+share files	api	fr	Partager les fichiers
+share link	api	fr	Partager le lien
 shift	common	fr	Shift
 shift ⇧	common	fr	Maj ⇧
 should the form be submitted or any custom javascript be executed	common	fr	Est-ce que le formulaire doit être soumis ou un script java doit être exécuté
@@ -1217,6 +1308,7 @@ span, class	common	fr	Envergure, Classe
 special characters	common	fr	caractères spéciaux
 sri lanka	common	fr	SRI LANKA
 stack	common	fr	Pile
+start	api	fr	Début
 start a new search, cancel this link	common	fr	Démarre une nouvelle recherche, annule ce lien
 start date	common	fr	Date de début
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	fr	Répertoire de début pour la navigation d'image dans l'éditeur riche dans le File Manager EGroupware
@@ -1224,8 +1316,12 @@ start new search for the above pattern	common	fr	Démarre une nouvelle recherche
 start time	common	fr	Heure de début
 start with	common	fr	commence par
 starting up...	common	fr	Démarrage...
+state	api	fr	Etat
+state (private)	api	fr	Etat (privé)
 status	common	fr	Etat
 store your public key in addressbook?	common	fr	Stocker votre clé publique dans le carnet d'adresses ?
+street	api	fr	rue
+street (private)	api	fr	rue (privé)
 stretched	common	fr	étiré
 su	common	fr	Di
 subject	common	fr	Objet
@@ -1235,6 +1331,7 @@ submitbutton	common	fr	BoutonSoumettre
 substitutions and their meanings:	common	fr	Substitutions et leurs sens:
 successful created new directory %1 for unconnected nods.	admin	fr	Nouveau répertoire %1  créé avec succès pour les nœuds non connectés.
 sudan	common	fr	SOUDAN
+suffix	api	fr	suffixe
 sunday	common	fr	Dimanche
 sure	common	fr	Sûr
 suriname	common	fr	SURINAM
@@ -1263,6 +1360,7 @@ tanzania, united republic of	common	fr	TANZANIE, REPUBLIQUE DE
 template	common	fr	Template
 template deleted	common	fr	Template effacé
 template saved	common	fr	Template enregistré
+templates	api	fr	Modèles
 text	common	fr	Texte
 text color:	common	fr	Couleur du Texte:
 textarea	common	fr	ChampTexte
@@ -1303,6 +1401,7 @@ top	common	fr	Sommet
 total	common	fr	Total
 total: %1 successful: %2 failed: %3 skipped: %4	common	fr	Total: %1 Succès: %2 Echec(s): %3 Ignoré(s): %4
 transparant bg for the icons?	common	fr	Fond transparent pour les icônes
+trash	api	fr	Corbeille
 tree	common	fr	Arborescence
 trinidad and tobago	common	fr	TRINIDAD ET TOBAGO
 tu	common	fr	Ma
@@ -1322,6 +1421,7 @@ uncheck all	common	fr	Tout décocher
 unconnected nodes will be moved to %1.	admin	fr	Les nœuds non connectés seront déplacés vers %1.
 undefined	common	fr	indéfini
 underline	common	fr	Souligné
+undo	common	fr	Annuler
 unicode	common	fr	Unicode
 unique	common	fr	Unique
 united arab emirates	common	fr	EMIRATS ARABES UNIS
@@ -1334,12 +1434,16 @@ update	common	fr	Mettre à jour
 update a single entry by passing the fields.	common	fr	Mettre à jour une entrée unique  en passant les champs.
 update from version '%s' to	common	fr	Mettre à jour depuis la Version '%s' vers
 update the clock per minute or per second	common	fr	Mettre à jour l'horloge par minutes ou secondes
+updated	api	fr	Mis à jour
 upload	common	fr	Uploader
 upload directory does not exist, or is not writeable by webserver	common	fr	Le répertoire de dépôt n'existe pas ou le serveur web ne peut pas y écrire
 upload file(s) from filemanager...	common	fr	Uploader des fichiers depuis le gestionnaire de fichiers
+upload new photo	common	fr	Uploader une nouvelle photo
 upload requires the directory to be writable by the webserver!	common	fr	L'upload nécessite que le répertoire soit en écriture sur le serveur web !
 uppercase letters	common	fr	lettres majuscules
 url	common	fr	Url
+url (business)	api	fr	url (professionnel)
+url (private)	api	fr	url (privé)
 uruguay	common	fr	URUGUAY
 use button to search for	common	fr	Utilisez le bouton pour rechercher
 use button to search for address	common	fr	Utilisez le bouton pour rechercher une adresse
@@ -1363,6 +1467,7 @@ version	common	fr	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	fr	Numéro de version, devrait être de la forme: majeur.mineur.revision.nombre (p.e. 0.9.13.001 tous les nombres remplis avec des zéros)
 vertical alignment of row	common	fr	Alignement vertical de la ligne
 vfs upload directory	common	fr	Dossier d'upload VFS
+video tutorials	api	fr	Tutoriels vidéos
 viet nam	common	fr	VIETNAM
 view	common	fr	Voir
 view this etemplate	common	fr	Voir cet eTemplate
@@ -1372,6 +1477,7 @@ virgin islands, u.s.	common	fr	ILES VIERGES AMERICAINES
 wallis and futuna	common	fr	WALLIS ET FUTUNA
 we	common	fr	Me
 wednesday	common	fr	Mercredi
+weekday	api	fr	Jour de la semaine
 weekend	common	fr	weekend
 welcome	common	fr	Bienvenue
 western european	common	fr	Europe occidentale
@@ -1392,8 +1498,10 @@ width of the table in % or pixels for the table-tag and (optional) div	common	fr
 width, disabled	common	fr	Largeur, désactivé
 wk	common	fr	S.
 work email	common	fr	Email professionnel
+work phone	api	fr	téléphone professionnel
 working days	common	fr	Jours ouvrables
 would you like to display the page generation time at the bottom of every window?	common	fr	Voulez-vous voir apparaître le temps de génération en bas de chaque fenêtre?
+writable	api	fr	Inscriptible
 writable share	common	fr	Dossier inscriptible
 write <app>/setup/tables_current.inc.php	common	fr	Ecrire <app>/setup/tables_current.inc.php
 write langfile	common	fr	Ecrire le fichier de langage
@@ -1421,6 +1529,7 @@ you have not entered participants	common	fr	Vous n'avez pas entré de participan
 you have selected an invalid date	common	fr	Vous avez sélectionné une date invalide !
 you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
 you have successfully logged out	common	fr	Vous vous êtes correctement déconnecté
+you must change your password!	api	fr	Vous devez changer votre mot de passe !
 you need to %1set your timezone preference%2.	common	fr	Vous devez %1 définir votre préférence de fuseau horaire %2.
 you need to add the webserver user '%1' to the group '%2'.	common	fr	Vous devez ajouter l'utilisateur du serveur web '%1' au groupe '%2'.
 you need to be an egroupware administrator to access this functionality!	common	fr	Vous devez être administrateur d'EGroupware pour accéder à cette fonction !
@@ -1445,4 +1554,6 @@ your session timed out, please log in again	login	fr	Votre sesssion est expirée
 your settings have been updated	common	fr	Vos préférences ont été mises à jour
 zambia	common	fr	ZAMBIE
 zimbabwe	common	fr	ZIMBABWE
+zip code	api	fr	code postal
+zip code (private)	api	fr	code postal (privé)
 zoom	common	fr	Agrandissement

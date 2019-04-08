@@ -1,3 +1,4 @@
+%1 %2 rights for %3 on %4 to %5	admin	fr	%1 %2 droits pour %3 de %4 vers %5
 %1 - %2 of %3 user accounts	admin	fr	%1 - %2 de %3 comptes utilisateurs
 %1 - %2 of %3 user groups	admin	fr	%1 - %2 de %3 groupes utilisateurs
 %1 access to other data	admin	fr	%1 accès aux données des autres
@@ -6,6 +7,7 @@
 %1 acl records of not (longer) existing accounts deleted.	admin	fr	%1 entrées ACL supprimées, qui étaient associées à des comptes n'existant plus.
 %1 api\categories of not (longer) existing api\accounts deleted.	admin	fr	%1 catégories supprimées, qui étaient associées à des comptes n'existant plus.
 %1 categories of not (longer) existing accounts deleted.	admin	fr	%1 catégories supprimées, qui étaient associées à des comptes n'existant plus.
+%1 category '%2' %3	admin	fr	%1 catégorie '%2' %3
 %1 category(s) %2	admin	fr	%1 catégorie(s) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	fr	%1 catégorie(s) %2, %3 en échec pour droits insuffisants !!!
 %1 class not instanciated	admin	fr	Classe %1 non instanciée
@@ -18,7 +20,6 @@
 %1 rights for %2 and applications %3	admin	fr	Droits en %1 pour %2 et l'application %3.
 %1 run rights for applications	admin	fr	% droits d'exécution des applications
 %1 sessions killed	admin	fr	%1 session(s) tuée(s).
-%1 site configuration	admin	fr	%1 configuration du site
 %1 user %2	admin	fr	%1 utilisateur %2
 (de)activate mail accounts	admin	fr	(dés)activer les comptes email
 (default no, leave it off if you dont use it)	admin	fr	(Non par défaut, ne pas modifier si vous ne l'utilisez pas)
@@ -48,6 +49,7 @@ account permissions	admin	fr	Permissions de compte
 account preferences	admin	fr	Préférences de compte
 account saved.	admin	fr	Compte enregistré.
 account-id's have to be integers!	admin	fr	Les ID de compte doivent être des entiers!
+acl	admin	fr	ACL
 acl added.	admin	fr	ACL ajouté.
 acl csv export	admin	fr	Export CSV des ACL
 acl deleted.	admin	fr	ACL supprimé.
@@ -87,6 +89,7 @@ add profile	admin	fr	Ajouter un profil
 add sub-category	admin	fr	Ajouter une sous-catégorie
 add user	admin	fr	Ajouter un utilisateur
 add user or group	admin	fr	Ajouter un utilisateur ou un groupe
+added	admin	fr	ajouté
 admin	admin	fr	Admin
 admin dn	admin	fr	DN administrateur
 admin email	admin	fr	Email de l'administrateur
@@ -98,7 +101,8 @@ admin username	admin	fr	Nom d'utilisateur de l'administrateur
 administration	admin	fr	Administration
 admins	admin	fr	Administrateurs
 advanced options	admin	fr	Options avancées
-after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée (3 par défaut) ?
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué. (3 par défaut)
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée. (15 par défaut)
 aliases	admin	fr	Alias
 all	admin	fr	Tout
 all acls	admin	fr	Tous les ACLs
@@ -177,6 +181,7 @@ cancel this scheduled command	admin	fr	Annuler cette commande programmée
 categories	admin	fr	catégories
 categories list	admin	fr	Liste des catégories
 category %1 has been saved !	admin	fr	La catégorie %1 a été enregistrée !
+category '%1' deleted	admin	fr	La catégorie %1 a été supprimée !
 category deleted.	admin	fr	Catégorie supprimée.
 category list	admin	fr	Liste de catégories
 category saved.	admin	fr	Catégorie enregistrée.
@@ -232,6 +237,11 @@ current hash	admin	fr	Clé cryptée actuelle
 custom	admin	fr	Personnalisé
 custom fields	admin	fr	Champs personnalisés
 custom translation	admin	fr	Traduction personnalisée
+customfield '%1' added	admin	fr	Champ personnalisé '%1' ajouté
+customfield '%1' deleted	admin	fr	Champ personnalisé '%1' supprimé
+customfield '%1' modified	admin	fr	Champ personnalisé '%1' modifié
+customfield deleted	admin	fr	Champ personnalisé supprimé
+customfield saved.	admin	fr	Champ personnalisé enregistré
 cyrus imap server	admin	fr	Serveur Cyrus IMAP
 cyrus imap server administration	admin	fr	Administration du serveur Cyrus IMAP
 data	admin	fr	Données
@@ -262,6 +272,7 @@ delete selected entries	admin	fr	Supprime les entrées sélectionnées
 delete the category	admin	fr	Supprimer la catégorie
 delete the group	admin	fr	Supprimer le groupe
 delete the selected entries	admin	fr	Supprime les entrées sélectionnées
+delete this access control	admin	fr	Supprimer ce contrôle d'accès
 delete this account	admin	fr	Supprimer ce compte
 delete this category	admin	fr	Supprimer cette catégorie
 delete this group	admin	fr	Supprimer ce groupe
@@ -334,6 +345,7 @@ edit this group	admin	fr	Modifier ce groupe
 edit this user	admin	fr	Modifier cet utilisateur
 edit user	admin	fr	Modifier l'utilisateur
 edit user account	admin	fr	Modifier le compte de l'utilisateur
+edited	admin	fr	modifié
 educational: universities, schools, ...	admin	fr	Education: Universités, Ecoles,...
 egroupware directory	admin	fr	Répertoire d'EGroupware
 egroupware tutorial	admin	fr	Tutoriel EGroupware
@@ -358,6 +370,7 @@ enabled	admin	fr	Activé
 enabled - hidden from navbar	admin	fr	Activé - caché de la barre de navigation
 enabled - popup window	admin	fr	Activé - Fenêtre popup
 encrypted connection	admin	fr	connexion chiffrée
+encryption	admin	fr	Chiffrement
 encryption settings	admin	fr	Paramètres de chiffrement
 enter a description for the category	admin	fr	Entrez une description pour la catégorie
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	fr	Entrez un texte au hasard pour le <br>chiffrement de l'app_session (nécessite mcrypt)
@@ -406,6 +419,7 @@ expired	admin	fr	Expiré
 expires	admin	fr	Expire
 explanation of ldapman	admin	fr	Ce module a été testé avec POSTFIX, LDAP, Courier-IMAP et nécessite les schémas CORE et QMAIL (OID7914). Des informations supplémentaires pour configurer ce système sont disponibles dans le fichier README.ldap du répertoire ADMIN.
 exports groups into a csv file.	admin	fr	Exporter les groupes dans un fichier CSV.
+exports permission settings into a csv file.	admin	fr	Exporter les permissions dans un fichier CSV.
 exports users into a csv file.	admin	fr	Exporter les utilisateurs dans un fichier CSV.
 failed to change password for account "%1"!	admin	fr	Echec du changement de mot de passe pour le compte "%1" !
 failed to change password.	admin	fr	Erreur lors du changement de mot de passe.
@@ -463,6 +477,7 @@ hash	admin	fr	Clé de cryptage
 hide php information	admin	fr	Cacher les informations sur php
 hide sidebox video tutorials	admin	fr	Cacher les sidebox de tutoriels video
 home directory	admin	fr	Répertoire maison
+home screen message	admin	fr	Message de l'écran principal
 host information	admin	fr	Informations sur l'hôte
 hostname or ip	admin	fr	Serveur hôte ou IP
 hour<br>(0-23)	admin	fr	Heure<br>(0-23)
@@ -509,10 +524,12 @@ instance	admin	fr	Instance
 interface	admin	fr	Interface
 international use	admin	fr	Usage internationnal
 invalid argument '%1' !!!	admin	fr	Argument invalide '%1' !!!
+invalid email	admin	fr	Email invalide
 invalid formated date "%1"!	admin	fr	Date formatée invalide "%1" !
 invalid remote id or name "%1"!	admin	fr	ID distante ou nom "%1" invalide !
 invalid type "%1"!	admin	fr	Type  "%1"! invalide !
-invalid value "%1" use yes or no!	admin	fr	Valeur "%1" invalide utiliser oui ou non
+invalid value "%1" use yes or no!	admin	fr	Valeur "%1" invalide, utiliser oui ou non !
+invalide value "%1", use only:	admin	fr	Valeur "%1" invalide, utiliser seulement :
 ip	admin	fr	IP
 jobs	admin	fr	Travaux
 kill	admin	fr	Tuer
@@ -573,8 +590,7 @@ lowercase email addresses	admin	fr	Adresse email en minuscule
 mail account	admin	fr	Compte email
 mail settings	admin	fr	Paramètres de messagerie
 main email-address	admin	fr	Adresse email principale
-home screen	admin	fr	Ecran principal
-home screen message	admin	fr	Message de l'écran principal
+main screen message	admin	fr	Message sur l'écran principal
 manage mapping	admin	fr	Gestion des correspondances
 manage stationery templates	admin	fr	Gérer les modèles
 manager	admin	fr	Gestionnaire
@@ -651,6 +667,7 @@ owner "%1" removed, please select group-owner	admin	fr	Propriétaire "%1" enlev�
 passthrough	admin	fr	Passage
 password	admin	fr	Mot de passe
 password for smtp-authentication	admin	fr	Mot de passe pour l'authentification SMTP
+password to unlock encrypted p12	admin	fr	Mot de passe pour débloquer le chiffrement p12
 password updated	admin	fr	Mot de passe mis à jour
 passwords and/or attributes of %1 accounts changed	admin	fr	Mots de passe et/ou attributs du compte %1 changés
 passwords require a minimum number of characters	admin	fr	Les mots de passe nécessitent une longueur minimale
@@ -714,7 +731,6 @@ removing access for groups may cause problems for data in this category.  are yo
 requested	admin	fr	Requis
 required pear class mail/mimedecode.php not found.	admin	fr	Classe PEAR class Mail/mimeDecode.php non trouvée.
 reset filter	admin	fr	Réinitialiser le filtre
-return to view account	admin	fr	Revenir à l'affichage du compte
 rights	admin	fr	Droits
 route all mails to	admin	fr	Livrer tous les emails à
 rows	admin	fr	Lignes
@@ -841,7 +857,8 @@ times	admin	fr	Heures
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	fr	Pour nous permettre de tracer la croissance de votre installation individuelle, utiliser cette ID soumise, sinon effacer la:
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	fr	Pour utiliser une connexion TLS, vous devez utiliser une version PHP 5.1.0 ou supérieure.
 top	admin	fr	Haut
-total of %1 id's changed.	admin	fr	Total de %1 id changées
+total of %1 accounts deleted.	admin	fr	Total de %1 compte(s) supprimé(s)
+total of %1 id's changed.	admin	fr	Total de %1 id changés
 total records	admin	fr	Enregistrements totaux
 translation	admin	fr	Traduction
 true	admin	fr	Vrai
@@ -871,6 +888,7 @@ updated	admin	fr	Mis à jour
 upload your background image or enter the url	admin	fr	Uploader le fonds d'écran ou entrer l'URL
 upload your certificate .p12/.pfx file	admin	fr	Uploader votre certificat .p12/.pfx
 upload your favicon or enter the url	admin	fr	Uploader votre icone ou entrer l'URL
+upload your logo or enter the url	admin	fr	Uploader votre logo ou entrer l'URL
 uppercase, lowercase, number, special char	admin	fr	Majuscule, minuscule, nombre, caractère spécial
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	fr	URL de l'installation d'EGroupware, ex. http://domaine.com/egroupware
 usage	admin	fr	Usage
@@ -936,7 +954,6 @@ yes, use credentials below only for alarms and notifications, otherwise use cred
 yes, use credentials of current user or if given credentials below	admin	fr	Oui, utiliser les informations du compte utilisateur actif ou bien de ces informations ci-dessous si elles sont renseignées
 yes, use webspellchecker	admin	fr	Oui, utiliser le moteur de correcteur orthographique en ligne
 you can not use --dry-run together with --skip-checks!	admin	fr	Vous ne pouvez pas utiliser à la fois  --dry-run et --skip-checks !
-you can not use --try-run together with --skip-checks!	admin	fr	Vous ne pouvez pas utiliser à la fois --dry-run et --skip-checks !
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	fr	Vous pouvez changer le type de cryptage seulement, si vous définissez un mot de passe aléatoire ou si vous utilisez actuellement des mots de passe texte en clair !
 you can use wizard to fix account settings or delete account.	admin	fr	Vous pouvez utiliser l'assistant pour régler les paramètres ou supprimer des comptes.
 you have entered an invalid expiration date	admin	fr	Vous avez entré une date d'expiration invalide
