@@ -218,6 +218,7 @@ db user	setup	fr	Utilisateur de la base de données
 default	setup	fr	valeur par défaut recommandée
 default file system space per user/group ?	setup	fr	Espace disque par utilisateur/groupe par défaut ?
 delete	setup	fr	Supprimer
+delete all existing accounts from sql database	setup	fr	Supprimer tous les comptes de la base SQL
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	fr	Supprimer tous les comptes, groupes, ACLs et préférences stockés dans la base SQL déjà existants (normalement, ceci n'est pas nécessaire).
 delete all my tables and data	setup	fr	Supprimer toutes mes tables et données
 delete all old languages and install new ones	setup	fr	Supprimer toutes les anciennes langues et installer les nouvelles
@@ -230,6 +231,7 @@ deregistered	setup	fr	désenregistré
 details for admin account	setup	fr	Détails du compte admin
 developers' table schema toy	setup	fr	Jouet pour les schémas de table pour développeurs
 did not find any valid db support!	setup	fr	Aucun support de base de données valide!
+disabled	setup	fr	Désactivé
 do you want persistent connections (higher performance, but consumes more resources)	setup	fr	Voulez-vous des connexions persistantes (meilleure performance, mais consomme plus de ressources)
 do you want to manage homedirectory and loginshell attributes?	setup	fr	Voulez-vous gérer les attributs des répertoire d'accueil et du shell de connexion?
 does not exist	setup	fr	n'existe pas
@@ -260,6 +262,7 @@ egroupware domain/instance %1(%2):	setup	fr	domaine/instance EGroupware %1 (%2) 
 egroupware is already installed!	setup	fr	EGroupware est déjà installé !
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	fr	les sources EGroupware dans '%1' sont incomplètes, le fichier '%2' est manquant !!!
 email (standard maildomain should be set)	setup	fr	Email (le domaine de mail standard doit être défini)
+email-address	setup	fr	Adresse email
 emailadmin profile updated:	setup	fr	profil EMailAdmin mis à jour :
 enable for extra debug-messages	setup	fr	Activer pour les messages de déboguage supplémentaires
 enable mcrypt	setup	fr	Activer MCrypt
@@ -281,6 +284,7 @@ enter your http proxy server	setup	fr	Entrez votre serveur proxy HTTP
 enter your http proxy server password	setup	fr	Entrez le mot de passe pour le proxy HTTP
 enter your http proxy server port	setup	fr	Entrez le port de votre serveur proxy HTTP
 enter your http proxy server username	setup	fr	Entrez le nom d'utilisateur pour le proxy HTTP
+entry has been deleted sucessfully	setup	fr	entrée supprimée avec succès
 error deleting "dn=%1"!	setup	fr	Erreur à la suppression de "dn=%1" !
 error dropping user!	setup	fr	Erreur à la suppression de l'utilisateur !
 error in admin-creation !!!	setup	fr	Erreur lors de la création de l'admin !
@@ -314,6 +318,7 @@ header password	setup	fr	Mot de passe En-tête
 header username	setup	fr	Identifiant En-tête
 header-password[,header-user(admin)]	setup	fr	header-password[,header-user(admin)]
 header.inc.php successful written.	setup	fr	header.inc.php écrit ok.
+help and support	setup	fr	Aide et support
 historylog removed	setup	fr	Historique effacé
 hooks deregistered	setup	fr	dépendances désinscrites
 hooks registered	setup	fr	dépendances inscrites
@@ -389,6 +394,7 @@ login to mysql -	setup	fr	Connexion à mysql -
 loginname needed for domain configuration	setup	fr	Login requis pour la configuration du domaine
 logout	setup	fr	Se déconnecter
 mail account of %1 migraged	setup	fr	Compte email de %1 migré
+mail account of %1 migrated	setup	fr	Compte email de %1 migré
 mail domain (for virtual mail manager)	setup	fr	Domaine email (pour Virtual mail manager)
 mail server login type	setup	fr	Type de login au serveur de messagerie
 mail server protocol	setup	fr	Protocole du serveur de messagerie
@@ -454,9 +460,11 @@ or %1continue to the header admin%2	setup	fr	ou %1continuer vers la configuratio
 or http://webdav.domain.com (webdav)	setup	fr	ou http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	fr	Ou nous pouvons tenter de créer la base de données pour vous:
 or you can install a previous backup.	setup	fr	Ou vous pouvez installer une sauvegarde précédente
+password	setup	fr	Mot de passe
 password for smtp-authentication	setup	fr	Mot de passe pour l'authentification SMTP
 password needed for domain configuration.	setup	fr	Un mot de passe est nécessaire pour la configuration du domaine.
 password of db user	setup	fr	Mot de passe de l'utilisateur de la base de données
+passwords --> sql	setup	fr	Mots de passe --> SQL
 passwords did not match, please re-enter	setup	fr	Les mots de passe ne correspondaient pas, essayez encore SVP
 path (not url!) to your egroupware installation.	setup	fr	Chemin (pas l'URL!) vers votre installation EGroupware
 path information	setup	fr	Information de chemin
@@ -483,6 +491,7 @@ please login to egroupware and run the admin application for additional site con
 please make the following change in your php.ini	setup	fr	Modifiez votre fichier php.ini comme suit
 please wait...	setup	fr	Patientez svp...
 pop/imap mail server hostname or ip address	setup	fr	nom d'hôte ou adresse IP du serveur de messagerie POP/IMAP
+port	setup	fr	port
 possible reasons	setup	fr	Raisons possibles
 possible solutions	setup	fr	Solutions possibles
 post-install dependency failure	setup	fr	Erreur des dépendances de la post-installation
@@ -546,6 +555,7 @@ select which user(s) will have admin privileges	setup	fr	Choisissez quel(s) util
 select your old version	setup	fr	Choisissez votre ancienne version
 selectbox	setup	fr	Boîte de sélection
 server root	setup	fr	Racine serveur
+session expired	setup	fr	Session expirée
 session handler class used.	setup	fr	Classe "Session handler" utilisée
 set	setup	fr	définir
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	fr	Définir le jeu de caractères en UTF8 permet la co-existence de données provenant de jeu de caractères des différentes langues.

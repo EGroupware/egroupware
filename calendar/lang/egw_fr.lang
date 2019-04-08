@@ -30,6 +30,7 @@ actions	calendar	fr	Actions
 actions...	calendar	fr	Actions...
 add	calendar	fr	Ajouter
 add alarm	calendar	fr	Ajouter une alarme
+add appointments via shortened dialog or complete edit window	calendar	fr	Ajouter les rendez-vous par une boîte de dialogue courte ou par une fenêtre complète
 add current view as favorite	calendar	fr	Ajouter cette vue aux favoris
 add new alarm	calendar	fr	Ajouter une alarme
 add new participants or resource	calendar	fr	Ajouter de nouveaux participants ou ressources
@@ -61,6 +62,8 @@ allow booking requests from any user when creating events?	calendar	fr	Autoriser
 allow users to prevent change notifications ('do not notify')	calendar	fr	Autoriser les utilisateurs à empêcher le changement des notifications "Ne pas notifier"
 allows to edit the event again	calendar	fr	Autorise la réédition de l'événement
 always	calendar	fr	toujours
+always use full edit dialog	calendar	fr	Toujours utiliser la boîte de dialogue complète
+always use the full edit dialog, not this little dialog	calendar	fr	Toujours utiliser la boîte de dialogue complète, pas cette petite fenêtre...
 api-accounts	calendar	fr	compte-api
 apply the action on the whole query, not only the shown events	calendar	fr	Appliquer l'action sur la requête entière, PAS SEULEMENT sur les événements affichés.
 apply the changes	calendar	fr	Appliquer les modifications
@@ -105,6 +108,7 @@ category	calendar	fr	Catégorie
 category %1 removed because of missing rights	calendar	fr	Catégorie %1 supprimée pour manque de droits
 category acl	common	fr	ACL sur les catégories
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	fr	Les ACL sur les catégories restreignent seulement l'ajout d'une catégorie sur un événement ou le changement de statut d'un participant.  Cela ne joue pas sur la visibilité de l'événement.
+category automatically added to new events	calendar	fr	Catégorie ajoutée automatiquement aux nouveaux événements
 chair	calendar	fr	Organisateur
 change history	calendar	fr	Historique des changements
 change your status	calendar	fr	Changer votre statut
@@ -231,6 +235,7 @@ error: you can't shift a series from the past!	calendar	fr	Erreur : vous ne pouv
 event	common	fr	Evénement
 event deleted	calendar	fr	Evénement supprimé.
 event details follow	calendar	fr	Les détails de l'événement suivent
+event has been deleted by organizer!	calendar	fr	L'événement a été supprimé par l'organisateur !
 event owner	calendar	fr	Propriétaire de l'événement
 event saved	calendar	fr	Evénement enregistré.
 event will occupy the whole day	calendar	fr	L'événement occupera la journée entière
@@ -238,6 +243,7 @@ events	common	fr	Evénements
 every user can invite other users and groups	admin	fr	Tous les utilisateur peuvent inviter d'autres utilisateurs ou groupes
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	fr	Exemple : {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - pour chercher sur le champ "n_prefix" pour "Mr", si trouvé alors "Hello Mr." sinon, "Hello Ms."
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	fr	Exemple {{LETTERPREFIXCUSTOM n_prefix title n_family}} - exemple : Mr Dr. James Miller
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	calendar	fr	Exemple {{LETTERPREFIX}} - Donne un début de lettre sans double espace, si le titre est vide par exemple
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	fr	Exemple {{NELF role}} - Si le champ rôle n'est pas vide, vous aurez une nouvelle ligne avec la valeur du champ rôle
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	calendar	fr	Exemple : {{nenvlf role}} - Si le champ rôle n'est pas vide, définir un "LF" sans aucune valeur de ce champ
 exception	calendar	fr	Exception
@@ -305,6 +311,10 @@ hour	calendar	fr	heure
 hours	calendar	fr	Heures
 how far to search (from startdate)	calendar	fr	rechercher jusqu'à quand (à partir de la date de début)
 how many appointments should non-admins be able to export	admin	fr	Combien de rendez-vous les non-administrateurs sont-ils autorisés à exporter ?
+how many days to be removed in the future (default 365)	calendar	fr	Combien de jours à supprimer dans le futur (défaut 365)
+how many days to be removed in the past (default 100)	calendar	fr	Combien de jours à supprimer dans le passé (défaut 100)
+how many days to sync in the future (default %1)	calendar	fr	Combien de jour à synchroniser dans le futur (défaut %1)
+how many days to sync in the past (default %1)	calendar	fr	Combien de jour à synchroniser dans le passé (défaut %1)
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	fr	Combien de lignes de descriptions devraient être directement visibles. Les lignes supplémentaires sont disponibles via une barre de défilement.
 how many minutes should each interval last?	calendar	fr	Combien de minutes doit durer chaque intervalle ?
 how many weeks should the multiple week view show?	calendar	fr	Combien de semaines afficher dans la vue multi-semaines ?
@@ -360,6 +370,7 @@ low	calendar	fr	Basse
 mail all participants	calendar	fr	envoyer un email à tous les participants
 make freebusy information available to not logged in persons?	calendar	fr	Mettre à disposition les disponibilités aux personnes non connectées?
 manage mapping	calendar	fr	Gérer l'association des champs
+mark event as private to hide title and description	calendar	fr	Marquer l'événement comme privé pour masquer le titre et la description
 max. number of entries to show (leave empty for no restriction)	calendar	fr	Nombre maximum d'éléments à afficher.  Laissez vide pour ne pas mettre de limite.
 maximum available quantity of %1 exceeded!	calendar	fr	Dépassement de la quantité maximum disponible %1 !
 meeting canceled	calendar	fr	Rendez-vous annulé
@@ -367,6 +378,8 @@ meeting request	calendar	fr	Demande de rendez-vous
 meetingrequest to all participants	calendar	fr	Demande de rendez-vous à tous les participants
 merge document...	calendar	fr	Fusionner un document...
 midnight	calendar	fr	Minuit
+minimum number of users for showing day view as consolidated.	calendar	fr	Nombre minimum d'utilisateurs pour afficher la vue journalière comme consolidée.
+minimum number of users for showing week view as consolidated.	calendar	fr	Nombre minimum d'utilisateurs pour afficher la vue hebdomadaire comme consolidée.
 minute	calendar	fr	minute
 minutes	calendar	fr	Minutes
 modified	calendar	fr	Modifié
@@ -387,6 +400,7 @@ name of the week (ex: monday), available for the first entry inside each day of 
 needs action	calendar	fr	Action nécessaire
 never	calendar	fr	Jamais
 new	calendar	fr	Nouveau
+new event category	calendar	fr	Catégorie du nouvel événement
 new event participants	calendar	fr	Nouveaux participants
 new search with the above parameters	calendar	fr	Nouvelle recherche avec les paramètres ci-dessus
 next	calendar	fr	Suivant
@@ -401,6 +415,7 @@ no preview for ical	calendar	fr	Aucune prévisualisation pour iCal
 no recurrence	calendar	fr	Pas de récurrence
 no response	calendar	fr	Pas de réponse
 no rights to export more than %1 entries!	calendar	fr	Pas de droit d'exporter plus de %1 entrées !
+no, users will need to contact users with direct booking permission	calendar	fr	Non, les utilisateur devront contacter les utilisateur avec les droits de réservations en direct.
 non blocking	calendar	fr	non bloquant
 none	calendar	fr	aucun
 normal	calendar	fr	Normal
@@ -468,6 +483,7 @@ private and group public	calendar	fr	Public privé et groupe
 private only	calendar	fr	Privé seulement
 public	calendar	fr	Public
 quantity	calendar	fr	Quantité
+quick add	calendar	fr	Ajout rapide
 range fields	calendar	fr	Champs d'intervalle
 re-edit event	calendar	fr	Remodifier l'événement
 receive email updates	calendar	fr	Recevoir les mises à jour par EMail
@@ -479,6 +495,7 @@ recurrence	calendar	fr	Récurrence
 recurrence enddate	calendar	fr	Date de fin de récurrence
 recurrences and conflict check	calendar	fr	Vérification des conflits et des récurrences
 recurring event	calendar	fr	Evénement récurrent
+regular edit	calendar	fr	Modification classique
 reject	calendar	fr	Rejeter
 rejected	calendar	fr	Rejeté
 repeat days	calendar	fr	Jours répétés
@@ -642,6 +659,8 @@ updated	calendar	fr	Mis à jour
 url	calendar	fr	URL
 use end date	calendar	fr	utiliser la date de fin
 use event tz	calendar	fr	Utiliser le fuseau horaire
+use given criteria:	calendar	fr	Utiliser les critères indiqués :
+use side menu to filter participants	calendar	fr	Utiliser le menu latéral pour filtrer les participants
 use the selected time and close the popup	calendar	fr	choisir la date et l'heure sélectionnées et fermer le popup
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
 use this timezone to export calendar data.	calendar	fr	Utiliser ce fuseau horaire pour exporter les données du calendrier
@@ -660,6 +679,7 @@ view exception	calendar	fr	Voir l'exception
 view series	calendar	fr	Voir la série
 view settings	calendar	fr	Voir les paramètres
 view this event	calendar	fr	Voir cet événement
+views showing a list of events	calendar	fr	Vues affichant une liste d'événements
 views with fixed time intervals	calendar	fr	Vues à intervalles de temps fixes
 wed	calendar	fr	Me
 week	calendar	fr	Semaine

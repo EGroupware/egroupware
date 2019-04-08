@@ -47,7 +47,10 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	de	Benutzerdefinierte Felder editieren
 enable	preferences	de	Aktivieren
 enable drag and drop functionality (experimental)	preferences	de	Drag-and-Drop einschalten (experimentell)
+enable menubar	preferences	de	Menüleiste aktivieren
 enable selectbox dropdown resizing for ie (experimental)	preferences	de	Aktiviere Selectbox-Drop-Down-Menue Grössenanpassung für IE (experimentell)
+enable/disable menubar from top of the editor.	preferences	de	Aktivieren/Deaktivieren der Menüleiste am oberen Rand des Editors.
+enabled features in toolbar	preferences	de	Aktivierte Funktionen in der Symbolleiste
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	de	Schaltet drag-and-drop in allen Anwendungen ein. Wenn vom Browser nicht unterstützt, wird es automatisch ausgeschaltet. Ist im Moment noch experimentell.
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	de	Hier können die die Funktion aktiveren oder deaktivieren, die es Ihnen im Internet Explorer ermöglicht Auswahl Boxen automatisch auf Ihre wirkliche Größe (bei langen Texten) zu erweitern. Falls Sie einen anderen Browser verwenden, hat dies keine Auswirkungen. Diese Funktion ist noch in der Erprobung.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	de	Schaltet die Selectbox-Drop-Down-Menue Grössenanpassung für den Internet Explorer in allen Anwendungen ein oder aus. Wenn der Browser kein Internet Explorer ist,wird diese Option ignoriert. Diese Option ist im Moment noch experimentell.
@@ -158,6 +161,7 @@ write prefs for the specified application.	preferences	de	Schreibt die Einstellu
 you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
 you can show the linked entries with icons only, icons with app-name or both.	common	de	Sie können verknüpfte Einträge mit Bild, Anwendungsnamen oder beidem anzeigen.
 you do not have permission to set acl's in this mode!	preferences	de	Sie haben keine Berechtigung die ACL in diesem Modus zu setzen.
+you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	de	Sie können Funktionen auswählen, die in der Symbolleiste aktiviert werden sollen.
 you must enter a password	preferences	de	Sie müssen ein Passwort angeben
 your current theme is: %1	preferences	de	Ihr aktuelles Farbschema ist: %1
 your password does not have required strength:	preferences	de	Ihr Passwort hat nicht die erforderliche Stärke:

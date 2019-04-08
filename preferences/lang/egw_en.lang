@@ -47,7 +47,10 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	en	Edit custom fields
 enable	preferences	en	Enable
 enable drag and drop functionality (experimental)	preferences	en	Drag and drop
+enable menubar	preferences	en	Enable menubar
 enable selectbox dropdown resizing for ie (experimental)	preferences	en	Select box drop down menu resizing
+enable/disable menubar from top of the editor.	preferences	en	Enable/Disable menubar from top of the editor.
+enabled features in toolbar	preferences	en	Enabled features in toolbar
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	en	Enables or disables drag and drop functions in all applications. If the browser does not support drag and drop, it will be disabled automatically.
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables select box drop down menu resizing for IE in all applications. If the browser is not an IE, the option will not apply.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE , the option will not apply. This feature is experimental at the moment.
@@ -158,6 +161,7 @@ write prefs for the specified application.	preferences	en	Write preferences for 
 you can show the applications as icons only, icons with app-name or both.	preferences	en	You can show the applications as icons only, icons with app-name or both.
 you can show the linked entries with icons only, icons with app-name or both.	common	en	Show applications with icons only, icons with application name or both.
 you do not have permission to set acl's in this mode!	preferences	en	You do not have permission to set ACL's in this mode!
+you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	en	You may select features to be enabled in toolbar.
 you must enter a password	preferences	en	You must enter a password.
 your current theme is: %1	preferences	en	Your current theme is %1
 your password does not have required strength:	preferences	en	Your password does not have required strength:

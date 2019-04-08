@@ -3,6 +3,7 @@
 %1 copied - the copy can now be edited	common	en	%1 copied - the copy can now be edited
 %1 directories %2 found!	admin	en	%1 directories %2 found!
 %1 email addresses inserted	common	en	%1 email addresses inserted.
+%1 email(s) added into %2	api	en	%1 email(s) added into %2
 %1 entries found, select one ...	common	en	%1 entries found, select one ...
 %1 etemplates deleted	common	en	%1 eTemplates deleted.
 %1 etemplates for application '%2' dumped to '%3'	common	en	%1 eTemplates for application '%2' dumped to '%3'
@@ -571,6 +572,7 @@ french southern territories	common	en	FRENCH SOUTHERN TERRITORIES
 friday	common	en	Friday
 ftp	common	en	FTP
 fullname	common	en	Full name
+fullscreen	api	en	Fullscreen
 fullscreen mode	common	en	Full screen mode
 gabon	common	en	GABON
 gambia	common	en	GAMBIA
@@ -1000,6 +1002,7 @@ philippines	common	en	PHILIPPINES
 phone number	common	en	Phone number
 pitcairn	common	en	PITCAIRN
 placeholders	common	en	Placeholders
+play/pause	api	en	Play/Pause
 please %1 by hand	common	en	Please %1 by hand
 please enter a name	common	en	Enter a name!
 please enter table-name first !!!	common	en	Enter table name first!
@@ -1205,6 +1208,9 @@ sets today as date	common	en	Set today as date
 setup	common	en	Setup
 setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
+share	api	en	Share
+share files	api	en	Share files
+share link	api	en	Share link
 shift	common	en	Shift
 shift ⇧	common	en	Shift ⇧
 should the form be submitted or any custom javascript be executed	common	en	Should form be submitted or any custom javascript executed
@@ -1437,6 +1443,7 @@ work email	common	en	Work email
 working days	common	en	Working days
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	en	Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB
 would you like to display the page generation time at the bottom of every window?	common	en	Display the page generation time at the bottom of every window
+writable	api	en	Writable
 writable share	common	en	Writable share
 write <app>/setup/tables_current.inc.php	common	en	Write <app>/setup/tables_current.inc.php
 write langfile	common	en	Write language file
