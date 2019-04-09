@@ -349,14 +349,14 @@ class admin_customfields
 						}
 						else
 						{
-							foreach(explode("\n",trim($content['cf_values'])) as $line)
+							foreach(explode("\n",trim($content['cf_values'])) as $idx => $line)
 							{
 								list($var_raw,$value) = explode('=',trim($line),2);
 								$var = trim($var_raw);
-								if (!preg_match(self::CHECK_MULTISELCT_VALUE, $var))
+								if (!preg_match(self::CHECK_MULTISELCT_VALUE, $var) && !($idx == 0 && !$var && $value))
 								{
 									Api\Etemplate::set_validation_error('cf_values',
-										lang('Invalide value "%1", use only:', $var)."\n".
+										lang('Invalid value "%1", use only:', $var)."\n".
 											preg_replace('/^.*\[([^]]+)\].*$/', '$1', self::CHECK_MULTISELCT_VALUE));
 									$action = 'apply';	// do not close the window to show validation error
 									if (!$cf_id) break 2;	// only stop storing of new CFs
