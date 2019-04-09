@@ -423,24 +423,17 @@ div.admin-config form > table {
  * Styles for different egw_message-types
  */
 .success_message, .warning_message, .error_message {
-	color: red;
 	font-weight: normal;
-	font-style: italic;
 	text-align: left;
 	margin-left: 5px;
 	padding-left: 20px;
-	background-image: url(../images/check.png);
-	background-position: left;
-	background-repeat: no-repeat;
-	background-size: 16px;
 	white-space: pre-wrap;
 }
 .warning_message {
-	background-image: url(../images/dialog_warning.png);
+	border-top: 6px solid @egw_color_msg_warning !important;
 }
 .error_message {
-	font-weight: bold;
-	background-image: url(../images/dialog_error.png);
+	border-top: 6px solid @egw_color_msg_error !important;
 }
 .info_message .discard  {
 	float:right;
@@ -451,17 +444,14 @@ div.admin-config form > table {
  */
 body > div#egw_message {
 	background-color: @gray_10;
-	.box_shadow_message;
-	border: 3px solid @egw_color_1_a;
-	.border_radius (0px, 15px, 15px, 0px);
 	right: 33%;
 	top: 0px;
-	padding: 10px;
-	padding-left: 25px;
-	background-position-x: 5px;
-	min-width: 100px;
+	padding: 13px;
+	padding-left: 20px;
+	min-width: 1300px;
 	z-index: 100000;
 	margin:  0px auto;
 	max-width: 90%;
 	white-space: pre-wrap;
+	border-top: 6px solid @egw_color_msg_info;
 }

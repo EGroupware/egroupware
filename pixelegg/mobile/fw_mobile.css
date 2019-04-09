@@ -3243,24 +3243,17 @@ div.admin-config form > table td b {
 .success_message,
 .warning_message,
 .error_message {
-  color: red;
   font-weight: normal;
-  font-style: italic;
   text-align: left;
   margin-left: 5px;
   padding-left: 20px;
-  background-image: url(../images/check.png);
-  background-position: left;
-  background-repeat: no-repeat;
-  background-size: 16px;
   white-space: pre-wrap;
 }
 .warning_message {
-  background-image: url(../images/dialog_warning.png);
+  border-top: 6px solid rgba(255, 204, 0, 0.9) !important;
 }
 .error_message {
-  font-weight: bold;
-  background-image: url(../images/dialog_error.png);
+  border-top: 6px solid rgba(204, 0, 51, 0.8) !important;
 }
 .info_message .discard {
   float: right;
@@ -3271,33 +3264,16 @@ div.admin-config form > table td b {
  */
 body > div#egw_message {
   background-color: #E6E6E6;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 3px solid #ffc200;
-  -webkit-border-top-right-radius: 0px;
-  -webkit-border-bottom-right-radius: 15px;
-  -webkit-border-bottom-left-radius: 15px;
-  -webkit-border-top-left-radius: 0px;
-  -moz-border-radius-topright: 0px;
-  -moz-border-radius-bottomright: 15px;
-  -moz-border-radius-bottomleft: 15px;
-  -moz-border-radius-topleft: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-top-left-radius: 0px;
-  /*.background-clip(padding-box);*/
   right: 33%;
   top: 0px;
-  padding: 10px;
-  padding-left: 25px;
-  background-position-x: 5px;
-  min-width: 100px;
+  padding: 13px;
+  padding-left: 20px;
+  min-width: 1300px;
   z-index: 100000;
   margin: 0px auto;
   max-width: 90%;
   white-space: pre-wrap;
+  border-top: 6px solid #33CC66;
 }
 /**
  * Less-file for egroupware
