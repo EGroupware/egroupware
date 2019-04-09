@@ -803,6 +803,21 @@ class Select extends Etemplate\Widget
 				{
 					$options += (array)Api\Hooks::single(array('location' => 'acl_rights'), $appname);
 				}
+				else
+				{
+					$options += array(
+						'run' => 'Run',
+						Api\Acl::READ => 'Read',
+						Api\Acl::ADD => 'Add',
+						Api\Acl::EDIT => 'Edit',
+						Api\Acl::DELETE => 'Delete',
+						Api\Acl::PRIVAT => 'Private',
+						Api\Acl::GROUPMGRS => 'Group managers',
+						Api\Acl::CUSTOM1 => 'Custom 1',
+						Api\Acl::CUSTOM2 => 'Custom 2',
+						Api\Acl::CUSTOM3 => 'Custom 3',
+					);
+				}
 				foreach((array)$options as $right => $name)
 				{
 					if(!!($value & $right))
