@@ -761,24 +761,25 @@
     min-height: 16px;
     padding: 3px 0px;
     margin-bottom: 0.2em;
-    background-color: #ece2f7;
+  }
+  .sidebox-favorites ul.favorites li.ui-menu-item a {
+    color: #000000;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item:hover {
     color: #000000;
-    background-color: #9B6AD6;
+    background-color: rgba(153, 204, 255, 0.4);
     padding: 3px 0;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item:hover a {
-    color: #FFFFFF;
+    color: #000000;
   }
-  .sidebox-favorites ul.favorites li.ui-menu-item:first-of-type {
-    background-color: #FFFFFF;
+  .sidebox-favorites ul.favorites li.ui-menu-item:hover a .ui-icon-trash {
+    background-image: url(../images/delete.svg);
+    background-size: 12px 12px;
+    background-position: center 4px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item:first-of-type a {
     color: #000000;
-  }
-  .sidebox-favorites ul.favorites li.ui-menu-item:last-of-type {
-    background-color: #FFFFFF;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item:last-of-type a {
     color: #000000;
@@ -788,7 +789,7 @@
     padding: 2px 0px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item a div.ui-icon-heart {
-    background-image: url(../images/personal.png);
+    background-image: url(../images/favorites.svg);
     background-size: 12px 12px;
     background-position: 0 0;
     margin-right: 9px;
@@ -812,26 +813,23 @@
     margin-top: -3px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item [data-id="blank"] div.ui-icon-heart {
-    background-image: url(../images/trash.png);
+    background-image: url(../images/delete.svg);
     background-size: 12px 12px;
     background-position: 0 0;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item.ui-state-highlight {
     color: #000000;
-    background: #9B6AD6;
+    background: rgba(102, 153, 204, 0.7);
     padding: 3px 0;
     border: none;
   }
-  .sidebox-favorites ul.favorites li.ui-menu-item.ui-state-highlight a {
-    color: #FFFFFF;
-  }
   .sidebox-favorites ul.favorites li:first-child a div.ui-icon-heart {
-    background-image: url(../images/trash.png);
+    background-image: url(../images/delete.svg);
     background-size: 12px 12px;
     background-position: 0 0;
   }
   .sidebox-favorites ul.favorites li:first-child a div.sideboxstar {
-    background-image: url(../images/trash.png);
+    background-image: url(../images/delete.svg);
     background-size: 12px 12px;
     background-position: 0 0;
   }
@@ -4811,8 +4809,6 @@ td.message span.message {
   text-decoration: none;
   min-width: 5em;
   vertical-align: bottom;
-}
-.egw_fw_ui_sidemenu_listitem a:hover {
   color: #000000;
 }
 .egw_fw_ui_sidemenu_listitem a:active {

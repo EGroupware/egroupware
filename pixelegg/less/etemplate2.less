@@ -698,94 +698,80 @@ div.header_row_right{
 // Favoriten
 .sidebox-favorites {
 
-        ul.favorites {
-                    width: 99%;
-                    padding: 0px;
-                    border: none;
-                    background: white;
+	ul.favorites {
+		width: 99%;
+		padding: 0px;
+		border: none;
+		background: white;
 
-                    li.ui-menu-item {
-                                    margin-left: 0px;
-                                    min-height: 16px;
-                                    padding: 3px 0px;
-                                    margin-bottom: 0.2em;
-                                    background-color: lighten(@egw_color_3_e, 30%);
-
-                                    // lila
-                                    &:hover{
-                                            .color_100_gray;
-                                            background-color: @egw_color_3_e;
-                                            padding: 3px 0;
-
-                                            a{color: @gray_0;}
-
-                                        }
-
-                                    // delete favourites
-                                    &:first-of-type {background-color: @gray_0;
-
-                                                     a{color: @gray_100;}
-                                    }
-
-                                    // view as favourites
-                                    &:last-of-type {background-color: @gray_0;
-
-                                                    a{color: @gray_100;}
-                                    }
-
-
-                                        a{
-
-                                                line-height: inherit;
-                                                padding: 2px 0px;
-
-
-                                                // Heart
-                                                div.ui-icon-heart {background-image: url(../images/personal.png); background-size: 12px 12px;background-position: 0 0;margin-right:9px;margin-left:2px;}
-
-                                                // Bulltpoints
-                                                div.sideboxstar {
-                                                                width: 4px;
-                                                                height: 12px;
-                                                                margin-left: 5px;
-																margin-right: 10px;
-                                                                background-image: url(../images/fav_filter.png);
-                                                                background-size: 12px 12px;
-                                                                background-position: 0 0;
-                                                                background-repeat: no-repeat;
-                                                            }
-
-                                             }
-
-                                       // Aktuelle Ansicht als Favorit
-                                       img {.dimension_width_height_xs; margin-left: 5px;margin-right:10px;margin-top:-3px;}
-
-                                       // Filter aufheben
-                                       [data-id="blank"]{
-
-                                                        div.ui-icon-heart {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
-
-                                                    }
-
-
-                                     } // Ende li
-					li.ui-menu-item.ui-state-highlight {
-						.color_100_gray;
-						background: @egw_color_3_e;
-						padding: 3px 0;
-						border: none;
-
-						a{color: @gray_0;}
-
+		li.ui-menu-item {
+			margin-left: 0px;
+			min-height: 16px;
+			padding: 3px 0px;
+			margin-bottom: 0.2em;
+			a {color:@gray_100;}
+			&:hover {
+				.color_100_gray;
+				background-color: @color_hover_row;
+				padding: 3px 0;
+				a {
+					color: @gray_100;
+					.ui-icon-trash {
+						background-image: url(../images/delete.svg);
+						background-size: 12px 12px;
+						background-position: center 4px;
 					}
-                     // Filter aufheben
-                     li:first-child{
-                        a div.ui-icon-heart {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
-                        a div.sideboxstar {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
+				}
+			}
 
-                     }
+			// delete favourites
+			&:first-of-type {
+				a {color: @gray_100;}
+			}
 
-        }
+			// view as favourites
+			&:last-of-type {
+				a {color: @gray_100;}
+			}
+
+			a {
+				line-height: inherit;
+				padding: 2px 0px;
+				// Heart
+				div.ui-icon-heart {background-image: url(../images/favorites.svg); background-size: 12px 12px;background-position: 0 0;margin-right:9px;margin-left:2px;}
+				// Bulltpoints
+				div.sideboxstar {
+					width: 4px;
+					height: 12px;
+					margin-left: 5px;
+					margin-right: 10px;
+					background-image: url(../images/fav_filter.png);
+					background-size: 12px 12px;
+					background-position: 0 0;
+					background-repeat: no-repeat;
+				}
+
+			}
+			// Aktuelle Ansicht als Favorit
+			img {.dimension_width_height_xs; margin-left: 5px;margin-right:10px;margin-top:-3px;}
+
+			// Filter aufheben
+			[data-id="blank"] {
+				div.ui-icon-heart {background-image: url(../images/delete.svg); background-size: 12px 12px;background-position: 0 0;}
+			}
+		} // Ende li
+		li.ui-menu-item.ui-state-highlight {
+			.color_100_gray;
+			background: @color_selected_row;
+			padding: 3px 0;
+			border: none;
+		}
+		// Filter aufheben
+		li:first-child {
+		   a div.ui-icon-heart {background-image: url(../images/delete.svg); background-size: 12px 12px;background-position: 0 0;}
+		   a div.sideboxstar {background-image: url(../images/delete.svg); background-size: 12px 12px;background-position: 0 0;}
+		}
+	}
 } // sidebox-favorites
 
 // Favorites in nextmatch Header
