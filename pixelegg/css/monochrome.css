@@ -3246,7 +3246,7 @@ body > div#egw_message {
   top: 0px;
   padding: 13px;
   padding-left: 20px;
-  min-width: 1300px;
+  min-width: 130px;
   z-index: 100000;
   margin: 0px auto;
   max-width: 90%;
