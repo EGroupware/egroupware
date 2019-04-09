@@ -760,6 +760,7 @@
     padding: 3px 0;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item:hover a {
+    text-decoration: none;
     color: #000000;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item:hover a .ui-icon-trash {
