@@ -374,7 +374,7 @@ class admin_customfields
 							$update_content[substr($key,3)] = $value;
 						}
 					}
-					$cmd = new admin_cmd_customfield($this->appname, $update_content);
+					$cmd = new admin_cmd_customfield($this->appname, $update_content,null,$content['admin_cmd']);
 					$cmd->run();
 					if(!$cf_id)
 					{

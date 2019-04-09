@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.customfield_edit" template="" lang="" group="0" version="1.9.001">
+	<template id="admin.customfield_edit.settings" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -11,11 +11,6 @@
 				<column width="50"/>
 			</columns>
 			<rows>
-				<row class="dialogHeader" height="28">
-					<description statustext="the name used internaly (&amp;lt;= 20 chars), changeing it makes existing data unavailible" value="Name"/>
-					<textbox statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" id="cf_name" size="20" maxlength="32" needed="true" class="et2_fullWidth" span="2"/>
-					<appicon/>
-				</row>
 				<row disabled="@no_types">
 					<description value="Type"/>
 					<menulist span="3">
@@ -53,7 +48,35 @@
 						<description value="Order"/>
 						<textbox type="integer" statustext="determines the order the fields are displayed" id="cf_order" min="1" size="4"/>
 					</box>
+
 					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.customfield_edit" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="100"/>
+				<column width="350"/>
+				<column width="45"/>
+				<column width="50"/>
+			</columns>
+			<rows>
+				<row class="dialogHeader" height="28">
+					<description statustext="the name used internaly (&amp;lt;= 20 chars), changeing it makes existing data unavailible" value="Name"/>
+					<textbox statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" id="cf_name" size="20" maxlength="32" needed="true" class="et2_fullWidth" span="2"/>
+					<appicon/>
+				</row>
+				<row>
+					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tab_height="400px">
+						<tabs>
+							<tab id="settings" label="Settings" statustext="Settings"/>
+						</tabs>
+						<tabpanels>
+							<template id="admin.customfield_edit.settings"/>
+						</tabpanels>
+					</tabbox>
 				</row>
 				<row class="dialogFooterToolbar">
 					<hbox span="2">
