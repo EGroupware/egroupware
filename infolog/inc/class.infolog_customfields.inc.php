@@ -229,6 +229,10 @@ class infolog_customfields extends admin_customfields
 
 	function update(&$content)
 	{
+		$old = array(
+			'status' => $this->status,
+			'group_owners' => $this->group_owners
+		);
 		$this->update_status($content);
 
 		if ($content['content_type_options']['group_owner'])
@@ -239,8 +243,31 @@ class infolog_customfields extends admin_customfields
 		{
 			unset($this->group_owners[$this->content_type]);
 		}
-		// save changes to repository
-		$this->save_repository();
+		$changed = array();
+		foreach($old as $key => $value)
+		{
+			if($this->$key != $value)
+			{
+				$changed[$key] = $this->$key;
+			}
+			else
+			{
+				unset($old[$key]);
+			}
+		}
+		foreach($changed['status'] as $type => $statuses)
+		{
+			if($old['status'][$type] == $statuses)
+			{
+				unset($old['status'][$type]);
+				unset($changed['status'][$type]);
+			}
+		}
+		if($changed)
+		{
+			$cmd = new admin_cmd_config('infolog',$changed, $old);
+			$cmd->run();
+		}
 	}
 
 	function delete(&$content)
@@ -315,6 +342,7 @@ class infolog_customfields extends admin_customfields
 
 		// migrate staff account_ids
 		$config = Api\Config::read('infolog');
+		$old = $config['group_owners'];
 		if (!empty($config['group_owners']))
 		{
 			foreach($config['group_owners'] as &$account_id)
@@ -328,7 +356,11 @@ class infolog_customfields extends admin_customfields
 			}
 			if ($needs_save)
 			{
-				Api\Config::save_value('group_owners', $config['group_owners'], 'infolog');
+				$cmd = new admin_cmd_config('infolog',
+						array('group_owners' => $config['group_owners']),
+						array('group_owners' => $old)
+				);
+				$cmd->exec();
 			}
 		}
 
