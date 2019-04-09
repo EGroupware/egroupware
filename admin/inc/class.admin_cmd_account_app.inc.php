@@ -68,8 +68,8 @@ class admin_cmd_account_app extends admin_cmd
 			$old_rights + array($apps) :
 			array_diff($old_rights, $apps);
 
-		$this->set = $new_rights;
-		$this->old = $old_rights;
+		$this->set = Array('app' => $new_rights);
+		$this->old = Array('app' => $old_rights);
 		if ($check_only) return true;
 
 		//echo "account=$this->account, account_id=$account_id, apps: ".implode(', ',$apps)."\n";
@@ -102,5 +102,34 @@ class admin_cmd_account_app extends admin_cmd
 		}
 		return lang('%1 rights for %2 and applications %3',$this->allow ? lang('Grant') : lang('Remove'),
 			admin_cmd::display_account($this->account),implode(', ',$apps));
+	}
+
+	/**
+	 * Return (human readable) labels for keys of changes
+	 *
+	 * Reading them from admin.account template
+	 *
+	 * @return array
+	 */
+	function get_change_labels()
+	{
+		$labels = parent::get_change_labels();
+
+		$labels['app'] = 'Applications';
+
+		return $labels;
+	}
+	/**
+	 * Return widget types (indexed by field key) for changes
+	 *
+	 * Used by historylog widget to show the changes the command recorded.
+	 */
+	function get_change_widgets()
+	{
+		$widgets = parent::get_change_widgets();
+
+		$widgets['app'] = 'select-app';
+
+		return $widgets;
 	}
 }

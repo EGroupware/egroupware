@@ -1131,7 +1131,7 @@ abstract class admin_cmd
 			_egw_log_exception($ex);
 			error_log(__METHOD__."(".array2string($data).") periodic execution failed: ".$ex->getMessage());
 		}
-		$periodic->value = $value;
+		$periodic->result = $value;
 		$periodic->save();
 	}
 

@@ -157,6 +157,7 @@ class admin_cmd_edit_group extends admin_cmd
 		unset($labels['${row}[run]']);
 
 		$labels['account_members'] = 'Members';
+		$labels['account_email'] = 'Email';
 
 		return $labels;
 	}
