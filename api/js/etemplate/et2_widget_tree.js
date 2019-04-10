@@ -257,6 +257,10 @@ var et2_tree = (function(){ "use strict"; return et2_inputWidget.extend(
 			close = this._rel_url(close);
 			widget.input.setImageArrays('minus', close, close, close, close, close);
 		}
+
+		this._install_handler('onBeforeCheck', function(id, state) {
+			return !this.options.readonly;
+		}.bind(this));
 	},
 
 	/**
