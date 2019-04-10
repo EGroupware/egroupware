@@ -265,14 +265,20 @@ class calendar_category_report extends calendar_ui{
 					}
 				}
 
+				$end_obj = new Api\DateTime($content['end']);
+				// Add 1 day minus a second to only query untill the end of the
+				// end range day.
+				$end_range =  $end_obj->modify('+1 day -1 sec');
+
 				// query calendar for events
 				$events = $this->bo->search(array(
 					'start' => $content['start'],
-					'end' => $content['end']+86399, // range till midnight of the sele3cted end date
+					'end' => $end_range->getTimestamp(), // range till midnight of the sele3cted end date
 					'users' => $users,
 					'cat_id' => $categories,
 					'daywise' => true
 				));
+
 				$days_sum = $weeks_sum = $events_log = array ();
 				// iterate over found events
 				foreach($events as $day_index => $day_events)
@@ -293,7 +299,7 @@ class calendar_category_report extends calendar_ui{
 									$content['grid'][$row_id]['min_days'],
 									$content['grid'][$row_id]['unit'],
 									$content['start'],
-									$content['end']+86399 // range till midnight of the selected end date
+									$end_range->getTimestamp() // range till midnight of the selected end date
 							);
 						}
 					}
