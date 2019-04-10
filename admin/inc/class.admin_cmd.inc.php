@@ -577,7 +577,9 @@ abstract class admin_cmd
 		{
 			admin_cmd::_instanciate_sql();
 
-			$labels = admin_cmd::$sql->query_list('cmd_type');
+			// Need a new one to avoid column name modification
+			$sql = new Api\Storage\Base('admin','egw_admin_queue',null);
+			$labels = $sql->query_list('cmd_type');
 
 			// for admin app we also add all available cmd objects
 			foreach(scandir(__DIR__) as $file)
@@ -595,6 +597,11 @@ abstract class admin_cmd
 			{
 				if(class_exists($class))
 				{
+					$label = $class::name();
+				}
+				elseif (class_exists('EGroupware\\' . $class))
+				{
+					$class = 'EGroupware\\' . $class;
 					$label = $class::name();
 				}
 			}
