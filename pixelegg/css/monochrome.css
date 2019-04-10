@@ -3233,6 +3233,10 @@ div.admin-config form > table td b {
 }
 .error_message {
   border-top: 6px solid rgba(204, 0, 51, 0.8) !important;
+  background-image: url(../images/dialog_error.png);
+  background-position: 4px 13px;
+  background-size: 12px;
+  background-repeat: no-repeat;
 }
 .info_message .discard {
   float: right;
@@ -3244,6 +3248,10 @@ div.admin-config form > table td b {
 body > div#egw_message {
   background-color: #E6E6E6;
   right: 33%;
+  box-shadow: 2px 3px 13px #666666;
+  -moz-box-shadow: 2px 3px 13px #666666;
+  -webkit-box-shadow: 2px 3px 13px #666666;
+  -khtml-box-shadow: 2px 3px 13px #666666;
   top: 0px;
   padding: 13px;
   padding-left: 20px;
