@@ -66,7 +66,7 @@ class preferences_settings
 		}
 		else
 		{
-			$is_admin = $content['is_admin'];
+			$is_admin = $content['is_admin'] || $content['type'] != 'user';
 			//error_log(__METHOD__."(".array2string($content).")");
 			if ($content['button'])
 			{
