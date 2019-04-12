@@ -203,7 +203,12 @@ abstract class LoggedInTest extends TestCase
 	{
 		if (!($sessionid = $GLOBALS['egw']->session->create($GLOBALS['egw_login_data'])))
 		{
-			die("Wrong account or password - run tests with 'phpunit -c doc/phpunit.xml' or 'phpunit <test_dir> -c doc/phpunit.xml'\n\n");
+			if(!($reason = $GLOBALS['egw']->session->reason) && $GLOBALS['egw']->session->account_id)
+			{
+				$GLOBALS['egw']->session->sessionid = 'CLI';
+				return 'CLI';
+			}
+			die($reason ? $reason : "Wrong account or password - run tests with 'phpunit -c doc/phpunit.xml' or 'phpunit <test_dir> -c doc/phpunit.xml'\n\n");
 		}
 		unset($GLOBALS['egw_login_data']);
 		return $sessionid;
