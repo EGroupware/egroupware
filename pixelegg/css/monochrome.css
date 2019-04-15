@@ -183,7 +183,7 @@
   }
   /*look in layout_content_elements*/
   .et2_selectbox .ui-multiselect-checkboxes li:hover {
-    background-color: #189800 !important;
+    background-color: rgba(102, 153, 204, 0.7) !important;
   }
   .et2_selectbox .ui-multiselect-checkboxes label {
     display: block;
@@ -1135,7 +1135,7 @@ option:checked {
 .ui-widget-header .ui-state-focus,
 .ui-widget-content .ui-state-focus {
   border-color: #E6E6E6;
-  background: #189800;
+  background: rgba(102, 153, 204, 0.7);
   background-image: none;
   color: #FFFFFF;
   font-weight: normal;
@@ -1151,7 +1151,7 @@ option:checked {
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
   border-color: #E6E6E6;
-  background: #189800;
+  background: rgba(102, 153, 204, 0.7);
   background-image: none;
   color: #ffffff;
 }
@@ -1369,7 +1369,7 @@ span.ui-icon-search {
   background-image: none;
 }
 .ui-widget-content .et2_selectbox div.ui-widget-header ul li label.ui-state-hover {
-  background-color: #189800;
+  background-color: rgba(102, 153, 204, 0.7);
   font-weight: normal;
 }
 button.ui-button {
