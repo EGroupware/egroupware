@@ -224,7 +224,7 @@ class calendar_category_report extends calendar_ui{
 		$api_cats = new Api\Categories($GLOBALS['egw_info']['user']['account_id'],'calendar');
 		if (is_null($content))
 		{
-			$cats = $api_cats->return_sorted_array($start=0, false, '', 'ASC', 'cat_name', true, 0, true);
+			$cats = $api_cats->return_sorted_array($start=0, false, '', 'ASC', 'cat_name', 'all_no_acl', 0, true);
 			$cats_status = $GLOBALS['egw_info']['user']['preferences']['calendar']['category_report'];
 			foreach ($cats as &$value)
 			{
@@ -238,9 +238,19 @@ class calendar_category_report extends calendar_ui{
 					'enable' => true
 				);
 			}
+
 			if (is_array($cats_status))
 			{
-				$content['grid'] = array_replace_recursive($content['grid'], $cats_status);
+				foreach ($content['grid'] as &$row)
+				{
+					foreach ($cats_status as $value)
+					{
+						if ($row['cat_id'] == $value['cat_id'])
+						{
+							$row = $value;
+						}
+					}
+				}
 			}
 		}
 		else
