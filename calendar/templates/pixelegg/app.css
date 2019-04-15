@@ -2690,5 +2690,41 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > span.et2_label {
   width: calc(100% - 58px);
 }
+span.et2_checkbox_slideSwitch.switchOn span.off {
+  filter: invert(1);
+}
+span.et2_checkbox_slideSwitch.switchOn span.on {
+  filter: none !important;
+}
+span.et2_checkbox_slideSwitch {
+  margin: 0px;
+  height: 22px;
+}
+span.et2_checkbox_slideSwitch span.slideSwitch_container {
+  padding: 0px;
+}
+span.et2_checkbox_slideSwitch span.slideSwitch_container span.on {
+  background-image: url(../../../pixelegg/images/7_day_view.svg);
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 24px;
+  top: 0;
+  filter: invert(1);
+}
+span.et2_checkbox_slideSwitch span.slideSwitch_container span.off {
+  background-image: url(../../../pixelegg/images/5_day_view.svg);
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 24px;
+  top: 0;
+}
+span.et2_checkbox_slideSwitch span.slideSwitch_container span {
+  color: transparent !important;
+}
+span.et2_checkbox_slideSwitch span.slideSwitch_container a {
+  background: none;
+}
 /* ########################################################################################
 /* * Calendar END */

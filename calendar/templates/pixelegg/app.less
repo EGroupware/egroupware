@@ -1235,7 +1235,41 @@ div#calendar-container {
 		.calendar_calGridHeader  > span.et2_label {width:~"calc(100% - 58px)";}
 	}
 }
+span.et2_checkbox_slideSwitch.switchOn {
+	span.off {
+		filter: invert(1);
+	}
+	span.on {
+		filter: none !important;
+	}
+}
+span.et2_checkbox_slideSwitch {
+	margin: 0px;
+	height: 22px;
+	span.slideSwitch_container {
+		span.on {
+			background-image: url(../../../pixelegg/images/7_day_view.svg);
+			background-size: 16px 16px;
+			background-repeat: no-repeat;
+			background-position: center;
+			height: 24px;
+			top:0;
+			filter: invert(1);
+		}
+		span.off {
+			background-image: url(../../../pixelegg/images/5_day_view.svg);
+			background-size: 16px 16px;
+			background-repeat: no-repeat;
+			background-position: center;
+			height: 24px;
+			top:0;
+		}
+		padding: 0px;
+		span {color:transparent !important;}
 
+		a {background: none;}
+	}
+}
 /* ########################################################################################
 /* * Calendar END */
 
