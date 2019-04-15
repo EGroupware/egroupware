@@ -116,7 +116,7 @@ var et2_editableWidget = (function(){ "use strict"; return et2_inputWidget.exten
 
 		jQuery('body').on("click.et2_editableWidget", this, function(e) {
 			// Make sure click comes from body, not a popup
-			if(jQuery.contains(this, e.target))
+			if(jQuery.contains(this, e.target) && e.target.type != 'textarea')
 			{
 				jQuery(this).off("click.et2_editableWidget");
 				e.data.focusout.call(e.data, this);
