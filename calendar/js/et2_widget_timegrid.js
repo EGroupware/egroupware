@@ -2270,7 +2270,10 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		}
 
 		// update day widgets, if not on single day view
-		if(this.day_widgets.length > 1)
+		//
+		// TODO: Find out why don't we update single day view
+		// Let the single day view participate in print calculation. 
+		if(this.day_widgets.length > 0)
 		{
 			var day_width = (100 / this.day_widgets.length);
 			for(var i = 0; i < this.day_widgets.length; i++)
