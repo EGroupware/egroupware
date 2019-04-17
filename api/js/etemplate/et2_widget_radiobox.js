@@ -371,6 +371,11 @@ var et2_radioGroup = (function(){ "use strict"; return et2_valueWidget.extend([e
 				ro_false: this.options.ro_false,
 				readonly: this.options.readonly
 			};
+			if(typeof _options[key] === 'object' && _options[key].label)
+			{
+				attrs.set_value = _options[key].value;
+				attrs.label = _options[key].label;
+			}
 			// Can't have a required readonly, it will warn & be removed later, so avoid the warning
 			if(attrs.readonly === false)
 			{
