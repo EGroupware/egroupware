@@ -1216,7 +1216,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		if(total == 0) this.controller._emptyRow();
 
 		// Set data cache prefix to either provided custom or auto
-		if(!this.options.settings.dataStorePrefix)
+		if(!this.options.settings.dataStorePrefix && this.options.settings.get_rows)
 		{
 			// Use jsapi data module to update
 			var list = this.options.settings.get_rows.split('.', 2);
