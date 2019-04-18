@@ -171,6 +171,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 
 		// Create the dynheight component which dynamically scales the inner
 		// container.
+		this.div.parentsUntil('.et2_tabs').height('100%');
 		this.dynheight = new et2_dynheight(this.div.parent(),
 				this.innerDiv, 250
 		);
@@ -660,6 +661,10 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 				// in order to update the height with new value
 				this.div.trigger('resize.' +this.options.value.app + this.options.value.id);
 			}
+		}
+		if(this.dynheight)
+		{
+			this.dynheight.update();
 		}
 		// Resize diff widgets to match new space
 		if(this.dataview)
