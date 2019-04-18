@@ -352,18 +352,22 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			var field = attrs.type || this.options.value['status-widgets'][key];
 			var options = null;
 			var widget = null;
+			// If field has multiple parts (is object) and isn't an obvious select box
 			if(typeof field == 'object')
 			{
 				// Check for multi-part statuses needing multiple widgets
 				var need_box = false;
-				for(var j in field)
+				if(!this.getArrayMgr('sel_options').getEntry(key))
 				{
-					// Require widget to be a valueWidget, to avoid invalid widgets
-					// (and template, which is a widget and an infolog todo status)
-					if(et2_registry[field[j]] && et2_registry[field[j]].prototype.instanceOf(et2_valueWidget))
+					for(var j in field)
 					{
-						need_box = true;
-						break;
+						// Require widget to be a valueWidget, to avoid invalid widgets
+						// (and template, which is a widget and an infolog todo status)
+						if(et2_registry[field[j]] && et2_registry[field[j]].prototype.instanceOf(et2_valueWidget))
+						{
+							need_box = true;
+							break;
+						}
 					}
 				}
 				if(need_box)
