@@ -267,6 +267,16 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 			return;
 		}
 
+		// allow statustext to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
+		if (_value.indexOf('{') !== -1)
+		{
+			var egw = this.egw();
+			_value = _value.replace(/{([^}]+)}/g, function(str,p1)
+			{
+				return egw.lang(p1);
+			});
+		}
+
 		this.statustext = _value;
 
 		//Get the domnode the tooltip should be attached to
