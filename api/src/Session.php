@@ -1268,7 +1268,7 @@ class Session
 	public static function getuser_ip()
 	{
 		return isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
-			preg_replace('/,10\..*$/', '', $_SERVER['HTTP_X_FORWARDED_FOR']) :
+			preg_replace('/, *10\..*$/', '', $_SERVER['HTTP_X_FORWARDED_FOR']) :
 			$_SERVER['REMOTE_ADDR'];
 	}
 
