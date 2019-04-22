@@ -1260,11 +1260,16 @@ class Session
 	/**
 	 * Get the ip address of current users
 	 *
+	 * We remove further private IPs (from proxys) as they invalidate user
+	 * sessions, when they change because of multiple proxys.
+	 *
 	 * @return string ip address
 	 */
 	public static function getuser_ip()
 	{
-		return isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+		return isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
+			preg_replace('/,10\..*$/', '', $_SERVER['HTTP_X_FORWARDED_FOR']) :
+			$_SERVER['REMOTE_ADDR'];
 	}
 
 	/**
