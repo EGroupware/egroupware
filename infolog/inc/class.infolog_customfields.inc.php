@@ -248,19 +248,14 @@ class infolog_customfields extends admin_customfields
 		{
 			if($this->$key != $value)
 			{
+				// NB: Statuses are monolithic - we can't record just the one type
+				// that was changed, or we loose the other types.  All status must
+				// be recorded.
 				$changed[$key] = $this->$key;
 			}
 			else
 			{
 				unset($old[$key]);
-			}
-		}
-		foreach($changed['status'] as $type => $statuses)
-		{
-			if($old['status'][$type] == $statuses)
-			{
-				unset($old['status'][$type]);
-				unset($changed['status'][$type]);
 			}
 		}
 		if($changed)
