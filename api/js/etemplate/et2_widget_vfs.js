@@ -848,7 +848,7 @@ et2_register_widget(et2_vfsUid, ["vfs-uid","vfs-gid"]);
 
 
 /* vfs-upload aka VFS file:       displays either download and delete (x) links or a file upload
- *   + value is either a vfs path or colon separated $app:$id:$relative_path, eg: infolog:123:special/offer
+ *   + ID is either a vfs path or colon separated $app:$id:$relative_path, eg: infolog:123:special/offer
  *   + if empty($id) / new entry, file is created in a hidden temporary directory in users home directory
  *     and calling app is responsible to move content of that dir to entry directory, after entry is saved
  *   + option: required mimetype or regular expression for mimetype to match, eg. '/^text\//i' for all text files
