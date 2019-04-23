@@ -94,6 +94,7 @@ class infolog_import_ical implements importexport_iface_import_plugin  {
 		@set_time_limit(0);     // try switching execution time limit off
 
 		$infolog_ical = new infolog_ical();
+		$infolog_ical->entry_callback = array($this, 'entry_callback');
 		if (!$infolog_ical->importVTODO(stream_get_contents($_stream)))
 		{
 			$this->errors[] = lang('Error: importing the iCal');
@@ -107,6 +108,21 @@ class infolog_import_ical implements importexport_iface_import_plugin  {
 		return $success;
 	}
 
+	/**
+	 * Do some modification on each entry
+	 */
+	public function entry_callback(&$event)
+	{
+		// Check & apply value overrides
+		foreach((array)$this->definition->plugin_options['override_values'] as $field => $settings)
+		{
+			if($settings['value'])
+			{
+				$event[$field] = $settings['value'];
+			}
+		}
+		return true;
+	}
 
 	/**
 	 * returns translated name of plugin

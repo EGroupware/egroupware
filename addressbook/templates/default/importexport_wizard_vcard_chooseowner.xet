@@ -9,7 +9,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description id="msg" no_lang="1"/>
+					<description id="title" no_lang="1"/>
 				</row>
 				<row>
 					<menulist>
@@ -17,7 +17,7 @@
 					</menulist>
 				</row>
 				<row>
-					<description/>
+					<select-cat id="override_values[cat_id][value]" label="Category" empty_label="From file" options=",,,@application"/>
 				</row>
 			</rows>
 		</grid>

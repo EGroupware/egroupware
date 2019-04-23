@@ -181,6 +181,14 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 			$record['owner'] = $this->user;
 		}
 
+		// Check & apply value overrides
+		foreach((array)$this->definition->plugin_options['override_values'] as $field => $settings)
+		{
+			if($settings['value'])
+			{
+				$record[$field] = $settings['value'];
+			}
+		}
 		if (is_array($record['cat_id']))
 		{
 			$record['cat_id'] = implode(',',$this->bocontacts->find_or_add_categories($record['cat_id'], -1));

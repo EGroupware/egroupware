@@ -93,7 +93,7 @@ class addressbook_wizard_import_vcard extends addressbook_import_vcard
 		// init step60
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step60'];
+			$content['title'] = $this->steps['wizard_step60'];
 			$content['step'] = 'wizard_step60';
 			if(!array_key_exists($content['contact_owner']) && $content['plugin_options']) {
 				$content['contact_owner'] = $content['plugin_options']['contact_owner'];
@@ -105,6 +105,13 @@ class addressbook_wizard_import_vcard extends addressbook_import_vcard
 			$bocontacts = new Api\Contacts();
 			$sel_options['contact_owner'] = array('personal' => lang("Importer's personal")) + $bocontacts->get_addressbooks(Acl::ADD);
 
+			foreach(array('override_values') as $field)
+			{
+				if(!$content[$field] && array_key_exists($field, $content['plugin_options']))
+				{
+					$content[$field] = $content['plugin_options'][$field];
+				}
+			}
 			$preserv = $content;
 			unset ($preserv['button']);
 			return 'addressbook.importexport_wizard_vcard_chooseowner';

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="infolog.import.ical_conditions" template="" lang="" group="0" version="16.1">
+		<vbox>
+			<template id="importexport.wizard_basic_import_csv.conditions" disabled="@no_conditions"/>
+
+			<select-cat id="override_values[cat_id][value]" label="Category" empty_label="From file" options=",,,@application"/>
+		</vbox>
+		<styles>
+			#importexport-wizardbox_delete_title {
+				margin-top: 1em;
+			}
+		</styles>
+	</template>
+</overlay>

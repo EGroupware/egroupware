@@ -88,6 +88,16 @@ class infolog_ical extends infolog_bo
 	var $clientProperties;
 
 	/**
+	 * Entry callback
+	 * If set, this will be called on each discovered etry so it can be
+	 * modified.  Entry is passed by reference, return true to keep the event
+	 * or false to skip it.
+	 *
+	 * @var callable
+	 */
+	var $entry_callback = null;
+
+	/**
 	 * Set Logging
 	 *
 	 * @var boolean
@@ -532,6 +542,14 @@ class infolog_ical extends infolog_bo
 			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 		}
 
+		if($this->entry_callback && is_callable($this->entry_callback))
+		{
+			if(!call_user_func_array($this->entry_callback, array(&$taskData)))
+			{
+				// Callback cancelled entry
+				return false;
+			}
+		}
 		if (!$taskData) return false;
 
 		// keep the dates
