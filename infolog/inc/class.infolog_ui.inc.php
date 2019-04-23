@@ -2170,7 +2170,7 @@ class infolog_ui
 					'Pr' => $this->bo->enums['priority'],
 					'Ow' => 'select-account',
 					//'Ac',	//	info_access: private||public
-					'St' => $this->bo->status[$content['info_type']]+array('deleted' => 'deleted'),
+					'St' => (array)$this->bo->status[$content['info_type']]+array('deleted' => 'deleted'),
 					'Pe' => 'select-percent',
 					'Co' => 'date-time',
 					'st' => 'date-time',
