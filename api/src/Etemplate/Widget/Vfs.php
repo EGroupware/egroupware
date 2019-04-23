@@ -47,7 +47,7 @@ class Vfs extends File
 			}
 			else
 			{
-				$path = $this->id;
+				$path = $form_name;
 			}
 
 			$this->setElementAttribute($form_name, 'path', $path);
