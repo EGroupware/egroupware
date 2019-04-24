@@ -171,6 +171,11 @@ class Contact extends Entry
 		}
 		unset($contact['jpegphoto']);	// makes no sense to return binary image
 
+		if($contact && !$contact['n_fn'])
+		{
+			$this->contacts->fixup_contact($contact);
+		}
+
 		//error_log(__METHOD__."('$value') returning ".array2string($contact));
 		return $contact;
 	}
