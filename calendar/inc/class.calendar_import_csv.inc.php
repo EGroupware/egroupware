@@ -42,9 +42,9 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 	protected $warnings = array();
 
 	/**
-	 * Set up tracker
+	 * Set up import
 	 */
-	protected function init(importexport_definition &$definition)
+	protected function init(importexport_definition &$definition, importexport_import_csv &$import_csv=NULL)
 	{
 		// fetch the addressbook bo
 		$this->bo= new calendar_boupdate();
@@ -224,7 +224,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 							$this->resource_so = new resources_so();
 						}
 						$result = $this->resource_so->search($search,'res_id');
-						if(count($result) >= 1) {
+						if($result && count($result) >= 1) {
 							$id = $resource['type'].$result[0]['res_id'];
 							break;
 						}

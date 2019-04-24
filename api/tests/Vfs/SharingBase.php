@@ -346,7 +346,7 @@ class SharingBase extends LoggedInTest
 		$files[] = $file = $path.'test_file.txt';
 		$this->assertTrue(
 			file_put_contents(Vfs::PREFIX.$file, $content) !== FALSE,
-			'Unable to write test file - check file permissions for CLI user'
+			'Unable to write test file "' . Vfs::PREFIX . $file .'" - check file permissions for CLI user'
 		);
 
 		// Subdirectory
@@ -364,7 +364,7 @@ class SharingBase extends LoggedInTest
 		$files[] = $file = $dir.'subdir_test_file.txt';
 		$this->assertTrue(
 			file_put_contents(Vfs::PREFIX.$file, $content) !== FALSE,
-			'Unable to write test file - check file permissions for CLI user'
+			'Unable to write test file "' . Vfs::PREFIX . $file .'" - check file permissions for CLI user'
 		);
 
 		// Symlinked file
@@ -547,7 +547,7 @@ class SharingBase extends LoggedInTest
 				'noheader'  => true,
 				'nonavbar' => 'always',	// true would cause eTemplate to reset it to false for non-popups!
 				'currentapp' => 'filemanager',
-				'autocreate_session_callback' => 'EGroupware\\Api\\Vfs\\Sharing::create_session',
+				'autocreate_session_callback' => 'EGroupware\\Api\\Vfs\\TestSharing::create_session',
 				'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
 			)
 		);
@@ -562,5 +562,24 @@ class SharingBase extends LoggedInTest
 		{
 			ob_end_clean();
 		}
+	}
+}
+
+/**
+ * Use this class for sharing so we can make sure we get a session ID, even
+ * though we're on the command line
+ */
+class TestSharing extends Api\Sharing {
+
+	public static function create_new_session()
+	{
+		if (!($sessionid = $GLOBALS['egw']->session->create('anonymous@'.$GLOBALS['egw_info']['user']['domain'],
+			'', 'text', false, false)))
+		{
+			// Allow for testing
+			$sessionid = 'CLI_TEST';
+			$GLOBALS['egw']->session->session_id = $sessionid;
+		}
+		return $sessionid;
 	}
 }

@@ -45,6 +45,21 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 		$this->mockTracking($this->bo, 'infolog_tracking');
 
+		// Make sure projects are not there first
+		$pm_numbers = array(
+			'TEST',
+			'SUB-TEST'
+		);
+		foreach($pm_numbers as $number)
+		{
+			$project = $this->pm_bo->read(Array('pm_number' => $number));
+			if($project && $project['pm_id'])
+			{
+				$this->pm_bo->delete($project);
+			}
+		}
+
+
 		$this->makeProject();
 	}
 
@@ -691,7 +706,7 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$element_bo = new \projectmanager_elements_bo();
 		$element_count = 0;
 
-		foreach($element_bo->search(array('pm_id' => $this->pm_id), false) as $element)
+		foreach((array)$element_bo->search(array('pm_id' => $this->pm_id), false) as $element)
 		{
 			$element_count++;
 			$this->assertEquals($this->info_id, $element['pe_app_id']);

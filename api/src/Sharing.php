@@ -240,16 +240,8 @@ class Sharing
 		// --> create a new anon session
 		if ($keep_session === false && $GLOBALS['egw']->sharing->need_session() || is_null($keep_session))
 		{
-			// create session without checking auth: create(..., false, false)
-			if (!($sessionid = $GLOBALS['egw']->session->create('anonymous@'.$GLOBALS['egw_info']['user']['domain'],
-				'', 'text', false, false)))
-			{
-				sleep(1);
-				return static::share_fail(
-					'500 Internal Server Error',
-					"Failed to create session: ".$GLOBALS['egw']->session->reason."\n"
-				);
-			}
+			$sessionid = static::create_new_session();
+
 			$GLOBALS['egw']->sharing->after_login();
 		}
 		// we have a session we want to keep, but share owner is different from current user and we dont need filemanager UI
@@ -271,6 +263,21 @@ class Sharing
 			$_SESSION[Session::EGW_OBJECT_CACHE] = serialize($GLOBALS['egw']);
 		}
 
+		return $sessionid;
+	}
+
+	public static function create_new_session()
+	{
+		// create session without checking auth: create(..., false, false)
+		if (!($sessionid = $GLOBALS['egw']->session->create('anonymous@'.$GLOBALS['egw_info']['user']['domain'],
+			'', 'text', false, false)))
+		{
+			sleep(1);
+			return static::share_fail(
+				'500 Internal Server Error',
+				"Failed to create session: ".$GLOBALS['egw']->session->reason."\n"
+			);
+		}
 		return $sessionid;
 	}
 

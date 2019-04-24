@@ -253,7 +253,7 @@ class PreferencesCommandTest extends CommandBase
 		$set = array($this->config_name => null);
 		$old = array($this->config_name => 'It will log whatever');
 
-		$prefs = new Api\Preferences(in_array($type, 'default', 'forced') ? $type : $account);
+		$prefs = new Api\Preferences(in_array($type, array('default', 'forced')) ? $type : $account);
 		$prefs->add(static::APP, $this->config_name, $old[$this->config_name], in_array($type, array('default', 'forced')) ? $type : 'user');
 		$prefs->save_repository(false, $type);
 
