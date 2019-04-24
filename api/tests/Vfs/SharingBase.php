@@ -405,7 +405,7 @@ class SharingBase extends LoggedInTest
 		}
 
 		// Create share
-		$this->shares[] = $share = Sharing::create($path, $mode, $name, $recipients, $extra);
+		$this->shares[] = $share = TestSharing::create($path, $mode, $name, $recipients, $extra);
 
 		return $share;
 	}
@@ -578,7 +578,7 @@ class TestSharing extends Api\Sharing {
 		{
 			// Allow for testing
 			$sessionid = 'CLI_TEST';
-			$GLOBALS['egw']->session->session_id = $sessionid;
+			$GLOBALS['egw']->session->sessionid = $sessionid;
 		}
 		return $sessionid;
 	}
