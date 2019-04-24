@@ -61,6 +61,15 @@ class SharingBase extends LoggedInTest
 
 	public function setUp()
 	{
+		// Check we have basic access
+		if(!is_readable($GLOBALS['egw_info']['server']['files_dir']))
+		{
+			$this->markTestSkipped('No read access to files dir "' .$GLOBALS['egw_info']['server']['files_dir'].'"' );
+		}
+		if(!is_writable($GLOBALS['egw_info']['server']['files_dir']))
+		{
+			$this->markTestSkipped('No write access to files dir "' .$GLOBALS['egw_info']['server']['files_dir'].'"' );
+		}
 
 	}
 
