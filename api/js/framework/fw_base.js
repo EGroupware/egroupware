@@ -888,7 +888,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				if (typeof param === 'object' && !(param instanceof RegExp))
 				{
 					var key = Object.keys(param)[0];
-					if (!popups[j][key].match(param[key]))
+					if (!popups[j][key].match(new RegExp(param[key])))
 					{
 						delete(popups[j]);
 					}
