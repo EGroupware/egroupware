@@ -6262,10 +6262,10 @@ div[id^="bookmarks-"] .search.nm-mob-header,
 form[id^="bookmarks-"] .search.nm-mob-header,
 div[id^="bookmarks-"] .dialogHeadbar,
 form[id^="bookmarks-"] .dialogHeadbar {
-  background-color: #ff9933;
+  background-color: #CC6633;
 }
 #bookmarks_sidebox_header {
-  border-left: 6px solid #ff9933 !important;
+  border-left: 6px solid #CC6633 !important;
 }
 div[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -6288,10 +6288,10 @@ div[id^="filemanager-"] .search.nm-mob-header,
 form[id^="filemanager-"] .search.nm-mob-header,
 div[id^="filemanager-"] .dialogHeadbar,
 form[id^="filemanager-"] .dialogHeadbar {
-  background-color: #CC6633;
+  background-color: #ff9933;
 }
 #filemanager_sidebox_header {
-  border-left: 6px solid #CC6633 !important;
+  border-left: 6px solid #ff9933 !important;
 }
 div[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -6423,10 +6423,10 @@ form[id^="ranking-"] .dialogHeadbar {
   background-color: #003333 !important;
 }
 #egw_fw_sidebar #egw_fw_sidemenu #filemanager_sidebox_content .egw_fw_ui_category_active {
-  background-color: #CC6633 !important;
+  background-color: #ff9933 !important;
 }
 #egw_fw_sidebar #egw_fw_sidemenu #bookmarks_sidebox_content .egw_fw_ui_category_active {
-  background-color: #ff9933 !important;
+  background-color: #CC6633 !important;
 }
 #egw_fw_sidebar #egw_fw_sidemenu #projectmanager_sidebox_content .egw_fw_ui_category_active {
   background-color: #669999 !important;
@@ -6462,18 +6462,18 @@ form[id^="ranking-"] .dialogHeadbar {
   border-top-width: 4px !important;
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #bookmarks_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
-  background-color: rgba(255, 153, 51, 0.3);
+  background-color: rgba(204, 102, 51, 0.3);
 }
 #bookmarks_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
-  border-top: 4px solid #ff9933 !important;
+  border-top: 4px solid #CC6633 !important;
   border-left: 1px solid silver !important;
 }
 #bookmarks_sidebox_header {
-  border-left: 4px solid #ff9933 !important;
+  border-left: 4px solid #CC6633 !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #bookmarks-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-top: 4px solid;
-  border-top-color: #ff9933;
+  border-top-color: #CC6633;
   border-top-width: 4px !important;
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #calendar_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
@@ -6492,18 +6492,18 @@ form[id^="ranking-"] .dialogHeadbar {
   border-top-width: 4px !important;
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
-  background-color: rgba(204, 102, 51, 0.3);
+  background-color: rgba(255, 153, 51, 0.3);
 }
 #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
-  border-top: 4px solid #CC6633 !important;
+  border-top: 4px solid #ff9933 !important;
   border-left: 1px solid silver !important;
 }
 #filemanager_sidebox_header {
-  border-left: 4px solid #CC6633 !important;
+  border-left: 4px solid #ff9933 !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #filemanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-top: 4px solid;
-  border-top-color: #CC6633;
+  border-top-color: #ff9933;
   border-top-width: 4px !important;
 }
 #egw_fw_sidemenu.egw_fw_sidebar_toggleOn #infolog_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
