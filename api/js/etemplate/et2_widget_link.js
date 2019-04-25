@@ -2168,9 +2168,9 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 			}
 		}
 		var filename = dirs.pop();
-		if(reformat && dirs.length === 1)
+		if(reformat && (dirs.length - i) === 0)
 		{
-			$td.html('<span style="display: inline-block; width:'+span_size+'ex;"></span> - '+dirs.join(''));
+			$td.html('<span style="display: inline-block; width:'+span_size+'ex;"></span> - '+filename);
 		}
 		else
 		{
