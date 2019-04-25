@@ -2144,7 +2144,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 
 		// VFS link - check for same dir as above, and hide dir
 		var reformat = false;
-		var span_size = 0.3;
+		var span_size = 1;
 		var prev = jQuery('td.title',$td.parent().prev('tr'));
 		if(prev.length === 1)
 		{
@@ -2167,16 +2167,16 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 				}
 			}
 		}
-		if(reformat)
+		var filename = dirs.pop();
+		if(reformat && dirs.length === 1)
 		{
 			$td.html('<span style="display: inline-block; width:'+span_size+'ex;"></span> - '+dirs.join(''));
 		}
 		else
 		{
 			// Different format for directory
-			var filename = dirs.pop();
 			span_size += dirs.join('/').length+1;
-			$td.html('<span style="display: inline-block; width:'+span_size+'ex;">'+dirs.join('/')+':</span> - ' + filename);
+			$td.html('<span style="display: inline-block; text-align: right; width:'+span_size+'ex;">'+dirs.join('/')+':</span> - ' + filename);
 		}
 	}
 });}).call(this);
