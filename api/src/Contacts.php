@@ -1725,7 +1725,7 @@ class Contacts extends Contacts\Storage
 		{
 			$sql .= " AND egw_cal_user.cal_status != 'R'";
 		}
-		$sql .= 'order by cal_recur_date ASC, cal_start ASC Limit 1
+		$sql .= ' order by cal_recur_date ASC, cal_start ASC Limit 1
 
 			) as next_event
 			FROM egw_addressbook
