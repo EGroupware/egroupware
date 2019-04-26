@@ -187,6 +187,7 @@ children	admin	de	Kinder
 clear cache and register hooks	admin	de	Cache löschen und Hooks registrieren
 click to select a color	admin	de	Anklicken um eine Farbe auszuwählen
 color	admin	de	Farbe
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	de	Komma getrennte Liste von IP Adressen die nicht blockiert werden (:optional Anzahl Fehlversuche)
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
 commercial: all sorts of companies	admin	de	Kommerziell: alle Arten von Firmen
 config password or md5 hash from the header.inc.php	admin	de	Konfigurationspasswort oder md5 Hash von der header.inc.php Datei
