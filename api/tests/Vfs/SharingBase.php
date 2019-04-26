@@ -61,7 +61,11 @@ class SharingBase extends LoggedInTest
 
 	public function setUp()
 	{
-		$this->markTestSkipped("Travis doesn't like these. " . __METHOD__ . ':'.__LINE__);
+		if(getenv('TRAVIS'))
+		{
+			// TODO: Figure out why this doesn't work on Travis
+			$this->markTestSkipped("Travis doesn't like these. " . __METHOD__ . ':'.__LINE__);
+		}
 		// Check we have basic access
 		if(!is_readable($GLOBALS['egw_info']['server']['files_dir']))
 		{
@@ -587,7 +591,7 @@ class TestSharing extends Api\Sharing {
 			'', 'text', false, false)))
 		{
 			// Allow for testing
-			$sessionid = 'CLI_TEST';
+			$sessionid = 'CLI_TEST ' . time();
 			$GLOBALS['egw']->session->sessionid = $sessionid;
 		}
 		return $sessionid;
