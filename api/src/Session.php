@@ -808,8 +808,24 @@ class Session
 		$false_ip += Cache::getInstance(__CLASS__, self::FALSE_IP_CACHE_PREFIX.$ip);
 		$false_id += Cache::getInstance(__CLASS__, self::FALSE_ID_CACHE_PREFIX.$login);
 
-		$blocked = $false_ip > $GLOBALS['egw_info']['server']['num_unsuccessful_ip'] ||
-			$false_id > $GLOBALS['egw_info']['server']['num_unsuccessful_id'];
+		// if IP matches one in the (comma-separated) whitelist
+		// --> check with whitelists optional number (none means never block)
+		$matches = null;
+		if (!empty($GLOBALS['egw_info']['server']['unsuccessful_ip_whitelist']) &&
+			preg_match_all('/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?/',
+				$GLOBALS['egw_info']['server']['unsuccessful_ip_whitelist'], $matches) &&
+			($key=array_search($ip, $matches[1])) !== false)
+		{
+			$blocked = !empty($matches[3][$key]) && $false_ip > $matches[3][$key];
+		}
+		else	// else check with general number
+		{
+			$blocked = $false_ip > $GLOBALS['egw_info']['server']['num_unsuccessful_ip'];
+		}
+		if (!$blocked)
+		{
+			$blocked = $false_id > $GLOBALS['egw_info']['server']['num_unsuccessful_id'];
+		}
 		//error_log(__METHOD__."('$login', '$ip') false_ip=$false_ip, false_id=$false_id --> blocked=".array2string($blocked));
 
 		if ($blocked && $GLOBALS['egw_info']['server']['admin_mails'] &&
