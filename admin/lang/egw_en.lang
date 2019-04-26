@@ -187,6 +187,7 @@ children	admin	en	Children
 clear cache and register hooks	admin	en	Clear cache and register hooks
 click to select a color	admin	en	Click to select a color
 color	admin	en	Color
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	en	Comma-separated IP addresses white-listed from above blocking (:optional number of attempts)
 command scheduled to run at %1	admin	en	Command scheduled to run at %1
 commercial: all sorts of companies	admin	en	Commercial: all sorts of companies
 config password or md5 hash from the header.inc.php	admin	en	Config password or md5 hash from the header.inc.php.
