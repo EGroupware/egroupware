@@ -189,6 +189,11 @@
 					<textbox id="newsettings[num_unsuccessful_ip]" size="5"/>
 				</row>
 				<row>
+					<description value="Comma-separated IP addresses white-listed from above blocking (:optional number of attempts)"/>
+					<textbox id="newsettings[unsuccessful_ip_whitelist]" size="64" blur="X.X.X.X[:N], ..."
+						validator="/^(\\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d+)?,? *)*$/"/>
+				</row>
+				<row>
 					<description value="How many minutes should an account or IP be blocked (default 1) ?" label="%s:"/>
 					<textbox id="newsettings[block_time]" size="5"/>
 				</row>
