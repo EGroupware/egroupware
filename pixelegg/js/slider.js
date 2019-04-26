@@ -12,7 +12,7 @@
 function show_pixelegg_header(_toggle, _delay)
 {
 	jQuery("#egw_fw_header").slideToggle();
-	jQuery("#egw_fw_sidebar").animate({'top':'48px'},_delay);
+	jQuery("#egw_fw_sidebar").animate({'top':'49px'},_delay);
 	jQuery("#jsxc_roster").animate({'top':'89px'});
 	jQuery("#egw_fw_tabs").animate({'margin-top':'8px'},_delay);
 	jQuery(".egw_fw_ui_tabs_header").css("padding", "1px 1px 0px 1px");
@@ -32,7 +32,7 @@ function hide_pixelegg_header(_toggle, _delay)
 	jQuery("#egw_fw_logout").show();
 	jQuery("#egw_fw_print").show();
 	jQuery("#egw_fw_tabs").animate({'margin-top':'8px', "top": "0px"},_delay);
-	jQuery("#jsxc_roster").animate({'top':'43px'});
+	jQuery("#jsxc_roster").animate({'top':'49px'});
 	jQuery(".egw_fw_ui_sidemenu_entry_header_active").css("background-position","95% 50%");
 	jQuery(".egw_fw_ui_tabs_header").css("height", "34px")
 		// Padding to adjust for icons left & right of the tabs

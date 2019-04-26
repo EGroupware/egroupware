@@ -4185,7 +4185,7 @@ td.message span.message {
   background-color: transparent;
   float: left;
   width: 100%;
-  margin-top: 3px;
+  margin-top: 8px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header {
   margin: 0px 0 0 0;
@@ -4357,7 +4357,7 @@ td.message span.message {
 #egw_fw_sidebar {
   position: fixed;
   overflow: hidden;
-  top: 43px;
+  top: 49px;
   left: 0px;
   bottom: 25px;
   width: 225px;
