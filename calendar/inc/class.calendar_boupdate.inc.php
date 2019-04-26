@@ -1183,6 +1183,7 @@ class calendar_boupdate extends calendar_bo
 			$alarm['time'] = $this->date2ts($event['start']) - $alarm['offset'];
 			unset($alarm['times']);
 			unset($alarm['next']);
+			unset($alarm['keep_time']);	// need to remove the keep_time, as otherwise the alarm would be deleted automatically
 			//error_log(__METHOD__."() moving alarm to next recurrence ".array2string($alarm));
 			$this->save_alarm($alarm['cal_id'], $alarm, false);	// false = do NOT update timestamp, as nothing changed for iCal clients
 		}
