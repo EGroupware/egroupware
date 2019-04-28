@@ -142,7 +142,7 @@ class Sharing extends \EGroupware\Api\Sharing
 			sleep(1);
 			return static::share_fail(
 				'404 Not Found',
-				"Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n"
+				"Requested resource '/".htmlspecialchars($share['share_token'])."' does NOT exist!\n"
 			);
 		}
 		Vfs::$is_root = false;
