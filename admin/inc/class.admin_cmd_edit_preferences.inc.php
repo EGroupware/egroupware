@@ -78,7 +78,7 @@ class admin_cmd_edit_preferences extends admin_cmd
 		$prefs->read_repository();
 		foreach($this->set as $name => $value)
 		{
-			if (!isset($value) || $value === '')
+			if (!isset($value) || $value === '' || in_array($this->pref, array('default', 'forced')) && $value === '**NULL**')
 			{
 				$prefs->delete($this->app, $name, in_array($this->pref, array('default', 'forced')) ? $this->pref : 'user');
 			}
