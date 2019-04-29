@@ -137,6 +137,11 @@ class Vfs extends File
 			$file_data[basename($file['tmp_name'])]['mime'] = $file['type'];
 			$file_data[basename($file['tmp_name'])]['mtime'] = time();
 		}
+		else
+		{
+			// Something happened with the VFS
+			$file_data[basename($file['tmp_name'])] = lang('Server error');
+		}
 	}
 
 	/**
