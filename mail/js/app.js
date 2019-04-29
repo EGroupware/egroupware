@@ -5299,6 +5299,7 @@ app.classes.mail = AppJS.extend(
 	{
 		if (this.compose_integrate_submit() && _action) return false;
 
+		if (_action.id == 'send') this.saveAsDraft(null, 'autosaving');
 		if (this.mailvelope_editor)
 		{
 			var self = this;
