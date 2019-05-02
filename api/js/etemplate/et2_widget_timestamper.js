@@ -61,7 +61,7 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.btn.addClass('et2_timestamper');
+		jQuery(this.getDOMNode()).addClass('et2_timestamper');
 	},
 
 	/**
