@@ -376,6 +376,12 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 				egw.jsonq('calendar_owner_etemplate_widget::ajax_owner',user,function(data) {
 					et2_calendar_view.owner_name_cache[user] = data;
 					this.invalidate(true);
+
+					// Set owner to make sure labels get set
+					if(this.owner && typeof this.owner.set_value === 'function')
+					{
+						this.owner.set_value(data);
+					}
 				}.bind(this), this);
 			}
 		}
