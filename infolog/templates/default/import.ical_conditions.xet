@@ -6,7 +6,7 @@
 		<vbox>
 			<template id="importexport.wizard_basic_import_csv.conditions" disabled="@no_conditions"/>
 
-			<select-cat id="override_values[cat_id][value]" label="Category" empty_label="From file" options=",,,@application"/>
+			<select-cat id="override_values[info_cat][value]" label="Category" empty_label="From file" options=",,,@application"/>
 		</vbox>
 		<styles>
 			#importexport-wizardbox_delete_title {
