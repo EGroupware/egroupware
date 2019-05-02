@@ -697,6 +697,8 @@ insert new row after this one	common	de	Neue Zeile nach dieser einfügen
 insert new row in front of first line	common	de	Neue Zeile vor dieser einfügen
 insert row after	common	de	Zeile danach einfügen
 insert row before	common	de	Zeile davor einfügen
+insert timestamp into description field	common	de	Zeitstempel in das Beschreibungs-Feld einfügen
+install	common	de	Installieren
 integer	common	de	Ganzzahl
 international	common	de	International
 introduction	common	de	Einführung
