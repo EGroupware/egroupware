@@ -63,6 +63,7 @@ div.addressbook_edit_general_picture img {
 	top: 55px;
 	left: 102px;
 	z-index: 1;
+	padding-right: 10px;
 }
 .custom_country {
 	display: none;
@@ -134,7 +135,7 @@ select#addressbook-index_col_filter\[tid\] {
 #addressbook-edit_adr_one_region, #addressbook-edit_adr_two_region {
 	width: 130px;
     vertical-align: middle;
-    margin-left: 3px;
+    margin-left: 1px;
 }
 .smime_section_border {border-top: 1px solid #e5e5e5;}
 .smime_section_border> * {padding-top: 10px;}

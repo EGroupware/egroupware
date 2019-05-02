@@ -2653,8 +2653,6 @@ ul.et2_nowrap, div.et2_nowrap{
 	float: right;
 }
 
-.et2_fullWidth input.et2_date { width:95%;}
-
 /*et2_image_widget*/
 div.et2_image_tooltipPopup {
 	background: white;

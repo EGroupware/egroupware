@@ -136,9 +136,11 @@
 					<url-phone id="tel_car" tabindex="26" class="et2_fullWidth"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_car,&amp;hearts;"/>
 					<description disabled="@no_tid" for="tid" value="Type"/>
-					<menulist disabled="@no_tid">
-						<menupopup id="tid" no_lang="1" class="et2_fullWidth" onchange="1"/>
-					</menulist>
+					<hbox width="102%">
+						<menulist disabled="@no_tid">
+							<menupopup id="tid" no_lang="1" class="et2_fullWidth" onchange="1"/>
+						</menulist>
+					</hbox>
 					<description/>
 				</row>
 			</rows>
