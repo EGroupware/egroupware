@@ -3508,7 +3508,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../images/delete.png);
+  background-image: url(../images/delete.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 12px;
@@ -3552,7 +3552,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../images/search.png);
+  background-image: url(../images/search.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 12px;
@@ -3603,7 +3603,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../images/close.png);
+  background-image: url(../images/close.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 12px;
@@ -3669,7 +3669,7 @@ td.lettersearch {
   background: rgba(103, 159, 210, 0.2);
 }
 #egwpopup div#egwpopup_header .egwpopup_deleteall {
-  background-image: url(../images/delete.png);
+  background-image: url(../images/delete.svg);
   width: 12px;
   height: 12px;
   background-position: center;
@@ -3694,7 +3694,7 @@ td.lettersearch {
   z-index: 200;
   width: 26px;
   height: 16px;
-  top: 9px;
+  top: 11px;
   position: fixed;
   right: 109px;
   border: 1px solid #656565;
@@ -4924,7 +4924,7 @@ td.message span.message {
 ###################################################*/
 /*#egw_fw_topmenu_addons{}*/
 #egw_fw_logout {
-  background-image: url(../images/logout.png);
+  background-image: url(../images/logout.svg);
   background-size: 16px 16px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -4960,7 +4960,7 @@ td.message span.message {
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #egw_fw_print {
-  background-image: url(../images/print.png);
+  background-image: url(../images/print.svg);
   background-size: 16px 16px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -5059,7 +5059,7 @@ td.message span.message {
   position: fixed;
   right: 80px;
   top: 5px;
-  background-image: url(../images/add.png);
+  background-image: url(../images/add.svg);
   background-repeat: no-repeat;
   background-size: 20px 20px;
   background-position: 4px 4px;
