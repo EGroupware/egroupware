@@ -563,6 +563,15 @@ which caused click on free space infront of a tag stops nm row selection*/
 }
 
 /*
+Nextmatch print dialog
+*/
+#nm_print_dialog-xet .slideSwitch_container .on {
+	background-image: url('images/portrait.svg')
+}
+#nm_print_dialog-xet .slideSwitch_container .off {
+	background-image: url('images/landscape.svg')
+}
+/*
 These are set via javascript before printing to help tame nextmatch's layout
 for printing
 */
