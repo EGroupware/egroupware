@@ -491,6 +491,21 @@ span.et2_date_duration input.et2_date_duration{
 }
 
 /**
+ * Timestamper widget
+ */
+button.et2_button_with_image.et2_timestamper {
+	background-position: center;
+	background-size: 16px;
+	padding: 0px;
+	width: 24px;
+	height: 24px;
+}
+button.et2_timestamper:hover {
+	background-size: 16px;
+}
+
+
+/**
  * Dialog widget
  * It uses jQueryUI, so this is just our little bits - icon on left
  */
