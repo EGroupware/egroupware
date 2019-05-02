@@ -42,6 +42,9 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 			default: et2_no_init,
 			description: "Timezone.  Default is user time."
 		},
+		statustext: {
+			default: "Insert timestamp into description field"
+		},
 		image: {
 			default: "timestamp"
 		},
@@ -57,6 +60,8 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
+
+		this.btn.addClass('et2_timestamper');
 	},
 
 	/**
