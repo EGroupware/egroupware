@@ -1414,7 +1414,7 @@ class calendar_boupdate extends calendar_bo
 		// Update history
 		$tracking = new calendar_tracking($this);
 		if (empty($event['id']) && !empty($cal_id)) $event['id']=$cal_id;
-		$tracking->track($save_event, $old_event);
+		$tracking->track($save_event, (array)$old_event);
 
 		return $cal_id;
 	}
