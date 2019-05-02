@@ -1422,7 +1422,7 @@ div .et2_taglist_small.et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 .et2_taglist_category span[class*="cat_"]:not([class*="cat_level"]) {
 	height: 1.7em;
 	width: 6px;
-	margin: -3px -6px;
+	margin: -3px -5px;
 	float: left;
 }
 .et2_taglist_category.et2_taglist_single span[class*="cat_"]:not([class*="cat_level"]) {
