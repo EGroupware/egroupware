@@ -317,7 +317,7 @@ class admin_ui
 			'offset' => $query['num_rows'],
 			'order' => $query['order'],
 			'sort' => $query['sort'],
-			'active' => false,
+			'active' => !empty($query['active']) ? $query['active'] : false,
 		);
 		if ($query['searchletter'])
 		{
