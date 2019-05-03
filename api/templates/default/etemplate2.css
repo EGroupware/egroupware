@@ -1650,8 +1650,7 @@ div.message.floating {
 .et2_nextmatch .egwGridView_outer thead tr > th:first-child {
 	border-left: 6px solid transparent;
 }
-.egwGridView_scrollarea tr.row_category > td:first-child,
-.select-cat li,.et2_selectbox .chzn-results li, .et2_selectbox ul.chzn-choices li.search-choice{
+.egwGridView_scrollarea tr.row_category > td:first-child, .select-cat li {
 	border-left: 6px solid transparent;
 }
 .et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.row_category td:first-child > div {
