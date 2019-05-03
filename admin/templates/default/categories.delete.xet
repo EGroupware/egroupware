@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.categories.delete.delete">
+		<description value="Are you sure you want to delete this category?"/>
+	</template>
+	<template id="admin.categories.delete">
+		<vbox>
+			<tabbox id="tabs" span="all" tab_height="150">
+				<tabs>
+					<tab id="main" label="Category"/>
+				</tabs>
+				<tabpanels>
+					<template id="admin.categories.delete.delete"/>
+				</tabpanels>
+			</tabbox>
+			<hbox class="dialogFooterToolbar" id="button">
+				<button id="cancel" label="Cancel" onclick="window.close()"/>
+				<button id="delete" label="Delete"/>
+				<button id="delete_sub" label="Delete including sub-entries"/>
+			</hbox>
+		</vbox>
+	</template>
+</overlay>

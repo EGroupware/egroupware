@@ -896,49 +896,6 @@ app.classes.admin = AppJS.extend(
 	},
 
 	/**
-	 * Delete confirmation dialog
-	 *
-	 * @param {egw action} _action
-	 */
-	delete_category: function (_action)
-	{
-		var _buttons = [
-				{"button_id": "delete[cancel]","text": this.egw.lang('Cancel'), id: 'delete[cancel]', image: 'cancel', "default":true},
-				{"button_id": "delete[delete]","text": this.egw.lang('Delete'), id: 'delete[delete]', image: 'delete'},
-				{"button_id": "delete[subs]","text": this.egw.lang('Delete including sub-entries'), id: 'delete[subs]', image: 'delete'}
-		];
-		var action = _action;
-		var self = this;
-		var delDialog_callBack = function (_buttons)
-		{
-			if (_buttons != "delete[cancel]")
-			{
-				if (self.et2._inst.name == "admin.categories.index")
-				{
-					var nm_widget = self.et2.getWidgetById('nm');
-					if (nm_widget)
-					{
-						if (_buttons == "delete[delete]")
-						{
-							nm_action(action);
-						}
-						else
-						{
-							action.id = 'delete_sub';
-							nm_action(action);
-						}
-					}
-				}
-				else
-				{
-					self.et2.getInstanceManager().submit(_buttons);
-				}
-			}
-		};
-		et2_dialog.show_dialog(delDialog_callBack,this.egw.lang("Are you sure you want to delete this category ?"),this.egw.lang("Delete"),{},_buttons,et2_dialog.WARNING_MESSAGE,null,'admin');
-	},
-
-	/**
 	 * Change handler for when you change the type of a custom field.
 	 * It toggles options / attributes as appropriate.
 	 * @param {event object} e

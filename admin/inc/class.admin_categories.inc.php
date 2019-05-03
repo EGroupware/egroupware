@@ -29,6 +29,7 @@ class admin_categories
 	public $public_functions = array(
 		'index' => true,
 		'edit'  => true,
+		'delete' => true,
 	);
 
 	/**
@@ -163,7 +164,7 @@ class admin_categories
 						}
 						try
 						{
-							$cmd = new admin_cmd_category($appname, $content, $cats->read($content['id']));
+							$cmd = new admin_cmd_category($appname, $content, $cats->read($content['id']), $content['admin_cmd']);
 							$msg = $cmd->run();
 						}
 						catch (Api\Exception\WrongUserinput $e)
@@ -620,6 +621,49 @@ class admin_categories
 		));
 	}
 
+	/**
+	 * Dialog to delete a category
+	 *
+	 * @param array $content =null
+	 */
+	public function delete(array $content=null)
+	{
+		if (!is_array($content))
+		{
+			if (isset($_GET['cat_id']))
+			{
+				$content = array(
+					'cat_id'=>(int)$_GET['cat_id'],
+				);
+			}
+			//error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
+		}
+		$cats = new Categories('', Categories::id2name($content['cat_id'],'appname'));
+		if(!$cats->check_perms(Acl::DELETE, $content['cat_id']) || !self::$acl_delete ||
+					// Only admins can delete globals
+					$cats->is_global($content['cat_id']) && !$GLOBALS['egw_info']['user']['apps']['admin'])
+
+		{
+			Framework::window_close(lang('Permission denied!!!'));
+		}
+		if ($content['button'])
+		{
+			if($cats->check_perms(Acl::DELETE, $content['cat_id'], (boolean)$GLOBALS['egw_info']['user']['apps']['admin']))
+			{
+				$cmd = new admin_cmd_delete_category(
+					$content['cat_id'],
+					key($content['button']) == 'delete_sub',
+					$content['admin_cmd']
+				);
+				$cmd->run();
+				Framework::refresh_opener(lang('Deleted'), 'admin', $content['cat_id'], 'delete');
+				Framework::window_close();
+			}
+		}
+		$tpl = new Etemplate('admin.categories.delete');
+		$tpl->exec('admin.admin_categories.delete', $content, array(), array(), $content, 2);
+	}
+
 	protected function get_actions($appname=Api\Categories::GLOBAL_APPNAME) {
 
 		$actions = array(
@@ -660,7 +704,8 @@ class admin_categories
 				'allowOnMultiple' => true,
 				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
-				'onExecute' => 'javaScript:app.admin.delete_category'
+				'popup' => '450x400',
+				'url' => 'menuaction=admin.admin_categories.delete&cat_id=$id',
 			),
 		);
 

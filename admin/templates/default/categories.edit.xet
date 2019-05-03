@@ -34,17 +34,13 @@
 		</grid>
 		<textbox id="delete[cat_id]" class="globalCat_hiddenCatid"/>
 	</template>
-	<template id="admin.categories.edit" template="" lang="" group="0" version="1.9.001">
+	<template id="admin.categories.edit.category" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="90"/>
 				<column width="300"/>
 			</columns>
 			<rows>
-				<row class="dialogHeader">
-					<description value="Name" for="name"/>
-					<textbox id="name" needed="1" size="50" maxlength="150" class="et2_fullWidth"/>
-				</row>
 				<row>
 					<description value="Parent category" for="parent"/>
 					<menulist>
@@ -82,6 +78,32 @@
 					<description value="Category owner" for="owner"/>
 					<taglist statustext="Limit global category to members of a certain group" id="owner" needed="1" height="190" class="et2_fullWidth" rows="4" />
 				</row>
+
+			</rows>
+		</grid>
+		<template id="admin.categories.delete" class="globalCat_hiddenCatid"/>
+	</template>
+	<template id="admin.categories.edit" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="90"/>
+				<column width="300"/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<description value="Name" for="name"/>
+					<textbox id="name" needed="1" size="50" maxlength="150" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<tabbox id="tabs" span="all" tab_height="350">
+						<tabs>
+							<tab id="category" label="Category"/>
+						</tabs>
+						<tabpanels>
+							<template id="admin.categories.edit.category"/>
+						</tabpanels>
+					</tabbox>
+				</row>
 				<row disabled="!@last_mod">
 					<description value="Modified"/>
 					<date-time id="last_mod" readonly="true"/>
@@ -96,7 +118,5 @@
 				</row>
 			</rows>
 		</grid>
-		<template id="admin.categories.delete" class="globalCat_hiddenCatid"/>
 	</template>
-
 </overlay>
