@@ -64,7 +64,7 @@ var et2_arrayMgr = (function(){ "use strict"; return Class.extend(
 					var target = _data;
 					for(var i = 0; i < indexes.length; i++) {
 						indexes[i] = indexes[i].replace(/&#x5D;/g,'').replace(']','');
-						if(typeof target[indexes[i]] == "undefined") {
+						if(typeof target[indexes[i]] == "undefined" || target[indexes[i]] === null) {
 							target[indexes[i]] = i == indexes.length-1 ? value : {};
 						}
 						target = target[indexes[i]];
