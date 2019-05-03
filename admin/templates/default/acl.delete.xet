@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.acl.delete.main" template="" lang="" group="0" version="1.9.001">
+		<description value="Delete this access control"/>
+	</template>
+	<template id="admin.acl.delete" template="" lang="" group="0" version="1.9.001">
+		<tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tab_height="250px">
+			<tabs>
+				<tab id="main" label="Delete" statustext="Delete"/>
+			</tabs>
+			<tabpanels>
+				<template id="admin.acl.delete.main"/>
+			</tabpanels>
+		</tabbox>
+	</template>
+</overlay>

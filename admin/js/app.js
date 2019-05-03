@@ -481,11 +481,7 @@ app.classes.admin = AppJS.extend(
 		switch(_action.id)
 		{
 			case 'delete':
-				var app = egw.app_name();	// can be either admin or preferences!
-				if (app != 'admin') app = 'preferences';
-				var className = app+'_acl';
-				var request = egw.json(className+'::ajax_change_acl', [ids], this._acl_callback,this,false,this)
-					.sendRequest();
+				this._acl_delete(ids);
 				break;
 
 			case 'add':
@@ -497,6 +493,50 @@ app.classes.admin = AppJS.extend(
 				this._acl_dialog(content);
 				break;
 		}
+	},
+
+	_acl_delete: function(ids)
+	{
+		var app = egw.app_name();	// can be either admin or preferences!
+		if (app != 'admin') app = 'preferences';
+		var className = app+'_acl';
+		var callback = function(_button_id, _value) {
+			if(_button_id != et2_dialog.OK_BUTTON) return;
+
+			var request = egw.json(className+'::ajax_change_acl', [ids,null,_value], this._acl_callback,this,false,this)
+				.sendRequest();
+		}.bind(this);
+
+		var modifications = {};
+		var dialog_options = {
+			callback: callback,
+			title: this.egw.lang('Delete'),
+			buttons: et2_dialog.BUTTONS_OK_CANCEL,
+			value: {
+				content: {},
+				sel_options: {},
+				modifications: modifications,
+				readonlys: {}
+			},
+			template: egw.webserverUrl+'/admin/templates/default/acl.delete.xet'
+		};
+
+		// Handle policy documentation tab here
+		if(this.egw.user('apps').policy)
+		{
+			dialog_options['width'] = 550;
+			dialog_options['height'] = 350,
+			modifications.tabs = {
+				add_tabs:   true,
+				tabs: [{
+					label:    egw.lang('Documentation'),
+					template: 'policy.admin_cmd',
+					prepend:  false
+				}]
+			};
+		}
+		// Create the dialog
+		this.acl_dialog = et2_createWidget("dialog", dialog_options, et2_dialog._create_parent(app));
 	},
 
 	/**

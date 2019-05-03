@@ -481,7 +481,6 @@ class admin_acl
 				'onExecute' => 'javaScript:app.admin.acl',
 			),
 			'delete' => array(
-				'confirm' => 'Delete this access control',
 				'caption' => 'Delete',
 				'disableClass' => 'rowNoEdit',
 				'onExecute' => 'javaScript:app.admin.acl',
