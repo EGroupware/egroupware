@@ -14,6 +14,8 @@
 
 namespace EGroupware\Api\Vfs;
 
+require_once __DIR__ . '/../LoggedInTest.php';
+
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
 use EGroupware\Api\LoggedInTest as LoggedInTest;
@@ -500,7 +502,7 @@ class SharingBase extends LoggedInTest
 		$this->assertTrue(Vfs::is_readable('/'), 'Could not read root (/) from link');
 
 		// Check other paths
-		$this->assertFalse(Vfs::is_readable($path));
+		$this->assertFalse(Vfs::is_readable($path), "Was able to read $path as anoymous, it should be mounted as /");
 		$this->assertFalse(Vfs::is_readable($path . '../'));
 	}
 
@@ -541,6 +543,7 @@ class SharingBase extends LoggedInTest
 				echo $form."\n\n";
 			}
 		}
+		$this->assertNotNull($form, "Didn't find filemanager interface");
 		$data = json_decode($form->getAttribute('data-etemplate'));
 
 		$this->assertEquals('filemanager.index', $data->name);
@@ -583,7 +586,9 @@ class SharingBase extends LoggedInTest
  * Use this class for sharing so we can make sure we get a session ID, even
  * though we're on the command line
  */
-class TestSharing extends Api\Sharing {
+if(!class_exists('TestSharing'))
+{
+class TestSharing extends Api\Vfs\Sharing {
 
 	public static function create_new_session()
 	{
@@ -596,4 +601,10 @@ class TestSharing extends Api\Sharing {
 		}
 		return $sessionid;
 	}
+
+	public static function get_share_class($share)
+	{
+		return __CLASS__;
+	}
+}
 }

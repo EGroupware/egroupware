@@ -32,8 +32,7 @@ class SharingTest extends SharingBase
 	public function testHomeReadonly()
 	{
 		$dir = Vfs::get_home_dir().'/';
-error_log(__METHOD__ . " Dir: $dir");
-error_log(array2string($GLOBALS['egw_info']['server']));
+
 		$this->checkDirectory($dir, Sharing::READONLY);
 	}
 
