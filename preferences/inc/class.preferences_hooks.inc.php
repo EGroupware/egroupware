@@ -186,7 +186,7 @@ class preferences_hooks
 				'help'   => 'Audio effect enables|disables sound effects used in the theme',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default' => '1',
+				'default' => '0',
 			),
 			'navbar_format' => array(
 				'type'   => 'select',
