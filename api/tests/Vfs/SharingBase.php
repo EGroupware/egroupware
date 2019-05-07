@@ -63,11 +63,6 @@ class SharingBase extends LoggedInTest
 
 	public function setUp()
 	{
-		if(getenv('TRAVIS'))
-		{
-			// TODO: Figure out why this doesn't work on Travis
-			//$this->markTestSkipped("Travis doesn't like these. " . __METHOD__ . ':'.__LINE__);
-		}
 		// Check we have basic access
 		if(!is_readable($GLOBALS['egw_info']['server']['files_dir']))
 		{
