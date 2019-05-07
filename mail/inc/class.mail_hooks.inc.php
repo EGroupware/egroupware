@@ -693,4 +693,20 @@ class mail_hooks
 		}
 		return true;
 	}
+
+	/**
+	 * Add mail related actions into status action
+	 *
+	 * @return array returns array of actions
+	 */
+	public static function get_status_actions ()
+	{
+		return [
+			'mail' => [
+				'caption' => 'Mail',
+				'allowOnMultiple' => false,
+				'onExecute' => 'javaScript:app.status.handle_actions',
+			]
+		];
+	}
 }
