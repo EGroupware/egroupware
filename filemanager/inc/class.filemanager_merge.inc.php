@@ -220,6 +220,34 @@ class filemanager_merge extends Api\Storage\Merge
 	}
 
 	/**
+	 * Create a share for an entry
+	 *
+	 * @param string $app
+	 * @param string $id
+	 * @param string $path
+	 * @param type $content
+	 * @return type
+	 */
+	protected function create_share($app, $id, &$content)
+	{
+		// Check if some other process created the share (with custom options)
+		// and put it in the session cache for us
+		$path = $id;
+		$session = \EGroupware\Api\Cache::getSession(Api\Sharing::class, $path);
+		if($session && $session['share_path'] == $path)
+		{
+			return $session;
+		}
+		// Need to create the share here.
+		// No way to know here if it should be writable, or who it's going to
+		$mode = /* ?  ? Sharing::WRITABLE :*/ Api\Sharing::READONLY;
+		$recipients = array();
+		$extra = array();
+
+		return \EGroupware\Api\Vfs\Sharing::create($path, $mode, NULL, $recipients, $extra);
+	}
+
+	/**
 	 * Generate table with replacements for the Api\Preferences
 	 *
 	 */
