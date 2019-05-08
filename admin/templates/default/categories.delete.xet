@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.categories.delete.delete">
+	<template id="admin.categories.delete.message">
 		<description value="Are you sure you want to delete this category?"/>
 	</template>
 	<template id="admin.categories.delete">
@@ -12,7 +12,7 @@
 					<tab id="main" label="Category"/>
 				</tabs>
 				<tabpanels>
-					<template id="admin.categories.delete.delete"/>
+					<template id="admin.categories.delete.message"/>
 				</tabpanels>
 			</tabbox>
 			<hbox class="dialogFooterToolbar" id="button">

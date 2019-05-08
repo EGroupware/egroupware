@@ -2,38 +2,6 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.categories.delete" template="" lang="" group="0" version="1.9.001">
-		<grid>
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<groupbox class="globalCat_confirmDelete">
-						<caption label="Delete this category"/>
-						<grid>
-							<columns>
-								<column/>
-								<column/>
-							</columns>
-							<rows>
-								<row height="30">
-									<description span="all"/>
-								</row>
-								<row>
-									<checkbox align="center" id="delete[subs]" span="all"/>
-								</row>
-								<row height="40">
-									<button align="center" label="Delete" id="delete[delete]" image="delete" background_image="1"/>
-								</row>
-							</rows>
-						</grid>
-					</groupbox>
-				</row>
-			</rows>
-		</grid>
-		<textbox id="delete[cat_id]" class="globalCat_hiddenCatid"/>
-	</template>
 	<template id="admin.categories.edit.category" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
@@ -81,7 +49,6 @@
 
 			</rows>
 		</grid>
-		<template id="admin.categories.delete" class="globalCat_hiddenCatid"/>
 	</template>
 	<template id="admin.categories.edit" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -113,7 +80,7 @@
 						<button label="Save" id="button[save]" onclick="return app.admin.check_owner(widget);" image="save" background_image="1"/>
 						<button label="Apply" id="button[apply]" onclick="return app.admin.check_owner(widget);" image="apply" background_image="1"/>
 						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-						<buttononly align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="app.admin.delete_category" image="delete" background_image="1"/>
+						<buttononly align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="egw.open_link('admin.admin_categories.delete&amp;cat_id='+widget.getRoot().getArrayMgr('content').getEntry('id'),'_browser','450x400');window.close();" image="delete" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>
