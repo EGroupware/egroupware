@@ -64,6 +64,5 @@
 				</row>
 			</rows>
 		</grid>
-		<template id="admin.categories.delete" class="globalCat_hiddenCatid"/>
 	</template>
 </overlay>
