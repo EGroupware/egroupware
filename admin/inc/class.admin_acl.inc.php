@@ -377,7 +377,7 @@ class admin_acl
 					)+(array)$values['admin_cmd'];
 					if($location == 'run')
 					{
-						$cmd = new admin_cmd_account_app($set_it,$account_id, $app);
+						$cmd = new admin_cmd_account_app($set_it,$account_id, $app, (array)$values['admin_cmd']);
 					}
 					else
 					{

@@ -29,7 +29,7 @@ class admin_cmd_account_app extends admin_cmd
 	 * @param string|int $account =null account name or id
 	 * @param array|string $apps =null app-names
 	 */
-	function __construct($allow,$account=null,$apps=null)
+	function __construct($allow,$account=null,$apps=null, $other=array())
 	{
 		if (!is_array($allow))
 		{
@@ -37,7 +37,7 @@ class admin_cmd_account_app extends admin_cmd
 				'allow' => $allow,
 				'account' => $account,
 				'apps' => $apps,
-			);
+			)+(array)$other;
 		}
 		if (isset($allow['apps']) && !is_array($allow['apps']))
 		{
@@ -65,7 +65,7 @@ class admin_cmd_account_app extends admin_cmd
 
 		$old_rights = (array)$GLOBALS['egw']->acl->get_app_list_for_id('run', Egroupware\Api\Acl::READ, $account_id);
 		$new_rights = $this->allow ?
-			$old_rights + array($apps) :
+			array_merge($old_rights, $apps) :
 			array_diff($old_rights, $apps);
 
 		$this->set = Array('app' => $new_rights);
