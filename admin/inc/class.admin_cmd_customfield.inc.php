@@ -97,6 +97,11 @@ class admin_cmd_customfield extends admin_cmd
 					unset($set[$key]);
 					unset($old[$key]);
 				}
+				else
+				{
+					// Make sure it's a string, not an int
+					$set[$key] = ''.$value;
+				}
 			}
 		}
 		$this->set = $set;
