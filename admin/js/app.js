@@ -123,6 +123,17 @@ app.classes.admin = AppJS.extend(
 			case 'admin.mailaccount':
 				this.account_hide_not_applying();
 				break;
+			case 'admin.cmds':
+				var selected = this.et2.getWidgetById('nm').getSelection();
+				if (selected && selected.ids.length == 1)
+				{
+					this.cmds_onselect(selected.ids);
+				}
+				else
+				{
+					this.et2.getWidgetById('splitter').dock();
+				}
+				break;
 		}
 	},
 
@@ -1340,5 +1351,45 @@ app.classes.admin = AppJS.extend(
 			function(_data){
 				taglist.set_value(_data);
 		}).sendRequest();
+	},
+
+	/**
+	 * Set content of selected row
+	 *
+	 * @param {array} node
+	 * @returns
+	 */
+	cmds_onselect: function (node)
+	{
+		var splitter = this.et2.getWidgetById('splitter');
+		var cmds_preview = this.et2.getWidgetById('cmds_preview');
+		if (node.length != 1)
+		{
+			splitter.dock();
+			return;
+		}
+
+		if (splitter.isDocked())
+		{
+			splitter.undock();
+		}
+		var data = egw.dataGetUIDdata(node[0]);
+		var policy_preview = this.et2.getWidgetById('policy_preview');
+		var id = node[0].replace('admin::', '');
+
+		if (app.policy)
+		{
+			cmds_preview.set_disabled(true);
+			policy_preview.set_src(egw.link('/index.php', {
+				menuaction:'policy.EGroupware\\Policy\\History.view',
+				'cmd_id':id,
+				'cmd_template': "policy.admin_cmd_history"
+			}));
+		}
+		else
+		{
+			policy_preview.set_disabled(true);
+			cmds_preview.set_value({content:[data.data]});
+		}
 	}
 });

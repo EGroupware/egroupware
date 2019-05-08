@@ -65,14 +65,43 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.cmds" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%">
+	<template id="admin.cmds.splitter" template="" lang="" height="100%" group="0" version="19.01">
+		<split orientation="h" height="100%" id="splitter" dock_side="bottomDock">
+			<nextmatch options="admin.cmds.rows" id="nm" onselect="app.admin.cmds_onselect"/>
+			<template id="admin.cmds.preview"/>
+		</split>
+	</template>
+
+	<template id="admin.cmds" template="" lang="" height="100%" group="0" version="1.5.001">
+		<template id="admin.cmds.splitter" height="100%"/>
+	</template>
+
+	<template id="admin.cmds.preview" template="" lang="" group="0" version="1.5.001">
+		<iframe id="policy_preview" src=""/>
+		<grid id="cmds_preview">
 			<columns>
-				<column/>
+				<column width="90"/>
+				<column />
 			</columns>
 			<rows>
 				<row>
-					<nextmatch options="admin.cmds.rows" id="nm"/>
+					<description value="Title" label="%s:"/>
+					<description value="$row_cont[title]"/>
+				</row>
+				<row>
+					<description value="Comment" label="%s:"/>
+					<description value="$row_cont[comment]"/>
+				</row>
+				<row>
+					<description value="Creator" label="%s:"/>
+					<hbox>
+						<description value="$row_cont[creator]" label="%s("/>
+						<description value="$row_cont[creator_email]" label="%s)"/>
+					</hbox>
+				</row>
+				<row>
+					<description value="Data" label="%s:"/>
+					<description value="$row_cont[data]"/>
 				</row>
 			</rows>
 		</grid>
