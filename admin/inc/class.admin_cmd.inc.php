@@ -50,6 +50,8 @@ use EGroupware\Api\Acl;
  * @property-read string $rrule rrule for periodic execution
  * @property int $rrule_start optional start timestamp for rrule, default $created time
  * @property string async_job_id optional name of async job for periodic-run, default "admin-cmd-$id"
+ * @property array set optional New values set by the command
+ * @property array old optional Previous values before the command was run
  */
 abstract class admin_cmd
 {
