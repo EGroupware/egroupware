@@ -39,18 +39,18 @@
 					</vbox>
 				</row>
 				<row class="row $row_cont[class]">
-					<description id="${row}[title]" statustext="$row_cont[data]"/>
+					<description id="${row}[title]"/>
 					<select-app id="${row}[app]" readonly="true"/>
 					<select-account id="${row}[account]" readonly="true"/>
 					<select id="${row}[type]" readonly="true"/>
-					<url-email id="${row}[requested_email]" readonly="true" statustext="$row_cont[comment]"/>
+					<url-email id="${row}[requested_email]" readonly="true"/>
 					<description id="${row}[comment]"/>
 					<date-time id="${row}[scheduled]" readonly="true"/>
 					<description id="${row}[rrule]"/>
 					<select id="${row}[remote_id]" readonly="true"/>
 					<vbox>
 						<date-time id="${row}[created]" readonly="true"/>
-						<select-account id="${row}[creator]" readonly="true" statustext="$row_cont[creator_email]"/>
+						<select-account id="${row}[creator]" readonly="true"/>
 					</vbox>
 					<vbox>
 						<select id="${row}[status]" readonly="true"/>
@@ -59,7 +59,7 @@
 					</vbox>
 					<vbox>
 						<date-time id="${row}[modified]" readonly="true"/>
-						<select-account id="${row}[modifier]" readonly="true" statustext="$row_cont[modifier_email]"/>
+						<select-account id="${row}[modifier]" readonly="true"/>
 					</vbox>
 				</row>
 			</rows>
@@ -80,30 +80,42 @@
 		<iframe id="policy_preview" src=""/>
 		<grid id="cmds_preview">
 			<columns>
-				<column width="90"/>
 				<column />
 			</columns>
 			<rows>
 				<row>
-					<description value="Title" label="%s:"/>
-					<description value="$row_cont[title]"/>
-				</row>
-				<row>
-					<description value="Comment" label="%s:"/>
-					<description value="$row_cont[comment]"/>
-				</row>
-				<row>
-					<description value="Creator" label="%s:"/>
-					<hbox>
-						<description value="$row_cont[creator]" label="%s("/>
-						<description value="$row_cont[creator_email]" label="%s)"/>
-					</hbox>
-				</row>
-				<row>
-					<description value="Data" label="%s:"/>
-					<description value="$row_cont[data]"/>
+					<vbox>
+						<hbox class="row">
+							<hbox class="et2_hbox_left"><description value="Title" label="%s:"/></hbox>
+							<description value="$row_cont[title]"/>
+						</hbox>
+						<hbox class="row dialogFooterToolbar">
+							<hbox class="et2_hbox_left">
+								<description value="Comment" label="%s:" class="et2_hbox_left"/>
+							</hbox>
+							<description value="$row_cont[comment]"/>
+						</hbox>
+						<hbox class="row">
+							<hbox class="et2_hbox_left">
+								<description value="Creator" label="%s:" class="et2_hbox_left"/>
+							</hbox>
+							<hbox>
+								<description value="$row_cont[creator]" label="%s("/>
+								<description value="$row_cont[creator_email]" label="%s)"/>
+							</hbox>
+						</hbox>
+						<hbox class="row">
+							<hbox class="et2_hbox_left">
+								<description value="Data" label="%s:" align="left" class="et2_hbox_left"/>
+							</hbox>
+							<description value="$row_cont[data]"/>
+						</hbox>
+					</vbox>
 				</row>
 			</rows>
 		</grid>
+		<styles>
+			#admin-cmds_cmds_preview .et2_hbox.row {padding: 5px 0 5px 3px;vertical-align: middle;}
+		</styles>
 	</template>
 </overlay>
