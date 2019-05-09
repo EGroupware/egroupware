@@ -27,7 +27,7 @@ class admin_cmd_change_account_id extends admin_cmd
 	 */
 	function __construct(array $change)
 	{
-		if (!isset($change['change']))
+		if (!isset($change['change']) && !($change['data'] && $change['id']))
 		{
 			$change = array(
 				'change' => $change,
@@ -161,7 +161,7 @@ class admin_cmd_change_account_id extends admin_cmd
 				$db->column_definitions = $db->column_definitions['fd'];
 				if (!$columns)
 				{
-					echo "$app: $table no columns with account-id's\n";
+					$this->value .= "$app: $table no columns with account-id's\n";
 					continue;	// noting to do for this table
 				}
 				if (!is_array($columns)) $columns = array($columns);
@@ -185,7 +185,7 @@ class admin_cmd_change_account_id extends admin_cmd
 						$where[] = "acl_appname != 'phpgw_group'";
 					}
 					$total += ($changed = self::_update_account_id($this->change,$db,$table,$column,$where,$type));
-					if (!$check_only && $changed) echo "$app:\t$table.$column $changed id's changed\n";
+					if (!$check_only && $changed) $this->value .=  "$app:\t$table.$column $changed id's changed\n";
 				}
 			}
 		}
@@ -194,7 +194,7 @@ class admin_cmd_change_account_id extends admin_cmd
 			foreach($GLOBALS['egw_info']['apps'] as $app => $data)
 			{
 				$total += ($changed = Api\Framework\Favorites::change_account_ids($app, $this->change));
-				if ($changed) echo "$app:\t$changed id's in favorites or index-state changed\n";
+				if ($changed) $this->value .=  "$app:\t$changed id's in favorites or index-state changed\n";
 			}
 
 			// call hooks, in case apps need additional changes
@@ -203,9 +203,10 @@ class admin_cmd_change_account_id extends admin_cmd
 			foreach(Api\Hooks::process($args, array(), true) as $app => $changed)
 			{
 				$total += $changed;
-				if ($changed) echo "$app:\t$changed id's changed by application hook\n";
+				if ($changed) $this->value .=  "$app:\t$changed id's changed by application hook\n";
 			}
 		}
+		echo $this->value;
 		if ($total) Api\Cache::flush(Api\Cache::INSTANCE);
 
 		return lang("Total of %1 id's changed.",$total)."\n";
