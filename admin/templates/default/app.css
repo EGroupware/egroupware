@@ -189,7 +189,7 @@ Admin command
 
 #admin-cmds_nm {min-height: 100px;}
 #admin-cmds .et2_split {padding-right: 10px;}
-#admin-cmds_preview {width:100%; height:100%;}
+#admin-cmds_policy_preview {width:100%; height:100%;}
 #admin-cmds div.splitter-bar-horizontal {
   border-top: 1px solid #B4B4B4;
   border-left: 0;
