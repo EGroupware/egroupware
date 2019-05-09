@@ -639,7 +639,7 @@ class admin_categories
 			//error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
 		}
 		$cats = new Categories('', Categories::id2name($content['cat_id'],'appname'));
-		if(!$cats->check_perms(Acl::DELETE, $content['cat_id']) || !self::$acl_delete ||
+		if((!$cats->check_perms(Acl::DELETE, $content['cat_id']) || !self::$acl_delete) &&
 					// Only admins can delete globals
 					$cats->is_global($content['cat_id']) && !$GLOBALS['egw_info']['user']['apps']['admin'])
 
