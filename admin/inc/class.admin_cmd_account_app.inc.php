@@ -68,8 +68,9 @@ class admin_cmd_account_app extends admin_cmd
 			array_merge($old_rights, $apps) :
 			array_diff($old_rights, $apps);
 
-		$this->set = Array('app' => $new_rights);
-		$this->old = Array('app' => $old_rights);
+		// Sometimes keys get stringified, so remove them
+		$this->set = Array('app' => array_values($new_rights));
+		$this->old = Array('app' => array_values($old_rights));
 		if ($check_only) return true;
 
 		//echo "account=$this->account, account_id=$account_id, apps: ".implode(', ',$apps)."\n";
