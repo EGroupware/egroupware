@@ -26,6 +26,18 @@ var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 	attributes: {
 		"multiline": {
 			"ignore": true
+		},
+		"allow_path": {
+			type: "boolean",
+			name: "Allow path",
+			description: "Allow a path instead of a URL, path must start with /",
+			default: false
+		},
+		"trailing_slash": {
+			type: "boolean",
+			name: "Trailing slash",
+			description: "Require (or forbid) that the path ends with a /",
+			default: et2_no_init
 		}
 	},
 
@@ -212,9 +224,23 @@ var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 		if(value == "") return;
 		switch(e.data._type) {
 			case "url":
-				if(value.indexOf("://") == -1) {
+				if(value.indexOf("://") == -1 && !e.data.options.allow_path) {
 					e.data.set_value("http://"+value);
 					e.data.showMessage(e.data.egw().lang("Protocol is required"), "hint", true);
+				}
+				else if (e.data.options.allow_path && value[0] !== '/')
+				{
+					e.data.showMessage(e.data.egw().lang("Path must start with '/'"), "hint", true);
+				}
+
+				// Adjust trailing slash - required or forbidden
+				if(e.data.options.trailing_slash === true && value[value.length-1] !== '/' )
+				{
+					e.data.set_value(value+'/');
+				}
+				else if (e.data.options.trailing_slash === false && value[value.length-1] === '/'  )
+				{
+					e.data.set_value(value.substr(0,value.length-1));
 				}
 				break;
 			case "url-email":

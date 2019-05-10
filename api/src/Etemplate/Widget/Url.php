@@ -78,17 +78,34 @@ class Url extends Etemplate\Widget
 			}
 			elseif ((string)$value != '' && !isset($this->attrs['preg']))
 			{
+				$url_valid = true;
 				switch($this->type)
 				{
 					case 'url':
+						$this->attrs['preg'] = self::URL_PREG;
+						if($this->attrs['allow_path'])
+						{
+							$url_valid = $value[0] === '/';
+
+							// Just need to override the regex
+							$this->attrs['preg'] = '_\/.*_';
+						}
 						// if no protocol given eg. "www.egroupware.org" prepend "http://" for validation
-						if (($missing_protocol = strpos($value, '://') === false))
+						else if (($missing_protocol = strpos($value, '://') === false))
 						{
 							$value = 'http://'.$value;
 						}
-						$url_valid = filter_var($value, FILTER_VALIDATE_URL) ||
-							// Remove intl chars & check again, but if it passes we'll keep the original
-							filter_var(preg_replace('/[^[:print:]]/','',$value), FILTER_VALIDATE_URL);
+						if($url_valid && !$this->attrs['allow_path'])
+						{
+							$url_valid = filter_var($value, FILTER_VALIDATE_URL) ||
+								// Remove intl chars & check again, but if it passes we'll keep the original
+								filter_var(preg_replace('/[^[:print:]]/','',$value), FILTER_VALIDATE_URL);
+						}
+						if(array_key_exists('trailing_slash', $this->attrs))
+						{
+							$trailing_slash = substr($value, -1) === '/';
+							$url_valid = (($this->attrs['trailing_slash'] == 'true') == $trailing_slash);
+						}
 						//error_log(__METHOD__."() filter_var(value=".array2string($value).", FILTER_VALIDATE_URL)=".array2string(filter_var($value, FILTER_VALIDATE_URL))." --> url_valid=".array2string($url_valid));
 						// remove http:// validation prefix again
 						if ($missing_protocol)
@@ -100,7 +117,6 @@ class Url extends Etemplate\Widget
 							self::set_validation_error($form_name,lang("'%1' has an invalid format !!!",$value),'');
 							return;
 						}
-						$this->attrs['preg'] = self::URL_PREG;
 						break;
 					case 'url-email':
 						$this->attrs['preg'] = self::EMAIL_PREG;
