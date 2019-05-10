@@ -503,6 +503,10 @@ class importexport_schedule_ui
 			}
 			$definition->plugin_options = array_merge($definition->plugin_options, $selection);
 		}
+		// Set some automatic admin history data, if the plugin wants it
+		$definition->plugin_options = array_merge($definition->plugin_options, array('admin_cmd' => array(
+			'comment' => lang('schedule import / export') . "\n" . $definition->get_title() . "\n" . $target
+		)));
 
 		foreach($targets as $target)
 		{

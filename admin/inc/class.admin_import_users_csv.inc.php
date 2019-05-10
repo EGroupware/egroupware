@@ -118,6 +118,7 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 			// First method is preferred
 			$import_csv->skip_records(1);
 		}
+		$admin_cmd = $_definition->plugin_options['admin_cmd'];
 
 		// Start counting successes
 		$count = 0;
@@ -163,11 +164,11 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 								$action = $condition['true'];
 								foreach ( (array)$accounts as $account ) {
 									$record['account_id'] = $account['account_id'];
-									$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
+									$success = $this->action(  $action['action'], $record, $import_csv->get_current_position(), $admin_cmd );
 								}
 							} else {
 								$action = $condition['false'];
-								$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
+								$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position(), $admin_cmd ));
 							}
 							break;
 
@@ -179,7 +180,7 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 				}
 			} else {
 				// unconditional insert
-				$success = $this->action( 'create', $record, $import_csv->get_current_position() );
+				$success = $this->action( 'create', $record, $import_csv->get_current_position(), $admin_cmd );
 			}
 			if($success) $count++;
 		}
@@ -193,7 +194,7 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 	 * @param array $_data contact data for the action
 	 * @return bool success or not
 	 */
-	private function action ( $_action, $_data, $record_num = 0 ) {
+	private function action ( $_action, $_data, $record_num = 0, $admin_cmd ) {
 		switch ($_action) {
 			case 'none' :
 				return true;
@@ -202,7 +203,12 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 				$_data['account_expires'] = $_action == 'disable' ? 'already' : '';
 			case 'create' :
 			case 'update' :
-				$command = new admin_cmd_edit_user(($_action=='create'?null:$_data['account_lid']), $_data);
+				$command = new admin_cmd_edit_user(array(
+					'account' => $_action=='create'?null:(int)$_data['account_lid'],
+					'set' => $_data
+				)+(array)$admin_cmd);
+
+
 				if($this->dry_run) {
 					$this->results[$_action]++;
 					return true;
