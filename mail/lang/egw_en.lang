@@ -268,9 +268,12 @@ how should the available information on identities be displayed	admin	en	how sho
 how to forward messages	mail	en	how to forward messages
 html	mail	en	html
 html mode	mail	en	HTML mode
+ident name	mail	en	Ident name
+ident name email	mail	en	Ident name [Email]
+ident name organization email	mail	en	Ident name Organization [Email]
 identity	mail	en	Identity
-identity+signature	mail	en	Identity+Signature
 identity label	mail	en	Identity label
+identity+signature	mail	en	Identity+Signature
 if	mail	en	IF
 if authentication required	mail	en	if authentication required
 if different from email address	mail	en	if different from EMail address
@@ -419,6 +422,9 @@ quota: %1	mail	en	Quota: %1
 read	mail	en	read
 read / unread	mail	en	Read / Unread
 readable	mail	en	readable
+real name	mail	en	Real name
+real name email	mail	en	Real name [Email]
+real name organization email	mail	en	Real name Organization [Email]
 reason!	mail	en	reason!
 receive notification	mail	en	Receive notification
 recursively	mail	en	Recursively

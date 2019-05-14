@@ -170,7 +170,6 @@ done	infolog	en	Done
 download	infolog	en	Download
 download url for links	infolog	en	Download url for links
 due %1	infolog	en	Due %1
-due date must be in the future!!!	en	Due date must be in the future!!!
 duration	infolog	en	Duration
 e-mail:	infolog	en	Email:
 each value is a line like <id>[=<label>]	infolog	en	Each value is a line like <id>[=<label>]
@@ -249,10 +248,11 @@ infolog - new subproject	infolog	en	InfoLog - New sub project
 infolog - subprojects from	infolog	en	InfoLog - Sub projects from
 infolog csv export	infolog	en	InfoLog CSV export
 infolog csv import	infolog	en	InfoLog CSV import
+infolog encryption requires epl subscription	infolog	en	InfoLog encryption requires EPL Subscription
 infolog entry deleted	infolog	en	InfoLog entry deleted
 infolog entry saved	infolog	en	InfoLog entry saved
 infolog fields:	infolog	en	InfoLog fields:
-InfoLog filter for the home screen	infolog	en	InfoLog filter for the home screen
+infolog filter for the home screen	infolog	en	InfoLog filter for the home screen
 infolog ical export	infolog	en	Infolog iCal export
 infolog ical import	infolog	en	Infolog iCal import
 infolog id	infolog	en	InfoLog ID
@@ -364,9 +364,9 @@ price	infolog	en	Price
 pricelist	infolog	en	Price list
 primary link	infolog	en	Primary link
 print this infolog	infolog	en	Print this infolog
+printing...	infolog	en	Printing...
 priority	infolog	en	Priority
 private	infolog	en	Private
-printing...	infolog	en	Printing...
 project	infolog	en	Project
 project id	infolog	en	Project ID
 project name	infolog	en	Project name
@@ -434,7 +434,7 @@ sets the status of this entry and its subs to done	infolog	en	Sets the status of
 sets the status of this entry to done	infolog	en	Sets the status of this entry to done
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show sub tasks, calls or notes in the normal view or not. You can always view the subs via their parent.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file attachments in the InfoLog list view.
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	en	Should InfoLog show up on the Home page and with which filter. Works only if you didn't select an application for the Home page in common preferences.
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	en	Should InfoLog show up on the Home page and with which filter. Works only if you didn't select an application for the Home page in common preferences.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names or just the login names.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	en	Should the InfoLog list show a unique numerical Id, which can be used e.g. as ticket Id.
 should the infolog list show the column "last modified".	infolog	en	Should the InfoLog list show the column "last modified".

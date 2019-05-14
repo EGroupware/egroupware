@@ -268,9 +268,12 @@ how should the available information on identities be displayed	admin	de	Hier le
 how to forward messages	mail	de	Wie möchten Sie Nachrichten weiterleiten
 html	mail	de	HTML
 html mode	mail	de	HTML Modus
+ident name	mail	de	Name
+ident name email	mail	de	Name [E-Mail]
+ident name organization email	mail	de	Name Organisation [E-Mail]
 identity	mail	de	Identität
-identity+signature	mail	de	Identität+Signatur
 identity label	mail	de	Anzeige E-Mail Profil im Seitenmenü
+identity+signature	mail	de	Identität+Signatur
 if	mail	de	Wenn
 if authentication required	mail	de	wenn Benutzeranmeldung erforderlich ist
 if different from email address	mail	de	falls abweichend zur E-Mailadresse
@@ -419,6 +422,9 @@ quota: %1	mail	de	Quota: %1
 read	mail	de	gelesen
 read / unread	mail	de	Gelesen / Ungelesen
 readable	mail	de	lesen
+real name	mail	de	Ihr Name
+real name email	mail	de	Ihr Name [E-Mail]
+real name organization email	mail	de	Ihr Name Organisation [E-Mail]
 reason!	mail	de	Grund!
 receive notification	mail	de	Empfangsbestätigung
 recursively	mail	de	Rekursiv

@@ -81,6 +81,7 @@ at your request, this script is going to attempt to upgrade your old tables to t
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	de	Auf Ihre Anforderung hin wird dieses Skript die üble Aktion auf sich nehmen, Ihre existierenden Tabellen zu löschen und sie im neuen Format wieder herzustellen!
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	de	Auf Ihre Anforderung hin wird dieses Skript die üble Aktion auf sich nehmen, alle Ihre Applikationen zu deinstallieren, was ebenfalls Ihre existierenden Tabellen und Daten löschen wird!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	de	Soll versucht werden den korrekten MIME-typ für FTP zu verwenden statt dem Vorgabewert "application/octet-stream"
+attributes for new users	setup	de	Attribute für neue Benutzer
 authentication / accounts	setup	de	Authentifizierung / Benutzerkonten
 authentication type for application	setup	de	Authentifizierungstyp für die Anwendung
 authentification mode:	setup	de	Art der Authentifizierung:
@@ -327,7 +328,7 @@ host information	setup	de	Host Informationen
 host,[smtp port],[smtp user],[smtp password]	setup	de	Host,[SMTP Port],[SMTP Benutzer],[SMTP Passwort]
 host,{imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	de	host,{imap | imaps },[domain],[{standard(Vorgabe)|vmailmgr = Hinzufügen einer Domain für Mailserver Anmeldung }]
 host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	de	Host,{imap | pop3 | imaps | pop3s},[Domain],[{standard(Vorgabe)|vmailmgr = Domain für Mailserver Anmeldung anhängen|email = eMail Adresse der Benutzer (Default MailDomain sollte gesetzt sein)}]
-host/ip domain controler	setup	de	Hostname / IP des Domain Controler
+host/ip domain controler	setup	de	Hostname/IP des Domänencontrollers
 hostname/ip of database server	setup	de	Hostname/IP des Datenbank-Servers
 hour (0-24)	setup	de	Stunde (0-24)
 however the tables are still in the database	setup	de	Wie auch immer, die Tabellen sind noch immer in der Datenbank
@@ -460,6 +461,7 @@ or %1continue to the header admin%2	setup	de	oder %1mit der Headerverwaltung wei
 or http://webdav.domain.com (webdav)	setup	de	oder http://webdav.domain.com (für WebDAV)
 or we can attempt to create the database for you:	setup	de	Oder wir können versuchen die Datenbank für Sie anzulegen:
 or you can install a previous backup.	setup	de	Oder Sie können eine vorherige Datensicherung installieren.
+password	setup	de	Passwort
 password for smtp-authentication	setup	de	Passwort für SMTP Authentifizierung
 password needed for domain configuration.	setup	de	Passwort für die Konfiguration der Domain.
 password of db user	setup	de	Passwort des Datenbank Benutzers

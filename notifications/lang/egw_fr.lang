@@ -1,8 +1,10 @@
 (update in sec. %s)	notifications	fr	(mise à jour dans sec. %s)
 account:	notifications	fr	Compte :
 all possible notification backends	notifications	fr	Tous les backends de notification possibles
+are you sure you want to delete all notifications?	notifications	fr	Confirmez-vous vouloir supprimer toutes les notifications ?
 browser	notifications	fr	Navigateur
 browser is starting.	notifications	fr	Le navigateur se lance.
+cancal settings?	notifications	fr	Annuler le paramétrage ?
 cancal?	notifications	fr	Annuler ?
 certification-information:	notifications	fr	Information sur le certificat
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	fr	Cocher les deux. D'abord essayer le compte de utilisateur actif, puis le profil eMailAdmin
@@ -11,6 +13,10 @@ connection error.	notifications	fr	Erreur de connexion
 connection error. please check connection to server.	notifications	fr	Erreur de connexion. Veuillez vérifier la connectivité au serveur.
 continue to connect?	notifications	fr	Continuer la connexion ?
 cookies are required to login to this site.	notifications	fr	Les cookies sont nécessaires pour la connexion à ce site.
+delete all messages	notifications	fr	supprimer tous les messages
+delete notifications	notifications	fr	supprimer toutes les notifications
+delete this message	notifications	fr	supprimer ce message
+disabled	notifications	fr	Désactivé
 disabled chains	notifications	fr	Chaînes désactivées
 do not notify me at all	notifications	fr	Ne pas me notifier du tout.
 domain not found, please check serveraddress.	notifications	fr	Domaine non trouvé, veuillez vérifier l'adresse du serveur
@@ -27,6 +33,7 @@ egroupware-popup backend	admin	fr	Backend de popup EGroupware
 egroupware-popup first, if that fails notify me by e-mail	notifications	fr	Popup EGroupware d'abord, si cela échoue, notifier par email
 egroupware-popup only	notifications	fr	Popup EGroupware seulement
 egroupware-popup verbosity	notifications	fr	Verbosité des Popup EGroupware
+email notifications only, if user is not logged in	notifications	fr	Notifications par mail uniquement si l'utilisateur n'est pas connecté
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	fr	Profil eMailAdmin seulement. Ne pas utiliser les profils mail des utilisateurs pour les notifications.
 enable egroupware-popup backend	admin	fr	Activer le backend des popup EGroupware
 enable windows-popup backend	admin	fr	Activer le backend de popup Windows
@@ -37,17 +44,28 @@ error ssl	notifications	fr	Erreur SSL
 exit	notifications	fr	Sortir
 folder	notifications	fr	Dossier
 from	notifications	fr	Depuis
+high	notifications	fr	haute
 host:	notifications	fr	Hôte :
 if set, embedded links get rendered special for external clients	notifications	fr	Si coché, les liens sont spécialement adaptés aux clients externes
 java desktop notification app	preferences	fr	Application java de notification
+last month	notifications	fr	Dernier mois
 linked entries:	common	fr	Entrées liées :
+login aborted, application exit?	notifications	fr	Login échoué, sortir de l'application ?
 login in egroupware:	notifications	fr	login EGroupware
+low	notifications	fr	bas
 mail backend	admin	fr	Backend email
+mark all as read	notifications	fr	tout marquer comme lu
+mark as read	notifications	fr	marquer comme lu
+medium	notifications	fr	moyen
 message from	notifications	fr	Message de
 minutes	notifications	fr	Minutes
+more info	notifications	fr	Plus d'info
+next	notifications	fr	suivant
 notification	common	fr	Notification
+notifications	notifications	fr	Notifications
 notifier	notifications	fr	Notificateur
 notify me by	notifications	fr	Notifier avec mon compte
+open notified entry	notifications	fr	Ouvrir l'entrée notifiée
 optimize e-mails for external mail client	notifications	fr	Optimizer les emails pour des clients de messagerie externes
 page not found, please check serveraddress.	notifications	fr	Page non trouvée, veuillez vérifier l'adresse du esrveur
 password:	notifications	fr	Mot de passe :
@@ -58,6 +76,7 @@ please enter the url of your egroupware.	notifications	fr	Veuillez entrer l'URL 
 please enter your egroupware username.	notifications	fr	Veuillez entrer votre nom d'utilisateur EGroupware
 please enter your password	notifications	fr	Veuillez entrer votre mot de passe
 preferences for notification	notifications	fr	Préférences de notification
+previous	notifications	fr	précédent
 received	notifications	fr	Reçu
 repeat login?	notifications	fr	Répeter la connexion ?
 run application	notifications	fr	exécuter l'application
@@ -67,19 +86,24 @@ setting aborted, application exit	notifications	fr	Paramètre annulé, l'applica
 settings	notifications	fr	Paramètres
 signature	admin	fr	Signature
 signature added to every change notification	admin	fr	Signature ajoutée à chaque notification de changement
+site configuration	admin	fr	Configuration du site
 sorry, your login has expired	notifications	fr	Désolé, votre login a expiré
 step	notifications	fr	Etape
 subject dn:	notifications	fr	Sujet DN :
 the server certificate is not a valid trust center certificate!	notifications	fr	Ce certificat n'est pas un certificat de confiance valide !
 this egroupware notification has been sent to you by mail because your	notifications	fr	Cette notification EGroupware vous a été envoyée par email parce que votre
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	fr	Cette notification EGroupware vous êtes envoyée par email parce que la chaîne de notification choisie a été désactivé par l'administrateur.  Veuillez sélectionner une autre chaîne de notification dans vos préférences !
+this month	notifications	fr	Ce mois-ci
+today	notifications	fr	Aujourd'hui
 user:	notifications	fr	Utilisateur :
 warning	notifications	fr	Attention
 windows-popup and e-mail	notifications	fr	Popup et email Windows
 windows-popup backend	admin	fr	Backend popup Windows
 windows-popup first, if that fails notify me by e-mail	notifications	fr	Popup windows en premier, en cas d'échec, me notifier par email
 windows-popup only	notifications	fr	Popup windows seulement
+yesterday	notifications	fr	hier
 you can also use	admin	fr	Vous pouvez aussi utiliser
+you have %1 unread notifications	notifications	fr	Vous avez %1 notification(s) non lue(s)
 you have been successfully logged out	notifications	fr	Vous avez été déconnecté avec succès
 you've got new mail	notifications	fr	Vous avez un nouveau message
 your session could not be verified.	notifications	fr	Votre session n'a pas pu être vérifiée.

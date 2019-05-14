@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	fr	%1 %2 dans %3
 %1 copied - the copy can now be edited	calendar	fr	%1 copié, la copie peut maintenant être modifiée
 %1 days	calendar	fr	%1 jours
+%1 entries %2, %3 failed because of insufficent rights !!!	calendar	fr	%1 entrées %2, %3 en échec pour cause de droits insuffisants  !!!
 %1 entries %2, %3 failed.	calendar	fr	%1 entrées %2, %3 en échec.
 %1 event(s) %2	calendar	fr	%1 événement(s) %2
 %1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	fr	%1 événement(s) %2, %3 en échec pour droits insuffisants !
@@ -14,6 +15,7 @@
 %s the event	calendar	fr	%s l'événement
 (%1 events in %2 seconds)	calendar	fr	(%1 événement en %2 secondes)
 (empty = use global limit, no = no export at all)	admin	fr	(vide = pas de limite globale, no = pas d'export du tout)
+(without a custom url we use nation of user preference to load holidays from %s)	calendar	fr	(En l'absence d'URL, le pays des préférences de l'utilisateur est utilisé pour chargé les jours fériés de %s)
 , exceptions preserved	calendar	fr	, exceptions préservées
 , stati of participants reset	calendar	fr	, statuts des participants remis à zéro
 a list of email addresses of all participants who have not declined	calendar	fr	Une liste d'adresse email avec tous les participants qui n'ont pas décliné
@@ -61,7 +63,7 @@ all participants	calendar	fr	Tous les participants
 allow booking requests from any user when creating events?	calendar	fr	Autoriser n'importe quel utilisateur à créer des demande de réservation ?
 allow users to prevent change notifications ('do not notify')	calendar	fr	Autoriser les utilisateurs à empêcher le changement des notifications "Ne pas notifier"
 allows to edit the event again	calendar	fr	Autorise la réédition de l'événement
-always	calendar	fr	toujours
+always	calendar	fr	Toujours
 always use full edit dialog	calendar	fr	Toujours utiliser la boîte de dialogue complète
 always use the full edit dialog, not this little dialog	calendar	fr	Toujours utiliser la boîte de dialogue complète, pas cette petite fenêtre...
 api-accounts	calendar	fr	compte-api
@@ -83,7 +85,7 @@ birthday	calendar	fr	Anniversaire
 birthdays	admin	fr	Anniversaires
 birthdays only	calendar	fr	Seuls les anniversaires
 both, holidays and birthdays	calendar	fr	Les deux : jours fériés et anniversaires
-busy	calendar	fr	occupé
+busy	calendar	fr	Occupé
 by	calendar	fr	par
 calendar	calendar	fr	Calendrier
 calendar - list	calendar	fr	Calendrier - Vue Liste
@@ -344,7 +346,7 @@ interval	calendar	fr	Intervalle
 invalid email-address "%1" for user %2	calendar	fr	Adresse email '%1' invalide pour l'utilisateur %2
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	fr	Id de propriétaire invalide: %1. %2 utilisé à la place.
 invitations	calendar	fr	Invitations
-invite	calendar	fr	Inviter
+invite	common	fr	Inviter
 it can not read timezones from sqlite database %1!	calendar	fr	Impossible de lire les fuseaux horaires de la base sqlite %1 !
 just me	calendar	fr	Seulement moi
 keep exceptions	calendar	fr	Garder les exceptions
@@ -395,7 +397,6 @@ move to	calendar	fr	Déplacer vers
 multiple week view	calendar	fr	Vue multi-semaines
 name	calendar	fr	nom
 name of current user, all other contact fields are valid too	calendar	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
-name of the week (ex: monday)	calendar	fr	Nom de la semaine (ex: Lundi)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	fr	Jour de la semaine (ex: lundi), disponible comme première entrée sur chaque vue semaine ou journalière à l'intérieur d'une sélection.
 needs action	calendar	fr	Action nécessaire
 never	calendar	fr	Jamais
@@ -591,6 +592,7 @@ status for all future scheduled days changed	calendar	fr	Le statut de tous les j
 status for this particular day changed	calendar	fr	Le statut de ce jour précis a été modifié.
 status of participants set to unknown because of missing category rights	calendar	fr	Le statut des participants a été mis à "pas de réponse" pour cause de manque de droit sur la catégorie
 submit to repository	calendar	fr	Soumettre au Dépôt
+summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	fr	Résumé des statuts : 3 participant, 1 accepté, 2 inconnu
 sun	calendar	fr	Di
 sunday	calendar	fr	Dimanche
 tag to mark positions for address labels	calendar	fr	Balise pour marquer les positions des étiquettes d'adresses

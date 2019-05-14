@@ -1204,6 +1204,7 @@ select the default width for the application windows	common	en	Select the defaul
 select the indexed columns in their desired order	common	en	Select indexed columns in desired order
 select this etemplate to delete it	common	en	Select eTemplate to delete
 select user	common	en	Select user
+select user or group	api	en	Select user or group
 select which accounts to show	common	en	Select accounts to show
 select which values to show	common	en	Select values to show
 select work email address	common	en	Select work email address

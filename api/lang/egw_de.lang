@@ -564,6 +564,8 @@ firstname	common	de	Vorname
 fixme!	common	de	KORREGIER MICH!
 floating point	common	de	Gleitkommawert
 folder already exists.	common	de	Verzeichnis existiert bereits.
+fontselect	common	de	Schriftart
+fontsizeselect	common	de	Schriftgröße
 for more than one contact in a document use the tag pagerepeat!	preferences	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
 force	common	de	Erzwungen
 force selectbox	common	de	Auswahlfeld erzwingen
@@ -673,6 +675,7 @@ import table-definitions from existing db-table	common	de	Importiert die Tabelle
 import xml	common	de	XML Import
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	de	Um in die Zwischenablage zu kopieren, müssen Sie Flash Player durch klicken auf die graue Box erlauben.\nSie können Flash Player für EGroupware in den Einstellungen Ihres Browsers auch permanent erlauben.
 increment version to not overwrite the existing template	common	de	Version erhöhen um das existierende Template nicht zu überschreiben
+indent	common	de	Einzug vergrößern
 index/name of returned content (name of the template, link / method for image)	common	de	Index / Name des zurückgelieferten Inhalts (Name des eTemplates oder Link/Methode für Grafik)
 indexed	common	de	Indiziert
 indexoptions	common	de	Indexoptionen
@@ -969,6 +972,7 @@ order to navigating by tab key through the form	common	de	Reihenfolge bei der Na
 ordered list	common	de	Nummerierung
 original	common	de	Original
 other	common	de	Andere
+outdent	common	de	Einzug verkleinern
 overflow	common	de	Überbreite
 overview	common	de	Überblick
 owner	common	de	Besitzer
@@ -1197,6 +1201,7 @@ select the default width for the application windows	common	de	Vorgabewert für 
 select the indexed columns in their desired order	common	de	Zu indizierende Spalten in der gewünschten Reihenfolge auswählen
 select this etemplate to delete it	common	de	dieses eTemplate zum Löschen auswählen
 select user	common	de	Benutzer auswählen
+select user or group	api	de	Benutzer oder Gruppe auswählen
 select which accounts to show	common	de	Benutzer zum Anzeigen auswählen
 select which values to show	common	de	auswählen welche Werte angezeigt werden
 select work email address	common	de	geschäftl. E-Mail-Adresse auswählen

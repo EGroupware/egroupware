@@ -194,6 +194,8 @@ deletes the photo	addressbook	fr	Supprime la photo
 department	common	fr	Département
 departments	addressbook	fr	départements
 directory with documents to insert contacts	addressbook	fr	Répertoire avec les documments des contacts
+disable	addressbook	fr	Désactiver
+disable last/next event column	addressbook	fr	Désaciver la colonne Dernier/Suivant
 display contact	addressbook	fr	Afficher le contact
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	fr	Affiche un rappel pour les anniversaires sur la page d'accueil (page qui s'affiche quand vous entrez dans EGroupware ou quand vous cliquez sur l'icône Accueil)
 distribution list deleted	addressbook	fr	La liste de diffusion est supprimée
@@ -228,6 +230,7 @@ email & internet	addressbook	fr	Email & Internet
 email (private)	addressbook	fr	email (privé)
 email addresses (comma separated) to send the contact data	addressbook	fr	Adresses email, séparées par des virgules, pour envoyer les données des contacts.
 empty	admin	fr	Vide
+empty addressbook before importing	addressbook	fr	Supprimer les entrées du carnet d'adresse NE SE TROUVANT PAS dans la liste csv
 empty for all	addressbook	fr	vide pour tous
 enable an extra private addressbook	addressbook	fr	Activer un carnet d'adresses privé supplémentaire
 enclosure	addressbook	fr	Pièce jointe
@@ -264,10 +267,13 @@ field %1 has been updated !	addressbook	fr	Le champ %1 a été mis à jour !
 field name	addressbook	fr	Nom du champ
 fields for the csv export	addressbook	fr	Champ pour l'exportation au format CSV
 fields the user is allowed to edit himself	admin	fr	Champs que l'utilisateur peut modifier lui-même
+fields to check for duplicates	addressbook	fr	Champs pour vérifier les doublons
+fields to consider when looking for duplicate contacts.	addressbook	fr	Champs à considérer pour chercher des doublons.
 fields to copy when copying an address?	admin	fr	Champs à copier lors de la copie d'une adresse
 fields to show in address list	addressbook	fr	Champs à afficher dans la liste des adresses
 fieldseparator	addressbook	fr	Séparateur de champs
 file is not a %1 public key!	addressbook	fr	Le fichier n'est pas une clé publique %1 !
+first name	addressbook	fr	prénom
 firstname	addressbook	fr	Prénom
 for read only ldap	admin	fr	pour un LDAP en lecture seule
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
@@ -329,6 +335,7 @@ label	addressbook	fr	Label
 last date	addressbook	fr	Dernier contact
 last modified	addressbook	fr	Dernière modification
 last modified by	addressbook	fr	Dernière modification par
+last name	addressbook	fr	Nom de famille
 lastname	addressbook	fr	Nom de famille
 ldap context for contacts	admin	fr	Contexte LDAP pour les contacts
 ldap host for contacts	admin	fr	Hôte LDAP pour les contacts
@@ -410,6 +417,7 @@ phone numbers	common	fr	Numéros de téléphone
 photo	addressbook	fr	Photo
 please enter a name for that field !	addressbook	fr	SVP entrez un nom pour ce champ !
 please select only one category	addressbook	fr	Sélectionnez une seule catégorie !
+please update the templatename in your customfields section!	addressbook	fr	Veuillez renseigner le nom de template dans les champs personnalisés.
 postal	common	fr	Postal
 pref	addressbook	fr	pref
 preferred email address to use in distribution lists	addressbook	fr	Adresse email préférée
@@ -468,7 +476,6 @@ should the columns photo and home address always be displayed, even if they are 
 show	addressbook	fr	Afficher
 show active accounts	addressbook	fr	Afficher les comptes actifs
 show all accounts	addressbook	fr	Afficher tous les comptes
-show birthday reminders on main screen	addressbook	fr	Montrer les rappels d'anniversaires sur la page principale
 show infolog entries for this organisation	addressbook	fr	Montre les entrées InfoLog pour cette organisation
 show the contacts of this organisation	addressbook	fr	Montrer les contacts de l'organisation
 similar contacts found:	addressbook	fr	Contacts similaires trouvés :
@@ -534,6 +541,7 @@ use country list	addressbook	fr	Utiliser la liste des pays
 use setup for a full account-migration	admin	fr	Utiliser le setup pour une migration de comptes complète
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
 used for links and for the own sorting of the list	addressbook	fr	utilisé pour les liens et le tri de la liste
+user groups are automatically shown as distribution lists.	addressbook	fr	Les groupes d'utilisateurs sont automatiquement affichés comme des listes de diffusion.
 user preference	addressbook	fr	Préférences de l'utilisateur
 vcard	common	fr	VCard
 vcards require a first name entry.	addressbook	fr	Les VCards nécessitent une entrée prénom.

@@ -81,6 +81,7 @@ at your request, this script is going to attempt to upgrade your old tables to t
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	en	At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	en	At your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
+attributes for new users	setup	en	Attributes for new users
 authentication / accounts	setup	en	Authentication / Accounts
 authentication type for application	setup	en	Authentication type for application
 authentification mode:	setup	en	Authentification mode:
@@ -460,6 +461,7 @@ or %1continue to the header admin%2	setup	en	or %1Continue to the Header Admin%2
 or http://webdav.domain.com (webdav)	setup	en	or http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	en	Or attempt to create the database:
 or you can install a previous backup.	setup	en	Or install a previous backup.
+password	setup	en	Password
 password for smtp-authentication	setup	en	Password for SMTP authentication
 password needed for domain configuration.	setup	en	Password needed for domain configuration.
 password of db user	setup	en	Password of db user

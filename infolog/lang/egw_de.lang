@@ -107,7 +107,6 @@ contact cf	infolog	de	Kontakt CF
 contact fields	infolog	de	Kontaktfelder
 contactfield	infolog	de	Kontaktfelder
 convert to a ticket	infolog	de	In ein Ticket umwandeln
-copy this infolog	infolog	de	Diesen InfoLog-Eintrag kopieren
 copy of:	infolog	de	Kopie von:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	de	Kopieren Sie ihre Änderungen in die Zwischenablage, %1laden den Eintrag neu%2 und fügen diese wieder ein.
 create new links	infolog	de	Neue Verknüpfung erzeugen
@@ -171,7 +170,6 @@ done	infolog	de	geschlossen
 download	infolog	de	Datei laden
 download url for links	infolog	de	Download Link für Verknüpfungen
 due %1	infolog	de	%1 fällig
-due date must be in the future!!!	de	Das Fälligkeitsdatum muss in der Zukunft liegen.
 duration	infolog	de	Dauer
 e-mail:	infolog	de	E-Mail
 each value is a line like <id>[=<label>]	infolog	de	jeder Wert ist eine Zeile im Format id=[angezeigter Wert]
@@ -203,7 +201,6 @@ execute a further action for this entry	infolog	de	Eine weitere Aktion für dies
 existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
 export definition to use for nextmatch export	infolog	de	Exportdefinition für Listenexport
-export ical	infolog	de	Export im iCal Format
 exports in ical format.	infolog	de	Export im iCal Format
 exports infolog entries into a csv file.	infolog	de	Exportiert InfoLog Einträge in eine CSV Datei
 favorites	infolog	de	Favoriten
@@ -251,10 +248,11 @@ infolog - new subproject	infolog	de	InfoLog - Anlegen Teilprojekt
 infolog - subprojects from	infolog	de	InfoLog - Teilprojekte von
 infolog csv export	infolog	de	InfoLog CSV Export
 infolog csv import	infolog	de	InfoLog CSV Import
+infolog encryption requires epl subscription	infolog	de	InfoLog verschlüsseln benötigt eine EPL-Version
 infolog entry deleted	infolog	de	InfoLog Eintrag gelöscht
 infolog entry saved	infolog	de	InfoLog Eintrag gespeichert
 infolog fields:	infolog	de	InfoLog Felder
-InfoLog filter for the home screen	infolog	de	InfoLog Filter für Startseite
+infolog filter for the home screen	infolog	de	InfoLog Filter für Startseite
 infolog ical export	infolog	de	InfoLog -> iCal Export
 infolog ical import	infolog	de	InfoLog <- iCal Import
 infolog id	infolog	de	InfoLog ID
@@ -262,8 +260,8 @@ infolog list	infolog	de	InfoLog Liste
 infolog preferences	common	de	InfoLog Einstellungen
 infolog-fieldname	infolog	de	InfoLog-Feldname
 insert	infolog	de	einfügen
-insert timestamp into description field	infolog	de	Zeitstempel in das Beschreibungs-Feld einfügen
 insert in document	infolog	de	In ein Dokument einfügen
+insert timestamp into description field	infolog	de	Zeitstempel in das Beschreibungs-Feld einfügen
 invalid filename	infolog	de	Ungültiger Dateiname
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	de	Ungültige Eigentümer ID: %1. Ist möglicher Weise eine falsche Feld Übersetzung. Es wird %2 anstatt dem ursprünglichen Wert verwendet.
 invalid status for entry type %1.	infolog	de	Ungültiger Status für den eingegebenen Typ %1
@@ -365,7 +363,7 @@ prefix for sub-entries (default: re:)	infolog	de	Präfix für Untereinträge (Vo
 price	infolog	de	Preis
 pricelist	infolog	de	Preisliste
 primary link	infolog	de	Primäre Verknüpfung
-print this infolog	infolog	de	Diesen InfoLog-drucken
+print this infolog	infolog	de	Diesen InfoLog drucken
 printing...	infolog	de	Drucke...
 priority	infolog	de	Priorität
 private	infolog	de	Privat
@@ -436,7 +434,7 @@ sets the status of this entry and its subs to done	infolog	de	Setzt den Status d
 sets the status of this entry to done	infolog	de	Setzt den Status für diesen InfoLog auf erledigt
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	de	Soll InfoLog auf der Startseite angezeigt werden und mit welchem Filter. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	de	Soll InfoLog auf der Startseite angezeigt werden und mit welchem Filter. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	de	Soll InfoLog den vollen Namen (Vor- und Familienname) oder nur die Benutzerkennung verwenden.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	de	Soll die InfoLog Liste eine eindeutige Nummer anzeigen, die z.B. als Ticketnummer verwendet werden kann.
 should the infolog list show the column "last modified".	infolog	de	Soll die InfoLog Liste die Spalte "Zuletzt geändert" anzeigen.
@@ -535,7 +533,7 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	de	Sie können keinen der Standardtypen löschen!!!
 you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Fälligkeitsdatum eingegeben
 you have entered an invalid starting date	infolog	de	Sie haben ein ungültiges Startdatum eingegeben
-you have to enter a name, to create a new typ!!!	infolog	de	Sie müssen einen Namen angeben, um einen neuen Typ zu erzeugen!!!
+you have to enter a name, to create a new type!	infolog	de	Sie müssen einen Namen angeben, um einen neuen Typ anzulegen!
 you must enter a subject or a description	infolog	de	Sie müssen einen Titel oder eine Beschreibung eingeben
 you need to select an entry for linking.	infolog	de	Sie müssen einen Datensatz auswählen, um eine Verknüpfung zu erstellen.
 you need to select some entries first	infolog	de	Bitte wählen Sie zuerst die Datensätze aus, die Sie bearbeiten wollen.

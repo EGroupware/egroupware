@@ -75,8 +75,8 @@ apply changes to all members, whose fields have the same previous content	addres
 apply the action on the whole query, not only the shown contacts!!!	addressbook	en	Apply the action on the whole query, NOT only the shown contacts!
 are you shure you want to delete this contact?	addressbook	en	Are you sure you want to delete this contact?
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
-assistent	addressbook	en	Assistent
-assistent phone	addressbook	en	Assistent phone
+assistent	addressbook	en	Assistant
+assistent phone	addressbook	en	Assistant phone
 birthday	common	en	Birthday
 birthdays	common	en	Birthdays
 blank	addressbook	en	Blank
