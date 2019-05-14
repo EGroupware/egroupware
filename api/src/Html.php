@@ -448,7 +448,7 @@ class Html
 		}
 
 		//include the ckeditor js file
-		Framework::includeJS('/api/js/tinymce/tinymce.min.js');
+		Framework::includeJS('/vendor/tinymce/tinymce/tinymce.min.js');
 
 		// run content through htmlpurifier
 		if ($_purify && !empty($_content))
