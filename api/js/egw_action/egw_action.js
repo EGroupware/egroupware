@@ -1604,11 +1604,11 @@ egwActionObject.prototype.handleKeyPress = function(_keyCode, _shift, _ctrl, _al
 
 				if (selObj != null)
 				{
-					if (!_shift)
+					if (!_shift && !(this.parent && this.parent.data && this.parent.data.keyboard_select))
 					{
 						this.setAllSelected(false);
 					}
-					else
+					else if (!(this.parent && this.parent.data && this.parent.data.keyboard_select))
 					{
 						var objs = focused.traversePath(selObj);
 						for (var i = 0; i < objs.length; i++)
@@ -1617,7 +1617,10 @@ egwActionObject.prototype.handleKeyPress = function(_keyCode, _shift, _ctrl, _al
 						}
 					}
 
-					selObj.setSelected(true);
+					if(!(this.parent.data && this.parent.data.keyboard_select))
+					{
+						selObj.setSelected(true);
+					}
 					selObj.setFocused(true);
 
 					// Tell the aoi of the object to make it visible
@@ -1630,6 +1633,29 @@ egwActionObject.prototype.handleKeyPress = function(_keyCode, _shift, _ctrl, _al
 
 		break;
 
+	// Space bar toggles selected for current row
+	case EGW_KEY_SPACE:
+		if (this.children.length <= 0)
+		{
+			break;
+		}
+		// Mark that we're selecting by keyboard, or arrows will reset selection
+		if(!this.parent.data)
+		{
+			this.parent.data = {};
+		}
+		this.parent.data.keyboard_select = true;
+
+		// Get the focused object
+		var focused = this.getFocusedObject();
+
+		focused.setSelected(!focused.getSelected());
+
+		// Tell the aoi of the object to make it visible
+		focused.makeVisible();
+		return true;
+
+		break;
 	// Handle CTRL-A to select all elements in the current container
 	case EGW_KEY_A:
 		if (_ctrl && !_shift && !_alt)
@@ -1796,6 +1822,10 @@ egwActionObject.prototype.setAllSelected = function(_selected, _informParent)
 		if (_informParent && this.parent)
 		{
 			this.parent.updateSelectedChildren(this, _selected);
+		}
+		if(this.parent.data && this.parent.data.keyboard_select)
+		{
+			this.parent.data.keyboard_select = false;
 		}
 	}
 

@@ -1646,6 +1646,8 @@ div.message.floating {
   /*	background-color: silver;*/
 }
 
+
+
 /* Allow space for category color indicators, preserving column calculations */
 .et2_nextmatch .egwGridView_outer thead tr > th:first-child {
 	border-left: 6px solid transparent;
@@ -1901,7 +1903,12 @@ ul[id$='favorites_popup_state'] span.filter_value {
   margin-right: -11px;
 }
 /* End of hierarchy */
-
+.et2_nextmatch .egwGridView_grid tr.focused {
+	background: rgba(153, 204, 255, 0.4);
+}
+.et2_nextmatch .egwGridView_grid tr.focused.selected {
+	background: rgba(153, 204, 255, 0.7);
+}
 /* Nextmatch tiled view */
 .et2_nextmatch .egwGridView_grid tr.tile {
 	display: inline-block;
