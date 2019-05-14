@@ -184,7 +184,12 @@ class admin_customfields
 			{
 				if(in_array($data['id'],$content['nm']['selected']))
 				{
-					$cmd = new admin_cmd_customfield($this->appname, array('id' => $data['id'],'name' => $name));
+					$cmd = new admin_cmd_customfield(
+							$this->appname,
+							array('id' => $data['id'],'name' => $name),
+							null,
+							$content['nm']['admin_cmd']
+					);
 					$cmd->run();
 					unset($this->fields[$name]);
 				}
@@ -520,6 +525,7 @@ class admin_customfields
 				'caption' => 'Delete',
 				'confirm' => 'Delete this entry',
 				'confirm_multiple' => 'Delete these entries',
+				'policy_confirmation' => 'Oh yeah',
 				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
 			),

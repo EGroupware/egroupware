@@ -231,12 +231,15 @@ function nm_action(_action, _senders, _target, _ids)
 				// Fake a getValue() function
 				var old_value = nextmatch.getValue;
 				var value = nextmatch.getValue();
-				jQuery.extend(value, this.activeFilters, {
+				jQuery.extend(value, _action.data, this.activeFilters, {
 					"selected": idsArr,
 					"select_all": _ids.all,
 					"checkboxes": checkbox_values
 				});
 				value[nextmatch.options.settings.action_var]= _action.id;
+
+				// Don't try to send the nextmatch
+				delete value['nextmatch'];
 
 				nextmatch.getValue = function() {
 					return value;

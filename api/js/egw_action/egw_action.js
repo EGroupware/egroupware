@@ -683,6 +683,17 @@ egwAction.prototype._check_confirm = function(_senders, _target)
 		var self = this;
 		if(msg.trim().length > 0)
 		{
+			if(this.data.policy_confirmation && egw.app('policy'))
+			{
+				egw.includeJS(egw.link('/policy/js/app.js'), function() {
+					if(typeof app.policy === 'undefined' || typeof app.policy.confirm === 'undefined')
+					{
+						app.policy = new app.classes.policy();
+					}
+					app.policy.confirm(self, _senders, _target);
+				});
+				return;
+			}
 			et2_dialog.show_dialog(function(_button)
 			{
 				if (_button == et2_dialog.YES_BUTTON)
