@@ -5239,7 +5239,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$response = Api\Json\Response::get();
 			if (empty($error))
 			{
-				$response->call('app.mail.mail_deleteMessagesShowResult',array('egw_message'=>lang('deleted %1 messages in %2',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($_messageList['msg'])),$folder),'msg'=>$_messageList['msg']));
+				$response->call('app.mail.mail_deleteMessagesShowResult',array('egw_message'=>'', 'msg'=>$_messageList['msg']));
 			}
 			else
 			{
