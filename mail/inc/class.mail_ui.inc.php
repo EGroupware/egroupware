@@ -660,6 +660,14 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder',
 				'group'		=> $group,
 			),
+			'readall' => array(
+				'group' => $group,
+				'caption' => "<font color='#ff0000'>".lang('mark all as read')."</font>",
+				'icon' => 'read_small',
+				'onExecute' => 'javaScript:app.mail.mail_flag',
+				'hint' => 'mark all messages in folder as read',
+				'toolbarDefault' => false
+			),
 			'subscribe' => array(
 				'caption' => 'Subscribe folder ...',
 				//'icon' => 'configure',
@@ -4961,6 +4969,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				// we have both messageIds AND allFlag folder information
 				$uidA = self::splitRowID($_messageList['msg'][0]);
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+				if(!$folder && !$uidA['msg'] && $uidA['accountID'])
+				{
+					$folder = $uidA['accountID'];
+				}
 				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
 				{
 					$query = $_messageList['activeFilters'];
