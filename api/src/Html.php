@@ -489,6 +489,18 @@ var name = "#"+"'.$_name.'".replace( /(:|\.|\[|\]|,|=|@)/g, "\\\$1" );
 var height = "'.$_height.'";
 var width = "'.$_width.'";
 var value = jQuery(name).val();
+/**
+ * language code represention for TinyMCE lang code
+ */
+var language_code = {
+	bg: "bg_BG", ca: "ca",	cs: "cs", da: "da", de: "de",	en:"en_CA",
+	el:"el", "es-es":"es",	et: "et", eu: "eu" , fa: "fa_IR", fi: "fi",
+	fr: "fr_FR", hi:"",	hr:"hr", hu:"hu_HU", id: "id", it: "it", iw: "",
+	ja: "ja", ko: "ko_KR", lo: "", lt: "lt", lv: "lv",	nl: "nl", no: "nb_NO",
+	pl: "pl", pt: "pt_PT", "pt-br": "pt_BR", ru: "ru", sk: "sk", sl: "sl_SI",
+	sv: "sv_SE", th: "th_TH", tr: "tr_TR", uk: "en_GB", vi: "vi_VN", zh: "zh_CN",
+	"zh-tw": "zh_TW"
+};
 tinymce.init({
 			selector: name,
 			menubar: parseInt('. $rte_menubar.')? true : false,
@@ -499,6 +511,7 @@ tinymce.init({
 			min_height: 200,
 			auto_focus: "'.$focusToBody.'",
 			language: language_code["'. $GLOBALS['egw_info']['user']['preferences']['common']['lang'].'"],
+			language_url: egw.webserverUrl+"/api/js/tinymce/langs/"+language_code[egw.preference("lang", "common")]+".js",
 			browser_spellcheck: true,
 			contextmenu: false,
 			file_picker_callback: function(_callback, _value, _meta){
