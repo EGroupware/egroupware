@@ -633,6 +633,19 @@ app.classes.addressbook = AppJS.extend(
 								// Not sure why our selectbox does not trigger change event
 								jQuery(lists.node).change();
 							}
+							// Add to actions
+							var addressbook_actions = egw_getActionManager('addressbook',false);
+							var dist_lists = null;
+							if(addressbook_actions && (dist_lists = addressbook_actions.getActionById('to_list')))
+							{
+								var id = 'to_list_' + result;
+								var action = dist_lists.addAction(
+									'popup',
+									id,
+									name
+								);
+								action.updateAction({group: 1});
+							}
 						}
 					).sendRequest(true);
 				}
