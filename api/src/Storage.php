@@ -420,7 +420,7 @@ class Storage extends Storage\Base
 
 		if (!$this->customfields) return '';	// no custom-fields --> no search
 
-		$sql = ' OR '.$this->table_name.'.'.$this->autoinc_id.' IN (SELECT '.$this->autoinc_id.
+		$sql = ' OR '.$this->table_name.'.'.$this->autoinc_id.' IN (SELECT '.$this->extra_id.
 			' FROM '.$this->extra_table.' WHERE '.$this->extra_value.' '.
 			$this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.
 			$GLOBALS['egw']->db->quote($_pattern);
