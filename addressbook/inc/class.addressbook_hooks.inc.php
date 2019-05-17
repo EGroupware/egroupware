@@ -424,6 +424,11 @@ class addressbook_hooks
 			'merge' => true,
 			'entry' => 'Contact',
 			'entries' => 'Contacts',
+			'modification_time' => array(
+				'key'    => 'contact_id',
+				'column' => 'egw_addressbook.contact_modified',
+				'type'   => 'int'
+			)
 		);
 		return $links;
 	}

@@ -74,6 +74,10 @@ namespace EGroupware\Api;
  *			'icon' => 'app/icon',					// Optional icon to use instead of app-icon
  *          'entry' => 'Contact',					// Optional name for single entry of app, eg. "contact" used instead of appname
  *          'entries' => 'Contacts',				// Optional name for multiple entries of app, eg. "contacts" used instead of appname
+ *			'modification_time' => array(			// Optional location of entry's last modification
+ *				'column' => {string} table.column	// Table & column name
+ *				'type'   => {string} longint        // Data type for the column, if it's not a timestamp
+ *			),
  *          'mime' => array(						// Optional register mime-types application can open
  *          	'text/something' => array(
  *          		'mime_url'  => $attr,			// either mime_url or mime_data is required for server-side processing!
