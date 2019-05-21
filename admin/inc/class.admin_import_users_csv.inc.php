@@ -204,7 +204,7 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 			case 'create' :
 			case 'update' :
 				$command = new admin_cmd_edit_user(array(
-					'account' => $_action=='create'?null:(int)$_data['account_lid'],
+					'account' => $_action=='create'?null:(int)$_data['account_id'],
 					'set' => $_data
 				)+(array)$admin_cmd);
 

@@ -59,8 +59,19 @@ class admin_wizard_import_users_csv extends importexport_wizard_basic_import_csv
 	function wizard_step50(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
 		$result = parent::wizard_step50($content, $sel_options, $readonlys, $preserv);
-		$content['msg'] .= "\n*" ;
-		
+
+		return $result;
+	}
+
+	/**
+	* Edit conditions - remove account_id as condition option
+	*/
+	function wizard_step55(&$content, &$sel_options, &$readonlys, &$preserv)
+	{
+		$result = parent::wizard_step55($content, $sel_options, $readonlys, $preserv);
+
+		unset($sel_options['string']['account_id']);
+
 		return $result;
 	}
 }
