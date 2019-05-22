@@ -962,6 +962,69 @@ app.classes.admin = AppJS.extend(
 	},
 
 	/**
+	 * Change handler for when you delete a custom app type
+	 * If Policy app is available, it asks for documentation
+	 */
+	cf_type_delete: function(e, widget) {
+		var callback = function(button, value) {
+			if(button === et2_dialog.YES_BUTTON)
+			{
+				var values = jQuery.extend(
+					{},
+					this.getInstanceManager().getValues(this.getRoot()),
+					value,
+					{appname: this.getRoot().getArrayMgr('content').getEntry('content_types[appname]')}
+				);
+				egw.json('admin.admin_customfields.ajax_delete_type', [values]).sendRequest();
+
+				// Immediately remove the type
+				var types = this.getRoot().getWidgetById('types');
+				var options = types.options.select_options;
+				var key;
+				for(key in options)
+				{
+					if(options.hasOwnProperty(key) && key === types.getValue())
+					{
+						delete options[key];
+						break;
+					}
+				}
+				types.set_select_options(options);
+				this.egw().message('');
+
+				// Trigger load of status for existing type
+				types.set_value(Object.keys(options)[0]);
+			}
+		}.bind(widget);
+
+		if(egw.app('policy'))
+		{
+			egw.includeJS(egw.link('/policy/js/app.js'), function() {
+				if(typeof app.policy === 'undefined' || typeof app.policy.confirm === 'undefined')
+				{
+					app.policy = new app.classes.policy();
+				}
+
+				var parent = et2_dialog._create_parent(widget.egw());
+				var dialog = et2_createWidget("dialog", {
+					callback: callback,
+					template: egw.link('/policy/templates/default/admin_cmd_narrow.xet'),
+					title: egw.lang('Delete'),
+					buttons: et2_dialog.BUTTONS_YES_NO,
+					value: {content:{}},
+					width: 'auto'
+				}, parent);
+				dialog.egw().message("Entries with a deleted type can cause problems.\nCheck for entries with this type before deleting.", 'warning');
+			});
+		}
+		else
+		{
+			callback(et2_dialog.OK_BUTTON);
+		}
+		return false;
+	},
+
+	/**
 	 * Activate none standard SMTP mail accounts for selected users
 	 *
 	 * @param {egw_action} _action

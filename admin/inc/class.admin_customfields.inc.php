@@ -285,6 +285,21 @@ class admin_customfields
 	}
 
 	/**
+	 * Delete a type over ajax.  Used when Policy is involved, otherwise
+	 * things go normally
+	 *
+	 * @param Array $content
+	 */
+	public function ajax_delete_type($content)
+	{
+		// Read fields
+		$this->appname = $content['appname'];
+		$this->fields = Api\Storage\Customfields::get($content['appname'],true);
+		$this->content_types = Api\Config::get_content_types($content['appname']);
+		$this->delete_content_type($content);
+	}
+
+	/**
 	 * Check selectbox values to match regular expression in et2_widget_selectbox.js: _is_multiple_regexp
 	 *
 	 * If values do not match, comma-separated values are not split by comma!
@@ -552,8 +567,12 @@ class admin_customfields
 
 	function delete_content_type(&$content)
 	{
+		$old = array('types' => $this->content_types);
 		unset($this->content_types[$content['content_types']['types']]);
 		unset($this->status[$content['content_types']['types']]);
+		$cmd = new admin_cmd_config($this->appname,array('types' => $this->content_types), $old, $content['admin_cmd']);
+		$cmd->run();
+
 		// save changes to repository
 		$this->save_repository();
 	}

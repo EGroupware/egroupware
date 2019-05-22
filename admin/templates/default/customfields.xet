@@ -22,7 +22,7 @@
 					<menulist>
 						<menupopup id="types" no_lang="1" onchange="1"/>
 					</menulist>
-					<button label="Delete" id="delete" onclick="et2_dialog.confirm(widget,'Entries with a deleted type can cause problems.\nCheck for entries with this type before deleting.\nDelete?','Delete');"/>
+					<button label="Delete" id="delete" onclick="app.admin.cf_type_delete"/>
 					<textbox blur="new name" id="name"/>
 					<button label="Create" id="create"/>
 				</row>
