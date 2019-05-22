@@ -1021,15 +1021,12 @@ li.vfsPath.et2_clickable:last-child:before {
     padding-right: 2px;
 }
 li.vfsPath.et2_clickable:not(:first-child):after {
-	content: ' ';
-    background-image: url(images/egw_action/arrow_left.png);
+	content: '/';
     width: 8px;
     height: 8px;
-    background-size: 12px;
-    background-position: center;
-    background-repeat: no-repeat;
     margin-left: 5px;
     display: inline-block;
+	font-size:8pt;
 }
 .et2_vfsPath input.et2_textbox.et2_vfs {
     background-image: url(images/edit.png);
