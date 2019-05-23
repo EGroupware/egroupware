@@ -165,7 +165,7 @@ class Schema
 			$columns = implode('-',$columns);
 			if ($ignore_length_limit) $columns = preg_replace('/\(\d+\)/', '', $columns);
 		}
-		
+
 		if(is_array($indexs)){
 
 			foreach($indexs as $index)
@@ -696,6 +696,13 @@ class Schema
 			{
 				$value = $name;
 
+				// varchar or ascii column shortened, use substring to avoid error if current content is to long
+				if(in_array($old_table_def['fd'][$name]['type'], array('varchar', 'ascii')) &&
+					in_array($data['type'], array('varchar', 'ascii')) &&
+					$old_table_def['fd'][$name]['precision'] > $data['precision'])
+				{
+					$value = "SUBSTRING($value FROM 1 FOR ".(int)$data['precision'].')';
+				}
 				if ($this->sType == 'pgsql')			// some postgres specific code
 				{
 					// this is eg. necessary to change a varchar into an int column under postgres
@@ -708,13 +715,6 @@ class Schema
 					elseif($old_table_def['fd'][$name]['type'] == 'blob' && $data['type'] == 'text')
 					{
 						$value = "ENCODE($value,'escape')";
-					}
-					// varchar or ascii column shortened, use substring to avoid error if current content is to long
-					elseif(in_array($old_table_def['fd'][$name]['type'], array('varchar', 'ascii')) &&
-						in_array($data['type'], array('varchar', 'ascii')) &&
-						$old_table_def['fd'][$name]['precision'] > $data['precision'])
-					{
-						$value = "SUBSTRING($value FROM 1 FOR ".(int)$data['precision'].')';
 					}
 					// cast everything which is a different type
 					elseif($old_table_def['fd'][$name]['type'] != $data['type'] && ($type_translated = $this->TranslateType($data['type'])))
