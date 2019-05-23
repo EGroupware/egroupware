@@ -401,7 +401,7 @@ class admin_customfields
 						$this->fields = Api\Storage\Customfields::get($this->appname,true);
 						$cf_id = (int)$this->fields[$content['cf_name']]['id'];
 					}
-					Framework::refresh_opener('Entry saved', 'admin', $cf_id, 'edit');
+					Framework::refresh_opener(lang('Entry saved'), 'admin', $cf_id, 'edit');
 					if ($action != 'save')
 					{
 						break;
@@ -609,7 +609,7 @@ class admin_customfields
 		$new_type = false;
 		if (empty($new_name))
 		{
-			$this->tmpl->set_validation_error('content_types[name]','You have to enter a name, to create a new type!');
+			$this->tmpl->set_validation_error('content_types[name]',lang('you have to enter a name, to create a new type!'));
 		}
 		else
 		{

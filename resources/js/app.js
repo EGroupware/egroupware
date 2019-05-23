@@ -83,7 +83,7 @@ app.classes.resources = AppJS.extend(
 				current_owners += ',';
 			}
 			this.egw.open_link('calendar.calendar_uiviews.index&view=planner&sortby=user&owner='+current_owners+'r'+res_ids.join(',r')+'&ajax=true');
-		};
+		}.bind(this);
 
 		if(selection && selection.all)
 		{
@@ -160,10 +160,10 @@ app.classes.resources = AppJS.extend(
 		this.egw.open_link('calendar.calendar_uiforms.edit&participants=r'+res_ids.join(',r'),'_blank','700x700');
 
 	},
-	
+
 	/**
 	 * set the picture_src to own_src by uploding own file
-	 * 
+	 *
 	 */
 	select_picture_src: function ()
 	{

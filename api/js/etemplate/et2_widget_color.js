@@ -130,7 +130,7 @@ var et2_color = (function(){ "use strict"; return et2_inputWidget.extend(
 		jQuery.jPicker.List[list_id].id = this.id + "_jPicker";
 
 		// jPicker doesn't allow translation of this one
-		jQuery('.Image', this.$node.parent()).attr('title', this.egw().lang('Click to open color picker'));
+		jQuery('.Image', this.$node.parent()).attr('title', this.egw().lang('Click to open colorpicker'));
 
 		// Make it look better - plugin defers initialization, so we have to also
 		setTimeout(function() {

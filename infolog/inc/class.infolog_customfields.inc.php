@@ -287,7 +287,7 @@ class infolog_customfields extends admin_customfields
 		$new_name = trim($content['content_types']['name']);
 		if (empty($new_name))
 		{
-			$this->tmpl->set_validation_error('content_types[name]','You have to enter a name, to create a new type!');
+			$this->tmpl->set_validation_error('content_types[name]',lang('You have to enter a name, to create a new type!'));
 			return false;
 		}
 		else
