@@ -242,6 +242,7 @@
     background-color: transparent;
   }
   .et2_file .progress li:hover div.remove {
+	background-image: url("../images/delete.svg");
     width: 16px;
     height: 16px;
   }
@@ -380,7 +381,7 @@
     width: 14px !important;
     height: 14px !important;
   }
-  .et2_link_list td div.delete {
+  .et2_link_list td div.delete, .et2_vfs td div.delete  {
     visibility: hidden;
     background-image: url("../images/delete.svg");
     background-position: center;

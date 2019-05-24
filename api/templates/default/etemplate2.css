@@ -705,6 +705,7 @@ div.et2_file {
   background-image: url("images/close.png");
   background-position: center;
   background-repeat: no-repeat;
+  background-size: 16px;
 }
 .et2_file .progress p {
   background-color: green;
