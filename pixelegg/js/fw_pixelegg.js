@@ -32,7 +32,7 @@
 		{
 			var height = this._super.apply(this, arguments);
 
-			return height - 28;
+			return height;
 		}
 	});
 
@@ -50,8 +50,9 @@
 			window.framework = new fw_pixelegg("egw_fw_sidemenu", "egw_fw_tabs",
 					window.egw_webserverUrl, egw_setSideboxSize,"egw_fw_splitter", 255, 245);	// should be identical to jdots_framework::(DEFAULT|MIN)_SIDEBAR_WIDTH
 			window.callManual = window.framework.callManual;
-			jQuery('#egw_fw_print').click(function(){window.framework.print();});
-			jQuery('#egw_fw_logout').click(function(){ window.framework.redirect(this.getAttribute('data-logout-url')); });
+			jQuery('#topmenu_info_user_avatar').click(function(){window.framework.toggle_avatar_menu();});
+			jQuery('#topmenu_info_print_title').click(function(){window.framework.print();});
+			jQuery('#topmenu_info_logout').click(function(){ window.framework.redirect(this.getAttribute('data-logout-url')); });
 			jQuery('form[name^="tz_selection"]').children().on('change', function(){framework.tzSelection(this.value);	return false;});
 			window.egw.link_quick_add('topmenu_info_quick_add');
 

@@ -278,15 +278,6 @@ abstract class Ajax extends Api\Framework
 		$this->tpl->set_var('sidebox_width', self::get_global_sidebar_width());
 		$this->tpl->set_var('sidebox_min_width', self::MIN_SIDEBAR_WIDTH);
 
-		if (!(Api\Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile'))
-		{
-			// logout button
-			$this->tpl->set_var('title_logout', lang("Logout"));
-			$this->tpl->set_var('link_logout', Egw::link('/logout.php'));
-			//Print button title
-			$this->tpl->set_var('title_print', lang("Print current view"));
-		}
-
 		// add framework div's
 		$this->tpl->set_var($this->_get_footer());
 		$content .= $this->tpl->fp('out','framework');
@@ -355,22 +346,15 @@ abstract class Ajax extends Api\Framework
 	{
 		switch($app_data['name'])
 		{
-			case 'logout':
-				if (Api\Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile')
-				{
-
-				}
-				else
-				{
-					return;	// no need for logout in topmenu on jdots
-				}
-				break;
-
 			case 'manual':
 				$app_data['url'] = "javascript:callManual();";
 				break;
 
 			default:
+				if (Api\Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile')
+				{
+					break;
+				}
 				if (strpos($app_data['url'],'logout.php') === false && substr($app_data['url'], 0, 11) != 'javascript:')
 				{
 					$app_data['url'] = "javascript:egw_link_handler('".$app_data['url']."','".

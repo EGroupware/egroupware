@@ -26,9 +26,9 @@
 #egw_fw_sidebar {
     position: fixed;
     overflow: hidden;
-    top: 49px;
+    top: 38px;
     left: 0px;
-    bottom: 25px;
+    bottom: 0px;
     width: 225px;
     /*.background_color_5_gray;*/
 
@@ -36,8 +36,8 @@
     #egw_fw_sidemenu {
         position: absolute;
         top: 1px;
-        bottom: 4px;
-        left: 4px;
+        bottom: 1px;
+        left: 0px;
         right: 8px;
         overflow: hidden;
         z-index: 0;
@@ -285,23 +285,27 @@
         top: 40px;
         bottom: 3px;
         right: 0px;
-		border-top:1px solid;
 		border-left: 1px solid;
 		border-color:@gray_30;
         &:hover {border-color: @gray_10;}
     }
 
+
+
+    // Ende Sidebar
+
+// Menu Seite links
+}
+#egw_fw_basecontainer {
 	// Toggle menu
 	#egw_fw_toggler {
 		display: block;
-		width: 30px;
-		height: 30px;
-		position: relative;
+		width: 44px;
+		height: 44px;
+		position: absolute;
 		z-index: 1;
-		top: 8px;
-		margin-top: 0;
-		margin-bottom: -30px;
-		float: right;
+		margin-top: 0px;
+		left: 256px;
 		span {
 			background-color: transparent;
 			&:before{
@@ -317,16 +321,16 @@
 			&:before, &:after {
 				content: "";
 				position: absolute;
-				left: 0;
-				top: -9px;
-				width:10px;
-				height: 2px;
+				left: 0px;
+				top: 3px;
+				width: 35px;
+				height: 4px;
 				background-color: #606060;
 				backface-visibility: hidden;
 				border-radius: 2px;
 			}
 			&:after {
-				top:9px;
+				top:15px;
 				transition-duration: 0.7s;
 				-webkit-transition-duration: 0.7s;
 				-moz-transition-duration: 0.7s;
@@ -336,51 +340,59 @@
 				-webkit-transform: rotate(-145deg) translate(8px, 2px);
 				background-color: #606060;
 			}
+			background-color: transparent;
 			position: relative;
 			display: block;
-			width: 100%;
+			width: 35px;
 			height: 5px;
 			backface-visibility: hidden;
 			border-radius: 2px;
-			top:11px;
-			left:10px;
+			top: 11px;
+			left: 10px;
 		}
 	}
-	#egw_fw_sidemenu.egw_fw_sidebar_toggleOn {
-		top:-1px;
-		/* toggler button*/
-		#egw_fw_toggler {
-			margin: 1px auto 4px;
-			float:none;
-			top: 5px;
-			span {
+}
+
+#egw_fw_basecontainer.egw_fw_sidebar_toggleOn {
+	/* toggler button*/
+	#egw_fw_toggler {
+		span {
+			background-color: #b4b4b4;
+			transition: all 0.3s;
+			-webkit-transition: all 0.3s;
+			-moz-transition: all 0.3s;
+			left:5px;
+			&:before, &:after {
+				transform:none;
+				-ms-transform: none;
+				-moz-transform: none;
+				-webkit-transform: none;
+				width:35px;
+				height:5px;
 				background-color: #b4b4b4;
-				transition: all 0.3s;
-				-webkit-transition: all 0.3s;
-				-moz-transition: all 0.3s;
-				left:0;
-				&:before, &:after {
-					transform:none;
-					-ms-transform: none;
-					-moz-transform: none;
-					-webkit-transform: none;
-					width:100%;
-					height:5px;
-					background-color: #b4b4b4;
-				}
 			}
-			&:hover {
-				span {
+			&:before {
+				top: 10px;
+			}
+			&:after {
+				top:20px;
+			}
+		}
+		&:hover {
+			span {
+				background-color: #606060;
+				&:before {
 					background-color: #606060;
-					&:before {
-						background-color: #606060;
-					}
-					&:after {
-						background-color: #606060;
-					}
+				}
+				&:after {
+					background-color: #606060;
 				}
 			}
 		}
+	}
+
+	#egw_fw_sidemenu {
+		top:1px;
 
 		/*sidebar adjustments*/
 		.egw_fw_ui_sidemenu_entry_content {
@@ -407,12 +419,7 @@
 			}
 		}
 	}
-    // Ende Sidebar
-
-// Menu Seite links
 }
-
-
 /** DON"T MOVE THIS **/
 .egw_fw_ui_splitter_vertical {
 	background-image: url(../images/splitter_vert.png);

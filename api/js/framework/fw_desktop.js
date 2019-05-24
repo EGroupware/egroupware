@@ -188,7 +188,7 @@
 				this.scrollAreaUi = new egw_fw_ui_scrollarea(this.sidemenuDiv);
 
 				// Create toggleSidebar menu
-				this.toggleSidebarUi = new egw_fw_ui_toggleSidebar(this.sidemenuDiv, this._toggleSidebarCallback,this);
+				this.toggleSidebarUi = new egw_fw_ui_toggleSidebar('#egw_fw_basecontainer', this._toggleSidebarCallback,this);
 
 				//Create the sidemenu, the tabs area and the splitter
 				this.sidemenuUi = new desktop_ui_sidemenu(this.scrollAreaUi.contentDiv,
@@ -458,6 +458,11 @@
 		{
 			var toggleSidebar = egw.preference('toggleSidebar',this.activeApp.appName);
 			this.toggleSidebarUi.set_toggle(toggleSidebar?toggleSidebar:"off", this._toggleSidebarCallback, this);
+		},
+
+		toggle_avatar_menu: function ()
+		{
+			jQuery('#egw_fw_topmenu').toggle();
 		}
 	});
 })(window);

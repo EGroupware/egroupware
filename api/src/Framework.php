@@ -549,9 +549,6 @@ abstract class Framework extends Framework\Extra
 		}
 		$var['currentapp'] = $GLOBALS['egw_info']['flags']['currentapp'];
 
-		// current users for admins
-		$var['current_users'] = $this->_current_users();
-
 		// quick add selectbox
 		$var['quick_add'] = $this->_get_quick_add();
 
@@ -631,17 +628,52 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
-	 * Prepare the current users
+	 * Returns user avatar menu
 	 *
 	 * @return string
+	 */
+	protected static function _user_avatar_menu()
+	{
+		return '<span title="'.Accounts::format_username().'" class="avatar"><img src="'.Egw::link('/api/avatar.php', array(
+								'account_id' => $GLOBALS['egw_info']['user']['account_id'],
+							)).'"/></span>';
+	}
+
+	/**
+	 * Returns logout menu
+	 *
+	 * @return string
+	 */
+	protected static function _logout_menu()
+	{
+		return '<a href="'.Egw::link('/logout.php').'" title="'.lang("Logout").'" ></a>';
+	}
+
+	/**
+	 * Returns print menu
+	 *
+	 * @return string
+	 */
+	protected static function _print_menu()
+	{
+		return '<span title="'.lang("Print current view").'"</span>';
+	}
+
+
+	/**
+	 * Prepare the current users
+	 *
+	 * @return array
 	 */
 	protected static function _current_users()
 	{
 	   if( $GLOBALS['egw_info']['user']['apps']['admin'] && $GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
 	   {
-		  $current_users = '<a href="' . self::link('/index.php','menuaction=admin.admin_accesslog.sessions') . '">' .
-		  	lang('Current users') . ': <span id="currentusers">' . $GLOBALS['egw']->session->session_count() . '</span></a>';
-		  return $current_users;
+		   return [
+			   'name' => 'current_user',
+			   'title' => lang('Current users').':'.$GLOBALS['egw']->session->session_count(),
+			   'url' => self::link('/index.php','menuaction=admin.admin_accesslog.sessions')
+		   ];
 	   }
 	}
 
@@ -652,7 +684,7 @@ abstract class Framework extends Framework\Extra
 	 */
 	protected static function _get_quick_add()
 	{
-		return '<span id="quick_add"></span>';
+		return '<span id="quick_add" title="'.lang('Quick add').'"></span>';
 	}
 
 	/**
@@ -1109,6 +1141,8 @@ abstract class Framework extends Framework\Extra
 	*/
 	function topmenu(array $vars,array $apps)
 	{
+		$this->_add_topmenu_info_item($this->_user_avatar_menu(), 'user_avatar');
+		$this->_add_topmenu_info_item($this->_logout_menu(), 'logout');
 		if($GLOBALS['egw_info']['user']['apps']['home'] && isset($apps['home']))
 		{
 			$this->_add_topmenu_item($apps['home']);
@@ -1155,9 +1189,11 @@ abstract class Framework extends Framework\Extra
 		{
 			$this->_add_topmenu_info_item(self::_get_notification_bell(), 'notifications');
 		}
-		$this->_add_topmenu_info_item($vars['user_info'], 'user_info');
-		$this->_add_topmenu_info_item($vars['current_users'], 'current_users');
+		$this->_add_topmenu_info_item($this->_user_avatar_menu(), 'user_avatar');
+		$this->_add_topmenu_item($this->_current_users());
 		$this->_add_topmenu_info_item($vars['quick_add'], 'quick_add');
+		$this->_add_topmenu_info_item($this->_print_menu(), 'print_title');
+
 	}
 
 	/**

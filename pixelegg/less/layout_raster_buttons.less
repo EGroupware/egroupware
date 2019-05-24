@@ -18,133 +18,63 @@
 
 @import (reference) "definitions.less";
 
-
-/*#################################################
-    Add / Print / Logout /
-    - Name / Date
-###################################################*/
-/*#egw_fw_topmenu_addons{}*/
-
-
-
-// Button Logout
-#egw_fw_logout {
-    background-image: url(../images/logout.svg);
-    background-size: 16px 16px;
-    background-position: center center;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    display: inline-block;
-    float: right;
-    margin-right: 1em;
-    margin-top: 0px;
-    z-index: 200;
-    .Button_size_square_16;
-    /*.border_normal;*/
-    /*.box_shadow_standard_light;*/
-    /*.border_radius_button_normal;*/
-    padding: 0.5em;
-    top: 5px;
-    position: fixed;
-    right: 0px;
-
-
-    &:hover {.box_shadow_standard_light_hover;}
-    &:active {.Complete_Button_active;}
-    &:focus {.box_shadow_standard_light_inset;}
-}
-
-
-
-// Button Print
-
-#egw_fw_print {
-    background-image: url(../images/print.svg);
-    background-size: 16px 16px;
-    background-position: center center;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    display: inline-block;
-    float: right;
-    margin-right: 5px;
-    margin-top: 0px;
-    position: fixed;
-    .Button_size_square_16;
-    /*.border_normal;*/
-    /*.box_shadow_standard_light;*/
-    /*.border_radius_button_normal;*/
-    padding: 0.5em;
-    top: 5px;
-    right: 40px;
-    z-index: 200;
-    &:hover {.box_shadow_standard_light_hover;}
-    &:active {.Complete_Button_active;}
-    &:focus {.box_shadow_standard_light_inset;}
-
-}
-
-
-/*#################################################
-/* Second Line
-/* e.g. Name / Datum / angemeldete User
-###################################################*/
-
-
 #egw_fw_topmenu_info_items {
-
-    // move to bottom of the page
-    position: fixed;
-    z-index: 1000;
-    bottom: 2px;
-    right: 5px;
-    padding-right: 20px;
-
-
-    .topmenu_info_item {
-
-        overflow: visible;
 	display: inline-block;
+	height: 45px;
+	position: absolute;
+    padding-right: 2px;
+	right: 0px;
+    z-index: 1000;
+	background-color: #fbfbfb;
+	.topmenu_info_item {
+		height: 45px;
+		width: 45px;
+		border-left: 1px solid #bfc0bf;
+		display: inline-block;
+		padding-left: 3px;
+		float: right;
+		background-size: 20px;
+		background-position: center center;
+		background-repeat: no-repeat;
+		cursor: pointer;
+		&:hover {
+			background-color: @color_hover_row;
+		}
+	}
+	#topmenu_info_user_avatar {
+		span {
+			height: 40px;
+			width: 40px;
+			display: inline-block;
+			border: none;
+			margin-top: 2px;
+			margin-left: 1px;
+			img {
+				width: 40px;
+			}
+		}
+	}
 
-        // Info Bell
-        &:nth-child(1) {
-        }
+	#topmenu_info_logout {
+		background-image: url(../images/logout.svg);
+		a {
+			width:45px;
+			height: 45px;
+			display: inline-block;
+		}
+	}
 
-        // Name
-        &:nth-child(2) {
-            /*float: right;*/
-            margin-top: 0;
-            font-size: 1em;
-            padding-right: 5px;
-
-        }
-
-        // angemeldete User
-        &:nth-child(3) {
-            position: relative;
-            top: 0px;
-            display: inline-block;
-
-            &:hover {.box_shadow_standard_light_hover;}
-            &:focus {.box_shadow_standard_light_inset;}
-
-            /*&:before {content: "";font-size: 1em;color: @egw_color_2_a;}*/
-
-        }
-
-        // Add
-        &:nth-child(4) {
-
-        }
-
-    }
-
-    /*Notification*/
+	#topmenu_info_print_title {
+		background-image: url(../images/print.svg);
+		span {
+			width: 45px;
+			height: 45px;
+			display: inline-block;
+		}
+	}
+	/*Notification*/
     #topmenu_info_notifications {}
 
-    /*user info*/
-    #topmenu_info_user_info {
-		display: inline-block;
-	}
 
     /*current user info*/
     #topmenu_info_current_users {}
@@ -159,28 +89,15 @@
 
     /*quick*/
     #topmenu_info_quick_add {
-
-		// ##############################################################################
-		// quick_add
-		// Fist you see an ADD Icon, via Mouseover it expand right, to an select field
-
 		span#quick_add {
-			/*border: 1px solid rgba(0, 0, 0, 0.15);*/
-			/*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
 			float: right;
-			padding: 0.5em;
-			position: fixed;
-			right: 80px;
-			top: 5px;
-
 			background-image: url(../images/add.svg);
 			background-repeat: no-repeat;
-			background-size: 20px 20px;
-			background-position: 4px 4px;
-
-			.border_radius_button_normal;
-			.dimension_width_height_s;
-
+			background-size: 24px;
+			background-position: center;
+			width: 45px;
+			height: 45px;
+			padding-right: 3px;
 			&:before {
 				content: " ";
 				font-size: 2em;
@@ -188,9 +105,6 @@
 				line-height: 0.6em;
 				background-color: white;
 			}
-
-			&:hover {.box_shadow_standard_light_hover;}
-			&:focus {.box_shadow_standard_light_inset;}
 		}
 
 		// ##############################################################################
@@ -198,23 +112,24 @@
 		// ADD different APPs
 
 		.chzn-container {
+
 			position: fixed;
-			right: 15px !important;
-			top: 40px;
+			right: 93px !important;
+			top: 47px;
 			width: 160px !important;
 			background: @gray_0;
 			&:before {
 				content: '';
 				position: absolute;
-				bottom: 50%;
+				bottom: 51%;
 				left: 42%;
 				width: 0;
-				height: 0;
-				border-left: 15px solid transparent;
+				height: 0px;
+				border-left: 14px solid transparent;
 				border-right: 15px solid transparent;
 				border-bottom: 12px solid #aaa;
 				margin-bottom: 12px;
-				margin-left: 0px;
+				margin-left: 1px;
 			}
 			&:after {
 				content: '';
@@ -229,6 +144,14 @@
 				margin-bottom: 11px;
 			}
 			.chzn-single span {display: none;}
+			a.chzn-single.chzn-default {
+				border: 1px solid #bfc0bf;
+				border-radius: 0px;
+			}
+			.chzn-drop {
+				border-radius: 0px;
+				margin-top: -2px;
+			}
 		}
 
 

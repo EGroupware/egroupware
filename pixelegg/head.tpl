@@ -31,35 +31,25 @@
 		<div id="egw_fw_basecontainer">
 			<div id="egw_fw_header">
 				<div id="egw_divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_header}" title="{logo_title}" alt="EGroupware"/></a></div>
-
 				<div id="egw_fw_topmenu">
-
-						<div id="egw_fw_topmenu_items">{topmenu_items}</div>
-
+					<div id="egw_fw_topmenu_items">
+						{topmenu_items}
+						{powered_by}
 					</div>
-			</div>
-
-
-			<div id="egw_fw_topmenu_addons">
-					<div id="egw_fw_topmenu_info_items">{topmenu_info_items}</div>
-					<div id="egw_fw_logout" title="{title_logout}" data-logout-url="{link_logout}"></div>
+				</div>
+				<div id="egw_fw_topmenu_info_items">
+					{topmenu_info_items}
 					<div id="egwpopup_fw_notifications" title="">0</div>
-					<div id="egw_fw_print" title="{title_print}"></div>
+				</div>
 			</div>
 			<div id="egw_fw_sidebar">
 				<div id="egw_fw_sidemenu"></div>
 				<div id="egw_fw_splitter"></div>
 			</div>
 			<div id="egw_fw_main">
-
-				<div id="egw_fw_tabs"><div id="egw_fw_topmenu_slide" class="slideup"><span id="slidetoggle"></span></div>
-
+				<div id="egw_fw_tabs">
 				</div>
-
 			</div>
 			<div id="egw_fw_sidebar_r"></div>
 		</div>
-		<div id="egw_fw_footer">{powered_by}</div>
-
-
 <!-- END framework -->
