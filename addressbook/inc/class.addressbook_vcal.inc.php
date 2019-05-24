@@ -388,7 +388,7 @@ class addressbook_vcal extends addressbook_bo
 								{
 										$options['ENCODING'] = 'FUNAMBOL-QP';
 								}
-								elseif (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
+								elseif (preg_match(Api\CalDAV\Handler::REQUIRE_QUOTED_PRINTABLE_ENCODING, $value))
 								{
 									$options['ENCODING'] = 'QUOTED-PRINTABLE';
 								}
@@ -467,7 +467,7 @@ class addressbook_vcal extends addressbook_bo
 								{
 									$options['ENCODING'] = 'FUNAMBOL-QP';
 								}
-								elseif (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
+								elseif (preg_match(Api\CalDAV\Handler::REQUIRE_QUOTED_PRINTABLE_ENCODING, $value))
 								{
 									$options['ENCODING'] = 'QUOTED-PRINTABLE';
 								}

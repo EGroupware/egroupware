@@ -115,6 +115,13 @@ abstract class Handler
 	var $new_id;
 
 	/**
+	 * Regular expression to identify content requiring QUOTED-PRINTABLE encoding
+	 *
+	 * Used in {addressbook,calendar,infolog}/inc/class.*cal.inc.php
+	 */
+	const REQUIRE_QUOTED_PRINTABLE_ENCODING = '/([\000-\012\013\015\016\020-\037\075])/';
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
