@@ -352,101 +352,11 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			var attrs = jQuery.extend({'readonly': true, 'id': key}, this.getArrayMgr('modifications').getEntry(key));
 			var field = attrs.type || this.options.value['status-widgets'][key];
 			var options = null;
-			var widget = null;
-			// If field has multiple parts (is object) and isn't an obvious select box
-			if(typeof field == 'object')
+			var widget = this._create_widget(key, field, attrs, options);
+			if(widget === null)
 			{
-				// Check for multi-part statuses needing multiple widgets
-				var need_box = false;
-				if(!this.getArrayMgr('sel_options').getEntry(key))
-				{
-					for(var j in field)
-					{
-						// Require widget to be a valueWidget, to avoid invalid widgets
-						// (and template, which is a widget and an infolog todo status)
-						if(et2_registry[field[j]] && et2_registry[field[j]].prototype.instanceOf(et2_valueWidget))
-						{
-							need_box = true;
-							break;
-						}
-					}
-				}
-				if(need_box)
-				{
-					// Multi-part value needs multiple widgets
-					widget = et2_createWidget('vbox', attrs, this);
-					for(var i in field)
-					{
-						if(typeof field[i] == 'object')
-						{
-							attrs['select_options'] = field[i];
-						}
-						else
-						{
-							delete attrs['select_options'];
-						}
-						attrs.id = i;
-						var child = et2_createWidget(typeof field[i] == 'string' ? field[i] : 'select', attrs, widget);
-						child.transformAttributes(attrs);
-					}
-				}
-				else
-				{
-					attrs['select_options'] = field;
-				}
-			}
-			// Check for options after the type, ex: link-entry:infolog
-			else if (field.indexOf(':') > 0)
-			{
-				var options = field.split(':');
-				field = options.shift();
-			}
-
-			if(widget == null)
-			{
-				widget = et2_createWidget(typeof field == 'string' ? field : 'select', attrs, this);
-			}
-
-			if(!widget.instanceOf(et2_IDetachedDOM))
-			{
-				this.egw().debug("warn", this, "Invalid widget " + field + " for " + key + ".  Status widgets must implement et2_IDetachedDOM.");
 				continue;
 			}
-
-			// Parse / set legacy options
-			if(options)
-			{
-				var mgr = this.getArrayMgr("content");
-				for(var i = 0; i < options.length && i < widget.legacyOptions.length; i++)
-				{
-					// Not set
-					if(options[i] == "") continue;
-
-					var attr = widget.attributes[widget.legacyOptions[i]];
-					var attrValue = options[i];
-
-					// If the attribute is marked as boolean, parse the
-					// expression as bool expression.
-					if (attr.type == "boolean")
-					{
-						attrValue = mgr.parseBoolExpression(attrValue);
-					}
-					else
-					{
-						attrValue = mgr.expandName(attrValue);
-					}
-					attrs[widget.legacyOptions[i]] = attrValue;
-					if(typeof widget['set_'+widget.legacyOptions[i]] == 'function')
-					{
-						widget['set_'+widget.legacyOptions[i]].call(widget, attrValue);
-					}
-					else
-					{
-						widget.options[widget.legacyOptions[i]] = attrValue;
-					}
-				}
-			}
-
 			if(widget.instanceOf(et2_selectbox)) widget.options.multiple = true;
 			widget.transformAttributes(attrs);
 
@@ -468,6 +378,108 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			widget: diff,
 			nodes: jQuery(diff.getDetachedNodes())
 		};
+	},
+
+	_create_widget(key, field, attrs, options)
+	{
+		var widget = null;
+
+		// If field has multiple parts (is object) and isn't an obvious select box
+		if(typeof field === 'object')
+		{
+			// Check for multi-part statuses needing multiple widgets
+			var need_box = false;//!this.getArrayMgr('sel_options').getEntry(key);
+			for(var j in field)
+			{
+				// Require widget to be a widget, to avoid invalid widgets
+				// (and template, which is a widget and an infolog todo status)
+				if(et2_registry[field[j]] && ['template'].indexOf(field[j]) < 0)// && (et2_registry[field[j]].prototype.instanceOf(et2_valueWidget))
+				{
+					need_box = true;
+					break;
+				}
+			}
+
+			if(need_box)
+			{
+				// Multi-part value needs multiple widgets
+				widget = et2_createWidget('vbox', attrs, this);
+				for(var i in field)
+				{
+					var type = field[i];
+					var child_attrs = jQuery.extend({}, attrs);
+					if(typeof type === 'object')
+					{
+						child_attrs['select_options'] = field[i];
+						type = 'select';
+					}
+					else
+					{
+						delete child_attrs['select_options'];
+					}
+					child_attrs.id = i;
+					var child = this._create_widget(i, type, child_attrs, options)
+					widget.addChild(child);
+					child.transformAttributes(child_attrs);
+				}
+			}
+			else
+			{
+				attrs['select_options'] = field;
+			}
+		}
+		// Check for options after the type, ex: link-entry:infolog
+		else if (field.indexOf(':') > 0)
+		{
+			var options = field.split(':');
+			field = options.shift();
+		}
+
+		if(widget === null)
+		{
+			widget = et2_createWidget(typeof field === 'string' ? field : 'select', attrs, this);
+		}
+
+		if(!widget.instanceOf(et2_IDetachedDOM))
+		{
+			this.egw().debug("warn", this, "Invalid widget " + field + " for " + key + ".  Status widgets must implement et2_IDetachedDOM.");
+			return null;
+		}
+
+		// Parse / set legacy options
+		if(options)
+		{
+			var mgr = this.getArrayMgr("content");
+			for(var i = 0; i < options.length && i < widget.legacyOptions.length; i++)
+			{
+				// Not set
+				if(options[i] === "") continue;
+
+				var attr = widget.attributes[widget.legacyOptions[i]];
+				var attrValue = options[i];
+
+				// If the attribute is marked as boolean, parse the
+				// expression as bool expression.
+				if (attr.type === "boolean")
+				{
+					attrValue = mgr.parseBoolExpression(attrValue);
+				}
+				else
+				{
+					attrValue = mgr.expandName(attrValue);
+				}
+				attrs[widget.legacyOptions[i]] = attrValue;
+				if(typeof widget['set_'+widget.legacyOptions[i]] === 'function')
+				{
+					widget['set_'+widget.legacyOptions[i]].call(widget, attrValue);
+				}
+				else
+				{
+					widget.options[widget.legacyOptions[i]] = attrValue;
+				}
+			}
+		}
+		return widget;
 	},
 
 	getDOMNode: function(_sender) {
