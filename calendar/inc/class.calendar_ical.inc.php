@@ -1034,7 +1034,7 @@ class calendar_ical extends calendar_boupdate
 								else
 								{
 									$paramData['CHARSET'] = '';
-									if (preg_match('/([\000-\012\015\016\020-\037\075])/', $valueData))
+									if (preg_match(Api\CalDAV\Handler::REQUIRE_QUOTED_PRINTABLE_ENCODING, $valueData))
 									{
 										$paramData['ENCODING'] = 'QUOTED-PRINTABLE';
 									}

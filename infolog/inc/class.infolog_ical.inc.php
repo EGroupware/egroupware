@@ -299,7 +299,7 @@ class infolog_ical extends infolog_bo
 						{
 							$options['CHARSET'] = '';
 
-							if (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
+							if (preg_match(Api\CalDAV\Handler::REQUIRE_QUOTED_PRINTABLE_ENCODING, $value))
 							{
 								$options['ENCODING'] = 'QUOTED-PRINTABLE';
 							}
@@ -972,7 +972,7 @@ class infolog_ical extends infolog_bo
 								{
 									$options['CHARSET'] = '';
 
-									if (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
+									if (preg_match(Api\CalDAV\Handler::REQUIRE_QUOTED_PRINTABLE_ENCODING, $value))
 									{
 										$options['ENCODING'] = 'QUOTED-PRINTABLE';
 									}
