@@ -1217,7 +1217,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			// invalidate the read-cache if it contains the event we store now
 			if ($event['id'] == self::$cached_event['id']) self::$cached_event = array();
-			$old_event = $this->read($event['id'], $event['recurrence'], false, 'server');
+			$old_event = $this->read($event['id'], $event['recurrence'], $ignore_acl, 'server');
 		}
 		else
 		{
@@ -1414,7 +1414,7 @@ class calendar_boupdate extends calendar_bo
 		// Update history
 		$tracking = new calendar_tracking($this);
 		if (empty($event['id']) && !empty($cal_id)) $event['id']=$cal_id;
-		$tracking->track($save_event, (array)$old_event);
+		$tracking->track($save_event, $old_event);
 
 		return $cal_id;
 	}
