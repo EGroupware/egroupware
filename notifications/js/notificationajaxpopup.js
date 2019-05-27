@@ -760,7 +760,7 @@
 	{
 		var $egwpopup = jQuery('#egwpopup');
 		var $body = jQuery('body');
-		var $counter = jQuery('#egwpopup_fw_notifications');
+		var $counter = jQuery('#topmenu_info_notifications');
 
 		if (!$egwpopup.is(":visible"))
 		{
@@ -782,7 +782,7 @@
 			$body.off('click');
 		}
 		// Remove popup_note as soon as message list is toggled
-		jQuery('.popup_note', '#egwpopup_fw_notifications').remove();
+		jQuery('.popup_note', '#topmenu_info_notifications').remove();
 
 		if ($egwpopup.length>0) $egwpopup.toggle('slide');
 	};
@@ -792,7 +792,7 @@
 	 */
 	notifications.prototype.counterUpdate = function ()
 	{
-		var $egwpopup_fw_notifications = jQuery('#egwpopup_fw_notifications');
+		var $topmenu_info_notifications = jQuery('#topmenu_info_notifications');
 		var $popup_note = jQuery(document.createElement('div')).addClass('popup_note');
 		var counter = 0;
 		for (var id in notifymessages)
@@ -801,16 +801,14 @@
 		}
 		if (counter > 0)
 		{
-			$egwpopup_fw_notifications.addClass('egwpopup_notify');
-			$egwpopup_fw_notifications.text(counter);
-			$egwpopup_fw_notifications.append($popup_note);
+			$topmenu_info_notifications.addClass('egwpopup_notify');
+			$topmenu_info_notifications.append($popup_note);
 			$popup_note.text(egw.lang('You have %1 unread notifications', counter));
-			setTimeout(function (){$popup_note.remove();}, 5000);
+			//setTimeout(function (){$popup_note.remove();}, 5000);
 		}
 		else
 		{
-			$egwpopup_fw_notifications.text(0);
-			$egwpopup_fw_notifications.removeClass('egwpopup_notify');
+			$topmenu_info_notifications.removeClass('egwpopup_notify');
 		}
 	};
 
@@ -820,7 +818,7 @@
 		var langRequire = jQuery('#notifications_script_id').attr('data-langRequire');
 		egw.langRequire(window, [JSON.parse(langRequire)], function()
 		{
-			var $egwpopup_fw = jQuery('#egwpopup_fw_notifications');
+			var $egwpopup_fw = jQuery('#topmenu_info_notifications');
 			switch (egw.preference('notification_chain','notifications'))
 			{
 				case 'popup_only':
