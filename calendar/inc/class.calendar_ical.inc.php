@@ -1048,16 +1048,12 @@ class calendar_ical extends calendar_boupdate
 								$paramData['ENCODING'] = 'FUNAMBOL-QP';
 						}
 					}
-					/*
-					if (preg_match('/([\000-\012])/', $valueData))
+					// some chars also require encoding for iCal 2+
+					elseif (preg_match(Api\CalDAV\Handler::REQUIRE_QUOTED_PRINTABLE_ENCODING, $valueData))
 					{
-						if ($this->log)
-						{
-							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
-								"() Has invalid XML data: $valueData",3,$this->logfile);
-						}
+						$paramData['ENCODING'] = 'QUOTED-PRINTABLE';
 					}
-					*/
+
 					$vevent->setAttribute($key, $valueData, $paramData, true, $valuesData);
 				}
 			}

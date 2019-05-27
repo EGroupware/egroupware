@@ -476,6 +476,11 @@ class addressbook_vcal extends addressbook_bo
 									unset($options['ENCODING']);
 								}
 							}
+							// some chars also require encoding for vCard 3+
+							elseif (preg_match(Api\CalDAV\Handler::REQUIRE_QUOTED_PRINTABLE_ENCODING, $value))
+							{
+								$options['ENCODING'] = 'QUOTED-PRINTABLE';
+							}
 							if ($vcardField == 'TEL' && $entry['tel_prefer'] &&
 								($databaseField == $entry['tel_prefer']))
 							{
