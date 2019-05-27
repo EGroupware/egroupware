@@ -85,7 +85,9 @@ switch($action)
 
 	default:
 		// we allow to call admin_cmd classes directly, if they define the constant SETUP_CLI_CALLABLE
-		if (substr($action,0,2) == '--' && class_exists($class = str_replace('-','_',substr($action,2))) &&
+		if (substr($action,0,2) == '--' && (class_exists($class = str_replace('-','_',substr($action, 2))) ||
+			class_exists($class = preg_replace('/^--([a-z0-9_]+)-([a-z0-9_]+)$/i', 'EGroupware\\$1\\$2', $action)) ||
+			class_exists($class = preg_replace('/^--([a-z0-9_]+)-([a-z0-9_]+)$/i', 'EGroupware\\$1\\AdminCmds\\$2', $action))) &&
 			is_subclass_of($class,'admin_cmd') && @constant($class.'::SETUP_CLI_CALLABLE'))
 		{
 			$args = array();
@@ -100,7 +102,14 @@ switch($action)
 				if (substr($name,-1) == ']')	// allow 1-dim. arrays
 				{
 					list($name,$sub) = explode('[',substr($name,0,-1),2);
-					$args[$name][$sub] = $value;
+					if (empty($sub))
+					{
+						$args[$name][] = $value;
+					}
+					else
+					{
+						$args[$name][$sub] = $value;
+					}
 				}
 				else
 				{
