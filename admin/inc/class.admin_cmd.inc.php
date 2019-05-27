@@ -432,7 +432,7 @@ abstract class admin_cmd
 			{
 				$value = self::mask_passwords($value, false);
 			}
-			elseif (preg_match('/(pw|passwd_?\d*|(?<!change)password|db_pass)$/i', $key))
+			elseif (preg_match('/(pw|passwd_?\d*|(?<!change)password|db_pass|secret)$/i', $key))
 			{
 				$value = str_repeat('*', strlen($value));
 			}
