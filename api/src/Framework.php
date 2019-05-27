@@ -425,7 +425,7 @@ abstract class Framework extends Framework\Extra
 		{
 			$GLOBALS['egw_info']['server']['versions']['maintenance_release'] = self::api_version();
 		}
-		$var['powered_by'] = '<a href="http://www.egroupware.org/" target="_blank">'.
+		$var['powered_by'] = '<a href="http://www.egroupware.org/" class="powered_by" target="_blank">'.
 			lang('Powered by').' EGroupware '.
 			$GLOBALS['egw_info']['server']['versions']['maintenance_release'].'</a>';
 
@@ -1174,12 +1174,6 @@ abstract class Framework extends Framework\Extra
 		}*/
 
 		Hooks::process('topmenu_info',array(),true);
-		// Add extra items added by hooks
-		foreach(self::$top_menu_extra as $extra_item) {
-			$this->_add_topmenu_item($extra_item);
-		}
-
-		$this->_add_topmenu_item($apps['logout']);
 
 		if (($update = Framework\Updates::notification()))
 		{
@@ -1193,7 +1187,18 @@ abstract class Framework extends Framework\Extra
 		$this->_add_topmenu_item($this->_current_users());
 		$this->_add_topmenu_info_item($vars['quick_add'], 'quick_add');
 		$this->_add_topmenu_info_item($this->_print_menu(), 'print_title');
-
+		// Add extra items added by hooks
+		foreach(self::$top_menu_extra as $extra_item) {
+			if ($extra_item['name'] == 'search')
+			{
+				$this->_add_topmenu_info_item('<a href="'.$extra_item['url'].'" title="'.$extra_item['title'].'"></a>', 'search');
+			}
+			else
+			{
+				$this->_add_topmenu_item($extra_item);
+			}
+		}
+		$this->_add_topmenu_item($apps['logout']);
 	}
 
 	/**

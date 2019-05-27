@@ -39,7 +39,6 @@
 				</div>
 				<div id="egw_fw_topmenu_info_items">
 					{topmenu_info_items}
-					<div id="egwpopup_fw_notifications" title="">0</div>
 				</div>
 			</div>
 			<div id="egw_fw_sidebar">

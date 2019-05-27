@@ -49,8 +49,10 @@
 			border: none;
 			margin-top: 2px;
 			margin-left: 1px;
+			pointer-events: none;
 			img {
 				width: 40px;
+				pointer-events: none;
 			}
 		}
 	}
@@ -73,8 +75,74 @@
 		}
 	}
 	/*Notification*/
-    #topmenu_info_notifications {}
+    #topmenu_info_notifications {
+		line-height: 45px;
+		text-align: center;
+		cursor: pointer;
+		display: inline-block;
+		color: #fbfbfb;
+		font-weight: bold;
+		opacity: 0.4;
+		background-image: url(../images/notification_message.svg);
+		border-left: 1px solid #636262;
+		.popup_note {
+			position: absolute;
+			width: 280px;
+			height: 30px;
+			left: -96px;
+			top: 45px;
+			border: 1px solid silver;
+			background: #ffffff;
+			text-align: center;
+			font-size: 10pt;
+			line-height: 22pt;
+			color: #b9436c;
+			white-space: nowrap;
+			z-index: 999;
+			&:before {
+				content: '';
+				position: absolute;
+				left: 252px;
+				width: 0;
+				height: 0px;
+				border-left: 14px solid transparent;
+				border-right: 15px solid transparent;
+				border-bottom: 12px solid #aaa;
+				margin-bottom: 12px;
+				margin-left: 1px;
+				top: -12px;
+			}
+			&:after {
+				content: '';
+				position: absolute;
+				top: -10px;
+				left: 252px;
+				width: 0;
+				height: 0;
+				border-left: 15px solid transparent;
+				border-right: 15px solid transparent;
+				border-bottom: 12px solid #ffffff;
+				margin-bottom: 11px;
+			}
+		}
+	}
+	#topmenu_info_notifications.egwpopup_notify {
+		background-image: url(../images/notification_message_active.svg);
+		opacity: 1;
+		border-left: 1px solid #bfc0bf;
+	}
 
+	/*Search button*/
+	#topmenu_info_search
+	{
+		background-repeat: no-repeat;
+		background-image: url(../images/topmenu_items/search.svg);
+		a {
+			width: 45px;
+			height: 45px;
+			display: inline-block;
+		}
+	}
 
     /*current user info*/
     #topmenu_info_current_users {}
@@ -112,7 +180,7 @@
 		// ADD different APPs
 
 		.chzn-container {
-
+			z-index: 1000;
 			position: fixed;
 			right: 93px !important;
 			top: 47px;

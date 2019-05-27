@@ -462,7 +462,23 @@
 
 		toggle_avatar_menu: function ()
 		{
-			jQuery('#egw_fw_topmenu').toggle();
+			var $menu = jQuery('#egw_fw_topmenu');
+			var $body = jQuery('body');
+			if (!$menu.is(":visible"))
+			{
+				$body.on('click', function(e){
+					if (e.target.id != 'topmenu_info_user_avatar')
+					{
+						jQuery(this).off(e);
+						$menu.toggle();
+					}
+				});
+			}
+			else
+			{
+				$body.off('click');
+			}
+			$menu.toggle();
 		}
 	});
 })(window);
