@@ -293,10 +293,11 @@ class admin_account
 	 * Delete a group via ajax
 	 *
 	 * @param int $account_id
+	 * @param String[] $data Optional data
 	 */
-	public static function ajax_delete_group($account_id)
+	public static function ajax_delete_group($account_id, $data)
 	{
-		$cmd = new admin_cmd_delete_account(Api\Accounts::id2name(Api\Accounts::id2name($account_id)), null, false);
+		$cmd = new admin_cmd_delete_account(Api\Accounts::id2name(Api\Accounts::id2name($account_id)), null, false, $data['admin_cmd']);
 		$msg = $cmd->run();
 
 		Api\Json\Response::get()->call('egw.refresh', $msg, 'admin', $account_id, 'delete');

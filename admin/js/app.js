@@ -443,12 +443,8 @@ app.classes.admin = AppJS.extend(
 				break;
 
 			case 'delete':
-				if (!this.egw.app('policy'))
-				{
-					this.egw.json('admin_account::ajax_delete_group', [account_id]).sendRequest();
-					break;
-				}
-				// fall through to open popup for policy
+				this.egw.json('admin_account::ajax_delete_group', [account_id, _action.data]).sendRequest();
+				break;
 			default:
 				if (!_action.data.url)
 				{
