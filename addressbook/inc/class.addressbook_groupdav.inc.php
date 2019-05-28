@@ -320,7 +320,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 						{
 							$content = $handler->getGroupVCard($list);
 							$props['getcontentlength'] = bytes($content);
-							$props[] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'address-data',$content,true);
+							$props[] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
 						}
 						$files[] = $this->add_resource($path, $list, $props);
 
