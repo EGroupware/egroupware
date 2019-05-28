@@ -147,6 +147,34 @@ class setup_header
 	}
 
 	/**
+	 * Check if any domain using mysql(i) gives a warning about disabled persistent connections
+	 *
+	 * @param array $egw_domains
+	 * @param boolean $persistent =true current value
+	 * @return boolean
+	 */
+	function check_db_persistent(array $egw_domains, $persistent=true)
+	{
+		if ($persistent !== false)
+		{
+			foreach($egw_domains as $data)
+			{
+				error_clear_last();
+				// check for persistent connection
+				if (substr($data['db_type'], 0, 5) === 'mysql' &&
+					function_exists('mysqli_connect') &&
+					@mysqli_connect('p:'.$data['db_host']) &&
+					preg_match('/Persistent connections are disabled/i', error_get_last()))
+				{
+					$persistent = false;
+					break;
+				}
+			}
+		}
+		return $persistent;
+	}
+
+	/**
 	 * generate header.inc.php file from given values
 	 *
 	 * setup_header::generate($GLOBALS['egw_info'],$GLOBALS['egw_domains'])

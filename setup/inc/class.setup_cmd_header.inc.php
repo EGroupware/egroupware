@@ -131,6 +131,11 @@ class setup_cmd_header extends setup_cmd
 		{
 			return true;
 		}
+		// check if php has persistent mysql connections disabled --> disable it in header, to not fill the log with warnings
+		if ($GLOBALS['egw_info']['server']['db_persistent'])
+		{
+			$GLOBALS['egw_info']['server']['db_persistent'] = $this->check_db_persistent($GLOBALS['egw_domain']);
+		}
 		$header = $this->generate($GLOBALS['egw_info'],$GLOBALS['egw_domain']);
 
 		if ($this->arguments)

@@ -270,6 +270,11 @@ function show_header_form($validation_errors)
 		switch($name)
 		{
 			case 'db_persistent':
+				if ($GLOBALS['egw_info']['server'][$name] && is_array($GLOBALS['egw_domain']))
+				{
+					$GLOBALS['egw_info']['server'][$name] = $GLOBALS['egw_setup']->header->check_db_persistent($GLOBALS['egw_domain']);
+				}
+				// fall through
 			case 'show_domain_selectbox':
 			case 'mcrypt_enabled':
 				$setup_tpl->set_var($name.($GLOBALS['egw_info']['server'][$name] ? '_yes' : '_no'),' selected="selected"');
