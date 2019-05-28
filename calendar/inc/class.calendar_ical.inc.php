@@ -1333,7 +1333,7 @@ class calendar_ical extends calendar_boupdate
 				else
 				{
 					// no merge
-					if(!isset($this->supportedFields['category']) || !isset($event['category']))
+					if(!isset($this->supportedFields['category']))
 					{
 						$event['category'] = $event_info['stored_event']['category'];
 					}
