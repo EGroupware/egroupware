@@ -4227,6 +4227,7 @@ td.message span.message {
   padding-top: 0px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active img.egw_fw_ui_tab_icon {
+  padding-top: 3px;
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -4505,7 +4506,7 @@ td.message span.message {
   position: relative;
   display: block;
   width: 35px;
-  height: 5px;
+  height: 3px;
   backface-visibility: hidden;
   border-radius: 2px;
   top: 11px;
@@ -4528,8 +4529,8 @@ td.message span.message {
   left: 0px;
   top: 3px;
   width: 35px;
-  height: 4px;
-  background-color: #606060;
+  height: 3px;
+  background-color: #b4b4b4;
   backface-visibility: hidden;
   border-radius: 2px;
 }
@@ -4542,6 +4543,12 @@ td.message span.message {
   -ms-transform: rotate(-145deg) translate(8px, 2px);
   -moz-transform: rotate(-145deg) translate(8px, 2px);
   -webkit-transform: rotate(-145deg) translate(8px, 2px);
+  background-color: #b4b4b4;
+}
+#egw_fw_basecontainer #egw_fw_toggler:hover span:before {
+  background-color: #606060;
+}
+#egw_fw_basecontainer #egw_fw_toggler:hover span:after {
   background-color: #606060;
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn {
@@ -4561,7 +4568,7 @@ td.message span.message {
   -moz-transform: none;
   -webkit-transform: none;
   width: 35px;
-  height: 5px;
+  height: 3px;
   background-color: #b4b4b4;
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #egw_fw_toggler span:before {
