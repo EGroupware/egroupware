@@ -4202,6 +4202,7 @@ td.message span.message {
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover:not(.egw_fw_ui_tab_header_active) .egw_fw_ui_tab_close_button {
   top: 8px;
+  background-image: url(../images/close.svg);
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
   font-size: 11px;
@@ -4250,7 +4251,6 @@ td.message span.message {
   margin-left: 0px;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url(../images/close.svg);
   background-size: 6px 6px;
   position: absolute;
 }
