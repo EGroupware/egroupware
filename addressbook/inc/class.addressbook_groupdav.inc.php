@@ -628,7 +628,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		}
 		elseif ($contactId > 0)
 		{
-			$contact['cat_id'] = $oldContact['cat_id'];
+			$contact['cat_id'] = null;
 		}
 		if (is_array($oldContact))
 		{

@@ -712,7 +712,7 @@ class infolog_ical extends infolog_bo
 				continue;
 			}
 
-			$taskData = array();
+			$taskData = array('info_cat' => $_taskID ? 0 : $GLOBALS['egw_info']['user']['preferences']['infolog']['cat_add_default']);
 
 			if ($_taskID > 0)
 			{
