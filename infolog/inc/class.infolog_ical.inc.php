@@ -313,11 +313,6 @@ class infolog_ical extends infolog_bo
 						$options['ENCODING'] = 'FUNAMBOL-QP';
 				}
 			}
-			// some chars also require encoding for iCal 2+
-			elseif (preg_match(Api\CalDAV\Handler::REQUIRE_QUOTED_PRINTABLE_ENCODING, $value))
-			{
-				$options['ENCODING'] = 'QUOTED-PRINTABLE';
-			}
 			$vevent->setAttribute($field, $value, $options);
 		}
 
