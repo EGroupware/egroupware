@@ -3737,6 +3737,7 @@ div#egwpopup_message {
   color: silver;
   overflow: hidden;
   height: 15px;
+  visibility: hidden;
 }
 .colselection.ui-widget-content {
   width: 33%;
@@ -3928,7 +3929,7 @@ td.message span.message {
   position: absolute;
   display: none;
   right: 5px;
-  width: 230px;
+  width: 241px;
   z-index: 1000;
   top: 46px;
   background: white;
@@ -3941,6 +3942,7 @@ td.message span.message {
   width: calc(100% - 20px);
   display: inline-block;
   padding: 10px;
+  font-size: 7pt;
   background-color: #fbfbfb;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_info_items {
@@ -4003,6 +4005,7 @@ td.message span.message {
   color: #000000;
   text-decoration: none;
   font-size: 12px;
+  padding-left: 26px;
   line-height: 1.5em;
   display: inline-block;
 }
@@ -4017,55 +4020,46 @@ td.message span.message {
   background-image: url(../images/topmenu_items/home.svg);
   background-repeat: no-repeat;
   background-size: 16px;
-  padding-left: 20px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_prefs {
   margin-left: 0px;
   background-repeat: no-repeat;
   background-size: 16px;
-  padding-left: 20px;
   background-image: url(../images/topmenu_items/setup.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_acl {
   background-repeat: no-repeat;
   background-size: 16px;
-  padding-left: 20px;
   background-image: url(../images/topmenu_items/access.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_cats {
   background-repeat: no-repeat;
   background-size: 16px;
-  padding-left: 20px;
   background-image: url(../images/topmenu_items/category.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_password {
   background-repeat: no-repeat;
   background-size: 16px;
-  padding-left: 20px;
   background-image: url(../images/topmenu_items/password.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_manual {
   background-repeat: no-repeat;
   background-size: 16px;
-  padding-left: 20px;
   background-image: url(../images/topmenu_items/help.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_current_user {
   background-repeat: no-repeat;
   background-size: 16px;
-  padding-left: 20px;
   background-image: url(../images/users.png);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_logout {
   background-repeat: no-repeat;
   background-size: 16px;
-  padding-left: 20px;
   background-image: url(../images/topmenu_items/logout.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_print {
   background-repeat: no-repeat;
   background-size: 16px;
-  padding-left: 20px;
   background-image: url(../images/print.svg);
 }
 /* ###################################################
@@ -4200,9 +4194,11 @@ td.message span.message {
   padding-top: 8px;
   transition: none;
 }
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover .egw_fw_ui_tab_close_button {
+  background-image: url(../images/close.svg);
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover:not(.egw_fw_ui_tab_header_active) .egw_fw_ui_tab_close_button {
   top: 8px;
-  background-image: url(../images/close.svg);
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
   font-size: 11px;
@@ -4245,7 +4241,7 @@ td.message span.message {
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tab_close_button {
   right: 3px;
-  top: 1px;
+  top: 3px;
   display: inline-block;
   width: 12px;
   height: 12px;
@@ -5013,6 +5009,9 @@ td.message span.message {
 #egw_fw_topmenu_info_items form select {
   padding: 0px;
 }
+#egw_fw_topmenu_info_items #topmenu_info_quick_add {
+  position: relative;
+}
 #egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add {
   float: right;
   background-image: url(../images/add.svg);
@@ -5032,8 +5031,8 @@ td.message span.message {
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add .chzn-container {
   z-index: 1000;
-  position: fixed;
-  right: 93px !important;
+  position: absolute;
+  right: -54px !important;
   top: 47px;
   width: 160px !important;
   background: #FFFFFF;
@@ -5073,6 +5072,9 @@ td.message span.message {
 #egw_fw_topmenu_info_items #topmenu_info_quick_add .chzn-container .chzn-drop {
   border-radius: 0px;
   margin-top: -2px;
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add .chzn-container .chzn-results {
+  max-height: none;
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add select#quick_add_selectbox {
   visibility: hidden;
@@ -5169,9 +5171,10 @@ div#topmenu_info_update {
   display: inline-block;
 }
 div#topmenu_info_update img {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  padding: 5px;
 }
 /**
  * EGroupware: Stylite Pixelegg template

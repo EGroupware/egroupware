@@ -1142,7 +1142,6 @@ abstract class Framework extends Framework\Extra
 	function topmenu(array $vars,array $apps)
 	{
 		$this->_add_topmenu_info_item($this->_user_avatar_menu(), 'user_avatar');
-		$this->_add_topmenu_info_item($this->_logout_menu(), 'logout');
 		if($GLOBALS['egw_info']['user']['apps']['home'] && isset($apps['home']))
 		{
 			$this->_add_topmenu_item($apps['home']);
