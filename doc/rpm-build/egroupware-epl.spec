@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 17.1.20180118
+Version: 17.1.20190402
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -38,7 +38,7 @@ Prefix: /usr/share
     	%define     extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom
     %else
         # SLES 12 and openSUSE Leap no longer sets sles_version, but suse_version == 1315: contains now php7 packages, but no php7-xml
-        %if 0%{?suse_version} == 1315
+        %if 0%{?suse_version} >= 1315
         	%define php php7
     	    %define extra_requires apache2 apache2-mod_%{php} %{php}-opcache php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix
         %else
@@ -57,8 +57,10 @@ Suggests: %{name}-phpbrain        = %{version}
 Suggests: %{name}-phpfreechat     = %{version}
 Suggests: %{name}-sambaadmin      = %{version}
 Suggests: %{name}-sitemgr         = %{version}
-Recommends: %{php}-APCu
 
+# recommend some packages so install of just egroupware-epl works fine
+Recommends: %{php}-APCu
+Recommends: mariadb-server
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
@@ -110,6 +112,11 @@ BuildRoot: %{_tmppath}/%{name}-buildroot
 
 #otherwise build fails because of jar files in G2
 BuildRequires: unzip sed
+
+# fixing unknown user wwwrun in automatic install after build
+%if 0%{?suse_version} >= 1500
+BuildRequires: apache2
+%endif
 
 Buildarch: noarch
 AutoReqProv: no
@@ -185,9 +192,9 @@ Obsoletes: %{name}-developer_tools
 # Check binary paths and create links for opensuse/sles
 # create symlink for suse to get scripts with /usr/bin/php working
 %if 0%{?suse_version}
-    if [ ! -f /usr/bin/php -a -x /usr/bin/php5 ]; then \
-        echo "Installing php -> php5 alternative"; \
-        /usr/sbin/update-alternatives --install /usr/bin/php php /usr/bin/php5 99; \
+    if [ ! -f /usr/bin/php -a -x /usr/bin/%{php} ]; then \
+        echo "Installing php -> %{php} alternative"; \
+        /usr/sbin/update-alternatives --install /usr/bin/php php /usr/bin/%{php} 99; \
     fi
 %endif
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
@@ -225,7 +232,7 @@ Further contributed applications are available as separate packages.
 Summary: The EGroupware core
 Group: Web/Database
 Requires: %{php} >= 5.6.0
-Requires: %{php}-mbstring %{php}-gd %{extra_requires} %{cron} zip %{php}-json %{php}-xsl %{php}-bcmath
+Requires: %{php}-mbstring %{php}-gd %{extra_requires} %{cron} zip %{php}-json %{php}-xsl
 Provides: egw-core %{version}
 Provides: egw-addressbook %{version}
 %if 0%{?suse_version}
@@ -620,6 +627,7 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/updateGruntfile.php
 %{egwdir}/groupdav.htaccess
 %{egwdir}/webdav.php
+%{egwdir}/install-cli.php
 %{egwdir}/addressbook
 %{egwdir}/admin
 %{egwdir}/api

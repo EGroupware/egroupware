@@ -1,11 +1,11 @@
 #!/usr/bin/env php
 <?php
 /**
- * EGroupware - RPM post install: automatic install or update EGroupware
+ * EGroupware - RPM/DEB post install: automatic install or update EGroupware
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author RalfBecker@outdoor-training.de
+ * @author rb@egroupware.org
  */
 
 if (php_sapi_name() !== 'cli')	// security precaution: forbit calling post_install as web-page
@@ -110,7 +110,6 @@ function set_distro_defaults($distro=null)
 	{
 		case 'suse': case 'opensuse-leap': case 'opensuse':
 			// openSUSE 12.1+ no longer uses php5
-			if (file_exists('/usr/bin/php5')) $config['php'] = '/usr/bin/php5';
 			if (file_exists('/usr/bin/php7')) $config['php'] = '/usr/bin/php7';
 			$config['start_db'] = '/sbin/service mysql';
 			$config['autostart_db'] = '/sbin/chkconfig --level 345 mysql on';
@@ -124,6 +123,11 @@ function set_distro_defaults($distro=null)
 			$config['ldap_group_context'] = 'ou=group,$base';
 			$config['webserver_user'] = 'wwwrun';
 			$config['apache_config'] = '/etc/apache2/conf.d/egroupware.conf';
+			// at least openSUSE 15.1 does no longer enable mod_php by default
+			if (file_exists('/usr/sbin/a2enmod'))
+			{
+				$config['php5enmod'] = '/usr/sbin/a2enmod '.basename($config['php']);
+			}
 			break;
 		case 'debian': case 'ubuntu':
 			// service not in Debian5, only newer Ubuntu, which complains about /etc/init.d/xx
