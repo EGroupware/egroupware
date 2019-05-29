@@ -16,7 +16,7 @@ Egroupware
 		<toolbar id="toolbar" width="100%" flat_list="false"/>
 		<!-- Fake an app header inside the toolbar -->
 		<box class="egw_fw_ui_app_header_container">
-			<description id="app_header" class="egw_fw_ui_app_header"/>
+			<description id="app_header"/>
 		</box>
 	</template>
 </overlay>
