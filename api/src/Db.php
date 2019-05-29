@@ -523,7 +523,11 @@ class Db
 					// set a connection timeout of 1 second, to allow quicker failover to other db-nodes (default is 20s)
 					$this->Link_ID->setConnectionParameter(MYSQLI_OPT_CONNECT_TIMEOUT, 1);
 				}
-				$connect = $GLOBALS['egw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
+				$connect = $GLOBALS['egw_info']['server']['db_persistent'] &&
+					// do NOT attempt persistent connection, if it is switched off in php.ini (it will only cause a warning)
+					($Type !== 'mysqli' || ini_get('mysqli.allow_persistent')) ?
+					'PConnect' : 'Connect';
+
 				if (($Ok = $this->Link_ID->$connect($Host, $User, $Password, $Database)))
 				{
 					$this->ServerInfo = $this->Link_ID->ServerInfo();
@@ -1570,6 +1574,11 @@ class Db
 				if (is_array($data) && count($data) <= 1)
 				{
 					$data = array_shift($data);
+				}
+				// array for SET or VALUES, not WHERE --> automatic store comma-separated
+				if (is_array($data) && $glue === ',' && in_array($column_type, ['varchar','ascii']))
+				{
+					$data = implode(',', $data);
 				}
 				if (is_array($data))
 				{
