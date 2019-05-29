@@ -165,13 +165,6 @@ div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active{
 	background-color: $sidebox_color !important;
 }
-/* Quick add */
-#egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add {
-	background-color: $color !important;
-}
-#egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add:hover {
-	background-color: $sidebox_color !important;
-}
 .ui-datepicker div.ui-timepicker-div div.ui_tpicker_minute_slider span.ui-slider-handle,
 .ui-datepicker table.ui-datepicker-calendar .ui-state-active,
 .ui-datepicker div.ui-timepicker-div div.ui_tpicker_hour_slider span.ui-slider-handle,

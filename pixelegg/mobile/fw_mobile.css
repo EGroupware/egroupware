@@ -4500,8 +4500,8 @@ td.message span.message {
 }
 #egw_fw_basecontainer #egw_fw_toggler {
   display: block;
-  width: 44px;
-  height: 44px;
+  width: 45px;
+  height: 45px;
   position: absolute;
   z-index: 1;
   margin-top: 0px;
