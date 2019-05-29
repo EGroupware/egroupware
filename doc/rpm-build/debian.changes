@@ -1,3 +1,14 @@
+egroupware-epl (17.1.20190529) hardy; urgency=low
+
+  * Admin: white-list IP addresses from blocking or set higher number of attempts
+  * Calendar: fix alarms on recurring events got lost after 1st ocurrence
+  * CalDAV/CardDAV: allow removing categories
+  * CalDAV/CardDAV: encoding VT (vertical tab) as it stalls Outlook (CalDav Synchronizer)
+  * iMip/Mail/Calendar: fix event-doublication on accepting, if the event was deleted once
+  * Collabora: egroupware-collabora-key package to install local container for current Debian, Ubuntu, RHEL, SUSE
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 29 May 2019 14:03:40 +0200
+
 egroupware-epl (17.1.20190402) hardy; urgency=low
 
   * Collabora: egroupware-collabora-key package allowing to install supported Collabora container on-site
