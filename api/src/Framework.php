@@ -1183,7 +1183,7 @@ abstract class Framework extends Framework\Extra
 			$this->_add_topmenu_info_item(self::_get_notification_bell(), 'notifications');
 		}
 		$this->_add_topmenu_info_item($this->_user_avatar_menu(), 'user_avatar');
-		$this->_add_topmenu_item($this->_current_users());
+		if (is_array(($current_user = $this->_current_users()))) $this->_add_topmenu_item($current_user);
 		$this->_add_topmenu_info_item($vars['quick_add'], 'quick_add');
 		$this->_add_topmenu_info_item($this->_print_menu(), 'print_title');
 		// Add extra items added by hooks
