@@ -159,12 +159,8 @@ class setup_header
 		{
 			foreach($egw_domains as $data)
 			{
-				error_clear_last();
-				// check for persistent connection
-				if (substr($data['db_type'], 0, 5) === 'mysql' &&
-					function_exists('mysqli_connect') &&
-					@mysqli_connect('p:'.$data['db_host']) &&
-					preg_match('/Persistent connections are disabled/i', error_get_last()))
+				// check if persistent connections are allowed
+				if (substr($data['db_type'], 0, 5) === 'mysql' && !ini_get('mysqli.allow_persistent'))
 				{
 					$persistent = false;
 					break;
