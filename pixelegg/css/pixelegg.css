@@ -389,7 +389,7 @@
     background-size: 12px 12px;
     padding: 0px;
   }
-  .et2_link_list td div.delete {
+  .et2_vfs td div.delete {
     visibility: hidden;
     background-image: url("../images/delete.svg");
     background-position: center;
