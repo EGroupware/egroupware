@@ -4581,7 +4581,7 @@ td.message span.message {
   visibility: hidden;
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header img {
-  margin: 4px auto 0px !important;
+  margin: 4px 13px 0px !important;
   padding: 0 !important;
   float: none !important;
   display: block !important;

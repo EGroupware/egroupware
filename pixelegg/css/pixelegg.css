@@ -4592,7 +4592,7 @@ td.message span.message {
   visibility: hidden;
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header img {
-  margin: 4px auto 0px !important;
+  margin: 4px 13px 0px !important;
   padding: 0 !important;
   float: none !important;
   display: block !important;
@@ -6324,6 +6324,7 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(0, 51, 102, 0.3);
+  border-left: 4px solid #003366 !important;
 }
 #egw_fw_sidebar #egw_fw_sidemenu #addressbook_sidebox_content .egw_fw_ui_category_active {
   background-color: #003366 !important;
@@ -6363,7 +6364,7 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #003366 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #addressbook_sidebox_header {
   border-left: 4px solid #003366 !important;
@@ -6375,10 +6376,11 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #admin_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(51, 51, 51, 0.3);
+  border-left: 4px solid #333333 !important;
 }
 #admin_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #333333 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #admin_sidebox_header {
   border-left: 4px solid #333333 !important;
@@ -6390,10 +6392,11 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #bookmarks_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(204, 102, 51, 0.3);
+  border-left: 4px solid #CC6633 !important;
 }
 #bookmarks_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #CC6633 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #bookmarks_sidebox_header {
   border-left: 4px solid #CC6633 !important;
@@ -6405,10 +6408,11 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #calendar_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(204, 0, 51, 0.3);
+  border-left: 4px solid #CC0033 !important;
 }
 #calendar_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #CC0033 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #calendar_sidebox_header {
   border-left: 4px solid #CC0033 !important;
@@ -6420,10 +6424,11 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(255, 153, 51, 0.3);
+  border-left: 4px solid #ff9933 !important;
 }
 #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #ff9933 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #filemanager_sidebox_header {
   border-left: 4px solid #ff9933 !important;
@@ -6436,9 +6441,6 @@ form[id^="ranking-"] .dialogHeadbar {
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #infolog_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(102, 0, 51, 0.3);
   border-left: 4px solid #660033 !important;
-  border-top: 0px !important;
-  margin-left: 3px;
-  padding-top: 6px;
 }
 #infolog_sidebox_header {
   border-left: 4px solid #660033 !important;
@@ -6454,10 +6456,11 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(0, 102, 153, 0.3);
+  border-left: 4px solid #006699 !important;
 }
 #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #006699 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #mail_sidebox_header {
   border-left: 4px solid #006699 !important;
@@ -6469,10 +6472,11 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #projectmanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(102, 153, 153, 0.3);
+  border-left: 4px solid #669999 !important;
 }
 #projectmanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #669999 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #projectmanager_sidebox_header {
   border-left: 4px solid #669999 !important;
@@ -6484,10 +6488,11 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #resources_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(0, 51, 51, 0.3);
+  border-left: 4px solid #003333 !important;
 }
 #resources_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #003333 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #resources_sidebox_header {
   border-left: 4px solid #003333 !important;
@@ -6499,10 +6504,11 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #timesheet_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(51, 0, 102, 0.3);
+  border-left: 4px solid #330066 !important;
 }
 #timesheet_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #330066 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #timesheet_sidebox_header {
   border-left: 4px solid #330066 !important;
@@ -6514,10 +6520,11 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #tracker_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(0, 153, 102, 0.3);
+  border-left: 4px solid #009966 !important;
 }
 #tracker_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #009966 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #tracker_sidebox_header {
   border-left: 4px solid #009966 !important;
@@ -6529,10 +6536,11 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #wiki_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(121, 121, 121, 0.3);
+  border-left: 4px solid #797979 !important;
 }
 #wiki_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #797979 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #wiki_sidebox_header {
   border-left: 4px solid #797979 !important;
@@ -6544,10 +6552,11 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #ranking_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(64, 64, 64, 0.3);
+  border-left: 4px solid #404040 !important;
 }
 #ranking_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #404040 !important;
-  border-left: 1px solid silver !important;
+  border-left: 0px !important;
 }
 #ranking_sidebox_header {
   border-left: 4px solid #404040 !important;
@@ -6561,10 +6570,10 @@ form[id^="ranking-"] .dialogHeadbar {
 .standartTreeImage {
   filter: none;
 }
-#egw_fw_sidebar #egw_fw_basecontainer.egw_fw_sidebar_toggleOn .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active {
-  margin-left: 3px;
-  padding-top: 6px;
+#egw_fw_basecontainer.egw_fw_sidebar_toggleOn .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active {
   border-top: 0px !important;
+  margin-left: 3px !important;
+  padding-top: 6px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header {
   border-left: 4px solid #797979;
