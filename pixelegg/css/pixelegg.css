@@ -3900,6 +3900,7 @@ td.message span.message {
 #egw_fw_header #egw_divLogo img {
   max-width: 209px;
   border: none;
+  height: 45px;
 }
 #egw_fw_header #egw_fw_topmenu ul,
 #egw_fw_header #egw_fw_topmenu > * > ul > li,
@@ -4476,7 +4477,7 @@ td.message span.message {
 }
 #egw_fw_basecontainer #egw_fw_toggler {
   display: block;
-  width: 52px;
+  width: 51px;
   height: 45px;
   position: absolute;
   z-index: 1;
