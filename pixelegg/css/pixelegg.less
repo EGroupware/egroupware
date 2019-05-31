@@ -151,13 +151,17 @@
 // Infolog
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #infolog_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
 	background-color: fade(@infolog-color, 30%);
+	border-left:4px solid @infolog-color !important;
+	border-top: 0px !important;
+	margin-left: 3px;
+    padding-top: 6px;
 }
 #infolog_sidebox_header{
 	border-left:4px solid @infolog-color !important;
 }
 #infolog_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
 	border-top:4px solid @infolog-color !important;
-	border-left: 1px solid silver !important;
+	border-left: 0px !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #infolog-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
 	border-top: 4px solid;
@@ -276,7 +280,8 @@
 		.egw_fw_ui_scrollarea_outerdiv {
 			.egw_fw_ui_sidemenu_entry_header_active {
 				margin-left: 3px;
-				padding-top: 3px;
+				padding-top: 6px;
+				border-top: 0px !important;
 			}
 		}
 	}
@@ -290,7 +295,7 @@
 			}
 			.egw_fw_ui_sidemenu_entry_header_active {
 				border-top: 4px solid @default-color;
-				border-left: 1px solid silver !important;
+				border-left: 0px;
 			}
 		}
 	}

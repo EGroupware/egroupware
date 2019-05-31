@@ -26,11 +26,10 @@
 #egw_fw_sidebar {
     position: fixed;
     overflow: hidden;
-    top: 38px;
+    top: 45px;
     left: 0px;
     bottom: 0px;
     width: 225px;
-    /*.background_color_5_gray;*/
 
     //SIDE AREA
     #egw_fw_sidemenu {
@@ -41,9 +40,8 @@
         right: 8px;
         overflow: hidden;
         z-index: 0;
-        padding-top: 0.6em;
         font-size: 0.9em;
-
+		border-right: 1px solid #bfbfbf;
         // SIDE AREA
         .egw_fw_ui_scrollarea_outerdiv{
             .background_color_5_gray;
@@ -94,7 +92,6 @@
                 background-position: 95% -3000px;
                 background-repeat: no-repeat;
                 .background_color_0_gray;
-                .bordered (@gray_30, @gray_30, @gray_30, @gray_30);
                 margin: 0 0 0 0;
                 border-bottom: none;
                 height: 33px;
@@ -285,8 +282,6 @@
         top: 40px;
         bottom: 3px;
         right: 0px;
-		border-left: 1px solid;
-		border-color:@gray_30;
         &:hover {border-color: @gray_10;}
     }
 
@@ -300,13 +295,15 @@
 	// Toggle menu
 	#egw_fw_toggler {
 		display: block;
-		width: 45px;
+		width: 52px;
 		height: 45px;
 		position: absolute;
 		z-index: 1;
 		margin-top: 0px;
-		left: 256px;
+		border-right: 1px solid #bfbfbf;
+		left: 0px;
 		background-color: #fbfbfb;
+		padding-left: 10px;
 		span {
 			background-color: transparent;
 			&:before{
@@ -429,6 +426,9 @@
 				display: block !important;
 				height: 24px !important;
 			}
+		}
+		.egw_fw_ui_scrollarea {
+			top: -4px !important;
 		}
 	}
 }

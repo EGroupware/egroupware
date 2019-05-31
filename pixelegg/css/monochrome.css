@@ -3882,19 +3882,13 @@ td.message span.message {
   float: left;
   width: 255px;
   display: block;
-  margin-left: -8px;
+  margin-left: 63px;
   text-align: center;
   height: 45px;
-  /*.background_color_5_gray;*/
 }
 #egw_fw_header #egw_divLogo img {
   max-width: 209px;
   border: none;
-  position: absolute;
-  top: 0.1em;
-  left: 1em;
-  height: 40px;
-  /*.background_color_5_gray;*/
 }
 #egw_fw_header #egw_fw_topmenu ul,
 #egw_fw_header #egw_fw_topmenu > * > ul > li,
@@ -4266,11 +4260,10 @@ td.message span.message {
 #egw_fw_sidebar {
   position: fixed;
   overflow: hidden;
-  top: 38px;
+  top: 45px;
   left: 0px;
   bottom: 0px;
   width: 225px;
-  /*.background_color_5_gray;*/
   /*#################################*/
 }
 #egw_fw_sidebar #egw_fw_sidemenu {
@@ -4281,8 +4274,8 @@ td.message span.message {
   right: 8px;
   overflow: hidden;
   z-index: 0;
-  padding-top: 0.6em;
   font-size: 0.9em;
+  border-right: 1px solid #bfbfbf;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv {
   background-color: #fafafa;
@@ -4323,10 +4316,6 @@ td.message span.message {
   background-position: 95% -3000px;
   background-repeat: no-repeat;
   background-color: #ffffff;
-  border-top: solid 1px #B4B4B4;
-  border-left: solid 1px #B4B4B4;
-  border-right: solid 1px #B4B4B4;
-  border-bottom: solid 1px #B4B4B4;
   margin: 0 0 0 0;
   border-bottom: none;
   height: 33px;
@@ -4470,21 +4459,21 @@ td.message span.message {
   top: 40px;
   bottom: 3px;
   right: 0px;
-  border-left: 1px solid;
-  border-color: #B4B4B4;
 }
 #egw_fw_sidebar #egw_fw_splitter:hover {
   border-color: #E6E6E6;
 }
 #egw_fw_basecontainer #egw_fw_toggler {
   display: block;
-  width: 45px;
+  width: 52px;
   height: 45px;
   position: absolute;
   z-index: 1;
   margin-top: 0px;
-  left: 256px;
+  border-right: 1px solid #bfbfbf;
+  left: 0px;
   background-color: #fbfbfb;
+  padding-left: 10px;
 }
 #egw_fw_basecontainer #egw_fw_toggler span {
   background-color: transparent;
@@ -4596,6 +4585,9 @@ td.message span.message {
   float: none !important;
   display: block !important;
   height: 24px !important;
+}
+#egw_fw_basecontainer.egw_fw_sidebar_toggleOn #egw_fw_sidemenu .egw_fw_ui_scrollarea {
+  top: -4px !important;
 }
 /** DON"T MOVE THIS **/
 .egw_fw_ui_splitter_vertical {
