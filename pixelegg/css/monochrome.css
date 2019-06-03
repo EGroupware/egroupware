@@ -4364,6 +4364,7 @@ td.message span.message {
   border-style: solid;
   border-width: 1px;
   margin: 0 0 2em 0;
+  border-left: none;
   /*######################*/
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content:nth-last-of-type(-n+3) {
