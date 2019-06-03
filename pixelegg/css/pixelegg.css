@@ -4598,9 +4598,6 @@ td.message span.message {
   display: block !important;
   height: 24px !important;
 }
-#egw_fw_basecontainer.egw_fw_sidebar_toggleOn #egw_fw_sidemenu .egw_fw_ui_scrollarea {
-  top: -4px !important;
-}
 /** DON"T MOVE THIS **/
 .egw_fw_ui_splitter_vertical {
   background-image: url(../images/splitter_vert.png);
@@ -4949,7 +4946,8 @@ td.message span.message {
 #egw_fw_topmenu_info_items #topmenu_info_notifications .popup_note:before {
   content: '';
   position: absolute;
-  left: 252px;
+  top: -13px;
+  left: 251px;
   width: 0;
   height: 0px;
   border-left: 14px solid transparent;
@@ -4957,13 +4955,12 @@ td.message span.message {
   border-bottom: 12px solid #aaa;
   margin-bottom: 12px;
   margin-left: 1px;
-  top: -12px;
 }
 #egw_fw_topmenu_info_items #topmenu_info_notifications .popup_note:after {
   content: '';
   position: absolute;
-  top: -10px;
-  left: 252px;
+  top: -11px;
+  left: 251px;
   width: 0;
   height: 0;
   border-left: 15px solid transparent;
@@ -5016,6 +5013,7 @@ td.message span.message {
   position: absolute;
   right: -54px !important;
   top: 47px;
+  min-width: 160px !important;
   width: 160px !important;
   background: #FFFFFF;
 }
