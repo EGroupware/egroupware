@@ -925,25 +925,15 @@ function egw_fw_ui_scrollarea(_contDiv)
 
 egw_fw_ui_scrollarea.prototype.setScrollPos = function(_pos)
 {
-	var $activeHeader =  jQuery('.egw_fw_ui_sidemenu_entry_header_active');
 	if (this.buttonsVisible)
 	{
 		if (_pos <= 0)
 		{
-			if (window.framework) jQuery(framework.sidemenuDiv).removeClass("egw_fw_ui_scrollarea_enabled");
 			_pos = 0;
 		}
 		else if (_pos >= this.maxScrollPos)
 		{
 			_pos = this.maxScrollPos;
-		}
-		else
-		{
-			if (egw.preference('toggleSidebar',framework.activeApp.appName) != 'on')
-			{
-				$activeHeader.width($activeHeader.width());
-				if (window.framework) jQuery(framework.sidemenuDiv).addClass("egw_fw_ui_scrollarea_enabled");
-			}
 		}
 
 		this.scrollPos = _pos;
