@@ -1021,6 +1021,9 @@ li.vfsPath.et2_clickable:last-child:before {
     padding-left: 10px;
     padding-right: 2px;
 }
+li.vfsPath.et2_clickable:last-child:after {
+	display: none !important;
+}
 li.vfsPath.et2_clickable:not(:first-child):after {
 	content: '/';
     width: 8px;
