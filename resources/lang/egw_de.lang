@@ -15,6 +15,7 @@ add resource	resources	de	Ressource hinzufügen
 add resources	resources	de	Ressourcen hinzufügen
 administrator	resources	de	Verwalter
 all categories	resources	de	Alle Kategorien
+allow booking requests from any user when creating events?	resources	de	Buchungsanfragen von beliebigen Benutzern bei der Erstellung von Terminen erlauben?
 allow ignore conflicts	admin	de	Wer darf Buchungskonflikte ignorieren?
 book	resources	de	Buchen
 book resource	resources	de	Ressource buchen
@@ -22,6 +23,7 @@ book selected resources	resources	de	Ausgewählte Ressourcen buchen
 book this resource	resources	de	Ressource buchen
 bookable	resources	de	buchbar
 booked	resources	de	gebucht
+booking requests	resources	de	Buchungsanfragen
 buy this article	resources	de	Diesen Artikel kaufen
 buy this resource	resources	de	Diese Ressource kaufen
 buyable	resources	de	käuflich
@@ -90,6 +92,7 @@ new resource	resources	de	Neue Ressource
 no description available	resources	de	Keine Beschreibung vorhanden
 no matches	resources	de	Keine Treffer
 no resources selected	resources	de	Keine Ressource ausgewählt
+no, users will need to contact users with direct booking permission	resources	de	Nein, Benutzer müssen sich mit Benutzern mit direkter Buchungsberechtigung in Verbindung setzen.
 notify your administrator to correct this situation	resources	de	Benachrichtigen Sie ihren Administrator um diese Situation zu lösen
 picture	resources	de	Bild
 picture source	resources	de	Quelle des Bildes

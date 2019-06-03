@@ -15,6 +15,7 @@ add resource	resources	en	Add resource
 add resources	resources	en	Add resources
 administrator	resources	en	Administrator
 all categories	resources	en	All categories
+allow booking requests from any user when creating events?	resources	en	Allow booking requests from any user when creating events?
 allow ignore conflicts	admin	en	Allow ignore conflicts
 book	resources	en	Book
 book resource	resources	en	Book resource
@@ -22,6 +23,7 @@ book selected resources	resources	en	Book selected resources
 book this resource	resources	en	Book this resource
 bookable	resources	en	Bookable
 booked	resources	en	booked
+booking requests	resources	en	Booking requests
 buy this article	resources	en	Buy this article
 buy this resource	resources	en	Buy this resource
 buyable	resources	en	Buyable
@@ -90,6 +92,7 @@ new resource	resources	en	New Resource
 no description available	resources	en	No description available.
 no matches	resources	en	no matches
 no resources selected	resources	en	No resources selected.
+no, users will need to contact users with direct booking permission	resources	en	No, users will need to contact users with direct booking permission
 notify your administrator to correct this situation	resources	en	Notify your administrator.
 picture	resources	en	Picture
 picture source	resources	en	Picture source
