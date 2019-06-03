@@ -740,9 +740,10 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		var result = null;
 
 		if(typeof _widget._genColumnCaption == "function") return _widget._genColumnCaption();
+		var self = this;
 
 		_widget.iterateOver(function(_widget) {
-			var label = (_widget.options.label ? _widget.options.label : _widget.options.empty_label);
+			var label = self.egw().lang(_widget.options.label ||  _widget.options.empty_label || '');
 			if (!label) return;	// skip empty, undefined or null labels
 			if (!result)
 			{
