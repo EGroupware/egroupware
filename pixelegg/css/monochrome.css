@@ -3880,14 +3880,14 @@ td.message span.message {
 }
 #egw_fw_header #egw_divLogo {
   float: left;
-  width: 255px;
+  max-width: 220px;
   display: block;
   margin-left: 63px;
   text-align: center;
   height: 45px;
 }
 #egw_fw_header #egw_divLogo img {
-  max-width: 209px;
+  max-width: 210px;
   border: none;
   height: 45px;
 }
