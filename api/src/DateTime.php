@@ -718,12 +718,12 @@ class DateTime extends \DateTime
 	public static function getUserTimezones($extra=null)
 	{
 		$tz = $GLOBALS['egw_info']['user']['preferences']['common']['tz'];
-		$user_tzs = explode(',',$GLOBALS['egw_info']['user']['preferences']['common']['tz_selection']);
-		if (count($user_tzs) <= 1)
+		$user_tzs = $GLOBALS['egw_info']['user']['preferences']['common']['tz_selection'];
+		if (!is_array($user_tzs))
 		{
-			$user_tzs = $tz ? array($tz) : array();
+			$user_tzs = $user_tzs ? explode(',', $user_tzs) : array();
 		}
-		if ($tz && !in_array($tz,$user_tzs))
+		if ($tz && !in_array($tz, $user_tzs))
 		{
 			$user_tzs = array_merge(array($tz),$user_tzs);
 		}
