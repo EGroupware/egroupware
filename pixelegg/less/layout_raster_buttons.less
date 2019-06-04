@@ -42,6 +42,7 @@
 		}
 	}
 	#topmenu_info_user_avatar {
+		position: relative;
 		span {
 			height: 40px;
 			width: 40px;
@@ -53,6 +54,35 @@
 			img {
 				width: 40px;
 				pointer-events: none;
+			}
+			span.stat1 {
+				width: 14px;
+				height: 14px;
+				position: absolute;
+				left: 0px;
+				bottom: 0px;
+				border-radius: 50%;
+				z-index: 100000;
+				background-size: 14px;
+				background-repeat: no-repeat;
+				color: #2d2b2b;
+				font-weight: bold;
+				text-align: center;
+				font-size: 10px;
+				line-height: 14px;
+				border: 2px solid #fbfbfb;
+			}
+			span.online {
+				background-color: #2de0a5;
+			}
+			span.offline {
+				background-color: #cbced1;
+			}
+			span.away {
+				background-color: #ffd21f;
+			}
+			span.busy {
+				background-color: #f5455c;
 			}
 		}
 	}
