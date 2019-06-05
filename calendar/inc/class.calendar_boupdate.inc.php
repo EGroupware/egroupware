@@ -269,7 +269,7 @@ class calendar_boupdate extends calendar_bo
 			$this->log2file($event2save,$event,$old_event);
 		}
 		// send notifications if the event is in the future
-		if(!$skip_notification && $event['end'] > time())
+		if(!$skip_notification && $event['end'] > $this->now_su)
 		{
 			if ($new_event)
 			{
