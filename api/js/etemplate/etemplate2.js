@@ -732,11 +732,6 @@ etemplate2.prototype.submit = function(button, async, no_validation, _container)
 {
 	var api = this.widgetContainer.egw();
 
-	if (typeof async == 'undefined' || typeof async == 'string')
-	{
-		api.loading_prompt('et2_submit_spinner', true, api.lang(typeof async == 'string' ? async : 'Please wait...'));
-		async = true;
-	}
 	if(typeof no_validation == 'undefined')
 	{
 		no_validation = false;
@@ -760,6 +755,11 @@ etemplate2.prototype.submit = function(button, async, no_validation, _container)
 
 	if (canSubmit)
 	{
+		if (typeof async == 'undefined' || typeof async == 'string')
+		{
+			api.loading_prompt('et2_submit_spinner', true, api.lang(typeof async == 'string' ? async : 'Please wait...'));
+			async = true;
+		}
 		if (button) this._set_button(button, values);
 
 		// Create the request object
