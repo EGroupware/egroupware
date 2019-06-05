@@ -59,15 +59,16 @@ class UserAgent
 		$matches = $os_matches = null;
 		if (preg_match_all('#([^/]+)/([0-9.]+)( \([^)]+\))? ?#i', $user_agent, $matches) && count($matches) >= 4)
 		{
-			if (preg_match('/((Windows|Linux|Mac OS X)( NT)?) ([0-9._]+)/', $os=$matches[3][0], $os_matches))
+			if (preg_match('/((Windows|Linux|Mac OS X|iOS|Android)( NT)?) ([0-9._]+)?/', $os=$matches[3][0], $os_matches) ||
+				preg_match('/((Windows|Linux|Mac OS X|iOS|Android)( NT)?)\/([0-9._]+)?/', $os=$matches[0][0], $os_matches))
 			{
 				$os = $os_matches[1].' '.str_replace('_', '.', $os_matches[4]);
 			}
-			$browser = $matches[1][2] === 'Version' ? $matches[1][3] : $matches[1][2];
-			$browser_version = $matches[2][2];
-			return "$os\n$browser $browser_version";
+			$browser = $matches[1][2] === 'Version' ? $matches[1][3] : (!empty($matches[1][2]) ? $matches[1][2] : $matches[1][1]);
+			$browser_version = !empty($matches[2][2]) ? $matches[2][2] : $matches[2][1];
+			$user_agent = "$os\n$browser $browser_version";
 		}
-		return $user_agent;
+		return str_replace('/', ' ', $user_agent);
 	}
 
 	/**

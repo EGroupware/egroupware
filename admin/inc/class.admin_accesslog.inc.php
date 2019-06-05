@@ -120,6 +120,8 @@ class admin_accesslog
 			}
 			$row['sessionstatus'] = lang($row['sessionstatus']);
 			unset($row['session_php']);	// for security reasons, do NOT give real PHP sessionid to UI
+
+			$row['os_browser'] = Api\Header\UserAgent::osBrowser($row['user_agent']);
 		}
 		if ($query['session_list'])
 		{

@@ -41,7 +41,7 @@
 					<date-time id="${row}[lo]" readonly="true"/>
 					<date-duration id="${row}[total]" readonly="true" options=",hm,24"/>
 					<date-since id="${row}[session_dla]" readonly="true"/>
-					<description statustext="$row_cont[user_agent]" id="{$row}[user_agent]" class="admin_userAgent"/>
+					<description statustext="$row_cont[user_agent]" id="${row}[os_browser]" class="admin_userAgent"/>
 				</row>
 			</rows>
 		</grid>
