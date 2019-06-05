@@ -21,6 +21,9 @@
 
 namespace EGroupware\Api;
 
+use PragmaRX\Google2FA;
+use EGroupware\Api\Mail\Credentials;
+
 /**
  * Create, verifies or destroys an EGroupware session
  *
@@ -444,9 +447,10 @@ class Session
 	 * @param boolean $no_session =false dont create a real session, eg. for GroupDAV clients using only basic auth, no cookie support
 	 * @param boolean $auth_check =true if false, the user is loged in without checking his password (eg. for single sign on), default = true
 	 * @param boolean $fail_on_forced_password_change =false true: do NOT create session, if password change requested
+	 * @param string|boolean $check_2fa =false string: 2fa-code to check (only if exists) and fail if wrong, false: do NOT check 2fa
 	 * @return string|boolean session id or false if session was not created, $this->(cd_)reason contains cause
 	 */
-	function create($login,$passwd = '',$passwd_type = '',$no_session=false,$auth_check=true,$fail_on_forced_password_change=false)
+	function create($login,$passwd = '',$passwd_type = '',$no_session=false,$auth_check=true,$fail_on_forced_password_change=false,$check_2fa=false)
 	{
 		try {
 			if (is_array($login))
@@ -509,11 +513,7 @@ class Session
 				if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
 				return false;
 			}
-			if ($fail_on_forced_password_change && Auth::check_password_change($this->reason) === false)
-			{
-				$this->cd_reason = self::CD_FORCE_PASSWORD_CHANGE;
-				return false;
-			}
+
 			if (!$this->account_id && $GLOBALS['egw_info']['server']['auto_create_acct'])
 			{
 				if ($GLOBALS['egw_info']['server']['auto_create_acct'] == 'lowercase')
@@ -561,6 +561,31 @@ class Session
 			}
 
 			Cache::setSession('phpgwapi', 'password', base64_encode($this->passwd));
+
+			// if we have a second factor, check it before forced password change
+			if ($check_2fa !== false &&
+				($creds = Credentials::read(0, Credentials::TWOFA, $this->account_id)))
+			{
+				$google2fa = new Google2FA\Google2FA();
+				try {
+					if (!$google2fa->verify($check_2fa, $creds['2fa_password']))
+					{
+						throw new \Exception('Invalid 2-Factor Authentication code!');
+					}
+				}
+				catch(\Exception $e) {
+					$this->cd_reason = $this->reason = $e->getMessage();
+					$this->log_access($this->reason, $login, $user_ip, 0);	// log unsuccessfull login
+					if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check,$fail_on_forced_password_change,'$check_2fa') UNSUCCESSFULL ($this->reason)");
+					return false;
+				}
+			}
+
+			if ($fail_on_forced_password_change && Auth::check_password_change($this->reason) === false)
+			{
+				$this->cd_reason = self::CD_FORCE_PASSWORD_CHANGE;
+				return false;
+			}
 
 			if ($GLOBALS['egw']->acl->check('anonymous',1,'phpgwapi'))
 			{
