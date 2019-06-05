@@ -189,16 +189,16 @@ var et2_image = (function(){ "use strict"; return expose(et2_baseWidget.extend([
 
 		this.options.src = _value;
 
+		// allow url's too
+		if (_value[0] == '/' || _value.substr(0,4) == 'http' || _value.substr(0,5) == 'data:')
+		{
+			this.image.attr('src', _value).show();
+			return true;
+		}
 		var src = this.egw().image(_value);
 		if (src)
 		{
 			this.image.attr("src", src).show();
-			return true;
-		}
-		// allow url's too
-		else if (_value[0] == '/' || _value.substr(0,4) == 'http')
-		{
-			this.image.attr('src', _value).show();
 			return true;
 		}
 		src = null;
