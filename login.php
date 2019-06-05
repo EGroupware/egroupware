@@ -252,7 +252,7 @@ else
 			}
 		}
 		$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login, $passwd,
-			$passwd_type, false, true, true);	// true = let session fail on forced password change
+			$passwd_type, false, true, true, $_POST['2fa_code']);	// true = let session fail on forced password change
 
 		if (!$GLOBALS['sessionid'] && $GLOBALS['egw']->session->cd_reason == Api\Session::CD_FORCE_PASSWORD_CHANGE)
 		{

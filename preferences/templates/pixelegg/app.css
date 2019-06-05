@@ -103,6 +103,28 @@ textarea.prefValue {
 #preferences_settings_country_chzn {
   width: 49% !important;
 }
+/**
+ * 2FA setup
+ */
+.securityHeader {
+  margin-top: 1em;
+  font-size: 120%;
+}
+img.qrCode {
+  position: relative;
+  left: -14px;
+}
+.toptApp {
+  display: list-item !important;
+  list-style-type: disc;
+  list-style-position: inside;
+  white-space: nowrap;
+}
+.toptStatus {
+  margin-top: 1em;
+  font-style: italic;
+  font-size: 120%;
+}
 /* #############################################################################
 // iframe
 // Rahmen + padding**/

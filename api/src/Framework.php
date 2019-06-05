@@ -1164,9 +1164,9 @@ abstract class Framework extends Framework\Extra
 			$this->_add_topmenu_item(array(
 				'id'    => 'password',
 				'name'  => 'preferences',
-				'title' => lang('Password'),
+				'title' => lang('Security & Password'),
 				'url'   => "javascript:egw.open_link('".
-					self::link('/index.php?menuaction=preferences.preferences_password.change')."','_blank','400x270')",
+					self::link('/index.php?menuaction=preferences.preferences_password.change')."','_blank','850x580')",
 			));
 		}
 		/* disable help until content is reworked

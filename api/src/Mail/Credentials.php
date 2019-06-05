@@ -63,9 +63,13 @@ class Credentials
 	 */
 	const SMIME = 16;
 	/**
-	 * All credentials IMAP|SMTP|ADMIN|SMIME
+	 * Two factor auth secret key
 	 */
-	const ALL = 27;
+	const TWOFA = 32;
+	/**
+	 * All credentials
+	 */
+	const ALL = self::IMAP|self::SMTP|self::ADMIN|self::SMIME|self::TWOFA;
 
 	/**
 	 * Password in cleartext
@@ -113,6 +117,7 @@ class Credentials
 		self::SMTP => 'acc_smtp_',
 		self::ADMIN => 'acc_imap_admin_',
 		self::SMIME => 'acc_smime_',
+		self::TWOFA => '2fa_',
 	);
 
 	/**

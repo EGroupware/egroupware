@@ -50,6 +50,27 @@ class UserAgent
 	}
 
 	/**
+	 * Convert user-agent string to OS and Browser
+	 *
+	 * @param string $user_agent =null
+	 */
+	public static function osBrowser($user_agent=null)
+	{
+		$matches = $os_matches = null;
+		if (preg_match_all('#([^/]+)/([0-9.]+)( \([^)]+\))? ?#i', $user_agent, $matches) && count($matches) >= 4)
+		{
+			if (preg_match('/((Windows|Linux|Mac OS X)( NT)?) ([0-9._]+)/', $os=$matches[3][0], $os_matches))
+			{
+				$os = $os_matches[1].' '.str_replace('_', '.', $os_matches[4]);
+			}
+			$browser = $matches[1][2] === 'Version' ? $matches[1][3] : $matches[1][2];
+			$browser_version = $matches[2][2];
+			return "$os\n$browser $browser_version";
+		}
+		return $user_agent;
+	}
+
+	/**
 	 * user-agent: 'firefox', 'msie', 'edge', 'safari' (incl. iPhone), 'chrome', 'opera', 'konqueror', 'mozilla'
 	 *
 	 * @var string

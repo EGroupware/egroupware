@@ -87,7 +87,8 @@
 		"egroupware/activesync": "self.version",
 		"egroupware/adodb-php": "self.version",
 		"bower-asset/diff2html": "^2.7",
-		"tinymce/tinymce": "^5.0"
+		"tinymce/tinymce": "^5.0",
+		"pragmarx/google2fa-qrcode": "^1.0"
 	},
 	"require-dev": {
 	},

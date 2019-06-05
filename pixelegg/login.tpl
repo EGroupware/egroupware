@@ -40,6 +40,12 @@
 						<input name="passwd" tabindex="5" value="{passwd}" type="password" size="30" placeholder="{lang_password}"/>
 					</td>
                 </tr>
+				<tr>
+					<td>
+						<span class="field_icons password"></span>
+						<input name="2fa_code" tabindex="6" size="30" placeholder="{lang_2fa}" title="{lang_2fa_help}"/>
+					</td>
+				</tr>
 				<!-- BEGIN remember_me_selection -->
                 <tr>
                     <td>
@@ -68,19 +74,19 @@
                  <tr>
                     <td>
 						<span class="field_icons password"></span>
-						<input name="new_passwd" tabindex="6" type="password" size="30" placeholder="{lang_new_password}" {autofocus_new_passwd}/>
+						<input name="new_passwd" tabindex="7" type="password" size="30" placeholder="{lang_new_password}" {autofocus_new_passwd}/>
 					</td>
                 </tr>
                 <tr>
                     <td>
 						<span class="field_icons password"></span>
-						<input name="new_passwd2" tabindex="7" type="password" placeholder="{lang_repeat_password}" size="30" />
+						<input name="new_passwd2" tabindex="8" type="password" placeholder="{lang_repeat_password}" size="30" />
 					</td>
                 </tr>
                <!-- END change_password -->
                 <tr>
                     <td>
-                        <input tabindex="8" type="submit" value="  {lang_login}  " name="submitit" />
+                        <input tabindex="9" type="submit" value="  {lang_login}  " name="submitit" />
                     </td>
                 </tr>
 

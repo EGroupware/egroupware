@@ -67,6 +67,9 @@ class Login
 			$tmpl->set_block('login_form','change_password');
 			$tmpl->set_var('change_password', '');
 			$tmpl->set_var('lang_password',lang('password'));
+			$tmpl->set_var('lang_2fa',lang('2-Factor-Authentication'));
+			$tmpl->set_var('lang_2fa_help', htmlspecialchars(
+				lang('If you use "2-Factor-Authentication", please enter the code here.')));
 
 			// display login-message depending on $_GET[cd] and what's in database/header for "login_message"
 			$cd_msg = self::check_logoutcode($_GET['cd']);
