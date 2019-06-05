@@ -94,8 +94,11 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 		this.editor = null; // TinyMce editor instance
 		this.supportedWidgetClasses = []; // Allow no child widgets
 		this.htmlNode = jQuery(document.createElement(this.options.readonly ? "div" : "textarea"))
-			.css('height', this.options.height)
 			.addClass('et2_textbox_ro');
+		if(this.options.height)
+		{
+			this.htmlNode.css('height', this.options.height);
+		}
 		this.setDOMNode(this.htmlNode[0]);
 	},
 
