@@ -441,7 +441,7 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 1)?
 how should email addresses for new users be constructed?	admin	de	In welchem Format sollen E-Mail-Adressen von neuen Benutzern erzeugt werden?
 how username get constructed	admin	de	Wie wird der Benutzername gebildet
-icon	admin	de	Icon
+icon	admin	de	Symbol
 identity deleted	admin	de	Identität gelöscht.
 identity saved.	admin	de	Identität gespeichert.
 idle	admin	de	im Leerlauf
