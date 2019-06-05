@@ -367,7 +367,7 @@ class calendar_so
 		$cols .= ',range_end-1 AS recur_enddate';
 
 		// sort deleted to the end, to prefer non-deleted events over deleted ones when querying by uid
-		$group_by .= ' ORDER BY cal_deleted IS NOT NULL,egw_cal.cal_id DESC';
+		$group_by .= ' ORDER BY cal_deleted IS NOT NULL,' . $this->db->to_varchar($this->cal_table.'.cal_id') . ' DESC';
 
 		$events =& $this->get_events($this->db->select($this->cal_table, $cols, $where, __LINE__, __FILE__, false, $group_by, 'calendar', 0, $join), $recur_date);
 
