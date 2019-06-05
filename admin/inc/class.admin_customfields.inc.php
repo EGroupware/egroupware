@@ -271,8 +271,9 @@ class admin_customfields
 		$readonlys = null;
 		static::app_index($content, $sel_options, $readonlys, $preserve);
 
-		// Make sure app css gets loaded, extending app might cause et2 to miss it
+		// Make sure app css & lang get loaded, extending app might cause et2 to miss it
 		Framework::includeCSS('admin','app');
+		translation::add_app('admin');
 
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
 
