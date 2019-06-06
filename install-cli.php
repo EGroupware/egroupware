@@ -8,7 +8,7 @@
  * - install-cli.php [-v|--verbose] [--use-prerelease] [<composer-args>] [(master|bugfix|release|<branch>|<tag>)]
  *   you can use composer install arguments like: --ignore-platform-reqs --no-dev
  *
- * - install-cli.php --git(-apps) <arguments>
+ * - install-cli.php [-c|--continue-on-error] --git(-apps) <arguments>
  *   runs git with given arguments (in main- and) all app-dirs, e.g. tag -a 17.1.20190214 -m 'tagging release'
  *
  * EGroupware main directory should be either git cloned:
@@ -50,7 +50,7 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling setup-cli 
 error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 
 // parse arguments
-$verbose = $use_prerelease = $run_git = false;
+$verbose = $use_prerelease = $run_git = $continue_on_error = false;
 $composer_args = [];
 
 $argv = $_SERVER['argv'];
@@ -83,6 +83,12 @@ foreach($argv as $n => $arg)
 				unset($argv[$n]);
 				break 2;	// no further argument processing, as they are for git
 
+			case '-c':
+			case '--continue-on-error':
+				$continue_on_error = true;
+				unset($argv[$n]);
+				break;
+
 			default:	// pass unknown arguments to composer install
 				$composer_args[] = $arg;
 				unset($argv[$n]);
@@ -103,7 +109,7 @@ function usage($err=null)
 	}
 	die("Usage:\t$cmd [-v|--verbose] [--use-prerelease] [<composer-args>] (master|bugfix|release|<branch>|<tag>)\n".
 		"\t\nyou can use composer install arguments like: --ignore-platform-reqs --no-dev\n".
-		"\t$cmd --git(-apps) <arguments>\n".
+		"\t$cmd [-c|--continue-on-error] --git(-apps) <arguments>\n".
 		"\truns git with given arguments (in main- and) all app-dirs, e.g. tag -a 17.1.20190214 -m 'tagging release'\n\n");
 }
 
@@ -224,6 +230,12 @@ else
 	}
 }
 
+// a branch update requires a composer install with --prefer-source
+if (count(explode('.', $target)) < 2)
+{
+	$composer_args[] = '--prefer-source';
+}
+
 echo "Updating to: $target\n";
 
 // Update EGroupware itself and further apps installed via git
@@ -311,7 +323,7 @@ function run_cmd($cmd, $name)
  */
 function run_git(array $argv, $main_too=true)
 {
-	global $git;
+	global $git, $continue_on_error;
 
 	$git_cmd = $git.' '.implode(' ', array_map('escapeshellarg', $argv));
 
@@ -325,8 +337,8 @@ function run_git(array $argv, $main_too=true)
 
 			error_log("\n>>> ".$cmd."\n");
 			system($cmd, $ret);
-			// break if command is not successful
-			if ($ret) return $ret;
+			// break if command is not successful, unless --continue-on-error
+			if ($ret && !$continue_on_error) return $ret;
 		}
 	}
 	return $ret;
