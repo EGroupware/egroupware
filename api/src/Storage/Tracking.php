@@ -463,7 +463,18 @@ abstract class Tracking
 					$this->historylog->needs_diff ($name, $data[$name]) || $this->historylog->needs_diff ($name, $old[$name])))
 			{
 				// Multiline string, just store diff
-				$diff = new \Horde_Text_Diff('auto', array(explode("\n",$old[$name]), explode("\n",$data[$name])));
+				// Strip HTML first though
+				$old_text = Api\Mail\Html::convertHTMLToText($old[$name]);
+				$new_text = Api\Mail\Html::convertHTMLToText($data[$name]);
+
+				// If only change was something in HTML, show the HTML
+				if(trim($old_text) === trim($new_text))
+				{
+					$old_text = $old[$name];
+					$new_text = $data[$name];
+				}
+
+				$diff = new \Horde_Text_Diff('auto', array(explode("\n",$old_text), explode("\n",$new_text)));
 				$renderer = new \Horde_Text_Diff_Renderer_Unified();
 				$this->historylog->add(
 					$status,
