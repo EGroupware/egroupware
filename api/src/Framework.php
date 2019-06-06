@@ -639,7 +639,7 @@ abstract class Framework extends Framework\Extra
 		return '<span title="'.Accounts::format_username().'" class="avatar"><img src="'.Egw::link('/api/avatar.php', array(
 								'account_id' => $GLOBALS['egw_info']['user']['account_id'],
 							)).'"/>'.(!empty($stat) ?
-				'<span class="'.$stat['class'].'">'.$stat['body'].'</span>' : '').'</span>';
+				'<span class="fw_avatar_stat '.$stat['class'].'">'.$stat['body'].'</span>' : '').'</span>';
 	}
 
 	/**
