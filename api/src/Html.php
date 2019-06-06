@@ -47,7 +47,7 @@ class Html
 		//  First match things beginning with http:// (or other protocols)
 		$optBracket0 = '(<|&lt;)';
 		$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';	// only http:// gets removed, other protocolls are shown
-		$Domain = '([\w-]+\.[\w-.]+)';
+		$Domain = '([\w-]+\.[\w\-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$optBracket = '(>|&gt;)';
 		$Expr = '/' .$optBracket0. $NotAnchor . $Protocol . $Domain . $Subdir . $optBracket . '/i';
