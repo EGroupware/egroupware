@@ -50,10 +50,12 @@
 					<td align="right">{lang_password}:&nbsp;</td>
 					<td><input name="passwd" tabindex="5" value="{passwd}" type="password" size="30" /></td>
 				</tr>
-				<tr>
+<!-- BEGIN 2fa_section -->
+				<tr class="{2fa_class}">
 					<td align="right">{lang_2fa}:&nbsp;</td>
 					<td><input name="2fa_code" tabindex="6" size="30" title="{lang_2fa_help}"/></td>
 				</tr>
+<!-- END 2fa_section -->
                <!-- BEGIN change_password -->
                  <tr>
                     <td align="right">{lang_new_password}:&nbsp;</td>

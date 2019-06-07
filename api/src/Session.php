@@ -167,6 +167,7 @@ class Session
 	 */
 	var $cd_reason;
 	const CD_BAD_LOGIN_OR_PASSWORD = 5;
+	const CD_SECOND_FACTOR_REQUIRED = 96;
 	const CD_FORCE_PASSWORD_CHANGE = 97;
 	const CD_ACCOUNT_EXPIRED = 98;
 	const CD_BLOCKED = 99;	// to many failed attempts to loing
@@ -564,17 +565,26 @@ class Session
 
 			// if we have a second factor, check it before forced password change
 			if ($check_2fa !== false &&
-				($creds = Credentials::read(0, Credentials::TWOFA, $this->account_id)))
+				$GLOBALS['egw_info']['server']['2fa_required'] !== 'disabled' &&
+				(($creds = Credentials::read(0, Credentials::TWOFA, $this->account_id)) ||
+					$GLOBALS['egw_info']['server']['2fa_required'] === 'strict'))
 			{
 				$google2fa = new Google2FA\Google2FA();
 				try {
+					if (empty($check_2fa) || empty($creds))
+					{
+						throw new \Exception(Framework\Login::check_logoutcode(self::CD_SECOND_FACTOR_REQUIRED), self::CD_SECOND_FACTOR_REQUIRED);
+					}
 					if (!$google2fa->verify($check_2fa, $creds['2fa_password']))
 					{
-						throw new \Exception('Invalid 2-Factor Authentication code!');
+						// we log the missing factor, but externally only show "Bad Login or Password"
+						// to give no indication that the password was already correct
+						throw new \Exception('Invalid 2-Factor Authentication code', self::CD_BAD_LOGIN_OR_PASSWORD);
 					}
 				}
 				catch(\Exception $e) {
-					$this->cd_reason = $this->reason = $e->getMessage();
+					$this->cd_reason = $e->getCode();
+					$this->reason = $e->getMessage();
 					$this->log_access($this->reason, $login, $user_ip, 0);	// log unsuccessfull login
 					if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check,$fail_on_forced_password_change,'$check_2fa') UNSUCCESSFULL ($this->reason)");
 					return false;

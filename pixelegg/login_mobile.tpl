@@ -43,12 +43,14 @@
 						<input name="passwd" tabindex="5" value="{passwd}" type="password" size="30" placeholder="{lang_password}"/>
 					</td>
                 </tr>
-				<tr>
+				<!-- BEGIN 2fa_section -->
+				<tr class="{2fa_class}">
 					<td>
 						<span class="field_icons password"></span>
 						<input name="2fa_code" tabindex="6" size="30" placeholder="{lang_2fa}" title="{lang_2fa_help}"/>
 					</td>
 				</tr>
+				<!-- END 2fa_section -->
 				<!-- BEGIN remember_me_selection -->
                  <tr>
                     <td>

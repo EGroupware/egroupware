@@ -7,7 +7,6 @@
  * @package admin
  * @copyright (c) 2012-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -41,7 +40,7 @@ class admin_cmd_check_cats extends admin_cmd
 
 		admin_cmd::_instanciate_accounts();
 
-		return lang("%1 Api\Categories of not (longer) existing Api\Accounts deleted.", Api\Categories::delete_orphans());
+		return lang("%1 categories of not (longer) existing accounts deleted.", Api\Categories::delete_orphans());
 	}
 
 	/**
@@ -51,6 +50,6 @@ class admin_cmd_check_cats extends admin_cmd
 	 */
 	function __tostring()
 	{
-		return lang('Check Api\Categories for not (longer) existing accounts');
+		return lang('Check categories for not (longer) existing accounts');
 	}
 }

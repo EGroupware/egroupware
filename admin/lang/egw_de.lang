@@ -24,6 +24,7 @@
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 -  type	admin	de	-Typ
+2-factor-authentication for interactive login	admin	de	2-Faktor-Authentifizierung für interaktive Anmeldung
 access by	admin	de	Zugriff durch
 access control	admin	de	Zugriffsrechte
 access to %1 data by others	admin	de	Zugriffsrechte %1 durch andere
@@ -279,6 +280,7 @@ disable minifying of javascript and css files	admin	de	Komprimierung von Javascr
 disable pgp encryption (mailvelope)	admin	de	PGP-Verschlüsselung deaktivieren (Mailvelope)
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
+disabled, do not show on login page	admin	de	ausgeschaltet, wird auf der Login-Seite nicht angezeigt
 display	admin	de	anzeigen
 displayed length of input field (set rows=1 to limit length)	admin	de	angezeigte Länge des Eingabefelds (setze Zeilen=1 um die Eingabe zu beschränken)
 displaying html messages is disabled	admin	de	Das Anzeigen von HTML Nachrichten ist deaktiviert
@@ -719,6 +721,8 @@ should exceptions contain a trace (including function arguments)	admin	de	Sollen
 should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl beinhalten?
 show 'powered by' logo on	admin	de	Zeige "powered by" Logo
 show access log	admin	de	Zugangsprotokoll anzeigen
+show as optional, but required once user has it setup	admin	de	als optional anzeigen, aber erforderlich wenn der Benutzer sie eingerichtet hat
+show as required, but only once user has it setup	admin	de	als benötigt anzeigen, aber nur benötigt, wenn Benutzer sie eingerichtet hat
 show current action	admin	de	aktuelle Aktion anzeigen
 show error log	admin	de	Fehlerprotokoll anzeigen
 show members	admin	de	Mitglieder dieser Gruppe anzeigen
@@ -753,6 +757,7 @@ start	admin	de	Start
 start testjob!	admin	de	Testjob starten!
 starts with	admin	de	startet mit
 stationery	admin	de	Briefpapier
+strictly required, user can not login without	admin	de	unbedingt benötigt, Benutzer können sich ohne nicht mehr anmelden
 submit changes	admin	de	Änderungen speichern
 submit displayed information?	admin	de	Angezeigte Informationen übertragen?
 submit statistic information	admin	de	Statistische Informationen übertragen

@@ -188,6 +188,12 @@ class preferences_password
 			$readonlys['tabs']['tokens'] = true;
 		}
 
+		// disable 2FA tab, if admin disabled it
+		if ($GLOBALS['egw_info']['server']['2fa_required'] === 'disabled')
+		{
+			$readonlys['tabs']['two_factor_auth'] = true;
+		}
+
 		$tmpl->exec('preferences.preferences_password.change', $content, $sel_options, $readonlys, [
 			'2fa' => $content['2fa']+[
 				'secret_key' => $secret_key,

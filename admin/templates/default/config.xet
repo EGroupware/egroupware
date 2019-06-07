@@ -157,6 +157,15 @@
 			</columns>
 			<rows>
 				<row>
+					<description value="2-Factor-Authentication for interactive login" label="%s:"/>
+					<select id="newsettings[2fa_required]">
+						<option value="">show as optional, but required once user has it setup</option>
+						<option value="required">show as required, but only once user has it setup</option>
+						<option value="strict">strictly required, user can not login without</option>
+						<option value="disabled">disabled, do not show on login page</option>
+					</select>
+				</row>
+				<row>
 					<description value="Cookie path (allows multiple eGW sessions with different directories, has problemes with SiteMgr!)" label="%s:"/>
 					<select id="newsettings[cookiepath]">
 						<option value="">Document root (default)</option>

@@ -61,15 +61,30 @@ class Login
 
 		$tmpl->set_var('lang_message',$GLOBALS['loginscreenmessage']);
 
+		// did admin disable 2FA
+		if ($GLOBALS['egw_info']['server']['2fa_required'] === 'disabled')
+		{
+			$tmpl->set_block('login_form','2fa_section');
+			$tmpl->set_var('2fa_section', '');
+		}
+		else
+		{
+			$tmpl->set_var('lang_2fa',lang('2-Factor-Authentication'));
+			$tmpl->set_var('lang_2fa_help', htmlspecialchars(
+				lang('If you use "2-Factor-Authentication", please enter the code here.')));
+
+			if (in_array($GLOBALS['egw_info']['server']['2fa_required'], ['required', 'strict']) ||
+				$_GET['cd'] == Api\Session::CD_SECOND_FACTOR_REQUIRED)
+			{
+				$tmpl->set_var('2fa_class', 'et2_required');
+			}
+		}
 		// hide change-password fields, if not requested
 		if (!$change_passwd)
 		{
 			$tmpl->set_block('login_form','change_password');
 			$tmpl->set_var('change_password', '');
 			$tmpl->set_var('lang_password',lang('password'));
-			$tmpl->set_var('lang_2fa',lang('2-Factor-Authentication'));
-			$tmpl->set_var('lang_2fa_help', htmlspecialchars(
-				lang('If you use "2-Factor-Authentication", please enter the code here.')));
 
 			// display login-message depending on $_GET[cd] and what's in database/header for "login_message"
 			$cd_msg = self::check_logoutcode($_GET['cd']);
@@ -321,6 +336,8 @@ class Login
 				return lang('Account is expired');
 			case Api\Session::CD_BLOCKED:
 				return lang('Blocked, too many attempts');
+			case Api\Session::CD_SECOND_FACTOR_REQUIRED:
+				return lang('2-Factor-Authentication required');
 			case 10:
 				$GLOBALS['egw']->session->egw_setcookie('sessionid');
 				$GLOBALS['egw']->session->egw_setcookie('kp3');
