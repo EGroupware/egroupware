@@ -47,7 +47,7 @@ class Html
 		//  First match things beginning with http:// (or other protocols)
 		$optBracket0 = '(<|&lt;)';
 		$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';	// only http:// gets removed, other protocolls are shown
-		$Domain = '([\w-]+\.[\w\-.]+)';
+		$Domain = '([\w\-]+\.[\w\-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$optBracket = '(>|&gt;)';
 		$Expr = '/' .$optBracket0. $NotAnchor . $Protocol . $Domain . $Subdir . $optBracket . '/i';
@@ -61,7 +61,7 @@ class Html
 		{
 			//  First match things beginning with http:// (or other protocols)
 			$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';	// only http:// gets removed, other protocolls are shown
-			$Domain = '([\w-]+\.[\w-.]+)';
+			$Domain = '([\w\-]+\.[\w\-.]+)';
 			$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 			$optStuff = '(&quot;|&quot|;)?';
 			$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . $optStuff . '/i';
@@ -92,7 +92,7 @@ class Html
 			//  Now match things beginning with www.
 			$optBracket0 = '(<|&lt;)?';
 			$NotHTTP = '(?<!:\/\/|" target=\"_blank\">)';	//	avoid running again on http://www links already handled above
-			$Domain2 = 'www(\.[\w-.]+)';
+			$Domain2 = 'www(\.[\w\-.]+)';
 			$Subdir2 = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 			$optBracket = '(>|&gt;|&gt|;)?';
 			$Expr = '/' .$optBracket0. $NotAnchor . $NotHTTP . $Domain2 . $Subdir2 .$optBracket. '/i';
