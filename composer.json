@@ -83,7 +83,7 @@
 		"egroupware/collabora": "self.version",
 		"egroupware/projectmanager": "self.version",
 		"egroupware/tracker": "self.version",
-		"egroupware/z-push-dev": "self.version",
+		"egroupware/z-push-dev": "^2.5",
 		"egroupware/activesync": "self.version",
 		"egroupware/adodb-php": "self.version",
 		"bower-asset/diff2html": "^2.7",

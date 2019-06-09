@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61dbe936707f756396f1c438b9bfa02b",
+    "content-hash": "21277127f2eabbba2c229974ab67a6ee",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -165,16 +165,16 @@
         },
         {
             "name": "bower-asset/diff2html",
-            "version": "v2.7.0",
+            "version": "v2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rtfpessoa/diff2html.git",
-                "reference": "2512e72f32b709a3dc0615a2d5b32183dd0b3b6a"
+                "reference": "4c15a9ca93e50c78f8d02e37273076994888d499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rtfpessoa/diff2html/zipball/2512e72f32b709a3dc0615a2d5b32183dd0b3b6a",
-                "reference": "2512e72f32b709a3dc0615a2d5b32183dd0b3b6a",
+                "url": "https://api.github.com/repos/rtfpessoa/diff2html/zipball/4c15a9ca93e50c78f8d02e37273076994888d499",
+                "reference": "4c15a9ca93e50c78f8d02e37273076994888d499",
                 "shasum": ""
             },
             "type": "bower-asset-library"
@@ -553,17 +553,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
-                "reference": "fdd13f949319a7197ce751310d8a65ca3eacf01e"
+                "reference": "4f07a3d5999f377f94b6ecc95c076d964e25730c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/fdd13f949319a7197ce751310d8a65ca3eacf01e",
-                "reference": "fdd13f949319a7197ce751310d8a65ca3eacf01e",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/4f07a3d5999f377f94b6ecc95c076d964e25730c",
+                "reference": "4f07a3d5999f377f94b6ecc95c076d964e25730c",
                 "shasum": ""
             },
             "require": {
                 "egroupware/egroupware": "self.version",
-                "egroupware/z-push-dev": "self.version"
+                "egroupware/z-push-dev": "^2.5"
             },
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
@@ -586,7 +586,7 @@
             ],
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-02-11T20:00:06+00:00"
+            "time": "2019-06-09T12:29:59+00:00"
         },
         {
             "name": "egroupware/adodb-php",
@@ -648,12 +648,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "a60471241919dee913e914dd6268655d513b7f4c"
+                "reference": "d1a55f51bf812ae9ec6418b58782f2520ea038a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/a60471241919dee913e914dd6268655d513b7f4c",
-                "reference": "a60471241919dee913e914dd6268655d513b7f4c",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/d1a55f51bf812ae9ec6418b58782f2520ea038a6",
+                "reference": "d1a55f51bf812ae9ec6418b58782f2520ea038a6",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +680,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-02-11T15:45:44+00:00"
+            "time": "2019-06-05T16:41:55+00:00"
         },
         {
             "name": "egroupware/icalendar",
@@ -786,12 +786,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "efdc86567e95f26bdfa368fa2b3f67a408ccc723"
+                "reference": "3b5aeff83edb2ab1b892a2be0669f4a5f43bbadd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/efdc86567e95f26bdfa368fa2b3f67a408ccc723",
-                "reference": "efdc86567e95f26bdfa368fa2b3f67a408ccc723",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/3b5aeff83edb2ab1b892a2be0669f4a5f43bbadd",
+                "reference": "3b5aeff83edb2ab1b892a2be0669f4a5f43bbadd",
                 "shasum": ""
             },
             "require": {
@@ -818,7 +818,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-02-11T17:06:23+00:00"
+            "time": "2019-06-06T07:24:29+00:00"
         },
         {
             "name": "egroupware/tracker",
@@ -826,12 +826,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "832bd24336470e674a840293df03a6b614f0f5cc"
+                "reference": "37d1c9d8a5cfc9d126b11dfd87bdf50fcb0013d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/832bd24336470e674a840293df03a6b614f0f5cc",
-                "reference": "832bd24336470e674a840293df03a6b614f0f5cc",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/37d1c9d8a5cfc9d126b11dfd87bdf50fcb0013d0",
+                "reference": "37d1c9d8a5cfc9d126b11dfd87bdf50fcb0013d0",
                 "shasum": ""
             },
             "require": {
@@ -858,49 +858,46 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-02-11T17:08:08+00:00"
+            "time": "2019-06-06T07:24:29+00:00"
         },
         {
             "name": "egroupware/z-push-dev",
-            "version": "dev-master",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/z-push.git",
-                "reference": "d7d88a13dcba4af4f8d494d8a62c653c3a53829a"
+                "reference": "2c7d40e0322ac3a0b6da9832730ae3986a30f112"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/z-push/zipball/d7d88a13dcba4af4f8d494d8a62c653c3a53829a",
-                "reference": "d7d88a13dcba4af4f8d494d8a62c653c3a53829a",
+                "url": "https://api.github.com/repos/EGroupware/z-push/zipball/2c7d40e0322ac3a0b6da9832730ae3986a30f112",
+                "reference": "2c7d40e0322ac3a0b6da9832730ae3986a30f112",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
             },
             "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "AGPL-3.0"
             ],
             "description": "Z-Push is an open-source application to synchronize ActiveSync compatible devices",
             "homepage": "http://z-push.org/",
-            "support": {
-                "source": "https://github.com/EGroupware/z-push/tree/master",
-                "issues": "https://github.com/EGroupware/z-push/issues"
-            },
-            "time": "2019-02-11T19:26:21+00:00"
+            "time": "2015-09-02T00:00:00+00:00"
         },
         {
             "name": "fxp/composer-asset-plugin",
-            "version": "v1.4.4",
+            "version": "v1.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fxpio/composer-asset-plugin.git",
-                "reference": "0d07328eef6e6f3753aa835fd2faef7fed1717bf"
+                "reference": "6d5cfd0a4f4c3e167d2048eb8f5347309a6bbe10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fxpio/composer-asset-plugin/zipball/0d07328eef6e6f3753aa835fd2faef7fed1717bf",
-                "reference": "0d07328eef6e6f3753aa835fd2faef7fed1717bf",
+                "url": "https://api.github.com/repos/fxpio/composer-asset-plugin/zipball/6d5cfd0a4f4c3e167d2048eb8f5347309a6bbe10",
+                "reference": "6d5cfd0a4f4c3e167d2048eb8f5347309a6bbe10",
                 "shasum": ""
             },
             "require": {
@@ -946,7 +943,7 @@
                 "npm",
                 "package"
             ],
-            "time": "2018-07-02T11:37:17+00:00"
+            "time": "2019-05-01T11:47:39+00:00"
         },
         {
             "name": "npm-asset/as-jqplot",
@@ -1442,10 +1439,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Imap_Client",
-            "version": "2.29.16",
+            "version": "2.29.17",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.16.tgz",
+                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.17.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -1464,7 +1461,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_imap_client": "== 2.29.16.0"
+                "pear-horde/horde_imap_client": "== 2.29.17.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1514,10 +1511,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Mail",
-            "version": "2.6.4",
+            "version": "2.6.5",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mail-2.6.4.tgz",
+                "url": "https://pear.horde.org/get/Horde_Mail-2.6.5.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -1531,7 +1528,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_mail": "== 2.6.4.0"
+                "pear-horde/horde_mail": "== 2.6.5.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1581,10 +1578,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Mapi",
-            "version": "1.0.9",
+            "version": "1.0.10",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mapi-1.0.9.tgz",
+                "url": "https://pear.horde.org/get/Horde_Mapi-1.0.10.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -1595,7 +1592,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_mapi": "== 1.0.9.0"
+                "pear-horde/horde_mapi": "== 1.0.10.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -2050,16 +2047,16 @@
         },
         {
             "name": "pear/archive_tar",
-            "version": "1.4.6",
+            "version": "1.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/Archive_Tar.git",
-                "reference": "b8e33f9063a7cd1d20f079014f8382b3a7aee47e"
+                "reference": "7e48add6f8edc3027dd98ad15964b1a28fd0c845"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/b8e33f9063a7cd1d20f079014f8382b3a7aee47e",
-                "reference": "b8e33f9063a7cd1d20f079014f8382b3a7aee47e",
+                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/7e48add6f8edc3027dd98ad15964b1a28fd0c845",
+                "reference": "7e48add6f8edc3027dd98ad15964b1a28fd0c845",
                 "shasum": ""
             },
             "require": {
@@ -2112,7 +2109,7 @@
                 "archive",
                 "tar"
             ],
-            "time": "2019-02-01T11:10:38+00:00"
+            "time": "2019-04-08T13:15:55+00:00"
         },
         {
             "name": "pear/auth_sasl",
@@ -2269,16 +2266,16 @@
         },
         {
             "name": "pear/pear",
-            "version": "v1.10.8",
+            "version": "v1.10.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/pear-core.git",
-                "reference": "f287dd85d11d7336489d7d742c6452922f39340f"
+                "reference": "82be5c2eed1dde9def0a84cc3420778b8b0ab9b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/pear-core/zipball/f287dd85d11d7336489d7d742c6452922f39340f",
-                "reference": "f287dd85d11d7336489d7d742c6452922f39340f",
+                "url": "https://api.github.com/repos/pear/pear-core/zipball/82be5c2eed1dde9def0a84cc3420778b8b0ab9b8",
+                "reference": "82be5c2eed1dde9def0a84cc3420778b8b0ab9b8",
                 "shasum": ""
             },
             "require": {
@@ -2360,7 +2357,7 @@
                 }
             ],
             "description": "This is the definitive source of PEAR's core files.",
-            "time": "2019-02-07T18:59:54+00:00"
+            "time": "2019-03-13T17:59:48+00:00"
         },
         {
             "name": "pear/pear_exception",
@@ -2780,16 +2777,16 @@
         },
         {
             "name": "tinymce/tinymce",
-            "version": "5.0.3",
+            "version": "5.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "0d275010c122a955b14ff5ed5d9e4ebff058e677"
+                "reference": "0ae953e05a2d2bfdf4a35a9ad8eaf6df0f875393"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/0d275010c122a955b14ff5ed5d9e4ebff058e677",
-                "reference": "0d275010c122a955b14ff5ed5d9e4ebff058e677",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/0ae953e05a2d2bfdf4a35a9ad8eaf6df0f875393",
+                "reference": "0ae953e05a2d2bfdf4a35a9ad8eaf6df0f875393",
                 "shasum": ""
             },
             "type": "component",
@@ -2822,7 +2819,7 @@
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2019-03-19T05:27:15+00:00"
+            "time": "2019-06-05T06:30:54+00:00"
         }
     ],
     "packages-dev": [],
@@ -2832,7 +2829,6 @@
         "egroupware/collabora": 20,
         "egroupware/projectmanager": 20,
         "egroupware/tracker": 20,
-        "egroupware/z-push-dev": 20,
         "egroupware/activesync": 20,
         "egroupware/adodb-php": 20
     },
