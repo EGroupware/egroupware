@@ -88,6 +88,11 @@ class Sharing extends \EGroupware\Api\Sharing
 			$documents['order'] = 20;
 
 			// Mail only
+			if ($documents['children']['message/rfc822'])
+			{
+				// Just email already filtered out
+				$documents['children'] = $documents['children']['message/rfc822']['children'];
+			}
 			foreach($documents['children'] as $key => &$document)
 			{
 				if(strpos($document['target'],'compose_') === FALSE)

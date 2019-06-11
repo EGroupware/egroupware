@@ -287,11 +287,6 @@ class Merge extends Api\Storage\Merge
 
 	protected static function customise_mail_actions(&$action)
 	{
-		if ($action['children']['message/rfc822'])
-		{
-			// Just email already filtered out
-			$action['children'] = $action['children']['message/rfc822']['children'];
-		}
 		if(strpos($action['egw_open'], 'edit-mail') === 0)
 		{
 			unset($action['confirm_multiple']);
