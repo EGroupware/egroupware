@@ -3992,6 +3992,7 @@ td.message span.message {
   padding-left: 26px;
   line-height: 1.5em;
   display: inline-block;
+  width: 100%;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
   text-decoration: none !important;
