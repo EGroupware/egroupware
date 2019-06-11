@@ -1126,11 +1126,13 @@ abstract class admin_cmd
 		// instanciate single periodic execution object
 		$single = $cmd->as_array();
 		$single['parent'] = $single['id'];
-		unset($single['id'], $single['uid'], $single['rrule'], $single['created'],
-				$single['modified'], $single['modifier'],
-		//		$single['set'], $single['old'],
-				$single['async_job_id']
-		);
+		$single = array_diff_key($single, array(
+			'id','uid',
+			'created','modified','modifier',
+			'async_job_id','rrule','scheduled',
+			'status', 'set', 'old'
+		));
+
 		$periodic = admin_cmd::instanciate($single);
 
 		try {
