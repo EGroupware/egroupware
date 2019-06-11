@@ -4889,9 +4889,6 @@ td.message span.message {
 #egw_fw_topmenu_info_items .topmenu_info_item:hover {
   background-color: rgba(153, 204, 255, 0.4);
 }
-#egw_fw_topmenu_info_items #topmenu_info_user_avatar {
-  position: relative;
-}
 #egw_fw_topmenu_info_items #topmenu_info_user_avatar span {
   height: 40px;
   width: 40px;
@@ -4909,7 +4906,7 @@ td.message span.message {
   width: 14px;
   height: 14px;
   position: absolute;
-  left: 0px;
+  right: 30px;
   bottom: 0px;
   border-radius: 50%;
   z-index: 100000;
