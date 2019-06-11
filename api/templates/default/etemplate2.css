@@ -1098,6 +1098,9 @@ div.et2_vfsPath li img {
   padding: 5px;
   overflow-y: auto;
 }
+.et2_tabcntr {
+	height: inherit;
+}
 .et2_tabflag.active {
   border-bottom: 1px solid white;
   background-color: white;
