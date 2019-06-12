@@ -1535,7 +1535,7 @@ class Contacts extends Contacts\Storage
 	function link_titles(array $ids)
 	{
 		$titles = array();
-		if (($contacts =& $this->search(array('contact_id' => $ids),false)))
+		if (($contacts =& $this->search(array('contact_id' => $ids),false,'',$extra_cols='','',False,'AND',False,array('tid'=>null))))
 		{
 			$ids = array();
 			foreach($contacts as $contact)
