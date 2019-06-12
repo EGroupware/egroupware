@@ -1126,12 +1126,12 @@ abstract class admin_cmd
 		// instanciate single periodic execution object
 		$single = $cmd->as_array();
 		$single['parent'] = $single['id'];
-		$single = array_diff_key($single, array(
+		$single = array_diff_key($single, array_flip(array(
 			'id','uid',
 			'created','modified','modifier',
 			'async_job_id','rrule','scheduled',
-			'status', 'set', 'old'
-		));
+			'status', 'set', 'old','value','result'
+		)));
 
 		$periodic = admin_cmd::instanciate($single);
 
@@ -1417,6 +1417,19 @@ abstract class admin_cmd
 					case 'textbox': case 'int': case 'float':
 					// ignore widgets that can't go in the historylog
 					case 'button': case 'buttononly': case 'taglist-thumbnail':
+						break;
+					case 'radio':
+						if (!is_array($widgets[$widget->id])) $widgets[$widget->id] = [];
+						$label = (string)$widget->attrs['label'];
+						// translate "{something} {else}" type options
+						if (strpos($label, '{') !== false)
+						{
+							$label = preg_replace_callback('/{([^}]+)}/', function($matches)
+							{
+								return lang($matches[1]);
+							}, $label);
+						}
+						$widgets[$widget->id][(string)$widget->attrs['set_value']] = $label;
 						break;
 					// config templates have options in the template
 					case 'option':
