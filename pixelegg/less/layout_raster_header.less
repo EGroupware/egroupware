@@ -103,7 +103,56 @@
 			height: auto;
 			z-index: 1000;
 			top: 45px;
-
+			#rc_status_select, #rc_status_select_chzn {
+				width: 50% !important;
+				margin-left: 10px;
+			}
+			#rc_status_select_chzn {
+				a.chzn-single span {padding-top: 0px;}
+				li.active-result {
+					color:#000000;
+					&:hover { color: #000000}
+					span {
+						&:before {
+							content: ' ';
+							width: 12px;
+							height: 12px;
+							display: inline-block;
+							border-radius: 50%;
+							margin-right: 4px;
+							vertical-align: text-bottom;
+						}
+					}
+				}
+				[data-option-array-index="0"] {
+					span {
+						&:before {
+							background: #2de0a5;
+						}
+					}
+				}
+				[data-option-array-index="1"] {
+					span {
+						&:before {
+							background: #ffd21f;
+						}
+					}
+				}
+				[data-option-array-index="2"] {
+					span {
+						&:before {
+							background: #f5455c;
+						}
+					}
+				}
+				[data-option-array-index="3"] {
+					span {
+						&:before {
+							background: #cbced1;
+						}
+					}
+				}
+			}
 			ul {
 				width: 100%;
 				padding: 0px;
