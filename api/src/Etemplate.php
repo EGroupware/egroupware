@@ -551,6 +551,9 @@ class Etemplate extends Etemplate\Widget\Template
 	public static function reset_request()
 	{
 		self::$request = Etemplate\Request::read();
+		self::$request->content = array();
+		self::$request->modifications = array();
+		self::$request->readonlys = array();
 		self::$cache = array();
 	}
 	/**

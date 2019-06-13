@@ -1346,6 +1346,7 @@ abstract class admin_cmd
 			else
 			{
 				$tpl = Api\Etemplate::instance($name);
+				Api\Etemplate::reset_request();
 			}
 		}
 		return $tpl ? $tpl : null;
