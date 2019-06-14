@@ -141,10 +141,11 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 
 				if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
-				// error_log(print_r($this->addressbook->get_addressbooks(Acl::READ),true));
-				$pref = $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'];
-				$pref_abs = (string)$pref !== '' ? explode(',',$pref) : array();
-
+				$pref_abs = $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'];
+				if (!is_array($pref_abs))
+				{
+					$pref_abs = $pref_abs ? explode(',',$pref_abs) : [];
+				}
 				foreach ($this->addressbook->get_addressbooks() as $account_id => $label)
 				{
 					if ((string)$account_id == $GLOBALS['egw_info']['user']['account_id'].'p')
@@ -739,7 +740,12 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] &&
 			$owner == $GLOBALS['egw_info']['user']['account_id'])
 		{
-			if (strpos($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'],'A') !== false)
+			$prefs_abs = $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'];
+			if (!is_array($prefs_abs))
+			{
+				$prefs_abs = $prefs_abs ? explode(',', $prefs_abs) : [];
+			}
+			if (in_array('A', $prefs_abs))
 			{
 				$owner = null;	// all AB's
 			}
