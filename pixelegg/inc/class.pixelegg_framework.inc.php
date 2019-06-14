@@ -108,7 +108,7 @@ class pixelegg_framework extends Api\Framework\Ajax
 			$GLOBALS['egw_info']['user']['preferences']['common']['template_color']);
 
 		// Create a dark variant of the color
-		$color_darker = $this->_color_shader($color, -30);
+		$color_darker = empty($color) ? '' :$this->_color_shader($color, -30);
 
 		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i', $GLOBALS['egw_info']['user']['preferences']['common']['sidebox_custom_color']))
 		{
