@@ -129,7 +129,7 @@ class pixelegg_framework extends Api\Framework\Ajax
 			$loginbox_color = $color_darker;
 		}
 
-		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color))	// a little xss check
+		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color) || preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$loginbox_color))	// a little xss check
 		{
 			if (!Api\Header\UserAgent::mobile())
 			{
