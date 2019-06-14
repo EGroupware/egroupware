@@ -5,8 +5,8 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @subpackage esync
- * @author Ralf Becker <rb@stylite.de>
- * @author Klaus Leithoff <kl@stylite.de>
+ * @author Ralf Becker <rb@egroupware.org>
+ * @author Klaus Leithoff
  * @author Philip Herbert <philip@knauber.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -18,10 +18,11 @@ use EGroupware\Api\Acl;
 /**
  * Required for TZID <--> AS timezone blob test, if script is called directly via URL
  */
-if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)
+if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) == __FILE__)
 {
 	interface activesync_plugin_write {}
 	interface activesync_plugin_meeting_requests {}
+	class ZLog { static function Write($level, $msg) { unset($level, $msg); }}
 }
 
 /**
@@ -195,8 +196,10 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			'daywise' => false,
 			'date_format' => 'server',
 			// default = not rejected, current user return NO meeting requests (status=unknown), as they are returned via email!
-			//'filter' => $user == $GLOBALS['egw_info']['user']['account_id'] ? (is_array($not_uids) ? 'unknown' : 'not-unknown') : 'default',
-			'filter' => $user == $GLOBALS['egw_info']['user']['account_id'] ? (is_array($not_uids) ? 'unknown' : 'default') : 'default',
+			// with filter="default" iOS 12.3 and z-push 2.5 shows events double: 1. email/meeting-request and 2. calendar entry itself
+			// ToDo: use filter="default", if user does NOT have email or email-notfications in calendar
+			'filter' => $user == $GLOBALS['egw_info']['user']['account_id'] ? (is_array($not_uids) ? 'unknown' : 'not-unknown') : 'default',
+			//'filter' => $user == $GLOBALS['egw_info']['user']['account_id'] ? (is_array($not_uids) ? 'unknown' : 'default') : 'default',
 			// @todo return only etag relevant information (seems not to work ...)
 			//'cols'		=> array('egw_cal.cal_id', 'cal_start',	'recur_type', 'cal_modified', 'cal_uid', 'cal_etag'),
 			'query' => array('cal_recurrence' => 0),	// do NOT return recurrence exceptions
@@ -383,7 +386,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		}
 		$message->organizer = $event['organizer'];
 
-		$message->sensitivity = $event['public'] ? 0 : 2;	// 0=normal, 1=personal, 2=private, 3=confidential
+		$message->sensitivity = !isset($event['public']) || $event['public'] ? 0 : 2;	// 0=normal, 1=personal, 2=private, 3=confidential
 
 		// busystatus=(0=free|1=tentative|2=busy|3=out-of-office), EGw has non_blocking=0|1
 		$message->busystatus = $event['non_blocking'] ? 0 : 2;
@@ -464,13 +467,16 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		if ($event['id'] && isset($event['participants'][$uid]))
 		{
 			$ret = $this->calendar->set_status($event, $uid, $status) ? $event['id'] : false;
+			$msg = $ret ? "status '$status' set for event #$ret" : "could NOT set status '$status' for event #$event[id]";
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.'('.array2string($requestid).", '$folderid', $response) $msg, returning ".array2string($ret));
 		}
 		else
 		{
 			$event['participants'][$uid] = $status;
 			$ret = $this->calendar->update($event, true);	// true = ignore conflicts, as there seems no conflict handling in AS
+			$msg = $ret ? "new event #$ret created" : "could NOT create event";
+			ZLog::Write(LOGLEVEL_DEBUG, __LINE__.': '.__METHOD__.'('.array2string($requestid).", '$folderid', $response) $msg, returning ".array2string($ret));
 		}
-		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.'('.array2string($requestid).", '$folderid', $response) returning ".array2string($ret));
 		return $ret;
 	}
 
@@ -1102,8 +1108,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		$message->attendees = array();
 		foreach($event['participants'] as $uid => $status)
 		{
-			// AS does NOT want calendar owner as participant
-			if ($uid == $account) continue;
+			// we send all participants (incl. organizer), as this is what Exchange also does
 			$quantity = $role = null;
 			calendar_so::split_status($status, $quantity, $role);
 
@@ -1435,6 +1440,10 @@ END:VTIMEZONE
 		{
 			foreach(array('dststart' => $daylight,'dstend' => $standard) as $prefix => $comp)
 			{
+				// fix RRULE order
+				$comp['RRULE'] = preg_replace('/FREQ=YEARLY;BYMONTH=(\d+);BYDAY=(.*)/',
+					'FREQ=YEARLY;BYDAY=$2;BYMONTH=$1', $comp['RRULE']);
+
 				if (preg_match('/FREQ=YEARLY;BYDAY=(.*);BYMONTH=(\d+)/',$comp['RRULE'],$matches))
 				{
 					$data[$prefix.'month'] = (int)$matches[2];
@@ -1660,12 +1669,12 @@ END:VTIMEZONE
 	}
 }
 
-/**
+    /**
  * Testcode for active sync timezone stuff
  *
  * You need to comment implements activesync_plugin_write
  */
-if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests
+if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) == __FILE__)	// some tests
 {
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
@@ -1689,7 +1698,9 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 
 	// TZID => AS timezone blobs reported by various devices
 	foreach(array(
-		'Europe/Berlin'    => 'xP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAFAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAFAAMAAAAAAAAAxP///w==',
+		// Exchange 2016 Europe/Berlin
+		'Europe/Berlin'    => 'xP///1cALgAgAEUAdQByAG8AcABlACAAUwB0AGEAbgBkAGEAcgBkACAAVABpAG0AZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAFAAMAAAAAAAAAAAAAACgAVQBUAEMAKwAwADEAOgAwADAAKQAgAEEAbQBzAHQAZQByAGQAYQBtACwAIABCAGUAcgBsAGkAbgAsACAAQgAAAAMAAAAFAAIAAAAAAAAAxP///w==',
+		//'Europe/Berlin'    => 'xP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAFAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAFAAMAAAAAAAAAxP///w==',
 		'Europe/Helsinki'  => 'iP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAFAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAFAAQAAAAAAAAAxP///w==',
 		'Asia/Tokyo'       => '5P3//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxP///w==',
 		'Atlantic/Azores'  => 'PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAFAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAFAAIAAAAAAAAAxP///w==',
@@ -1711,7 +1722,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 		//echo "$tz=<pre>".print_r($as_tz,true)."</pre>\n";
 
 		$as_tz_org = calendar_zpush::_getTZFromSyncBlob(base64_decode($sync_blob));
-		//echo "sync_blob=<pre>".print_r($as_tz_org,true)."</pre>\n";
+		echo "sync_blob=<pre>".print_r($as_tz_org,true)."</pre>\n";
 
 		// find matching timezone from as data
 		// this returns the FIRST match, which is in case of Pacific/Auckland eg. Antarctica/McMurdo ;-)
@@ -1728,7 +1739,9 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 				foreach(array('year','month','day','week','hour','minute','second') as $postfix)
 				{
 					$failed = $n && $as_tz_org[$prefix.$postfix] !== $as_tz[$prefix.$postfix];
-					$parts[] = ($failed?'<font color="red">':'').$arr[$prefix.$postfix].($failed?'</font>':'');
+					$parts[] = ($failed?'<font color="red">':'').
+						"<span title='$postfix'>".$arr[$prefix.$postfix].'</span>'.
+						($failed?'</font>':'');
 				}
 				echo implode(' ', $parts).(!$n?'<br/>':'');
 			}

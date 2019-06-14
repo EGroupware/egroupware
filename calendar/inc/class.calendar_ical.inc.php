@@ -2510,6 +2510,7 @@ class calendar_ical extends calendar_boupdate
 			'recur_type'		=> MCAL_RECUR_NONE,
 			'recur_exception'	=> array(),
 			'priority'          => 0,	// iCalendar default is 0=undefined, not EGroupware 5=normal
+			'public'            => 1,
 		);
 		// we need to parse DTSTART, DTEND or DURATION (in that order!) first
 		foreach (array_merge(
