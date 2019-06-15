@@ -1226,6 +1226,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$ret = $this->backend->MeetingResponse($attachment['attachment'],
 					$this->backend->createID('calendar',$GLOBALS['egw_info']['user']['account_id']),
 					$response);
+
+				// delete message after meeting-response is processed successful by calendar
+				if ($ret) $this->DeleteMessage($folderid, $requestid, null);
 				break;
 			}
 		}
@@ -1805,7 +1808,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		$syncstate = "M:". $status['messages'] ."-R:". $status['recent'] ."-U:". $status['unseen']."-NUID:".$status['uidnext']."-UIDV:".$status['uidvalidity'];
 
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."($folderid, ...) $folder ($account) returning ".array2string($syncstate));
+		if ($this->debugLevel) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."($folderid, ...) $folder ($account) returning ".array2string($syncstate));
 		return array();
 	}
 
