@@ -50,7 +50,7 @@ before_script:
        composer require 'phpunit/phpunit:~6';
        ;;
     *)
-       composer require 'phpunit/phpunit:~7';
+       composer require --ignore-platform-reqs 'phpunit/phpunit:~7';
       ;;
     esac
   #- php -m
