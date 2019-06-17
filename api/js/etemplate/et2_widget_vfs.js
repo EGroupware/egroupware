@@ -375,7 +375,7 @@ var et2_vfsPath = (function(){ "use strict"; return et2_vfsName.extend(
 				.text(text)
 				//.attr('title', egw.decodePath(path))
 				.click({data:path, egw: this.egw()}, function(e) {
-					e.data.egw.open({path: egw.encodePath(e.data.data), type:'httpd/unix-directory'}, "file");
+					return self.set_value(e.data.data);
 				})
 				.prependTo(this.span);
 			if(image && !this.options.noicon)
