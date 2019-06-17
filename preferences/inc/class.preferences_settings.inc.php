@@ -199,11 +199,15 @@ class preferences_settings
 	{
 		$changes = array_udiff_assoc($values, $content['old_values'], function($a, $b)
 		{
+			if($a == '**NULL**' && empty($b) || empty($a) && $b == '**NULL**')
+			{
+				return 0;
+			}
 			// some prefs are still comma-delimitered
 			if (is_array($a) != is_array($b))
 			{
-				if (!is_array($a)) $a = explode(',', $a);
-				if (!is_array($b)) $b = explode(',', $b);
+				if (!is_array($a)) $a = is_null($a) ? array() : explode(',', $a);
+				if (!is_array($b)) $b = is_null($b) ? array() : explode(',', $b);
 			}
 			return (int)($a != $b);
 		});
@@ -288,6 +292,12 @@ class preferences_settings
 						}
 					}
 					break;
+				case 'multiselect':
+					if(empty($value) && $type == 'forced')
+					{
+						$value = '**NULL**';
+					}
+					break;
 				case 'Array':	// notify
 					// Make sure the application translation is loaded
 					Api\Translation::add_app($appname);
@@ -332,15 +342,12 @@ class preferences_settings
 
 		if (!$only_verify)
 		{
+			$GLOBALS['egw']->preferences->save_repository(True, $type);
 			if ($content['is_admin'])
 			{
 				if (($account_id = $GLOBALS['egw']->preferences->get_account_id()) < 0 && $type == 'user') $type = 'group';
 
 				self::admin_cmd_run($content, $values, $account_id, $type, $appname);
-			}
-			else
-			{
-				$GLOBALS['egw']->preferences->save_repository(True, $type);
 			}
 
 			// certain common prefs (language, template, ...) require the session to be re-created
