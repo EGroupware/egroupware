@@ -196,8 +196,8 @@ $checks = array(
 		'warning' => lang("The ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. It's not needed for a standard SQL installation."),
 	),
 	'' => array(
-		'func' => 'pear_check',
-		'error' => lang('PEAR extensions are required by many eGroupware applications, PEAR itself is the required basis for each extension!'),
+		'func' => 'dependency_check',
+		'error' => lang('EGroupware requires several dependencies installed via: %1', 'composer install'),
 	),
 	realpath('..') => array(
 		'func' => 'permission_check',
@@ -290,6 +290,19 @@ foreach($setup_info as $app => $app_data)
 		//echo "added check $data[func]($name) for $app"; _debug_array($data);
 	}
 }
+// load required extensions from composer.json too:
+$composer = json_decode(file_get_contents(EGW_SERVER_ROOT.'/composer.json'), true);
+foreach($composer['require'] as $name => $version)
+{
+	if (substr($name, 0, 4) === 'ext-')// && !isset($checks[substr($name, 4)]))
+	{
+$name = 'ext-hugo';
+		$checks[substr($name, 4)] = [
+			'func' => 'extension_check',
+			'error' => lang('The %1 extension is needed from: %2.', substr($name, 4), 'EGroupware'),
+		];
+	}
+}
 $sorted_checks = array();
 foreach(array('php_version','php_ini_check','extension_check','pear_check','gd_check','permission_check') as $func)
 {
@@ -340,163 +353,74 @@ function composer_check($package)
 }
 
 /**
- * quering the pear registry to find out which pear packages and versions are installed
+ * Check all dependencies from composer.lock are installed
  *
- * @param $channel =null use default or given channel
- * @return array with package-name => version pairs, eg. array('Log' => '1.9.8','PEAR' => '1.4.11')
+ * @param boolean $verbose true: list all packages, false: list only missing packages
  */
-function get_installed_pear_packages($channel=null)
+function dependency_check($verbose=true)
 {
-	$pear_config = '';	// use the system default
-	// fix for SuSE having the pear.conf only for cli, will fail with open_basedir - no idea what to do then
-	if (@is_dir('/etc/php5/apache2') && !file_exists('/etc/php5/apache2/pear.conf') && @file_exists('/etc/php5/cli/pear.conf'))
+	global $passed_icon, $warning_icon, $error_icon;
+
+	if (!file_exists(EGW_SERVER_ROOT.'/vendor') || !file_exists($json=EGW_SERVER_ROOT.'/vendor/composer/installed.json'))
 	{
-		$pear_config = '/etc/php5/cli/pear.conf';
+		echo '<div>'.$error_icon.' <span class="setup_error">'.
+			lang('No dependencies are installed: you need to run "%1" AND either "%2" OR "%3"!',
+				'cd '.EGW_SERVER_ROOT, './install-cli.php install', 'composer install')."</div>\n";
+		return;
 	}
-	@include_once 'PEAR/Config.php';
 
-	if (!class_exists('PEAR_Config')) return false;
-
-	$config = new PEAR_Config('',$pear_config);
-	//echo "<pre>config = ".print_r($config,true)."</pre>\n";
-
-	if (empty($channel)) $channel = $config->get('default_channel');
-	//echo "<pre>channel = ".print_r($channel,true)."</pre>\n";
-
-	if (!method_exists($config,'getRegistry')) return false;	// PEAR version to old
-
-	$reg = &$config->getRegistry();
-	//echo "<pre>reg = ".print_r($reg,true)."</pre>\n";
-
-	// a bug in pear causes an endless loop if the install-dir does not exist
-	// bug reported: http://pear.php.net/bugs/bug.php?id=11317
-	if (!file_exists($reg->install_dir)) return false;
-
-	$installed = $reg->packageInfo(null,null,$channel);
-
-	//echo "<pre>installed =".print_r($installed,true)."</pre>\n";
-	$packages = array();
-	foreach($installed as $package)
+	$composer_lock = json_decode(file_get_contents(EGW_SERVER_ROOT.'/composer.lock'), true);
+	$ok = $wrong_version = $missing = 0;
+	foreach($composer_lock['packages'] as $package)
 	{
-		$name = isset($package['package']) ? $package['package'] : $package['name'];
-		$version = $package['version'];
-		if (is_array($version)) $version = $version['release'];
+		$installed = composer_check($package['name']);
+		$version_ok = !empty($installed) && version_compare($installed, $package['version'], '==');
 
-		$packages[$name] = $version;
-		//echo "<p>$name: ".print_r($package['version'],true)."</p>\n";
-	}
-	ksort($packages);
-
-	return $packages;
-}
-
-function pear_check($package,$args)
-{
-	global $passed_icon, $warning_icon;
-	static $pear_available = null;
-	static $channel_packages = array();
-	$channel = '';
-	if (strpos($package, '/') !== false)
-	{
-		list($channel, $package) = explode('/', $package);
-	}
-	$min_version = isset($args['version']) ? $args['version'] : null;
-
-	// first check if package is available via composer installed vendor directory
-	$composer_name = 'pear-'.($channel ? $channel : 'pear.php.net').'/'.($package ? $package : 'pear');
-	$version_available = composer_check($composer_name);
-	if ((!($found = !empty($version_available))))
-	{
-		if (!isset($channel_packages[(string)$channel]))
+		if (empty($installed))
 		{
-			$channel_packages[(string)$channel] = get_installed_pear_packages($channel);
+			$missing++;
+			$icon = $error_icon;
+			$class = ' class="setup_error"';
 		}
-		$pear_packages = $channel_packages[(string)$channel];
-		$version_available = false;
-
-		// packages found in the pear registry --> use that info
-		if ($pear_packages)
+		elseif (!$version_ok)
 		{
-			$pear_available = $found = true;
-			// check if package is installed
-			if ($package && isset($pear_packages[$package])) $available = true;
-			// check if it's the right version
-			$version_available = $pear_packages[$package ? $package : 'PEAR'];
-		}
-		else	// use the old checks as fallback
-		{
-			if (is_null($pear_available))
-			{
-				$pear_available = @include_once('PEAR.php');
-
-				if (!class_exists('PEAR')) $pear_available = false;
-			}
-			$found = $pear_available;
-			if ($pear_available && $package)
-			{
-				$file = str_replace('_','/',$package == 'Mail_Mime' ? 'Mail_mime' : $package).'.php';
-
-				$found = @include_once($file);
-
-				if (!class_exists($package)) $found = false;
-			}
-		}
-	}
-	// is the right version availible
-	$available = $found && (!$min_version || version_compare($min_version,$version_available) <= 0);
-	echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.
-		lang('Checking PEAR%1 is installed',($package?($channel?' '.$channel.'/':'::').$package:'').($min_version?" ($min_version)":'')).': '.
-		($available ? ($version_available ? $version_available : lang('True')) :
-		($found ? lang('Found, but unknown version') : lang('False')))."</span></div>\n";
-
-	if (!$available)	// give further info only if not availible
-	{
-		echo '<div class="setup_info">' . lang('PEAR%1 is needed by: %2.',$package ? '::'.$package : '',
-			is_array($args['from']) ? implode(', ',$args['from']) : $args['from']);
-
-		// if using Composer, dont confuse user with PEAR ;-)
-		if (file_exists(EGW_SERVER_ROOT.'/vendor'))
-		{
-			echo '<br/>'.lang('You can install it by running:').
-				' cd '.realpath(EGW_SERVER_ROOT).'; php composer.phar install';
+			$wrong_version++;
+			$icon = $warning_icon;
+			$class = ' class="setup_warning"';
 		}
 		else
 		{
-			if (!$pear_available)
-			{
-				echo '<br/>'.lang('PEAR (%1) is a PHP repository and is usually in a package called %2.',
-					'<a href="http://pear.php.net" target="_blank">pear.php.net</a>','php-pear');
-			}
-			elseif ($package && !$found)
-			{
-				echo '<br/>'.lang('You can install it by running:').
-					($channel ? ' pear channel-discover '.$channel.' ;' : '').
-					' pear install '.($channel ? $channel.'/' : '').$package;
-			}
-			elseif ($min_version && !$version_available)
-			{
-				echo '<br/>'.lang('We could not determine the version of %1, please make sure it is at least %2',$package,$min_version);
-			}
-			elseif ($min_version && version_compare($min_version,$version_available) > 0)
-			{
-				echo '<br/>'.lang('Your installed version of %1 is %2, required is at least %3, please run: ',
-					$package,$version_available,$min_version).' pear upgrade '.$package;
-			}
-			echo '<br/>'.lang('Alternatively you can use %1Composer%2 to install all requirements at once. Downloading it and run:',
-				'<a href="https://getcomposer.org/" target="_blank">', '</a>').
-				' cd '.realpath(EGW_SERVER_ROOT).'; php composer.phar install';
+			$ok++;
+			$icon = $passed_icon;
+			$class = '';
 		}
-		echo "</div>";
-	}
-	echo "\n";
 
-	return $available;
+		if ($verbose || !$version_ok)
+		{
+			echo '<div>'.$icon.' <span'.$class.'>'.
+				lang('Checking package %1 is installed', $package['name'].':'.$package['version']).
+				': '.(empty($installed) ? lang('not installed') : $installed)."</div>\n";
+		}
+	}
+	if ($ok && !$verbose)
+	{
+		echo '<div>'.$passed_icon.' <span class="setup_error">'.
+			lang('Checking dependencies: %1 packages are installed in the required version.', $ok)."</div>\n";
+	}
+}
+
+/**
+ * @deprecated use composer.json
+ */
+function pear_check($package,$args)
+{
+	unset($package, $args);
 }
 
 function extension_check($name,$args)
 {
 	//echo "<p>extension_check($name,".print_r($args,true).")</p>\n";
-	global $passed_icon, $warning_icon, $is_windows;
+	global $passed_icon, $warning_icon, $is_windows, $error_icon;
 
 	if (isset($args['win_only']) && $args['win_only'] && !$is_windows)
 	{
@@ -504,8 +428,11 @@ function extension_check($name,$args)
 	}
 	// we check for the existens of 'dl', as multithreaded webservers dont have it !!!
 	$available = check_load_extension($name);
+	$icon = $available ? $passed_icon : (isset($args['error']) ? $error_icon : $warning_icon);
+	$class = $available ? '' : (isset($args['error']) ? ' class="setup_error"' : ' class="setup_warning"');
 
-	echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.lang('Checking extension %1 is loaded or loadable',$name).': '.($available ? lang('True') : lang('False'))."</span></div>\n";
+	echo '<div>'.$icon.' <span'.$class.'>'.lang('Checking extension %1 is loaded or loadable', $name).
+		': '.($available ? lang('True') : lang('False'))."</span></div>\n";
 
 	if (!$available)
 	{
@@ -514,7 +441,7 @@ function extension_check($name,$args)
 			$args['warning'] = lang('The %1 extension is needed from: %2.',$name,
 				is_array($args['from']) ? implode(', ',$args['from']) : $args['from']);
 		}
-		echo "<div class='setup_info'>".$args['warning'].'</div>';
+		echo "<div class='setup_info'>".(isset($args['error']) ? $args['error'] : $args['warning']).'</div>';
 	}
 	echo "\n";
 

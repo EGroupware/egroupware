@@ -1,14 +1,20 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	en	%1 '%2' does NOT exist, is not readable by the web server or contains no EGroupware installation!
+%1 accounts to copy found.	setup	en	%1 accounts to copy found.
 %1 already exists in %2.	setup	en	%1 already exists in %2.
 %1 created in %2.	setup	en	%1 created in %2.
 %1 database %2 on %3 already contains the following tables:	setup	en	%1 database %2 on %3 already contains the following tables:
 %1 does not exist !!!	setup	en	%1 does not exist!
+%1 does not exist in %2.	setup	en	%1 does NOT exist in %2.
+%1 does not have a password (userpassword attribute) or we are not allowed to read it!	setup	en	%1 does NOT have a password (userPassword attribute) or we are not allowed to read it!
 %1 entries modified.	setup	en	%1 entries modified.
 %1 entries would have been modified.	setup	en	%1 entries would have been modified.
 %1 is %2%3 !!!	setup	en	%1 is %2%3 !
 %1 is needed by: %2.	setup	en	%1 is needed by: %2.
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	en	%1 is set to %2, you will NOT be able to upload or attach files bigger than that!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	en	%1 is set to %2. This is NOT recommended for a production system, as displayed error messages can contain passwords or other sensitive information!
+%1 not allowed to create in univention.	setup	en	%1 not allowed to create in Univention.
+%1 password set in %2.	setup	en	%1 password set in %2.
+%1 passwords updated, %3 errors	setup	en	%1 passwords updated, %3 errors
 %1 users and %2 groups created, %3 errors	setup	en	%1 users and %2 groups created, %3 errors.
 %1, %2 or %3 the configuration file.	setup	en	%1, %2 or %3 the configuration file.
 '%1' is no valid domain name!	setup	en	'%1' is no valid domain name!
@@ -45,6 +51,7 @@ admin user	setup	en	Admin user
 admin user for header manager	setup	en	Admin user for header manager
 admin username	setup	en	Admin username
 admins	setup	en	Admins
+ads dn "%1" not found!	setup	en	Ads dn "%1" NOT found!
 after backing up your tables first.	setup	en	After backing up your tables first.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	en	After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".
 all applications	setup	en	All applications
@@ -121,6 +128,7 @@ but we <u>highly recommend backing up</u> your tables in case the script causes 
 by redirecting to https	setup	en	By redirecting to https
 by rewriting links to https (allows eg. sitemgr to run on http)	setup	en	By rewriting links to https (allows eg. SiteMgr to run on http)
 ca certificate	setup	en	CA certificate
+cached cleared	setup	en	Cached cleared
 can not connect to %1 database %2 on host %3 using user %4!	setup	en	Can not connect to %1 database %2 on host %3 using user %4!
 can not connect to ldap server on host %1 using dn %2!	setup	en	Can not connect to LDAP server on host %1 using DN %2!
 can not create %1 database %2 on %3 for user %4!	setup	en	Can not create %1 database %2 on %3 for user %4!
@@ -141,6 +149,7 @@ check can only be performed, if called via a webserver, as the user-id/-name of 
 check installation	setup	en	Check installation
 check ip address of all sessions	setup	en	Check IP address of all sessions
 check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	en	Check to backup and restore the files directory. May use a lot of space, make sure to configure housekeeping accordingly.
+checking dependencies: %1 packages are installed in the required version.	setup	en	Checking dependencies: %1 packages are installed in the required version.
 checking extension %1 is loaded or loadable	setup	en	Checking extension %1 is loaded or loadable
 checking file-permissions of %1 for %2 %3: %4	setup	en	Checking file permissions of %1 for %2 %3: %4
 checking for gd support...	setup	en	Checking for GD support...
@@ -148,7 +157,7 @@ checking for jpgraph in %1	setup	en	Checking for JPGraph in %1
 checking for tnef application	setup	en	Checking for tnef application
 checking function %1 exists	setup	en	Checking function %1 exists
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	en	Checking if php.ini setting session.save_path='%1' is writable by the web server
-checking pear%1 is installed	setup	en	Checking PEAR%1 is installed
+checking package %1 is installed	setup	en	Checking package %1 is installed
 checking php.ini	setup	en	Checking php.ini
 checking required php version %1 (recommended %2)	setup	en	Checking required PHP version %1 (recommended %2)
 checking the egroupware installation	setup	en	Checking the EGroupware Installation
@@ -223,6 +232,7 @@ db user	setup	en	DB user
 default	setup	en	Recommended default
 default file system space per user/group ?	setup	en	Default file system space per user/group ?
 delete	setup	en	Delete
+delete all existing accounts from sql database	setup	en	Delete all existing accounts from SQL database
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	en	Delete all existing SQL accounts, groups, ACLs and preferences. Normally not necessary.
 delete all my tables and data	setup	en	Delete all my tables and data
 delete all old languages and install new ones	setup	en	Delete all old languages and install new ones
@@ -264,8 +274,11 @@ egroupware configuration file (header.inc.php) version %1 exists%2	setup	en	EGro
 egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	en	EGroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!
 egroupware domain/instance %1(%2):	setup	en	EGroupware domain/instance %1(%2):
 egroupware is already installed!	setup	en	EGroupware is already installed!
+egroupware requires several dependencies installed via: %1	setup	en	EGroupware requires several dependencies installed via: %1
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	en	EGroupware sources in '%1' are not complete, file '%2' missing !!!
 email (standard maildomain should be set)	setup	en	Email (Standard Maildomain should be set)
+email-address	setup	en	EMail-address
+emailadmin mail account saved:	setup	en	EMailAdmin mail account saved:
 emailadmin profile updated:	setup	en	eMailAdmin profile updated:
 enable for extra debug-messages	setup	en	Enable for extra debug messages
 enable mcrypt	setup	en	Enable MCrypt
@@ -293,8 +306,10 @@ error in admin-creation !!!	setup	en	Error in admin creation!
 error in group-creation !!!	setup	en	Error in group creation!
 error listing "dn=%1"!	setup	en	Error listing "dn=%1"!
 error modifying dn=%1: %2='%3'!	setup	en	Error modifying dn=%1: %2='%3'!
+error searching "dn=%1" for "%2"!	setup	en	Error searching "dn=%1" for "%2"!
 export has been completed!	setup	en	Export has been completed!
 failed to mount backup directory!	setup	en	Failed to mount Backup directory!
+failed updating user "%1" dn="%2"!	setup	en	Failed updating user "%1" dn="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	en	Failed writing configuration file header.inc.php, check the permissions!
 false	setup	en	False
 file	setup	en	FILE
@@ -303,6 +318,8 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	en	File name
 filesystem	setup	en	File system
 filesystem (default)	setup	en	File system (default)
+find and register all application hooks	setup	en	Find and Register all Application Hooks
+folders: sent,trash,drafts,templates,junk	setup	en	Folders: Sent,Trash,Drafts,Templates,Junk
 force selectbox	setup	en	Force select box
 found, but unknown version	setup	en	Found, but unknown version
 give admin access to all installed apps	setup	en	Give admin access to all installed apps
@@ -349,6 +366,7 @@ if you did not receive any errors, your tables have been	setup	en	If you did not
 if you running this the first time, don't forget to manualy %1 !!!	setup	en	If you running this the first time, don't forget to manually %1 !
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	en	If you use only languages of the same charset (eg. western european ones) you don't need to set a system charset!
 image type selection order	setup	en	Image type selection order
+imap: admin user,password,emailadmin_imap(|_cyrus|_dovecot)	setup	en	IMAP: Admin user,Password,emailadmin_imap(|_cyrus|_dovecot)
 import has been completed!	setup	en	Import has been completed!
 include_path need to contain "." - the current directory	setup	en	include_path need to contain "." - the current directory
 install	setup	en	Install
@@ -396,6 +414,7 @@ login to mysql -	setup	en	Login to mysql -
 loginname needed for domain configuration	setup	en	Login name needed for domain configuration
 logout	setup	en	Logout
 mail account of %1 migraged	setup	en	Mail account of %1 migraged
+mail account of %1 migrated	setup	en	Mail account of %1 migrated
 mail domain (for virtual mail manager)	setup	en	Mail domain (for Virtual mail manager)
 mail server login type	setup	en	Mail server login type
 mail server protocol	setup	en	Mail server protocol
@@ -433,6 +452,7 @@ no	setup	en	No
 no %1 support found. disabling	setup	en	No %1 support found. Disabling
 no accounts existing	setup	en	No accounts existing
 no algorithms available	setup	en	No algorithms available
+no dependencies are installed: you need to run "%1" and either "%2" or "%3"!	setup	en	No dependencies are installed: you need to run "%1" AND either "%2" OR "%3"!
 no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	en	No EGroupware domains / database instances exist! Use --edit-header --domain to add one (--usage gives more options).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	en	No header admin password set! Use --edit-header <password>[,<user>] to set one (--usage gives more options).
 no modes available	setup	en	No modes available!
@@ -443,6 +463,7 @@ not	setup	en	Not
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	en	Not all mcrypt algorithms and modes work with EGroupware. If you experience problems try switching it off.
 not complete	setup	en	Not complete
 not completed	setup	en	Not completed
+not installed	setup	en	not installed
 not ready for this stage yet	setup	en	Not ready for this stage yet.
 not set	setup	en	Not set
 note: you will be able to customize this later	setup	en	Note: You will be able to customize this later
@@ -465,15 +486,13 @@ password	setup	en	Password
 password for smtp-authentication	setup	en	Password for SMTP authentication
 password needed for domain configuration.	setup	en	Password needed for domain configuration.
 password of db user	setup	en	Password of db user
+passwords --> sql	setup	en	Passwords --> SQL
 passwords did not match, please re-enter	setup	en	Passwords did not match, please re-enter
 path (not url!) to your egroupware installation.	setup	en	Path (not URL!) to your EGroupware installation.
 path information	setup	en	Path information
 path of egroupware install directory (default auto-detected)	setup	en	Path of EGroupware install directory (default auto-detected)
 path to user and group files has to be outside of the webservers document-root!!!	setup	en	Path to user and group files HAS TO BE OUTSIDE of the web servers document-root!
 path to various directories: have to exist and be writeable by the webserver	setup	en	Path to various directories: have to exist and be writable by the web server
-pear (%1) is a php repository and is usually in a package called %2.	setup	en	PEAR (%1) is a PHP repository and is usually in a package called %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	en	PEAR extensions are required by many EGroupware applications, PEAR itself is the required basis for each extension!
-pear%1 is needed by: %2.	setup	en	PEAR%1 is needed by: %2.
 pem certificate	setup	en	PEM certificate
 persistent connections	setup	en	Persistent connections
 php client	setup	en	PHP client
@@ -491,6 +510,7 @@ please login to egroupware and run the admin application for additional site con
 please make the following change in your php.ini	setup	en	Please make the following change in your php.ini
 please wait...	setup	en	Please wait...
 pop/imap mail server hostname or ip address	setup	en	POP/IMAP mail server hostname or IP address
+port	setup	en	port
 possible reasons	setup	en	Possible reasons
 possible solutions	setup	en	Possible solutions
 post-install dependency failure	setup	en	Post-install dependency failure
@@ -554,6 +574,7 @@ select which user(s) will have admin privileges	setup	en	Select which user(s) wi
 select your old version	setup	en	Select your old version
 selectbox	setup	en	Select box
 server root	setup	en	Server root
+session expired	setup	en	Session expired
 session handler class used.	setup	en	Session handler class used.
 sessions handler	setup	en	Sessions handler
 set	setup	en	Set
@@ -626,6 +647,7 @@ the tables	setup	en	the tables
 the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	en	The tidy extension is need in merge-print to clean up html before inserting it in office documents.
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	The username/passwords are: demo/guest, demo2/guest and demo3/guest.
 the xmlreader extension is required by egroupware in several applications.	setup	en	The xmlreader extension is required by EGroupware in several applications.
+the xsl extension is need in merge-print for processing html and office documents.	setup	en	The xsl extension is need in merge-print for processing html and office documents.
 the zip extension is required for merge-print with office documents.	setup	en	The zip extension is required for merge-print with office documents.
 there was a problem trying to connect to your ldap server. <br />	setup	en	There was a problem trying to connect to your LDAP server. <br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. <br />please check your LDAP server configuration
@@ -653,6 +675,8 @@ uninstall all applications	setup	en	Uninstall all applications
 uninstalled	setup	en	Uninstalled
 unknown option '%1' !!!	setup	en	Unknown option '%1' !!!
 update finished.	setup	en	Update finished.
+update necessary.	setup	en	Update necessary.
+update of %1 in %2 failed !!!	setup	en	Update of %1 in %2 failed !!!
 upgrade	setup	en	Upgrade
 upgrade all	setup	en	Upgrade all
 upgraded	setup	en	Upgraded.
@@ -661,6 +685,7 @@ upload backup	setup	en	Upload backup
 uploads a backup and installs it on your db	setup	en	Uploads a backup and installs it on your DB
 uploads a backup to the backup-dir, from where you can restore it	setup	en	Uploads a backup to the backup-dir, from where you can restore it
 usage: %1 command [additional options]	setup	en	Usage: %1 command [additional options]
+use %u for username, leave empty to no set	setup	en	use %u for username, leave empty to no set
 use --create-header to create the configuration file (--usage gives more options).	setup	en	Use --create-header to create the configuration file (--usage gives more options).
 use --install to install egroupware.	setup	en	Use --install to install EGroupware
 use --update to do so.	setup	en	Use --update to do so
@@ -671,6 +696,8 @@ use pure html compliant code (not fully working yet)	setup	en	Use pure HTML comp
 use space to separate multiple	setup	en	use space to separate multiple
 use tls or ssl encryption	setup	en	Use TLS or SSL encryption
 user	setup	en	User
+user "%1" dn="%2" successful updated.	setup	en	User "%1" dn="%2" successful updated.
+user "%1" not found!	setup	en	User "%1" not found!
 user account prefix	setup	en	User account prefix
 user for smtp-authentication (leave it empty if no auth required)	setup	en	User for SMTP-authentication (leave it empty if no auth required)
 usernames (comma-separated) which can get vfs root access (beside setup user)	setup	en	User names, comma-separated, which can get VFS root access (beside setup user)

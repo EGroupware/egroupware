@@ -141,6 +141,7 @@ check can only be performed, if called via a webserver, as the user-id/-name of 
 check installation	setup	de	Installation überprüfen
 check ip address of all sessions	setup	de	IP Adresse bei allen Sessions überprüfen
 check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	de	anhaken, um das Backup und Restore der  Dateiumgebung (Datei-Verzeichnis) zu aktivieren. (diese Option kann grosse Mengen an Festplatten-Speicherpatz verbrauchen; stellen Sie sicher dass das Housekeeping entsprechend konfiguriert ist.)
+checking dependencies: %1 packages are installed in the required version.	setup	de	Überprüfe Abhängigkeiten: %1 Pakete sind in der benötigten Version installiert.
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
 checking file-permissions of %1 for %2 %3: %4	setup	de	Überprüfe Datei Zugriffsrechte von %1 für %2 %3: %4
 checking for gd support...	setup	de	Überprüfe die GD Unterstützung...
@@ -148,7 +149,7 @@ checking for jpgraph in %1	setup	de	Überprüfe JPGraph in %1
 checking for tnef application	setup	de	Überprüfe tnef Anwendung
 checking function %1 exists	setup	de	Überprüfe ob die Funktion %1 verfügbar ist
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	de	Überprüfe ob der Webserver auf die php.ini Einstellung session.save_path='%1' schreiben kann
-checking pear%1 is installed	setup	de	Überprüfe ob PEAR%1 installiert ist
+checking package %1 is installed	setup	de	Überprüfe ob das Paket %1 installiert ist
 checking php.ini	setup	de	Überprüfe die php.ini Datei
 checking required php version %1 (recommended %2)	setup	de	Überprüfe benötigte PHP Version %1 (empfohlen %2)
 checking the egroupware installation	setup	de	Überprüfe die EGroupware-Installation
@@ -264,6 +265,7 @@ egroupware configuration file (header.inc.php) version %1 exists%2	setup	de	EGro
 egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	de	EGroupware Konfigurationsdatei header.inc.php existiert bereits, benutzen Sie --edit-header oder löschen Sie diese zuerst!
 egroupware domain/instance %1(%2):	setup	de	EGroupware Domain/Instanz %1(%2):
 egroupware is already installed!	setup	de	EGroupware ist bereits installiert!
+egroupware requires several dependencies installed via: %1	setup	de	EGroupware hängt von diversen Paketen ab, die installiert werden müssen mit: %1
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	de	EGroupware Quellen in '%1' sind nicht komplett, Datei '%2' fehlt !!!
 email (standard maildomain should be set)	setup	de	email (Standard Maildomaine muss gesetzt sein)
 emailadmin profile updated:	setup	de	EMailAdmin Profil aktualisiert:
@@ -433,6 +435,7 @@ no	setup	de	Nein
 no %1 support found. disabling	setup	de	Keine Unterstützung für %1 gefunden. Abgeschaltet
 no accounts existing	setup	de	Keine Benutzerkonten gefunden
 no algorithms available	setup	de	Kein Algorithmus verfügbar
+no dependencies are installed: you need to run "%1" and either "%2" or "%3"!	setup	de	Alle notwendigen Abhänigkeiten fehlen: Sie müssen "%1" UND entweder "%2" oder "%3" ausführen!
 no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	de	Keine EGroupware Domain / Datenbank Instanz existiert! Benutzen Sie --edit-header --domain um eine hinzuzufügen (--usage gibt weitere Optionen).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	de	Kein Passwort für die Headerverwaltung gesetzt! Benutzen Sie --edit-header Passwort[,Benutzer] um eines zu setzen (--usage gibt weitere Optionen).
 no modes available	setup	de	kein Modus verfügbar
@@ -443,6 +446,7 @@ not	setup	de	nicht
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	de	Nicht alle MCrypt-Algorithmen und -Modi funktionieren mit EGroupware. Wenn Sie Probleme feststellen, versuchen Sie es abzuschalten.
 not complete	setup	de	nicht komplett
 not completed	setup	de	Nicht komplett
+not installed	setup	de	nicht installiert
 not ready for this stage yet	setup	de	Noch nicht bereit für diesen Schritt
 not set	setup	de	nicht gesetzt
 note: you will be able to customize this later	setup	de	Notiz: Sie können dies später anpassen
@@ -471,9 +475,6 @@ path information	setup	de	Pfadinformationen
 path of egroupware install directory (default auto-detected)	setup	de	Pfad des EGroupware Installationsverzeichnis (Vorgabe wird automatisch erkannt)
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (document root) des Webservers sein!!!
 path to various directories: have to exist and be writeable by the webserver	setup	de	Pfade zu verschiedenen Verzeichnissen: Diese müssen vorhanden sein und vom Webserver beschreibbar
-pear (%1) is a php repository and is usually in a package called %2.	setup	de	PEAR (%1) ist eine PHP Sammlung und ist üblicherweise in einem Paket namens %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	de	PEAR Erweiterungen werden von vielen EGroupware Anwendungen benötigt, PEAR selbst ist die Basis für diese Erweiterungen!
-pear%1 is needed by: %2.	setup	de	PEAR%1 wird benötigt von: %2.
 pem certificate	setup	de	PEM Zertifikat
 persistent connections	setup	de	Permanente Verbindungen
 php client	setup	de	PHP Klient
