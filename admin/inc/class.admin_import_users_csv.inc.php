@@ -201,11 +201,20 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 			case 'disable':
 			case 'enable':
 				$_data['account_expires'] = $_action == 'disable' ? 'already' : '';
-			case 'create' :
 			case 'update' :
+				$old = $GLOBALS['egw']->accounts->read($_data['account_id']);
+				if($old)
+				{
+					$old['account_passwd'] = $old['account_pwd']; unset($old['account_pwd']);
+					$old['account_groups'] = implode(',',$GLOBALS['egw']->accounts->memberships($_data['account_id'], true));
+					// Limit history to what actually changed
+					$old = array_intersect_key($old, $_data);
+				}
+			case 'create' :
 				$command = new admin_cmd_edit_user(array(
 					'account' => $_action=='create'?null:(int)$_data['account_id'],
-					'set' => $_data
+					'set' => $_data,
+					'old' => $_action=='create'?null:$old
 				)+(array)$admin_cmd);
 
 
