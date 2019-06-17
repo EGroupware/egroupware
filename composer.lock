@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "21277127f2eabbba2c229974ab67a6ee",
+    "content-hash": "657f4102bb8684c562f9e495b179af5d",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -58,35 +58,32 @@
         },
         {
             "name": "bacon/bacon-qr-code",
-            "version": "2.0.0",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Bacon/BaconQrCode.git",
-                "reference": "eaac909da3ccc32b748a65b127acd8918f58d9b0"
+                "reference": "5a91b62b9d37cee635bbf8d553f4546057250bee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Bacon/BaconQrCode/zipball/eaac909da3ccc32b748a65b127acd8918f58d9b0",
-                "reference": "eaac909da3ccc32b748a65b127acd8918f58d9b0",
+                "url": "https://api.github.com/repos/Bacon/BaconQrCode/zipball/5a91b62b9d37cee635bbf8d553f4546057250bee",
+                "reference": "5a91b62b9d37cee635bbf8d553f4546057250bee",
                 "shasum": ""
             },
             "require": {
-                "dasprid/enum": "^1.0",
                 "ext-iconv": "*",
-                "php": "^7.1"
+                "php": "^5.4|^7.0"
             },
             "require-dev": {
-                "phly/keep-a-changelog": "^1.4",
-                "phpunit/phpunit": "^6.4",
-                "squizlabs/php_codesniffer": "^3.1"
+                "phpunit/phpunit": "^4.8"
             },
             "suggest": {
-                "ext-imagick": "to generate QR code images"
+                "ext-gd": "to generate QR code images"
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "BaconQrCode\\": "src/"
+                "psr-0": {
+                    "BaconQrCode": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -103,7 +100,7 @@
             ],
             "description": "BaconQrCode is a QR code generator for PHP.",
             "homepage": "https://github.com/Bacon/BaconQrCode",
-            "time": "2018-04-25T17:53:56+00:00"
+            "time": "2017-10-17T09:59:25+00:00"
         },
         {
             "name": "bower-asset/cropper",
@@ -506,59 +503,17 @@
             "time": "2018-08-27T06:10:37+00:00"
         },
         {
-            "name": "dasprid/enum",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DASPRiD/Enum.git",
-                "reference": "631ef6e638e9494b0310837fa531bedd908fc22b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DASPRiD/Enum/zipball/631ef6e638e9494b0310837fa531bedd908fc22b",
-                "reference": "631ef6e638e9494b0310837fa531bedd908fc22b",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.4",
-                "squizlabs/php_codesniffer": "^3.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DASPRiD\\Enum\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Ben Scholzen 'DASPRiD'",
-                    "email": "mail@dasprids.de",
-                    "homepage": "https://dasprids.de/"
-                }
-            ],
-            "description": "PHP 7.1 enum implementation",
-            "keywords": [
-                "enum",
-                "map"
-            ],
-            "time": "2017-10-25T22:45:27+00:00"
-        },
-        {
             "name": "egroupware/activesync",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
-                "reference": "4f07a3d5999f377f94b6ecc95c076d964e25730c"
+                "reference": "8f30989c1b58159a4fd20ef4318727833a41b24e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/4f07a3d5999f377f94b6ecc95c076d964e25730c",
-                "reference": "4f07a3d5999f377f94b6ecc95c076d964e25730c",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/8f30989c1b58159a4fd20ef4318727833a41b24e",
+                "reference": "8f30989c1b58159a4fd20ef4318727833a41b24e",
                 "shasum": ""
             },
             "require": {
@@ -586,7 +541,7 @@
             ],
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-06-09T12:29:59+00:00"
+            "time": "2019-06-14T15:24:10+00:00"
         },
         {
             "name": "egroupware/adodb-php",
@@ -786,12 +741,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "3b5aeff83edb2ab1b892a2be0669f4a5f43bbadd"
+                "reference": "fd570491a697aebe53b14c3a276f6905dbcdbe45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/3b5aeff83edb2ab1b892a2be0669f4a5f43bbadd",
-                "reference": "3b5aeff83edb2ab1b892a2be0669f4a5f43bbadd",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/fd570491a697aebe53b14c3a276f6905dbcdbe45",
+                "reference": "fd570491a697aebe53b14c3a276f6905dbcdbe45",
                 "shasum": ""
             },
             "require": {
@@ -818,7 +773,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-06-06T07:24:29+00:00"
+            "time": "2019-06-13T17:23:18+00:00"
         },
         {
             "name": "egroupware/tracker",
@@ -866,12 +821,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/z-push.git",
-                "reference": "2c7d40e0322ac3a0b6da9832730ae3986a30f112"
+                "reference": "32da00e1024038a8f57c8a185c671179c3922ebe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/z-push/zipball/2c7d40e0322ac3a0b6da9832730ae3986a30f112",
-                "reference": "2c7d40e0322ac3a0b6da9832730ae3986a30f112",
+                "url": "https://api.github.com/repos/EGroupware/z-push/zipball/32da00e1024038a8f57c8a185c671179c3922ebe",
+                "reference": "32da00e1024038a8f57c8a185c671179c3922ebe",
                 "shasum": ""
             },
             "require": {
@@ -2845,5 +2800,8 @@
         "ext-openssl": "*",
         "ext-session": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "platform-overrides": {
+        "php": "7.0"
+    }
 }

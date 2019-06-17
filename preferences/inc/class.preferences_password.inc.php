@@ -291,12 +291,16 @@ class preferences_password
 				$GLOBALS['egw_info']['user']['account_email'],
 				$secret_key
 			);
-			$qrc = 'data:image/'.(substr($image, 0, 5) === '<?xml' ? 'svg+xml' : 'png').
-				';base64,'.base64_encode($image);
+			// bacon/bacon-qr-code >= 2 does not generate a data-url itself, but 1.x does :(
+			if (substr($image, 0, 11) !== 'data:image/')
+			{
+				$image = 'data:image/'.(substr($image, 0, 5) === '<?xml' ? 'svg+xml' : 'png').
+					';base64,'.base64_encode($image);
+			}
 		}
 		return [
-			'qrc' => $qrc,
-			'hide_qrc' => empty($qrc),
+			'qrc' => $image,
+			'hide_qrc' => empty($image),
 			'cred_id' => !empty($creds) ? $creds['2fa_cred_id'] : null,
 			'secret_key' => $secret_key,
 			'status' => !empty($creds) ? lang('Two Factor Auth is already setup.') : '',
