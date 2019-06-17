@@ -63,10 +63,10 @@ addvcard	addressbook	de	vCard hinzufügen
 advanced search	addressbook	de	Erweiterte Suche
 all addressbooks	addressbook	de	Alle Adressbücher
 all contacts	addressbook	de	Alle Kontakte
-allow for contacts only	addressbook	de	Nur für Kontakte erlauben
 all in one field	addressbook	de	Alle Kategorien in einem Feld ausgeben
 all types	addressbook	de	Alle Typen
 allow	addressbook	de	erlauben
+allow for contacts only	addressbook	de	Nur für Kontakte erlauben
 allow members of following groups to edit contact-data of accounts	addressbook	de	Erlaube Mitgliedern der folgenden Gruppen die Kontaktdaten von Benutzern zu bearbeiten
 allow users to maintain their own account-data	admin	de	Erlaube Benutzern ihre eigenen Benutzerdaten zu verwalten
 alt. csv import	addressbook	de	Alt. CSV Import
@@ -113,7 +113,7 @@ charset for the vcard export	addressbook	de	Zeichensatz für den vCard Export
 charset for the vcard import and export	addressbook	de	Zeichensatz für den vCard Import und Export
 charset of file	addressbook	de	Zeichensatz der Datei
 check all	addressbook	de	Alle auswählen
-choose an icon for this contact type	admin	de	Wählen Sie ein Icon für diesen Kontakt Typ
+choose an icon for this contact type	admin	de	Wählen Sie ein Symbol für diesen Kontakt Typ
 choose charset	addressbook	de	Zeichensatz auswählen
 choose owner of imported data	addressbook	de	Wählen Sie den Besitzer der importierten Daten
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	de	Wählen Sie einen vordefinierten Kartenanbieter aus oder geben Sie eine Url an mit folgenden Platzhaltern: %r = Strasse, %t = Stadt, %c = Land, %z = Postleitzahl
@@ -189,7 +189,7 @@ directory with documents to insert contacts	addressbook	de	Verzeichnis mit Dokum
 disable	addressbook	de	Deaktivieren
 disable last/next event column	addressbook	de	Spalte Letzer/nächster Termin deaktivieren
 display contact	addressbook	de	Kontakte Anzeigen
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	de	Zeigt auf der Startseite eine Geburtstags Erinnerung an. Die Startseite ist die Seite die Sie sehen, wenn Sie sich in der EGroupware anmelden oder auf das Startseiten Icon (Haus) klicken.
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	de	Zeigt auf der Startseite eine Geburtstags Erinnerung an. Die Startseite ist die Seite die Sie sehen, wenn Sie sich in der EGroupware anmelden oder auf das Startseiten-Symbol (Haus) klicken.
 distribution list deleted	addressbook	de	Verteiler gelöscht
 distribution list renamed	addressbook	de	Verteiler umbenannt
 distribution lists	addressbook	de	Verteilerlisten
@@ -298,7 +298,7 @@ home zip code	addressbook	de	PLZ privat
 how many contacts should non-admins be able to export	admin	de	Wie viele Kontakte sollen Nicht-Adminstratoren exportieren können?
 how many fields must match for the record to be considered a duplicate.	addressbook	de	Wie viele Felder müssen mindestens übereinstimmen, damit Kontakte als Duplikate angezeigt werden
 html link to the current record	addressbook	de	HTML-Link zum aktuellen Datensatz
-icon	addressbook	de	Icon
+icon	addressbook	de	Symbol
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
 ignore first line	addressbook	de	Erste Zeile ignorieren
 import	addressbook	de	Importieren
@@ -344,7 +344,7 @@ list of files linked to the current record	addressbook	de	Liste der Dokumente, d
 load vcard	addressbook	de	vCard laden
 location	addressbook	de	Standort
 locations	addressbook	de	Standorte
-mail vcard	addressbook	de	vCard per E-Mail zusenden
+mail vcard	addressbook	de	vCard per E-Mail versenden
 main categories in their own field	addressbook	de	Haupkategorien in einem eigenen Feld
 manage mapping	addressbook	de	Feldzuordnungen verwalten
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen

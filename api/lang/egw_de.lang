@@ -3,7 +3,7 @@
 %1 copied - the copy can now be edited	common	de	%1 Kopie - Diese Kopie kann jetzt bearbeitet werden
 %1 directories %2 found!	admin	de	%1 Verzeichnisse %2 gefunden!
 %1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
-%1 email(s) added into %2	common	de	%1 E-Mail-Adresse(n) in %2 hinzugefügt
+%1 email(s) added into %2	api	de	%1 E-Mail-Adresse(n) in %2 hinzugefügt
 %1 entries found, select one ...	common	de	%1 Einträge gefunden, einen auswählen ...
 %1 etemplates deleted	common	de	%1 eTemplate(s) gelöscht
 %1 etemplates for application '%2' dumped to '%3'	common	de	%1 eTemplate(s) für die Anwendung '%2' nach '%3' geschrieben
@@ -43,6 +43,7 @@
 1 week	common	de	1 Woche
 13 (ntp)	admin	de	13 (ntp)
 15 minutes	common	de	15 Minuten
+2-factor-authentication	api	de	2-Faktor-Authentifizierung
 30 minutes	common	de	30 Minuten
 30 seconds	common	de	30 Sekunden
 5 minutes	common	de	5 Minuten
@@ -66,7 +67,7 @@ account is expired	common	de	Benutzerkennung ist abgelaufen
 accounts	common	de	Benutzerkonten
 acl	common	de	ACL
 action	common	de	Aktion
-action when category is an email address	groupdav	de	Aktion wenn Kategorie eine E-Mail Adresse ist
+action when category is an email address	groupdav	de	Aktion wenn Kategorie eine E-Mail-Adresse ist
 actions	common	de	Befehle
 actions...	common	de	Aktionen...
 active	common	de	Aktiv
@@ -142,6 +143,7 @@ applies the changes made	common	de	übernimmt die Änderungen
 applies the changes to the given version of the template	common	de	übernimmt die Änderungen in die angegebene Version des Templates
 apply	common	de	Übernehmen
 apply the action on the whole query, not only the shown entries	common	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Einträge
+apps &amp; license	api	de	Apps & Lizenzen
 april	common	de	April
 are you sure you want to delete these entries ?	common	de	Sind Sie sicher, daß Sie diese Einträge löschen möchten?
 are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daß Sie diesen Eintrag löschen möchten?
@@ -168,6 +170,7 @@ autosave default category	common	de	Standard-Kategorie automatisch speichern
 azerbaijan	common	de	ASERBAIDSCHAN
 back	common	de	Zurück
 back to user login	common	de	Zurück zur Benutzer Anmeldung
+backcolor	common	de	Hintergrundfarbe
 background color:	common	de	Hintergrund Farbe:
 backup key	common	de	Schlüssel sichern
 backup/restore	common	de	Backup/Wiederherstellung
@@ -569,8 +572,10 @@ fontsizeselect	common	de	Schriftgröße
 for more than one contact in a document use the tag pagerepeat!	preferences	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
 force	common	de	Erzwungen
 force selectbox	common	de	Auswahlfeld erzwingen
+forecolor	common	de	Textfarbe
 foreign key	common	de	Foreign Key
 forever	common	de	Für immer
+formatselect	common	de	Format
 formatted text (html)	common	de	Formatierter Text (HTML)
 found unconnected %1 %2!	admin	de	Nicht verbundenen Einträge gefunden %1 %2
 fr	common	de	Fr
@@ -636,7 +641,8 @@ height, disabled	common	de	Höhe, Deaktiviert
 help	common	de	Hilfe
 high	common	de	Hoch
 highest	common	de	Höchste
-history log	common	de	Versionshistorie
+history	api	de	Historie
+history log	common	de	Versions-Historie
 hold [%1] and [%2] key to drag %3 to your desktop	common	de	[%1] und [%2] Tasten halten um %3 auf Ihren Schreibtisch (Desktop) zu ziehen
 hold [%1] key to select text eg. to copy it	common	de	Zum Kopieren [%1]-Taste beim Auswählen halten
 holy see (vatican city state)	common	de	VATICAN
@@ -666,6 +672,7 @@ if the error persists, contact your administrator for help and ask to check the 
 if there are some images in the background folder you can choose the one you would like to see.	common	de	Wenn mehrere Bilder im Hintergrund Ordner sind können Sie wählen, welches Sie sehen möchten.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
+if you use "2-factor-authentication", please enter the code here.	api	de	Wenn Sie "2-Faktor-Authentifizierung" verwenden, geben Sie bitte hier den Code ein.
 image	common	de	Grafik
 image directory relative to document root (use / !), example:	common	de	Bildverzeichnis entsprechend zur Dokumentroot (benutze / !), Beispiel:
 image url	common	de	Bild URL
@@ -681,7 +688,7 @@ indexed	common	de	Indiziert
 indexoptions	common	de	Indexoptionen
 india	common	de	INDIEN
 indonesia	common	de	INDONESIEN
-infolog types to sync	common	de	InfoLog Typen zum synchronisieren
+infolog types to sync	common	de	InfoLog-Typen zum synchronisieren
 input required	common	de	Eingabe erforderlich
 insert a column before	common	de	eine Spalte davor einfügen
 insert a column behind	common	de	eine Spalte dahinter einfügen
@@ -1151,6 +1158,7 @@ searchreplace	common	de	Suchen und ersetzen
 second	common	de	Sekunden
 section	common	de	Sektion
 securest	common	de	sicherste
+security & password	api	de	Sicherheit & Passwort
 select	common	de	Auswählen
 select "%1", if your client does not support multiple addressbooks.	groupdav	de	"%1" auswählen, wenn der Client nur ein einziges Adressbuch unterstützt.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	de	"%1" auswählen, wenn der Client Gruppen unterstützt, z.B. für das OS X oder iOS Adressbuch.
@@ -1261,8 +1269,8 @@ showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
 shows / allows you to enter values into the etemplate for testing	common	de	zeigt den Inhalt / Werte an und erlaubt welche zum Testen des eTemplates einzugeben
 shows/displays etemplate for testing, does not save it before	common	de	zeigt eTemplate zum Testen an, speichert es NICHT davor
 sierra leone	common	de	SIERRA LEONE
-simple	common	de	Einfach
 sign up	common	de	Anmelden
+simple	common	de	Einfach
 singapore	common	de	SINGAPUR
 site configuration	common	de	Konfiguration der Anwendung
 size	common	de	Größe
@@ -1433,6 +1441,7 @@ version	common	de	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefüllt)
 vertical alignment of row	common	de	vertikale Ausrichtung der Zeile
 vfs upload directory	common	de	Dateimanager Upload Verzeichnis
+video tutorials	api	de	Video-Tutorials
 viet nam	common	de	VIETNAM
 view	common	de	Anzeigen
 view linked %1 entries	common	de	Verknüpfte %1 Einträge anzeigen

@@ -4,7 +4,7 @@
 %1 is no existing vfs file!	preferences	de	Die VFS Datei %1 existiert nicht!
 12 hour	preferences	de	12 Stunden
 24 hour	preferences	de	24 Stunden
-a template defines the layout of egroupware and it contains icons for each application.	preferences	de	Die Benutzeroberfläche definiert das Layout von EGroupware und enthält die Icons (Symbole) der Anwendungen.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	de	Die Benutzeroberfläche definiert das Layout von EGroupware und enthält die Symbole (Icons) der Anwendungen.
 a theme defines the colors and fonts used by the template.	preferences	de	Das Thema definiert die Farben und Schriftarten der Benutzeroberfläche.
 acl grants have been updated	preferences	de	ACL (Zugangskontrollliste) wurde aktualisiert
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in EGroupware zeigt diese Anzahl Zeilen pro Seite.<br>Zu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
@@ -37,7 +37,7 @@ default preferences	preferences	de	Voreinstellungen
 delete categories	preferences	de	Kategorie löschen
 deny following groups access to acl (grant access)	admin	de	verweigere folgenden Gruppen den Zugriff in den ACL's
 deny following groups access to edit categories	admin	de	verweigere folgenden Gruppen den Zugriff zum Ändern der Kategorien
-deny following groups access to preferences	admin	de	verweigere folgenden Gruppen den Zugang zu den Präferenzen
+deny following groups access to preferences	admin	de	verweigere folgenden Gruppen den Zugang zu den Einstellungen
 description can not exceed 255 characters in length !	preferences	de	Die Beschreibung darf nicht länger als 255 Zeichen sein !
 disable	preferences	de	Deaktivieren
 display thumbnails for linked images	preferences	de	Zeige Vorschaubilder für verlinkte Bilder
@@ -73,9 +73,9 @@ how many hours are you in front or after the timezone of the server.<br>if you a
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	de	Wie viele Icons sollen in der Navigationsleiste am Kopf der Seite angezeigt werden. Zusätzliche Icons erscheinen in einem Pulldown-Menü, das über ein Icon ganz rechts in der Navigation aufgerufen wird.
 how many toolbar buttons are available	preferences	de	Wie viele Buttons sind in der Symbolleiste verfügbar
 how should egroupware display dates for you.	preferences	de	Wie soll EGroupware das Datum für Sie anzeigen?
-icon	preferences	de	Icon
-icons and text	preferences	de	Icons und Text
-icons only	preferences	de	nur Icons
+icon	preferences	de	Symbol
+icons and text	preferences	de	Symbole und Text
+icons only	preferences	de	nur Symbole
 if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	de	Wenn bereits eine Zeile ausgewählt ist, werden weitere Zeilen entweder durch das Halten der Strg/Cmd Taste (um die bereits ausgewählten nicht abzuwählen) und anklicken derselben, oder durch einfaches anklicken wie für eine Checkbox, ausgewählt. Wenn keine Zeile ausgewählt ist, wählt anklicken diese immer aus. Das Halten der Umschalt-Taste wählt alles zwischen der aktuell ausgewählten Zeile und der angeklickten.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	de	Bilder die mit einem Eintrag verlinkt sind können als Vorschaubild angezeigt werden. Kann ausgeschaltet werden um die Geschwindigkeit der Anzeige zu erhöhen.
 in which country are you. this is used to set certain defaults for you.	preferences	de	In welchen Land befinden Sie sich? Damit werden verschiedene Voreinstellungen für Sie vorgenommen.

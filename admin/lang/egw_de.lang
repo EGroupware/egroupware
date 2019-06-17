@@ -108,6 +108,7 @@ anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei 'Sitzungen anzeigen' nicht angezeigt)
 anonymous user does not exist!	admin	de	Anonymer Benutzer existiert NICHT!
 anonymous user has no run-rights for the application!	admin	de	Anonymer Benutzer hat KEINE Ausführungsrechte für die Anwendung!
+anonymous user. not shown in list sessions.	admin	de	Anonymer Benutzer. Wird in der Liste der Sitzungen nicht angezeigt.
 any application	admin	de	jede Anwendung
 any group	admin	de	jede Gruppe
 any user	admin	de	jeder Benutzer
@@ -354,7 +355,7 @@ enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Se
 enter the title for your site	admin	de	Titel der EGroupware-Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Icons abgelegt und von EGroupware Applikationen verwendet werden können. Der Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein.
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Symbole abgelegt und von EGroupware Applikationen verwendet werden können. Der Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein.
 enter your default ftp server	admin	de	Standard-FTP-Server
 enter your default mail domain ( from: user@domain )	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 enter your default mail domain (from: user@domain)	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
@@ -443,6 +444,7 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 1)?
 how should email addresses for new users be constructed?	admin	de	In welchem Format sollen E-Mail-Adressen von neuen Benutzern erzeugt werden?
 how username get constructed	admin	de	Wie wird der Benutzername gebildet
+html/plaintext	admin	de	HTML/Plaintext
 icon	admin	de	Symbol
 identity deleted	admin	de	Identität gelöscht.
 identity saved.	admin	de	Identität gespeichert.
@@ -494,6 +496,7 @@ languages	admin	de	Sprachen
 last %1 logins	admin	de	Letzte %1 Logins
 last %1 logins for %2	admin	de	Letzte %1 Logins für %2
 last action	admin	de	Letzte Aktion
+last ip	admin	de	Letzte IP
 last login	admin	de	Letzter Login
 last login from	admin	de	Letzter Login von
 last password change	admin	de	Letzte Passwortänderung
@@ -587,11 +590,11 @@ no sieve support detected, either fix configuration manually or leave it switche
 no supported imap authentication method could be found.	admin	de	Keine unterstützte IMAP-Authentifizierungsmethode gefunden.
 non profit: clubs, associations, ...	admin	de	Gemeinnützig: Vereine, Verbände, ...
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung gebaut wurde
-notification mail	admin	de	Benachrichtigungsmail
+notification mail	admin	de	Benachrichtigungs-E-Mail
 notify user by email	admin	de	Benutzer per E-Mail benachrichtigen
 notifying account "%1" %2 failed!	admin	de	Benachrichtigen von Benutzer "%1" %2 fehlgeschlagen!
 number applications serially	admin	de	Numeriere Anwendungen aufeinander folgend
-number of active users	admin	de	Anzahl aktiver User
+number of active users	admin	de	Anzahl aktiver Benutzer
 number of row for a multiline inputfield or line of a multi-select-box	admin	de	Anzahl der Zeilen in einem mehrzeiligen Feld oder eine multi-select-box
 number of sessions / egroupware logins in the last 30 days	admin	de	Anzahl Sitzungen / EGroupware Logins in den letzten 30 Tagen
 number of users	admin	de	Anzahl Benutzer
@@ -613,7 +616,7 @@ own install id:	admin	de	eigene Install-ID
 owner "%1" removed, please select group-owner	admin	de	Besitzer "%1" entfernt, bitte einen Gruppenbesitzer auswählen.
 passthrough	admin	de	durchgehend
 password for smtp-authentication	admin	de	Passwort für SMTP Authentifizierung
-password to unlock encrypted p12	admin	de	Passwort zum Entsperren von verschlüsseltem p12
+password to unlock encrypted p12	admin	de	Passwort zum Entsperren von verschlüsseltem Zertifikat
 password updated	admin	de	Passwort aktualisiert
 passwords and/or attributes of %1 accounts changed	admin	de	Passwörter und/oder Attribute von %1 Benutzern geändert
 passwords require a minimum number of characters	admin	de	Passworte benötigen diese Mindestanzahl Zeichen
@@ -695,6 +698,7 @@ secure connection	admin	de	Sichere Verbindung
 security	admin	de	Sicherheit
 select accounts for which the custom field should be visible	admin	de	Benutzer auswählen, für die dieses benutzerdefinierte Feld sichtbar sein soll.
 select group managers	admin	de	Gruppenmanager auswählen
+select language to define language based message. language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.	admin	de	Wählen Sie die Sprache, um eine sprachabhängige Nachricht zu definieren. Sprache 'Englisch' ist die Standardseite für alle Sprachen, daher müssen Sie für die Einstellung einer allgemeinen Nachricht für allen Sprachen nur die Seite 'Englisch' erstellen.
 select permissions this group will have	admin	de	wählen Sie die Zugriffsrechte für diese Gruppe.
 select the parent category. if this is a main category select no category	admin	de	Eine übergeordnete Kategorie auswählen. Wenn dies eine Hauptkategorie ist, KEINE KATEGORIE auswählen.
 select type of imap server	admin	de	IMAP-Server Typ auswählen
@@ -788,7 +792,7 @@ the login and password can not be the same	admin	de	Benutzername und Passwort d�
 the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nicht länger als 8 Zeichen sein
 the mimeparser can not parse this message.	admin	de	Der Mimeparser versteht diese Nachricht nicht
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	de	intern benutzter Name (<= 20 Buchstaben), Veränderungen machen existierende Daten unerreichbar !
-the testjob sends you a mail everytime it is called.	admin	de	Der Testjob sendet Ihnen jedesmal eine E-Mail wenn er aufgerufen wird.
+the testjob sends you a mail everytime it is called.	admin	de	Der Testjob sendet Ihnen jedes mal eine E-Mail wenn er aufgerufen wird.
 the text displayed to the user	admin	de	für den Benutzer angezeigter Text
 the two passwords are not the same	admin	de	Die beiden Passwörter stimmen nicht überein
 the users bellow are still members of group %1	admin	de	Die unten angezeigten Benutzer sind Mitglied der Gruppe %1

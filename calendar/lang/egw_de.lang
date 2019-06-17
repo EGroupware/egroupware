@@ -95,8 +95,8 @@ can't add alarms in the past !!!	calendar	de	Kann keine Alarme in der Vergangenh
 can't aquire lock!	calendar	de	Kann Termin nicht sperren!
 canceled	calendar	de	Abgesagt
 category %1 removed because of missing rights	calendar	de	Kategorie %1 entfernt wegen fehlender Rechte
-category acl	common	de	Kategorie Rechte
-category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	de	Kategorie Rechte beschränken nur das Hinzufügen einer Kategorie zu einem Termin oder das Ändern des Status eines Teilnehmers. Sie ändern NICHT die Sichtbarkeit eines Termins!
+category acl	common	de	Kategorie-Rechte
+category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	de	Kategorie-Rechte beschränken nur das Hinzufügen einer Kategorie zu einem Termin oder das Ändern des Status eines Teilnehmers. Sie ändern NICHT die Sichtbarkeit eines Termins!
 category automatically added to new events	calendar	de	Kategorie, die automatisch zu neuen Veranstaltungen hinzugefügt wird.
 chair	calendar	de	Vorsitz
 change history	calendar	de	Änderungshistorie

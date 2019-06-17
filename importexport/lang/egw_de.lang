@@ -134,6 +134,7 @@ unable to delete	importexport	de	Löschen nicht möglich
 unable to link to %1 "%2"	importexport	de	Verknüpfung nicht möglich %1 "%2"
 unable to schedule	importexport	de	Zeitplan nicht möglich
 update categories	importexport	de	Kategorien aktualisieren
+update default-definitions	importexport	de	Aktualisieren der Standard-Definitionen
 use default	importexport	de	Standard verwenden
 use definition filter	importexport	de	Definitionsfilter benutzen
 use field from csv if possible	importexport	de	Verwendet Werte der CSV-Datei, falls dort vorhanden.

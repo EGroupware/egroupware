@@ -488,6 +488,7 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	en	How many minutes should an account or IP be blocked. Default = 30
 how should email addresses for new users be constructed?	admin	en	Select default email address format for new user accounts
 how username get constructed	admin	en	How username get constructed
+html/plaintext	admin	en	html/plaintext
 icon	admin	en	Icon
 identity deleted	admin	en	Identity deleted
 identity saved.	admin	en	Identity saved.

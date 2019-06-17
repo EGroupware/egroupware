@@ -36,16 +36,17 @@
 '%1' is not allowed%2)!	common	en	'%1' is NOT allowed%2)!
 (session restored in %1 seconds)	common	en	Session restored in %1 seconds.
 00 (disable)	admin	en	00 (disable)
-1 day	common	en	1 Day
-1 hour	common	en	1 Hour
-1 minute	common	en	1 Minute
-1 month	common	en	1 Month
-1 week	common	en	1 Week
+1 day	common	en	1 day
+1 hour	common	en	1 hour
+1 minute	common	en	1 minute
+1 month	common	en	1 month
+1 week	common	en	1 week
 13 (ntp)	admin	en	13 (ntp)
-15 minutes	common	en	15 Minutes
-30 minutes	common	en	30 Minutes
+15 minutes	common	en	15 minutes
+2-factor-authentication	api	en	2-Factor-Authentication
+30 minutes	common	en	30 minutes
 30 seconds	common	en	30 seconds
-5 minutes	common	en	5 Minutes
+5 minutes	common	en	5 minutes
 80 (http)	admin	en	80 (http)
 a pattern to be searched for	common	en	Pattern to be searched for
 a request to the egroupware server returned with an error	common	en	A request to the EGroupware server returned with an error
@@ -142,6 +143,7 @@ applies the changes made	common	en	Applies the changes
 applies the changes to the given version of the template	common	en	Applies the changes to the given version of the template
 apply	common	en	Apply
 apply the action on the whole query, not only the shown entries	common	en	Apply the action on the whole query, NOT only the shown entries
+apps &amp; license	api	en	Apps &amp; License
 april	common	en	April
 are you sure you want to delete these entries ?	common	en	Are you sure you want to delete these entries?
 are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry?
@@ -354,8 +356,8 @@ date	common	en	Date
 date due	common	en	Due date
 date+time	common	en	Date+Time
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Date time port.<br>If using port 13, set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28).
-day	common	en	Day
-days	common	en	Days
+day	common	en	day
+days	common	en	days
 db ensures that every row has a unique value in that column	common	en	DB ensures that every row has a unique value in that column
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	en	DB specific index options, comma separated, e.g. mysql(FULLTEXT) or mysql(100) for the indexed length of a column.
 db-tools	common	en	DB tools
@@ -639,6 +641,7 @@ height, disabled	common	en	Height, Disabled
 help	common	en	Help
 high	common	en	High
 highest	common	en	Highest
+history	api	en	History
 history log	common	en	History log
 hold [%1] and [%2] key to drag %3 to your desktop	common	en	Hold [%1] and [%2] key to drag %3 to your desktop
 hold [%1] key to select text eg. to copy it	common	en	Hold [%1] key to select text eg. to copy it
@@ -649,8 +652,8 @@ home screen	common	en	Home screen
 honduras	common	en	HONDURAS
 hong kong	common	en	HONG KONG
 horizontal rule	common	en	Horizontal ruler
-hour	common	en	Hour
-hours	common	en	Hours
+hour	common	en	hour
+hours	common	en	hours
 how many days to sync in the future (default %1)	groupdav	en	How many days to sync in the future (default %1)
 how many days to sync in the past (default %1)	groupdav	en	How many days to sync in the past (default %1)
 how many entries should the list show	common	en	How many entries should the list show
@@ -669,6 +672,7 @@ if the error persists, contact your administrator for help and ask to check the 
 if there are some images in the background folder you can choose the one you would like to see.	common	en	If there are some images in the background folder you can choose the one you would like to see.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	en	If you specify a directory, full vfs path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	en	If you specify a document, full vfs path, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you use "2-factor-authentication", please enter the code here.	api	en	If you use "2-Factor-Authentication", please enter the code here.
 image	common	en	Image
 image directory relative to document root (use / !), example:	common	en	Image directory relative to document root (use / !), example:
 image url	common	en	Image URL
@@ -838,8 +842,8 @@ message(s) send ok.	common	en	Message(s) send ok.
 mexico	common	en	MEXICO
 micronesia, federated states of	common	en	MICRONESIA, FEDERATED STATES OF
 middle	common	en	Middle
-minute	common	en	Minute
-minutes	common	en	Minutes
+minute	common	en	minute
+minutes	common	en	minutes
 missing: %1	common	en	Missing: %1
 mo	common	en	Mo
 mode of required directory "%1" changed to %2.	admin	en	Mode of required directory "%1" changed to %2.
@@ -1151,9 +1155,10 @@ search letter	common	en	Search letter
 search or select accounts	common	en	Search or select accounts
 search...	common	en	Search...
 searchreplace	common	en	Searchreplace
-second	common	en	Second
+second	common	en	second
 section	common	en	Section
 securest	common	en	securest
+security & password	api	en	Security & Password
 select	common	en	Select
 select "%1", if your client does not support multiple addressbooks.	groupdav	en	Select "%1", if your client does not support multiple addressbooks.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	en	Select "%1", if your client support groups, eg. OS X or iOS addressbook.
@@ -1264,9 +1269,9 @@ showing %1 - %2 of %3	common	en	showing %1 - %2 of %3
 shows / allows you to enter values into the etemplate for testing	common	en	Shows / allows to enter values into the eTemplate for testing
 shows/displays etemplate for testing, does not save it before	common	en	Shows / displays eTemplate for testing, does NOT save it
 sierra leone	common	en	SIERRA LEONE
+sign up	common	en	Sign up
 simple	common	en	Simple
 singapore	common	en	SINGAPORE
-sign up	common	en	Sign up
 site configuration	common	en	Site configuration
 size	common	en	Size
 skip	common	en	Skip
@@ -1436,6 +1441,7 @@ version	common	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	en	Version number, should be in the form: major.minor.revision.number e.g. 0.9.13.001 all numbers filled up with zeros
 vertical alignment of row	common	en	Vertical alignment of row
 vfs upload directory	common	en	VFS upload directory
+video tutorials	api	en	Video Tutorials
 viet nam	common	en	VIET NAM
 view	common	en	View
 view linked %1 entries	common	en	View linked %1 entries
