@@ -617,6 +617,9 @@ function fix_perms()
 {
 	global $config;
 
+	// chown only works as root (uid=0)
+	if (function_exists('posix_getuid') && posix_geteuid()) return;
+
 	if (file_exists('/tmp/egw_cache') && !empty($config['webserver_user']))
 	{
 		system('/bin/chown -R '.$config['webserver_user'].' /tmp/egw_cache');
