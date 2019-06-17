@@ -1655,7 +1655,6 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		// Open dialog to use as target
 		var add_dialog = et2_dialog.show_dialog(null, '', ' ', null, [], et2_dialog.PLAIN_MESSAGE, this.egw);
 
-
 		// Call the server, get it into the dialog
 		options = jQuery.extend({menuaction: 'calendar.calendar_uiforms.ajax_add', template: 'calendar.add'}, options);
 		this.egw.json(
@@ -1699,16 +1698,36 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			  // Wait a bit to make sure etemplate button finishes processing, or it will error
 			  window.setTimeout(function() {
 				var template = etemplate2.getById('calendar-add');
-				if(template)
+				if(template && template.name === 'calendar.add')
 				{
 					template.clear();
+					this.dialog.destroy();
+					delete app.calendar.quick_add;
 				}
-				this.dialog.destroy();
-				if(this.event)
+				else if (template)
 				{
-					this.event.destroy();
+					// Open conflicts
+					var data = jQuery.extend({},template.widgetContainer.getArrayMgr('content').data, app.calendar.quick_add);
+
+					egw.openPopup(
+						egw.link(
+							'/index.php?menuaction=calendar.calendar_uiforms.ajax_conflicts',
+							data
+						),
+						850, 300,
+						'conflicts', 'calendar'
+					);
+
+					delete app.calendar.quick_add;
+
+					// Close the JS dialog
+					this.dialog.destroy();
+
+					// Do not submit this etemplate
+					return false;
 				}
-			  }.bind({dialog: add_dialog, event: event}), 100);
+
+			  }.bind({dialog: add_dialog, event: ev}), 1000);
 		  }
 		});
 	},
@@ -1722,6 +1741,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 */
 	add_dialog_save: function(event, widget)
 	{
+		this.quick_add = widget.getInstanceManager().getValues(widget.getRoot());
 		// Close the dialog
 		jQuery(widget.getInstanceManager().DOMContainer.parentNode).dialog('close');
 

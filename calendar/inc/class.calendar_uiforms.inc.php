@@ -34,6 +34,7 @@ class calendar_uiforms extends calendar_ui
 	var $public_functions = array(
 		'freetimesearch'  => True,
 		'ajax_add' => true,
+		'ajax_conflicts' => true,
 		'edit' => true,
 		'process_edit' => true,
 		'export' => true,
@@ -1467,6 +1468,32 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		$this->edit();
+	}
+
+	public function ajax_conflicts()
+	{
+		$participants = json_decode($_GET['participants'],true);
+		unset($_GET['participants']);
+
+		$content = $this->default_add_event();
+
+		// Process edit wants to see input values
+		$participants = array(1=> false);
+		$participants['cal_resources'] = '';
+		foreach($content['participants'] as $id => $status)
+		{
+			$quantity = $role = '';
+			calendar_so::split_status($status,$quantity,$role);
+			$participants[] = array(
+				'uid' => $id,
+				'status' => $status,
+				'quantity' => $quantity,
+				'role' => $role
+			);
+		}
+		$content['participants'] = $participants;
+		$content['button'] = array('apply' => true);
+		return $this->process_edit($content);
 	}
 
 	/**
