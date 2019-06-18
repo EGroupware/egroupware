@@ -2430,6 +2430,7 @@ class infolog_ui
 		unset($sub_excludefields['info_id_parent']);	// always set to parent!
 
 		$config = Api\Config::read('infolog');
+		Api\Translation::add_app('infolog');
 
 		if($content)
 		{
