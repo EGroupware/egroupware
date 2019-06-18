@@ -4530,7 +4530,6 @@ td.message span.message {
   position: absolute;
   z-index: 1;
   margin-top: 0px;
-  border-right: 1px solid #bfbfbf;
   left: 0px;
   background-color: #fbfbfb;
   padding-left: 10px;
