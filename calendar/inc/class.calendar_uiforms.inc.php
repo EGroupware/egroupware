@@ -852,28 +852,6 @@ class calendar_uiforms extends calendar_ui
 							$old_event['end'] != $event['end'] ||
 							$event['whole_day'] != $old_event['whole_day'])
 						{
-							$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
-							foreach((array)$event['participants'] as $uid => $status)
-							{
-								$q = $r = null;
-								calendar_so::split_status($status,$q,$r);
-								if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
-								{
-									$preferences = new Api\Preferences($uid);
-									$part_prefs = $preferences->read_repository();
-									switch ($part_prefs['calendar']['reset_stati'])
-									{
-										case 'no':
-											break;
-										case 'startday':
-											if ($sameday) break;
-										default:
-											$status_reset_to_unknown = true;
-											$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
-											// todo: report reset status to user
-									}
-								}
-							}
 							// check if we need to move the alarms, because they are relative
 							$this->bo->check_move_alarms($event, $old_event);
 						}
@@ -3060,27 +3038,6 @@ class calendar_uiforms extends calendar_ui
 
 		$status_reset_to_unknown = false;
 		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
-		foreach((array)$event['participants'] as $uid => $status)
-		{
-			$q = $r = null;
-			calendar_so::split_status($status,$q,$r);
-			if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
-			{
-				$preferences = new Api\Preferences($uid);
-				$part_prefs = $preferences->read_repository();
-				switch ($part_prefs['calendar']['reset_stati'])
-				{
-					case 'no':
-						break;
-					case 'startday':
-						if ($sameday) break;
-					default:
-						$status_reset_to_unknown = true;
-						$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
-						// todo: report reset status to user
-				}
-			}
-		}
 
 		$message = false;
 		$conflicts=$this->bo->update($event,$ignore_conflicts, true, false, true, $message);
