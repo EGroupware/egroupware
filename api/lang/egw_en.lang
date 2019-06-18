@@ -47,6 +47,7 @@
 30 minutes	common	en	30 minutes
 30 seconds	common	en	30 seconds
 5 minutes	common	en	5 minutes
+5 seconds	common	en	5 seconds
 80 (http)	admin	en	80 (http)
 a pattern to be searched for	common	en	Pattern to be searched for
 a request to the egroupware server returned with an error	common	en	A request to the EGroupware server returned with an error

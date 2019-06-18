@@ -382,6 +382,7 @@ nothing to change.	mail	de	Nichts zu Ändern.
 notify about new mail in this folders	mail	de	Über neue Mails in diesem Ordner benachrichtigen
 notify when new mails arrive in these folders	mail	de	Benachrichtigung, sobald neue E-Mails in den folgenden Ordnern ankommen
 on	mail	de	am
+on behalf of	mail	de	Im Namen von
 one address is not valid	mail	de	Eine Adresse ist ungültig
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	de	Macht nur dann Sinn, wenn das Passwort auf einem anderen Weg, außerhalb dieser Mail, den Empfängern mitgeteilt wird!
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	de	wird nur für bestimmte Server gebraucht, die NICHT alle Ordner für Root-Knoten-Abfragen zurückgeben (damit wird in diesem Fall explizit auf Ordner in den Prefixes der Namespaces geprüft)

@@ -332,7 +332,7 @@ var et2_portlet = (function(){ "use strict"; return et2_valueWidget.extend(
 				self._process_edit(button_id, '~remove~');
 				self._parent.removeChild(self);
 				self.destroy();
-			},"Remove", this.options.title,{},
+			},this.egw().lang("Remove"), this.options.title,{},
 			et2_dialog.BUTTONS_OK_CANCEL, et2_dialog.QUESTION_MESSAGE
 		);
 	},

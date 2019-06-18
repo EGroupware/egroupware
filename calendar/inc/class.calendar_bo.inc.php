@@ -1938,7 +1938,7 @@ class calendar_bo
 		$options = array (
 			'end' => lang('End date'),
 			'id' => lang('ID'),
-			'owner' => lang('Event owner'),
+			'owner' => lang('Owner'),
 			'category' => lang('Category'),
 			'location' => lang('Location'),
 			'creator' => lang('Creator'),

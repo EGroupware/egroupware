@@ -47,6 +47,7 @@
 30 minutes	common	de	30 Minuten
 30 seconds	common	de	30 Sekunden
 5 minutes	common	de	5 Minuten
+5 seconds	common	de	5 Sekunden
 80 (http)	admin	de	80 (http)
 a pattern to be searched for	common	de	ein Muster nach dem gesucht werden soll
 a request to the egroupware server returned with an error	common	de	Eine Anfrage an den EGroupware Server ergab einen Fehler
