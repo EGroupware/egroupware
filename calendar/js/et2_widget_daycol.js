@@ -418,7 +418,15 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		// Holidays and birthdays
 		var holidays = et2_calendar_view.get_holidays(this,this.options.date.substring(0,4));
 		var holiday_list = [];
-		var holiday_pref = (egw.preference('birthdays_as_events','calendar')||'').split(',');
+		var holiday_pref = (egw.preference('birthdays_as_events','calendar')||[]);
+		if(typeof holiday_pref === 'string')
+		{
+			holiday_pref = holiday_pref.split(',');
+		}
+		else
+		{
+			holiday_pref = jQuery.extend([], holiday_pref);
+		}
 
 		// Show holidays as events on mobile or by preference
 		var holidays_as_events = egwIsMobile() || egw.preference('birthdays_as_events','calendar') === true ||
