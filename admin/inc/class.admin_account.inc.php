@@ -264,6 +264,24 @@ class admin_account
 			{
 				$content = array('account_id' => (int)$_GET['account_id']);
 			}
+
+			// Get a count of entries owned by the user
+			$counts = $GLOBALS['egw']->accounts->get_account_entry_counts($content['account_id']);
+			foreach($counts as $app => $counts)
+			{
+				$entry = Api\Link::get_registry($app, 'entries');
+				if(!$entry)
+				{
+					$entry = lang('Entries');
+				}
+				if($counts['total'])
+				{
+					$content['counts'][] = array(
+						'app' => $app,
+						'count' => $counts['total'] . ' '.$entry
+					);
+				}
+			}
 			//error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
 		}
 		if ($GLOBALS['egw']->acl->check('account_access',32,'admin') ||

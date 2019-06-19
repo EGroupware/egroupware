@@ -401,6 +401,7 @@ enter your http proxy server port	admin	en	Enter your HTTP proxy server port
 enter your smtp server hostname or ip address	admin	en	Enter your SMTP server hostname or IP address
 enter your smtp server port	admin	en	Enter your SMTP server port
 entry saved	admin	en	Entry saved
+entries owned by the user:	admin	en	Entries owned by the user:
 error canceling timer, maybe there's none set !!!	admin	en	Error canceling timer, maybe there's none set!
 error changing the password for %1 !!!	admin	en	Error changing the password for %1 !
 error connecting to imap server. %s : %s.	admin	en	Error connecting to IMAP server. %s : %s.

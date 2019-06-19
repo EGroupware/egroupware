@@ -1037,6 +1037,102 @@ class Accounts
 		}
 		return False;
 	}
+/**
+	 * Get a list of how many entries of each app the account has
+	 *
+	 * @param int $account_id
+	 *
+	 * @return array app => count
+	 */
+	public function get_account_entry_counts($account_id)
+	{
+		$owner_columns = static::get_owner_columns();
+
+		$selects = array();
+
+		foreach($owner_columns as $app => $column)
+		{
+			list($table, $column_name) = explode('.', $column['column']);
+			$select = array(
+				'table' => $table,
+				'cols'  => array(
+					"'$app' AS app",
+					'"total" AS type',
+					'count(' . $column['key'] . ') AS count'
+				),
+				'where' => array(
+					$column['column'] => (int)$account_id
+				),
+				'app'   => $app
+			);
+			switch($app)
+			{
+				case 'infolog':
+					$select['cols'][1] = 'info_type AS type';
+					$select['append'] = ' GROUP BY info_type';
+					break;
+			}
+			$selects[] = $select;
+		}
+
+		$counts = array();
+		foreach($GLOBALS['egw']->db->union($selects, __LINE__ , __FILE__) as $row)
+		{
+			if(!is_array($counts[$row['app']]))
+			{
+				$counts[$row['app']] = array('total' => 0);
+			}
+			$counts[$row['app']][$row['type']] = $row['count'];
+			if($row['type'] != 'total')
+			{
+				$counts[$row['app']]['total'] += $row['count'];
+			}
+		}
+
+		return $counts;
+	}
+	protected function get_owner_columns()
+	{
+		$owner_columns = array();
+		foreach($GLOBALS['egw_info']['apps'] as $appname => $app)
+		{
+			// Check hook
+			$owner_column = Link::get_registry($appname, 'owner');
+
+			// Try for automatically finding the modification
+			if(!is_array($owner_column) && !in_array($appname, array('admin', 'api','etemplate')))
+			{
+				$tables = $GLOBALS['egw']->db->get_table_definitions($appname);
+				if(!is_array($tables))
+				{
+					continue;
+				}
+				foreach($tables as $table_name => $table)
+				{
+					foreach($table['fd'] as $column_name => $column)
+					{
+						if((strpos($column_name, 'owner') !== FALSE || strpos($column_name, 'creator') !== FALSE) &&
+								($column['meta'] == 'account' || $column['meta'] == 'user')
+						)
+						{
+							$owner_column = array(
+								'key'    => $table_name . '.' . $table['pk'][0],
+								'column' => $table_name . '.' . $column_name,
+								'type' => $column['type']
+							);
+							break 2;
+						}
+					}
+				}
+			}
+			if($owner_column)
+			{
+				$owner_columns[$appname] = $owner_column;
+			}
+		}
+
+		return $owner_columns;
+	}
 
 	/**
 	 * Add an account for an authenticated user
