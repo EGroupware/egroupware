@@ -227,8 +227,11 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 		{
 			if (this. editor) this.editor.remove();
 			this.htmlNode = jQuery(document.createElement(this.options.readonly ? "div" : "textarea"))
-				.css('height', this.options.height)
 				.addClass('et2_textbox_ro');
+			if(this.options.height)
+			{
+				this.htmlNode.css('height', this.options.height)
+			}
 			this.editor = null;
 			this.setDOMNode(this.htmlNode[0]);
 			this.set_value(value);
@@ -238,8 +241,11 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			if(!this.editor)
 			{
 				this.htmlNode = jQuery(document.createElement("textarea"))
-					.css('height', (this.options.editable_height ? this.options.editable_height : this.options.height))
 					.val(value);
+				if(this.options.height)
+				{
+					this.htmlNode.css('height', (this.options.editable_height ? this.options.editable_height : this.options.height));
+				}
 				this.setDOMNode(this.htmlNode[0]);
 				this.init_editor();
 			}
