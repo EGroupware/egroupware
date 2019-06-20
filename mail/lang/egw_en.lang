@@ -70,6 +70,7 @@ attach vcard	mail	en	Attach vCard
 attachment	mail	en	Attachment
 attachment has been saved successfully.	mail	en	Attachment has been saved successfully.
 attachments	mail	en	Attachments
+attachments, ...	mail	en	attachments, ...
 authentication	mail	en	Authentication
 available personal email-accounts/profiles	mail	en	available personal EMail-Accounts/Profiles
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r would you like to proceed?	mail	en	Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r Would you like to proceed?
@@ -318,6 +319,7 @@ list of actions to be switched/activated on by default (eg. mail compose save as
 mail	common	en	Mail
 mail acl	mail	en	Mail ACL
 mail filter	mail	en	Mail filter
+mail filter rule	mail	en	Mail filter rule
 mail settings	mail	en	Mail settings
 mail source	mail	en	Mail Source
 mail-address	mail	en	Mail-Address

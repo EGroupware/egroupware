@@ -22,7 +22,7 @@ add %1	addressbook	de	%1 hinzufügen
 add a contact to this organisation	addressbook	de	Einen Kontakt zu dieser Organisation hinzufügen
 add a customfield to link title	addressbook	de	Benutzerdefiniertes Feld zu Link-Titel hinzufügen
 add a new contact	addressbook	de	Neuen Kontakt anlegen
-add a new infolog	addressbook	de	Neuen Infolog Eintrag hinzufügen
+add a new infolog	addressbook	de	Neuen InfoLog-Eintrag hinzufügen
 add a new list	addressbook	de	Neuen Verteiler hinzufügen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
 add appointment	addressbook	de	Termin hinzufügen
@@ -369,7 +369,7 @@ name for the distribution list	addressbook	de	Name für die Verteilerliste
 name of current user, all other contact fields are valid too	addressbook	de	Name des aktuellen Benutzers, auch alle anderen Kontaktfelder sind erlaubt
 name, address	addressbook	de	Name, Adresse
 new contact submitted by %1 at %2	addressbook	de	Neuer Kontakt eingetragen von %1 am %2
-new window opened to edit infolog for your selection	addressbook	de	Es wird ein neues Fenster zum erstellen des Infolog Eintrags geöffnet
+new window opened to edit infolog for your selection	addressbook	de	Es wird ein neues Fenster zum Erstellen des InfoLog-Eintrags geöffnet
 next date	addressbook	de	Nächster Termin
 no categories selected	addressbook	de	keine Kategorien ausgewählt
 no distribution list	addressbook	de	Keine Verteilerliste
@@ -380,7 +380,7 @@ number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensät
 open %1 crm view	addressbook	de	Öffnet %1 in der CRM-Ansicht
 open email addresses in external mail program	addressbook	de	Öffne E-Mail Adressen in externem Mail-Programm
 open for editing?	addressbook	de	Zum Bearbeiten öffnen?
-open infolog crm view	preferences	de	Infolog CRM-Ansicht öffnen
+open infolog crm view	preferences	de	InfoLog CRM-Ansicht öffnen
 open tracking system crm view	preferences	de	Ticket System CRM-Ansicht öffnen
 options for type	admin	de	Optionen für Typ
 organisation	addressbook	de	Organisation
@@ -455,7 +455,7 @@ should the columns photo and home address always be displayed, even if they are 
 show	addressbook	de	Anzeigen
 show active accounts	addressbook	de	Zeigt nur aktive Benutzer an
 show all accounts	addressbook	de	Zeigt alle Benutzer an
-show infolog entries for this organisation	addressbook	de	InfoLog Einträge dieser Organisation anzeigen
+show infolog entries for this organisation	addressbook	de	InfoLog-Einträge dieser Organisation anzeigen
 show the contacts of this organisation	addressbook	de	Kontakte dieser Organisation anzeigen
 similar contacts found:	addressbook	de	Ähnliche Kontakte gefunden:
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	de	Größe des Popup (WxH, zB. 400x300, falls ein Popup verwendet werden soll)
@@ -523,7 +523,7 @@ vcard	common	de	vCard
 vcards require a first name entry.	addressbook	de	vCards benötigen einen Vornamen
 vcards require a last name entry.	addressbook	de	vCards benötigen einen Nachnamen
 verification	addressbook	de	Verifikation
-view linked infolog entries	addressbook	de	Verknüpfte InfoLog Einträge anzeigen
+view linked infolog entries	addressbook	de	Verknüpfte InfoLog-Einträge anzeigen
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht !
 weekday	addressbook	de	Wochentag

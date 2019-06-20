@@ -71,7 +71,7 @@ back to main list	infolog	de	Zurück zur Gesamtliste
 billed	infolog	de	abgerechnet
 both	infolog	de	Annahme+erledigt
 call	infolog	de	anrufen
-can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	de	Kann dazu benutzt werden um weitere InfoLog Typen im Kalender anzuzeigen oder zu begrenzen dass z.B. nur noch Aufgaben angezeigt werden.
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	de	Kann dazu benutzt werden um weitere InfoLog-Typen im Kalender anzuzeigen oder zu begrenzen dass z.B. nur noch Aufgaben angezeigt werden.
 cancel	infolog	de	Abbruch
 cancelled	infolog	de	abgesagt
 categories	infolog	de	Kategorien
@@ -82,7 +82,6 @@ change completed	infolog	de	Änderungen durchgeführt
 change completion	infolog	de	Bearbeitungsstatus ändern
 change history	infolog	de	Änderungsverlauf
 change owner when updating	infolog	de	Ändert den Benutzer bei bei diesem Änderungsvorgang
-change responsible	infolog	de	Verantwortlichkeit ändern
 change the status of an entry, eg. close it	infolog	de	Status eines Eintrags ändern, z.B. Ihn als erledigt markieren
 changed category to %1	infolog	de	Kategorie geändert zu %1
 changed completion to %1%	infolog	de	Erledigt geändert zu %1%
@@ -135,7 +134,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	de	Erstellt am
 dates, status, access	infolog	de	Daten, Status, Zugriff
 days	infolog	de	Tage
-default category for new infolog entries	infolog	de	Vorgabe Kategorie für neue InfoLog Einträge
+default category for new infolog entries	infolog	de	Vorgabe Kategorie für neue InfoLog-Einträge
 default document to insert entries	infolog	de	Standarddokument zum Einfügen von Infologs
 default filter for infolog	infolog	de	Standard-Filter für InfoLog
 default status for a new log entry	infolog	de	Vorgabe für den Status eines neuen Eintrags
@@ -171,7 +170,6 @@ done	infolog	de	geschlossen
 download	infolog	de	Datei laden
 download url for links	infolog	de	Download Link für Verknüpfungen
 due %1	infolog	de	%1 fällig
-due date	infolog	de	fällig am
 duration	infolog	de	Dauer
 e-mail:	infolog	de	E-Mail
 each value is a line like <id>[=<label>]	infolog	de	jeder Wert ist eine Zeile im Format id=[angezeigter Wert]
@@ -204,7 +202,7 @@ existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
 export definition to use for nextmatch export	infolog	de	Exportdefinition für Listenexport
 exports in ical format.	infolog	de	Export im iCal Format
-exports infolog entries into a csv file.	infolog	de	Exportiert InfoLog Einträge in eine CSV Datei
+exports infolog entries into a csv file.	infolog	de	Exportiert InfoLog-Einträge in eine CSV Datei
 favorites	infolog	de	Favoriten
 fax	infolog	de	Fax
 field must not be empty !!!	infolog	de	Feld darf nicht leer sein !!!

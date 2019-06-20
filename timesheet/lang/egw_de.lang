@@ -17,7 +17,6 @@ check all	timesheet	de	Alle selektieren
 choose 'creator' of imported data	timesheet	de	Wählen Sie den 'Ersteller' der Importierten Daten.
 comment by %1 at %2:	timesheet	de	Übertragen von %1 am %2
 create new links	timesheet	de	Neue Verknüpfung erstellen
-created	timesheet	de	Erstellt
 creates a new field	timesheet	de	neues Feld anlegen
 creating new entry	timesheet	de	neuen Eintrag anlegen
 custom fields	timesheet	de	Benutzerdefinierte Felder
@@ -108,7 +107,7 @@ saves this entry and add a new one	timesheet	de	Speichert diesen Eintrag und fü
 select a price	timesheet	de	Preis auswählen
 select a project	timesheet	de	Projekt auswählen
 select a status of the timesheet	timesheet	de	einen Status auswählen
-select infolog	timesheet	de	Infolog auswählen
+select infolog	timesheet	de	InfoLog auswählen
 select multiple timeshhets for a further action	timesheet	de	Wählen Sie mehrere Stundenzettel für einen weitere Aktion aus
 select the predefined status, whan creating a new timesheet	preferences	de	Wählen Sie einen Status als Vorgabe für neu zu erstellende Stundenzettel aus
 select the predefined status, when creating a new timesheet	preferences	de	Wählen Sie hier einen Status aus, der bei neu erstellten Stundenzetteln automatisch vorausgewählt wird.

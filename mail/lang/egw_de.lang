@@ -23,7 +23,7 @@ add "%1" into blacklisted emails	mail	de	E-Mailadresse "%1" zu Blacklist hinzuf�
 add "%1" into whiltelisted domains	mail	de	Domain "%1" als Whitelist hinzufügen
 add "%1" into whitelisted emails	mail	de	E-Mailadresse "%1" zu Whitelist hinzufügen
 add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter:  %1
-add all my aliases	mail	de	Alle Alias Adressen hinzufügen
+add all my aliases	mail	de	Alle Alias-Adressen hinzufügen
 add as new	mail	de	Neues Ticket erstellen
 add files as %1	mail	de	Dateien hinzufügen als %1
 add folder	mail	de	Ordner hinzufügen
@@ -70,6 +70,7 @@ attach vcard	mail	de	vCard hinzufügen
 attachment	mail	de	Anhang
 attachment has been saved successfully.	mail	de	Anhang erfolgreich gespeichert.
 attachments	mail	de	Dateien
+attachments, ...	mail	de	Anhänge, ...
 authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r would you like to proceed?	mail	de	Wenn Sie alle ausgewählten Dateien als %1-Modus hinzufügen, werden auch alle in der Liste vorhandenen Anhänge in den %2-Modus geändert.  \n\r \n\r Wollen Sie fortfahren?
@@ -89,7 +90,7 @@ changing subject failed folder %1 does not exist	mail	de	Ändern des Betreffs fe
 check message against next rule also	mail	de	Nachricht auch gegen nächste Regel prüfen
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. manche Empfänger keine Bestätigung senden möchten.)
 check to save as calendar event on send	mail	de	Nach dem Versenden als Termin erstellen
-check to save as infolog on send	mail	de	Nach dem Versenden als Infolog erstellen
+check to save as infolog on send	mail	de	Nach dem Versenden als InfoLog erstellen
 check to save as tracker entry on send	mail	de	Nach dem Versenden als Ticket erstellen
 choose file	mail	de	Datei
 common acl	mail	de	Berechtigung
@@ -314,10 +315,11 @@ later	mail	de	später
 learning as ham (not spam) failed because of %1	mail	de	Als "gute E-Mail" (kein Spam) lernen fehlgeschlagen, da %1
 learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da %1
 less than	mail	de	kleiner als
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als Infolog speichern)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als InfoLog speichern)
 mail	common	de	Mail
 mail acl	mail	de	Zugriffsrechte
 mail filter	mail	de	Filter-Regeln
+mail filter rule	mail	de	Filter-Regel
 mail settings	mail	de	E-Mail-Einstellungen
 mail source	mail	de	Nachrichtenquelltext anzeigen
 mail-address	mail	de	Mail-Adresse
@@ -363,7 +365,7 @@ no access	mail	de	Kein Zugriff
 no action defined!	mail	de	Keine Aktion ausgewählt!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	de	Keine Empfänger-Adresse (An/Kopie/Blindkopie) angegeben und kein Ordner zur Ablage der E-Mail spezifiziert.
 no adress, to send this mail to, supplied	mail	de	Keine Empfängeradresse angegeben!
-no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	de	Es sind keine Zielordner oder andere Methoden (als Infolog/Tracker ablegen) angegeben, um die Nachricht nach dem Senden zu speichern.
+no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	de	Es sind keine Zielordner oder andere Methoden (als InfoLog/Tracker ablegen) angegeben, um die Nachricht nach dem Senden zu speichern.
 no folders	mail	de	Keine Ordner
 no message body supplied	mail	de	Keinen Nachrichtentext - Teil gefunden.
 no plain text part found	mail	de	Kein Text-Teil gefunden.
@@ -475,8 +477,8 @@ save as calendar	mail	de	Als Termin speichern
 save as default	mail	de	Als Vorgabe speichern
 save as draft	mail	de	Als Entwurf speichern
 save as draft and print	mail	de	Als Entwurf speichern und drucken
-save as infolog	mail	de	Als Infolog speichern
-save as infolog on send	mail	de	Als Infolog speichern
+save as infolog	mail	de	Als InfoLog speichern
+save as infolog on send	mail	de	Als InfoLog speichern
 save as ticket	mail	de	Als Ticket speichern
 save as tracker on send	mail	de	Als Ticket speichern
 save attachment	mail	de	Anhang speichern
@@ -650,7 +652,7 @@ yes, offer copy option	mail	de	Ja, mit Kopieroption
 yes, only trigger connection reset	mail	de	Ja, aber führe nur das zurücksetzen der Verbindung aus
 yes, show all debug information available for the user	mail	de	Ja, zeige alle dem Benutzer zugänglichen Informationen an.
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
-you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht beides gleichzeitig.
+you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als InfoLog-, ODER als Ticket-Eintrag speichern, nicht beides gleichzeitig.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
 you may add this certificate into your contact, if you trust this signature.	mail	de	Sie können dieses Zertifikat in Ihren Kontakt speichern, wenn dieser Signatur trauen.
 you need to enter your s/mime passphrase to send this message.	mail	de	Sie müssen Ihr S/MIME-Passwort eingeben um diese Nachricht zu senden.
