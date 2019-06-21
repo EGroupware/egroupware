@@ -1100,7 +1100,7 @@ class Accounts
 			$owner_column = Link::get_registry($appname, 'owner');
 
 			// Try for automatically finding the modification
-			if(!is_array($owner_column) && !in_array($appname, array('admin', 'api','etemplate')))
+			if(!is_array($owner_column) && !in_array($appname, array('admin', 'api','etemplate','phpgwapi')))
 			{
 				$tables = $GLOBALS['egw']->db->get_table_definitions($appname);
 				if(!is_array($tables))
