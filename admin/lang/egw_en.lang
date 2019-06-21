@@ -500,6 +500,7 @@ if different from email address	admin	en	if different from EMail address
 if no acl records for user or any group the user is a member of	admin	en	If no ACL records for user or any group the user is a member of
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	en	If using LDAP, do you want to manage home directory and loginshell attributes?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	en	If using SSL or TLS, you must have the PHP openssl extension loaded.
+if you delete the user without selecting an account to move the data to, all entries get deleted!	admin	en	If you delete the user without selecting an account to move the data to, all entries get deleted!
 if you ignore that error as admin, you should check "%1"!	admin	en	If you ignore that error as admin, you should check "%1"!
 if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	en	if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)
 if you wish to have randomly selected images you may upload multiple images.	admin	en	If you wish to have randomly selected images you may upload multiple images.

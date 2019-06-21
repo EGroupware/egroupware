@@ -36,6 +36,7 @@
 					</row>
 				</rows>
 			</grid>
+			<description value="If you delete the user without selecting an account to move the data to, all entries get deleted!"/>
 		</vbox>
 	</template>
 </overlay>
