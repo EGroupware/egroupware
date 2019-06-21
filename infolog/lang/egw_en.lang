@@ -82,6 +82,7 @@ change completed	infolog	en	Change completed.
 change completion	infolog	en	Change completion
 change history	infolog	en	Change history
 change owner when updating	infolog	en	Change owner when updating
+change responsible	infolog	en	Change responsible
 change the status of an entry, eg. close it	infolog	en	Change the status of an entry, eg. close it
 changed category to %1	infolog	en	Changed category to %1
 changed completion to %1%	infolog	en	Changed completion to %1%
@@ -170,6 +171,7 @@ done	infolog	en	Done
 download	infolog	en	Download
 download url for links	infolog	en	Download url for links
 due %1	infolog	en	Due %1
+due date	infolog	en	Due date
 duration	infolog	en	Duration
 e-mail:	infolog	en	Email:
 each value is a line like <id>[=<label>]	infolog	en	Each value is a line like <id>[=<label>]

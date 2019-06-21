@@ -82,6 +82,7 @@ change completed	infolog	de	Änderungen durchgeführt
 change completion	infolog	de	Bearbeitungsstatus ändern
 change history	infolog	de	Änderungsverlauf
 change owner when updating	infolog	de	Ändert den Benutzer bei bei diesem Änderungsvorgang
+change responsible	infolog	de	Verantwortlichkeit ändern
 change the status of an entry, eg. close it	infolog	de	Status eines Eintrags ändern, z.B. Ihn als erledigt markieren
 changed category to %1	infolog	de	Kategorie geändert zu %1
 changed completion to %1%	infolog	de	Erledigt geändert zu %1%
@@ -170,6 +171,7 @@ done	infolog	de	geschlossen
 download	infolog	de	Datei laden
 download url for links	infolog	de	Download Link für Verknüpfungen
 due %1	infolog	de	%1 fällig
+due date	infolog	de	Fällig am
 duration	infolog	de	Dauer
 e-mail:	infolog	de	E-Mail
 each value is a line like <id>[=<label>]	infolog	de	jeder Wert ist eine Zeile im Format id=[angezeigter Wert]
