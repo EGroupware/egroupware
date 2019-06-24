@@ -170,11 +170,7 @@ class admin_customfields
 				unset($content['content_types']['create']);
 				unset($content['content_types']['name']);
 			}
-			// No common type change and type didn't change, try an update
-			elseif($this->content_type && is_array($content) && $this->content_type == $content['old_content_type'])
-			{
-				$this->update($content);
-			}
+			// No common type change and type didn't change, do nothing
 		}
 
 		// Custom field deleted from nextmatch
@@ -192,10 +188,10 @@ class admin_customfields
 					);
 					$cmd->run();
 					unset($this->fields[$name]);
+
+					Framework::refresh_opener('Deleted', 'admin', $data['id'] /* Conflicts with Api\Accounts 'delete'*/);
 				}
 			}
-			// save changes to repository
-			$this->save_repository();
 		}
 
 		$content['nm']= Api\Cache::getSession('admin', 'customfield-index');
@@ -650,8 +646,6 @@ class admin_customfields
 		$config->read_repository();
 		$config->value('types',$this->content_types);
 		$config->save_repository();
-
-		Api\Storage\Customfields::save($this->appname, $this->fields);
 	}
 
 	/**
