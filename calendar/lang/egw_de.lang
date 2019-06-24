@@ -494,7 +494,7 @@ select an action	calendar	de	Befehl auswählen
 select an action...	calendar	de	Aktion auswählen...
 select multiple contacts for a further action	calendar	de	mehrere Adressen für weiteren Befehl auswählen
 select resources	calendar	de	Ressourcen auswählen
-select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall der Teilnehmerstatus von Teilnehmern zurückgesetzt werden soll, wenn ein Termin verschoben wird
+select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall der Teilnehmerstatus von Teilnehmern zurückgesetzt werden soll, wenn ein Termin verschoben wird. Der Teilnehmerstatus von Externen wird immer zurückgesetzt!
 select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten soll
 selected range	calendar	de	Ausgewählter Zeitraum
 selected users/groups	calendar	de	Ausgewählte Benutzer/Gruppen

@@ -418,7 +418,7 @@ class calendar_hooks
 				'name'   => 'reset_stati',
 				'help'   => 'Select whether you want the participant stati reset to unknown, if an event is shifted later on.',
 				'values' => $reset_stati_on_shifts,
-				'default' => 'no',
+				'default' => 'all',
 				'xmlrpc' => True,
 				'admin'  => False,
 			),
