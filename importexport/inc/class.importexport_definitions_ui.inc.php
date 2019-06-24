@@ -400,13 +400,13 @@ class importexport_definitions_ui
 					$definition = new importexport_definition($id);
 					try {
 						$export = $bodefinitions->export_from_import($definition);
-						$export->save();
+						$export->save($definition->get_title());
 					} catch (Exception $e) {
 						if($export)
 						{
 							try {
 								$export->name = $export->name.' ' . $GLOBALS['egw_info']['user']['account_lid'];
-								$export->save();
+								$export->save($export->name);
 							} catch (Exception $ex) {
 								$failed++;
 								$msg .= lang('Duplicate name, please choose another.');
