@@ -1448,6 +1448,10 @@ class calendar_uiforms extends calendar_ui
 		$this->edit();
 	}
 
+	/**
+	 * Get conflict dialog via ajax.  Used by quick add.
+	 *
+	 */
 	public function ajax_conflicts()
 	{
 		$participants = json_decode($_GET['participants'],true);
@@ -1470,7 +1474,7 @@ class calendar_uiforms extends calendar_ui
 			);
 		}
 		$content['participants'] = $participants;
-		$content['button'] = array('apply' => true);
+		$content['button'] = array('save' => true);
 		return $this->process_edit($content);
 	}
 
