@@ -697,6 +697,8 @@ php version	admin	en	PHP version
 phpinfo	admin	en	PHP information
 phrase	admin	en	Phrase
 phrase deleted	admin	en	Phrase deleted
+please check email.  it gets automatically deleted if email integration is used.	admin	en	Please check email.  It gets automatically deleted if email integration is used.
+please check home folder.  all files and folders of the user will be unusable by other users.	admin	en	Please check home folder.  All files and folders of the user will be unusable by other users.
 please enter a name	admin	en	Enter a name
 please enter a name for that server !	admin	en	Enter a name for that server!
 please run setup to become current	admin	en	Run setup to become current

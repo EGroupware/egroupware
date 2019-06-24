@@ -36,6 +36,22 @@
 					</row>
 				</rows>
 			</grid>
+			<grid>
+				<columns>
+					<column width="150"/>
+					<column/>
+				</columns>
+				<rows>
+					<row>
+						<select-app value="filemanager" readonly="true"/>
+						<description value="Please check home folder.  All files and folders of the user will be unusable by other users."/>
+					</row>
+					<row>
+						<select-app value="mail" readonly="true"/>
+						<description value="Please check email.  It gets automatically deleted if email integration is used."/>
+					</row>
+				</rows>
+			</grid>
 			<description value="If you delete the user without selecting an account to move the data to, all entries get deleted!"/>
 		</vbox>
 	</template>
