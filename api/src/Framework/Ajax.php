@@ -825,7 +825,7 @@ abstract class Ajax extends Api\Framework
 		// open tab for default app, if no other tab is set
 		if (!($default_app = $GLOBALS['egw_info']['user']['preferences']['common']['default_app']))
 		{
-			$default_app = 'home';
+			$default_app = 'calendar';
 		}
 		if (isset($apps[$default_app]))
 		{
