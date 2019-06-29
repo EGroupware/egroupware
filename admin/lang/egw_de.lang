@@ -281,7 +281,7 @@ disable minifying of javascript and css files	admin	de	Komprimierung von Javascr
 disable pgp encryption (mailvelope)	admin	de	PGP-Verschlüsselung deaktivieren (Mailvelope)
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
-disabled, do not show on login page	admin	de	ausgeschaltet, wird auf der Login-Seite nicht angezeigt
+disabled, do not show on login page	admin	de	ausgeschaltet, wird auf der Anmelde-Seite nicht angezeigt
 display	admin	de	anzeigen
 displayed length of input field (set rows=1 to limit length)	admin	de	angezeigte Länge des Eingabefelds (setze Zeilen=1 um die Eingabe zu beschränken)
 displaying html messages is disabled	admin	de	Das Anzeigen von HTML Nachrichten ist deaktiviert
@@ -355,7 +355,7 @@ enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Se
 enter the title for your site	admin	de	Titel der EGroupware-Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Symbole abgelegt und von EGroupware Applikationen verwendet werden können. Der Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein.
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Symbole abgelegt und von EGroupware-Applikationen verwendet werden können. Der Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein
 enter your default ftp server	admin	de	Standard-FTP-Server
 enter your default mail domain ( from: user@domain )	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 enter your default mail domain (from: user@domain)	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
@@ -531,11 +531,11 @@ limit to members of	admin	de	beschränken auf Mitglieder von
 list config settings	admin	de	Konfigurationseinstellungen auflisten
 list current sessions	admin	de	aktive Sitzungen anzeigen
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
-log user-agent and action of changes in history-log of entries	admin	de	Protokolliere Browser-Typ und Aktion von Änderungen in der History der Einträge
+log user-agent and action of changes in history-log of entries	admin	de	Protokolliere Browser-Typ und -Aktion von Änderungen in der Historie der Einträge
 logged out	admin	de	abgemeldet
 login history	admin	de	Login-Kontrolle
-login message	admin	de	Meldung der Login-Seite
-login screen	admin	de	Login-Seite
+login message	admin	de	Meldung der Anmelde-Seite
+login screen	admin	de	Anmelde-Seite
 login shell	admin	de	Login-Kommandointerpreter (Login-Shell)
 login time	admin	de	Login Zeit
 login-status	admin	de	Angemeldet-Status

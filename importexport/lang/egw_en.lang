@@ -12,6 +12,7 @@
 (0-6, 0=sun)	importexport	en	(0-6, 0=Sun)
 *contact id cannot be changed by import	importexport	en	*Contact ID cannot be changed by import
 add a new definition	importexport	en	Add a new definition
+add an additional condition	importexport	en	Add an additional condition
 addressbook csv import	importexport	en	Addressbook CSV Import
 addressbook vcard import	importexport	en	Addressbook vCard import
 admin disabled exporting	importexport	en	Admin disabled exporting
@@ -44,6 +45,7 @@ day of week	importexport	en	Day of week
 define imports|exports	common	en	Define Imports|Exports
 definition	importexport	en	Definition
 delete all selected definitions	importexport	en	Delete ALL selected definitions
+delete files after import	importexport	en	Delete files after import
 deleted	importexport	en	Deleted.
 delimiter	importexport	en	Delimiter
 duplicate name, please choose another.	importexport	en	Duplicate name, please choose another.
@@ -69,6 +71,7 @@ fieldseperator	importexport	en	Field separator
 filters	importexport	en	Filters
 finish	importexport	en	Finish
 from definition	importexport	en	From definition
+from file	importexport	en	From file
 general	preferences	en	General
 general fields:	preferences	en	General fields:
 header lines to skip	importexport	en	Header lines to skip
@@ -114,9 +117,10 @@ schedule not found	importexport	en	Schedule not found.
 schedule times are server time!  currently %s.	importexport	en	Schedule times are server time!  Currently %s.
 select definition	importexport	en	Select definition
 select groups	importexport	en	Select groups
-Select owner	importexport	en	Select owner
+select owner	importexport	en	Select owner
 select plugin	importexport	en	Select plugin
 select...	importexport	en	Select...
+set import values	importexport	en	Set import values
 skipped	importexport	en	Skipped
 some nice text	importexport	en	Some nice text
 some records may not have been imported	importexport	en	Some records may not have been imported.
@@ -134,6 +138,7 @@ unable to delete	importexport	en	Unable to delete
 unable to link to %1 "%2"	importexport	en	Unable to link to %1 "%2"
 unable to schedule	importexport	en	Unable to schedule.
 update categories	importexport	en	Update categories
+update default-definitions	importexport	en	Update default-definitions
 use default	importexport	en	Use default
 use definition filter	importexport	en	Use definition filter
 use field from csv if possible	importexport	en	Use field from CSV if possible

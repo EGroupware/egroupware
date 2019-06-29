@@ -12,6 +12,7 @@
 (0-6, 0=sun)	importexport	de	(0-6, 0=Sonntag)
 *contact id cannot be changed by import	importexport	de	*Contact ID kann nicht durch den Import verändert werden
 add a new definition	importexport	de	Hinzufügen einer neuen Definition
+add an additional condition	importexport	de	Eine zusätzliche Bedingung hinzufügen
 addressbook csv import	importexport	de	Adressen per CSV Importieren
 addressbook vcard import	importexport	de	Adressen per vCard Importieren
 admin disabled exporting	importexport	de	Ihr Administrator hat den Export deaktiviert
@@ -44,6 +45,7 @@ day of week	importexport	de	Wochentag
 define imports|exports	common	de	Profil definieren
 definition	importexport	de	Definition
 delete all selected definitions	importexport	de	Alle ausgewählten Definitionen löschen
+delete files after import	importexport	de	Dateien nach dem Import löschen
 deleted	importexport	de	Gelöscht
 delimiter	importexport	de	Trennzeichen
 duplicate name, please choose another.	importexport	de	Doppelter Name, bitte wählen Sie einen anderen Namen
@@ -69,6 +71,7 @@ fieldseperator	importexport	de	Feldtrenner
 filters	importexport	de	Filter
 finish	importexport	de	Fertig
 from definition	importexport	de	Von der Vorlage
+from file	importexport	de	Aus Datei
 general	preferences	de	Generell
 general fields:	preferences	de	Allgemeine Felder
 header lines to skip	importexport	de	Kopfzeilen zu überspringen
@@ -117,6 +120,7 @@ select groups	importexport	de	Wähle Gruppen
 select owner	importexport	de	Eigentümer auswählen
 select plugin	importexport	de	Plug-in auswählen
 select...	importexport	de	Auswählen...
+set import values	importexport	de	Importwerte setzen
 skipped	importexport	de	Überspringen
 some nice text	importexport	de	Ein schöner Text
 some records may not have been imported	importexport	de	Einige Datensätze konnten nicht importiert werden
