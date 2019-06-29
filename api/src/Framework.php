@@ -675,7 +675,7 @@ abstract class Framework extends Framework\Extra
 		   return [
 			   'name' => 'current_user',
 			   'title' => lang('Current users').':'.$GLOBALS['egw']->session->session_count(),
-			   'url' => self::link('/index.php','menuaction=admin.admin_accesslog.sessions')
+			   'url' => self::link('/index.php','menuaction=admin.admin_accesslog.sessions&ajax=true')
 		   ];
 	   }
 	}
