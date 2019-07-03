@@ -299,9 +299,10 @@ class Account implements \ArrayAccess
 	/**
 	 * Query quota, aliases, forwards, ... from imap and smtp backends and sets them as parameters on current object
 	 *
+	 * @param boolean $need_quota =true false: qutoa not needed, do NOT query IMAP server
 	 * @return array with values for keys in self::$user_data
 	 */
-	public function getUserData()
+	public function getUserData($need_quota=true)
 	{
 		if ($this->acc_smtp_type != __NAMESPACE__.'\\Smtp' && $this->smtpServer() &&
 			($smtp_data = $this->smtpServer->getUserData($this->user)))
@@ -312,7 +313,7 @@ class Account implements \ArrayAccess
 		try {
 			if ($this->acc_imap_type != __NAMESPACE__.'\\Imap' &&
 				// do NOT query IMAP server, if we are in forward-only delivery-mode, imap will NOT answer, as switched off for that account!
-				$this->params['deliveryMode'] != Smtp::FORWARD_ONLY &&
+				$this->params['deliveryMode'] != Smtp::FORWARD_ONLY && $need_quota &&
 				$this->imapServer($this->user) && is_a($this->imapServer, __NAMESPACE__.'\\Imap') &&
 				($data = $this->imapServer->getUserData($GLOBALS['egw']->accounts->id2name($this->user))))
 			{
@@ -407,7 +408,7 @@ class Account implements \ArrayAccess
 			return false;	// no imap host or credentials
 		}
 		// if we are not managing the mail-server, we do NOT need to check deliveryMode and accountStatus
-		if ($this->acc_smtp_type == __NAMESPACE__.'\\Smtp')
+		if ($this->acc_smtp_type == __NAMESPACE__.'\\Imap')
 		{
 			return true;
 		}
@@ -833,7 +834,8 @@ class Account implements \ArrayAccess
 		// if user-data is requested, check if it is already loaded and load it if not
 		if (in_array($name, self::$user_data) && !array_key_exists($name, $this->params))
 		{
-			$this->getUserData();
+			// let getUserData "know" if we are interested in quota (requiring IMAP login) or not
+			$this->getUserData(substr($name, 0, 5) === 'quota');
 		}
 		return $this->params[$name];
 	}
