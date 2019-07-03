@@ -353,23 +353,41 @@ class Sql extends Mail\Smtp
 	 * Get configured mailboxes of a domain
 	 *
 	 * @param boolean $return_inactive return mailboxes NOT marked as accountStatus=active too
-	 * @return array uid => name-part of mailMessageStore
+	 * @param boolean $return_extra =false true: return quota and groups
+	 * @return array uid => name-part of mailMessageStore or $return_extra array with keys "mbox", "quota" and "groups"
 	 */
-	function getMailboxes($return_inactive)
+	function getMailboxes($return_inactive, $return_extra=false)
 	{
+		$cols = 'account_lid AS uid,'.self::TABLE.'.mail_value AS mailbox';
 		$join = 'JOIN '.Api\Accounts\Sql::TABLE.' ON '.self::TABLE.'.account_id='.Api\Accounts\Sql::TABLE.'.account_id';
 		if (!$return_inactive)
 		{
 			$join .= ' JOIN '.self::TABLE.' active ON active.account_id='.self::TABLE.'.account_id AND active.mail_type='.self::TYPE_ENABLED;
 		}
+		if ($return_extra)
+		{
+			$join .= ' JOIN '.self::TABLE.' quota ON quota.account_id='.Api\Accounts\Sql::TABLE.'.account_id';
+			$cols .= ',account_id,quota.mail_value AS quota';
+		}
 		$mailboxes = array();
-		foreach($this->db->select(self::TABLE, 'account_lid AS uid,'.self::TABLE.'.mail_value AS mailbox',
+		foreach($this->db->select(self::TABLE, $cols,
 			self::TABLE.'.mail_type='.self::TYPE_MAILBOX,
 			__LINE__, __FILE__, false, 'ORDER BY account_lid', self::APP, 0, $join) as $row)
 		{
 			if ($row['uid'] == 'anonymous') continue;	// anonymous is never a mail-user!
 			list($mailbox) = explode('@', $row['mailbox']);
-			$mailboxes[$row['uid']] = $mailbox;
+			if (!$return_extra)
+			{
+				$mailboxes[$row['uid']] = $mailbox;
+			}
+			else
+			{
+				$mailboxes[$row['uid']] = [
+					'mbox'   => $mailbox,
+					'quota'  => $row['quota'] ? $row['quota'] : $GLOBALS['egw_info']['server']['default_quota'],
+					'groups' => array_values($GLOBALS['egw']->accounts->memberships($row['account_id'])),
+				];
+			}
 		}
 		return $mailboxes;
 	}
