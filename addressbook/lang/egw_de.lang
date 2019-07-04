@@ -26,7 +26,7 @@ add a new infolog	addressbook	de	Neuen InfoLog-Eintrag hinzufügen
 add a new list	addressbook	de	Neuen Verteiler hinzufügen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
 add appointment	addressbook	de	Termin hinzufügen
-add business email of whole distribution list?	addressbook	de	E-Mail geschäftl. der kompletten Liste hinzufügen?
+add business email of whole distribution list?	addressbook	de	E-Mail geschäftlich der kompletten Liste hinzufügen?
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	de	Fügt ein benutzerdefiniertes Feld zum Titel der Verknüpfung eines Kontakts hinzu. Dieser wird in anderen Anwendungen angezeigt. Die Vorgabe ist kein benutzerdefiniertes Feld hinzuzufügen.
 add emails of whole distribution list?	addressbook	de	E-Mails der gesamten Verteilerliste hinzufügen?
@@ -57,7 +57,7 @@ addressbook preferences	addressbook	de	Adressbuch Einstellungen
 addressbook the contact should be saved to	addressbook	de	Adressbuch in dem der Kontakt gespeichert werden soll
 addressbook the contact should be shown	addressbook	de	Adressbuch in dem der Kontakt angezeigt werden soll
 addressbook vcard export	addressbook	de	Adressbuch im vCard-Format exportieren
-addressbook vcard import	addressbook	de	Adressbuch per vCard-Format importieren
+addressbook vcard import	addressbook	de	Adressbuch im vCard-Format importieren
 addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	vCard hinzufügen
 advanced search	addressbook	de	Erweiterte Suche
@@ -83,16 +83,16 @@ blank	addressbook	de	Leer
 browser location	addressbook	de	Browser-Standort
 business	common	de	Geschäftlich
 business address	addressbook	de	Geschäftsadresse
-business address line 2	addressbook	de	Straße Zeile 2 geschäftl.
-business city	addressbook	de	Stadt geschäftl.
-business country	addressbook	de	Land geschäftl.
-business country code	addressbook	de	Ländervorwahl geschäftl.
-business email	addressbook	de	E-Mail geschäftl.
-business fax	addressbook	de	Fax geschäftl.
-business phone	addressbook	de	Tel. geschäftl.
-business state	addressbook	de	Bundesland geschäftl.
-business street	addressbook	de	Straße geschäftl.
-business zip code	addressbook	de	PLZ geschäftl.
+business address line 2	addressbook	de	Straße Zeile 2 geschäftlich
+business city	addressbook	de	Stadt geschäftlich
+business country	addressbook	de	Land geschäftlich
+business country code	addressbook	de	Ländervorwahl geschäftlich
+business email	addressbook	de	E-Mail geschäftlich
+business fax	addressbook	de	Fax geschäftlich
+business phone	addressbook	de	Tel. geschäftlich
+business state	addressbook	de	Bundesland geschäftlich
+business street	addressbook	de	Straße geschäftlich
+business zip code	addressbook	de	PLZ geschäftlich
 calendar fields:	addressbook	de	Kalender Felder:
 calendar integration	addressbook	de	Kalender Integration
 calendar uri	addressbook	de	Kalender URI
@@ -108,12 +108,12 @@ category tree	admin	de	Kategoriebaum
 cell phone	addressbook	de	Mobiltelefon
 change addressbook when updating	addressbook	de	Zugehörigkeit zu Adressbuch bei der Aktualisierung ändern
 change all organisation members	addressbook	de	Alle Mitglieder der Organisation ändern
-charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
-charset for the vcard export	addressbook	de	Zeichensatz für den vCard Export
+charset for the csv export	addressbook	de	Zeichensatz für den CSV-Export
+charset for the vcard export	addressbook	de	Zeichensatz für den vCard-Export
 charset for the vcard import and export	addressbook	de	Zeichensatz für den vCard Import und Export
 charset of file	addressbook	de	Zeichensatz der Datei
 check all	addressbook	de	Alle auswählen
-choose an icon for this contact type	admin	de	Wählen Sie ein Symbol für diesen Kontakt Typ
+choose an icon for this contact type	admin	de	Wählen Sie ein Symbol für diesen Kontakt-Typ
 choose charset	addressbook	de	Zeichensatz auswählen
 choose owner of imported data	addressbook	de	Wählen Sie den Besitzer der importierten Daten
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	de	Wählen Sie einen vordefinierten Kartenanbieter aus oder geben Sie eine Url an mit folgenden Platzhaltern: %r = Strasse, %t = Stadt, %c = Land, %z = Postleitzahl
@@ -203,7 +203,7 @@ domestic	addressbook	de	Wohnung
 don't hide empty columns	addressbook	de	Leere Spalten nicht ausblenden
 download	addressbook	de	Herunterladen
 download export file (uncheck to debug output in browser)	addressbook	de	Download Export-Datei (zur Vorschau im Browser Ankreuzfeld frei lassen)
-download this contact as vcard file	addressbook	de	Diese Adresse als vCard Datei herunterladen
+download this contact as vcard file	addressbook	de	Diese Adresse als vCard-Datei herunterladen
 duplicate threshold	addressbook	de	Treffer für Anzeige als Duplikat
 duplicate warning	addressbook	de	Duplikat-Warnung
 duplicates	addressbook	de	Duplikate
@@ -313,7 +313,7 @@ import next set	addressbook	de	Nächsten Satz importieren
 import_instructions	addressbook	de	In Netscape: Öffnen Sie das Adressbuch und wählen Sie <b>Exportieren</b> aus dem Datei Menü aus. Die Dateien werden im LDIF Format exportiert.<p> In Outlook wählen Sie den Ordner Kontakte aus, wählen Sie <b>Importieren und Exportieren...</p> aus dem <b>Datei</b> Menü aus und Exportieren Sie die Kontakte als eine CSV Datei.<p> In Palm Desktop 4.0 oder größer, öffnen Sie Ihr Adressbuch und wählen Sie <b>Export</b> aus dem Datei-Menü aus. Die Datei wird im vCard-Format exportiert.
 importer's personal	addressbook	de	Persönliche Adressbuch des Importierenden
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	de	Importiert Kontakte aus einer CSV Datei in Ihr Adressbuch. CSV bedeutet Komma getrennte Werte. Sie können in dem Reiter Einstellungen auch ein anderes Trennzeichen wählen.
-imports contacts into your addressbook from a vcard file.	addressbook	de	Importiert Kontakte in Ihr Adressbuch von einer vCard Datei
+imports contacts into your addressbook from a vcard file.	addressbook	de	Importiert Kontakte in Ihr Adressbuch von einer vCard-Datei
 in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburtstag von %3.
 income	addressbook	de	Einkommen
 infolog	addressbook	de	InfoLog
@@ -504,7 +504,7 @@ unique id (uid)	addressbook	de	Eindeutige ID (UID)
 unique id<br />(to update existing records)	addressbook	de	Eindeutige ID<br />(um existierende Datensätze zu aktualisieren)
 unknown type %1, imported as %2	addressbook	de	Unbekannter Typ %!, als %2 importiert
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
-update fields by edited organisations?	admin	de	Welche Felder sollen  beim Bearbeiten von Organisationen aktualisiert werden?
+update fields by edited organisations?	admin	de	Welche Felder sollen beim Bearbeiten von Organisationen aktualisiert werden?
 updated	addressbook	de	Aktualisiert
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
 url (business)	addressbook	de	URL geschäftlich

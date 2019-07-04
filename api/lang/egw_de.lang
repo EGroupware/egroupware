@@ -478,7 +478,7 @@ empty file	common	de	Datei leeren
 enable javascript onchange submit	common	de	JavaScript absenden bei Änderung (onChange) aktivieren
 enable logging	groupdav	de	Logging einschalten
 enabled	common	de	Verfügbar
-enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	de	Schaltet das loggen des CalDAV/CardDAV Verkehrs zur Diagnose von Problemen mit Geräten ein.
+enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	de	Schaltet das loggen des CalDAV/CardDAV Daten-Verkehrs zur Diagnose von Problemen mit Geräten ein.
 end date	common	de	Enddatum
 end time	common	de	Endzeit
 enter '' for an empty default, nothing mean no default	common	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe

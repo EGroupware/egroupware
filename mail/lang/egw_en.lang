@@ -45,13 +45,13 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	en	Allow
 allow external images	mail	en	Allow external images
 allow external images from listed domains	mail	en	Allow external images from listed domains
-allow images from external sources in html emails	mail	en	allow images from external sources in html emails
-allow images from listed domains in html emails	mail	en	allow images from listed domains in html emails
+allow images from external sources in html emails	mail	en	allow images from external sources in HTML emails
+allow images from listed domains in html emails	mail	en	allow images from listed domains in HTML emails
 allow users to create further identities	mail	en	allow users to create further identities
 allways a new window	mail	en	allways a new window
 always	mail	en	Always
 always allow external sources from %1	mail	en	Always allow external sources from %1
-always show html emails	mail	en	always show html emails
+always show html emails	mail	en	always show HTML emails
 an error happend while trying to remove acl rights from the account %1!	mail	en	An error happend while trying to remove ACL rights from the account %1!
 and the rule with priority %1, now got the priority %2	mail	en	And the rule with priority %1, now got the priority %2
 any of	mail	en	any of
@@ -141,10 +141,10 @@ disabled!	mail	en	disabled!
 discard	mail	en	discard
 discard message	mail	en	Discard message
 display messages in multiple windows	mail	en	display messages in multiple windows
-display of html emails	mail	en	display of html emails
+display of html emails	mail	en	display of HTML emails
 display of identities	admin	en	display identities
 display only when no plain text is available	mail	en	display only when no plain text is available
-displaying html messages is disabled	mail	en	displaying html messages is disabled
+displaying html messages is disabled	mail	en	displaying HTML messages is disabled
 displaying plain messages is disabled	mail	en	displaying plain messages is disabled
 do not auto create folders	mail	en	do not auto create folders
 do not forward	mail	en	do not forward
@@ -193,7 +193,7 @@ empty trash and junk	mail	en	Empty Trash and Junk
 enable	mail	en	Enable
 enabled!	mail	en	enabled!
 encrypt	mail	en	Encrypt
-encrypt your message with smime certificate	mail	en	Encrypt your message with smime certificate
+encrypt your message with smime certificate	mail	en	Encrypt your message with S/MIME certificate
 encryption	mail	en	Encryption
 enter the name for the new folder:	mail	en	Enter the name for the new Folder:
 error saving %1!	mail	en	Error saving %1!
@@ -239,7 +239,7 @@ folder management ...	mail	en	Folder Management ...
 folder settings	mail	en	Folder settings
 for e.g.: mpeg	mail	en	for e.g.: mpeg
 for eg.: mpeg	mail	en	for eg.: mpeg
-force html	mail	en	force html
+force html	mail	en	force HTML
 force plain text	mail	en	force plain text
 forward	mail	en	Forward
 forward as attachment	mail	en	forward as attachment
@@ -267,7 +267,7 @@ hostname or ip	mail	en	Hostname or IP
 how often to check with the server for new mail	mail	en	How often to check with the server for new mail
 how should the available information on identities be displayed	admin	en	how should the available information on identities be displayed
 how to forward messages	mail	en	how to forward messages
-html	mail	en	html
+html	mail	en	HTML
 html mode	mail	en	HTML mode
 ident name	mail	en	Ident name
 ident name email	mail	en	Ident name [Email]
@@ -355,7 +355,7 @@ move to trash	mail	en	move to trash
 moved %1 message(s) from %2 to %3	mail	en	moved %1 message(s) from %2 to %3
 moving folders from one mailaccount to another is not supported	mail	en	Moving Folders from one mail account to another is not supported
 name of account	mail	en	Name of account
-never display html emails	mail	en	never display html emails
+never display html emails	mail	en	never display HTML emails
 never show	mail	en	never show
 new mail notification	mail	en	New mail notification
 new message type	mail	en	New message type
@@ -542,7 +542,7 @@ sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
 sieve script name	mail	en	sieve script name
 sieve server	mail	en	Sieve server
-sign your message with smime certificate	mail	en	Sign your message with smime certificate
+sign your message with smime certificate	mail	en	Sign your message with S/MIME certificate
 signature	mail	en	Signature
 signature at top	mail	en	signature at top
 signature position and visibility	mail	en	Signature position and visibility
@@ -557,8 +557,8 @@ source	mail	en	Source
 sources	mail	en	Sources
 spamtitian api url	mail	en	SpamTitian API URL
 spamtitian integration requires epl version	mail	en	SpamTitian integration requires EPL version
-start new messages with mime type plain/text or html?	mail	en	start new messages with mime type plain/text or html?
-start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	start reply messages with mime type plain/text or html or try to use the displayed format (default)?
+start new messages with mime type plain/text or html?	mail	en	start new messages with MIME-type plain/text or HTML?
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	start reply messages with MIME-type plain/text or HTML or try to use the displayed format (default)?
 step 1: imap - incoming mail	mail	en	Step 1: IMAP - incoming mail
 step 2: folder	mail	en	Step 2: Folder
 step 3: sieve - server side mail filtering	mail	en	Step 3: Sieve - server side mail filtering
@@ -592,7 +592,7 @@ the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 
 then	mail	en	THEN
 there is no imap server configured.	mail	en	There is no IMAP Server configured.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.
-this message is smime encrypted and password protected.	mail	en	This message is smime encrypted and password protected.
+this message is smime encrypted and password protected.	mail	en	This message is S/MIME encrypted and password protected.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
 to do	mail	en	to do
 toggle all folders view for %1	mail	en	Toggle all Folders view for %1
@@ -628,7 +628,7 @@ validate addresses on submit:	mail	en	Validate addresses on submit:
 validate selected addresses on submit:	mail	en	Validate selected addresses on submit:
 view full mail source	mail	en	View full Mail Source
 view header lines	mail	en	View header lines
-what do do with html email	mail	en	What do do with html email
+what do do with html email	mail	en	What do do with HTML email
 what order the list columns are in	mail	en	What order the list columns are in
 what to do when you delete a message	mail	en	what to do when you delete a message
 what to do when you send a message	mail	en	what to do when you send a message

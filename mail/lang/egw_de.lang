@@ -193,7 +193,7 @@ empty trash and junk	mail	de	Papierkorb und Spam-Ordner leeren
 enable	mail	de	aktivieren
 enabled!	mail	de	aktiviert!
 encrypt	mail	de	Verschlüsseln
-encrypt your message with smime certificate	mail	de	Verschlüsseln Sie Ihre Nachricht mit einem Smime-Zertifikat
+encrypt your message with smime certificate	mail	de	Verschlüsseln Sie Ihre Nachricht mit einem S/MIME-Zertifikat
 encryption	mail	de	Verschlüsselung
 enter the name for the new folder:	mail	de	Tragen Sie hier den Namen für den neuen Ordner ein:
 error saving %1!	mail	de	Fehler beim Speichern von %1!

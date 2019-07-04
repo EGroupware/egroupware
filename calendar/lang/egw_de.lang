@@ -484,7 +484,7 @@ rule	calendar	de	Regel
 sat	calendar	de	Sa
 save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	de	Termin als Ausnahme speichern - Einzelne Ausnahme löschen - Status oder Alarm dieses Tages bearbeiten
 saves the changes made	calendar	de	Speichert die Änderungen
-saves the event ignoring the conflict	calendar	de	Speichert den Konflikt ignorierend den Termin
+saves the event ignoring the conflict	calendar	de	Speichert den Termin trotz Konflikt
 scheduling conflict	calendar	de	Terminüberschneidung
 search string for the events	calendar	de	Suchtext für Termine
 select a %1	calendar	de	%1 auswählen
@@ -606,7 +606,7 @@ two weeks	calendar	de	zwei Wochen
 type of planner	calendar	de	Planer Typ
 unable to save	calendar	de	Speichern nicht möglich
 uninvited	calendar	de	Ausgeladen
-update calendar view immediately when navigation calendar in sidebox is changed	calendar	de	Kalenderansicht sofort aktualisieren, wenn der Navigationskalender in der Sidebox geändert wird.
+update calendar view immediately when navigation calendar in sidebox is changed	calendar	de	Kalenderansicht sofort aktualisieren, wenn der Navigationskalender in der Sidebar geändert wird.
 update timezones	common	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
