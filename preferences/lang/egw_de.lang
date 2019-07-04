@@ -24,6 +24,7 @@ charset for the csv export/import	preferences	de	Zeichensatz
 click to select a color	preferences	de	Anklicken um eine Farbe auszuwählen
 color	preferences	de	Farbe
 country	preferences	de	Land
+current password	preferences	de	Aktuelles Passwort
 custom login box color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe der Anmeldemaske, Vorgabe obige Farbe abgedunkelt
 custom sidebar menu active color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe des Seitenmenü, Vorgabe obige Farbe abgedunkelt
 dark moono theme	preferences	de	Dunkles Moono Schema
