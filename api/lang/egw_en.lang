@@ -43,7 +43,7 @@
 1 week	common	en	1 week
 13 (ntp)	admin	en	13 (ntp)
 15 minutes	common	en	15 minutes
-2-factor-authentication	api	en	2-Factor-Authentication
+2-factor-authentication	common	en	2-Factor-Authentication
 30 minutes	common	en	30 minutes
 30 seconds	common	en	30 seconds
 5 minutes	common	en	5 minutes
@@ -1159,7 +1159,7 @@ searchreplace	common	en	Searchreplace
 second	common	en	second
 section	common	en	Section
 securest	common	en	securest
-security & password	api	en	Security & Password
+security & password	common	en	Security & Password
 select	common	en	Select
 select "%1", if your client does not support multiple addressbooks.	groupdav	en	Select "%1", if your client does not support multiple addressbooks.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	en	Select "%1", if your client support groups, eg. OS X or iOS addressbook.
