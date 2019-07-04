@@ -128,7 +128,7 @@ function egw_exception_handler($e)
 		}
 		elseif (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->session) && method_exists($GLOBALS['egw'],'link'))
 		{
-			$message .= '<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.try_lang('Click here to resume your eGroupWare Session.').'</a></p>';
+			$message .= '<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.try_lang('Click here to resume your EGroupware Session.').'</a></p>';
 		}
 		if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->framework))
 		{
