@@ -408,7 +408,7 @@ class Account implements \ArrayAccess
 			return false;	// no imap host or credentials
 		}
 		// if we are not managing the mail-server, we do NOT need to check deliveryMode and accountStatus
-		if ($this->acc_smtp_type == __NAMESPACE__.'\\Imap')
+		if ($this->acc_smtp_type == __NAMESPACE__.'\\Smtp')
 		{
 			return true;
 		}
