@@ -367,7 +367,7 @@ class Sql extends Mail\Smtp
 		if ($return_extra)
 		{
 			$join .= ' LEFT JOIN '.self::TABLE.' quota ON quota.account_id='.Api\Accounts\Sql::TABLE.'.account_id AND quota.mail_type='.self::TYPE_QUOTA;
-			$cols .= ','.Api\Accounts\Sql::TABLE.'.account_id AS account_id,quota.mail_value AS quota';
+			$cols .= ','.Api\Accounts\Sql::TABLE.'.account_id AS account_id,ROUND(quota.mail_value,0) AS quota';
 		}
 		$mailboxes = array();
 		foreach($this->db->select(self::TABLE, $cols,
