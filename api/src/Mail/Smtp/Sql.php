@@ -366,8 +366,8 @@ class Sql extends Mail\Smtp
 		}
 		if ($return_extra)
 		{
-			$join .= ' JOIN '.self::TABLE.' quota ON quota.account_id='.Api\Accounts\Sql::TABLE.'.account_id';
-			$cols .= ',account_id,quota.mail_value AS quota';
+			$join .= ' LEFT JOIN '.self::TABLE.' quota ON quota.account_id='.Api\Accounts\Sql::TABLE.'.account_id AND quota.mail_type='.self::TYPE_QUOTA;
+			$cols .= ','.Api\Accounts\Sql::TABLE.'.account_id AS account_id,quota.mail_value AS quota';
 		}
 		$mailboxes = array();
 		foreach($this->db->select(self::TABLE, $cols,
@@ -384,7 +384,7 @@ class Sql extends Mail\Smtp
 			{
 				$mailboxes[$row['uid']] = [
 					'mbox'   => $mailbox,
-					'quota'  => $row['quota'] ? $row['quota'] : $GLOBALS['egw_info']['server']['default_quota'],
+					'quota'  => !empty($row['quota']) ? $row['quota'] : $GLOBALS['egw_info']['server']['default_quota'],
 					'groups' => array_values($GLOBALS['egw']->accounts->memberships($row['account_id'])),
 				];
 			}
