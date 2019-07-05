@@ -234,6 +234,12 @@ while(($arg = array_shift($argv)))
 	{
 		$config[$name] = array_shift($argv);
 
+		// replace empty pw with a random one
+		if ($name === 'db_pass' && $config[$name] === '')
+		{
+			$config[$name] = randomstring();
+		}
+
 		switch($name)
 		{
 			case 'auth_type':
