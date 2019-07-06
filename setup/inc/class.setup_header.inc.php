@@ -8,7 +8,6 @@
  * @author Miles Lott <milos@groupwhere.org>
  * @author Tony Puglisi (Angles)
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -212,7 +211,10 @@ class setup_header
 		$var = Array();
 		foreach($egw_info['server'] as $name => $value)
 		{
-			if ($name == 'header_admin_password' && $value && !self::is_hashed($value)) $value = Api\Auth::encrypt_sql($value, $most_secure_pw_hash);
+			if ($name == 'header_admin_password' && $value && !self::is_hashed($value))
+			{
+				$value = Api\Auth::encrypt_sql($value, $most_secure_pw_hash);
+			}
 			if ($name == 'versions')
 			{
 				$name = 'mcrypt_version';

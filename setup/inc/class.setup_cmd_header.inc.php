@@ -1,13 +1,12 @@
 <?php
 /**
- * eGgroupWare setup - create or update the header.inc.php
+ * EGgroupware setup - create or update the header.inc.php
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -366,6 +365,6 @@ class setup_cmd_header extends setup_cmd
 		{
 			$var =& $var[$name];
 		}
-		if (true) $var = strpos($name,'passw') !== false ? md5($value) : $value;
+		if (true) $var = $value;
 	}
 }
