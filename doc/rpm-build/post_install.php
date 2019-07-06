@@ -372,6 +372,9 @@ if (!isset($GLOBALS['egw_domain']) ||  $config['domain'] !== 'default' && !isset
 		' --domain '.escapeshellarg($config['domain'].','.$config['db_name'].','.$config['db_user'].','.$config['db_pass'].
 			','.$config['db_type'].','.$config['db_host'].','.$config['db_port']);
 	run_cmd($setup_header);
+	// fix permissions of header.inc.php
+	chown($config['header'], $config['webserver_user']);
+	chmod($config['header'], 0600);
 
 	// install egroupware
 	$setup_install = $setup_cli.' --install '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd'].','.$config['backup'].','.$config['charset'].','.$config['lang'])
