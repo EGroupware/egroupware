@@ -7,7 +7,6 @@
  * @author Miles Lott <milos@groupwhere.org>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -294,9 +293,8 @@ foreach($setup_info as $app => $app_data)
 $composer = json_decode(file_get_contents(EGW_SERVER_ROOT.'/composer.json'), true);
 foreach($composer['require'] as $name => $version)
 {
-	if (substr($name, 0, 4) === 'ext-')// && !isset($checks[substr($name, 4)]))
+	if (substr($name, 0, 4) === 'ext-' && !isset($checks[substr($name, 4)]))
 	{
-$name = 'ext-hugo';
 		$checks[substr($name, 4)] = [
 			'func' => 'extension_check',
 			'error' => lang('The %1 extension is needed from: %2.', substr($name, 4), 'EGroupware'),
