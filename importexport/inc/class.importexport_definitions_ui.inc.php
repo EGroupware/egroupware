@@ -160,19 +160,18 @@ class importexport_definitions_ui
 			}
 		}
 
-		if(!is_array($content['nm'])) {
-			$content['nm'] = array(
-				'get_rows'	=> 'importexport.importexport_definitions_ui.get_rows',
-				'no_cat'	=> true,
-				'no_filter'	=> true,
-				'no_filter2'	=> true,
-				'csv_fields'	=> false,	// Disable CSV export, uses own export
-				'default_cols'  => '!actions',  // switch legacy actions column and row off by default
-				'row_id'	=> 'definition_id',
-				'placeholder_actions' => array('add')
-			);
-			if($_GET['application']) $content['nm']['col_filter']['application'] = $_GET['application'];
-		}
+		$content['nm'] = array(
+			'get_rows'	=> 'importexport.importexport_definitions_ui.get_rows',
+			'no_cat'	=> true,
+			'no_filter'	=> true,
+			'no_filter2'	=> true,
+			'csv_fields'	=> false,	// Disable CSV export, uses own export
+			'default_cols'  => '!actions',  // switch legacy actions column and row off by default
+			'row_id'	=> 'definition_id',
+			'placeholder_actions' => array('add')
+		);
+		if($_GET['application']) $content['nm']['col_filter']['application'] = $_GET['application'];
+
 		if(Api\Cache::getSession('importexport', 'index'))
 		{
 			$content['nm'] = array_merge($content['nm'], Api\Cache::getSession('importexport', 'index'));
@@ -427,7 +426,9 @@ class importexport_definitions_ui
 
 	public function get_rows(&$query, &$rows, &$readonlys) {
 		$rows = array();
-		Api\Cache::setSession('importexport', 'index', $query);
+		Api\Cache::setSession('importexport', 'index', array_intersect_key($query, array_flip(array(
+			'col_filter', 'search', 'filter', 'filter2'
+		))));
 
 		// Special handling for allowed users 'private'
 		if($query['col_filter']['allowed_users'] == 'private')
