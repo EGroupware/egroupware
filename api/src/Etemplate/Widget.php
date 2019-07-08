@@ -382,7 +382,9 @@ class Widget
 					}
 				}
 			}
+			if (self::$widget_registry['htmlarea'] === Api\Etemplate\Widget\HtmlArea::class)
 			Api\Cache::setInstance('etemplate', 'widget_registry', self::$widget_registry, 3600);
+			else error_log(__METHOD__."() wrong class for Htmlarea: ".function_backtrace ());
 		}
 		else
 		{
