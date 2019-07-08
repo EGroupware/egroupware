@@ -637,8 +637,8 @@ php version	admin	de	PHP Version
 phpinfo	admin	de	PHP-Informationen
 phrase	admin	de	Phrase
 phrase deleted	admin	de	Phrase gelöscht
-please check email.  it gets automatically deleted if email integration is used.	admin	en	Bitte überprüfen Sie das E-Mailkonto des Benutzers, es wird automatisch gelöscht, wenn E-Mail-Integration verwendet wird.
-please check home folder.  all files and folders of the user will be unusable by other users.	admin	en	Bitte überprüfen Sie die Home-Ordner! Alle Dateien und Ordner des Benutzers werden für andere Benutzer unbrauchbar.
+please check email.  it gets automatically deleted if email integration is used.	admin	de	Bitte überprüfen Sie das E-Mailkonto des Benutzers, es wird automatisch gelöscht, wenn E-Mail-Integration verwendet wird.
+please check home folder.  all files and folders of the user will be unusable by other users.	admin	de	Bitte überprüfen Sie die Home-Ordner! Alle Dateien und Ordner des Benutzers werden für andere Benutzer unbrauchbar.
 please enter a name	admin	de	Bitte einen Namen eingeben
 please enter a name for that server !	admin	de	Bitte einen Namen für diesen Server eingeben!
 please run setup to become current	admin	de	Bitte Setup ausführen um die Installation zu aktualisieren
