@@ -379,6 +379,7 @@ class Link extends Link\Storage
 				if (is_array($id1) || !$id1)		// create link only in $id1 array
 				{
 					self::link($app1, $id1, $link['app'], $link['id'], $link['remark'],$link['owner'],$link['lastmod']);
+					next($app2);
 					continue;
 				}
 				switch ($link['app'])
