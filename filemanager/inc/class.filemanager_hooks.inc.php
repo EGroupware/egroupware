@@ -293,7 +293,7 @@ class filemanager_hooks
 				'help'   => lang('Defines how to open a merge print document'),
 				'name'   => 'merge_open_handler',
 				'values' => $merge_open_handler,
-				'default' => $GLOBALS['egw_info']['user']['apps']['collabora'] ? 'collabora' : 'download',
+				'default' => file_exists(EGW_SERVER_ROOT.'/collabora') ? 'collabora' : 'download',
 			),
 			'document_doubleclick_action' => array (
 				'type'   => 'select',
@@ -301,7 +301,7 @@ class filemanager_hooks
 				'help'   => lang('Defines how to handle double click action on a document file. Images are always opened in the expose-view and emails with email application. All other mime-types are handled by the browser itself.'),
 				'name'   => 'document_doubleclick_action',
 				'values' => $document_doubleclick_action,
-				'default' => $GLOBALS['egw_info']['user']['apps']['collabora'] ? 'collabora' : 'download',
+				'default' => file_exists(EGW_SERVER_ROOT.'/collabora') ? 'collabora' : 'download',
 			)
 		);
 
@@ -344,18 +344,17 @@ class filemanager_hooks
 	/**
 	 * Gets registered links for VFS file editor
 	 *
-	 * @return array links
+	 * @return array|null links
 	 */
 	static function getEditorLink()
 	{
-		$implemented = Api\Hooks::implemented('filemanager-editor-link');
-		foreach ($implemented as $app)
+		foreach (Api\Hooks::process('filemanager-editor-link', 'collabora') as $app => $link)
 		{
-			if (($access = \EGroupware\Api\Vfs\Links\StreamWrapper::check_app_rights($app)) &&
-					($l = Api\Hooks::process('filemanager-editor-link',$app, true)) && $l[$app]
-					&& $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_doubleclick_action'] == $app)
+			if ($link && ($access = \EGroupware\Api\Vfs\Links\StreamWrapper::check_app_rights($app)) &&
+				(empty($GLOBALS['egw_info']['user']['preferences']['filemanager']['document_doubleclick_action']) ||
+					$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_doubleclick_action'] == $app))
 			{
-				$link = $l[$app];
+				break;
 			}
 		}
 		return $link;
