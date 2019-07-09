@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3244e151a2774a6fbe65bac8aa0bd3be",
+    "content-hash": "0c9c0c05b73f827512eeb4272326ff71",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -736,6 +736,38 @@
             "time": "2019-02-22T10:09:08+00:00"
         },
         {
+            "name": "egroupware/bookmarks",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/bookmarks.git",
+                "reference": "a009853e9285d7c837e905fdf49211ca85a37b17"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/a009853e9285d7c837e905fdf49211ca85a37b17",
+                "reference": "a009853e9285d7c837e905fdf49211ca85a37b17",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                }
+            ],
+            "description": "EGroupware app to manage bookmarks",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-07-09T08:25:03+00:00"
+        },
+        {
             "name": "egroupware/collabora",
             "version": "dev-master",
             "source": {
@@ -874,6 +906,38 @@
             "time": "2018-06-21T10:14:03+00:00"
         },
         {
+            "name": "egroupware/news_admin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/news_admin.git",
+                "reference": "dc00bc2958d396ac53c5d8b65ea4885b0d6bf3f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/dc00bc2958d396ac53c5d8b65ea4885b0d6bf3f1",
+                "reference": "dc00bc2958d396ac53c5d8b65ea4885b0d6bf3f1",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                }
+            ],
+            "description": "EGroupware app to supply and aggregate RSS/Atom feeds",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-07-09T08:25:03+00:00"
+        },
+        {
             "name": "egroupware/openid",
             "version": "dev-master",
             "source": {
@@ -961,6 +1025,55 @@
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
             "time": "2019-06-13T17:23:18+00:00"
+        },
+        {
+            "name": "egroupware/registration",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/registration.git",
+                "reference": "0347a76d200317610202847825ff1d5650e93fd8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/0347a76d200317610202847825ff1d5650e93fd8",
+                "reference": "0347a76d200317610202847825ff1d5650e93fd8",
+                "shasum": ""
+            },
+            "require": {
+                "egroupware/egroupware": "self.version"
+            },
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                },
+                {
+                    "name": "Hadi Nategh",
+                    "email": "hn@egroupware.org"
+                },
+                {
+                    "name": "Nathan Gray",
+                    "email": "ng@egroupware.org"
+                },
+                {
+                    "name": "Padraic Renaghan"
+                },
+                {
+                    "name": "Joseph Engo"
+                },
+                {
+                    "name": "Michael Totschnig"
+                }
+            ],
+            "description": "EGroupware app to allow self-registration of users",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2019-07-09T08:25:03+00:00"
         },
         {
             "name": "egroupware/rocketchat",
@@ -3878,9 +3991,12 @@
     "stability-flags": {
         "egroupware/activesync": 20,
         "egroupware/adodb-php": 20,
+        "egroupware/bookmarks": 20,
         "egroupware/collabora": 20,
+        "egroupware/news_admin": 20,
         "egroupware/openid": 20,
         "egroupware/projectmanager": 20,
+        "egroupware/registration": 20,
         "egroupware/rocketchat": 20,
         "egroupware/status": 20,
         "egroupware/tracker": 20
