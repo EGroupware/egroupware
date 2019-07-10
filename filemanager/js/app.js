@@ -1226,6 +1226,21 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
+	 * View the link from an existing share
+	 * (EPL only)
+	 *
+	 * @param {egwAction} _action The shareLink action
+	 * @param {egwActionObject[]} _senders The row clicked on
+	 */
+	view_link: function(_action, _senders)
+	{
+		var id = egw.dataGetUIDdata(_senders[0].id).data.share_id;
+		egw.json('stylite_filemanager::ajax_view_link', [id],
+			this._share_link_callback, this, true, this).sendRequest();
+		return true;
+	},
+
+	/**
 	 * This function copies the selected file/folder entry as webdav link into clipboard
 	 *
 	 * @param {object} _action egw actions

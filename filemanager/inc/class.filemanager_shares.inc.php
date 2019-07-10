@@ -121,6 +121,25 @@ class filemanager_shares extends filemanager_ui
 	{
 		$group = 1;
 		$actions = array(
+
+			'shareLink' => array(
+				'caption' => lang('View link'),
+				'group' => $group,
+				'icon' => 'share',
+				'allowOnMultiple' => false,
+				'default' => true,
+				'onExecute' => 'javaScript:app.filemanager.view_link',
+				'disableIfNoEPL' => true
+			),
+			'shareEdit' => array(
+				'caption' => lang('Edit Share'),
+				'group' => 1,
+				'icon' => 'edit',
+				'allowOnMultiple' => false,
+				'popup' => '400x200',
+				'url' => 'menuaction=stylite.stylite_filemanager.edit_share&share_id=$id',
+				'disableIfNoEPL' => true
+			),
 			'delete' => array(
 				'caption' => lang('Delete'),
 				'group' => ++$group,
