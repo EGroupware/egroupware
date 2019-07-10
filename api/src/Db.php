@@ -1136,7 +1136,8 @@ class Db
 					$create .= ' DEFAULT CHARACTER SET '.$this->Link_ID->charset2mysql[$charset].';';
 				}
 				$sqls[] = $create;
-				$sqls[] = "GRANT ALL ON `$currentDatabase`.* TO $currentUser@'$grant_host' IDENTIFIED BY ".$this->quote($currentPassword);
+				$sqls[] = "CREATE USER $currentUser@'$grant_host' IDENTIFIED BY ".$this->quote($currentPassword);
+				$sqls[] = "GRANT ALL PRIVILEGES ON `$currentDatabase`.* TO $currentUser@'$grant_host'";
 				break;
 			default:
 				throw new Exception\WrongParameter(__METHOD__."(user=$adminname, \$pw) not yet implemented for DB-type '$this->Type'");
