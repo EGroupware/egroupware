@@ -16,6 +16,22 @@
  */
 class admin_export_users_csv implements importexport_iface_export_plugin
 {
+	protected $lookups = array(
+		'account_status'	=> array('A' => 'Active', '' => 'Disabled', 'D' => 'Disabled'),
+	);
+
+	public function __construct() {
+		foreach($this->lookups as $select => &$options)
+		{
+			foreach($options as $key => &$label)
+			{
+				if(is_string($label))
+				{
+					$label = lang($label);
+				}
+			}
+		}
+	}
 	/**
 	 * Exports records as defined in $_definition
 	 *
@@ -38,10 +54,6 @@ class admin_export_users_csv implements importexport_iface_export_plugin
 		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
 
-		$lookups = array(
-			'account_status'	=> array('A' => lang('Active'), '' => lang('Disabled'), 'D' => lang('Disabled')),
-		);
-
 		// $_record is an array, that's what search() returns
 		foreach ($selection as $_record)
 		{
@@ -49,7 +61,7 @@ class admin_export_users_csv implements importexport_iface_export_plugin
 			if($options['convert'])
 			{
 				$never_expires = ($record->account_expires == -1);
-				importexport_export_csv::convert($record, admin_egw_user_record::$types, 'admin', $lookups);
+				importexport_export_csv::convert($record, admin_egw_user_record::$types, 'admin', $this->lookups);
 				if($never_expires) $record->account_expires = 'never';  // Has to be 'never' for admin_cmd_edit_user to parse it
 			}
 			else
@@ -137,5 +149,13 @@ class admin_export_users_csv implements importexport_iface_export_plugin
 	public static function get_egw_record_class()
 	{
 		return 'admin_egw_user_record';
+	}
+
+	public function get_filter_fields(&$fields)
+	{
+		$fields['account_primary_group']['account_type'] = 'groups';
+		$fields['account_groups']['account_type'] = 'groups';
+
+		$fields['account_status']['values'] = $this->lookups['account_status'];
 	}
 }
