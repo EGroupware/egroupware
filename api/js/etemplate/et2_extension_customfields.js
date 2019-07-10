@@ -489,6 +489,10 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 	},
 	_setup_select_account: function(field_name, field, attrs) {
 		attrs.empty_label = egw.lang('Select');
+		if(field.account_type)
+		{
+			attrs.account_type = field.account_type;
+		}
 		return this._setup_select(field_name, field, attrs);
 	},
 
