@@ -1081,12 +1081,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "426212670297a0b2353ca8242940898e2cfd7dc2"
+                "reference": "800913216736cc1319af4b04a975df32fcce8904"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/426212670297a0b2353ca8242940898e2cfd7dc2",
-                "reference": "426212670297a0b2353ca8242940898e2cfd7dc2",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/800913216736cc1319af4b04a975df32fcce8904",
+                "reference": "800913216736cc1319af4b04a975df32fcce8904",
                 "shasum": ""
             },
             "require": {
@@ -1113,7 +1113,7 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-08T13:26:20+00:00"
+            "time": "2019-07-11T15:47:23+00:00"
         },
         {
             "name": "egroupware/status",
