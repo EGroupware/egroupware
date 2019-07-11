@@ -15,7 +15,7 @@
 				<row>
 					<description value="Poll interval"/>
 					<select id="newsettings[popup_poll_interval]">
-						<option value="5">5secs</option>
+						<option value="5">5 seconds</option>
 						<option value="60">1 {minute}</option>
 						<option value="120">2 {minutes}</option>
 						<option value="300">5 {minutes}</option>
