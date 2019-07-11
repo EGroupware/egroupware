@@ -389,6 +389,7 @@ class Sharing
 	 */
 	public static function get_actions($appname, $group = 6)
 	{
+		Translation::add_app('api');
 		$actions = array(
 		'share' => array(
 				'caption' => lang('Share'),
