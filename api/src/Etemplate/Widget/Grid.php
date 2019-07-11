@@ -95,7 +95,7 @@ class Grid extends Box
 			$expand['cname'] = $cname;
 		}
 
-		if (method_exists($this, $method_name))
+		if (is_string($method_name) && method_exists($this, $method_name))
 		{
 			call_user_func_array(array($this, $method_name), $params);
 		}

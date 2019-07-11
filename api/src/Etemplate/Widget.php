@@ -534,7 +534,7 @@ class Widget
 			//error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'=".array2string($disabled).": NOT running");
 			return;
 		}
-		if (method_exists($this, $method_name))
+		if (is_string($method_name) && method_exists($this, $method_name))
 		{
 			// Some parameter checking to avoid fatal errors
 			$call = true;
