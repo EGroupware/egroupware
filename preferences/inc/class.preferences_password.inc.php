@@ -71,7 +71,6 @@ class preferences_password
 							if (($errors = self::do_change($content['password'], $content['n_passwd'], $content['n_passwd_2'])))
 							{
 								Framework::message(implode("\n", $errors), 'error');
-								$content = array();
 							}
 							else
 							{
