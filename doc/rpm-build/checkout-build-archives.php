@@ -43,7 +43,7 @@ $config = array(
 	'all-add' => array('contrib'),
 	// diverse binaries we need
 	'svn' => trim(`which svn`),
-	'tar' => trim(`which tar`),
+	'tar' => trim(`which gnutar` ?: `which tar`),	// tar on MacOS does not support --owner or --group
 	'mv' => trim(`which mv`),
 	'rm' => trim(`which rm`),
 	'zip' => trim(`which zip`),
@@ -68,7 +68,7 @@ $config = array(
 	'upload' => '$sourcedir/*egroupware-$version.$packaging*',
 	'copychangelog' => '$sourcedir/README', //'$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
-	'run' => array('checkout','editchangelog','tag','copy','virusscan','create','sign','obs','copychangelog'),
+	'run' => array('checkout','editchangelog','tag','copy','virusscan','create','sign',/*'obs',*/'copychangelog','release'),
 	'patchCmd' => '# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
 	'github_user' => 'ralfbecker',	// Github user for following token
 	'github_token' => '',	// Github repo personal access token from above user
@@ -411,12 +411,17 @@ function do_release()
 	// push local changes to Github incl. tag (tags of apps are already pushed by do_tag)
 	if ($verbose) echo "Pushing changes and tags\n";
 	chdir($config['checkoutdir']);
-	run_cmd($config['git'].' push');
+	// gives error "fatal: you are not on a branch" run_cmd($config['git'].' push');
 	$tag = config_translate('tag');
 	run_cmd($config['git'].' push -f origin '.$tag);
 	// checkout release-branch again (we are on the tag!)
-	run_cmd($config['git'].' checkout '.$config['version']);
+	run_cmd($config['git'].' checkout '.'master');// we have no 19.1 branch yet $config['version']);
 
+	if (!empty($config['github_user']) || empty($config['github_token']))
+	{
+		echo "GitHub token for '$config[github_user]': ";
+		$config['github_token'] = readline();
+	}
 	if (empty($config['github_user']) || empty($config['github_token']))
 	{
 		throw new Exception("No personal Github user or access token specified (--github_token)!");
@@ -1140,7 +1145,8 @@ function do_copy()
 	catch (Exception $e) {
 		// catch failures to pop stash, before throwing exception
 	}
-	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("git stash pop");
+	$output = null;
+	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("git stash pop", $output, 1);	// do not fail, if there's nothing to pop
 	if (isset($e)) throw $e;
 
 	if (($cmd = config_translate('patchCmd')) && $cmd[0] != '#')
@@ -1152,7 +1158,7 @@ function do_copy()
 	echo "Fixing permissions\n";
 	chdir($config['egw_buildroot'].'/'.$config['aliasdir']);
 	run_cmd('/bin/chmod -R a-x,u=rwX,g=rX,o=rX .');
-	run_cmd('/bin/chmod +x */*cli.php phpgwapi/cron/*.php doc/rpm-build/*.php');
+	run_cmd('/bin/chmod +x */*cli.php doc/rpm-build/*.php');
 }
 
 /**
