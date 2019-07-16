@@ -1,3 +1,17 @@
+egroupware-epl (19.1.20190716) hardy; urgency=low
+
+  * First release-candidate for 19.1 with following major changes
+  * Integration of Rocket.Chat an open-source chat server with native clients for all plattforms
+  * GDPR implementation facilitated by new policy app (EPL only)
+  * Full logging of all administrative actions incl. who requested them
+  * Status app to show users logged into EGroupware or Rocket.Chat and allowing to interact with them
+  * OpenID Connect / OAuth2 server as EGroupware app used to integrate Rocket.Chat
+  * Two-Factor-Authentication to secure EGroupware with time-based one-time passwords
+  * New colored default theme and many usability improvements in all apps
+  * Installation through Docker container also used by DEB and RPM packages
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 16 Jul 2019 09:29:43 +0200
+
 egroupware-epl (17.1.20190529) hardy; urgency=low
 
   * Admin: white-list IP addresses from blocking or set higher number of attempts
