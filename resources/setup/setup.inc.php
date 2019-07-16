@@ -12,7 +12,7 @@
 
 $setup_info['resources']['name']	= 'resources';
 $setup_info['resources']['title']	= 'Resources';
-$setup_info['resources']['version']	= '17.1';
+$setup_info['resources']['version']	= '19.1';
 $setup_info['resources']['app_order']	= 5;
 $setup_info['resources']['tables']	= array('egw_resources','egw_resources_extra');
 $setup_info['resources']['enable']	= 1;
@@ -37,5 +37,5 @@ $setup_info['resources']['hooks']['settings'] = 'resources_hooks::settings';
 
 $setup_info['resources']['depends'][]	= array(
 	 'appname' => 'api',
-	 'versions' => Array('17.1')
+	 'versions' => Array('19.1')
 );

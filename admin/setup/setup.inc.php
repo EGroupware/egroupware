@@ -9,7 +9,7 @@
  */
 
 $setup_info['admin']['name']      = 'admin';
-$setup_info['admin']['version']   = '18.1.001';
+$setup_info['admin']['version']   = '19.1';
 $setup_info['admin']['app_order'] = 1;
 $setup_info['admin']['tables']    = array('egw_admin_queue','egw_admin_remote');
 $setup_info['admin']['enable']    = 1;
@@ -40,5 +40,5 @@ $setup_info['admin']['hooks']['addressbook_edit'] = 'admin.admin_account.address
 // Dependencies for this app to work
 $setup_info['admin']['depends'][] = array(
 	'appname' => 'api',
-	'versions' => Array('17.1')
+	'versions' => Array('19.1')
 );

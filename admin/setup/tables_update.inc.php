@@ -269,3 +269,12 @@ function admin_upgrade18_1()
 	return $GLOBALS['setup_info']['admin']['currentver'] = '18.1.001';
 }
 
+/**
+ * Bump version to 19.1
+ *
+ * @return string
+ */
+function admin_upgrade18_1_001()
+{
+	return $GLOBALS['setup_info']['admin']['currentver'] = '19.1';
+}

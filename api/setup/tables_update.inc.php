@@ -612,3 +612,12 @@ function api_upgrade17_9_001()
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.9.002';
 }
 
+/**
+ * Bump version to 19.1
+ *
+ * @return string
+ */
+function api_upgrade17_9_002()
+{
+	return $GLOBALS['setup_info']['api']['currentver'] = '19.1';
+}

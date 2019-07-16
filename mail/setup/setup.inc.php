@@ -6,13 +6,13 @@
  * @package mail
  * @subpackage setup
  * @author EGroupware GmbH [info@egroupware.org]
- * @copyright (c) 2013-17 by EGroupware GmbH <info-AT-egroupware.org>
+ * @copyright (c) 2013-19 by EGroupware GmbH <info-AT-egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
 $setup_info['mail']['name']      	= 'mail';
 $setup_info['mail']['title']     	= 'mail';
-$setup_info['mail']['version']     	= '17.1';
+$setup_info['mail']['version']     	= '19.1';
 $setup_info['mail']['app_order'] 	= 2;
 $setup_info['mail']['enable']    	= 1;
 $setup_info['mail']['index']    	= 'mail.mail_ui.index&ajax=true';
@@ -41,7 +41,7 @@ $setup_info['mail']['hooks']['status-get_actions'] = 'mail_hooks::get_status_act
 /* Dependencies for this app to work */
 $setup_info['mail']['depends'][] = array(
 	'appname'  => 'api',
-	'versions' => Array('17.1')
+	'versions' => Array('19.1')
 );
 // installation checks for mail
 $setup_info['mail']['check_install'] = array(

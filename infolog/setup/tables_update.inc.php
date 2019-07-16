@@ -6,9 +6,8 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -485,7 +484,7 @@ function infolog_upgrade1_2_001()
 	$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_datecompleted=info_datemodified,info_percent=100 WHERE info_status IN ('done','billed','100%')",__LINE__,__FILE__);
 
 	// remove the percentages from the custom stati, if they exist
-	$config =& CreateObject('phpgwapi.config','infolog');
+	$config = new Api\Config('infolog');
 	$config->read_repository();
 	if (is_array($config->config_data['status']['task']))
 	{
@@ -504,7 +503,7 @@ function infolog_upgrade1_2_002()
 	$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_status='ongoing' WHERE info_status='will-call'",__LINE__,__FILE__);
 
 	// remove the call and will-call from the custom stati, if they exist
-	$config =& CreateObject('phpgwapi.config','infolog');
+	$config = new Api\Config('infolog');
 	$config->read_repository();
 	if (is_array($config->config_data['status']['phone']))
 	{
@@ -1100,3 +1099,12 @@ function infolog_upgrade17_1()
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '17.1.001';
 }
 
+/**
+ * Bump version to 19.1
+ *
+ * @return string
+ */
+function infolog_upgrade17_1_001()
+{
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '19.1';
+}

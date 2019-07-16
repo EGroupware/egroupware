@@ -6,11 +6,10 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 $setup_info['calendar']['name']    = 'calendar';
-$setup_info['calendar']['version'] = '17.1.003';
+$setup_info['calendar']['version'] = '19.1';
 $setup_info['calendar']['app_order'] = 3;
 $setup_info['calendar']['enable']  = 1;
 $setup_info['calendar']['index']   = 'calendar.calendar_uiviews.index&ajax=true';
@@ -51,6 +50,6 @@ $setup_info['calendar']['hooks']['notifications_actions'] = 'calendar_hooks::not
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(
 	 'appname' => 'api',
-	 'versions' => Array('17.1')
+	 'versions' => Array('19.1')
 );
 

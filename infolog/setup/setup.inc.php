@@ -6,12 +6,12 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
 $setup_info['infolog']['name']      = 'infolog';
-$setup_info['infolog']['version']   = '17.1.001';
+$setup_info['infolog']['version']   = '19.1';
 $setup_info['infolog']['app_order'] = 5;
 $setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra','egw_infolog_users');
 $setup_info['infolog']['enable']    = 1;
@@ -62,6 +62,6 @@ $setup_info['infolog']['hooks']['change_account_ids'] = 'infolog_customfields::c
 // Dependencies for this app to work
 $setup_info['infolog']['depends'][] = array(
 	'appname' => 'api',
-	'versions' => Array('17.1')
+	'versions' => Array('19.1')
 );
 

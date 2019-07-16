@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
  * @subpackage setup
- * @copyright (c) 2005-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
@@ -16,7 +16,7 @@ if (!defined('TIMESHEET_APP'))
 }
 
 $setup_info[TIMESHEET_APP]['name']      = TIMESHEET_APP;
-$setup_info[TIMESHEET_APP]['version']   = '17.1.001';
+$setup_info[TIMESHEET_APP]['version']   = '19.1';
 $setup_info[TIMESHEET_APP]['app_order'] = 5;
 $setup_info[TIMESHEET_APP]['tables']    = array('egw_timesheet','egw_timesheet_extra');
 $setup_info[TIMESHEET_APP]['enable']    = 1;
@@ -49,5 +49,5 @@ $setup_info[TIMESHEET_APP]['hooks']['acl_rights'] = 'timesheet_hooks::acl_rights
 /* Dependencies for this app to work */
 $setup_info[TIMESHEET_APP]['depends'][] = array(
 	 'appname' => 'api',
-	 'versions' => Array('17.1')
+	 'versions' => Array('19.1')
 );

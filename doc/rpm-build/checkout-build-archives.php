@@ -17,15 +17,15 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 
 $verbose = 0;
 $config = array(
-	'packagename' => 'egroupware-epl',
-	'version' => '17.1',        // '17.1'
+	'packagename' => 'egroupware',
+	'version' => '19.1',        // '19.1'
 	'packaging' => date('Ymd'), // '20160520'
 	'branch'  => 'master',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
-	'checkoutdir' => realpath(__DIR__.'/../..'),
-	'egw_buildroot' => '/tmp/build_root/epl_17.1_buildroot',
-	'sourcedir' => '/home/download/stylite-epl/egroupware-epl-17.1',
-	/* svn-config currently not used, as we use .mrconfig to define modules and urls
+	'checkoutdir' => '~/epl-19.1-checkout',	//realpath(__DIR__.'/../..'),
+	'egw_buildroot' => '/tmp/build_root/epl_19.1_buildroot',
+	'sourcedir' => '~/download/archives/egroupware-epl-19.1',
+	/* svn-config no longer used
 	'svntag' => 'tags/$version.$packaging',
 	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
 	'stylitebase' => 'svn+ssh://stylite@svn.stylite.de/stylite',
@@ -33,13 +33,14 @@ $config = array(
 	'svnalias' => 'aliases/default-ssh',    // default alias
 	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro', '$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	*/
-	'extra' => array('functions' => array('stylite'), 'esyncpro', 'archive',	// create an extra archive for given apps
+	'extra' => array('functions' => array('stylite'), 'esyncpro', 'policy', 'archive',	// create an extra archive for given apps
 		// these apps are placed in egroupware-epl-contrib archive
-		'contrib' => array('phpgwapi', 'etemplate', 'jdots', 'phpbrain', 'wiki', 'sambaadmin', 'sitemgr', 'phpfreechat')),
+		//'contrib' => array('phpgwapi', 'etemplate', 'jdots', 'phpbrain', 'wiki', 'sitemgr')
+	),
 	'aliasdir' => 'egroupware',             // directory created by the alias
 	'types' => array('tar.bz2','tar.gz','zip','all.tar.bz2'),
 	// add given extra-apps or (uncompressed!) archives to above all.tar.bz2 archive
-	'all-add' => array('contrib', '/home/stylite/epl-trunk/phpfreechat_data_public.tar'),
+	'all-add' => array('contrib'),
 	// diverse binaries we need
 	'svn' => trim(`which svn`),
 	'tar' => trim(`which tar`),
@@ -56,7 +57,7 @@ $config = array(
 	'composer' => trim(`which composer.phar`),
 	'after-checkout' => 'rm -rf */source */templates/*/source',
 	'packager' => 'build@egroupware.org',
-	'obs' => '/home/stylite/obs/stylite-epl-trunk',
+	'obs' => '~/build.opensuse.org/server:eGroupWare:trunk/egroupware-docker',
 	'obs_package_alias' => '',	// name used in obs package, if different from packagename
 	'changelog' => false,   // eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@egroupware.org>',
@@ -64,7 +65,7 @@ $config = array(
 	//'sfuser' => 'ralfbecker',
 	//'release' => '$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
 	// what gets uploaded with upload
-	'upload' => '$sourcedir/*egroupware-epl{,-contrib}-$version.$packaging*',
+	'upload' => '$sourcedir/*egroupware-$version.$packaging*',
 	'copychangelog' => '$sourcedir/README', //'$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
 	'run' => array('checkout','editchangelog','tag','copy','virusscan','create','sign','obs','copychangelog'),
@@ -167,6 +168,11 @@ if ($verbose > 1)
 {
 	echo "Using following config:\n".json_encode($config, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES)."\n\n";
 }
+// translate everything, so we dont have in each and every place
+foreach(array_keys($config) as $name)
+{
+	$config[$name] = config_translate($name);
+}
 $svn = $config['svn'];
 
 $run = array_diff($config['run'],$config['skip']);
@@ -227,7 +233,7 @@ function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $pre
 }
 
 /**
- * Get module path (starting with $config['aliasdir']) per repo from .mrconfig for svn and git
+ * Get module path (starting with $config['aliasdir']) per repo
  *
  * @return array with $repro_url => $path => $url, eg. array(
  *		"git@github.com:EGroupware/egroupware.git" => array(
@@ -241,21 +247,22 @@ function get_modules_per_repo()
 {
 	global $config, $verbose;
 
-	if ($verbose) echo "Get modules from .mrconfig in checkoutdir $config[checkoutdir]\n";
+	if ($verbose) echo "Get modules from checkoutdir $config[checkoutdir]\n";
 
-	if (!is_dir($config['checkoutdir']))
+	$checkoutdir = config_translate('checkoutdir');
+	if (!is_dir($checkoutdir))
 	{
-		throw new Exception("checkout directory '{$config['checkoutdir']} does NOT exists or is NO directory!");
+		throw new Exception("checkout directory '$checkoutdir does NOT exists or is NO directory!");
 	}
 	$modules = array();
 	foreach(scandir($config['checkoutdir']) as $module)
 	{
-		if ($module === '..' || !file_exists($config['checkoutdir'].'/'.$module.'/.git'))
+		if ($module === '..' || !file_exists($checkoutdir.'/'.$module.'/.git'))
 		{
 			continue;
 		}
 		$output = $matches = null;
-		run_cmd($cmd='cd '.$config['checkoutdir'].'/'.$module.'; '.$config['git'].' remote -v', $output);
+		run_cmd($cmd='cd '.$checkoutdir.'/'.$module.'; '.$config['git'].' remote -v', $output);
 		if (!preg_match('/^origin\s+(.*)\s+\(push\)$/m', implode("\n", $output), $matches))
 		{
 			throw new Exception("Could not parse output of ".implode("\n", $output));
@@ -423,6 +430,8 @@ function do_release()
 		'name' => $tag,
 		'target_commitish' => $config['branch'],
 		'body' => $config['changelog'],
+		'draft' => false,
+		'prerelease' => true,	// create as prerelease first, as we need it for testing
 	);
 	$response = github_api("/repos/EGroupware/egroupware/releases", $data);
 	$config['upload_url'] = preg_replace('/{\?[^}]+}$/', '', $response['upload_url']);	// remove {?name,label} template
@@ -562,9 +571,9 @@ function config_translate($name, $value=null)
 	global $config;
 
 	if (!isset($value)) $value = $config[$name];
-	if (is_string($value) && strpos($value, '$') !== false)
+	if (is_string($value) && (strpos($value, '$') !== false || substr($value, 0, 2) === '~/'))
 	{
-		$translate = array();
+		$translate = ['~/' => getenv('HOME').'/'];
 		foreach($config as $n => $val)
 		{
 			if (is_string($val)) $translate['$'.$n] = $val;
@@ -1107,7 +1116,7 @@ function do_virusscan()
 /**
  * Copy non .svn/.git parts to egw_buildroot and fix permissions and ownership
  *
- * We need to stash local modifications (currently only in egroupware main module) to revert eg. .mrconfig modifications
+ * We need to stash local modifications (currently only in egroupware main module) to revert modifications
  */
 function do_copy()
 {
@@ -1121,11 +1130,11 @@ function do_copy()
 		run_cmd("mkdir -p $config[egw_buildroot]");
 	}
 
-	// we need to stash uncommited changes like .mrconfig, before copying
+	// we need to stash uncommited changes, before copying
 	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("cd $config[checkoutdir]; git stash");
 
 	try {
-		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude .mrconfig --exclude node_modules/ --exclude tests '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
+		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude node_modules/ --exclude tests '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
 		run_cmd($cmd);
 	}
 	catch (Exception $e) {

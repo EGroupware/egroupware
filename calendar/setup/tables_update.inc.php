@@ -2745,6 +2745,7 @@ function calendar_upgrade16_1_002()
 		{
 			return $old_value ? $old_value.',month' : 'month';
 		}
+		unset($attr);
 	};
 	Api\Preferences::change_preference('calendar', 'use_time_grid', $change);
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '16.1.003';
@@ -2760,6 +2761,7 @@ function calendar_upgrade17_1()
 	// Update birthdays as events preference from boolean
 	$change = function($attr, $old_value, $owner) {
 		if (!isset($old_value)) return null;	// do not set anything, if nothing was set before
+		unset($attr, $owner);
 		return $old_value ? 'birthday' : 'none';
 	};
 	Api\Preferences::change_preference('calendar', 'birthdays_as_events', $change);
@@ -2790,3 +2792,12 @@ function calendar_upgrade17_1_002()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '17.1.003';
 }
 
+/**
+ * Bump version to 19.1
+ *
+ * @return string
+ */
+function calendar_upgrade17_1_003()
+{
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '19.1';
+}

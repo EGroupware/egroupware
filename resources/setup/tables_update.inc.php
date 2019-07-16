@@ -395,3 +395,13 @@ function resources_upgrade16_1()
 {
 	return $GLOBALS['setup_info']['resources']['currentver'] = '17.1';
 }
+
+/**
+ * Bump version to 19.1
+ *
+ * @return string
+ */
+function resources_upgrade17_1()
+{
+	return $GLOBALS['setup_info']['resources']['currentver'] = '19.1';
+}
