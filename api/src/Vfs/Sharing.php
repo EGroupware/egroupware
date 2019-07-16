@@ -430,6 +430,57 @@ class Sharing extends \EGroupware\Api\Sharing
 	}
 
 	/**
+	 * Get actions for sharing an entry from filemanager
+	 *
+	 * @param string $appname
+	 * @param int $group Current menu group
+	 */
+	public static function get_actions($appname, $group = 6)
+	{
+		$actions = parent::get_actions('filemanager', $group);
+
+		// This one makes no sense for filemanager
+		unset($actions['share']['children']['shareFiles']);
+
+		// Move these around to mesh nicely if collabora is available
+		$actions['share']['children']['shareReadonlyLink']['group'] = 2;
+		$actions['share']['children']['shareReadonlyLink']['order'] = 22;
+		$actions['share']['children']['shareWritable']['group'] = 3;
+
+		// Add in merge to document
+		if (class_exists($appname.'_merge'))
+		{
+			$documents = call_user_func(array($appname.'_merge', 'document_action'),
+				$GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'],
+				2, 'Insert in document', 'shareDocument_'
+			);
+			$documents['order'] = 25;
+
+			// Mail only
+			if ($documents['children']['message/rfc822'])
+			{
+				// Just email already filtered out
+				$documents['children'] = $documents['children']['message/rfc822']['children'];
+			}
+			foreach($documents['children'] as $key => &$document)
+			{
+				if(strpos($document['target'],'compose_') === FALSE)
+				{
+					unset($documents['children'][$key]);
+					continue;
+				}
+
+				$document['allowOnMultiple'] = true;
+				$document['onExecute'] = "javaScript:app.$appname.share_merge";
+			}
+			$documents['enabled'] = $documents['enabled'] && (boolean)$documents['children'] && !!($GLOBALS['egw_info']['user']['apps']['stylite']);
+			$actions['share']['children']['shareDocuments'] = $documents;
+		}
+
+		return $actions;
+	}
+
+	/**
 	 * Generate link from share or share-token
 	 *
 	 * @param string|array $share share or share-token

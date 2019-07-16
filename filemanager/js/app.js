@@ -1175,19 +1175,6 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
-	 * create a share-link for the given file or directory
-	 * @param {object} _action egw actions
-	 * @param {object} _senders selected nm row
-	 * @returns {Boolean} returns false if not successful
-	 */
-	share_link: function(_action, _senders){
-		var path = this.id2path(_senders[0].id);
-		egw.json('filemanager_ui::ajax_action', [_action.id, path],
-			this._share_link_callback, this, true, this).sendRequest();
-		return true;
-	},
-
-	/**
 	 * Share-link callback
 	 * @param {object} _data
 	 */

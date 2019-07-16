@@ -176,29 +176,6 @@ class filemanager_ui
 				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.filemanager.viewEntry':'javaScript:app.filemanager.editprefs',
 				'mobileViewTemplate' => 'file?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/filemanager/templates/mobile/file.xet'))
 			),
-			'share' => array(
-				'caption' => lang('Share files'),
-				'icon' => 'filemanager/mail_post_to',
-				'group' => $group,
-				'children' => array(
-					'shareReadonlyLink' => array(
-						'caption' => lang('Readonly Share link'),
-						'group' => 1,
-						'icon' => 'share',
-						'allowOnMultiple' => false,
-						'order' => 11,
-						'onExecute' => 'javaScript:app.filemanager.share_link'
-					),
-					'shareWritableLink' => array(
-						'caption' => lang('Writable Share link'),
-						'group' => 1,
-						'icon' => 'share',
-						'allowOnMultiple' => false,
-						'enableClass' => 'isDir',
-						'order' => 11,
-						'onExecute' => 'javaScript:app.filemanager.share_link'
-					)),
-			),
 			'saveas' => array(
 				'caption' => lang('Save as'),
 				'group' => $group,
@@ -238,6 +215,7 @@ class filemanager_ui
 				'order' => 10,
 				'onExecute' => 'javaScript:app.filemanager.copy_link'
 			),
+			'share' => EGroupware\Api\Vfs\Sharing::get_actions('filemanager', ++$group)['share'],
 			'documents' => filemanager_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir'],
 				++$group, 'Insert in document', 'document_',
@@ -287,17 +265,26 @@ class filemanager_ui
 		);
 
 		if (isset($GLOBALS['egw_info']['user']['apps']['mail'])) {
+			$actions['share']['children']['share_mail'] = array(
+				'caption' => lang('Mail'),
+				'icon' => 'mail',
+				'group' => 1,
+				'order' => 0,
+				'allowOnMultiple' => false,
+			);
 			foreach(Vfs\Sharing::$modes as $mode => $data)
 			{
-				$actions['share']['children']['mail_'.$mode] = array(
+				$actions['share']['children']['share_mail']['children']['mail_'.$mode] = array(
 					'caption' => $data['label'],
 					'hint' => $data['title'],
+					'icon' => $mode == Vfs\Sharing::ATTACH ?
+						'mail/attach' : 'api/link',
 					'group' => 2,
 					'onExecute' => 'javaScript:app.filemanager.mail',
 				);
 				if ($mode == Vfs\Sharing::ATTACH || $mode == Vfs\Sharing::LINK)
 				{
-					$actions['share']['children']['mail_'.$mode]['disableClass'] = 'isDir';
+					$actions['share']['children']['share_mail']['children']['mail_'.$mode]['disableClass'] = 'isDir';
 				}
 			}
 		}

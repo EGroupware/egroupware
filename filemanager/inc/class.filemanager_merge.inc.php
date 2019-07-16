@@ -238,6 +238,11 @@ class filemanager_merge extends Api\Storage\Merge
 		{
 			return $session;
 		}
+		else if (($session = \EGroupware\Api\Cache::getSession(Api\Sharing::class, "$app::$id")) &&
+				substr($session['share_path'], -strlen($path)) === $path)
+		{
+			return $session;
+		}
 		// Need to create the share here.
 		// No way to know here if it should be writable, or who it's going to
 		$mode = /* ?  ? Sharing::WRITABLE :*/ Api\Sharing::READONLY;
