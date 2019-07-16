@@ -64,13 +64,13 @@ class setup
 	 *
 	 * @var float
 	 */
-	var $required_php_version = 5.6;
+	var $required_php_version = 7.2;
 	/**
 	 * PHP Version recommended for eGroupware
 	 *
 	 * @var string
 	 */
-	var $recommended_php_version = '7.0';
+	var $recommended_php_version = '7.3';
 
 	function __construct($html=False, $translation=False)
 	{
