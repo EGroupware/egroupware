@@ -1,4 +1,4 @@
-egroupware-epl (19.1.20190716) hardy; urgency=low
+egroupware (19.1.20190716) hardy; urgency=low
 
   * First release-candidate for 19.1 with following major changes
   * Integration of Rocket.Chat an open-source chat server with native clients for all plattforms
