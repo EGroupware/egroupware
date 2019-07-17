@@ -5,7 +5,7 @@
 %1 fields in %2 other organisation member(s) changed	addressbook	sk	%1 položiek u %2 členov iných organizácií sa zmenilo
 %1 key(s) added to public keyserver "%2".	addressbook	sk	%1 kľúčov bolo pridaných na server verejných kľúčov "%2".
 %1 not implemented for %2!	addressbook	sk	%1 nebolo implementované pre %2!
-%1 public keys added.	addressbook	sk	%1 verných kľúčov pridaných.
+%1 public keys added.	addressbook	sk	%1 verejných kľúčov pridaných.
 %1 records imported	addressbook	sk	Bolo naimportovaných %1 záznamov
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sk	Bolo prečítaných %1 záznamov (zatiaľ neimportované, môžete se vrátit %2späť%3 a odznačit Test importu)
 %1 starts with '%2'	addressbook	sk	%1 začína na '%2'
@@ -65,6 +65,8 @@ all addressbooks	addressbook	sk	Všetky adresáre
 all contacts	addressbook	sk	Všetky kontakty
 all in one field	addressbook	sk	Všetko v jednom poli
 all types	addressbook	sk	Všetky typy
+allow	addressbook	sk	Povoliť
+allow for contacts only	addressbook	sk	Povoliť len pre kontakty
 allow members of following groups to edit contact-data of accounts	addressbook	sk	Povoliť členom nasledovných skupín úpravu kontaktných údajov v účtoch
 allow users to maintain their own account-data	admin	sk	Povoliť používateľom, aby spravovali údaje svojich vlastných používateľských účtov
 alt. csv import	addressbook	sk	Alternatívny import z CSV
@@ -92,6 +94,7 @@ business state	addressbook	sk	Zamestnanie - Štát
 business street	addressbook	sk	Zamestnanie - Ulica
 business zip code	addressbook	sk	Zamestnanie - PSČ
 calendar fields:	addressbook	sk	Polia Kalendára:
+calendar integration	addressbook	sk	Integrácia s Kalendárom
 calendar uri	addressbook	sk	URI Kalendára
 can be changed via setup >> configuration	admin	sk	Dá sa zmeniť cez Setup -> Konfigurácia
 can't create dn %1	addressbook	sk	Nedá sa vytvoriť dn %1
@@ -103,6 +106,7 @@ categories, notes, ...	addressbook	sk	Kategórie, Poznámky,...
 category path	addressbook	sk	Cesta kategórie
 category tree	admin	sk	Strom kategórie
 cell phone	addressbook	sk	Mobil
+change addressbook when updating	addressbook	sk	Zmeniť Adresár pri aktualizácii
 change all organisation members	addressbook	sk	zmeniť všetkých členov organizácie
 charset for the csv export	addressbook	sk	Znaková sada pre export CSV
 charset for the vcard export	addressbook	sk	Znaková sada pre export vCard
@@ -122,7 +126,6 @@ company name	addressbook	sk	Názov firmy
 configuration	common	sk	Konfigurácia
 contact	common	sk	Kontakt
 contact application	admin	sk	Aplikácia kontaktov
-contact copied	addressbook	sk	Kontakt bol skopírovaný
 contact data	addressbook	sk	Údaje kontaktu
 contact deleted	addressbook	sk	Kontakt bol odstránený
 contact fields to show	addressbook	sk	Ktoré polia kontaktu zobraziť
@@ -183,6 +186,8 @@ deletes the photo	addressbook	sk	O
 department	common	sk	Oddelenie
 departments	addressbook	sk	Oddelenia
 directory with documents to insert contacts	addressbook	sk	Adresár s dokumentami pre vloženie kontaktov
+disable	addressbook	sk	Zakázať
+disable last/next event column	addressbook	sk	Zakázať stĺpec Posledná/Ďalšia udalosť
 display contact	addressbook	sk	Zobraziť kontakt
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sk	Zobrazí pripomienku o narodeninách na úvodnej stránke (to je tá, ktorá sa zobrazí hneď po prihlásení do EGroupware, alebo po kliknutí na ikonu Domov).
 distribution list deleted	addressbook	sk	Distribučný zoznam bol odstránený
@@ -198,7 +203,7 @@ domestic	addressbook	sk	Domáci
 don't hide empty columns	addressbook	sk	Neskrývať prázdne stĺpce
 download	addressbook	sk	Stiahnutie
 download export file (uncheck to debug output in browser)	addressbook	sk	Uložiť exportovaný súbor (Nechajte prázdne ak chcete zobraziť výsledek v prehliadači)
-download this contact as vcard file	addressbook	sk	Stiahnuť tento kontakt ak súbor vCard
+download this contact as vcard file	addressbook	sk	Stiahnuť tento kontakt ako súbor vCard
 duplicate threshold	addressbook	sk	Prah duplikátu
 duplicate warning	addressbook	sk	Varovanie duplikátu
 duplicates	addressbook	sk	Duplikáty
@@ -216,6 +221,7 @@ email & internet	addressbook	sk	Email & Internet
 email (private)	addressbook	sk	Email (súkromné)
 email addresses (comma separated) to send the contact data	addressbook	sk	E-mailové adresy oddelené čiarkou, kam poslať kontaktné údaje
 empty	admin	sk	Prázdne
+empty addressbook before importing	addressbook	sk	Odstrániť položky Adresára ktoré nie sú v zozname CSV
 empty for all	addressbook	sk	Prázdne znamená: všetko
 enable an extra private addressbook	addressbook	sk	Zapnúť extra súkromný adresár
 enclosure	addressbook	sk	Skrinka
@@ -276,7 +282,8 @@ group %1	addressbook	sk	Skupina %1
 h	addressbook	sk	h
 hide accounts from addressbook	addressbook	sk	Skryť účty z Adresára
 hide all accounts	addressbook	sk	Skryť všetky účty
-hides accounts completly from the adressbook.	addressbook	sk	Úplne skryje účty z Adresára.
+hide user groups as distribution lists	addressbook	sk	Skryť používateľské skupiny ako distribučné zoznamy
+hides accounts completly from the adressbook.	addressbook	sk	Úplne skryť používateľské účty z Adresára.
 history logging	admin	sk	Zaznamenávanie histórie
 home address	addressbook	sk	Domov - Adresa
 home address, birthday, ...	addressbook	sk	Adresa domov, sviatky,...
@@ -388,6 +395,7 @@ parcel	addressbook	sk	Parcela
 participants	addressbook	sk	Účastníci
 permission denied !!!	addressbook	sk	Prístup bol odmietnutý !!!
 permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	sk	Prístup odopretý! Požiadajte svojho správcu, aby povolil bežným používateľom meniť svoje verejné kľúče.
+pgp key	addressbook	sk	PGP kľúč
 phone number	common	sk	Telefónne číslo
 phone numbers	common	sk	Telefónne čísla
 photo	addressbook	sk	Fotografia
@@ -411,7 +419,7 @@ read only	addressbook	sk	iba na čítanie
 record access	addressbook	sk	Prístup k záznamu
 record owner	addressbook	sk	Vlastník záznamu
 recovered	addressbook	sk	Obnovené
-region	addressbook	sk	Región
+region	addressbook	sk	Región / štát
 remove from distribution list	addressbook	sk	Odstrániť z distribučného zoznamu
 remove selected contacts from distribution list	addressbook	sk	Odstrániť vybrané kontakty z distribučného zoznamu
 removed from distribution list	addressbook	sk	Odstránené z distribučného zoznamu
@@ -430,6 +438,7 @@ select addressbook type	addressbook	sk	Vyberte typ Adresára
 select all	addressbook	sk	Označiť všetko
 select an action or addressbook to move to	addressbook	sk	Vyberte akciu alebo Adresár kam sa presunúť
 select an action or addressbook to move to...	addressbook	sk	Vyberte akciu alebo adresár, do ktorého sa má presúvať...
+select an opened dialog	addressbook	sk	Vyberte otvorený dialóg
 select migration type	admin	sk	Vyberte typ migrácie
 select multiple contacts for a further action	addressbook	sk	Vybrať viacero kontaktov pre vykonanie nejakej akcie
 select phone number as prefered way of contact	addressbook	sk	vybrať číslo telefónu ako preferovaný spôsob komunikácie
@@ -450,6 +459,7 @@ show infolog entries for this organisation	addressbook	sk	Zobraziť položky Zá
 show the contacts of this organisation	addressbook	sk	Zobraziť kontakty v tejto organizácii
 similar contacts found:	addressbook	sk	Našli sa podobné kontakty:
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	sk	Veľkosť vyskakovacieho okna (DxV, napr. 400x300, ak sa má používať vyskakovacie okno)
+smime key	addressbook	sk	S/MIME kľúč
 special	addressbook	sk	Špeciálne
 stadt	addressbook	sk	Mesto
 start	admin	sk	Štart
@@ -507,6 +517,7 @@ use country list	addressbook	sk	Použiť zoznam krajín
 use setup for a full account-migration	admin	sk	Pre plnú migráciu účtov použite Setup
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	sk	Použiť túto značku pre označenie adries. Vložte obsah, ktorý chcete, medzi dve značky.
 used for links and for the own sorting of the list	addressbook	sk	Používa sa pre odkazy a vlastné spôsoby triedenia zoznamu
+user groups are automatically shown as distribution lists.	addressbook	sk	Používateľské skupiny sa automaticky ukážu akodistribučné zoznamy.
 user preference	addressbook	sk	Používateľská voľba
 vcard	common	sk	Vizitka VCard
 vcards require a first name entry.	addressbook	sk	Vizitky potrebujú zadané krstné meno.

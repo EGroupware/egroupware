@@ -3,6 +3,7 @@
 %1 copied - the copy can now be edited	common	sk	%1 skopírovaný - kópia sa odteraz dá upravovať
 %1 directories %2 found!	admin	sk	našlo sa %1 priečinkov %2
 %1 email addresses inserted	common	sk	%1 E-mailových adries bolo vložených
+%1 email(s) added into %2	api	sk	%1 e-mailov bolo pridaných do %2
 %1 entries found, select one ...	common	sk	Našlo sa %1 položiek, vyberte si jednu ...
 %1 etemplates deleted	common	sk	%1 eŠablón bolo odstránených
 %1 etemplates for application '%2' dumped to '%3'	common	sk	%1 eŠablón pre aplikáciu '%2' urobilo výpis do '%3'
@@ -42,9 +43,11 @@
 1 week	common	sk	1 týždeň
 13 (ntp)	admin	sk	13 (ntp)
 15 minutes	common	sk	15 minút
+2-factor-authentication	common	sk	2-faktorová autentifikácia
 30 minutes	common	sk	30 minút
 30 seconds	common	sk	30 sekúnd
 5 minutes	common	sk	5 minút
+5 seconds	common	sk	5 sekúnd
 80 (http)	admin	sk	80 (http)
 a pattern to be searched for	common	sk	Hľadaný výraz
 a request to the egroupware server returned with an error	common	sk	Dopyt na server EGroupware vrátil chybu
@@ -92,6 +95,7 @@ add your domain as "%1" in options to list of email providers and enable api.	co
 addressbook	common	sk	Adresár
 addressbooks to sync in addition to personal addressbook	groupdav	sk	Adresár ktorý sa má synchronizovať popri osobnom adresári
 admin	common	sk	Správca
+admin settings for %1	common	sk	Správcovské nastavenia pre %1
 administration	common	sk	Správa
 advanced search	common	sk	Pokročilé hľadanie
 afghanistan	common	sk	AFGANISTAN
@@ -135,9 +139,11 @@ applies the changes made	common	sk	Uplatnia sa vykonané zmeny
 applies the changes to the given version of the template	common	sk	vykoná zmeny urobené na danej verzii šablóny
 apply	common	sk	Použiť
 apply the action on the whole query, not only the shown entries	common	sk	Vykonať akciu na celom výbere, NIE len na zobrazených položkách
+apps &amp; license	api	sk	Aplikácie & Licencie
 april	common	sk	Apríl
-are you sure you want to delete these entries ?	common	sk	Ste si istí, chcete odstrániť tieto záznamy?
-are you sure you want to delete this entry ?	common	sk	Ste si istí, chcete odstrániť tento záznam?
+are you sure you want to delete these entries ?	common	sk	Skutočne chcete odstrániť tieto záznamy?
+are you sure you want to delete this entry ?	common	sk	Skutočne chcete odstrániť tento záznam?
+are you sure you want to logout?	common	sk	Skutočne sa chcete odhlásiť?
 are you sure, you would like to delete the backup key?	common	sk	Ste si istí, chcete odstrániť záložný kľúč?
 argentina	common	sk	ARGENTÍNA
 armenia	common	sk	ARMÉNSKO
@@ -163,6 +169,7 @@ back to user login	common	sk	Naspäť na prihlásenie používateľa
 background color:	common	sk	Farba pozadia:
 backup key	common	sk	Záložný kľúč
 backup/restore	common	sk	Záloha/Obnova
+backup/restore ...	common	sk	Záloha/Obnova ...
 backupdir '%1' is not writeable by the webserver	common	sk	Webserver nemá oprávnenia k zápisu do zálohovacieho adresára '%1'
 bad login or password	common	sk	Chybné meno alebo heslo
 bahamas	common	sk	BAHAMY
@@ -269,6 +276,7 @@ click here to upload the file	common	sk	Ak chcete odovzdať súbor, kliknite sem
 click or mouse over to show menus	common	sk	Ak chcete zobraziť ponuku, kliknite alebo ukážte myšou
 click or mouse over to show menus?	common	sk	Ak chcete zobraziť ponuku, kliknete alebo ukážete myšou
 click this image on the navbar: %1	common	sk	Kliknite na tento obrázok v navigačnom paneli: %1
+click to open colorpicker	common	sk	Kliknutím otvoríte výber farieb
 click to order after that criteria	common	sk	Ak chcete zoradiť podľa tohto kritéria, kliknite sem
 clickable path	common	sk	Rozkliknuteľná cesta
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	sk	Klienti bez vlastných limitov budú obmedzení na takýto počet dní. Príliš vysoký limit môže spôsobiť problémy s niektorými klientami.
@@ -347,6 +355,7 @@ deck	common	sk	Balíček (vnútorný)
 default	common	sk	Predvolené
 default category	common	sk	Štandardná kategória
 default height for the windows	common	sk	Predvolená výška okien
+default visible actions	common	sk	Predvolené viditeľné akcie
 default width for the windows	common	sk	Predvolená šírka okien
 del	common	sk	Del
 delete	common	sk	Odstrániť
@@ -368,6 +377,7 @@ delete this column	common	sk	Odstrániť tento stĺpec
 delete this entry	common	sk	Odstrániť túto položku
 delete this etemplate	common	sk	Odstrániť túto eŠablónu
 delete this file	common	sk	Odstrániť tento súbor
+delete this photo?	common	sk	Odstrániť túto fotografiu?
 delete this row	common	sk	Odstrániť tento riadok
 delete whole column (can not be undone!!!)	common	sk	Odstrániť celý stĺpec (NEDÁ sa vrátiť späť !!!)
 deletes the above spez. etemplate from the database, can not be undone	common	sk	Odstráni vyššieuvedenú eŠablónu, NEDÁ sa vrátiť späť
@@ -460,6 +470,7 @@ enter filename to upload and attach, use [browse...] to search for it	common	sk	
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre EGroupware.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
 enter the new version number here (> old_version), empty for no update-file	common	sk	Zadajte sem nové číslo verzie (> stará verzia), prázdne znamená: bez aktualizácie súboru
 enter the new version number here (has to be > old_version)	common	sk	Zadajte sem nové číslo verzie (musí byť > stará verzia)
+enter your file name	common	sk	Zadajte názov súboru
 entry has been deleted sucessfully	common	sk	Položka bola úspešne odstránená
 entry not found!	common	sk	Položka sa nenašla!
 entry saved	common	sk	Záznam uložený
@@ -492,6 +503,7 @@ ethiopia	common	sk	ETIÓPIA
 everything	common	sk	Všetko
 exact	common	sk	Presne
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	sk	Príklad {{LETTERPREFIX}} - Dáva listu prefix bez dvojitých medzier, ak je napríklad titulok prázdny
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	sk	Príklad {{nenvlf role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 exchange this row with the one above	common	sk	Zameniť tento riadok s riadkom vyššie
@@ -554,6 +566,7 @@ french southern territories	common	sk	FRANCÚZSKE JUŽNÉ ÚZEMIA
 friday	common	sk	Piatok
 ftp	common	sk	FTP
 fullname	common	sk	Plné meno
+fullscreen	api	sk	Na celú obrazovku
 fullscreen mode	common	sk	Celoobrazovkový režim
 gabon	common	sk	GABUN
 gambia	common	sk	GAMBIA
@@ -607,11 +620,14 @@ height, disabled	common	sk	Výška, Vypnuté
 help	common	sk	Pomocník
 high	common	sk	Vysoká
 highest	common	sk	Najvyššia
+history	api	sk	História
 history log	common	sk	Záznam histórie
 hold [%1] and [%2] key to drag %3 to your desktop	common	sk	Ak chcete premiestniť %3 na svoju plochu, podržte klávesy [%1] a [%2]
+hold [%1] key to select text eg. to copy it	common	sk	Ak podržíte klávesu [%1], môžete vyznačiť text, napr. za účelom kopírovania
 holy see (vatican city state)	common	sk	VATIKÁN (MESTSKÝ ŠTÁT)
 home	common	sk	Domov
 home email	common	sk	Domáci E-mail
+home screen	common	sk	Hlavná stránka
 honduras	common	sk	HONDURAS
 hong kong	common	sk	HONG KONG
 horizontal rule	common	sk	Vodorovné pravítko
@@ -635,6 +651,7 @@ if the error persists, contact your administrator for help and ask to check the 
 if there are some images in the background folder you can choose the one you would like to see.	common	sk	Ak sú v priečinku pre pozadia nejaké obrázky, môžete si vybrať, ktorý chcete.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	sk	Ak zadáte priečinok, plnú VFS cestu, %1 zobrazí akciu pre každý dokument. Táto akcia umožní stiahnuť vybraný dokument s vloženými dátami.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	sk	Ak zadáte dokument, plnú VFS cestu, %1 zobrazí samostatnú ikonu dokumentu pre každú položku. Táto ikona umožní stiahnuť vybraný dokument s vloženými dátami.
+if you use "2-factor-authentication", please enter the code here.	api	sk	Ak používate 2-faktorovú autentifikáciu, prosím zadajte sem kód.
 image	common	sk	Obrázok
 image directory relative to document root (use / !), example:	common	sk	Adresár obrázkov vzťahujúci sa na koreňový adresár dokumentov (použite / !), príklad:
 image url	common	sk	URL adresa obrázka
@@ -669,9 +686,11 @@ insert new row after this one	common	sk	Vložiť riadok za týmto
 insert new row in front of first line	common	sk	Vložiť riadok na začiatok prvého Riadku
 insert row after	common	sk	Vložiť Riadok Za
 insert row before	common	sk	Vložiť Riadok Pred
+install	common	sk	Inštalovať
 integer	common	sk	Celé číslo
 international	common	sk	Mezinárodný
 introduction	common	sk	Úvod
+invalid email	common	sk	Chybný e-mail
 invalid filename	common	sk	Chybný názov súboru
 invalid ip address	common	sk	Chybná IP adresa
 invalid password	common	sk	Chybné heslo
@@ -771,7 +790,6 @@ mail domain, eg. "%1"	common	sk	E-Mailová doména, napr. "%1"
 mailvelope addon installation failed! please try again.	common	sk	Inštalácia zásuvného modulu Mailvelope zlyhala! Prosím skúste to znovu.
 mailvelope addon installation succeded. now you may configure the options.	common	sk	Inštalácia zásuvného modulu Mailvelope  podarila. Môžete si nastaviť predvoľby.
 main category	common	sk	Hlavná kategória
-home screen	common	sk	Hlavná stránka
 maintainer	common	sk	Správca-údržbár
 malawi	common	sk	MALAWI
 malaysia	common	sk	MALAJZIA
@@ -954,6 +972,7 @@ paste	common	sk	Vložiť
 path	common	sk	Cesta
 path to user and group files has to be outside of the webservers document-root!!!	common	sk	Cesta k súborom používateľa a skupiny MUSÍ BYŤ MIMO document-root webservera!
 permission denied!	common	sk	Prístup bol odopretý!
+permission denied! this is an administration only feature.	common	sk	Prístup odopretý! Táto funkcia je len pre správcov.
 permissions to the files/users directory	common	sk	oprávnenia k adresáru pre súbory / používateľov
 permisson denied!	common	sk	Prístup bol odopretý!
 personal	common	sk	Osobný
@@ -1029,6 +1048,7 @@ required directory "%1" created.	admin	sk	Požadovaný priečinok "%1" vytvoren�
 required directory "%1" has wrong mode %2 instead of %3!	admin	sk	Požadovaný priečinok "%1" má nesprávny režim %2 namiesto %3!
 required directory "%1" not found!	admin	sk	Požadovaný priečinok "%1" sa nenašiel!
 reset	common	sk	Vynulovať
+reset all to default	common	sk	Vynulovať všetko do predvolených nastavení
 reset all user's column preferences	common	sk	Vynulovať všetky používateľské predvoľby stĺpca
 resource calendars	groupdav	sk	Kalendáre zdroja
 resource type	common	sk	Typ zdroja
@@ -1085,6 +1105,7 @@ search...	common	sk	Hľadať...
 second	common	sk	Sekunda
 section	common	sk	Sekcia
 securest	common	sk	Najbezpečnejšie
+security & password	common	sk	Bezpečnosť & Heslo
 select	common	sk	Výber
 select "%1", if your client does not support multiple addressbooks.	groupdav	sk	Vyberte "%1" ak váš klient nepodporuje viacero adresárov.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	sk	Vyberte "%1" ak váš klient podporuje skupiny, napr. adresár OS X alebo iOS.
@@ -1101,6 +1122,7 @@ select an app to search in	common	sk	Vyberte, v ktorej aplikácii chcete hľada�
 select an application	common	sk	Vyberte aplikáciu
 select an application, (*) = uninstalled	common	sk	Vyberte aplikáciu, (*) = odinštalované
 select an entry to link with	common	sk	Vyberte záznam na ktorý chcete vytvoriť odkaz
+select an opened dialog	common	sk	Vyberte otvorený dialóg
 select an table of the application	common	sk	Vyberte tabuľku aplikácie
 select application	common	sk	Vyberte aplikáciu
 select application to search	common	sk	Vyberte, v akej aplikácii hľadať
@@ -1134,6 +1156,7 @@ select the default width for the application windows	common	sk	Vyberte predvolen
 select the indexed columns in their desired order	common	sk	Vyberte indexované stĺpce v požadovanom poradí
 select this etemplate to delete it	common	sk	Vyberte túto eŠablónu, aby sa mohla odstrániť
 select user	common	sk	Vyberte používateľa
+select user or group	api	sk	Vyberte používateľa alebo skupinu
 select which accounts to show	common	sk	Vyberte, ktoré účty zobraziť
 select which values to show	common	sk	Vyberte, ktoré hodnoty zobraziť
 select work email address	common	sk	Vyberte pracovnú E-mailovú adresu
@@ -1157,9 +1180,13 @@ set these columns as the default	common	sk	Nastaviť tieto stĺpce ako predvolen
 set user as only responsible user, but keeping groups	groupdav	sk	Nastaviť používateľa ako jediného zodpovedného, ale zachovať skupiny
 set user as only responsible, removing all existing responsibles	groupdav	sk	Nastaviť používateľa ako jediného zodpovedného, odstrániť všetkých ostatných zodpovedných
 sets today as date	common	sk	Nastaviť dnešok ako dátum
+settings saved.	common	sk	Nastavenia sú uložené.
 setup	common	sk	Inštalácia
 setup main menu	common	sk	Hlavná inštalačná ponuka
 seychelles	common	sk	SEYCHELLY
+share	api	sk	Zdieľať
+share files	api	sk	Zdieľať súbory
+share link	api	sk	Zdieľať odkaz
 shift	common	sk	Shift
 shift ⇧	common	sk	Shift ⇧
 should the form be submitted or any custom javascript be executed	common	sk	Má sa formulár odoslať alebo akýkoľvek používateľský javaskript spustiť
@@ -1309,6 +1336,7 @@ uncheck all	common	sk	Zrušiť označenie
 unconnected nodes will be moved to %1.	admin	sk	Nepripojené uzly budú presunuté to %1.
 undefined	common	sk	Nedefinované
 underline	common	sk	Podčiarknuť
+undo	common	sk	Späť
 unicode	common	sk	Unicode
 unique	common	sk	Jedinečné
 united arab emirates	common	sk	SPOJENÉ ARABSKÉ EMIRÁTY
@@ -1385,6 +1413,7 @@ work email	common	sk	Pracovný E-mail
 working days	common	sk	Pracovné dni
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	sk	Spoľahlivo to funguje pre celkovú veľkosť do 1-2MB, zvyčajne aj do 5-10MB, ale pravdepodobne zlyhá pri >10MB
 would you like to display the page generation time at the bottom of every window?	common	sk	Chcete, aby sa naspodku stránky zobrazoval čas jej generovania?
+writable	api	sk	Zapisovateľné
 writable share	common	sk	Sieťový disk s možnosťou zápisu
 write <app>/setup/tables_current.inc.php	common	sk	Zapísať <app>/setup/tables_current.inc.php
 write langfile	common	sk	Zapísať jazykový súbor
@@ -1423,6 +1452,7 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	sk	Ak ch
 you tried to automatically size a flex column, which always takes the rest of the space	common	sk	Pokúšate sa nastaviť automatickú veľkosť pohyblivého stĺpca, ktorý vždy zaberie celý zvyšný priestor.
 you will not be able to send or receive encrypted mails before completing that step!	common	sk	Kým nedokončíte tento krok, NEbudete môcť posielať alebo prijímať šifrované správy!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	sk	Pokúsili ste sa otvoriť aplikáciu EGroupware: %1, ale nemáte na to oprávnenia.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	sk	Váš internetový prehliadač je zastaralý (z hľadiska kompatibility JavaScript ES6), môžete naraziť na problémy s niektorými funkciami.
 your code is incorrect !!!	common	sk	Váš kód je chybný!
 your key has been restored successfully.	common	sk	Váš kľúč bol úspešne obnovený.
 your message could <b>not</b> be sent!<br>	common	sk	Vašu správu sa <b>nepodarilo</b> odoslať!<br>
