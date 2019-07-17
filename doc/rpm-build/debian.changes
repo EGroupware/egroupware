@@ -1,3 +1,9 @@
+egroupware (19.1.20190717) hardy; urgency=low
+
+  * better guiding through Rocket.Chat installation process
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 17 Jul 2019 14:07:06 +0200
+
 egroupware (19.1.20190716) hardy; urgency=low
 
   * First release-candidate for 19.1 with following major changes
