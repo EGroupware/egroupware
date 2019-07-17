@@ -24,7 +24,7 @@ $config = array(
 	'tag' => '$version.$packaging',	// name of tag
 	'checkoutdir' => '~/epl-19.1-checkout',	//realpath(__DIR__.'/../..'),
 	'egw_buildroot' => '/tmp/build_root/epl_19.1_buildroot',
-	'sourcedir' => '~/download/archives/egroupware-epl-19.1',
+	'sourcedir' => '~/download/archives/egroupware-19.1',
 	/* svn-config no longer used
 	'svntag' => 'tags/$version.$packaging',
 	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
@@ -53,7 +53,7 @@ $config = array(
 	'git' => trim(`which git`),
 	'gpg' => trim(`which gpg`),
 	'editor' => trim(`which vi`),
-	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
+	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*" --exclude "*-policy-*"',
 	'composer' => trim(`which composer.phar`),
 	'after-checkout' => 'rm -rf */source */templates/*/source',
 	'packager' => 'build@egroupware.org',
