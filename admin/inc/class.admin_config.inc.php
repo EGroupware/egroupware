@@ -142,7 +142,7 @@ class admin_config
 			$this->remove_anon_images(array_diff((array)$c->config_data['login_background_file'], $_content['newsettings']['login_background_file']));
 
 			/* Load hook file with functions to validate each config (one/none/all) */
-			Api\Hooks::single(array(
+			$errors = Api\Hooks::single(array(
 				'location' => 'config_validate',
 			)+(array)$_content['newsettings'], $appname);
 
@@ -179,32 +179,33 @@ class admin_config
 				unset($GLOBALS['egw_info']['server']['found_validation_hook']);
 			}
 
-			// compute real changes and their old values (null for removals)
-			$modifications = array_udiff_assoc($c->config_data, $old, function($a, $b)
-			{
-				return (int)($a != $b);	// necessary to kope with arrays
-			});
-			$removals = array_diff(array_udiff_assoc($old, $c->config_data, function($a, $b)
-			{
-				return (int)(!empty($a) && $a != $b);
-			}), array(null, ''));
-			$set = array_merge(array_fill_keys(array_keys($removals), null), $modifications);
-			$old = array_filter($old, function($key) use ($set)
-			{
-				return array_key_exists($key, $set);
-			}, ARRAY_FILTER_USE_KEY);
-			if ($set)
-			{
-				$cmd = new admin_cmd_config($_appname, $set, $old,
-					(array)$_content['admin_cmd'], $config_appname === 'phpgwapi');
-				$msg = $cmd->run();
-			}
-			else
-			{
-				$msg = lang('Nothing to save.');
-			}
+			// do not allow to save config, if there are errors
 			if (!$errors)
 			{
+				// compute real changes and their old values (null for removals)
+				$modifications = array_udiff_assoc($c->config_data, $old, function($a, $b)
+				{
+					return (int)($a != $b);	// necessary to kope with arrays
+				});
+				$removals = array_diff(array_udiff_assoc($old, $c->config_data, function($a, $b)
+				{
+					return (int)(!empty($a) && $a != $b);
+				}), array(null, ''));
+				$set = array_merge(array_fill_keys(array_keys($removals), null), $modifications);
+				$old = array_filter($old, function($key) use ($set)
+				{
+					return array_key_exists($key, $set);
+				}, ARRAY_FILTER_USE_KEY);
+				if ($set)
+				{
+					$cmd = new admin_cmd_config($_appname, $set, $old,
+						(array)$_content['admin_cmd'], $config_appname === 'phpgwapi');
+					$msg = $cmd->run();
+				}
+				else
+				{
+					$msg = lang('Nothing to save.');
+				}
 				// allow apps to hook into configuration dialog to eg. save some stuff outside configuration
 				$_content['location'] = 'config_after_save';
 				Api\Hooks::single($_content, $_appname);
@@ -224,18 +225,24 @@ class admin_config
 			Api\Framework::message(lang('Error') . ': ' . $errors, 'error');
 			unset($errors);
 			unset($GLOBALS['config_error']);
+
+			// keep old content on error
+			$config = $_content['newsettings'];
 		}
-		elseif ($_content['apply'])
+		else
 		{
-			Api\Framework::message($msg, 'success');
+			if ($_content['apply'])
+			{
+				Api\Framework::message($msg, 'success');
+			}
+			$config = $c->read_repository();
 		}
-
 		$sel_options = $readonlys = array();
-		$config = $c->read_repository();
-
 		// call "config" hook, allowing apps to overwrite config, eg. set default values,
 		// or return options in "sel_options" keys
 		$config['location'] = 'config';
+		// let config hook know, this is an inital call and not one after user hits [Apply] button
+		$config['initial-call'] = is_null($_content);
 		$ret = Api\Hooks::single($config, $appname);
 		if (is_array($ret))
 		{
