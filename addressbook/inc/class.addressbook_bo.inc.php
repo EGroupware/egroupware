@@ -219,7 +219,7 @@ class addressbook_bo extends Api\Contacts
 		if (!$criteria) return 0;
 
 		$updated = 0;
-		foreach($this->search($criteria, false, '', '', '', false, 'OR') as $contact)
+		foreach((array)$this->search($criteria, false, '', '', '', false, 'OR') as $contact)
 		{
 			if ($contact['account_id'] && isset($keys[$contact['account_id']]))
 			{
