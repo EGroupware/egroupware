@@ -290,26 +290,6 @@ class Sharing extends \EGroupware\Api\Sharing
 	}
 
 	/**
-	 * Api\Storage\Base instance for egw_sharing table
-	 *
-	 * @var Api\Storage\Base
-	 */
-	protected static $so;
-
-	/**
-	 * Get a so_sql instance initialised for shares
-	 */
-	public static function so()
-	{
-		if (!isset(self::$so))
-		{
-			self::$so = new Api\Storage\Base('phpgwapi', self::TABLE, null, '', true);
-			self::$so->set_times('string');
-		}
-		return self::$so;
-	}
-
-	/**
 	 * Delete specified shares and unlink temp. files
 	 *
 	 * @param int|array $keys
@@ -329,9 +309,7 @@ class Sharing extends \EGroupware\Api\Sharing
 			$tmp_paths[] = $row['share_path'];
 		}
 
-		// delete specified shares
-		self::$db->delete(self::TABLE, $keys, __LINE__, __FILE__);
-		$deleted = self::$db->affected_rows();
+		$deleted = parent::delete($keys);
 
 		// check if temp. files are used elsewhere
 		if ($tmp_paths)
@@ -355,78 +333,11 @@ class Sharing extends \EGroupware\Api\Sharing
 	}
 
 	/**
-	 * Home long to keep temp. files: 100 day
+	 * Check that a share path still exists (and is readable)
 	 */
-	const TMP_KEEP = 8640000;
-	/**
-	 * How long to keep automatic created Wopi shares
-	 */
-	const WOPI_KEEP = '-3month';
-
-	/**.
-	 * Periodic (monthly) cleanup of temporary sharing files (download link)
-	 *
-	 * Exlicit expireds shares are delete, as ones created over 100 days ago and last accessed over 100 days ago.
-	 */
-	public static function tmp_cleanup()
+	protected static function check_path($share)
 	{
-		if (!isset(self::$db)) self::$db = $GLOBALS['egw']->db;
-		Vfs::$is_root = true;
-
-		try {
-			$cols = array(
-				'share_path',
-				'MAX(share_expires) AS share_expires',
-				'MAX(share_created) AS share_created',
-				'MAX(share_last_accessed) AS share_last_accessed',
-			);
-			if (($group_concat = self::$db->group_concat('share_id'))) $cols[] = $group_concat.' AS share_id';
-			// remove expired tmp-files unconditionally
-			$having = 'HAVING MAX(share_expires) < '.self::$db->quote(self::$db->to_timestamp(time())).' OR '.
-				// remove without expiration date, when created over 100 days ago AND
-				'MAX(share_expires) IS NULL AND MAX(share_created) < '.self::$db->quote(self::$db->to_timestamp(time()-self::TMP_KEEP)). ' AND '.
-					// (last accessed over 100 days ago OR never)
-					'(MAX(share_last_accessed) IS NULL OR MAX(share_last_accessed) < '.self::$db->quote(self::$db->to_timestamp(time()-self::TMP_KEEP)).')';
-
-			foreach(self::$db->select(self::TABLE, $cols, array(
-				"share_path LIKE '/home/%/.tmp/%'",
-			), __LINE__, __FILE__, false, 'GROUP BY share_path '.$having) as $row)
-			{
-				Vfs::remove($row['share_path']);
-
-				if ($group_concat)
-				{
-					$share_ids = $row['share_id'] ? explode(',', $row['share_id']) : array();
-				}
-				else
-				{
-					$share_ids = array();
-					foreach(self::$db->selec(self::TABLE, 'share_id', array(
-						'share_path' => $row['share_path'],
-					), __LINE__, __FILE__) as $id)
-					{
-						$share_ids[] = $id['share_id'];
-					}
-				}
-				if ($share_ids)
-				{
-					self::$db->delete(self::TABLE, array('share_id' => $share_ids), __LINE__, __FILE__);
-				}
-			}
-
-			// delete automatic created and expired Collabora shares older then 3 month
-			if (class_exists('EGroupware\\Collabora\\Wopi'))
-			{
-				self::$db->delete(self::TABLE, array(
-					'share_expires < '.self::$db->quote(Api\DateTime::to(self::WOPI_KEEP, 'Y-m-d')),
-					'share_writable IN ('.Wopi::WOPI_WRITABLE.','.Wopi::WOPI_READONLY.')',
-				), __LINE__, __FILE__);
-			}
-		}
-		catch (\Exception $e) {
-			_egw_log_exception($e);
-		}
-		Vfs::$is_root = false;
+		return file_exists($share['share_path']);
 	}
 
 	/**

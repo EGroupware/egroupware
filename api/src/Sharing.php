@@ -370,7 +370,6 @@ class Sharing
 
 	public function is_entry($share = false)
 	{
-		if(!$share) $share = $this->share;
 		list($app, $id) = explode('::', $share['share_path']);
 		return $share && $share['share_path'] &&
 				$app && $id && !in_array($app, array('filemanager', 'vfs')) ;//&& array_key_exists($app, $GLOBALS['egw_info']['apps']);
@@ -378,7 +377,7 @@ class Sharing
 
 	public function need_session()
 	{
-		return $this->use_filemanager() || $this->is_entry();
+		return $this->use_filemanager() || static::is_entry($this->session);
 	}
 
 	/**
@@ -463,7 +462,7 @@ class Sharing
 			return $ui->editor($this->share['share_path']);
 		}
 		// use pure WebDAV for everything but GET requests to directories
-		else if (!$this->use_filemanager() && !$this->is_entry())
+		else if (!$this->use_filemanager() && !static::is_entry($this->share))
 		{
 			// send a content-disposition header, so browser knows how to name downloaded file
 			if (!Vfs::is_dir($this->share['share_root']))
@@ -591,11 +590,12 @@ class Sharing
 
 		// if not already installed, install periodic cleanup of shares
 		$async = new Asyncservice();
-		if (!($job = $async->read(self::ASYNC_JOB_ID)) || $job[self::ASYNC_JOB_ID]['method'] === 'egw_sharing::tmp_cleanup')
+		$method = 'EGroupware\\Api\\Sharing::tmp_cleanup';
+		if (!($job = $async->read(self::ASYNC_JOB_ID)) || $job[self::ASYNC_JOB_ID]['method'] !== $method)
 		{
 			if ($job) $async->delete(self::ASYNC_JOB_ID);	// update not working old class-name
 
-			$async->set_timer(array('day' => 28), self::ASYNC_JOB_ID, 'EGroupware\\Api\\Vfs\\Sharing::tmp_cleanup',null);
+			$async->set_timer(array('day' => 28), self::ASYNC_JOB_ID, $method ,null);
 		}
 
 		return $share;
@@ -668,36 +668,10 @@ class Sharing
 
 		if (is_scalar($keys)) $keys = array('share_id' => $keys);
 
-		// get all temp. files, to be able to delete them
-		$tmp_paths = array();
-		foreach(self::$db->select(self::TABLE, 'share_path', array(
-			"share_path LIKE '/home/%/.tmp/%'")+$keys, __LINE__, __FILE__, false) as $row)
-		{
-			$tmp_paths[] = $row['share_path'];
-		}
-
 		// delete specified shares
 		self::$db->delete(self::TABLE, $keys, __LINE__, __FILE__);
 		$deleted = self::$db->affected_rows();
 
-		// check if temp. files are used elsewhere
-		if ($tmp_paths)
-		{
-			foreach(self::$db->select(self::TABLE, 'share_path,COUNT(*) AS cnt', array(
-				'share_path' => $tmp_paths,
-			), __LINE__, __FILE__, false, 'GROUP BY share_path') as $row)
-			{
-				if (($key = array_search($row['share_path'], $tmp_paths)))
-				{
-					unset($tmp_paths[$key]);
-				}
-			}
-			// if not delete them
-			foreach($tmp_paths as $path)
-			{
-				Vfs::remove($path);
-			}
-		}
 		return $deleted;
 	}
 
@@ -748,7 +722,7 @@ class Sharing
 				else
 				{
 					$share_ids = array();
-					foreach(self::$db->selec(self::TABLE, 'share_id', array(
+					foreach(self::$db->select(self::TABLE, 'share_id', array(
 						'share_path' => $row['share_path'],
 					), __LINE__, __FILE__) as $id)
 					{
@@ -757,7 +731,8 @@ class Sharing
 				}
 				if ($share_ids)
 				{
-					self::$db->delete(self::TABLE, array('share_id' => $share_ids), __LINE__, __FILE__);
+					$class = self::get_share_class($row);
+					$class::delete($share_ids);
 				}
 			}
 
@@ -765,15 +740,51 @@ class Sharing
 			if (class_exists('EGroupware\\Collabora\\Wopi'))
 			{
 				self::$db->delete(self::TABLE, array(
-					'share_expires < '.self::$db->quote(Api\DateTime::to(self::WOPI_KEEP, 'Y-m-d')),
-					'share_writable IN ('.Wopi::WOPI_WRITABLE.','.Wopi::WOPI_READONLY.')',
+					'share_expires < '.self::$db->quote(DateTime::to(self::WOPI_KEEP, 'Y-m-d')),
+					'share_writable IN ('.\EGroupware\Collabora\Wopi::WOPI_WRITABLE.','.\EGroupware\Collabora\Wopi::WOPI_READONLY.')',
 				), __LINE__, __FILE__);
 			}
+
+			// Now check the remaining shares
+			static::cleanup_missing_paths();
 		}
 		catch (\Exception $e) {
 			_egw_log_exception($e);
 		}
 		Vfs::$is_root = false;
+	}
+
+	/**
+	 * Check share paths and if the path is no longer there / valid, remove the share
+	 */
+	public static function cleanup_missing_paths()
+	{
+		if (!isset(self::$db)) self::$db = $GLOBALS['egw']->db;
+
+		foreach(self::$db->select(self::TABLE, array(
+			'share_id','share_path'
+			), array(), __LINE__, __FILE__, false) as $share)
+		{
+			$class = self::get_share_class($share);
+
+			if(!$class::check_path($share))
+			{
+				$class::delete($share);
+			}
+		}
+	}
+
+	/**
+	 * Check that the share path is still valid, and if not, delete it.
+	 * This should be overridden.
+	 *
+	 * @param Array share
+	 *
+	 * @return boolean Is the share still valid
+	 */
+	protected static function check_path($share)
+	{
+		return true;
 	}
 
 	/**

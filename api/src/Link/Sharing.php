@@ -119,4 +119,13 @@ class Sharing extends \EGroupware\Api\Sharing
 		echo lang('EPL Only');
 	}
 
+	/**
+	 * Check that a share path still exists (and is readable)
+	 */
+	protected static function check_path($share)
+	{
+		list($app, $id) = explode('::', $share['share_path']);
+		return (boolean) \EGroupware\Api\Link::title($app, $id);
+	}
+
 }
