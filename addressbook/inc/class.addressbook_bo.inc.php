@@ -315,27 +315,36 @@ class addressbook_bo extends Api\Contacts
 				$criteria['contact_email_home'][] = $criteria['contact_email'][] = $recipient = strtolower($recipient);
 			}
 		}
-		foreach($this->search($criteria, array('account_id', 'contact_email', 'contact_email_home', 'contact_pubkey', 'contact_id'),
-			'', '', '', false, 'OR', false, null) as $contact)
+		$filters = array(null);
+		// if accounts-backend is NOT SQL, we need to search the accounts separate
+		if ($this->so_accounts)
 		{
-			// first check for file and second for pubkey field (LDAP, AD or old SQL)
-			if (($content = $this->get_key($contact, $pgp)))
+			$filters[] = array('owner' => '0');
+		}
+		foreach ($filters as $filter)
+		{
+			foreach($this->search($criteria, array('account_id', 'contact_email', 'contact_email_home', 'contact_pubkey', 'contact_id'),
+				'', '', '', false, 'OR', false, $filter) as $contact)
 			{
-				$contact['email'] = strtolower($contact['email']);
-				if (empty($criteria['account_id']) || in_array($contact['email'], $recipients))
+				// first check for file and second for pubkey field (LDAP, AD or old SQL)
+				if (($content = $this->get_key($contact, $pgp)))
 				{
-					if (in_array($contact['email_home'], $recipients))
+					$contact['email'] = strtolower($contact['email']);
+					if (empty($criteria['account_id']) || in_array($contact['email'], $recipients))
 					{
-						$result[$contact['email_home']] = $content;
+						if (in_array($contact['email_home'], $recipients))
+						{
+							$result[$contact['email_home']] = $content;
+						}
+						else
+						{
+							$result[$contact['email']] = $content;
+						}
 					}
 					else
 					{
-						$result[$contact['email']] = $content;
+						$result[$contact['account_id']] = $content;
 					}
-				}
-				else
-				{
-					$result[$contact['account_id']] = $content;
 				}
 			}
 		}
