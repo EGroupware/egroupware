@@ -821,9 +821,10 @@ class Ldap
 				}
 				foreach($this->schema2egw as $mapping)
 				{
-					if (substr($egwSearchKey, 0, 8) === 'contact_')
+					$matches = null;
+					if (preg_match('/^(egw_addressbook\.)?(contact_)?(.*)$/', $egwSearchKey, $matches))
 					{
-						$egwSearchKey = substr($egwSearchKey, 8);
+						$egwSearchKey = $matches[3];
 					}
 					if(($ldapSearchKey = $mapping[$egwSearchKey]))
 					{
