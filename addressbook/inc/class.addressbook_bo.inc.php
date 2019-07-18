@@ -219,51 +219,60 @@ class addressbook_bo extends Api\Contacts
 		if (!$criteria) return 0;
 
 		$updated = 0;
-		foreach((array)$this->search($criteria, false, '', '', '', false, 'OR') as $contact)
+		$filters = array(null);
+		// if accounts-backend is NOT SQL, we need to search the accounts separate
+		if ($this->so_accounts)
 		{
-			if ($contact['account_id'] && isset($keys[$contact['account_id']]))
+			$filters[] = array('owner' => '0');
+		}
+		foreach($filters as $filter)
+		{
+			foreach((array)$this->search($criteria, false, '', '', '', false, 'OR', false, $filter) as $contact)
 			{
-				$key = $keys[$contact['account_id']];
-			}
-			elseif (isset($keys[$contact['email']]))
-			{
-				$key = $keys[$contact['email']];
-			}
-
-			// key is stored in file for sql backend or allways for pgp key
-			$path = null;
-			if ($contact['id'] && $this->pubkey_use_file($pgp, $contact))
-			{
-				$path =  Api\Link::vfs_path('addressbook', $contact['id'], $file);
-				$contact['files'] |= $pgp ? self::FILES_BIT_PGP_PUBKEY : self::FILES_BIT_SMIME_PUBKEY;
-				// remove evtl. existing old pubkey
-				if (preg_match($key_regexp, $contact['pubkey']))
+				if ($contact['account_id'] && isset($keys[$contact['account_id']]))
 				{
-					$contact['pubkey'] = preg_replace($key_regexp, '', $contact['pubkey']);
+					$key = $keys[$contact['account_id']];
 				}
-				$updated++;
-			}
-			elseif (empty($contact['pubkey']) || !preg_match($key_regexp, $contact['pubkey']))
-			{
-				$contact['pubkey'] .= $key;
-			}
-			else
-			{
-				$contact['pubkey'] = preg_replace($key_regexp, $key, $contact['pubkey']);
-			}
-			$contact['photo_unchanged'] = true;	// otherwise photo will be lost, because $contact['jpegphoto'] is not set
-			if ($this->check_perms(Acl::EDIT, $contact) && $this->save($contact))
-			{
-				if ($path)
+				elseif (isset($keys[$contact['email']]))
 				{
-					// check_perms && save check ACL, in case of access only via own-account we have to use root to allow the update
-					$backup = Api\Vfs::$is_root; Api\Vfs::$is_root = true;
-					if (file_put_contents($path, $key)) ++$updated;
-					Api\Vfs::$is_root = $backup;
+					$key = $keys[$contact['email']];
+				}
+
+				// key is stored in file for sql backend or allways for pgp key
+				$path = null;
+				if ($contact['id'] && $this->pubkey_use_file($pgp, $contact))
+				{
+					$path =  Api\Link::vfs_path('addressbook', $contact['id'], $file);
+					$contact['files'] |= $pgp ? self::FILES_BIT_PGP_PUBKEY : self::FILES_BIT_SMIME_PUBKEY;
+					// remove evtl. existing old pubkey
+					if (preg_match($key_regexp, $contact['pubkey']))
+					{
+						$contact['pubkey'] = preg_replace($key_regexp, '', $contact['pubkey']);
+					}
+					$updated++;
+				}
+				elseif (empty($contact['pubkey']) || !preg_match($key_regexp, $contact['pubkey']))
+				{
+					$contact['pubkey'] .= $key;
 				}
 				else
 				{
-					++$updated;
+					$contact['pubkey'] = preg_replace($key_regexp, $key, $contact['pubkey']);
+				}
+				$contact['photo_unchanged'] = true;	// otherwise photo will be lost, because $contact['jpegphoto'] is not set
+				if ($this->check_perms(Acl::EDIT, $contact) && $this->save($contact))
+				{
+					if ($path)
+					{
+						// check_perms && save check ACL, in case of access only via own-account we have to use root to allow the update
+						$backup = Api\Vfs::$is_root; Api\Vfs::$is_root = true;
+						if (file_put_contents($path, $key)) ++$updated;
+						Api\Vfs::$is_root = $backup;
+					}
+					else
+					{
+						++$updated;
+					}
 				}
 			}
 		}
