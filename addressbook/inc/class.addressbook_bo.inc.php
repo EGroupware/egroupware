@@ -323,7 +323,7 @@ class addressbook_bo extends Api\Contacts
 		}
 		foreach ($filters as $filter)
 		{
-			foreach($this->search($criteria, array('account_id', 'contact_email', 'contact_email_home', 'contact_pubkey', 'contact_id'),
+			foreach((array)$this->search($criteria, array('account_id', 'contact_email', 'contact_email_home', 'contact_pubkey', 'contact_id'),
 				'', '', '', false, 'OR', false, $filter) as $contact)
 			{
 				// first check for file and second for pubkey field (LDAP, AD or old SQL)
