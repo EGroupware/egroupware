@@ -821,10 +821,17 @@ class Ldap
 				}
 				foreach($this->schema2egw as $mapping)
 				{
+					if (substr($egwSearchKey, 0, 8) === 'contact_')
+					{
+						$egwSearchKey = substr($egwSearchKey, 8);
+					}
 					if(($ldapSearchKey = $mapping[$egwSearchKey]))
 					{
-						$searchString = Api\Translation::convert($searchValue,$this->charset,'utf-8');
-						$searchFilter .= '('.$ldapSearchKey.'='.$wildcard.Api\Ldap::quote($searchString).$wildcard.')';
+						foreach((array)$searchValue as $val)
+						{
+							$searchString = Api\Translation::convert($val, $this->charset,'utf-8');
+							$searchFilter .= '('.$ldapSearchKey.'='.$wildcard.Api\Ldap::quote($searchString).$wildcard.')';
+						}
 						break;
 					}
 				}
