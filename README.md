@@ -29,10 +29,10 @@ git clone https://github.com/EGroupware/egroupware.git # or git@github.com:EGrou
 cd egroupware
 ./install-cli.php
 ```
-* install further EGroupware apps by cloning them into your egroupware directory eg.
+* install non-default EGroupware apps by cloning them into your egroupware directory eg.
 ```
 cd /path/to/your/egroupware
-git clone https://github.com/EGroupware/registration.git
+git clone https://github.com/EGroupware/wiki.git
 ```
 * continue installation at http://localhost/egroupware/setup/
 
