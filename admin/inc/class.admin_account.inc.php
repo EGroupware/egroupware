@@ -264,24 +264,6 @@ class admin_account
 			{
 				$content = array('account_id' => (int)$_GET['account_id']);
 			}
-
-			// Get a count of entries owned by the user
-			$counts = $GLOBALS['egw']->accounts->get_account_entry_counts($content['account_id']);
-			foreach($counts as $app => $counts)
-			{
-				$entry = Api\Link::get_registry($app, 'entries');
-				if(!$entry)
-				{
-					$entry = lang('Entries');
-				}
-				if($counts['total'])
-				{
-					$content['counts'][] = array(
-						'app' => $app,
-						'count' => $counts['total'] . ' '.$entry
-					);
-				}
-			}
 			//error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
 		}
 		if ($GLOBALS['egw']->acl->check('account_access',32,'admin') ||
@@ -291,7 +273,12 @@ class admin_account
 		}
 		if ($content['delete'])
 		{
-			$cmd = new admin_cmd_delete_account($content['account_id'], $content['new_owner'], $content['account_id'] > 0, (array)$content['admin_cmd']);
+			$cmd = new admin_cmd_delete_account(array(
+				'account' => $content['account_id'],
+				'new_user' => $content['new_owner'],
+				'is_user' => $content['account_id'] > 0,
+				'change_apps' => $content['delete_apps']
+			) +  (array)$content['admin_cmd']);
 			$msg = $cmd->run();
 			if ($content['contact_id'])
 			{
@@ -303,8 +290,30 @@ class admin_account
 			}
 			Framework::window_close();
 		}
+
+		$sel_options = array();
+		$preserve = $content;
+
+		// Get a count of entries owned by the user
+		$counts = $GLOBALS['egw']->accounts->get_account_entry_counts($content['account_id']);
+		foreach($counts as $app => $counts)
+		{
+			$entry = Api\Link::get_registry($app, 'entries');
+			if(!$entry)
+			{
+				$entry = lang('Entries');
+			}
+			if($counts['total'])
+			{
+				$content['delete_apps'][] = $app;
+				$sel_options['delete_apps'][] = array(
+					'value' => $app,
+					'label' => lang($app) . ': ' . $counts['total'] . ' '.$entry
+				);
+			}
+		}
 		$tpl = new Etemplate('admin.account.delete');
-		$tpl->exec('admin_account::delete', $content, array(), array(), $content, 2);
+		$tpl->exec('admin_account::delete', $content, $sel_options, array(), $preserve, 2);
 	}
 
 	/**
