@@ -39,14 +39,23 @@ var et2_color = (function(){ "use strict"; return et2_inputWidget.extend(
 		this.input = this.$node = jQuery("<input type='color' class='et2_color'/>");
 
 		this.setDOMNode(this.$node[0]);
+		this.set_value(this.options.value);
 	},
 
 	getValue: function() {
-		return this.$node.val();
+		var value = this.$node.val();
+		if(value === '#FFFFFF' || value === '#ffffff')
+		{
+			return null;
+		}
+		return value;
 	},
 
 	set_value: function(color) {
-
+		if(!color)
+		{
+			color = '#ffffff';
+		}
 		this.$node.val(color);
 	}
 });}).call(this);
