@@ -6,8 +6,21 @@
 		<vbox class="admin_account_delete">
 			<description value="Who would you like to transfer records owned by the deleted user to?" class="dialogHeader2"/>
 			<select-account id="new_owner" empty_label="Delete all records" class="dialogHeader3"/>
-			<description value="Transfer entries owned by the user:"/>
+			<description value="Automatically transfer entries owned by the user:"/>
 			<select id="delete_apps" rows="8" multiple="true" span="2"/>
+			<description value="Please manually deal with entries owned by the user:"/>
+			<grid id="counts">
+				<columns>
+					<column width="150"/>
+					<column/>
+				</columns>
+				<rows>
+					<row>
+						<select-app id="${row}[app]" readonly="true"/>
+						<description id="${row}[count]"/>
+					</row>
+				</rows>
+			</grid>
 			<grid>
 				<columns>
 					<column width="150"/>

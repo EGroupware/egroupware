@@ -292,6 +292,7 @@ class admin_account
 		}
 
 		$sel_options = array();
+		$readonlys = array();
 		$preserve = $content;
 
 		// Get a count of entries owned by the user
@@ -303,12 +304,20 @@ class admin_account
 			{
 				$entry = lang('Entries');
 			}
-			if($counts['total'])
+			if($counts['total'] && Api\Hooks::exists('deleteaccount', $app))
 			{
 				$content['delete_apps'][] = $app;
 				$sel_options['delete_apps'][] = array(
 					'value' => $app,
 					'label' => lang($app) . ': ' . $counts['total'] . ' '.$entry
+				);
+			}
+			else if ($counts['total'])
+			{
+				// These ones don't support the needed hook
+				$content['counts'][] = array(
+					'app' => $app,
+					'count' => $counts['total'] . ' '.$entry
 				);
 			}
 		}
