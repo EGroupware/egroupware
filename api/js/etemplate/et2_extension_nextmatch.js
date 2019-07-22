@@ -809,9 +809,10 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		}
 
 		var app = '';
+		var list = [];
 		if(this.options.settings.columnselection_pref) {
 			var pref = {};
-			var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
+			list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
 			if(this.options.settings.columnselection_pref.indexOf('nextmatch') == 0)
 			{
 				app = list[0].substring('nextmatch'.length+1);
@@ -854,10 +855,18 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			size = this.egw().preference(size_pref, app);
 		}
 		if(!size) size = {};
+
+		// Column order
+		var order = {};
+		for(var i = 0; i < columnDisplay.length; i++)
+		{
+			order[columnDisplay[i]] = i;
+		}
 		return {
 			visible: columnDisplay,
 			visible_negated: negated,
-			size: size
+			size: size,
+			order: order
 		};
 	},
 
@@ -872,6 +881,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		var columnDisplay = prefs.visible;
 		var size = prefs.size;
 		var negated = prefs.visible_negated;
+		var order = prefs.order;
 		var colName = '';
 
 		// Add in display preferences
@@ -934,6 +944,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 						_colData[i].width = parseInt(size[colName])+'px';
 					}
 				}
+				_colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
 				for(var j = 0; j < columnDisplay.length; j++)
 				{
 					if(columnDisplay[j] == colName)
@@ -946,6 +957,13 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				_colData[i].visible = negated;
 			}
 		}
+
+		_colData.sort(function(a,b) {
+			return a.order - b.order;
+		});
+		_row.sort(function(a,b) {
+			return a.colData.order - b.colData.order;
+		});
 	},
 
 	/**
@@ -1075,6 +1093,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		for (var x = 0; x < _row.length; x++)
 		{
 			this.columns[x] = jQuery.extend({
+				"order": _colData[x] && typeof _colData[x].order !== 'undefined' ? _colData[x].order : x,
 				"widget": _row[x].widget
 			},_colData[x]);
 
@@ -1088,6 +1107,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			}
 			columnData[x] = {
 				"id": "col_" + x,
+				"order": this.columns[x].order,
 				"caption": this._genColumnCaption(_row[x].widget),
 				"visibility": visibility,
 				"width": _colData[x] ? _colData[x].width : 0
@@ -1175,6 +1195,10 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 	_parseDataRow: function(_row, _rowData, _colData) {
 		var columnWidgets = new Array(this.columns.length);
+
+		_row.sort(function(a,b) {
+			return a.colData.order - b.colData.order;
+		});
 
 		for (var x = 0; x < columnWidgets.length; x++)
 		{
