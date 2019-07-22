@@ -145,6 +145,7 @@ class admin_config
 			$errors = Api\Hooks::single(array(
 				'location' => 'config_validate',
 			)+(array)$_content['newsettings'], $appname);
+			if (!is_string($errors)) $errors = '';	// old hooks allways return true
 
 			foreach($_content['newsettings'] as $key => $config)
 			{
