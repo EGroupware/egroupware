@@ -7,9 +7,9 @@
 			<description value="Who would you like to transfer records owned by the deleted user to?" class="dialogHeader2"/>
 			<select-account id="new_owner" empty_label="Delete all records" class="dialogHeader3"/>
 			<description value="Automatically transfer entries owned by the user:"/>
-			<select id="delete_apps" rows="8" multiple="true" span="2"/>
+			<select id="delete_apps" rows="6" multiple="true" span="2"/>
 			<description value="Please manually deal with entries owned by the user:"/>
-			<grid id="counts">
+			<grid id="counts" disabled="!@counts">
 				<columns>
 					<column width="150"/>
 					<column/>
@@ -44,7 +44,7 @@
 		<box class="dialogHeader">
 			<select-account id="account_id" readonly="true" label="Delete" onchange="var apps = widget.getRoot().getWidgetById('delete_apps'); apps.set_enabled(widget.getValue());"/>
 		</box>
-		<tabbox id="tabs" width="99%">
+		<tabbox id="tabs" width="99%" tab_height="400px">
 			<tabs>
 				<tab id="main" label="Delete"/>
 			</tabs>

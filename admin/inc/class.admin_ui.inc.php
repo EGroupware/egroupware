@@ -209,7 +209,7 @@ class admin_ui
 			$actions['delete'] = array(
 				'caption' => 'Delete',
 				'group' => ++$group,
-				'popup' => '615x590',
+				'popup' => '615x600',
 				'url' => 'menuaction=admin.admin_account.delete&account_id=$id',
 				'allowOnMultiple' => false,
 			);
