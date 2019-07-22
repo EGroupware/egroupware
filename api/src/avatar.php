@@ -107,7 +107,7 @@ class avatar
 		if ($ttf)
 		{
 			ob_start();
-			imagejpeg($image, null,100);
+			imagejpeg($image, null,50);
 			$result = ob_get_contents();
 			ob_clean();
 			imagedestroy($image);
