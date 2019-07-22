@@ -34,6 +34,7 @@ $setup_info['importexport']['hooks']['sidebox_all'] = 'importexport_admin_prefs_
 $setup_info['importexport']['hooks']['etemplate2_register_widgets'] = 'importexport_admin_prefs_sidebox_hooks::widgets';
 $setup_info['importexport']['hooks']['config'] = 'importexport_admin_prefs_sidebox_hooks::config';
 $setup_info['importexport']['hooks']['config_after_save'] = 'importexport_admin_prefs_sidebox_hooks::config_after_save';
+$setup_info['importexport']['hooks']['deleteaccount'] = 'importexport.importexport_definitions_bo.change_delete_owner';
 
 /* Dependencies for this app to work */
 $setup_info['importexport']['depends'][] = array(

@@ -60,7 +60,7 @@ class importexport_definitions_bo {
 			$sql .= ') OR owner = '.$GLOBALS['egw_info']['user']['account_id'];
 			$query['col_filter'][] = $sql;
 		}
-		
+
 		// Handle allowed filter
 		if($query['col_filter']['allowed_users'])
 		{
@@ -77,7 +77,7 @@ class importexport_definitions_bo {
 				$query['col_filter'][] = '('.implode(' OR ', $allowed) . ')';
 			}
 		}
-		
+
 		$total = $this->so_sql->get_rows($query, $rows, $readonlys);
 		$ro_count = 0;
 		foreach($rows as &$row) {
@@ -328,5 +328,32 @@ class importexport_definitions_bo {
 
 		return $export;
 	}
+	/**
+	 *
+	 * changes or deletes entries with a specified owner (for deleteaccount hook)
+	 *
+	 * @param array $args hook arguments
+	 * @param int $args['account_id'] account to delete
+	 * @param int $args['new_owner']=0 new owner
+	 * @todo test deleting an owner with replace and without
+	 */
+	function change_delete_owner(array $args)  // new_owner=0 means delete
+	{
+		if (!(int) $args['new_owner'])
+		{
+			$this->so_sql->delete(array('owner'=>$args['account_id']));
+		}
+		else
+		{
+			$GLOBALS['egw']->db->update(
+				self::_defintion_table,
+				array('owner'=>$args['new_owner']),
+				array('owner'=>$args['account_id']),
+				__LINE__,__FILE__,'importexport'
+			);
+		}
+	}
+
+
 }
 
