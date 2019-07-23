@@ -185,6 +185,15 @@ function set_distro_defaults($distro=null)
 }
 set_distro_defaults();
 
+// read EGW_* environment variables overwriting default config above allowing to set all parameters via environment
+foreach($config as $name => $value)
+{
+	if (isset($_SERVER[$env='EGW_'.strtoupper(strtr($name, ['-'=>'_','/'=>'_']))]) && $_SERVER[$env] !== $value)
+	{
+		$config[$name] = $_SERVER[$env];
+	}
+}
+
 // read config from command line
 $argv = str_replace(array("''", '""'), '', $_SERVER['argv']);
 $prog = array_shift($argv);
