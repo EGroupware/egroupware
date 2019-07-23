@@ -66,6 +66,10 @@ services:
     #- EGW_DB_NAME=egroupware
     #- EGW_DB_USER=egroupware
     #- EGW_DB_PASS=
+    # further post_install.php arguments can be passed as a single enviroment variable with space separated assignments
+    # "<name1>=<value1> <name2>=<value2>" see https://github.com/EGroupware/egroupware/blob/master/doc/rpm-build/post_install.php#L17
+    # to configure eg. LDAP for authentication and account storage use
+    #- EGW_POST_INSTALL='account-auth=ldap,ldap ldap_base=ou=egroupware,dc=example,dc=org ldap_host=tls://ldap.example.org ldap_admin=cn=admin,$base ldap_admin_pw=secret ldap_context=cn=users,$base ldap_group_context=cn=groups,$base'
     restart: always
     depends_on:
     - db
