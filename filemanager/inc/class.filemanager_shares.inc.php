@@ -195,6 +195,7 @@ class filemanager_shares extends filemanager_ui
 					throw new Api\Exception\WrongParameter("Unknown action '{$content['nm']['action']}'!");
 			}
 			unset($content['nm']['action']);
+			unset($content['nm']['id']);
 		}
 		$content['is_setup'] = self::$is_setup;
 
