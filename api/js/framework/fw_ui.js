@@ -1223,6 +1223,7 @@ function egw_fw_ui_toggleSidebar (_contentDiv, _toggleCallback, _callbackContext
 	this.toggleCallback = _toggleCallback;
 	this.toggleDiv = jQuery(document.createElement('div'))
 			.attr({id:"egw_fw_toggler"})
+			.addClass('noPrint')
 			.click(function(){
 				self.onToggle(_callbackContext);
 			});
