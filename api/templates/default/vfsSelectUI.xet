@@ -19,7 +19,7 @@
 						<select width="175" id="app" empty_label="Applications" no_lang="1" onchange="app.vfsSelectUI.do_action('app', widget)"/>
 						<buttononly statustext="Create directory" id="createdir" class="createDir" onclick="app.vfsSelectUI.createdir" image="button_createdir" ro_image="createdir_disabled" background_image="1"/>
 						<file id='upload_file' statustext="upload file" progress_dropdownlist = "true" multiple="true" onFinish="app.vfsSelectUI.storeFile"/>
-						<searchbox id="search"/>
+						<searchbox id="search" onchange="app.vfsSelectUI.search"/>
 						<vfs-path id="path" class="et2_fullWidth selectPath" align="left" onchange="app.vfsSelectUI.do_action('path', widget)"/>
 					</box>
 				</row>

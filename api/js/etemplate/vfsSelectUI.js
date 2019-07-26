@@ -17,6 +17,7 @@
 app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 {
 	appname: 'filemanager',
+	dirContent: {},
 	vfsSelectWidget: {},
 	path_widget: {},
 	/**
@@ -54,6 +55,7 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 	et2_ready: function(et2,name)
 	{
 		this.path_widget = this.et2.getWidgetById('path');
+		this.dirContent = this.et2.getArrayMgr('content').data.dir;
 	},
 
 	/**
@@ -310,5 +312,41 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 		}
 
 		this.vfsSelectWidget._content(arrMgrs.content.data, _callback);
+	},
+	
+	/**
+	 * search through dir content and set its content base on searched query
+	 * @returns
+	 */
+	search: function(_widget)
+	{
+		var dir = this.et2.getWidgetById('dir');
+		var query = _widget.get_value();
+		if (query == "")
+		{
+			dir.set_value({content: this.dirContent});
+			return;
+		}
+		var searchQuery = function (_query)
+		{
+			var result = {};
+			var reg = RegExp(_query, 'ig');
+			var content = dir.getArrayMgr('content').data;
+			var key = 0;
+			for (var i in content)
+			{
+				if (typeof content[i]['name'] != 'undefined' && content[i]['name'].match(reg))
+				{
+					result[key] = content[i];
+					key++;
+				}
+				else if (typeof content[i]['name'] == 'undefined' && isNaN(i))
+				{
+					result[i] = content[i];
+				}
+			}
+			return result;
+		};
+		dir.set_value({content: searchQuery(query)});
 	}
 });}).call(this);
