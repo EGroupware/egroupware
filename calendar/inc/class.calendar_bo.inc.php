@@ -321,7 +321,7 @@ class calendar_bo
 			$data[] = array(
 				'res_id' => $id,
 				'email' => $email,
-				'rights' => self::ACL_READ_FOR_PARTICIPANTS,
+				'rights' => self::ACL_READ_FOR_PARTICIPANTS | self::ACL_INVITE,
 				'name' => $name,
 			);
 		}
