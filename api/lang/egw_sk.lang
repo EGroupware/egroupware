@@ -166,6 +166,7 @@ autosave default category	common	sk	Automaticky ukladať štandardnú kategóriu
 azerbaijan	common	sk	AZERBAJDŽÁN
 back	common	sk	Naspäť
 back to user login	common	sk	Naspäť na prihlásenie používateľa
+backcolor	common	sk	Farba pozadia
 background color:	common	sk	Farba pozadia:
 backup key	common	sk	Záložný kľúč
 backup/restore	common	sk	Záloha/Obnova
@@ -200,6 +201,7 @@ box...	common	sk	Okno...
 brazil	common	sk	BRAZÍLIA
 british indian ocean territory	common	sk	BRITSKÉ INDICKOOCEÁNSKE TERITÓRIUM
 broken link	common	sk	Nefunkčný odkaz
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	sk	Prehliadač %1 %2 neodporúčame. Môžete naraziť na problémy a poruchy funkcionality. Prosíme, použite najnovšiu verziu Chrome, Firefox alebo Edge. Ďakujeme!
 brunei darussalam	common	sk	BRUNEJ DARUSSALAM
 bulgaria	common	sk	BULHARSKO
 bulgarian	common	sk	Bulharsky
@@ -284,6 +286,7 @@ close	common	sk	Zavrieť
 close sidebox	common	sk	Zavrieť Sidebox
 closes the window without saving the changes	common	sk	Zavrie okno bez uloženia zmien
 cocos (keeling) islands	common	sk	KOKOSOVÉ OSTROVY
+code	common	sk	Kód
 collection empty.	common	sk	Výber je prázdny.
 collection listing	common	sk	Výpis výberu
 colombia	common	sk	KOLUMBIA
@@ -686,6 +689,7 @@ insert new row after this one	common	sk	Vložiť riadok za týmto
 insert new row in front of first line	common	sk	Vložiť riadok na začiatok prvého Riadku
 insert row after	common	sk	Vložiť Riadok Za
 insert row before	common	sk	Vložiť Riadok Pred
+insert timestamp into description field	common	sk	Vložiť časovú pečiatku do poľa popisu
 install	common	sk	Inštalovať
 integer	common	sk	Celé číslo
 international	common	sk	Mezinárodný
@@ -727,6 +731,7 @@ korean	common	sk	Kórejsky
 kuwait	common	sk	KUVAJT
 kyrgyzstan	common	sk	KIRGIZSKO
 label	common	sk	Menovka
+landscape	common	sk	Na šírku
 lang	common	sk	Jazyk
 language	common	sk	Jazyk
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	sk	Skratka jazyka (napr. 'en' pre English) pre jazykovo závislú šablónu ('' znamená vaše uprednostňované jazyky alebo predvolený, použite 'default' pre načítanie predvolenej šablóny '')
@@ -1293,6 +1298,7 @@ there already is a system-user with this name. user's should not have the same n
 they will be sub-folders in users home (%1 attribute).	common	sk	Budú pod-priečinkami v používateľovom domovskom priečinku (%1 atribút).
 this name has been used already	common	sk	Toto meno sa už používa!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	sk	Text sa zobrazí keď je vstupné pole prázdne a nemá fokus (rozmazanie)
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	sk	Týmto sa vymažú nastavenia panelu nástrojov pre všetkých používateľov a obnovia sa predvolené nastavenia.
 thursday	common	sk	Štvrtok
 tiled	common	sk	Dlaždice
 time	common	sk	Čas
