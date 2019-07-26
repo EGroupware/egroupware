@@ -236,6 +236,8 @@ function nm_action(_action, _senders, _target, _ids)
 					"select_all": _ids.all,
 					"checkboxes": checkbox_values
 				});
+				// Skip this one, it would cause the nm to change ID on reload
+				delete value.id;
 				value[nextmatch.options.settings.action_var]= _action.id;
 
 				// Don't try to send the nextmatch
