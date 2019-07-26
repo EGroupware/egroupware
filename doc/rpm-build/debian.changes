@@ -1,3 +1,17 @@
+egroupware (19.1.20190726) hardy; urgency=low
+
+  * 2. 19.1 release-candidate / preview
+  * Admin: fixed Site config did not store ("Error: 1")
+  * Admin: delete account allows to choose per app what happens with the data
+  * eTemplate2/UI: remove JPicker color-picker in favor of native html5 one from browser
+  * eTemplate2/UI: lists now supports to change order of columns (no GUI yet)
+  * EPL/Filemanager/Versioning: do not version Office 2007 .tmp files
+  * LDAP/SMIME: certifcates are now stored and used for accounts in LDAP
+  * Univention: use stock 19.1 container by replacing univention-directory-manager with new UDM REST Api
+  * Docker: allow to set all post_install parameters to be set via EGW_* enviroment vars
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 26 Jul 2019 11:07:27 +0200
+
 egroupware (19.1.20190717) hardy; urgency=low
 
   * better guiding through Rocket.Chat installation process
