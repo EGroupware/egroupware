@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # setting VERSION build arg from the tag we build
-docker build --build-arg VESION=$SOURCE_BRANCH -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+docker build --build-arg VERSION=$SOURCE_BRANCH -f $DOCKERFILE_PATH -t $IMAGE_NAME .
