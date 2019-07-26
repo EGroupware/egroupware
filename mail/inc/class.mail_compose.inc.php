@@ -1187,7 +1187,8 @@ class mail_compose
 				$content['body'] = $font_span.$before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true)).$inbetween.$content['body'];
 			}
 		}
-		else
+		// Skip this part if we're merging, it would add an extra line at the top
+		else if ($actionToProcess != 'merge')
 		{
 			$content['body'] = ($font_span?($isFirstLoad === "switchedplaintohtml"?$font_part:$font_span):/*($content['mimeType'] == 'html'?'&nbsp;':'')*/'').$content['body'].($isFirstLoad === "switchedplaintohtml"?"</span>":"");
 		}
