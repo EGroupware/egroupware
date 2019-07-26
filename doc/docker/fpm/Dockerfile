@@ -6,7 +6,7 @@
 FROM ubuntu:18.04
 MAINTAINER rb@egroupware.org
 
-ARG VERSION=dev-master
+ARG VERSION=19.1.20190726
 
 RUN apt-get update \
 	&& apt-get install -y software-properties-common \
