@@ -3148,8 +3148,19 @@ div.eml div.emlDelete:hover, div.eml div.emlEdit:hover  {
     margin-left: 0;
 }
 #api\.vfsSelectUI_app {width:177px}
-#api\.vfsSelectUI_name {padding-right: 4px;}
-
+#api\.vfsSelectUI_name {
+	padding-right: 0;
+	margin-right:0;
+}
+#api\.vfsSelectUI_search.et2_searchbox .flex{
+	width: 122px;
+	padding-right: 0px;
+}
+#api\.vfsSelectUI_path {width:100%;}
+#api\.vfsSelectUI_path .et2_textbox.et2_vfs {
+	padding-right: 0px;
+	margin-right: 0px;
+}
 tr.disableIfNoEPL {
     box-shadow: inset 1px 1px 1px 1px #b9b9b9bf;
 }
