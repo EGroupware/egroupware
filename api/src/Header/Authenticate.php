@@ -115,7 +115,7 @@ class Authenticate
 			{
 				$realm .= ': '.$GLOBALS['egw']->session->reason;
 			}
-			header('WWW-Authenticate: Basic realm="'.$realm.'"');// draft-reschke-basicauth-enc-06 adds, accept-charset="'.translation::charset().'"');
+			header('WWW-Authenticate: Basic realm="'.$realm.'"');// draft-reschke-basicauth-enc-06 adds, accept-charset="'.Api\Translation::charset().'"');
 			self::digest_header($realm);
 			header('HTTP/1.1 401 Unauthorized');
 			header('X-WebDAV-Status: 401 Unauthorized', true);

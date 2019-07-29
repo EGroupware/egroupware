@@ -262,6 +262,7 @@ class admin_customfields
 
 		// Make sure app css gets loaded, extending app might cause et2 to miss it
 		Framework::includeCSS('admin','app');
+		Api\Translation::add_app('admin');
 
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
 
