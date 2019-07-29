@@ -1188,9 +1188,9 @@ class mail_compose
 			}
 		}
 		// Skip this part if we're merging, it would add an extra line at the top
-		else if ($actionToProcess != 'merge')
+		else if (!$content['body'])
 		{
-			$content['body'] = ($font_span?($isFirstLoad === "switchedplaintohtml"?$font_part:$font_span):/*($content['mimeType'] == 'html'?'&nbsp;':'')*/'').$content['body'].($isFirstLoad === "switchedplaintohtml"?"</span>":"");
+			$content['body'] = ($font_span?($isFirstLoad === "switchedplaintohtml"?$font_part:$font_span):'').($isFirstLoad === "switchedplaintohtml"?"</span>":"");
 		}
 		//error_log(__METHOD__.__LINE__.$content['body']);
 
