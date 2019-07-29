@@ -174,6 +174,12 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			description: "Define width of dialog, the default is auto",
 			"default": 'auto'
 		},
+		height: {
+			name: "height",
+			type: "string",
+			description: "Define width of dialog, the default is auto",
+			"default": 'auto'
+		},
 		position: {
 			name: "position",
 			type: "string",
@@ -484,7 +490,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			minWidth: this.options.minWidth,
 			minHeight:this.options.minHeight,
 			maxWidth: 640,
-			height: 'auto',
+			height: this.options.height,
 			title: this.options.title,
 			open: function() {
 				// Focus default button so enter works
