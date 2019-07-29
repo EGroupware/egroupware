@@ -399,7 +399,7 @@ class Sharing
 					'shareReadonlyLink' => array(
 						'caption' => lang('Share link'),
 						'group' => 1,
-						'icon' => 'view',
+						'icon' => 'link',
 						'order' => 11,
 						'enabled' => "javaScript:app.$appname.is_share_enabled",
 						'onExecute' => "javaScript:app.$appname.share_link"
