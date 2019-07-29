@@ -69,9 +69,11 @@ class Credentials
 
 	/**
 	 * Collabora key
+	 *
+	 * @link https://github.com/EGroupware/collabora/blob/master/src/Credentials.php#L20
 	 */
 	const COLLABORA = 64;
-	
+
 	/**
 	 * All credentials
 	 */
