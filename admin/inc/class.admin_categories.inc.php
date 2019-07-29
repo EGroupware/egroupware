@@ -317,7 +317,7 @@ class admin_categories
 		}
 
 		Framework::includeJS('.','global_categories','admin');
-		translation::add_app('admin');
+		Api\Translation::add_app('admin');
 
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete ||		// cant delete not yet saved category
 			$appname != $content['appname'] || // Can't edit a category from a different app
