@@ -66,6 +66,12 @@ class Credentials
 	 * Two factor auth secret key
 	 */
 	const TWOFA = 32;
+
+	/**
+	 * Collabora key
+	 */
+	const COLLABORA = 64;
+	
 	/**
 	 * All credentials
 	 */
