@@ -486,7 +486,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 								content: _value
 							},
 							width: "90%",
-							height:"90%",
+							height:"450",
 							resizable: false,
 							position:"top+10",
 							template: egw.webserverUrl+'/api/templates/default/avatar_edit.xet?2'
