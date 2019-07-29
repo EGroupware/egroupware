@@ -5784,7 +5784,7 @@ class Mail
 				$attachment['mimeType'] = $mime_type;
 				$attachment['uid'] = $_uid;
 				$attachment['partID'] = $mime_id;
-				if (!isset($attachment['name'])||empty($attachment['name'])) $attachment['name'] = $part->getName();
+				if (!isset($attachment['name'])||empty($attachment['name'])) $attachment['name'] = $part->getName() ? $part->getName() : lang('forwarded message');
 				if ($fetchTextCalendar)
 				{
 					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($part->getAllContentTypeParameters()));
