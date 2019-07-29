@@ -73,7 +73,7 @@ font size unit	preferences	de	Einheit der Schriftgröße
 forced preferences	preferences	de	Erzwungene Einstellungen
 formatting & general settings	preferences	de	Formatierung & allgemeine Einstellungen
 general settings	preferences	de	Allgemeine Einstellungen
-generate new qrcode to disable existing one, after enabling the new one!	preferences	de	Einen neuen QRCode generieren um den bestehenden ungültig zu machen, nach dem diese gespeichert wurde!
+generate new qrcode to disable existing one, after enabling the new one!	preferences	de	Einen neuen QR-Code generieren um den bestehenden ungültig zu machen, nach dem diese gespeichert wurde!
 google authenticator for android	preferences	de	Google Authenticator für Android
 google authenticator for ios	preferences	de	Google Authenticator für iOS
 help off	preferences	de	Keine Hilfe
@@ -127,11 +127,11 @@ pt: points (1/72 inch)	preferences	de	pt: Punkt (1/72 Inch)
 px: display pixels	preferences	de	px: Bildschirmpixel
 re-enter your password	preferences	de	Neues Passwort wiederholen
 read prefs for the specified application.	preferences	de	Liest Einstellungen von den ausgewählten Anwendungen.
-reset qrcode	preferences	de	QRCode zurücksetzen
+reset qrcode	preferences	de	QR-Code zurücksetzen
 revoke acccess tokens	preferences	de	Tokens zurückziehen
 rich text editor enter mode	preferences	de	Zeilenumbruchmodus des Editors
 rich text editor theme	preferences	de	Farbschema des Editors
-scan qrcode with a time-based one-time password (totp) app:	preferences	de	QRCode mit einer App für zeitbasierende Einmalpasswörter (TOTP Time-based One-time Password) abscanen:
+scan qrcode with a time-based one-time password (totp) app:	preferences	de	QR-Code mit einer App für zeitbasierende Einmalpasswörter (TOTP Time-based One-time Password) abscannen:
 secret deleted, two factor authentication disabled.	preferences	de	Schlüssel gelöscht, die Zweifaktor Authentifizierung ist jetzt abgeschaltet.
 select additional lines in lists by	preferences	de	Zusätzliche Zeilen in Listen auswählen durch
 select different theme	preferences	de	anderes Schema wählen
@@ -152,7 +152,7 @@ show helpmessages by default	preferences	de	Hilfetexte standardmäßig anzeigen
 show links between egroupware aps as	common	de	Zeige Verknüpfungen zwischen EGroupware Anwendungen als
 show navigation bar as	preferences	de	Anzeige der Navigationsleiste
 show number of current users	preferences	de	Anzahl gegenwärtiger Benutzer anzeigen
-show qrcode	preferences	de	QRCode anzeigen
+show qrcode	preferences	de	QR-Code anzeigen
 show qrcode to enable on an additional device.	preferences	de	Zeigt den QRCode wieder an um ihn auf weiteren Geräten einzurichten.
 show text on navigation icons	preferences	de	Text zu Icons in der Navigationsleiste anzeigen
 show_more_apps	common	de	Mehr Anwendungen anzeigen
