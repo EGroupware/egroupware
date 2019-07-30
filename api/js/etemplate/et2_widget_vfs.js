@@ -1230,7 +1230,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			}
 
 		}
-		buttons.push({text: egw.lang("Close"), id:"close"});
+		buttons.push({text: egw.lang("Close"), id:"close", image:"cancel"});
 		var data = jQuery.extend(_data, {'currentapp': egw(window).app_name()});
 
 		// define a mini app object for vfs select UI
