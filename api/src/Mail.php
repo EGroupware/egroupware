@@ -1737,7 +1737,8 @@ class Mail
 						$headerObject['ATTACHMENTS'][$mime_id]['partID']=$mime_id;
 						if (!isset($headerObject['ATTACHMENTS'][$mime_id]['name']))
 						{
-							$headerObject['ATTACHMENTS'][$mime_id]['name']= $part->getName() ? $part->getName() : lang('forwarded message');
+							$headerObject['ATTACHMENTS'][$mime_id]['name']= $part->getName() ? $part->getName() :
+								($mime_type == "message/rfc822" ? lang('forwarded message') : lang('attachment'));
 						}
 						if (!strcasecmp($headerObject['ATTACHMENTS'][$mime_id]['name'],'winmail.dat') ||
 							$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=='application/ms-tnef')
@@ -5784,7 +5785,7 @@ class Mail
 				$attachment['mimeType'] = $mime_type;
 				$attachment['uid'] = $_uid;
 				$attachment['partID'] = $mime_id;
-				if (!isset($attachment['name'])||empty($attachment['name'])) $attachment['name'] = $part->getName() ? $part->getName() : lang('forwarded message');
+				if (!isset($attachment['name'])||empty($attachment['name'])) $attachment['name'] = $part->getName() ? $part->getName() : ($mime_type == "message/rfc822" ? lang('forwarded message') : lang('attachment'));;
 				if ($fetchTextCalendar)
 				{
 					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($part->getAllContentTypeParameters()));
