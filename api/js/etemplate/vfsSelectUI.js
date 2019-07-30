@@ -313,7 +313,7 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 
 		this.vfsSelectWidget._content(arrMgrs.content.data, _callback);
 	},
-	
+
 	/**
 	 * search through dir content and set its content base on searched query
 	 * @returns
@@ -327,22 +327,22 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 			dir.set_value({content: this.dirContent});
 			return;
 		}
+		var self = this;
 		var searchQuery = function (_query)
 		{
 			var result = {};
-			var reg = RegExp(_query, 'ig');
-			var content = dir.getArrayMgr('content').data;
+			var reg = RegExp("^"+_query, 'ig');
 			var key = 0;
-			for (var i in content)
+			for (var i in self.dirContent)
 			{
-				if (typeof content[i]['name'] != 'undefined' && content[i]['name'].match(reg))
+				if (typeof self.dirContent[i]['name'] != 'undefined' && self.dirContent[i]['name'].match(reg))
 				{
-					result[key] = content[i];
+					result[key] = self.dirContent[i];
 					key++;
 				}
-				else if (typeof content[i]['name'] == 'undefined' && isNaN(i))
+				else if (typeof self.dirContent[i]['name'] == 'undefined' && isNaN(i))
 				{
-					result[i] = content[i];
+					result[i] = self.dirContent[i];
 				}
 			}
 			return result;
