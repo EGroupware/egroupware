@@ -220,7 +220,7 @@ class Udm
 	{
 		// set existing values
 		$get_headers = [];
-		$payload = $this->user2udm($data, $this->call('users/user/'.urlencode($dn), 'GET', [], $get_headers)['entry']);
+		$payload = $this->user2udm($data, $this->call('users/user/'.urlencode($dn), 'GET', [], $get_headers));
 
 		$headers = [];
 		return $this->call('users/user/', 'PUT', $payload, $headers, $get_headers['etag'], true);
@@ -310,7 +310,7 @@ class Udm
 	{
 		// set existing values
 		$get_headers = [];
-		$payload = $this->user2udm($data, $this->call('groups/group/'.urlencode($dn), 'GET', [], $get_headers)['entry']);
+		$payload = $this->user2udm($data, $this->call('groups/group/'.urlencode($dn), 'GET', [], $get_headers));
 
 		$headers = [];
 		return $this->call('groups/group/', 'PUT', $payload, $headers, $get_headers['etag'], true);
