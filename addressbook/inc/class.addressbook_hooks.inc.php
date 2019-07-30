@@ -390,6 +390,10 @@ class addressbook_hooks
 				'key'    => 'contact_id',
 				'column' => 'egw_addressbook.contact_modified',
 				'type'   => 'int'
+			),
+			'owner' => array(
+				'key'    => 'egw_addressbook.contact_id',
+				'column' => 'egw_addressbook.contact_owner'
 			)
 		);
 		return $links;
