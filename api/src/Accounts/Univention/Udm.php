@@ -97,10 +97,10 @@ class Udm
 		$curl = curl_init();
 
 		// fix error: Request argument "policies" is not a "dict" (PHP encodes empty arrays as array, not object)
-		/*if (array_key_exists('policies', $_payload) && empty($_payload['policies']))
+		if (array_key_exists('policies', $_payload) && empty($_payload['policies']))
 		{
 			$_payload['policies'] = new \stdClass();	// force "policies": {}
-		}*/
+		}
 
 		$headers = [];
 		$curlOpts = [
