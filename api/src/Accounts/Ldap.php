@@ -350,7 +350,7 @@ class Ldap
 		{
 			$to_write = $this->_merge_user($to_write,$data_utf8,!$old);
 			// make sure multiple email-addresses in the mail attribute "survive"
-			if (isset($to_write[static::MAIL_ATTR]) && count($old[static::MAIL_ATTR]) > 1)
+			if (isset($to_write[static::MAIL_ATTR]) && is_array($old[static::MAIL_ATTR]) && count($old[static::MAIL_ATTR]) > 1)
 			{
 				$mail = $old[static::MAIL_ATTR];
 				$mail[0] = $to_write[static::MAIL_ATTR];
