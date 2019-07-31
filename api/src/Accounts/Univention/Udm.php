@@ -86,13 +86,13 @@ class Udm
 	 * @param array& $headers =[] on return response headers
 	 * @param string $if_match =null etag for If-Match header
 	 * @param boolean $return_dn =false return DN of Location header
-	 * @throws Exception on error
+	 * @param int $retry =1 >0 retry on connection-error only
 	 * @return array|string decoded JSON or DN for $return_DN === true
 	 * @throws UdmCantConnect for connection errors or JSON decoding errors
 	 * @throws UdmError for returned JSON error object
 	 * @throws UdmMissingLocation for missing Location header with DN ($return_dn === true)
 	 */
-	protected function call($_path, $_method='GET', array $_payload=[], &$headers=[], $if_match=null, $return_dn=false)
+	protected function call($_path, $_method='GET', array $_payload=[], &$headers=[], $if_match=null, $return_dn=false, $retry=1)
 	{
 		$curl = curl_init();
 
@@ -164,18 +164,29 @@ class Udm
 
 		if (!$response || !($json = json_decode($response, true)) && json_last_error())
 		{
+			if ($retry > 0)
+			{
+				return $this->call($_path, $_method, $_payload, $headers, $if_match, $return_dn, --$retry);
+			}
 			$info = curl_getinfo($curl);
 			curl_close($curl);
-			error_log(__METHOD__."($_path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).") returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).", curl_getinfo()=".json_encode($info, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+			$_path = urldecode($_path);	// for nicer error-messages
+			error_log(__METHOD__."($_path, $_method, ...) returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).", curl_getinfo()=".json_encode($info, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+			error_log(__METHOD__."($_path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).")");
 			throw new UdmCantConnect("Error contacting Univention UDM REST Api ($_path)".($response ? ': '.json_last_error() : ''));
 		}
 		curl_close($curl);
 		if (!empty($json['error']))
 		{
-			error_log(__METHOD__."($_path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).") returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
-			throw new UdmError("UDM REST Api ($_path): ".(empty($json['error']['message']) ? $response : $json['error']['message']), $json['error']['code']);
+			error_log(__METHOD__."($_path, $_method, ...) returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+			error_log(__METHOD__."($_path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).")");
+			throw new UdmError("UDM REST Api (".urldecode($_path)."): ".(empty($json['error']['message']) ? $response : $json['error']['message']), $json['error']['code']);
 		}
-		if (self::DEBUG) error_log(__METHOD__."($_path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).") returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+		if (self::DEBUG)
+		{
+			error_log(__METHOD__."($_path, $_method, ...) returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+			error_log(__METHOD__."($_path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).")");
+		}
 
 		if ($return_dn)
 		{
@@ -223,7 +234,7 @@ class Udm
 		$payload = $this->user2udm($data, $this->call('users/user/'.urlencode($dn), 'GET', [], $get_headers));
 
 		$headers = [];
-		return $this->call('users/user/', 'PUT', $payload, $headers, $get_headers['etag'], true);
+		return $this->call('users/user/'.urlencode($dn), 'PUT', $payload, $headers, $get_headers['etag'], true);
 	}
 
 	/**
@@ -313,7 +324,7 @@ class Udm
 		$payload = $this->user2udm($data, $this->call('groups/group/'.urlencode($dn), 'GET', [], $get_headers));
 
 		$headers = [];
-		return $this->call('groups/group/', 'PUT', $payload, $headers, $get_headers['etag'], true);
+		return $this->call('groups/group/'.urlencode($dn), 'PUT', $payload, $headers, $get_headers['etag'], true);
 	}
 
 	/**

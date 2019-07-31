@@ -89,8 +89,9 @@ class Univention extends Ldap
 			$data['account_dn'] = $udm->createGroup($data);
 			$data['account_id'] = $this->name2id($data['account_lid'], 'account_lid', 'g');
 		}
+		// account_lid and password changes need to go through UDM too
 		elseif($data['account_id'] && ($data['old_loginid'] || ($data['old_loginid'] = $this->id2name($data['account_id']))) &&
-			$data['account_lid'] != $data['old_loginid'] &&
+			($data['account_lid'] != $data['old_loginid'] || !empty($data['account_passwd'])) &&
 			($data['account_dn'] = $this->id2name($data['account_id'], 'account_dn')))
 		{
 			if ($data['account_type'] !== 'g')
