@@ -467,7 +467,7 @@
 			if (!$menu.is(":visible"))
 			{
 				$body.on('click', function(e){
-					if (e.target.id != 'topmenu_info_user_avatar')
+					if (e.target.id != 'topmenu_info_user_avatar' && jQuery(e.target).parents('#topmenu_info_user_avatar').length < 1)
 					{
 						jQuery(this).off(e);
 						$menu.toggle();

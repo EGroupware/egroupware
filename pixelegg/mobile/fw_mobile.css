@@ -4942,11 +4942,9 @@ td.message span.message {
   border: none;
   margin-top: 2px;
   margin-left: 1px;
-  pointer-events: none;
 }
 #egw_fw_topmenu_info_items #topmenu_info_user_avatar span img {
   width: 40px;
-  pointer-events: none;
 }
 #egw_fw_topmenu_info_items #topmenu_info_user_avatar span span.fw_avatar_stat {
   position: absolute;
