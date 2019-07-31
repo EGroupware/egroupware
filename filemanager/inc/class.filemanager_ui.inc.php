@@ -382,7 +382,7 @@ class filemanager_ui
 			$content['nm']['actions'] = static::get_actions();
 			$content['nm']['home_dir'] = static::get_home_dir();
 			$content['nm']['view'] = $GLOBALS['egw_info']['user']['preferences']['filemanager']['nm_view'];
-			$content['nm']['placeholder_actions'] = array('mkdir','paste','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink');
+			$content['nm']['placeholder_actions'] = array('mkdir','paste','share','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink');
 
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 
