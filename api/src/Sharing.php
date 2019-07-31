@@ -611,6 +611,10 @@ class Sharing
 	 */
 	public static function ajax_create($action, $path, $writable = false, $files = false, $extra = array())
 	{
+		if(!$path)
+		{
+			throw new Exception\WrongParameter('Missing share path.  Unable to create share.');
+		}
 		$class = self::get_share_class(array('share_path' => $path));
 		$extra = $extra + array(
 			'share_writable' => $writable,

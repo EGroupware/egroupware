@@ -1902,6 +1902,10 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 */
 	share_link: function(_action, _senders, _target, _writable, _files, _callback){
 		var path = _senders[0].id;
+		if(!path)
+		{
+			return this.egw.message(this.egw.lang('Missing share path.  Unable to create share.'), 'error');
+		}
 		if(typeof _writable === 'undefined' && _action.parent && _action.parent.getActionById('shareWritable'))
 		{
 			_writable = _action.parent.getActionById('shareWritable').checked || false;
