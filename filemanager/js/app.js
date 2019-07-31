@@ -1175,6 +1175,29 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
+	 * create a share-link for the given entry
+	 * Overriden from parent to handle empty directories
+	 *
+	 * @param {egwAction} _action egw actions
+	 * @param {egwActionObject[]} _senders selected nm row
+	 * @param {egwActionObject} _target Drag source.  Not used here.
+	 * @param {Boolean} _writable Allow edit access from the share.
+	 * @param {Boolean} _files Allow access to files from the share.
+	 * @param {Function} _callback Callback with results
+	 * @returns {Boolean} returns false if not successful
+	 */
+	share_link: function(_action, _senders, _target, _writable, _files, _callback)
+	{
+		// Check to see if we're in the empty row (No matches found.) and use current path
+		var path = _senders[0].id;
+		if(!path)
+		{
+			_senders[0] = {id: this.get_path()};
+		}
+		this._super.call(this, _action, _senders, _target, _writable, _files, _callback);
+	},
+
+	/**
 	 * Share-link callback
 	 * @param {object} _data
 	 */
