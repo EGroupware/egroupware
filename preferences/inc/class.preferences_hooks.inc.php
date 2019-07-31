@@ -403,16 +403,6 @@ class preferences_hooks
 				'admin'  => false,
 				'default' => '10'
 			),
-			'rte_enter_mode' => array(
-				'type'   => 'select',
-				'label'  => 'Rich text editor enter mode',
-				'name'   => 'rte_enter_mode',
-				'values' => $html_enter_mode,
-				'help'   => 'Select how the rich text editor will generate the enter (linebreak) tag.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => 'br',
-			),
 			'rte_menubar' => array(
 				'type'   => 'select',
 				'label'  => 'Enable menubar',
