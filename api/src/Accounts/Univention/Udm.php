@@ -113,7 +113,7 @@ class Udm
 			CURLOPT_CUSTOMREQUEST => $_method,
 			CURLOPT_RETURNTRANSFER => 1,
 			//CURLOPT_FOLLOWLOCATION => 1,
-			CURLOPT_TIMEOUT => 1,
+			CURLOPT_TIMEOUT => 30,	// setting a timeout of 30 seconds, as recommended by Univention
 			CURLOPT_VERBOSE => 1,
 			CURLOPT_HEADERFUNCTION =>
 				function($curl, $header) use (&$headers)
@@ -162,30 +162,32 @@ class Udm
 		curl_setopt_array($curl, $curlOpts);
 		$response = curl_exec($curl);
 
+		$path = urldecode($_path);	// for nicer error-messages
 		if (!$response || !($json = json_decode($response, true)) && json_last_error())
 		{
-			if ($retry > 0)
-			{
-				return $this->call($_path, $_method, $_payload, $headers, $if_match, $return_dn, --$retry);
-			}
 			$info = curl_getinfo($curl);
 			curl_close($curl);
-			$_path = urldecode($_path);	// for nicer error-messages
-			error_log(__METHOD__."($_path, $_method, ...) returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).", curl_getinfo()=".json_encode($info, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
-			error_log(__METHOD__."($_path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).")");
+			if ($retry > 0)
+			{
+				error_log(__METHOD__."($path, $_method, ...) failed, retrying in 100ms, returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).", curl_getinfo()=".json_encode($info, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+				usleep(100000);
+				return $this->call($_path, $_method, $_payload, $headers, $if_match, $return_dn, --$retry);
+			}
+			error_log(__METHOD__."($path, $_method, ...) returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).", curl_getinfo()=".json_encode($info, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+			error_log(__METHOD__."($path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).")");
 			throw new UdmCantConnect("Error contacting Univention UDM REST Api ($_path)".($response ? ': '.json_last_error() : ''));
 		}
 		curl_close($curl);
 		if (!empty($json['error']))
 		{
-			error_log(__METHOD__."($_path, $_method, ...) returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
-			error_log(__METHOD__."($_path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).")");
+			error_log(__METHOD__."($path, $_method, ...) returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+			error_log(__METHOD__."($path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).")");
 			throw new UdmError("UDM REST Api (".urldecode($_path)."): ".(empty($json['error']['message']) ? $response : $json['error']['message']), $json['error']['code']);
 		}
 		if (self::DEBUG)
 		{
-			error_log(__METHOD__."($_path, $_method, ...) returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
-			error_log(__METHOD__."($_path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).")");
+			error_log(__METHOD__."($path, $_method, ...) returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+			error_log(__METHOD__."($path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).")");
 		}
 
 		if ($return_dn)
