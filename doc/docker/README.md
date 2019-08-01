@@ -37,7 +37,7 @@ volumes:
   #    #device: $PWD/extra
 services:
   egroupware:
-    image: quay.io/egroupware/egroupware:latest
+    image: egroupware/egroupware:latest
     # EPL image: download.egroupware.org/egroupware/epl:latest
     # setting a default language for a new installation
     #environment:
