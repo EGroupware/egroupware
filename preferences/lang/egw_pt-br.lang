@@ -62,10 +62,8 @@ please, select a new theme	preferences	pt-br	Por favor, selecione um novo tema
 popup with search	preferences	pt-br	Janela  instantânea com busca
 re-enter your password	preferences	pt-br	Digite sua senha novamente
 read prefs for the specified application.	preferences	pt-br	Ler preferências do aplicativo específico
-rich text editor enter mode	preferences	pt-br	Modo 'Enter' do Editor Rich Text
 rich text editor theme	preferences	pt-br	Tema do Editor Rich Text
 select different theme	preferences	pt-br	Selecione um tema diferente
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	pt-br	Selecione como o editor rich text gerará a tag enter (quebra de linha).
 select one	preferences	pt-br	Selecione um
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pt-br	Selecione o idioma dos textos e mensagens do EGroupware.<br> Alguns idiomas podem estar incopletos, e neste caso aparecerá a mensagem original em inglês seguida de um asterisco.
 select the language of the spellchecker integrated into the rich text editor.	preferences	pt-br	Selecione o idioma do corretor gramatical integrado ao editor rich text.

@@ -58,10 +58,8 @@ please select your timezone.	preferences	hu	Kérlek válassz időzónát.
 please, select a new theme	preferences	hu	Válasszon új témát
 popup with search	preferences	hu	Felugró ablak kereséssel
 re-enter your password	preferences	hu	Jelszó megerősítése
-rich text editor enter mode	preferences	hu	Egyszerű szöveg szerkesztő beviteli mód
 rich text editor theme	preferences	hu	Egyszerű szöveg szerkesztő téma
 select different theme	preferences	hu	Másik téma választása
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	hu	Válaszd ki a szövegszerkesztő hogy generálja a sorvégeket.
 select one	preferences	hu	Válasszon egyet
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	hu	Válassza ki a szövegek és üzenetek nyelvét.<br>Néhány nyelv nem tartalmaz minden üzenetet az ön nyelvére lefordítva, ebben az esetben angolul fog megjelenni az üzenet. Fordítási észrevételeit/javaslatait az előfordulás pontos helyének megjelölésével és a szöveg pontos idézésével küldje el a http://www.osbusiness.hu címre!
 select the language of the spellchecker integrated into the rich text editor.	preferences	hu	Válaszd ki a szövegszerkesztőbe integrált helyesírás-ellenőrzőt.

@@ -59,7 +59,6 @@ popup with search	preferences	id	Popup dengan pencarian
 re-enter your password	preferences	id	Ulangi masukan password
 rich text editor theme	preferences	id	Tema editor Rich text
 select different theme	preferences	id	Pilih tema berbeda
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	id	Pilihlah bagaimana editor rich text akan menghasilkan <em>enter tag</em> (pemutus baris).
 select one	preferences	id	Pilih satu
 selectbox	preferences	id	Kotak pilihan
 selectbox with groupmembers	common	id	Kotak pilihan dengan anggota kelompok

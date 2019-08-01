@@ -94,10 +94,8 @@ pt: points (1/72 inch)	preferences	es-es	pt: puntos (1/72 pulgada)
 px: display pixels	preferences	es-es	px: mostrar pixeles
 re-enter your password	preferences	es-es	Confirme su contraseña
 read prefs for the specified application.	preferences	es-es	Leer las preferencias para la aplicación especificada.
-rich text editor enter mode	preferences	es-es	Modo de edición del editor de texto enriquecido
 rich text editor theme	preferences	es-es	Tema del editor de texto enriquecido
 select different theme	preferences	es-es	Seleccione un tema diferente
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	es-es	Seleccionar cómo el editor de texto enriquecido generará la etiqueta de enter (salto de línea).
 select one	preferences	es-es	Seleccione uno
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-es	Seleccione el idioma de los textos y los mensajes en EGroupware.<br>Algunos idiomas puede que no tengan todos los mensajes, en cuyo caso verá el mensaje en inglés.
 select the language of the spellchecker integrated into the rich text editor.	preferences	es-es	Seleccionar el idioma del corrector ortográfico en el editor de texto enriquecido.

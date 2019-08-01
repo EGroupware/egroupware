@@ -112,11 +112,9 @@ pt: points (1/72 inch)	preferences	sk	pt: body (1/72 palca)
 px: display pixels	preferences	sk	px: zobrazovacie pixle
 re-enter your password	preferences	sk	Zadajte heslo znovu
 read prefs for the specified application.	preferences	sk	Načítať predvoľby pre vybranú aplikáciu.
-rich text editor enter mode	preferences	sk	Režim ukončenia riadku v textovom editore
 rich text editor theme	preferences	sk	Téma textového editora
 select additional lines in lists by	preferences	sk	Vybrať ďalšie riadky zoznamu pomocou
 select different theme	preferences	sk	Vybrať inú farebnú tému
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	sk	Vyberte, ako má textový editor generovať značku enter (zalomenie riadku).
 select one	preferences	sk	Vyberte si jeden
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sk	Vyberte jazyk pre texty a správy v rámci EGroupware.<br>Niektoré jazyky nemusia zahŕňať preklad všetkých hlášok - v takých prípadoch sa zobrazí hláška v angličtine.
 select the language of the spellchecker integrated into the rich text editor.	preferences	sk	Vyberte jazyk kontroly pravopisu v textovom editore.

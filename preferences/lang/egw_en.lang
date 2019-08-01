@@ -129,13 +129,11 @@ re-enter your password	preferences	en	Re-enter your password
 read prefs for the specified application.	preferences	en	Read preferences for the specified application.
 reset qrcode	preferences	en	Reset QRCode
 revoke acccess tokens	preferences	en	Revoke Acccess Tokens
-rich text editor enter mode	preferences	en	Rich text editor enter mode
 rich text editor theme	preferences	en	Rich text editor theme
 scan qrcode with a time-based one-time password (totp) app:	preferences	en	Scan QRCode with a Time-based One-time Password (TOTP) App:
 secret deleted, two factor authentication disabled.	preferences	en	Secret deleted, two factor authentication disabled.
 select additional lines in lists by	preferences	en	Select additional lines in lists by
 select different theme	preferences	en	Select different theme
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	en	Select how the rich text editor will generate the line break tag.
 select one	preferences	en	Select
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	en	Select the language of texts and messages. English is used, if there is no translation provided.
 select the language of the spellchecker integrated into the rich text editor.	preferences	en	Select the language of the spellchecker integrated into the rich text editor.

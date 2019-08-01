@@ -109,11 +109,9 @@ pt: points (1/72 inch)	preferences	ja	pt: ポイント (1/72 インチ)
 px: display pixels	preferences	ja	px: ピクセル
 re-enter your password	preferences	ja	パスワードを再入力して下さい。
 read prefs for the specified application.	preferences	ja	アプリケーション個別設定を読み込みます。
-rich text editor enter mode	preferences	ja	Rich text editor enter mode
 rich text editor theme	preferences	ja	Rich text editor theme
 select additional lines in lists by	preferences	ja	複数行を選択する方法
 select different theme	preferences	ja	異なるテーマを選択してください。
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	ja	リッチテキスト・エディタでの破線タグの生成方法を選択してください。
 select one	preferences	ja	選択してください
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ja	表示言語を選択して下さい。
 select the language of the spellchecker integrated into the rich text editor.	preferences	ja	リッチテキスト・エディタに統合されているスペル・チェッカーの言語を選択してください。

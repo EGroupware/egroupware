@@ -61,10 +61,8 @@ please, select a new theme	preferences	nl	Selecteer een nieuw thema
 popup with search	preferences	nl	Popupvenster met zoekfunctie
 re-enter your password	preferences	nl	Voor uw wachtwoord nogmaals in
 read prefs for the specified application.	preferences	nl	Lees voorkeuren voor de opgegeven toepassing
-rich text editor enter mode	preferences	nl	Rich text editor invoer modus
 rich text editor theme	preferences	nl	Rich text editor theme
 select different theme	preferences	nl	Selecteer een ander thema
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	nl	Kies hoe de rich text editor de Enter (regelomloop) tag moet opbouwen.
 select one	preferences	nl	Selecteer één
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	nl	Selecteer de taal teksten en berichten in EGroupware. <br />Sommige talen zijn niet compleet.  In dat geval wordt teruggevallen op de Engelse taal.
 select the language of the spellchecker integrated into the rich text editor.	preferences	nl	Kies de taal van de spellingcontrole die is geintegreerde rich text editor.

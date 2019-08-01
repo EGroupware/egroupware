@@ -109,11 +109,9 @@ pt: points (1/72 inch)	preferences	cs	pt: body (1/72 palce)
 px: display pixels	preferences	cs	px: pixely
 re-enter your password	preferences	cs	Zadejte znovu své heslo
 read prefs for the specified application.	preferences	cs	Načíst předvolby pro vybranou aplikaci.
-rich text editor enter mode	preferences	cs	Vstupní režim richtext editoru
 rich text editor theme	preferences	cs	Téma richtext editoru
 select additional lines in lists by	preferences	cs	Další řádky v seznamu vybrat
 select different theme	preferences	cs	Vybrat jiné téma
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	cs	Vyberte jaký tag bude richtext editor generovat pro zalomení řádky při stisku klávesy Enter.
 select one	preferences	cs	Vybrat jeden
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	cs	Vyberte jazyk pro texty a hlášky v eGroupWaru.<br>Některé jazyky nemusí obsahovat překlad všech hlášek, v takovém případě se zobrazí anglický originál.
 select the language of the spellchecker integrated into the rich text editor.	preferences	cs	Vyberte jazyk pro kontrolu pravopisu v richtext editoru.

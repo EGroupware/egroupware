@@ -115,11 +115,9 @@ pt: points (1/72 inch)	preferences	fr	pt: points (1/72 pouces)
 px: display pixels	preferences	fr	px: affiche des pixels
 re-enter your password	preferences	fr	Ré-entrez votre mot de passe
 read prefs for the specified application.	preferences	fr	Lire les préférences pour l'apllication spécifiée.
-rich text editor enter mode	preferences	fr	Mode d'entrer dans l'éditeur de texte riche
 rich text editor theme	preferences	fr	Thème de l'éditeur de texte
 select additional lines in lists by	preferences	fr	Sélectionner des lignes supplémentaires dans les listes en
 select different theme	preferences	fr	Choisissez un thème différent
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	fr	Sélectionner comment l'éditeur de texte avancé va générer une balise de retour à la ligne.
 select one	preferences	fr	Choisissez un(e)
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fr	Choisissez la langue des textes et messages dans EGroupware.<br>Certaines langues peuvent ne pas contenir toutes les traductions, dans ce cas vous verrez le message en anglais.
 select the language of the spellchecker integrated into the rich text editor.	preferences	fr	Sélectionner la langue du correcteur orthographique intégré à l'éditeur de texte.

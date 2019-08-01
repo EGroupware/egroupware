@@ -78,11 +78,9 @@ please, select a new theme	preferences	fi	Valitse teema
 popup with search	preferences	fi	Haun ponnahdusikkuna
 re-enter your password	preferences	fi	Anna salasana uudelleen
 read prefs for the specified application.	preferences	fi	Lukuoikeudet tiettyyn sovellukseen
-rich text editor enter mode	preferences	fi	Rich text editor enter -tila
 rich text editor theme	preferences	fi	Rich text editor -teema
 select additional lines in lists by	preferences	fi	Valitse lisärivit listanäkymässä
 select different theme	preferences	fi	Valitse toinen teema
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	fi	Valitse kuinka Rich text editor tuottaa rivivälin merkin.
 select one	preferences	fi	Valitse
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fi	Valitse käytettävä kieli. Osa kielistä ei ole täysin käännettyjä, kääntämättömät kohdat näkyvät silloin englanniksi.
 select the language of the spellchecker integrated into the rich text editor.	preferences	fi	Valitse oikolukuohjelman kieli. Se on integroitu Rich text editoriin.

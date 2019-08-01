@@ -58,10 +58,8 @@ please, select a new theme	preferences	zh	请选择一个新主题
 popup with search	preferences	zh	弹出式搜索窗口
 re-enter your password	preferences	zh	重新输入您的密码
 read prefs for the specified application.	preferences	zh	为指定应用程序读取配置文件。
-rich text editor enter mode	preferences	zh	FCKeditor 文本编辑器输入方式
 rich text editor theme	preferences	zh	FCKeditor 文本编辑器主题
 select different theme	preferences	zh	选择不同的主题
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	zh	选择何种方式 FCKeditor 文本编辑器将生成输入(换行) Tag 标签。
 select one	preferences	zh	选择一个
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zh	选择 EGroupware 内部文本和讯息的语言。<br>有些语言不可能包含所有讯息, 在这种情况下您会看到一条英文讯息。
 select the language of the spellchecker integrated into the rich text editor.	preferences	zh	选择整合到 FCKeditor 文本编辑器的拼写检查语言。

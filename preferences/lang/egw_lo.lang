@@ -59,10 +59,8 @@ please, select a new theme	preferences	lo	ກະລຸນາເລືອກຮ�
 popup with search	preferences	lo	Popup ສໍາລັບການຄົ້ນຫາ
 re-enter your password	preferences	lo	ໃສ່ລະຫັດຜ່ານໃໝ່ຊໍ້າຄືນອີກ
 read prefs for the specified application.	preferences	lo	ຕັ້ງຄ່າການອ່ານສຳລັບແອບພຼິເຄຊັນພິເສດ
-rich text editor enter mode	preferences	lo	ຂໍ້ຄວາມແກ້ໄຂສົມບູນເຂົ້າສູ່ຮູບແບບ
 rich text editor theme	preferences	lo	ຮູບແບບຂໍ້ຄວາມແກ້ໄຂສົມບູນ
 select different theme	preferences	lo	ເລືອກຮູບແບບທີ່ແຕກຕ່າງກັນ
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	lo	ວິທີການເລືອກຂໍ້ຄວາມແກ້ໄຂສົມບູນຈະສ້າງ (ລົງແຖວ) .
 select one	preferences	lo	ເລືອກ
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	lo	ເລືອກພາສາຂອງຂໍ້ຄວາມ ແລະ ຂໍ້ຄວາມພາຍໃນຕາຕະລາງເວລາ. <br> ບາງພາສາອາດຈະບໍ່ມີຂໍ້ຄວາມທັງໝົດ, ໃນກໍລະນີນັ້ນທ່ານຈະເຫັນຂໍ້ຄວາມເປັນພາສາອັງກິດ
 select the language of the spellchecker integrated into the rich text editor.	preferences	lo	ເລືອກພາສາຂອງຕົວກວດສອບສະກົດຄຳຢູ່ໃນການແກ້ໄຂຂໍ້ຄວາມທີ່ສົມບູນ

@@ -66,10 +66,8 @@ please, select a new theme	preferences	pl	Proszę wybrać nowy temat
 popup with search	preferences	pl	Okno popup do szukania
 re-enter your password	preferences	pl	Wpisz hasło ponownie
 read prefs for the specified application.	preferences	pl	Odczytaj preferencje dla wybranej aplikacji.
-rich text editor enter mode	preferences	pl	Tryb edytora zaawansowanego
 rich text editor theme	preferences	pl	Kompozycja edytora zaawansowanego
 select different theme	preferences	pl	Wybierz inny temat
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	pl	Wybierz w jaki sposób zaawansowany edytor wygeneruje znak nowej linii.
 select one	preferences	pl	Wybierz jeden
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pl	Wybierz język tekstów i komunikatów wewnątrz EGroupware.<br />Niektóre języki nie zawierają wszelkich komunikatów. W takich wypadkach wyświetlane będą komunikaty w języku angielskim.
 select the language of the spellchecker integrated into the rich text editor.	preferences	pl	Wybierz język sprawdzania pisowni.

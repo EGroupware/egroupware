@@ -114,11 +114,9 @@ pt: points (1/72 inch)	preferences	sl	pt: točke (1/72 palca)
 px: display pixels	preferences	sl	px: prikaz slikovnih pik
 re-enter your password	preferences	sl	Ponovno vpišite geslo
 read prefs for the specified application.	preferences	sl	Preberite lastnosti izbrane aplikacije.
-rich text editor enter mode	preferences	sl	Način obogatenega besedila
 rich text editor theme	preferences	sl	Tema obogatenega besedila
 select additional lines in lists by	preferences	sl	Izberite dodatne vrstice v seznamih z
 select different theme	preferences	sl	Izberite drugačno temo
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	sl	Izberite, kako bo urejevalnik obogatenega besedila ustvaril značko za prelom vsrtice.
 select one	preferences	sl	Izberite eno
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sl	Izberi jezik sporočil in besedil znotraj EGW.<br>Nekateri jeziki morda ne vsebujejo vseh prevodov in v tem primeru bo izpisano besedilo v angleščini.
 select the language of the spellchecker integrated into the rich text editor.	preferences	sl	Izberite jezik črkovalnika, vgrajenega v urejevalnik  obogatenega besedila.

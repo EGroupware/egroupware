@@ -129,13 +129,11 @@ re-enter your password	preferences	de	Neues Passwort wiederholen
 read prefs for the specified application.	preferences	de	Liest Einstellungen von den ausgewählten Anwendungen.
 reset qrcode	preferences	de	QR-Code zurücksetzen
 revoke acccess tokens	preferences	de	Tokens zurückziehen
-rich text editor enter mode	preferences	de	Zeilenumbruchmodus des Editors
 rich text editor theme	preferences	de	Farbschema des Editors
 scan qrcode with a time-based one-time password (totp) app:	preferences	de	QR-Code mit einer App für zeitbasierende Einmalpasswörter (TOTP Time-based One-time Password) abscannen:
 secret deleted, two factor authentication disabled.	preferences	de	Schlüssel gelöscht, die Zweifaktor Authentifizierung ist jetzt abgeschaltet.
 select additional lines in lists by	preferences	de	Zusätzliche Zeilen in Listen auswählen durch
 select different theme	preferences	de	anderes Schema wählen
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	de	Auswählen welches Tag der Editor bei einem Zeilenumbruch verwendet.
 select one	preferences	de	Bitte wählen
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der EGroupware.<br>Manche Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der englische Text angezeigt.
 select the language of the spellchecker integrated into the rich text editor.	preferences	de	Sprache der integrierten Rechtschreibprüfung des Editors.

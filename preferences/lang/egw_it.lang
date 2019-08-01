@@ -109,11 +109,9 @@ pt: points (1/72 inch)	preferences	it	pt: Punti  (1/72 pollici)
 px: display pixels	preferences	it	px: Pixel
 re-enter your password	preferences	it	Reinserisci la password
 read prefs for the specified application.	preferences	it	Legge le preferenze per l'applicazione specificata.
-rich text editor enter mode	preferences	it	Editor avanzato - modalità attivazione
 rich text editor theme	preferences	it	Tema editor avanzato
 select additional lines in lists by	preferences	it	Selezionare righe aggiuntive nelle lista con
 select different theme	preferences	it	Seleziona un tema differente
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	it	Selezioare come l'editor avanzato genererà il tag di cambio riga.
 select one	preferences	it	Seleziona uno
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	it	Seleziona la lingua dei testi e dei messaggi di EGroupware.<br>Alcune lingue non contengono tutti i messaggi, in quel caso rimarranno in inglese.
 select the language of the spellchecker integrated into the rich text editor.	preferences	it	Selezionare la lingua del correttore ortografico integrato nell'editor avanzato

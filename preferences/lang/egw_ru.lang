@@ -88,11 +88,9 @@ pt: points (1/72 inch)	preferences	ru	pt – точка (1/72 дюйма)
 px: display pixels	preferences	ru	px – отображать пикселы
 re-enter your password	preferences	ru	Введите пароль еще раз
 read prefs for the specified application.	preferences	ru	Прочтите настройки для указанных приложений
-rich text editor enter mode	preferences	ru	Режим входа в расширенный редактор текста
 rich text editor theme	preferences	ru	Тема расширенного редактора текста
 select additional lines in lists by	preferences	ru	Выберите дополнительные строки в списке по
 select different theme	preferences	ru	Выберите другую тему
-select how the rich text editor will generate the enter (linebreak) tag.	preferences	ru	Выберите - как расширенный редактор текста будет генерировать тэг перевода строки.
 select one	preferences	ru	Выберите одно
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ru	Выбирите язык текстов и сообщений в EGroupware. Некоторые языки могут не содержать все сообщения, в этом случае вы увидите сообщение на английском языке.
 select the language of the spellchecker integrated into the rich text editor.	preferences	ru	Выберите язык проверки орфографии, втроенной в расширенный редактор текста.
