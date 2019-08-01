@@ -3,7 +3,7 @@
 %1 copied - the copy can now be edited	common	en	%1 copied - the copy can now be edited
 %1 directories %2 found!	admin	en	%1 directories %2 found!
 %1 email addresses inserted	common	en	%1 email addresses inserted.
-%1 email(s) added into %2	api	en	%1 email(s) added into %2
+%1 email(s) added into %2	common	en	%1 email(s) added into %2
 %1 entries found, select one ...	common	en	%1 entries found, select one ...
 %1 etemplates deleted	common	en	%1 eTemplates deleted.
 %1 etemplates for application '%2' dumped to '%3'	common	en	%1 eTemplates for application '%2' dumped to '%3'
@@ -144,7 +144,7 @@ applies the changes made	common	en	Applies the changes
 applies the changes to the given version of the template	common	en	Applies the changes to the given version of the template
 apply	common	en	Apply
 apply the action on the whole query, not only the shown entries	common	en	Apply the action on the whole query, NOT only the shown entries
-apps &amp; license	api	en	Apps &amp; License
+apps &amp; license	common	en	Apps &amp; License
 april	common	en	April
 are you sure you want to delete these entries ?	common	en	Are you sure you want to delete these entries?
 are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry?
@@ -587,7 +587,7 @@ french southern territories	common	en	FRENCH SOUTHERN TERRITORIES
 friday	common	en	Friday
 ftp	common	en	FTP
 fullname	common	en	Full name
-fullscreen	api	en	Fullscreen
+fullscreen	common	en	Fullscreen
 fullscreen mode	common	en	Full screen mode
 gabon	common	en	GABON
 gambia	common	en	GAMBIA
@@ -642,7 +642,7 @@ height, disabled	common	en	Height, Disabled
 help	common	en	Help
 high	common	en	High
 highest	common	en	Highest
-history	api	en	History
+history	common	en	History
 history log	common	en	History log
 hold [%1] and [%2] key to drag %3 to your desktop	common	en	Hold [%1] and [%2] key to drag %3 to your desktop
 hold [%1] key to select text eg. to copy it	common	en	Hold [%1] key to select text eg. to copy it
@@ -673,7 +673,7 @@ if the error persists, contact your administrator for help and ask to check the 
 if there are some images in the background folder you can choose the one you would like to see.	common	en	If there are some images in the background folder you can choose the one you would like to see.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	en	If you specify a directory, full vfs path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	en	If you specify a document, full vfs path, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
-if you use "2-factor-authentication", please enter the code here.	api	en	If you use "2-Factor-Authentication", please enter the code here.
+if you use "2-factor-authentication", please enter the code here.	common	en	If you use "2-Factor-Authentication", please enter the code here.
 image	common	en	Image
 image directory relative to document root (use / !), example:	common	en	Image directory relative to document root (use / !), example:
 image url	common	en	Image URL
@@ -1024,7 +1024,7 @@ philippines	common	en	PHILIPPINES
 phone number	common	en	Phone number
 pitcairn	common	en	PITCAIRN
 placeholders	common	en	Placeholders
-play/pause	api	en	Play/Pause
+play/pause	common	en	Play/Pause
 please %1 by hand	common	en	Please %1 by hand
 please enter a name	common	en	Enter a name!
 please enter table-name first !!!	common	en	Enter table name first!
@@ -1210,7 +1210,7 @@ select the default width for the application windows	common	en	Select the defaul
 select the indexed columns in their desired order	common	en	Select indexed columns in desired order
 select this etemplate to delete it	common	en	Select eTemplate to delete
 select user	common	en	Select user
-select user or group	api	en	Select user or group
+select user or group	common	en	Select user or group
 select which accounts to show	common	en	Select accounts to show
 select which values to show	common	en	Select values to show
 select work email address	common	en	Select work email address
@@ -1238,9 +1238,9 @@ settings saved.	common	en	Settings saved.
 setup	common	en	Setup
 setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
-share	api	en	Share
-share files	api	en	Share files
-share link	api	en	Share link
+share	common	en	Share
+share files	common	en	Share files
+share link	common	en	Share link
 shift	common	en	Shift
 shift ⇧	common	en	Shift ⇧
 should the form be submitted or any custom javascript be executed	common	en	Should form be submitted or any custom javascript executed
@@ -1442,7 +1442,7 @@ version	common	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	en	Version number, should be in the form: major.minor.revision.number e.g. 0.9.13.001 all numbers filled up with zeros
 vertical alignment of row	common	en	Vertical alignment of row
 vfs upload directory	common	en	VFS upload directory
-video tutorials	api	en	Video Tutorials
+video tutorials	common	en	Video Tutorials
 viet nam	common	en	VIET NAM
 view	common	en	View
 view linked %1 entries	common	en	View linked %1 entries
@@ -1478,7 +1478,7 @@ work email	common	en	Work email
 working days	common	en	Working days
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	en	Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB
 would you like to display the page generation time at the bottom of every window?	common	en	Display the page generation time at the bottom of every window
-writable	api	en	Writable
+writable	common	en	Writable
 writable share	common	en	Writable share
 write <app>/setup/tables_current.inc.php	common	en	Write <app>/setup/tables_current.inc.php
 write langfile	common	en	Write language file

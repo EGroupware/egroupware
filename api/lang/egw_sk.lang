@@ -3,7 +3,7 @@
 %1 copied - the copy can now be edited	common	sk	%1 skopírovaný - kópia sa odteraz dá upravovať
 %1 directories %2 found!	admin	sk	našlo sa %1 priečinkov %2
 %1 email addresses inserted	common	sk	%1 E-mailových adries bolo vložených
-%1 email(s) added into %2	api	sk	%1 e-mailov bolo pridaných do %2
+%1 email(s) added into %2	common	sk	%1 e-mailov bolo pridaných do %2
 %1 entries found, select one ...	common	sk	Našlo sa %1 položiek, vyberte si jednu ...
 %1 etemplates deleted	common	sk	%1 eŠablón bolo odstránených
 %1 etemplates for application '%2' dumped to '%3'	common	sk	%1 eŠablón pre aplikáciu '%2' urobilo výpis do '%3'
@@ -139,7 +139,7 @@ applies the changes made	common	sk	Uplatnia sa vykonané zmeny
 applies the changes to the given version of the template	common	sk	vykoná zmeny urobené na danej verzii šablóny
 apply	common	sk	Použiť
 apply the action on the whole query, not only the shown entries	common	sk	Vykonať akciu na celom výbere, NIE len na zobrazených položkách
-apps &amp; license	api	sk	Aplikácie & Licencie
+apps &amp; license	common	sk	Aplikácie & Licencie
 april	common	sk	Apríl
 are you sure you want to delete these entries ?	common	sk	Skutočne chcete odstrániť tieto záznamy?
 are you sure you want to delete this entry ?	common	sk	Skutočne chcete odstrániť tento záznam?
@@ -569,7 +569,7 @@ french southern territories	common	sk	FRANCÚZSKE JUŽNÉ ÚZEMIA
 friday	common	sk	Piatok
 ftp	common	sk	FTP
 fullname	common	sk	Plné meno
-fullscreen	api	sk	Na celú obrazovku
+fullscreen	common	sk	Na celú obrazovku
 fullscreen mode	common	sk	Celoobrazovkový režim
 gabon	common	sk	GABUN
 gambia	common	sk	GAMBIA
@@ -623,7 +623,7 @@ height, disabled	common	sk	Výška, Vypnuté
 help	common	sk	Pomocník
 high	common	sk	Vysoká
 highest	common	sk	Najvyššia
-history	api	sk	História
+history	common	sk	História
 history log	common	sk	Záznam histórie
 hold [%1] and [%2] key to drag %3 to your desktop	common	sk	Ak chcete premiestniť %3 na svoju plochu, podržte klávesy [%1] a [%2]
 hold [%1] key to select text eg. to copy it	common	sk	Ak podržíte klávesu [%1], môžete vyznačiť text, napr. za účelom kopírovania
@@ -654,7 +654,7 @@ if the error persists, contact your administrator for help and ask to check the 
 if there are some images in the background folder you can choose the one you would like to see.	common	sk	Ak sú v priečinku pre pozadia nejaké obrázky, môžete si vybrať, ktorý chcete.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	sk	Ak zadáte priečinok, plnú VFS cestu, %1 zobrazí akciu pre každý dokument. Táto akcia umožní stiahnuť vybraný dokument s vloženými dátami.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	sk	Ak zadáte dokument, plnú VFS cestu, %1 zobrazí samostatnú ikonu dokumentu pre každú položku. Táto ikona umožní stiahnuť vybraný dokument s vloženými dátami.
-if you use "2-factor-authentication", please enter the code here.	api	sk	Ak používate 2-faktorovú autentifikáciu, prosím zadajte sem kód.
+if you use "2-factor-authentication", please enter the code here.	common	sk	Ak používate 2-faktorovú autentifikáciu, prosím zadajte sem kód.
 image	common	sk	Obrázok
 image directory relative to document root (use / !), example:	common	sk	Adresár obrázkov vzťahujúci sa na koreňový adresár dokumentov (použite / !), príklad:
 image url	common	sk	URL adresa obrázka
@@ -1161,7 +1161,7 @@ select the default width for the application windows	common	sk	Vyberte predvolen
 select the indexed columns in their desired order	common	sk	Vyberte indexované stĺpce v požadovanom poradí
 select this etemplate to delete it	common	sk	Vyberte túto eŠablónu, aby sa mohla odstrániť
 select user	common	sk	Vyberte používateľa
-select user or group	api	sk	Vyberte používateľa alebo skupinu
+select user or group	common	sk	Vyberte používateľa alebo skupinu
 select which accounts to show	common	sk	Vyberte, ktoré účty zobraziť
 select which values to show	common	sk	Vyberte, ktoré hodnoty zobraziť
 select work email address	common	sk	Vyberte pracovnú E-mailovú adresu
@@ -1189,9 +1189,9 @@ settings saved.	common	sk	Nastavenia sú uložené.
 setup	common	sk	Inštalácia
 setup main menu	common	sk	Hlavná inštalačná ponuka
 seychelles	common	sk	SEYCHELLY
-share	api	sk	Zdieľať
-share files	api	sk	Zdieľať súbory
-share link	api	sk	Zdieľať odkaz
+share	common	sk	Zdieľať
+share files	common	sk	Zdieľať súbory
+share link	common	sk	Zdieľať odkaz
 shift	common	sk	Shift
 shift ⇧	common	sk	Shift ⇧
 should the form be submitted or any custom javascript be executed	common	sk	Má sa formulár odoslať alebo akýkoľvek používateľský javaskript spustiť
@@ -1419,7 +1419,7 @@ work email	common	sk	Pracovný E-mail
 working days	common	sk	Pracovné dni
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	sk	Spoľahlivo to funguje pre celkovú veľkosť do 1-2MB, zvyčajne aj do 5-10MB, ale pravdepodobne zlyhá pri >10MB
 would you like to display the page generation time at the bottom of every window?	common	sk	Chcete, aby sa naspodku stránky zobrazoval čas jej generovania?
-writable	api	sk	Zapisovateľné
+writable	common	sk	Zapisovateľné
 writable share	common	sk	Sieťový disk s možnosťou zápisu
 write <app>/setup/tables_current.inc.php	common	sk	Zapísať <app>/setup/tables_current.inc.php
 write langfile	common	sk	Zapísať jazykový súbor
