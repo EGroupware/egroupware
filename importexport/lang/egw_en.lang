@@ -22,6 +22,7 @@ allowed users	importexport	en	Allowed users
 automatically created by importexport	importexport	en	Automatically created by Import|Export
 basic csv import	importexport	en	Basic CSV import
 change allowed users	importexport	en	Change allowed users
+change owner when updating	importexport	en	Change owner when updating
 changed	importexport	en	Changed
 changed allowed_users	importexport	en	Changed allowed users
 changed owner	importexport	en	Changed owner
@@ -37,6 +38,7 @@ column mismatch: %1 should be %2, not %3	importexport	en	Column mismatch: %1 sho
 condition	importexport	en	Condition
 copied	importexport	en	Copied.
 create a <a href="%1">new definition</a> for this file	importexport	en	Create a <a href="%1">new definition</a> for this file
+create a matching export definition based on this import definition	importexport	en	Create a matching export definition based on this import definition
 create export	importexport	en	Create export
 created	importexport	en	created
 csv field	importexport	en	CSV field
@@ -148,6 +150,7 @@ user template folder	importexport	en	User template folder
 users allowed to create their own definitions	importexport	en	Users allowed to create their own definitions
 users allowed to share their own definitions	importexport	en	Users allowed to share their own definitions
 warnings	importexport	en	Warnings
+what should be done with unknown values?	importexport	en	What should be done with unknown values?
 which useres are allowed for this definition	importexport	en	Which users are allowed to use this definition
 which users are allowed to use this definition	importexport	en	Which users are allowed to use this definition
 you may want to <a href="%1" target="_new">backup</a> first.	importexport	en	You may want to <a href="%1" target="_new">backup</a> first.

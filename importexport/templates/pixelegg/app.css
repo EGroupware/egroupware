@@ -130,7 +130,6 @@ div.preview .content {
   margin: 0.5em;
 }
 .wizard_content #importexport-wizardbox_importexport-wizard_basic_import_csv-conditions .condition_help {
-  font-size: 15px;
   line-height: 2em;
   border-bottom: 10px solid transparent;
 }

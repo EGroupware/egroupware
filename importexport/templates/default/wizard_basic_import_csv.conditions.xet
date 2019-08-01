@@ -4,7 +4,7 @@
 <overlay>
 	<template id="importexport.wizard_basic_import_csv.conditions" template="" lang="" group="0" version="1.9.002">
 		<vbox cols="4" rows="1">
-			<description value="How to merge with existing data?  For each record, all conditions are evaluated from top to bottom, or stop.  For blind insert, leave blank.  " class="condition_help"/>
+			<description value="How to merge with existing data? For each record, all conditions are evaluated from top to bottom, or stop. For blind insert, leave blank." class="condition_help"/>
 			<grid id="conditions">
 				<columns>
 					<column/>

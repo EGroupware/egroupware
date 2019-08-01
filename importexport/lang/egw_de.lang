@@ -22,6 +22,7 @@ allowed users	importexport	de	Erlaubte Benutzer
 automatically created by importexport	importexport	de	Wurde automatisch vom Import/Export Modul erstellt
 basic csv import	importexport	de	Basis CSV Import
 change allowed users	importexport	de	Erlaubte Benutzer ändern
+change owner when updating	importexport	de	Besitzer ändern bei der Aktualisierung
 changed	importexport	de	Geändert
 changed allowed_users	importexport	de	Erlaubten Benutzer geändert
 changed owner	importexport	de	Besitzer geändert
@@ -37,6 +38,7 @@ column mismatch: %1 should be %2, not %3	importexport	de	Zuordnungsfehler in der
 condition	importexport	de	Bedingungen
 copied	importexport	de	Kopiert
 create a <a href="%1">new definition</a> for this file	importexport	de	Erstellen Sie hier <a href="%1">Neue Definition</a> für Ihre Importdatei
+create a matching export definition based on this import definition	importexport	de	Erstellt eine passende Exportdefinition, die auf dieser Importdefinition basiert
 create export	importexport	de	Exportdefinition erstellen
 created	importexport	de	erstellt
 csv field	importexport	de	CSV Feld (Importdatei)
@@ -148,6 +150,7 @@ user template folder	importexport	de	Vorlagenverzeichnis verwenden
 users allowed to create their own definitions	importexport	de	Benutzern erlauben, Ihre eigenen Definitionen zu erstellen.
 users allowed to share their own definitions	importexport	de	Benutzer dürfen Ihre Profile auch anderen Nutzern zur Verfügung stellen.
 warnings	importexport	de	Warnungen
+what should be done with unknown values?	importexport	de	Was soll mit unbekannten Werten gemacht werden?
 which useres are allowed for this definition	importexport	de	Welche Benutzer dürfen diese Definition verwenden?
 which users are allowed to use this definition	importexport	de	Welche Benutzer dürfen die Definition benutzen?
 you may want to <a href="%1" target="_new">backup</a> first.	importexport	de	Erstellen Sie eine <a href="%1" target="_new">Sicherung Ihrer bestehenden Daten</a> bevor Sie den Import starten. Für einen erstmaligen Import benötigen Sie ein neues Importprofil.
