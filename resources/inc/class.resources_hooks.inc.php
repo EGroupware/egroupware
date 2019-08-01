@@ -170,58 +170,6 @@ class resources_hooks
 	}
 
 	/**
-	 * populates $settings for the preferences
-	 *
-	 * @param array|string $hook_data
-	 * @return array
-	 */
-	static function settings($hook_data)
-	{
-		$settings = array();
-
-		if ($GLOBALS['egw_info']['user']['apps']['importexport'])
-		{
-			$definitions = new importexport_definitions_bo(array(
-				'type' => 'export',
-				'application' => 'resources'
-			));
-			$options = array(
-				'~nextmatch~'	=>	lang('Old fixed definition')
-			);
-			$default_def = 'export-resources';
-			foreach ((array)$definitions->get_definitions() as $identifier)
-			{
-				try
-				{
-					$definition = new importexport_definition($identifier);
-				}
-				catch (Exception $e)
-				{
-					// permission error
-					continue;
-				}
-				if ($title = $definition->get_title())
-				{
-					$options[$title] = $title;
-				}
-				unset($definition);
-			}
-			$settings['nextmatch-export-definition'] = array(
-				'type'   => 'select',
-				'values' => $options,
-				'label'  => 'Export definition to use for nextmatch export',
-				'name'   => 'nextmatch-export-definition',
-				'help'   => lang('If you specify an export definition, it will be used when you export'),
-				'run_lang' => false,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> isset($options[$default_def]) ? $default_def : false,
-			);
-		}
-		return $settings;
-	}
-
-	/**
 	 * Hook to tell framework we use only global Api\Categories (return link data in that case and false otherwise)
 	 *
 	 * @param string|array $data hook-data or location
