@@ -821,7 +821,7 @@ class Credentials
 	/**
 	 * Get the current Db object, from either setup or egw
 	 *
-	 * @return Db
+	 * @return Api\Db
 	 */
 	static public function get_db()
 	{
