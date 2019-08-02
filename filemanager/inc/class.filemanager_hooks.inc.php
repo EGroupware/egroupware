@@ -265,15 +265,6 @@ class filemanager_hooks
 				'xmlrpc' => False,
 				'admin'  => False
 			),
-			'collab_user_color' => array(
-				'type' => 'color',
-				'label' => lang('User color indicator'),
-				'name' => 'collab_user_color',
-				'help' => lang('Use eg. %1 or %2','#FF0000','orange'),
-				'no_lang'=> true,
-				'xmlrpc' => True,
-				'admin'  => False,
-			),
 			'collab_excluded_mimes' => array(
 				'type'   => 'taglist',
 				'label'  => lang('Excludes selected mime types'),
