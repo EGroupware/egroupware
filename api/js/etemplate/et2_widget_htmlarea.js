@@ -242,7 +242,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			{
 				this.htmlNode = jQuery(document.createElement("textarea"))
 					.val(value);
-				if(this.options.height)
+				if(this.options.height || this.options.editable_height)
 				{
 					this.htmlNode.css('height', (this.options.editable_height ? this.options.editable_height : this.options.height));
 				}
