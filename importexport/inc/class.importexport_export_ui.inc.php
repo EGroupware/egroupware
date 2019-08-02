@@ -74,10 +74,6 @@ class importexport_export_ui {
 			$et->setElementAttribute('select_definition','disabled',true);
 		}
 
-		// Check for preferred definition
-		if(!$_definition && $_appname) {
-			$_definition = $GLOBALS['egw_info']['user']['preferences'][$_appname]['nextmatch-export-definition'];
-		}
 		// fill definitions
 		$sel_options['definition'] = array('' => lang('Select'));
 		$definitions = new importexport_definitions_bo(array(

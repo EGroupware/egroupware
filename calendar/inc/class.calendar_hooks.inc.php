@@ -657,47 +657,7 @@ class calendar_hooks
 				'default' => '/templates/calendar',
 			);
 		}
-		// Import / Export for nextmatch
-		if ($GLOBALS['egw_info']['user']['apps']['importexport'])
-		{
-			$definitions = new importexport_definitions_bo(array(
-				'type' => 'export',
-				'application' => 'calendar'
-			));
-			$options = array(
-				'~nextmatch~'	=>	lang('Old fixed definition')
-			);
-			foreach ((array)$definitions->get_definitions() as $identifier)
-			{
-				try
-				{
-					$definition = new importexport_definition($identifier);
-				}
-				catch (Exception $e)
-				{
-					unset($e);	// not used
-					// permission error
-					continue;
-				}
-				if (($title = $definition->get_title()))
-				{
-					$options[$title] = $title;
-				}
-				unset($definition);
-			}
-			$default_def = 'export-calendar-csv';
-			$settings['nextmatch-export-definition'] = array(
-				'type'   => 'select',
-				'values' => $options,
-				'label'  => 'Export definition to use for nextmatch export',
-				'name'   => 'nextmatch-export-definition',
-				'help'   => lang('If you specify an export definition, it will be used when you export'),
-				'run_lang' => false,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> isset($options[$default_def]) ? $default_def : false,
-			);
-		}
+
 		$settings += array(
 			'export_timezone' => array(
 				'type'   => 'select',
