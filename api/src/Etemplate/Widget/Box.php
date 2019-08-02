@@ -92,11 +92,8 @@ class Box extends Etemplate\Widget
 			{
 				break;
 			}
-			if($child && $child instanceof Widget)
-			{
-				//error_log('Running ' . $method_name . ' on child ' . $n . '(' . $child . ') ['.$expand['row'] . ','.$expand['c'] . ']');
-				$disabled = $child->run($method_name, $params, $respect_disabled, $columns_disabled) === false;
-			}
+			//error_log('Running ' . $method_name . ' on child ' . $n . '(' . $child . ') ['.$expand['row'] . ','.$expand['c'] . ']');
+			$disabled = $child->run($method_name, $params, $respect_disabled, $columns_disabled) === false;
 		}
 
 		$params[0] = $old_cname;
