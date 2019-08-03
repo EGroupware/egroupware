@@ -77,7 +77,7 @@ from file	importexport	de	Aus Datei
 general	preferences	de	Generell
 general fields:	preferences	de	Allgemeine Felder
 header lines to skip	importexport	de	Kopfzeilen zu überspringen
-how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	de	Wie möchten Sie mit bestehenden Daten umgehen? EGroupware kann mit einer Definierten ID bestehenden Daten auch aktualisieren. Dazu werden die hier erstellten Regeln von Oben nach unten abgearbeitet. Lassen Sie diese Tabelle leer, wenn Sie Ihre Daten nur einfügen möchten.
+how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	de	Wie möchten Sie mit bestehenden Daten umgehen? EGroupware kann bestehenden Daten mit einer definierten ID auch aktualisieren. Dazu werden die hier erstellten Regeln von oben nach unten abgearbeitet. Lassen Sie diese Tabelle leer, wenn Sie Ihre Daten nur einfügen möchten.
 human friendly values	importexport	de	Verwendet die Beschreibungen, anstatt der Internen Bezeichnungen
 if you specify an export definition, it will be used when you export	preferences	de	Wenn Sie  Export Definition erfassen , wird dieses Profil für den Export verwendet.
 import	importexport	de	Import

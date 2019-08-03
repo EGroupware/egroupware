@@ -142,8 +142,8 @@ days	calendar	de	Tage
 days of the week for a weekly repeated event	calendar	de	Wochentage für wöchentlich wiederholten Termin
 days repeated	calendar	de	wiederholte Tage
 dayview	calendar	de	Tagesansicht
-default alarm for regular events	calendar	de	Default-Alarm für normale Termine
-default alarm for whole-day events	calendar	de	Default-Alarm für ganztägige Termine
+default alarm for regular events	calendar	de	Standard-Alarm für normale Termine
+default alarm for whole-day events	calendar	de	Standard-Alarm für ganztägige Termine
 default appointment length (in minutes)	calendar	de	Standardlänge eines neuen Kalendereintrags (in Minuten)
 default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
@@ -643,7 +643,7 @@ weekview	calendar	de	Wochenansicht
 weekview with weekend	calendar	de	Wochenansicht mit Wochenende
 weekview without weekend	calendar	de	Wochenansicht ohne Wochenende
 what should links to the calendar events display in other applications.	calendar	de	Was soll der Link-Titel zusätzlich enthalten bei der Anzeige von Verknüpfungen?
-when changing the month	calendar	de	Bei Monatswechsel
+when changing the month	calendar	de	Bei Monats- und Jahreswechsel.<br>Wenn Ja, wird der Haken zum übernehmen entfernt.
 when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	de	Wenn ausgewählt werden Geburts- und/oder Feiertage als Ereignisse in Ihrem Kalender angezeigt. Bitte beachten Sie, dass diese Option nur die Erscheinung innerhalb von EGroupware verändert, nicht aber die Informationen, die via iCal oder über andere Kalender-Schnittstellen gesendet werden.
 which view to show on home page	calendar	de	Welche Ansicht soll auf der Startseite angezeigt werden
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	de	Ab der hier eingestellten Anzahl von Benutzern wird die nach Benutzern aufgeteilte Tages- und Wochenansicht in einer Ansicht zusammengefasst
