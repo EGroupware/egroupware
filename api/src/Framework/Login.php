@@ -223,18 +223,31 @@ class Login
 		* and place a time selectbox, how long cookie is valid   *
 		\********************************************************/
 
-		if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
+		if ($GLOBALS['egw_info']['server']['remember_me_token'] === 'always' ||
+			($GLOBALS['egw_info']['server']['2fa_required'] !== 'disabled' &&
+				$GLOBALS['egw_info']['server']['remember_me_token'] !== 'disabled'))
 		{
 			$tmpl->set_block('login_form','remember_me_selection');
-			$tmpl->set_var('lang_remember_me',lang('Remember me'));
-			$tmpl->set_var('select_remember_me',Api\Html::select('remember_me', '', array(
-				'' => lang('not'),
-				'1hour' => lang('1 Hour'),
-				'1day' => lang('1 Day'),
-				'1week'=> lang('1 Week'),
-				'1month' => lang('1 Month'),
-				'forever' => lang('Forever'),
-			),true,'tabindex="3"',0,false));
+			$help = htmlspecialchars(lang('Do NOT use on public computers!'));
+			$tmpl->set_var('lang_remember_me_help', $help);
+			if ($GLOBALS['egw_info']['server']['remember_me_lifetime'] === 'user')
+			{
+				$tmpl->set_var('lang_remember_me', '');
+				$tmpl->set_var('select_remember_me',Api\Html::select('remember_me', '', array(
+					'' => lang('Do not remember me'),
+					'P1W'=> lang('Remember me for %1', lang('1 Week')),
+					'P2W'=> lang('Remember me for %1', lang('2 Weeks')),
+					'P1M' => lang('Remember me for %1', lang('1 Month')),
+					'P3M' => lang('Remember me for %1', lang('3 Month')),
+					'P1Y' => lang('Remember me for %1', lang('1 Year')),
+				), true, 'tabindex="3" title="'.$help.'"', 0, false));
+			}
+			else
+			{
+				$tmpl->set_var('lang_remember_me',lang('Remember me'));
+				$tmpl->set_var('select_remember_me',
+					Api\Html::checkbox('remember_me', false, 'True', ' id="remember_me" tabindex="3" title="'.$help.'"'));
+			}
 		}
 		else
 		{

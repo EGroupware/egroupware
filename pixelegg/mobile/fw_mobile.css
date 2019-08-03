@@ -1930,8 +1930,9 @@ body {
   background-color: transparent;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select[name="remember_me"] {
-  text-indent: 60%;
-  background-color: transparent;
+  background-image: url(../images/task.png);
+  background-repeat: no-repeat;
+  background-position-x: 0;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select:focus,
 #loginMainDiv div#centerBox form table.divLoginbox select:hover {
@@ -1969,9 +1970,9 @@ body {
   background-image: url(../images/password.png);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.remember_me {
-  background-image: url(../images/task.png);
+  background-image: none;
   z-index: 0;
-  width: 130px;
+  width: 230px;
   padding-left: 27px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.domain {
@@ -1979,6 +1980,11 @@ body {
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.language {
   background-image: url(../images/language.png);
+}
+#loginMainDiv div#centerBox form table.divLoginbox input[type="checkbox"] {
+  height: 25px;
+  margin-top: 7px;
+  width: auto;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
   background-color: #0a5ca5;

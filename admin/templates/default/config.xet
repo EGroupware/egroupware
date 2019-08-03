@@ -157,6 +157,9 @@
 			</columns>
 			<rows>
 				<row>
+					<description value="2-Factor-Authentication" span="all" class="subHeader"/>
+				</row>
+				<row>
 					<description value="2-Factor-Authentication for interactive login" label="%s:"/>
 					<select id="newsettings[2fa_required]">
 						<option value="">show as optional, but required once user has it setup</option>
@@ -166,15 +169,57 @@
 					</select>
 				</row>
 				<row>
-					<description value="Cookie path (allows multiple eGW sessions with different directories, has problemes with SiteMgr!)" label="%s:"/>
-					<select id="newsettings[cookiepath]">
-						<option value="">Document root (default)</option>
-						<option value="egroupware">EGroupware directory</option>
-					</select>
+					<vbox>
+						<description value="Allow user to set 'Remember me' token" label="%s:"/>
+						<description value="Requires 'OpenID / OAuth2 Server' app." label="(%s)"/>
+					</vbox>
+					<vbox>
+						<select id="newsettings[remember_me_token]">
+							<option value="">allowed just as second factor</option>
+							<option value="always">direct login without password or second factor</option>
+							<option value="disabled">disabled, do not show on login page</option>
+						</select>
+						<description value="If disabled existing tokens immediatly stop working." label="(%s)"/>
+					</vbox>
 				</row>
 				<row>
-					<description value="Cookie domain (default empty means use full domain name, for SiteMgr eg. &quot;.domain.com&quot; allows to use the same cookie for egw.domain.com and www.domain.com)" label="%s:"/>
-					<textbox id="newsettings[cookiedomain]"/>
+					<description value="Lifetime of 'Remember me' token" label="%s:"/>
+					<select id="newsettings[remember_me_lifetime]">
+						<option value="">{default of currently} {1 month}</option>
+						<option value="P1W">1 week</option>
+						<option value="P2W">2 weeks</option>
+						<option value="P1M">1 month</option>
+						<option value="P2M">2 month</option>
+						<option value="P3M">3 month</option>
+						<option value="P6M">6 month</option>
+						<option value="P1Y">1 year</option>
+						<option value="user">User choice</option>
+					</select>
+				</row>
+
+				<row>
+					<description value="Blocking after wrong password" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="After how many unsuccessful attempts to login, an account should be blocked (default 3) ?" label="%s:"/>
+					<textbox id="newsettings[num_unsuccessful_id]" size="5"/>
+				</row>
+				<row>
+					<description value="After how many unsuccessful attempts to login, an IP should be blocked (default 15) ?" label="%s:"/>
+					<textbox id="newsettings[num_unsuccessful_ip]" size="5"/>
+				</row>
+				<row>
+					<description value="Comma-separated IP addresses white-listed from above blocking (:optional number of attempts)"/>
+					<textbox id="newsettings[unsuccessful_ip_whitelist]" size="64" blur="X.X.X.X[:N], ..."
+						validator="/^(\\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d+)?,? *)*$/"/>
+				</row>
+				<row>
+					<description value="How many minutes should an account or IP be blocked (default 1) ?" label="%s:"/>
+					<textbox id="newsettings[block_time]" size="5"/>
+				</row>
+
+				<row>
+					<description value="Sessions" span="all" class="subHeader"/>
 				</row>
 				<row>
 					<vbox>
@@ -195,48 +240,19 @@
 					</select>
 				</row>
 				<row>
-					<description value="Deny all users access to grant other users access to their entries ?" label="%s:"/>
-					<select id="newsettings[deny_user_grants_access]">
-						<option value="">No</option>
-						<option value="True">Yes</option>
+					<description value="Cookie path (allows multiple eGW sessions with different directories, has problemes with SiteMgr!)" label="%s:"/>
+					<select id="newsettings[cookiepath]">
+						<option value="">Document root (default)</option>
+						<option value="egroupware">EGroupware directory</option>
 					</select>
 				</row>
-				<!--
 				<row>
-					<description value="Default file system space per user"/>
-					<textbox id="newsettings[vfs_default_account_size_number]" type="text" size="7"/>
+					<description value="Cookie domain (default empty means use full domain name, for SiteMgr eg. &quot;.domain.com&quot; allows to use the same cookie for egw.domain.com and www.domain.com)" label="%s:"/>
+					<textbox id="newsettings[cookiedomain]"/>
+				</row>
 
-     <td>{Default_file_system_space_per_user}/{group_?}:</td>
-     <td>
-      <input type="text" name="newsettings[vfs_default_account_size_number]" size="7" value="{value_vfs_default_account_size_number}">&nbsp;&nbsp;
-      <select name="newsettings[vfs_default_account_size_type]">
-       <option value="gb"{selected_vfs_default_account_size_type_gb}>GB</option>
-       <option value="mb"{selected_vfs_default_account_size_type_mb}>MB</option>
-       <option value="kb"{selected_vfs_default_account_size_type_kb}>KB</option>
-       <option value="b"{selected_vfs_default_account_size_type_b}>B</option>
-      </select>
-     </td>
-    				</row> -->
 				<row>
-					<description value="How many days should entries stay in the access log, before they get deleted (default 90) ?" label="%s:"/>
-					<textbox id="newsettings[max_access_log_age]" size="5"/>
-				</row>
-				<row>
-					<description value="After how many unsuccessful attempts to login, an account should be blocked (default 3) ?" label="%s:"/>
-					<textbox id="newsettings[num_unsuccessful_id]" size="5"/>
-				</row>
-				<row>
-					<description value="After how many unsuccessful attempts to login, an IP should be blocked (default 15) ?" label="%s:"/>
-					<textbox id="newsettings[num_unsuccessful_ip]" size="5"/>
-				</row>
-				<row>
-					<description value="Comma-separated IP addresses white-listed from above blocking (:optional number of attempts)"/>
-					<textbox id="newsettings[unsuccessful_ip_whitelist]" size="64" blur="X.X.X.X[:N], ..."
-						validator="/^(\\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d+)?,? *)*$/"/>
-				</row>
-				<row>
-					<description value="How many minutes should an account or IP be blocked (default 1) ?" label="%s:"/>
-					<textbox id="newsettings[block_time]" size="5"/>
+					<description value="Passwords" span="all" class="subHeader"/>
 				</row>
 				<row>
 					<description value="Force users to change their password regularily?(empty for no,number for after that number of days" label="%s:"/>
@@ -277,6 +293,37 @@
 						<option value="no">No</option>
 						<option value="yes">Yes</option>
 					</select>
+				</row>
+
+				<row>
+					<description value="Other security configuration" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Deny all users access to grant other users access to their entries ?" label="%s:"/>
+					<select id="newsettings[deny_user_grants_access]">
+						<option value="">No</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
+				<!--
+				<row>
+					<description value="Default file system space per user"/>
+					<textbox id="newsettings[vfs_default_account_size_number]" type="text" size="7"/>
+
+     <td>{Default_file_system_space_per_user}/{group_?}:</td>
+     <td>
+      <input type="text" name="newsettings[vfs_default_account_size_number]" size="7" value="{value_vfs_default_account_size_number}">&nbsp;&nbsp;
+      <select name="newsettings[vfs_default_account_size_type]">
+       <option value="gb"{selected_vfs_default_account_size_type_gb}>GB</option>
+       <option value="mb"{selected_vfs_default_account_size_type_mb}>MB</option>
+       <option value="kb"{selected_vfs_default_account_size_type_kb}>KB</option>
+       <option value="b"{selected_vfs_default_account_size_type_b}>B</option>
+      </select>
+     </td>
+    				</row> -->
+				<row>
+					<description value="How many days should entries stay in the access log, before they get deleted (default 90) ?" label="%s:"/>
+					<textbox id="newsettings[max_access_log_age]" size="5"/>
 				</row>
 				<row>
 					<description value="Admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)" label="%s:"/>

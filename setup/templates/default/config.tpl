@@ -192,16 +192,6 @@
     </td>
    </tr>
 
-   <tr class="row_off">
-    <td>{lang_Allow_authentication_via_cookie}:</td>
-    <td>
-      <select name="newsettings[allow_cookie_auth]">
-         <option value="">{lang_No}</option>
-         <option value="True" {selected_allow_cookie_auth_True}>{lang_Yes}</option>
-       </select>
-    </td>
-   </tr>
-
    <tr class="row_on">
     <td>{lang_Auto_login_anonymous_user}:</td>
     <td>

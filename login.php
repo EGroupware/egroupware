@@ -136,44 +136,27 @@ else
 	// some apache mod_auth_* modules use REMOTE_USER instead of PHP_AUTH_USER, thanks to Sylvain Beucler
 	if ($GLOBALS['egw_info']['server']['auth_type'] == 'http' && !isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['REMOTE_USER']))
 	{
-        	$_SERVER['PHP_AUTH_USER'] = $_SERVER['REMOTE_USER'];
+		$_SERVER['PHP_AUTH_USER'] = $_SERVER['REMOTE_USER'];
 	}
-	if($GLOBALS['egw_info']['server']['auth_type'] == 'http' && isset($_SERVER['PHP_AUTH_USER']))
+	$passwd = get_magic_quotes_gpc() ? stripslashes($_POST['passwd']) : $_POST['passwd'];
+	$passwd_type = $_POST['passwd_type'];
+
+	// forced password change
+	if($GLOBALS['egw']->session->cd_reason != Api\Session::CD_FORCE_PASSWORD_CHANGE)
+	{
+		// no automatic login
+	}
+	// authentication via Apache
+	elseif ($GLOBALS['egw_info']['server']['auth_type'] == 'http' && isset($_SERVER['PHP_AUTH_USER']))
 	{
 		$submit = True;
 		$login  = $_SERVER['PHP_AUTH_USER'];
 		$passwd = $_SERVER['PHP_AUTH_PW'];
 		$passwd_type = 'text';
 	}
-	else
-	{
-		$passwd = get_magic_quotes_gpc() ? stripslashes($_POST['passwd']) : $_POST['passwd'];
-		$passwd_type = $_POST['passwd_type'];
-
-		if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
-		{
-			$eGW_remember = explode('::::',get_magic_quotes_gpc() ? stripslashes($_COOKIE['eGW_remember']) : $_COOKIE['eGW_remember']);
-
-			if($eGW_remember[0] && $eGW_remember[1] && $eGW_remember[2])
-			{
-				$_SERVER['PHP_AUTH_USER'] = $login = $eGW_remember[0];
-				$_SERVER['PHP_AUTH_PW'] = $passwd = $eGW_remember[1];
-				$passwd_type = $eGW_remember[2];
-				$submit = True;
-			}
-		}
-		if(!$passwd && ($GLOBALS['egw_info']['server']['auto_anon_login']) && !$_GET['cd'])
-		{
-			$_SERVER['PHP_AUTH_USER'] = $login = 'anonymous';
-			$_SERVER['PHP_AUTH_PW'] =  $passwd = 'anonymous';
-			$passwd_type = 'text';
-			$submit = True;
-		}
-	}
-
 	# Apache + mod_ssl style SSL certificate authentication
 	# Certificate (chain) verification occurs inside mod_ssl
-	if($GLOBALS['egw_info']['server']['auth_type'] == 'sqlssl' && isset($_SERVER['SSL_CLIENT_S_DN']) && !isset($_GET['cd']))
+	elseif($GLOBALS['egw_info']['server']['auth_type'] == 'sqlssl' && isset($_SERVER['SSL_CLIENT_S_DN']) && !isset($_GET['cd']))
 	{
 	   // an X.509 subject looks like:
 	   // CN=john.doe/OU=Department/O=Company/C=xx/Email=john@comapy.tld/L=City/
@@ -203,20 +186,33 @@ else
 	   unset($val);
 	   unset($sslattributes);
 	}
-
-	if(isset($passwd_type) || $_POST['submitit_x'] || $_POST['submitit_y'] || $submit)
+	else
 	{
-		if(getenv('REQUEST_METHOD') != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST' &&
+		// check if we have a sufficient access-token as cookie and no forced password change
+		if ($GLOBALS['egw']->session->cd_reason != Api\Session::CD_FORCE_PASSWORD_CHANGE &&
+			$GLOBALS['egw']->session->skipPasswordAuth($_COOKIE[Api\Session::REMEMBER_ME_COOKIE], $account_id))
+		{
+			$_SERVER['PHP_AUTH_USER'] = $login = Api\Accounts::id2name($account_id);
+			$submit = true;
+		}
+
+		if(!$passwd && ($GLOBALS['egw_info']['server']['auto_anon_login']) && !$_GET['cd'])
+		{
+			$_SERVER['PHP_AUTH_USER'] = $login = 'anonymous';
+			$_SERVER['PHP_AUTH_PW'] =  $passwd = 'anonymous';
+			$passwd_type = 'text';
+			$submit = True;
+		}
+	}
+
+
+	if (isset($passwd_type) || $submit)
+	{
+		if($_SERVER['REQUEST_METHOD'] != 'POST' &&
 			!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
 		{
-			$GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
 			Egw::redirect_link('/login.php','cd=5');
 		}
-		/* cookie enabled check comment out, as it seems to cause a redirect loop under certain conditions and browsers :-(
-		if ($_COOKIE['eGW_cookie_test'] !== 'enabled')
-		{
-			Egw::redirect_link('/login.php','cd=4');
-		}*/
 
 		// don't get login data again when $submit is true
 		if($submit == false)
@@ -252,7 +248,7 @@ else
 			}
 		}
 		$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login, $passwd,
-			$passwd_type, false, true, true, $_POST['2fa_code']);	// true = let session fail on forced password change
+			$passwd_type, false, true, true, $_POST['2fa_code'], $_POST['remember_me']);	// true = let session fail on forced password change
 
 		if (!$GLOBALS['sessionid'] && $GLOBALS['egw']->session->cd_reason == Api\Session::CD_FORCE_PASSWORD_CHANGE)
 		{
@@ -278,40 +274,10 @@ else
 		}
 		elseif (!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
-			Api\Session::egw_setcookie('eGW_remember','',0,'/');
 			Egw::redirect_link('/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
 		}
 		else
 		{
-			/* set auth_cookie  */
-			if($GLOBALS['egw_info']['server']['allow_cookie_auth'] && $_POST['remember_me'] && $_POST['passwd'])
-			{
-				switch ($_POST['remember_me'])
-				{
-					case '1hour' :
-						$remember_time = time()+60*60;
-						break;
-					case '1day' :
-						$remember_time = time()+60*60*24;
-						break;
-					case '1week' :
-						$remember_time = time()+60*60*24*7;
-						break;
-					case '1month' :
-						$remember_time = time()+60*60*24*30;
-						break;
-					case 'forever' :
-					default:
-						$remember_time = 2147483647;
-						break;
-				}
-				$GLOBALS['egw']->session->egw_setcookie('eGW_remember',implode('::::',array(
-					'login' => $login,
-					'passwd' => $passwd,
-					'passwd_type' => $passwd_type)),
-					$remember_time,'/');	// make the cookie valid for the whole site (incl. sitemgr) and not only the eGW install-dir
-			}
-
 			if ($_POST['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$_POST['lang']) &&
 				$_POST['lang'] != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 			{

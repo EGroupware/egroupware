@@ -23,6 +23,8 @@ namespace EGroupware\Api;
 
 use PragmaRX\Google2FA;
 use EGroupware\Api\Mail\Credentials;
+use EGroupware\OpenID;
+use League\OAuth2\Server\Exception\OAuthServerException;
 
 /**
  * Create, verifies or destroys an EGroupware session
@@ -74,6 +76,11 @@ class Session
 	 * Name of cookie or get-parameter with session-id
 	 */
 	const EGW_SESSION_NAME = 'sessionid';
+
+	/**
+	 * Name of cookie with remember me token
+	 */
+	const REMEMBER_ME_COOKIE = 'eGW_remember';
 
 	/**
 	* current user login (account_lid@domain)
@@ -449,9 +456,10 @@ class Session
 	 * @param boolean $auth_check =true if false, the user is loged in without checking his password (eg. for single sign on), default = true
 	 * @param boolean $fail_on_forced_password_change =false true: do NOT create session, if password change requested
 	 * @param string|boolean $check_2fa =false string: 2fa-code to check (only if exists) and fail if wrong, false: do NOT check 2fa
+	 * @param string $remember_me =null "True" for checkbox checked, or periode for user-choice select-box eg. "P1W" or "" for NOT remember
 	 * @return string|boolean session id or false if session was not created, $this->(cd_)reason contains cause
 	 */
-	function create($login,$passwd = '',$passwd_type = '',$no_session=false,$auth_check=true,$fail_on_forced_password_change=false,$check_2fa=false)
+	function create($login,$passwd = '',$passwd_type = '',$no_session=false,$auth_check=true,$fail_on_forced_password_change=false,$check_2fa=false,$remember_me=null)
 	{
 		try {
 			if (is_array($login))
@@ -497,6 +505,12 @@ class Session
 			$user_ip = self::getuser_ip();
 
 			$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
+
+			// do we need to check 'remember me' token (to bypass authentication)
+			if ($auth_check && !empty($_COOKIE[self::REMEMBER_ME_COOKIE]))
+			{
+				$auth_check = !$this->skipPasswordAuth($_COOKIE[self::REMEMBER_ME_COOKIE], $this->account_id);
+			}
 
 			if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
 				$GLOBALS['egw_info']['server']['global_denied_users'][$this->account_lid] ||
@@ -564,23 +578,10 @@ class Session
 			Cache::setSession('phpgwapi', 'password', base64_encode($this->passwd));
 
 			// if we have a second factor, check it before forced password change
-			if ($check_2fa !== false &&
-				$GLOBALS['egw_info']['server']['2fa_required'] !== 'disabled' &&
-				(($creds = Credentials::read(0, Credentials::TWOFA, $this->account_id)) ||
-					$GLOBALS['egw_info']['server']['2fa_required'] === 'strict'))
+			if ($check_2fa !== false)
 			{
-				$google2fa = new Google2FA\Google2FA();
 				try {
-					if (empty($check_2fa) || empty($creds))
-					{
-						throw new \Exception(Framework\Login::check_logoutcode(self::CD_SECOND_FACTOR_REQUIRED), self::CD_SECOND_FACTOR_REQUIRED);
-					}
-					if (!$google2fa->verify($check_2fa, $creds['2fa_password']))
-					{
-						// we log the missing factor, but externally only show "Bad Login or Password"
-						// to give no indication that the password was already correct
-						throw new \Exception('Invalid 2-Factor Authentication code', self::CD_BAD_LOGIN_OR_PASSWORD);
-					}
+					$this->checkMultifactorAuth($check_2fa, $_COOKIE[self::REMEMBER_ME_COOKIE]);
 				}
 				catch(\Exception $e) {
 					$this->cd_reason = $e->getCode();
@@ -649,6 +650,14 @@ class Session
 				self::egw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
 				self::egw_setcookie('last_domain',$this->account_domain,$now+1209600);
 			}
+
+			// set new remember me token/cookie, if requested and necessary
+			$expiration = null;
+			if (($token = $this->checkSetRememberMeToken($remember_me, $_COOKIE[self::REMEMBER_ME_COOKIE], $expiration)))
+			{
+				self::egw_setcookie(self::REMEMBER_ME_COOKIE, $token, $expiration);
+			}
+
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
 
 			// hook called once session is created
@@ -670,7 +679,9 @@ class Session
 		}
 		// catch all exceptions, as their (allways logged) trace (eg. on a database error) would contain the user password
 		catch(Exception $e) {
-			$this->reason = $this->cd_reason = $e->getMessage();
+			$this->reason = $this->cd_reason = is_a($e, Db\Exception::class) ?
+				// do not output specific database error, eg. invalid SQL statement
+				lang('Database Error!') : $e->getMessage();
 			error_log(__METHOD__."('$login', ".array2string(str_repeat('*', strlen($passwd))).
 				", '$passwd_type', no_session=".array2string($no_session).
 				", auth_check=".array2string($auth_check).
@@ -678,6 +689,246 @@ class Session
 				") Exception ".$e->getMessage());
 			return false;
 		}
+	}
+
+	/**
+	 * Check if password authentication is required or given token is sufficient
+	 *
+	 * Token is only checked for 'remember_me_token' === 'always', not for default of only for 2FA!
+	 *
+	 * Password auth is also required if 2FA is not disabled and either required or configured by user.
+	 *
+	 * @param string $token value of token
+	 * @param int& $account_id =null account_id of token-owner to limit check on that user, on return account_id of token owner
+	 * @return boolean false: if further auth check is required, true: if token is sufficient for authentication
+	 */
+	public function skipPasswordAuth($token, &$account_id=null)
+	{
+		// if token is empty or disabled --> password authentication required
+		if (empty($token) || $GLOBALS['egw_info']['server']['remember_me_token'] !== 'always' ||
+			!($client = $this->checkOpenIDconfigured()))
+		{
+			return false;
+		}
+
+		// check if token exists and is (still) valid
+		$tokenRepo = new OpenID\Repositories\AccessTokenRepository();
+		if (!($access_token = $tokenRepo->findToken($client, $account_id, 'PT1S', $token)))
+		{
+			return false;
+		}
+		$account_id = $access_token->getUserIdentifier();
+
+		// check if we need a second factor
+		if ($GLOBALS['egw_info']['server']['2fa_required'] !== 'disabled' &&
+			(($creds = Credentials::read(0, Credentials::TWOFA, $account_id)) ||
+				$GLOBALS['egw_info']['server']['2fa_required'] === 'strict'))
+		{
+			return false;
+		}
+
+		// access-token is sufficient
+		return true;
+	}
+
+	/**
+	 * Check multifcator authemtication
+	 *
+	 * @param string $code 2fa-code
+	 * @param string $token remember me token
+	 * @throws \Exception with error-message if NOT successful
+	 */
+	protected function checkMultifactorAuth($code, $token)
+	{
+		$errors = $factors = [];
+
+		if ($GLOBALS['egw_info']['server']['2fa_required'] === 'disabled')
+		{
+			return;	// nothing to check
+		}
+
+		// check if token exists and is (still) valid
+		if (!empty($token) && $GLOBALS['egw_info']['server']['remember_me_token'] !== 'disabled' &&
+			($client = $this->checkOpenIDconfigured()))
+		{
+			$tokenRepo = new OpenID\Repositories\AccessTokenRepository();
+			if ($tokenRepo->findToken($client, $this->account_id, 'PT1S', $token))
+			{
+				$factors['remember_me_token'] = true;
+			}
+			else
+			{
+				$errors['remember_me_token'] = lang("Invalid or expired 'remember me' token");
+			}
+		}
+
+		// if 2fa is configured by user, check it
+		if (($creds = Credentials::read(0, Credentials::TWOFA, $this->account_id)))
+		{
+			if (empty($code))
+			{
+				$errors['2fa_code'] = lang('2-Factor Authentication code required');
+			}
+			else
+			{
+				$google2fa = new Google2FA\Google2FA();
+				if (!empty($code) && $google2fa->verify($code, $creds['2fa_password']))
+				{
+					$factors['2fa_code'] = true;
+				}
+				else
+				{
+					$errors['2fa_code'] = lang('Invalid 2-Factor Authentication code');
+				}
+			}
+		}
+
+		// check for more factors and/or policies
+		// hook can add factors, errors or throw \Exception with error-message and -code
+		Hooks::process([
+			'location' => 'multifactor_policy',
+			'factors' => &$factors,
+			'errors' => &$errors,
+			'2fa_code' => $code,
+			'remember_me_token' => $token,
+		], [], true);
+
+		if (!count($factors) && (isset($errors['2fa_code']) ||
+			$GLOBALS['egw_info']['server']['2fa_required'] === 'strict'))
+		{
+			if (!empty($code) && isset($errors['2fa_code']))
+			{
+				// we log the missing factor, but externally only show "Bad Login or Password"
+				// to give no indication that the password was already correct
+				throw new \Exception(implode(', ', $errors), self::CD_BAD_LOGIN_OR_PASSWORD);
+			}
+			else
+			{
+				throw new \Exception(implode(', $errors'), self::CD_SECOND_FACTOR_REQUIRED);
+			}
+		}
+	}
+
+	/**
+	 * Check if we need to set a remember me token/cookie
+	 *
+	 * @param string $remember_me =null "True" for checkbox checked, or periode for user-choice select-box eg. "P1W" or "" for NOT remember
+	 * @param string $token current remember me token
+	 * @param int& $expriation on return expiration time of new cookie
+	 * @return string new token to set as Cookieor null to not set a new one
+	 */
+	protected function checkSetRememberMeToken($remember_me, $token, &$expiration)
+	{
+		// do we need a new token
+		if (!empty($remember_me) && $GLOBALS['egw_info']['server']['remember_me_token'] !== 'disabled' &&
+			($client = $this->checkOpenIDconfigured()))
+		{
+			if (!empty($token))
+			{
+				// check if token exists and is (still) valid
+				$tokenRepo = new OpenID\Repositories\AccessTokenRepository();
+				if ($tokenRepo->findToken($client, $this->account_id, 'PT1S', $token))
+				{
+					return null;	// token still valid, no need to set it again
+				}
+			}
+			$lifetime = $this->rememberMeTokenLifetime(is_string($remember_me) ? $remember_me : null);
+			$expiration = $this->rememberMeTokenLifetime(is_string($remember_me) ? $remember_me : null, true);
+
+			$tokenFactory = new OpenID\Token();
+			if (($token = $tokenFactory->accessToken(self::OPENID_REMEMBER_ME_CLIENT_ID, [], $lifetime, false, $lifetime, false)))
+			{
+				return $token->getIdentifier();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Check if 'remember me' token should be deleted on explict logout
+	 *
+	 * @return boolean false: if 2FA is enabeld for user, true: otherwise
+	 */
+	public function removeRememberMeTokenOnLogout()
+	{
+		return $GLOBALS['egw_info']['server']['2fa_required'] === 'disabled' ||
+			$GLOBALS['egw_info']['server']['2fa_required'] !== 'strict' &&
+			!($creds = Credentials::read(0, Credentials::TWOFA, $this->account_id));
+	}
+
+	/**
+	 * OpenID Client ID for remember me token
+	 */
+	const OPENID_REMEMBER_ME_CLIENT_ID = 'login-remember-me';
+
+	/**
+	 * Check and if not configure OpenID app to generate 'remember me' tokens
+	 *
+	 * @return OpenID\Entities\ClientEntity|null null if OpenID Server app is not installed
+	 */
+	protected function checkOpenIDconfigured()
+	{
+		// OpenID app not installed --> password authentication required
+		if (!isset($GLOBALS['egw_info']['apps']))
+		{
+			$GLOBALS['egw']->applications->read_installed_apps();
+		}
+		if (empty($GLOBALS['egw_info']['apps']['openid']))
+		{
+			return null;
+		}
+
+		$clients = new OpenID\Repositories\ClientRepository();
+		try {
+			$client = $clients->getClientEntity(self::OPENID_REMEMBER_ME_CLIENT_ID, null, null, false);	// false = do NOT check client-secret
+		}
+		catch (OAuthServerException $e)
+		{
+			unset($e);
+			$client = new OpenID\Entities\ClientEntity();
+			$client->setIdentifier(self::OPENID_REMEMBER_ME_CLIENT_ID);
+			$client->setSecret(Auth::randomstring(24));	// must not be unset
+			$client->setName(lang('Remember me token'));
+			$client->setAccessTokenTTL($this->rememberMeTokenLifetime());
+			$client->setRefreshTokenTTL('P0S');	// no refresh token
+			$client->setRedirectUri($GLOBALS['egw_info']['server']['webserver_url'].'/');
+			$clients->persistNewClient($client);
+		}
+		return $client;
+	}
+
+	/**
+	 * Return lifetime for remember me token
+	 *
+	 * @param string $user user choice, if allowed
+	 * @param boolean $ts =false false: return periode string, true: return integer timestamp
+	 * @return string periode spec eg. 'P1M'
+	 */
+	protected function rememberMeTokenLifetime($user=null, $ts=false)
+	{
+		switch ((string)$GLOBALS['egw_info']['server']['remember_me_lifetime'])
+		{
+			case 'user':
+				if (!empty($user))
+				{
+					$lifetime = $user;
+					break;
+				}
+				// fall-through for default lifetime
+			case '':	// default lifetime
+				$lifetime = 'P1M';
+				break;
+			default:
+				$lifetime = $GLOBALS['egw_info']['server']['remember_me_lifetime'];
+				break;
+		}
+		if ($ts)
+		{
+			$expiration = new DateTime('now', DateTime::$server_timezone);
+			$expiration->add(new \DateInterval($lifetime));
+			return $expiration->format('ts');
+		}
+		return $lifetime;
 	}
 
 	/**

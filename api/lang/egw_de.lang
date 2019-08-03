@@ -418,6 +418,7 @@ distribution lists as groups	groupdav	de	Verteilerlisten als Gruppen
 djibouti	common	de	DSCHIBUTI
 do not notify	common	de	Nicht benachrichtigen
 do not notify of these changes	common	de	Es werden keine Benachrichtigungen beim Anlegen oder Ändern versendet.
+do not use on public computers!	common	de	NICHT auf öffentlichen Computern verwenden!
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 do you want to save the changes you made in table %s?	common	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
 do you want to send the message to all selected entries, without further editing?	common	de	Wollen Sie die Nachricht an alle ausgewählten Einträge OHNE weitere Bearbeitung versenden?
@@ -1082,7 +1083,8 @@ refresh	common	de	Aktualisierung
 register	common	de	Registrieren
 regular	common	de	Normal
 reject	common	de	Zurückweisen
-remember me	common	de	Mich erinnern
+remember me	common	de	An mich erinnern
+remember me for %1	common	de	An mich erinnern für %1
 remove row (can not be undone!!!)	common	de	löscht eine Zeile (NICHT rückgängig zu machen)
 remove selected accounts	common	de	Ausgewählte Benutzer entfernen
 remove shortcut	common	de	Abkürzung entfernen

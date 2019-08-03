@@ -189,8 +189,9 @@
 					background-color: transparent;
 				}
 				select[name="remember_me"] {
-					text-indent: 60%;
-					background-color: transparent;
+					background-image: url(../images/task.png);
+					background-repeat: no-repeat;
+					background-position-x: 0;
 				}
 				select:focus, select:hover {box-shadow:none;}
 				input {
@@ -221,9 +222,14 @@
 				}
 				span.field_icons.username {background-image: url(../images/personal.png);}
 				span.field_icons.password {background-image: url(../images/password.png);}
-				span.field_icons.remember_me {background-image: url(../images/task.png);z-index:0;width: 130px;padding-left: 27px;}
+				span.field_icons.remember_me {background-image: none;z-index:0;width: 230px;padding-left: 27px;}
 				span.field_icons.domain {background-image: url(../images/internet.png);}
 				span.field_icons.language {background-image: url(../images/language.png);}
+				input[type="checkbox"] {
+					height: 25px;
+					margin-top: 7px;
+					width: auto;
+				}
 				input[type="submit"] {
 					background-color: #0a5ca5;
 					.color_0_gray;
