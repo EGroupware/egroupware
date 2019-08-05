@@ -165,7 +165,7 @@ class mail_compose
 			),
 			'to_infolog' => array(
 				'caption' => 'Infolog',
-				'icon' => 'to_infolog',
+				'icon' => 'infolog/navbar',
 				'group' => ++$group,
 				'checkbox' => true,
 				'hint' => 'check to save as infolog on send',
@@ -174,7 +174,7 @@ class mail_compose
 			),
 			'to_tracker' => array(
 				'caption' => 'Tracker',
-				'icon' => 'to_tracker',
+				'icon' => 'tracker/navbar',
 				'group' => $group,
 				'checkbox' => true,
 				'hint' => 'check to save as tracker entry on send',
@@ -183,7 +183,7 @@ class mail_compose
 			),
 			'to_calendar' => array(
 				'caption' => 'Calendar',
-				'icon' => 'to_calendar',
+				'icon' => 'calendar/navbar',
 				'group' => $group,
 				'checkbox' => true,
 				'hint' => 'check to save as calendar event on send',
