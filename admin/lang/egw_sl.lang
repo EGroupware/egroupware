@@ -342,7 +342,6 @@ educational: universities, schools, ...	admin	sl	Izobraževanje: univerze, šole
 egroupware directory	admin	sl	Mapa EGroupware
 egroupware tutorial	admin	sl	Vadnica EGroupware
 egroupware version	admin	sl	Različica programa EGroupware
-either install id and api\config password needed or the remote hash!	admin	sl	Bodite namesti ID in Api \ Config geslo, ki je potreben ALI oddaljeni hash!
 either install id and config password needed or the remote hash!	admin	sl	Bodite namesti ID in geslo za konfiguriranje ALI oddaljeni hash!
 email	admin	sl	ePošta
 email account active	admin	sl	Nabiralnik E-pošte je aktiven
