@@ -50,7 +50,7 @@
 				<!-- END 2fa_section -->
 				<!-- BEGIN remember_me_selection -->
                 <tr>
-                    <td>
+                    <td class="remember_me_row">
 						<label for="remember_me" title="{lang_remember_me_help}"><span class="field_icons remember_me" style="background-image: none">{lang_remember_me}</span></label>
 						{select_remember_me}
 					</td>

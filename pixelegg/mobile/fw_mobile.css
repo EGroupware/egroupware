@@ -1934,6 +1934,9 @@ body {
   background-repeat: no-repeat;
   background-position-x: 0;
 }
+#loginMainDiv div#centerBox form table.divLoginbox td.remember_me_row {
+  border-bottom: 1px solid silver;
+}
 #loginMainDiv div#centerBox form table.divLoginbox select:focus,
 #loginMainDiv div#centerBox form table.divLoginbox select:hover {
   box-shadow: none;
@@ -7309,6 +7312,9 @@ form[id^="ranking-"] .dialogHeadbar {
     font-size: large;
     padding: 0.8%;
   }
+  div#loginMainDiv div#centerBox form table.divLoginbox td span.field_icons.remember_me {
+    padding-left: 40px;
+  }
   div#loginMainDiv div#centerBox #loginCdMessage {
     margin: 8px;
     font-size: 12pt !important;
@@ -8627,6 +8633,8 @@ form[id^="ranking-"] .dialogHeadbar {
     height: 32px;
     background-image: url(../images/topmenu_items/mobile/checkbox.svg) !important;
     display: inline-block;
+    background-repeat: no-repeat;
+    background-size: 31px;
   }
   body input[type="checkbox"]:checked {
     background-image: url(../images/topmenu_items/mobile/checkbox.svg) !important;
