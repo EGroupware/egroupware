@@ -1126,14 +1126,14 @@ abstract class admin_cmd
 		// instanciate single periodic execution object
 		$single = $cmd->as_array();
 		$single['parent'] = $single['id'];
-		$single = array_diff_key($single, array_flip(array(
+		$args = array_diff_key($single, array_flip(array(
 			'id','uid',
 			'created','modified','modifier',
 			'async_job_id','rrule','scheduled',
 			'status', 'set', 'old','value','result'
 		)));
 
-		$periodic = admin_cmd::instanciate($single);
+		$periodic = admin_cmd::instanciate($args);
 
 		try {
 			$value = $periodic->run(null, false);
@@ -1207,7 +1207,7 @@ abstract class admin_cmd
 		}
 		elseif (!$data['remote_hash'] && !($data['install_id'] && $data['config_passwd']))
 		{
-			throw new Api\Exception\WrongUserinput(lang('Either Install ID AND Api\Config password needed OR the remote hash!'));
+			throw new Api\Exception\WrongUserinput(lang('Either Install ID AND config password needed OR the remote hash!'));
 		}
 		//_debug_array($data);
 		admin_cmd::$remote->init($data);
