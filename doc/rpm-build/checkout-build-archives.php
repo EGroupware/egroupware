@@ -20,7 +20,7 @@ $config = array(
 	'packagename' => 'egroupware',
 	'version' => '19.1',        // '19.1'
 	'packaging' => date('Ymd'), // '20160520'
-	'branch'  => 'master',        // checked out branch
+	'branch'  => '19.1',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
 	'checkoutdir' => '~/epl-19.1-checkout',	//realpath(__DIR__.'/../..'),
 	'egw_buildroot' => '/tmp/build_root/epl_19.1_buildroot',
@@ -415,7 +415,7 @@ function do_release()
 	$tag = config_translate('tag');
 	run_cmd($config['git'].' push -f origin '.$tag);
 	// checkout release-branch again (we are on the tag!)
-	run_cmd($config['git'].' checkout '.'master');// we have no 19.1 branch yet $config['version']);
+	run_cmd($config['git'].' checkout '.$config['branch']);
 
 	if (!empty($config['github_user']) || empty($config['github_token']))
 	{
