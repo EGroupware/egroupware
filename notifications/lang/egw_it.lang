@@ -34,6 +34,7 @@ egroupware-popup backend	admin	it	Popup backend EGroupware
 egroupware-popup first, if that fails notify me by e-mail	notifications	it	Prima popup di EGroupware, se fallisce, mandami email
 egroupware-popup only	notifications	it	Solo popup EGroupware
 egroupware-popup verbosity	notifications	it	Verbosità popup EGroupware
+email notifications only, if user is not logged in	notifications	it	Notifiche via email, se l'utente non ha effettuato l'accesso
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	it	Solo profilo emailadmin. NON usare profili email attivi definiti da utenti per le notifiche
 enable egroupware-popup backend	admin	it	Abilita il backend popup di EGroupware
 enable windows-popup backend	admin	it	Abilita il backend popup di Windows

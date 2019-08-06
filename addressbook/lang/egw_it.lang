@@ -65,6 +65,8 @@ all addressbooks	addressbook	it	Tutte le rubriche
 all contacts	addressbook	it	Tutti i contatti
 all in one field	addressbook	it	Tutto in un Campo
 all types	addressbook	it	Tutti i tipi
+allow	addressbook	it	Permettere
+allow for contacts only	addressbook	it	Permettere solo per i contatti
 allow members of following groups to edit contact-data of accounts	addressbook	it	Permettere ai membri dei seguenti gruppi di modificare i dati di contatto degli account
 allow users to maintain their own account-data	admin	it	Permetti agli utenti di gestire i dati del proprio account
 alt. csv import	addressbook	it	Importazione CSV Alternativa
@@ -78,6 +80,7 @@ assistent phone	addressbook	it	Telefono assistente
 birthday	common	it	Data di nascita
 birthdays	common	it	Compleanni
 blank	addressbook	it	Vuoto
+browser location	addressbook	it	Localizzazione browser
 business	common	it	Ufficio
 business address	addressbook	it	Indirizzo ufficio
 business address line 2	addressbook	it	Indirizzo ufficio riga 2
@@ -91,6 +94,7 @@ business state	addressbook	it	Provincia ufficio
 business street	addressbook	it	Via ufficio
 business zip code	addressbook	it	CAP ufficio
 calendar fields:	addressbook	it	Campi agenda:
+calendar integration	addressbook	it	Integrazione agenda
 calendar uri	addressbook	it	URI Agenda
 can be changed via setup >> configuration	admin	it	Può essere modificato tramite Setup >> Configurazione
 can't create dn %1	addressbook	it	Impossibile creare dn %1
@@ -102,6 +106,7 @@ categories, notes, ...	addressbook	it	Categorie, Note, ...
 category path	addressbook	it	Percorso categoria
 category tree	admin	it	Albero categoria
 cell phone	addressbook	it	Telefono cellulare
+change addressbook when updating	addressbook	it	Modificare la rubrica quando si modifica
 change all organisation members	addressbook	it	modifica tutti i membri dell'organizzazione
 charset for the csv export	addressbook	it	Set di caratteri per esportazione CSV
 charset for the vcard export	addressbook	it	Set di caratteri per l'esportazione vCard
@@ -169,6 +174,7 @@ default document to insert contacts	addressbook	it	Documento predefinito per l'i
 default file as format	addressbook	it	File predefinito come formato
 default filter	addressbook	it	Filtro predefinito
 default format for fileas, eg. for new entries.	addressbook	it	Formato predefinito p.es. per nuove voci
+default geolocation source address	addressbook	it	Fonte predefinita di GeoLocalizzazione
 default is to open email addresses in egroupware email application, if user has access to it.	addressbook	it	L'azione predefinita è aprire gli indirizzi email nell'applicazione EMail, se l'utente ha diritto di accesso ad essa.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	it	Quale indirizzo email viene utilizzato come preferito nelle liste di distribuzione
 delete a single entry by passing the id.	addressbook	it	Elimina un singola voce passando l'ID.
@@ -180,6 +186,8 @@ deletes the photo	addressbook	it	Elimina la foto
 department	common	it	Dipartimento
 departments	addressbook	it	Dipartimenti
 directory with documents to insert contacts	addressbook	it	Cartella con documenti in cui inserire contatti
+disable	addressbook	it	Disabilita
+disable last/next event column	addressbook	it	Disabilita la colonna "evento precedente/successivo"
 display contact	addressbook	it	Mostra contatto
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	it	Visualizza un promemoria per i compleanni sulla pagina iniziale (pagina che vedi quando entri in EGroupware o clicchi sull'icona Home).
 distribution list deleted	addressbook	it	La lista di distribuzione è stata rimossa
@@ -213,6 +221,7 @@ email & internet	addressbook	it	Email e Internet
 email (private)	addressbook	it	Email (privato)
 email addresses (comma separated) to send the contact data	addressbook	it	Indirizzi email, separati da virgola, per l'invio dei dati di contatto
 empty	admin	it	Vuoto
+empty addressbook before importing	addressbook	it	Eliminare elementi di rubrica senza corrispondenza nella lista CSV
 empty for all	addressbook	it	per tutti vuoto
 enable an extra private addressbook	addressbook	it	Abilita una rubrica extra privata
 enclosure	addressbook	it	Inclusione
@@ -386,6 +395,7 @@ parcel	addressbook	it	Parcel
 participants	addressbook	it	Partecipanti
 permission denied !!!	addressbook	it	Permesso negato !!!
 permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	it	Permesso negato! Chiedere all'amministratore di permettere agli utenti di aggiornare le proprie chiavi pubbliche
+pgp key	addressbook	it	Chiave PGP
 phone number	common	it	Numero di Telefono
 phone numbers	common	it	Numeri di telefono
 photo	addressbook	it	Foto
@@ -428,6 +438,7 @@ select addressbook type	addressbook	it	Seleziona il tipo di rubrica
 select all	addressbook	it	Seleziona tutto
 select an action or addressbook to move to	addressbook	it	Seleziona una azione o una rubrica per lo spostamento
 select an action or addressbook to move to...	addressbook	it	Seleziona una azione o una rubrica per lo spostamento...
+select an opened dialog	addressbook	it	Seleziona una finestra di dialogo aperta
 select migration type	admin	it	Seleziona tipo di migrazione
 select multiple contacts for a further action	addressbook	it	Seleziona contatti multipli per azioni ulteriori
 select phone number as prefered way of contact	addressbook	it	Seleziona il numero di telefono come modalità di contatto preferita
@@ -448,6 +459,7 @@ show infolog entries for this organisation	addressbook	it	Mostra tutte le attivi
 show the contacts of this organisation	addressbook	it	Mostra i contatti di questa organizzazione
 similar contacts found:	addressbook	it	Contatti simili trovati:
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	it	Dimensioni finestra popup: 400x300
+smime key	addressbook	it	Chiave S/MIME
 special	addressbook	it	Speciale
 stadt	addressbook	it	Città
 start	admin	it	Inizio
