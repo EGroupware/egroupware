@@ -73,7 +73,7 @@ $GLOBALS['settings'] = array(
 		'help'   => 'Allows to set a default or force the open application tabs.',
 		'xmlrpc' => True,
 		'admin'  => False,
-		'default' => 'addressbook,calendar',
+		'default' => 'addressbook,calendar,mail,filemanager,infolog,rocketchat',
 	),
 	'active_tab' => array(
 		'type'   => 'select',
@@ -83,6 +83,7 @@ $GLOBALS['settings'] = array(
 		'help'   => 'Allows to set a default or force the active application tab for new logins.',
 		'xmlrpc' => True,
 		'admin'  => False,
+		'default' => 'calendar',
 	),
 	'template_color' => array(
 		'type' => 'select',
