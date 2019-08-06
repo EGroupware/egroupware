@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c9c0c05b73f827512eeb4272326ff71",
+    "content-hash": "bab03e42bfb2e9b015788370c6987eea",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -642,16 +642,16 @@
         },
         {
             "name": "egroupware/activesync",
-            "version": "dev-master",
+            "version": "19.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
-                "reference": "8f30989c1b58159a4fd20ef4318727833a41b24e"
+                "reference": "bb8aa14fd33e59e95ca85c47e39de43e232ff6eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/8f30989c1b58159a4fd20ef4318727833a41b24e",
-                "reference": "8f30989c1b58159a4fd20ef4318727833a41b24e",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/bb8aa14fd33e59e95ca85c47e39de43e232ff6eb",
+                "reference": "bb8aa14fd33e59e95ca85c47e39de43e232ff6eb",
                 "shasum": ""
             },
             "require": {
@@ -679,11 +679,11 @@
             ],
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-06-14T15:24:10+00:00"
+            "time": "2019-08-03T06:55:13+00:00"
         },
         {
             "name": "egroupware/adodb-php",
-            "version": "dev-master",
+            "version": "19.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
@@ -712,8 +712,8 @@
             "authors": [
                 {
                     "name": "John Lim",
-                    "email": "jlim@natsoft.com",
-                    "role": "Author"
+                    "role": "Author",
+                    "email": "jlim@natsoft.com"
                 },
                 {
                     "name": "Damien Regad",
@@ -737,16 +737,16 @@
         },
         {
             "name": "egroupware/bookmarks",
-            "version": "dev-master",
+            "version": "19.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
-                "reference": "a009853e9285d7c837e905fdf49211ca85a37b17"
+                "reference": "9d9ac16b07b5f584384d9bd935c80adbb6930c90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/a009853e9285d7c837e905fdf49211ca85a37b17",
-                "reference": "a009853e9285d7c837e905fdf49211ca85a37b17",
+                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/9d9ac16b07b5f584384d9bd935c80adbb6930c90",
+                "reference": "9d9ac16b07b5f584384d9bd935c80adbb6930c90",
                 "shasum": ""
             },
             "require": {
@@ -765,20 +765,20 @@
             ],
             "description": "EGroupware app to manage bookmarks",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-09T08:25:03+00:00"
+            "time": "2019-08-02T16:24:52+00:00"
         },
         {
             "name": "egroupware/collabora",
-            "version": "dev-master",
+            "version": "19.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "c9b8bbdf43d0fd9aedf9768772d02c6f63e744bd"
+                "reference": "0ebf1211eb8bcab96242c8a46af1e31660334736"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/c9b8bbdf43d0fd9aedf9768772d02c6f63e744bd",
-                "reference": "c9b8bbdf43d0fd9aedf9768772d02c6f63e744bd",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/0ebf1211eb8bcab96242c8a46af1e31660334736",
+                "reference": "0ebf1211eb8bcab96242c8a46af1e31660334736",
                 "shasum": ""
             },
             "require": {
@@ -805,7 +805,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-09T14:43:13+00:00"
+            "time": "2019-08-03T08:56:06+00:00"
         },
         {
             "name": "egroupware/icalendar",
@@ -907,16 +907,16 @@
         },
         {
             "name": "egroupware/news_admin",
-            "version": "dev-master",
+            "version": "19.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
-                "reference": "dc00bc2958d396ac53c5d8b65ea4885b0d6bf3f1"
+                "reference": "65858a6fe9b405150c838edff7dfa5f0d56aa531"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/dc00bc2958d396ac53c5d8b65ea4885b0d6bf3f1",
-                "reference": "dc00bc2958d396ac53c5d8b65ea4885b0d6bf3f1",
+                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/65858a6fe9b405150c838edff7dfa5f0d56aa531",
+                "reference": "65858a6fe9b405150c838edff7dfa5f0d56aa531",
                 "shasum": ""
             },
             "require": {
@@ -935,20 +935,20 @@
             ],
             "description": "EGroupware app to supply and aggregate RSS/Atom feeds",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-09T08:25:03+00:00"
+            "time": "2019-07-16T08:13:20+00:00"
         },
         {
             "name": "egroupware/openid",
-            "version": "dev-master",
+            "version": "19.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "9aeab3624b41df393fa2405eb3497dc9e2cb8b7e"
+                "reference": "2bd316456d3a83586e5e8d4c29ed49fa885c4385"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/9aeab3624b41df393fa2405eb3497dc9e2cb8b7e",
-                "reference": "9aeab3624b41df393fa2405eb3497dc9e2cb8b7e",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/2bd316456d3a83586e5e8d4c29ed49fa885c4385",
+                "reference": "2bd316456d3a83586e5e8d4c29ed49fa885c4385",
                 "shasum": ""
             },
             "require": {
@@ -984,20 +984,20 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-06-17T13:29:36+00:00"
+            "time": "2019-08-05T12:49:23+00:00"
         },
         {
             "name": "egroupware/projectmanager",
-            "version": "dev-master",
+            "version": "19.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "625735636edb22a996f7482d560c664953c71bfd"
+                "reference": "c80ba1fd297a8b3c3a3b2b4055a6fe5b62ef7910"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/625735636edb22a996f7482d560c664953c71bfd",
-                "reference": "625735636edb22a996f7482d560c664953c71bfd",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/c80ba1fd297a8b3c3a3b2b4055a6fe5b62ef7910",
+                "reference": "c80ba1fd297a8b3c3a3b2b4055a6fe5b62ef7910",
                 "shasum": ""
             },
             "require": {
@@ -1024,20 +1024,20 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-04T10:44:16+00:00"
+            "time": "2019-08-06T07:57:26+00:00"
         },
         {
             "name": "egroupware/registration",
-            "version": "dev-master",
+            "version": "19.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
-                "reference": "0347a76d200317610202847825ff1d5650e93fd8"
+                "reference": "3f26823a949a8eba459ad4878f3150e3afba6e6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/registration/zipball/0347a76d200317610202847825ff1d5650e93fd8",
-                "reference": "0347a76d200317610202847825ff1d5650e93fd8",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/3f26823a949a8eba459ad4878f3150e3afba6e6f",
+                "reference": "3f26823a949a8eba459ad4878f3150e3afba6e6f",
                 "shasum": ""
             },
             "require": {
@@ -1050,6 +1050,15 @@
             ],
             "authors": [
                 {
+                    "name": "Padraic Renaghan"
+                },
+                {
+                    "name": "Joseph Engo"
+                },
+                {
+                    "name": "Michael Totschnig"
+                },
+                {
                     "name": "Ralf Becker",
                     "email": "rb@egroupware.org"
                 },
@@ -1060,33 +1069,24 @@
                 {
                     "name": "Nathan Gray",
                     "email": "ng@egroupware.org"
-                },
-                {
-                    "name": "Padraic Renaghan"
-                },
-                {
-                    "name": "Joseph Engo"
-                },
-                {
-                    "name": "Michael Totschnig"
                 }
             ],
             "description": "EGroupware app to allow self-registration of users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-09T08:25:03+00:00"
+            "time": "2019-07-16T08:23:13+00:00"
         },
         {
             "name": "egroupware/rocketchat",
-            "version": "dev-master",
+            "version": "19.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "800913216736cc1319af4b04a975df32fcce8904"
+                "reference": "e13472c04379db9bcc7094116106d718a3eeddc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/800913216736cc1319af4b04a975df32fcce8904",
-                "reference": "800913216736cc1319af4b04a975df32fcce8904",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/e13472c04379db9bcc7094116106d718a3eeddc4",
+                "reference": "e13472c04379db9bcc7094116106d718a3eeddc4",
                 "shasum": ""
             },
             "require": {
@@ -1113,20 +1113,20 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-11T15:47:23+00:00"
+            "time": "2019-08-05T13:25:10+00:00"
         },
         {
             "name": "egroupware/status",
-            "version": "dev-master",
+            "version": "19.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "0c5160baa7a1c655bf18c40b516a5aa1f125ccb6"
+                "reference": "66b0a35e4a9fa4f0dcb1d021769ac22336f7b17f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/0c5160baa7a1c655bf18c40b516a5aa1f125ccb6",
-                "reference": "0c5160baa7a1c655bf18c40b516a5aa1f125ccb6",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/66b0a35e4a9fa4f0dcb1d021769ac22336f7b17f",
+                "reference": "66b0a35e4a9fa4f0dcb1d021769ac22336f7b17f",
                 "shasum": ""
             },
             "require": {
@@ -1153,20 +1153,20 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-09T11:56:12+00:00"
+            "time": "2019-08-01T22:24:59+00:00"
         },
         {
             "name": "egroupware/tracker",
-            "version": "dev-master",
+            "version": "19.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "166ba2df3ffa1cbdcfa94a0a0b74b0ff5f39c5b8"
+                "reference": "d331ad7e9e3a6c5f0717aeb8462d2e5ae061006f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/166ba2df3ffa1cbdcfa94a0a0b74b0ff5f39c5b8",
-                "reference": "166ba2df3ffa1cbdcfa94a0a0b74b0ff5f39c5b8",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/d331ad7e9e3a6c5f0717aeb8462d2e5ae061006f",
+                "reference": "d331ad7e9e3a6c5f0717aeb8462d2e5ae061006f",
                 "shasum": ""
             },
             "require": {
@@ -1193,7 +1193,7 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-08T22:07:07+00:00"
+            "time": "2019-08-03T06:56:38+00:00"
         },
         {
             "name": "egroupware/z-push-dev",
@@ -1592,7 +1592,6 @@
             "dist": {
                 "type": "tar",
                 "url": "https://registry.npmjs.org/as-jqplot/-/as-jqplot-1.0.8.tgz",
-                "reference": null,
                 "shasum": "97061e0f32167597b87c98dfd42c93f10a2fb249"
             },
             "type": "npm-asset-library",
@@ -1617,7 +1616,6 @@
             "dist": {
                 "type": "tar",
                 "url": "https://registry.npmjs.org/gridster/-/gridster-0.5.6.tgz",
-                "reference": null,
                 "shasum": "4024713aabd559093a72e9b713f1e41f9bded76f"
             },
             "require": {
@@ -1856,9 +1854,7 @@
             "version": "2.2.2",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Compress-2.2.2.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Compress-2.2.2.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -1889,9 +1885,7 @@
             "version": "2.7.12",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Crypt-2.7.12.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Crypt-2.7.12.tgz"
             },
             "require": {
                 "ext-hash": "*",
@@ -1928,9 +1922,7 @@
             "version": "1.1.2",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Crypt_Blowfish-1.1.2.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Crypt_Blowfish-1.1.2.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -1959,9 +1951,7 @@
             "version": "2.4.1",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Date-2.4.1.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Date-2.4.1.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -1991,9 +1981,7 @@
             "version": "2.0.8",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Exception-2.0.8.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Exception-2.0.8.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_translation": "<3.0.0.0",
@@ -2021,9 +2009,7 @@
             "version": "2.1.7",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Http-2.1.7.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Http-2.1.7.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2052,9 +2038,7 @@
             "version": "1.1.1",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Idna-1.1.1.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Idna-1.1.1.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2083,9 +2067,7 @@
             "version": "2.29.17",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.17.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.17.tgz"
             },
             "require": {
                 "ext-hash": "*",
@@ -2123,9 +2105,7 @@
             "version": "1.2.5",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_ListHeaders-1.2.5.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_ListHeaders-1.2.5.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_mail": "<3.0.0.0",
@@ -2155,9 +2135,7 @@
             "version": "2.6.5",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mail-2.6.5.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Mail-2.6.5.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2190,9 +2168,7 @@
             "version": "1.0.2",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_ManageSieve-1.0.2.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_ManageSieve-1.0.2.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2222,9 +2198,7 @@
             "version": "1.0.10",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mapi-1.0.10.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Mapi-1.0.10.tgz"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -2254,9 +2228,7 @@
             "version": "2.11.0",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mime-2.11.0.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Mime-2.11.0.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2292,9 +2264,7 @@
             "version": "2.2.1",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Nls-2.2.1.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Nls-2.2.1.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_translation": "<3.0.0.0",
@@ -2323,9 +2293,7 @@
             "version": "2.0.6",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Secret-2.0.6.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Secret-2.0.6.tgz"
             },
             "require": {
                 "ext-hash": "*",
@@ -2356,9 +2324,7 @@
             "version": "1.9.5",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Smtp-1.9.5.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Smtp-1.9.5.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2391,9 +2357,7 @@
             "version": "2.1.2",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Socket_Client-2.1.2.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Socket_Client-2.1.2.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2421,9 +2385,7 @@
             "version": "1.6.3",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Stream-1.6.3.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Stream-1.6.3.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2451,9 +2413,7 @@
             "version": "2.0.4",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Stream_Filter-2.0.4.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Stream_Filter-2.0.4.tgz"
             },
             "require": {
                 "php": "<8.0.0.0"
@@ -2480,9 +2440,7 @@
             "version": "2.1.4",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Stream_Wrapper-2.1.4.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Stream_Wrapper-2.1.4.tgz"
             },
             "require": {
                 "php": "<8.0.0.0"
@@ -2509,9 +2467,7 @@
             "version": "2.2.0",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Support-2.2.0.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Support-2.2.0.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2541,9 +2497,7 @@
             "version": "2.2.0",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Text_Diff-2.2.0.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Text_Diff-2.2.0.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2572,9 +2526,7 @@
             "version": "2.0.3",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Text_Flowed-2.0.3.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Text_Flowed-2.0.3.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_util": "<3.0.0.0",
@@ -2602,9 +2554,7 @@
             "version": "2.2.2",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Translation-2.2.2.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Translation-2.2.2.tgz"
             },
             "require": {
                 "php": "<8.0.0.0"
@@ -2631,9 +2581,7 @@
             "version": "2.2.6",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Url-2.2.6.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Url-2.2.6.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2661,9 +2609,7 @@
             "version": "2.5.8",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Util-2.5.8.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://pear.horde.org/get/Horde_Util-2.5.8.tgz"
             },
             "require": {
                 "ext-dom": "*",
