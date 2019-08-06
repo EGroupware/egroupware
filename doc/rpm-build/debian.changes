@@ -1,3 +1,13 @@
+egroupware (19.1.20190806) hardy; urgency=low
+
+  * 3rd and probably last release-kandidate for 19.1
+  * Login: RememberMe token for either automatic login or as 2. factor for 2-Factor-Auth
+  * Api: fix error adding/editing catgories or custom fields
+  * Docker: allow to specify private CA so EGroupware and Rocket.Chat can validate their certificates
+  * minor fixes in all apps
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 06 Aug 2019 12:45:05 +0200
+
 egroupware (19.1.20190726) hardy; urgency=low
 
   * 2. 19.1 release-candidate / preview
