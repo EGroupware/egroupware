@@ -1,4 +1,4 @@
-egroupware (19.1.20190806) hardy; urgency=low
+egroupware-docker (19.1.20190806) hardy; urgency=low
 
   * 3rd and probably last release-candidate for 19.1
   * Login: RememberMe token for either automatic login or as 2. factor for 2-Factor-Auth
@@ -8,7 +8,7 @@ egroupware (19.1.20190806) hardy; urgency=low
 
  -- Ralf Becker <rb@egroupware.org>  Tue, 06 Aug 2019 12:45:05 +0200
 
-egroupware (19.1.20190726) hardy; urgency=low
+egroupware-docker (19.1.20190726) hardy; urgency=low
 
   * 2. 19.1 release-candidate / preview
   * Admin: fixed Site config did not store ("Error: 1")
@@ -22,13 +22,13 @@ egroupware (19.1.20190726) hardy; urgency=low
 
  -- Ralf Becker <rb@egroupware.org>  Fri, 26 Jul 2019 11:07:27 +0200
 
-egroupware (19.1.20190717) hardy; urgency=low
+egroupware-docker (19.1.20190717) hardy; urgency=low
 
   * better guiding through Rocket.Chat installation process
 
  -- Ralf Becker <rb@egroupware.org>  Wed, 17 Jul 2019 14:07:06 +0200
 
-egroupware (19.1.20190716) hardy; urgency=low
+egroupware-docker (19.1.20190716) hardy; urgency=low
 
   * First release-candidate for 19.1 with following major changes
   * Integration of Rocket.Chat an open-source chat server with native clients for all plattforms
