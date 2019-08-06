@@ -472,8 +472,7 @@ Hide subsequent headers in week view with non-consolidated owners
   border-bottom: 1px solid silver;
   white-space: nowrap;
   overflow: hidden;
-  color: white;
-  background: #2D6393;
+  background-color: white;
 }
 .hideDayColHeader .calendar_calDayColHeader > div[data-date] {
   position: fixed;
@@ -2718,19 +2717,19 @@ span.et2_checkbox_slideSwitch span.slideSwitch_container {
 }
 span.et2_checkbox_slideSwitch span.slideSwitch_container span.on {
   background-image: url(../../../pixelegg/images/7_day_view.svg);
-  background-size: 16px 16px;
+  background-size: 18px 18px;
   background-repeat: no-repeat;
   background-position: center;
-  height: 24px;
+  height: 21px;
   top: 0;
   filter: invert(1);
 }
 span.et2_checkbox_slideSwitch span.slideSwitch_container span.off {
   background-image: url(../../../pixelegg/images/5_day_view.svg);
-  background-size: 16px 16px;
+  background-size: 18px 18px;
   background-repeat: no-repeat;
   background-position: center;
-  height: 24px;
+  height: 21px;
   top: 0;
 }
 span.et2_checkbox_slideSwitch span.slideSwitch_container span {
