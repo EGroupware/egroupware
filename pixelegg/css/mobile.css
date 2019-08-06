@@ -6268,7 +6268,7 @@ span.egw_tutorial_title {
     top: 0;
     left: 0;
     bottom: 0;
-    background-color: #0C5DA5;
+    background: white;
     height: 100%;
     width: 100%;
   }
@@ -6278,13 +6278,9 @@ span.egw_tutorial_title {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url(../../api/templates/default/images/logo64x64.png);
+    background-image: url(../../pixelegg/images/loading.svg);
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 64px;
-    -webkit-animation: fw-firstload 2s infinite;
-    animation: fw-firstload 2s infinite;
-    -moz-animation: fw-firstload 2s infinite;
   }
   body table.egwGridView_outer thead tr th {
     font-size: small !important;
