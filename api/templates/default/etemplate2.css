@@ -41,6 +41,10 @@ select {
 }
 /*Hide element*/
 .hideme {display:none !important;}
+
+/*display none*/
+.hide {dispaly:none;}
+
 /**
  * VBox widget
  */

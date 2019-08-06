@@ -88,7 +88,7 @@
 	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
 		<tree autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet"/>
 		<nextmatch id="nm" template="admin.index.rows" header_left="admin.index.add"/>
-		<nextmatch id="groups" template="admin.index.group"/>
+		<nextmatch id="groups" template="admin.index.group" class="hide"/>
 		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
 		<box id="ajax_target" height="99%" disabled="true"/>
 	</template>
