@@ -12,6 +12,10 @@ test -d /usr/share/egroupware-extra && \
 test $(stat -c '%U' /var/lib/egroupware) = "www-data" || \
 	chown -R www-data:www-data /var/lib/egroupware
 
+# add private CA so egroupware can validate your certificate to talk to Collabora or Rocket.Chat
+test -f /usr/local/share/ca-certificates/private-ca.crt &&
+	update-ca-certificates
+
 # write install-log in /var/lib/egroupware (only readable by root!)
 LOG=/var/lib/egroupware/egroupware-docker-install.log
 touch $LOG
