@@ -4211,7 +4211,6 @@ td.message span.message {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin: 0px 5px 0px 0px;
   padding: 0px 5px 0px 0px;
   cursor: pointer;
   background-repeat: repeat-x;

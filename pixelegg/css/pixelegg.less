@@ -17,7 +17,29 @@
 	background-color: fade(@addressbook-color, 30%);
 	border-left:4px solid @addressbook-color !important;
 }
-
+#egw_fw_firstload {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	background: white;
+	height: 100%;
+	width: 100%;
+	&:before{
+		content:"";
+		display: inline-block;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-image: url(../../pixelegg/images/loading.svg);
+		background-position: center;
+		background-repeat: no-repeat;
+		-webkit-animation: fw-firstload 2s infinite;
+		animation: fw-firstload 2s infinite;
+		-moz-animation: fw-firstload 2s infinite;
+		background-size: 50%;
+	}
+}
 #egw_fw_sidebar {
 	#egw_fw_sidemenu {
 		#addressbook_sidebox_content {

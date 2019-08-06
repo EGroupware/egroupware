@@ -33,7 +33,46 @@
 			var height = this._super.apply(this, arguments);
 
 			return height;
-		}
+		},
+
+		/**
+		 * Check to see if the tab header will overflow and want to wrap.
+		 * Deal with it by setting some smaller widths on the tabs.
+		 */
+		checkTabOverflow: function()
+		{
+			var topmenuWidth = jQuery('#egw_fw_topmenu_info_items').outerWidth();
+			var width = 0;
+			var counter = 0;
+			var marginR = parseInt(jQuery("#egw_fw_main").css('margin-right'));
+			jQuery(this.tabsUi.contHeaderDiv).css('padding-right',topmenuWidth - marginR);
+			var outer_width = jQuery(this.tabsUi.contHeaderDiv).width();
+			var spans = jQuery(this.tabsUi.contHeaderDiv).children('span');
+			spans.css('max-width','');
+			spans.each(function() {
+				// Do not count and add up node if the width is not set (e.g. status app)
+				if (this.clientWidth > 0)
+				{
+					width += jQuery(this).outerWidth(true);
+					counter++;
+				}
+			});
+			if(width > outer_width)
+			{
+				var max_width = Math.floor(outer_width / counter) - (spans.outerWidth(true) - spans.width());
+				spans.css('max-width', max_width + 'px');
+			}
+		},
+
+		/**
+		 * Runs after et2 is loaded
+		 *
+		 */
+		et2_loadingFinished: function() {
+			this._super.apply(this, arguments);
+			jQuery('#egw_fw_firstload').remove();
+		},
+
 	});
 
 	/**

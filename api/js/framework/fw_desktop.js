@@ -395,8 +395,14 @@
 		createApplicationTab: function(_app, _pos)
 		{
 			this._super.apply(this, arguments);
-			this.checkTabOverflow();
+		},
 
+		/**
+		 * Runs after et2 is loaded
+		 *
+		 */
+		et2_loadingFinished: function() {
+			this.checkTabOverflow();
 		},
 
 		/**

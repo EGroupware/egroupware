@@ -51,4 +51,5 @@
 			</div>
 			<div id="egw_fw_sidebar_r"></div>
 		</div>
+		<div id="egw_fw_firstload"></div>
 <!-- END framework -->
