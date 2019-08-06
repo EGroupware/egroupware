@@ -37,14 +37,13 @@ elseif(strpos($redirectTarget, '[?&]cd=') !== false)
 	$redirectTarget = preg_replace('/([?&])cd=[^&]+/', '$1cd=1', $redirectTarget);
 }
 
-// remove remember me cookie on explicit logout, unless it is a second factor
-if ($GLOBALS['egw']->session->removeRememberMeTokenOnLogout())
-{
-	Api\Session::egw_setcookie('eGW_remember','',0,'/');
-}
-
 if($verified)
 {
+	// remove remember me cookie on explicit logout, unless it is a second factor
+	if ($GLOBALS['egw']->session->removeRememberMeTokenOnLogout())
+	{
+		Api\Session::egw_setcookie('eGW_remember','',0,'/');
+	}
 	Api\Hooks::process('logout');
 	$GLOBALS['egw']->session->destroy($GLOBALS['sessionid'],$GLOBALS['kp3']);
 }
