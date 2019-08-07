@@ -30,7 +30,7 @@ until [ -n "$EGW_SKIP_INSTALL" -a ! -f /var/lib/egroupware/header.inc.php ] || \
 	--start_db "" --autostart_db "" \
 	--db_type "${EGW_DB_TYPE:-mysqli}" \
 	--db_host "${EGW_DB_HOST:-localhost}" \
-	--db_grant_host "${EGW_DB_GRANT_HOST:-%}" \
+	--db_grant_host "${EGW_DB_GRANT_HOST:-localhost}" \
 	--db_root "${EGW_DB_ROOT:-root}" \
 	--db_root_pw   "${EGW_DB_ROOT_PW:-}" \
 	--db_name "${EGW_DB_NAME:-egroupware}" \
