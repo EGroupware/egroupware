@@ -70,7 +70,7 @@
 		 */
 		et2_loadingFinished: function() {
 			this._super.apply(this, arguments);
-			jQuery('#egw_fw_firstload').remove();
+			setTimeout(function(){jQuery('#egw_fw_firstload').remove()}, 1000);
 		},
 
 	});
