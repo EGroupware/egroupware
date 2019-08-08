@@ -387,3 +387,15 @@ img.et2_button_icon[src*="svg"], img.et2_button_icon[src*="svg"]:hover {
 	background-color: transparent;
 	background-image: none;
 }
+
+/* set default placeholder color*/
+::placeholder {
+	color: @color_placeholder;
+	opacity: 1;
+}
+:-ms-input-placeholder {
+	color: @color_placeholder;
+}
+::-ms-input-placeholder{
+	color: @color_placeholder;
+}
