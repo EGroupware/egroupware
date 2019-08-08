@@ -105,7 +105,7 @@ services:
     environment:
     - WATCHTOWER_CLEANUP=true # delete old image after update to not fill up the disk
     #- REPO_USER="your-repo-username"
-    #- REPO_PASSWORD="your-repo-password"
+    #- REPO_PASS="your-repo-password"
     # for email notifications add your email and mail-server here
     #- WATCHTOWER_NOTIFICATIONS=email
     #- WATCHTOWER_NOTIFICATIONS_LEVEL=info # possible values: panic, fatal, error, warn, info or debug
