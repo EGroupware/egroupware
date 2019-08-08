@@ -1926,6 +1926,10 @@ body {
 #loginMainDiv div#centerBox form table.divLoginbox td.remember_me_row {
   border-bottom: 1px solid silver;
 }
+#loginMainDiv div#centerBox form table.divLoginbox td.remember_me_row span.remember_me {
+  color: #666666;
+  opacity: 1;
+}
 #loginMainDiv div#centerBox form table.divLoginbox select:focus,
 #loginMainDiv div#centerBox form table.divLoginbox select:hover {
   box-shadow: none;
@@ -6731,4 +6735,15 @@ img.et2_button_icon[src*="svg"],
 img.et2_button_icon[src*="svg"]:hover {
   background-color: transparent;
   background-image: none;
+}
+/* set default placeholder color*/
+::placeholder {
+  color: #666666;
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  color: #666666;
+}
+::-ms-input-placeholder {
+  color: #666666;
 }
