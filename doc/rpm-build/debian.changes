@@ -1,3 +1,14 @@
+egroupware-epl (17.1.20190808) hardy; urgency=low
+
+  * Api: add search feature into file select dialog
+  * Admin: fix deleting custom field from list's context menu changed the modified date on all fields
+  * Calendar: only send update notifications if the event is in the future
+  * EPL/Filemanager/Versioning: do not version Office 2007 .tmp files
+  * Filemanager/EPL: skip Libre Office .~lock. file from versioning
+  * Univention: password reset needs to go through UDM too
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 08 Aug 2019 15:00:26 +0200
+
 egroupware-epl (17.1.20190529) hardy; urgency=low
 
   * Admin: white-list IP addresses from blocking or set higher number of attempts
