@@ -58,7 +58,7 @@ class Login
 			$tmpl = new Template(EGW_SERVER_ROOT.'/api/templates/default');
 			$tmpl->set_file(array('login_form' => Api\Header\UserAgent::mobile()?'login_mobile.tpl':'login.tpl'));
 		}
-		$tmpl->set_var('lang_message', empty(strip_tags($GLOBALS['loginscreenmessage'])) || $GLOBALS['loginscreenmessage'] === 'EGroupware' ?
+		$tmpl->set_var('lang_message', in_array(strip_tags($GLOBALS['loginscreenmessage']), ['', 'EGroupware']) ?
 			lang('Your Collaboration Platform') : $GLOBALS['loginscreenmessage']);
 
 		// did admin disable 2FA
