@@ -208,7 +208,7 @@ body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active{background-colo
 	{
 		if (empty($GLOBALS['loginscreenmessage']))
 		{
-			$GLOBALS['loginscreenmessage'] = '<h1>'.$GLOBALS['egw_info']['server']['site_title'].'</h1>';
+			$GLOBALS['loginscreenmessage'] = $GLOBALS['egw_info']['server']['site_title'];
 		}
 		unset($GLOBALS['egw_info']['server']['site_title']);
 
