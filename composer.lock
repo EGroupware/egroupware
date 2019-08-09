@@ -943,12 +943,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "2bd316456d3a83586e5e8d4c29ed49fa885c4385"
+                "reference": "8821e22d7de68b3450421029a022abd310e7bab5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/2bd316456d3a83586e5e8d4c29ed49fa885c4385",
-                "reference": "2bd316456d3a83586e5e8d4c29ed49fa885c4385",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/8821e22d7de68b3450421029a022abd310e7bab5",
+                "reference": "8821e22d7de68b3450421029a022abd310e7bab5",
                 "shasum": ""
             },
             "require": {
@@ -984,7 +984,7 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-08-05T12:49:23+00:00"
+            "time": "2019-08-06T13:45:46+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -1081,12 +1081,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "e13472c04379db9bcc7094116106d718a3eeddc4"
+                "reference": "53ed1a6cdaad0708c9d71dce192dcace5f51dfbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/e13472c04379db9bcc7094116106d718a3eeddc4",
-                "reference": "e13472c04379db9bcc7094116106d718a3eeddc4",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/53ed1a6cdaad0708c9d71dce192dcace5f51dfbe",
+                "reference": "53ed1a6cdaad0708c9d71dce192dcace5f51dfbe",
                 "shasum": ""
             },
             "require": {
@@ -1113,7 +1113,7 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-08-05T13:25:10+00:00"
+            "time": "2019-08-09T14:33:08+00:00"
         },
         {
             "name": "egroupware/status",
