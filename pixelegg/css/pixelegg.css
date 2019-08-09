@@ -1739,6 +1739,33 @@ body {
  * @package pixelegg
  * @version $Id$
  */
+/**
+ * 19.1 Login page with stock background image
+ */
+div#loginMainDiv.stockLoginBackground div#divAppIconBar div#divLogo {
+  position: relative;
+  top: 100px;
+  left: -50px;
+}
+div#loginMainDiv.stockLoginBackground div#divAppIconBar div#divLogo div.login_logo_container {
+  height: 80px;
+}
+div#loginMainDiv.stockLoginBackground div#divAppIconBar div#divLogo div.login_logo_container div.login_logo {
+  width: 350px;
+  max-width: 350px;
+}
+div#loginMainDiv.stockLoginBackground div#divAppIconBar div#divLogo div#loginScreenMessage {
+  font-size: 28.5px;
+  font-weight: 500;
+  color: #075ca3;
+  font-family: arial, helvetica, sans-serif;
+  margin: 0;
+  padding-left: 106px;
+}
+div#loginMainDiv.stockLoginBackground div#centerBox form {
+  border: 1px solid gray;
+  border-radius: 0 !important;
+}
 #socialBox {
   float: left;
   margin-top: 20px;

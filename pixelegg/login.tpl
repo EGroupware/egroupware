@@ -1,7 +1,7 @@
 <script src="./api/js/login.js" type="text/javascript"></script>
 
 
-<div id="loginMainDiv" style="background-image:url({background_file})">
+<div id="loginMainDiv" style="background-image:url({background_file})" class="{stock_background_class}">
 	<div class="loginMessageBox">
 		<div id="loginCdMessage" class="{cd_class}">{cd}
 		<span class="closeBtn">X</span></div>
