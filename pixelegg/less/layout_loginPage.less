@@ -15,6 +15,39 @@
 @import (reference) "definitions.less";
 
 @import "def_colors.less";
+
+/**
+ * 19.1 Login page with stock background image
+ */
+div#loginMainDiv.stockLoginBackground {
+	div#divAppIconBar {
+		div#divLogo {
+			position: relative;
+			top: 100px;
+			left: -50px;
+			div.login_logo_container {
+				height: 80px;
+				div.login_logo {
+					width: 350px;
+					max-width: 350px;
+				}
+			}
+			div#loginScreenMessage {
+				font-size: 28.5px;
+				font-weight: 500;
+				color: #075ca3;
+				font-family: arial, helvetica, sans-serif;
+				margin: 0;
+				padding-left: 106px;
+			}
+		}
+	}
+	div#centerBox form {
+	   border: 1px solid gray;
+	   border-radius: 0 !important;
+	}
+}
+
 //##############################################################################################################
 
 #socialBox {

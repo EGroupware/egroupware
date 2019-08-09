@@ -58,8 +58,8 @@ class Login
 			$tmpl = new Template(EGW_SERVER_ROOT.'/api/templates/default');
 			$tmpl->set_file(array('login_form' => Api\Header\UserAgent::mobile()?'login_mobile.tpl':'login.tpl'));
 		}
-
-		$tmpl->set_var('lang_message',$GLOBALS['loginscreenmessage']);
+		$tmpl->set_var('lang_message', empty(strip_tags($GLOBALS['loginscreenmessage'])) || $GLOBALS['loginscreenmessage'] === 'EGroupware' ?
+			lang('Your Collaboration Platform') : $GLOBALS['loginscreenmessage']);
 
 		// did admin disable 2FA
 		if ($GLOBALS['egw_info']['server']['2fa_required'] === 'disabled')
@@ -192,6 +192,9 @@ class Login
 		$tmpl->set_var('template_set',$this->framework->template);
 
 		$var['background_file'] = self::pick_login_background($GLOBALS['egw_info']['server']['login_background_file']);
+		// add "stockLoginBackground" class to div#loginMainDiv to fix positions for stock background
+		$var['stock_background_class'] = strpos($var['background_file'], '/api/templates/default/images/login_background') !== false ?
+			'stockLoginBackground' : '';
 
 		$var['logo_file'] = \EGroupware\Api\Framework::get_login_logo_or_bg_url('login_logo_file', 'login_logo');
 
