@@ -1733,7 +1733,7 @@ body {
  */
 div#loginMainDiv.stockLoginBackground div#divAppIconBar div#divLogo {
   position: relative;
-  top: 100px;
+  top: 35%;
   left: -50px;
 }
 div#loginMainDiv.stockLoginBackground div#divAppIconBar div#divLogo div.login_logo_container {
