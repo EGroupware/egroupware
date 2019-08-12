@@ -70,9 +70,8 @@
 		 */
 		et2_loadingFinished: function() {
 			this._super.apply(this, arguments);
-			setTimeout(function(){jQuery('#egw_fw_firstload').remove()}, 1000);
-		},
-
+			setTimeout(function(){jQuery('#egw_fw_firstload').remove();}, 1000);
+		}
 	});
 
 	/**
@@ -86,6 +85,8 @@
 		}
 
 		jQuery(document).ready(function() {
+			//Stop the loading animation after 3sec if for whatever reason it didn't end
+			setTimeout(function(){jQuery('#egw_fw_firstload').remove();}, 3000);
 			window.framework = new fw_pixelegg("egw_fw_sidemenu", "egw_fw_tabs",
 					window.egw_webserverUrl, egw_setSideboxSize,"egw_fw_splitter", 255, 245);	// should be identical to jdots_framework::(DEFAULT|MIN)_SIDEBAR_WIDTH
 			window.callManual = window.framework.callManual;
