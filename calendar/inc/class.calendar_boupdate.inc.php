@@ -2917,4 +2917,60 @@ class calendar_boupdate extends calendar_bo
 			$this->so->purge(time() - 365*24*3600*(float)$age);
 		}
 	}
+
+	/**
+	 * Check to see if we need to reset the status of any of the participants
+	 * - Current user is never reset
+	 * - Other users we respect their preference
+	 * - Non-users status is always reset
+	 *
+	 * @param Array $event New event
+	 * @param Array $old_event Event before modification
+	 *
+	 * @return boolean true if any statuses were reset
+	 */
+	protected function check_reset_stati(&$event, $old_event)
+	{
+		if(!$old_event || !is_array($old_event) || $event['start'] == $old_event['start'])
+		{
+			return false;
+		}
+
+		$status_reset = false;
+		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
+		$preferences = new Api\Preferences($uid);
+		$part_prefs = $preferences->read_repository();
+		foreach((array)$event['participants'] as $uid => $status)
+		{
+			$q = $r = null;
+			calendar_so::split_status($status,$q,$r);
+			if($uid == $this->user || $status == 'U')
+			{
+				continue;
+			}
+
+			// Just user accounts
+			if (is_int($uid))
+			{
+				switch ($part_prefs['calendar']['reset_stati'])
+				{
+					case 'no':
+						break;
+					case 'startday':
+						if ($sameday) break;
+					default:
+						$status_reset = true;
+						$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
+				}
+			}
+			// All other participant types
+			else
+			{
+				$status_reset = true;
+				$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
+			}
+		}
+		return $status_reset;
+
+	}
 }
