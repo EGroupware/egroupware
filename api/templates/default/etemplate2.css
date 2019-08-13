@@ -616,6 +616,9 @@ div.et2_diff {
 .et2_diff .d2h-file-diff {
 	overflow-x: hidden;
 }
+.et2_diff .d2h-code-wrapper {
+	position: relative;
+}
 .ui-widget-content .d2h-code-line-ctn {
 	white-space:normal;
 }
