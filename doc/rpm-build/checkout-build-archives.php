@@ -65,7 +65,7 @@ $config = array(
 	//'sfuser' => 'ralfbecker',
 	//'release' => '$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
 	// what gets uploaded with upload
-	'upload' => '$sourcedir/*egroupware*-$version.$packaging*',
+	'upload' => '$sourcedir/*$packagename-$version.$packaging*',
 	'copychangelog' => '$sourcedir/README', //'$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
 	'run' => array('checkout','editchangelog','tag','copy','virusscan','create','sign',/*'obs',*/'copychangelog','release'),
