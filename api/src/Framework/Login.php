@@ -297,7 +297,7 @@ class Login
 		}
 		else
 		{
-			return Api\Image::find('api',$chosen ? $chosen : 'login_background', '', null);
+			return Api\Image::find('api', $chosen ? $chosen : 'login_background', '', true);	// true: add cachebuster
 		}
 	}
 

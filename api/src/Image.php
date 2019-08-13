@@ -25,10 +25,11 @@ class Image
 	 * @param string $app
 	 * @param string|array $image one or more image-name in order of precedence
 	 * @param string $extension ='' extension to $image, makes sense only with an array
+	 * @param boolean $add_cachebuster =false true: add a cachebuster to the returnd url
 	 *
 	 * @return string url of image or null if not found
 	 */
-	static function find($app,$image,$extension='')
+	static function find($app,$image,$extension='',$add_cachebuster=false)
 	{
 		$image_map = self::map(null);
 
@@ -37,7 +38,7 @@ class Image
 		{
 			foreach($image as $img)
 			{
-				if (($url = self::find($app, $img, $extension)))
+				if (($url = self::find($app, $img, $extension, $add_cachebuster)))
 				{
 					return $url;
 				}
@@ -51,21 +52,30 @@ class Image
 		// instance specific images have highest precedence
 		if (isset($image_map['vfs'][$image.$extension]))
 		{
-			return $webserver_url.$image_map['vfs'][$image.$extension];
+			$url = $webserver_url.$image_map['vfs'][$image.$extension];
 		}
 		// then app specific ones
-		if(isset($image_map[$app][$image.$extension]))
+		elseif(isset($image_map[$app][$image.$extension]))
 		{
-			return $webserver_url.$image_map[$app][$image.$extension];
+			$url = $webserver_url.$image_map[$app][$image.$extension];
 		}
 		// then api
-		if(isset($image_map['api'][$image.$extension]))
+		elseif(isset($image_map['api'][$image.$extension]))
 		{
-			return $webserver_url.$image_map['api'][$image.$extension];
+			$url = $webserver_url.$image_map['api'][$image.$extension];
 		}
-		if(isset($image_map['phpgwapi'][$image.$extension]))
+		elseif(isset($image_map['phpgwapi'][$image.$extension]))
 		{
-			return $webserver_url.$image_map['phpgwapi'][$image.$extension];
+			$url = $webserver_url.$image_map['phpgwapi'][$image.$extension];
+		}
+
+		if (!empty($url))
+		{
+			if ($add_cachebuster)
+			{
+				$url .= '?'.filemtime(EGW_SERVER_ROOT.substr($url, strlen($webserver_url)));
+			}
+			return $url;
 		}
 
 		// if image not found, check if it has an extension and try withoug
@@ -73,7 +83,7 @@ class Image
 		{
 			$name = null;
 			self::get_extension($image, $name);
-			return self::find($app, $name, $extension);
+			return self::find($app, $name, $extension, $add_cachebuster);
 		}
 		//error_log(__METHOD__."('$app', '$image', '$extension') image NOT found!");
 		return null;
