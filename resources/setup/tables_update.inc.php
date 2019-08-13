@@ -405,3 +405,17 @@ function resources_upgrade17_1()
 {
 	return $GLOBALS['setup_info']['resources']['currentver'] = '19.1';
 }
+
+function resources_upgrade19_1()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_resources_extra','extra_value',array(
+		'type' => 'varchar',
+		'meta' => 'cfvalue',
+		'precision' => '16384',
+		'nullable' => False,
+		'default' => ''
+	));
+
+	return $GLOBALS['setup_info']['resources']['currentver'] = '19.1.001';
+}
+
