@@ -118,11 +118,7 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 		this.span = jQuery(document.createElement(this.options["for"] ? "label" : "span"))
 			.addClass("et2_label");
 
-		if (this.options["for"])
-		{
-			// TODO: Get the real id of the widget in the doLoadingFinished method.
-			this.span.attr("for", this.options["for"]);
-		}
+
 
 		et2_insertLinkText(this._parseText(this.options.value), this.span[0],
 			this.options.href ? this.options.extra_link_target : '_blank');
@@ -142,6 +138,36 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 					_attrs["value"] = val;
 			}
 		}
+	},
+
+	doLoadingFinished: function() {
+
+		this._super.apply(this, arguments);
+
+		// Get the real id of the 'for' widget
+		var for_widget = null;
+		if (this.options["for"] && (
+				(for_widget = this.getParent().getWidgetById(this.options.for)) ||
+				(for_widget = this.getRoot().getWidgetById(this.options.for))
+		) && for_widget && for_widget.id)
+		{
+			if(for_widget.dom_id)
+			{
+				this.span.attr("for", for_widget.dom_id);
+			}
+			else
+			{
+				// Target widget is not done yet, need to wait
+				var tab_deferred = jQuery.Deferred();
+				window.setTimeout(function() {
+					this.span.attr("for", for_widget.dom_id);
+					tab_deferred.resolve();
+				}.bind(this),0);
+
+				return tab_deferred.promise();
+			}
+		}
+		return true;
 	},
 
 	set_label: function(_value) {
