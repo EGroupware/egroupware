@@ -1,3 +1,11 @@
+egroupware-docker (19.1.20190813) hardy; urgency=low
+
+  * final 19.1 release
+  * Login: new background and logo for login page
+  * Debian/Ubuntu/SUSE: recommend now Rocket.Chat (egroupware-rocketchat) and Collabora (egroupware-collabora-key)
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 13 Aug 2019 09:05:29 +0200
+
 egroupware-docker (19.1.20190806) hardy; urgency=low
 
   * 3rd and probably last release-candidate for 19.1
