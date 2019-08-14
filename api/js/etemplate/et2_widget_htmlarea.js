@@ -141,6 +141,9 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			resize: false,
 			height: this.options.height,
 			width: this.options.width,
+			mobile: {
+				theme: 'silver'
+			},
 			min_height: 100,
 			convert_urls: false,
 			language: et2_htmlarea.LANGUAGE_CODE[egw.preference('lang', 'common')],
