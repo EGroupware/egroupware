@@ -538,7 +538,7 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 				this._actionManager = gam.addAction("actionManager", this.id);
 			}
 		}
-		this._actionManager.updateActions(actions);
+		this._actionManager.updateActions(actions, this.egw().appName);
 		if (this.options.default_execute) this._actionManager.setDefaultExecute(this.options.default_execute);
 
 		// Put a reference to the widget into the action stuff, so we can
