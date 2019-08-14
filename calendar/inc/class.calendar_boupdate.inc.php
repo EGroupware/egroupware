@@ -2941,8 +2941,6 @@ class calendar_boupdate extends calendar_bo
 
 		$status_reset = false;
 		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
-		$preferences = new Api\Preferences($uid);
-		$part_prefs = $preferences->read_repository();
 		foreach((array)$event['participants'] as $uid => $status)
 		{
 			$q = $r = null;
@@ -2955,6 +2953,8 @@ class calendar_boupdate extends calendar_bo
 			// Just user accounts
 			if (is_int($uid))
 			{
+				$preferences = new Api\Preferences($uid);
+				$part_prefs = $preferences->read_repository();
 				switch ($part_prefs['calendar']['reset_stati'])
 				{
 					case 'no':
