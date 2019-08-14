@@ -878,19 +878,19 @@ END:VALARM';
 				'id' => 'A',
 				'caption' => lang('Accept'),
 				'icon' => 'accepted',
-				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"A"'.']).sendRequest(true);'
+				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"A"'.']).sendRequest(true);this.button_delete(arguments[0], arguments[1]);'
 			),
 			array(
 				'id' => 'R',
 				'caption' => lang('Reject'),
 				'icon' => 'rejected',
-				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"R"'.']).sendRequest(true);'
+				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"R"'.']).sendRequest(true);this.button_delete(arguments[0], arguments[1]);'
 			),
 			array(
 				'id' => 'T',
 				'caption' => lang('Tentative'),
 				'icon' => 'tentative',
-				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"T"'.']).sendRequest(true);'
+				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"T"'.']).sendRequest(true);this.button_delete(arguments[0], arguments[1]);'
 			)
 		);
 	}
