@@ -203,7 +203,7 @@ class Login
 		{
 			$var['logo_url'] = 'http://'.$var['logo_url'];
 		}
-		$var['logo_title'] = $GLOBALS['egw_info']['server']['login_logo_title']?$GLOBALS['egw_info']['server']['login_logo_title']:'www.eGroupWare.org';
+		$var['logo_title'] = $GLOBALS['egw_info']['server']['login_logo_title']?$GLOBALS['egw_info']['server']['login_logo_title']:'www.egroupware.org';
 		$tmpl->set_var($var);
 
 		/* language section if activated in site Config */
