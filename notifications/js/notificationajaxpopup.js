@@ -339,7 +339,7 @@
 							.addClass('et2_button')
 							.css({'background-image':'url('+egw.image(notifymessages[id].data.actions[action].icon,notifymessages[id].data.app)+')'})
 							.text(notifymessages[id].data.actions[action].caption)
-							.click(jQuery.proxy(func,this))
+							.click(jQuery.proxy(func, this, [$message]))
 							.prependTo($actions_container);
 				}
 				$actions_container.appendTo($message);
