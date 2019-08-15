@@ -329,6 +329,9 @@ abstract class setup_cmd extends admin_cmd
 							self::$apps_to_install[] = $app;
 						}
 					}
+					// add autodeinstall apps
+					self::$apps_to_upgrade = array_unique(array_merge(self::$apps_to_upgrade, self::check_autodeinstall()));
+
 					if (self::$apps_to_install)
 					{
 						self::_echo_message($verbose);
@@ -367,6 +370,39 @@ abstract class setup_cmd extends admin_cmd
 			return $setup_info[$app]['autoinstall'];
 		});
 		//error_log(__METHOD__."() apps_to_install=".array2string(self::$apps_to_install).' returning '.array2string($ret));
+		return $ret;
+	}
+
+	/**
+	 * Check if app should be automatically deinstalled
+	 *
+	 * @return array with app-names to automatic deinstall
+	 */
+	static function check_autodeinstall()
+	{
+		global $setup_info;
+
+		$ret = array_values(array_filter(array_keys($setup_info), function($app)
+		{
+			global $setup_info;
+			if (empty($setup_info[$app]['autodeinstall']))
+			{
+				return false;
+			}
+			$autodeinstall = $setup_info[$app]['autodeinstall'];
+			if (!is_bool($autodeinstall))
+			{
+				try {
+					$autodeinstall = (bool)$GLOBALS['egw_setup']->db->query($autodeinstall, __LINE__, __FILE__)->fetchColumn();
+				}
+				catch (\Exception $e) {
+					_egw_log_exception($e);
+					$autodeinstall = false;
+				}
+			}
+			return $autodeinstall;
+		}));
+		//error_log(__METHOD__."() apps=".json_encode(array_keys($setup_info)).' returning '.json_encode($ret));
 		return $ret;
 	}
 

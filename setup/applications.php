@@ -127,36 +127,7 @@ if(@$_POST['submit'])
 
 	if(!empty($remove) && is_array($remove))
 	{
-		$historylog = new Api\Storage\History();
-		$historylog->db = $GLOBALS['egw_setup']->db;
-
-		foreach($remove as $appname => $key)
-		{
-			$app_title = $setup_info[$appname]['title'] ? $setup_info[$appname]['title'] : $setup_info[$appname]['name'];
-			$terror = array();
-			$terror[$appname] = $setup_info[$appname];
-
-			if ($setup_info[$appname]['tables'])
-			{
-				$GLOBALS['egw_setup']->process->droptables($terror,$DEBUG);
-				echo '<br />' . $app_title . ' ' . lang('tables dropped') . '.';
-			}
-
-			$GLOBALS['egw_setup']->deregister_app($setup_info[$appname]['name']);
-			echo '<br />' . $app_title . ' ' . lang('deregistered') . '.';
-
-			$register_hooks = true;
-
-			$historylog->appname = $appname;
-			if ($historylog->delete(null))
-			{
-				echo '<br />' . $app_title . ' ' . lang('Historylog removed') . '.';
-			}
-
-			// delete all application categories and ACL
-			$GLOBALS['egw_setup']->db->delete($GLOBALS['egw_setup']->cats_table,array('cat_appname' => $appname),__LINE__,__FILE__);
-			$GLOBALS['egw_setup']->db->delete($GLOBALS['egw_setup']->acl_table,array('acl_appname' => $appname),__LINE__,__FILE__);
-		}
+		$register_hooks = $GLOBALS['egw_setup']->process->remove(array_keys($remove), $setup_info, $DEBUG) > 0;
 	}
 
 	if(!empty($install) && is_array($install))

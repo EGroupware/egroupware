@@ -105,8 +105,8 @@ class setup_process
 		$i = 1;
 		$passed = array();
 		$passing = array();
-		$pass_string = implode (':', $pass);
-		$passing_string = implode (':', $passing);
+		$pass_string = implode (':', array_keys($pass));
+		$passing_string = implode (':', array_keys($passing));
 		while($pass_string != $passing_string)
 		{
 			$passing = array();
@@ -193,9 +193,16 @@ class setup_process
 				_debug_array($passed);
 				exit;
 			}
-			$pass_string = implode (':', $pass);
-			$passing_string = implode (':', $passing);
+			$pass_string = implode (':', array_keys($pass));
+			$passing_string = implode (':', array_keys($passing));
 		}
+
+		// remove all apps which should be automatic deinstalled
+		if (($deinstall = setup_cmd::check_autodeinstall()))
+		{
+			$this->remove($deinstall, $setup_info, $DEBUG);
+		}
+
 		try {
 			// flush instance cache: also registers hooks and flushes image cache
 			Api\Cache::flush(Api\Cache::INSTANCE);
@@ -771,7 +778,7 @@ class setup_process
 		$sColumns = null;
 		$GLOBALS['egw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['egw_setup']->oProc, $tablename, $sColumns);
 
-		foreach($GLOBALS['egw_setup']->oProc->m_oTranslator->sCol as $key => $tbldata)
+		foreach($GLOBALS['egw_setup']->oProc->m_oTranslator->sCol as $tbldata)
 		{
 			$arr .= $tbldata;
 		}
@@ -781,5 +788,46 @@ class setup_process
 		$uc = $GLOBALS['egw_setup']->oProc->m_oTranslator->uc;
 
 		return array($arr,$pk,$fk,$ix,$uc);
+	}
+
+	/**
+	 * Deinstall given apps
+	 *
+	 * @param array $apps name of apps to deinstall
+	 * @param array $setup_info
+	 * @param bool $DEBUG =false
+	 * @return int
+	 */
+	function remove(array $apps, array $setup_info, $DEBUG=false)
+	{
+		$historylog = new Api\Storage\History();
+		$historylog->db = $GLOBALS['egw_setup']->db;
+
+		foreach($apps as $appname)
+		{
+			$app_title = $setup_info[$appname]['title'] ? $setup_info[$appname]['title'] : $setup_info[$appname]['name'];
+			$terror = array();
+			$terror[$appname] = $setup_info[$appname];
+
+			if ($setup_info[$appname]['tables'])
+			{
+				$this->droptables($terror,$DEBUG);
+				echo '<br />' . $app_title . ' ' . lang('tables dropped') . '.';
+			}
+
+			$GLOBALS['egw_setup']->deregister_app($setup_info[$appname]['name']);
+			echo '<br />' . $app_title . ' ' . lang('deregistered') . '.';
+
+			$historylog->appname = $appname;
+			if ($historylog->delete(null))
+			{
+				echo '<br />' . $app_title . ' ' . lang('Historylog removed') . '.';
+			}
+
+			// delete all application categories and ACL
+			$GLOBALS['egw_setup']->db->delete($GLOBALS['egw_setup']->cats_table,array('cat_appname' => $appname),__LINE__,__FILE__);
+			$GLOBALS['egw_setup']->db->delete($GLOBALS['egw_setup']->acl_table,array('acl_appname' => $appname),__LINE__,__FILE__);
+		}
+		return count($apps);
 	}
 }
