@@ -112,7 +112,7 @@
 					}
 				}
 				args.unshift(matches[1]);
-				et2_call.apply(this, args);
+				if (matches[1] !== 'void') et2_call.apply(this, args);
 				return false;	// IE11 seems to require this, ev.stopPropagation() does NOT stop link from being executed
 			});
 		});
