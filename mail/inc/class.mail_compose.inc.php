@@ -1574,7 +1574,7 @@ class mail_compose
 			try
 			{
 				$merged_mail_id = '';
-				$folder = '';
+				$folder = $this->mail_bo->getDraftFolder();
 				if(($error = $document_merge->check_document($_REQUEST['document'],'')))
 				{
 					$content['msg'] = $error;
