@@ -131,6 +131,11 @@ switch($action)
 			list($args['domain']) = explode(',', array_shift($arguments));	// domain must be first argument, to ensure right domain get's selected in header-include
 			foreach($arguments as $arg)
 			{
+				// remove quotes from arguments eg. 'db_host=db', in case it does not happen by shell (eg. debuging in Netbeans)
+				if (in_array($arg[0], ["'", '"']) && substr($arg, -1) === $arg[0])
+				{
+					$arg = substr($arg, 1, -1);
+				}
 				list($name,$value) = explode('=',$arg,2);
 				if(property_exists('admin_cmd',$name))		// dont allow to overwrite admin_cmd properties
 				{
