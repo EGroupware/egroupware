@@ -43,7 +43,7 @@ services:
     # MariaDB/MySQL host to use: for internal service use "db", for host database (socket bind-mounted into container) use "localhost"
     - EGW_DB_HOST=db
     # grant host is needed for NOT using localhost / unix domain socket for MySQL/MariaDB
-    - EGW_DB_GRANT_HOST="172.17.%"
+    - EGW_DB_GRANT_HOST=172.%
     # for internal db service you should to specify a root password here AND in db service
     # a database "egroupware" with a random password is created for you on installation (password is stored in header.inc.php in data directory)
     #- EGW_DB_ROOT=root
