@@ -5,6 +5,7 @@
 curl https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/docker-compose.yml > docker-compose.yml
 curl https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/nginx.conf > nginx.conf
 # edit docker-compose.yml or nginx.conf, by default it will run on http://localhost:8080/
+mkdir data # this is where egroupware data is stored, it's by default a subdir of the directory of docker-compose.yml
 docker-compose up -d
 ```
 ## More information
