@@ -634,9 +634,11 @@ class Session
 			if ($this->session_flags != 'A')		// dont log anonymous sessions
 			{
 				$this->sessionid_access_log = $this->log_access($this->sessionid,$login,$user_ip,$this->account_id);
+				// We do NOT log anonymous sessions to not block website and also to cope with
+				// high rate anon endpoints might be called creating a bottleneck in the egw_accounts table.
+				Cache::setSession('phpgwapi', 'account_previous_login', $GLOBALS['egw']->auth->previous_login);
+				$GLOBALS['egw']->accounts->update_lastlogin($this->account_id,$user_ip);
 			}
-			Cache::setSession('phpgwapi', 'account_previous_login', $GLOBALS['egw']->auth->previous_login);
-			$GLOBALS['egw']->accounts->update_lastlogin($this->account_id,$user_ip);
 			$GLOBALS['egw']->db->transaction_commit();
 
 			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session)
@@ -973,16 +975,24 @@ class Session
 	const FALSE_ID_CACHE_PREFIX = 'false_id-';
 
 	/**
-    * Write or update (for logout) the access_log
-	*
-	* @param string|int $sessionid nummeric or PHP session id or error-message for unsuccessful logins
-	* @param string $login ='' account_lid (evtl. with domain) or '' for setting the logout-time
-	* @param string $user_ip ='' ip to log
-	* @param int $account_id =0 numerical account_id
-	* @return int $sessionid primary key of egw_access_log for login, null otherwise
-	*/
+     * Write or update (for logout) the access_log
+	 *
+	 * We do NOT log anonymous sessions to not block website and also to cope with
+	 * high rate anon endpoints might be called creating a bottleneck in the egw_access_log table.
+	 *
+	 * @param string|int $sessionid nummeric or PHP session id or error-message for unsuccessful logins
+	 * @param string $login ='' account_lid (evtl. with domain) or '' for setting the logout-time
+	 * @param string $user_ip ='' ip to log
+	 * @param int $account_id =0 numerical account_id
+	 * @return int $sessionid primary key of egw_access_log for login, null otherwise
+	 */
 	private function log_access($sessionid,$login='',$user_ip='',$account_id=0)
 	{
+		// do not log anything for anonymous sessions
+		if ($this->session_flags === 'A')
+		{
+			return;
+		}
 		$now = time();
 
 		// if sessionid contains non-ascii chars (only happens for error-messages)
