@@ -3162,7 +3162,10 @@ div.eml div.emlDelete:hover, div.eml div.emlEdit:hover  {
 	margin-right:0;
 }
 #api\.vfsSelectUI_search.et2_searchbox .flex{
-	width: 122px;
+	width: 142px;
+	padding-right: 0px;
+}
+#api\.vfsSelectUI_search.et2_searchbox .flex input{
 	padding-right: 0px;
 }
 #api\.vfsSelectUI_path {width:100%;}
