@@ -3611,7 +3611,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 							.css('left', '');
 						today.position({my: 'top', at: 'top', of: buttons});
 						today.css({
-							'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth(true)/2),
+							'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth()/2),
 						});
 					}
 					if(auto_update)
@@ -3755,6 +3755,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				}
 			}
 		});
+		window.setTimeout(calendar_resize,50);
 	},
 
 	/**
