@@ -446,7 +446,7 @@ jQuery.extend(et2_htmlarea, {
 	 * arranged toolbars as simple mode
 	 * @constant
 	 */
-	TOOLBAR_SIMPLE: "undo redo|fontselect fontsizeselect | bold italic removeformat forecolor backcolor | "+
+	TOOLBAR_SIMPLE: "undo redo|formatselect fontselect fontsizeselect | bold italic removeformat forecolor backcolor | "+
 					"alignleft aligncenter alignright alignjustify | numlist "+
 					"bullist outdent indent| link image pastetext",
 	/**

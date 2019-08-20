@@ -964,3 +964,11 @@ img.smime_cert_unknownemail {
 }
 div#mail-index_nm.splitter-pane {min-height: 100px;}
 #mail-index_mailSplitter .splitter-bar-horizontal {background: white;}
+
+#mail-compose .tox.tox-tinymce .tox-tbtn--bespoke:first-child > .tox-tbtn__select-label {
+	width: 18px;
+}
+
+#mail-compose .tox.tox-tinymce .tox-tbtn--bespoke .tox-tbtn__select-label {
+	width: 3em;
+}

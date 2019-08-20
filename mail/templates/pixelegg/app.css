@@ -940,6 +940,12 @@ div#mail-index_nm.splitter-pane {
 #mail-index_mailSplitter .splitter-bar-horizontal {
   background: white;
 }
+#mail-compose .tox.tox-tinymce .tox-tbtn--bespoke:first-child > .tox-tbtn__select-label {
+  width: 18px;
+}
+#mail-compose .tox.tox-tinymce .tox-tbtn--bespoke .tox-tbtn__select-label {
+  width: 3em;
+}
 #popupMainDiv {
   padding: 5px;
 }
