@@ -490,11 +490,11 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		{
 			//Create the tab
 			_app.tab = this.tabsUi.addTab(_app.icon, this.tabClickCallback, this.tabCloseClickCallback,
-				_app, _pos);
+				_app, _pos, _status);
 			_app.tab.setTitle(_app.displayName);
 
 			//Set the tab closeable if there's more than one tab
-			this.tabsUi.setCloseable(this.tabsUi.tabs.length > 1);
+			this.tabsUi.setCloseable(this.tabsUi._isNotTheLastTab());
 			// Do not show tab header if the app is with status 5, means run in background
 			if (_status == 5) _app.tab.hideTabHeader(true);
 
@@ -559,7 +559,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			this.tag.parentFw.notifyTabChange();
 		}
 
-		tabsUi.setCloseable(tabsUi.tabs.length > 1);
+		tabsUi.setCloseable(tabsUi._isNotTheLastTab());
 
 		//As a new tab might remove a row from the tab header, we have to resize all tab content browsers
 		 this.tag.parentFw.resizeHandler();

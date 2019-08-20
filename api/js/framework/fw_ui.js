@@ -292,9 +292,10 @@ var fw_ui_sidemenu = (function(){ "use strict"; return Class.extend(
  * @param {function}(_sender) _closeCallback specifies the function which should be called when the tab close button is clicked. The _sender parameter passed is a reference to this egw_fw_ui_tab element.
  * @param {object} _tag can be used to attach any user data to the object. Inside egw_fw _tag is used to attach an egw_fw_class_application to each sidemenu entry.
  * @param {int} _pos is the position where the tab will be inserted
+ * @param {string} application status (e.g. status="5")
  */
 function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
-	_closeCallback,	_tag, _pos)
+	_closeCallback,	_tag, _pos, _status)
 {
 	this.parent = _parent;
 	this.contHeaderDiv = _contHeaderDiv;
@@ -305,6 +306,7 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 	this.callback = _callback;
 	this.closeCallback = _closeCallback;
 	this.position = _pos;
+	this.status = _status;
 
 	//Create the header div and set its "click" function and "hover" event
 	this.headerDiv = document.createElement("span");
@@ -574,15 +576,16 @@ egw_fw_ui_tabs.prototype.cleanHistory = function()
  * @param {function} _closeCallback (_sender) function which should be called whenever the close button of the tab is clicked. The _sender parameter passed is a reference to this egw_fw_ui_tab element.
  * @param {object} _tag can be used to attach any user data to the object. Inside egw_fw _tag is used to attach an egw_fw_class_application to each sidemenu entry.
  * @param {int} _pos specifies the position in the tab list. If _pos is -1, the tab will be added to the end of the tab list
+ * @param {string} application status
  */
-egw_fw_ui_tabs.prototype.addTab = function(_icon, _callback, _closeCallback, _tag, _pos)
+egw_fw_ui_tabs.prototype.addTab = function(_icon, _callback, _closeCallback, _tag, _pos, _status)
 {
 	var pos = -1;
 	if (typeof _pos != 'undefined')
 		pos = _pos;
 
 	var tab = new egw_fw_ui_tab(this, this.contHeaderDiv, this.contDiv, _icon, _callback,
-		_closeCallback, _tag, pos);
+		_closeCallback, _tag, pos, _status);
 
 	//Insert the tab into the tab list.
 	var inserted = false;
@@ -719,6 +722,21 @@ egw_fw_ui_tabs.prototype.clean = function()
 	return true;
 };
 
+/**
+ * Check if we have not the last tab visible in the tab stack
+ *
+ * @return {boolean} returns true if the open tab is not the last visible tab otherwise false
+ */
+egw_fw_ui_tabs.prototype._isNotTheLastTab = function()
+{
+	var n = 0;
+	for (var i in this.tabs)
+	{
+		//exclude open tabs with status 5, e.g. status app
+		if (this.tabs[i]['status'] != '5') n++;
+	}
+	return n > 1 ? true : false;
+};
 
 /**
  * Class: egw_fw_ui_category
