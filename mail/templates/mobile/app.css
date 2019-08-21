@@ -953,7 +953,7 @@ div#mail-index_nm.splitter-pane {
   background: white;
 }
 #mail-compose .tox.tox-tinymce .tox-tbtn--bespoke:first-child > .tox-tbtn__select-label {
-  width: 18px;
+  width: 6px;
 }
 #mail-compose .tox.tox-tinymce .tox-tbtn--bespoke .tox-tbtn__select-label {
   width: 3em;
