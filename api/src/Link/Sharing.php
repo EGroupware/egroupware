@@ -104,7 +104,8 @@ class Sharing extends \EGroupware\Api\Sharing
 				$document['allowOnMultiple'] = true;
 				$document['onExecute'] = "javaScript:app.$appname.share_merge";
 			}
-			$documents['enabled'] = !!($GLOBALS['egw_info']['user']['apps']['stylite']);
+			$documents['enabled'] = !!($GLOBALS['egw_info']['user']['apps']['stylite']) ?
+					"javaScript:app.$appname.is_share_enabled" : false;
 			$actions['share']['children']['shareDocuments'] = $documents;
 		}
 
