@@ -1906,6 +1906,13 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		{
 			return this.egw.message(this.egw.lang('Missing share path.  Unable to create share.'), 'error');
 		}
+		switch(_action.id)
+		{
+			case 'shareFilemanager':
+				// Sharing a link to just files in filemanager
+				var id = path.split('::');
+				path = '/apps/'+ id[0] + '/' + id[1];
+		}
 		if(typeof _writable === 'undefined' && _action.parent && _action.parent.getActionById('shareWritable'))
 		{
 			_writable = _action.parent.getActionById('shareWritable').checked || false;
