@@ -32,6 +32,7 @@ add new alarm	calendar	sk	Pridať novú pripomienku
 add new participants or resource	calendar	sk	Pridať nových účastníkov alebo zdroj
 add timesheet entry	calendar	sk	Pridať položku Harmonogramu
 added	calendar	sk	Pridané
+added by synchronization	calendar	sk	Pridané počas synchronizácie
 after	calendar	sk	Po
 after %1	calendar	sk	Až po %1
 after current date	calendar	sk	Po súčasnom dátume
@@ -50,14 +51,19 @@ all exceptions are converted into single events.	calendar	sk	Všetky výnimky bo
 all future	calendar	sk	Všetky budúce
 all incl. rejected	calendar	sk	Všetky vrátane odmietnutých
 all participants	calendar	sk	Všetci účastníci
+allow booking requests from any user when creating events?	calendar	sk	Povoliť žiadosti o rezerváciu od ktoréhokoľvek používateľa pri vytváraní udalostí?
 allow users to prevent change notifications ('do not notify')	calendar	sk	Povoliť používateľom, aby zabránili upozorneniam o zmenách 'Neupozorňovať'
 allows to edit the event again	calendar	sk	Povolí znovu upraviť udalosť
 always	calendar	sk	Vždy
+always use full edit dialog	calendar	sk	Vždy použiť plný dialóg pre úpravy
+always use the full edit dialog, not this little dialog	calendar	sk	Vždy použiť plný dialóg pre úpravy, nie tento malý dialóg
 apply the action on the whole query, not only the shown events	calendar	sk	Vykonať túto akciu pre celý dopyt, NIELEN pre zobrazené udalosti
 apply the changes	calendar	sk	Vykonať uvedené zmeny
 appointment settings	calendar	sk	Nastavenia udalostí
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	sk	Iná možnosť - môžete %1stiahnuť MYSQL dump%2 a naimportovať ho ručne do tabuľky egw_cal_timezones.
+at start of the event	calendar	sk	na začiatku udalosti
 automatically purge old events after	admin	sk	Automaticky vymazať udalosti staršie než
+available for the first entry inside each day of week or daily table inside the selected range:	calendar	sk	Dostupné pre prvú položku v rámci každého dňa v týždni alebo dennej tabuľky v rámci vybraného rozsahu:
 back half a month	calendar	sk	Späť o pol mesiaca
 back one month	calendar	sk	Späť o mesiac
 back one year	calendar	sk	Späť o rok
@@ -91,14 +97,17 @@ canceled	calendar	sk	Zrušené
 category %1 removed because of missing rights	calendar	sk	Kategória %1 odstránená kvôli chýbajúcim oprávneniam
 category acl	common	sk	ACL pre kategórie
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	sk	ACL pre kategórie obmedzujú len pridávanie kategórie k udalosti alebo zmene stavu účastníka. NEovplyvňujú viditeľnosť udalosti!
+category automatically added to new events	calendar	sk	Kategória ktorá sa automaticky pridáva k novým udalostiam
 chair	calendar	sk	Predseda
 change history	calendar	sk	Zmeniť históriu
 change your status	calendar	sk	Zmeniť váš status
 charset of file	calendar	sk	Znaková sada súboru
 check all	calendar	sk	Označiť všetko
 choose a category	calendar	sk	Vyberte kategóriu
+choose owner of imported data	calendar	sk	Vyberte vlastníka importovaných údajov
 close the window	calendar	sk	Zavrieť okno
 compose a mail to all participants after the event is saved	calendar	sk	Po uložení udalosti napísať E-mail všetkým účastníkom
+configuration settings	calendar	sk	Konfiguračné nastavenia
 conflict	calendar	sk	Konflikt
 copy of:	calendar	sk	Kópia (čoho):
 copy this event	calendar	sk	Kopírovať udalosť
@@ -125,6 +134,7 @@ custom_2	common	sk	zaneprázdnenosť
 daily	calendar	sk	Denne
 daily tables	calendar	sk	Denné tabuľky
 data exchange settings	calendar	sk	Nastavenia pre výmenu údajov
+date for the day of the week	calendar	sk	Dátum pre deň v týždni
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	sk	Dátum pre deň-v-týždni, dostupný pre prvú položku v rámci každého dňa v týždni alebo dennej tabuľky v rámci vybraného rozsahu.
 day	calendar	sk	deň
 day of week tables	calendar	sk	Tabuľky deň-v-týždni
@@ -160,6 +170,7 @@ display status of events	calendar	sk	Zobraziť stav udalostí
 displayed view	calendar	sk	zobrazený pohľad
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	sk	Zobraziť tento pohľad kalendára na domovskej stránke - tej, ktorá sa zobrazí keď otvoríte EGroupware alebo kliknete na ikonu Domov?
 distribution list	calendar	sk	Distribučný zoznam
+do not import conflicting events	calendar	sk	Neimportovať udalosti ktoré sú v konflikte
 do not include events of group members	calendar	sk	Nezahrnúť udalosti členov skupiny
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	sk	Naozaj si želáte zmeniť začiatok tejto série? Ak to urobíte, pôvodná séria bude %1 ukončená a bude vytvorená nová séria pre budúcnosť, v ktorej budú zohľadnené vaše zmeny.
 do you want a weekview with or without weekend?	calendar	sk	Želáte si týždenný pohľad s víkendom alebo bez?
@@ -182,6 +193,7 @@ edit this event	calendar	sk	Upraviť túto udalosť
 edit this series of recurring events	calendar	sk	Upraviť túto sériu pravidelných udalostí
 empty = no alarm	calendar	sk	prázdne = bez pripomienky
 empty for all	calendar	sk	prázdne znamená všetko
+empty target calendar before importing	calendar	sk	Pred importom vyprázdniť cieľový kalendár
 end	calendar	sk	Koniec
 end date/time	calendar	sk	Dátum a čas ukončenia
 enddate	calendar	sk	Dátum ukončenia
@@ -202,6 +214,7 @@ error: you can't shift a series from the past!	calendar	sk	Chyba: Nemôžete pos
 event	common	sk	Udalosť
 event deleted	calendar	sk	Udalosť bola odstránená
 event details follow	calendar	sk	Podrobnosti o udalosti:
+event has been deleted by organizer!	calendar	sk	Udalosť bola odstránená organizátorom!
 event saved	calendar	sk	Udalosť bola uložená
 event will occupy the whole day	calendar	sk	Udalosť zaberie celý deň
 events	common	sk	Udalosti
@@ -244,6 +257,7 @@ freetime	calendar	sk	Voľný čas
 freetime search	calendar	sk	Vyhľadanie voľného času
 fri	calendar	sk	Pi
 full description	calendar	sk	Opis
+full edit dialog	calendar	sk	Plný dialóg pre úpravy
 fullname of person to notify	calendar	sk	Celé meno upozorňovanej osoby
 general fields:	calendar	sk	Všeobecné polia:
 general settings	calendar	sk	Všeobecné nastavenia
@@ -270,6 +284,8 @@ holidays only	calendar	sk	Iba sviatky
 hours	calendar	sk	hodín
 how far to search (from startdate)	calendar	sk	ako ďaleko hľadať (od dátumu začiatku)
 how many appointments should non-admins be able to export	admin	sk	Koľko udalostí smú exportovať používatelia bez oprávnení správcu.
+how many days to be removed in the future (default 365)	calendar	sk	Koľko dní do budúcnosti sa má odstrániť (predvolené: 365)
+how many days to be removed in the past (default 100)	calendar	sk	Koľko dní do minulosti sa má odstrániť (predvolené: 100)
 how many days to sync in the future (default %1)	calendar	sk	Koľko dní do budúcnosti synchronizovať (predvolené %1)
 how many days to sync in the past (default %1)	calendar	sk	Koľko dní do minulosti synchronizovať (predvolené %1)
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	sk	Koľko riadkov popisu má byť priamo viditeľných. Ďalšie riadky sú dostupné cez skrolovacie tlačítko.
@@ -350,9 +366,11 @@ monthly (by day)	calendar	sk	Mesačne (podľa dňa)
 monthview	calendar	sk	Mesačný pohľad
 multiple week view	calendar	sk	Pohľad viacerých týždňov
 name of current user, all other contact fields are valid too	calendar	sk	Meno súčasného používateľa, platné sú aj všetky ostatné polia kontaktu
+name of the day of the week (ex: monday)	calendar	sk	Názov dňa v týždni (napr. Pondelok)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	sk	Názov týždňa, napr: Pondelok, dostupný pre prvú položku v každom dni týždňa alebo dennú tabuľku v rámci určeného intervalu.
 needs action	calendar	sk	Vyžaduje akciu
 new	calendar	sk	Nové
+new event category	calendar	sk	Nová kategória udalostí
 new event participants	calendar	sk	Noví účastníci udalosti
 new search with the above parameters	calendar	sk	nové vyhľadávanie s uvedenými parametrami
 no automatic purging	admin	sk	Bez automatického odstraňovania
@@ -365,6 +383,7 @@ no preview for ical	calendar	sk	Bez náhľadu pre iCal
 no recurrence	calendar	sk	Bez opakovaní
 no response	calendar	sk	Bez odozvy
 no rights to export more than %1 entries!	calendar	sk	Nemáte právo exportovať viac než %1 položiek!
+no, users will need to contact users with direct booking permission	calendar	sk	Nie, používatelia budú musieť kontaktovať takých používateľov, ktorí majú priame rezervačné právo
 non blocking	calendar	sk	Neblokujúce
 not	calendar	sk	nie
 not rejected	calendar	sk	Neodmietnuté
@@ -400,8 +419,10 @@ only the initial date of that recurring event is checked!	calendar	sk	Kontroluje
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	sk	Použije sa len pre prvý pohľad na Kalendár, potom sa už používa naposledy použitý pohľad.
 open todo's:	calendar	sk	Otvorené Úlohy:
 optional	calendar	sk	Voliteľné
+organizer	calendar	sk	Organizátor
 overlap holiday	calendar	sk	prekryť sviatky
 owner too	calendar	sk	Vrátane vlastníka
+participant names by type	calendar	sk	Mená účastníkov podľa typu
 participant table	calendar	sk	Tabuľka účastníkov
 participants	calendar	sk	Účastníci
 participants automatically added to new events	calendar	sk	Účastníci automaticky pridaní k novým udalostiam
@@ -422,6 +443,7 @@ private and global public	calendar	sk	Súkromné i verejne prístupné
 private and group public	calendar	sk	Prístupné súkromne i pre skupinu
 private only	calendar	sk	Iba súkromne
 quantity	calendar	sk	Množstvo
+quick add	calendar	sk	Rýchlo pridať
 range fields	calendar	sk	Polia intervalu
 re-edit event	calendar	sk	Znovu uprav
 receive email updates	calendar	sk	Dostávať informácie elektronickou poštou?
@@ -432,7 +454,7 @@ recovered	calendar	sk	Obnovené.
 recurrence	calendar	sk	Pravidelné opakovanie
 recurrence enddate	calendar	sk	Dáum ukončenia opakovania
 recurrences and conflict check	calendar	sk	Opakovania a zisťovanie konfliktov
-recurring event	calendar	sk	Opakujúca se udalosť
+recurring event	calendar	sk	Opakujúca sa udalosť
 reject	calendar	sk	Odmietnuť
 rejected	calendar	sk	Odmietnuté
 repeat days	calendar	sk	Opakované dni
@@ -525,6 +547,7 @@ status for all future scheduled days changed	calendar	sk	Stav všetkých budúci
 status for this particular day changed	calendar	sk	Stav tohto konkrétneho dňa sa zmenil
 status of participants set to unknown because of missing category rights	calendar	sk	Stav účastníkov nastavený na neznámy kvôli chýbajúcim oprávneniam kategórie
 submit to repository	calendar	sk	Uložiť do databázy
+summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	sk	Súhrn stavu účastníkov: 3 účastníci: 1 prijal, 2 neznáme
 sun	calendar	sk	Ne
 tag to mark positions for address labels	calendar	sk	Značka pre vyznačenie pozícií pre štítky s adresami
 tentative	calendar	sk	Predbežne prijaté
@@ -581,9 +604,12 @@ two weeks	calendar	sk	dva týždne
 type of planner	calendar	sk	Typ plánovača
 unable to save	calendar	sk	Nedá sa uložiť
 uninvited	calendar	sk	Zrušená pozvánka
+update calendar view immediately when navigation calendar in sidebox is changed	calendar	sk	Aktualizovať pohľad kalendára zakaždým keď sa zmení stav navigačného kalendára v bočnom paneli
 update timezones	common	sk	Aktualizovať časové pásma
 updated	calendar	sk	Aktualizované
 use end date	calendar	sk	použiť dátum ukončenia
+use given criteria:	calendar	sk	Použiť zadané kritériá:
+use quick add or full edit dialog when creating a new event	calendar	sk	Na vytvorenie novej udalosti použiť funkciu rýchle pridanie alebo plný dialóg pre úpravy
 use range-views to optimise calendar queries?	calendar	sk	Použiť interval zobrazenia na optimizáciu kalendára?
 use side menu to filter participants	calendar	sk	Použiť bočnú ponuku na filtrovanie účastníkov
 use the selected time and close the popup	calendar	sk	Použiť zvolený čas a zavrieť okno

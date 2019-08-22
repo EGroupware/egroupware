@@ -436,6 +436,7 @@ no	setup	sk	Nie
 no %1 support found. disabling	setup	sk	Nenašla sa podpora pre %1. Vypínam
 no accounts existing	setup	sk	Žiadne účty neexistujú
 no algorithms available	setup	sk	Nie sú dostupné žiadne algoritmy
+no dependencies are installed: you need to run "%1" and either "%2" or "%3"!	setup	sk	Nie sú nainštalované žiadne závislosti: treba spustiť "%1" A buď "%2" ALEBO "%3"!
 no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	sk	Neexistujú žiadne EGroupware domény / databázové inštancie! Použite --edit-header --domain pre pridanie nových (--usage zobrazí viacej možností).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	sk	Nebolo zadané heslo správcu hlavičiek! Použite --edit-header <password>[,<user>] (--usage zobrazí viacero možností).
 no modes available	setup	sk	Nie sú dostupné žiadne režimy!

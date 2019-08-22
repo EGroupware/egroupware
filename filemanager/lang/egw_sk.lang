@@ -77,11 +77,14 @@ current directory	filemanager	sk	Súčasný priečinok
 custom fields	filemanager	sk	Používateľské polia
 cut	filemanager	sk	Vystrihnúť
 cut to clipboard	filemanager	sk	Vystrihnúť do schránky
+default action on double-click	filemanager	sk	Predvolená akcia po dvojitom kliknutí
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	sk	Predvolené správanie je NIE. Odkaz sa nezobrazí, ale stále je možné dostať sa do tohto umiestnenia, alebo nastaviť niektorú oblasť ako štartovací priečinok alebo priečinkový odkaz.
 default document to insert entries	filemanager	sk	Predvolený dokument pre vloženie položiek
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	sk	Definuje, čo sa udeje po dvojitom kliknutí na súbor dokumentu. Obrázky sa vždy otvoria v prehliadači a e-maily pomocou e-mailovej aplikácie. Všetky ostatné MIME typy otvára webový prehliadač podľa jeho vlastných nastavení.
 delete all older versions and deleted files older then %s days	filemanager	sk	Odstrániť všetky staršie verzie a odstránené súbory staršie než %s dní
 delete these files or directories?	filemanager	sk	Odstrániť tieto súbory alebo priečinky?
 delete these shares?	filemanager	sk	Odstrániť tieto zdieľané priečinky?
+delete this extended acl?	filemanager	sk	Odstrániť tento rozšírený ACL?
 delete this file or directory	filemanager	sk	Odstrániť tento súbor alebo priečinok
 deleted %1	filemanager	sk	Odstránené %1
 directories sorted in	filemanager	sk	Priečinky zoradené v
@@ -100,6 +103,7 @@ do you want more information about epl subscription?	common	sk	Želáte si viac 
 do you want to overwrite existing file %1 in directory %2?	filemanager	sk	Chcete prepísať existujúci súbor %1 v priečinku %2?
 do you want to overwrite the existing file %1?	filemanager	sk	Chcete prepísať existujúci súbor "%1"?
 download	filemanager	sk	Stiahnuť
+download documents	filemanager	sk	Stiahnuť dokumenty
 edit comments	filemanager	sk	Upraviť poznámky
 edit settings	filemanager	sk	Upraviť nastavenia
 enable	filemanager	sk	Zapnúť
@@ -108,6 +112,7 @@ enter setup user and password	filemanager	sk	Zadajte používateľa a heslo inš
 enter setup user and password to get root rights	filemanager	sk	Ak chcete získať administrátorské oprávnenia, zadajte používateľa a heslo inštalácie
 enter the complete vfs path to specify a fast access link to a folder	filemanager	sk	Zadajte úplnú cestu VFS pre odkaz pre rýchly prístup do priečinku
 enter the complete vfs path to specify your desired start folder.	filemanager	sk	Zadajte úplnú cestu VFS pre váš štartovací priečinok.
+enter your file name	filemanager	sk	Zadajte názov súboru
 error adding the acl!	filemanager	sk	Chyba počas pridávania ACL!
 error creating symlink to target %1!	filemanager	sk	Chyba pri vytváraní symbolického odkazu na cieľ %1!
 error deleting the acl entry!	filemanager	sk	Chyba počas odstraňovania záznamu ACL!
@@ -198,6 +203,8 @@ noone	filemanager	sk	Nikto
 older versions or deleted files	filemanager	sk	Staré verzie alebo odstránené súbory
 only owner can rename or delete the content	filemanager	sk	Iba vlastník môže premenovať alebo odstrániť obsah
 open	filemanager	sk	Otvoriť
+open documents with collabora, if permissions are given	filemanager	sk	Otvoriť dokument pomocou Collabora, ak máte povolenie
+open odt documents with collabeditor	filemanager	sk	Otvoriť ODT dokument pomocou editora Collabora
 operation	filemanager	sk	Operácia
 paste link	filemanager	sk	Prilepiť odkaz
 path %1 not found or not a directory!	filemanager	sk	Cesta %1 sa nenašla alebo nie je priečinkom!
@@ -240,6 +247,7 @@ select file to upload in current directory	filemanager	sk	Vyberte súbor, ktorý
 select file(s) from vfs	common	sk	Vyberte súbor(y) z VFS
 setting for document merge saved.	filemanager	sk	Nastavenia e zlučovanie dokumentov boli uložené.
 share files	filemanager	sk	Zdieľať súbory
+share link copied into clipboard	filemanager	sk	Zdieľať odkaz skopírovaný v schránke
 shared files	filemanager	sk	Zdieľané súbory
 shared with	filemanager	sk	Zdieľané s
 show	filemanager	sk	Ukázať

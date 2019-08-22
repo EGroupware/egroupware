@@ -3,6 +3,7 @@
 %1 resource(s) %2	resources	sk	%1 zdrojov %2
 %1 resource(s) %2, %3 failed	resources	sk	%1 zdrojov %2, %3 zlyhalo
 %1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	sk	%1 zdrojov %2, %3 zlyhalo kvôli nedostatočným oprávneniam!!!
+%1 resource(s) view calendar	resources	sk	%1 zdrojov Zobraziť kalendár
 accessories	resources	sk	Príslušenstvo
 accessories of	resources	sk	Príslušenstvo k
 accessories:	resources	sk	Príslušenstvo:
@@ -14,6 +15,7 @@ add resource	resources	sk	Pridať zdroj
 add resources	resources	sk	Pridať zdroje
 administrator	resources	sk	Správca
 all categories	resources	sk	Všetky kategórie
+allow booking requests from any user when creating events?	resources	sk	Povoliť žiadosti o rezerváciu od ktoréhokoľvek používateľa pri vytváraní udalostí?
 allow ignore conflicts	admin	sk	Povoliť ignorovanie konfliktov
 book	resources	sk	Rezervovať
 book resource	resources	sk	Rezervovať zdroj
@@ -21,13 +23,14 @@ book selected resources	resources	sk	Rezervovať vybrané zdroje
 book this resource	resources	sk	Rezervovať tento zdroj
 bookable	resources	sk	Rezervovateľný
 booked	resources	sk	Rezervovaný
+booking requests	resources	sk	Žiadosti o rezerváciu
 buy this article	resources	sk	Kúpiť tento článok
 buy this resource	resources	sk	Kúpiť tento zdroj
 buyable	resources	sk	Na predaj
-categories admin	resources	sk	Správca kategórií
+category admin	resources	sk	Správca kategórie
 category:	resources	sk	Kategória:
 check all	resources	sk	Označ všetko
-choose categories admin	resources	sk	Vyberte správcu kategórií
+choose category admin	resources	sk	Vyberte správcu kategórie
 clear selection	resources	sk	Zrušiť výber
 configure access permissions	admin	sk	Nastaviť prístupové práva
 confirmation email text	resources	sk	Text potvrdzovacej správy
@@ -89,6 +92,7 @@ new resource	resources	sk	Nový zdroj
 no description available	resources	sk	Žiadny popis sa nenašiel
 no matches	resources	sk	Žiadne zhody
 no resources selected	resources	sk	Nie sú vybrané žiadne zdroje
+no, users will need to contact users with direct booking permission	resources	sk	Nie, používatelia budú musieť kontaktovať takých používateľov, ktorí majú priame rezervačné právo
 notify your administrator to correct this situation	resources	sk	Upozornite svojho správcu, nech napraví vzniknutú situáciu
 picture	resources	sk	Obrázok
 picture source	resources	sk	Zdroj obrázka
@@ -113,6 +117,7 @@ resource	resources	sk	Zdroj
 resource %1 deleted!	resources	sk	Zdroj %1 bol odstránený!
 resource %1 faild to be deleted!	resources	sk	Zdroj %1 sa nepodarilo odstrániť!
 resource %1 saved!	resources	sk	Zdroj %1 bol uložený!
+resource / accessories	resources	sk	Zdroj / Príslušenstvo
 resource id	resources	sk	ID zdroja
 resources	common	sk	Zdroje
 resources and accessories	resources	sk	Zdroje a príslušenstvo
@@ -145,8 +150,7 @@ use general resources icon	resources	sk	Použiť všeobecnú ikonu zdrojov
 use own picture	resources	sk	Použiť vlastný obrázok
 use the category's icon	resources	sk	Použiť ikonu kategórie
 useable	resources	sk	Použiteľné
-useable:	resources	sk	Použiteľné:
-view accessories for this resource	resources	sk	Zobraziť príslušenstvo k tomuto zdroju
+view accessories	resources	sk	Zobraziť príslušenstvo
 view calendar	resources	sk	Zobraziť kalendár
 view this entry	resources	sk	Zobraziť položku
 web-page of resource	resources	sk	Webstránka zdroja

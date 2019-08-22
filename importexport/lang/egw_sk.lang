@@ -22,6 +22,7 @@ allowed users	importexport	sk	Oprávnení používatelia
 automatically created by importexport	importexport	sk	Automaticky vytvorené aplikáciou importexport
 basic csv import	importexport	sk	Základný CSV import
 change allowed users	importexport	sk	Zmeniť oprávnených používateľov
+change owner when updating	importexport	sk	Zmeniť vlastníka pri aktualizácii
 changed	importexport	sk	Zmenil
 changed allowed_users	importexport	sk	Zmena oprávnených používateľov
 changed owner	importexport	sk	Zmena vlastníka
@@ -37,6 +38,7 @@ column mismatch: %1 should be %2, not %3	importexport	sk	Zmätok v stĺpcoch: %1
 condition	importexport	sk	Podmienka
 copied	importexport	sk	Skopírované.
 create a <a href="%1">new definition</a> for this file	importexport	sk	Vytvoriť  <a href="%1">novú definíciu</a> pre tento súbor
+create a matching export definition based on this import definition	importexport	sk	Vytvoriť zodpovedajúcu exportnú definíciu na základe tejto importnej definície
 create export	importexport	sk	Vytvoriť export
 created	importexport	sk	vytvorené
 csv field	importexport	sk	pole CSV
@@ -148,6 +150,7 @@ user template folder	importexport	sk	Použiť priečinok šablón
 users allowed to create their own definitions	importexport	sk	Používatelia si smú vytvoriť svoje vlastné definície
 users allowed to share their own definitions	importexport	sk	Používatelia smú zdieľať svoje vlastné definície
 warnings	importexport	sk	Varovania
+what should be done with unknown values?	importexport	sk	Čo urobiť s neznámymi hodnotami?
 which useres are allowed for this definition	importexport	sk	Ktorí používatelia sú oprávnení použiť túto definíciu
 which users are allowed to use this definition	importexport	sk	Ktorí používatelia sú oprávnení použiť túto definíciu
 you may want to <a href="%1" target="_new">backup</a> first.	importexport	sk	Možno by ste mali najprv <a href="%1" target="_new">zálohovať</a>.
