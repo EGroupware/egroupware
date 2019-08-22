@@ -51,6 +51,7 @@ all	infolog	sk	Všetko
 all links and attachments	infolog	sk	Všetky odkazy a prílohy
 all other %1 fields are valid	infolog	sk	Všetky ostatné %1 polia sú platné
 all projects	infolog	sk	Všetky projekty
+allow to save entries with due date in the past	infolog	sk	Umožniť vytváranie záznamov ktorých termín splnenia je v minulosti
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sk	umožňuje nastaviť stav záznamu, napr. nastaviť Úlohu ktorá sa má vykonať po ukončení (hodnoty závisia na type záznamu)
 alternatives	infolog	sk	Alternatívy
 always show them	infolog	sk	Vždy ich ukázať
@@ -64,6 +65,7 @@ attach a file	infolog	sk	Priložiť súbor
 attach file	infolog	sk	Priložiť súbor
 attachments	infolog	sk	Prílohy
 attention: no contact with address %1 found.	infolog	sk	Upozornenie: Kontakt s adresou %1 sa nenašiel.
+automatically check 'do not notify' for these types	infolog	sk	Automaticky zaškrtnúť "Neposielať upozornenia" pre tieto typy
 back to main list	infolog	sk	Naspäť na hlavný zoznam
 billed	infolog	sk	Vyúčtované
 both	infolog	sk	Obidvoje
@@ -79,6 +81,7 @@ change completed	infolog	sk	Zmeny vykonané.
 change completion	infolog	sk	Zmeniť dokončenosť
 change history	infolog	sk	Zmeniť históriu
 change owner when updating	infolog	sk	Zmeniť vlastníka pri aktualizovaní
+change responsible	infolog	sk	Zmeniť zodpovedných
 change the status of an entry, eg. close it	infolog	sk	Zmeniť stav záznamu, napr. uzavrieť ho
 changed category to %1	infolog	sk	Kategória zmenená na %1
 changed completion to %1%	infolog	sk	Dokončenosť zmenená na %1%
@@ -166,6 +169,7 @@ done	infolog	sk	Hotovo
 download	infolog	sk	Stiahnuť
 download url for links	infolog	sk	Stiahnuť URL pre odkazy
 due %1	infolog	sk	Termín %1
+due date	infolog	sk	Termín splnenia
 duration	infolog	sk	Trvanie
 e-mail:	infolog	sk	E-mail:
 each value is a line like <id>[=<label>]	infolog	sk	každá hodnota je riadok v tvare <id>[=<label>]
@@ -243,10 +247,11 @@ infolog - new subproject	infolog	sk	Záznamník - Nový podprojekt
 infolog - subprojects from	infolog	sk	Záznamník - Podprojekty od
 infolog csv export	infolog	sk	CSV export Záznamníka
 infolog csv import	infolog	sk	CSV import Záznamníka
+infolog encryption requires epl subscription	infolog	sk	Šifrovanie Záznamníka vyžaduje licenciu EPL
 infolog entry deleted	infolog	sk	Záznam bol odstránený
 infolog entry saved	infolog	sk	Záznam bol uložený
 infolog fields:	infolog	sk	Polia Záznamníka:
-InfoLog filter for the home screen	infolog	sk	Filter Záznamníka pre hlavnú stránku
+infolog filter for the home screen	infolog	sk	Filter Záznamníka pre hlavnú stránku
 infolog ical export	infolog	sk	Export Záznamníka - iCal
 infolog ical import	infolog	sk	Import Záznamníka - iCal
 infolog id	infolog	sk	ID Záznamníka
@@ -357,6 +362,7 @@ prefix for sub-entries (default: re:)	infolog	sk	Predpona pre pod-položky (pred
 price	infolog	sk	Cena
 pricelist	infolog	sk	Cenník
 primary link	infolog	sk	Primárny odkaz
+print this infolog	infolog	sk	Vytlačiť tento záznamník
 printing...	infolog	sk	Tlačí sa...
 priority	infolog	sk	Priorita
 private	infolog	sk	Súkromné
@@ -426,7 +432,7 @@ sets the status of this entry and its subs to done	infolog	sk	Nastaví stav záz
 sets the status of this entry to done	infolog	sk	Nastaví stav položky na hotovo
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sk	Má Záznamník zobrazovať Podúlohy, Podhovory alebo Podpoznámky v normálnom zobrazení alebo nie? Vždy ešte môžete zobraziť Podradené záznamy cez ich rodičovský záznam.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	sk	Má Záznamník zobrazovať v zozname odkazy na iné aplikácie a/alebo súbory v prílohe (v normálnom pohľade, keď otvoríte Záznamník)?
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	sk	Zobrazovať Záznamník na hlavnej stránke? Ak áno, s akým filtrom? Táto voľba funguje len v prípade, ak ste už nevybrali konkrétnu aplikáciu pre hlavnú stránku (vo vašich predvoľbách).
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	sk	Zobrazovať Záznamník na hlavnej stránke? Ak áno, s akým filtrom? Táto voľba funguje len v prípade, ak ste už nevybrali konkrétnu aplikáciu pre hlavnú stránku (vo vašich predvoľbách).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	sk	Má Záznamník používať plné mená (meno, priezvisko) alebo iba používateľské mená?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	sk	Má sa v zozname Záznamníka zobrazovať jedinečné číselné ID, ktoré môže byť použité napr. ako ID problému?
 should the infolog list show the column "last modified".	infolog	sk	Zobrazovať v zozname Záznamníka aj stĺpec "Naposledy zmenené"?
@@ -524,7 +530,7 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	sk	Nemôžete odstrániť východiskový typ!!
 you have entered an invalid ending date	infolog	sk	Zadali ste chybný termín ukončenia
 you have entered an invalid starting date	infolog	sk	Zadali ste chybný dátum začatia
-you have to enter a name, to create a new typ!!!	infolog	sk	Ak chcete vytvoriť nový typ, musíte zadať jeho názov!!
+you have to enter a name, to create a new type!	infolog	sk	Ak chcete vytvoriť typ, musíte zadať nejaké meno!
 you must enter a subject or a description	infolog	sk	Musíte zadať predmet alebo opis
 you need to select an entry for linking.	infolog	sk	Najprv vyberte nejakú položku pre odkaz.
 you need to select some entries first	infolog	sk	Najprv vyberte nejaké položky.

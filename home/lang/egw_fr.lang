@@ -1,25 +1,26 @@
 a quick note	home	fr	Une note rapide
-add	home	fr	ajouter
-all	home	fr	Tout
+add as default for	home	fr	Ajouter comme défaut pour
+apply the changes	home	fr	Appliquer les changements
 birthday reminders	home	fr	Rappel des anniversaires
 color	home	fr	Couleur
 configure	home	fr	Configurer
 displays home	home	fr	Afficher l'écran d'accueil
-edit	home	fr	modifier
 egroupware	home	fr	EGroupware
 entry	home	fr	Entrée
 favorite	home	fr	Favoris
 forced	home	fr	Forcé
 home	home	fr	Accueil
 in %1 days (%2) is %3's birthday.	home	fr	L'anniversaire de %3 est dans %1 jours (%2)
+leave without saveing the entry	home	fr	quitter sans sauvegarder
 list of entries	home	fr	Liste des entrées
 location	home	fr	Emplacement
-note	home	fr	Note
-open	home	fr	Ouvrir
+openweathermap.org	home	fr	openweathermap.org
 remove	home	fr	Supprimer
 remove as default for %1	home	fr	Supprimer %1 comme valeur par défaut
 remove default %1	home	fr	Supprimer %1 par défaut
 removed default	home	fr	Supprimer le défaut
+row	home	fr	ligne
+saves this entry	home	fr	Sauvegarder cette entrée
 set as default	home	fr	Définir par défaut
 set default	home	fr	Définir par défaut
 show a list of entries	home	fr	Montrer une liste d'entrées
@@ -27,7 +28,6 @@ show all the entries using a favorite	home	fr	Afficher toutes les entrées via u
 show one entry	home	fr	Montrer une entrée
 single entry	home	fr	Entrée seule
 there is a new version of egroupware available	home	fr	Une nouvelle version de EGroupware est disponible
-title	home	fr	Titre
 today is %1's birthday!	home	fr	Aujourd'hui, c'est l'anniversaire de %1 !
 tomorrow is %1's birthday.	home	fr	Demain, c'est l'anniversaire de %1 !
 weather	home	fr	Météo
