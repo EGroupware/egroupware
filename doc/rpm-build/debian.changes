@@ -1,3 +1,19 @@
+egroupware-docker (19.1.20190822) hardy; urgency=low
+
+  * Mail: fix broken save to filemanager action
+  * Mail: add format selector into compose htmltext editor's toolbar
+  * Api: no longer loggin last-logintime of anonymous user
+  * Notifications: remove calendar notification from the list after applying any of actions
+  * Mobile theme: fix broken html editor in mobile view (e.g. mail compose)
+  * OpenID/OAuth: fixed missing redirect to login causing Rocket.Chat login to fail
+  * OpenID/OAuth: allow to enable and view request log from within EGroupware
+  * PostgreSQL: fix SQL error displaying project-list
+  * Status: fix status app loses its user list if no access right to rocketchat app
+  * Tracker: fix sometimes not readable comments (resized too small)
+  * Rocketchat: fix stalled registration due to (wrong) MAIL_URL in docker-compose file
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 22 Aug 2019 14:11:14 +0200
+
 egroupware-docker (19.1.20190813) hardy; urgency=low
 
   * final 19.1 release
