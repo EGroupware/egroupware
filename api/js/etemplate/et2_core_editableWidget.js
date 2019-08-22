@@ -21,7 +21,7 @@
  *
  * @augments et2_inputWidget
  */
-var et2_editableWidget = (function(){ "use strict"; return et2_inputWidget.extend(
+var et2_editableWidget = (function(){ "use strict"; return et2_inputWidget.extend(et2_ISubmitListener,
 {
 	attributes: {
 		readonly: {
@@ -141,6 +141,7 @@ var et2_editableWidget = (function(){ "use strict"; return et2_inputWidget.exten
 		// No change, do nothing
 		if(value == oldValue) return;
 
+
 		// Submit
 		if(this.options.save_callback)
 		{
@@ -155,9 +156,39 @@ var et2_editableWidget = (function(){ "use strict"; return et2_inputWidget.exten
 		}
 		else
 		{
+			this.set_value(value);
 			return this.getInstanceManager().submit();
 		}
-	}
+	},
 
+	/**
+	 * Called whenever the template gets submitted.
+	 * If we have a save_callback, we call that before the submit (no check on
+	 * the result)
+	 *
+	 * @param _values contains the values which will be sent to the server.
+	 * 	Listeners may change these values before they get submitted.
+	 */
+	submit: function(_values) {
+		if(this.options.readonly)
+		{
+			// Not currently editing, just continue on
+			return true;
+		}
+		// Change back to readonly
+		this.set_readonly(true);
+
+		var params = [this.get_value()];
+		if(this.options.save_callback_params)
+		{
+			params = params.concat(this.options.save_callback_params.split(','));
+		}
+		if(this.options.save_callback)
+		{
+			egw.json(this.options.save_callback, params, function() {
+				}, this, true, this).sendRequest();
+		}
+		return true;
+	}
 });}).call(this);
 
