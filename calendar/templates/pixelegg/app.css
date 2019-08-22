@@ -1527,9 +1527,6 @@ img.calendar_print_appicon {
 #calendar_sidebox_content .egw_fw_ui_category_content {
   padding-left: 0px !important;
 }
-#calendar_sidebox_content .egw_fw_ui_category_content img.egw_fw_ui_sidemenu_listitem_icon {
-  display: none;
-}
 img.sideboxstar {
   width: 12px;
   height: 12px;
