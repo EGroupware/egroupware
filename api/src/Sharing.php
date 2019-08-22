@@ -426,9 +426,21 @@ class Sharing
 						'allowOnMultiple' => true,
 						'enabled' => "javaScript:app.$appname.is_share_enabled",
 						'checkbox' => true
-					)
+					),
+					'shareFilemanager' => array(
+						'caption' => lang('Filemanager directory'),
+						'group' => 10,
+						'icon' => 'link',
+						'order' => 20,
+						'enabled' => "javaScript:app.$appname.is_share_enabled",
+						'onExecute' => "javaScript:app.$appname.share_link"
+					),
 				),
 		));
+		if(!$GLOBALS['egw_info']['user']['apps']['filemanager'])
+		{
+			unset($actions['share']['children']['shareFilemanager']);
+		}
 		if(!$GLOBALS['egw_info']['user']['apps']['stylite'])
 		{
 			array_unshift($actions['share']['children'], array(
