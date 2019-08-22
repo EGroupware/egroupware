@@ -648,6 +648,11 @@ class Sharing
 			'share_link'	=> $class::share2link($share),
 			'template'		=> Etemplate\Widget\Template::rel2url('/filemanager/templates/default/share_dialog.xet')
 		);
+		switch($action)
+		{
+			case 'shareFilemanager':
+				$arr['title'] = lang('Filemanager directory');
+		}
 		$response = Json\Response::get();
 		$response->data($arr);
 	}
