@@ -1284,6 +1284,29 @@ app.classes.addressbook = AppJS.extend(
 			var data = egw.dataGetUIDdata(row.id);
 			return data && data.data.account_id;
 		}).length <= 1;
-	}
+	},
 
+	/**
+	 * Check if the share action is enabled for this entry
+	 * This only works for single contacts
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _entries
+	 * @param {egwActionObject} _target
+	 * @returns {boolean} if action is enabled
+	 */
+	is_share_enabled: function is_share_enabled(_action, _entries, _target)
+	{
+		var enabled = true;
+		var id = '';
+		for( var i = 0; i < _entries.length; i++)
+		{
+			id = _entries[i].id.split('::');
+			if(isNaN(id[1]))
+			{
+				return false;
+			}
+		}
+		return enabled;
+	}
 });
