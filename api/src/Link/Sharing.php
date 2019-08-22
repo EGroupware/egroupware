@@ -82,7 +82,7 @@ class Sharing extends \EGroupware\Api\Sharing
 		if ($GLOBALS['egw_info']['user']['apps']['mail'] && class_exists($appname.'_merge'))
 		{
 			$documents = call_user_func(array($appname.'_merge', 'document_action'),
-				$GLOBALS['egw_info']['user']['preferences']['addressbook']['document_dir'],
+				$GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'],
 				1, 'Insert in document', 'shareDocument_'
 			);
 			$documents['order'] = 20;
