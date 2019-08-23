@@ -368,10 +368,7 @@ abstract class Merge
 			if($exclude && in_array($link_info['id'], $exclude)) continue;
 
 			$title = Api\Link::title($link_info['app'], $link_info['id']);
-			if(class_exists('EGroupware\Stylite\Vfs\Links\StreamWrapper') && $link_info['app'] != Api\Link::VFS_APPNAME)
-			{
-				$title = Stylite\Vfs\Links\StreamWrapper::entry2name($link_info['app'], $link_info['id'], $title);
-			}
+			
 			if($style == 'href' || $style == 'link')
 			{
 				$link = Api\Link::view($link_info['app'], $link_info['id'], $link_info);
