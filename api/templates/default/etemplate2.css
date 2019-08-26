@@ -569,10 +569,12 @@ which caused click on free space infront of a tag stops nm row selection*/
 Nextmatch print dialog
 */
 #nm_print_dialog-xet .slideSwitch_container .on {
-	background-image: url('images/portrait.svg')
+	background-image: url('images/portrait.svg');
+	background-position: 5px 0px;
 }
 #nm_print_dialog-xet .slideSwitch_container .off {
-	background-image: url('images/landscape.svg')
+	background-image: url('images/landscape.svg');
+	background-position: 5px -2px;
 }
 /*
 These are set via javascript before printing to help tame nextmatch's layout
@@ -2457,6 +2459,10 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container {
     border-radius: 2px;
     padding: 3px 0px 3px 0px;
     font-size: 12px;
+}
+span.et2_checkbox_slideSwitch > span.slideSwitch_container > span {
+	background-size: contain;
+	background-repeat: no-repeat;
 }
 span.et2_checkbox_slideSwitch > span.slideSwitch_container > span:first-child {
 	width: 50%;
