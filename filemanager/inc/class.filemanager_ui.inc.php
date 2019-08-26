@@ -264,6 +264,8 @@ class filemanager_ui
 			)
 		);
 
+		// This one makes no sense in filemanager
+		unset($actions['share']['children']['shareFilemanager']);
 		if (isset($GLOBALS['egw_info']['user']['apps']['mail'])) {
 			$actions['share']['children']['share_mail'] = array(
 				'caption' => lang('Mail'),
