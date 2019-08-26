@@ -19,7 +19,7 @@
 				</hbox>
 				<hbox id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
 					<description value="Subject"/>
-					<description align="left" id="previewSubject" readonly="true" hover_action="app.mail.modifyMessageSubjectDialog"/>
+					<description align="left" id="previewSubject" readonly="true" hover_action="app.mail.modifyMessageSubjectDialog" hover_action_title="Modify subject of this message"/>
 				</hbox>
 				<hbox id="mailPreviewHeadersDate" class="mailPreviewHeaders">
 					<description value="Date"/>
