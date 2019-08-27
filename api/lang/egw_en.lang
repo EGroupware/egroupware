@@ -157,6 +157,7 @@ as default	common	en	As default
 attach	common	en	Attach
 attach file	common	en	Attach file
 attachment	common	en	Attachment
+attention: action will be applied to all rows, not only visible ones!	api	en	Attention: action will be applied to all rows, not only visible ones!
 august	common	en	August
 australia	common	en	AUSTRALIA
 austria	common	en	AUSTRIA
