@@ -632,7 +632,7 @@ var et2_dataview_selectionManager = (function(){ "use strict"; return Class.exte
 			template: egw.webserverUrl+'/api/templates/default/long_task.xet',
 			message: egw.lang('Loading'),
 			title: egw.lang('please wait...'),
-			buttons: [{"button_id": et2_dialog.CANCEL_BUTTON,"text": 'cancel',id: 'dialog[cancel]',image: 'cancel'}],
+			buttons: [{"button_id": et2_dialog.CANCEL_BUTTON,"text": egw.lang('cancel'),id: 'dialog[cancel]',image: 'cancel'}],
 			width: 300
 		}, parent);
 		jQuery(dialog.template.DOMContainer).on('load', function() {

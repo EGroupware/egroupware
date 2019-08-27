@@ -303,7 +303,7 @@ function fetchAll(ids, nextmatch, callback)
 			// Abort the long task if they canceled the data load
 			function() {count = total; cancel=true;},
 			egw.lang('Loading'), egw.lang('please wait...'),{},[
-				{"button_id": et2_dialog.CANCEL_BUTTON,"text": 'cancel',id: 'dialog[cancel]',image: 'cancel'}
+				{"button_id": et2_dialog.CANCEL_BUTTON,"text": egw.lang('cancel'),id: 'dialog[cancel]',image: 'cancel'}
 			]
 		);
 
