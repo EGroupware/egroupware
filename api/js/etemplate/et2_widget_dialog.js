@@ -514,6 +514,15 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 		}
 
 		this.div.dialog(options);
+
+		// Make sure dialog is wide enough for the title
+		// Arbitrary numbers that seem to work nicely.
+		var title_width = 20 + 10 * this.options.title.length;
+		if(this.div.width() < title_width)
+		{
+			// Auto-sizing chopped the title
+			this.div.dialog('option', 'width', title_width);
+		}
 	}
 });}).call(this);
 et2_register_widget(et2_dialog, ["dialog"]);
