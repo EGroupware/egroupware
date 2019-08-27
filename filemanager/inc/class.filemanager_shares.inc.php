@@ -136,7 +136,7 @@ class filemanager_shares extends filemanager_ui
 				'group' => 1,
 				'icon' => 'edit',
 				'allowOnMultiple' => false,
-				'popup' => '400x200',
+				'popup' => '500x200',
 				'url' => 'menuaction=stylite.stylite_filemanager.edit_share&share_id=$id',
 				'disableIfNoEPL' => true
 			),
