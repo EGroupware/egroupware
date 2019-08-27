@@ -128,7 +128,9 @@ px: display pixels	preferences	en	px: display pixels
 re-enter your password	preferences	en	Re-enter your password
 read prefs for the specified application.	preferences	en	Read preferences for the specified application.
 reset qrcode	preferences	en	Reset QRCode
+revoke	preferences	en	Revoke
 revoke acccess tokens	preferences	en	Revoke Acccess Tokens
+revoke this token	preferences	en	Revoke this token
 rich text editor theme	preferences	en	Rich text editor theme
 scan qrcode with a time-based one-time password (totp) app:	preferences	en	Scan QRCode with a Time-based One-time Password (TOTP) App:
 secret deleted, two factor authentication disabled.	preferences	en	Secret deleted, two factor authentication disabled.
