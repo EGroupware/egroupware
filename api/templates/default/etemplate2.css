@@ -3211,3 +3211,24 @@ tr.disableIfNoEPL {
 .et2_editable {
 	cursor: url(images/cursor_editable.svg), pointer;
 }
+.dragover {
+	position: relative;
+}
+.dragover::after {
+    content: ' ';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #ffffff;
+    opacity: 0.9;
+    font-size: 20pt;
+    font-weight: bold;
+    text-align: center;
+    background-image: url(images/drop.svg);
+    background-position: center;
+    background-size: 20%;
+    background-repeat: no-repeat;
+    border: 2px dashed silver;
+}

@@ -149,6 +149,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			language: et2_htmlarea.LANGUAGE_CODE[egw.preference('lang', 'common')],
 			language_url: egw.webserverUrl+'/api/js/tinymce/langs/'+et2_htmlarea.LANGUAGE_CODE[egw.preference('lang', 'common')]+'.js',
 			paste_data_images: true,
+			paste_filter_drop: false,
 			browser_spellcheck: true,
 			contextmenu: false,
 			images_upload_url: imageUpload,
@@ -309,6 +310,11 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 		// current focus.
 		var focusedEl = jQuery(':focus');
 		this.editor = _editor;
+
+		this.editor.on('drop', function(e){
+			e.preventDefault();
+		});
+
 		if (!this.disabled) jQuery(this.editor.editorContainer).css('display', 'flex');
 		this.tinymce_container = this.editor.editorContainer;
 		// go back to reserved focused element

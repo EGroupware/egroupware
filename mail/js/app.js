@@ -262,9 +262,15 @@ app.classes.mail = AppJS.extend(
 				});
 				/*Trigger compose_resizeHandler after the TinyMCE is fully loaded*/
 				jQuery('#mail-compose').on ('load',function() {
+
 					if (textAreaWidget && textAreaWidget.tinymce)
 					{
-						textAreaWidget.tinymce.then(()=>{that.compose_resizeHandler()});
+						textAreaWidget.tinymce.then(()=>{
+							that.compose_resizeHandler();
+							jQuery(textAreaWidget.editor.iframeElement.contentWindow.document).on('dragenter', function(){
+								jQuery('#mail-compose').addClass('dragover');
+							});
+						});
 					}
 					else
 					{
