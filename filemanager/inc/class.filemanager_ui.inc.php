@@ -270,7 +270,7 @@ class filemanager_ui
 				'icon' => 'mail',
 				'group' => 1,
 				'order' => 0,
-				'allowOnMultiple' => false,
+				'allowOnMultiple' => true,
 			);
 			foreach(Vfs\Sharing::$modes as $mode => $data)
 			{
