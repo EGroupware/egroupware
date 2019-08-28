@@ -53,7 +53,7 @@ To handle the state of upload chunks, a number of extra parameters are sent alon
 
 * `resumableChunkNumber`: The index of the chunk in the current upload. First chunk is `1` (no base-0 counting here).
 * `resumableTotalChunks`: The total number of chunks.
-* `resumableChunkSize`: The general chunk size. Using this value and `resumableTotalSize` you can calculate the total number of chunks. Please note that the size of the data received in the HTTP might be lower than `resumableChunkSize` of this for the last chunk for a file.
+* `resumableChunkSize`: The general chunk size. Using this value and `resumableTotalSize` you can calculate the total number of chunks. Please note that the size of the data received in the HTTP might be higher than `resumableChunkSize` for the last chunk for a file.
 * `resumableTotalSize`: The total file size.
 * `resumableIdentifier`: A unique identifier for the file contained in the request.
 * `resumableFilename`: The original file name (since a bug in Firefox results in the file name not being transmitted in chunk multipart posts).
@@ -63,8 +63,8 @@ You should allow for the same chunk to be uploaded more than once; this isn't st
 
 For every request, you can confirm reception in HTTP status codes (can be changed through the `permanentErrors` option):
 
-* `200`: The chunk was accepted and correct. No need to re-upload.
-* `404`, `415`. `500`, `501`: The file for which the chunk was uploaded is not supported, cancel the entire upload.
+* `200`, `201`: The chunk was accepted and correct. No need to re-upload.
+* `400`, `404`, `409`, `415`, `500`, `501`: The file for which the chunk was uploaded is not supported, cancel the entire upload.
 * _Anything else_: Something went wrong, but try reuploading the file.
 
 ## Handling GET (or `test()` requests)
@@ -127,10 +127,13 @@ adding the file. (Default: `null`)
 * `fileType` The file types allowed to upload. An empty array allow any file type. (Default: `[]`)
 * `fileTypeErrorCallback(file, errorCount)` A function which displays an error a selected file has type not allowed. (Default: displays an alert for every bad file.)
 * `maxChunkRetries` The maximum number of retries for a chunk before the upload is failed. Valid values are any positive integer and `undefined` for no limit. (Default: `undefined`)
+* `permanentErrors` List of HTTP status codes that define if the chunk upload was a permanent error and should not retry the upload. (Default: `[400, 404, 409, 415, 500, 501]`)
 * `chunkRetryInterval` The number of milliseconds to wait before retrying a chunk on a non-permanent error.  Valid values are any positive integer and `undefined` for immediate retry.  (Default: `undefined`)
 * `withCredentials` Standard CORS requests do not send or set any cookies by default. In order to include cookies as part of the request, you need to set the `withCredentials` property to true. (Default: `false`)
 * `xhrTimeout` The timeout in milliseconds for each request (Default: `0`)
 * `setChunkTypeFromFile` Set chunk content-type from original file.type. (Default: `false`, if `false` default Content-Type: `application/octet-stream`)
+* `dragOverClass` The class name to add on drag over an assigned drop zone. (Default: `dragover`)
+
 #### Properties
 
 * `.support` A boolean value indicator whether or not Resumable.js is supported by the current browser.
@@ -156,7 +159,7 @@ adding the file. (Default: `null`)
 #### Events
 
 * `.fileSuccess(file, message)` A specific file was completed. `message` is the response body from the server.
-* `.fileProgress(file)` Uploading progressed for a specific file.
+* `.fileProgress(file, message)` Uploading progressed for a specific file.
 * `.fileAdded(file, event)` A new file was added. Optionally, you can use the browser `event` object from when the file was added.
 * `.filesAdded(arrayAdded, arraySkipped)` New files were added (and maybe some have been skipped).
 * `.fileRetry(file)` Something went wrong during upload of a specific file, uploading is being retried.
@@ -193,6 +196,7 @@ adding the file. (Default: `null`)
 * `.bootstrap()` Rebuild the state of a `ResumableFile` object, including reassigning chunks and XMLHttpRequest instances.
 * `.isUploading()` Returns a boolean indicating whether file chunks is uploading.
 * `.isComplete()` Returns a boolean indicating whether the file has completed uploading and received a server response.
+* `.markChunksCompleted()` starts upload from the next chunk number while marking all previous chunks complete. Must be called before upload() method.
 
 ## Alternatives
 
