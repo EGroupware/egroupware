@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware preferences
+ * EGroupware preferences: Security and passwords
  *
  * @package preferences
  * @link http://www.egroupware.org
@@ -13,10 +13,13 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Etemplate;
 use PragmaRX\Google2FAQRCode\Google2FA;
 use EGroupware\Api\Mail\Credentials;
-use EGroupware\OpenID\Repositories\AccessTokenRepository;
-use EGroupware\OpenID\Repositories\ScopeRepository;
-use EGroupware\OpenID\Repositories\RefreshTokenRepository;
 
+/**
+ * Security and passwords
+ *
+ * Other apps can add tabs to this popup by implementing the "preferences_security" hook
+ * like eg. the OpenID App does to allow users to revoke tokens.
+ */
 class preferences_password
 {
 	var $public_functions = array(
@@ -63,128 +66,91 @@ class preferences_password
 				$secret_key = $content['2fa']['secret_key'];
 				unset($content['2fa']['secret_key']);
 
-				switch($content['tabs'])
+				// check user password for everything but password change, where it will be checked anyway
+				$auth = new Api\Auth();
+				if ($content['tabs'] !== 'change_password' &&
+					!$auth->authenticate($GLOBALS['egw_info']['user']['account_lid'], $content['password']))
 				{
-					case 'change_password':
-						if ($content['button']['save'])
-						{
-							if (($errors = self::do_change($content['password'], $content['n_passwd'], $content['n_passwd_2'])))
+					$tmpl->set_validation_error('password', lang('Password is invalid'));
+				}
+				else
+				{
+					switch($content['tabs'])
+					{
+						case 'change_password':
+							if ($content['button']['save'])
 							{
-								Framework::message(implode("\n", $errors), 'error');
+								if (($errors = self::do_change($content['password'], $content['n_passwd'], $content['n_passwd_2'])))
+								{
+									Framework::message(implode("\n", $errors), 'error');
+								}
+								else
+								{
+									Framework::refresh_opener(lang('Password changed'), 'preferences');
+									Framework::window_close();
+								}
 							}
-							else
-							{
-								Framework::refresh_opener(lang('Password changed'), 'preferences');
-								Framework::window_close();
-							}
-						}
-						break;
-
-					case 'two_factor_auth':
-						$auth = new Api\Auth();
-						if (!$auth->authenticate($GLOBALS['egw_info']['user']['account_lid'], $content['password']))
-						{
-							$tmpl->set_validation_error('password', lang('Password is invalid'), '2fa');
 							break;
-						}
-						switch(key($content['2fa']['action']))
-						{
-							case 'show':
-								$content['2fa'] = $this->generateQRCode($google2fa, false);
-								break;
-							case 'reset':
-								$content['2fa'] = $this->generateQRCode($google2fa, true);
-								Framework::message(lang('New secret generated, you need to save it to disable the old one!'));
-								break;
-							case 'disable':
-								if (Credentials::delete(0, $GLOBALS['egw_info']['user']['account_id'], Credentials::TWOFA))
-								{
-									Framework::refresh_opener(lang('Secret deleted, two factor authentication disabled.'), 'preferences');
-									Framework::window_close();
-								}
-								else
-								{
-									Framework::message(lang('Failed to delete secret!'), 'error');
-								}
-								break;
-							default:	// no action, save secret
-								if (!$google2fa->verifyKey($secret_key, $content['2fa']['code']))
-								{
-									$tmpl->set_validation_error('code', lang('Code is invalid'), '2fa');
-									break 2;
-								}
-								if (($content['2fa']['cred_id'] = Credentials::write(0,
-									$GLOBALS['egw_info']['user']['account_lid'],
-									$secret_key, Credentials::TWOFA,
-									$GLOBALS['egw_info']['user']['account_id'],
-									$content['2fa']['cred_id'])))
-								{
-									Framework::refresh_opener(lang('Two Factor Auth enabled.'), 'preferences');
-									Framework::window_close();
-								}
-								else
-								{
-									Framework::message(lang('Failed to store secret!'), 'error');
-								}
-								break;
-						}
-						unset($content['2fa']['action']);
-						break;
 
-					case 'tokens':
-						if (is_array($content) && $content['nm']['selected'])
-						{
-							try {
-								switch($content['nm']['action'])
-								{
-									case 'delete':
-										$token_repo = new AccessTokenRepository();
-										$token_repo->revokeAccessToken(['access_token_id' => $content['nm']['selected']]);
-										$refresh_token_repo = new RefreshTokenRepository();
-										$refresh_token_repo->revokeRefreshToken(['access_token_id' => $content['nm']['selected']]);
-										$msg = (count($content['nm']['selected']) > 1 ?
-											count($content['nm']['selected']).' ' : '').
-											lang('Access Token revoked.');
-										break;
-								}
+						case 'two_factor_auth':
+							switch(key($content['2fa']['action']))
+							{
+								case 'show':
+									$content['2fa'] = $this->generateQRCode($google2fa, false);
+									break;
+								case 'reset':
+									$content['2fa'] = $this->generateQRCode($google2fa, true);
+									Framework::message(lang('New secret generated, you need to save it to disable the old one!'));
+									break;
+								case 'disable':
+									if (Credentials::delete(0, $GLOBALS['egw_info']['user']['account_id'], Credentials::TWOFA))
+									{
+										Framework::refresh_opener(lang('Secret deleted, two factor authentication disabled.'), 'preferences');
+										Framework::window_close();
+									}
+									else
+									{
+										Framework::message(lang('Failed to delete secret!'), 'error');
+									}
+									break;
+								default:	// no action, save secret
+									if (!$google2fa->verifyKey($secret_key, $content['2fa']['code']))
+									{
+										$tmpl->set_validation_error('code', lang('Code is invalid'), '2fa');
+										break 2;
+									}
+									if (($content['2fa']['cred_id'] = Credentials::write(0,
+										$GLOBALS['egw_info']['user']['account_lid'],
+										$secret_key, Credentials::TWOFA,
+										$GLOBALS['egw_info']['user']['account_id'],
+										$content['2fa']['cred_id'])))
+									{
+										Framework::refresh_opener(lang('Two Factor Auth enabled.'), 'preferences');
+										Framework::window_close();
+									}
+									else
+									{
+										Framework::message(lang('Failed to store secret!'), 'error');
+									}
+									break;
 							}
-							catch(\Exception $e) {
-								$msg = lang('Error').': '.$e->getMessage();
-								break;
+							unset($content['2fa']['action']);
+							break;
+
+						default:
+							// for other tabs call their save_callback (user password is already checked!)
+							if (!empty($content['save_callbacks'][$content['tabs']]) &&
+								($msg = call_user_func_array($content['save_callbacks'][$content['tabs']], [&$content])))
+							{
+								Framework::message($msg, 'success');
 							}
-						}
-						break;
+							break;
+					}
 				}
 			}
 		}
 		catch (Exception $e) {
 			Framework::message($e->getMessage(), 'error');
-		}
-
-		// display tokens, if we have openid installed (currently no run-rights needed!)
-		if ($GLOBALS['egw_info']['apps']['openid'] && class_exists(AccessTokenRepository::class))
-		{
-			$content['nm'] = [
-				'get_rows' => 'preferences.'.__CLASS__.'.getTokens',
-				'no_cat' => true,
-				'no_filter' => true,
-				'no_filter2' => true,
-				'filter_no_lang' => true,
-				'order' => 'access_token_updated',
-				'sort' => 'DESC',
-				'row_id' => 'access_token_id',
-				'default_cols' => '!client_id',
-				'actions' => self::tokenActions(),
-			];
-			$sel_options += [
-				'client_status' => ['Disabled', 'Active'],
-				'access_token_revoked' => ['Active', 'Revoked'],
-				'access_token_scopes' => (new ScopeRepository())->selOptions(),
-			];
-		}
-		else
-		{
-			$readonlys['tabs']['tokens'] = true;
 		}
 
 		// disable 2FA tab, if admin disabled it
@@ -193,71 +159,64 @@ class preferences_password
 			$readonlys['tabs']['two_factor_auth'] = true;
 		}
 
-		$tmpl->exec('preferences.preferences_password.change', $content, $sel_options, $readonlys, [
+		$preserve = [
 			'2fa' => $content['2fa']+[
 				'secret_key' => $secret_key,
-			],
-		], 2);
-	}
+			]
+		];
 
-	/**
-	 * Query tokens for nextmatch widget
-	 *
-	 * @param array $query with keys 'start', 'search', 'order', 'sort', 'col_filter'
-	 *	For other keys like 'filter', 'cat_id' you have to reimplement this method in a derived class.
-	 * @param array &$rows returned rows/competitions
-	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
-	 * @return int number of rows found
-	 */
-	public function getTokens(array $query, array &$rows, array &$readonlys)
-	{
-		if (!class_exists(AccessTokenRepository::class)) return;
-
-		$token_repo = new AccessTokenRepository();
-		if (($ret = $token_repo->get_rows($query, $rows, $readonlys)))
+		$tmpl->setElementAttribute('tabs', 'add_tabs', true);
+		$tabs =& $tmpl->getElementAttribute('tabs', 'tabs');
+		if (($first_call = !isset($tabs)))
 		{
-			foreach($rows as $key => &$row)
+			$tabs = array();
+		}
+		// register hooks, if openid is available, but new hook not yet registered (should be removed after 19.1)
+		if (!empty($GLOBALS['egw_info']['apps']['openid']) && !Api\Hooks::implemented('preferences_security'))
+		{
+			Api\Hooks::read(true);
+		}
+		$hook_data = Api\Hooks::process(array('location' => 'preferences_security')+$content, ['openid'], true);
+		foreach($hook_data as $extra_tabs)
+		{
+			if (!$extra_tabs) continue;
+
+			foreach(isset($extra_tabs[0]) ? $extra_tabs : [$extra_tabs] as $extra_tab)
 			{
-				if (!is_int($key)) continue;
-
-				// boolean does NOT work as key for select-box
-				$row['access_token_revoked'] = (string)(int)$row['access_token_revoked'];
-				$row['client_status'] = (string)(int)$row['client_status'];
-
-				// dont send token itself to UI
-				unset($row['access_token_identifier']);
-
-				// format user-agent as "OS Version\nBrowser Version" prefering auth-code over access-token
-				// as for implicit grant auth-code contains real user-agent, access-token container the server
-				if (!empty($row['auth_code_user_agent']))
+				if (!empty($extra_tab['data']) && is_array($extra_tab['data']))
 				{
-					$row['user_agent'] = Api\Header\UserAgent::osBrowser($row['auth_code_user_agent']);
-					$row['user_ip'] = $row['auth_code_ip'];
-					$row['user_agent_tooltip'] = Api\Header\UserAgent::osBrowser($row['access_token_user_agent']);
-					$row['user_ip_tooltip'] = $row['access_token_ip'];
+					$content = array_merge($content, $extra_tab['data']);
 				}
-				else
+				if (!empty($extra_tab['preserve']) && is_array($extra_tab['preserve']))
 				{
-					$row['user_agent'] = Api\Header\UserAgent::osBrowser($row['access_token_user_agent']);
-					$row['user_ip'] = $row['access_token_ip'];
+					$preserve = array_merge($preserve, $extra_tab['preserve']);
 				}
+				if (!empty($extra_tab['sel_options']) && is_array($extra_tab['sel_options']))
+				{
+					$sel_options = array_merge($sel_options, $extra_tab['sel_options']);
+				}
+				if (!empty($extra_tab['readonlys']) && is_array($extra_tab['readonlys']))
+				{
+					$readonlys = array_merge($readonlys, $extra_tab['readonlys']);
+				}
+				if (!empty($extra_tab['save_callback']))
+				{
+					$preserve['save_callbacks'][$extra_tab['name']] = $extra_tab['save_callback'];
+				}
+				// we must NOT add tabs more then once!
+				if ($first_call && !empty($extra_tab['label']) && !empty($extra_tab['name']))
+				{
+					$tabs[] = array(
+						'label' =>	$extra_tab['label'],
+						'template' =>	$extra_tab['name'],
+						'prepend' => $extra_tab['prepend'],
+					);
+				}
+				//error_log(__METHOD__."() changed tabs=".array2string($tabs));
 			}
 		}
-		return $ret;
-	}
 
-	/**
-	 * Get actions for tokens
-	 */
-	protected function tokenActions()
-	{
-		return [
-			'delete' => array(
-				'caption' => 'Revoke',
-				'allowOnMultiple' => true,
-				'confirm' => 'Revoke this token',
-			),
-		];
+		$tmpl->exec('preferences.preferences_password.change', $content, $sel_options, $readonlys, $preserve, 2);
 	}
 
 	/**
@@ -281,7 +240,6 @@ class preferences_password
 		{
 			$secret_key = $google2fa->generateSecretKey();//16, $GLOBALS['egw_info']['user']['account_lid']);
 		}
-		$qrc = '';
 		if (isset($generate) || empty($creds))
 		{
 			$image = $google2fa->getQRCodeInline(
