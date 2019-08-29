@@ -311,7 +311,7 @@ class Html
 			4 => '~<li[^>]*>\r*\n*~si',
 			5 => '~<br[^>]*>\r*\n*~si',
 			6 => '~<br[^>]*>~si',
-			7 => '~<p[^>]*>\r*\n*~si',
+			7 => '~<\/p[^>r]*>\r*\n*~si',
 			8 => '~<div[^>]*>\r*\n*~si',
 			9 => '~<span[^>]*>\r*\n*~si',
 			10 => '~<hr[^>]*>\r*\n*~si',
@@ -345,6 +345,8 @@ class Html
 			17 => '#lower#than#$1',
 			18 => '#greater#than#$1',
 		);
+			error_log(__LINE__);
+		error_log($_html);
 		$_html = preg_replace($tags,$Replace,$_html);
 		$_html = preg_replace('~</t(d|h)>\s*<t(d|h)[^>]*>~si',' - ',$_html);
 		$_html = preg_replace('~<img[^>]+>~s','',$_html);
