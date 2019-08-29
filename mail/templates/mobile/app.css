@@ -2043,6 +2043,10 @@ div.mailComposeHeaderSection > table {
   color: #5B5B5B;
   background-color: white;
 }
+#composeToolbar-send {
+  background-color: #fafafa;
+  width: 40px;
+}
 /* width */
 table#mail-index_previewAttachmentArea::-webkit-scrollbar {
   width: 5px;
