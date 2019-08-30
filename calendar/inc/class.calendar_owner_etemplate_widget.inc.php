@@ -81,6 +81,11 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 						));
 					}
 				}
+				else
+				{
+					// Add in group memberships as strings
+					$data['resources'] = array_map(function($a) { return ''.$a;},$GLOBALS['egw']->accounts->members($account_id, true));
+				}
 				return $data;
 			},
 			array_keys($accounts), $accounts
