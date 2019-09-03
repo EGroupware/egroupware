@@ -271,6 +271,8 @@ class admin_customfields
 		Framework::includeCSS('admin','app');
 		Api\Translation::add_app('admin');
 
+		// Set app to admin to make sure actions are correctly loaded into admin
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
 
 		// Some logic to make sure extending class (if there is one) gets called
