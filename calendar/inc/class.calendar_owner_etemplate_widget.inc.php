@@ -116,15 +116,12 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				$resource = array('app'=> 'api-accounts');
 			}
-			else if ($owner < 0)
+			if ($resource && is_numeric ($owner) && (int)$owner < 0)
 			{
 				// Add in group memberships as strings
 				$info['resources'] = array_map(function($a) { return ''.$a;},$GLOBALS['egw']->accounts->members($owner, true));
 			}
-			else
-			{
-				continue;
-			}
+
 			$option = array('value' => $owner, 'label' => $label, 'app' => lang($resource['app'])) + $info;
 			$sel_option_index = $this->get_index($sel_options, 'value', $owner);
 			if($sel_option_index === false)
