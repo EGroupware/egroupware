@@ -268,6 +268,12 @@ class Login
 		// load jquery for login screen too
 		Api\Framework::includeJS('jquery', 'jquery');
 
+		// call hook to allow apps to modify login page, eg. for multifactor auth
+		Api\Hooks::process([
+			'location' => 'login_page',
+			'tmpl' => $tmpl,
+		], [], true);
+
 		$this->framework->render($tmpl->fp('loginout','login_form'),false,false);
 	}
 
