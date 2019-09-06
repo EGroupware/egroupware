@@ -795,7 +795,7 @@ class Session
 			'remember_me_token' => $token,
 		], [], true);
 
-		if (!count($factors) && (isset($errors['2fa_code']) ||
+		if (!count($factors) && (count($errors) ||
 			$GLOBALS['egw_info']['server']['2fa_required'] === 'strict'))
 		{
 			if (!empty($code) && isset($errors['2fa_code']))
