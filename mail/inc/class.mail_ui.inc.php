@@ -2248,6 +2248,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			)
 		));
 		$readonlys = $preserv = $content;
+		$readonlys['mail_displaydate'] = true;
 		if ($rememberServerID != $this->mail_bo->profileID)
 		{
 			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from->'.$rememberServerID);
