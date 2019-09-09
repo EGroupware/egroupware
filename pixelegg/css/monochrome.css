@@ -239,7 +239,7 @@
     background-color: #FFDD73;
   }
   span.et2_file_span {
-    background-image: url(../images/attach.png);
+    background-image: url(../images/attach.svg);
   }
   span.et2_file_span img[url*="svg"] {
     background-color: #b4b4b4 !important;
