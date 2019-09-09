@@ -32,7 +32,7 @@ function try_lang($key,$vars=null)
 		$vars = func_get_args();
 		array_shift($vars);	// remove $key
 	}
-	return class_exists('EGroupware\Api\Translations',false) ? Api\Translation::translate($key,$vars) : str_replace($varnames,$vars,$key);
+	return class_exists('EGroupware\Api\Translation',false) ? Api\Translation::translate($key,$vars) : str_replace($varnames,$vars,$key);
 }
 
 /**
