@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<?xml-stylesheet type="text/css" href="../../../../pixelegg/less/svg.css" ?>
-<svg version="1.1" id="calendar_week" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
 <g>
+	<path fill="#62686A" d="M14.193,1.212V3.97L6.492,19.888H1.867l7.7-15.027V4.803H1.004V1.212H14.193z"/>
+</g>
+<g>
 	<g>
-		<path fill="#696969" d="M26.001,1.001H22v3h3.001c1.657,0,3,1.343,3,3V25
-			c0,1.657-1.343,3-3,3H7c-1.656,0-3-1.343-3-3v-3H1v4c0,2.762,2.238,5,5,5h20.001c2.761,0,5-2.238,5-5V6.001
-			C31.001,3.239,28.762,1.001,26.001,1.001z M6,7V4.542l6.642-0.108c-2.2,2.18-3.958,4.653-5.274,7.419
-			c-1.317,2.767-2.015,5.48-2.092,8.142h4.517c-0.011-1.698,0.341-3.626,1.058-5.784c0.717-2.158,1.759-4.196,3.125-6.113
-			c1.367-1.917,2.711-3.388,4.033-4.413V1.006H1.992v3.427L2,7H6z"/>
+		<path fill="#62686A" d="M26.001,1.001H16v3h9.001c1.657,0,3,1.343,3,3V25c0,1.657-1.343,3-3,3H7c-1.656,0-3-1.343-3-3v-3H1v4
+			c0,2.762,2.238,5,5,5h20.001c2.761,0,5-2.238,5-5V6.001C31.001,3.239,28.762,1.001,26.001,1.001z"/>
 	</g>
 </g>
 </svg>
