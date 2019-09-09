@@ -146,7 +146,7 @@ div.city_state_postcode #addressbook-edit_adr_one_postalcode {
   width: 31.5% !important;
 }
 select#addressbook-index_col_filter\[tid\] {
-  width: 82px;
+  width: 100px;
 }
 #addressbook-index_addressbook-index-row select {
   float: right;
