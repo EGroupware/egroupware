@@ -149,7 +149,7 @@ class mail_compose
 			),
 			'selectFromVFSForCompose' => array(
 				'caption' => 'VFS',
-				'icon' => 'filemanager',
+				'icon' => 'filemanager/navbar',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose_triggerWidget',
 				'hint' => 'Select file(s) from VFS',
