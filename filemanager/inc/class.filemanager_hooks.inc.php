@@ -304,7 +304,7 @@ class filemanager_hooks
 	 */
 	static function getEditorLink()
 	{
-		foreach (Api\Hooks::process('filemanager-editor-link', 'collabora') as $app => $link)
+		foreach (Api\Hooks::process('filemanager-editor-link', 'collabora',true) as $app => $link)
 		{
 			if ($link && ($access = \EGroupware\Api\Vfs\Links\StreamWrapper::check_app_rights($app)) &&
 				(empty($GLOBALS['egw_info']['user']['preferences']['filemanager']['document_doubleclick_action']) ||
