@@ -518,7 +518,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 		// Make sure dialog is wide enough for the title
 		// Arbitrary numbers that seem to work nicely.
 		var title_width = 20 + 10 * this.options.title.length;
-		if(this.div.width() < title_width)
+		if(this.div.width() < title_width && this.options.title.trim())
 		{
 			// Auto-sizing chopped the title
 			this.div.dialog('option', 'width', title_width);
