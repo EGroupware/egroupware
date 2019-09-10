@@ -25,10 +25,10 @@
 				</rows>
 			</grid>
 		</box>
-		<hbox>
-			<button label="Ignore conflict" id="button[ignore]" statustext="Saves the event ignoring the conflict"/>
-			<button id="button[reedit]" label="Re-Edit event" statustext="Allows to edit the event again"/>
-			<button label="Freetime search" id="button[freetime]" statustext="Find free timeslots where the selected participants are available for the given timespan"/>
+		<hbox class="dialogFooterToolbar">
+			<button label="Ignore conflict" id="button[ignore]" image="check" background_image="1" statustext="Saves the event ignoring the conflict"/>
+			<button id="button[reedit]" label="Re-Edit event" image="edit" background_image="1" statustext="Allows to edit the event again"/>
+			<button label="Freetime search" id="button[freetime]" image="search" background_image="1" statustext="Find free timeslots where the selected participants are available for the given timespan"/>
 		</hbox>
 	</template>
 </overlay>

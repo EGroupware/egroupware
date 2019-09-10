@@ -154,6 +154,10 @@ div.calendar_conflicts {
 	max-height: 540px;
 	overflow-y: auto;
 }
+.calendar_conflicts img {
+	width: 22px;
+	height: 22px;
+}
 
 /* Loader - hide sizing behind overlay*/
 #egw-loadin-prompt_calendar::before {
