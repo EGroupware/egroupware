@@ -65,12 +65,6 @@ class preferences_hooks
 			'24' => lang('24 hour')
 		);
 
-		$html_enter_mode = array(
-			'p'		=> lang('p: Paragraph'),
-			'div'	=> lang('div'),
-			'br'	=> lang('br')
-		);
-
 		$account_sels = array(
 			'selectbox'     => lang('Selectbox'),
 			'primary_group' => lang('Selectbox with primary group and search'),
@@ -142,6 +136,16 @@ class preferences_hooks
 				',outdent,indent,link,image', 'user');
 			$GLOBALS['egw']->preferences->save_repository(true);
 		}
+
+		// do NOT query widgets from setup / installation, it fails with an exception
+		$font_options = $font_unit_options = $font_size_options = [];
+		if (!isset($GLOBALS['egw_setup']))
+		{
+			$font_options = Api\Etemplate\Widget\HtmlArea::$font_options;
+			$font_unit_options = Api\Etemplate\Widget\HtmlArea::$font_unit_options;
+			$font_size_options = Api\Etemplate\Widget\HtmlArea::$font_size_options;
+		}
+
 		// Settings array for this app
 		$settings = array(
 			array(
@@ -376,7 +380,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Default font',
 				'name'   => 'rte_font',
-				'values' => Api\Etemplate\Widget\HtmlArea::$font_options,
+				'values' => $font_options,
 				'help'   => 'Automatically start with this font',
 				'xmlrpc' => True,
 				'admin'  => false,
@@ -386,7 +390,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Font size unit',
 				'name'   => 'rte_font_unit',
-				'values' => array_map('lang', Api\Etemplate\Widget\HtmlArea::$font_unit_options),
+				'values' => array_map('lang', $font_unit_options),
 				'help'   => 'Unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.',
 				'default'=> 'pt',
 				'xmlrpc' => True,
@@ -397,7 +401,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Default font size',
 				'name'   => 'rte_font_size',
-				'values' => Api\Etemplate\Widget\HtmlArea::$font_size_options,
+				'values' => $font_size_options,
 				'help'   => 'Automatically start with this font size',
 				'xmlrpc' => True,
 				'admin'  => false,
