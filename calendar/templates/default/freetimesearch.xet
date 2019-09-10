@@ -61,8 +61,8 @@
 						<select-dow rows="10" id="weekdays" statustext="Weekdays to use in search" class="calendar_freetime_dow"/>
 					</hbox>
 				</row>
-				<row>
-					<button label="New search" id="search" statustext="new search with the above parameters"/>
+				<row class="dialogFooterToolbar">
+					<button label="New search" id="search" image="search" background_image="1" statustext="new search with the above parameters"/>
 					<hbox>
 						<menulist>
 							<menupopup no_lang="1" id="search_window" statustext="how far to search (from startdate)"/>
