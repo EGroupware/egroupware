@@ -7,9 +7,8 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009-16 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2009-19 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -153,6 +152,11 @@ class calendar_timezones
 		{
 			$data = self::id2tz($data['alias'],null);
 		}
+		if ($what === 'component')
+		{
+			// version 2019b no longer contains BEGIN/END:TIMEZONE and TZID
+			return "BEGIN:VTIMEZONE\r\nTZID:$data[tzid]\r\n$data[component]\r\nEND:VTIMEZONE";
+		}
 		return !$data ? $data : ($what ? $data[$what] : $data);
 	}
 
@@ -260,7 +264,7 @@ class calendar_timezones
 					'tz_alias' => $data['alias'],
 					'tz_latitude' => $data['latitude'],
 					'tz_longitude' => $data['longitude'],
-					'tz_component' => $data['ics'],
+					'tz_component' => implode("\r\n", (array)$data['ics']),
 				),array(
 					'tz_tzid' => $tzid,
 				),__LINE__,__FILE__,'calendar');
