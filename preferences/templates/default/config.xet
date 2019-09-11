@@ -21,6 +21,10 @@
 					<description value="Deny following groups access to edit categories" label="%s:"/>
 					<select-account id="newsettings[deny_cats]" account_type="groups" multiple="true" tags="true" width="100%"/>
 				</row>
+				<row>
+					<description value="Deny following groups access to security popup" label="%s:"/>
+					<select-account id="newsettings[deny_security]" account_type="groups" multiple="true" tags="true" width="100%"/>
+				</row>
 			</rows>
 		</grid>
 	</template>
