@@ -233,6 +233,24 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		},
 
 		/**
+		 * Set account data.  This one can be called from the server to pre-fill the cache.
+		 *
+		 * @param {Array} _data
+		 * @param {String} _field
+		 */
+		set_account_cache: function(_data, _field)
+		{
+			for(var account_id in _data)
+			{
+				if (typeof accountData[account_id] === 'undefined')
+				{
+					accountData[account_id] = {};
+				}
+				accountData[account_id][_field] = _data[account_id];
+			}
+		},
+
+		/**
 		 * Set specified account-data of selected user in an other widget
 		 *
 		 * Used eg. in template as: onchange="egw.set_account_data(widget, 'target', 'account_email')"
