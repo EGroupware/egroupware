@@ -42,6 +42,7 @@ delete categories	preferences	en	Delete categories
 deny following groups access to acl (grant access)	admin	en	Deny following groups access to ACL (grant access)
 deny following groups access to edit categories	admin	en	Deny following groups access to edit categories
 deny following groups access to preferences	admin	en	Deny following groups access to preferences
+deny following groups access to security popup	admin	en	Deny following groups access to security popup
 description can not exceed 255 characters in length !	preferences	en	Description can not exceed 255 characters in length !
 disable	preferences	en	Disable
 disable two factor auth	preferences	en	Disable Two Factor Auth

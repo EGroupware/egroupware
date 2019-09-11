@@ -39,9 +39,10 @@ default font	preferences	de	Standard-Schrift
 default font size	preferences	de	Standard-Schriftgröße
 default preferences	preferences	de	Voreinstellungen
 delete categories	preferences	de	Kategorie löschen
-deny following groups access to acl (grant access)	admin	de	verweigere folgenden Gruppen den Zugriff in den ACL's
-deny following groups access to edit categories	admin	de	verweigere folgenden Gruppen den Zugriff zum Ändern der Kategorien
-deny following groups access to preferences	admin	de	verweigere folgenden Gruppen den Zugang zu den Einstellungen
+deny following groups access to acl (grant access)	admin	de	Verweigere folgenden Gruppen den Zugriff in den ACL's
+deny following groups access to edit categories	admin	de	Verweigere folgenden Gruppen den Zugriff zum Ändern der Kategorien
+deny following groups access to preferences	admin	de	Verweigere folgenden Gruppen den Zugriff zu den Einstellungen
+deny following groups access to security popup	admin	de	Verweigere folgenden Gruppen den Zugriff auf das Popup Sicherheit
 description can not exceed 255 characters in length !	preferences	de	Die Beschreibung darf nicht länger als 255 Zeichen sein !
 disable	preferences	de	Deaktivieren
 disable two factor auth	preferences	de	2-Faktor-Authentifizierung deaktivieren
@@ -143,6 +144,7 @@ selectbox with groupmembers	common	de	Auswahlbox mit Gruppenmitgliedern
 selectbox with primary group and search	preferences	de	Auswahlfeld mit primärer Gruppe und Suche
 server is unwilling to perform.	preferences	de	Server ist unwillig die Änderung auszuführen.
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	de	Stellen Sie das nach Ihren Vorlieben ein. Aus Sicherheitsgründen sollte der Benutzername nicht in der Öffentlichkeit gezeigt werden.
+settings	preferences	de	Einstellungen
 setup two factor authentication	preferences	de	Setup 2-Faktor-Authentifizierung
 should the number of active sessions be displayed for you all the time.	preferences	de	Zeigt die Anzahl aktiver Sitzungen permanent unten rechts an.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	de	Sollen die Hilfetexte immer angezeigt werden, wenn Sie die Einstellungen aufrufen oder nur auf Anforderung?

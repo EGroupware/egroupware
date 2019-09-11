@@ -35,11 +35,7 @@ class preferences_password
 	 */
 	function change($content = null)
 	{
-		if ($GLOBALS['egw']->acl->check('nopasswordchange', 1))
-		{
-			Framework::window_close('Password change is disabled!');
-		}
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('Change your password');
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Security & Password');
 		$tmpl = new Etemplate('preferences.password');
 
 		$readonlys = $sel_options = [];
@@ -78,7 +74,7 @@ class preferences_password
 					switch($content['tabs'])
 					{
 						case 'change_password':
-							if ($content['button']['save'])
+							if ($GLOBALS['egw']->acl->check('nopasswordchange', 1) && $content['button']['save'])
 							{
 								if (($errors = self::do_change($content['password'], $content['n_passwd'], $content['n_passwd_2'])))
 								{
@@ -157,6 +153,12 @@ class preferences_password
 		if ($GLOBALS['egw_info']['server']['2fa_required'] === 'disabled')
 		{
 			$readonlys['tabs']['two_factor_auth'] = true;
+		}
+
+		// disable password change, if user has not right to change it
+		if ($GLOBALS['egw']->acl->check('nopasswordchange', 1))
+		{
+			$readonlys['tabs']['change_password'] = true;
 		}
 
 		$preserve = [

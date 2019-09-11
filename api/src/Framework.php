@@ -1155,20 +1155,9 @@ abstract class Framework extends Framework\Extra
 			$this->add_preferences_topmenu('prefs');
 			$this->add_preferences_topmenu('acl');
 			$this->add_preferences_topmenu('cats');
+			$this->add_preferences_topmenu('security');
 		}
 
-		// allways display password in topmenu, if user has rights to change it
-		if ($GLOBALS['egw_info']['user']['apps']['preferences'] &&
-			!$GLOBALS['egw']->acl->check('nopasswordchange', 1, 'preferences'))
-		{
-			$this->_add_topmenu_item(array(
-				'id'    => 'password',
-				'name'  => 'preferences',
-				'title' => lang('Security & Password'),
-				'url'   => "javascript:egw.open_link('".
-					self::link('/index.php?menuaction=preferences.preferences_password.change')."','_blank','850x580')",
-			));
-		}
 		/* disable help until content is reworked
 		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
 		{
@@ -1224,6 +1213,10 @@ abstract class Framework extends Framework\Extra
 				'hook' => 'categories',
 				'run_hook' => true,	// acturally run hook, not just look it's implemented
 			),
+			'security' => array(
+				'title' => 'Security & Password',
+				'hook' => 'preferences_security',
+			),
 		);
 		if (!$GLOBALS['egw_info']['user']['apps']['preferences'] || $GLOBALS['egw_info']['server']['deny_'.$type] &&
 			array_intersect($memberships, (array)$GLOBALS['egw_info']['server']['deny_'.$type]) &&
@@ -1244,12 +1237,31 @@ abstract class Framework extends Framework\Extra
 		{
 			$apps = Hooks::implemented($types[$type]['hook']);
 		}
-		$this->_add_topmenu_item(array(
-			'id' => $type,
-			'name' => 'preferences',
-			'title' => lang($types[$type]['title']),
-			'url' => "javascript:egw.show_preferences(\"$type\",".json_encode($apps).')',
-		));
+		// allways display password in topmenu, if user has rights to change it
+		switch ($type)
+		{
+			case 'security':
+				if ($apps || $GLOBALS['egw_info']['server']['2fa_required'] !== 'disabled' ||
+					!$GLOBALS['egw']->acl->check('nopasswordchange', 1))
+				{
+					$this->_add_topmenu_item(array(
+						'id'    => 'password',
+						'name'  => 'preferences',
+						'title' => lang($types[$type]['title']),
+						'url'   => "javascript:egw.open_link('".
+							self::link('/index.php?menuaction=preferences.preferences_password.change')."','_blank','850x580')",
+					));
+				}
+				break;
+
+			default:
+				$this->_add_topmenu_item(array(
+					'id' => $type,
+					'name' => 'preferences',
+					'title' => lang($types[$type]['title']),
+					'url' => "javascript:egw.show_preferences(\"$type\",".json_encode($apps).')',
+				));
+		}
 	}
 
 	/**
