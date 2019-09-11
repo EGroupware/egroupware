@@ -708,6 +708,8 @@ class calendar_ui
 	{
 		if(!$event || !is_array($event)) return false;
 
+		static $sent_groups = array();
+
 		if (!$this->bo->check_perms(Acl::EDIT,$event))
 		{
 			$event['class'] .= 'rowNoEdit ';
@@ -786,6 +788,15 @@ class calendar_ui
 			calendar_so::split_user($uid, $user_type, $user_id);
 			$type_name = lang($this->bo->resources[$user_type]['app']);
 			$event['participant_types'][$type_name ? $type_name : ''][] = $text;
+			if(is_int($uid) && $uid < 0 && !in_array($uid, $sent_groups))
+			{
+				// Make sure group membership info is on the client
+				Api\Json\Response::get()->apply(
+					'egw.set_account_cache', array(
+					array($uid => $GLOBALS['egw']->accounts->members($uid) ),
+					'account_id'
+				));
+			}
 		}
 		$event['date'] = $this->bo->date2string($event['start']);
 
