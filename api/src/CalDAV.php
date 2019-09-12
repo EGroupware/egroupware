@@ -263,11 +263,12 @@ class CalDAV extends HTTP_WebDAV_Server
 		parent::__construct();
 		// hack to allow to use query parameters in WebDAV, which HTTP_WebDAV_Server interprets as part of the path
 		list($this->_SERVER['REQUEST_URI']) = explode('?',$this->_SERVER['REQUEST_URI']);
-		/*if (substr($this->_SERVER['REQUEST_URI'],-13) == '/;add-member/')
+		// OSX Addressbook sends ?add-member url-encoded
+		if (substr($this->_SERVER['REQUEST_URI'], -14) == '/%3Fadd-member')
 		{
 			$_GET['add-member'] = '';
-			$this->_SERVER['REQUEST_URI'] = substr($this->_SERVER['REQUEST_URI'],0,-12);
-		}*/
+			$this->_SERVER['REQUEST_URI'] = substr($this->_SERVER['REQUEST_URI'], 0, -14);
+		}
 		//error_log($_SERVER['REQUEST_URI']." --> ".$this->_SERVER['REQUEST_URI']);
 
 		$this->egw_charset = Translation::charset();
