@@ -269,7 +269,7 @@ class calendar_uiviews extends calendar_ui
 			),
 			'day_view' => array(
 				'caption' => 'Dayview',
-				'icon'	=> 'day',
+				'icon'	=> '1_day_view',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Dayview',
@@ -278,7 +278,7 @@ class calendar_uiviews extends calendar_ui
 			),
 			'4day_view' => array(
 				'caption' => 'Four days view',
-				'icon'	=> 'cal4',
+				'icon'	=> '4_day_view',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Four days view',
@@ -287,7 +287,7 @@ class calendar_uiviews extends calendar_ui
 			),
 			'week_view' => array(
 				'caption' => 'Weekview',
-				'icon'	=> 'week',
+				'icon'	=> 'week_view',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Weekview',
@@ -296,7 +296,7 @@ class calendar_uiviews extends calendar_ui
 			),
 			'weekN_view' => array(
 				'caption' => 'Multiple week view',
-				'icon'	=> 'multiweek',
+				'icon'	=> 'multiweek_view',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Multiple week view',
@@ -305,7 +305,7 @@ class calendar_uiviews extends calendar_ui
 			),
 			'month_view' => array(
 				'caption' => 'Monthview',
-				'icon'	=> 'month',
+				'icon'	=> 'month_view',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Monthview',
@@ -314,7 +314,7 @@ class calendar_uiviews extends calendar_ui
 			),
 			'planner_category' => array(
 				'caption' => 'Planner by category',
-				'icon'	=> 'planner_category',
+				'icon'	=> 'planner_category_view',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Planner by category',
@@ -323,7 +323,7 @@ class calendar_uiviews extends calendar_ui
 			),
 			'planner_user' => array(
 				'caption' => 'Planner by user',
-				'icon'	=> 'planner',
+				'icon'	=> 'planner_view',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Planner by user',
@@ -332,7 +332,7 @@ class calendar_uiviews extends calendar_ui
 			),
 			'planner_month' => array(
 				'caption' => 'Yearly planner',
-				'icon'	=> 'year',
+				'icon'	=> 'year_view',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Yearly planner',
