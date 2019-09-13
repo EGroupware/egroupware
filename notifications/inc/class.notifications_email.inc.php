@@ -86,7 +86,7 @@ class notifications_email implements notifications_iface {
 	 * @param string $_subject
 	 * @param array $_links
 	 * @param array $_attachments
-	 * @param array $_data
+	 * @param array $_data value for key "reply_to" to use a custom ReplyTo address
 	 */
 	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false, $_data = false)
 	{
@@ -102,10 +102,14 @@ class notifications_email implements notifications_iface {
 		//$this->mail->AddHeader('X-EGroupware-Tracker', 'notification-mail');
 		//error_log(__METHOD__.__LINE__."preparing notification message via email.".array2string($this->mail));
 
-		$this->mail->setFrom($this->sender->account_email, $this->sender->account_fullname);
-
-		if ( $_data && isset( $_data['reply_to'] ) ) {
-			$this->mail->addAddress($_data['reply_to'], '', 'replyto');
+		if ( $_data && !empty( $_data['reply_to'] ) )
+		{
+			$this->mail->addReplyTo($_data['reply_to']);
+		}
+		// do NOT set sender as From, as this might not be allowed, set it instead as ReplyTo, if that one it not explicitly set already
+		elseif ($this->mail->getHeader('From') != Api\Mailer::add_personal($this->sender->account_email, $this->sender->account_fullname))
+		{
+			$this->mail->addReplyTo($this->sender->account_email, $this->sender->account_fullname);
 		}
 
 		$this->mail->addHeader('Subject', trim($_subject)); // trim the subject to avoid strange wrong encoding problem
