@@ -46,6 +46,7 @@
 /tracker/
 /usage/
 /vendor/
+/webauthn/
 /wiki/
 .idea/
 addressbook/carddav/
