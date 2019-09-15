@@ -126,6 +126,11 @@ else
 			{
 				fwrite($f,$newheader);
 				fclose($f);
+				// invalidate OpCache so change have an effect, if scripts are cached and not checked for changes (as in our container installation)
+				if (function_exists('opcache_is_script_cached') && (opcache_is_script_cached($header= realpath('../header.inc.php'))))
+				{
+					opcache_invalidate($header, true);
+				}
 				$GLOBALS['egw_setup']->html->show_header('Saved header.inc.php', False, 'header');
 				echo '<form action="index.php" method="post">';
 					echo '<br />' . lang('Created header.inc.php!');
