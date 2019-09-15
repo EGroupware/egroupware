@@ -521,12 +521,20 @@ function patch_header($filename,&$user,$password)
 	{
 		bail_out(99,"$filename is no regular EGroupware header.inc.php!");
 	}
-	file_put_contents($filename,preg_replace('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '", '/')."([^']*)';/m",
-		"\$GLOBALS['egw_info']['server']['header_admin_password'] = '".$password."';",$header));
+	//error_log(__FUNCTION__."('$filename', '$user', '$password') header_admin_password was '$pmatches[1]'");
+
+	file_put_contents($filename,$header_new=preg_replace('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '", '/')."([^']*)';/m",
+		// $ in password needs to be escaped as they otherwise address captures in the regualar expression
+		"\$GLOBALS['egw_info']['server']['header_admin_password'] = '".str_replace('$', '\\$', $password)."';",$header));
+
+	/*$xmatches = null;
+	preg_match('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '", '/')."([^']*)';/m",$header_new,$xmatches);
+	error_log(__FUNCTION__."('$filename', '$user', '$password') header_admin_password now '$xmatches[1]' returning '$pmatches[1]'");*/
 
 	$user = $umatches[1];
 
-	return $pmatches[1];
+	// try fixing crypt passwords broken by unescaped replace
+	return str_replace('{crypt}a$', '{crypt}$2a$12$', $pmatches[1]);
 }
 
 /**
