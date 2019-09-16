@@ -191,14 +191,6 @@ class Univention extends Ldap
 		$data = [
 			'account_passwd' => $new_passwd
 		];
-		if ($old_passwd)
-		{
-			$data['pwdChangeNextLogin'] = false;
-		}
-		if ($update_lastchange)
-		{
-			// ToDo: $entry['shadowlastchange'] = round((time()-date('Z')) / (24*3600));
-		}
 
 		$udm->updateUser($dn, $data);
 

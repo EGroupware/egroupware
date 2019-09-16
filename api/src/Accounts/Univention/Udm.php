@@ -236,7 +236,16 @@ class Udm
 		$payload = $this->user2udm($data, $this->call('users/user/'.urlencode($dn), 'GET', [], $get_headers));
 
 		$headers = [];
-		return $this->call('users/user/'.urlencode($dn), 'PUT', $payload, $headers, $get_headers['etag'], true);
+		$ret = $this->call('users/user/'.urlencode($dn), 'PUT', $payload, $headers, $get_headers['etag'], true);
+
+		// you can not set the password and force a password change for next login in the same call
+		// the forced password change will be lost --> call again without password to force the change on next login
+		if (!empty($data['account_passwd']) && !empty($data['mustchangepassword']))
+		{
+			unset($data['account_passwd']);
+			$ret = $this->updateUser($ret, $data);
+		}
+		return $ret;
 	}
 
 	/**
@@ -248,6 +257,9 @@ class Udm
 	 */
 	protected function user2udm(array $data, array $payload)
 	{
+		// gives error: The property passwordexpiry has an invalid value: Value may not change.
+		unset($payload['properties']['passwordexpiry']);
+
 		foreach([
 			'account_lid' => 'username',
 			'account_passwd' => 'password',
@@ -255,6 +267,7 @@ class Udm
 			'account_firstname' => 'firstname',
 			'account_id' => ['uidNumber', 'sambaRID'],
 			'account_email' => 'mailPrimaryAddress',
+			'mustchangepassword' => 'pwdChangeNextLogin',
 		] as $egw => $names)
 		{
 			if (!empty($data[$egw]))

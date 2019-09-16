@@ -163,7 +163,7 @@ class Ldap implements Backend
 	 * fetch the last pwd change for the user
 	 *
 	 * @param string $_username username of account to authenticate
-	 * @return mixed false or shadowlastchange*24*3600
+	 * @return mixed false or shadowlastchange*24*3600 or 0, if user must change his password
 	 */
 	function getLastPwdChange($_username)
 	{
@@ -180,7 +180,7 @@ class Ldap implements Backend
 			return false;
 		}
 		/* find the dn for this uid, the uid is not always in the dn */
-		$attributes	= array('uid','dn','shadowexpire','shadowlastchange');
+		$attributes	= array('uid','dn','shadowexpire','shadowlastchange','sambaPwdLastSet','krb5PasswordEnd');
 
 		$filter = str_replace(array('%user','%domain'),array(Api\Ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),
 			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
@@ -194,6 +194,14 @@ class Ldap implements Backend
 
 		if ($allValues['count'] > 0)
 		{
+			// there are several schema-specific ways to express the user must change the password
+			if (isset($allValues[0]['shadowlastchange']) && (string)$allValues[0]['shadowlastchange'][0] === '0' ||
+				isset($allValues[0]['sambapwdlastset']) && (string)$allValues[0]['sambapwdlastset'][0] === '0' ||
+				isset($allValues[0]['krb5passwordend']) && Api\DateTime::user2server($allValues[0]['krb5passwordend'][0]) < time())
+			{
+				error_log(__METHOD__."('$_username') shadowlastchange={$allValues[0]['shadowlastchange']}, sambapwdlastset={$allValues[0]['sambapwdlastset'][0]}, krb5passwordend={$allValues[0]['krb5passwordend'][0]} --> return 0");
+				return 0;
+			}
 			if (!isset($allValues[0]['shadowlastchange']))
 			{
 				if ($this->debug) error_log(__METHOD__."('$username') no shadowlastchange attribute!");

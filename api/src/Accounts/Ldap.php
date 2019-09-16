@@ -620,7 +620,10 @@ class Ldap
 		}
 		//error_log(__METHOD__.__LINE__.$data['account_lid'].'#'.$data['account_lastpwd_change'].'#');
 		if ($data['account_lastpwd_change']) $to_write['shadowlastchange'] = round(($data['account_lastpwd_change']-$utc_diff)/(24*3600));
-		if (isset($data['account_lastpwd_change']) && $data['account_lastpwd_change']==0) $to_write['shadowlastchange'] = 0;
+		if ($data['mustchangepassword'] == 1 || isset($data['account_lastpwd_change']) && $data['account_lastpwd_change'] == 0)
+		{
+			$to_write['shadowlastchange'] = 0;
+		}
 		// lastlogin and lastlogin from are not availible via the shadowAccount object class
 		// $to_write['phpgwaccountlastlogin'] = $data['lastlogin'];
 		// $to_write['phpgwaccountlastloginfrom'] = $data['lastloginfrom'];
