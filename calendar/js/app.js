@@ -1741,7 +1741,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 */
 	add_dialog_save: function(event, widget)
 	{
-		this.quick_add = widget.getInstanceManager().getValues(widget.getRoot());
+		// Include all sent values so we can pass on things that we don't have UI widgets for
+		this.quick_add = this._add_dialog_values(widget);
+
 		// Close the dialog
 		jQuery(widget.getInstanceManager().DOMContainer.parentNode).dialog('close');
 
@@ -1770,13 +1772,34 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		}
 
 		// Open regular edit
-		egw.open(null,'calendar','edit',widget.getInstanceManager().getValues(widget.getRoot()));
+		egw.open(null,'calendar','edit',this._add_dialog_values(widget));
 
 		// Close the dialog
 		jQuery(widget.getInstanceManager().DOMContainer.parentNode).dialog('close');
 
 		// Do not submit this etemplate
 		return false;
+	},
+
+	/**
+	 * Include some additional values so we can pass on things that we don't have
+	 * UI widgets for in the add template
+	 *
+	 * @param {et2_widget} widget
+	 * @returns {Object}
+	 */
+	_add_dialog_values: function(widget)
+	{
+		// Some select things to pass on
+		var mgr = widget.getRoot().getArrayMgr('content');
+		var values = {
+			participants: mgr.getEntry('participants'),
+			whole_day: mgr.getEntry('whole_day')
+		};
+		return jQuery.extend(
+				values,
+				widget.getInstanceManager().getValues(widget.getRoot())
+		);
 	},
 
 	/**
