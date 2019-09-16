@@ -233,8 +233,14 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 		// Free the grid components
 		this.dataview.free();
-		this.rowProvider.free();
-		this.controller.free();
+		if(this.rowProvider)
+		{
+			this.rowProvider.free();
+		}
+		if(this.controller)
+		{
+			this.controller.free();
+		}
 		this.dynheight.free();
 
 		this._super.apply(this, arguments);
