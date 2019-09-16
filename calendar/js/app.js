@@ -1793,9 +1793,17 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		// Some select things to pass on
 		var mgr = widget.getRoot().getArrayMgr('content');
 		var values = {
-			participants: mgr.getEntry('participants'),
+			participants: [],
 			whole_day: mgr.getEntry('whole_day')
 		};
+		for(var id in mgr.getEntry('participants'))
+		{
+			var participant = mgr.getEntry('participants')[id];
+			if (participant && participant.uid)
+			{
+				values.participants.push(participant.uid);
+			}
+		}
 		return jQuery.extend(
 				values,
 				widget.getInstanceManager().getValues(widget.getRoot())
