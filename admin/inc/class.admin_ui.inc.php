@@ -96,7 +96,6 @@ class admin_ui
 
 		// switching between iframe and nm/accounts-list depending on load parameter
 		// important for first time load eg. from an other application calling it's site configuration
-		$tpl->setElementAttribute('nm', 'disabled', !empty($_GET['load']));
 		$tpl->setElementAttribute('iframe', 'disabled', empty($_GET['load']));
 		$content['iframe'] = 'about:blank';	// we show accounts-list be default now
 		if (!empty($_GET['load']))
