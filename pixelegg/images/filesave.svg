@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="pixelegg_save_zip" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-	 y="0px" width="28.348px" height="28.348px" viewBox="0 0 28.348 28.348" enable-background="new 0 0 28.348 28.348"
-	 xml:space="preserve">
+<svg version="1.1" id="filemanager_navbar" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" width="32.003px" height="32.003px" viewBox="-1.827 -3.655 32.003 32.003"
+	 enable-background="new -1.827 -3.655 32.003 32.003" xml:space="preserve">
 <g>
-	<g>
-		<g>
-			<defs>
-				<rect id="SVGID_1_" x="0.042" y="0.046" width="28.263" height="28.255"/>
-			</defs>
-			<clipPath id="SVGID_2_">
-				<use xlink:href="#SVGID_1_"  overflow="visible"/>
-			</clipPath>
-			<path clip-path="url(#SVGID_2_)" fill="#ECECED" d="M15.108,17.001"/>
-		</g>
-	</g>
+	<polygon fill="#666666" points="9.517,-0.715 9.085,-2.974 -0.977,-1.758 0.984,5.493 26.924,2.549 27.338,-2.585 	"/>
 </g>
-<rect x="0.042" y="0.046" fill="none" width="28.263" height="28.255"/>
-<rect x="0.042" y="0.046" fill="none" width="28.263" height="28.255"/>
-<path fill="#62686A" d="M16.581,13.866C8.77,14.153,4.069,10.585,0.099,6.619c0,9.426,8.185,16.848,16.482,16.932V28.3l11.716-9.61
-	L16.581,9.078V13.866z"/>
+<path fill="#666666" d="M19.518,13.83"/>
+<path fill="#666666" d="M9.869,12.87"/>
+<g>
+	<path fill="#666666" d="M8.322,14.354l-0.16-1.478c-0.073-0.675,0.288-1.323,0.901-1.616c0.22-0.105,0.456-0.157,0.689-0.157
+		c0.416,0,0.827,0.163,1.133,0.47l1.007,1.01c1.718,1.723,3.751,3.331,6.946,3.632l-0.008-0.575v-1.164
+		c0-0.63,0.37-1.202,0.945-1.46c0.21-0.094,0.433-0.14,0.654-0.14c0.385,0,0.766,0.139,1.064,0.406l5.487,4.89l1.507-0.171
+		l0.522-14.381l-29.23,3.317l3.373,13.939l7.109-0.807C9.26,18.436,8.555,16.519,8.322,14.354z"/>
+</g>
+<path fill="#666666" d="M28.033,21.254l-7.604-6.777v1.164l0.032,2.216c-0.18,0.007-0.354,0.01-0.527,0.01
+	c-4.437,0-7.129-2.1-9.176-4.153l-1.006-1.009l0.16,1.478c0.693,6.419,6.016,10.448,10.518,10.469v3.383L28.033,21.254z"/>
+<path fill="#666666" d="M126.472-37.705"/>
+<path fill="#666666" d="M121.724-38.178"/>
 </svg>
