@@ -46,7 +46,7 @@ var et2_color = (function(){ "use strict"; return et2_inputWidget.extend(
 		var value = this.$node.val();
 		if(value === '#FFFFFF' || value === '#ffffff')
 		{
-			return null;
+			return '';
 		}
 		return value;
 	},
