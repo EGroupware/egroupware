@@ -557,8 +557,12 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 				value = _data['share_email'];
 			}
 			// Get widget from list, unless it needs a diff widget
-			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined' && (i < self.NEW_VALUE ||
-					i >= self.NEW_VALUE &&!self._needsDiffWidget(_data['status'], _data[self.columns[self.OLD_VALUE].id])))
+			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined' && (
+					i < self.NEW_VALUE ||
+					i >= self.NEW_VALUE && (
+						self.fields[_data.status].nodes || !self._needsDiffWidget(_data['status'], _data[self.columns[self.OLD_VALUE].id])
+					)
+			))
 			{
 				widget = self.fields[_data.status].widget;
 				if(!widget._children.length)
@@ -568,6 +572,10 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 				for(var j = 0; j < widget._children.length; j++)
 				{
 					nodes.push(self.fields[_data.status].nodes[j].clone());
+					if(widget._children[j].instanceOf(et2_diff))
+					{
+						self._spanValueColumns(jQuery(this));
+					}
 				}
 			}
 			else if (widget)
@@ -592,18 +600,12 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 					widget = self.diff.widget;
 					nodes = self.diff.nodes.clone();
 
-					// Skip column 4
-					jthis.parents("td").attr("colspan", 2)
-						.css("border-right", "none");
-					jthis.css("width", (self.dataview.columnMgr.columnWidths[i] + self.dataview.columnMgr.columnWidths[i+1]-10)+'px');
-
 					if(widget) widget.setDetachedAttributes(nodes, {
 						value: value,
 						label: jthis.parents("td").prev().text()
 					});
 
-					// Skip column 4
-					jthis.parents("td").next().remove();
+					self._spanValueColumns(jthis);
 				}
 			}
 			else
@@ -652,6 +654,25 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 			return false;
 		}
 		return value === '***diff***';
+	},
+
+	/**
+	 * Make a single row's new value cell span across both new value and old value
+	 * columns.  Used for diff widget.
+	 *
+	 * @param {jQuery} row jQuery wrapped row node
+	 */
+	_spanValueColumns: function(row)
+	{
+		// Stretch column 4
+		row.parents("td").attr("colspan", 2)
+			.css("border-right", "none");
+		row.css("width", (
+				this.dataview.columnMgr.columnWidths[this.NEW_VALUE] +
+				this.dataview.columnMgr.columnWidths[this.OLD_VALUE]-10)+'px');
+
+		// Skip column 5
+		row.parents("td").next().remove();
 	},
 
 	resize: function (_height)
