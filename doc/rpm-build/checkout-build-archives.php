@@ -33,7 +33,8 @@ $config = array(
 	'svnalias' => 'aliases/default-ssh',    // default alias
 	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro', '$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	*/
-	'extra' => array('functions' => array('stylite'), 'esyncpro', 'policy', 'archive',	// create an extra archive for given apps
+	// create an extra archive for given apps
+	'extra' => array('functions' => array('stylite'), 'esyncpro', 'policy', 'webauthn', 'archive',
 		// these apps are placed in egroupware-epl-contrib archive
 		//'contrib' => array('phpgwapi', 'etemplate', 'jdots', 'phpbrain', 'wiki', 'sitemgr')
 	),
@@ -53,7 +54,7 @@ $config = array(
 	'git' => trim(`which git`),
 	'gpg' => trim(`which gpg`),
 	'editor' => trim(`which vi`),
-	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*" --exclude "*-policy-*"',
+	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*" --exclude "*-policy-*" --exclude "*-webauthn-*"',
 	'composer' => trim(`which composer.phar`),
 	'after-checkout' => 'rm -rf */source */templates/*/source',
 	'packager' => 'build@egroupware.org',
