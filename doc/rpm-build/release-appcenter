@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# To update univention-appcenter-control run:
+# curl https://provider-portal.software-univention.de/appcenter-selfservice/univention-appcenter-control > ~/bin/univention-appcenter-control
+
+# copy Debian_7 packages to UCS
+
+version=17.1
+packaging=`date +%Y%m%d`
+# default is now Docker!
+postfix='-docker-ucs43'
+project=stylite-epl
+
+while [ $# -gt 0 ]
+do
+	case "$1" in
+		"--packaging")
+			packaging=$2
+			shift; shift
+			;;
+		"--postfix")
+			postfix=$2
+			shift; shift
+			;;
+		"--debug")
+			debug=echo
+			shift
+			;;
+		"--help")
+			echo "Usage: release-appcenter [--packaging <YYYYmmdd>] [--postfix -docker] [--debug] [--help]"
+			echo "	--packaging specifiy packaging, default current date '$packaging'"
+			echo "	--postfix eg. '-docker' used to find old package to copy and appended to packaging"
+			echo "	--debug only echo out (modifying commands), does NOT execute them"
+			exit 0
+			;;
+	esac
+done
+
+#echo "version=$version, packaging=$packaging, postfix=$postfix, debug=$debug"
+
+for ucs in 4.3
+do
+	case $ucs in
+		"4.1")
+			repo=Debian_8.0
+			;;
+		"4.3")
+			repo=Debian_9.0
+			;;
+	esac
+	[ ! -f /srv/obs/repos/$project/$repo/all/egroupware-epl-core_$version.${packaging}_all.deb ] && {
+		echo "No $version.$packaging packages found!"
+		echo "You probably need to use --packaging <date>"
+		exit 1
+	}
+	univention-appcenter-control list | tee /tmp/ucs-apps | egrep "$ucs/egroupware=$version.$packaging$postfix" || {
+		copy_app=$(cat /tmp/ucs-apps | egrep "$ucs/egroupware=$version\.[0-9.]+$postfix$" | tail -1)
+		[ -z "$copy_app" ] && copy_app=$ucs/egroupware
+		$debug univention-appcenter-control new-version $copy_app $ucs/egroupware=$version.$packaging$postfix
+	}
+	# converting changelog to html with <h3>version</h3><ul><li>...</li></ul>
+	sed    -e 's/egroupware-epl (/<h3>/g' \
+	       -e 's/) hardy; urgency=low/<\/h3><ul>/g' \
+	       -e 's/^ -- .*/<\/ul>/g' \
+	       -e 's/^  \* \(.*\)/<li>\1<\/li>/g' $(dirname $0)/egroupware/doc/rpm-build/debian.changes > $(dirname $0)/README_UPDATE
+	# no binary php-pecl-smb packages for docker, as they are php5 and stall UCS install with docker
+	[ "$prefix" = "-docker" ] && extra="/srv/obs/repos/$project/$repo/{amd64,i386}/*"
+	$debug univention-appcenter-control upload $ucs/egroupware=$version.$packaging$postfix /srv/obs/repos/$project/$repo/all/egroupware-epl*$version.$packaging* $extra $(dirname $0)/README_UPDATE
+done

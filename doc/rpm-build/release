@@ -1,0 +1,47 @@
+#!/bin/bash -x
+
+version=17.1
+if [ "$1" == "--packaging" ]
+then
+	packaging=$2
+else
+	packaging=`date +%Y%m%d`
+fi
+[ ! -f download/egroupware-epl-$version.$packaging.zip ] && {
+	echo "No $version.$packaging packages found!"
+	echo "You probably need to use --packaging <date>"
+	exit 1
+}
+
+echo "syncing to download.egroupware.org"
+~/sync-repos.sh stylite-epl
+
+# update https://www.egroupware.org/currentversion
+# default for no security update
+last_security_update=`curl https://www.egroupware.org/currentversion|tail -n +2`
+# uncomment and therefore enable line below for a security update
+#last_security_update="$version.$packaging\n$(curl https://www.egroupware.org/currentversion|tail -n +3)"
+echo "Updating www.egroupware.org/currentversion to $version.$packaging"
+echo -e "$version.$packaging\n$last_security_update" | ssh root@wordpress.egroupware.org tee /var/www/egroupware.org/currentversion
+
+# building CE packages on build.opensuse.org
+./checkout-build-archives.php --obs /home/stylite/obs/server\:eGroupWare --run 'obs release' $*
+
+# disabled as we have now 19.1
+#echo "Copying $version debian.changes to master to satisfy update checker"
+#cd ~/epl-trunk/egroupware
+#./install-cli.php
+#cp ~/epl-17.1/egroupware/doc/rpm-build/debian.changes doc/rpm-build/
+#sed -i "s|'maintenance_release'] = '.*';|'maintenance_release'] = '$version.$packaging';|" api/setup/setup.inc.php
+#git commit -m "copy $version changelog to master to satisfy update checker" doc/rpm-build/debian.changes api/setup/setup.inc.php
+#git push
+
+# Mail an Univention Appcenter
+cat - ~/.signature.egroupware <<EOF | mail -s "Neue EGroupware Version $version.$packaging" -r rb@egroupware.org -b info@egroupware.org appcenter@univention.de
+Hallo,
+
+wir haben ein neues Maintenance-Release im TestAppCenter.
+
+Ralf
+--
+EOF
