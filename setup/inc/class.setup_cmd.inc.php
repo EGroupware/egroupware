@@ -314,7 +314,7 @@ abstract class setup_cmd extends admin_cmd
 
 				case 3: throw new Api\Exception\WrongUserinput(lang('Your database is working, but you dont have any applications installed')." ($db). ".lang("Use --install to install EGroupware."),13);
 
-				case 4: throw new Api\Exception\WrongUserinput(lang('EGroupware API needs a database (schema) update from version %1 to %2!',$setup_info['phpgwapi']['currentver'],$versions['phpgwapi']).' '.lang('Use --update to do so.'),14);
+				case 4: throw new Api\Exception\WrongUserinput(lang('EGroupware API needs a database (schema) update from version %1 to %2!',$setup_info['api']['currentver'],$versions['api']).' '.lang('Use --update to do so.'),14);
 
 				case 10:	// also check apps of updates
 					self::$apps_to_upgrade = self::$apps_to_install = array();
