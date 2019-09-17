@@ -1,3 +1,20 @@
+egroupware-docker (19.1.20190917) hardy; urgency=low
+
+  * EPL: WebAuthn incl. older U2F tokens as 2nd factor for authentication
+  * Preferences: always show Security & Password popup, only disable password tab, if no rights to change it
+  * Notification: instead of overwritting From address use ReplyTo
+  * Tracker: for notifications use explicit replyTo address or sender from mail config
+  * Calendar: Fix quick add lost additional participants
+  * Calendar: update to timezones version 2.2019b
+  * Univention: fix "Must change password upon next login" feature
+  * Mail: fix email date is an editable field in mail display
+  * Filemanager: fix actions in share->mail context menu not working on multi-selection
+  * Setup: fix post_install.php breaking bcrypt header_admin_password
+  * EPL: fix not working automatic update of container / watchtower (requires docker-compose.yml update!)
+  * RHEL/CentOS: fix dependency of docker-compose package to work with OS docker version
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 17 Sep 2019 12:14:04 +0200
+
 egroupware-docker (19.1.20190822) hardy; urgency=low
 
   * Mail: fix broken save to filemanager action
