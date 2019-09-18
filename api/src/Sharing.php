@@ -120,14 +120,6 @@ class Sharing
 	}
 
 	/**
-	 * Get share path
-	 */
-	public function get_path()
-	{
-		return $this->share['share_path'];
-	}
-	
-	/**
 	 * Get share with email addresses
 	 */
 	public function get_share_with()
