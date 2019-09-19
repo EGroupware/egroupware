@@ -88,12 +88,12 @@ class mail_hooks
 			'add'        => array(
 				'menuaction' => 'mail.mail_compose.compose',
 			),
-			'add_popup'  => '870xavailHeight',
+			'add_popup'  => '900xavailHeight',
 			'edit'        => array(
 				'menuaction' => 'mail.mail_compose.compose',
 			),
 			'edit_id'    => 'id',
-			'edit_popup'  => '870xavailHeight',
+			'edit_popup'  => '900xavailHeight',
 			// register mail as handler for .eml files
 			'mime' => array(
 				'message/rfc822' => array(
@@ -101,7 +101,7 @@ class mail_hooks
 					'mime_url'   => 'formData[file]',
 					'mime_data'  => 'formData[data]',
 					'formData[type]' => 'message/rfc822',
-					'mime_popup' => '870xavailHeight',
+					'mime_popup' => '900xavailHeight',
 					'mime_target' => '_blank'
 				),
 			),
