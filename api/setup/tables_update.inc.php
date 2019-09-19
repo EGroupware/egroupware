@@ -575,7 +575,8 @@ function api_upgrade17_9_001()
 	$total = $saved = 0;
 	do {
 		$n = 0;
-		foreach($GLOBALS['egw_setup']->db->select('egw_history_log', 'history_id,history_new_value,history_old_value', array(
+		foreach($GLOBALS['egw_setup']->db->select('egw_history_log',
+			'history_id,history_new_value,history_old_value,history_timestamp', array(
 			'history_old_value != '.$GLOBALS['egw_setup']->db->quote(Api\Storage\Tracking::DIFF_MARKER),
 			// if one is empty, no need to store diff
 			"(LENGTH(history_new_value) > 0 AND LENGTH(history_old_value) > 0)",
@@ -596,6 +597,7 @@ function api_upgrade17_9_001()
 			$GLOBALS['egw_setup']->db->update('egw_history_log', array(
 				'history_new_value' => $diff_str,
 				'history_old_value' => Api\Storage\Tracking::DIFF_MARKER,
+				'history_timestamp' => $row['history_timestamp'],	// keep existing time!
 			), array(
 				'history_id' => $row['history_id'],
 			), __LINE__, __FILE__);
