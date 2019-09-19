@@ -703,7 +703,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 		if(this.dataview)
 		{
 			var columns = this.dataview.getColumnMgr().columnWidths;
-			jQuery('.et2_diff', this.div).parent().width(columns[this.NEW_VALUE] + columns[this.OLD_VALUE]);
+			jQuery('.et2_diff', this.div).closest('.innerContainer').width(columns[this.NEW_VALUE] + columns[this.OLD_VALUE]);
 		}
 	}
 });}).call(this);

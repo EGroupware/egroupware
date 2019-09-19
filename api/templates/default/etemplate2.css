@@ -613,7 +613,6 @@ div.et2_diff {
 	white-space:normal;
 }
 .et2_diff .d2h-file-wrapper {
-	margin: 0px;
 }
 .et2_diff .d2h-file-diff {
 	overflow-x: hidden;
@@ -629,7 +628,7 @@ div.et2_diff {
 	overflow-y: visible;
 }
 .et2_diff .ui-icon {
-  margin-top: -16px;
+  margin-top: -14px;
   float: right;
 }
 .et2_diff .d2h-del, .et2_diff.d2h-del.d2h-change, .et2_diff .d2h-file-diff .d2h-del.d2h-change  {
