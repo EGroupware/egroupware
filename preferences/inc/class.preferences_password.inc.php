@@ -74,7 +74,7 @@ class preferences_password
 					switch($content['tabs'])
 					{
 						case 'change_password':
-							if ($GLOBALS['egw']->acl->check('nopasswordchange', 1) && $content['button']['save'])
+							if (!$GLOBALS['egw']->acl->check('nopasswordchange', 1) && $content['button']['save'])
 							{
 								if (($errors = self::do_change($content['password'], $content['n_passwd'], $content['n_passwd_2'])))
 								{
