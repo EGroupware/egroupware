@@ -191,7 +191,7 @@ class mail_compose
 			),
 			'disposition' => array(
 				'caption' => 'Notification',
-				'icon' => 'high',
+				'icon' => 'notification_message',
 				'group' => ++$group,
 				'checkbox' => true,
 				'hint' => 'check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)',
@@ -250,7 +250,7 @@ class mail_compose
 					$actions['prty']['children'][$key]['icon'] = 'prio_high';
 					break;
 				case 'normal':
-					$actions['prty']['children'][$key]['icon'] = 'prio_normal';
+					$actions['prty']['children'][$key]['icon'] = 'priority';
 					break;
 				case 'low':
 					$actions['prty']['children'][$key]['icon'] = 'prio_low';
