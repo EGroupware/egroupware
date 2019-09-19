@@ -611,6 +611,8 @@ function api_upgrade17_9_001()
 	$time = number_format((microtime(true)-$start)/60, 1);
 	if ($total) echo "$total history-records converted in $time minutes to diff with a total of $saved MB saved\n";
 
+	$GLOBALS['do_NOT_run_api_upgrade19_1'] = true;	// marker for api_upgrade_19_1 to NOT run
+
 	return $GLOBALS['setup_info']['api']['currentver'] = '17.9.002';
 }
 
@@ -622,4 +624,35 @@ function api_upgrade17_9_001()
 function api_upgrade17_9_002()
 {
 	return $GLOBALS['setup_info']['api']['currentver'] = '19.1';
+}
+
+/**
+ * Fix egw_history_log.history_timestamps accidently set to time of update
+ *
+ * We can only set them to the time of the preceeding entry / row!
+ *
+ * @return string
+ */
+function api_upgrade19_1()
+{
+	// do NOT run if fixed api_upgrade17_9_001 was used / we run direct after it
+	if (empty($GLOBALS['do_NOT_run_api_upgrade19_1']) &&
+		// we have no updated / diffed row
+		(($broken_update_starttime = $GLOBALS['egw_setup']->db->select('egw_history_log',
+			'MIN(history_timestamp)', ['history_old_value' => Api\Storage\Tracking::DIFF_MARKER],
+			__LINE__, __FILE__)->fetchColumn())))
+	{
+		$endtime = new Api\DateTime($broken_update_starttime, Api\DateTime::$server_timezone);
+		$endtime->add('+ 6 hours');	// we estimate update does not take longer then 6 hours
+		$max_endtime = $endtime->format(Api\DateTime::DATABASE);
+
+		// set timestamps in estimated update window to the one of the preceeding row
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_history_log SET history_timestamp='.
+			'(SELECT history_timestamp FROM egw_history_log prev WHERE egw_history_log.history_id > prev.history_id AND prev.history_old_value != '.
+				$GLOBALS['egw_setup']->db->quote(Api\Storage\Tracking::DIFF_MARKER).' ORDER BY prev.history_id DESC LIMIT 1)'.
+			" WHERE history_timestamp BETWEEN '$broken_update_starttime' AND '$max_endtime'".
+			" AND history_old_value=".$GLOBALS['egw_setup']->db->quote(Api\Storage\Tracking::DIFF_MARKER),
+			__LINE__, __FILE__);
+	}
+	return $GLOBALS['setup_info']['api']['currentver'] = '19.1.001';
 }
