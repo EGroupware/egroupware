@@ -2744,10 +2744,11 @@ body:last-child .blueimp-gallery>.play-pause, .blueimp-gallery>.play-pause{
 .blueimp-gallery>.download{
 	right: 120px;
 	top: 20px;
-	background: url(images/download.png) 0 0 no-repeat;
+	background: url(images/apply.svg) 0 0 no-repeat;
 	background-size: 24px;
 	height:24px;
 	width:24px;
+	filter: invert(1) brightness(1.5);
 }
 /*close button*/
 .blueimp-gallery>.close{
