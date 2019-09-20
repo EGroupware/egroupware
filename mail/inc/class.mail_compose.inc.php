@@ -127,7 +127,7 @@ class mail_compose
 			),
 			'button[saveAsDraft]' => array(
 				'caption' => 'Save',
-				'icon' => 'save',
+				'icon' => 'apply',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.saveAsDraft',
 				'hint' => 'Save as Draft',
