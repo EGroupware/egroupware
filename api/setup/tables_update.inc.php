@@ -647,12 +647,32 @@ function api_upgrade19_1()
 		$max_endtime = $endtime->format(Api\DateTime::DATABASE);
 
 		// set timestamps in estimated update window to the one of the preceeding row
-		$GLOBALS['egw_setup']->db->query('UPDATE egw_history_log SET history_timestamp='.
-			'(SELECT history_timestamp FROM egw_history_log prev WHERE egw_history_log.history_id > prev.history_id AND prev.history_old_value != '.
-				$GLOBALS['egw_setup']->db->quote(Api\Storage\Tracking::DIFF_MARKER).' ORDER BY prev.history_id DESC LIMIT 1)'.
-			" WHERE history_timestamp BETWEEN '$broken_update_starttime' AND '$max_endtime'".
-			" AND history_old_value=".$GLOBALS['egw_setup']->db->quote(Api\Storage\Tracking::DIFF_MARKER),
-			__LINE__, __FILE__);
+		$prev_timestamp = '(SELECT history_timestamp FROM egw_history_log prev WHERE egw_history_log.history_id > prev.history_id AND prev.history_old_value != '.
+			$GLOBALS['egw_setup']->db->quote(Api\Storage\Tracking::DIFF_MARKER).' ORDER BY prev.history_id DESC LIMIT 1)';
+
+		// MariaDB before 10.3 could not update same table used in a sub-query (not sure about MySQL, so handle it like older MariaDB)
+		if ($GLOBALS['egw_setup']->db->Type === 'mysql' && (float)$$GLOBALS['egw_setup']->db->ServerInfo['version'] < 10.3)
+		{
+			// iterate over queried timestamps to update them from PHP
+			foreach($GLOBALS['egw_setup']->db->select('egw_history_log', "history_id,$prev_timestamp AS prev_timestamp", [
+					"history_timestamp BETWEEN '$broken_update_starttime' AND '$max_endtime'",
+					'history_old_value' => Api\Storage\Tracking::DIFF_MARKER,
+				], __LINE__, __FILE__) as $row)
+			{
+				$GLOBALS['egw_setup']->db->update('egw_history_log', [
+					'history_timestamp' => $row['prev_timestamp'],
+				], [
+					'history_id' => $row['history_id'],
+				], __LINE__, __FILE__);
+			}
+		}
+		else
+		{
+			$GLOBALS['egw_setup']->db->query("UPDATE egw_history_log SET history_timestamp=$prev_timestamp".
+				" WHERE history_timestamp BETWEEN '$broken_update_starttime' AND '$max_endtime'".
+				" AND history_old_value=".$GLOBALS['egw_setup']->db->quote(Api\Storage\Tracking::DIFF_MARKER),
+				__LINE__, __FILE__);
+		}
 	}
 	return $GLOBALS['setup_info']['api']['currentver'] = '19.1.001';
 }
