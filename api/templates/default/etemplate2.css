@@ -1660,7 +1660,7 @@ div.message.floating {
 
 
 /* Allow space for category color indicators, preserving column calculations */
-.et2_nextmatch .egwGridView_outer thead tr > th:first-child {
+.egwGridView_outer thead tr > th:first-child {
 	border-left: 6px solid transparent;
 }
 .egwGridView_scrollarea tr.row_category > td:first-child, .select-cat li {
