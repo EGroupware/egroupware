@@ -1793,7 +1793,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		// Some select things to pass on
 		var mgr = widget.getRoot().getArrayMgr('content');
 		var values = {
-			owner: mgr.getEntry('owner'),
+			owner: typeof mgr.getEntry('owner') == 'object' ? mgr.getEntry('owner') : (mgr.getEntry('owner')+'').split(','),
 			participants: [],
 			whole_day: mgr.getEntry('whole_day')
 		};
