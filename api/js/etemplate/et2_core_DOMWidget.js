@@ -274,13 +274,26 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 		// Find the tab index
 		for(var i = 0; i < parent.tabData.length; i++)
 		{
-			// Find the tab
+			// Find the tab by DOM heritage
 			if(parent.tabData[i].contentDiv.has(this.div).length)
 			{
 				return parent.tabData[i];
 			}
 		}
-		// On a tab, but we couldn't find it?  This gives best result so far.
+		// On a tab, but we couldn't find it by DOM nodes  Maybe tab template is
+		// not loaded yet.  Try checking IDs.
+		var template = this;
+		do {
+			template = template._parent;
+		} while (template !== parent && template._type !== 'template');
+		for(var i = parent.tabData.length - 1; i >= 0; i--)
+		{
+			if(template && template.id && template.id === parent.tabData[i].id)
+			{
+				return parent.tabData[i];
+			}
+		}
+		// Fallback
 		return this._parent.get_tab_info();
 	},
 
