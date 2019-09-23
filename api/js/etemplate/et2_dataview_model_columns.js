@@ -102,7 +102,7 @@ var et2_dataview_column = (function(){ "use strict"; return ClassWithAttributes.
 	 * @param {float|string} _value
 	 */
 	set_width: function(_value) {
-		// Parse the width parameter. 
+		// Parse the width parameter.
 		this.relativeWidth = false;
 		this.fixedWidth = false;
 		var w = _value;
@@ -434,12 +434,17 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 			if(!column)
 			{
 				// Distribute shortage over all fixed width columns
+				var diff = Math.round(remaining_width / fixedCount);
 				for(var i = 0; i < this.columns.length; i++)
 				{
 					var col = this.columns[i];
+					var col_diff = (diff < 0 ?
+						Math.max(remaining_width, diff) :
+						Math.min(remaining_width, diff)
+					);
 					if(!col.fixedWidth) continue;
-					var diff = Math.round(remaining_width / fixedCount);
-					var new_width = this.columnWidths[i] - diff;
+					var new_width = this.columnWidths[i] - col_diff;
+					remaining_width -= col_diff;
 					this.columnWidths[i] = Math.max(0, Math.min(new_width,tw));
 				}
 			}
