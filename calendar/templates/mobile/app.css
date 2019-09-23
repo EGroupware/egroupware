@@ -2747,6 +2747,7 @@ span.et2_checkbox_slideSwitch span.slideSwitch_container a {
   }
   #calendar-toolbar #toolbar-actionlist {
     margin-left: 60px;
+    margin-top: 14px;
   }
   #calendar-edit #calendar-edit_calendar-edit-details {
     float: none;
