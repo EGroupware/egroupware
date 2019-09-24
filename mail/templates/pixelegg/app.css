@@ -86,7 +86,7 @@ span.status_img {
   width: 12px;
   height: 12px;
   background-repeat: no-repeat;
-  background-image: url(../default/images/kmmsgread.svg);
+  background-image: url(../default/images/kmmsgread.png);
 }
 tr.deleted span.status_img {
   background-image: url(../default/images/kmmsgdel.png);
@@ -1659,10 +1659,10 @@ tr.recent span.status_img {
   background-image: url(../pixelegg/images/kmmsgnew.png) !important;
 }
 tr.replied span.status_img {
-  background-image: url(../pixelegg/images/kmmsgreplied.png) !important;
+  background-image: url(../pixelegg/images/mail_reply.svg) !important;
 }
 tr.forwarded span.status_img {
-  background-image: url(../pixelegg/images/kmmsgforwarded.png) !important;
+  background-image: url(../pixelegg/images/mail_forward.svg) !important;
 }
 .subjectBold {
   font-size: 12px;
