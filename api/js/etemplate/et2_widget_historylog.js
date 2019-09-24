@@ -125,7 +125,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 								e.data.history.dynheight.update(function(_w, _h) {
 									e.data.history.dataview.resize(_w, _h);
 								});
-							}
+						}
 						}
 
 					};
@@ -172,7 +172,8 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 		// Create the dynheight component which dynamically scales the inner
 		// container.
 		this.div.parentsUntil('.et2_tabs').height('100%');
-		this.dynheight = new et2_dynheight(this.div.parent(),
+		var parent = this.get_tab_info();
+		this.dynheight = new et2_dynheight(parent ? parent.contentDiv : this.div.parent(),
 				this.innerDiv, 250
 		);
 
@@ -507,13 +508,21 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 		if ( this.options.value['num_rows'] )
 			_queriedRange['num_rows'] = this.options.value['num_rows'];
 
+		var historylog = this;
 		// Pass the fetch call to the API
 		this.egw().dataFetch(
 			this.getInstanceManager().etemplate_exec_id,
 			_queriedRange,
 			this._filters,
 			this.id,
-			_callback,
+			function(_response) {
+				_callback.call(this,_response);
+				// This seems to prevent unwanted scrollbars
+				historylog.div.hide();
+				window.setTimeout(function() {
+					historylog.div.show();
+				}.bind(historylog),100);
+			},
 			_context,
 			[]
 		);
