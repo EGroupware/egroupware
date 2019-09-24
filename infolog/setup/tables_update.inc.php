@@ -1108,3 +1108,16 @@ function infolog_upgrade17_1_001()
 {
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '19.1';
 }
+
+/**
+ * Fix egw_infolog_users.info_res_deleted=0 --> NULL
+ *
+ * @return string
+ */
+function infolog_upgrade19_1()
+{
+	$GLOBALS['egw_setup']->db->query("UPDATE egw_infolog_users SET info_res_deleted=NULL WHERE info_res_deleted=".
+		$GLOBALS['egw_setup']->db->quote(false, 'bool'));
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '19.1.001';
+}

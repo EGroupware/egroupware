@@ -765,7 +765,10 @@ class Backup
 				// decode bool columns, they might be 't'/'f' for old PostgreSQL backups
 				foreach($bools as $key)
 				{
-					$fields[$key] = Api\Db::from_bool($fields[$key]);
+					if (isset($fields[$key]))	// do NOT replace NULL with false/0
+					{
+						$fields[$key] = Api\Db::from_bool($fields[$key]);
+					}
 				}
 			}
 			return $fields;
@@ -797,7 +800,7 @@ class Backup
 			{
 				$arr[$key] = base64_decode($field);
 			}
-			elseif (in_array($key, $bools))
+			elseif ($field !== 'NULL' && in_array($key, $bools))
 			{
 				$arr[$key] = Api\Db::from_bool($field);
 			}
