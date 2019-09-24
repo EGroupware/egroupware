@@ -1671,10 +1671,10 @@ tr.recent span.status_img {
   background-image: url(../pixelegg/images/kmmsgnew.png) !important;
 }
 tr.replied span.status_img {
-  background-image: url(../pixelegg/images/kmmsgreplied.png) !important;
+  background-image: url(../pixelegg/images/mail_reply.svg) !important;
 }
 tr.forwarded span.status_img {
-  background-image: url(../pixelegg/images/kmmsgforwarded.png) !important;
+  background-image: url(../pixelegg/images/mail_forward.svg) !important;
 }
 .subjectBold {
   font-size: 12px;
@@ -2349,10 +2349,10 @@ table#mail-index_previewAttachmentArea::-webkit-scrollbar-thumb:hover {
     background-image: url(../pixelegg/images/kmmsgnew.png);
   }
   #mail-index table.egwGridView_outer tbody tr span.replied.status_img {
-    background-image: url(../pixelegg/images/kmmsgreplied.png);
+    background-image: url(../pixelegg/images/mail_reply.svg);
   }
   #mail-index table.egwGridView_outer tbody tr span.forwarded.status_img {
-    background-image: url(../pixelegg/images/kmmsgforwarded.png);
+    background-image: url(../pixelegg/images/mail_forward.svg);
   }
   #mail-index table.egwGridView_outer tbody tr span.bodypreview {
     text-overflow: ellipsis;
