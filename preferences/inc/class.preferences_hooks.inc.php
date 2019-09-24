@@ -269,6 +269,16 @@ class preferences_hooks
 				'admin'  => True,
 				'forced' => true,
 			),
+			'scroll_area'=> array(
+				'type'   => 'select',
+				'label'  => 'Applications list scroll area',
+				'name'   => 'scroll_area',
+				'values' => array('0'=>lang('Disable'),'1'=>lang('Enable')),
+				'help'   => 'Make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default' => '0',
+			),
 			array(
 				'type'	=> 'section',
 				'title'	=> 'Formatting & general settings'

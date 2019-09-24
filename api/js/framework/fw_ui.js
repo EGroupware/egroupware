@@ -858,6 +858,8 @@ function egw_fw_ui_scrollarea(_contDiv)
 	this.buttonsVisible = true;
 	this.mouseOver = false;
 	this.scrollTime = 0.0;
+	this.btnUpEnabled = true;
+	this.btnDownEnabled = true;
 
 	//Wrap a new "scroll" div around the content of the content div
 	this.scrollDiv = document.createElement("div");
@@ -943,17 +945,54 @@ function egw_fw_ui_scrollarea(_contDiv)
 
 egw_fw_ui_scrollarea.prototype.setScrollPos = function(_pos)
 {
+	var scrollArea = egw.preference('scroll_area', 'common') == 1 ? true : false;
 	if (this.buttonsVisible)
 	{
-		if (_pos <= 0)
+		if (scrollArea)
 		{
-			_pos = 0;
+			if (_pos <= 0)
+			{
+				if (this.btnUpEnabled)
+					jQuery(this.btnUp).addClass("egw_fw_ui_scrollarea_button_disabled");
+				if (!this.btnDownEnabled)
+					jQuery(this.btnDown).removeClass("egw_fw_ui_scrollarea_button_disabled");
+				this.btnDownEnabled = true;
+				this.btnUpEnabled = false;
+				_pos = 0;
+			}
+			else if (_pos >= this.maxScrollPos)
+			{
+				if (this.btnDownEnabled)
+					jQuery(this.btnDown).addClass("egw_fw_ui_scrollarea_button_disabled");
+				if (!this.btnUpEnabled)
+					jQuery(this.btnUp).removeClass("egw_fw_ui_scrollarea_button_disabled");
+				this.btnDownEnabled = false;
+				this.btnUpEnabled = true;
+				_pos = this.maxScrollPos;
+			}
+			else
+			{
+				if (!this.btnUpEnabled)
+					jQuery(this.btnUp).removeClass("egw_fw_ui_scrollarea_button_disabled");
+				if (!this.btnDownEnabled)
+					jQuery(this.btnDown).removeClass("egw_fw_ui_scrollarea_button_disabled");
+				this.btnUpEnabled = true;
+				this.btnDownEnabled = true;
+			}
 		}
-		else if (_pos >= this.maxScrollPos)
+		else
 		{
-			_pos = this.maxScrollPos;
+			if (_pos <= 0)
+			{
+				_pos = 0;
+			}
+			else if (_pos >= this.maxScrollPos)
+			{
+				_pos = this.maxScrollPos;
+			}
+			jQuery(this.btnUp).addClass("egw_fw_ui_scrollarea_button_disabled");
+			jQuery(this.btnDown).addClass("egw_fw_ui_scrollarea_button_disabled");
 		}
-
 		this.scrollPos = _pos;
 
 		//Apply the calculated scroll position to the scrollDiv
