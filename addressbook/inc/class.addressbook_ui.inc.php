@@ -2863,6 +2863,7 @@ class addressbook_ui extends addressbook_bo
 			'cancel' => array(
 				'caption' => 'Cancel',
 				'toolbarDefault' => true,
+				'icon' => 'close'
 			),
 			'back' => array(
 				'caption' => 'Back',
