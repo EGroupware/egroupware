@@ -164,10 +164,9 @@ div.calendar_conflicts {
   overflow-y: auto;
 }
 .calendar_conflicts img {
-	width: 22px;
-	height: 22px;
+  width: 22px;
+  height: 22px;
 }
-
 /* Loader - hide sizing behind overlay*/
 #egw-loadin-prompt_calendar::before {
   opacity: 1;
@@ -1510,6 +1509,9 @@ img.calendar_print_appicon {
   display: block;
   max-height: 550px;
   overflow-y: auto;
+}
+#toolbar-weekend {
+  background-image: none !important;
 }
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {

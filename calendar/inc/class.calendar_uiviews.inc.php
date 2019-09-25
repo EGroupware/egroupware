@@ -350,7 +350,7 @@ class calendar_uiviews extends calendar_ui
 			),
 			'weekend' => array(
 				'caption' => 'Weekend',
-				'icon' => 'weekend',
+				'icon' => '7_day_view',
 				'checkbox'	=> true,
 				'checked' => $this->cal_prefs['saved_states']['weekend'],
 				'group' => $group,
