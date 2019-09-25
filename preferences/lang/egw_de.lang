@@ -9,6 +9,7 @@ a theme defines the colors and fonts used by the template.	preferences	de	Das Th
 access token revoked.	preferences	de	Token zurückgezogen
 acl grants have been updated	preferences	de	ACL (Zugangskontrollliste) wurde aktualisiert
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in EGroupware zeigt diese Anzahl Zeilen pro Seite.<br>Zu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
+applications list scroll area	preferences	de	Scroll-Leiste für Anwendung im Seitenmenü
 are you sure you want to delete this category ?	preferences	de	Sind sie sicher, dass Sie diese Kategorie löschen wollen?
 audio effect	preferences	de	Audio-Effekt
 audio effect enables|disables sound effects used in the theme	preferences	de	Audio Effekte (Sound) für das Thema aktivieren|deaktivieren.
@@ -98,6 +99,7 @@ kama theme	preferences	de	Kama Farbschema
 language	preferences	de	Sprache
 look & feel	preferences	de	Aussehen und Handhabung
 lowercase letters	preferences	de	Kleinbuchstaben
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	de	Machen Sie die Anwendungsliste im Seitenmenü über Scroll-Tasten nach oben/unten scrollbar (nützlich für Benutzer, die mit einer Maus ohne Scrollrad arbeiten).
 max matches per page	preferences	de	maximale Treffer pro Seite
 max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Navigationsleiste
 moono color theme	preferences	de	Farbiges Schema (Moono)

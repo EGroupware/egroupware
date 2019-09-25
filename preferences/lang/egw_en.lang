@@ -9,6 +9,7 @@ a theme defines the colors and fonts used by the template.	preferences	en	A them
 access token revoked.	preferences	en	Access Token revoked.
 acl grants have been updated	preferences	en	ACL grants have been updated.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in EGroupware will show this number of entries or lines per page. Too many slow down the page display, too less will cost you the overview.
+applications list scroll area	preferences	en	Applications list scroll area
 are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category ?
 audio effect	preferences	en	Audio effect
 audio effect enables|disables sound effects used in the theme	preferences	en	Audio effect enables|disables sound effects used in the theme
@@ -98,6 +99,7 @@ kama theme	preferences	en	Kama theme
 language	preferences	en	Language
 look & feel	preferences	en	Look & feel
 lowercase letters	preferences	en	lowercase letters
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	en	Make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)
 max matches per page	preferences	en	Max matches per page
 max number of icons in navbar	preferences	en	Max number of icons in navigation bar
 moono color theme	preferences	en	Moono color theme
