@@ -1518,6 +1518,9 @@ img.calendar_print_appicon {
   max-height: 550px;
   overflow-y: auto;
 }
+#toolbar-weekend {
+  background-image: none !important;
+}
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {
   background-color: #828282 !important;

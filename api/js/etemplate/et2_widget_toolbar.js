@@ -709,8 +709,8 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 	_admin_settings_dialog: function (_actions, _default_prefs)
 	{
 		var buttons = [
-			{text: egw.lang("Close"), id:"close"},
 			{text: egw.lang("Save"), id:"save"},
+			{text: egw.lang("Close"), id:"close"}
 		];
 		var self = this;
 		var sel_options = {actions:[]};
@@ -767,7 +767,7 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 			},
 			title: egw.lang('admin settings for %1', this.dom_id),
 			buttons: buttons,
-			minWidth: 500,
+			minWidth: 600,
 			minHeight: 300,
 			value:{content: content, sel_options: sel_options},
 			template: egw.webserverUrl+'/api/templates/default/toolbarAdminSettings.xet?1',

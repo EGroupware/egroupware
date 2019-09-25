@@ -1543,3 +1543,5 @@ img.calendar_print_button, img.calendar_print_appicon {
 
 .category_report_cats {height:80%;overflow-y: auto;display:block;}
 #calendar-category_report_grid {display:block;max-height: 550px;overflow-y: auto;}
+
+#toolbar-weekend {background-image: none !important}
