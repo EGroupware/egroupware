@@ -1537,7 +1537,7 @@ class calendar_uiforms extends calendar_ui
 				'no_popup' => isset($_GET['no_popup']),
 				'template' => isset($_GET['template']) ? $_GET['template'] : (isset($_REQUEST['print']) ? 'calendar.print' : 'calendar.edit'),
 			);
-			if($preserv['template'] && $this->cal_prefs['new_event_dialog'] == 'edit')
+			if(!isset($_REQUEST['print']) && !empty($preserv['template']) && $this->cal_prefs['new_event_dialog'] == 'edit')
 			{
 				// User wants full thing
 				unset($preserv['template']);
