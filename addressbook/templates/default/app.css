@@ -109,6 +109,9 @@ div.city_state_postcode #addressbook-edit_adr_one_postalcode {margin-right: 5px 
 .addressbookHooked .egwGridView_grid label>span.et2_link {
 	display: none;
 }
+#addressbook-index .filtersContainer select {
+	max-width: 31.5% !important;
+}
 select#addressbook-index_col_filter\[tid\] {
 	width: 100px;
 }
