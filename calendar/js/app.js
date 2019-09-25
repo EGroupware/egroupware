@@ -1641,7 +1641,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 * with the submission, handling of the response, and cleanup.
 	 *
 	 * @param {Object} options Array of values for new
-	 * @param {et2_calendar_event} event Placeholder showing where new event goed
+	 * @param {et2_calendar_event} event Placeholder showing where new event goes
 	 */
 	add: function(options, event)
 	{
@@ -1790,13 +1790,25 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 */
 	_add_dialog_values: function(widget)
 	{
-		// Some select things to pass on
+		// Some select things to pass on, since not everything will fit
 		var mgr = widget.getRoot().getArrayMgr('content');
 		var values = {
 			owner: typeof mgr.getEntry('owner') == 'object' ? mgr.getEntry('owner') : (mgr.getEntry('owner')+'').split(','),
 			participants: [],
 			whole_day: mgr.getEntry('whole_day')
 		};
+		if(mgr.getEntry('link_to') && typeof mgr.getEntry('link_to').to_id === 'object')
+		{
+			var links = mgr.getEntry('link_to').to_id;
+
+			values.link_app = [];
+			values.link_id = [];
+			for( var id in links)
+			{
+				values.link_app.push(links[id].app);
+				values.link_id.push(links[id].id);
+			}
+		}
 		for(var id in mgr.getEntry('participants'))
 		{
 			var participant = mgr.getEntry('participants')[id];
