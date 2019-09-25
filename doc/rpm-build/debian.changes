@@ -1,3 +1,15 @@
+egroupware-docker (19.1.20190925) hardy; urgency=low
+
+  * Password&Security: fix not working password change after 19.1.20190917
+  * Calendar: fix not working print view, if conventional add popup is enabled
+  * Addressbook: fix filters in list "jumping" in Chrome 76+ on Windows
+  * Template: implement applications list up/down scroll buttons (as an user preference feature)
+  * InfoLog: fix delegation no longer shown after database restore
+  * History: fix timestamps broken by 19.1 update storing diffs using timestamp of preceeding row
+  * Tracker: fix unable to clear queue/category/version colors
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 25 Sep 2019 13:26:53 +0200
+
 egroupware-docker (19.1.20190917) hardy; urgency=low
 
   * EPL: WebAuthn incl. older U2F tokens as 2nd factor for authentication
