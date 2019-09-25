@@ -129,8 +129,23 @@ div.city_state_postcode #addressbook-edit_adr_one_postalcode {
 .addressbookHooked .egwGridView_grid label > span.et2_link {
   display: none;
 }
+/**
+ * adjust width of select-boxes in nextmatch
+ */
+#addressbook-index .filtersContainer {
+  position: absolute;
+  top: 0;
+  /* Required for Chrome 76+ on Windows */
+  left: 342px;
+  right: 215px;
+}
 #addressbook-index .filtersContainer select {
-  max-width: 31.5% !important;
+  width: 31.5%;
+}
+/* category filter chosen. !important is neccessary to override the width set by chosen*/
+#addressbook-index .nextmatch_header_row .et2_selectbox.select-cat {
+  min-width: auto;
+  width: 31.5% !important;
 }
 select#addressbook-index_col_filter\[tid\] {
   width: 100px;
