@@ -5,9 +5,8 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
  * @package admin
- * @copyright (c) 2014-16 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2014-19 by Ralf Becker <rb@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -292,7 +291,6 @@ class admin_account
 		}
 
 		$sel_options = array();
-		$readonlys = array();
 		$preserve = $content;
 
 		// Get a count of entries owned by the user
@@ -333,7 +331,7 @@ class admin_account
 	 */
 	public static function ajax_delete_group($account_id, $data)
 	{
-		$cmd = new admin_cmd_delete_account(Api\Accounts::id2name(Api\Accounts::id2name($account_id)), null, false, $data['admin_cmd']);
+		$cmd = new admin_cmd_delete_account(Api\Accounts::id2name(Api\Accounts::id2name($account_id)), null, false, (array)$data['admin_cmd']);
 		$msg = $cmd->run();
 
 		Api\Json\Response::get()->call('egw.refresh', $msg, 'admin', $account_id, 'delete');
