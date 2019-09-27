@@ -43,7 +43,7 @@ class Vfs extends File
 			$form_name = self::form_name($cname, $this->id, $expand ? $expand : array('cont'=>self::$request->content));
 			if($this->attrs['path'])
 			{
-				$path = $this->attrs['path'];
+				$path = self::expand_name($this->attrs['path'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 			}
 			else
 			{
