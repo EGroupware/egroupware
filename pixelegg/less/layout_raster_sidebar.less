@@ -65,7 +65,7 @@
 				}
 				&:active {.box_shadow_standard_light_inset;}
 				h1 {
-					margin: 0 0 0 0;
+					margin: 0 0 10px 0;
 					padding-top: 0.4em;
 					padding-left: 3em;
 					.color_40_gray;
@@ -105,8 +105,12 @@
 				}
                 &:active {}
 				&:hover {
+					background-image: url(../images/reload.png);
+					background-size: 18px;
+					background-position: 9px 6px;
+					background-repeat: no-repeat;
 					img {
-						content: url(../images/reload.png);
+						display: none !important;
 					}
 				}
                 &:focus {
@@ -411,6 +415,10 @@
 			border-radius: 0 !important;
 			width: auto !important;
 			border:0;
+			&:hover {
+				background-size: 24px;
+				background-position: 15px 8px;
+			}
 		}
 		.egw_fw_ui_sidemenu_entry_header {
 			width: 50px;
