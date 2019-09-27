@@ -4396,7 +4396,7 @@ td.message span.message {
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header h1 {
-  margin: 0 0 0 0;
+  margin: 0 0 10px 0;
   padding-top: 0.4em;
   padding-left: 3em;
   color: #999999;
@@ -4431,8 +4431,14 @@ td.message span.message {
   padding-top: 0;
   line-height: 33px;
 }
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active:hover {
+  background-image: url(../images/reload.png);
+  background-size: 18px;
+  background-position: 9px 6px;
+  background-repeat: no-repeat;
+}
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active:hover img {
-  content: url(../images/reload.png);
+  display: none !important;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active:focus {
   background-image: url("../images/ajax-loader.gif");
@@ -4670,6 +4676,10 @@ td.message span.message {
   border-radius: 0 !important;
   width: auto !important;
   border: 0;
+}
+#egw_fw_basecontainer.egw_fw_sidebar_toggleOn #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:hover {
+  background-size: 24px;
+  background-position: 15px 8px;
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header {
   width: 50px;
