@@ -35,6 +35,27 @@ use EGroupware\Api;
 class Univention extends Ldap
 {
 	/**
+	 * Name of mail attribute
+	 */
+	const MAIL_ATTR = 'mailprimaryaddress';
+
+	/**
+	 * Constructor
+	 *
+	 * @param Api\Accounts $frontend reference to the frontend class, to be able to call it's methods if needed
+	 */
+	function __construct(Api\Accounts $frontend)
+	{
+		parent::__construct($frontend);
+
+		// remove not supported groupOfNames to skip parent::save() first tries with it, before trying without
+		if (($groupOfNameKey = array_search('groupofnames', $this->requiredObjectClasses['group'])))
+		{
+			unset($this->requiredObjectClasses['group'][$groupOfNameKey]);
+		}
+	}
+
+	/**
 	 * Saves / adds the data of one account
 	 *
 	 * If no account_id is set in data the account is added and the new id is set in $data.
@@ -82,9 +103,9 @@ class Univention extends Ldap
 			$data['account_dn'] = $udm->createUser($data);
 			$data['account_id'] = $this->name2id($data['account_lid'], 'account_lid', 'u');
 		}
-		// create new groups with given account_id via directory-manager too, to be able to set the RID
-		elseif($data['account_type'] === 'g' && !empty($data['account_id']) &&
-			$data['account_id'] >= Ads::MIN_ACCOUNT_ID && !$this->id2name($data['account_id']))
+		// create new groups incl. Samba objectclass and SID
+		elseif($data['account_type'] === 'g' && (empty($data['account_id']) ||
+			$data['account_id'] >= Ads::MIN_ACCOUNT_ID && !$this->id2name($data['account_id'])))
 		{
 			$data['account_dn'] = $udm->createGroup($data);
 			$data['account_id'] = $this->name2id($data['account_lid'], 'account_lid', 'g');

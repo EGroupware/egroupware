@@ -52,7 +52,7 @@ class Udm
 	/**
 	 * Log webservice-calls to error_log
 	 */
-	const DEBUG = true;
+	const DEBUG = false;
 
 	/**
 	 * Constructor
@@ -96,13 +96,16 @@ class Udm
 	{
 		$curl = curl_init();
 
-		// fix error: Request argument "policies" is not a "dict" (PHP encodes empty arrays as array, not object)
+		// fix error like: Request argument "policies" is not a "dict" (PHP encodes empty arrays as array, not object)
 		if (array_key_exists('policies', $_payload) && empty($_payload['policies']))
 		{
 			$_payload['policies'] = new \stdClass();	// force "policies": {}
 		}
+		if (is_array($_payload['properties']) && array_key_exists('umcProperty', $_payload['properties']) && empty($_payload['properties']['umcProperty']))
+		{
+			$_payload['properties']['umcProperty'] = new \stdClass();	// force "umcProperty": {}
+		}
 
-		$headers = [];
 		$curlOpts = [
 			CURLOPT_URL => 'https://'.$this->host.($_path[0] !== '/' ? self::PREFIX : '').$_path,
 			CURLOPT_USERPWD => $this->user.':'.$this->config['ldap_root_pw'],
@@ -115,29 +118,7 @@ class Udm
 			//CURLOPT_FOLLOWLOCATION => 1,
 			CURLOPT_TIMEOUT => 30,	// setting a timeout of 30 seconds, as recommended by Univention
 			CURLOPT_VERBOSE => 1,
-			CURLOPT_HEADERFUNCTION =>
-				function($curl, $header) use (&$headers)
-				{
-					$len = strlen($header);
-					$header = explode(':', $header, 2);
-					if (count($header) < 2)
-					{
-						$headers[] = $header[0];	// http status
-						return $len;
-					}
-					$name = strtolower(trim($header[0]));
-					if (!array_key_exists($name, $headers))
-					{
-						$headers[$name] = trim($header[1]);
-					}
-					else
-					{
-						$headers[$name] = [$headers[$name]];
-						$headers[$name][] = trim($header[1]);
-					}
-					unset($curl);	// not used, but required by function signature
-					return $len;
-				},
+			CURLOPT_HEADER => 1,
 		];
 		if (isset($if_match))
 		{
@@ -162,27 +143,32 @@ class Udm
 		curl_setopt_array($curl, $curlOpts);
 		$response = curl_exec($curl);
 
+		$header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+		$headers = self::getHeaders(substr($response, 0, $header_size));
+		$body = substr($response, $header_size);
+
 		$path = urldecode($_path);	// for nicer error-messages
-		if (!$response || !($json = json_decode($response, true)) && json_last_error())
+		if ($response === false || $body !== '' && !($json = json_decode($body, true)) && json_last_error())
 		{
 			$info = curl_getinfo($curl);
 			curl_close($curl);
 			if ($retry > 0)
 			{
-				error_log(__METHOD__."($path, $_method, ...) failed, retrying in 100ms, returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).", curl_getinfo()=".json_encode($info, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+				error_log(__METHOD__."($path, $_method, ...) failed, retrying in 100ms, returned $body, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).", curl_getinfo()=".json_encode($info, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
 				usleep(100000);
 				return $this->call($_path, $_method, $_payload, $headers, $if_match, $return_dn, --$retry);
 			}
-			error_log(__METHOD__."($path, $_method, ...) returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).", curl_getinfo()=".json_encode($info, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+			error_log(__METHOD__."($path, $_method, ...) returned $body, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).", curl_getinfo()=".json_encode($info, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
 			error_log(__METHOD__."($path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).")");
-			throw new UdmCantConnect("Error contacting Univention UDM REST Api ($_path)".($response ? ': '.json_last_error() : ''));
+			throw new UdmCantConnect("Error contacting Univention UDM REST Api ($path)".($response !== false ? ': '.json_last_error() : ''));
 		}
 		curl_close($curl);
-		if (!empty($json['error']))
+		// error in json or non 20x http status
+		if (!empty($json['error']) || !preg_match('|^HTTP/[0-9.]+ 20|', $headers[0]))
 		{
 			error_log(__METHOD__."($path, $_method, ...) returned $response, headers=".json_encode($headers, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
 			error_log(__METHOD__."($path, $_method, ".json_encode($_payload, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).")");
-			throw new UdmError("UDM REST Api (".urldecode($_path)."): ".(empty($json['error']['message']) ? $response : $json['error']['message']), $json['error']['code']);
+			throw new UdmError("UDM REST Api ($path): ".(empty($json['error']['message']) ? $headers[0] : $json['error']['message']), $json['error']['code']);
 		}
 		if (self::DEBUG)
 		{
@@ -195,11 +181,52 @@ class Udm
 			$matches = null;
 			if (!isset($headers['location']) || !preg_match('|/([^/]+)$|', $headers['location'], $matches))
 			{
-				throw new UdmMissingLocation("UDM REST Api ($_path) did not return Location header!");
+				throw new UdmMissingLocation("UDM REST Api ($path) did not return Location header!");
 			}
 			return urldecode($matches[1]);
 		}
 		return $json;
+	}
+
+	/**
+	 * Convert header string in array of headers
+	 *
+	 * A "HTTP/1.1 100 Continue" is NOT returned!
+	 *
+	 * @param string $head
+	 * @return array with name => value pairs, 0: http-status, value can be an array for multiple headers with same name
+	 */
+	protected static function getHeaders($head)
+	{
+		$headers = [];
+		foreach(explode("\r\n", $head) as $header)
+		{
+			if (empty($header)) continue;
+
+			$parts = explode(':', $header, 2);
+			if (count($parts) < 2)
+			{
+				$headers[0] = $header;	// http-status
+			}
+			else
+			{
+				$name = strtolower($parts[0]);
+				if (!isset($headers[$name]))
+				{
+					$headers[$name] = trim($parts[1]);
+				}
+				else
+				{
+					if (!is_array($headers[$name]))
+					{
+						$headers[$name] = [$headers[$name]];
+					}
+					$headers[$name][] = trim($parts[1]);
+				}
+			}
+		}
+		if (self::DEBUG) error_log(__METHOD__."(\$head) returning ".json_encode($headers));
+		return $headers;
 	}
 
 	/**
@@ -212,7 +239,7 @@ class Udm
 	public function createUser(array $data)
 	{
 		// set default values
-		$payload = $this->user2udm($data, $this->call('users/user/add')['entry']);
+		$payload = $this->user2udm($data, $this->call('users/user/add'));
 
 		$payload['superordinate'] = null;
 		$payload['position'] = $this->config['ldap_context'];
@@ -236,16 +263,7 @@ class Udm
 		$payload = $this->user2udm($data, $this->call('users/user/'.urlencode($dn), 'GET', [], $get_headers));
 
 		$headers = [];
-		$ret = $this->call('users/user/'.urlencode($dn), 'PUT', $payload, $headers, $get_headers['etag'], true);
-
-		// you can not set the password and force a password change for next login in the same call
-		// the forced password change will be lost --> call again without password to force the change on next login
-		if (!empty($data['account_passwd']) && !empty($data['mustchangepassword']))
-		{
-			unset($data['account_passwd']);
-			$ret = $this->updateUser($ret, $data);
-		}
-		return $ret;
+		return $this->call('users/user/'.urlencode($dn), 'PUT', $payload, $headers, $get_headers['etag'], true);
 	}
 
 	/**
@@ -315,7 +333,7 @@ class Udm
 	public function createGroup(array $data)
 	{
 		// set default values
-		$payload = $this->group2udm($data, $this->call('groups/group/add')['entry']);
+		$payload = $this->group2udm($data, $this->call('groups/group/add'));
 
 		$payload['superordinate'] = null;
 		$payload['position'] = empty($this->config['ldap_group_context']) ? $this->config['ldap_context'] : $this->config['ldap_group_context'];
@@ -336,7 +354,7 @@ class Udm
 	{
 		// set existing values
 		$get_headers = [];
-		$payload = $this->user2udm($data, $this->call('groups/group/'.urlencode($dn), 'GET', [], $get_headers));
+		$payload = $this->group2udm($data, $this->call('groups/group/'.urlencode($dn), 'GET', [], $get_headers));
 
 		$headers = [];
 		return $this->call('groups/group/'.urlencode($dn), 'PUT', $payload, $headers, $get_headers['etag'], true);
@@ -353,7 +371,7 @@ class Udm
 	{
 		foreach([
 			'account_lid' => 'name',
-			'account_id' => ['gidNumber', 'sambaRID'],
+			'account_id' => 'gidNumber',
 		] as $egw => $names)
 		{
 			if (!empty($data[$egw]))
@@ -364,7 +382,8 @@ class Udm
 					{
 						throw new \Exception ("No '$name' in properties: ".json_encode($payload['properties']));
 					}
-					$payload['properties'][$name] = $data[$egw];
+					// our account_id is negative for groups!
+					$payload['properties'][$name] = $egw === 'account_id' ? abs($data[$egw]) : $data[$egw];
 				}
 			}
 		}

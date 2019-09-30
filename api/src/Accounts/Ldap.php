@@ -557,9 +557,18 @@ class Ldap
 	{
 		$to_write['gidnumber'] = abs($data['account_id']);
 		$to_write['cn'] = $data['account_lid'];
-		if (!empty($data['account_description']) || $old)
+		// do not overwrite exitsting description, if non is given
+		if (isset($data['account_description']))
 		{
 			$to_write['description'] = !empty($data['account_description']) ? $data['account_description'] : array();
+		}
+		// to kope with various dependencies / requirements of objectclasses, simply write everything again
+		foreach($old as $name => $value)
+		{
+			if (!isset($to_write[$name]) && !in_array($name, ['dn', 'objectclass']))
+			{
+				$to_write[$name] = $value;
+			}
 		}
 		return $to_write;
 	}

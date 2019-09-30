@@ -199,7 +199,7 @@ class Ldap implements Backend
 				isset($allValues[0]['sambapwdlastset']) && (string)$allValues[0]['sambapwdlastset'][0] === '0' ||
 				isset($allValues[0]['krb5passwordend']) && Api\DateTime::user2server($allValues[0]['krb5passwordend'][0]) < time())
 			{
-				error_log(__METHOD__."('$_username') shadowlastchange={$allValues[0]['shadowlastchange']}, sambapwdlastset={$allValues[0]['sambapwdlastset'][0]}, krb5passwordend={$allValues[0]['krb5passwordend'][0]} --> return 0");
+				if ($this->debug) error_log(__METHOD__."('$_username') shadowlastchange={$allValues[0]['shadowlastchange'][0]}, sambapwdlastset={$allValues[0]['sambapwdlastset'][0]}, krb5passwordend={$allValues[0]['krb5passwordend'][0]} --> return 0");
 				return 0;
 			}
 			if (!isset($allValues[0]['shadowlastchange']))
