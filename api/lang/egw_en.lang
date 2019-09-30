@@ -1086,6 +1086,7 @@ regular	common	en	Regular
 reject	common	en	Reject
 remember me	common	en	Remember me
 remember me for %1	common	en	Remember me for %1
+remove	api	en	Remove
 remove row (can not be undone!!!)	common	en	Remove row
 remove selected accounts	common	en	Remove selected accounts
 remove shortcut	common	en	Remove shortcut

@@ -1,6 +1,6 @@
 %1 definition(s) %2	importexport	de	%1 Profildefinition(en) %2
-%1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	de	%1 Import/Exportdefonition(en) %2, %3 konnte wegen fehlender Rechte nicht ausgeführt wegen !!!
-%1 definitions %2	importexport	de	%1 Import/Exportdefonition(en) %2
+%1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	de	%1 Import/Exportdefinition(en) %2, %3 konnte wegen fehlender Rechte nicht ausgeführt wegen !!!
+%1 definitions %2	importexport	de	%1 Import/Exportdefinition(en) %2
 %1 is not a known user or group	importexport	de	%1 ist kein Benutzer oder eine Benutzergruppe
 %1 is not readable	importexport	de	%1 ist nicht lesbar
 %1 is not writable	importexport	de	%1 ist nicht möglich zu schreiben
@@ -28,12 +28,12 @@ changed allowed_users	importexport	de	Erlaubten Benutzer geändert
 changed owner	importexport	de	Besitzer geändert
 charset of file	importexport	de	Zeichensatz der Datei
 check all	importexport	de	Alle markieren
-choose a name for this definition	importexport	de	Wählen sie einen Namen für diese Definition.
-choose a plugin	importexport	de	Wählen sie ein Plug-in.
-choose an application	importexport	de	Wählen sei eine Anwendung.
+choose a name for this definition	importexport	de	Wählen Sie einen Namen für diese Definition.
+choose a plugin	importexport	de	Wählen Sie ein Plug-in.
+choose an application	importexport	de	Wählen Sie eine Anwendung.
 choose fields to export	importexport	de	Wählen Sie die Felder für den Export aus.
 choose seperator and charset	importexport	de	Wählen Sie das Trennzeichen und den Zeichensatz aus
-column mismatch.  expected %1 columns, your file has %2.	importexport	de	Zuordnungsfehler bei der Spaltendefinition. %1 Spalten in der Definition, In der Importdatei  %2.
+column mismatch.  expected %1 columns, your file has %2.	importexport	de	Zuordnungsfehler bei der Spaltendefinition. %1 Spalten in der Definition, in der Importdatei  %2.
 column mismatch: %1 should be %2, not %3	importexport	de	Zuordnungsfehler in der Spaltendefinition. %1 sollte %2, nicht %3 sein
 condition	importexport	de	Bedingungen
 copied	importexport	de	Kopiert
@@ -53,14 +53,14 @@ delimiter	importexport	de	Trennzeichen
 duplicate name, please choose another.	importexport	de	Doppelter Name, bitte wählen Sie einen anderen Namen
 edit conditions	importexport	de	Einstellmöglichkeiten bearbeiten
 edit definition <a href="%1">%2</a> to match your file	importexport	de	Importdefinition überarbeiten<a href="%1">%2</a> um Ihre Datei zu Importieren
-edit your file to match the definition:	importexport	de	Bearbeiten Sie Ihre Importdatei, um Ihrem Importprofil zu Entsprechen
+edit your file to match the definition:	importexport	de	Bearbeiten Sie Ihre Importdatei, um Ihrem Importprofil zu entsprechen
 errors	importexport	de	Fehler
 execute	importexport	de	Ausführen
 expert options	importexport	de	Export Optionen
 export	importexport	de	Exportieren
 export all selected definitions	importexport	de	Alle ausgewählten Definitionen exportieren
 export data as	importexport	de	Daten exportieren als
-export definition to use for nextmatch export	preferences	de	Export Definition für den Export über die Benutzeroberfläche (nextmatch)
+export definition to use for nextmatch export	preferences	de	Export-Definition für den Export über die Benutzeroberfläche (nextmatch)
 export spreadsheet	importexport	de	Export Tabellenkalkulation
 exported	importexport	de	Exportiert.
 extra %1	importexport	de	Extra %1
@@ -78,8 +78,8 @@ general	preferences	de	Generell
 general fields:	preferences	de	Allgemeine Felder
 header lines to skip	importexport	de	Kopfzeilen zu überspringen
 how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	de	Wie möchten Sie mit bestehenden Daten umgehen? EGroupware kann bestehenden Daten mit einer definierten ID auch aktualisieren. Dazu werden die hier erstellten Regeln von oben nach unten abgearbeitet. Lassen Sie diese Tabelle leer, wenn Sie Ihre Daten nur einfügen möchten.
-human friendly values	importexport	de	Verwendet die Beschreibungen, anstatt der Internen Bezeichnungen
-if you specify an export definition, it will be used when you export	preferences	de	Wenn Sie  Export Definition erfassen , wird dieses Profil für den Export verwendet.
+human friendly values	importexport	de	Verwendet die Beschreibungen, anstatt der internen Bezeichnungen
+if you specify an export definition, it will be used when you export	preferences	de	Wenn Sie Export-Definition erfassen, wird dieses Profil für den Export verwendet.
 import	importexport	de	Import
 import aborted	importexport	de	Import abgebrochen
 import data is	importexport	de	Importformat
@@ -89,7 +89,7 @@ import definitions (attension: existing definitions with equal names will be ove
 imported	importexport	de	importiert
 importexport	common	de	Import/Export
 importexport wizard finished successfully!	importexport	de	Der ImportExport Assistent wurde erfolgreich beendet
-imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	de	Importiert Informationen aus einem CSV Datei. Dies ist nur eine Basis Klasse.
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	de	Importiert Informationen aus einer CSV Datei. Dies ist nur eine Basis Klasse.
 include header	importexport	de	Kopfzeile inklusive
 just me	importexport	de	Nur von mir zu verwenden
 last run	importexport	de	Letzter Import-Lauf
@@ -105,7 +105,7 @@ no notifications	importexport	de	Keine Benachrichtigung versenden
 no records selected	importexport	de	Keine Datensätze ausgewählt
 none found	importexport	de	Keine Einträge gefunden
 old fixed definition	preferences	de	Alte feste Definition
-please select file to import	importexport	de	Bitte wählen Sie ein Import Datei
+please select file to import	importexport	de	Bitte wählen Sie ein Import-Datei
 plugin	importexport	de	Plug-In
 preview	importexport	de	Vorschau
 preview not supported by %1	importexport	de	Die Vorschau für %1 wird nicht unterstützt.

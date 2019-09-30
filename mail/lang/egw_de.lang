@@ -114,7 +114,7 @@ copy to	mail	de	kopieren
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
 could not save the acl because some names are empty	mail	de	Konnte die Zugriffskontrollrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
 create new account	mail	de	Konto hinzufügen
-cross account forward attachment is not allowed!	mail	de	Weiterleitung als Anhang ist nicht Emailkonto-Übergreifend möglich!
+cross account forward attachment is not allowed!	mail	de	Weiterleitung als Anhang ist nicht E-Mail-Konto-übergreifend möglich!
 current folder	mail	de	Aktueller Ordner
 current subject	mail	de	Aktueller Betreff
 currently:	mail	de	Aktuell:
@@ -322,7 +322,7 @@ mail filter	mail	de	Filter-Regeln
 mail filter rule	mail	de	Filter-Regel
 mail settings	mail	de	E-Mail-Einstellungen
 mail source	mail	de	Nachrichtenquelltext anzeigen
-mail-address	mail	de	Mail-Adresse
+mail-address	mail	de	E-Mail-Adresse
 mailaccount	mail	de	Mailkonto
 mailinglist	mail	de	Mailingliste
 mails	common	de	Mails

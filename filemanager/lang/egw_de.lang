@@ -53,7 +53,7 @@ check all	filemanager	de	Alle auswählen
 check virtual filesystem	common	de	Virtuelles Dateisystem überprüfen
 clear search	filemanager	de	Suchfelder zurücksetzen
 clipboard is empty!	filemanager	de	Zwischenablage ist leer!
-collab editor settings	filemanager	de	Collabora Office Einstellungen
+collab editor settings	filemanager	de	Collabora Online Einstellungen
 comment	filemanager	de	Kommentar
 configuration changed.	filemanager	de	Konfiguration geändert
 confirm final delete	filemanager	de	Endgültiges Löschen bestätigen
@@ -110,6 +110,7 @@ download	filemanager	de	Herunterladen
 download documents	filemanager	de	Dokument herunterladen
 edit comments	filemanager	de	Kommentare bearbeiten
 edit settings	filemanager	de	Eigenschaften bearbeiten
+edit share	filemanager	de	Freigabe bearbeiten
 enable	filemanager	de	Einschalten
 enable versioning for given mountpoint	filemanager	de	Versionierung für angegebenen Mountpoint einschalten
 enter setup user and password	filemanager	de	Setup Benutzer und Passwort eingeben
@@ -211,7 +212,7 @@ noone	filemanager	de	Niemand
 older versions or deleted files	filemanager	de	Ältere Versionen oder gelöschte Dateien
 only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen
 open	filemanager	de	Öffnen
-open documents with collabora, if permissions are given	filemanager	de	Dokument mit Collabora öffnen, falls Rechte vorhanden sind
+open documents with collabora, if permissions are given	filemanager	de	Dokument mit Collabora Online öffnen, falls Rechte vorhanden sind
 open odt documents with collabeditor	filemanager	de	odt Dokumente mit CollabEditor öffnen
 operation	filemanager	de	Vorgang
 paste link	filemanager	de	Als Verknüpfung einfügen
@@ -298,9 +299,10 @@ user color indicator	filemanager	de	Benutzer-Farbe
 users and groups	filemanager	de	Benutzer und Gruppen
 versioning	filemanager	de	Versionierung
 vfs mounts and versioning	common	de	VFS einhängen und versionieren
+view link	filemanager	de	Zeige Freigabe-Link
 webdav link copied into clipboard	filemanager	de	WebDAV-Link in die Zwischenablage kopiert
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	de	Wer soll gelöschte Dateien oder ältere Versionen endgültig löschen dürfen:
-writable share link	filemanager	de	Beschreibbare Freigabe - Link
+writable share link	filemanager	de	Beschreibbare Freigabe-Link
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
 you are not allowed to finally delete older versions and deleted files!	filemanager	de	Sie haben nicht die Berechtigung ältere Versionen oder gelöschte Dateien endgültig zu löschen!
 you are not allowed to upload a script!	filemanager	de	Sie dürfen KEINE Skripte hochladen!

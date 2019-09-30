@@ -157,6 +157,7 @@ as default	common	de	als Vorgabe
 attach	common	de	Anhängen
 attach file	common	de	Datei anhängen
 attachment	common	de	Anhang
+attention: action will be applied to all rows, not only visible ones!	api	de	Achtung: Die Aktion wird auf alle Zeilen angewendet, nicht nur auf die sichtbaren!
 august	common	de	August
 australia	common	de	AUSTRALIEN
 austria	common	de	ÖSTERREICH
@@ -778,9 +779,9 @@ liechtenstein	common	de	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	de	Zeile %1: '%2'<br /><b>CSV enthalten ##last-check-run## der Tabelle %3 ==> ignoriert</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	de	Zeile %1: '%2'<br /><b>CSV haben andere Spaltenanzahl als Tabelle %3 ==> ignoriert</b>
 link	common	de	Verknüpfung
-link is appended to mail allowing recipients to download currently attached version of files	common	de	Link wird an die Mail anfügt und erlaubt Adressaten den jetzigen Inhalt der angehangen Dateien herunter zu laden
-link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	de	Link wird an die Mail anfügt und erlaubt Adressaten den aktuellen Inhalt der angehangen Dateien zu bearbeiten (nur EPL)
-link is appended to mail allowing recipients to download up to date version of files	common	de	Link wird an die Mail anfügt und erlaubt Adressaten den aktuellen Inhalt der angehangen Dateien herunter zu laden
+link is appended to mail allowing recipients to download currently attached version of files	common	de	Link wird an die Mail angefügt und erlaubt Adressaten den jetzigen Inhalt der angehangenen Dateien herunter zu laden
+link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	de	Link wird an die Mail angefügt und erlaubt Adressaten den aktuellen Inhalt der angehangenen Dateien zu bearbeiten (nur EPL)
+link is appended to mail allowing recipients to download up to date version of files	common	de	Link wird an die Mail angefügt und erlaubt Adressaten den aktuellen Inhalt der angehangenen Dateien herunter zu laden
 link target %1 not found!	common	de	Keine Verknüpfung zu %1 gefunden!
 linkapps	common	de	VerknüpfungAnwendungen
 linked	common	de	Verknüpft
@@ -1085,6 +1086,7 @@ regular	common	de	Normal
 reject	common	de	Zurückweisen
 remember me	common	de	An mich erinnern
 remember me for %1	common	de	An mich erinnern für %1
+remove	api	de	Entfernen
 remove row (can not be undone!!!)	common	de	löscht eine Zeile (NICHT rückgängig zu machen)
 remove selected accounts	common	de	Ausgewählte Benutzer entfernen
 remove shortcut	common	de	Abkürzung entfernen
@@ -1233,7 +1235,7 @@ server is unwilling to perform.	common	de	Server ist zur Ausführung nicht berei
 server name	common	de	Server Name
 session has been killed	common	de	Session wurde beendet
 set as default	common	de	Als Vorgabe setzen
-set these columns as the default	common	de	Speichern Sie diese Spaltenauswahl als Vorgabe
+set these columns as the default	common	de	Spaltenauswahl als Vorgabe setzen
 set user as only responsible user, but keeping groups	groupdav	de	setze Benutzer als einzigen verantwortlichen Benutzer, Gruppen werden nicht geändert
 set user as only responsible, removing all existing responsibles	groupdav	de	setze Benutzer als alleinigen Verantwortlichen, entferne alle bestehenden Verantwortlichen
 sets today as date	common	de	setzt heutiges Datum
