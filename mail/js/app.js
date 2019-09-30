@@ -268,7 +268,7 @@ app.classes.mail = AppJS.extend(
 						textAreaWidget.tinymce.then(()=>{
 							that.compose_resizeHandler();
 							jQuery(textAreaWidget.editor.iframeElement.contentWindow.document).on('dragenter', function(){
-								jQuery('#mail-compose').addClass('dragover');
+							// anything to bind on tinymce iframe
 							});
 						});
 					}

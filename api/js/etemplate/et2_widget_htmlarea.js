@@ -149,7 +149,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			language: et2_htmlarea.LANGUAGE_CODE[egw.preference('lang', 'common')],
 			language_url: egw.webserverUrl+'/api/js/tinymce/langs/'+et2_htmlarea.LANGUAGE_CODE[egw.preference('lang', 'common')]+'.js',
 			paste_data_images: true,
-			paste_filter_drop: false,
+			paste_filter_drop: true,
 			browser_spellcheck: true,
 			contextmenu: false,
 			images_upload_url: imageUpload,
@@ -199,6 +199,9 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			if (self.editor && self.editor.editorContainer)
 			{
 				jQuery(self.editor.editorContainer).height(self.options.height);
+				jQuery(self.editor.iframeElement.contentWindow.document).on('dragenter', function(){
+					if (jQuery('#dragover-tinymce').length < 1) jQuery("<style id='dragover-tinymce'>.dragover:after {height:calc(100% - "+jQuery(this).height()+"px) !important;}</style>").appendTo('head');
+				});
 			}
 		});
 	},
