@@ -663,7 +663,7 @@ class mail_ui
 			'readall' => array(
 				'group' => $group,
 				'caption' => "<font color='#ff0000'>".lang('mark all as read')."</font>",
-				'icon' => 'read_small',
+				'icon' => 'kmmsgread',
 				'onExecute' => 'javaScript:app.mail.mail_flag',
 				'hint' => 'mark all messages in folder as read',
 				'toolbarDefault' => false
@@ -1343,7 +1343,7 @@ class mail_ui
 			),
 			'mark' => array(
 				'caption' => 'Set / Remove Flags',
-				'icon' => 'read_small',
+				'icon' => 'kmmsgread',
 				'group' => ++$group,
 				'children' => array(
 					// icons used from http://creativecommons.org/licenses/by-sa/3.0/
@@ -1415,7 +1415,7 @@ class mail_ui
 					'read' => array(
 						'group' => $group,
 						'caption' => 'Read / Unread',
-						'icon' => 'read_small',
+						'icon' => 'kmmsgread',
 						'onExecute' => 'javaScript:app.mail.mail_flag',
 						'shortcut' => KeyManager::shortcut(KeyManager::U, true, true),
 
@@ -1423,7 +1423,7 @@ class mail_ui
 					'readall' => array(
 						'group' => ++$group,
 						'caption' => "<font color='#ff0000'>".lang('mark all as read')."</font>",
-						'icon' => 'read_small',
+						'icon' => 'kmmsgread',
 						'onExecute' => 'javaScript:app.mail.mail_flag',
 						'hint' => 'mark all messages in folder as read',
 						'toolbarDefault' => false
