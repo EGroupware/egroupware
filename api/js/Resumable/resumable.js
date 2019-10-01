@@ -231,9 +231,8 @@
         loadFiles(e.dataTransfer.files, e);
       }
     };
-	var counterDrag = 0;
     var onDragLeave = function(e){
-      if (--counterDrag == 0) e.currentTarget.classList.remove($.getOpt('dragOverClass'));
+      e.currentTarget.classList.remove($.getOpt('dragOverClass'));
     };
     var onDragOverEnter = function(e) {
       e.preventDefault();
@@ -242,7 +241,7 @@
         e.stopPropagation();
         dt.dropEffect = "copy";
         dt.effectAllowed = "copy";
-        if (e.type == 'dragenter' && counterDrag++ === 0) e.currentTarget.classList.add($.getOpt('dragOverClass'));
+        e.currentTarget.classList.add($.getOpt('dragOverClass'));
       } else { // not work on IE/Edge....
         dt.dropEffect = "none";
         dt.effectAllowed = "none";
