@@ -304,6 +304,12 @@ class importexport_export_ui {
 			unset($_content['filter']);
 			$definition->filter = $filter;
 
+			// Check/fix non-printing delimiters
+			if($_content['delimiter'] === '\t')
+			{
+				$_content['delimiter'] = "\t";
+			}
+
 			$definition->plugin_options = array_merge(
 				$definition->plugin_options,
 				$_content
