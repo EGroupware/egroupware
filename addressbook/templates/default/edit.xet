@@ -351,7 +351,7 @@
 				<row class="dialogHeader">
 					<box align="center">
 						<hbox disabled="@hidebuttons" class="avatar">
-							<avatar contact_id="$cont[id]" src="$cont[photo]" crop="false" editable="true"/>
+							<avatar id="jpegphoto" contact_id="$cont[id]" src="$cont[photo]" crop="false" editable="true"/>
 						</hbox>
 					</box>
 					<textbox id="n_fn" blur="Name" no_lang="1" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name"/>

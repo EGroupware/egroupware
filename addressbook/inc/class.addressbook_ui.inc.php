@@ -3065,7 +3065,7 @@ class addressbook_ui extends addressbook_bo
 	{
 		$response = Api\Json\Response::get();
 		$response->data((!($contact = $this->read($contact_id)) ||
-			empty($contact['jpegphoto']) &&	!(($contact['files'] & Api\Contacts::FILES_BIT_PHOTO) &&
+			empty($contact['photo']) &&	!(($contact['files'] & Api\Contacts::FILES_BIT_PHOTO) &&
 				($size = filesize($url=Api\Link::vfs_path('addressbook', $contact_id, Api\Contacts::FILES_PHOTO))))));
 	}
 
