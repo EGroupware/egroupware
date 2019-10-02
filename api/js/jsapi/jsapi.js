@@ -772,7 +772,7 @@ function egw_get_file_editor_prefered_mimes(_mime)
 	{
 		ex_mimes = !ex_mimes ? _mime : ex_mimes+','+_mime;
 	}
-	if (fe && fe.mime && ex_mimes)
+	if (fe && fe.mime && ex_mimes && typeof ex_mimes === 'string')
 	{
 		ex_mimes = ex_mimes.split(',');
 		for (var mime in fe.mime)
