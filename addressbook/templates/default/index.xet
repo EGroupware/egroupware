@@ -16,6 +16,7 @@
 				<column width="180"/>
 				<column width="180"/>
 				<column width="40"/>
+				<column width="60"/>
 				<column width="80" disabled="@no_customfields"/>
 				<column width="60%" minWidth="100"/>
 				<column width="80" disabled="@no_distribution_list"/>
@@ -82,6 +83,7 @@
 						<nextmatch-header label="Home email" id="email_home"/>
 					</vbox>
 					<nextmatch-header label="Room" id="room"/>
+					<nextmatch-header label="INdustry" id="#kgb_industry"/>
 					<nextmatch-customfields id="customfields"/>
 					<nextmatch-header label="Note" id="note"/>
 					<nextmatch-header label="Distribution lists" id="distribution_list"/>
@@ -150,6 +152,7 @@
 						<url-email id="${row}[email_home]" readonly="true" class="fixedHeight"/>
 					</vbox>
 					<description id="${row}[room]"/>
+					<customfields id="$row" readonly="true" fields="kgb_industry" field-list="kgb_industry"/>
 					<customfields-list id="$row" class="customfields"/>
 					<textbox multiline="true" id="${row}[note]" no_lang="1" readonly="true"/>
 					<description id="${row}[distrib_lists]"/>
