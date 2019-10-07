@@ -93,6 +93,15 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 		this.widgets = {};
 		this.detachedNodes = [];
 		if(!this.options.fields) this.options.fields = {};
+		if(typeof this.options.fields === 'string')
+		{
+			var fields = this.options.fields.split(',');
+			this.options.fields = {};
+			for(var i = 0; i < fields.length; i++)
+			{
+				this.options.fields[fields[i]] = true;
+			}
+		}
 
 		if(this.options.type_filter && typeof this.options.type_filter == "string")
 		{
