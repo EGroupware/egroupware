@@ -564,9 +564,13 @@ class addressbook_hooks
 				'copy_fields' => $copy_fields,
 				'fileas' => $bocontacts->fileas_options(),
 				'contact_repository' => $repositories,
-				'geolocation_url' => $geoLocation
+				'geolocation_url' => $geoLocation,
 			)
 		);
+		foreach(Api\Storage\Customfields::get('addressbook') as $tid => $data)
+		{
+			$ret['sel_options']['index_load_cfs'][$tid] = $data['name'];
+		}
 
 		if (empty($config['geolocation_url']))	$ret ['geolocation_url'] = $geoLocation[0]['value'];
 		return $ret;

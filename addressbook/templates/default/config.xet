@@ -49,6 +49,10 @@
 					<description value="General" span="all" class="subHeader"/>
 				</row>
 				<row>
+					<description value="Load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)"/>
+					<listbox id="newsettings[index_load_cfs]" rows="6" options=",,,,,,1"/>
+				</row>
+				<row>
 					<description value="Use a category tree?"/>
 					<select id="newsettings[cat_tab]">
 						<option value="True">No</option>

@@ -1713,7 +1713,7 @@ class addressbook_ui extends addressbook_bo
 			$ids = $calendar_participants = array();
 			if (!$id_only && $rows)
 			{
-				$show_custom_fields = (in_array('customfields',$columselection)) && $this->customfields;
+				$show_custom_fields = (in_array('customfields',$columselection) || $this->config['index_load_cfs']) && $this->customfields;
 				$show_calendar = $this->config['disable_event_column'] != 'True' && in_array('calendar_calendar',$columselection);
 				$show_distributionlist = in_array('distrib_lists',$columselection) || count($available_distib_lists);
 				if ($show_calendar || $show_custom_fields || $show_distributionlist)
@@ -1725,10 +1725,15 @@ class addressbook_ui extends addressbook_bo
 					}
 					if ($show_custom_fields)
 					{
-						foreach($columselection as $col)
+						$selected_cfs = array();
+						if(in_array('customfields',$columselection))
 						{
-							if ($col[0] == '#') $selected_cfs[] = substr($col,1);
+							foreach($columselection as $col)
+							{
+								if ($col[0] == '#') $selected_cfs[] = substr($col,1);
+							}
 						}
+						$selected_cfs = array_unique(array_merge($selected_cfs, (array)$this->config['index_load_cfs']));
 						$customfields = $this->read_customfields($ids,$selected_cfs);
 					}
 					if ($show_calendar && !empty($ids)) $calendar = $this->read_calendar($calendar_participants);
