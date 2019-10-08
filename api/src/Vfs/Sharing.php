@@ -394,18 +394,6 @@ class Sharing extends \EGroupware\Api\Sharing
 		return $actions;
 	}
 
-	/**
-	 * Generate link from share or share-token
-	 *
-	 * @param string|array $share share or share-token
-	 * @return string full Url incl. schema and host
-	 */
-	public static function share2link($share)
-	{
-		if (is_array($share)) $share = $share['share_token'];
-
-		return Api\Framework::getUrl(Api\Framework::link('/share.php')).'/'.$share;
-	}
 }
 
 if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'))
