@@ -126,7 +126,7 @@ class Sharing
 	{
 		return $this->share['share_path'];
 	}
-	
+
 	/**
 	 * Get share with email addresses
 	 */
@@ -323,6 +323,10 @@ class Sharing
 				{
 					return '\\EGroupware\\Stylite\\Link\\Sharing';
 				}
+			}
+			else if (class_exists ('\EGroupware\Collabora\Wopi') && $share['share_writable'] == \EGroupware\Collabora\Wopi::WOPI_SHARED)
+			{
+				return '\\EGroupware\\Collabora\\Wopi';
 			}
 		}
 		catch(Exception $e){throw $e;}
