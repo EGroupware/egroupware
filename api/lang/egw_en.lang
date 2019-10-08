@@ -1077,6 +1077,7 @@ read etemplate from database (for the keys above)	common	en	Read eTemplate from 
 read this list of methods.	common	en	Read this list of methods
 reading	common	en	Reading
 readonly	common	en	Read only
+readonly filemanager directory	common	en	Readonly filemanager directory
 readonly share	common	en	Readonly share
 redo	common	en	Redo
 refresh	common	en	Refresh
@@ -1482,6 +1483,7 @@ working days	common	en	Working days
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	en	Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB
 would you like to display the page generation time at the bottom of every window?	common	en	Display the page generation time at the bottom of every window
 writable	common	en	Writable
+writable filemanager directory	common	en	Writable filemanager directory
 writable share	common	en	Writable share
 write <app>/setup/tables_current.inc.php	common	en	Write <app>/setup/tables_current.inc.php
 write langfile	common	en	Write language file

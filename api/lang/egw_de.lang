@@ -1077,6 +1077,7 @@ read etemplate from database (for the keys above)	common	de	ließt ein eTemplate
 read this list of methods.	common	de	Diese Liste der Methoden lesen.
 reading	common	de	lesen
 readonly	common	de	nur lesen
+readonly filemanager directory	common	de	Lesende Freigabe Dateimanager Verzeichnis
 readonly share	common	de	Nur lesende Freigabe
 redo	common	de	Wiederholen
 refresh	common	de	Aktualisierung
@@ -1482,6 +1483,7 @@ working days	common	de	Werktage
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	de	Arbeitet zuverlässig für eine Gesamtgröße von 1-2 MB, kann auch für 5-10 MB funktionieren, wird wahrscheinlich für >10MB fehlschlagen
 would you like to display the page generation time at the bottom of every window?	common	de	Möchten Sie die Zeit zur Erstellung der Seite am Ende jedes Fensters anzeigen?
 writable	common	de	Beschreibbar
+writable filemanager directory	common	de	Beschreibbare Freigabe Dateimanager Verzeichnis
 writable share	common	de	Beschreibbare Freigabe
 write <app>/setup/tables_current.inc.php	common	de	schreibt <app>/setup/tables_current.inc.php
 write langfile	common	de	Sprachdatei
