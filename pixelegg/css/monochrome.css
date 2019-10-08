@@ -4885,19 +4885,21 @@ td.message span.message {
   height: 35px;
   top: 0px;
   border-bottom: 1px solid silver;
-  background-image: url(../images/up_pointer.png);
+  background-image: url(../images/up.svg);
   background-position: center;
   background-repeat: no-repeat;
-  background-position-y: -1px;
+  background-position-y: 5px;
+  background-size: 24px;
 }
 .egw_fw_ui_scrollarea_button_down {
   bottom: 0px;
   height: 35px;
   border-top: 1px solid silver;
-  background-image: url(../images/down_pointer.png);
+  background-image: url(../images/down.svg);
   background-repeat: no-repeat;
   background-position: center;
-  background-position-y: 1px;
+  background-position-y: 6px;
+  background-size: 24px;
 }
 .egw_fw_ui_scrollarea_outerdiv {
   height: 100%;
