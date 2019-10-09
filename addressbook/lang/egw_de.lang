@@ -341,6 +341,7 @@ list already exists!	addressbook	de	Die Liste existiert bereits!
 list created	addressbook	de	Verteiler erzeugt
 list creation failed, no rights!	addressbook	de	Verteiler erzeugen fehlgeschlagen, keine Rechte!
 list of files linked to the current record	addressbook	de	Liste der Dokumente, die zu dem aktuellen Datensatz gehören.
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	de	Lade die folgenden benutzerdefinierten Felder immer, auch wenn die Spalte ausgeschaltet ist - z.B. zur Anzeige von bestimmte Informationen in einzelnen Spalten.
 load vcard	addressbook	de	vCard laden
 location	addressbook	de	Standort
 locations	addressbook	de	Standorte
