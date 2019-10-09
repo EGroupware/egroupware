@@ -341,6 +341,7 @@ list already exists!	addressbook	en	List already exists!
 list created	addressbook	en	List created.
 list creation failed, no rights!	addressbook	en	List creation failed, no rights!
 list of files linked to the current record	addressbook	en	List of files linked to the current record
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	en	Load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)
 load vcard	addressbook	en	Load vCard
 location	addressbook	en	Location
 locations	addressbook	en	Locations
