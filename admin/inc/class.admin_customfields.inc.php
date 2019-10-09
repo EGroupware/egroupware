@@ -170,7 +170,11 @@ class admin_customfields
 				unset($content['content_types']['create']);
 				unset($content['content_types']['name']);
 			}
-			// No common type change and type didn't change, do nothing
+			// No common type change and type didn't change, try an update to check new type statuses
+			elseif($this->content_type && is_array($content) && $this->content_type == $content['old_content_type'])
+			{
+				$this->update($content);
+			}
 		}
 
 		// Custom field deleted from nextmatch
