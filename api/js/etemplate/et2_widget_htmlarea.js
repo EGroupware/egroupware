@@ -198,6 +198,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			self.set_value(self.htmlNode.val());
 			if (self.editor && self.editor.editorContainer)
 			{
+				self.editor.formatter.toggle(egw.preference('rte_formatblock', 'common'));
 				jQuery(self.editor.editorContainer).height(self.options.height);
 				jQuery(self.editor.iframeElement.contentWindow.document).on('dragenter', function(){
 					if (jQuery('#dragover-tinymce').length < 1) jQuery("<style id='dragover-tinymce'>.dragover:after {height:calc(100% - "+jQuery(this).height()+"px) !important;}</style>").appendTo('head');
