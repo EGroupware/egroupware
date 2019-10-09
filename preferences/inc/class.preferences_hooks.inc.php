@@ -417,6 +417,25 @@ class preferences_hooks
 				'admin'  => false,
 				'default' => '10'
 			),
+			'rte_formatblock' => array(
+				'type'   => 'select',
+				'label'  => 'Default format block',
+				'name'   => 'rte_formatblock',
+				'values' => array(
+					'p' => lang("Paragraph"),
+					'h1' => lang("Heading 1"),
+					'h2' => lang("Heading 2"),
+					'h3' => lang("Heading 3"),
+					'h4' => lang("Heading 4"),
+					'h5' => lang("Heading 5"),
+					'h6' => lang("Heading 6"),
+					'pre' => lang("Preformatted")
+				),
+				'help'   => 'Automatically start with this format block',
+				'xmlrpc' => True,
+				'admin'  => false,
+				'default' => 'p'
+			),
 			'rte_menubar' => array(
 				'type'   => 'select',
 				'label'  => 'Enable menubar',

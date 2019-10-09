@@ -197,6 +197,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			self.set_value(self.htmlNode.val());
 			if (self.editor && self.editor.editorContainer)
 			{
+				self.editor.formatter.toggle(egw.preference('rte_formatblock', 'common'));
 				jQuery(self.editor.editorContainer).height(self.options.height);
 			}
 		});
