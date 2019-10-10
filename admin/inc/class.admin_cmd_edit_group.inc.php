@@ -94,15 +94,18 @@ class admin_cmd_edit_group extends admin_cmd
 				if (is_null($value)) $value = $old[$name];
 			}
 		}
+		// Make sure we have lid for hook even if not changed, some backend require it
+		if (empty($data['account_lid']))
+		{
+			$data['account_lid'] = admin_cmd::$accounts->id2name($data['account_id']);
+		}
 		if (!($data['account_id'] = admin_cmd::$accounts->save($data)))
 		{
 			//_debug_array($data);
 			throw new Api\Db\Exception(lang("Error saving account!"),11);
 		}
-		// Make sure we have lid for hook even if not changed, also set deprecated name
-		$data['account_name'] = $data['account_lid'] = $data['account_lid'] ?
-				$data['account_lid'] :
-				admin_cmd::$accounts->id2name($data['account_id']);
+		// set deprecated name
+		$data['account_name'] = $data['account_lid'];
 
 		if ($update) $data['old_name'] = $old['account_lid'];	// make old name available for hooks
 		$GLOBALS['hook_values'] =& $data;
