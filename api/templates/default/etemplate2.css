@@ -486,7 +486,7 @@ span.et2_date_duration input.et2_date_duration{
     margin-left: 3px;
     text-indent: 20px;
     background-size: contain;
-    background-image: url(images/today.png);
+    background-image: url(images/datepopup.svg);
 }
 .ui-timepicker-div dl dd { margin: 0 0px 10px 30%; }
 .ui-timepicker-div .ui_tpicker_time .ui_tpicker_time_input {
