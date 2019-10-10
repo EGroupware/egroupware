@@ -12,6 +12,7 @@
 %1 is not executable by the webserver !!!	common	de	%1 ist nicht ausführbar durch den Webserver !!!
 %1 matches on search criteria	common	de	%1 Treffer bei der Suche
 %1 more...	common	de	%1 mehr...
+%1 more %2 selected ...	common	de	%1 weitere %2 ausgewählt ...
 %1 new etemplates imported for application '%2'	common	de	%1 neue eTemplate(s) importiert für die Anwendung '%2'
 %1 not implemented for %2!	common	de	%1 ist nicht  implementiert für '%2'
 %1 proxy of %2	common	de	%1 beauftragt von %2

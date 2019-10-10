@@ -409,6 +409,7 @@ startdate must be before enddate!!!	infolog	pt	STARTDATE deve ser antes endDate!
 starting %1	infolog	pt	A partir de 1%
 startrecord	infolog	pt	Iniciar registo
 status	infolog	pt	Estado
+status, percent and date completed are always allowed.	infolog	pt	A edição do estado, percentagem e data de conclusão é sempre autorizada.
 status ...	infolog	pt	Estado ...
 sub	infolog	pt	Sub-registo
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	pt	Os sub-registos tornam-se sub-registos de registos principais, ou registos principais se não existirem registos principais.
@@ -458,7 +459,7 @@ view subs	infolog	pt	Ver sub-registo(s)
 view the parent of this entry and all his subs	infolog	pt	Ver o registo principal e os seus sub-registos
 view this linked entry in its application	infolog	pt	Ver este registo ligado na sua aplicação
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pt	Quando as tarefas ou chamadas telefónicas devem ser executadas. Surgem a partir dessa data no filtro--abertas ou no minhas--abertas (página inicial)
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	pt	Sem ter direitos de edição, o responsável deve estar autorizado a editar que campos adicionais?<br />A edição do estado, percentagem e data de conclusão é sempre autorizada.
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	pt	Sem ter direitos de edição, o responsável deve estar autorizado a editar que campos adicionais?
 which implicit acl rights should the responsible get?	infolog	pt	O responsável deve ter que direitos ACL implícitos?
 which types should the calendar show	infolog	pt	Quais os tipos deve o calendário mostra
 will-call	infolog	pt	Por telefonar

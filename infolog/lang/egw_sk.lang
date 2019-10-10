@@ -457,6 +457,7 @@ startdate must be before enddate!!!	infolog	sk	Dátu začiatku musí byť pred d
 starting %1	infolog	sk	Začiatok %1
 startrecord	infolog	sk	Prvý záznam
 status	infolog	sk	Stav
+status, percent and date completed are always allowed.	infolog	sk	Stav, percentuálny stav vybavenia a dátum dokončenia sú prístupné vždy.
 status ...	infolog	sk	Stav...
 sub	infolog	sk	Podradené
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	sk	Podzáznamy sa dostanú pod rodičovské alebo hlavné záznamy, ak nie je k dispozícii rodičovský.
@@ -511,7 +512,7 @@ view subs	infolog	sk	Zobraziť podradené záznamy
 view the parent of this entry and all his subs	infolog	sk	Zobraziť rodičovský záznam a všetky jeho podradené
 view this linked entry in its application	infolog	sk	Zobraziť tento odkaz v jeho aplikácii
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	sk	keď má byť začatá Úloha alebo Telefonát, ukáže sa akoby od tohto dátumu vo filtri "otvorené" alebo "moje otvorené" (úvodná stránka)
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	sk	Ktoré prídavné položky majú byť zodpovednej osobe prístupné pre úpravy, a to aj bez pridelených práv na úpravy?<br />Stav, percentuálny stav vybavenia a dátum dokončenia sú prístupné vždy.
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	sk	Ktoré prídavné položky majú byť zodpovednej osobe prístupné pre úpravy, a to aj bez pridelených práv na úpravy?
 which implicit acl rights should the responsible get?	infolog	sk	Ktoré implicitné ACL oprávnenia má zodpovedná osoba obdržať automaticky?
 which participants should be preselected when scheduling an appointment.	infolog	sk	Ktorí účastníci majú byť predvybratí pri plánovaní pozvania.
 which types should the calendar show	infolog	sk	Aké typy má kalendár ukazovať

@@ -268,6 +268,7 @@ startdate enddate	infolog	fa	تاریخ شروع تاریخ انجام
 startdate for new entries	infolog	fa	تاریخ شروع برای ورودی های جدید
 startrecord	infolog	fa	رکورد شروع
 status	infolog	fa	وضعیت
+status, percent and date completed are always allowed.	infolog	fa	وضعیت درصد پیشرفت و تاریخ، تمام شده، همیشه مجازند
 status ...	infolog	fa	وضعیت...
 sub	infolog	fa	ارجاع/جواب
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	fa	اگر والدی نباشد، زیر ورودی تحت والد یا بعنوان ورودی اصلی می شود
@@ -305,7 +306,7 @@ view subs	infolog	fa	نمایش جواب/ارجاعها
 view the parent of this entry and all his subs	infolog	fa	نمایش والد این ورودی و تمام جواب/ارجاعهایش
 view this linked entry in its application	infolog	fa	نمایش این ورودی پیوند شده در برنامه اش
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	fa	زمان شروع یک کار «برای انجام» یا «تماس تلفنی» چه زمانی است.
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	fa	کدام فیلد دیگر باید توسط مسئول اجرا قابل ویرایش باشد بدون آنکه حقوق ویرایشگری داشته باشد؟<br />وضعیت درصد پیشرفت و تاریخ، تمام شده، همیشه مجازند
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	fa	کدام فیلد دیگر باید توسط مسئول اجرا قابل ویرایش باشد بدون آنکه حقوق ویرایشگری داشته باشد؟
 which implicit acl rights should the responsible get?	infolog	fa	کدام حق دسترسی را باید مسئول اجرا داشته باشد؟
 will-call	infolog	fa	تماس خواهد گرفت
 write (add or update) a record by passing its fields.	infolog	fa	نوشتن(افزودن یا بهنگام سازی) یک رکورد با ارسال یک فیلد به آن

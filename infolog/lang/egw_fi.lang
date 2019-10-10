@@ -410,6 +410,7 @@ startdate for new entries	infolog	fi	Aloituspäivä uusille merkinnöille
 starting %1	infolog	fi	Alkaa %1
 startrecord	infolog	fi	Startrecord
 status	infolog	fi	Tila
+status, percent and date completed are always allowed.	infolog	fi	Tila, prosentit, valmistumispäivä ovat aina sallittuja.
 status ...	infolog	fi	Tila...
 sub	infolog	fi	Sub
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	fi	Alimerkinnät (sub entries) tulevat päämerkinnän (parent) alle tai päämerkinnöiksi, ellei niille aseteta päämerkintää.
@@ -460,7 +461,7 @@ view subs	infolog	fi	Näytä alamerkinnät
 view the parent of this entry and all his subs	infolog	fi	Näytä tämän merkinnän päämerkintä ja kaikki sen alimerkinnät
 view this linked entry in its application	infolog	fi	Näytä tämä linkitetty merkintä sovelluksessa
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	fi	Millon tehtävän tai puhelinsoiton pitäisi alkaa, se näkyy sinä päivä avoimissa tai omissa avoimissa tehtävissä (aloitussivulla)?
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	fi	Mitä muita kenttiä vastuuhenkilö saa muokata, ilman että hänellä on muokkas oikeuksia? <br/>Tila, prosentit, valmistumispäivä ovat aina sallittuja.
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	fi	Mitä muita kenttiä vastuuhenkilö saa muokata, ilman että hänellä on muokkas oikeuksia?
 which implicit acl rights should the responsible get?	infolog	fi	Mitä ACL -oikeuksia vastuuhenkilö saa?
 which types should the calendar show	infolog	fi	Mitkä Tehtävätyypit kalenterin tulisi näyttää
 will-call	infolog	fi	Soita

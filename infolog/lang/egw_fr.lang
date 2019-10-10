@@ -462,6 +462,7 @@ startdate must be before enddate!!!	infolog	fr	La date de début doit être avan
 starting %1	infolog	fr	Début le %1
 startrecord	infolog	fr	Enregistrement de départ
 status	infolog	fr	Statut
+status, percent and date completed are always allowed.	infolog	fr	Statuts, pourcentage et date de fin sont toujours permis.
 status ...	infolog	fr	Statut ...
 sub	infolog	fr	Enfant
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	fr	Les sous-entrées deviennent les enfants des parents des entrées principales s'il n'y a pas de parent
@@ -519,7 +520,7 @@ view subs	infolog	fr	Voir les Enfants
 view the parent of this entry and all his subs	infolog	fr	Voir le parent de cette entrée et tous ses Enfants
 view this linked entry in its application	infolog	fr	Voir cette entrée liée dans son application
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	fr	Quand la tâche ou l'appel téléphonique devrait être démarré, il s'affiche depuis cette date dans le filtre ouvert ou propre ouvert (page de démarrage)
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	fr	Quels champs supplémentaires le responsable devrait être autorisé à modifier sans avoir à modifier les droits d'édition ?<br />Statuts, pourcentage et date de fin sont toujours permis.
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	fr	Quels champs supplémentaires le responsable devrait être autorisé à modifier sans avoir à modifier les droits d'édition ?
 which implicit acl rights should the responsible get?	infolog	fr	Quels droits ACL implicites le responsable devrait-il obtenir ?
 which participants should be preselected when scheduling an appointment.	infolog	fr	Quels participants devraient être présélectionnés lors de la programmation d'une réunion.
 which types should the calendar show	infolog	fr	Quels types afficher dans le calendrier

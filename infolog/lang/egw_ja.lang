@@ -486,6 +486,7 @@ startdate must be before enddate!!!	infolog	ja	開始日は終了日よりも前
 starting %1	infolog	ja	%1 を開始
 startrecord	infolog	ja	レコード開始
 status	infolog	ja	状態
+status, percent and date completed are always allowed.	infolog	ja	状態, 進捗パーセント, 完了日は常に編集を許可されます。
 status ...	infolog	ja	状態 ...
 sub	infolog	ja	サブ
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	ja	サブ項目は、親または主項目（親が無い場合）のサブになります。
@@ -499,7 +500,7 @@ tasks of	infolog	ja	タスク:
 template	infolog	ja	テンプレート
 test import (show importable records <u>only</u> in browser)	infolog	ja	インポートの予行演習。インポート可能なレコードをブラウザに<u>表示するだけ</u>。
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	ja	ドキュメントにはプレース・ホルダー（例: {{%1}}）を埋め込むことができ、ドキュメント保存時に実データで置換されます。
-the following document-types are supported:	infolog	ja	下記のドキュメント・タイプがサポートされます: 
+the following document-types are supported:	infolog	ja	下記のドキュメント・タイプがサポートされます:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	ja	内部識別名（10文字以下）。これを変更すると既存データが利用できなくなります。
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	ja	内部識別名（20文字以下）。これを変更すると既存データが利用できなくなります。
 the text displayed to the user	infolog	ja	ユーザに表示されるテキスト
@@ -544,7 +545,7 @@ view subs	infolog	ja	サブ項目を表示
 view the parent of this entry and all his subs	infolog	ja	この項目の親とその他全てのサブ項目を表示
 view this linked entry in its application	infolog	ja	この項目のリンク先情報を表示
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	ja	ToDo、または電話発呼を開始する日。指定日以降、フィルター「オープン」または「所有者 オープン」で表示されます。
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	ja	責任者が、編集権限無しでも編集可能な追加項目。<br>状態, 進捗パーセント, 完了日は常に編集を許可されます。
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	ja	責任者が、編集権限無しでも編集可能な追加項目。
 which implicit acl rights should the responsible get?	infolog	ja	責任者が取得する、暗黙の ACL 権限。
 which participants should be preselected when scheduling an appointment.	infolog	ja	約束をスケジュールする際に、あらかじめ選択される参加者を指定します。
 which types should the calendar show	infolog	ja	カレンダーで表示するタイプ

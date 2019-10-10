@@ -319,6 +319,7 @@ startdate enddate	infolog	bg	Начална дата дата за прикл.
 startdate for new entries	infolog	bg	Начална дата за новите записи
 startrecord	infolog	bg	Начален запис
 status	infolog	bg	Статус
+status, percent and date completed are always allowed.	infolog	bg	Статус, степен на изпълнение и датата на приключване винаги са достъпни.
 status ...	infolog	bg	Статус...
 sub	infolog	bg	Под-
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	bg	Под-записите са такива за "родителските" или главните записи, ако няма "родителски"
@@ -355,7 +356,7 @@ view parent	infolog	bg	Показва "Родителя"
 view subs	infolog	bg	показва Под-
 view the parent of this entry and all his subs	infolog	bg	Показва Родителя на записа и всичките му под-
 view this linked entry in its application	infolog	bg	показва свързания запис в съотв. приложение
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	bg	Кои допълнителни полета да бъдат достъпни за редакция от отговорника, без да има съответните права?<br />Статус, степен на изпълнение и датата на приключване винаги са достъпни.
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	bg	Кои допълнителни полета да бъдат достъпни за редакция от отговорника, без да има съответните права?
 which implicit acl rights should the responsible get?	infolog	bg	Какви права от Списъка за контрол на достъпа (ACL) да получава отговорника при назначаването си?
 which types should the calendar show	infolog	bg	Кои типове да се показват в Календара
 will-call	infolog	bg	ще телефонира
