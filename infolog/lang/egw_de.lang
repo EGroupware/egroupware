@@ -461,6 +461,7 @@ startdate must be before enddate!!!	infolog	de	Startdatum muss vor dem Fälligke
 starting %1	infolog	de	%1 startet
 startrecord	infolog	de	Startdatensatz
 status	infolog	de	Status
+status, percent and date completed are always allowed.	infolog	de	Status, Prozent und Datum erledigt sind immer erlaubt.
 status ...	infolog	de	Status ...
 sub	infolog	de	Unter-<br />einträge
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	de	Untereinträge gehören dann zum übergeordneten Eintrag oder werden Haupteinträge wenn es keinen übergeordneten gibt.
@@ -516,8 +517,8 @@ view subs	infolog	de	Untereinträge anzeigen
 view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
 view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	wann soll mit der Aufgabe oder dem Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite)
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?<br />Status, Prozent und Datum erledigt sind immer erlaubt.
-which implicit acl rights should the responsible get?	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?
+which implicit acl rights should the responsible get	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
 which participants should be preselected when scheduling an appointment.	infolog	de	Welche Teilnehmer sollen als Vorgabe ausgewählt sein bei Termin planen.
 which types should the calendar show	infolog	de	Welche Typen soll der Kalender anzeigen
 which types should the calendar show like events?	infolog	de	Welche Typen soll der Kalender wie Termine anzeigen?

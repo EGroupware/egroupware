@@ -453,6 +453,7 @@ startdate must be before enddate!!!	infolog	cs	Počáteční datum musí být d�
 starting %1	infolog	cs	Začíná %1
 startrecord	infolog	cs	První záznam
 status	infolog	cs	Stav
+status, percent and date completed are always allowed.	infolog	cs	Stav, procento a datum dokončení může vždy.
 status ...	infolog	cs	Stav ...
 sub	infolog	cs	Podpoložka
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	cs	Podzáznamy se stanou podpoložkou rodiče nebo hlavních záznamů, pokud neexistuje rodič
@@ -508,7 +509,7 @@ view subs	infolog	cs	zobrazit podpoložky
 view the parent of this entry and all his subs	infolog	cs	Zobrazit rodiče tohoto záznamu a všechny jeho podpoložky
 view this linked entry in its application	infolog	cs	zobrazit odkazovaný záznam v jeho aplikaci
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	cs	kdy má být úkol nebo telefonní hovor započat (od tohoto data se ve filtru na úvodní straně zobrazuje jako otevřený nebo vlastní otevřený)
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	cs	Které dodatečné položky má mít odpovědná osoba možnost editovat bez toho, že by měla práva k editaci?<br>Stav, procento a datum dokončení může vždy.
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	cs	Které dodatečné položky má mít odpovědná osoba možnost editovat bez toho, že by měla práva k editaci?
 which implicit acl rights should the responsible get?	infolog	cs	Jaká implicitní ACL práva má odpovědná osoba dostat?
 which participants should be preselected when scheduling an appointment.	infolog	cs	Kteří účastníci by měli být automaticky pozváni při vytváření schůzky.
 which types should the calendar show	infolog	cs	Které typy záznamů má kalendář zobrazovat

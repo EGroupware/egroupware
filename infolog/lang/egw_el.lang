@@ -300,6 +300,7 @@ startdate enddate	infolog	el	Ημερομηνία έναρξης ημερομη�
 startdate for new entries	infolog	el	Ημερομηνία έναρξης για νέες καταχωρήσεις
 startrecord	infolog	el	Έναρξη εγγραφής
 status	infolog	el	Κατάσταση
+status, percent and date completed are always allowed.	infolog	el	Κατάσταση, ποσοστό και ημερομηνία ολοκλήρωσης είναι πάντοτε επιτρεπτά.
 status ...	infolog	el	Κατάσταση
 sub	infolog	el	Υπό
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	el	Υπό-καταχωρήσεις γίνονται υποκατηγορίες των μητρικών ή βασικών καταχωρήσεων, αν δεν υπάρχει μητρική
@@ -337,7 +338,7 @@ view subs	infolog	el	εμφάνιση υποκατηγοριών
 view the parent of this entry and all his subs	infolog	el	Εμφάνιση της μητρικής αυτής της καταχώρησης και όλων των υποκατηγοριών της
 view this linked entry in its application	infolog	el	εμφάνιση αυτής της συνδεδεμένης καταχώρησης στην αίτησή της
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	el	πότε θα έπρεπε οι Εργασίες ή Κλήση τηλεφώνου να αρχίζουν,εμφανίζεται από εκείνη την ημερομηνία στο άνοιγμα φίλτρου ή δικά μου άνοιγμα (αρχική σελίδα)
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	el	Ποια επιπλέον πεδία πρέπει ο υπεύθυνος να έχει άδεια να επιμεληθεί χωρίς να έχει δικαιώματα επιμέλειας;<br/>Κατάσταση, ποσοστό και ημερομηνία ολοκλήρωσης είναι πάντοτε επιτρεπτά.
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	el	Ποια επιπλέον πεδία πρέπει ο υπεύθυνος να έχει άδεια να επιμεληθεί χωρίς να έχει δικαιώματα επιμέλειας;
 which implicit acl rights should the responsible get?	infolog	el	Ποια αυτονόητα ACL δικαιώματα πρέπει ο υπεύθυνος να έχει;
 will-call	infolog	el	θα τηλεφωνήσει
 write (add or update) a record by passing its fields.	infolog	el	Καταγραφή (προσθήκη ή ενημέρωση) μιας εγγραφής διαβαίνοντας από τα πεδία της.

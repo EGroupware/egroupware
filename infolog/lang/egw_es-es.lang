@@ -410,6 +410,7 @@ startdate for new entries	infolog	es-es	Fecha de inicio para entradas nuevas
 starting %1	infolog	es-es	Iniciando %1
 startrecord	infolog	es-es	Comenzar grabación de registro
 status	infolog	es-es	Estado
+status, percent and date completed are always allowed.	infolog	es-es	El estado, porcentaje y fecha de finalización se permiten siempre.
 status ...	infolog	es-es	Estado...
 sub	infolog	es-es	Sub
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	es-es	Las subentradas quedan por debajo de las entradas del nivel superior o del principal, si no hay nivel superior.
@@ -458,7 +459,7 @@ view subs	infolog	es-es	ver subs
 view the parent of this entry and all his subs	infolog	es-es	Ver el padre de esta entrada y todos sus subs
 view this linked entry in its application	infolog	es-es	ver esta entrada vinculada en su aplicación
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	es-es	Cuándo se debe iniciar las tareas pendientes o llamada de teléfono. Se muestra en la fecha del filtro o al abrir manualmente en la página de inicio
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	es-es	¿Qué campos adicionales puede editar el responsable sin tener derechos de edición?<br />El estado, porcentaje y fecha de finalización se permiten siempre.
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	es-es	¿Qué campos adicionales puede editar el responsable sin tener derechos de edición?
 which implicit acl rights should the responsible get?	infolog	es-es	¿Qué derechos implícitos de ACL debe tener el responsable?
 which types should the calendar show	infolog	es-es	Qué tipos debe mostrar el calendario
 will-call	infolog	es-es	va a llamar

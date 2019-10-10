@@ -440,6 +440,7 @@ startdate for new entries	infolog	ru	Дата начала для новых з�
 starting %1	infolog	ru	Начиная с %1
 startrecord	infolog	ru	Начальная запись
 status	infolog	ru	Состояние
+status, percent and date completed are always allowed.	infolog	ru	Состояние, процент и дата завершения уже разрешены.
 status ...	infolog	ru	Состояние ...
 sub	infolog	ru	Под
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	ru	Под-записи становятся подзаписями родительских или главных записей если нет родителей
@@ -492,7 +493,7 @@ view subs	infolog	ru	Смотреть дочерние записи
 view the parent of this entry and all his subs	infolog	ru	Показать родительскую запись данной записи и всех подзаписей
 view this linked entry in its application	infolog	ru	Показать данную запись в ее приложении
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	ru	когда Задание или Телефонный Звонок должны начаться, они показываются с этой даты при открытии фильтра или просто открытии (стартовая страница) (?..)
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	ru	Какие дополнительные поля должен мочь редактировать ответственный, не имея прав на редактирование?<br/>Состояние, процент и дата завершения уже разрешены.
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	ru	Какие дополнительные поля должен мочь редактировать ответственный, не имея прав на редактирование?
 which implicit acl rights should the responsible get?	infolog	ru	Какие подразумеваемые права ACL должен получить ответственный?
 which participants should be preselected when scheduling an appointment.	infolog	ru	Какие участники должны быть предварительно выбраны для расписания встречи.
 which types should the calendar show	infolog	ru	Какие типы календарь должен показывать

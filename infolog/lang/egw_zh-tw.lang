@@ -321,6 +321,7 @@ startdate enddate	infolog	zh-tw	開始日期 結束日期
 startdate for new entries	infolog	zh-tw	新資料的開始日期
 startrecord	infolog	zh-tw	開始紀錄
 status	infolog	zh-tw	狀態
+status, percent and date completed are always allowed.	infolog	zh-tw	狀態、比率與完成日期預設都會允許。
 status ...	infolog	zh-tw	狀態...
 sub	infolog	zh-tw	附屬
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	zh-tw	如果沒有父項目的資訊，附屬資料會歸屬到主要資料的父項目
@@ -358,7 +359,7 @@ view subs	infolog	zh-tw	顯示附屬的
 view the parent of this entry and all his subs	infolog	zh-tw	顯示這個事件的主要與所有附屬事件
 view this linked entry in its application	infolog	zh-tw	在應用程式中顯示這個被連結的事件
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	zh-tw	待辦事項或是聯絡清單應該開始的時間？當過濾條件為"所有未完成"或是"自己未完成"時顯示在開始頁面。
-which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	zh-tw	哪些額外欄位即使負責人沒有編輯權限也能夠編輯？<br />狀態、比率與完成日期預設都會允許。
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	zh-tw	哪些額外欄位即使負責人沒有編輯權限也能夠編輯？
 which implicit acl rights should the responsible get?	infolog	zh-tw	負責人可以取得哪個隱含的權限？
 which types should the calendar show	infolog	zh-tw	行事曆要顯示哪些類型
 will-call	infolog	zh-tw	將連絡
