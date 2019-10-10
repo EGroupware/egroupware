@@ -676,3 +676,19 @@ function api_upgrade19_1()
 	}
 	return $GLOBALS['setup_info']['api']['currentver'] = '19.1.001';
 }
+
+/**
+ * Set auth_type=univention for account_repository=univention (was ldap)
+ *
+ * @return string
+ */
+function api_upgrade19_1_001()
+{
+	$config = Api\Config::read('phpgwapi');
+
+	if ($config['account_repository'] === 'univention' && $config['auth_type'] !== 'univention')
+	{
+		Api\Config::save_value('auth_type', 'univention', 'phpgwapi');
+	}
+	return $GLOBALS['setup_info']['api']['currentver'] = '19.1.002';
+}
