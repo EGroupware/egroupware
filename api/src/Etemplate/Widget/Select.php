@@ -515,6 +515,22 @@ class Select extends Etemplate\Widget
 			//error_log(__METHOD__."('$name', TRUE) options=".array2string($options).' --> values='.array2string($values));
 			$options = $values;
 		}
+		else if (end($options) && is_array(end($options)) && isset(end($options)['value']))
+		{
+			$values = array();
+			foreach($options as $index => $option)
+			{
+				if(is_array($option) && isset($option['value']))
+				{
+					$values[$option['value']] = $option['label'];
+				}
+				else
+				{
+					$values[$index] = $option;
+				}
+			}
+			$options = $values;
+		}
 		//error_log(__METHOD__."('$name') returning ".array2string($options));
 		return $options;
 	}

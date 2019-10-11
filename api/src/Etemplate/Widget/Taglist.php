@@ -88,7 +88,7 @@ class Taglist extends Etemplate\Widget
 		{
 			$results[] = array('id' => $id, 'label' => $name);
 		}
-		
+
 		usort($results, function ($a, $b) use ($query) {
 			$a_label = is_array($a["label"]) ? $a["label"]["label"] : $a["label"];
 			$b_label = is_array($b["label"]) ? $b["label"]["label"] : $b["label"];
@@ -97,7 +97,7 @@ class Taglist extends Etemplate\Widget
 		    similar_text($query, $b_label, $percent_b);
 		    return $percent_a === $percent_b ? 0 : ($percent_a > $percent_b ? -1 : 1);
 		});
-		
+
 		 // switch regular JSON response handling off
 		Api\Json\Request::isJSONRequest(false);
 
@@ -144,6 +144,28 @@ class Taglist extends Etemplate\Widget
 
 			foreach((array) $value as $key => $val)
 			{
+				if($this->type == 'taglist-account')
+				{
+					// If in allowed options, skip account check to support app-specific options
+					if(count($allowed) > 0 && in_array($val, $allowed)) continue;
+					// validate accounts independent of options know to server
+					$account_type = $this->attrs['account_type'] ? $this->attrs['account_type'] : 'accounts';
+					$type = $GLOBALS['egw']->accounts->exists($val);
+					//error_log(__METHOD__."($cname,...) form_name=$form_name, widget_type=$widget_type, account_type=$account_type, type=$type");
+					if (!$type || $type == 1 && in_array($account_type, array('groups', 'owngroups', 'memberships')) ||
+						$type == 2 && $account_type == 'users' ||
+						in_array($account_type, array('owngroups', 'memberships')) &&
+							!in_array($val, $GLOBALS['egw']->accounts->memberships(
+								$GLOBALS['egw_info']['user']['account_id'], true))
+					)
+					{
+						self::set_validation_error($form_name, lang("'%1' is NOT allowed ('%2')!", $val,
+							!$type?'not found' : ($type == 1 ? 'user' : 'group')),'');
+						$value = '';
+						break;
+					}
+					continue;
+				}
 				if(count($allowed) && !$this->attrs['allowFreeEntries'] && !array_key_exists($val,$allowed))
 				{
 					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
