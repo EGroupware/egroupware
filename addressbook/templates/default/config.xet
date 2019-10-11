@@ -43,14 +43,10 @@
 				</row>
 				<row>
 					<description value="Fields the user is allowed to edit himself"/>
-					<select id="newsettings[own_account_acl]" multiple="true" tags="true"/>
+					<select id="newsettings[own_account_acl]" multiple="true" tags="true" class="et2_fullWidth"/>
 				</row>
 				<row>
 					<description value="General" span="all" class="subHeader"/>
-				</row>
-				<row>
-					<description value="Load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)"/>
-					<select id="newsettings[index_load_cfs]" rows="4" multiple="true"/>
 				</row>
 				<row>
 					<description value="Use a category tree?"/>
@@ -60,25 +56,23 @@
 					</select>
 				</row>
 				<row>
-					<description value="Update Fields by edited organisations?"/>
-					<hbox>
-						<select id="newsettings[org_fileds_to_update]" multiple="true" rows="4"/>
-						<button onclick="widget.getParent().getWidgetById('newsettings[org_fileds_to_update]').select_all_toggle();" label="Select all" image="check"/>
-					</hbox>
-				</row>
-				<row>
-					<description value="Fields to copy when copying an address?"/>
-					<hbox>
-						<select id="newsettings[copy_fields]" multiple="true" rows="4"/>
-						<button onclick="widget.getParent().getWidgetById('newsettings[copy_fields]').select_all_toggle();" label="Select all" image="check"/>
-					</hbox>
-				</row>
-				<row>
 					<description value="Use an extra tab for private custom fields?"/>
 					<select id="newsettings[private_cf_tab]">
 						<option value="">No</option>
 						<option value="True">Yes</option>
 					</select>
+				</row>
+				<row>
+					<description value="Load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)"/>
+					<select id="newsettings[index_load_cfs]" multiple="true" tags="true" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description value="Update Fields by edited organisations?"/>
+					<select id="newsettings[org_fileds_to_update]" multiple="true" tags="true" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description value="Fields to copy when copying an address?"/>
+					<select id="newsettings[copy_fields]" multiple="true" tags="true" class="et2_fullWidth"/>
 				</row>
 				<row>
 					<description value="Security" span="all" class="subHeader"/>
