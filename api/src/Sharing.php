@@ -200,12 +200,8 @@ class Sharing
 				"Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n"
 			);
 		}
-
 		// check password, if required
-		if ($share['share_passwd'] && (empty($_SERVER['PHP_AUTH_PW']) ||
-			!(Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt') ||
-				Header\Authenticate::decode_password($_SERVER['PHP_AUTH_PW']) &&
-					Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt'))))
+		if(!static::check_password($share))
 		{
 			$realm = 'EGroupware share '.$share['share_token'];
 			header('WWW-Authenticate: Basic realm="'.$realm.'"');
@@ -215,6 +211,25 @@ class Sharing
 			);
 		}
 
+	}
+
+	/**
+	 * Check to see if the share needs a password, and if it does that the password
+	 * provided matches.
+	 *
+	 * @param Array $share
+	 * @return boolean Password OK (or not needed)
+	 */
+	protected static function check_password(Array $share)
+	{
+		if ($share['share_passwd'] && (empty($_SERVER['PHP_AUTH_PW']) ||
+			!(Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt') ||
+				Header\Authenticate::decode_password($_SERVER['PHP_AUTH_PW']) &&
+					Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt'))))
+		{
+			return false;
+		}
+		return true;
 	}
 
 	/**
