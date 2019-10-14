@@ -601,5 +601,59 @@ jQuery.extend(et2_avatar,
 			jQuery('#_cropper_image').cropper('replace',e.target.result);
 		};
 		reader.readAsDataURL(file);
+	},
+
+	/**
+	 * background oolor codes
+	 */
+	LAVATAR_BG_COLORS: [
+		'#5a8770', '#b2b7bb', '#6fa9ab', '#f5af29',
+		'#0088b9', '#f18636', '#d93a37', '#a6b12e',
+		'#0088b9', '#f18636', '#d93a37', '#a6b12e',
+		'#5c9bbc', '#f5888d', '#9a89b5', '#407887',
+		'#9a89b5', '#5a8770', '#d33f33', '#a2b01f',
+		'#f0b126', '#0087bf', '#f18636', '#0087bf',
+		'#b2b7bb', '#72acae', '#9c8ab4', '#5a8770',
+		'#eeb424', '#407887'
+	],
+
+	/**
+	 * Text color
+	 */
+	LAVATAR_TEXT_COLOR: '#ffffff',
+
+	LAVATAR_SIZE: 128,
+	/**
+	 * Generate letter avatar with given data
+	 * @param {type} _fname
+	 * @param {type} _lname
+	 * @param {type} _id
+	 * @returns {string} return data url
+	 */
+	lavatar: function(_fname, _lname, _id){
+		var str = _fname + _lname + _id;
+		var getBgColor = function(_str)
+		{
+			var hash = 0;
+			for (var i=0; i< _str.length; i++)
+			{
+				hash = _str[i].charCodeAt() + hash;
+			}
+			return et2_avatar.LAVATAR_BG_COLORS[hash % et2_avatar.LAVATAR_BG_COLORS.length];
+		};
+		var bg = getBgColor(str);
+		var size = et2_avatar.LAVATAR_SIZE * (window.devicePixelRatio ? window.devicePixelRatio : 1);
+		var text = _fname[0].toUpperCase()+_lname[0].toUpperCase();
+		var canvas = document.createElement('canvas');
+		canvas.width = size;
+		canvas.height = size;
+		var context = canvas.getContext("2d");
+		context.fillStyle = bg;
+		context.fillRect (0, 0, canvas.width, canvas.height);
+		context.font = Math.round(canvas.width/2)+"px Arial";
+		context.textAlign = "center";
+		context.fillStyle = et2_avatar.LAVATAR_TEXT_COLOR;
+		context.fillText(text, size / 2, size / 1.5);
+		return canvas.toDataURL();
 	}
 });
