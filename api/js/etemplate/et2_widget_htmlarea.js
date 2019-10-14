@@ -350,6 +350,8 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			case 'advanced':
 				settings.toolbar = et2_htmlarea.TOOLBAR_ADVANCED;
 				break;
+			default:
+				this.mode = '';
 		}
 
 		// take rte_toolbar into account if no mode restrictly set from template
