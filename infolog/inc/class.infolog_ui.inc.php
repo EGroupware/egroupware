@@ -1227,7 +1227,7 @@ class infolog_ui
 				'url' => 'menuaction=calendar.calendar_uiforms.edit&'.
 					Link::get_registry('calendar', 'add_app') . '[]=infolog&'.Link::get_registry('calendar','add_id').'[]=$id',
 				'allowOnMultiple' => false,
-				'popup' => Link::get_registry('calendar', 'add_popup'),
+				'popup' => Link::get_registry('calendar', 'edit_popup')
 			);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['timesheet'])
