@@ -765,9 +765,10 @@ class Contacts extends Contacts\Storage
 	{
 		//error_log(__METHOD__."($id, ..., etag=$etag) ".  function_backtrace());
 		return $jpeg || !$default ? Egw::link('/api/avatar.php', array(
-			'contact_id' => $id
+			'contact_id' => $id,
+			'lavatar' => !$jpeg ? true : false
 		)+(isset($etag) ? array(
-			'etag'       => $etag,
+			'etag'       => $etag
 		) : array())) : $default;
 	}
 

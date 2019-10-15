@@ -583,6 +583,52 @@ var et2_avatar_ro = (function(){ "use strict"; return et2_avatar.extend(
 });}).call(this);
 et2_register_widget(et2_avatar_ro, ["avatar_ro"]);
 
+/**
+ * Letter Avatar widget to display user profile picture (given url) or
+ * user letter avatar based on user's firstname lastname.
+ *
+ * It will use client-side lavatar if all the following conditions are met:
+ *  - contact_id, lname and fname are all set.
+ *  - the given src url includes flag of lavatar=1 which means there's
+ *    no personal avatar set for the contact yet.
+ *
+ * @augments et2_baseWidget
+ */
+var et2_lavatar = (function(){ "use strict"; return et2_image.extend(
+{
+	attributes: {
+		lname: {
+			name: "last name",
+			type: "string",
+			default: "",
+			description:""
+		},
+		fname: {
+			name: "first name",
+			type: "string",
+			default: "",
+			description: ""
+		},
+
+		contact_id: {
+			name: "contact id",
+			type: "string",
+			default: "",
+			description: ""
+		}
+	},
+
+	set_src: function(_url){
+		if (_url && decodeURIComponent(_url).match("lavatar=1") && (this.options.fname || this.options.lname) && this.options.contact_id)
+		{
+			this.set_src(et2_avatar.lavatar(this.options.fname, this.options.lname, this.options.contact_id));
+			return false;
+		}
+		this._super.apply(this,arguments);
+	}
+});}).call(this);
+et2_register_widget(et2_lavatar, ["lavatar"]);
+
 jQuery.extend(et2_avatar,
 {
 	/**
@@ -643,7 +689,7 @@ jQuery.extend(et2_avatar,
 		};
 		var bg = getBgColor(str);
 		var size = et2_avatar.LAVATAR_SIZE * (window.devicePixelRatio ? window.devicePixelRatio : 1);
-		var text = _fname[0].toUpperCase()+_lname[0].toUpperCase();
+		var text = (_fname ? _fname[0].toUpperCase() : "")+(_lname ? _lname[0].toUpperCase() : "");
 		var canvas = document.createElement('canvas');
 		canvas.width = size;
 		canvas.height = size;
@@ -654,6 +700,8 @@ jQuery.extend(et2_avatar,
 		context.textAlign = "center";
 		context.fillStyle = et2_avatar.LAVATAR_TEXT_COLOR;
 		context.fillText(text, size / 2, size / 1.5);
-		return canvas.toDataURL();
+		var dataURL = canvas.toDataURL();
+		canvas.remove();
+		return dataURL;
 	}
 });
