@@ -723,7 +723,7 @@ class Credentials
 
 		foreach(self::get_db()->select(self::TABLE, self::TABLE.'.*', array(
 			'account_id' => $data['account_id']
-		),__LINE__, __FILE__, false, '', self::APP, 0, self::USER_EDITABLE_JOIN.self::get_db()->quote(true, 'bool')) as $row)
+		),__LINE__, __FILE__, false, '', self::APP) as $row)
 		{
 			$password = self::decrypt($row, self::isUser($row['cred_pw_enc']) ? $data['old_passwd'] : null);
 
