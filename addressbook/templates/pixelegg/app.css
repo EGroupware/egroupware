@@ -103,6 +103,9 @@ input.et2_radiobox {
   border: none;
   box-shadow: none;
 }
+#addressbook-index .avatar span {
+  margin-right: 0;
+}
 #addressbook-index_org_view,
 #addressbook-index_addressbook-index-right_add > div.et2_box_widget {
   top: 0;

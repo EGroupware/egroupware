@@ -109,7 +109,7 @@
 					<listbox type="select-cat" id="${row}[cat_id]" readonly="true" rows="2"/>
 					<box>
 						<hbox class="avatar">
-							<image src="${row}[photo]" class="iphoto"/>
+							<lavatar src="${row}[photo]" contact_id="$row_cont[id]" class="iphoto" lname="$row_cont[n_family]" fname="$row_cont[n_given]"/>
 						</hbox>
 					</box>
 					<date id="${row}[bday]" readonly="true" options="Y-m-d"/>
