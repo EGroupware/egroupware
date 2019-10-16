@@ -15,6 +15,7 @@ audio effect	preferences	de	Audio-Effekt
 audio effect enables|disables sound effects used in the theme	preferences	de	Audio Effekte (Sound) für das Thema aktivieren|deaktivieren.
 automatically start with this font	preferences	de	Startet automatisch mit dieser Schrift
 automatically start with this font size	preferences	de	Startet automatisch mit dieser Schriftgröße
+automatically start with this format block	preferences	de	Startet automatisch mit dieser Formatierung
 br	preferences	de	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	de	Ändern Sie Ihr Passwort, indem Sie Ihr altes und neues Passwort angeben. Es wird TRUE zurückgegeben für eine erfolgreiche Änderung und FALSE wenn es nicht erfolgreich war.
 change password	preferences	de	Passwort ändern
@@ -37,6 +38,7 @@ date format	preferences	de	Datumsformat
 default	preferences	de	Vorgabe
 default application	preferences	de	Standard-Anwendung
 default font	preferences	de	Standard-Schrift
+default format block	preferences	de	Standard Formatierung
 default font size	preferences	de	Standard-Schriftgröße
 default preferences	preferences	de	Voreinstellungen
 delete categories	preferences	de	Kategorie löschen
@@ -78,6 +80,7 @@ general settings	preferences	de	Allgemeine Einstellungen
 generate new qrcode to disable existing one, after enabling the new one!	preferences	de	Einen neuen QR-Code generieren um den bestehenden ungültig zu machen, nach dem diese gespeichert wurde!
 google authenticator for android	preferences	de	Google Authenticator für Android
 google authenticator for ios	preferences	de	Google Authenticator für iOS
+heading %1	preferences	de	Kopfzeile %1
 help off	preferences	de	Keine Hilfe
 holding ctrl/cmd key and click on the line	preferences	de	halten der Strg/Cmd Taste und anklicken der Zeile
 hours	preferences	de	Stunden
@@ -115,11 +118,13 @@ numbers	preferences	de	Zahlen
 old password and new password are the same. this is invalid. you must enter a new password	preferences	de	Altes Passwort und Neues Passwort sind gleich. Dies ist ungültig. Sie müssen ein neues Passwort vergeben.
 or other compatible apps	preferences	de	Oder andere kompatible Apps
 p: paragraph	preferences	de	p: Absatz
+paragraph	preferences	de	Abzats
 password changed	preferences	de	Ihr Password wurde geändert
 password contains only %1 of required %2 character classes: no %3	preferences	de	Passwort enthält nur %1 von erforderlichen %2 Zeichenklassen: keine %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	de	Passwort enthält mit "%1" einen Teil Ihres Benutzernamens oder vollständigen Namen (3 oder mehr Zeichen lang)
 password is invalid	preferences	de	Das Passwort ist ungültig
 password must have at least %1 characters	preferences	de	Passwort muss mindestens %1 Zeichen lang sein
+preformatted	preferences	de	Vormatiert
 permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	de	Zeitzonen auswählen, zwischen den schnell umgeschaltet werden soll. Der Umschalter wird NICHT angezeigt, wenn weniger als zwei ausgewählt werden.
 please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone

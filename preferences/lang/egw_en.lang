@@ -15,6 +15,7 @@ audio effect	preferences	en	Audio effect
 audio effect enables|disables sound effects used in the theme	preferences	en	Audio effect enables|disables sound effects used in the theme
 automatically start with this font	preferences	en	Automatically start with this font
 automatically start with this font size	preferences	en	Automatically start with this font size
+automatically start with this format block	preferences	en	Automatically start with this format block
 br	preferences	en	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	en	Change a user password by passing the old and new passwords.  Returns TRUE on success, FALSE on failure.
 change password	preferences	en	Change password
@@ -34,6 +35,7 @@ custom sidebar menu active color, defaults to above color darkened	preferences	e
 dark moono theme	preferences	en	Dark Moono Theme
 data exchange settings	preferences	en	Data exchange settings
 date format	preferences	en	Date format
+default format block	preferences	en	Default format block
 default	preferences	en	Default
 default application	preferences	en	Default application
 default font	preferences	en	Default font
@@ -78,6 +80,7 @@ general settings	preferences	en	General settings
 generate new qrcode to disable existing one, after enabling the new one!	preferences	en	Generate new QRCode to disable existing one, after enabling the new one!
 google authenticator for android	preferences	en	Google Authenticator for Android
 google authenticator for ios	preferences	en	Google Authenticator for iOS
+heading %1	preferences	en	Heading %1
 help off	preferences	en	Help off
 holding ctrl/cmd key and click on the line	preferences	en	holding Ctrl/Cmd key and click on the line
 hours	preferences	en	Hours
@@ -115,6 +118,7 @@ numbers	preferences	en	numbers
 old password and new password are the same. this is invalid. you must enter a new password	preferences	en	Old password and new password are the same. You must enter a new password!
 or other compatible apps	preferences	en	Or other compatible apps
 p: paragraph	preferences	en	p: Paragraph
+paragraph	preferences	en	Paragraph
 password changed	preferences	en	Password changed.
 password contains only %1 of required %2 character classes: no %3	preferences	en	password contains only %1 of required %2 character classes: no %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	en	password contains with "%1" a parts of your user- or full-name (3 or more characters long)
@@ -126,6 +130,7 @@ please select your timezone.	preferences	en	Select your time zone.
 please, select a new theme	preferences	en	Select a new theme
 popup with search	preferences	en	Popup with search
 preferences saved.	preferences	en	Preferences saved.
+preformatted	preferences	en	Preformatted
 pt: points (1/72 inch)	preferences	en	pt: points (1/72 inch)
 px: display pixels	preferences	en	px: display pixels
 re-enter your password	preferences	en	Re-enter your password

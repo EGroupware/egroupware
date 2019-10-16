@@ -423,12 +423,12 @@ class preferences_hooks
 				'name'   => 'rte_formatblock',
 				'values' => array(
 					'p' => lang("Paragraph"),
-					'h1' => lang("Heading 1"),
-					'h2' => lang("Heading 2"),
-					'h3' => lang("Heading 3"),
-					'h4' => lang("Heading 4"),
-					'h5' => lang("Heading 5"),
-					'h6' => lang("Heading 6"),
+					'h1' => lang("Heading %1", '1'),
+					'h2' => lang("Heading %1", '2'),
+					'h3' => lang("Heading %1", '3'),
+					'h4' => lang("Heading %1", '4'),
+					'h5' => lang("Heading %1", '5'),
+					'h6' => lang("Heading %1", '6'),
 					'pre' => lang("Preformatted")
 				),
 				'help'   => 'Automatically start with this format block',
