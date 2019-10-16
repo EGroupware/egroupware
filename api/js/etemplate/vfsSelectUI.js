@@ -331,7 +331,7 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 		var searchQuery = function (_query)
 		{
 			var result = {};
-			var reg = RegExp("^"+_query, 'ig');
+			var reg = RegExp(_query, 'ig');
 			var key = 0;
 			for (var i in self.dirContent)
 			{
