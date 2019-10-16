@@ -4703,7 +4703,7 @@ class Mail
 							break;
 
 						case 'related':
-							$bodyPart = array_merge($bodyPart, $this->getMultipartRelated($_uid, $part, $_htmlMode, $_preserveSeen));
+							$bodyPart = array_merge($bodyPart, $this->getMultipartRelated($_uid, $part, $_htmlMode, $_preserveSeen, $partCalendar, $skipParts));
 							break;
 					}
 					break;
@@ -4779,12 +4779,12 @@ class Mail
 	 * @param string $_htmlMode how to display a message, html, plain text, ...
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @param Horde_Mime_Part& $partCalendar =null on return text/calendar part, if one was contained or false
+	 * @param array& $skipParts - passed by reference to have control/knowledge which parts are already fetched
 	 * @return array containing the desired part
 	 */
-	function getMultipartRelated($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen=false, &$partCalendar=null)
+	function getMultipartRelated($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen=false, &$partCalendar=null, &$skipParts=array())
 	{
-		$skip = array();
-		return $this->getMultipartMixed($_uid, $_structure, $_htmlMode, $_preserveSeen, $skip, $partCalendar);
+		return $this->getMultipartMixed($_uid, $_structure, $_htmlMode, $_preserveSeen, $skipParts, $partCalendar);
 	}
 
 	/**
