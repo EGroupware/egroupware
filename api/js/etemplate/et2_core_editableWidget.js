@@ -30,6 +30,12 @@ var et2_editableWidget = (function(){ "use strict"; return et2_inputWidget.exten
 			default: false,
 			description: "If set to 'editable' will start readonly, double clicking will make it editable and clicking out will save"
 		},
+		toggle_readonly: {
+			name: "toggle_readonly",
+			type: "boolean",
+			default: true,
+			description: "Double clicking makes widget editable.  If off, must be made editable in some other way."
+		},
 		save_callback: {
 			name: "save_callback",
 			type: "string",
@@ -59,7 +65,7 @@ var et2_editableWidget = (function(){ "use strict"; return et2_inputWidget.exten
 		if(_attrs.readonly && typeof _attrs.readonly === 'string')
 		{
 			_attrs.readonly = true;
-			this._toggle_readonly = true;
+			this._toggle_readonly = _attrs.toggle_readonly;
 		}
 		this._super.apply(this, arguments);
 	},
