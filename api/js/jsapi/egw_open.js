@@ -308,7 +308,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			if (_popup && _popup.indexOf('x') > 0)
 			{
 				var w_h = _popup.split('x');
-				var popup_window = this.openPopup(url, w_h[0], w_h[1], _target || '_blank', _target_app, true);
+				var popup_window = this.openPopup(url, w_h[0], w_h[1], _target && _target != _target_app ? _target : '_blank', _target_app, true);
 
 				// Remember which windows are open
 				egw().storeWindow(_target_app, popup_window);
