@@ -1556,7 +1556,7 @@ var et2_link_string = (function(){ "use strict"; return expose(et2_valueWidget.e
 				}
 				else
 				{
-					self.egw().open(_link_data, "", "view",null,null,_link_data.app);
+					self.egw().open(_link_data, "", "view",null,_link_data.app,_link_data.app);
 				}
 				e.stopImmediatePropagation();
 			});
@@ -1951,7 +1951,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 						if( !self.options.target_app ){
 							self.options.target_app = _link_data.app;
 						}
-						self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : null,self.options.target_app);
+						self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,self.options.target_app);
 					}
 				});
 			}
