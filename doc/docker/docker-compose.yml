@@ -101,11 +101,11 @@ services:
     image: containrrr/watchtower
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
-    # For automatic EPL Updates you need to add your credentials here too
+    # For automatic EPL Updates (not necessary for CE!) you need to pass docker
+    # credentials into watchtower after running: docker login download.egroupware.org
+    #- /root/.docker/config.json:/config.json:ro
     environment:
     - WATCHTOWER_CLEANUP=true # delete old image after update to not fill up the disk
-    #- REPO_USER="your-repo-username"
-    #- REPO_PASS="your-repo-password"
     # for email notifications add your email and mail-server here
     #- WATCHTOWER_NOTIFICATIONS=email
     #- WATCHTOWER_NOTIFICATIONS_LEVEL=info # possible values: panic, fatal, error, warn, info or debug
