@@ -29,6 +29,7 @@ function login_redirect(&$anon_account)
 	}
 	Json\Request::isJSONRequest(true);	// because Api\Json\Request::parseRequest() is not (yet) called
 	$response = Json\Response::get();
+	$response->apply('framework.callOnLogout');
 	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10', true);
 
 	exit();
