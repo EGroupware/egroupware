@@ -404,18 +404,12 @@
 		et2_loadingFinished: function() {
 			this.checkTabOverflow();
 			var $logout = jQuery('#topmenu_logout');
+			var self = this;
 			if (!$logout.hasClass('onLogout'))
 			{
 				$logout.on('click', function(e){
 					e.preventDefault();
-					var apps = Object.keys(framework.applications);
-					for(var i in apps)
-					{
-						if (app[apps[i]] && typeof app[apps[i]].onLogout === "function")
-						{
-							app[apps[i]].onLogout.call(e);
-						}
-					}
+					self.callOnLogout(e);
 					window.framework.redirect(this.href);
 				});
 				$logout.addClass('onLogout');
@@ -502,6 +496,17 @@
 				$body.off('click');
 			}
 			$menu.toggle();
+		},
+
+		callOnLogout: function(e) {
+			var apps = Object.keys(framework.applications);
+			for(var i in apps)
+			{
+				if (app[apps[i]] && typeof app[apps[i]].onLogout === "function")
+				{
+					app[apps[i]].onLogout.call(e);
+				}
+			}
 		}
 	});
 })(window);
