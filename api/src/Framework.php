@@ -615,7 +615,7 @@ abstract class Framework extends Framework\Extra
 	protected static function _user_time_info()
 	{
 		$now = new DateTime();
-		$user_info = '<b>'.Accounts::format_username() .'</b>'. ' - ' . lang($now->format('l')) . ' ' . $now->format(true);
+		$user_info = '<span>'.lang($now->format('l')) . ' ' . $now->format(true).'</span>';
 
 		$user_tzs = DateTime::getUserTimezones();
 		if (count($user_tzs) > 1)
