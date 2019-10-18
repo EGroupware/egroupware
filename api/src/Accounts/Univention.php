@@ -107,7 +107,27 @@ class Univention extends Ldap
 		elseif($data['account_type'] === 'g' && (empty($data['account_id']) ||
 			$data['account_id'] >= Ads::MIN_ACCOUNT_ID && !$this->id2name($data['account_id'])))
 		{
-			$data['account_dn'] = $udm->createGroup($data);
+			// UCS 4.4 Rest API gives an error creating group "Default" claiming a user or group with that name exists
+			if ($data['account_lid'] === 'Default')
+			{
+				// we work around that by creating the group as DefaultX and then rename it to Default in ldap
+				$data['account_lid'] = 'DefaultX';
+				if (($data['account_dn'] = $udm->createGroup($data)) &&
+					ldap_rename($this->ds, $data['account_dn'], 'cn=Default',
+						substr($data['account_dn'], 12), true))	// strlen("cn=DefaultX,")==12
+				{
+					$data['account_dn'] = str_replace('=DefaultX,', '=Default,', $data['account_dn']);
+					$data['account_lid'] = 'Default';
+				}
+				else
+				{
+					throw new Exception("Creating Group DefaultX and renaming to Default failed!");
+				}
+			}
+			else
+			{
+				$data['account_dn'] = $udm->createGroup($data);
+			}
 			$data['account_id'] = $this->name2id($data['account_lid'], 'account_lid', 'g');
 		}
 		// account_lid and password changes need to go through UDM too
@@ -139,7 +159,7 @@ class Univention extends Ldap
 	 */
 	function name2id($_name,$which='account_lid',$account_type=null)
 	{
-		if ((!$id = parent::name2id($_name, $which, $account_type)))
+		if ((!$id = parent::name2id($_name, $which, $account_type)) && $account_type !== 'g')
 		{
 			$user_dn = $this->user_context;
 			$this->user_context = preg_replace('/(cn|uid)=([^,]+),/i', '', $this->user_context);
