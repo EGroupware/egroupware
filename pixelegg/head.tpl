@@ -34,6 +34,9 @@
 				<div id="egw_fw_topmenu">
 					<div id="egw_fw_topmenu_items">
 						{topmenu_items}
+						<div class="timezone">
+							{user_info}
+						</div>
 						{powered_by}
 					</div>
 				</div>

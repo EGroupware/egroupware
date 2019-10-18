@@ -4133,6 +4133,16 @@ td.message span.message {
   background-size: 16px;
   background-image: url(../images/print.svg);
 }
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items .timezone span {
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  background-color: #fafafa;
+  padding: 5px 0px 5px 0px;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items .timezone select {
+  width: 100%;
+}
 /* ###################################################
    Slide Effekt
    ###################################################*/
