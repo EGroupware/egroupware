@@ -269,8 +269,8 @@ module.exports = function (grunt) {
 			projectmanager: {
 				files: {
 					"projectmanager/js/app.min.js": [
-						"projectmanager/js/dhtmlxGantt/codebase/dhtmlxgantt.js",
-						"projectmanager/js/dhtmlxGantt/codebase/ext/dhtmlxgantt_marker.js",
+						"vendor/npm-asset/dhtmlx-gantt/codebase/dhtmlxgantt.js",
+						"vendor/npm-asset/dhtmlx-gantt/codebase/ext/dhtmlxgantt_marker.js",
 						"projectmanager/js/et2_widget_gantt.js",
 						"projectmanager/js/app.js"
 					]
@@ -310,8 +310,8 @@ module.exports = function (grunt) {
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
 						"api/templates/default/def_tutorials.css",
+						"api/templates/default/etemplate2.css",
 						"pixelegg/css/pixelegg.css",
 						"api/templates/default/print.css",
 						"pixelegg/print.css"
@@ -328,6 +328,7 @@ module.exports = function (grunt) {
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
+						"api/templates/default/def_tutorials.css",
 						"api/templates/default/etemplate2.css",
 						"pixelegg/css/mobile.css",
 						"api/templates/default/print.css",
@@ -362,9 +363,27 @@ module.exports = function (grunt) {
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
 						"api/templates/default/def_tutorials.css",
+						"api/templates/default/etemplate2.css",
 						"pixelegg/css/monochrome.css",
+						"api/templates/default/print.css",
+						"pixelegg/print.css"
+					],
+					"pixelegg/css/modern.min.css": [
+						"api/js/jquery/chosen/chosen.css",
+						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
+						"vendor/egroupware/magicsuggest/magicsuggest.css",
+						"api/js/jquery/jquery-ui-timepicker-addon.css",
+						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
+						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
+						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
+						"vendor/bower-asset/diff2html/dist/diff2html.css",
+						"vendor/bower-asset/cropper/dist/cropper.min.css",
+						"api/templates/default/css/flags.css",
+						"api/templates/default/css/htmlarea.css",
+						"api/templates/default/def_tutorials.css",
+						"api/templates/default/etemplate2.css",
+						"pixelegg/css/pixelegg.css",
 						"api/templates/default/print.css",
 						"pixelegg/print.css"
 					]
@@ -384,8 +403,8 @@ module.exports = function (grunt) {
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
 						"api/templates/default/def_tutorials.css",
+						"api/templates/default/etemplate2.css",
 						"api/templates/default/default.css",
 						"jdots/egw_fw.css",
 						"jdots/css/jdots.css",
@@ -405,8 +424,8 @@ module.exports = function (grunt) {
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
 						"api/templates/default/def_tutorials.css",
+						"api/templates/default/etemplate2.css",
 						"api/templates/default/default.css",
 						"jdots/egw_fw.css",
 						"jdots/css/jdots.css",
@@ -425,8 +444,8 @@ module.exports = function (grunt) {
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
 						"api/templates/default/def_tutorials.css",
+						"api/templates/default/etemplate2.css",
 						"api/templates/default/default.css",
 						"jdots/egw_fw.css",
 						"jdots/css/jdots.css",
