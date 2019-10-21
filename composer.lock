@@ -992,16 +992,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "c80ba1fd297a8b3c3a3b2b4055a6fe5b62ef7910"
+                "reference": "d573782214cd9a7a651b76de448c85a1710dc01b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/c80ba1fd297a8b3c3a3b2b4055a6fe5b62ef7910",
-                "reference": "c80ba1fd297a8b3c3a3b2b4055a6fe5b62ef7910",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/d573782214cd9a7a651b76de448c85a1710dc01b",
+                "reference": "d573782214cd9a7a651b76de448c85a1710dc01b",
                 "shasum": ""
             },
             "require": {
-                "egroupware/egroupware": "self.version"
+                "fxp/composer-asset-plugin": "^1.2.2",
+                "npm-asset/dhtmlx-gantt": "~6.2"
             },
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
@@ -1024,7 +1025,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-08-06T07:57:26+00:00"
+            "time": "2019-10-18T22:10:10+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -1609,6 +1610,49 @@
                 ""
             ],
             "description": "AS jqPlot Shim"
+        },
+        {
+            "name": "npm-asset/dhtmlx-gantt",
+            "version": "6.2.7",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/dhtmlx-gantt/-/dhtmlx-gantt-6.2.7.tgz",
+                "shasum": "86689f36c1f10e2bfaa5126445b4c560d82b4587"
+            },
+            "type": "npm-asset-library",
+            "extra": {
+                "npm-asset-bugs": {
+                    "url": "https://github.com/DHTMLX/gantt/issues"
+                },
+                "npm-asset-main": "codebase/dhtmlxgantt.js",
+                "npm-asset-directories": [],
+                "npm-asset-repository": {
+                    "type": "git",
+                    "url": "git+https://github.com/DHTMLX/gantt.git"
+                }
+            },
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "DHTMLX"
+                }
+            ],
+            "description": "An open source JavaScript Gantt chart that helps you illustrate a project schedule in a nice-looking chart.",
+            "homepage": "https://github.com/DHTMLX/gantt#readme",
+            "keywords": [
+                "browser",
+                "calendar",
+                "chart",
+                "dhtmlx",
+                "dhtmlxgantt",
+                "gantt",
+                "gantt chart",
+                "scheduler",
+                "timeline"
+            ],
+            "time": "2019-10-11T10:48:39+00:00"
         },
         {
             "name": "npm-asset/gridster",
