@@ -236,6 +236,7 @@ class addressbook_hooks
 		$crm_list_options = array(
 			'~edit~'    => lang('Edit contact'),
 			'infolog' => lang('Open %1 CRM view', lang('infolog')),
+			'infolog-organisation' => lang('infolog-organisation'),
 		);
 		if($GLOBALS['egw_info']['user']['apps']['tracker'])
 		{
