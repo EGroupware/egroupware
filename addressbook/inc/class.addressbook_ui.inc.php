@@ -402,6 +402,10 @@ class addressbook_ui extends addressbook_bo
 		{
 			if ($GLOBALS['egw_info']['user']['apps'][$app]) $crm_count++;
 		}
+		if($GLOBALS['egw_info']['user']['apps']['infolog'])
+		{
+			array_splice($crm_apps, 1, 0, 'infolog-organisation');
+		}
 		if($crm_count > 1)
 		{
 			foreach($crm_apps as $app)
@@ -2697,6 +2701,9 @@ class addressbook_ui extends addressbook_bo
 					{
 						switch($crm_list)
 						{
+							case 'infolog-organisation':
+								$contact_id = $this->get_all_org_contacts($contact_id);
+								// Fall through
 							case 'infolog':
 							case 'tracker':
 							default:
@@ -2905,11 +2912,48 @@ class addressbook_ui extends addressbook_bo
 		// Sending it again (via ajax) will break the addressbook.view etemplate2
 		if($contact_id)
 		{
+			// Show for whole organisation, not just selected contact
+			if($crm_list == 'infolog-organisation' && $content['org_name'])
+			{
+				$crm_list = str_replace('-organisation','',$crm_list);
+				$_query = Api\Cache::getSession('addressbook', 'index');
+				$content['id'] = $this->get_all_org_contacts($content['id']);
+			}
 			Api\Hooks::single(array(
 				'location' => 'addressbook_view',
 				'ab_id'    => $content['id']
 			),$crm_list);
 		}
+	}
+
+	/**
+	 * Get all the contact IDs in the given contact's organisation
+	 *
+	 * @param int $contact_id
+	 * @param Array $query Optional base query
+	 *
+	 * @return array of contact IDs in the organisation
+	 */
+	function get_all_org_contacts($contact_id, $query = array())
+	{
+		$contact = $this->read($contact_id);
+		$query['num_rows'] = -1;
+		$query['start'] = 0;
+		if(!array_key_exists('filter', $query))
+		{
+			$query['filter'] = '';
+		}
+		if(!is_array($query['col_filter']))
+		{
+			$query['col_filter'] = array();
+		}
+		$query['grouped_view'] = 'org_name:'.$contact['org_name'];
+
+		$org_contacts = array();
+		$readonlys = null;
+		$this->get_rows($query,$org_contacts,$readonlys,true);	// true = only return the id's
+
+		return $org_contacts ? $org_contacts : array($contact_id);
 	}
 
 	/**

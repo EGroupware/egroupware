@@ -317,6 +317,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	en	Imports
 in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthday.
 income	addressbook	en	Income
 infolog	addressbook	en	InfoLog
+infolog-organisation	addressbook	en	Infolog CRM for organisation
 insert	addressbook	en	Insert
 insufficent rights to delete this list!	addressbook	en	Insufficient rights to delete this list!
 insufficent rights to edit this list!	addressbook	en	Insufficent rights to edit this list!
