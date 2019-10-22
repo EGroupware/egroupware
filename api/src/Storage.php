@@ -463,12 +463,34 @@ class Storage extends Storage\Base
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
 		//error_log(__METHOD__.'('.array2string(array_combine(array_slice(array('criteria','only_keys','order_by','extra_cols','wildcard','empty','op','start','filter','join','need_full_no_count'), 0, count(func_get_args())), func_get_args())).')');
+		$this->process_search($criteria, $only_keys, $order_by, $extra_cols, $wildcard, $op, $filter, $join);
 
+		return parent::search($criteria, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $need_full_no_count);
+	}
+
+	/**
+	 * Full logic of search to be reused in custom search methods
+	 *
+	 * Works by modifying the parameters so search calls this method and then it's parent with the modified parameters.
+	 *
+	 * @param array|string $criteria array of key and data cols, OR string with search pattern (incl. * or ? as wildcards)
+	 * @param boolean|string/array $only_keys =true True returns only keys, False returns all cols. or
+	 *	comma seperated list or array of columns to return
+	 * @param string $order_by ='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
+	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $wildcard ='' appended befor and after each criteria
+	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param array $filter =null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. "JOIN table2 ON x=y" or
+	 *	"LEFT JOIN table2 ON (x=y AND z=o)", Note: there's no quoting done on $join, you are responsible for it!!!
+	 */
+	protected function process_search(&$criteria, &$only_keys=True, &$order_by='', &$extra_cols='', &$wildcard='', &$op='AND', &$filter=null, &$join='')
+	{
 		// if no CFs are defined OR used and became unavailable (deleted or permissions changed)
 		if (!$this->customfields && strpos($order_by, self::CF_PREFIX) === false &&
 			strpos(implode(',', array_keys($filter ? $filter : [])), self::CF_PREFIX) === false)
 		{
-			return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
+			return;
 		}
 		if ($only_keys === false)
 		{
@@ -743,7 +765,6 @@ class Storage extends Storage\Base
 				$only_keys = 'DISTINCT '.$only_keys;
 			}
 		}
-		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
 
 	/**
