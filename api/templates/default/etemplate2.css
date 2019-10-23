@@ -445,8 +445,9 @@ span.et2_date {
 span.et2_date input.et2_date {
   min-width: 16.5ex;
   background-repeat: no-repeat;
-  background-position: top right;
-  background-size: contain;
+  background-position-x: right;
+  background-position-y: 1px;
+  background-size: 18px
 }
 span.et2_date input.et2_time {
   min-width: 6ex;
