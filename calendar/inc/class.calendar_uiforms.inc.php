@@ -692,7 +692,7 @@ class calendar_uiforms extends calendar_ui
 
 			// Get links to be copied
 			// With no ID, $content['link_to']['to_id'] is used
-			$content['link_to']['to_id'] = array('to_app' => 'calendar', 'to_id' => 0);
+			$content['link_to'] = array('to_app' => 'calendar', 'to_id' => 0);
 			foreach(Link::get_links('calendar', $content['id']) as $link)
 			{
 				if ($link['app'] != Link::VFS_APPNAME)
