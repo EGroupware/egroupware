@@ -655,7 +655,7 @@ class calendar_boupdate extends calendar_bo
 						}
 					}
 				case 'add_cancel':
-					if ($msg_is_response && ($old_event['owner'] == $userid || $role == 'CHAIR') &&
+					if ($msg_is_response && ($old_event['owner'] == $userid || $role == 'CHAIR') ||
 						$msg_type == MSG_DELETED || $msg_type == MSG_ADDED || $msg_type == MSG_DISINVITE)
 					{
 						++$want_update;
