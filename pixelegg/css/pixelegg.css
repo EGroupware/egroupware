@@ -4130,7 +4130,8 @@ td.message span.message {
   padding: 5px 0px 5px 0px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items .timezone select {
-  width: 100%;
+  width: calc(80%);
+  margin-left: 10px;
 }
 /* ###################################################
    Slide Effekt
