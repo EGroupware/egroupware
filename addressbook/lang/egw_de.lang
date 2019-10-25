@@ -317,6 +317,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	de	Importi
 in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburtstag von %3.
 income	addressbook	de	Einkommen
 infolog	addressbook	de	InfoLog
+infolog-organisation	addressbook	de	Öffnet Infolog CRM-Ansicht der Organisation
 insert	addressbook	de	einfügen
 insufficent rights to delete this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu löschen!
 insufficent rights to edit this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu ändern!
@@ -381,8 +382,8 @@ number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensät
 open %1 crm view	addressbook	de	Öffnet %1 in der CRM-Ansicht
 open email addresses in external mail program	addressbook	de	Öffne E-Mail Adressen in externem Mail-Programm
 open for editing?	addressbook	de	Zum Bearbeiten öffnen?
-open infolog crm view	preferences	de	InfoLog CRM-Ansicht öffnen
-open tracking system crm view	preferences	de	Ticket System CRM-Ansicht öffnen
+open infolog crm view	preferences	de	Öffnet Infolog CRM-Ansicht des Kontaktes
+open tracking system crm view	preferences	de	Öffnet Verfolgungssystem in der CRM-Ansicht
 options for type	admin	de	Optionen für Typ
 organisation	addressbook	de	Organisation
 organisations	addressbook	de	Organisationen
@@ -529,7 +530,7 @@ warning!! ldap is valid only if you are not using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht !
 weekday	addressbook	de	Wochentag
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!
-when viewing a contact, show linked entries from the selected application	addressbook	de	Bei der Ansicht eine Kontaktes werden nur Links zu folgenden Anwendungen geziegt
+when viewing a contact, show linked entries from the selected application	addressbook	de	Bei der Ansicht eine Kontaktes werden nur Links zu folgenden Anwendungen gezeigt.
 where to add the email address	addressbook	de	wo soll die E-Mail-Adresse hinzugefügt werden
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	de	Welches Format soll das Adressbuch für Adressen verwenden, deren landesübliches Adressformat unbekannt ist. Wenn das Adressformat eines Landes dem Adressbuch bekannt ist, wird das unabhängig von dieser Einstellung benutzt.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll beim Hinzufügen von Kontakten ausgewählt sein, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
