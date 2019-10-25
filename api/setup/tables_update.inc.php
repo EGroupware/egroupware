@@ -692,3 +692,15 @@ function api_upgrade19_1_001()
 	}
 	return $GLOBALS['setup_info']['api']['currentver'] = '19.1.002';
 }
+
+/**
+ * Index to speed up ProjectManager link-/sub-project-queries
+ *
+ * @return string
+ */
+function api_upgrade19_1_002()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_links', array('link_app1','link_app2','link_id1','link_id2'));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '19.1.003';
+}

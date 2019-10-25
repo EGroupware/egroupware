@@ -191,7 +191,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('link_id'),
 		'fk' => array(),
-		'ix' => array('deleted',array('link_app1','link_id1','link_lastmod'),array('link_app2','link_id2','link_lastmod')),
+		'ix' => array('deleted',array('link_app1','link_id1','link_lastmod'),array('link_app2','link_id2','link_lastmod'),array('link_app1','link_app2','link_id1','link_id2')),
 		'uc' => array()
 	),
 	'egw_addressbook' => array(
