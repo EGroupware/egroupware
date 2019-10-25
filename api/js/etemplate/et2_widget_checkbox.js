@@ -139,7 +139,13 @@ var et2_checkbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	 *
 	 * @param {string|boolean} _value
 	 */
-	set_value: function(_value) {
+	set_value: function(_value)
+	{
+		// in php, our database storage and et2_checkType(): "0" == false
+		if (_value === "0" && this.options.selected_value != "0")
+		{
+			_value = false;
+		}
 		if(_value != this.value) {
 			if(_value == this.options.selected_value ||
 					_value && this.options.selected_value == this.attributes.selected_value["default"] &&
