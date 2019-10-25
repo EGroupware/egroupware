@@ -2913,7 +2913,7 @@ class addressbook_ui extends addressbook_bo
 		if($contact_id)
 		{
 			// Show for whole organisation, not just selected contact
-			if($crm_list == 'infolog-organisation' && $content['org_name'])
+			if($crm_list == 'infolog-organisation')
 			{
 				$crm_list = str_replace('-organisation','',$crm_list);
 				$_query = Api\Cache::getSession('addressbook', 'index');
@@ -2937,6 +2937,13 @@ class addressbook_ui extends addressbook_bo
 	function get_all_org_contacts($contact_id, $query = array())
 	{
 		$contact = $this->read($contact_id);
+
+		// No org name, early return with just the contact
+		if(!$contact['org_name'])
+		{
+			return array($contact_id);
+		}
+		
 		$query['num_rows'] = -1;
 		$query['start'] = 0;
 		if(!array_key_exists('filter', $query))
