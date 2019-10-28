@@ -632,6 +632,11 @@ class calendar_boupdate extends calendar_bo
 		}
 		else
 		{
+			// Check if user is not participating, and does not want notifications
+			if(!$part_prefs['calendar']['receive_not_participating'] && !array_key_exists($userid, $old_event['participants']))
+			{
+				return false;
+			}
 			switch($ru = $part_prefs['calendar']['receive_updates'])
 			{
 				case 'responses':
