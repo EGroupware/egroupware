@@ -526,6 +526,14 @@ class calendar_hooks
 				'admin'  => False,
 				'default'=> 'false',
 			),
+			'receive_not_participating' => array(
+				'type'   => 'select',
+				'label'  => 'Receive notifications about events you are not a participant in',
+				'name'   => 'receive_not_participating',
+				'values' => $yesno,
+				'help'   => 'Do you want to be notified about events you created, but are not participating in?',
+				'default'=> '1'
+			),
 			'notify_externals' => array(
 				'type'   => 'select',
 				'label'  => 'Notify non-EGroupware users about event updates',
