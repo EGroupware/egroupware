@@ -78,7 +78,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			name: "Valid children",
 			description: "Enables to control what child tag is allowed or not allowed of the present tag. For instance: +body[style], makes style tag allowed inside body",
 			type: "string",
-			default: ""
+			default: "+body[style]"
 		}
 	},
 
