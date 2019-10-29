@@ -9,13 +9,11 @@
  * @author Ralf Becker <rb@stylite.de>
  * @author Nathan Gray <ng@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 namespace EGroupware\Api\Framework;
 
 use EGroupware\Api;
-use EGroupware\Api\Egw;
 
 /**
 * Stylite jdots template
@@ -521,11 +519,11 @@ abstract class Ajax extends Api\Framework
 		{
 			foreach($file as &$link)
 			{
+				$ajax = null;
 				preg_match('/ajax=(true|false)/', $link, $ajax);
 				$link = preg_replace("/^(javascript:egw_link_handler\(')(.*)menuaction=([^&]+)(.*)(','[^']+'\))$/",
-					'$1$2menuaction=admin.admin_ui.index&load=$3$4&ajax=' . ($ajax[1] ? $ajax[1] : 'true') .'\',\'admin\')', $file_was=$link);
+					'$1$2menuaction=admin.admin_ui.index&load=$3$4&ajax=' . ($ajax[1] ? $ajax[1] : 'true') .'\',\'admin\')', $link);
 			}
-
 		}
 
 		$this->sideboxes[$appname][$menu_title] = $file;
@@ -868,7 +866,7 @@ abstract class Ajax extends Api\Framework
 			}
 			$store_prefs = true;
 		}
-		$last_direct_url = null;
+
 		// if we have the open tabs in the session, use it instead the maybe forced common prefs open_tabs
 		if (!($open_tabs = Api\Cache::getSession(__CLASS__, 'open_tabs')))
 		{
