@@ -76,10 +76,10 @@ class admin_statistics
 			'other'       => lang('Other'),
 		);
 		$sel_options['install_type'] = array(
-			'archive' => lang('Archive: zip or tar'),
+			'docker'  => lang('Docker'),
 			'package' => lang('RPM or Debian package'),
 			'git'     => lang('Git clone'),
-			'svn'     => lang('Subversion checkout'),
+			'archive' => lang('Archive: zip or tar'),
 			'other'   => lang('Other'),
 		);
 		$sel_options['postpone'] = array(
@@ -157,13 +157,9 @@ class admin_statistics
 
 		$data['country'] = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
 
-		// api version
-		$data['version'] = $GLOBALS['egw_info']['apps']['api']['version'];
-		// append EPL version
-		if (isset($GLOBALS['egw_info']['apps']['stylite']))
-		{
-			$data['version'] .= ' '.$GLOBALS['egw_info']['apps']['stylite']['version'].'EPL';
-		}
+		// maintenance release (incl. EPL)
+		$data['version'] = $GLOBALS['egw_info']['server']['versions']['maintenance_release'];
+
 		// sessions in the last 30 days
 		$data['sessions'] = $GLOBALS['egw']->db->query('SELECT COUNT(*) FROM egw_access_log WHERE li > '.(time()-30*24*3600))->fetchColumn();
 
@@ -177,7 +173,12 @@ class admin_statistics
 		$data['php'] = PHP_VERSION.': '.PHP_SAPI;
 		$data['os'] = PHP_OS;
 		// @ required to get ride of warning, if files are outside of open_basedir
-		if (@file_exists($file = '/etc/SuSE-release') || @file_exists($file = '/etc/redhat-release') || @file_exists($file = '/etc/debian_version'))
+		$matches = null;
+		if (@file_exists($file = '/etc/lsb-release') && preg_match('/^DISTRIB_DESCRIPTION="?([^"]+)"?/mi', file_get_contents($file), $matches))
+		{
+			$data['os'] .= ': '.$matches[1];
+		}
+		elseif (@file_exists($file = '/etc/SuSE-release') || @file_exists($file = '/etc/redhat-release') || @file_exists($file = '/etc/debian_version'))
 		{
 			$data['os'] .= ': '.str_replace(array("\n","\r"),'',implode(',',file($file)));
 		}
@@ -185,9 +186,9 @@ class admin_statistics
 		{
 			$data['install_type'] = 'git';
 		}
-		elseif (file_exists('.svn'))
+		elseif (file_exists('/entrypoint.sh'))
 		{
-			$data['install_type'] = 'svn';
+			$data['install_type'] = 'docker';
 		}
 		elseif(EGW_INCLUDE_ROOT == '/usr/share/egroupware' && PHP_OS == 'Linux' && is_link('/usr/share/egroupware/header.inc.php'))
 		{

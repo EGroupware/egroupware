@@ -41,15 +41,15 @@
 				</row>
 				<row>
 					<description value="EGroupware Version"/>
-					<textbox id="version" size="-16" readonly="true"/>
+					<textbox id="version" size="-64" readonly="true"/>
 				</row>
 				<row>
 					<description value="Operating System"/>
-					<textbox id="os" size="-40" readonly="true"/>
+					<textbox id="os" size="-64" readonly="true"/>
 				</row>
 				<row>
-					<description options=",,,php" value="PHP Version"/>
-					<textbox id="php" size="-20" readonly="true"/>
+					<description value="PHP Version"/>
+					<textbox id="php" size="-64" readonly="true"/>
 				</row>
 				<row>
 					<description value="Installation Type"/>
