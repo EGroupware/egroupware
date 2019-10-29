@@ -382,6 +382,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				var labels = [];
 				var already_added = [];
 				var options = false;
+				var resource = null;
 				if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 				{
 					options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
@@ -395,9 +396,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					var user = this.options.owner[i];
 					// Handle grouped resources like mailing lists - pull it from sidebox owner
 					// and expand to their contents
-					if(isNaN(user) && options && options.find)
+					if(options && options.find &&
+							((resource = options.find(function(element) {return element.id == user;}) || {}) || isNaN(user)))
 					{
-						var resource = options.find(function(element) {return element.id == user;}) || {};
 						if(resource && resource.resources)
 						{
 							for(var j = 0; j < resource.resources.length; j++)
@@ -426,7 +427,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					}
 					else if (user < 0)	// groups
 					{
-						egw.accountData(user,'account_fullname',true,function(result) {
+						egw.accountData(parseInt(user),'account_fullname',true,function(result) {
 							for(var id in result)
 							{
 								if(already_added.indexOf(''+id) < 0)
