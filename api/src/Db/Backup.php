@@ -331,11 +331,11 @@ class Backup
 	 * @param boolean $convert_to_system_charset =true obsolet, it's now allways done
 	 * @param string $filename ='' gives the file name which is used in case of a zip archive.
 	 * @param boolean $protect_system_config =true should above system_config values be protected (NOT overwritten)
-	 * @param int $insert_n_rows =10 how many rows to insert in one sql statement
+	 * @param int $insert_n_rows =500 how many rows to insert in one sql statement
 	 *
 	 * @returns An empty string or an error message in case of failure.
 	 */
-	function restore($f,$convert_to_system_charset=true,$filename='',$protect_system_config=true, $insert_n_rows=10)
+	function restore($f,$convert_to_system_charset=true,$filename='',$protect_system_config=true, $insert_n_rows=500)
 	{
 		@set_time_limit(0);
 		ini_set('auto_detect_line_endings',true);
@@ -496,10 +496,10 @@ class Backup
 	 * Restore data from a (compressed) csv file
 	 *
 	 * @param resource $f file opened with fopen for reading
-	 * @param int|string $insert_n_rows =10 how many rows to insert in one sql statement, or string with column-name used as unique key for insert
+	 * @param int|string $insert_n_rows =500 how many rows to insert in one sql statement, or string with column-name used as unique key for insert
 	 * @returns int number of rows read from csv file
 	 */
-	function db_restore($f, $insert_n_rows=10)
+	function db_restore($f, $insert_n_rows=500)
 	{
 		$convert_to_system_charset = true;
 		$table = null;
@@ -604,7 +604,9 @@ class Backup
 						if ($insert_n_rows > 1)
 						{
 							$rows[] = $data;
-							if (count($rows) == $insert_n_rows)
+							if (count($rows) == $insert_n_rows ||
+								// check every 50 rows, if we might reach MySQLs max_allowed_packet=1MB
+								(!(count($rows) % 50) && strlen(json_encode($rows)) > 500000))
 							{
 								$this->insert_multiple($table, $rows, $this->schemas[$table]);
 								$rows = array();
