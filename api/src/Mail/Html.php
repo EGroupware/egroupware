@@ -345,8 +345,7 @@ class Html
 			17 => '#lower#than#$1',
 			18 => '#greater#than#$1',
 		);
-			error_log(__LINE__);
-		error_log($_html);
+
 		$_html = preg_replace($tags,$Replace,$_html);
 		$_html = preg_replace('~</t(d|h)>\s*<t(d|h)[^>]*>~si',' - ',$_html);
 		$_html = preg_replace('~<img[^>]+>~s','',$_html);
