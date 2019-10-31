@@ -1,3 +1,35 @@
+egroupware-docker (19.1.20191031) hardy; urgency=low
+
+  * Docker: allow to set session timeout (in sec) via EGW_SESSION_TIMEOUT enviroment variable
+  * Docker: do not allow to call php files ment to be included only (src, setup, inc or vendor directories)
+  * OpenID/OAuth2: do NOT ask user aproval, if already given and client does not use refresh token
+  * Rocket.Chat: automatic logout and login withing EGroupware
+  * Rocket.Chat: fix list of channels not being searchable on add favorite search dialog
+  * Mail: stop logging of mails to webserver error-log
+  * Mail: fix mails consists of both multipart/mixed and multipart/related create duplicated content
+  * Mail: fix textarea in compose dialog gets disappeared after attaching a file, happens in mobile template only
+  * Mail/Api: fix password change looses S/Mime, one time passwords and other credentials
+  * Mail: new preference to set default format (line height, font, ...)
+  * Api: Fix bug where some links opened in the application's main tab instead of popups
+  * Admin: fix deleting of customfields type not working
+  * Admin: Fix adding custom type status or setting type owner was not saved
+  * Calendar: Fix selecting a group in planner by user view did not always load group members
+  * Calendar: Fix copy event loses links
+  * Addressbook: Add a new CRM option to view infologs for the contacts' entire organisation
+  * Addressbook: Add site configuration to always load certain custom fields, allows for single customfields in custom list templates
+  * Addressbook: fix issue of avatar edit is disabled even though user has enough rights to edit it.
+  * Infolog: Fix context menu 'Schedule appointment' action opened in calendar tab instead of a popup
+  * Tracker: context menu to edit comments or add attachments to them
+  * Tracker: Record comment changes in history
+  * Import/Export: Fix export CSV with Tab delimiter literally inserted '\t' instead of tab.
+  * CE-Groups: fix error deleting groups
+  * News: Fix error "Cannot read property 'col_filter' of undefined" when clicking 'No filters'
+  * Statistik: add maintenance release version and docker install type
+  * Collabora: 4.0.8 fixes inserting images from filemanager plus several new features and bugfixes
+  * Univention: EGroupware 19.1 is now available via AppCenter for UCS 4.4
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 31 Oct 2019 14:02:13 +0100
+
 egroupware-docker (19.1.20190925) hardy; urgency=low
 
   * Password&Security: fix not working password change after 19.1.20190917
