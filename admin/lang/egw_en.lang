@@ -27,7 +27,12 @@
 (stored password will not be shown here)	admin	en	Stored password will not be shown here!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
 -  type	admin	en	-  type
+1 year	admin	en	1 year
+2 month	admin	en	2 month
+2 weeks	admin	en	2 weeks
 2-factor-authentication for interactive login	admin	en	2-Factor-Authentication for interactive login
+3 month	admin	en	3 month
+6 month	admin	en	6 month
 access by	admin	en	Access by
 access control	admin	en	Access control
 access to %1 data by others	admin	en	Access to %1 data by others
@@ -937,6 +942,7 @@ use tls encryption	admin	en	Use TLS encryption
 use users email-address (as seen in useraccount)	admin	en	Use users email address, as set in user account
 user accounts	admin	en	User accounts
 user can edit forwarding address	admin	en	User can edit forwarding address
+user choice	admin	en	User choice
 user csv export	admin	en	User CSV export
 user csv import	admin	en	User CSV import
 user data	common	en	User data
