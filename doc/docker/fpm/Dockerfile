@@ -12,7 +12,7 @@ RUN apt-get update \
 	&& apt-get install -y software-properties-common \
 	&& LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php \
 	&& apt-get update \
-	&& bash -c "apt-get install -y php7.3-{cli,mysql,json,gd,xsl,bz2,opcache,apcu,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql}" \
+	&& bash -c "apt-get install -y php7.3-{cli,mysql,json,gd,xsl,bz2,opcache,apcu,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp}" \
 	# fpm and php.ini settings
 	&& sed -e 's/^;\?listen \?=.*/listen = 9000/g' \
 		-e '/allowed_clients/d' \
@@ -37,6 +37,7 @@ RUN apt-get update \
 	&& sed 	-e 's|^;\?date.timezone.*|date.timezone = UTC|g' \
 		-e 's|^;\?sys_temp_dir.*|sys_temp_dir = /tmp|g' \
 		-i /etc/php/7.3/cli/php.ini \
+	# create directory for pid file
 	&& mkdir -p /run/php \
 	# send logs to stderr to be viewed by docker logs
 	&& ln -s /dev/stderr /var/log/php7.3-fpm.log \
