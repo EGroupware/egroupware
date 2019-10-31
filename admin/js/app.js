@@ -1015,7 +1015,7 @@ app.classes.admin = AppJS.extend(
 		}
 		else
 		{
-			callback(et2_dialog.OK_BUTTON);
+			callback(et2_dialog.YES_BUTTON);
 		}
 		return false;
 	},
