@@ -316,7 +316,7 @@ learning as ham (not spam) failed because of %1	mail	de	Als "gute E-Mail" (kein 
 learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da %1
 less than	mail	de	kleiner als
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als InfoLog speichern)
-mail	common	de	Mail
+mail	common	de	E-Mail
 mail acl	mail	de	Zugriffsrechte
 mail filter	mail	de	Filter-Regeln
 mail filter rule	mail	de	Filter-Regel
@@ -488,7 +488,7 @@ save message to disk	mail	de	Nachricht speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
 save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf im EGroupware Dateimanager ab.
 save to disk	mail	de	Speichern unter
-save to filemanager	mail	de	Nachricht im Dateimananger speichern
+save to filemanager	mail	de	Im Dateimananger speichern
 save:	mail	de	Speichern
 saves subscription changes	mail	de	Änderungen speichern
 saves this acl	mail	de	Zugriffsrechte speichern

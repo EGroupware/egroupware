@@ -80,7 +80,7 @@ current directory	filemanager	de	Aktuelles Verzeichnis
 custom fields	filemanager	de	Benutzerdefinierte Felder
 cut	filemanager	de	Ausschneiden
 cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
-default action on double-click	filemanager	de	Aktion beim Doppel-Klick einer Datei
+default action on double-click	filemanager	de	Aktion beim Doppelklick einer Datei
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Verzeichnis navigieren, Sie können aber das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis konfigurieren.
 default document to insert entries	filemanager	de	Standarddokument zum Einfügen von Daten
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	de	Legt fest, wie Dokumente behandelt werden beim Doppelklick auf die Datei. Bilder werden immer in der Exposé-Ansicht geöffnet und E-Mails mit der E-Mail-Anwendung. Alle anderen MIME-Typen werden vom Browser selbst behandelt.
@@ -190,7 +190,7 @@ log out as superuser	filemanager	de	Superuser abmelden
 mail files	filemanager	de	Dateien per E-Mail versenden
 mail paste	filemanager	de	per E-Mail versenden
 max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
-merge print open handler	filemanager	de	Handler für einfügen in Dokument
+merge print open handler	filemanager	de	Handler für das Einfügen in Dokument
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	verändert
 modified between	filemanager	de	verändert zwischen
@@ -299,7 +299,6 @@ user color indicator	filemanager	de	Benutzer-Farbe
 users and groups	filemanager	de	Benutzer und Gruppen
 versioning	filemanager	de	Versionierung
 vfs mounts and versioning	common	de	VFS einhängen und versionieren
-view link	filemanager	de	Zeige Freigabe-Link
 webdav link copied into clipboard	filemanager	de	WebDAV-Link in die Zwischenablage kopiert
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	de	Wer soll gelöschte Dateien oder ältere Versionen endgültig löschen dürfen:
 writable share link	filemanager	de	Beschreibbare Freigabe-Link

@@ -27,7 +27,12 @@
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 -  type	admin	de	-Typ
+1 year	admin	de	1 Jahr
+2 month	admin	de	2 Monate
+2 weeks	admin	de	2 Wochen
 2-factor-authentication for interactive login	admin	de	2-Faktor-Authentifizierung für interaktive Anmeldung
+3 month	admin	de	3 Monate
+6 month	admin	de	6 Monate
 access by	admin	de	Zugriff durch
 access control	admin	de	Zugriffsrechte
 access to %1 data by others	admin	de	Zugriffsrechte %1 durch andere
@@ -376,7 +381,7 @@ encrypted connection	admin	de	verschlüsselte Verbindung
 encryption	admin	de	Verschlüsselung
 encryption settings	admin	de	Verschlüsselungseinstellungen
 enter a description for the category	admin	de	Geben Sie eine Beschreibung für diese Kategorie ein
-enter a passphrase if you would like to protect your private key by password.	admin	de	Bitte geben Sie ein Passphrase ein, wenn Sie Ihren privaten Schlüssen mit einem Passwort sichern wollen.
+enter a passphrase if you would like to protect your private key by password.	admin	de	Bitte geben Sie ein Passphrase ein, wenn Sie Ihren privaten Schlüssel mit einem Passwort sichern wollen.
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session<br>Verschlüsselung (braucht mcrypt)
 enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite
 enter the background color for the site title	admin	de	Hintergrundfarbe für den Titel der Installation
@@ -877,7 +882,7 @@ this application requires an upgrade	admin	de	Diese Anwendung benötigt ein Upgr
 this category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenwärtig als übergeordnete Kategorie benutzt.
 this controls exports and merging.	admin	de	Steuert den Export und den Merge Print von Dokumenten
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	de	Das ist KEIN persönliches Mail-Konto!\n\nDas Konto wird für ALLE Benutzer gelöscht!\n\nSind Sie wirklich sicher, dass Sie das wollen?
-this key used in the html code your site serves to users.	admin	de	Dieser Schlüssen steht im HTML Code den Ihre Website ausliefert.
+this key used in the html code your site serves to users.	admin	de	Dieser Schlüssel steht im HTML Code den Ihre Website ausliefert.
 this php has no imap support compiled in!!	admin	de	Dieses PHP hat keine IMAP Unterstützung!!!
 this secret key used for communication between your site and google. be sure to keep it a secret.	admin	de	Diese geheime Schlüssel wird in der Kommunikation zwischen Ihrem Server und Google verwendet. Sorgen Sie dafür, dass er geheim bleibt.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	de	Zeit nach der Anwendungsdaten der Sitzung gelöscht werden in Sekunden (Vorgabe 86400 = 1 Tag)
@@ -913,7 +918,7 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	de	hoch
 update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse
 updated	admin	de	aktualisiert
-upload your background image or enter the url	admin	de	Laden Sei ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
+upload your background image or enter the url	admin	de	Laden Sie ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
 upload your certificate .p12/.pfx file	admin	de	Zertifikat hochladen (.p12/.pfx-Datei)
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein
 upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	de	Laden Sie Ihr Header-Logo hoch oder geben Sie die URL ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
@@ -934,6 +939,7 @@ use tls encryption	admin	de	TLS Verschlüsselung benutzen
 use users email-address (as seen in useraccount)	admin	de	Benutzt E-Mail Adresse des Benutzers (Die unter seinem Mail-Konto angezeigt wird)
 user accounts	admin	de	Benutzerkonten
 user can edit forwarding address	admin	de	Anwender können ihre Weiterleitungsadresse bearbeiten
+user choice	admin	de	Benutzerauswahl
 user csv export	admin	de	CSV Export von Benutzern
 user csv import	admin	de	CSV Import von Benutzern
 user data	common	de	Benutzerdaten
