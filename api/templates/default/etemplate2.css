@@ -480,6 +480,12 @@ span.et2_date span {
 span.et2_date_duration input.et2_date_duration{
 	width: 25%;
 }
+.et2_date.required, .et2_date[required] {
+	background-color: inherit;
+}
+.et2_date.required input, .et2_date[required] input {
+	background-color: #FFDD73
+}
 /* customize calendar layout */
 .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
 	margin-left: 2px;
