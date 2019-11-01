@@ -841,7 +841,8 @@ div.et2_link_entry input.ui-autocomplete-input {
   width: 100%;
 }
 .et2_link_entry.no_app input.ui-autocomplete-input {
-  width: 100%;
+  width: calc(100% - 22px);
+  padding-right: 16px
 }
 .et2_link_entry.no_app select {
   display: none;
@@ -852,7 +853,7 @@ div.et2_link_entry input.ui-autocomplete-input {
   border: none;
   position: relative;
   top: 3px;
-  left: -26px;
+  left: -18px;
   cursor: pointer;
   margin-top: -3px;
 }
