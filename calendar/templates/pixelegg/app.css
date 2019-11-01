@@ -2663,8 +2663,9 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-color: transparent;
 }
 #calendar-sidebox_header_today {
-  width: 20px;
+  width: 19px;
   height: 20px;
+  margin-left: 6px;
   background-image: url('../../../pixelegg/images/bullet.svg');
   text-indent: 140%;
   border: none;
