@@ -492,10 +492,10 @@ span.et2_date_duration input.et2_date_duration{
 }
 .ui-datepicker .ui-datepicker-buttonpane button[data-handler="today"] {
     position: absolute;
-    top: 0px;
-    right: 28px;
-    width: 16px;
-    height: 16px;
+    top: 3px;
+    right: 22px;
+    width: 2em;
+    height: 2em;
     overflow: hidden;
     background-color: white;
 	background-repeat:no-repeat;
@@ -503,6 +503,10 @@ span.et2_date_duration input.et2_date_duration{
     text-indent: 20px;
     background-size: contain;
     background-image: url(images/datepopup.svg);
+}
+.ui-datepicker .ui-datepicker-prev .ui-icon, .ui-datepicker .ui-datepicker-next .ui-icon {
+	width: 2em;
+	height: 2em;
 }
 .ui-timepicker-div dl dd { margin: 0 0px 10px 30%; }
 .ui-timepicker-div .ui_tpicker_time .ui_tpicker_time_input {
