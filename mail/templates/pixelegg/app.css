@@ -1024,7 +1024,6 @@ body {
   margin: 3px 5px 0 0;
 }
 #mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
-  width: 58%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
