@@ -227,6 +227,9 @@ a.et2_url.url {
 .et2_email a:not(:first-child) {
 	margin-left: 1em;
 }
+.et2_hbox > .et2_url_span > a {
+	margin-left: 0px;
+}
 /**
  * Button widget - text only, and icon
  */
