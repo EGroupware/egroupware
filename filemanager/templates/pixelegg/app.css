@@ -267,37 +267,10 @@ div#filemanager-file_tabs {
 }
 div#filemanager-file_tabs span.ui-icon-search {
   /*.background_color_10_gray;*/
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
   position: relative;
   top: 3px;
   margin-left: 3px;
-}
-div#filemanager-file_tabs span.ui-icon-search:hover {
-  /*.background_color_20_gray;*/
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-div#filemanager-file_tabs span.ui-icon-search:active {
-  /*.background_color_30_gray;*/
-  border: 1px solid rgba(0, 0, 0, 0.9);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  background-color: #b3e4a6;
+  background-position: 3px;
 }
 div#filemanager-file_tabs #filemanager-file_filemanager-file-eacl {
   /*Owner*/
