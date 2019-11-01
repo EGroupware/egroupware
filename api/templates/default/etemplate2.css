@@ -85,6 +85,18 @@ div.et2_hbox_right {
 div.et2_hbox > div {
   display: inline-block;
 }
+
+/**
+ * History log widget, most comes from the gridview
+ */
+/* Turn off column button, it does nothing */
+.et2_historylog table.egwGridView_outer thead tr th.optcol:hover {
+	cursor: inherit;
+}
+.et2_historylog table.egwGridView_outer thead tr th.optcol span.selectcols {
+	background: inherit;
+}
+
 /**
  * Placeholder widget - used for un-implemented widgets
  */
