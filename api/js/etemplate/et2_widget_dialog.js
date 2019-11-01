@@ -830,7 +830,9 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 					if(response)
 					{
 						totals.success++;
-						log.append("<div class='message'>"+response+"</div>");
+						jQuery("<div class='message'></div>")
+							.text(response)
+							.appendTo(log);
 					}
 			}
 			// Scroll to bottom
