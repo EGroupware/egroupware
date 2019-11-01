@@ -247,7 +247,7 @@ class preferences_settings
 		unset($prefs['']);
 
 		//_debug_array($values);exit;
-		foreach($values as $var => $value)
+		foreach($values as $var => &$value)
 		{
 			// type specific validation
 			switch((string)$types[$var])
