@@ -33,7 +33,7 @@ if (ini_get('session.save_handler') == 'files' && !is_writable(ini_get('session.
 }
 
 // Include PEAR::Console_Getopt
-require_once 'Console/Getopt.php';
+require_once dirname(__DIR__).'/vendor/autoload.php';
 
 // Define exit codes for errors
 define('HEADER_NOT_FOUND',9);
