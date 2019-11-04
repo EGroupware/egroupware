@@ -605,6 +605,12 @@ class calendar_boupdate extends calendar_bo
 		//
 		$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE || $msg_type == MSG_DELEGATED;
 
+		// Check if user is not participating, and does not want notifications
+		if($msg_is_response && !$part_prefs['calendar']['receive_not_participating'] && !array_key_exists($userid, $old_event['participants']))
+		{
+			return false;
+		}
+
 		// always notify externals chairs
 		// EGroupware owner only get notified about responses, if pref is NOT "no"
 		if (!is_numeric($userid) && $role == 'CHAIR' &&
@@ -629,11 +635,6 @@ class calendar_boupdate extends calendar_bo
 		}
 		else
 		{
-			// Check if user is not participating, and does not want notifications
-			if(!$part_prefs['calendar']['receive_not_participating'] && !array_key_exists($userid, $old_event['participants']))
-			{
-				return false;
-			}
 			switch($ru = $part_prefs['calendar']['receive_updates'])
 			{
 				case 'responses':

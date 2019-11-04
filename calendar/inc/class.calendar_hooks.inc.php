@@ -528,10 +528,10 @@ class calendar_hooks
 			),
 			'receive_not_participating' => array(
 				'type'   => 'select',
-				'label'  => 'Receive notifications about events you are not a participant in',
+				'label'  => 'Do you want responses from events you are not participating in?',
 				'name'   => 'receive_not_participating',
 				'values' => $yesno,
-				'help'   => 'Do you want to be notified about events you created, but are not participating in?',
+				'help'   => 'Do you want to be notified about participant responses from events you created, but are not participating in?',
 				'default'=> '1'
 			),
 			'notify_externals' => array(
