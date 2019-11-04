@@ -171,6 +171,11 @@ class Response extends Msg
 	 */
 	protected function addGeneric($key, $data)
 	{
+		/* send testwise all message responses via push server
+		if ($key === 'message' || $key === 'apply' && $data['func'] === 'egw.message')
+		{
+			return (new Push())->addGeneric($key, $data);
+		}*/
 		self::get()->responseArray[] = array(
 			'type' => $key,
 			'data' => $data,

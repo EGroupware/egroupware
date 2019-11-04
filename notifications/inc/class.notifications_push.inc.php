@@ -86,7 +86,8 @@ class notifications_push implements Json\PushBackend
 	/**
 	 * Adds any type of data to the message
 	 *
-	 * @param int $account_id account_id to push message too
+	 * @param int|null $account_id account_id to push message too, 0 for broadcast
+	 *	or null for curent session (we can only send to current user)
 	 * @param string $key
 	 * @param mixed $data
 	 *
@@ -96,6 +97,8 @@ class notifications_push implements Json\PushBackend
 	 */
 	public function addGeneric($account_id, $key, $data)
 	{
+		if (!isset($account_id)) $account_id = $GLOBALS['egw_info']['user']['account_id'];
+
 		self::$db->insert(self::TABLE, array(
 			'account_id'  => $account_id,
 			'notify_type' => self::TYPE,

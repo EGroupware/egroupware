@@ -257,7 +257,8 @@ abstract class Ajax extends Api\Framework
 		Api\Hooks::process(array(
 			'location' => 'framework_header',
 			'popup' => !$do_framework,
-		));
+			'extra' => &$extra,
+		), [], true);
 
 		$this->tpl->set_var($this->_get_header($extra));
 		$content = $this->tpl->fp('out','head').$content;
