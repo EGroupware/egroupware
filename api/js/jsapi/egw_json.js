@@ -95,6 +95,64 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	}
 
 	/**
+	 * Open websocket to push server (and keeps it open)
+	 *
+	 * @param {string} url this.websocket(s)://host:port
+	 * @param {array} tokens tokens to subscribe too
+	 * @param {function} error option error callback(_msg) used instead our default this.error
+	 * @param {int} reconnect timeout in ms (internal)
+	 */
+	json_request.prototype.openWebSocket = function(url, tokens, error, reconnect)
+	{
+		const min_reconnect_time = 1000;
+		const max_reconnect_time = 300000;
+		let reconnect_time = reconnect || min_reconnect_time;
+
+		this.websocket = new WebSocket(url);
+		this.websocket.onopen = jQuery.proxy(function(e)
+		{
+			reconnect_time = min_reconnect_time;
+			this.websocket.send(JSON.stringify({
+				subscribe: tokens
+			}));
+		}, this);
+
+		this.websocket.onmessage = jQuery.proxy(function(event)
+		{
+			console.log(event);
+			let data = JSON.parse(event.data);
+			if (data && data.type)
+			{
+				this.handleResponse({ response: [data]});
+			}
+		}, this);
+
+		this.websocket.onerror = jQuery.proxy(function(error)
+		{
+			console.log(error);
+			(error||this.handleError({}, error));
+		}, this);
+
+		this.websocket.onclose = jQuery.proxy(function(event)
+		{
+			if (event.wasClean)
+			{
+				console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+			}
+			else
+			{
+				reconnect_time *= 2;
+				if (reconnect_time > max_reconnect_time) reconnect_time = max_reconnect_time;
+
+				// e.g. server process killed or network down
+				// event.code is usually 1006 in this case
+				console.log('[close] Connection died --> reconnect in '+reconnect_time+'ms');
+				window.setTimeout(jQuery.proxy(this.openWebSocket, this, url, tokens, error, reconnect_time), reconnect_time);
+			}
+		}, this);
+	},
+
+	/**
 	 * Sends the assembled request to the server
 	 * @param {boolean} [async=false] Overrides async provided in constructor to give an easy way to make simple async requests
 	 * @param {string} method ='POST' allow to eg. use a (cachable) 'GET' request instead of POST

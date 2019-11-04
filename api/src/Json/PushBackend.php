@@ -20,7 +20,8 @@ interface PushBackend
 	/**
 	 * Adds any type of data to the message
 	 *
-	 * @param int $account_id account_id to push message too
+	 * @param int $account_id =null account_id to push message too or
+	 *	null: for current session only or 0 for whole instance / broadcast
 	 * @param string $key
 	 * @param mixed $data
 	 * @throws Exception\NotOnline if $account_id is not online

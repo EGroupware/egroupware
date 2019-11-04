@@ -382,7 +382,7 @@
 				// Open tutorial popup with an introduction video about egroupware
 				if (window.framework === window.top.framework && typeof et2_dialog != 'undefined' &&
 					!egw.preference('egw_tutorial_noautoload', 'common') &&
-					!parseInt(document.getElementById('egw_script_id').getAttribute('data-framework-reload')) &&
+					!parseInt(egw_script.getAttribute('data-framework-reload')) &&
 					(!egw.config('egw_tutorial_disable', 'phpgwapi') || egw.config('egw_tutorial_disable', 'phpgwapi') == 'sidebox'))
 				{
 					// we need to wait until common translations are loaded
@@ -408,6 +408,15 @@
 						egw.lang('Introduction'),
 						{}, buttons, et2_dialog.QUESTION_MESSAGE, undefined, egw(window));
 					}, this);
+				}
+
+				// open websocket to push server for our top window
+				if (egw === window.top.egw && egw_script.getAttribute('data-websocket-url'))
+				{
+					egw.json('websocket', {}, undefined, this).openWebSocket(
+						egw_script.getAttribute('data-websocket-url'),
+						JSON.parse(egw_script.getAttribute('data-websocket-tokens'))
+					);
 				}
 			}
 			catch(e) {

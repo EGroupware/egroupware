@@ -7,10 +7,11 @@
  * @package api
  * @subpackage json
  * @author Ralf Becker <rb@stylite.de>
- * @version $Id$
  */
 
 namespace EGroupware\Api\Json;
+
+use EGroupware\Api;
 
 /**
  * Class to push JSON commands to client
@@ -41,9 +42,10 @@ class Push extends Msg
 
 	/**
 	 *
-	 * @param int $account_id account_id of user to push to
+	 * @param int $account_id =null account_id to push message too or
+	 *	null: for current session only or 0 for whole instance / broadcast
 	 */
-	public function __construct($account_id)
+	public function __construct($account_id=null)
 	{
 		$this->account_id = $account_id;
 	}
@@ -59,6 +61,14 @@ class Push extends Msg
 	{
 		if (!isset(self::$backend))
 		{
+			// we prepend so the default backend stays last
+			foreach(Api\Hooks::process('push-backends', [], true) as $class)
+			{
+				if (!empty($class))
+				{
+					array_unshift(self::$backends, $class);
+				}
+			}
 			foreach(self::$backends as $class)
 			{
 				if (class_exists($class))
@@ -69,7 +79,8 @@ class Push extends Msg
 					}
 					catch (\Exception $e) {
 						// ignore all exceptions
-						unset($e, self::$backend);
+						unset($e);
+						self::$backend = null;
 					}
 				}
 			}

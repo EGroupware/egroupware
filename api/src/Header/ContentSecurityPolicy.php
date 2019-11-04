@@ -32,7 +32,7 @@ class ContentSecurityPolicy
 	private static $sources = array(
 		'script-src'  => array("'unsafe-eval'"),
 		'style-src'   => array("'unsafe-inline'"),
-		'connect-src' => array(),
+		'connect-src' => null,	// NOT array(), to allow setting no default connect-src!
 		'frame-src'   => null,	// NOT array(), to allow setting no default frame-src!
 	);
 
@@ -50,10 +50,11 @@ class ContentSecurityPolicy
 		if (!isset(self::$sources[$source]))
 		{
 			// set frame-src attrs of API and apps via hook
-			if ($source == 'frame-src' && !isset($attrs))
+			if (in_array($source, ['frame-src', 'connect-src']) && !isset($attrs))
 			{
-				$attrs = array('www.egroupware.org');
-				if (($app_additional = Api\Hooks::process('csp-frame-src')))
+				$attrs = [];
+				// no permssion / user-run-rights check for connect-src
+				if (($app_additional = Api\Hooks::process('csp-'.$source, [], $source === 'connect-src')))
 				{
 					foreach($app_additional as $addtional)
 					{
@@ -135,6 +136,7 @@ class ContentSecurityPolicy
 	 */
 	public static function send()
 	{
+		self::add('connect-src', null);	// set defaults for connect-src (no run rights checked)
 		self::add('frame-src', null);	// set defaults for frame-src
 
 		$policies = array();
