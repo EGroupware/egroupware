@@ -200,16 +200,14 @@ class admin_cmd_delete_account extends admin_cmd
 		);
 		// First do apps that were not selected
 		$skip_apps = array();
-		$do_last = array('preferences','admin');
-		if($this->change_apps)
+		$do_last = array('preferences','admin','api');
+		foreach(array_diff(array_keys($GLOBALS['egw_info']['apps']), array_merge($this->change_apps,$do_last)) as $app)
 		{
-			foreach(array_diff(array_keys($GLOBALS['egw_info']['apps']), array_merge($this->change_apps,$do_last)) as $app)
-			{
-				$skip_apps[] = $app;
-				Api\Hooks::single(array_merge($GLOBALS['hook_values'], array('new_owner' => 0)), $app, true);
-			}
+			$skip_apps[] = $app;
+			Api\Hooks::single(array_merge($GLOBALS['hook_values'], array('new_owner' => 0)), $app, true);
 		}
-		// first all other apps, then preferences and admin
+
+		// first all other apps, then preferences, admin & api
 		foreach(array_merge($this->change_apps,$do_last) as $app)
 		{
 			Api\Hooks::single($GLOBALS['hook_values'], $app, true);
