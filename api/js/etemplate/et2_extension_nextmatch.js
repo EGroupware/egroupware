@@ -1411,7 +1411,8 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				multiple: true,
 				rows: 8,
 				empty_label:this.egw().lang("select columns"),
-				selected_first: false
+				selected_first: false,
+				value_class:"selcolumn_sortable_"
 			}, this);
 			select.set_select_options(columns);
 			select.set_value(columns_selected);
@@ -1505,6 +1506,16 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				}
 				columnMgr.setColumnVisibilitySet(visibility);
 
+				var sortedColumnList = [];
+				jQuery(select.getDOMNode()).find('li[class^="selcolumn_sortable_"]').each(function(i,v){
+					var data_id = v.getAttribute('data-value');
+					if (data_id.match(/^col_/) && visibility[data_id]['visible'])
+					{
+						var col_id = data_id.replace('col_','')
+						sortedColumnList.push(self._getColumnName(self.columns[col_id].widget));
+					}
+				});
+
 				// Hide popup
 				self.selectPopup.toggle();
 
@@ -1529,7 +1540,15 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				self.selectPopup.toggle();
 				self.selectPopup = null;
 			};
-
+			var $select = jQuery(select.getDOMNode());
+			$select.sortable({
+				items:'li[class^="selcolumn_sortable_col_"]',
+				placeholder:'ui-fav-sortable-placeholder',
+				delay: 250, //(millisecond) delay before the sorting should start
+			});
+			$select.find('li[class^="selcolumn_sortable_"]').each(function(i,v){
+				jQuery(v).attr('data-value',(jQuery(v).find('input')[0].value))
+			});
 			this.selectPopup = jQuery(document.createElement("div"))
 				.addClass("colselection ui-dialog ui-widget-content")
 				.append(select.getDOMNode())
