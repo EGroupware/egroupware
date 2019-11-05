@@ -20,7 +20,7 @@ $GLOBALS['egw_info'] = array(
 	),
 );
 // check if we are loged in, by checking sessionid and kp3, as the sessionid get set automaticaly by php for php4-sessions
-if (!($loged_in = @$_REQUEST['sessionid'] && @$_REQUEST['kp3']))
+if (!($loged_in = !empty($_COOKIE['sessionid'])))
 {
 	$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
 	$GLOBALS['egw_info']['flags']['noapi'] = True;
@@ -37,7 +37,7 @@ function fail_exit($msg)
 
 if (!$loged_in)
 {
-	include ('../phpgwapi/inc/functions.inc.php');
+	include ('../api/src/loader.php');
 	$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
 }
 // fix for SOGo connector, which does not decode the = in our f/b url
@@ -92,7 +92,6 @@ if (!$loged_in)
 			$GLOBALS['egw_info']['user']['domain'] = $domain;
 			$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
 			$GLOBALS['egw_info']['flags']['noapi'] = false;
-			require_once(EGW_API_INC . '/functions.inc.php');
 			$loged_in =  $GLOBALS['egw']->session->create($authuser, $password, 'text');
 			session_unset();
 			session_destroy();
