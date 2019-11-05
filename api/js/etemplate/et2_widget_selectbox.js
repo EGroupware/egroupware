@@ -378,7 +378,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		}
 		label.append(jQuery("<span>"+_label+"</span>"));
 		var li = jQuery(document.createElement("li")).append(label);
-
+		if (this.options.value_class !='') li.addClass(this.options.value_class+_value);
 		li.appendTo(dom_element || this.multiOptions);
 	},
 
