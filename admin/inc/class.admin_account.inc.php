@@ -319,6 +319,16 @@ class admin_account
 				);
 			}
 		}
+		// Add filemanager home directory in as special case, hook is in the API
+		if(Api\Vfs::file_exists('/home/'.$GLOBALS['egw']->accounts->id2name($content['account_id'])))
+		{
+			$app = 'filemanager';
+			$sel_options['delete_apps'][] = array(
+				'value' => $app,
+				'label' => lang($app) . ': ' . lang('home directory')
+			);
+			$content['delete_apps'][] = $app;
+		}
 		$tpl = new Etemplate('admin.account.delete');
 		$tpl->exec('admin_account::delete', $content, $sel_options, array(), $preserve, 2);
 	}

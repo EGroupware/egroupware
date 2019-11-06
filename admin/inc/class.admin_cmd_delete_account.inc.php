@@ -206,6 +206,10 @@ class admin_cmd_delete_account extends admin_cmd
 			$skip_apps[] = $app;
 			Api\Hooks::single(array_merge($GLOBALS['hook_values'], array('new_owner' => 0)), $app, true);
 		}
+		
+		// Filemanager is a special case, since the hook is in API not filemanager
+		$vfs_new_owner = in_array('filemanager', $this->change_apps) ? $new_user : 0;
+		Api\Vfs\Hooks::deleteAccount(array_merge($GLOBALS['hook_values'], array('new_owner' => $vfs_new_owner)));
 
 		// first all other apps, then preferences, admin & api
 		foreach(array_merge($this->change_apps,$do_last) as $app)
