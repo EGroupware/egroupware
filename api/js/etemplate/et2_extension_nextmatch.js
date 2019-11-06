@@ -1568,21 +1568,24 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			$select.find('li[class^="selcolumn_sortable_"]').each(function(i,v){
 				jQuery(v).attr('data-value',(jQuery(v).find('input')[0].value))
 			});
+			var $footerWrap = jQuery(document.createElement("div"))
+					.addClass('dialogFooterToolbar')
+					.append(okButton.getDOMNode())
+					.append(cancelButton.getDOMNode());
 			this.selectPopup = jQuery(document.createElement("div"))
 				.addClass("colselection ui-dialog ui-widget-content")
 				.append(select.getDOMNode())
-				.append(okButton.getDOMNode())
-				.append(cancelButton.getDOMNode())
+				.append($footerWrap)
 				.appendTo(this.innerDiv);
 
 			// Add autorefresh
-			this.selectPopup.append(autoRefresh.getSurroundings().getDOMNode(autoRefresh.getDOMNode()));
+			$footerWrap.append(autoRefresh.getSurroundings().getDOMNode(autoRefresh.getDOMNode()));
 
 			// Add default checkbox for admins
 			var apps = this.egw().user('apps');
 			if(apps['admin'])
 			{
-				this.selectPopup.append(defaultCheck.getSurroundings().getDOMNode(defaultCheck.getDOMNode()));
+				$footerWrap.append(defaultCheck.getSurroundings().getDOMNode(defaultCheck.getDOMNode()));
 			}
 		}
 		else

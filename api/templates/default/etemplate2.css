@@ -3159,3 +3159,21 @@ tr.disableIfNoEPL {
     background-repeat: no-repeat;
     border: 2px dashed silver;
 }
+
+.colselection.ui-widget-content {
+	width: 45%;
+}
+
+.colselection .et2_selectbox .ui-widget-header.ui-helper-clearfix {
+	padding: 10px;
+	font-size:10pt;
+}
+.colselection .et2_selectbox .ui-multiselect-checkboxes li {
+	border-bottom: 1px solid #e6e6e6;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+.colselection .et2_selectbox .ui-multiselect-checkboxes li label{
+	cursor: grab;
+}
+.colselection .et2_selectbox .ui-multiselect-checkboxes li label.ui-state-hover {background: none;}
