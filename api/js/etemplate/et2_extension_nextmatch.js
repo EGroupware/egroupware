@@ -215,6 +215,9 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		// instance, which can first be created once we have the columns
 		this.controller = null;
 		this.rowProvider = null;
+
+		// keeps sorted columns
+		this.sortedColumnsList = [];
 	},
 
 	/**
@@ -1033,7 +1036,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		// Update query value, so data source can use visible columns to exclude expensive sub-queries
 		var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
 
-		this.activeFilters.selectcols = colDisplay;
+		this.activeFilters.selectcols = this.sortedColumnsList ? this.sortedColumnsList : colDisplay;
 
 		// We don't need to re-query if they've removed a column
 		var changed = [];
@@ -1052,7 +1055,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 		// Save visible columns
 		// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
-		this.egw().set_preference(app, pref, colDisplay.join(","),
+		this.egw().set_preference(app, pref, this.activeFilters.selectcols.join(","),
 			// Use callback after the preference gets set to trigger refresh, in case app
 			// isn't looking at selectcols and just uses preference
 			cf_added ? jQuery.proxy(function() {if(this.controller) this.controller.update(true);}, this):null
@@ -1500,13 +1503,29 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				}
 				columnMgr.setColumnVisibilitySet(visibility);
 
-				var sortedColumnList = [];
+				this.sortedColumnsList = [];
 				jQuery(select.getDOMNode()).find('li[class^="selcolumn_sortable_"]').each(function(i,v){
 					var data_id = v.getAttribute('data-value');
-					if (data_id.match(/^col_/) && visibility[data_id]['visible'])
+					var value = select.getValue();
+					if (data_id.match(/^col_/) && value.indexOf(data_id) != -1)
 					{
 						var col_id = data_id.replace('col_','')
-						sortedColumnList.push(self._getColumnName(self.columns[col_id].widget));
+						var col_widget = self.columns[col_id].widget;
+						if (col_widget.customfields)
+						{
+							self.sortedColumnsList.push(col_widget.id);
+							for(var field_name in col_widget.customfields)
+							{
+								if(jQuery.isEmptyObject(col_widget.options.fields) || col_widget.options.fields[field_name] == true)
+								{
+									self.sortedColumnsList.push(et2_customfields_list.prototype.prefix + field_name);
+								}
+							}
+						}
+						else
+						{
+							self.sortedColumnsList.push(self._getColumnName(col_widget));
+						}
 					}
 				});
 
