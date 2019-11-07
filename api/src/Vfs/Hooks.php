@@ -87,6 +87,8 @@ class Hooks
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		Api\Vfs::$is_root = true;
+
+		// Home directory
 		if ($data['new_owner'] && ($new_lid = $GLOBALS['egw']->accounts->id2name($data['new_owner'])))
 		{
 			// copy content of user-dir to new owner's user-dir as old-home-$name
@@ -107,6 +109,14 @@ class Hooks
 		{
 			throw new Api\Exception\AssertionFailed(__METHOD__.'('.array2string($data).') account_lid NOT set!');
 		}
+
+		// Other files
+		Api\Vfs::find(
+				'/',
+				array('user' => $data['account_lid']),
+				$data['new_owner'] ? 'EGroupware\Api\Vfs::chown' : 'EGroupware\Api\Vfs::remove', $data['new_owner']
+		);
+
 		Api\Vfs::$is_root = false;
 	}
 
