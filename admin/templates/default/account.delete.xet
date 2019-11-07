@@ -29,7 +29,7 @@
 				<rows>
 					<row>
 						<select-app value="filemanager" readonly="true"/>
-						<description value="Please check home folder.  All files and folders of the user will be unusable by other users."/>
+						<description value="Change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username."/>
 					</row>
 					<row>
 						<select-app value="mail" readonly="true"/>
