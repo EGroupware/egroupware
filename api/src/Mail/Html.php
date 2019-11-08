@@ -303,6 +303,13 @@ class Html
 				$_html = str_replace(array("\r\n","\n"),($isHTML?'':' '),$_html);
 			}
 		}
+
+		// Handle lists
+		if(stripos($_html, '<li') !== false)
+		{
+			$_html = self::replaceLists($_html);
+		}
+
 		$tags = array (
 			0 => '~<h[123][^>]*>\r*\n*~si',
 			1 => '~<h[456][^>]*>\r*\n*~si',
@@ -469,6 +476,48 @@ class Html
 			}
 			return implode("\r\n",$asciiTextBuff);
 		}
+	}
+
+	/**
+	 * Replace HTML lists with a plain text equivalent
+	 *
+	 * @param string $html
+	 *
+	 * @return string
+	 */
+	static function replaceLists($html)
+	{
+		if(!$html || stripos($html, '<li') === False)
+		{
+			return $html;
+		}
+
+		$dom = \DOMDocument::loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS);
+		if(!$dom)
+		{
+			// Failed to parse
+			return $html;
+		}
+		$dom->normalizeDocument();
+
+		foreach(array('ol','ul') as $list_type)
+		{
+			$lists = $dom->getElementsByTagName($list_type);
+			foreach($lists as $list)
+			{
+				$list_text = "\r\n";
+				$item_count = 0;
+				$prefix = $list_type == 'ul' ? ' * ' : '. ';
+				foreach($list->getElementsByTagName('li') as $element)
+				{
+					$list_text .= ($list_type == 'ol' ? ' '. ++$item_count : '') . $prefix . $element->textContent . "\r\n";
+				}
+
+				$list->parentNode->replaceChild($dom->createTextNode($list_text), $list);
+			}
+		}
+
+		return $dom->saveHTML();
 	}
 
 	/**
