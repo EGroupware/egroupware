@@ -31,8 +31,12 @@ mkdir sources data
 # xdebug port, default 9001 (NOT 9000!)
 # IDE host, default XDEBUG_REMOTE_HOST=docker.for.mac.localhost
 docker-compose up -d
-# will install EGroupware master and phpMyAdmin in egroupware / phpmyadmin subdirectory of sources volume, if not yet there
-# credentials for a new install can be found in data:egroupware-docker-install.log
+```
+* It will install EGroupware master and phpMyAdmin in egroupware / phpmyadmin subdirectory of sources volume, if not already there
+* Credentials for a new install can be found in data:egroupware-docker-install.log
+* Use the following to tail the webserver error.log
+```
+docker logs -f egroupware-nginx 2>&1 | sed "s/PHP message/\\$(echo -e '\n\r')PHP message/g"
 ```
 
 ### Docker Desktop for Mac notes
