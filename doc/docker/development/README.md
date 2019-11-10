@@ -2,13 +2,13 @@
 
 The container and docker-compose.yml file in this directory are the most easy way to get a full development enviroment for EGroupware.
 
-It defines and uses the following volumes:
+### It defines and uses the following volumes:
 * sources: document root of the webserver, by default $PWD/sources subdirectory, can also be your existing document root
 * data: EGroupware stores it's files here, by default $PWD/data subdirectory, can also be your existing /var/lib/egroupware
 * db: volume for MariaDB (should be NOT a directory under Mac OS and Windows for performance reasons!)
 * sessions: volume for sessions, internal no need to change
 
-It runs the following containers:
+### It runs the following containers:
 * egroupware: php-fpm
 * egroupware-nginx: Nginx
 * egroupware-db: MariaDB
