@@ -24,7 +24,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: $PWD/sources/egroupware/swoolpush
+      device: $PWD/sources/egroupware/swoolepush
   # for Mac and Windows, do NOT use a directory for the DB, as the Docker host is in a VM!
   db:
   sessions:
@@ -123,12 +123,12 @@ services:
     container_name: egroupware-db
 
   # push server using phpswoole
-  #push:
-  #  image: phpswoole/swoole:latest-dev
-  #  volumes:
-  #  - sources-push:/var/www
-  #  - sessions:/var/lib/php/sessions
-  #  container_name: egroupware-push
+  push:
+    image: phpswoole/swoole:latest-dev
+    volumes:
+    - sources-push:/var/www
+    - sessions:/var/lib/php/sessions
+    container_name: egroupware-push
 
   # automatic updates of all containers daily at 4am
   # see https://containrrr.github.io/watchtower for more information
