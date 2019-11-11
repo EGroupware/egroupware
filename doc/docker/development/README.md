@@ -12,11 +12,11 @@ The container and docker-compose.yml file in this directory are the most easy wa
 * egroupware: php-fpm
 * egroupware-nginx: Nginx
 * egroupware-db: MariaDB
+* egroupware-push: PHP Swoole based push server
 * egroupware-watchtower: to automatic keeps the containers up to date
 
 Planned, but not yet there:
 * egroupware-collabora: Collabora Online Office
-* egroupware-push: PHP Swoole based push server
 * egroupware-rocketchat: Rocket.Chat
 * egroupware-mongo: MongoDB for Rocket.Chat
 
