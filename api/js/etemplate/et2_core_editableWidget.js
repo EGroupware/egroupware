@@ -102,6 +102,10 @@ var et2_editableWidget = (function(){ "use strict"; return et2_inputWidget.exten
 				})
 				.addClass('et2_clickable et2_editable');
 		}
+		else
+		{
+			jQuery(node).addClass('et2_editable_readonly');
+		}
 
 	},
 
