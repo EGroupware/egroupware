@@ -2706,6 +2706,19 @@ class HTTP_WebDAV_Server
      */
     public static function _urlencode($url)
     {
+		// Thunderbird Lightning 68+ does not recognice participants,
+		// if EMail in principal (calendar-user-address-set) is encoded
+		if (strpos($_SERVER['HTTP_USER_AGENT'], 'Lightning') !== false)
+		{
+			return strtr($url, array(
+				' '	=>	'%20',
+				'%'	=>	'%25',
+				'&'	=>	'%26',
+				'<'	=>	'%3C',
+				'>'	=>	'%3E',
+				'+'	=>	'%2B',
+			));
+		}
 		return strtr(rawurlencode($url),array(
 			'%2F' => '/',
 			'%3A' => ':',
