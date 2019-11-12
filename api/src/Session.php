@@ -1650,7 +1650,7 @@ class Session
 		else
 		{
 			// Use HTTP_X_FORWARDED_HOST if set, which is the case behind a none-transparent proxy
-			self::$cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
+			self::$cookie_domain = Header\Http::host();
 		}
 		// remove port from HTTP_HOST
 		$arr = null;
