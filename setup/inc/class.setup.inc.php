@@ -157,7 +157,7 @@ class setup
 	static function cookiedomain()
 	{
 		// Use HTTP_X_FORWARDED_HOST if set, which is the case behind a none-transparent proxy
-		$cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
+		$cookie_domain = Api\Header\Http::host();
 
 		// remove port from HTTP_HOST
 		$arr = null;

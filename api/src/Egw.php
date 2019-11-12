@@ -140,8 +140,9 @@ class Egw extends Egw\Base
 		}
 		if (isset($_SERVER['HTTP_X_FORWARDED_HOST']) && $GLOBALS['egw_info']['server']['webserver_url'][0] != '/')
 		{
-			$GLOBALS['egw_info']['server']['webserver_url'] = ($_SERVER['HTTPS'] ? 'https://' : 'http://').
-				$_SERVER['HTTP_X_FORWARDED_HOST'].parse_url($GLOBALS['egw_info']['server']['webserver_url'], PHP_URL_PATH);
+			$GLOBALS['egw_info']['server']['webserver_url'] =
+				Header\Http::schema().'://'.Header\Http::host().
+				parse_url($GLOBALS['egw_info']['server']['webserver_url'], PHP_URL_PATH);
 		}
 
 		// if no server timezone set, use date_default_timezone_get() to determine it once
