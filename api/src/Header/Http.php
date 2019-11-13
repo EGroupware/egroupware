@@ -25,11 +25,13 @@ class Http
 	 * 2. $_SERVER['HTTP_X_FORWARDED_HOST'] (X-Forwarded-Host HTTP header)
 	 * 3. $_SERVER['HTTP_HOST'] (Host HTTP header)
 	 *
+	 * @param boolean $use_setup_hostname =false true: hostame config from setup has highest precedence, default not
 	 * @return string
 	 */
-	static function host()
+	static function host($use_setup_hostname=false)
 	{
-		if (!empty($GLOBALS['egw_info']['server']['hostname']) && $GLOBALS['egw_info']['server']['hostname'] !== 'localhost')
+		if ($use_setup_hostname && !empty($GLOBALS['egw_info']['server']['hostname']) &&
+			$GLOBALS['egw_info']['server']['hostname'] !== 'localhost')
 		{
 			$host = $GLOBALS['egw_info']['server']['hostname'];
 		}
@@ -75,7 +77,7 @@ class Http
 	{
 		if ($link[0] === '/')
 		{
-			$link = self::schema().'://'.self::host().$link;
+			$link = self::schema().'://'.self::host(true).$link;
 		}
 		return $link;
 	}
