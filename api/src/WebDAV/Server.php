@@ -1058,7 +1058,11 @@ class HTTP_WebDAV_Server
 	                    			if (isset($subprop['raw'])) {
 	                    				$vals .= '<![CDATA['.$subprop['val'].']]>';
 	                    			} else {
-	                    				if($subprop['name'] == 'href') $subprop['val'] = $this->_urlencode($subprop['val']);
+										// do NOT urlencode mailto href, as no clients understands them
+										if ($subprop['name'] == 'href' && strpos($subprop['val'], 'mailto:') !== 0)
+										{
+											$subprop['val'] = $this->_urlencode($subprop['val']);
+										}
 		                    			$vals .= htmlspecialchars($subprop['val'], ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8');
 	                    			}
 	                    			$vals .= "</$ns_name$subprop[name]>";
@@ -2706,19 +2710,6 @@ class HTTP_WebDAV_Server
      */
     public static function _urlencode($url)
     {
-		// Thunderbird Lightning 68+ does not recognice participants,
-		// if EMail in principal (calendar-user-address-set) is encoded
-		if (strpos($_SERVER['HTTP_USER_AGENT'], 'Lightning') !== false)
-		{
-			return strtr($url, array(
-				' '	=>	'%20',
-				'%'	=>	'%25',
-				'&'	=>	'%26',
-				'<'	=>	'%3C',
-				'>'	=>	'%3E',
-				'+'	=>	'%2B',
-			));
-		}
 		return strtr(rawurlencode($url),array(
 			'%2F' => '/',
 			'%3A' => ':',
@@ -2811,8 +2802,8 @@ class HTTP_WebDAV_Server
 						$val = $this->_prop_encode('<![CDATA['.$prop['val'].']]>');
 					} else {
 						$val = $this->_prop_encode(htmlspecialchars($prop['val'], ENT_NOQUOTES, 'utf-8'));
-						// for href properties we need (minimalistic) urlencoding, eg. space
-						if ($prop['name'] == 'href')
+						// do NOT urlencode mailto href, as no clients understands them
+						if ($prop['name'] == 'href' && stripos($val, 'mailto:') !== 0)
 						{
 							$val = $this->_urlencode($val);
 						}
