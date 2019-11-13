@@ -598,7 +598,9 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 */
 	add_favorite: function(state)
 	{
-		if(typeof this.favorite_popup == "undefined")
+		if(typeof this.favorite_popup == "undefined" || // Create popup if it's not defined yet
+			(this.favorite_popup && typeof this.favorite_popup.group !="undefiend"
+			&& !this.favorite_popup.group.isAttached())) // recreate the favorite popup if the group selectbox is not attached (eg. after et2 submit)
 		{
 			this._create_favorite_popup();
 		}
