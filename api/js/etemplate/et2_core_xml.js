@@ -44,7 +44,10 @@ function et2_loadXMLFromURL(_url, _callback, _context, _fail_callback)
 		win = top;
 	}
 	win.jQuery.ajax({
-		url: _url,
+		// we add the full url (protocol and domain) as sometimes just the path
+		// gives a CSP error interpreting it as file:///path
+		// (if there are a enough 404 errors in html content ...)
+		url: (_url[0]=='/' ? location.protocol+'//'+location.host : '')+_url,
 		context: _context,
 		type: 'GET',
 		dataType: 'xml',
@@ -55,7 +58,7 @@ function et2_loadXMLFromURL(_url, _callback, _context, _fail_callback)
 			egw().debug('error', 'Loading eTemplate from '+_url+' failed! '+_xmlhttp.status+' '+_xmlhttp.statusText);
 			if(typeof _fail_callback !== 'undefined')
 			{
-				_fail_callback.call(_context, _err)
+				_fail_callback.call(_context, _err);
 			}
 		}
 	});
