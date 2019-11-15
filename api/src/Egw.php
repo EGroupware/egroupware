@@ -290,9 +290,9 @@ class Egw extends Egw\Base
 	 */
 	function verify_session()
 	{
-		if($GLOBALS['egw_info']['server']['enforce_ssl'] === 'redirect' && !$_SERVER['HTTPS'])
+		if($GLOBALS['egw_info']['server']['enforce_ssl'] === 'redirect' && Header\Http::schema() !== 'https')
 		{
-			Header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+			Header('Location: https://' . Header\Http::host() . $_SERVER['REQUEST_URI']);
 			exit;
 		}
 		// check if we have a session, if not try to automatic create one

@@ -278,8 +278,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		else
 		{
-			$this->current_user_principal = (@$_SERVER["HTTPS"] === "on" ? "https:" : "http:") .
-				'//' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '/';
+			$this->current_user_principal = Framework::getUrl($_SERVER['SCRIPT_NAME']) . '/';
 		}
 		$this->current_user_principal .= 'principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/';
 
@@ -1519,16 +1518,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	 */
 	protected static function path2location($path)
 	{
-		static $url_prefix = null;
-		if (!isset($url_prefix))
-		{
-			$url_prefix = '';
-			if ($GLOBALS['egw_info']['server']['webserver_url'][0] == '/')
-			{
-				$url_prefix = ($_SERVER['HTTPS'] ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
-			}
-		}
-		return $url_prefix.Framework::link(Vfs::download_url($path));
+		return Framework::getUrl(Framework::link(Vfs::download_url($path)));
 	}
 
 	/**

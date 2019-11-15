@@ -1633,7 +1633,7 @@ class Session
 				!$cookietime && $is_iOS ? time()+self::IOS_SESSION_COOKIE_LIFETIME : $cookietime,
 				is_null($cookiepath) ? self::$cookie_path : $cookiepath,self::$cookie_domain,
 				// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
-				empty($GLOBALS['egw_info']['server']['insecure_cookies']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
+				empty($GLOBALS['egw_info']['server']['insecure_cookies']) && Header\Http::schema() === 'https', true);
 		}
 	}
 
@@ -1671,7 +1671,7 @@ class Session
 
 		session_set_cookie_params(0, self::$cookie_path, self::$cookie_domain,
 			// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
-			empty($GLOBALS['egw_info']['server']['insecure_cookies']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
+			empty($GLOBALS['egw_info']['server']['insecure_cookies']) && Header\Http::schema() === 'https', true);
 	}
 
 	/**

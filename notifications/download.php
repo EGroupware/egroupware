@@ -42,11 +42,7 @@ function replace_callback($matches)
 	switch($matches[1])
 	{
 		case 'egw_dc_url':
-			$replacement = $GLOBALS['egw_info']['server']['webserver_url'];
-			if (empty($replacement) || $replacement[0] == '/')
-			{
-				$replacement = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$replacement;
-			}
+			$replacement = Api\Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url']);
 			break;
 		case 'egw_dc_logindomain':
 			$replacement = $GLOBALS['egw_info']['user']['domain'];

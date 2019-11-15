@@ -369,12 +369,7 @@ abstract class Handler
 		{
 			if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			{
-				$location = $this->caldav->base_uri.$options['path'];
-				if ($location[0] == '/')
-				{
-					$location = (@$_SERVER['HTTPS'] === 'on' ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'].$location;
-				}
-				header('Content-Location: '.$location);
+				header('Content-Location: '.Api\Framework::getUrl($this->caldav->base_uri.$options['path']));
 			}
 
 			// remove If-Match or If-None-Match headers, otherwise HTTP status 412 goes into endless loop!
@@ -687,7 +682,7 @@ abstract class Handler
 			$uri = $path = $this->caldav->base_uri;
 			if ($uri[0] == '/')
 			{
-				$uri = ($_SERVER["HTTPS"] === "on" ? "https:" : "http:") .'//' . $_SERVER['HTTP_HOST'] . $uri;
+				$uri = Api\Framework::getUrl($uri);
 			}
 			else
 			{
