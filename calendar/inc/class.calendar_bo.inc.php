@@ -2116,9 +2116,8 @@ class calendar_bo
 				. ':' . $GLOBALS['egw_info']['user']['passwd'];
 			$credentials = '&cred=' . base64_encode($credentials);
 		}
-		return (!$GLOBALS['egw_info']['server']['webserver_url'] || $GLOBALS['egw_info']['server']['webserver_url'][0] == '/' ?
-			($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
-			$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php/?user='.urlencode($user).$credentials;
+		return Api\Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url']).
+			'/calendar/freebusy.php/?user='.urlencode($user).$credentials;
 	}
 
 	/**

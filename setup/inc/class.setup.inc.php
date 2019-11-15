@@ -188,7 +188,7 @@ class setup
 		}
 		setcookie($cookiename, $cookievalue, $cookietime, '/', $this->cookie_domain,
 			// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
-			!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
+			Api\Header\Http::schema() === 'https', true);
 	}
 
 	/**
@@ -257,7 +257,7 @@ class setup
 				session_name(self::SESSIONID);
 				session_set_cookie_params(0, '/', self::cookiedomain(),
 					// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
-					!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
+					Api\Header\Http::schema() === 'https', true);
 
 				if (isset($_COOKIE[self::SESSIONID])) session_id($_COOKIE[self::SESSIONID]);
 

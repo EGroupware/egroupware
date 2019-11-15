@@ -734,15 +734,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 
 		$relpath = substr($url,strlen($mount_url));
 
-		$download_url = Vfs::concat($get['url'],$relpath);
-		if ($download_url[0] == '/')
-		{
-			$download_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').
-				$_SERVER['HTTP_HOST'].$download_url;
-		}
-
-		//die(__METHOD__."('$url') --> relpath = $relpath --> $download_url");
-		return $download_url;
+		return Api\Framework::getUrl(Vfs::concat($get['url'],$relpath));
 	}
 
 	/**
