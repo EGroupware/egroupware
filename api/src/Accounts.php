@@ -1089,10 +1089,6 @@ class Accounts
 			}
 		}
 
-		// Add filemanager as special case, since most of it is in Api
-		$files = Vfs::find('/',	array('uid' => (int)$account_id, 'limit' => 50));
-		$counts['filemanager']['total'] = Vfs::$find_total;
-
 		return $counts;
 	}
 	protected function get_owner_columns()
