@@ -3162,6 +3162,7 @@ tr.disableIfNoEPL {
 
 .colselection.ui-widget-content {
 	width: 45%;
+	height:80%;
 }
 
 .colselection .et2_selectbox .ui-widget-header.ui-helper-clearfix {
@@ -3177,3 +3178,10 @@ tr.disableIfNoEPL {
 	cursor: grab;
 }
 .colselection .et2_selectbox .ui-multiselect-checkboxes li label.ui-state-hover {background: none;}
+
+.colselection.ui-widget-content .et2_selectbox {
+	height: calc(100% - 68px);
+}
+.colselection.ui-widget-content .et2_selectbox .ui-multiselect-checkboxes {
+	height: calc(100% - 68px) !important;
+}
