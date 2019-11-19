@@ -5,7 +5,7 @@ VERSION=${VERSION:-dev-master}
 
 # if EGW_SESSION_TIMEOUT is set in environment, propagate value to php.ini
 test -n "$EGW_SESSION_TIMEOUT" && test "$EGW_SESSION_TIMEOUT" -ge 1440 &&
-	sed -e "s/^;\?session.gc_maxlifetime.*/session.gc_maxlifetime = $EGW_SESSION_TIMEOUT/g" \
+	sed -e "s/^;\?session.gc_maxlifetime.*/session.gc_maxlifetime=$EGW_SESSION_TIMEOUT/g" \
 		-i /etc/php/7.3/fpm/php.ini
 
 # if XDEBUG_REMOTE_HOST is set, patch it into xdebug config

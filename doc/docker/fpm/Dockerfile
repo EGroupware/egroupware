@@ -23,7 +23,7 @@ RUN apt-get update \
 		-e 's/^;\?php_admin_value\[memory_limit\].*/php_admin_value[memory_limit] = 172M/' \
 		-e 's/^;\?request_terminate_timeout.*/request_terminate_timeout = 70m/' \
 		-i /etc/php/7.3/fpm/pool.d/www.conf \
-	&& sed 	-e 's/^;\?session.gc_maxlifetime.*/session.gc_maxlifetime = 14400/g' \
+	&& sed 	-e 's/^;\?session.gc_maxlifetime.*/session.gc_maxlifetime=14400/g' \
 		-e 's|^;\?date.timezone.*|date.timezone = UTC|g' \
 		-e 's|^;\?sys_temp_dir.*|sys_temp_dir = /tmp|g' \
 		-e 's|^;\?disable_functions.*|disable_functions = exec,passthru,shell_exec,system,proc_open,popen|g' \
