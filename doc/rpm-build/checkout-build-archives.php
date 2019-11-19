@@ -1108,7 +1108,7 @@ function do_virusscan()
 	if (file_exists($config['freshclam']))
 	{
 		echo "Updating virus signatures\n";
-		$cmd = '/usr/bin/sudo '.$config['freshclam'];
+		$cmd = '/usr/bin/sudo bash -c "cd /; '.$config['freshclam'].'"';
 		if (!$verbose && function_exists('posix_getuid') && posix_getuid()) echo $cmd."\n";
 		$output = null;
 		run_cmd($cmd,$output,1);	// 1 = ignore already up to date database
