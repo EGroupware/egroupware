@@ -201,6 +201,7 @@ change config settings	admin	de	Konfiguration der Anwendung ändern
 change domain of email address and aliases	admin	de	ändert Domain von E-Mail-Adressen oder Aliase
 change login screen message	admin	de	Nachricht der Startseite ändern
 change owner	admin	de	Besitzer ändern
+change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	de	Ändert den Besitzer der gefundenen Dateien in /home auf den neuen Benutzer und verschiebt den Benutzerordner in /home/new-user/old-home-username.
 change password for %1	admin	de	Ändern des Passworts für %1
 change password hash to	admin	de	Passwort Verschlüsselung ändern in
 changed password hash for %1 to %2.	admin	de	Passwort Verschlüsselung für %1 ändern in %2.
