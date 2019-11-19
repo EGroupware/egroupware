@@ -122,7 +122,10 @@ var et2_calendar_owner = (function(){ "use strict"; return et2_taglist_email.ext
 			if(value.id == value.label)
 			{
 				// Proper label was not fount by parent - ask directly
-				egw.json('calendar_owner_etemplate_widget::ajax_owner',value.id,function(data) {value.label = data;}, this).sendRequest();
+				egw.json('calendar_owner_etemplate_widget::ajax_owner',value.id,function(data) {
+					this.widget.options.value[this.i].label = data;
+					this.widget.set_value(this.widget.options.value);
+				}, this,true,{widget: this, i: i}).sendRequest();
 			}
 		}
 
