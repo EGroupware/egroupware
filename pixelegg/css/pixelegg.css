@@ -3770,6 +3770,13 @@ div#egwpopup_message {
 }
 .colselection.ui-widget-content {
   width: 45%;
+  height: 80%;
+}
+.colselection.ui-widget-content .et2_selectbox {
+  height: calc(100% - 68px);
+}
+.colselection.ui-widget-content .et2_selectbox .ui-multiselect-checkboxes {
+  height: calc(100% - 68px) !important;
 }
 /*Calendar ##############*/
 td.message {
