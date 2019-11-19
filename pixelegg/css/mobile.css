@@ -3770,7 +3770,7 @@ div#egwpopup_message {
 }
 .colselection.ui-widget-content {
   width: 45%;
-  height: 80%;
+  height: auto;
 }
 .colselection.ui-widget-content .et2_selectbox {
   height: calc(100% - 68px);
