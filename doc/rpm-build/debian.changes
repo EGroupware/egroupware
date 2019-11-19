@@ -1,3 +1,12 @@
+egroupware-docker (19.1.20191119) hardy; urgency=low
+
+  * CalDAV/Calendar: Lightning 68 no longer allowed to accept/reject invitations
+  * CalDAV/Calendar: iOS also no longer allowed to accept/reject invitations
+  * ImportExport: fix error in importexport_cli.php (Console/Getopt.php not found)
+  * all apps: fixing serveral cases of wrong Url when proxying and terminating TLS on the proxy
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 19 Nov 2019 08:17:32 +0100
+
 egroupware-docker (19.1.20191031) hardy; urgency=low
 
   * Docker: allow to set session timeout (in sec) via EGW_SESSION_TIMEOUT enviroment variable
