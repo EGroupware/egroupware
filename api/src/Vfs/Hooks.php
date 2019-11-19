@@ -110,9 +110,9 @@ class Hooks
 			throw new Api\Exception\AssertionFailed(__METHOD__.'('.array2string($data).') account_lid NOT set!');
 		}
 
-		// Other files
+		// Other files in home
 		Api\Vfs::find(
-				'/',
+				'/home',
 				array('user' => $data['account_lid']),
 				$data['new_owner'] ? 'EGroupware\Api\Vfs::chown' : 'EGroupware\Api\Vfs::remove', $data['new_owner']
 		);

@@ -325,7 +325,7 @@ class admin_account
 			$app = 'filemanager';
 			$sel_options['delete_apps'][] = array(
 				'value' => $app,
-				'label' => lang($app) . ': ' . lang('home directory')
+				'label' => lang($app) . ': /home'
 			);
 			$content['delete_apps'][] = $app;
 		}

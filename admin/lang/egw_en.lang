@@ -201,7 +201,7 @@ change config settings	admin	en	Change config settings
 change domain of email address and aliases	admin	en	change domain of email address and aliases
 change login screen message	admin	en	Change login screen message
 change owner	admin	en	Change owner
-change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	en	Found files will have owner changed to the new user.  The home folder will be moved to /home/new-user/old-home-username.
+change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	en	Files in /home will have owner changed to the new user.  The home folder will be moved to /home/new-user/old-home-username.
 change password for %1	admin	en	Change password for %1
 change password hash to	admin	en	Change password hash to
 changed password hash for %1 to %2.	admin	en	Changed password hash for %1 to %2.
