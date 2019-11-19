@@ -13,6 +13,7 @@
 
 namespace EGroupware\Api\Vfs\Filesystem;
 
+use EGroupware\Api;
 use EGroupware\Api\Vfs;
 
 /**
