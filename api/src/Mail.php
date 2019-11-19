@@ -6797,7 +6797,7 @@ class Mail
 						$myUrl = $directory.$filename;
 						if ($myUrl[0]=='/') // local path -> we only allow path's that are available via http/https (or vfs)
 						{
-							$basedir = Api\Framework::getUrl('/');
+							$basedir = Framework::getUrl('/');
 						}
 						// use vfs instead of url containing webdav.php
 						// ToDo: we should test if the webdav url is of our own scope, as we cannot handle foreign
