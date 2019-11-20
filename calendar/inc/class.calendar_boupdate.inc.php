@@ -729,7 +729,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param string& $action=null on return verbose name
 	 * @param string& $msg=null on return notification message
 	 */
-	function msg_type2ical_method($msg_type, &$action=null, &$msg=null)
+	function msg_type2ical_method($msg_type, &$action=null, &$msg=null, $prefs=null)
 	{
 		switch($msg_type)
 		{
@@ -780,10 +780,14 @@ class calendar_boupdate extends calendar_bo
 			default:
 				$method = 'PUBLISH';
 		}
-		$msg = $this->cal_prefs['notify'.$pref];
+		if(is_null($prefs))
+		{
+			$prefs = $this->cal_prefs;
+		}
+		$msg = $prefs['notify'.$pref];
 		if (empty($msg))
 		{
-			$msg = $this->cal_prefs['notifyAdded'];	// use a default
+			$msg = $prefs['notifyAdded'];	// use a default
 		}
 		//error_log(__METHOD__."($msg_type) action='$action', $msg='$msg' returning '$method'");
 		return $method;
@@ -962,7 +966,7 @@ class calendar_boupdate extends calendar_bo
 					continue;
 				}
 				$action = $notify_msg = null;
-				$method = $this->msg_type2ical_method($m_type, $action, $notify_msg);
+				$method = $this->msg_type2ical_method($m_type, $action, $notify_msg, $user_prefs['calendar']);
 
 				if ($lang !== $part_prefs['common']['lang'])
 				{
@@ -1653,7 +1657,8 @@ class calendar_boupdate extends calendar_bo
 			{
 				if (!is_array($event)) $event = $this->read($cal_id);
 				if (isset($recur_date)) $event = $this->read($event['id'],$recur_date); //re-read the actually edited recurring event
-				$this->send_update($status2msg[$status],$event['participants'],$event);
+				$user_id = is_numeric($uid) ? (int)$uid : 0;
+				$this->send_update($status2msg[$status],$event['participants'],$event, null, $user_id);
 			}
 
 			// Update history
