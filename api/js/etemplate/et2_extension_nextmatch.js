@@ -1608,6 +1608,9 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		}
 		var t_position = jQuery(e.target).position();
 		var s_position = this.div.position();
+		var max_height = this.getDOMNode().getElementsByClassName('egwGridView_outer')[0]['tBodies'][0].clientHeight -
+				(2 * this.selectPopup.find('.dialogFooterToolbar').height());
+		this.selectPopup.find('.ui-multiselect-checkboxes').css('max-height',max_height);
 		this.selectPopup.css("top", t_position.top)
 			.css("left", s_position.left + this.div.width() - this.selectPopup.width());
 	},
