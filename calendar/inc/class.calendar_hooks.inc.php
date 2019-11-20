@@ -528,7 +528,7 @@ class calendar_hooks
 			),
 			'receive_not_participating' => array(
 				'type'   => 'select',
-				'label'  => 'Do you want responses from events you are not participating in?',
+				'label'  => 'Do you want responses from events you created, but are not participating in?',
 				'name'   => 'receive_not_participating',
 				'values' => $yesno,
 				'help'   => 'Do you want to be notified about participant responses from events you created, but are not participating in?',
