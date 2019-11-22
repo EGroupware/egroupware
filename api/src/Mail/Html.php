@@ -492,7 +492,11 @@ class Html
 			return $html;
 		}
 
-		$dom = \DOMDocument::loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS);
+		$dom = new \DOMDocument('1.0','UTF-8');
+		$dom->loadHTML(
+				'<?xml encoding="UTF-8">'. Api\Translation::convert($html,false, 'utf8'),
+				LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS
+		);
 		if(!$dom)
 		{
 			// Failed to parse
@@ -508,14 +512,23 @@ class Html
 				$list_text = "\r\n";
 				$item_count = 0;
 				$prefix = $list_type == 'ul' ? ' * ' : '. ';
-				foreach($list->getElementsByTagName('li') as $element)
+				$elements = $list->getElementsByTagName('li');
+				foreach($elements as $element)
 				{
-					$list_text .= ($list_type == 'ol' ? ' '. ++$item_count : '') . $prefix . $element->textContent . "\r\n";
+					if($element->tagName == 'li')
+					{
+						$list_text .= ($list_type == 'ol' ? ' '. ++$item_count : '') . $prefix . $element->textContent . "\r\n";
+					}
+					else
+					{
+						$list_text .= $element->nodeValue;
+					}
 				}
 
 				$list->parentNode->replaceChild($dom->createTextNode($list_text), $list);
 			}
 		}
+		$dom->removeChild($dom->firstChild);
 
 		return $dom->saveHTML();
 	}
