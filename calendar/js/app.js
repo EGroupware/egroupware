@@ -2693,7 +2693,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				}
 				state.state.col_filter = {participant: state.state.owner};
 				state.state.search = state.state.keywords ? state.state.keywords : state.state.search;
-
+				delete state.state.keywords;
 
 				var nm = view.etemplates[0].widgetContainer.getWidgetById('nm');
 
