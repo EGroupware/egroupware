@@ -172,10 +172,12 @@ class calendar_uilist extends calendar_ui
 			{
 				$this->adjust_for_search($params['keywords'], $content['nm']);
 			}
+			unset($params['keywords']);
 		}
 		if (isset($_REQUEST['keywords']))	// new search => set filters so every match is shown
 		{
 			$this->adjust_for_search($_REQUEST['keywords'],$content['nm']);
+			unset($_REQUEST['keywords']);
 		}
 		$sel_options['filter'] = &$this->date_filters;
 
