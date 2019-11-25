@@ -1554,11 +1554,31 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				self.selectPopup = null;
 			};
 			var $select = jQuery(select.getDOMNode());
-			$select.sortable({
-				items:'li[class^="selcolumn_sortable_col_"]',
+			$select.find('.ui-multiselect-checkboxes').sortable({
 				placeholder:'ui-fav-sortable-placeholder',
+				items:'li[class^="selcolumn_sortable_col"]',
+				cancel: 'li[class^="selcolumn_sortable_#"]',
+				cursor: "move",
+				tolerance: "pointer",
+				axis: 'y',
+				containment: "parent",
 				delay: 250, //(millisecond) delay before the sorting should start
+				beforeStop: function(event, ui) {
+					jQuery('li[class^="selcolumn_sortable_#"]', this).css({
+						opacity: 1
+					});
+				},
+				start: function(event, ui){
+					jQuery('li[class^="selcolumn_sortable_#"]', this).css({
+						opacity: 0.5
+					});
+				},
+				sort: function (event, ui)
+				{
+					jQuery( this ).sortable("refreshPositions" );
+				}
 			});
+			$select.disableSelection();
 			$select.find('li[class^="selcolumn_sortable_"]').each(function(i,v){
 				jQuery(v).attr('data-value',(jQuery(v).find('input')[0].value))
 			});
