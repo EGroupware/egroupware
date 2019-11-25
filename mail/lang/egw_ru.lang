@@ -136,14 +136,21 @@ mail source	mail	ru	Источник почты
 mark as deleted	mail	ru	Отметить как стертое
 matches	mail	ru	Совпадения
 matches regexp	mail	ru	Совпадает с регулярным выражением
+message body	mail	ru	Текст сообщения
+message preview area	mail	ru	Область предпросмотра сообщения
+message saved successfully.	mail	ru	Сообщение сохранено.
+modify subject	mail	ru	Изменить тему
+modify subject of this message	mail	ru	Изменить тему этого сообщения
 move selected to	mail	ru	Переместить выбранное в
 move to	mail	ru	Переместить в
 move to trash	mail	ru	Переместить в корзину
 never display html emails	mail	ru	Никогда не показывать эл. письма в формате HTML
 new mail notification	mail	ru	Новое оповещение о поступлении сообщений
 new message type	mail	ru	новый тип сообщения
+new subject	mail	ru	Новая тема
 no (valid) send folder set in preferences	mail	ru	Не установлена папка Send(отправленные) в настройках
 no access	mail	ru	Нет доступа
+no action defined!	mail	ru	Действие не определено!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	ru	нет адреса в поле кому/копия/скрытая копия/ и нет папки для сохранения сообщения
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	ru	не установлена папка назначения,нет папки для сохранения сообщений,не заданы  эти или другие обязательные действия для хранения почты(сохранить в инфолог/трекер)
 no folders	mail	ru	Нет папок
@@ -151,6 +158,7 @@ no plain text part found	mail	ru	Не найдена текстовая част
 no recipient address given!	mail	ru	Не указан адрес получателя!
 no send folder set in preferences	mail	ru	В настройках не указана папка Отправленные
 no signature	mail	ru	Без подписи!
+no sneak preview in list	mail	ru	Без предварительного просмотра в списке
 no subject given!	mail	ru	Тема не указана!
 no text body supplied, check attachments for message text	mail	ru	Отсутствует текст сообщения, проверьте вложения для текста сообщения.
 no valid %1 folder configured!	mail	ru	Не настроен правильный каталог %1 !
@@ -161,9 +169,12 @@ on	mail	ru	На
 one address is not valid	mail	ru	Один из адресов неверен
 only one window	mail	ru	Только одно окно
 only send message, do not copy a version of the message to the configured sent folder	mail	ru	Только отправить сообщение, не копировать в папку отправленные.
+open in html mode	mail	ru	Открыть как HTML
+open in text mode	mail	ru	Открыть как текст
 organisation	admin	ru	Организация
 organization	mail	ru	Организация
 original message	mail	ru	Исходное сообщение
+outbox	mail	ru	Исходящие
 permission denied	mail	ru	Доступ запрещён
 please configure access to an existing individual imap account.	mail	ru	Настроить доступ к существующей учетной записи IMAP
 please select a address	mail	ru	Пожалуйста выберите адрес
@@ -177,6 +188,8 @@ printview	mail	ru	Предварительный просмотр
 processing of file %1 failed. failed to meet basic restrictions.	mail	ru	Обработка файла %1 прервана. Не удалось удовлетворить основные ограничения.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	ru	Введите текст по умолчанию на случай отсутствия (используется для новых сообщений об отсутствии, когда нет предварительно установленных сообщений)
 quicksearch	mail	ru	Быстрый поиск
+quicksearch (with cc)	mail	ru	Быстрый поиск (включая 'Копия')
+read / unread	mail	ru	Прочитано / Непрочитано
 refresh time in minutes	mail	ru	Время обновления в минутах
 reject with	mail	ru	Отклонить с
 remove all	mail	ru	Удалить все
@@ -220,6 +233,7 @@ signature at top	mail	ru	Подпись сверху
 size(...->0)	mail	ru	Размер (...->0)
 size(0->...)	mail	ru	Размер (0->...)
 small view	mail	ru	просмотр в небольшом окне
+sneak preview in list	mail	ru	Предварительный просмотр в списке
 sort order	mail	ru	Порядок Сортировки
 start new messages with mime type plain/text or html?	mail	ru	новые сообщения начинать как текст или html?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	ru	Создать ответ на сообщение как текст (или html), или использовать формат сообщения по умолчанию?
