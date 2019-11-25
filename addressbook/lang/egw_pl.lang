@@ -31,7 +31,7 @@ added	addressbook	pl	Dodano
 added by synchronisation	addressbook	pl	dodano poprzez synchronizację
 added to distribution list	addressbook	pl	dodano do listy dystrybucyjnej
 additional information about using ldap as contact repository	admin	pl	Dodatkowe informacje o korzystaniu z LDAP jako repozytorium kontaktów
-address book	common	pl	Kontakty, adresy
+address book	common	pl	Książka adresowa
 address book - vcard in	addressbook	pl	Wczytanie kartek elektronicznych do książki adresowej
 address book - view	addressbook	pl	Przegląd książki adresowej
 address line 2	addressbook	pl	Wiersz adresu nr 2
@@ -96,7 +96,6 @@ company name	addressbook	pl	Nazwa firmy
 configuration	common	pl	Konfiguracja
 contact	common	pl	Kontakt
 contact application	admin	pl	Aplikacja kontaktowa
-contact copied	addressbook	pl	Kontakt został skopiowany
 contact deleted	addressbook	pl	Kontakt został skasowany
 contact fields to show	addressbook	pl	Pokazuj te pola kontaktu
 contact fields:	addressbook	pl	Pola kontaktu:
@@ -239,7 +238,7 @@ import_instructions	addressbook	pl	W Netscape, otwórz Książkę Adresową (Add
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pl	Importuj kontakty do Twojej książki adresowej z pliku CSV.
 in %1 days (%2) is %3's birthday.	addressbook	pl	Za %1 dni są urodziny %3
 income	addressbook	pl	Dochód
-infolog	addressbook	pl	CRM Dziennik
+infolog	addressbook	pl	InfoLog
 insert	addressbook	pl	wstaw
 insufficent rights to delete this list!	addressbook	pl	Brak wystarczających uprawnień do usunięcia listy!
 international	addressbook	pl	Międzynarodowy
@@ -390,7 +389,6 @@ update fields by edited organisations?	admin	pl	Zaktualizować pola przez edycje
 updated	addressbook	pl	Uaktualniony
 upload or delete the photo	addressbook	pl	Załaduj lub usuń zdjęcie
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pl	Odnośnik URL do numerów telefonów (użyj %1 zamiast numeru telefonu, %2 zamiast nazwy konta, %3 zamiast numeru telefonu konta)
-use an extra category tab?	addressbook	pl	Używać specjalnej zakładki kategorii?
 use an extra tab for private custom fields?	admin	pl	Używać dodatkowej zakładki dla prywatnych pól własnych?
 use country list	addressbook	pl	Użyj listy krajów
 use setup for a full account-migration	admin	pl	użyj (/setup) w celu pełnej migracji kont

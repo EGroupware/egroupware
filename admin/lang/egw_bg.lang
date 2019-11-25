@@ -1,663 +1,120 @@
-%1 %2 in %3	calendar	bg	%1 %2 в %3
-%1 days	calendar	bg	%1 дни
-%1 event(s) %2	calendar	bg	%1 събитие(я) %2
-%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	bg	%1 събитие(я) %2, %3 не успява поради недостатъчни права!
-%1 events in ical file, only first one imported and displayed!	calendar	bg	% 1 събития във iCal файл, само първият импортиран и показан!
-%1 hours	calendar	bg	%1 часа
-%1 minutes	calendar	bg	%1 минути
-%1 participants removed because of missing invite grants	calendar	bg	%1 участници бяха премахнати поради липса на потвърждение от потребител с повече права.
-%1 records imported	calendar	bg	%1 записи бяха импортирани
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	bg	Прочетени са %1 записа, но не са импортирани. Можете да се върнете на предната съпка и да демаркирате "Тест импорт".
-%1 weeks	calendar	bg	%1 седмици
-%s the event	calendar	bg	%s събитието
-(%1 events in %2 seconds)	calendar	bg	(% 1 събития за% 2 секунди)
-(empty = use global limit, no = no export at all)	admin	bg	(empty =  използване на глобален лимит, no = без експортиране на данни)
-(without a custom url we use nation of user preference to load holidays from %s)	calendar	bg	(Без персонализиран URL използваме нация на предпочитанията на потребителя, за да зареждаме празници от % s)
-, exceptions preserved	calendar	bg	, изключения запазени
-, stati of participants reset	calendar	bg	, статус на участниците нулиран
-a list of email addresses of all participants who have not declined	calendar	bg	Списък с имейл адреси на всички участници, които не са се отказали
-a non blocking event will not conflict with other events	calendar	bg	Не пълно ангажиращо събитие няма да предизвика конфликт с други събития
-accept	calendar	bg	Приемане
-accept or reject an invitation	calendar	bg	Приемане или отказ на покана
-accepted	calendar	bg	Прието
-access denied to the calendar of %1 !!!	calendar	bg	Отказан Ви е достъп до календара на %1 !!!
-access to calendar of %1 denied!	calendar	bg	Достъп до календара на %1 отказан !!!
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	bg	Действия, предизвикали известяването: Добавен, Отменен, Приет, Отказан, ...
-actions	calendar	bg	Действия
-actions...	calendar	bg	Действия...
-add alarm	calendar	bg	Добавяне на "Аларма"
-add appointments via shortened dialog or complete edit window	calendar	bg	Добавяне на срещи, чрез съкратен диалогов прозорец или прозорец за редактиране
-add current view as favorite	calendar	bg	Добавяне на текущия изглед като любим
-add new alarm	calendar	bg	Добавяне на нова аларма
-add new participants or resource	calendar	bg	Добавяне на нови участници или ресурс
-add timesheet entry	calendar	bg	Добави запис в Графика
-added	calendar	bg	Добавено
-added by synchronization	calendar	bg	Добавено чрез синхронизация
-after	calendar	bg	След
-after %1	calendar	bg	След %1
-after current date	calendar	bg	След текущата дата
-age:	calendar	bg	Години:
-alarm	calendar	bg	Аларма / Напомняне
-alarm added	calendar	bg	Напомняне добавено
-alarm added automatic to new events before event start-time	calendar	bg	Напомнянето е добавено автоматично към нови събития, преди началото на събитието
-alarm deleted	calendar	bg	Напомнянето е изтрито
-alarm for %1 at %2 in %3	calendar	bg	Напомняне за %1 - %2 в %3
-alarm management	calendar	bg	Редактиране на напомнянията
-alarms	calendar	bg	Аларми  / Напомняния
-all categories	calendar	bg	Всички категории
-all day	calendar	bg	Целия ден
-all events	calendar	bg	Всички събития
-all exceptions are converted into single events.	calendar	bg	Всички изключения са преобразувани в единични събития.
-all future	calendar	bg	Всички бъдещи
-all incl. rejected	calendar	bg	Всички, включително отхвърления(те)
-all participants	calendar	bg	Всички участници
-allow booking requests from any user when creating events?	calendar	bg	Позволено ли е на всеки потребител предварително да резервира запитвания, когато се създават събития?
-allow users to prevent change notifications ('do not notify')	calendar	bg	Разрешаване на потребителите да предотвратяват известията за промяна „Не информирай!“
-allows to edit the event again	calendar	bg	Позволява отново редакция на събитието
-always	calendar	bg	Винаги
-always use full edit dialog	calendar	bg	Винаги използвай пълен диалогов прозорец за редактиране
-always use the full edit dialog, not this little dialog	calendar	bg	Винаги използвай пълен диалогов прозорец за редактиране, а не този малък...
-apply the action on the whole query, not only the shown events	calendar	bg	Приложи действието върху цялото запитване, НЕ само на показаните събития.
-apply the changes	calendar	bg	Прилагане на промените
-appointment settings	calendar	bg	Настройки на уговорените срещи
-as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	bg	Като алтернатива може да изтеглите %1 a MySQL dump%2 и да го импортирате ръчно в egw_cal_timezones таблица.
-at start of the event	calendar	bg	в началото на събитието
-automatically purge old events after	admin	bg	Автоматично почистване на стари събития
-available for the first entry inside each day of week or daily table inside the selected range:	calendar	bg	Позволено за първия запис във всеки ден от седмицата или дневна таблица в избрания диапазон:
-back half a month	calendar	bg	Назад половин месец
-back one month	calendar	bg	Назад един месец
-back one year	calendar	bg	Назад една година
-before	calendar	bg	Преди
-before %1	calendar	bg	Преди %1
-before current date	calendar	bg	Преди текущата дата
-before the event	calendar	bg	Преди събитието
-birthday	calendar	bg	Рожден ден
-birthdays	admin	bg	Рождени дни
-birthdays only	calendar	bg	Рождени дни само
-both, holidays and birthdays	calendar	bg	И двете, празници и рождени дни заедно
-busy	calendar	bg	Зает
-by	calendar	bg	от
-calendar - list	calendar	bg	Календар - списък
-calendar - multi-weekly	calendar	bg	Календар - Многоседмичен
-calendar - planner	calendar	bg	Календар - Плана
-calendar csv export	calendar	bg	Експорт в CSV на календара
-calendar csv import	calendar	bg	Импорт  в CSV на календара
-calendar event	calendar	bg	Събитие от календара
-calendar fields:	calendar	bg	Полета на календара:
-calendar ical export	calendar	bg	Експорт в iCal на календара
-calendar ical import	calendar	bg	Импорт  в iCal на календара
-calendar id	calendar	bg	ID на календар
-calendar menu	calendar	bg	Календар - Меню
-calendar preferences	calendar	bg	Календар - Предпочитания
-calendar settings	admin	bg	Календар - Настройки
-calendar-fieldname	calendar	bg	Календар - Име на поле
-can't add alarms in the past !!!	calendar	bg	Невъзможно е добавяне на аларми в миналото !!!
-can't aquire lock!	calendar	bg	Невъзможно е заключването на записа!
-canceled	calendar	bg	Отменено
-category %1 removed because of missing rights	calendar	bg	Категория % 1 е премахната поради липсващи права
-category acl	common	bg	Категория ACL
-category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	bg	Категория ACL ограничава само добавянето на категория към събитие, или промяна статуса на участник. НЕ променя видимостта на събитие!
-category automatically added to new events	calendar	bg	Категорията автоматично се добавя към нови събития
-chair	calendar	bg	Председател
-change history	calendar	bg	Промяна на историята
-change your status	calendar	bg	Променете статуса си
-charset of file	calendar	bg	Символен набор на файла
-check all	calendar	bg	Маркира всички
-choose a category	calendar	bg	Избери категория
-choose owner of imported data	calendar	bg	Изберете собственик на импортирани данни
-close the window	calendar	bg	Затвори прозореца
-compose a mail to all participants after the event is saved	calendar	bg	съставяне на e-mail до всички участници след запис на събитието
-configuration settings	calendar	bg	Настройки за конфигурация
-conflict	calendar	bg	Конфликт
-copy of:	calendar	bg	Копие на:
-copy this event	calendar	bg	Копирай това събитие
-copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	bg	Копирайте промените в клипборда, %1презаредете записа%2 и ги съединете.
-countries	calendar	bg	Държави
-country	calendar	bg	Държава
-create a new series	calendar	bg	Създай нова серия
-create an exception for the given date	calendar	bg	Създай изключение за дадената дата
-create an infolog from this event	calendar	bg	Създайте InfoLog от това събитие
-create exception	calendar	bg	Създаване на изключение
-create links for participants from addressbook	calendar	bg	Създайте връзки за участниците от адресен указател
-create new links	calendar	bg	Създаване на нови връзки
-created	calendar	bg	Създаден
-creator	calendar	bg	Създател
-csv	calendar	bg	CSV
-csv-fieldname	calendar	bg	Име на полето в CSV
-csv-filename	calendar	bg	Име на CSV файла
-custom	calendar	bg	По избор
-custom color for events without category color	calendar	bg	Персонализиран цвят за събития, без цвят на категория
-custom event color	calendar	bg	Персонализиран цвят на събитието
-custom fields	common	bg	Полета по избор
-custom url for ical with holidays for all users	calendar	bg	Персонализиран URL адрес за iCal с празници за всички потребители
-custom_2	common	bg	Заетост
-daily	calendar	bg	Дневен
-daily tables	calendar	bg	Дневни таблици
-data exchange settings	calendar	bg	Настройки за обмен на данни
-date for the day of the week	calendar	bg	Дата за деня от седмицата
-date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	bg	Дата за деня от седмицата, налична за първия запис във всеки ден от седмицата или дневна таблица в избрания диапазон.
-day	calendar	bg	Ден
-day of week tables	calendar	bg	Ден от седмичните таблици
-days	calendar	bg	Дни
-days of the week for a weekly repeated event	calendar	bg	Дни от седмицата - за ежеседмично събитие
-days repeated	calendar	bg	Дни за повторение
-dayview	calendar	bg	Дневен изглед
-default alarm for regular events	calendar	bg	Аларма по подразбиране за редовни събития
-default alarm for whole-day events	calendar	bg	Аларма по подразбиране за целодневни събития
-default appointment length (in minutes)	calendar	bg	Продължителност по подразбиране (в минути)
-default calendar filter	calendar	bg	Филтър по подразбиране
-default calendar view	calendar	bg	Изглед по подразбиране
-default document to insert entries	calendar	bg	Документ по подразбиране за въвеждане на записи
-default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	bg	Продължителност по подразбиране на новосъздадените събития. Стойността е в минути, напр. 60 означава 1 час.
-default type of resources application selected in the calendar participants research form.	calendar	bg	Тип на приложението по подразбиране, избрано във формата за изследване на участниците в календара.
-default type of resources selection	calendar	bg	Избор на тип ресурси по подразбиране
-default week view	calendar	bg	Седмичен изглед по подразбиране
-delegated	calendar	bg	Делегиран
-delete exceptions	calendar	bg	Изтриване на изключенията
-delete selected events	calendar	bg	Изтриване на избраните събития
-delete series	calendar	bg	Изтриване на серия
-delete this alarm	calendar	bg	Изтриване на "Алармата"
-delete this event	calendar	bg	Изтриване на събитието
-delete this exception	calendar	bg	Изтриване на изключението
-delete this recurrence	calendar	bg	Изтриване на това повторение
-delete this series of recurring events	calendar	bg	Изтриване на серията от повтарящи се събития
-deleted	calendar	bg	Изтрит
-deny resources reservation for private events	calendar	bg	Отказ на наличните резервации за частни събития
-directory with documents to insert entries	calendar	bg	Директория с документи за въвеждане на записи
-display holidays or birthdays as events in dayview	calendar	bg	Показване на празници или рождени дни, като събития в дневен изглед
-display in header	calendar	bg	Показване в заглавна част (header)
-display status of events	calendar	bg	Покажи статуса на събитията
-displayed view	calendar	bg	Показан изглед
-displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	bg	Показва този изглед на календара на началната страница, страницата, която виждате, когато влезете в EGroupware или щракнете върху иконата на началната страница?
-distribution list	calendar	bg	Пощенски списък
-do not import conflicting events	calendar	bg	Не импортирайте противоречиви събития!
-do not include events of group members	calendar	bg	Не включвайте събития на членове на групата
-do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	bg	Наистина ли искате да промените началото на тези серии? Ако го направите, първоначалната серия ще бъде прекратена от % 1 и ще бъде създадена нова, отразяваща вашите промени.
-do you want a weekview with or without weekend?	calendar	bg	Седмичния изглед  с или без почивните дни?
-do you want non-egroupware participants of events you created to be automatically notified about new or changed appointments?	calendar	bg	Желаете ли участниците, в създадени от вас non-EGroupware, да бъдат автоматично известявани за нови или променени срещи?
-do you want to be notified about changes of appointments you modified?	calendar	bg	Желаете ли да бъдете известявани за промените относно срещите, които сте направили?
-do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	bg	Желаете ли известяване за нови или променени ангажименти? Известяването ще бъде и за промените, направени от Вас.<br>Може да ограничите известяването само за определени промени. Всеки елемент включва списък с известяванията. Всички промени включват промени на заглавие, описание и участници, но не и отговора на участниците. Ако собственикът на събитието е заявил известяване, той ще получава и отговорите на участниците (приемане, отказ).
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	bg	Желаете ли да бъдете уведомявани за нови или променени срещи? Ще бъдете известявани за промените, които сами правите. <br> Можете да ограничите известията само до определени промени. Всеки елемент включва всички известия, изброени по-горе. Всички модификации включват промени в заглавието, описанието, участниците, но без отговори на участници. Ако собственикът на събитие поиска да получава известия, ще има достъп до отговорите на участниците (приели и отхвърлили).
-do you want to edit this event as an exception or the whole series?	calendar	bg	Желаете ли да редактирате това събитие като изключение или цялата серия?
-do you want to keep the series exceptions in your calendar?	calendar	bg	Желаете ли да запазите серийните изключения в календара си?
-do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	bg	Желаете ли да получавате кратко описание на ангажиментите Ви чрез e-mail? Съобщенията за деня се изпращат сутрин, а за седмицата - в понеделник. Не се изпращат писма ако нямате ангажименти за деня, съответно седмицата.
-download	calendar	bg	Изтегляне
-download this event as ical	calendar	bg	Изтегляне на събитието като iCal
-duration	calendar	bg	Продължителност
-duration of the meeting	calendar	bg	Продължителност на срещата
-edit event in calendar	calendar	bg	Редактиране на събитие в календара
-edit exception	calendar	bg	Редактиране на изключението
-edit series	calendar	bg	Редактиране на серия
-edit status or alarms for this particular day	calendar	bg	Редактиране на статуса или алармите за този конкретен ден
-edit this event	calendar	bg	Редактиране на това събитие
-edit this series of recurring events	calendar	bg	Редактиране на тази серия повтарящи се събития
-empty = no alarm	calendar	bg	Празно = няма "Аларма"
-empty for all	calendar	bg	Празно за всички
-end	calendar	bg	Край
-end date/time	calendar	bg	Край Дата/Час
-enddate	calendar	bg	Крайна дата
-enddate / -time of the meeting, eg. for more then one day	calendar	bg	Крайна дата / -час на срещата, напр. за продължителност повече от един ден
-enddate of the export	calendar	bg	Крайна дата за експорта
-ends	calendar	bg	Приключва
-error adding the alarm	calendar	bg	Грешка при добавяне на аларма
-error saving the event!	calendar	bg	Грешка при запазването на събитието!
-error: can't delete original series!	calendar	bg	Грешка: Не може да се изтрие оригинална серия!
-error: duration of event longer then recurrence interval!	calendar	bg	Грешка: Продължителност на събитието по-голяма от интервала на повторение!
-error: importing the ical	calendar	bg	Грешка при импорт на iCal
-error: no participants selected !!!	calendar	bg	Грешка: не са избрани участници !!!
-error: resources reservation in private events is not allowed!!!	calendar	bg	Грешка: Налични резервации в частни събития не е разрешено!
-error: saving the event !!!	calendar	bg	Грешка при запис на събитието !!!
-error: starttime has to be before the endtime !!!	calendar	bg	Грешка: началният час трабва да бъде преди крайния !!!
-error: the entry has been updated since you opened it for editing!	calendar	bg	Грешка: записът е актуализиран от друг потребител, след като сте го отворили за редакция!
-error: you can't shift a series from the past!	calendar	bg	Грешка: Не можете да промените серии от миналото!
-event	common	bg	Събитие
-event deleted	calendar	bg	Събитието е изтрито
-event details follow	calendar	bg	Следват подробности за събитието
-event has been deleted by organizer!	calendar	bg	Събитието е изтрито от организатора!
-event saved	calendar	bg	Събитието е записано
-event will occupy the whole day	calendar	bg	Събитието ще трае през целия ден
-events	common	bg	Събития
-every user can invite other users and groups	admin	bg	Всеки потребител може да покани други потребители и групи
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	bg	Например {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - потърсете полето "n_prefix", за "Г-н", ако е намерено, напишете "Здравейте г-н", иначе напишете "Здравей г-жо".
-example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	bg	Например {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Например : Mr Dr. James Miller
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	bg	Например {{NELF role}} - ако полето с наименованието на позицията не празно, ще излезе допълнителен ред с наименованието на позицията!
-example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	calendar	bg	Например {{nenvlf role}} - - ако полето с наименованието на позицията не е празно, въведете на следващ празен ред.
-exception	calendar	bg	Изключение
-exception created - you can now edit or delete it	calendar	bg	Изключението е създадено - може да го редактирате или изтриете
-exceptions	calendar	bg	Изключения
-execute a further action for this entry	calendar	bg	Изпълни допълнително за това събитие
-existing links	calendar	bg	Съществуващи връзки
-exists	calendar	bg	Съществува
-export definition to use for nextmatch export	calendar	bg	Определение за експорт, което да се използва за nextmatch export
-exports events from your calendar in ical format.	calendar	bg	Експортира събития от вашия календар в iCal формат.
-exports events from your calendar into a csv file.	calendar	bg	Експортира събития от вашия календар в CSV файл.
-extended	calendar	bg	Разширен
-extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	bg	Разширените актуализации винаги включват пълната информация за събитията. iCal файловете могат да бъдат импортирани в много други приложения за управление на календар.
-favorites	calendar	bg	Любими
-fieldseparator	calendar	bg	Разделител на полетата
-filemanager	calendar	bg	Файл мениджър
-filename	calendar	bg	Име на файл
-filename of the download	calendar	bg	Име на файл за изтегляне
-find free timeslots where the selected participants are available for the given timespan	calendar	bg	Намиране на времеинтервали, в който избраните участници са свободни - в посочения интервал
-firstname of person to notify	calendar	bg	Собствено име на лицето за известяване.
-for	calendar	bg	за
-for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	bg	За поредно писмо използвайте този таг. Поставете съдържанието, което искате в рамките на двата тага.
-for which views should calendar just a list of events instead of distinct lines with a fixed time interval.	calendar	bg	За кои изгледи трябва да се назначи само списък на събития, вместо отделни редове с фиксиран времеви интервал.
-for which views should calendar show distinct lines with a fixed time interval.	calendar	bg	За кои изгледи следва Календарът да показва разделителни линии с фиксирани времеинтервали?
-format of event updates	calendar	bg	Формат за актуализация на събитията
-forward half a month	calendar	bg	Напред половин месец
-forward one month	calendar	bg	Напред един месец
-forward one year	calendar	bg	Напред една година
-four days view	calendar	bg	Четири дневен изглед
-freebusy	common	bg	Заетост
-freebusy: unknown user '%1', or not available for unauthenticated users!	calendar	bg	Заетост: Неизвестен потребител '% 1' или не е достъпен за неоторизирани потребители!
-freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	bg	Заетост: Непознат потребител '%1', грешна парола или достъпа е забранен за външни потребители !!!
-freetime	calendar	bg	Свободно време
-freetime search	calendar	bg	Търсене на свободно време
-fri	calendar	bg	Пт
-full description	calendar	bg	Подробно описание
-full edit dialog	calendar	bg	Пълен диалог за редактиране
-fullname of person to notify	calendar	bg	Пълно име на лицето за известяване
-general fields:	calendar	bg	Общи полета:
-general settings	calendar	bg	Основни настройки
-global categories	calendar	bg	Глобални категории
-global public and group public	calendar	bg	Глобална и групова публика
-global public only	calendar	bg	Само глобална публика
-group invitation	calendar	bg	Покана на група
-group planner	calendar	bg	План за група
-group public only	calendar	bg	Само групова публика
-group(s) or user(s) to show	calendar	bg	Група(и) или потребител(и) за показване
-group(s) or user(s) whose calendars to show (if acl exists)	calendar	bg	Група(и) или потребител(и), чиито календари да се покажат, ако съществува ACL.
-groupmember(s) %1 not included, because you have no access.	calendar	bg	Членовете на групата: %1 не са включени - достъпът Ви е отказан
-groups: other users can always be invited, only groups require an invite grant	admin	bg	Групи: други потребители винаги могат да бъдат поканени, само при потвърждение от потребител с повече права.
-h	calendar	bg	ч
-here is your requested alarm.	calendar	bg	Това е поисканата от Вас аларма.
-hide private events	calendar	bg	Скриване на частни събития
-hide private infos	calendar	bg	Скрий маркираните като "Лични"
-high priority	calendar	bg	Висок приоритет
-history	calendar	bg	История
-history logging	admin	bg	Запис на история
-holiday	calendar	bg	Празник
-holidays	calendar	bg	Празници
-holidays only	calendar	bg	Само празници
-hours	calendar	bg	часа
-how far to search (from startdate)	calendar	bg	Период за търсене (от началната дата)
-how many appointments should non-admins be able to export	admin	bg	Колко срещи трябва да могат да експортират не-администраторите (non-admins).
-how many days to be removed in the future (default 365)	calendar	bg	Колко дни да бъдат премахнати напред - 365 дни по подразбиране (default 365)
-how many days to be removed in the past (default 100)	calendar	bg	Колко дни да бъдат премахнати назад - 100 дни  по подразбиране (default 100)
-how many days to sync in the future (default %1)	calendar	bg	Колко дни за синхронизиране в бъдеще - по подразбиране %1 (default %1)
-how many days to sync in the past (default %1)	calendar	bg	Колко дни за синхронизиране в миналото - по подразбиране %1 (default %1)
-how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	bg	Колко реда за описание трябва да бъдат видими? Допълнителни редове може да намерите по- надолу.
-how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	bg	Колко реда на събитията за целия ден, трябва да бъдат видими? Допълнителни редове са достъпни по- надолу.
-how many minutes should each interval last?	calendar	bg	Колко минути да бъде продължителността на всеки интервал?
-how many separate calendars to show before merging them together	calendar	bg	Минимален брой потребители за показване на консолидиран изглед на календар, ако по-малко потребители са маркирани, календарът се показва отделно за седмичен или дневен изглед.
-how many weeks should the multiple week view show?	calendar	bg	Колко седмици са се показват при няколкоседмичния изглед?
-how much entries to skip	calendar	bg	Колко записи да пропуснете?
-html link to the current record	calendar	bg	HTML линк към текущия запис
-ical	calendar	bg	iCal
-ical / rfc2445	calendar	bg	iCal / rfc2445
-ical export	calendar	bg	Експорт в iCal
-ical file	calendar	bg	iCal файл
-ical import	calendar	bg	Импорт на iCal
-ical successful imported	calendar	bg	iCal успешно бе импортиран
-if start day differs	calendar	bg	Ако началният ден се различава
-if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	bg	Ако не зададете парола, информацията ще бъде достъпна за всеки, който знае URL !!!
-if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	bg	Ако изберете диапазон от (месец, седмица и т.н.) вместо списък с записи, тези допълнителни полета са налични.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	bg	Ако посочите директория (full vfs path) тук, % 1 показва действие за всеки документ. С него може да изтеглите посочения документ с вмъкнатите данни.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	bg	Ако посочите документ (full vfs path) тук, % 1 показва допълнителна иконка на документ за всеки запис. С нея може да изтеглите посочения документ с вмъкнатите данни.
-if you specify an export definition, it will be used when you export	calendar	bg	Ако посочите дефиниция за експортиране, ще се използва винаги, когато експортирате
-ignore conflict	calendar	bg	Игнорирай конфликта
-import	calendar	bg	Импорт
-import csv-file	common	bg	Импорт на CSV-файл
-imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	bg	Импортира събития във Вашия календар от CSV файл (стойности, разделени със запетая). От таба Опции може да изберете друг разделител.
-imports events into your calendar from an ical file.	calendar	bg	Импортира събития от iCal файла във вашия календар.
-insert	calendar	bg	Вмъкване
-insert in document	calendar	bg	Вмъкване в документа
-interval	calendar	bg	Интервал
-invalid email-address "%1" for user %2	calendar	bg	Невалиден e-mail адрес "%1" на потребител %2
-invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	bg	Невалиден ID на собственика:% 1. Възможен е неправилен превод на полето. Вместо него използвай %2.
-invitations	calendar	bg	Покани
-invite	common	bg	Отправи покана за...
-it can not read timezones from sqlite database %1!	calendar	bg	НЕ може да чете часови зони от sqlite database %1!
-just me	calendar	bg	Само мен
-keep exceptions	calendar	bg	Поддържане на изключения
-keep the series unchanged.	calendar	bg	Поддържане на серията непроменена.
-last	calendar	bg	Последен
-last changed	calendar	bg	Последна промяна
-lastname of person to notify	calendar	bg	Фамилия на лицето за известяване
-length of the time interval	calendar	bg	Продължителност на времеинтервала
-limit number of description lines in list view (default 5, 0 for no limit)	calendar	bg	Ограничаване броя на редовете за описание в изглед на списъка. По подразбиране е 5, 0 без ограничение.
-limit number of lines for all day events	calendar	bg	Ограничаване броя на редовете за целодневни събития
-limit search for conflicts in recurrences to given number of recurrences	calendar	bg	Ограничаване на търсенето на конфликти в повторенията до определен брой повторения.
-limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	bg	Ограничаване на търсенето на конфликти в повторенията до зададено време в секунди (по подразбиране 3 сек.)
-link title for events to show	calendar	bg	Показване на заглавия на връзки към събития
-link to view the event	calendar	bg	Връзка за преглед на събитието
-links	calendar	bg	Връзки
-links and attached files	calendar	bg	Връзки и прикачени файлове
-links to specified application.  example: {{links/infolog}}	calendar	bg	Връзки към определено приложение. Например: {{links/infolog}}
-links, attachments	calendar	bg	Връзки, прикачени файлове
-list of files linked to the current record	calendar	bg	Списък с файлове, свързани с текущия запис
-listview	calendar	bg	Списък със събития
-location	calendar	bg	Място на събитието
-location, start- and endtimes, ...	calendar	bg	Място, начален и краен час, ...
-mail all participants	calendar	bg	Изпращане на e-mail до всички участници
-make freebusy information available to not logged in persons?	calendar	bg	Да се позволи достъп до Вашата информация за заетост на неоторизирани от системата лица?
-manage mapping	calendar	bg	Управление на съответствията
-mark event as private to hide title and description	calendar	bg	Маркиране на събитието като частно, за да скриете заглавието и описанието
-max. number of entries to show (leave empty for no restriction)	calendar	bg	Макс. брой записи за показване. Оставете празно, ако е без ограничение.
-maximum available quantity of %1 exceeded!	calendar	bg	Максималното налично количество от % 1 е превишено!
-meeting canceled	calendar	bg	Срещата е отменена
-meeting request	calendar	bg	Покана за среща
-meetingrequest to all participants	calendar	bg	Покана за среща до всички участници
-merge document...	calendar	bg	Обединяване на документа ...
-midnight	calendar	bg	Полунощ
-minimum number of users for showing day view as consolidated.	calendar	bg	Минимален брой потребители за показване на дневен изглед като консолидиран.
-minimum number of users for showing week view as consolidated.	calendar	bg	Минимален брой потребители за показване на седмичен изглед като консолидиран.
-minutes	calendar	bg	Минути
-modified	calendar	bg	Редактирано
-modifier	calendar	bg	Редактор
-mon	calendar	bg	Пон
-month	calendar	bg	Месец
-monthly	calendar	bg	Месечен
-monthly (by date)	calendar	bg	Месечно (по дати)
-monthly (by day)	calendar	bg	Месечно (по дни)
-monthview	calendar	bg	Месечен изглед
-multiple week view	calendar	bg	Няколкоседмичен изглед
-name of current user, all other contact fields are valid too	calendar	bg	Име на текущия потребител, останалите полета на контакта също са валидни
-name of the day of the week (ex: monday)	calendar	bg	Име на ден от седмицата (напр. Понеделник)
-name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	bg	Наименование на седмицата, например:Понеделник, достъпен за първи запис във всеки ден от седмицата или дневна таблица в избрания диапазон.
-needs action	calendar	bg	Нужда от действие
-new	calendar	bg	Нов(а)
-new event category	calendar	bg	Нова категория на събитията
-new event participants	calendar	bg	Нови участници в събитието
-new search with the above parameters	calendar	bg	Ново търсене с дадените параметри
-no automatic purging	admin	bg	Без автоматично почистване
-no events found	calendar	bg	Не са намерени събития
-no filter	calendar	bg	Без филтър
-no matches found	calendar	bg	Не са открити съвпадения
-no meeting requests	calendar	bg	Не са открити искания за среща
-no owner selected	calendar	bg	Няма избран собственик
-no preview for ical	calendar	bg	Няма визуализация за iCal
-no recurrence	calendar	bg	Без повтаряне
-no response	calendar	bg	Без отговор
-no rights to export more than %1 entries!	calendar	bg	Без права за експортиране на повече от % 1 записи!
-no, users will need to contact users with direct booking permission	calendar	bg	Не, потребителите ще трябва да се свържат с потребители, с разрешение за директна резервация.
-non blocking	calendar	bg	Не пълен ангажимент
-not	calendar	bg	Не е
-not rejected	calendar	bg	Не е отхвърлен
-nothing to update, version is already %1.	calendar	bg	Нищо за актуализиране, версията вече е % 1.
-notification messages for added events	calendar	bg	Известие за добавен ангажимент
-notification messages for canceled events	calendar	bg	Известие за отменено събитие
-notification messages for modified events	calendar	bg	Известие за променен ангажимент
-notification messages for uninvited participants	calendar	bg	Известяване на участниците с отменена покана
-notification messages for your alarms	calendar	bg	Известяване за Вашите аларми
-notification messages for your responses	calendar	bg	Известие за Ваши отговори на покана
-notification settings	calendar	bg	Настройки на известията
-notify non-egroupware users about event updates	calendar	bg	Известяване на non-EGroupware потребители за актуализации на събитията
-number of records to read (%1)	calendar	bg	Брой записи, които да бъдат прочетени (%1)
-number of weeks to show	calendar	bg	Брой седмици, които да бъдат показани
-observance rule	calendar	bg	Правило за съблюдаване
-occurence	calendar	bg	Период на повторение
-old fixed definition	calendar	bg	Стара фиксирана дефиниция
-old startdate	calendar	bg	Стара начална дата
-olddate	calendar	bg	Оригинална дата
-on %1 %2 %3 your meeting request for %4	calendar	bg	На %1 %2 %3 заявката Ви за среща за %4
-on all modification, but responses	calendar	bg	за всички промени, освен отговорите
-on any time change too	calendar	bg	и за всяка промяна на времето
-on invitation / cancellation only	calendar	bg	само при покана или отмяна
-on participant responses too	calendar	bg	и за отговорите на участниците
-on time change of more than 4 hours too	calendar	bg	и за промяна във времето с повече от 4 часа
-one month	calendar	bg	един месец
-one week	calendar	bg	една седмица
-one year	calendar	bg	една година
-only group-events	calendar	bg	Само групови събития
-only recurrences until %1 (excluding) have been checked!	calendar	bg	Проверени са само повтарянията до %1 (включително)
-only the initial date of that recurring event is checked!	calendar	bg	Отбелязана е само първоначалната дата на това повтарящо се събитие!
-only used for first viewing of calendar, afterwards last selected view is used.	calendar	bg	Използва се само за първоначалния преглед на календара, след това се използва последният селектиран.
-open todo's:	calendar	bg	Отвори Задачите
-optional	calendar	bg	По избор
-organizer	calendar	bg	Организатор
-overlap holiday	calendar	bg	Застъпване на празник
-owner too	calendar	bg	Собственик също
-participant names by type	calendar	bg	Имена на участниците по тип
-participant table	calendar	bg	Таблица на участниците
-participants	calendar	bg	Участници
-participants automatically added to new events	calendar	bg	Автоматично добавяне на участниците към нови събития
-participants uninvited from an event	calendar	bg	Участници с отменена покана за събитие
-participants, resources, ...	calendar	bg	Участници, Ресурси, ...
-password for not loged in users to your freebusy information?	calendar	bg	Парола за достъп до информацията за Вашата заетост за потребители, които не са влезли в системата. Задайте парола, различна от Вашата!
-permission denied	calendar	bg	Не е позволено
-planner by category	calendar	bg	План по категории
-planner by user	calendar	bg	План по потребители
-please first select participants on the left and then use plus button to add them	calendar	bg	Моля, първо изберете (от ляво) участниците и след това използвайте бутона "Плюс", за да ги добавите
-please note: you can configure the field assignments after you uploaded the file.	calendar	bg	Обърнете внимание: Може да конфигурирате назначението на полетата СЛЕД като сте качили файла.
-preselected group for entering the planner	calendar	bg	Група при влизане в "План"
-prevent deleting of entries	admin	bg	Предотвратяване на изтриването на записи
-previous	calendar	bg	Предишно
-private and global public	calendar	bg	Лична и глобална публика
-private and group public	calendar	bg	Лична и глобална публика
-private only	calendar	bg	Само личните
-quantity	calendar	bg	Количество
-quick add	calendar	bg	Бързо добавяне
-range fields	calendar	bg	Полета на обхват
-re-edit event	calendar	bg	Редактиране отново
-receive email updates	calendar	bg	Получаване на e-mail за актуализациите
-receive notifications about events you created/modified/deleted	calendar	bg	Получаване на известия за създадените / променените / изтритите от вас събития.
-receive summary of appointments	calendar	bg	Получаване на обобщение за ангажиментите
-recover	calendar	bg	Възстановяване
-recovered	calendar	bg	Възстановен(и).
-recurrence	calendar	bg	Повторение
-recurrence enddate	calendar	bg	Крайна дата на повторение
-recurring event	calendar	bg	Повтарящо се събитие
-regular edit	calendar	bg	Редовна редакция
-reject	calendar	bg	Отхвърляне
-rejected	calendar	bg	Отказано
-repeat days	calendar	bg	Дни на повторение
-repeat the event until which date (empty means unlimited)	calendar	bg	дата на край на повторението на събитието (не въведена = безкрайно повторение)
-repeat type	calendar	bg	Тип на повторение
-repeating event information	calendar	bg	Информация за повтарящи се събития
-repeating interval, eg. 2 to repeat every second week	calendar	bg	интервал на повторение, напр. 2 за да се повтаря всяка втора седмица
-repetition	calendar	bg	Повторение
-repetitiondetails (or empty)	calendar	bg	Детайли на повторение (или непопълнено)
-replacements for inserting events into documents	calendar	bg	Замени за вмъкване на събития в документи
-reply to meeting request	calendar	bg	Отговор на покана за среща
-requested	calendar	bg	Заявена
-requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	bg	Заявена дата % 1 извън допустимия диапазон от % 2 дни: повтарящи се събития са пропуснати!
-requested meeting is in the past!	calendar	bg	Заявената среща е в миналото!
-require an acl grant to invite other users and groups	admin	bg	Изискване на ACL grant, за да поканите други потребители и групи
-required information (start, end, title, ...) missing!	calendar	bg	Необходимата информация (начало, край, заглавие, ...) липсва!
-reset	calendar	bg	Нулиране
-reset participant stati on event shifts	calendar	bg	Нулиране на статуса на участниците при промени на събитията
-resources	calendar	bg	Ресурси
-resources except conflicting ones	calendar	bg	Ресурси, с изключение на конфликтните
-resources with conflict detection	calendar	bg	Ресурси, с конфликта насоченост
-restrict add category to	calendar	bg	Ограничаване на добавянето на категория към
-role	calendar	bg	Роля
-rule	calendar	bg	Правило
-sat	calendar	bg	Съб
-save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	bg	Запазване на събитието като изключение - Изтриване на единично събитие - Редактиране на статуса или настройка на аларми за конкретния ден.
-saves the changes made	calendar	bg	Запазва промените
-saves the event ignoring the conflict	calendar	bg	Запазва събитието, игнорира конфликта
-scheduling conflict	calendar	bg	Конфликт в разписанието
-select a %1	calendar	bg	Изберете %1
-select a color for this calendar	calendar	bg	Изберете цвят за календара
-select a time	calendar	bg	Изберете време
-select an action	calendar	bg	Изберете действие
-select an action...	calendar	bg	Изберете действие...
-select multiple contacts for a further action	calendar	bg	Избор на множество контакти
-select resources	calendar	bg	Изберете ресурси
-select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	bg	Изберете дали статуса на участника да се възстанови до "непознат"(unknown), ако събитието бъде изместено за по-късно. За външни лица винаги се връща статуса на участника до "непознат".
-select who should get the alarm	calendar	bg	Изберете кой да бъде известен чрез алармата
-selected range	calendar	bg	Изберете обхват
-selected users/groups	calendar	bg	Избрани потребители / групи
-send meetingrequest to all participants after the event is saved	calendar	bg	Изпращане на покана за среща до всички участници, след запазването на събитието.
-series deleted	calendar	bg	Серията е изтрита
-set new events to private	calendar	bg	Маркира новите събития като "Лични"
-setting lock time calender	admin	bg	Настройка на данни на Календара, за време за заключване, които не позволяват да се отключи до определено време (по подразбиране 1 сек.).
-shall the date parameter be accepted (e.g. from calendar module)?	calendar	bg	Дали параметърът за дата ще бъде приет, напр. от модула на календара?
-should new events created as private by default ?	calendar	bg	При добавяне на нов ангажимент,  "Личен" по подразбиране да е маркирано.
-should the grid be shown in the calendar	calendar	bg	Да показва ли мрежата в Календара?
-should the number of weeks be shown on top of the calendar	calendar	bg	Да показва ли номерата на седмиците отгоре на Календара?
-should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	bg	Да показва ли номерата на седмиците отгоре на Календара (само ако изместването е = 0 (offset = 0))
-should the planner display an empty row for users or categories without any appointment.	calendar	bg	При работа с План да се показва ли празен ред за потребители или категории без ангажименти?
-should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	bg	В скоби, след името на поканения за дадено събитие, ще се изписва неговия отговор (Приема, Отказва,...).
-show a calendar title	calendar	bg	Показване на заглавие на Календара
-show all events, as if they were private	calendar	bg	Показване на всички събития, като "Лични"
-show all status incl. rejected events	calendar	bg	Показване на всички (вкл. отказалите се)
-show all status, but rejected	calendar	bg	Показване на всички, освен на отказалите се
-show all status, but unknown	calendar	bg	Показване на всички, освен на непознатите
-show birthdays as events	calendar	bg	Показване като събития
-show birthdays from addressbook	admin	bg	Показване на рождените дни от Адресния указател
-show empty rows in planner	calendar	bg	Показва празни редове в Плана
-show events that have been deleted	calendar	bg	Показва събития, които са били изтрити
-show list of upcoming events	calendar	bg	Показва списък на наближаващите събития
-show only accepted events	calendar	bg	Показва само приети събития
-show only delegated events	calendar	bg	Показва само  делегирани събития
-show only events flagged as public, (not checked as private)	calendar	bg	Показва само събития, маркирани като обществени, - не като "Лични"
-show only invitations, not yet accepted or rejected	calendar	bg	Показва само покани, които все още не са приети или отхвърлени
-show only rejected events	calendar	bg	Показва само отхвърлени събития
-show only tentative accepted events	calendar	bg	Показва временно само приети събития, които подлежат на промяна
-show only the date, not the year	admin	bg	Показване само на датата, без годината
-show this month	calendar	bg	Покажи този месец
-show this week	calendar	bg	Покажи тази седмица
-show year and age	calendar	bg	Покажи година и възраст
-single event	calendar	bg	Еднократно събитие
-specify where url of the day links to	calendar	bg	Посочете къде да се свърже URL на деня
-start	calendar	bg	Старт
-start date/time	calendar	bg	Начало Дата/Час
-start of series event changed	calendar	bg	Началото на серия от събития е променено.
-startdate	calendar	bg	Начална дата
-startdate / -time	calendar	bg	Нач.дата / -час
-startdate and -time of the search	calendar	bg	Начална дата и час за търсенето
-startdate of the export	calendar	bg	Начална дата за експорт
-startrecord	calendar	bg	Начален запис
-status already applied	calendar	bg	Статусът е приложен
-status changed	calendar	bg	Статусът е променен
-status for all future scheduled days changed	calendar	bg	Статусът за планираното разписание е променено.
-status for this particular day changed	calendar	bg	Статусът за този ден е променен.
-status of participants set to unknown because of missing category rights	calendar	bg	Статусът на участниците е настроен на "неопределен", поради липса на права.
-submit to repository	calendar	bg	Подаване към хранилището
-summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	bg	Обобщен статус: 3 участника: 1 одобрен, 2 с неопределен статус
-sun	calendar	bg	Нед
-tag to mark positions for address labels	calendar	bg	Отбележи като маркирани позиции за адр. етикети
-tentative	calendar	bg	С колебание
-test import (show importable records <u>only</u> in browser)	calendar	bg	Тестов импорт (показва импортируемите записи <u>само</u> в прозореца).
-the exceptions are deleted together with the series.	calendar	bg	Изключенията се изтриват заедно със серията.
-the following document-types are supported:	calendar	bg	Поддържа следните типове документи:
-the original series will be terminated today and a new series be created.	calendar	bg	Оригиналната серия ще бъде прекратена днес и ще бъде създадена нова.
-the resource you selected is already overbooked:	calendar	bg	Избраният от вас ресурс вече е зает:
-this day is shown as first day in the week or month view.	calendar	bg	Този ден ще е първи в седмичния и в месечния вид на календара.
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	bg	Определя края на работното време в Дневен вид на календара. Ангажиментите след този час се изобразяват отдолу.
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	bg	Определя началото на работното време в Дневен вид на календара. Ангажиментите преди този час се изобразяват отгоре.<br>Този час се ползва и за начален час по подразбиране за новите събития.
-this entry is currently opened by %1!	calendar	bg	Този запис е отворен в момента от %1!
-this entry is opened by user:	calendar	bg	Записът е бил отварян в продължение на зададения времеинтервал от потребител:
-this event is part of a series	calendar	bg	Това събитие е част от серията
-this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	bg	При влизане в "План" ще виждате информацията за тази група. В Плана може да я променяте.
-this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	bg	Това е повтарящо се събитие. Искате да изтриете само него или цялата серия?
-this mail cancels a meeting	calendar	bg	Имейл с такъв текст се използва за отмяна на среща
-this mail contains a meeting request	calendar	bg	Имейл с такъв текст съдържа покана за среща
-this mail contains a reply to a meeting request	calendar	bg	Имейл с такъв текст съдържа отговор на покана за среща
-this message is sent for canceled or deleted events.	calendar	bg	Писмо с такъв текст ще бъде изпращано за отменени или изтрити събития.
-this message is sent for modified or moved events.	calendar	bg	Писмо с такъв текст ще бъде изпращано за редактирани или преместени събития.
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	bg	Когато записвате ново събитие, писмо с такъв текст ще получи всеки от участниците в събитието, който в настройките си е задал да му бъде изпращано известие при добавяне на ново събитие. Можете да ползвате дадените променливи, които ще се заместват със съответните данни за ангажимента. За "Относно" на писмото се използва първия ред от текста.
-this message is sent to uninvited participants.	calendar	bg	Писмо с такъв текст ще бъде изпращано на участници с отменени покани.
-this message is sent when you accept, tentative accept or reject an event.	calendar	bg	Писмо с такъв текст ще бъде изпращано, когато приемете, приемете с колебание или откажете участие в събитие / ангажимент.
-this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	bg	Писмо с такъв текст ще получавате, ако зададете "Аларма" за дадено събитие. Можете да включите цялата информация, от която ще се нуждаете.
-this module displays a planner calendar.	calendar	bg	Този модул показва "План" на Календар
-this module displays a user's calendar as multiple weeks. don't give calendar application access to the anon user!	calendar	bg	Този модул показва потребителския Календар като множество от седмици. Не давайте достъп на приложението на Календара на анонимни потребители!
-this module displays calendar events as a list.	calendar	bg	Този модул показва събитията в Календара като списък.
-this module displays the current month	calendar	bg	Този модул показва текущия месец
-three month	calendar	bg	три месеца
-thu	calendar	bg	Чет
-til	calendar	bg	до
-timeframe	calendar	bg	Времеинтервал
-timeframe to search	calendar	bg	Времеинтервал за търсене
-timesheet entries created for	calendar	bg	Записи в графика, създадени за
-timezone	calendar	bg	Часова зона
-timezone in which recurrences have identical time	calendar	bg	Часова зона, в която рецидивите (повторенията) имат идентично време
-timezone of event exports	calendar	bg	Часова зона за експорт на събития
-timezone of event ical file import/export	calendar	bg	Часова зона за импорт |експорт на събитие в iCal файл
-timezones aliases updated to version %1 (%2 records updated).	calendar	bg	Зададените часови зони са актуализирани до версия %1 (актуализирани са %2 записа).
-timezones updated to version %1 (%2 records updated).	calendar	bg	Часовите зони са актуализирани до версия % 1, % 2 записи са актуализирани.
-title of the event	calendar	bg	Заглавие на събитието
-titles of any entries linked to the current record, excluding attached files	calendar	bg	Заглавия на всички записи, свързани с текущия запис, с изключение на прикачените файлове
-to many might exceed your execution-time-limit	calendar	bg	твърде много може да надвиши ограничението на времето за изпълнение
-to-firstname	calendar	bg	Собствено име
-to-fullname	calendar	bg	Пълно име (собствено, бащино, фамилно)
-to-lastname	calendar	bg	Фамилно име
-tomorrow	calendar	bg	Утре
-translation	calendar	bg	Превод
-tue	calendar	bg	Вто
-two weeks	calendar	bg	две седмици
-type of planner	calendar	bg	Вид на Плана
-unable to save	calendar	bg	Не може да бъде записано
-uninvited	calendar	bg	Поканата отменена
-update calendar view immediately when navigation calendar in sidebox is changed	calendar	bg	Актуализиране на изгледа на Календара, когато навигационният календар в страничната лента  е променен
-update timezones	common	bg	Актуализиране на часовите зони
-updated	calendar	bg	Актуализиран
-use end date	calendar	bg	Дата за край
-use given criteria:	calendar	bg	Ползване на зададени критерии:
-use quick add or full edit dialog when creating a new event	calendar	bg	Ползване на бърз диалог за добавяне или пълно редактиране, когато създавате ново събитие
-use side menu to filter participants	calendar	bg	Използвайте странично меню за филтриране на участници
-use the selected time and close the popup	calendar	bg	Използвайте избраното време и затвори прозореца
-use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	bg	Използвайте този таг за адр.етикети. Поставете съдържанието, което искате да повторите в рамките на двата тага (маркировъчни етикети).
-use this timezone to export calendar data.	calendar	bg	Използване на часовата зона, за експортиране на данни от Календара.
-use this timezone to import/export calendar data.	calendar	bg	Използване на часовата зона, за импортиране|експортиране на данни от Календара.
-use weekday start	calendar	bg	Използване на делничен ден за старт
-user or group	calendar	bg	Потребител или група
-user selectable css file for the calendar setup	calendar	bg	Потребителя сам избира CSS файл за настройка на Календара
-users + groups: inviting both always requires an invite grant	admin	bg	Потребители + групи: Покани всички, но Винаги изисквай потвърждение от потребител с повече права
-using already existing event on server.	calendar	bg	Използване на вече съществуващо събитие на сървъра.
-view exception	calendar	bg	Преглед на изключение(я)
-view series	calendar	bg	Преглед на сериите
-view settings	calendar	bg	Преглед на настройките
-view this event	calendar	bg	Преглед на събитието
-views showing a list of events	calendar	bg	Изглед показващ списък със събития
-views with fixed time intervals	calendar	bg	Изглед с фиксирани времеинтервали
-wed	calendar	bg	Сря
-week	calendar	bg	Седмица
-weekday	calendar	bg	ден от седмицата
-weekday starts on	calendar	bg	седмицата започва в
-weekdays	calendar	bg	Дни от седмицата
-weekdays to use in search	calendar	bg	Дни от седмицата за търсене
-weekly	calendar	bg	Седмичен
-weeks in multiple week view	calendar	bg	Седмици в няколкоседмичния изглед
-weeks offset (for multi-column display)	calendar	bg	Седмични компенсации при извеждане на няколко колони
-weekview	calendar	bg	Седмичен изглед
-weekview with weekend	calendar	bg	Седмичен изглед с уикенд
-weekview without weekend	calendar	bg	Седмичен изглед без уикенд
-what should links to the calendar events display in other applications.	calendar	bg	Какво трябва да показват линковете към събитията в Календара, в други приложения.
-when changing the month	calendar	bg	При промяна на месеца и годината. <br> При промяна, отметката за приемане се премахва.
-when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	bg	При избор, рождените дни и/или празниците ще се показват като събития в Kалендара ви. Моля, обърнете внимание, че тази опция променя само външния вид на EGroupware, но не променя информацията, изпращана чрез iCal или други календари.
-which view to show on home page	calendar	bg	Кой изглед да се покаже на началната страница
-while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	bg	Минимален брой потребители за показване на дневни и седмични изгледи като консолидирани. По подразбиране = 5
-whole day	calendar	bg	цял ден
-with credentials included	calendar	bg	С включени пълномощия
-wk	calendar	bg	Седм.
-work day ends on	calendar	bg	Работно време - край
-work day starts on	calendar	bg	Работно време - начало
-workday	calendar	bg	Работен ден
-workdays	calendar	bg	Работни дни
-yearly	calendar	bg	Годишен
-yearly planner	calendar	bg	Годишен План
-years	admin	bg	Години
-yearview	calendar	bg	Годишен изглед
-yes, only admins can purge deleted items	admin	bg	Да, само администраторите могат да заличават изтрити записи
-yes, users can purge their deleted items	admin	bg	Да, потребителите могат да заличават изтритите си записи
-you already replied to this invitation with	calendar	bg	Вече сте отговорили на тази покана с
-you are not allowed to book the resource selected:	calendar	bg	Нямате право да резервирате избрания ресурс:
-you are not invited to that event!	calendar	bg	Не сте поканени на това събитие!!!
-you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	bg	Искате да изпратите имейл с покана за среща до получателите по-горе. В зависимост от клиента, до когото изпращате писмото, останалите получатели ще могат или не, да видят съобщението по-долу, ще виждат само приложената заявка за среща.
-you can either set a year or a occurrence, not both !!!	calendar	bg	Може да изберете Година или Интервал на повторение, не и двете !!!
-you can only set a year or a occurrence !!!	calendar	bg	Може да изберете само Година или Интервал на повторение !!!
-you do not have permission to read this record!	calendar	bg	Нямате права за четене на този запис!
-you have a meeting scheduled for %1	calendar	bg	Имате среща, насрочена за %1
-you have been uninvited from the meeting at %1	calendar	bg	Поканата Ви за среща на %1 е отменена.
-you need to select an account, contact or resource first!	calendar	bg	Необходимо е първо да изберете акаунт, контакт или ресурс!
-you need to select an ical file first	calendar	bg	Необходимо е първо да изберете iCal файл
-you need to select some events first	calendar	bg	Необходимо е първо да изберете някои събития.
-you need to set either a day or a occurrence !!!	calendar	bg	Необходимо е да изберете ден или интервал на повторение !!!
-you requested more than available for the selected resource:	calendar	bg	Искате позволение за повече от наличното за избрания ресурс:
-your meeting scheduled for %1 has been canceled	calendar	bg	Срещата Ви, насрочена за %1 е отменена
-your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	bg	Вашата среща, насрочена за %1 беше пренасрочена за %2
-your php extension pdo_sqlite is broken!	calendar	bg	Вашето PHP разширение pdo_sqlite е непълно или повредено!
+%1 %2 rights for %3 on %4 to %5	admin	bg	%1 %2 права за %3 на % 4 до % 5
+%1 - %2 of %3 user accounts	admin	bg	%1 - %2 от % 3 потребителски акаунти
+%1 - %2 of %3 user groups	admin	bg	%1 - %2 от % 3 потребителски групи
+%1 access to other data	admin	bg	% 1 достъп до други данни
+%1 accounts being activated	admin	bg	% 1 акаунта са активирани
+%1 acl entries deleted.	admin	bg	% 1 ACL записа са изтрити.
+%1 acl records of not (longer) existing accounts deleted.	admin	bg	Изтрити са %1 ACL записи на вече не съществуващи акаунти.
+%1 categories of not (longer) existing accounts deleted.	admin	bg	% 1 категории на не съществуващи акаунти са изтрити.
+%1 category '%2' %3	admin	bg	%1 категория  '%2' %3
+%1 category(s) %2	admin	bg	%1 категория(и) %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	bg	%1 категория(и) %2, %3 отпада поради недостатъчни права!!!
+%1 class not instanciated	admin	bg	%1 клас не е представен
+%1 entries deleted.	admin	bg	% 1 записа бяха изтрити.
+%1 group %2	admin	bg	% 1 група % 2
+%1 is no command!	admin	bg	% 1 не е "команда"!
+%1 log entries deleted.	admin	bg	% записи за регистрация са изтрити.
+%1 not found or not executable !!!	admin	bg	% 1 не е намерен или не е изпълним!
+%1 phrases saved.	admin	bg	% 1 запазени фрази.
+%1 rights for %2 and applications %3	admin	bg	% 1 има права за % 2 и приложение(я)% 3.
+%1 run rights for applications	admin	bg	%1 има права за приложенията
+%1 user %2	admin	bg	% 1 потребител % 2
+(de)activate mail accounts	admin	bg	(де)активиране на имейл акаунти
+(default no, leave it off if you dont use it)	admin	bg	По подразбиране = Не, остави го изключен, ако не се ползва
+(no subject)	admin	bg	(без тема)
+(stored password will not be shown here)	admin	bg	Съхранената парола няма да бъде показана тук!
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	bg	За инсталиране на нови приложения използвайте <br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
+-  type	admin	bg	- вид
+1 year	admin	bg	1 година
+2 month	admin	bg	2 месеца
+2 weeks	admin	bg	3 седмици
+2-factor-authentication for interactive login	admin	bg	2-Factor-Authentication за интерактивно влизане, чрез въвеждане на потребителско име и парола.
+3 month	admin	bg	3 месеца
+6 month	admin	bg	6 месеца
+access by	admin	bg	Достъпен от
+access control	admin	bg	Контрол на достъпа
+accesslog and bruteforce defense	admin	bg	AccessLog и BruteForce защита
+account	admin	bg	Акаунт
+account "%1" has no email address --> not notified!	admin	bg	Акаунтът "% 1" няма имейл адрес -> не е уведомен!
+account "%1" has no plaintext password!	admin	bg	Акаунтът "% 1" няма ясна парола!
+account %1 %2	admin	bg	Акаунтът %1 %2
+account '%1' deleted.	admin	bg	Акаунтът '%1' е изтрит.
+account '%1' not found !!!	admin	bg	Акаунтът '%1' не е намерен!
+account active	admin	bg	Акаунтът е активен
+account deleted.	admin	bg	Акаунтът е изтрит.
+account has been created	common	bg	Акаунтът беше създаден.
+account has been deleted	common	bg	Акаунтът беше изтрит.
+account has been updated	common	bg	Акаунтът беше актуализиран.
+account id	admin	bg	ID на акаунт
+account list	admin	bg	Списък на акаунти
+account not found!	common	bg	Акаунтът не е намерен!
+account permissions	admin	bg	Разрешения за акаунти
+account preferences	admin	bg	Преференции на акаунти
+account saved.	admin	bg	Акаунтът е запазен.
+account-id's have to be integers!	admin	bg	ID-то на акаунта трябва да е с цели числа!
+acl added.	admin	bg	ACL е добавен.
+acl deleted.	admin	bg	ACL е изтрит.
+acl entry deleted.	admin	bg	ACL записът е изтрит.
+acl entry not found!	admin	bg	ACL записът не е намерен!
+acl manager	admin	bg	ACL мениджър
+acl rights	common	bg	ACL права
+acl updated	admin	bg	ACL е актуализиран
+acl updated.	admin	bg	ACL е актуализиран.
+action	admin	bg	Действие
+actions	admin	bg	Действия
+activate	admin	bg	Активиране
+activate wysiwyg-editor	admin	bg	Активиране на WYSIWYG-редактор
+activated	admin	bg	Активиран
+active mail accounts	admin	bg	Активни пощенски акаунти
+active templates	admin	bg	Активни шаблони
+add a category	admin	bg	Добавете категория
+add a group	admin	bg	Добавете група
+add a new account.	admin	bg	Добавете нов акаунт
+add a subcategory	admin	bg	Добавете подкатегория
+add a user	admin	bg	Добавете потребител
+add account	admin	bg	Добавяне на профил (акаунт)
+add application	admin	bg	Добавете приложение
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	bg	Добавете автоматично създадени потребители към тази група. 'По подразбиране'
+add global category	admin	bg	Добавете глобална категория
+add global category for %1	admin	bg	Добавете глобална категория за %1
+add group	admin	bg	Добавете група
+add new account	admin	bg	Добавете нов акаунт
+add new application	admin	bg	Добавете ново приложение
+add new email address:	admin	bg	Добавяне на нов имейл адрес:
+add peer server	admin	bg	Добавете Peer Server
+add profile	admin	bg	Добавете профил
+add sub-category	admin	bg	Добавете Подкатегория
+add user	admin	bg	Добавяне на потребител
+add user or group	admin	bg	Добавяне на потребител или група
+added	admin	bg	Добавено
+admin dn	admin	bg	Администраторски dn
+admin email	admin	bg	Имейл на Администратор
+admin name	admin	bg	Име на администратора
+admin password	admin	bg	Парола на администратора
+admin username	admin	bg	Потребителско име на администратора
+administration	admin	bg	Администрация
+admins	admin	bg	Администратори
+advanced options	admin	bg	Разширени опции
+aliases	admin	bg	Псевдоними
+all categories	admin	bg	Всички категории
+apply the changes	admin	bg	Прилагане на промените
+country	admin	bg	Държава
+created	admin	bg	Създаден
+custom fields	admin	bg	Полета по избор
+day	admin	bg	Ден
+deleted	admin	bg	Изтрит
+event details follow	admin	bg	Следват подробности за събитието
+exists	admin	bg	Съществува
+global categories	common	bg	Глобални категории
+manage mapping	admin	bg	Управление на съответствията
+modified	admin	bg	Редактирано
+month	admin	bg	Месец
+no matches found	admin	bg	Не са открити съвпадения
+one month	admin	bg	един месец
+one week	admin	bg	една седмица
+permission denied	admin	bg	Не е позволено
+requested	admin	bg	Заявена
+start	admin	bg	Старт
+translation	admin	bg	Превод
+two weeks	admin	bg	две седмици
+updated	admin	bg	Актуализиран

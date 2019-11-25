@@ -84,7 +84,9 @@ imap	mail	pl	IMAP
 imap server	mail	pl	Serwer IMAP
 import message	mail	pl	importuj wiadomość
 importance	mail	pl	ważność
+important	mail	pl	ważny
 inbox	mail	pl	ODEBRANE
+job	mail	pl	służbowy
 junk	mail	pl	Śmieci
 keep a copy of the message in your inbox	mail	pl	zachowaj kopię wiadomości w folderze ODEBRANE
 kilobytes	mail	pl	kilobajtów
@@ -95,6 +97,8 @@ mail settings	mail	pl	Ustawienia email
 mark as deleted	mail	pl	Zaznacz jako usunietą
 matches	mail	pl	pasuje do
 matches regexp	mail	pl	pasuje do wyrażenia regularnego
+message body	mail	pl	wiadomość
+modify subject of this message	mail	pl	Zmień temat tej wiadomości
 move selected to	mail	pl	przenieś wiadomości do
 move to	mail	pl	przenieś wiadomości do
 move to trash	mail	pl	przenieś do kosza
@@ -105,6 +109,7 @@ no folders	mail	pl	brak folderów
 no plain text part found	mail	pl	brak części 'czystym' tekstem
 no recipient address given!	mail	pl	Nie podano adresu docelowego!
 no signature	mail	pl	brak podpisu
+no sneak preview in list	mail	pl	Bez krótkiego podglądu
 no subject given!	mail	pl	Nie podano tematu!
 none, create all	mail	pl	żaden, utwórz wszystko
 nothing to change.	mail	pl	Brak elementów do wprowadzenia zmian.
@@ -122,6 +127,7 @@ please supply the message to send with auto-responses	mail	pl	Proszę wprowadzi�
 printview	mail	pl	wydrukuj widok
 processing of file %1 failed. failed to meet basic restrictions.	mail	pl	Przetwarzanie pliku %1 nie powiodło się. Nie dotrzymano podstawowych restrykcji.
 quicksearch	mail	pl	Szybkie wyszukiwanie
+quicksearch (with cc)	mail	pl	szybkie wyszukiwanie (+Kopia)
 refresh time in minutes	mail	pl	Czas odświeżania w minutach
 reject with	mail	pl	odrzuć z
 remove all	mail	pl	Usuń wszystko
@@ -138,6 +144,7 @@ save as draft	mail	pl	zapisz jako szkic
 save as infolog	mail	pl	zapisz jako zadanie Dziennika CRM
 save message to disk	mail	pl	zachowaj wiadomość na dysku
 select all	mail	pl	Zaznacz wszystkie
+selected date range (with quicksearch)	mail	pl	Zakres dat ( z szybkim wyszukiwaniem)
 sender	mail	pl	nadawca
 sent	mail	pl	Wysłano
 sent folder	mail	pl	Folder Wysłane
@@ -146,6 +153,7 @@ signature	mail	pl	Sygnaturka
 size(...->0)	mail	pl	Rozmiar (...->0)
 size(0->...)	mail	pl	Rozmiar (0->...)
 small view	mail	pl	widok uproszczony
+sneak preview in list	mail	pl	z krótkim podglądem
 sort order	mail	pl	Porządek sortowania
 start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości mają być oznaczane jako tekst czy html?
 subject(a->z)	mail	pl	Temat (A->Z)
@@ -158,6 +166,7 @@ the message sender has requested a response to indicate that you have read this 
 the mimeparser can not parse this message.	mail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości
 then	mail	pl	WTEDY
 there is no imap server configured.	mail	pl	Brak skonfigurowanego serwera IMAP
+to do	mail	pl	Do wykonania
 trash	mail	pl	Kosz
 trash folder	mail	pl	Folder Kosza
 unflagged	mail	pl	nie oflagowano
@@ -169,6 +178,7 @@ view header lines	mail	pl	pokaż linie nagłówka
 when deleting messages	mail	pl	Gdy usuwasz wiadomość
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	pl	które foldery (oprócz Wysłane) powinny być wyświetlone z użyciem schematy folderu "Wysłane"
 which folders - in general - should not be automatically created, if not existing	mail	pl	które foldery - ogólnie - nie powinny być automatycznie tworzone jeśli nie istnieją
+whole message	mail	pl	cała wiadomość
 write	mail	pl	Zapisz
 wrote	mail	pl	zapisano
 yes, offer copy option	mail	pl	tak, oferuj opcję kopii
