@@ -236,7 +236,7 @@ var et2_nextmatch_rowProvider = (function(){ "use strict"; return ClassWithAttri
 	_getVariableAttributeSet: function(_widget) {
 		var variableAttributes = [];
 
-		_widget.iterateOver(function(_widget) {
+		var process = function(_widget) {
 			// Create the attribtues
 			var hasAttr = false;
 			var widgetData = {
@@ -270,7 +270,19 @@ var et2_nextmatch_rowProvider = (function(){ "use strict"; return ClassWithAttri
 				variableAttributes.push(widgetData);
 			}
 
-		}, this);
+		};
+
+		// Check each column
+		var columns = _widget.getChildren();
+		for(var i = 0; i < columns.length; i++)
+		{
+			// If column is hidden, don't process it
+			if(this._context && this._context.columns && this._context.columns[i] && !this._context.columns[i].visible)
+			{
+				continue;
+			}
+			columns[i].iterateOver(process, this);
+		}
 
 		return variableAttributes;
 	},
@@ -570,7 +582,8 @@ var et2_nextmatch_rowWidget = (function(){ "use strict"; return et2_widget.exten
 	 */
 	createWidgets: function(_widgets) {
 		// Clone the given the widgets with this element as parent
-		this._widgets = new Array(_widgets.length);
+		this._widgets = new Array();
+		var row_id = 0;
 		for (var i = 0; i < _widgets.length; i++)
 		{
 			// Disabled columns might be missing widget - skip it
@@ -581,8 +594,9 @@ var et2_nextmatch_rowWidget = (function(){ "use strict"; return et2_widget.exten
 			// Set column alignment from widget
 			if(this._widgets[i].align)
 			{
-				this._row.childNodes[i].align = this._widgets[i].align;
+				this._row.childNodes[row_id].align = this._widgets[i].align;
 			}
+			row_id++;
 		}
 	},
 
@@ -593,12 +607,16 @@ var et2_nextmatch_rowWidget = (function(){ "use strict"; return et2_widget.exten
 	 * @return {DOMElement}
 	 */
 	getDOMNode: function(_sender) {
+		var row_id = 0;
 		for (var i = 0; i < this._widgets.length; i++)
 		{
+			// Disabled columns might be missing widget - skip it
+			if(!this._widgets[i]) continue;
 			if (this._widgets[i] == _sender)
 			{
-				return this._row.childNodes[i].childNodes[0]; // Return the i-th td tag
+				return this._row.childNodes[row_id].childNodes[0]; // Return the i-th td tag
 			}
+			row_id++;
 		}
 
 		return null;
