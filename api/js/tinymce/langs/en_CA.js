@@ -77,6 +77,7 @@ tinymce.addI18n('en_CA',{
 "Special character": "Special character",
 "Source code": "Source code",
 "Insert\/Edit code sample": "Insert\/Edit code sample",
+"Code view": "Code view",
 "Language": "Language",
 "Code sample": "Code sample",
 "Color": "Colour",
