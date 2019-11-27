@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="admin.acl.edit.acl" template="" lang="" group="0" version="1.9.001">
-		<grid>
+		<grid width="100%" resize_ratio="0">
 			<columns>
 				<column/>
 				<column/>
@@ -54,7 +54,7 @@
 			<tabs>
 				<tab id="acl" label="Access" statustext="Access"/>
 			</tabs>
-			<tabpanels>
+				<tabpanels>
 				<template id="admin.acl.edit.acl"/>
 			</tabpanels>
 		</tabbox>

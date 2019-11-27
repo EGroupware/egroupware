@@ -731,7 +731,7 @@ app.classes.admin = AppJS.extend(
 		if(this.egw.user('apps').policy)
 		{
 			dialog_options['width'] = 550;
-			dialog_options['height'] = 350,
+			dialog_options['height'] = 450,
 			modifications.tabs = {
 				add_tabs:   true,
 				tabs: [{
