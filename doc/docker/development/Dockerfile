@@ -62,7 +62,7 @@ exit $RESULT' \
 	&& echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf
 
 # install diverse developper tools, not installed above / in stock container
-RUN apt-get install -y php7.3-xdebug git vim yarn \
+RUN apt-get install -y php7.3-{xdebug,cli} inetutils-ping iproute2 git vim yarn \
 	&& echo "xdebug.remote_enable=1" >> /etc/php/7.3/fpm/conf.d/20-xdebug.ini \
 	&& echo "xdebug.remote_port=9001" >> /etc/php/7.3/fpm/conf.d/20-xdebug.ini \
 	&& echo "xdebug.remote_host=172.17.0.1" >> /etc/php/7.3/fpm/conf.d/20-xdebug.ini \
@@ -73,6 +73,7 @@ RUN apt-get install -y php7.3-xdebug git vim yarn \
 
 VOLUME /var/www
 VOLUME /var/lib/egroupware
+VOLUME /var/lib/php/sessions
 
 EXPOSE 9000
 
