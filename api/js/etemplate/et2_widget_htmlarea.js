@@ -325,6 +325,11 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 
 		var rte_menubar = egw.preference('rte_menubar', 'common');
 		var rte_toolbar = egw.preference('rte_toolbar', 'common');
+		// we need to have rte_toolbar values as an array
+		if (rte_toolbar && typeof rte_toolbar == "object")
+		{
+			rte_toolbar = Object.values(rte_toolbar);
+		}
 		var settings = {
 			fontsize_formats: et2_htmlarea.FONT_SIZE_FORMATS[egw.preference('rte_font_unit', 'common')],
 			menubar: parseInt(rte_menubar) && this.menubar ? true : typeof rte_menubar != 'undefined' ? false : this.menubar
