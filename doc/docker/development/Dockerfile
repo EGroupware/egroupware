@@ -1,18 +1,23 @@
 ################################################################################
 ##
-## EGroupware FPM container using Ubuntu 18.04 and PHP 7.3 from ondrej/php PPA
+## EGroupware FPM container using Ubuntu 18.04 and PHP from ondrej/php PPA
 ##
 ################################################################################
 FROM ubuntu:18.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
+ARG PHP_VERSION=7.3
+
+# keeping build-arg in environment for entrypoint.sh
+ENV VERSION=$VERSION
+ENV PHP_VERSION=$PHP_VERSION
 
 RUN apt-get update \
 	&& apt-get install -y software-properties-common \
 	&& LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php \
 	&& apt-get update \
-	&& bash -c "apt-get install -y php7.3-{cli,mysql,json,gd,xsl,bz2,opcache,apcu,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp}" \
+	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,json,gd,xsl,bz2,opcache,apcu,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp}" \
 	# fpm and php.ini settings
 	&& sed -e 's/^;\?listen \?=.*/listen = 9000/g' \
 		-e '/allowed_clients/d' \
@@ -22,7 +27,7 @@ RUN apt-get update \
 		-e 's/^;\?pm.max_requests =.*/pm.max_requests = 30/' \
 		-e 's/^;\?php_admin_value\[memory_limit\].*/php_admin_value[memory_limit] = 172M/' \
 		-e 's/^;\?request_terminate_timeout.*/request_terminate_timeout = 70m/' \
-		-i /etc/php/7.3/fpm/pool.d/www.conf \
+		-i /etc/php/$PHP_VERSION/fpm/pool.d/www.conf \
 	&& sed 	-e 's/^;\?session.gc_maxlifetime.*/session.gc_maxlifetime = 14400/g' \
 		-e 's|^;\?date.timezone.*|date.timezone = UTC|g' \
 		-e 's|^;\?sys_temp_dir.*|sys_temp_dir = /tmp|g' \
@@ -33,14 +38,14 @@ RUN apt-get update \
 		-e 's|^;\?max_input_vars \?=.*|max_input_vars = 2000|g' \
 		-e 's|^;\?zlib.output_compression \?=.*|zlib.output_compression = On|g' \
 		-e 's|^;\?opcache.validate_timestamps \?=.*|opcache.validate_timestamps=0|g' \
-		-i /etc/php/7.3/fpm/php.ini \
+		-i /etc/php/$PHP_VERSION/fpm/php.ini \
 	&& sed 	-e 's|^;\?date.timezone.*|date.timezone = UTC|g' \
 		-e 's|^;\?sys_temp_dir.*|sys_temp_dir = /tmp|g' \
-		-i /etc/php/7.3/cli/php.ini \
+		-i /etc/php/$PHP_VERSION/cli/php.ini \
 	# create directory for pid file
 	&& mkdir -p /run/php \
 	# send logs to stderr to be viewed by docker logs
-	&& ln -s /dev/stderr /var/log/php7.3-fpm.log \
+	&& ln -s /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
 	# install tools to build EGroupware
 	&& apt-get install -y rsync npm zip curl sudo cron patch \
 	&& npm install -g grunt-cli \
@@ -62,14 +67,15 @@ exit $RESULT' \
 	&& echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf
 
 # install diverse developper tools, not installed above / in stock container
-RUN apt-get install -y php7.3-{xdebug,cli} inetutils-ping iproute2 git vim yarn \
-	&& echo "xdebug.remote_enable=1" >> /etc/php/7.3/fpm/conf.d/20-xdebug.ini \
-	&& echo "xdebug.remote_port=9001" >> /etc/php/7.3/fpm/conf.d/20-xdebug.ini \
-	&& echo "xdebug.remote_host=172.17.0.1" >> /etc/php/7.3/fpm/conf.d/20-xdebug.ini \
+RUN apt-get install -y php$PHP_VERSION-cli php-xdebug inetutils-ping iproute2 git vim yarn \
+	&& echo "xdebug.remote_enable=1" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
+	&& echo "xdebug.remote_port=9001" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
+	&& echo "xdebug.remote_host=172.17.0.1" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
 	&& ln -s /usr/local/bin/composer.phar /usr/local/bin/composer \
 	&& sed 	-e 's|^;\?opcache.validate_timestamps \?=.*|opcache.validate_timestamps=1|g' \
-		-i /etc/php/7.3/fpm/php.ini \
-	&& apt-get clean
+		-i /etc/php/$PHP_VERSION/fpm/php.ini \
+	&& apt-get clean \
+	&& update-alternatives --install /usr/sbin/php-fpm php-fpm /usr/sbin/php-fpm$PHP_VERSION 5
 
 VOLUME /var/www
 VOLUME /var/lib/egroupware
@@ -79,5 +85,5 @@ EXPOSE 9000
 
 ADD entrypoint.sh /
 
-CMD ["php-fpm7.3", "--nodaemonize"]
+CMD ["php-fpm", "--nodaemonize"]
 ENTRYPOINT ["/entrypoint.sh"]
