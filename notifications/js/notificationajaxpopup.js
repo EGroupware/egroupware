@@ -802,13 +802,12 @@
 		if (counter > 0)
 		{
 			$topmenu_info_notifications.addClass('egwpopup_notify');
-			if (jQuery('#egw_fw_topmenu:visible').length == 0) $topmenu_info_notifications.append($popup_note);
-			$popup_note.text(egw.lang('You have %1 unread notifications', counter));
+			framework.topmenu_info_notify('notifications', true, counter,egw.lang('You have %1 unread notifications', counter));
 			setTimeout(function (){$popup_note.remove();}, 4000);
 		}
 		else
 		{
-			$topmenu_info_notifications.removeClass('egwpopup_notify');
+			framework.topmenu_info_notify('notifications', false);
 		}
 	};
 
