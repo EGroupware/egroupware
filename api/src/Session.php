@@ -1015,6 +1015,8 @@ class Session
 				'session_action' => $this->update_dla(false),	// dont update egw_access_log
 			),false,__LINE__,__FILE__);
 
+			$_SESSION[self::EGW_SESSION_VAR]['session_logged_dla'] = $now;
+
 			$ret = $GLOBALS['egw']->db->get_last_insert_id(self::ACCESS_LOG_TABLE,'sessionid');
 
 			// if we can not store failed login attempts in database, store it in cache
@@ -1759,6 +1761,11 @@ class Session
 	}
 
 	/**
+	 * Ignore dla logging for a maximum of 900s = 15min
+	 */
+	const MAX_IGNORE_DLA_LOG = 900;
+
+	/**
 	 * Update session_action and session_dla (session last used time)
 	 *
 	 * @param boolean $update_access_log =false false: dont update egw_access_log table, but set $this->action
@@ -1797,9 +1804,12 @@ class Session
 		// update dla in access-log table, if we have an access-log row (non-anonymous session)
 		if ($this->sessionid_access_log && $update_access_log &&
 			// ignore updates (session creation is written) of *dav, avatar and thumbnail, due to possible high volume of updates
-			!preg_match('#^(/webdav|/groupdav|/api/avatar|/api/thumbnail)\.php#', $this->action) &&
+			(!preg_match('#^(/webdav|/groupdav|/api/avatar|/api/thumbnail)\.php#', $this->action) ||
+				(time() - $_SESSION[self::EGW_SESSION_VAR]['session_logged_dla']) > self::MAX_IGNORE_DLA_LOG) &&
 			is_object($GLOBALS['egw']->db))
 		{
+			$_SESSION[self::EGW_SESSION_VAR]['session_logged_dla'] = time();
+
 			$GLOBALS['egw']->db->update(self::ACCESS_LOG_TABLE,array(
 				'session_dla' => time(),
 				'session_action' => $this->action,
