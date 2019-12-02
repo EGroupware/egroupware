@@ -765,7 +765,7 @@
 		if (!$egwpopup.is(":visible"))
 		{
 			$body.on('click', function(e){
-				if (!$counter.is(e.target) && e.originalEvent.target.className !== 'popup_note' &&
+				if (!$counter.is(e.target) && $counter.find(e.target).length == 0 &&
 						!$egwpopup.is(e.target) && $egwpopup.has(e.target).length == 0)
 				{
 					jQuery(this).off(e);
@@ -781,8 +781,6 @@
 			if (_stat) return;
 			$body.off('click');
 		}
-		// Remove popup_note as soon as message list is toggled
-		jQuery('.popup_note', '#topmenu_info_notifications').remove();
 
 		if ($egwpopup.length>0) $egwpopup.toggle('slide');
 	};
@@ -793,7 +791,6 @@
 	notifications.prototype.counterUpdate = function ()
 	{
 		var $topmenu_info_notifications = jQuery('#topmenu_info_notifications');
-		var $popup_note = jQuery(document.createElement('div')).addClass('popup_note');
 		var counter = 0;
 		for (var id in notifymessages)
 		{
@@ -803,7 +800,6 @@
 		{
 			$topmenu_info_notifications.addClass('egwpopup_notify');
 			framework.topmenu_info_notify('notifications', true, counter,egw.lang('You have %1 unread notifications', counter));
-			setTimeout(function (){$popup_note.remove();}, 4000);
 		}
 		else
 		{
