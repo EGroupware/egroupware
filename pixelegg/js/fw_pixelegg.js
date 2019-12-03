@@ -97,7 +97,7 @@
 									.prop('title', _tooltip)
 									.appendTo(item);
 						}
-						$notify.text(_message);
+						$notify.prop('title', _tooltip).text(_message);
 					}
 					else
 					{
