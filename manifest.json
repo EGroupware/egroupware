@@ -1,0 +1,27 @@
+{
+	"short_name": "EGroupware",
+	"name": "EGroupware",
+	"category": ["business", "education"],
+	"description": "EGroupware is an online open-source enterprise software for business use and provides the services by using cutting edge collaboration technologies which allow organisations to collaborate in a secure and function rich environment, supporting integrated project teams across and within organisation boundaries.",
+	"orientation": "landscape-primary",
+	"icons": [
+	  {
+		"src": "api/templates/default/images/logo_192x192.png",
+		"type": "image/png",
+		"sizes": "192x192"
+	  },
+	  {
+		"src": "api/templates/default/images/logo_512x512.png",
+		"type": "image/png",
+		"sizes": "512x512"
+	  }
+	],
+	"start_url": "index.php",
+	"background_color": "#fafafa",
+	"display": "standalone",
+	"scope": "/egroupware",
+	"theme_color": "#0073ae",
+	"serviceworker": {
+		"src": "/service-worker.js"
+	}
+}
