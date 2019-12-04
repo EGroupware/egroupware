@@ -1203,18 +1203,14 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 	},
 
 	_parseDataRow: function(_row, _rowData, _colData) {
-		var columnWidgets = new Array();
+		var columnWidgets = new Array(this.columns.length);
 
 		_row.sort(function(a,b) {
 			return a.colData.order - b.colData.order;
 		});
 
-		for (var x = 0; x < this.columns.length; x++)
+		for (var x = 0; x < columnWidgets.length; x++)
 		{
-			if (!this.columns[x].visible)
-			{
-				continue;
-			}
 			if (typeof _row[x] != "undefined" && _row[x].widget)
 			{
 				columnWidgets[x] = _row[x].widget;

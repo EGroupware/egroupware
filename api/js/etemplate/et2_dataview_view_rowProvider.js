@@ -100,14 +100,13 @@ var et2_dataview_rowProvider = (function(){ "use strict"; return Class.extend(
 		var tr = jQuery(document.createElement("tr"));
 
 		// Append a td for each column
-		for (var column of this._columnIds)
+		for (var i = 0; i < this._columnIds.length; i++)
 		{
-			if(!column) continue;
 			var td = jQuery(document.createElement("td"))
-				.addClass(this._outerId + "_td_" + column)
+				.addClass(this._outerId + "_td_" + this._columnIds[i])
 				.appendTo(tr);
 			var div = jQuery(document.createElement("div"))
-				.addClass(this._outerId + "_div_" + column)
+				.addClass(this._outerId + "_div_" + this._columnIds[i])
 				.addClass("innerContainer")
 				.appendTo(td);
 		}

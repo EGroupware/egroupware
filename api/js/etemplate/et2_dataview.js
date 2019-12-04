@@ -493,13 +493,10 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 	 */
 	_buildGrid: function() {
 		// Create the collection of column ids
-		var colIds = new Array();
+		var colIds = new Array(this.columns.length);
 		for (var i = 0; i < this.columns.length; i++)
 		{
-			if(this.columns[i].visible)
-			{
-				colIds[i] = this.columns[i].id;
-			}
+			colIds[i] = this.columns[i].id;
 		}
 
 		// Create the row provider
