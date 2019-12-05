@@ -429,7 +429,8 @@ class preferences_hooks
 					'h4' => lang("Heading %1", '4'),
 					'h5' => lang("Heading %1", '5'),
 					'h6' => lang("Heading %1", '6'),
-					'pre' => lang("Preformatted")
+					'pre' => lang("Preformatted"),
+					'customparagraph' => lang("Custom Paragraph")
 				),
 				'help'   => 'Automatically start with this format block',
 				'xmlrpc' => True,
