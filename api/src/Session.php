@@ -806,7 +806,7 @@ class Session
 			}
 			else
 			{
-				throw new \Exception(implode(', $errors'), self::CD_SECOND_FACTOR_REQUIRED);
+				throw new \Exception(implode(', ', $errors), self::CD_SECOND_FACTOR_REQUIRED);
 			}
 		}
 	}
