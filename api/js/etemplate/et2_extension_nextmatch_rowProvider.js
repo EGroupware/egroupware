@@ -274,13 +274,9 @@ var et2_nextmatch_rowProvider = (function(){ "use strict"; return ClassWithAttri
 
 		// Check each column
 		var columns = _widget.getChildren();
+
 		for(var i = 0; i < columns.length; i++)
 		{
-			// If column is hidden, don't process it
-			if(this._context && this._context.columns && this._context.columns[i] && !this._context.columns[i].visible)
-			{
-				continue;
-			}
 			columns[i].iterateOver(process, this);
 		}
 
