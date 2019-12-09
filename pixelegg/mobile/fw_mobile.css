@@ -1253,7 +1253,7 @@ option:checked {
 .ui-icon-close {
   /*visibility: hidden;*/
   /*background-image: url(../images/search.png);*/
-  background-image: url("../images/cancel.png");
+  background-image: url("../images/cancel.svg");
   background-repeat: no-repeat;
   background-color: #FFFFFF;
   background-size: 12px 12px;
@@ -1283,7 +1283,7 @@ span.ui-icon-close {
 }
 /*Schliessen x*/
 .ui-icon-closethick {
-  background-image: url(../images/close.png) !important;
+  background-image: url(../images/close.svg) !important;
   background-repeat: no-repeat;
   background-color: #FFFFFF;
   background-size: contain;
@@ -1332,7 +1332,7 @@ span.ui-multiselect-header {
   color: #FFFFFF;
 }
 span.ui-icon-search {
-  background-image: url(../images/search.png) !important;
+  background-image: url(../images/search.svg) !important;
   background-position: 0px;
   background-size: 10px 10px;
 }
