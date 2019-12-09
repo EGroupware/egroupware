@@ -486,12 +486,6 @@ class Storage extends Storage\Base
 	 */
 	protected function process_search(&$criteria, &$only_keys=True, &$order_by='', &$extra_cols='', &$wildcard='', &$op='AND', &$filter=null, &$join='')
 	{
-		// if no CFs are defined OR used and became unavailable (deleted or permissions changed)
-		if (!$this->customfields && strpos($order_by, self::CF_PREFIX) === false &&
-			strpos(implode(',', array_keys($filter ? $filter : [])), self::CF_PREFIX) === false)
-		{
-			return;
-		}
 		if ($only_keys === false)
 		{
 			$only_keys = $this->table_name.'.*';
@@ -587,6 +581,15 @@ class Storage extends Storage\Base
 				if(is_numeric($key) && in_array($col, $this->db_cols, true))
 				{
 					$col = $this->table_name .'.'.array_search($col, $this->db_cols).' AS '.$col;
+				}
+				// Check to make sure our order by doesn't have aliases that won't work
+				else if (stripos($col, 'AS') !== false && $order_by)
+				{
+					list($value, $alias) = explode(' AS ', $col);
+					if(stripos($order_by, $alias) !== FALSE)
+					{
+						$order_by = str_replace($alias, $value, $order_by);
+					}
 				}
 			}
 		}
