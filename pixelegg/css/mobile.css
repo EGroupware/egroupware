@@ -6982,6 +6982,8 @@ span.egw_tutorial_title {
   body .sidebar-toggle #egw_fw_top_toolbar div#egw_fw_menu {
     background-image: url(../images/topmenu_items/mobile/menu.png);
   }
+  body .sidebar-toggle #egw_fw_top_toolbar #egw_fw_topmenu_info_items,
+  body .sidebar-toggle #egw_fw_top_toolbar #egw_fw_topmenu,
   body .sidebar-toggle #egw_fw_top_toolbar #egw_fw_userinfo,
   body .sidebar-toggle #egw_fw_top_toolbar .egw_fw_logout,
   body .sidebar-toggle #egw_fw_top_toolbar #egw_fw_appsToggle {
