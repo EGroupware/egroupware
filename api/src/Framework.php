@@ -1121,52 +1121,70 @@ abstract class Framework extends Framework\Extra
 	*/
 	function topmenu(array $vars,array $apps)
 	{
-		$this->_add_topmenu_info_item($this->_user_avatar_menu(), 'user_avatar');
+		// array of topmenu info items (orders of the items matter)
+		$topmenu_info_items = [
+			'user_avatar' => $this->_user_avatar_menu(),
+			'logout' => (Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile') ? self::_logout_menu() : null,
+			'update' => ($update = Framework\Updates::notification()) ? $update : null,
+			'notifications' => ($GLOBALS['egw_info']['user']['apps']['notifications']) ? self::_get_notification_bell() : null,
+			'quick_add' => $vars['quick_add'],
+			'print_title' => $this->_print_menu()
+		];
+
+		// array of topmenu items (orders of the items matter)
+		$topmenu_items = [
+			0 => (is_array(($current_user = $this->_current_users()))) ? $current_user : null,
+		];
+
+		// Home should be at the top before preferences
 		if($GLOBALS['egw_info']['user']['apps']['home'] && isset($apps['home']))
 		{
 			$this->_add_topmenu_item($apps['home']);
 		}
 
+		// array of topmenu preferences items (orders of the items matter)
+		$topmenu_preferences = ['prefs', 'acl', 'cats', 'security'];
+
+		// set topmenu preferences items
 		if($GLOBALS['egw_info']['user']['apps']['preferences'])
 		{
-			$this->add_preferences_topmenu('prefs');
-			$this->add_preferences_topmenu('acl');
-			$this->add_preferences_topmenu('cats');
-			$this->add_preferences_topmenu('security');
+			foreach ($topmenu_preferences as $prefs)
+			{
+				$this->add_preferences_topmenu($prefs);
+			}
 		}
 
-		/* disable help until content is reworked
-		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
-		{
-			$this->_add_topmenu_item(array_merge($apps['manual'],array('title' => lang('Help'))));
-		}*/
-
+		// call topmenu info items hooks
 		Hooks::process('topmenu_info',array(),true);
 
-		if (($update = Framework\Updates::notification()))
-		{
-			$this->_add_topmenu_info_item($update, 'update');
-		}
-		if($GLOBALS['egw_info']['user']['apps']['notifications'])
-		{
-			$this->_add_topmenu_info_item(self::_get_notification_bell(), 'notifications');
-		}
-
-		if (is_array(($current_user = $this->_current_users()))) $this->_add_topmenu_item($current_user);
-		$this->_add_topmenu_info_item($vars['quick_add'], 'quick_add');
-		$this->_add_topmenu_info_item($this->_print_menu(), 'print_title');
 		// Add extra items added by hooks
 		foreach(self::$top_menu_extra as $extra_item) {
 			if ($extra_item['name'] == 'search')
 			{
-				$this->_add_topmenu_info_item('<a href="'.$extra_item['url'].'" title="'.$extra_item['title'].'"></a>', 'search');
+				$topmenu_info_items['search'] = '<a href="'.$extra_item['url'].'" title="'.$extra_item['title'].'"></a>';
 			}
 			else
 			{
-				$this->_add_topmenu_item($extra_item);
+				array_push($topmenu_items, $extra_item);
 			}
 		}
-		$this->_add_topmenu_item($apps['logout']);
+		// push logout as the last item in topmenu items list
+		array_push($topmenu_items, $apps['logout']);
+
+		// set topmenu info items
+		foreach ($topmenu_info_items as $id => $content)
+		{
+			if (!$content || (in_array($id, ['search', 'quick_add', 'update']) && (Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile')))
+			{
+				continue;
+			}
+			$this->_add_topmenu_info_item($content, $id);
+		}
+		// set topmenu items
+		foreach ($topmenu_items as $item)
+		{
+			if ($item) $this->_add_topmenu_item($item);
+		}
 	}
 
 	/**
