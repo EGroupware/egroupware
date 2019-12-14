@@ -286,7 +286,7 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 				jQuery(this.contentDiv).empty();
 				var self_egw = egw(this.app.appName);
 				var req = self_egw.json(
-					this.app.getMenuaction('ajax_exec'),
+					this.app.getMenuaction('ajax_exec', targetUrl),
 					[targetUrl], this.browse_callback,this, true, this
 				);
 				req.sendRequest();

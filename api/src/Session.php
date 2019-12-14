@@ -282,12 +282,6 @@ class Session
 	 */
 	function __destruct()
 	{
-		// write dla update on destruct, allows to modify session action by calling Session::set_action()
-		if (!isset($GLOBALS['egw_info']['flags']['no_dla_update']) || !$GLOBALS['egw_info']['flags']['no_dla_update'])
-		{
-			$this->update_dla(true);
-		}
-
 		self::encrypt($this->kp3);
 	}
 
@@ -1301,7 +1295,7 @@ class Session
 		// allow xajax / notifications to not update the dla, so sessions can time out again
 		if (!isset($GLOBALS['egw_info']['flags']['no_dla_update']) || !$GLOBALS['egw_info']['flags']['no_dla_update'])
 		{
-			$this->update_dla();
+			$this->update_dla(true);
 		}
 		elseif ($GLOBALS['egw_info']['flags']['currentapp'] == 'notifications')
 		{
@@ -1774,33 +1768,29 @@ class Session
 	private function update_dla($update_access_log=false)
 	{
 		// This way XML-RPC users aren't always listed as xmlrpc.php
-		if (!$update_access_log)
+		if (isset($_GET['menuaction']))
 		{
-			if ($this->xmlrpc_method_called)
-			{
-				$action = $this->xmlrpc_method_called;
-			}
-			elseif (isset($_GET['menuaction']))
-			{
-				$action = $_GET['menuaction'];
-			}
-			else
-			{
-				$action = $_SERVER['PHP_SELF'];
-				// remove EGroupware path, if not installed in webroot
-				$egw_path = $GLOBALS['egw_info']['server']['webserver_url'];
-				if ($egw_path[0] != '/') $egw_path = parse_url($egw_path,PHP_URL_PATH);
-				if ($action == '/Microsoft-Server-ActiveSync')
-				{
-					$action .= '?Cmd='.$_GET['Cmd'].'&DeviceId='.$_GET['DeviceId'];
-				}
-				elseif ($egw_path)
-				{
-					list(,$action) = explode($egw_path,$action,2);
-				}
-			}
-			$this->set_action($action);
+			list(, $action) = explode('.ajax_exec.template.', $_GET['menuaction']);
+
+			if (empty($action)) $action = $_GET['menuaction'];
 		}
+		else
+		{
+			$action = $_SERVER['PHP_SELF'];
+			// remove EGroupware path, if not installed in webroot
+			$egw_path = $GLOBALS['egw_info']['server']['webserver_url'];
+			if ($egw_path[0] != '/') $egw_path = parse_url($egw_path,PHP_URL_PATH);
+			if ($action == '/Microsoft-Server-ActiveSync')
+			{
+				$action .= '?Cmd='.$_GET['Cmd'].'&DeviceId='.$_GET['DeviceId'];
+			}
+			elseif ($egw_path)
+			{
+				list(,$action) = explode($egw_path,$action,2);
+			}
+		}
+		$this->set_action($action);
+
 		// update dla in access-log table, if we have an access-log row (non-anonymous session)
 		if ($this->sessionid_access_log && $update_access_log &&
 			// ignore updates (session creation is written) of *dav, avatar and thumbnail, due to possible high volume of updates

@@ -104,7 +104,7 @@ try {
 			'no_exception_handler' => true,	// we already installed our own
 			// only log ajax requests which represent former GET requests or submits
 			// cuts down updates to egw_access_log table
-			'no_dla_update' => !preg_match('/(Etemplate::ajax_process_content|\.jdots_framework\.ajax_exec\.template)$/', $_GET['menuaction']),
+			'no_dla_update' => !preg_match('/(Etemplate::ajax_process_content|\.jdots_framework\.ajax_exec\.template)/', $_GET['menuaction']),
 		)
 	);
 	include_once('./header.inc.php');

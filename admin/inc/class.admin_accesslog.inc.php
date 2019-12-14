@@ -5,9 +5,8 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2009-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -166,7 +165,7 @@ class admin_accesslog
 				'start'          =>	0,		// IO position in list
 				'order'          =>	'li',	// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
-				//'default_cols'   => 	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+				'default_cols'   => '!session_action',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 				'csv_fields'     =>	false,	// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 								//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 				'actions'		=> $this->get_actions($sessions_list),
