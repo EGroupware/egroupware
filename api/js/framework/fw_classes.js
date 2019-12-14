@@ -12,7 +12,7 @@
   ----------------------------*/
 /**
  * application class constructor
- * 
+ *
  * @param {type} _parentFw
  * @param {type} _appName
  * @param {type} _displayName
@@ -59,8 +59,9 @@ function egw_fw_class_application(_parentFw, _appName, _displayName, _icon,
  * lie inside the default egw instance.
  *
  * @param {string} _fun is the function which shall be called on the server.
+ * @param {string} _ajax_exec_url contains menuaction for _fun === 'ajax_exec'
  */
-egw_fw_class_application.prototype.getMenuaction = function(_fun)
+egw_fw_class_application.prototype.getMenuaction = function(_fun, _ajax_exec_url)
 {
 	var baseUrl = '';
 	var appName = 'home';
@@ -79,8 +80,11 @@ egw_fw_class_application.prototype.getMenuaction = function(_fun)
 		baseUrl = baseUrl + 'json.php?menuaction=';
 	}
 
+	var menuaction = _ajax_exec_url ? _ajax_exec_url.match(/menuaction=([^&]+)/) : null;
+
 	// use template handler to call current framework, eg. pixelegg
-	return baseUrl + appName + '.jdots_framework.' + _fun + '.template';
+	return baseUrl + appName + '.jdots_framework.' + _fun + '.template'+
+		(menuaction ? '.'+menuaction[1] : '');
 };
 
 /**
