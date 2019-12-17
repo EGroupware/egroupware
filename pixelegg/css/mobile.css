@@ -6537,7 +6537,7 @@ span.egw_tutorial_title {
     display: none;
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_home {
-    background-image: url(../images/topmenu_items/mobile/home.png);
+    background-image: url(../images/topmenu_items/mobile/home.svg);
     display: none;
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_prefs {
