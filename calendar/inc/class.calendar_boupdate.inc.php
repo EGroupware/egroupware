@@ -800,7 +800,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $to_notify numerical user-ids as keys (!) (value is not used)
 	 * @param array $old_event Event before the change
 	 * @param array $new_event =null Event after the change
-	 * @param int $user =0 User who started the notify, default current user
+	 * @param int/string $user =0 User/participant who started the notify, default current user
 	 * @return bool true/false
 	 */
 	function send_update($msg_type,$to_notify,$old_event,$new_event=null,$user=0)
@@ -838,8 +838,23 @@ class calendar_boupdate extends calendar_bo
 		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		if ($GLOBALS['egw']->preferences->account_id != $user)
 		{
-			$GLOBALS['egw']->preferences->__construct($user);
+			// Get correct preferences
+			$GLOBALS['egw']->preferences->__construct(is_numeric($user) ? $user : $temp_user['account_id']);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+
+			// If target user/participant is not an account, try to get good notification message
+			if(!is_numeric($user))
+			{
+				$res_info = $this->resource_info($user);
+				$title = $res_info['name'] ?: Link::title($res_info['app'], $res_info['res_id']) ?: $res_info['res_id'] ?: $user;
+				$GLOBALS['egw']->preferences->values['fullname'] = $GLOBALS['egw']->preferences->values['lastname'] = $title;
+				$GLOBALS['egw']->preferences->values['firstname'] = '';
+				$msg = $GLOBALS['egw']->preferences->user['calendar']['notifyResponse'] ?: $GLOBALS['egw']->preferences->default['calendar']['notifyResponse'] ?: $GLOBALS['egw']->preferences->forced['calendar']['notifyResponse'];
+				$GLOBALS['egw_info']['user']['preferences']['calendar']['notifyResponse'] = $GLOBALS['egw']->preferences->parse_notify(
+					$msg
+				);
+			}
+
 		}
 		$senderid = $this->user;
 		$event = $msg_type == MSG_ADDED || $msg_type == MSG_MODIFIED ? $new_event : $old_event;
@@ -1657,7 +1672,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				if (!is_array($event)) $event = $this->read($cal_id);
 				if (isset($recur_date)) $event = $this->read($event['id'],$recur_date); //re-read the actually edited recurring event
-				$user_id = is_numeric($uid) ? (int)$uid : 0;
+				$user_id = is_numeric($uid) ? (int)$uid : $uid;
 				$this->send_update($status2msg[$status],$event['participants'],$event, null, $user_id);
 			}
 
