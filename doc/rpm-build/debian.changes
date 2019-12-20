@@ -1,3 +1,22 @@
+egroupware-docker (19.1.20191220) hardy; urgency=low
+
+  * All apps: make list columns being sortable via column-selector dialog
+  * Admin: optional session-action column in access-log and sessions
+  * Admin: Add filemanager (home directory) as an option to move to new user when deleting an account
+  * Admin: Fix some hooks got missed when deleting a user
+  * File selector: implement Overwrite and Rename possibilities for saving an existing email message or attachment
+  * Mobile theme: fix mobile theme sidebar not showing notifications
+  * Html Editor: Add a custom paragraph into block formating in order to get paragraph lines with no line-height
+  * Mail: keep number & bullet lists when converting to plain text
+  * Notifications: implement new indicator in dashboard in order to notify user about unread notifications
+  * Calendar: New preference for notifications about events you created, but are not a participant in
+  * Addressbook: Fix files and entries linked to a new contact were not saved
+  * Rocket.Chat: fix Message action on status app's contextmenu is always active even when Rochet.Chat is not yet logged in and active
+  * Tracker: Fix HTML tickets showed their HTML tags in async notifications
+  * Packages/WebDAV: remove upload / PUT limit of 65MB (now 1GB), you need to accept/merge changes in apache/nginx.conf files!
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 20 Dec 2019 08:40:34 +0100
+
 egroupware-docker (19.1.20191119) hardy; urgency=low
 
   * CalDAV/Calendar: Lightning 68 no longer allowed to accept/reject invitations
