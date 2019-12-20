@@ -3,6 +3,7 @@
 %1 copied - the copy can now be edited	common	es-es	%1 copiado - la copia ya puede ser editada
 %1 directories %2 found!	admin	es-es	¡%1 directorios %2 encontrados!
 %1 email addresses inserted	common	es-es	Se han insertado %1 direcciones de correo
+%1 email(s) added into %2	common	es-es	Se añadieron %1 correos-e a %2
 %1 entries found, select one ...	common	es-es	Se han encontrado %1 entradas. Seleccione una...
 %1 etemplates deleted	common	es-es	%1 plantillas borradas
 %1 etemplates for application '%2' dumped to '%3'	common	es-es	%1 plantillas para la aplicación '%2' volcadas a '%3'
@@ -10,6 +11,7 @@
 %1 file	common	es-es	archivo %1
 %1 is not executable by the webserver !!!	common	es-es	%1 no tiene permiso de ejecución para el servidor web
 %1 matches on search criteria	common	es-es	%1 coincidencias para la búsqueda solicitada
+%1 more %2 selected ...	common	es-es	%1 más %2 seleccionados...
 %1 more...	common	es-es	%1 más...
 %1 new etemplates imported for application '%2'	common	es-es	%1 nuevas plantillas importadas para la aplicación '%2'
 %1 not implemented for %2!	common	es-es	%1 no está implementado para %2!
@@ -42,9 +44,11 @@
 1 week	common	es-es	1 semana
 13 (ntp)	admin	es-es	13 (ntp)
 15 minutes	common	es-es	15 minutos
+2-factor-authentication	common	es-es	Autenticación de 2 factores
 30 minutes	common	es-es	30 minutos
 30 seconds	common	es-es	30 segundos
 5 minutes	common	es-es	5 minutos
+5 seconds	common	es-es	5 segundos
 80 (http)	admin	es-es	80 (http)
 a pattern to be searched for	common	es-es	un patrón de búsqueda
 a request to the egroupware server returned with an error	common	es-es	Una solicitud al servidor de EGroupware devolvió un error
@@ -99,8 +103,12 @@ afghanistan	common	es-es	AFGHANISTAN
 albania	common	es-es	ALBANIA
 algeria	common	es-es	ARGELIA
 align	common	es-es	Alinear
+aligncenter	common	es-es	Centrar
+alignjustify	common	es-es	Justificar
+alignleft	common	es-es	Alinear a la izquierda
 alignment of label and input-field in table-cell	common	es-es	posición de la etiqueta y campo de entrada en la celda de la tabla
 alignment of the v/hbox containing table-cell	common	es-es	Posición del recuadro horizontal o vertical que contiene la celda de la tabla
+alignright	common	es-es	Alinear a la derecha
 all	common	es-es	Todos
 all addressbooks	groupdav	es-es	Todas las libretas de direcciones
 all categories	common	es-es	Todas las categorías
@@ -137,6 +145,7 @@ applies the changes made	common	es-es	aplica los cambios realizados
 applies the changes to the given version of the template	common	es-es	aplica los cambios a la versión dada de la plantilla
 apply	common	es-es	Aplicar
 apply the action on the whole query, not only the shown entries	common	es-es	Aplicar la acción a toda la consulta, NO solo a las entradas mostradas
+apps &amp; license	common	es-es	Aplicaciones y licencia
 april	common	es-es	Abril
 are you sure you want to delete these entries ?	common	es-es	¿Seguro que desea borrar estas entradas?
 are you sure you want to delete this entry ?	common	es-es	¿Está seguro de querer borrar esta entrada?
@@ -149,6 +158,7 @@ as default	common	es-es	como predeterminado
 attach	common	es-es	Adjuntar
 attach file	common	es-es	Adjuntar archivo
 attachment	common	es-es	Adjunto
+attention: action will be applied to all rows, not only visible ones!	api	es-es	Atención: la acción se aplicará a todas las filas, ¡no solo a las visibles!
 august	common	es-es	Agosto
 australia	common	es-es	AUSTRALIA
 austria	common	es-es	AUSTRIA
@@ -163,6 +173,7 @@ autosave default category	common	es-es	Guardar auotmáticamente la categoria pre
 azerbaijan	common	es-es	AZERBAIJAN
 back	common	es-es	Atrás
 back to user login	common	es-es	Volver al inicio de sesión del usuario
+backcolor	common	es-es	Color de fondo
 background color:	common	es-es	Color de fondo:
 backup key	common	es-es	Clave de respaldo
 backup/restore	common	es-es	Respaldar/Restaurar
@@ -275,6 +286,7 @@ click here to upload the file	common	es-es	Subir el archivo
 click or mouse over to show menus	common	es-es	Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima
 click or mouse over to show menus?	common	es-es	¿Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima?
 click this image on the navbar: %1	common	es-es	Pulse esta imagen en la barra de navegación: %1
+click to open colorpicker	common	es-es	Haga clic para abrir el selector de color
 click to order after that criteria	common	es-es	pulse para ordenar después de ese criterio
 clickable path	common	es-es	ruta pulsable
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	es-es	Los clientes que no indiquen explícitamente un quedan limitados a esta cantidad de días. Un límite demasiado alto puede causar problemas con algunos clientes.
@@ -282,6 +294,7 @@ close	common	es-es	Cerrar
 close sidebox	common	es-es	Cerrar caja lateral
 closes the window without saving the changes	common	es-es	cierra la ventana sin guardar los cambios
 cocos (keeling) islands	common	es-es	COCOS (KEELING) ISLANDS
+code	common	es-es	Código
 collection empty.	common	es-es	La colección está vacía
 collection listing	common	es-es	Listado de colecciones
 colombia	common	es-es	COLOMBIA
@@ -406,6 +419,7 @@ distribution lists as groups	groupdav	es-es	Listas de distribución como grupos
 djibouti	common	es-es	DJIBOUTI
 do not notify	common	es-es	No notificar
 do not notify of these changes	common	es-es	No notificar estos cambios
+do not use on public computers!	common	es-es	¡NO lo use en computadoras públicas!
 do you also want to delete all subcategories ?	common	es-es	¿Desea eliminar también todas las subcategorías?
 do you want to save the changes you made in table %s?	common	es-es	¿Desea guardar los cambios que ha realizado en la tabla %s?
 do you want to send the message to all selected entries, without further editing?	common	es-es	¿Desea enviar el mensaje a todas las entradas seleccionadas, SIN seguir editando?
@@ -425,6 +439,7 @@ done	common	es-es	Hecho
 dos international	common	es-es	DOS internacional
 download	common	es-es	Descargar
 download link	common	es-es	Enlace de descarga
+drag markers to pick a color	common	es-es	Arrastra los marcadores para elegir un color
 drop a table - this can not be undone	common	es-es	Borrar una tabla - NO se puede deshacer
 drop table	common	es-es	Borrar tabla
 dump4setup	common	es-es	Volcar para instalación
@@ -474,6 +489,7 @@ enter filename to upload and attach, use [browse...] to search for it	common	es-
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de EGroupware. <br>Ejemplo: http://www.dominio.com/egroupware   o   /egroupware<br><b>Sin barra al final</b>
 enter the new version number here (> old_version), empty for no update-file	common	es-es	Ingrese el número de versión nuevo, > old_version, vacío para ningún archivo de actualización
 enter the new version number here (has to be > old_version)	common	es-es	Introduzca el nuevo número de versión aquí (tiene que ser mayor que la versión anterior)
+enter your file name	common	es-es	Ingrese su nombre de archivo
 entry has been deleted sucessfully	common	es-es	La entrada ha sido eliminada correctamente
 entry not found!	common	es-es	¡No se encontró la entrada!
 entry saved	common	es-es	La entrada ha sido guardada
@@ -554,11 +570,15 @@ firstname	common	es-es	Nombre de pila
 fixme!	common	es-es	¡Corríjame!
 floating point	common	es-es	Coma flotante
 folder already exists.	common	es-es	La carpeta ya existe
+fontselect	common	es-es	Seleccionar tipografía
+fontsizeselect	common	es-es	Seleccionar tamaño de letra
 for more than one contact in a document use the tag pagerepeat!	preferences	es-es	¡Use la etiqueta repetición de página para más de un contacto en un documento!
 force	common	es-es	forzar
 force selectbox	common	es-es	Forzar cuadro de selección
+forecolor	common	es-es	Color frontal
 foreign key	common	es-es	Clave ajena
 forever	common	es-es	Para siempre
+formatselect	common	es-es	Seleccionar formato
 formatted text (html)	common	es-es	Texto con formato (HTML)
 found unconnected %1 %2!	admin	es-es	¡Se encontró desconexión %1 %2!
 fr	common	es-es	Fr
@@ -569,6 +589,7 @@ french southern territories	common	es-es	FRENCH SOUTHERN TERRITORIES
 friday	common	es-es	Viernes
 ftp	common	es-es	FTP
 fullname	common	es-es	Nombre completo
+fullscreen	common	es-es	Pantalla completa
 fullscreen mode	common	es-es	Modo de pantalla completa
 gabon	common	es-es	GABON
 gambia	common	es-es	GAMBIA
@@ -623,12 +644,14 @@ height, disabled	common	es-es	Altura, desactivada
 help	common	es-es	Ayuda
 high	common	es-es	Alta
 highest	common	es-es	La más alta
+history	common	es-es	Historia
 history log	common	es-es	Registro histórico
 hold [%1] and [%2] key to drag %3 to your desktop	common	es-es	Mantenga presionadas las teclas [%1] y [%2] para arrastrar %3 a su escritorio
 hold [%1] key to select text eg. to copy it	common	es-es	Mantenga presionada la tecla [%1] para seleccionar texto, e.g. para copiarlo
 holy see (vatican city state)	common	es-es	SANTA SEDE (ESTADO DE LA CIUDAD DEL VATICANO)
 home	common	es-es	Inicio
 home email	common	es-es	correo electrónico particular
+home screen	common	es-es	Pantalla principal
 honduras	common	es-es	HONDURAS
 hong kong	common	es-es	HONG KONG
 horizontal rule	common	es-es	Línea horizontal
@@ -652,6 +675,7 @@ if the error persists, contact your administrator for help and ask to check the 
 if there are some images in the background folder you can choose the one you would like to see.	common	es-es	Si hay algunas imágenes en la carpeta de fondo, puede elegir la que desea ver.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	es-es	Si especifica un directorio, ruta completa vfs, %1 muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos insertados.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
+if you use "2-factor-authentication", please enter the code here.	common	es-es	Si usa "Autenticación de 2 factores", ingrese el código aquí.
 image	common	es-es	Imagen
 image directory relative to document root (use / !), example:	common	es-es	Directorio de imágenes relativo a la raíz de los documentos (use / !). Ejemplo:
 image url	common	es-es	URL de la imagen
@@ -661,6 +685,7 @@ import table-definitions from existing db-table	common	es-es	Importar definicion
 import xml	common	es-es	Importar XML
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	es-es	Para copiar al portapapeles, debe permitir Flash Player haciendo clic en el cuadro gris.\nPuede permitir permanentemente Flash Player para EGroupware en la configuración de su navegador.
 increment version to not overwrite the existing template	common	es-es	Incrementar la versión para no sobreescribir la plantilla existente
+indent	common	es-es	Sangrar
 index/name of returned content (name of the template, link / method for image)	common	es-es	Nombre o índice del nombre del contenido devuelto (nombre de la plantilla, enlace o método para una imagen)
 indexed	common	es-es	Indexado
 indexoptions	common	es-es	Opciones de indexar
@@ -686,9 +711,12 @@ insert new row after this one	common	es-es	Insertar una nueva fila después de �
 insert new row in front of first line	common	es-es	Insertar una nueva fila delante de la primera línea
 insert row after	common	es-es	Insertar una fila despues
 insert row before	common	es-es	Insertar una fila antes
+insert timestamp into description field	common	es-es	Insertar marca de tiempo en el campo de descripción
+install	common	es-es	Instalar
 integer	common	es-es	Entero
 international	common	es-es	Internacional
 introduction	common	es-es	Introducción
+invalid email	common	es-es	Correo-e no válido
 invalid filename	common	es-es	Nombre de archivo inválido.
 invalid ip address	common	es-es	Dirección IP inválida.
 invalid password	common	es-es	La contraseña inválida.
@@ -726,6 +754,7 @@ kuwait	common	es-es	KUWAIT
 kyrgyzstan	common	es-es	KYRGYZSTAN
 label	common	es-es	Etiqueta
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	es-es	Etiqueta:[bold][italic] Texto:[len][,max] Números:[min][,[max][,len]] Área de texto:[rows][,cols] BotónRadio:valor Línea hor.:[width] Plantilla:[IndexInContent] Selec.:[multiselect] Fecha:[valores: ej. 'A-m-d']
+landscape	common	es-es	Paisaje
 lang	common	es-es	Idioma
 language	common	es-es	Idioma
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	es-es	Abreviatura del idioma (ej. 'en' para inglés) para plantillas que dependen del idioma ('' lee las preferencias del idioma o el predeterminado. Use 'default' para la plantilla predeterminada.
@@ -789,7 +818,6 @@ mail domain, eg. "%1"	common	es-es	dominio de correo, p.ej. "%1"
 mailvelope addon installation failed! please try again.	common	es-es	Falló la instalación del complemento Mailvelope! Inténtalo de nuevo.
 mailvelope addon installation succeded. now you may configure the options.	common	es-es	La instalación del complemento Mailvelope se realizó correctamente. Ahora puedes configurar las opciones.
 main category	common	es-es	Categoria principal
-home screen	common	es-es	Pantalla principal
 maintainer	common	es-es	Mantenido por
 malawi	common	es-es	MALAWI
 malaysia	common	es-es	MALASIA
@@ -924,6 +952,7 @@ now	common	es-es	Ahora
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	es-es	número de columnas por las que el campo o celda debe distribuirse, o 'todas' para el resto de columnas, nombre de la clase CSS (para la etiqueta TD)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	common	es-es	número de filas o columnas en un recuadro vertical u horizontal, distancia del texto a la celda y espaciado entre celdas
 numbers	common	es-es	números
+numlist	common	es-es	Lista de números
 october	common	es-es	Octubre
 of	common	es-es	de
 off	common	es-es	apagado
@@ -987,15 +1016,19 @@ permissions to the files/users directory	common	es-es	permisos a los directorios
 permisson denied!	common	es-es	Permiso denegado
 personal	common	es-es	Personal
 peru	common	es-es	PERU
+pg down	common	es-es	Av Pág
+pg up	common	es-es	Re Pág
 pgp encryption	common	es-es	Cifrado PGP
 pgp encryption installation	common	es-es	instalación del cifrado PGP
 philippines	common	es-es	FILIPINAS
 phone number	common	es-es	Número de teléfono
 pitcairn	common	es-es	PITCAIRN
 placeholders	common	es-es	Marcador
+play/pause	common	es-es	Reproducir/Pausar
 please %1 by hand	common	es-es	Por favor %1 manualmente
 please enter a name	common	es-es	Por favor, introduzca un nombre
 please enter table-name first !!!	common	es-es	Por favor, introduzca el nombre de la tabla primero
+please reload the egroupware desktop (f5 / cmd+r).	common	es-es	Vuelva a cargar el escritorio EGroupware (F5 / Cmd+r).
 please run setup to become current	common	es-es	Por favor ejecute la instalación para actualizar
 please select	common	es-es	Por favor, seleccione
 please set your global preferences	common	es-es	Por favor, ponga sus preferencias globales
@@ -1008,6 +1041,7 @@ pm	common	es-es	pm
 poland	common	es-es	POLONIA
 popup	common	es-es	Ventama emergente
 popup with search	common	es-es	Ventana emergente con búsqueda
+portrait	common	es-es	Retrato
 portugal	common	es-es	PORTUGAL
 postal	common	es-es	Postal
 powered by	common	es-es	Proporcionado por
@@ -1028,9 +1062,11 @@ private	common	es-es	Privado
 programs	common	es-es	Programas
 project	common	es-es	Proyecto
 properties	common	es-es	Propiedades
+protocol is required	common	es-es	Se requiere protocolo
 public	common	es-es	público
 puerto rico	common	es-es	PUERTO RICO
 qatar	common	es-es	QATAR
+quick add	common	es-es	Añadir rápido
 radiobutton	common	es-es	Botón tipo radio
 read	common	es-es	Leer
 read a list of entries.	common	es-es	Leer una lista de entradas
@@ -1039,23 +1075,42 @@ read etemplate from database (for the keys above)	common	es-es	leer plantilla de
 read this list of methods.	common	es-es	Leer esta lista de métodos
 reading	common	es-es	leyendo
 readonly	common	es-es	sólo lectura
+readonly filemanager directory	common	es-es	Directorio del administrador de archivos de solo lectura
+readonly share	common	es-es	Compartir solo lectura
+redo	common	es-es	Rehacer
 refresh	common	es-es	Refrescar
 register	common	es-es	Registrar
 regular	common	es-es	Regular
 reject	common	es-es	Rechazar
 remember me	common	es-es	Recordarme
+remember me for %1	common	es-es	Recuérdame para %1
+remove	api	es-es	Quitar
 remove row (can not be undone!!!)	common	es-es	Eliminar fila (¡NO se puede deshacer!)
 remove selected accounts	common	es-es	borrar las cuentas seleccionadas
 remove shortcut	common	es-es	Eliminar acceso directo
 remove this link (not the entry itself)	common	es-es	Borrar este enlace (no la entrada en sí)
+removed (now) empty directory fs_id=%1	admin	es-es	Se eliminó (ahora) el directorio vacío fs_id = %1
+removeformat	common	es-es	Eliminar formato
 rename	common	es-es	Renombrar
 replace	common	es-es	Sustituir
 replace with	common	es-es	Sustituir por
+requests and full responses to files directory	common	es-es	Solicitudes y respuestas completas al directorio de archivos
 required	common	es-es	Requerido
+required directory "%1" created.	admin	es-es	Directorio requerido "%1" creado.
+required directory "%1" has wrong mode %2 instead of %3!	admin	es-es	¡El directorio requerido "%1" tiene un modo incorrecto %2 en lugar de %3!
+required directory "%1" not found!	admin	es-es	¡No se encontró el directorio requerido "%1"!
 reset	common	es-es	Restablecer
+reset all to default	common	es-es	Restablecer todo a predeterminado
+reset all user's column preferences	common	es-es	Restablecer todas las preferencias de columna del usuario
+resource calendars	groupdav	es-es	Calendarios de recursos
 resource type	common	es-es	Tipo de recurso
 resources	common	es-es	Recursos
+restore all	common	es-es	Restaura todo
+restore all application templates, overwriting existing ones with identical version number	common	es-es	Restaure todas las plantillas de aplicaciones, sobrescribiendo las existentes con un número de versión idéntico
 restore failed	common	es-es	Fallo al restaurar
+restore key	common	es-es	Restaurar clave
+restore password	common	es-es	Restaurar contraseña
+retry	common	es-es	Reintentar
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	es-es	Devuelve una lista completa de las cuentas del sistema. Aviso: puede ser bastante largo
 returns an array of todo items	common	es-es	Devuelve un array de elementos pendientes
 returns savely, without deleting	common	es-es	Vuelve de forma segura, SIN borrar
@@ -1063,6 +1118,8 @@ returns struct of users application access	common	es-es	Devuelve la estructura d
 reunion	common	es-es	REUNION
 right	common	es-es	Derecha
 romania	common	es-es	RUMANIA
+rotate left	common	es-es	Girar a la izquierda
+rotate right	common	es-es	Girar a la derecha
 row...	common	es-es	Fila...
 russian	common	es-es	Ruso
 russian federation	common	es-es	FEDERACION RUSA
@@ -1081,6 +1138,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	es-es	Grabar
 save all	common	es-es	Guardar todo
 save as	common	es-es	Guardar como
+save as zip	common	es-es	Guardar como Zip
 save selected columns as default preference for all users.	common	es-es	Guardar las columnas seleccionadas como preferencia predeterminada para todos los usuarios.
 save the changes made and close the window	common	es-es	Guardar los cambios realizados y cerrar la ventana
 save the etemplate under the above keys (name, ...), change them for a saveas	common	es-es	Guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.
@@ -1088,80 +1146,101 @@ saves changes to tables_current.inc.php	common	es-es	Guarda los cambios en table
 saves the template with given version number and closes the window	common	es-es	Guarda la plantilla con el número de versión indicado y cierra la ventana
 scale	common	es-es	Escala
 scale for float	common	es-es	escala para flotante
+scheduling inbox	common	es-es	Bandeja de entrada de programación
+scheduling outbox	common	es-es	Bandeja de salida de programación
 search	common	es-es	Buscar
 search %1 '%2'	common	es-es	Buscar %1 '%2'
 search accounts	common	es-es	Buscar cuentas
 search for '%1'	common	es-es	Buscar '%1'
+search letter	common	es-es	Buscar carta
 search or select accounts	common	es-es	buscar o seleccionar cuentas
+search...	common	es-es	Buscar...
+searchreplace	common	es-es	Buscar y reemplazar
 second	common	es-es	segundo
 section	common	es-es	Sección
 select	common	es-es	Seleccionar
+select "%1", if your client does not support multiple addressbooks.	groupdav	es-es	Seleccione "%1", si su cliente no admite múltiples libretas de direcciones.
+select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	es-es	Seleccione "%1", si su cliente soporta grupos, e.g. Libreta de direcciones OS X o iOS.
 select a category	common	es-es	seleccionar una categoría
 select a primary contact, to show in the list	common	es-es	Seleccionar un contacto primario, para mostrar en la lista
-select access	common	es-es	Seleccionar acceso
-select account	common	es-es	Seleccionar cuenta
-select action	common	es-es	Seleccionar acción
-select all	common	es-es	Seleccionar todo
-select all %1 %2 for %3	common	es-es	Seleccionar todos los %1 %2 para %3
-select all entries	common	es-es	Seleccionar todas las entradas
+select access	common	es-es	Seleccione acceso
+select account	common	es-es	Seleccione cuenta
+select action	common	es-es	Seleccione acción
+select all	common	es-es	Seleccione todo
+select all %1 %2 for %3	common	es-es	Seleccione todos los %1 %2 para %3
+select all entries	common	es-es	Seleccione todas las entradas
 select an app first !!!	common	es-es	Seleccione una aplicación primero
-select an app to search in	common	es-es	Seleccionar una aplicación en la que buscar
-select an application	common	es-es	Seleccionar una aplicación
-select an application, (*) = uninstalled	common	es-es	Seleccionar una aplicación. (*) = sin instalar
-select an entry to link with	common	es-es	Seleccionar una entrada para enlazar
+select an app to search in	common	es-es	Seleccione una aplicación en la que buscar
+select an application	common	es-es	Seleccione una aplicación
+select an application, (*) = uninstalled	common	es-es	Seleccione una aplicación. (*) = sin instalar
+select an entry to link with	common	es-es	Seleccione una entrada para enlazar
+select an opened dialog	common	es-es	Seleccione un diálogo abierto
 select an table of the application	common	es-es	Seleccione una tabla de la aplicación
-select application	common	es-es	Seleccionar aplicación
-select application to search	common	es-es	Seleccionar aplicación para buscar
-select category	common	es-es	Seleccionar categoría
-select color	common	es-es	Seleccionar color
-select columns	common	es-es	Seleccionar columnas
-select country	common	es-es	Seleccionar país
-select date	common	es-es	Seleccionar fecha
-select day	common	es-es	Seleccionar día
-select day of week	common	es-es	Seleccionar día de la semana
-select entry	common	es-es	Seleccionar entrada
-select file(s) from vfs	common	es-es	Seleccionar archivo(s) desde VFS
-select files from filemanager ...	common	es-es	Seleccionar archivos desde el Administrador de archivos
-select group	common	es-es	Seleccionar grupo
-select home email address	common	es-es	Seleccionar dirección de correo inicial
-select hour	common	es-es	Seleccionar hora del día
+select application	common	es-es	Seleccione aplicación
+select application to search	common	es-es	Seleccione aplicación para buscar
+select category	common	es-es	Seleccione categoría
+select color	common	es-es	Seleccione color
+select columns	common	es-es	Seleccione columnas
+select country	common	es-es	Seleccione país
+select date	common	es-es	Seleccione fecha
+select day	common	es-es	Seleccione día
+select day of week	common	es-es	Seleccione día de la semana
+select entry	common	es-es	Seleccione entrada
+select file(s) from vfs	common	es-es	Seleccione archivo(s) desde VFS
+select files from filemanager ...	common	es-es	Seleccione archivos desde el Administrador de archivos
+select group	common	es-es	Seleccione grupo
+select home email address	common	es-es	Seleccione dirección de correo inicial
+select hour	common	es-es	Seleccione hora del día
 select if content of field should not be translated (label gets always translated)	common	es-es	Seleccione si el contenido del campo no debe traducirse (la etiqueta siempre se traduce)
-select language	common	es-es	Seleccionar idioma
-select month	common	es-es	Seleccionar mes
-select multiple accounts	common	es-es	seleccionar múltiples cuentas
-select number	common	es-es	Seleccionar número
-select one	common	es-es	Seleccionar uno
-select one ...	common	es-es	Seleccionar uno...
-select percentage	common	es-es	Seleccionar porcentaje
-select priority	common	es-es	Seleccionar prioridad
-select some options	common	es-es	Seleccionar algunas opciones
-select state	common	es-es	Seleccionar estado
-select the columns to display in the list	common	es-es	Seleccionar columnas a mostrar en la lista
+select language	common	es-es	Seleccione idioma
+select month	common	es-es	Seleccione mes
+select multiple accounts	common	es-es	Seleccione múltiples cuentas
+select number	common	es-es	Seleccione número
+select one	common	es-es	Seleccione uno
+select one ...	common	es-es	Seleccione...
+select percentage	common	es-es	Seleccione porcentaje
+select priority	common	es-es	Seleccione prioridad
+select some options	common	es-es	Seleccione algunas opciones
+select state	common	es-es	Seleccione estado
+select the columns to display in the list	common	es-es	Seleccione columnas a mostrar en la lista
 select the default height for the application windows	common	es-es	Seleccione la altura predeterminada para las ventanas de la aplicación
 select the default width for the application windows	common	es-es	Seleccione el ancho predeterminado para las ventanas de la aplicación
-select the indexed columns in their desired order	common	es-es	Seleccionar las columnas indexadas en su orden deseado
-select this etemplate to delete it	common	es-es	Seleccionar esta plantilla para borrarla
-select user	common	es-es	Seleccionar usuario
-select which accounts to show	common	es-es	seleccionar las cuentas a mostrar
-select which values to show	common	es-es	Seleccionar qué valores mostrar
-select work email address	common	es-es	Seleccionar dirección de correo del trabajo
-select year	common	es-es	Seleccionar año
+select the indexed columns in their desired order	common	es-es	Seleccione las columnas indexadas en su orden deseado
+select this etemplate to delete it	common	es-es	Seleccione esta plantilla para borrarla
+select user	common	es-es	Seleccione usuario
+select user or group	common	es-es	Seleccione usuario ogrupo
+select which accounts to show	common	es-es	Seleccione las cuentas a mostrar
+select which values to show	common	es-es	Seleccione qué valores mostrar
+select work email address	common	es-es	Seleccione dirección de correo del trabajo
+select year	common	es-es	Seleccione año
 selectbox	common	es-es	Cuadro de selección
 selection	common	es-es	Selección
 send	common	es-es	Enviar
+send succeeded to %1	common	es-es	Enviado correctamente a %1
 senegal	common	es-es	SENEGAL
 september	common	es-es	Septiembre
 serbia	common	es-es	Serbia
 server %1 has been added	common	es-es	El servidor %1 ha sido añadido
 server answered. processing response...	common	es-es	El servidor ha respondido. Procesando la respuesta...
 server contacted. waiting for response...	common	es-es	Se ha conectado con el servidor. Esperando la respuesta...
+server error	common	es-es	Error del servidor
+server is unwilling to perform.	common	es-es	El servidor es incapaz de hacer.
 server name	common	es-es	Nombre del servidor
 session has been killed	common	es-es	La sesión ha sido eliminada
 set as default	common	es-es	Establecer como predeterminado
+set these columns as the default	common	es-es	Establecer estas columnas como predeterminadas
+set user as only responsible user, but keeping groups	groupdav	es-es	establecer al usuario como el único responsable, pero manteniendo grupos
+set user as only responsible, removing all existing responsibles	groupdav	es-es	establecer al usuario como el único responsable, eliminando todos los responsables existentes
 sets today as date	common	es-es	pone hoy como fecha
+settings saved.	common	es-es	Se guardó la configuración.
 setup	common	es-es	Instalación
 setup main menu	common	es-es	Menú principal de instalación
 seychelles	common	es-es	SEYCHELLES
+share	common	es-es	Compartir
+share files	common	es-es	Compartir archivos
+share link	common	es-es	Compartir enlace
+shift	common	es-es	May
+shift ⇧	common	es-es	May ⇧
 should the form be submitted or any custom javascript be executed	common	es-es	Se debe enviar el formulario o ejecutar cualquier javascript personalizado
 show	common	es-es	Mostrar
 show (no save)	common	es-es	Mostrar (sin guardar)
@@ -1174,6 +1253,8 @@ show home and logout button in main application bar?	common	es-es	¿Mostrar los 
 show in sidebox	common	es-es	Mostrar en el menú lateral
 show logo's on the desktop.	common	es-es	Mostrar logo en el escritorio
 show menu	common	es-es	mostrar menú
+show next login	common	es-es	Mostrar registro del siguiente dispositivo
+show now	common	es-es	Mostrar ahora
 show page generation time	common	es-es	Mostrar el tiempo que tarda en generarse la página
 show page generation time on the bottom of the page?	common	es-es	¿Mostrar el tiempo que tarda en generarse la página en la parte inferior de la página?
 show page generation time?	common	es-es	¿Mostrar el tiempo que tarda en generarse la página?
@@ -1186,6 +1267,7 @@ showing %1 - %2 of %3	common	es-es	mostrando %1 - %2 de %3
 shows / allows you to enter values into the etemplate for testing	common	es-es	muestra / permite introducir valores en la plantilla para probar
 shows/displays etemplate for testing, does not save it before	common	es-es	Muestra la plantilla para pruebas. NO la guarda antes
 sierra leone	common	es-es	SIERRA LEONA
+sign up	common	es-es	Registrarse
 simple	common	es-es	Simple
 singapore	common	es-es	SINGAPUR
 site configuration	common	es-es	Configuración del sitio
@@ -1234,7 +1316,9 @@ sweden	common	es-es	SUECIA
 switch to a parent widget	common	es-es	Cambiar a un control superior
 switch to an other widgets of that container	common	es-es	Cambiar a otros controles de ese contenedor
 switzerland	common	es-es	SUIZA
+sync all selected into one	groupdav	es-es	Sincronizar todos los seleccionados en uno
 syrian arab republic	common	es-es	SYRIAN ARAB REPUBLIC
+tab	common	es-es	Tab
 tabindex	common	es-es	Índice de tabulación
 table %1 is excluded from backup and restore. data will not be restored.	common	es-es	La tabla %1 se ha excluido del respaldo y la restauración. Los datos no se restaurarán.
 table properties	common	es-es	Propiedades de la tabla
@@ -1252,13 +1336,16 @@ text color:	common	es-es	Color del texto:
 textarea	common	es-es	Area de texto
 thailand	common	es-es	TAILANDIA
 the backup key has been deleted.	common	es-es	La clave de respaldo se ha suprimido.
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	es-es	El bloqueador de ventanas emergentes del navegador está activado. Haga clic en el botón Aceptar para ver la ventana emergente.\n\nSi no desea ver este mensaje la próxima vez, permita que el bloqueador de ventanas emergentes de su navegador abra ventanas emergentes desde %1
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
 the following applications require upgrades	common	es-es	Las siguientes aplicaciones requieren actualizaciones
 the following document-types are supported:	preferences	es-es	Los siguientes tipos de documentos están soportados:
 the mail server returned	common	es-es	El servidor de correo devolvió
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	es-es	Ya hay un usuario de sistema con este nombre. Los usuarios no deben tener el mismo nombre que un usuario de sistema.
+they will be sub-folders in users home (%1 attribute).	common	es-es	Serán subcarpetas en la página de inicio de los usuarios (atributo %1).
 this name has been used already	common	es-es	¡Este nombre ya ha sido usado!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	es-es	este texto se muestra si el campo de entrada está vacío y no tiene foco (borroso)
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	es-es	Esto restablecerá las preferencias de la barra de herramientas para todos los usuarios y los establecerá en las preferencias predeterminadas configuradas.
 thursday	common	es-es	Jueves
 tiled	common	es-es	mosaico
 time	common	es-es	Hora (completa)
@@ -1282,6 +1369,7 @@ tonga	common	es-es	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	es-es	Demasiados intentos fallidos de inicio de sesión: %1 para el usuario '%2', %3 para la IP %4
 top	common	es-es	Superior
 total	common	es-es	Total
+total: %1 successful: %2 failed: %3 skipped: %4	common	es-es	Total: %1 Exitoso: %2  Falló: %3 Saltado: %4
 transparant bg for the icons?	common	es-es	¿Fondo transparente para los iconos?
 tree	common	es-es	Arbol
 trinidad and tobago	common	es-es	TRINIDAD AND TOBAGO
@@ -1296,9 +1384,12 @@ type of the column	common	es-es	tipo de la columna
 type of the field (select label if field should be empty)	common	es-es	tipo del campo (seleccionar la etiqueta si el campo tiene que estar vacío)
 uganda	common	es-es	UGANDA
 ukraine	common	es-es	UCRANIA
+un-delete	common	es-es	Recuperar
 uncheck all	common	es-es	Desmarcar todo
 undefined	common	es-es	indefinido
 underline	common	es-es	Subrayado
+undo	common	es-es	Deshacer
+unicode	common	es-es	Unicode
 unique	common	es-es	Único
 united arab emirates	common	es-es	EMIRATOS ARABES UNIDOS
 united kingdom	common	es-es	REINO UNIDO
@@ -1341,13 +1432,17 @@ version	common	es-es	Versión
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	es-es	número de la versión, en formato mayor.menor.revisión.número (por ej. 0.9.13.001, con todos los números rellenos con ceros)
 vertical alignment of row	common	es-es	alineación vertical de la fila
 vfs upload directory	common	es-es	Directorio de subida de archivos VFS
+video tutorials	common	es-es	Tutoriales en video
 viet nam	common	es-es	VIETNAM
 view	common	es-es	Ver
+view linked %1 entries	common	es-es	Ver entradas vinculadas de %1
 view this etemplate	common	es-es	ver esta plantilla
 view this linked entry in its application	common	es-es	ver esta entrada enlazada en su aplicación
 virgin islands, british	common	es-es	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	es-es	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	es-es	WALLIS AND FUTUNA
+was not able to delete the backup key because %1	common	es-es	No se pudo suprimir la clave de respaldo porque %1
+we would like to introduce you to egroupware by showing a short introduction video.	common	es-es	Nos gustaría presentarte EGroupware mostrando un breve video de introducción.
 wednesday	common	es-es	Miércoles
 weekend	common	es-es	fin de semana
 welcome	common	es-es	Página principal
@@ -1359,6 +1454,7 @@ what style would you like the image to have?	common	es-es	¿Qué estilo desea qu
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	es-es	Si dice que sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra principal de aplicaciones.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	es-es	Dónde y cómo mostrar los enlaces de egroupware com las preferencias, acerca de y salir.
 which groups	common	es-es	Qué grupos
+which infolog types should be synced with the device, default only tasks.	common	es-es	Cuales tipos de InfoLog deben sincronizarse con el dispositivo, solo tareas predeterminadas.
 whole query	common	es-es	la consulta completa
 widget copied into clipboard	common	es-es	control copiado en el portapapeles
 width	common	es-es	Ancho
@@ -1369,7 +1465,11 @@ width, disabled	common	es-es	Ancho, desactivado
 wk	common	es-es	Semana
 work email	common	es-es	correo del trabajo
 working days	common	es-es	días laborales
+works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	es-es	Funciona de forma confiable para un tamaño total de hasta 1-2 MB, puede funcionar para 5-10 MB, lo más probable es que falle para >10 MB
 would you like to display the page generation time at the bottom of every window?	common	es-es	¿Desea mostrar el tiempo que tarda en generarse la página en la parte inferior de cada ventana?
+writable	common	es-es	Writable
+writable filemanager directory	common	es-es	Directorio del administrador de archivos grabable
+writable share	common	es-es	Cuota de escritura
 write <app>/setup/tables_current.inc.php	common	es-es	Escribir <app>/setup/tables_current.inc.php
 write langfile	common	es-es	Escribir archivo de idioma
 write tables	common	es-es	Escribir tablas
@@ -1383,9 +1483,11 @@ yemen	common	es-es	YEMEN
 yes	common	es-es	Sí
 yes - delete	common	es-es	Sí - Eliminar
 yes - delete including sub-entries	common	es-es	Sí - Eliminar incluso las subentradas
+yes and allow non-admin users to do that too (recommended)	common	es-es	Sí y permitir que los usuarios que no sean administradores también lo hagan (recomendado)
 you are not allowed to export more than %1 entries!	common	es-es	¡No se le permite exportar más de %1 entradas!
 you are required to change your password during your first login	common	es-es	Es necesario que cambie la contraseña durante su primer inicio de sesión.
 you can customize how many icons and toolbars the editor shows.	common	es-es	Puede personalizar el número de iconos y barras de herramientas que muestra el editor.
+you can not choose more then %1 item(s)!	common	es-es	¡No puede elegir más de% 1 artículo (s)!
 you can respond by visiting:	common	es-es	Puede responder visitando:
 you have been successfully logged out	login	es-es	Usted ha salido correctamente
 you have not entered a title	common	es-es	No ha introducido un título
@@ -1398,9 +1500,14 @@ you have successfully logged out	common	es-es	Ha terminado la sesión correctame
 you need to %1set your timezone preference%2.	common	es-es	Necesita %1 establecer su preferencia de zona horaria%2.
 you need to add the webserver user '%1' to the group '%2'.	common	es-es	Necesita añadir el usuario del servidor web '%1' al grupo '%2'.
 you need to be an egroupware administrator to access this functionality!	common	es-es	¡Necesita ser administrador de EGroupware para acceder a esta funcionalidad!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	es-es	Debe instalar el complemento Mailvelope disponible para Chrome y Firefox desde www.mailvelope.com o haciendo clic en el botón de instalación.
 you need to select a file first!	common	es-es	¡Seleccione un archivo primero!
 you need to select some entries first!	common	es-es	¡Necesita seleccionar algunas entradas primero!
+you need to set enable logging to "%1" to create/update a log.	groupdav	es-es	Debe establecer habilitar el registro en "%1" para crear/actualizar un registro.
+you tried to automatically size a flex column, which always takes the rest of the space	common	es-es	Intentó dimensionar automáticamente una columna flexible, que siempre ocupa el resto del espacio.
+you will not be able to send or receive encrypted mails before completing that step!	common	es-es	¡NO podrá enviar ni recibir correos cifrados antes de completar ese paso!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	Ha intentado abrir la aplicación de EGroupware %1, pero no tiene permiso para acceder a esta aplicación.
+your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	es-es	Su navegador no está actualizado (compatible con JavaScript ES6), es posible que algunas de las funciones no funcionen.
 your code is incorrect !!!	common	es-es	¡Código es incorrecto!
 your key has been restored successfully.	common	es-es	Su clave ha sido restaurada con éxito.
 your message could <b>not</b> be sent!<br>	common	es-es	Su mensaje <b>no</b> se pudo enviar<br>

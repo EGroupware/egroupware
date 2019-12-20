@@ -3,6 +3,8 @@
 (select mails by clicking on the line, like a checkbox)	mail	ru	(выберите письма нажатием на строчку, как место выбора)
 (with checkbox enforced)	mail	ru	(с отмеченным флажком)
 activating by date requires a start- and end-date!	mail	ru	Активация по дате требует наличия начальной и конечной даты!
+add as new	mail	ru	Новая запись
+add folder	mail	ru	Добавить папку
 add to addressbook	mail	ru	добавить в адресную книгу
 all available info	admin	ru	Вся доступная информация
 all of	mail	ru	Все из
@@ -12,6 +14,7 @@ allways a new window	mail	ru	Всегда новое окно
 always show html emails	mail	ru	Всегда показывать письма формата HTML
 any of	mail	ru	Любой из
 any status	mail	ru	Любое состояние
+append	mail	ru	Дополнить
 attach users vcard at compose to every new mail	mail	ru	Вкладывать визитку пользователя в каждое новое письмо
 attach vcard	mail	ru	Вложить vCard (визитку)
 attachments	mail	ru	Вложения
@@ -215,6 +218,7 @@ save:	mail	ru	Сохранить
 saving of message %1 failed. destination folder %2 does not exist.	mail	ru	Сохранение сообщения %1 не удалось. Папка назначения %2 не существует.
 saving of message %1 succeeded. check folder %2.	mail	ru	Сохранение сообщения %1 прошло успешно. Проверьте папку %2.
 select all	mail	ru	Выбрать все
+select an existing entry in order to append mail content to it	mail	ru	Выберите существующую запись для добавления в неё содержимого письма
 selected	mail	ru	Выбранный
 send message and move to send folder (if configured)	mail	ru	Отправить сообщение и переместить в папку Отправленные
 sender	mail	ru	Отправитель
