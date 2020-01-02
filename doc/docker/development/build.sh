@@ -21,6 +21,10 @@ BRANCH=$(echo $VERSION|sed 's/\.[0-9]\{8\}$//')
 [ $BRANCH != "master" ] && {
 	TAG=$BRANCH-$TAG
 }
+[ $BRANCH = "master" ] && {
+	TAG=master
+	VERSION=dev-master
+}
 echo -e "\nbuilding $REPO/$IMAGE:$TAG\n"
 
 cd $(dirname $0)
@@ -30,7 +34,7 @@ docker build --build-arg "VERSION=$VERSION" --build-arg="PHP_VERSION=$PHP_VERSIO
 	docker push $REPO/$IMAGE:$TAG
 
 	# tag by major PHP version eg. 7.3
-	docker tag $REPO/$IMAGE:$TAG $REPO/$IMAGE:PHP_VESION
+	docker tag $REPO/$IMAGE:$TAG $REPO/$IMAGE:$PHP_VERSION
 	docker push $REPO/$IMAGE:$PHP_VERSION
 
 	# tag only recommended PHP version as latest and $BRANCH (eg. master)
@@ -38,6 +42,6 @@ docker build --build-arg "VERSION=$VERSION" --build-arg="PHP_VERSION=$PHP_VERSIO
 		docker tag $REPO/$IMAGE:$TAG $REPO/$IMAGE:latest
 		docker push $REPO/$IMAGE:latest
 		docker tag $REPO/$IMAGE:$TAG $REPO/$IMAGE:$BRANCH
-		docker push $REPO/$IMAGE:$BANCH
+		docker push $REPO/$IMAGE:$BRANCH
 	}
 }
