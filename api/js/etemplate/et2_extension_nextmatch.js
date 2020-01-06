@@ -1438,7 +1438,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			});
 			defaultCheck.set_value(this.options.settings.columns_forced ? 'force': '');
 
-			var okButton = et2_createWidget("buttononly", {}, this);
+			var okButton = et2_createWidget("buttononly", {"background_image":true, image:"check"}, this);
 			okButton.set_label(this.egw().lang("ok"));
 			okButton.onclick = function() {
 				// Update visibility
@@ -1547,7 +1547,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				self.selectPopup = null;
 			};
 
-			var cancelButton = et2_createWidget("buttononly", {}, this);
+			var cancelButton = et2_createWidget("buttononly", {"background_image":true, image:"cancel"}, this);
 			cancelButton.set_label(this.egw().lang("cancel"));
 			cancelButton.onclick = function() {
 				self.selectPopup.toggle();
