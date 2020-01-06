@@ -73,6 +73,9 @@ tr.prefRow:hover .prefHelp {
 .prefDefault {
   float: right;
   width: 48%;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
 }
 .prefValue textarea,
 textarea.prefValue {
