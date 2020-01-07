@@ -2816,7 +2816,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * @param string $submit_button_id dialog button id of triggered submit
 	 * @param string $savemode save mode: 'overwrite' or 'rename'
 	 */
-	function ajax_vfsSave ($params, $path, $submit_button_id, $savemode)
+	function ajax_vfsSave ($params, $path, $submit_button_id='', $savemode='rename')
 	{
 		unset($submit_button_id); // not used here
 
@@ -2847,7 +2847,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 *			'success' => BOOLEAN
 	 *		)
 	 */
-	function vfsSaveMessages($ids,$path, $savemode)
+	function vfsSaveMessages($ids,$path, $savemode='rename')
 	{
 		// add mail translation
 		Api\Translation::add_app('mail');
@@ -2943,7 +2943,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 *			'success' => BOOLEAN
 	 *		)
 	 */
-	function vfsSaveAttachments($ids,$path, $savemode)
+	function vfsSaveAttachments($ids,$path, $savemode='rename')
 	{
 		$res = array (
 			'msg' => lang('Attachment has been saved successfully.'),
