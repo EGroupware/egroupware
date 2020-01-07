@@ -800,7 +800,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			negated = this.options.settings.default_cols[0] == "!";
 			columnPreference = negated ? this.options.settings.default_cols.substring(1) : this.options.settings.default_cols;
 		}
-		if(this.options.settings.selectcols)
+		if(this.options.settings.selectcols && this.options.settings.selectcols.length)
 		{
 			columnPreference = this.options.settings.selectcols;
 			negated = false;
@@ -947,7 +947,10 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 						_colData[i].width = parseInt(size[colName])+'px';
 					}
 				}
-				_colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
+				if(!negated)
+				{
+					_colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
+				}
 				for(var j = 0; j < columnDisplay.length; j++)
 				{
 					if(columnDisplay[j] == colName)
@@ -965,7 +968,14 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			return a.order - b.order;
 		});
 		_row.sort(function(a,b) {
-			return a.colData.order - b.colData.order;
+			if(typeof a.colData !== 'undefined' && typeof b.colData !== 'undefined')
+			{
+				return a.colData.order - b.colData.order;
+			}
+			else if (typeof a.order !== 'undefined' && typeof b.order !== 'undefined')
+			{
+				return a.order - b.order;
+			}
 		});
 	},
 
