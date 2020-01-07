@@ -22,7 +22,7 @@
 ==========================================================
 -->
 
-<!ENTITY % Widgets "template|grid|vbox|box|details|hbox|groupbox|caption|split|button|buttononly|colorpicker|description|label|entry|contact-value|contact-account|contact-template|infolog-value|tracker-value|records-value|textbox|passwd|hidden|searchbox|int|integer|float|url|url-email|url-phone|menupopup|listbox|select|select-cat|select-percent|select-priority|select-country|select-state|select-year|select-month|select-day|select-dow|select-hour|select-number|select-app|select-lang|select-bool|select-timezone|menulist|checkbox|radio|radiogroup|date|date-time|date-timeonly|date-duration|date-since|date-time_today|time_or_date|date-range|diff|dropdown_button|styles|link-to|link-apps|link-entry|link|link-string|link-list|link-add|select-account|taglist|taglist-account|taglist-email|taglist-cat|customfields|customfields-list|favorites|html|htmlarea|tabbox|toolbar|tree|tree-cat|historylog|hrule|image|appicon|avatar|iframe|file|progress|portlet|ajax_select|vfs|vfs-name|vfs-mime|vfs-size|vfs-mode|vfs-uid|vfs-gid|vfs-upload|vfs-select|video|barcode|itempicker|script">
+<!ENTITY % Widgets "template|grid|vbox|box|details|hbox|groupbox|caption|split|button|buttononly|colorpicker|description|label|entry|contact-value|contact-account|contact-template|infolog-value|tracker-value|records-value|textbox|passwd|hidden|searchbox|int|integer|float|url|url-email|url-phone|menupopup|listbox|select|select-cat|select-percent|select-priority|select-country|select-state|select-year|select-month|select-day|select-dow|select-hour|select-number|select-app|select-lang|select-bool|select-timezone|select-bitwise|menulist|checkbox|radio|radiogroup|date|date-time|date-timeonly|date-duration|date-since|date-time_today|time_or_date|date-range|diff|dropdown_button|styles|link-to|link-apps|link-entry|link|link-string|link-list|link-add|select-account|taglist|taglist-account|taglist-email|taglist-cat|taglist-thumbnail|taglist-state|customfields|customfields-list|favorites|html|htmlarea|tabbox|button-timestamp|timestamper|toolbar|tree|tree-cat|historylog|hrule|image|appicon|avatar|lavatar|iframe|file|progress|portlet|ajax_select|vfs|vfs-name|vfs-path|vfs-mime|vfs-size|vfs-mode|vfs-uid|vfs-gid|vfs-upload|vfs-select|video|barcode|itempicker|script">
 <!ELEMENT overlay (%Widgets;)*>
 <!ELEMENT template (%Widgets;)*>
 <!ATTLIST template
@@ -32,6 +32,7 @@ version CDATA #IMPLIED
 lang CDATA #IMPLIED
 content CDATA #IMPLIED
 url CDATA #IMPLIED
+onload CDATA #IMPLIED
 disabled (true|false) "false"
 width CDATA #IMPLIED
 height CDATA #IMPLIED
@@ -48,6 +49,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT grid (columns,rows)>
 <!ELEMENT columns (column)*>
@@ -71,6 +73,12 @@ align CDATA "left"
 spacing CDATA #IMPLIED
 padding CDATA #IMPLIED
 sortable CDATA #IMPLIED
+sortable_containment CDATA #IMPLIED
+sortable_connectWith CDATA #IMPLIED
+sortable_placeholder CDATA #IMPLIED
+sortable_cancel CDATA #IMPLIED
+sortable_recieveCallback CDATA #IMPLIED
+sortable_startCallback CDATA #IMPLIED
 disabled (true|false) "false"
 width CDATA #IMPLIED
 height CDATA #IMPLIED
@@ -87,12 +95,14 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT vbox (%Widgets;)*>
 <!ATTLIST vbox
 rows CDATA #IMPLIED
 cols CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -111,12 +121,14 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT box (%Widgets;)*>
 <!ATTLIST box
 rows CDATA #IMPLIED
 cols CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -135,6 +147,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT details EMPTY>
 <!ATTLIST details
@@ -143,6 +156,7 @@ title CDATA #IMPLIED
 rows CDATA #IMPLIED
 cols CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -161,10 +175,12 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT hbox (%Widgets;)*>
 <!ATTLIST hbox
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -183,10 +199,12 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT groupbox (%Widgets;)*>
 <!ATTLIST groupbox
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -205,11 +223,13 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT caption EMPTY>
 <!ATTLIST caption
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -228,6 +248,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT split EMPTY>
 <!ATTLIST split
@@ -252,6 +273,7 @@ id CDATA #IMPLIED
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT button EMPTY>
 <!ATTLIST button
@@ -265,6 +287,7 @@ background_image (true|false) "[object Object]"
 novalidate (true|false) "false"
 needed CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 disabled (true|false) "false"
 width CDATA #IMPLIED
@@ -282,6 +305,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT buttononly EMPTY>
 <!ATTLIST buttononly
@@ -295,6 +319,7 @@ background_image (true|false) "[object Object]"
 novalidate (true|false) "false"
 needed CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 disabled (true|false) "false"
 width CDATA #IMPLIED
@@ -312,10 +337,10 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT colorpicker EMPTY>
 <!ATTLIST colorpicker
-alphaSupport (true|false) "false"
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -325,6 +350,7 @@ readonly (true|false) "false"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -342,6 +368,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT description EMPTY>
 <!ATTLIST description
@@ -356,7 +383,10 @@ extra_link_popup CDATA #IMPLIED
 expose_view (true|false) "false"
 mime CDATA #IMPLIED
 mime_data CDATA #IMPLIED
+hover_action CDATA #IMPLIED
+hover_action_title CDATA "Edit"
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -375,6 +405,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT label EMPTY>
 <!ATTLIST label
@@ -389,7 +420,10 @@ extra_link_popup CDATA #IMPLIED
 expose_view (true|false) "false"
 mime CDATA #IMPLIED
 mime_data CDATA #IMPLIED
+hover_action CDATA #IMPLIED
+hover_action_title CDATA "Edit"
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -408,6 +442,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT entry EMPTY>
 <!ATTLIST entry
@@ -415,10 +450,13 @@ field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
 precision CDATA "2"
+regex CDATA #IMPLIED
+regex_replace CDATA #IMPLIED
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -436,6 +474,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT contact-value EMPTY>
 <!ATTLIST contact-value
@@ -443,10 +482,13 @@ field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
 precision CDATA "2"
+regex CDATA #IMPLIED
+regex_replace CDATA #IMPLIED
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -464,6 +506,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT contact-account EMPTY>
 <!ATTLIST contact-account
@@ -471,10 +514,13 @@ field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
 precision CDATA "2"
+regex CDATA #IMPLIED
+regex_replace CDATA #IMPLIED
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -492,6 +538,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT contact-template EMPTY>
 <!ATTLIST contact-template
@@ -499,10 +546,13 @@ field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
 precision CDATA "2"
+regex CDATA #IMPLIED
+regex_replace CDATA #IMPLIED
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -520,6 +570,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT infolog-value EMPTY>
 <!ATTLIST infolog-value
@@ -527,10 +578,13 @@ field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
 precision CDATA "2"
+regex CDATA #IMPLIED
+regex_replace CDATA #IMPLIED
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -548,6 +602,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT tracker-value EMPTY>
 <!ATTLIST tracker-value
@@ -555,10 +610,13 @@ field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
 precision CDATA "2"
+regex CDATA #IMPLIED
+regex_replace CDATA #IMPLIED
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -576,6 +634,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT records-value EMPTY>
 <!ATTLIST records-value
@@ -583,10 +642,13 @@ field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
 precision CDATA "2"
+regex CDATA #IMPLIED
+regex_replace CDATA #IMPLIED
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -604,6 +666,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT textbox EMPTY>
 <!ATTLIST textbox
@@ -625,6 +688,7 @@ readonly (true|false) "false"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -642,6 +706,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT passwd EMPTY>
 <!ATTLIST passwd
@@ -663,6 +728,7 @@ readonly (true|false) "false"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -680,6 +746,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT hidden EMPTY>
 <!ATTLIST hidden
@@ -701,6 +768,7 @@ readonly (true|false) "false"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -718,6 +786,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT searchbox EMPTY>
 <!ATTLIST searchbox
@@ -741,6 +810,7 @@ readonly (true|false) "false"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -758,6 +828,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT int EMPTY>
 <!ATTLIST int
@@ -782,6 +853,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -799,6 +871,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT integer EMPTY>
 <!ATTLIST integer
@@ -823,6 +896,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -840,6 +914,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT float EMPTY>
 <!ATTLIST float
@@ -864,6 +939,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -881,10 +957,13 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT url EMPTY>
 <!ATTLIST url
 multiline (true|false) "false"
+allow_path (true|false) "false"
+trailing_slash (true|false) "[object Object]"
 size CDATA #IMPLIED
 maxlength CDATA #IMPLIED
 blur CDATA #IMPLIED
@@ -902,6 +981,7 @@ readonly (true|false) "false"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -919,10 +999,13 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT url-email EMPTY>
 <!ATTLIST url-email
 multiline (true|false) "false"
+allow_path (true|false) "false"
+trailing_slash (true|false) "[object Object]"
 size CDATA #IMPLIED
 maxlength CDATA #IMPLIED
 blur CDATA #IMPLIED
@@ -940,6 +1023,7 @@ readonly (true|false) "false"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -957,10 +1041,13 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT url-phone EMPTY>
 <!ATTLIST url-phone
 multiline (true|false) "false"
+allow_path (true|false) "false"
+trailing_slash (true|false) "[object Object]"
 size CDATA #IMPLIED
 maxlength CDATA #IMPLIED
 blur CDATA #IMPLIED
@@ -978,6 +1065,7 @@ readonly (true|false) "false"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -995,6 +1083,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT menupopup EMPTY>
 <!ATTLIST menupopup
@@ -1006,8 +1095,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1016,6 +1107,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1033,6 +1125,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT listbox EMPTY>
 <!ATTLIST listbox
@@ -1044,8 +1137,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1054,6 +1149,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1071,6 +1167,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select EMPTY>
 <!ATTLIST select
@@ -1082,8 +1179,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1092,6 +1191,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1109,6 +1209,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-cat EMPTY>
 <!ATTLIST select-cat
@@ -1120,8 +1221,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1130,6 +1233,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1147,6 +1251,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-percent EMPTY>
 <!ATTLIST select-percent
@@ -1158,8 +1263,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1168,6 +1275,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1185,6 +1293,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-priority EMPTY>
 <!ATTLIST select-priority
@@ -1196,8 +1305,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1206,6 +1317,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1223,6 +1335,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-country EMPTY>
 <!ATTLIST select-country
@@ -1234,8 +1347,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1244,6 +1359,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1261,6 +1377,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-state EMPTY>
 <!ATTLIST select-state
@@ -1272,8 +1389,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1282,6 +1401,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1299,6 +1419,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-year EMPTY>
 <!ATTLIST select-year
@@ -1310,8 +1431,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1320,6 +1443,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1337,6 +1461,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-month EMPTY>
 <!ATTLIST select-month
@@ -1348,8 +1473,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1358,6 +1485,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1375,6 +1503,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-day EMPTY>
 <!ATTLIST select-day
@@ -1386,8 +1515,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1396,6 +1527,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1413,6 +1545,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-dow EMPTY>
 <!ATTLIST select-dow
@@ -1424,8 +1557,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1434,6 +1569,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1451,6 +1587,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-hour EMPTY>
 <!ATTLIST select-hour
@@ -1462,8 +1599,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1472,6 +1611,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1489,6 +1629,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-number EMPTY>
 <!ATTLIST select-number
@@ -1500,8 +1641,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1510,6 +1653,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1527,6 +1671,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-app EMPTY>
 <!ATTLIST select-app
@@ -1538,8 +1683,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1548,6 +1695,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1565,6 +1713,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-lang EMPTY>
 <!ATTLIST select-lang
@@ -1576,8 +1725,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1586,6 +1737,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1603,6 +1755,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-bool EMPTY>
 <!ATTLIST select-bool
@@ -1614,8 +1767,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1624,6 +1779,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1641,6 +1797,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-timezone EMPTY>
 <!ATTLIST select-timezone
@@ -1652,8 +1809,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1662,6 +1821,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1679,6 +1839,49 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
+>
+<!ELEMENT select-bitwise EMPTY>
+<!ATTLIST select-bitwise
+multiple (true|false) "false"
+expand_multiple_rows CDATA #IMPLIED
+rows CDATA #IMPLIED
+empty_label CDATA #IMPLIED
+select_options CDATA #IMPLIED
+selected_first (true|false) "true"
+search (true|false) "false"
+tags (true|false) "false"
+allow_single_deselect (true|false) "true"
+value CDATA #IMPLIED
+other CDATA #IMPLIED
+value_class CDATA #IMPLIED
+needed (true|false) "false"
+onchange CDATA #IMPLIED
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT menulist (menupopup)>
 <!ATTLIST menulist
@@ -1698,6 +1901,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT checkbox EMPTY>
 <!ATTLIST checkbox
@@ -1716,6 +1920,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1733,6 +1938,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT radio EMPTY>
 <!ATTLIST radio
@@ -1748,6 +1954,7 @@ readonly (true|false) "false"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1765,6 +1972,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT radiogroup EMPTY>
 <!ATTLIST radiogroup
@@ -1775,6 +1983,7 @@ ro_false CDATA #IMPLIED
 options CDATA #IMPLIED
 needed (true|false) "false"
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1793,6 +2002,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT date EMPTY>
 <!ATTLIST date
@@ -1812,6 +2022,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1828,6 +2039,7 @@ background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT date-time EMPTY>
 <!ATTLIST date-time
@@ -1847,6 +2059,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1863,6 +2076,7 @@ background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT date-timeonly EMPTY>
 <!ATTLIST date-timeonly
@@ -1882,6 +2096,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1898,6 +2113,7 @@ background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT date-duration EMPTY>
 <!ATTLIST date-duration
@@ -1923,6 +2139,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1939,6 +2156,7 @@ background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT date-since EMPTY>
 <!ATTLIST date-since
@@ -1950,6 +2168,7 @@ max CDATA #IMPLIED
 year_range CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1967,6 +2186,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT date-time_today EMPTY>
 <!ATTLIST date-time_today
@@ -1978,6 +2198,7 @@ max CDATA #IMPLIED
 year_range CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -1995,6 +2216,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT time_or_date EMPTY>
 <!ATTLIST time_or_date
@@ -2006,6 +2228,7 @@ max CDATA #IMPLIED
 year_range CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2023,6 +2246,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT date-range EMPTY>
 <!ATTLIST date-range
@@ -2036,6 +2260,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2053,12 +2278,14 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT diff EMPTY>
 <!ATTLIST diff
 value CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2077,6 +2304,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT dropdown_button EMPTY>
 <!ATTLIST dropdown_button
@@ -2096,6 +2324,7 @@ validation_error CDATA #IMPLIED
 readonly (true|false) "false"
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 disabled (true|false) "false"
 width CDATA #IMPLIED
@@ -2112,6 +2341,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT styles EMPTY>
 <!ATTLIST styles
@@ -2120,6 +2350,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT link-to EMPTY>
 <!ATTLIST link-to
@@ -2138,6 +2369,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2155,6 +2387,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT link-apps EMPTY>
 <!ATTLIST link-apps
@@ -2168,8 +2401,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -2178,6 +2413,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2195,12 +2431,14 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT link-entry EMPTY>
 <!ATTLIST link-entry
 value CDATA #IMPLIED
 only_app CDATA #IMPLIED
 application_list CDATA #IMPLIED
+app_icons (true|false) "false"
 blur CDATA #IMPLIED
 query CDATA #IMPLIED
 select CDATA #IMPLIED
@@ -2212,6 +2450,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2229,14 +2468,18 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT link EMPTY>
 <!ATTLIST link
 only_app CDATA #IMPLIED
 value CDATA #IMPLIED
 needed CDATA #IMPLIED
+link_hook CDATA "view"
+target_app CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2255,6 +2498,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT link-string EMPTY>
 <!ATTLIST link-string
@@ -2265,6 +2509,7 @@ link_type CDATA #IMPLIED
 expose_view (true|false) "true"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2283,12 +2528,14 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT link-list EMPTY>
 <!ATTLIST link-list
 show_deleted (true|false) "false"
 onchange CDATA #IMPLIED
 readonly (true|false) "false"
+target_app CDATA #IMPLIED
 application CDATA #IMPLIED
 value CDATA #IMPLIED
 only_app CDATA #IMPLIED
@@ -2296,6 +2543,7 @@ link_type CDATA #IMPLIED
 expose_view (true|false) "true"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2313,6 +2561,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT link-add EMPTY>
 <!ATTLIST link-add
@@ -2326,6 +2575,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2343,6 +2593,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT select-account EMPTY>
 <!ATTLIST select-account
@@ -2355,8 +2606,10 @@ select_options CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
 tags (true|false) "false"
+allow_single_deselect (true|false) "true"
 value CDATA #IMPLIED
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -2365,6 +2618,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2382,6 +2636,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT taglist EMPTY>
 <!ATTLIST taglist
@@ -2404,10 +2659,13 @@ tags (true|false) "false"
 useCommaKey (true|false) "true"
 groupBy CDATA #IMPLIED
 minChars CDATA #IMPLIED
+editModeEnabled (true|false) "true"
 expand_multiple_rows CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
+allow_single_deselect (true|false) "true"
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onfocus CDATA #IMPLIED
 validation_error CDATA #IMPLIED
@@ -2415,6 +2673,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 disabled (true|false) "false"
 class CDATA #IMPLIED
@@ -2429,6 +2688,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT taglist-account EMPTY>
 <!ATTLIST taglist-account
@@ -2452,10 +2712,13 @@ tags (true|false) "false"
 useCommaKey (true|false) "true"
 groupBy CDATA #IMPLIED
 minChars CDATA #IMPLIED
+editModeEnabled (true|false) "true"
 expand_multiple_rows CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
+allow_single_deselect (true|false) "true"
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onfocus CDATA #IMPLIED
 validation_error CDATA #IMPLIED
@@ -2463,6 +2726,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 disabled (true|false) "false"
 class CDATA #IMPLIED
@@ -2477,6 +2741,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT taglist-email EMPTY>
 <!ATTLIST taglist-email
@@ -2485,6 +2750,7 @@ autocomplete_params CDATA #IMPLIED
 allowFreeEntries (true|false) "true"
 include_lists (true|false) "false"
 useCommaKey (true|false) "false"
+domainOptional (true|false) "false"
 empty_label CDATA #IMPLIED
 select_options CDATA #IMPLIED
 value CDATA #IMPLIED
@@ -2500,10 +2766,13 @@ rows CDATA #IMPLIED
 tags (true|false) "false"
 groupBy CDATA #IMPLIED
 minChars CDATA #IMPLIED
+editModeEnabled (true|false) "true"
 expand_multiple_rows CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
+allow_single_deselect (true|false) "true"
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onfocus CDATA #IMPLIED
 validation_error CDATA #IMPLIED
@@ -2511,6 +2780,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 disabled (true|false) "false"
 class CDATA #IMPLIED
@@ -2525,6 +2795,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT taglist-cat EMPTY>
 <!ATTLIST taglist-cat
@@ -2547,10 +2818,13 @@ rows CDATA #IMPLIED
 tags (true|false) "false"
 useCommaKey (true|false) "true"
 groupBy CDATA #IMPLIED
+editModeEnabled (true|false) "true"
 expand_multiple_rows CDATA #IMPLIED
 selected_first (true|false) "true"
 search (true|false) "false"
+allow_single_deselect (true|false) "true"
 other CDATA #IMPLIED
+value_class CDATA #IMPLIED
 needed (true|false) "false"
 onfocus CDATA #IMPLIED
 validation_error CDATA #IMPLIED
@@ -2558,6 +2832,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 disabled (true|false) "false"
 class CDATA #IMPLIED
@@ -2572,6 +2847,112 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
+>
+<!ELEMENT taglist-thumbnail EMPTY>
+<!ATTLIST taglist-thumbnail
+minChars CDATA #IMPLIED
+autocomplete_url CDATA #IMPLIED
+autocomplete_params CDATA #IMPLIED
+empty_label CDATA #IMPLIED
+select_options CDATA #IMPLIED
+value CDATA #IMPLIED
+allowFreeEntries (true|false) "true"
+onchange CDATA #IMPLIED
+onclick CDATA #IMPLIED
+tagRenderer CDATA #IMPLIED
+listRenderer CDATA #IMPLIED
+width CDATA "100%"
+height CDATA #IMPLIED
+maxSelection CDATA #IMPLIED
+multiple CDATA #IMPLIED
+rows CDATA #IMPLIED
+tags (true|false) "false"
+useCommaKey (true|false) "true"
+groupBy CDATA #IMPLIED
+editModeEnabled (true|false) "true"
+expand_multiple_rows CDATA #IMPLIED
+selected_first (true|false) "true"
+search (true|false) "false"
+allow_single_deselect (true|false) "true"
+other CDATA #IMPLIED
+value_class CDATA #IMPLIED
+needed (true|false) "false"
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
+align CDATA "left"
+disabled (true|false) "false"
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+attributes CDATA #IMPLIED
+>
+<!ELEMENT taglist-state EMPTY>
+<!ATTLIST taglist-state
+minChars CDATA #IMPLIED
+autocomplete_url CDATA #IMPLIED
+autocomplete_params CDATA #IMPLIED
+country_code CDATA "de"
+empty_label CDATA #IMPLIED
+select_options CDATA #IMPLIED
+value CDATA #IMPLIED
+allowFreeEntries (true|false) "true"
+onchange CDATA #IMPLIED
+onclick CDATA #IMPLIED
+tagRenderer CDATA #IMPLIED
+listRenderer CDATA #IMPLIED
+width CDATA "100%"
+height CDATA #IMPLIED
+maxSelection CDATA #IMPLIED
+multiple CDATA #IMPLIED
+rows CDATA #IMPLIED
+tags (true|false) "false"
+useCommaKey (true|false) "true"
+groupBy CDATA #IMPLIED
+editModeEnabled (true|false) "true"
+expand_multiple_rows CDATA #IMPLIED
+selected_first (true|false) "true"
+search (true|false) "false"
+allow_single_deselect (true|false) "true"
+other CDATA #IMPLIED
+value_class CDATA #IMPLIED
+needed (true|false) "false"
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
+align CDATA "left"
+disabled (true|false) "false"
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT customfields EMPTY>
 <!ATTLIST customfields
@@ -2580,8 +2961,11 @@ fields CDATA #IMPLIED
 value CDATA #IMPLIED
 type_filter CDATA #IMPLIED
 private (true|false) "undefined"
+sub_app CDATA #IMPLIED
+onchange CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2600,6 +2984,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT customfields-list EMPTY>
 <!ATTLIST customfields-list
@@ -2608,8 +2993,11 @@ fields CDATA #IMPLIED
 value CDATA #IMPLIED
 type_filter CDATA #IMPLIED
 private (true|false) "undefined"
+sub_app CDATA #IMPLIED
+onchange CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2628,6 +3016,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT favorites EMPTY>
 <!ATTLIST favorites
@@ -2638,7 +3027,7 @@ filters CDATA #IMPLIED
 id CDATA "favorite"
 label CDATA #IMPLIED
 label_updates (true|false) "false"
-image CDATA "/egroupware/pixelegg/images/fav_filter.png"
+image CDATA "/egroupware/etemplate/templates/pixelegg/images/fav_filter.svg"
 statustext CDATA "Favorite queries"
 ro_image CDATA #IMPLIED
 onclick CDATA #IMPLIED
@@ -2652,6 +3041,7 @@ onfocus CDATA #IMPLIED
 validation_error CDATA #IMPLIED
 readonly (true|false) "false"
 value CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 disabled (true|false) "false"
 width CDATA #IMPLIED
@@ -2667,6 +3057,7 @@ background CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT html EMPTY>
 <!ATTLIST html
@@ -2674,6 +3065,7 @@ label CDATA #IMPLIED
 needed CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2692,25 +3084,33 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT htmlarea EMPTY>
 <!ATTLIST htmlarea
-mode CDATA "simple"
+mode CDATA #IMPLIED
 height CDATA #IMPLIED
 width CDATA #IMPLIED
-expand_toolbar (true|false) "true"
-base_href CDATA #IMPLIED
-config CDATA #IMPLIED
 value CDATA #IMPLIED
 imageUpload CDATA #IMPLIED
+file_picker_callback CDATA #IMPLIED
+images_upload_handler CDATA #IMPLIED
+menubar (true|false) "true"
+statusbar (true|false) "true"
+valid_children CDATA "+body[style]"
+readonly CDATA #IMPLIED
+toggle_readonly (true|false) "true"
+save_callback CDATA #IMPLIED
+save_callback_params CDATA #IMPLIED
+editable_height CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
 validation_error CDATA #IMPLIED
 tabindex CDATA #IMPLIED
-readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2726,6 +3126,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT tabbox (tabs,tabpanels)>
 <!ELEMENT tabs (tab)>
@@ -2738,6 +3139,7 @@ align_tabs CDATA "h"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2756,6 +3158,77 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
+>
+<!ELEMENT button-timestamp EMPTY>
+<!ATTLIST button-timestamp
+target CDATA #IMPLIED
+format CDATA #IMPLIED
+timezone CDATA #IMPLIED
+statustext CDATA "Insert timestamp into description field"
+image CDATA "timestamp"
+background_image (true|false) "true"
+label CDATA #IMPLIED
+ro_image CDATA #IMPLIED
+onclick CDATA #IMPLIED
+accesskey CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+novalidate (true|false) "false"
+needed CDATA #IMPLIED
+statustext_html (true|false) "false"
+align CDATA "left"
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
+>
+<!ELEMENT timestamper EMPTY>
+<!ATTLIST timestamper
+target CDATA #IMPLIED
+format CDATA #IMPLIED
+timezone CDATA #IMPLIED
+statustext CDATA "Insert timestamp into description field"
+image CDATA "timestamp"
+background_image (true|false) "true"
+label CDATA #IMPLIED
+ro_image CDATA #IMPLIED
+onclick CDATA #IMPLIED
+accesskey CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+novalidate (true|false) "false"
+needed CDATA #IMPLIED
+statustext_html (true|false) "false"
+align CDATA "left"
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT toolbar EMPTY>
 <!ATTLIST toolbar
@@ -2777,6 +3250,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT tree EMPTY>
 <!ATTLIST tree
@@ -2802,6 +3276,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 disabled (true|false) "false"
 width CDATA #IMPLIED
@@ -2817,6 +3292,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT tree-cat EMPTY>
 <!ATTLIST tree-cat
@@ -2842,6 +3318,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 disabled (true|false) "false"
 width CDATA #IMPLIED
@@ -2857,13 +3334,17 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT historylog EMPTY>
 <!ATTLIST historylog
 value CDATA #IMPLIED
 status_id CDATA "status"
+columns CDATA "user_ts,owner,status,new_value,old_value"
+get_rows CDATA "EGroupware\Api\Storage\History::get_rows"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2882,10 +3363,12 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT hrule EMPTY>
 <!ATTLIST hrule
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2904,6 +3387,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT image EMPTY>
 <!ATTLIST image
@@ -2916,6 +3400,7 @@ imagemap CDATA #IMPLIED
 label CDATA #IMPLIED
 expose_view (true|false) "false"
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2934,6 +3419,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT appicon EMPTY>
 <!ATTLIST appicon
@@ -2946,6 +3432,7 @@ imagemap CDATA #IMPLIED
 label CDATA #IMPLIED
 expose_view (true|false) "false"
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2964,6 +3451,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT avatar EMPTY>
 <!ATTLIST avatar
@@ -2980,6 +3468,7 @@ imagemap CDATA #IMPLIED
 label CDATA #IMPLIED
 expose_view (true|false) "false"
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -2998,6 +3487,42 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
+>
+<!ELEMENT lavatar EMPTY>
+<!ATTLIST lavatar
+lname CDATA #IMPLIED
+fname CDATA #IMPLIED
+contact_id CDATA #IMPLIED
+src CDATA #IMPLIED
+default_src CDATA #IMPLIED
+href CDATA #IMPLIED
+extra_link_target CDATA "_self"
+extra_link_popup CDATA #IMPLIED
+imagemap CDATA #IMPLIED
+label CDATA #IMPLIED
+expose_view (true|false) "false"
+statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT iframe EMPTY>
 <!ATTLIST iframe
@@ -3009,6 +3534,7 @@ fullscreen (true|false) "false"
 src CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3027,6 +3553,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT file EMPTY>
 <!ATTLIST file
@@ -3042,6 +3569,7 @@ label CDATA "Choose file..."
 progress_dropdownlist (true|false) "false"
 onFinishOne CDATA #IMPLIED
 accept CDATA #IMPLIED
+chunk_size CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -3050,6 +3578,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3067,6 +3596,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT progress EMPTY>
 <!ATTLIST progress
@@ -3076,6 +3606,7 @@ extra_link_popup CDATA #IMPLIED
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3094,6 +3625,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT portlet EMPTY>
 <!ATTLIST portlet
@@ -3112,6 +3644,7 @@ col CDATA #IMPLIED
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3126,6 +3659,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT ajax_select EMPTY>
 <!ATTLIST ajax_select
@@ -3146,6 +3680,7 @@ readonly (true|false) "false"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3163,12 +3698,14 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT vfs EMPTY>
 <!ATTLIST vfs
 value CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3187,6 +3724,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT vfs-name EMPTY>
 <!ATTLIST vfs-name
@@ -3208,6 +3746,7 @@ readonly (true|false) "false"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3225,6 +3764,48 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
+>
+<!ELEMENT vfs-path EMPTY>
+<!ATTLIST vfs-path
+noicon (true|false) "true"
+multiline (true|false) "false"
+size CDATA #IMPLIED
+maxlength CDATA #IMPLIED
+blur CDATA #IMPLIED
+rows CDATA #IMPLIED
+cols CDATA #IMPLIED
+validator CDATA #IMPLIED
+autocomplete CDATA #IMPLIED
+onkeypress CDATA #IMPLIED
+needed (true|false) "false"
+onchange CDATA #IMPLIED
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+value CDATA #IMPLIED
+statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT vfs-mime EMPTY>
 <!ATTLIST vfs-mime
@@ -3235,6 +3816,7 @@ expose_view (true|false) "true"
 thumb_mime_size CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3253,6 +3835,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT vfs-size EMPTY>
 <!ATTLIST vfs-size
@@ -3267,7 +3850,10 @@ extra_link_popup CDATA #IMPLIED
 expose_view (true|false) "false"
 mime CDATA #IMPLIED
 mime_data CDATA #IMPLIED
+hover_action CDATA #IMPLIED
+hover_action_title CDATA "Edit"
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3286,6 +3872,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT vfs-mode EMPTY>
 <!ATTLIST vfs-mode
@@ -3300,7 +3887,10 @@ extra_link_popup CDATA #IMPLIED
 expose_view (true|false) "false"
 mime CDATA #IMPLIED
 mime_data CDATA #IMPLIED
+hover_action CDATA #IMPLIED
+hover_action_title CDATA "Edit"
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3319,6 +3909,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT vfs-uid EMPTY>
 <!ATTLIST vfs-uid
@@ -3330,6 +3921,7 @@ link_type CDATA #IMPLIED
 expose_view (true|false) "true"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3348,6 +3940,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT vfs-gid EMPTY>
 <!ATTLIST vfs-gid
@@ -3359,6 +3952,7 @@ link_type CDATA #IMPLIED
 expose_view (true|false) "true"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3377,6 +3971,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT vfs-upload EMPTY>
 <!ATTLIST vfs-upload
@@ -3394,6 +3989,7 @@ label CDATA "Choose file..."
 progress_dropdownlist (true|false) "false"
 onFinishOne CDATA #IMPLIED
 accept CDATA #IMPLIED
+chunk_size CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -3401,6 +3997,7 @@ validation_error CDATA #IMPLIED
 tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3418,6 +4015,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT vfs-select EMPTY>
 <!ATTLIST vfs-select
@@ -3429,6 +4027,10 @@ mime CDATA #IMPLIED
 button_label CDATA "open"
 value CDATA #IMPLIED
 button_caption CDATA "Select files from Filemanager ..."
+button_icon CDATA "check"
+name CDATA #IMPLIED
+dialog_title CDATA "Save as"
+extra_buttons CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -3437,6 +4039,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3454,6 +4057,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT video EMPTY>
 <!ATTLIST video
@@ -3465,6 +4069,7 @@ controls (true|false) "false"
 poster CDATA #IMPLIED
 loop (true|false) "false"
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3483,6 +4088,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT barcode EMPTY>
 <!ATTLIST barcode
@@ -3495,6 +4101,7 @@ barHeight CDATA "50"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3513,6 +4120,7 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT itempicker EMPTY>
 <!ATTLIST itempicker
@@ -3530,6 +4138,7 @@ tabindex CDATA #IMPLIED
 readonly (true|false) "false"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
 align CDATA "left"
 onclick CDATA #IMPLIED
 disabled (true|false) "false"
@@ -3547,6 +4156,7 @@ id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
 <!ELEMENT script EMPTY>
 <!ATTLIST script
@@ -3555,4 +4165,5 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
 >
