@@ -1016,6 +1016,7 @@ body {
   border-right: 0;
   border-top: 0;
   border-bottom: 0;
+  margin-left: 4px;
 }
 #mail-index div.splitter-bar-horizontal {
   border-top: 1px solid #B4B4B4;
@@ -1036,7 +1037,6 @@ body {
   margin: 3px 5px 0 0;
 }
 #mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
-  width: 58%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
