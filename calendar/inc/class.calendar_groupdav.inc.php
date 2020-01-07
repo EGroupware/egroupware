@@ -747,7 +747,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		foreach($events as $k => &$recurrence)
 		{
 			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($uid)[$k]:" . array2string($recurrence));
-			if ($master && $recurrence['reference'] != $master['id'])
+			if ($master && $recurrence['reference'] && $recurrence['reference'] != $master['id'])
 			{
 				unset($events[$k]);
 				continue;	// same uid, but references a different event or is own master
