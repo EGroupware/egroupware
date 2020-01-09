@@ -194,10 +194,10 @@ class Egw extends Egw\Base
 
 		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
 		{
+			$this->define_egw_constants();
+
 			$this->verify_session();
 			$this->applications->read_installed_apps();	// to get translated app-titles, has to be after verify_session
-
-			$this->define_egw_constants();
 
 			$this->check_app_rights();
 
