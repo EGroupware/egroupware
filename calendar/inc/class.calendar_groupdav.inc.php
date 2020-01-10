@@ -688,7 +688,9 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				if (isset($expand['start'])) $expand['start'] = $this->vCalendar->_parseDateTime($expand['start']);
 				if (isset($expand['end'])) $expand['end'] = $this->vCalendar->_parseDateTime($expand['end']);
 			}
-			$events =& self::get_series($event['uid'], $this->bo, $expand, $user);
+			// pass in original event as master, as it has correct start-date even if first recurrence is an exception
+			$events =& self::get_series($event['uid'], $this->bo, $expand, $user, $event);
+
 			// as alarm is now only on next recurrence, set alarm from original event on master
 			if ($event['alarm']) $events[0]['alarm'] = $event['alarm'];
 		}
@@ -708,9 +710,10 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param calendar_bo $bo =null calendar_bo object to reuse for search call
 	 * @param boolean|array $expand =false true or array with values for 'start', 'end' to expand recurrences
 	 * @param int $user =null account_id of calendar to display, to remove master, if current user does not participate in
+	 * @param array $master =null use provided event as master to fix wrong start-date if first recurrence is an exception
 	 * @return array
 	 */
-	private static function &get_series($uid,calendar_bo $bo=null, $expand=false, $user=null)
+	private static function &get_series($uid,calendar_bo $bo=null, $expand=false, $user=null, $master=null)
 	{
 		if (is_null($bo)) $bo = new calendar_bopdate();
 
@@ -729,13 +732,12 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		}
 
 		// find master, which is not always first event, eg. when first event is an exception
-		$master = null;
 		$exceptions = array();
 		foreach($events as $k => &$recurrence)
 		{
 			if ($recurrence['recur_type'])
 			{
-				$master = $recurrence;
+				if (!isset($master)) $master = $recurrence;
 				$exceptions =& $master['recur_exception'];
 				unset($events[$k]);
 				break;
