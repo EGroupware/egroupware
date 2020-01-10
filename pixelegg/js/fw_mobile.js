@@ -1055,7 +1055,9 @@
 			window.callManual = window.framework.callManual;
 			jQuery('#egw_fw_print').click(function(){window.framework.print();});
 			jQuery('#topmenu_logout').click(function(){ window.framework.redirect(this.getAttribute('href')); return false;});
-			jQuery('form[name^="tz_selection"]').children().on('change', function(){framework.tzSelection(this.value);	return false;});
+			jQuery('form[name^="tz_selection"]').children()
+				.on('change', function() { framework.tzSelection(this.value); return false; })
+				.on('click', function(e) { e.stopPropagation(); });
 			window.egw.link_quick_add('quick_add');
 			history.pushState({type:'main'}, 'main', '#main');
 			jQuery(window).on('popstate', function(e){
