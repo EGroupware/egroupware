@@ -127,7 +127,9 @@
 			jQuery('#topmenu_info_user_avatar').click(function(){window.framework.toggle_avatar_menu();});
 			jQuery('#topmenu_info_print_title').click(function(){window.framework.print();});
 			jQuery('#topmenu_info_logout').click(function(){ window.framework.redirect(this.getAttribute('data-logout-url')); });
-			jQuery('form[name^="tz_selection"]').children().on('change', function(){framework.tzSelection(this.value);	return false;});
+			jQuery('form[name^="tz_selection"]').children()
+				.on('change', function() { framework.tzSelection(this.value); return false; })
+				.on('click', function(e) { e.stopPropagation(); });
 			window.egw.link_quick_add('topmenu_info_quick_add');
 
 			// allowing javascript urls in topmenu and sidebox only under CSP by binding click handlers to them
