@@ -7337,6 +7337,7 @@ form[id^="ranking-"] .dialogHeadbar {
     margin: 0 auto;
   }
   div#loginMainDiv div#centerBox {
+    position: relative;
     padding: 0;
     -webkit-border-top-right-radius: 0;
     -webkit-border-bottom-right-radius: 0;
@@ -7396,6 +7397,9 @@ form[id^="ranking-"] .dialogHeadbar {
   }
 }
 @media only screen and (max-device-width : 1024px) and (orientation : portrait) {
+  body div#loginMainDiv div#centerBox {
+    position: relative;
+  }
   body div#loginMainDiv div#centerBox form table.divLoginbox {
     width: 100%;
   }
