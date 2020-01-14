@@ -14,6 +14,7 @@
 				<column disabled="@no_total" width="80"/>
 				<column width="80"/>
 				<column width="40%"/>
+				<column width="30%"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -26,6 +27,7 @@
 					<nextmatch-header label="Total" id="total"/>
 					<nextmatch-sortheader label="Idle" id="session_dla"/>
 					<nextmatch-sortheader label="User-Agent" id="user_agent"/>
+					<nextmatch-header label="Action" id="session_action"/>
 				</row>
 				<row class="row $row_cont[class]">
 					<hbox>
@@ -42,6 +44,7 @@
 					<date-duration id="${row}[total]" readonly="true" options=",hm,24"/>
 					<date-since id="${row}[session_dla]" readonly="true"/>
 					<description statustext="$row_cont[user_agent]" id="${row}[os_browser]" class="admin_userAgent"/>
+					<description id="${row}[session_action]"/>
 				</row>
 			</rows>
 		</grid>

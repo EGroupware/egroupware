@@ -2,16 +2,17 @@
 set -ex
 
 VERSION=${VERSION:-dev-master}
+PHP_VERSION=${PHP_VERSION:-7.3}
 
 # if EGW_SESSION_TIMEOUT is set in environment, propagate value to php.ini
 test -n "$EGW_SESSION_TIMEOUT" && test "$EGW_SESSION_TIMEOUT" -ge 1440 &&
 	sed -e "s/^;\?session.gc_maxlifetime.*/session.gc_maxlifetime=$EGW_SESSION_TIMEOUT/g" \
-		-i /etc/php/7.3/fpm/php.ini
+		-i /etc/php/$PHP_VERSION/fpm/php.ini
 
 # if XDEBUG_REMOTE_HOST is set, patch it into xdebug config
 test -n "$XDEBUG_REMOTE_HOST" && \
 	sed -e "s/^xdebug.remote_host.*/xdebug.remote_host=$XDEBUG_REMOTE_HOST/g" \
-		-i /etc/php/7.3/fpm/conf.d/*xdebug.ini
+		-i /etc/php/$PHP_VERSION/fpm/conf.d/*xdebug.ini
 
 # downgrade composer to 1.8.6, as 1.9.x does not work with "dev-master" version :(
 composer selfupdate 1.8.6
@@ -79,7 +80,7 @@ chmod 600 $LOG
 max_retries=10
 export try=0
 # EGW_SKIP_INSTALL=true skips initial installation (no header.inc.php yet)
-until [ -n "$EGW_SKIP_INSTALL" -a ! -f /var/www/egroupware/header.inc.php ] || \
+until [ "$EGW_SKIP_INSTALL" = "allways" -o -n "$EGW_SKIP_INSTALL" -a ! -f /var/www/egroupware/header.inc.php ] || \
 	php /var/www/egroupware/doc/rpm-build/post_install.php \
 	--start_webserver "" --autostart_webserver "" \
 	--start_db "" --autostart_db "" \
@@ -113,4 +114,4 @@ done 2>&1 | tee -a $LOG
 # to run async jobs
 service cron start
 
-exec "$@"
+exec php-fpm$PHP_VERSION --nodaemonize

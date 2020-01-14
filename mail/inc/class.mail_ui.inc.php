@@ -2813,18 +2813,22 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 *				action => string
 	 *			)
 	 * @param string $path path to save the emails
+	 * @param string $submit_button_id dialog button id of triggered submit
+	 * @param string $savemode save mode: 'overwrite' or 'rename'
 	 */
-	function ajax_vfsSave ($params,$path)
+	function ajax_vfsSave ($params, $path, $submit_button_id='', $savemode='rename')
 	{
+		unset($submit_button_id); // not used here
+
 		$response = Api\Json\Response::get();
 
 		switch ($params['action'])
 		{
 			case 'message':
-				$result = $this->vfsSaveMessages($params['ids'], $path);
+				$result = $this->vfsSaveMessages($params['ids'], $path, $savemode);
 				break;
 			case 'attachment':
-				$result = $this->vfsSaveAttachments($params['ids'], $path);
+				$result = $this->vfsSaveAttachments($params['ids'], $path, $savemode);
 				break;
 		}
 		$response->call('app.mail.vfsSaveCallback', $result);
@@ -2835,6 +2839,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 *
 	 * @param string|array $ids use splitRowID, to separate values
 	 * @param string $path path in vfs (no Vfs::PREFIX!), only directory for multiple id's ($ids is an array)
+	 * @param string $savemode save mode: 'overwrite' or 'rename'
 	 *
 	 * @return array returns an array including message and success result
 	 *		array (
@@ -2842,7 +2847,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 *			'success' => BOOLEAN
 	 *		)
 	 */
-	function vfsSaveMessages($ids,$path)
+	function vfsSaveMessages($ids,$path, $savemode='rename')
 	{
 		// add mail translation
 		Api\Translation::add_app('mail');
@@ -2884,17 +2889,20 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$file = $dir . '/' . mail_bo::clean_subject_for_filename(str_replace($dir.'/', '', $path));
 			}
 
-			// Check if file already exists, then try to assign a none existance filename
-			$counter = 1;
-			$tmp_file = $file;
-			while (Vfs::file_exists($tmp_file))
+			if ($savemode != 'overwrite')
 			{
+				// Check if file already exists, then try to assign a none existance filename
+				$counter = 1;
 				$tmp_file = $file;
-				$pathinfo = pathinfo(Vfs::basename($tmp_file));
-				$tmp_file = $dir . '/' . $pathinfo['filename'] . '(' . $counter . ')' . '.' . $pathinfo['extension'];
-				$counter++;
+				while (Vfs::file_exists($tmp_file))
+				{
+					$tmp_file = $file;
+					$pathinfo = pathinfo(Vfs::basename($tmp_file));
+					$tmp_file = $dir . '/' . $pathinfo['filename'] . '(' . $counter . ')' . '.' . $pathinfo['extension'];
+					$counter++;
+				}
+				$file = $tmp_file;
 			}
-			$file = $tmp_file;
 
 			if (!($fp = Vfs::fopen($file,'wb')) || !fwrite($fp,$message))
 			{
@@ -2927,6 +2935,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 *
 	 * @param string|array $ids '::' delimited mailbox::uid::part-id::is_winmail::name (::name for multiple id's)
 	 * @param string $path path in vfs (no Vfs::PREFIX!), only directory for multiple id's ($ids is an array)
+	 * @param string $savemode save mode: 'overwrite' or 'rename'
 	 *
 	 * @return array returns an array including message and success result
 	 *		array (
@@ -2934,7 +2943,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 *			'success' => BOOLEAN
 	 *		)
 	 */
-	function vfsSaveAttachments($ids,$path)
+	function vfsSaveAttachments($ids,$path, $savemode='rename')
 	{
 		$res = array (
 			'msg' => lang('Attachment has been saved successfully.'),
@@ -3032,16 +3041,19 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 			$file = $dir. '/' . ($filename ? $filename : mail_bo::clean_subject_for_filename($attachment['filename']));
 
-			$counter = 1;
-			$tmp_file = $file;
-			while (Vfs::file_exists($tmp_file))
+			if ($savemode != 'overwrite')
 			{
+				$counter = 1;
 				$tmp_file = $file;
-				$pathinfo = pathinfo(Vfs::basename($tmp_file));
-				$tmp_file = $dir . '/' . $pathinfo['filename'] . '(' . $counter . ')' . '.' . $pathinfo['extension'];
-				$counter++;
+				while (Vfs::file_exists($tmp_file))
+				{
+					$tmp_file = $file;
+					$pathinfo = pathinfo(Vfs::basename($tmp_file));
+					$tmp_file = $dir . '/' . $pathinfo['filename'] . '(' . $counter . ')' . '.' . $pathinfo['extension'];
+					$counter++;
+				}
+				$file = $tmp_file;
 			}
-			$file = $tmp_file;
 
 			if (!($fp = Vfs::fopen($file,'wb')) ||
 				!fwrite($fp,$attachment['attachment']))

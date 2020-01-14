@@ -176,7 +176,7 @@ app.classes.admin = AppJS.extend(
 					jQuery(this.ajax_target.node).empty();
 				}
 				this.egw.json(
-					framework.activeApp.getMenuaction('ajax_exec'),
+					framework.activeApp.getMenuaction('ajax_exec', _url),
 					// It's important that the context is null, or etemplate2
 					// won't load the template properly
 					[_url], this._ajax_load_callback,null, true, this
@@ -731,7 +731,7 @@ app.classes.admin = AppJS.extend(
 		if(this.egw.user('apps').policy)
 		{
 			dialog_options['width'] = 550;
-			dialog_options['height'] = 350,
+			dialog_options['height'] = 450,
 			modifications.tabs = {
 				add_tabs:   true,
 				tabs: [{

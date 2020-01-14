@@ -555,7 +555,9 @@ class Html
 		$html2ret[] = substr($html,0,$pos);
 		while ($pos!==false)
 		{
-			$endofpre = stripos($html,'</pre>',$pos);
+			// avoid infinit loop in case the endof pre can't be found, just give the
+			// end position to return the rest of content as return html
+			$endofpre = (stripos($html,'</pre>',$pos) === false ? strlen($html) : stripos($html,'</pre>',$pos));
 			$length = $endofpre-$pos+6;
 			$html2ret[] = substr($html,$pos,$length);
 			$searchFor = '<pre ';

@@ -282,12 +282,6 @@ class Session
 	 */
 	function __destruct()
 	{
-		// write dla update on destruct, allows to modify session action by calling Session::set_action()
-		if (!isset($GLOBALS['egw_info']['flags']['no_dla_update']) || !$GLOBALS['egw_info']['flags']['no_dla_update'])
-		{
-			$this->update_dla(true);
-		}
-
 		self::encrypt($this->kp3);
 	}
 
@@ -806,7 +800,7 @@ class Session
 			}
 			else
 			{
-				throw new \Exception(implode(', $errors'), self::CD_SECOND_FACTOR_REQUIRED);
+				throw new \Exception(implode(', ', $errors), self::CD_SECOND_FACTOR_REQUIRED);
 			}
 		}
 	}
@@ -1014,6 +1008,8 @@ class Session
 				'session_dla'    => $now,
 				'session_action' => $this->update_dla(false),	// dont update egw_access_log
 			),false,__LINE__,__FILE__);
+
+			$_SESSION[self::EGW_SESSION_VAR]['session_logged_dla'] = $now;
 
 			$ret = $GLOBALS['egw']->db->get_last_insert_id(self::ACCESS_LOG_TABLE,'sessionid');
 
@@ -1299,7 +1295,7 @@ class Session
 		// allow xajax / notifications to not update the dla, so sessions can time out again
 		if (!isset($GLOBALS['egw_info']['flags']['no_dla_update']) || !$GLOBALS['egw_info']['flags']['no_dla_update'])
 		{
-			$this->update_dla();
+			$this->update_dla(true);
 		}
 		elseif ($GLOBALS['egw_info']['flags']['currentapp'] == 'notifications')
 		{
@@ -1759,6 +1755,11 @@ class Session
 	}
 
 	/**
+	 * Ignore dla logging for a maximum of 900s = 15min
+	 */
+	const MAX_IGNORE_DLA_LOG = 900;
+
+	/**
 	 * Update session_action and session_dla (session last used time)
 	 *
 	 * @param boolean $update_access_log =false false: dont update egw_access_log table, but set $this->action
@@ -1767,39 +1768,38 @@ class Session
 	private function update_dla($update_access_log=false)
 	{
 		// This way XML-RPC users aren't always listed as xmlrpc.php
-		if (!$update_access_log)
+		if (isset($_GET['menuaction']))
 		{
-			if ($this->xmlrpc_method_called)
-			{
-				$action = $this->xmlrpc_method_called;
-			}
-			elseif (isset($_GET['menuaction']))
-			{
-				$action = $_GET['menuaction'];
-			}
-			else
-			{
-				$action = $_SERVER['PHP_SELF'];
-				// remove EGroupware path, if not installed in webroot
-				$egw_path = $GLOBALS['egw_info']['server']['webserver_url'];
-				if ($egw_path[0] != '/') $egw_path = parse_url($egw_path,PHP_URL_PATH);
-				if ($action == '/Microsoft-Server-ActiveSync')
-				{
-					$action .= '?Cmd='.$_GET['Cmd'].'&DeviceId='.$_GET['DeviceId'];
-				}
-				elseif ($egw_path)
-				{
-					list(,$action) = explode($egw_path,$action,2);
-				}
-			}
-			$this->set_action($action);
+			list(, $action) = explode('.ajax_exec.template.', $_GET['menuaction']);
+
+			if (empty($action)) $action = $_GET['menuaction'];
 		}
+		else
+		{
+			$action = $_SERVER['PHP_SELF'];
+			// remove EGroupware path, if not installed in webroot
+			$egw_path = $GLOBALS['egw_info']['server']['webserver_url'];
+			if ($egw_path[0] != '/') $egw_path = parse_url($egw_path,PHP_URL_PATH);
+			if ($action == '/Microsoft-Server-ActiveSync')
+			{
+				$action .= '?Cmd='.$_GET['Cmd'].'&DeviceId='.$_GET['DeviceId'];
+			}
+			elseif ($egw_path)
+			{
+				list(,$action) = explode($egw_path,$action,2);
+			}
+		}
+		$this->set_action($action);
+
 		// update dla in access-log table, if we have an access-log row (non-anonymous session)
 		if ($this->sessionid_access_log && $update_access_log &&
 			// ignore updates (session creation is written) of *dav, avatar and thumbnail, due to possible high volume of updates
-			!preg_match('#^(/webdav|/groupdav|/api/avatar|/api/thumbnail)\.php#', $this->action) &&
+			(!preg_match('#^(/webdav|/groupdav|/api/avatar|/api/thumbnail)\.php#', $this->action) ||
+				(time() - $_SESSION[self::EGW_SESSION_VAR]['session_logged_dla']) > self::MAX_IGNORE_DLA_LOG) &&
 			is_object($GLOBALS['egw']->db))
 		{
+			$_SESSION[self::EGW_SESSION_VAR]['session_logged_dla'] = time();
+
 			$GLOBALS['egw']->db->update(self::ACCESS_LOG_TABLE,array(
 				'session_dla' => time(),
 				'session_action' => $this->action,

@@ -11,6 +11,7 @@
 		<meta name="author" content="EGroupware GmbH http://www.egroupware.org" />
 		{pngfix}
 		{meta_robots}
+		<link rel="manifest" href="{webserver_url}/manifest.json"/>
 		<link rel="icon" href="{img_icon}" type="image/x-ico" />
 		<link rel="shortcut icon" href="{img_shortcut}" />
 		<link rel="stylesheet" href="{webserver_url}/api/js/offline/themes/offline-theme-slide.css">

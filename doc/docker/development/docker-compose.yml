@@ -25,6 +25,16 @@ volumes:
       type: none
       o: bind
       device: $PWD/sources/egroupware/swoolepush
+  # collabora-config
+  collabora-config:
+    driver_opts:
+      type: none
+      o: bind
+      # to upgrade an existing non-docker installation most easy is to use the existing
+      # data directory /var/lib/egroupware AND the host database see below
+      #device: /var/lib/egroupware/default/loolwsd
+      # otherwise data is stored in data subdirectory of the current directory
+      device: $PWD/data/default/loolwsd
   # for Mac and Windows, do NOT use a directory for the DB, as the Docker host is in a VM!
   db:
   sessions:
@@ -32,6 +42,7 @@ volumes:
   cache:
 services:
   egroupware:
+    # you can also use tags like: 7.3, 7.3.12 or 7.4
     image: egroupware/development:master
     # setting a default language for a new installation
     #environment:
@@ -110,6 +121,7 @@ services:
     - "4443:443"
     depends_on:
     - egroupware
+    - collabora-key
     container_name: egroupware-nginx
 
   # run an own MariaDB:10.4 (you can use EGroupware's database backup and restore to add your existing database)
@@ -121,6 +133,9 @@ services:
     volumes:
     - db:/var/lib/mysql
     container_name: egroupware-db
+    # make mysql also available on the host
+    #ports:
+    #- "3306:3306"
 
   # push server using phpswoole
   push:
@@ -153,3 +168,20 @@ services:
     command: --schedule "0 0 4 * * *"
     container_name: egroupware-watchtower
     restart: always
+
+  # Collabora Online Office
+  collabora-key:
+    image: "quay.io/egroupware/collabora-key:stable"
+    #image: collabora/code:latest
+    # needs to be initialised via: docker run --rm -v dev_collabora-config:/mnt --entrypoint '/bin/cp -r /etc/loolwsd /mnt' quay.io/egroupware/collabora-key:stable
+    volumes:
+    - collabora-config:/etc/loolwsd
+    # dont try to regenerate the (not used certificate) as volumn is readonly
+    environment:
+    - DONT_GEN_SSL_CERT=1
+    restart: always
+    container_name: collabora-key
+    # set the ip-address of your docker host AND your official DNS name so Collabora
+    # can access EGroupware without the need to go over your firewall
+    #extra_hosts:
+    #- "my.host.name:ip-address"

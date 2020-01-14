@@ -144,6 +144,9 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			mobile: {
 				theme: 'silver'
 			},
+			formats: {
+				customparagraph: { block: 'p', styles: {"margin-block-start": "0px", "margin-block-end": "0px"}}
+			},
 			min_height: 100,
 			convert_urls: false,
 			language: et2_htmlarea.LANGUAGE_CODE[egw.preference('lang', 'common')],
@@ -167,7 +170,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			],
 			toolbar: et2_htmlarea.TOOLBAR_SIMPLE,
 			block_formats: "Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;"+
-					"Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre",
+					"Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre;Custom Paragraph=customparagraph",
 			font_formats: "Andale Mono=andale mono,times;Arial=arial,helvetica,"+
 					"sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book "+
 					"antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;"+
@@ -334,6 +337,11 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 
 		var rte_menubar = egw.preference('rte_menubar', 'common');
 		var rte_toolbar = egw.preference('rte_toolbar', 'common');
+		// we need to have rte_toolbar values as an array
+		if (rte_toolbar && typeof rte_toolbar == "object")
+		{
+			rte_toolbar = Object.values(rte_toolbar);
+		}
 		var settings = {
 			fontsize_formats: et2_htmlarea.FONT_SIZE_FORMATS[egw.preference('rte_font_unit', 'common')],
 			menubar: parseInt(rte_menubar) && this.menubar ? true : typeof rte_menubar != 'undefined' ? false : this.menubar

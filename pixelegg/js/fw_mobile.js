@@ -396,12 +396,7 @@
 		{
 			this._super.apply(this,arguments);
 			this.setSidebarState(this.activeApp.preferences.toggleMenu);
-			var self = this;
-			var $user = jQuery('#egw_fw_userinfo .user');
-
-			var $avatar = jQuery('#egw_fw_userinfo .avatar img');
-			$avatar.attr('src', egw.webserverUrl + '/api/avatar.php?account_id=' + egw.user('account_id'));
-
+			var $avatar = jQuery('#topmenu_info_user_avatar');
 			var $sidebar = jQuery('#egw_fw_sidebar');
 			$sidebar.removeClass('avatarSubmenu');
 			this.updateAppsToggle();
@@ -409,8 +404,6 @@
 			$avatar.off().on('click',function(){
 				$sidebar.toggleClass('avatarSubmenu',!$sidebar.hasClass('avatarSubmenu'));
 			});
-
-
 		},
 
 		/**
@@ -462,13 +455,13 @@
 			if (state === 'on')
 			{
 				jQuery('.egw_fw_sidebar_dropMask').remove();
-				$toggleMenu.addClass('sidebar-toggle');
+				$toggleMenu.addClass('sidebar-toggle egw_fw_sidebar_toggleOn');
 				this.toggleMenuResizeHandler(collapseSize);
 				this.setToggleMenuState('off');
 			}
 			else
 			{
-				$toggleMenu.removeClass('sidebar-toggle');
+				$toggleMenu.removeClass('sidebar-toggle egw_fw_sidebar_toggleOn');
 				this.toggleMenuResizeHandler(expandSize);
 				this.setToggleMenuState('on');
 				if (screen.width<700)
@@ -1058,11 +1051,13 @@
 
 		jQuery(document).ready(function() {
 			window.framework = new fw_mobile("egw_fw_sidemenu", "egw_fw_tabs",
-					window.egw_webserverUrl, egw_setSideboxSize, 300, 'egw_fw_basecontainer', 'egw_fw_menu');
+					window.egw_webserverUrl, egw_setSideboxSize, 300, 'egw_fw_basecontainer', 'egw_fw_toggler');
 			window.callManual = window.framework.callManual;
 			jQuery('#egw_fw_print').click(function(){window.framework.print();});
 			jQuery('#topmenu_logout').click(function(){ window.framework.redirect(this.getAttribute('href')); return false;});
-			jQuery('form[name^="tz_selection"]').children().on('change', function(){framework.tzSelection(this.value);	return false;});
+			jQuery('form[name^="tz_selection"]').children()
+				.on('change', function() { framework.tzSelection(this.value); return false; })
+				.on('click', function(e) { e.stopPropagation(); });
 			window.egw.link_quick_add('quick_add');
 			history.pushState({type:'main'}, 'main', '#main');
 			jQuery(window).on('popstate', function(e){

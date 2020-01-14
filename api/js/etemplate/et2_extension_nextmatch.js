@@ -806,7 +806,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			negated = this.options.settings.default_cols[0] == "!";
 			columnPreference = negated ? this.options.settings.default_cols.substring(1) : this.options.settings.default_cols;
 		}
-		if(this.options.settings.selectcols)
+		if(this.options.settings.selectcols && this.options.settings.selectcols.length)
 		{
 			columnPreference = this.options.settings.selectcols;
 			negated = false;
@@ -953,7 +953,10 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 						_colData[i].width = parseInt(size[colName])+'px';
 					}
 				}
-				_colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
+				if(!negated)
+				{
+					_colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
+				}
 				for(var j = 0; j < columnDisplay.length; j++)
 				{
 					if(columnDisplay[j] == colName)
@@ -971,7 +974,14 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			return a.order - b.order;
 		});
 		_row.sort(function(a,b) {
-			return a.colData.order - b.colData.order;
+			if(typeof a.colData !== 'undefined' && typeof b.colData !== 'undefined')
+			{
+				return a.colData.order - b.colData.order;
+			}
+			else if (typeof a.order !== 'undefined' && typeof b.order !== 'undefined')
+			{
+				return a.order - b.order;
+			}
 		});
 	},
 
@@ -1203,18 +1213,14 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 	},
 
 	_parseDataRow: function(_row, _rowData, _colData) {
-		var columnWidgets = new Array();
+		var columnWidgets = new Array(this.columns.length);
 
 		_row.sort(function(a,b) {
 			return a.colData.order - b.colData.order;
 		});
 
-		for (var x = 0; x < this.columns.length; x++)
+		for (var x = 0; x < columnWidgets.length; x++)
 		{
-			if (!this.columns[x].visible)
-			{
-				continue;
-			}
 			if (typeof _row[x] != "undefined" && _row[x].widget)
 			{
 				columnWidgets[x] = _row[x].widget;
@@ -1448,7 +1454,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			});
 			defaultCheck.set_value(this.options.settings.columns_forced ? 'force': '');
 
-			var okButton = et2_createWidget("buttononly", {}, this);
+			var okButton = et2_createWidget("buttononly", {"background_image":true, image:"check"}, this);
 			okButton.set_label(this.egw().lang("ok"));
 			okButton.onclick = function() {
 				// Update visibility
@@ -1557,7 +1563,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				self.selectPopup = null;
 			};
 
-			var cancelButton = et2_createWidget("buttononly", {}, this);
+			var cancelButton = et2_createWidget("buttononly", {"background_image":true, image:"cancel"}, this);
 			cancelButton.set_label(this.egw().lang("cancel"));
 			cancelButton.onclick = function() {
 				self.selectPopup.toggle();

@@ -1236,55 +1236,85 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		// define a mini app object for vfs select UI
 		app.vfsSelectUI = new app.classes.vfsSelectUI;
 
-		this.dialog = et2_createWidget("dialog",
+		// callback for dialog
+		this.submit_callback = function(submit_button_id, submit_value, savemode)
 		{
-			callback: function(_button_id, _value)
+			if ((submit_button_id == 'submit' || (extra_buttons_action && extra_buttons_action[submit_button_id])) && submit_value)
 			{
-				if ((_button_id == 'submit' || (extra_buttons_action && extra_buttons_action[_button_id])) && _value)
+				var files = [];
+				switch(_data.content.mode)
 				{
-					var files = [];
-					switch(_data.content.mode)
-					{
-						case 'open-multiple':
-							if (_value.dir && _value.dir.selected)
+					case 'open-multiple':
+						if (submit_value.dir && submit_value.dir.selected)
+						{
+							for(var key in Object.keys(submit_value.dir.selected))
 							{
-								for(var key in Object.keys(_value.dir.selected))
+								if (submit_value.dir.selected[key] != "")
 								{
-									if (_value.dir.selected[key] != "")
-									{
-										files.push(_value.path+'/'+_value.dir.selected[key]);
-									}
+									files.push(submit_value.path+'/'+submit_value.dir.selected[key]);
 								}
 							}
-							break;
-						case 'select-dir':
-							files = _value.path;
-							break;
-						default:
-							if (self.options.method === 'download') _value.path = _data.content.download_baseUrl;
-							files = _value.path+'/'+_value.name;
-							break;
-					}
-					self._setRecentPaths(_value.path);
-					self.value = files;
-					if (self.options.method && self.options.method !== 'download')
-					{
-						egw(window).json(
-							self.options.method,
-							[self.options.method_id, files, _button_id],
-							function(){
-								jQuery(self.node).change();
+						}
+						break;
+					case 'select-dir':
+						files = submit_value.path;
+						break;
+					default:
+						if (self.options.method === 'download') submit_value.path = _data.content.download_baseUrl;
+						files = submit_value.path+'/'+submit_value.name;
+						if (self.options.method !== 'download' && !savemode)
+						{
+							for(var p in _data.content.dir)
+							{
+								if (_data.content.dir[p]['name'] == submit_value.name)
+								{
+									var saveModeDialogButtons = [
+										{text: self.egw().lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true, image: 'check'},
+										{text: self.egw().lang("Rename"), id:"rename", image: 'edit'},
+										{text: self.egw().lang("Cancel"), id:"cancel"}
+									];
+									return et2_dialog.show_prompt(function(_button_id, _value) {
+										switch (_button_id)
+										{
+											case "overwrite":
+												return self.submit_callback(submit_button_id, submit_value, 'overwrite');
+											case "rename":
+												submit_value.name = _value;
+												return self.submit_callback(submit_button_id, submit_value, 'rename');
+										}
+									},
+									self.egw().lang('Do you want to overwrite existing file %1 in directory %2?', submit_value.name, submit_value.path),
+									self.egw().lang('File %1 already exists', submit_value.name),
+									submit_value.name, saveModeDialogButtons);
+								}
 							}
-						).sendRequest(true);
-					}
-					else
-					{
-						jQuery(self.node).change();
-					}
-					delete app.vfsSelectUI;
-					return true;
+						}
+						break;
 				}
-			},
+				self._setRecentPaths(submit_value.path);
+				self.value = files;
+				if (self.options.method && self.options.method !== 'download')
+				{
+					egw(window).json(
+						self.options.method,
+						[self.options.method_id, files, submit_button_id, savemode],
+						function(){
+							jQuery(self.node).change();
+						}
+					).sendRequest(true);
+				}
+				else
+				{
+					jQuery(self.node).change();
+				}
+				delete app.vfsSelectUI;
+				return true;
+			}
+		};
+
+		this.dialog = et2_createWidget("dialog",
+		{
+			callback: this.submit_callback,
 			title: this.options.dialog_title,
 			buttons: buttons,
 			minWidth: 500,
