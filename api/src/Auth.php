@@ -561,7 +561,7 @@ class Auth
 
 
 			default:
-				$type = 'blowfisch_crypt';
+				$type = 'blowfish_crypt';
 				// fall throught
 			// all other types are identical to ldap, so no need to doublicate the code here
 			case 'des':
