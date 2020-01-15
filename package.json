@@ -6,6 +6,8 @@
   "dependencies": {},
   "repository": {},
   "devDependencies": {
+    "@types/jquery": "^1.10.35",
+    "@types/jqueryui": "^1.11.37",
     "grunt": "^1.0.3",
     "grunt-contrib-cssmin": "^2.2.1",
     "grunt-contrib-uglify-es": "^3.3.0",

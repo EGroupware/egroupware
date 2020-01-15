@@ -1,0 +1,23 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es5",
+		"lib": ["es2015","dom"],
+        "outDir": "",
+        "rootDir": "./",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": false,
+        "moduleResolution": "node",
+        "noImplicitAny": false
+    },
+    "include" : [
+        "**/js/*",
+        "api/js/**/*",
+		"node_modules/@types/**/*",
+		"*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
