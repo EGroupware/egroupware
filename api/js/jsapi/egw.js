@@ -437,6 +437,13 @@
 	};
 })();
 
+// get TypeScript modules working with our loader
+function require(_file)
+{
+	return { EgwApp: window.EgwApp};
+}
+var exports = {};
+
 /**
  * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
  *
