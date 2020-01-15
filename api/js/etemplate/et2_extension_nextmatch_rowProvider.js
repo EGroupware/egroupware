@@ -270,7 +270,7 @@ var et2_nextmatch_rowProvider = (function(){ "use strict"; return ClassWithAttri
 				variableAttributes.push(widgetData);
 			}
 
-		};
+		});
 
 		// Check each column
 		var columns = _widget.getChildren();
