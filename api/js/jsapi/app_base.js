@@ -599,7 +599,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	add_favorite: function(state)
 	{
 		if(typeof this.favorite_popup == "undefined" || // Create popup if it's not defined yet
-			(this.favorite_popup && typeof this.favorite_popup.group !="undefiend"
+			(this.favorite_popup && typeof this.favorite_popup.group != "undefined"
 			&& !this.favorite_popup.group.isAttached())) // recreate the favorite popup if the group selectbox is not attached (eg. after et2 submit)
 		{
 			this._create_favorite_popup();
@@ -1656,12 +1656,12 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 						function(_url, _status){
 							if (_status == 0)
 							{
-								et2_dialog.alert(lang('Mailvelope addon installation succeded. Now you may configure the options.'));
+								et2_dialog.alert(egw.lang('Mailvelope addon installation succeded. Now you may configure the options.'));
 								return;
 							}
 							else
 							{
-								et2_dialog.alert(lang('Mailvelope addon installation failed! Please try again.'));
+								et2_dialog.alert(egw.lang('Mailvelope addon installation failed! Please try again.'));
 							}
 						});
 				}
