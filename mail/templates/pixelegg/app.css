@@ -1637,11 +1637,11 @@ tr.mail.deleted td:first-child {
 }
 span.status_img {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 18px;
+  height: 18px;
   background-repeat: no-repeat;
   background-image: url(../pixelegg/images/kmmsgread.svg);
-  background-size: 12px 12px;
+  background-size: 18px 18px;
 }
 tr.deleted span.status_img {
   background-image: url(../pixelegg/images/kmmsgdel.svg);
