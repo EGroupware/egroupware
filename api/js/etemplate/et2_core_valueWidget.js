@@ -28,7 +28,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_baseWidget;
 */
-require("./et2_core_baseWidget");
+var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
 require("./et2_core_common");
 /**
  * et2_valueWidget is the base class for et2_inputWidget - valueWidget introduces
@@ -40,7 +40,10 @@ require("./et2_core_common");
 var et2_valueWidget = /** @class */ (function (_super) {
     __extends(et2_valueWidget, _super);
     function et2_valueWidget() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.label = '';
+        _this._labelContainer = null;
+        return _this;
     }
     /**
      *
@@ -124,4 +127,5 @@ var et2_valueWidget = /** @class */ (function (_super) {
         }
     };
     return et2_valueWidget;
-}(et2_baseWidget));
+}(et2_core_baseWidget_1.et2_baseWidget));
+exports.et2_valueWidget = et2_valueWidget;

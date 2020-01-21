@@ -28,7 +28,7 @@ import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from 
  *
  * @augments et2_DOMWidget
  */
-class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
+export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 {
 	static readonly _attributes: any = {
 		"statustext": {
