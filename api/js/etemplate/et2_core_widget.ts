@@ -174,7 +174,7 @@ export class et2_widget extends ClassWithAttributes
 
 	// Set the legacyOptions array to the names of the properties the "options"
 	// attribute defines.
-	legacyOptions: [];
+	legacyOptions: string[] = [];
 
 	private _type: string;
 	id: string;

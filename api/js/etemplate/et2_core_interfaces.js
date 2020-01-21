@@ -21,24 +21,31 @@ function implements_methods(obj, methods) {
     }
     return true;
 }
+var et2_IDOMNode = "et2_IDOMNode";
 function implements_et2_IDOMNode(obj) {
     return implements_methods(obj, ["getDOMNode"]);
 }
+var et2_IInput = "et2_IInput";
 function implements_et2_IInput(obj) {
     return implements_methods(obj, ["getValue", "isDirty", "resetDirty", "isValid"]);
 }
+var et2_IResizeable = "et2_IResizeable";
 function implements_et2_IResizeable(obj) {
     return implements_methods(obj, ["resize"]);
 }
+var et2_IAligned = "et2_IAligned";
 function implements_et2_IAligned(obj) {
     return implements_methods(obj, ["get_align"]);
 }
+var et2_ISubmitListener = "et2_ISubmitListener";
 function implements_et2_ISubmitListener(obj) {
     return implements_methods(obj, ["submit"]);
 }
+var et2_IDetachedDOM = "et2_IDetachedDOM";
 function implements_et2_IDetachedDOM(obj) {
     return implements_methods(obj, ["getDetachedAttributes", "getDetachedNodes", "setDetachedAttributes"]);
 }
+var et2_IPrint = "et2_IPrint";
 function implements_et2_IPrint(obj) {
     return implements_methods(obj, ["beforePrint", "afterPrint"]);
 }

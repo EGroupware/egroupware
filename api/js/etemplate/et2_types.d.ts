@@ -23,13 +23,13 @@ declare var et2_validTypes : string[];
 declare var et2_typeDefaults : object;
 //declare const et2_no_init : object;
 declare var et2_editableWidget : any;
-declare var et2_IDOMNode : any;
+/*declare var et2_IDOMNode : any;
 declare var et2_IInput : any;
 declare var et2_IResizeable : any;
 declare var et2_IAligned : any;
 declare var et2_ISubmitListener : any;
 declare var et2_IDetachedDOM : any;
-declare var et2_IPrint : any;
+declare var et2_IPrint : any;*/
 declare var et2_registry : {};
 declare var et2_dataview : any;
 declare var et2_dataview_controller : any;
