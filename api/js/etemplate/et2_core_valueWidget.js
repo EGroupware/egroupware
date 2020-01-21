@@ -127,3 +127,4 @@ var et2_valueWidget = /** @class */ (function (_super) {
     return et2_valueWidget;
 }(et2_core_baseWidget_1.et2_baseWidget));
 exports.et2_valueWidget = et2_valueWidget;
+//# sourceMappingURL=et2_core_valueWidget.js.map

@@ -16,9 +16,9 @@
 
 import './et2_core_interfaces';
 import './et2_core_common';
-import { et2_DOMWidget } from './et2_core_DOMWidget';
-import { ClassWithAttributes } from "./et2_core_inheritance";
-import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
+import {et2_DOMWidget} from './et2_core_DOMWidget';
+import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_widget, WidgetConfig} from "./et2_core_widget";
 
 /**
  * Class which manages the DOM node itself. The simpleWidget class is derrived
@@ -54,7 +54,7 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 			"default": et2_no_init,
 			"description": "JS code which is executed when the element is clicked."
 		}
-	}
+	};
 
 	align: string = 'left';
 	node: HTMLElement = null;

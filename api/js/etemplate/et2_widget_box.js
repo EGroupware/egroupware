@@ -222,3 +222,4 @@ var et2_details = /** @class */ (function (_super) {
 }(et2_box));
 exports.et2_details = et2_details;
 et2_core_widget_1.et2_register_widget(et2_details, ["details"]);
+//# sourceMappingURL=et2_widget_box.js.map

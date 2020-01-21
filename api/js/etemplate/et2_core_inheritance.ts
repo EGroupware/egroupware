@@ -95,16 +95,16 @@ export class ClassWithAttributes
 	 *
 	 * @param {object} _attrs is the associative array containing the attributes.
 	 */
-	generateAttributeSet(_attrs)
+	static generateAttributeSet(widget, _attrs)
 	{
 		// Sanity check and validation
 		for (var key in _attrs)
 		{
-			if (typeof this.attributes[key] != "undefined")
+			if (typeof widget[key] != "undefined")
 			{
-				if (!this.attributes[key].ignore)
+				if (!widget[key].ignore)
 				{
-					_attrs[key] = et2_checkType(_attrs[key], this.attributes[key].type,
+					_attrs[key] = et2_checkType(_attrs[key], widget[key].type,
 						key, this);
 				}
 			}
@@ -118,11 +118,11 @@ export class ClassWithAttributes
 		}
 
 		// Include default values or already set values for this attribute
-		for (var key in this.attributes)
+		for (var key in widget)
 		{
 			if (typeof _attrs[key] == "undefined")
 			{
-				var _default = this.attributes[key]["default"];
+				var _default = widget[key]["default"];
 				if (_default == et2_no_init)
 				{
 					_default = undefined;
@@ -154,6 +154,24 @@ export class ClassWithAttributes
 		}
 	}
 
+	static buildAttributes(class_prototype: object)
+	{
+		let class_tree = [];
+		let attributes = {};
+		let n = 0;
+		do
+		{
+			n++;
+			class_tree.push(class_prototype);
+			class_prototype = Object.getPrototypeOf(class_prototype);
+		} while (class_prototype !== ClassWithAttributes && n < 50);
+
+		for(let i = class_tree.length - 1; i > 0; i--)
+		{
+			class_tree[i-1]._attributes = ClassWithAttributes.extendAttributes(class_tree[i-1]._attributes,class_tree[i]._attributes);
+		}
+		return class_tree[0]._attributes;
+	}
 	/**
 	 * Extend current _attributes with the one from the parent class
 	 *

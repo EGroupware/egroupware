@@ -575,3 +575,4 @@ var et2_searchbox = /** @class */ (function (_super) {
     return et2_searchbox;
 }(et2_textbox));
 et2_core_widget_1.et2_register_widget(et2_searchbox, ["searchbox"]);
+//# sourceMappingURL=et2_widget_textbox.js.map
