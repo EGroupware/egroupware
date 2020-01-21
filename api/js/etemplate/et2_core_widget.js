@@ -180,7 +180,7 @@ var et2_widget = /** @class */ (function (_super) {
     et2_widget.prototype.destroy = function () {
         // Call the destructor of all children
         for (var i = this._children.length - 1; i >= 0; i--) {
-            this._children[i].free();
+            this._children[i].destroy();
         }
         // Remove this element from the parent, if it exists
         if (typeof this._parent != "undefined" && this._parent !== null) {
@@ -189,9 +189,15 @@ var et2_widget = /** @class */ (function (_super) {
         // Free the array managers if they belong to this widget
         for (var key in this._mgrs) {
             if (this._mgrs[key] && this._mgrs[key].owner == this) {
-                this._mgrs[key].free();
+                this._mgrs[key].destroy();
             }
         }
+    };
+    et2_widget.prototype.getType = function () {
+        return this._type;
+    };
+    et2_widget.prototype.setType = function (_type) {
+        this._type = _type;
     };
     /**
      * Creates a copy of this widget. The parameters given are passed to the

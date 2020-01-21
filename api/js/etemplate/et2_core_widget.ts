@@ -264,7 +264,7 @@ export class et2_widget extends ClassWithAttributes
 	{
 		// Call the destructor of all children
 		for (var i = this._children.length - 1; i >= 0; i--) {
-			this._children[i].free();
+			this._children[i].destroy();
 		}
 
 		// Remove this element from the parent, if it exists
@@ -275,9 +275,19 @@ export class et2_widget extends ClassWithAttributes
 		// Free the array managers if they belong to this widget
 		for (var key in this._mgrs) {
 			if (this._mgrs[key] && this._mgrs[key].owner == this) {
-				this._mgrs[key].free();
+				this._mgrs[key].destroy();
 			}
 		}
+	}
+
+	getType() : string
+	{
+		return this._type;
+	}
+
+	setType(_type : string)
+	{
+		this._type = _type;
 	}
 
 	/**

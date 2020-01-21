@@ -4,7 +4,7 @@ declare module eT2
 }
 declare var etemplate2 : any;
 declare class et2_widget{}
-declare class et2_DOMWidget{}
+declare class et2_DOMWidget extends et2_widget{}
 declare class et2_inputWidget{
 	getInputNode() : HTMLElement
 }
@@ -117,7 +117,9 @@ declare var et2_selectbox_ro : any;
 declare var et2_menulist : any;
 declare var et2_split : any;
 declare var et2_styles : any;
-declare var et2_tabbox : any;
+declare class et2_tabbox extends et2_widget {
+	tabData : any;
+}
 declare var et2_taglist : any;
 declare var et2_taglist_account : any;
 declare var et2_taglist_email : any;
