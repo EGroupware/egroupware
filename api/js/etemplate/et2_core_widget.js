@@ -822,34 +822,6 @@ var et2_widget = /** @class */ (function (_super) {
             path.pop();
         return path;
     };
-    /**
-     * The implements function can be used to check whether the object
-     * implements the given interface.
-     *
-     * As TypeScript can not (yet) check if an objects implements an interface on runtime,
-     * we currently implements with each interface a function called 'implements_'+interfacename
-     * to be able to check here.
-     *
-     * @param _iface name of interface to check
-     */
-    et2_widget.prototype.implements = function (_iface_name) {
-        if (typeof window['implements_' + _iface_name] === 'function' &&
-            window['implements_' + _iface_name](this)) {
-            return true;
-        }
-        return false;
-    };
-    /**
-     * Check if object is an instance of a class or implements an interface (specified by the interfaces name)
-     *
-     * @param _class_or_interfacename class(-name) or string with name of interface
-     */
-    et2_widget.prototype.instanceOf = function (_class_or_interfacename) {
-        if (typeof _class_or_interfacename === 'string') {
-            return this.implements(_class_or_interfacename);
-        }
-        return this instanceof _class_or_interfacename;
-    };
     et2_widget._attributes = {
         "id": {
             "name": "ID",
