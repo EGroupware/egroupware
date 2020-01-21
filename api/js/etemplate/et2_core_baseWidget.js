@@ -27,7 +27,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
     lib/tooltip;
     et2_core_DOMWidget;
 */
-//import { ClassWithAttributes } from './et2_core_inheritance';
 require("./et2_core_interfaces");
 require("./et2_core_common");
 var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");

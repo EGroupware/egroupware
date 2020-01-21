@@ -22,8 +22,6 @@ import './et2_core_common';
  * et2_valueWidget is the base class for et2_inputWidget - valueWidget introduces
  * the "value" attribute and automatically loads it from the "content" array
  * after loading from XML.
- *
- * @augments et2_baseWidget
  */
 export class et2_valueWidget extends et2_baseWidget
 {
@@ -44,7 +42,7 @@ export class et2_valueWidget extends et2_baseWidget
 	};
 
 	label: string = '';
-	private _labelContainer: JQuery = null;
+	protected _labelContainer: JQuery = null;
 
 	/**
 	 *

@@ -10,6 +10,10 @@ declare class et2_valueWidget extends et2_baseWidget{}
 declare class et2_inputWidget{
 	getInputNode() : HTMLElement
 }
+declare class et2_tabbox extends et2_valueWidget {
+	tabData : any;
+	activateTab(et2_widget);
+}
 declare var et2_surroundingsMgr : any;
 declare var et2_arrayMgr : any;
 declare var et2_readonlysArrayMgr : any;
@@ -117,9 +121,6 @@ declare var et2_selectbox_ro : any;
 declare var et2_menulist : any;
 declare var et2_split : any;
 declare var et2_styles : any;
-declare class et2_tabbox extends et2_widget {
-	tabData : any;
-}
 declare var et2_taglist : any;
 declare var et2_taglist_account : any;
 declare var et2_taglist_email : any;
