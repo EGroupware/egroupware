@@ -39,15 +39,15 @@ require("./et2_types");
  *
  * @augments et2_inputWidget
  */
-var et2_textbox = /** @class */ (function (_super_1) {
-    __extends(et2_textbox, _super_1);
+var et2_textbox = /** @class */ (function (_super) {
+    __extends(et2_textbox, _super);
     /**
      * Constructor
      */
     function et2_textbox(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
         _this.legacyOptions = ["size", "maxlength", "validator"];
         _this.input = null;
         _this.input = null;
@@ -112,7 +112,7 @@ var et2_textbox = /** @class */ (function (_super_1) {
      * @returns {undefined}
      */
     et2_textbox.prototype.set_id = function (_value) {
-        _super_1.prototype.set_id.call(this, _value);
+        _super.prototype.set_id.call(this, _value);
         // Remove the name attribute inorder to affect autocomplete="off"
         // for no password save. ATM seems all browsers ignore autocomplete for
         // input field inside the form
@@ -124,12 +124,12 @@ var et2_textbox = /** @class */ (function (_super_1) {
         var node = this.getInputNode();
         if (node)
             jQuery(node).unbind("keypress");
-        _super_1.prototype.destroy.call(this);
+        _super.prototype.destroy.call(this);
     };
     et2_textbox.prototype.getValue = function () {
         if (this.options && this.options.blur && this.input.val() == this.options.blur)
             return "";
-        return _super_1.prototype.getValue.call(this);
+        return _super.prototype.getValue.call(this);
     };
     /**
      * Clientside validation using regular expression in "validator" attribute
@@ -155,7 +155,7 @@ var et2_textbox = /** @class */ (function (_super_1) {
                 _messages.push(this.egw().lang("'%1' has an invalid format !!!", value));
             }
         }
-        return _super_1.prototype.isValid.call(this, _messages) && ok;
+        return _super.prototype.isValid.call(this, _messages) && ok;
     };
     /**
      * Set input widget size
@@ -165,7 +165,7 @@ var et2_textbox = /** @class */ (function (_super_1) {
         if (this.options.multiline || this.options.rows > 1 || this.options.cols > 1) {
             this.input.css('width', _size + "em");
         }
-        else if (typeof _size != 'undefined' && _size != this.input.attr("size")) {
+        else if (typeof _size != 'undefined' && _size != parseInt(this.input.attr("size"))) {
             this.size = _size;
             this.input.attr("size", this.size);
         }
@@ -175,7 +175,7 @@ var et2_textbox = /** @class */ (function (_super_1) {
      * @param _size Max characters allowed
      */
     et2_textbox.prototype.set_maxlength = function (_size) {
-        if (typeof _size != 'undefined' && _size != this.input.attr("maxlength")) {
+        if (typeof _size != 'undefined' && _size != parseInt(this.input.attr("maxlength"))) {
             this.maxLength = _size;
             this.input.attr("maxLength", this.maxLength);
         }
@@ -286,21 +286,22 @@ var et2_textbox = /** @class */ (function (_super_1) {
     };
     return et2_textbox;
 }(et2_core_inputWidget_1.et2_inputWidget));
+exports.et2_textbox = et2_textbox;
 et2_core_widget_1.et2_register_widget(et2_textbox, ["textbox", "passwd", "hidden"]);
 /**
  * et2_textbox_ro is the dummy readonly implementation of the textbox.
  *
  * @augments et2_valueWidget
  */
-var et2_textbox_ro = /** @class */ (function (_super_1) {
-    __extends(et2_textbox_ro, _super_1);
+var et2_textbox_ro = /** @class */ (function (_super) {
+    __extends(et2_textbox_ro, _super);
     /**
      * Constructor
      */
     function et2_textbox_ro(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
         _this.value = "";
         _this.span = jQuery(document.createElement("label"))
             .addClass("et2_label");
@@ -388,15 +389,16 @@ et2_core_widget_1.et2_register_widget(et2_textbox_ro, ["textbox_ro"]);
  * et2_searchbox is a widget which provides a collapsable input search
  * with on searching indicator and clear handler regardless of any browser limitation.
  */
-var et2_searchbox = /** @class */ (function (_super_1) {
-    __extends(et2_searchbox, _super_1);
+var et2_searchbox = /** @class */ (function (_super) {
+    __extends(et2_searchbox, _super);
     /**
      * Constructor
      */
     function et2_searchbox(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _this.value = "";
         _this.value = "";
         _this.div = jQuery(document.createElement('div'))
             .addClass('et2_searchbox');
@@ -459,8 +461,8 @@ var et2_searchbox = /** @class */ (function (_super_1) {
                 }
             },
             mousedown: function (event) {
-                if (event.target.type == 'span')
-                    event.stopImmidatePropagation();
+                if (event.target.tagName == 'span')
+                    event.stopImmediatePropagation();
             }
         });
         this.flex.append(this.search.getDOMNode());
@@ -518,13 +520,13 @@ var et2_searchbox = /** @class */ (function (_super_1) {
      */
     et2_searchbox.prototype.change = function () {
         this._searchToggleState();
-        this._super.apply(this, arguments);
+        _super.prototype.change.apply(this, arguments);
     };
     et2_searchbox.prototype.get_value = function () {
         return this.search.input.val();
     };
     et2_searchbox.prototype.set_value = function (_value) {
-        _super_1.prototype.set_value.call(this, _value);
+        _super.prototype.set_value.call(this, _value);
         if (this.search)
             this.search.input.val(_value);
     };
@@ -532,7 +534,7 @@ var et2_searchbox = /** @class */ (function (_super_1) {
      * override doLoadingFinished in order to set initial state
      */
     et2_searchbox.prototype.doLoadingFinished = function () {
-        _super_1.prototype.doLoadingFinished.call(this);
+        var ret = _super.prototype.doLoadingFinished.call(this);
         if (!this.get_value()) {
             this._show_hide(false);
         }
@@ -540,16 +542,18 @@ var et2_searchbox = /** @class */ (function (_super_1) {
             this._show_hide(!this.options.overlay);
             this._searchToggleState();
         }
+        return ret;
     };
     /**
      * Overrride attachToDOM in order to unbind change handler
      */
     et2_searchbox.prototype.attachToDOM = function () {
-        _super_1.prototype.attachToDOM.call(this);
+        var ret = _super.prototype.attachToDOM.call(this);
         var node = this.getInputNode();
         if (node) {
             jQuery(node).off('.et2_inputWidget');
         }
+        return ret;
     };
     /**
      * Advanced attributes
