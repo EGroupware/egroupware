@@ -535,6 +535,7 @@ var et2_DOMWidget = /** @class */ (function (_super) {
     };
     return et2_DOMWidget;
 }(et2_core_widget_1.et2_widget));
+exports.et2_DOMWidget = et2_DOMWidget;
 /**
  * The surroundings manager class allows to append or prepend elements around
  * an widget node.

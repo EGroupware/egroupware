@@ -338,7 +338,7 @@ export class et2_widget extends ClassWithAttributes
 		return this._parent;
 	}
 
-	private _children = [];
+	protected _children = [];
 
 	/**
 	 * Returns the list of children of this widget.
@@ -893,7 +893,7 @@ export class et2_widget extends ClassWithAttributes
 		this._egw = _egw;
 	}
 
-	private _mgrs = {};
+	protected _mgrs = {};
 
 	/**
 	 * Sets all array manager objects - this function can be used to set the

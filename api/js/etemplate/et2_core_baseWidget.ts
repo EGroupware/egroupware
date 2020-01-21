@@ -14,6 +14,13 @@
 	et2_core_DOMWidget;
 */
 
+//import { ClassWithAttributes } from './et2_core_inheritance';
+import './et2_core_interfaces';
+import './et2_core_common';
+import { et2_DOMWidget } from './et2_core_DOMWidget';
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
+
 /**
  * Class which manages the DOM node itself. The simpleWidget class is derrived
  * from et2_DOMWidget and implements the getDOMNode function. A setDOMNode
@@ -21,9 +28,9 @@
  *
  * @augments et2_DOMWidget
  */
-var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_IAligned,
+class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 {
-	attributes: {
+	static readonly _attributes: any = {
 		"statustext": {
 			"name": "Tooltip",
 			"type": "string",
@@ -48,30 +55,31 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 			"default": et2_no_init,
 			"description": "JS code which is executed when the element is clicked."
 		}
-	},
+	}
+
+	align: string = 'left';
+	node: HTMLElement = null;
+	statustext: string = '';
+	private _messageDiv: JQuery = null;
+	private _tooltipElem: JQuery = null;
+	onclick: any;
 
 	/**
 	 * Constructor
-	 *
-	 * @memberOf et2BaseWidget
 	 */
-	init: function() {
-		this.align = "left";
+	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
+	{
+		// Call the inherited constructor
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+	}
 
-		this._super.apply(this, arguments);
-
-		this.node = null;
-		this.statustext = "";
-		this._messageDiv = null;
-		this._tooltipElem = null;
-	},
-
-	destroy: function() {
-		this._super.apply(this, arguments);
+	destroy()
+	{
+		super.destroy();
 
 		this.node = null;
 		this._messageDiv = null;
-	},
+	}
 
 	/**
 	 * The setMessage function can be used to attach a small message box to the
@@ -86,8 +94,8 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 	 * @param _prepend if set, the message is displayed behind the widget node
 	 * 	instead of before. Defaults to false.
 	 */
-	showMessage: function(_text, _type, _floating, _prepend) {
-
+	showMessage(_text, _type, _floating, _prepend)
+	{
 		// Preset the parameters
 		if (typeof _type == "undefined")
 		{
@@ -128,7 +136,7 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 		}
 
 		surr.update();
-	},
+	}
 
 	/**
 	 * The hideMessage function can be used to hide a previously shown message.
@@ -138,7 +146,8 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 	 * @param _noUpdate is used internally to prevent an update of the surroundings
 	 * 	manager.
 	 */
-	hideMessage: function(_fade, _noUpdate) {
+	hideMessage(_fade, _noUpdate)
+	{
 		if (typeof _fade == "undefined")
 		{
 			_fade = true;
@@ -178,9 +187,10 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 				_done();
 			}
 		}
-	},
+	}
 
-	detachFromDOM: function() {
+	detachFromDOM()
+	{
 		// Detach this node from the tooltip node
 		if (this._tooltipElem)
 		{
@@ -194,11 +204,12 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 			jQuery(this.node).unbind("click.et2_baseWidget");
 		}
 
-		this._super.apply(this, arguments);
-	},
+		return super.detachFromDOM();
+	}
 
-	attachToDOM: function() {
-		this._super.apply(this, arguments);
+	attachToDOM()
+	{
+		let ret = super.attachToDOM();
 
 		// Add the binding for the click handler
 		if (this.node)
@@ -211,9 +222,12 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 
 		// Update the statustext
 		this.set_statustext(this.statustext);
-	},
 
-	setDOMNode: function(_node) {
+		return ret;
+	}
+
+	setDOMNode(_node)
+	{
 		if (_node != this.node)
 		{
 			// Deatch the old node from the DOM
@@ -227,15 +241,17 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 		}
 
 		return false;
-	},
+	}
 
-	getDOMNode: function() {
+	getDOMNode(_sender?: et2_widget)
+	{
 		return this.node;
-	},
+	}
 
-	getTooltipElement: function() {
+	getTooltipElement()
+	{
 		return this.getDOMNode(this);
-	},
+	}
 
 	/**
 	 * Click handler calling custom handler set via onclick attribute to this.onclick
@@ -243,7 +259,7 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 	 * @param _ev
 	 * @returns
 	 */
-	click: function(_ev) {
+	click(_ev) {
 		if(typeof this.onclick == 'function')
 		{
 			// Make sure function gets a reference to the widget, splice it in as 2. argument if not
@@ -254,9 +270,9 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 		}
 
 		return true;
-	},
+	}
 
-	set_statustext: function(_value) {
+	set_statustext(_value) {
 		// Tooltip should not be shown in mobile view
 		if (egwIsMobile()) return;
 		// Don't execute the code below, if no tooltip will be attached/detached
@@ -295,46 +311,44 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 				this._tooltipElem = elem;
 			}
 		}
-	},
-
-	set_align: function(_value) {
-		this.align = _value;
-	},
-
-	get_align: function(_value) {
-		return this.align;
 	}
 
-});}).call(this);
+	set_align(_value)
+	{
+		this.align = _value;
+	}
+
+	get_align()
+	{
+		return this.align;
+	}
+}
 
 /**
  * Simple container object
- *
- * @augments et2_baseWidget
  */
-var et2_container = (function(){ "use strict"; return et2_baseWidget.extend(
+class et2_container extends et2_baseWidget
 {
 	/**
 	 * Constructor
-	 *
-	 * @memberOf et2_container
 	 */
-	init: function() {
-		this._super.apply(this, arguments);
-
-		this.setDOMNode(document.createElement("div"));
-	},
+	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
+	{
+		// Call the inherited constructor
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+	}
 
 	/**
 	 * The destroy function destroys all children of the widget, removes itself
 	 * from the parents children list.
 	 * Overriden to not try to remove self from parent, as that's not possible.
 	 */
-	destroy: function() {
+	destroy()
+	{
 		// Call the destructor of all children
 		for (var i = this._children.length - 1; i >= 0; i--)
 		{
-			this._children[i].free();
+			this._children[i].destroy();
 		}
 
 		// Free the array managers if they belong to this widget
@@ -342,39 +356,43 @@ var et2_container = (function(){ "use strict"; return et2_baseWidget.extend(
 		{
 			if (this._mgrs[key] && this._mgrs[key].owner == this)
 			{
-				this._mgrs[key].free();
+				this._mgrs[key].destroy();
 			}
 		}
 	}
-});}).call(this);
+}
 
 /**
  * Container object for not-yet supported widgets
  *
  * @augments et2_baseWidget
  */
-var et2_placeholder = (function(){ "use strict"; return et2_baseWidget.extend([et2_IDetachedDOM],
+class et2_placeholder extends et2_baseWidget implements et2_IDetachedDOM
 {
 	/**
-	 * Constructor
-	 *
-	 * @memberOf et2_placeholder
+	 *  he attrNodes object will hold the DOM nodes which represent the
+	 * values of this object
 	 */
-	init: function() {
-		this._super.apply(this, arguments);
+	attrNodes: {};
+	visible: boolean = false;
+	placeDiv: JQuery;
+	
+	/**
+	 * Constructor
+	 */
+	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
+	{
+		// Call the inherited constructor
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
 
-		// The attrNodes object will hold the DOM nodes which represent the
-		// values of this object
 		this.attrNodes = {};
-
-		this.visible = false;
 
 		// Create the placeholder div
 		this.placeDiv = jQuery(document.createElement("span"))
 			.addClass("et2_placeholder");
 
 		var headerNode = jQuery(document.createElement("span"))
-			.text(this._type || "")
+			.text(this.getType() || "")
 			.addClass("et2_caption")
 			.appendTo(this.placeDiv);
 
@@ -410,18 +428,21 @@ var et2_placeholder = (function(){ "use strict"; return et2_baseWidget.extend([e
 		}
 
 		this.setDOMNode(this.placeDiv[0]);
-	},
+	}
 
-	getDetachedAttributes: function(_attrs) {
+	getDetachedAttributes(_attrs)
+	{
 		_attrs.push("value");
-	},
+	}
 
-	getDetachedNodes: function() {
+	getDetachedNodes()
+	{
 		return [this.placeDiv[0]];
-	},
+	}
 
-	setDetachedAttributes: function(_nodes, _values) {
+	setDetachedAttributes(_nodes, _values)
+	{
 		this.placeDiv = jQuery(_nodes[0]);
 	}
-});}).call(this);
+}
 

@@ -31,7 +31,7 @@ import {
  *
  * @augments et2_widget
  */
-abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
+export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 {
 	static readonly _attributes : any = {
 		"disabled": {
@@ -187,8 +187,8 @@ abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 	 * Detaches the widget from the DOM tree, if it had been attached to the
 	 * DOM-Tree using the attachToDOM method.
 	 */
-	detachFromDOM() {
-
+	detachFromDOM()
+	{
 		if (this._attachSet.node && this._attachSet.parent)
 		{
 			// Remove the current node from the parent node
