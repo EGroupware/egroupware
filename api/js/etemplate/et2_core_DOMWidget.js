@@ -745,3 +745,4 @@ var et2_action_object_impl = /** @class */ (function () {
     };
     return et2_action_object_impl;
 }());
+//# sourceMappingURL=et2_core_DOMWidget.js.map

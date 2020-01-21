@@ -35,6 +35,7 @@ var et2_core_inheritance_1 = require("./et2_core_inheritance");
  * constructor.
  */
 var et2_registry = {};
+var et2_attribute_registry = {};
 /**
  * Registers the widget class defined by the given constructor and associates it
  * with the types in the _types array.
@@ -44,6 +45,7 @@ var et2_registry = {};
  */
 function et2_register_widget(_constructor, _types) {
     "use strict";
+    et2_attribute_registry[_constructor.name] = et2_core_inheritance_1.ClassWithAttributes.buildAttributes(_constructor);
     // Iterate over all given types and register those
     for (var i = 0; i < _types.length; i++) {
         var type = _types[i].toLowerCase();
@@ -447,8 +449,9 @@ var et2_widget = /** @class */ (function (_super) {
                 // do NOT overwrite already evaluated readonly attribute
             }
             else {
-                if (mgr != null && typeof _proto.attributes[attrName] != "undefined") {
-                    var attr = _proto.attributes[attrName];
+                var attrs = et2_attribute_registry[Object.getPrototypeOf(_proto).constructor.name] || {};
+                if (mgr != null && typeof attrs[attrName] != "undefined") {
+                    var attr = attrs[attrName];
                     // If the attribute is marked as boolean, parse the
                     // expression as bool expression.
                     if (attr.type == "boolean") {
@@ -555,7 +558,7 @@ var et2_widget = /** @class */ (function (_super) {
         // Parse the attributes from the given XML attributes object
         this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
         // Do an sanity check for the attributes
-        constructor.prototype.generateAttributeSet(attributes);
+        et2_core_inheritance_1.ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], attributes);
         // Creates the new widget, passes this widget as an instance and
         // passes the widgetType. Then it goes on loading the XML for it.
         var widget = new constructor(this, attributes);
@@ -884,3 +887,4 @@ var et2_widget = /** @class */ (function (_super) {
     return et2_widget;
 }(et2_core_inheritance_1.ClassWithAttributes));
 exports.et2_widget = et2_widget;
+//# sourceMappingURL=et2_core_widget.js.map

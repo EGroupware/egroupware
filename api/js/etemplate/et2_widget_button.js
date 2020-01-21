@@ -390,3 +390,4 @@ var et2_button = /** @class */ (function (_super) {
 }(et2_core_baseWidget_1.et2_baseWidget));
 exports.et2_button = et2_button;
 et2_core_widget_1.et2_register_widget(et2_button, ["button", "buttononly"]);
+//# sourceMappingURL=et2_widget_button.js.map

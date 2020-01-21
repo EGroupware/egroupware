@@ -23,6 +23,8 @@ import { ClassWithAttributes } from './et2_core_inheritance';
  * constructor.
  */
 var et2_registry = {};
+var et2_attribute_registry = {};
+
 
 /**
  * Registers the widget class defined by the given constructor and associates it
@@ -35,6 +37,7 @@ export function et2_register_widget(_constructor, _types)
 {
 	"use strict";
 
+	et2_attribute_registry[_constructor.name] = ClassWithAttributes.buildAttributes(_constructor);
 	// Iterate over all given types and register those
 	for (var i = 0; i < _types.length; i++)
 	{
@@ -577,8 +580,9 @@ export class et2_widget extends ClassWithAttributes
 			} else if (attrName == "readonly" && typeof _target[attrName] != "undefined") {
 				// do NOT overwrite already evaluated readonly attribute
 			} else {
-				if (mgr != null && typeof _proto.attributes[attrName] != "undefined") {
-					var attr = _proto.attributes[attrName];
+				let attrs = et2_attribute_registry[Object.getPrototypeOf(_proto).constructor.name] || {};
+				if (mgr != null && typeof attrs[attrName] != "undefined") {
+					var attr = attrs[attrName];
 
 					// If the attribute is marked as boolean, parse the
 					// expression as bool expression.
@@ -701,7 +705,7 @@ export class et2_widget extends ClassWithAttributes
 		this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
 
 		// Do an sanity check for the attributes
-		constructor.prototype.generateAttributeSet(attributes);
+		ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], attributes);
 
 		// Creates the new widget, passes this widget as an instance and
 		// passes the widgetType. Then it goes on loading the XML for it.

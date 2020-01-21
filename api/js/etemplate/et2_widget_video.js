@@ -175,3 +175,4 @@ var et2_video = /** @class */ (function (_super) {
     };
     return et2_video;
 }(et2_core_baseWidget_1.et2_baseWidget));
+//# sourceMappingURL=et2_widget_video.js.map

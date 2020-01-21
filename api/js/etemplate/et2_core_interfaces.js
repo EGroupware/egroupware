@@ -49,3 +49,4 @@ var et2_IPrint = "et2_IPrint";
 function implements_et2_IPrint(obj) {
     return implements_methods(obj, ["beforePrint", "afterPrint"]);
 }
+//# sourceMappingURL=et2_core_interfaces.js.map

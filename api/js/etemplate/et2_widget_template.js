@@ -228,3 +228,4 @@ var et2_template = /** @class */ (function (_super) {
     return et2_template;
 }(et2_core_DOMWidget_1.et2_DOMWidget));
 et2_core_widget_1.et2_register_widget(et2_template, ["template"]);
+//# sourceMappingURL=et2_widget_template.js.map

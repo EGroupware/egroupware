@@ -14,14 +14,18 @@
 	/api/js/egw_action/egw_action.js;
 */
 
-import { ClassWithAttributes } from './et2_core_inheritance';
+import {ClassWithAttributes} from './et2_core_inheritance';
 import './et2_core_interfaces';
 import './et2_core_common';
-import {et2_widget, et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_widget, WidgetConfig} from "./et2_core_widget";
 import {
-	egw_getObjectManager, egwActionObjectInterface,
-	egw_getActionManager, egw_getAppObjectManager,
-	egwActionObject, egwAction, EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT
+	EGW_AI_DRAG_OUT,
+	EGW_AI_DRAG_OVER,
+	egw_getActionManager,
+	egw_getAppObjectManager,
+	egw_getObjectManager,
+	egwActionObject,
+	egwActionObjectInterface
 } from '../egw_action/egw_action.js';
 import './et2_types';
 
