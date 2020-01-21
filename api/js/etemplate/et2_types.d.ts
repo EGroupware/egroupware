@@ -14,6 +14,10 @@ declare class et2_tabbox extends et2_valueWidget {
 	tabData : any;
 	activateTab(et2_widget);
 }
+declare class et2_button extends et2_DOMWidget {
+	click() : boolean
+	onclick: Function
+}
 declare var et2_surroundingsMgr : any;
 declare var et2_arrayMgr : any;
 declare var et2_readonlysArrayMgr : any;
@@ -68,7 +72,6 @@ declare var et2_ajaxSelect_ro : any;
 declare var et2_barcode : any;
 declare var et2_box : any;
 declare var et2_details : any;
-declare var et2_button : any;
 declare var et2_checkbox : any;
 declare var et2_checkbox_ro : any;
 declare var et2_color : any;

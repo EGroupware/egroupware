@@ -20,6 +20,7 @@ import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from 
 import { et2_DOMWidget } from './et2_core_DOMWidget'
 import { et2_valueWidget } from './et2_core_valueWidget'
 import { et2_inputWidget } from './et2_core_inputWidget'
+import { et2_button } from './et2_widget_button'
 import './et2_types';
 
 /**
@@ -27,7 +28,7 @@ import './et2_types';
  *
  * @augments et2_inputWidget
  */
-class et2_textbox extends et2_inputWidget implements et2_IResizeable
+export class et2_textbox extends et2_inputWidget implements et2_IResizeable
 {
 	static readonly _attributes : any = {
 		"multiline": {
@@ -89,8 +90,8 @@ class et2_textbox extends et2_inputWidget implements et2_IResizeable
 
 	legacyOptions: string[] = ["size", "maxlength", "validator"];
 	input: JQuery = null;
-	size: number|string;
-	maxLength: number|string;
+	size: number;
+	maxLength: number;
 
 	/**
 	 * Constructor
@@ -99,7 +100,6 @@ class et2_textbox extends et2_inputWidget implements et2_IResizeable
 	{
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
-
 
 		this.input = null;
 
@@ -236,13 +236,13 @@ class et2_textbox extends et2_inputWidget implements et2_IResizeable
 	 * Set input widget size
 	 * @param _size Rather arbitrary size units, approximately characters
 	 */
-	set_size(_size : number|string)
+	set_size(_size : number)
 	{
 		if (this.options.multiline || this.options.rows > 1 || this.options.cols > 1)
 		{
 			this.input.css('width', _size + "em");
 		}
-		else if (typeof _size != 'undefined' && _size != this.input.attr("size"))
+		else if (typeof _size != 'undefined' && _size != parseInt(this.input.attr("size")))
 		{
 			this.size = _size;
 			this.input.attr("size", this.size);
@@ -253,9 +253,9 @@ class et2_textbox extends et2_inputWidget implements et2_IResizeable
 	 * Set maximum characters allowed
 	 * @param _size Max characters allowed
 	 */
-	set_maxlength(_size : number|string)
+	set_maxlength(_size : number)
 	{
-		if (typeof _size != 'undefined' && _size != this.input.attr("maxlength"))
+		if (typeof _size != 'undefined' && _size != parseInt(this.input.attr("maxlength")))
 		{
 			this.maxLength = _size;
 			this.input.attr("maxLength", this.maxLength);
@@ -277,7 +277,7 @@ class et2_textbox extends et2_inputWidget implements et2_IResizeable
 	{
 		if(_value) {
 			this.input.attr("placeholder", this.egw().lang(_value) + "");	// HTML5
-			if(!this.input[0].placeholder) {
+			if (!(<HTMLInputElement>this.input[0]).placeholder) {
 				// Not HTML5
 				if(this.input.val() == "") this.input.val(this.egw().lang(this.options.blur));
 				this.input.focus(this,function(e) {
@@ -299,7 +299,7 @@ class et2_textbox extends et2_inputWidget implements et2_IResizeable
 		this.input.attr('autocomplete', _value);
 	}
 
-	resize(_height)
+	resize(_height : number)
 	{
 		if (_height && this.options.multiline)
 		{
@@ -349,6 +349,9 @@ class et2_textbox_ro extends et2_valueWidget implements et2_IDetachedDOM
 			"ignore": true
 		}
 	};
+	value: string = "";
+	span: JQuery;
+	value_span: JQuery;
 
 	/**
 	 * Constructor
@@ -358,7 +361,6 @@ class et2_textbox_ro extends et2_valueWidget implements et2_IDetachedDOM
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
 
-		this.value = "";
 		this.span = jQuery(document.createElement("label"))
 			.addClass("et2_label");
 		this.value_span = jQuery(document.createElement("span"))
@@ -456,6 +458,13 @@ class et2_searchbox extends et2_textbox
 			description:"Define wheter the searchbox should be a fix input field or flexible search button. Default is true (fix)."
 		}
 	}
+	value: string = "";
+	div: JQuery;
+	flex: JQuery;
+	button: et2_button;
+	search: et2_textbox;
+	oldValue: any;
+	clear: JQuery;
 
 	/**
 	 * Constructor
@@ -486,7 +495,7 @@ class et2_searchbox extends et2_textbox
 		// no need to create search button if it's a fix search field
 		if (!this.options.fix)
 		{
-			this.button = et2_createWidget('button',{image:"search","background_image":"1"},this);
+			this.button = <et2_button><unknown>et2_createWidget('button',{image:"search","background_image":"1"},this);
 			this.button.onclick= function(){
 				self._show_hide(jQuery(self.flex).hasClass('hide'));
 				self.search.input.focus();
@@ -494,7 +503,7 @@ class et2_searchbox extends et2_textbox
 			this.div.prepend(this.button.getDOMNode());
 		}
 		// input field
-		this.search = et2_createWidget('textbox',{"blur":egw.lang("search"),
+		this.search = <et2_textbox><unknown>et2_createWidget('textbox',{"blur":egw.lang("search"),
 			onkeypress:function(event) {
 				if(event.which == 13)
 				{
@@ -533,7 +542,7 @@ class et2_searchbox extends et2_textbox
 				}
 			},
 			mousedown:function(event){
-				if (event.target.type == 'span') event.stopImmidatePropagation();
+				if (event.target.tagName == 'span') event.stopImmediatePropagation();
 			}
 		});
 		this.flex.append(this.search.getDOMNode());
@@ -600,7 +609,7 @@ class et2_searchbox extends et2_textbox
 	{
 		this._searchToggleState();
 
-		this._super.apply(this,arguments);
+		super.change.apply(this,arguments);
 	}
 
 
@@ -620,14 +629,16 @@ class et2_searchbox extends et2_textbox
 	 */
 	doLoadingFinished()
 	{
-		super.doLoadingFinished();
+		let ret = super.doLoadingFinished();
+
 		if (!this.get_value()) {
 			this._show_hide(false);
 		}
-		else{
+		else {
 			this._show_hide(!this.options.overlay);
 			this._searchToggleState();
 		}
+		return ret;
 	}
 
 	/**
@@ -635,13 +646,14 @@ class et2_searchbox extends et2_textbox
 	 */
 	attachToDOM()
 	{
-		super.attachToDOM();
+		let ret = super.attachToDOM();
 
 		var node = this.getInputNode();
 		if (node)
 		{
 			jQuery(node).off('.et2_inputWidget');
 		}
+		return ret;
 	}
 }
 et2_register_widget(et2_searchbox, ["searchbox"]);

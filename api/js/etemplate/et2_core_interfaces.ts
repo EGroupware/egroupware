@@ -106,7 +106,7 @@ interface et2_IResizeable
 	/**
 	 * Called whenever the window is resized
 	 */
-	resize() : void
+	resize(number) : void
 }
 var et2_IResizeable = "et2_IResizeable";
 function implements_et2_IResizeable(obj : et2_widget)

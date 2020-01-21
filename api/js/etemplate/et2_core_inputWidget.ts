@@ -67,7 +67,7 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 		}
 	}
 
-	private _oldValue: any;
+	protected _oldValue: any;
 	onchange: Function;
 
 	/**
