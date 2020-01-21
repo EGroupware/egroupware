@@ -41,9 +41,6 @@ export class et2_valueWidget extends et2_baseWidget
 		}
 	};
 
-	label: string = '';
-	protected _labelContainer: JQuery = null;
-
 	/**
 	 *
 	 *
@@ -59,7 +56,7 @@ export class et2_valueWidget extends et2_baseWidget
 			// Set the value for this element
 			var contentMgr = this.getArrayMgr("content");
 			if (contentMgr != null) {
-				var val = contentMgr.getEntry(this.id,false,true);
+				let val = contentMgr.getEntry(this.id, false, true);
 				if (val !== null)
 				{
 					_attrs["value"] = val;
@@ -74,7 +71,7 @@ export class et2_valueWidget extends et2_baseWidget
 		}
 	}
 
-	set_label(_value : string)
+	set_label(_value)
 	{
 		// Abort if there was no change in the label
 		if (_value == this.label)
