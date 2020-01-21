@@ -30,7 +30,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
-var jQuery = require("jquery");
 var et2_core_xml_1 = require("./et2_core_xml");
 /**
  * Class which implements box and vbox tag

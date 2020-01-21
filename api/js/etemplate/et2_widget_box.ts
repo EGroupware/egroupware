@@ -18,7 +18,6 @@
 
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
-import * as jQuery from "jquery";
 import {et2_readAttrWithDefault} from './et2_core_xml'
 
 /**

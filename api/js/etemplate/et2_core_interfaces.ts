@@ -155,7 +155,6 @@ function implements_et2_ISubmitListener(obj : et2_widget)
  */
 interface et2_IDetachedDOM
 {
-
 	/**
 	 * Creates a list of attributes which can be set when working in the
 	 * "detached" mode. The result is stored in the _attrs array which is provided
@@ -181,8 +180,7 @@ interface et2_IDetachedDOM
 	 * 	returned by the "getDetachedAttributes" function and sets them to the
 	 * 	given values.
 	 */
-	setDetachedAttributes(_nodes : HTMLElement[], _values : object) : void
-
+	setDetachedAttributes(_nodes : HTMLElement[], _values : object, _data?) : void
 }
 var et2_IDetachedDOM = "et2_IDetachedDOM";
 function implements_et2_IDetachedDOM(obj : et2_widget)
