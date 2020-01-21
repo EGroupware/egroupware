@@ -49,6 +49,7 @@ interface et2_IDOMNode
 	 */
 	getDOMNode(_sender? : et2_widget) : HTMLElement
 }
+var et2_IDOMNode = "et2_IDOMNode";
 function implements_et2_IDOMNode(obj : et2_widget)
 {
 	return implements_methods(obj, ["getDOMNode"]);
@@ -91,6 +92,7 @@ interface et2_IInput
 	 */
 	isValid(messages) : boolean
 }
+var et2_IInput = "et2_IInput";
 function implements_et2_IInput(obj : et2_widget)
 {
 	return implements_methods(obj, ["getValue", "isDirty", "resetDirty", "isValid"]);
@@ -106,6 +108,7 @@ interface et2_IResizeable
 	 */
 	resize() : void
 }
+var et2_IResizeable = "et2_IResizeable";
 function implements_et2_IResizeable(obj : et2_widget)
 {
 	return implements_methods(obj, ["resize"]);
@@ -118,6 +121,7 @@ interface et2_IAligned
 {
 	get_align() : string
 }
+var et2_IAligned = "et2_IAligned";
 function implements_et2_IAligned(obj : et2_widget)
 {
 	return implements_methods(obj, ["get_align"]);
@@ -138,6 +142,7 @@ interface et2_ISubmitListener
 	 */
 	submit(_values) : void
 }
+var et2_ISubmitListener = "et2_ISubmitListener";
 function implements_et2_ISubmitListener(obj : et2_widget)
 {
 	return implements_methods(obj, ["submit"]);
@@ -179,6 +184,7 @@ interface et2_IDetachedDOM
 	setDetachedAttributes(_nodes : HTMLElement[], _values : object) : void
 
 }
+var et2_IDetachedDOM = "et2_IDetachedDOM";
 function implements_et2_IDetachedDOM(obj : et2_widget)
 {
 	return implements_methods(obj, ["getDetachedAttributes", "getDetachedNodes", "setDetachedAttributes"]);
@@ -202,6 +208,7 @@ interface et2_IPrint
 	 */
 	afterPrint() : void
 }
+var et2_IPrint = "et2_IPrint";
 function implements_et2_IPrint(obj : et2_widget)
 {
 	return implements_methods(obj, ["beforePrint", "afterPrint"]);

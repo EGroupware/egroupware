@@ -32,6 +32,7 @@ require("./et2_core_interfaces");
 require("./et2_core_common");
 var et2_core_widget_1 = require("./et2_core_widget");
 var egw_action_js_1 = require("../egw_action/egw_action.js");
+require("./et2_types");
 /**
  * Abstract widget class which can be inserted into the DOM. All widget classes
  * deriving from this class have to care about implementing the "getDOMNode"

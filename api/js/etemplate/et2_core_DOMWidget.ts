@@ -23,6 +23,7 @@ import {
 	egw_getActionManager, egw_getAppObjectManager,
 	egwActionObject, egwAction, EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT
 } from '../egw_action/egw_action.js';
+import './et2_types';
 
 /**
  * Abstract widget class which can be inserted into the DOM. All widget classes
