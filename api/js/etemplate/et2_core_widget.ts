@@ -170,7 +170,7 @@ export class et2_widget extends ClassWithAttributes
 			"ignore": true,
 			"description": "Object of widget attributes"
 		}
-	}
+	};
 
 	// Set the legacyOptions array to the names of the properties the "options"
 	// attribute defines.
@@ -185,7 +185,7 @@ export class et2_widget extends ClassWithAttributes
 	/**
 	 * Set this variable to true if this widget can have namespaces
 	 */
-	createNamespace: false;
+	createNamespace: boolean = false;
 
 	/**
 	 * Widget constructor
