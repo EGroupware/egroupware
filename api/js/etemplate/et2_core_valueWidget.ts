@@ -42,7 +42,7 @@ export class et2_valueWidget extends et2_baseWidget
 	};
 
 	label: string = '';
-	private _labelContainer: JQuery = null;
+	protected _labelContainer: JQuery = null;
 
 	/**
 	 *
