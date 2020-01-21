@@ -9,7 +9,8 @@
         "experimentalDecorators": true,
         "removeComments": false,
         "moduleResolution": "node",
-        "noImplicitAny": false
+        "noImplicitAny": false,
+        "sourceMap": true
     },
     "include" : [
         "**/js/*",
