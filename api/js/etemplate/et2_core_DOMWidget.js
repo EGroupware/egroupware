@@ -31,7 +31,7 @@ var et2_core_inheritance_1 = require("./et2_core_inheritance");
 require("./et2_core_interfaces");
 require("./et2_core_common");
 var et2_core_widget_1 = require("./et2_core_widget");
-require("../egw_action/egw_action.js");
+var egw_action_js_1 = require("../egw_action/egw_action.js");
 /**
  * Abstract widget class which can be inserted into the DOM. All widget classes
  * deriving from this class have to care about implementing the "getDOMNode"
@@ -39,8 +39,8 @@ require("../egw_action/egw_action.js");
  *
  * @augments et2_widget
  */
-var et2_DOMWidget = /** @class */ (function (_super_1) {
-    __extends(et2_DOMWidget, _super_1);
+var et2_DOMWidget = /** @class */ (function (_super) {
+    __extends(et2_DOMWidget, _super);
     /**
      * When the DOMWidget is initialized, it grabs the DOM-Node of the parent
      * object (if available) and passes it to its own "createDOMNode" function
@@ -50,13 +50,13 @@ var et2_DOMWidget = /** @class */ (function (_super_1) {
     function et2_DOMWidget(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {})) || this;
         _this.parentNode = null;
+        _this.disabled = false;
         _this._attachSet = {
             "node": null,
             "parent": null
         };
-        _this.disabled = false;
         _this._surroundingsMgr = null;
         return _this;
     }
@@ -69,7 +69,7 @@ var et2_DOMWidget = /** @class */ (function (_super_1) {
         this.parentNode = null;
         this._attachSet = {};
         if (this._actionManager) {
-            var app_om = egw_getObjectManager(this.egw().getAppName(), false, 1);
+            var app_om = egw_action_js_1.egw_getObjectManager(this.egw().getAppName(), false, 1);
             if (app_om) {
                 var om = app_om.getObjectById(this.id);
                 if (om)
@@ -79,10 +79,10 @@ var et2_DOMWidget = /** @class */ (function (_super_1) {
             this._actionManager = null;
         }
         if (this._surroundingsMgr) {
-            this._surroundingsMgr.free();
+            this._surroundingsMgr.destroy();
             this._surroundingsMgr = null;
         }
-        this._super();
+        _super.prototype.destroy.call(this);
     };
     /**
      * Attaches the container node of this widget to the DOM-Tree
@@ -178,32 +178,39 @@ var et2_DOMWidget = /** @class */ (function (_super_1) {
     et2_DOMWidget.prototype.get_tab_info = function () {
         var parent = this;
         do {
-            parent = parent._parent;
-        } while (parent !== this.getRoot() && parent._type !== 'tabbox');
+            parent = parent.getParent();
+        } while (parent !== this.getRoot() && parent.getType() !== 'tabbox');
         // No tab
         if (parent === this.getRoot()) {
             return null;
         }
+        var tabbox = parent;
         // Find the tab index
-        for (var i = 0; i < parent.tabData.length; i++) {
+        for (var i = 0; i < tabbox.tabData.length; i++) {
             // Find the tab by DOM heritage
-            if (parent.tabData[i].contentDiv.has(this.div).length) {
-                return parent.tabData[i];
+            // @ts-ignore
+            if (tabbox.tabData[i].contentDiv.has(this.div).length) {
+                return tabbox.tabData[i];
             }
         }
         // On a tab, but we couldn't find it by DOM nodes  Maybe tab template is
         // not loaded yet.  Try checking IDs.
         var template = this;
         do {
-            template = template._parent;
-        } while (template !== parent && template._type !== 'template');
-        for (var i = parent.tabData.length - 1; i >= 0; i--) {
-            if (template && template.id && template.id === parent.tabData[i].id) {
-                return parent.tabData[i];
+            template = template.getParent();
+            // @ts-ignore
+        } while (template !== tabbox && template.getType() !== 'template');
+        for (var i = tabbox.tabData.length - 1; i >= 0; i--) {
+            if (template && template.id && template.id === tabbox.tabData[i].id) {
+                return tabbox.tabData[i];
             }
         }
         // Fallback
-        return this.getParent().get_tab_info();
+        var fallback = this.getParent();
+        if (typeof fallback.get_tab_info === 'function') {
+            return fallback.get_tab_info();
+        }
+        return null;
     };
     /**
      * Set the parent DOM node of this element.  Takes a wider variety of types
@@ -391,7 +398,7 @@ var et2_DOMWidget = /** @class */ (function (_super_1) {
         }
         // Initialize the action manager and add some actions to it
         // Only look 1 level deep
-        var gam = egw_getActionManager(this.egw().appName, true, 1);
+        var gam = egw_action_js_1.egw_getActionManager(this.egw().appName, true, 1);
         if (typeof this._actionManager != "object") {
             if (gam.getActionById(this.getInstanceManager().uniqueId, 1) !== null) {
                 gam = gam.getActionById(this.getInstanceManager().uniqueId, 1);
@@ -440,15 +447,15 @@ var et2_DOMWidget = /** @class */ (function (_super_1) {
      */
     et2_DOMWidget.prototype._link_actions = function (actions) {
         // Get the top level element for the tree
-        var objectManager = egw_getAppObjectManager(true);
+        var objectManager = egw_action_js_1.egw_getAppObjectManager(true);
         var widget_object = objectManager.getObjectById(this.id);
         if (widget_object == null) {
             // Add a new container to the object manager which will hold the widget
             // objects
-            widget_object = objectManager.insertObject(false, new egwActionObject(this.id, objectManager, new et2_action_object_impl(this), this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager));
+            widget_object = objectManager.insertObject(false, new egw_action_js_1.egwActionObject(this.id, objectManager, (new et2_action_object_impl(this)).getAOI(), this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager));
         }
         else {
-            widget_object.setAOI(new et2_action_object_impl(this, this.getDOMNode()));
+            widget_object.setAOI((new et2_action_object_impl(this, this.getDOMNode())).getAOI());
         }
         // Delete all old objects
         widget_object.clear();
@@ -531,28 +538,26 @@ var et2_DOMWidget = /** @class */ (function (_super_1) {
 /**
  * The surroundings manager class allows to append or prepend elements around
  * an widget node.
- *
- * @augments Class
  */
-var et2_surroundingsMgr = /** @class */ (function (_super_1) {
-    __extends(et2_surroundingsMgr, _super_1);
-    function et2_surroundingsMgr() {
-        return _super_1 !== null && _super_1.apply(this, arguments) || this;
-    }
+var et2_surroundingsMgr = /** @class */ (function (_super) {
+    __extends(et2_surroundingsMgr, _super);
     /**
      * Constructor
      *
      * @memberOf et2_surroundingsMgr
      * @param _widget
      */
-    et2_surroundingsMgr.prototype.init = function (_widget) {
-        this.widget = _widget;
-        this._widgetContainer = null;
-        this._widgetSurroundings = [];
-        this._widgetPlaceholder = null;
-        this._widgetNode = null;
-        this._ownPlaceholder = true;
-    };
+    function et2_surroundingsMgr(_widget) {
+        var _this = _super.call(this) || this;
+        _this._widgetContainer = null;
+        _this._widgetSurroundings = [];
+        _this._widgetPlaceholder = null;
+        _this._widgetNode = null;
+        _this._ownPlaceholder = true;
+        _this._surroundingsUpdated = false;
+        _this.widget = _widget;
+        return _this;
+    }
     et2_surroundingsMgr.prototype.destroy = function () {
         this._widgetContainer = null;
         this._widgetSurroundings = null;
@@ -703,33 +708,38 @@ var et2_surroundingsMgr = /** @class */ (function (_super_1) {
  * @param {Object} node
  *
  */
-function et2_action_object_impl(widget, node) {
-    var aoi = new egwActionObjectInterface();
-    var objectNode = node;
-    aoi.getWidget = function () {
-        return widget;
+var et2_action_object_impl = /** @class */ (function () {
+    function et2_action_object_impl(_widget, _node) {
+        var widget = _widget;
+        var objectNode = _node;
+        this.aoi = new egw_action_js_1.egwActionObjectInterface();
+        this.aoi.getWidget = function () {
+            return widget;
+        };
+        this.aoi.doGetDOMNode = function () {
+            return objectNode ? objectNode : widget.getDOMNode();
+        };
+        // _outerCall may be used to determine, whether the state change has been
+        // evoked from the outside and the stateChangeCallback has to be called
+        // or not.
+        this.aoi.doSetState = function (_state, _outerCall) {
+        };
+        // The doTiggerEvent function may be overritten by the aoi if it wants to
+        // support certain action implementation specific events like EGW_AI_DRAG_OVER
+        // or EGW_AI_DRAG_OUT
+        this.aoi.doTriggerEvent = function (_event, _data) {
+            switch (_event) {
+                case egw_action_js_1.EGW_AI_DRAG_OVER:
+                    jQuery(this.node).addClass("ui-state-active");
+                    break;
+                case egw_action_js_1.EGW_AI_DRAG_OUT:
+                    jQuery(this.node).removeClass("ui-state-active");
+                    break;
+            }
+        };
+    }
+    et2_action_object_impl.prototype.getAOI = function () {
+        return this.aoi;
     };
-    aoi.doGetDOMNode = function () {
-        return objectNode ? objectNode : widget.getDOMNode();
-    };
-    // _outerCall may be used to determine, whether the state change has been
-    // evoked from the outside and the stateChangeCallback has to be called
-    // or not.
-    aoi.doSetState = function (_state, _outerCall) {
-    };
-    // The doTiggerEvent function may be overritten by the aoi if it wants to
-    // support certain action implementation specific events like EGW_AI_DRAG_OVER
-    // or EGW_AI_DRAG_OUT
-    aoi.doTriggerEvent = function (_event, _data) {
-        switch (_event) {
-            case EGW_AI_DRAG_OVER:
-                jQuery(this.node).addClass("ui-state-active");
-                break;
-            case EGW_AI_DRAG_OUT:
-                jQuery(this.node).removeClass("ui-state-active");
-                break;
-        }
-    };
-    return aoi;
-}
-;
+    return et2_action_object_impl;
+}());
