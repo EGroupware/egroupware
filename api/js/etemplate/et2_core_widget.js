@@ -508,10 +508,11 @@ var et2_widget = /** @class */ (function (_super) {
      * is called with the node.
      *
      * @param _node XML node to read
+     * @param _name XML node name
      *
      * @return et2_widget
      */
-    et2_widget.prototype.createElementFromNode = function (_node) {
+    et2_widget.prototype.createElementFromNode = function (_node, _name) {
         var attributes = {};
         // Parse the "readonly" and "type" flag for this element here, as they
         // determine which constructor is used

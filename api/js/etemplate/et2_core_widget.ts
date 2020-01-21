@@ -646,10 +646,11 @@ export class et2_widget extends ClassWithAttributes
 	 * is called with the node.
 	 *
 	 * @param _node XML node to read
+	 * @param _name XML node name
 	 *
 	 * @return et2_widget
 	 */
-	createElementFromNode(_node)
+	createElementFromNode(_node, _name?)
 	{
 		var attributes = {};
 
