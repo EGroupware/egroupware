@@ -354,4 +354,3 @@ var et2_description = /** @class */ (function (_super) {
     return et2_description;
 }(et2_core_baseWidget_1.et2_baseWidget));
 et2_core_widget_1.et2_register_widget(et2_description, ["description", "label"]);
-//# sourceMappingURL=et2_widget_description.js.map
