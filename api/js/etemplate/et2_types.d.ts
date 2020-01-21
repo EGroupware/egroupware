@@ -155,3 +155,4 @@ declare var et2_IExposable : any;
 declare function et2_createWidget(type : string, params : {}, parent? : any) : any;
 declare function nm_action(_action : {}, _senders : [], _target : any, _ids? : any) : void;
 declare function et2_compileLegacyJS(_code : string, _widget : et2_widget, _context? : HTMLElement) : Function;
+declare function et2_loadXMLFromURL(_url : string, _callback : Function, _context? : object, _fail_callback? : Function) : void;

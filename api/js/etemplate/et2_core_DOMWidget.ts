@@ -165,7 +165,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 	/**
 	 * Attaches the container node of this widget to the DOM-Tree
 	 */
-	doLoadingFinished() 
+	doLoadingFinished() : boolean | JQueryPromise<unknown>
 	{
 		// Check whether the parent implements the et2_IDOMNode interface. If
 		// yes, grab the DOM node and create our own.
