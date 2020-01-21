@@ -1189,6 +1189,7 @@ declare var app : {classes: any};
 declare var egw_globalObjectManager : any;
 declare var framework : any;
 declare var egw_LAB : any;
+declare function egwIsMobile() : boolean;
 
 declare var mailvelope : any;
 
