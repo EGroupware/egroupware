@@ -100,7 +100,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 			default:'',
 			description: "Sets background image, left, right and scale on DOM",
 		}
-	}
+	};
 
 	parentNode : HTMLElement = null;
 	disabled : boolean = false;
@@ -259,7 +259,8 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 
 	private _surroundingsMgr : et2_surroundingsMgr;
 	
-	getSurroundings() {
+	getSurroundings() : et2_surroundingsMgr
+	{
 		if (!this._surroundingsMgr)
 		{
 			this._surroundingsMgr = new et2_surroundingsMgr(this);
@@ -382,14 +383,16 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 	/**
 	 * Returns the parent node.
 	 */
-	getParentDOMNode() {
+	getParentDOMNode() : HTMLElement
+	{
 		return this.parentNode;
 	}
 
 	/**
 	 * Returns the index of this element in the DOM tree
 	 */
-	getDOMIndex() {
+	getDOMIndex() : number
+	{
 		if (this.getParent())
 		{
 			var idx = 0;
