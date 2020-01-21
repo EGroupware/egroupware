@@ -41,6 +41,9 @@ export class et2_valueWidget extends et2_baseWidget
 		}
 	};
 
+	label: string = '';
+	private _labelContainer: JQuery = null;
+
 	/**
 	 *
 	 *
@@ -71,7 +74,7 @@ export class et2_valueWidget extends et2_baseWidget
 		}
 	}
 
-	set_label(_value)
+	set_label(_value : string)
 	{
 		// Abort if there was no change in the label
 		if (_value == this.label)
