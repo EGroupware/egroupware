@@ -48,7 +48,7 @@ var et2_box = /** @class */ (function (_super) {
      * @memberOf et2_box
      */
     function et2_box(_parent, _attrs, _child) {
-        var _this = _super.call(this, arguments) || this;
+        var _this = _super.call(this, _parent, _attrs, _child) || this;
         _this.createNamespace = true;
         _this.div = jQuery(document.createElement("div"))
             .addClass("et2_" + _this.getType())

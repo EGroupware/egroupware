@@ -47,7 +47,7 @@ export class et2_box extends et2_baseWidget implements et2_IDetachedDOM
 	 */
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
-		super(arguments);
+		super(_parent, _attrs, _child);
 
 		this.div = jQuery(document.createElement("div"))
 			.addClass("et2_" + this.getType())
