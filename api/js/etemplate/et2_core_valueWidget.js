@@ -34,8 +34,6 @@ require("./et2_core_common");
  * et2_valueWidget is the base class for et2_inputWidget - valueWidget introduces
  * the "value" attribute and automatically loads it from the "content" array
  * after loading from XML.
- *
- * @augments et2_baseWidget
  */
 var et2_valueWidget = /** @class */ (function (_super) {
     __extends(et2_valueWidget, _super);

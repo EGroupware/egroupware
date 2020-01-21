@@ -14,7 +14,6 @@
 	et2_core_DOMWidget;
 */
 
-//import { ClassWithAttributes } from './et2_core_inheritance';
 import './et2_core_interfaces';
 import './et2_core_common';
 import { et2_DOMWidget } from './et2_core_DOMWidget';
@@ -94,7 +93,7 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 	 * @param _prepend if set, the message is displayed behind the widget node
 	 * 	instead of before. Defaults to false.
 	 */
-	showMessage(_text, _type, _floating, _prepend)
+	showMessage(_text, _type?, _floating?, _prepend?)
 	{
 		// Preset the parameters
 		if (typeof _type == "undefined")
@@ -146,7 +145,7 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 	 * @param _noUpdate is used internally to prevent an update of the surroundings
 	 * 	manager.
 	 */
-	hideMessage(_fade, _noUpdate)
+	hideMessage(_fade? : boolean, _noUpdate? : boolean)
 	{
 		if (typeof _fade == "undefined")
 		{
@@ -259,7 +258,8 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 	 * @param _ev
 	 * @returns
 	 */
-	click(_ev) {
+	click(_ev)
+	{
 		if(typeof this.onclick == 'function')
 		{
 			// Make sure function gets a reference to the widget, splice it in as 2. argument if not
@@ -272,7 +272,8 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 		return true;
 	}
 
-	set_statustext(_value) {
+	set_statustext(_value)
+	{
 		// Tooltip should not be shown in mobile view
 		if (egwIsMobile()) return;
 		// Don't execute the code below, if no tooltip will be attached/detached

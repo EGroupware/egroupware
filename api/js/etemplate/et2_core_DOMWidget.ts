@@ -215,7 +215,8 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 	 * attached to the tree or no parent node or no node for this widget is
 	 * defined.
 	 */
-	attachToDOM() {
+	attachToDOM()
+	{
 		// Attach the DOM node of this widget (if existing) to the new parent
 		var node = this.getDOMNode(this);
 		if (node && this.parentNode &&
