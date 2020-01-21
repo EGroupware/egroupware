@@ -15,7 +15,7 @@
 	et2_core_baseWidget;
 */
 
-import './et2_core_baseWidget'
+import { et2_baseWidget } from './et2_core_baseWidget'
 import './et2_core_common';
 
 /**
@@ -25,7 +25,7 @@ import './et2_core_common';
  *
  * @augments et2_baseWidget
  */
-class et2_valueWidget extends et2_baseWidget
+export class et2_valueWidget extends et2_baseWidget
 {
 	static readonly _attributes : any = {
 		"label": {
@@ -42,6 +42,9 @@ class et2_valueWidget extends et2_baseWidget
 			"default": et2_no_init
 		}
 	};
+
+	label: string = '';
+	private _labelContainer: JQuery = null;
 
 	/**
 	 *
@@ -73,7 +76,7 @@ class et2_valueWidget extends et2_baseWidget
 		}
 	}
 
-	set_label(_value)
+	set_label(_value : string)
 	{
 		// Abort if there was no change in the label
 		if (_value == this.label)

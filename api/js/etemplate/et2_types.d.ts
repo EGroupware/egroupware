@@ -5,13 +5,14 @@ declare module eT2
 declare var etemplate2 : any;
 declare class et2_widget{}
 declare class et2_DOMWidget extends et2_widget{}
+declare class et2_baseWidget extends et2_DOMWidget{}
+declare class et2_valueWidget extends et2_baseWidget{}
 declare class et2_inputWidget{
 	getInputNode() : HTMLElement
 }
 declare var et2_surroundingsMgr : any;
 declare var et2_arrayMgr : any;
 declare var et2_readonlysArrayMgr : any;
-declare var et2_baseWidget : any;
 declare var et2_container : any;
 declare var et2_placeholder : any;
 declare var et2_validTypes : string[];
@@ -25,7 +26,6 @@ declare var et2_IAligned : any;
 declare var et2_ISubmitListener : any;
 declare var et2_IDetachedDOM : any;
 declare var et2_IPrint : any;
-declare var et2_valueWidget : any;
 declare var et2_registry : {};
 declare var et2_dataview : any;
 declare var et2_dataview_controller : any;
