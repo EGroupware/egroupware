@@ -276,7 +276,7 @@ var et2_container = /** @class */ (function (_super) {
     function et2_container(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_container._attributes, _child || {})) || this;
         _this.setDOMNode(document.createElement("div"));
         return _this;
     }
@@ -314,7 +314,7 @@ var et2_placeholder = /** @class */ (function (_super) {
     function et2_placeholder(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_placeholder._attributes, _child || {})) || this;
         _this.visible = false;
         _this.attrNodes = {};
         // Create the placeholder div
