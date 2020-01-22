@@ -23,8 +23,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+/*egw:uses
+        et2_core_widget;
+    /vendor/bower-asset/jquery-ui/jquery-ui.js;
+*/
 var et2_core_widget_1 = require("./et2_core_widget");
+var et2_core_widget_2 = require("./et2_core_widget");
 var et2_widget_button_1 = require("./et2_widget_button");
+var et2_core_inheritance_1 = require("./et2_core_inheritance");
+var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 /**
  * A common dialog widget that makes it easy to imform users or prompt for information.
  *
@@ -101,7 +108,7 @@ var et2_widget_button_1 = require("./et2_widget_button");
 var et2_dialog = /** @class */ (function (_super) {
     __extends(et2_dialog, _super);
     function et2_dialog(_parent, _attrs, _child) {
-        var _this = _super.call(this) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
         /**
          * Details for dialog type options
          */
@@ -394,7 +401,7 @@ var et2_dialog = /** @class */ (function (_super) {
             _egw_or_appname = egw_appName;
         }
         // create a dummy parent with a correct reference to an application specific egw object
-        var parent = new et2_core_widget_1.et2_widget();
+        var parent = new et2_core_widget_2.et2_widget();
         // if egw object is passed in because called from et2, just use it
         if (typeof _egw_or_appname != 'string') {
             parent.setApiInstance(_egw_or_appname);
@@ -499,7 +506,7 @@ var et2_dialog = /** @class */ (function (_super) {
         var buttonId = _senders.id;
         var dialogMsg = (typeof _dialogMsg != "undefined") ? _dialogMsg : '';
         var titleMsg = (typeof _titleMsg != "undefined") ? _titleMsg : '';
-        var egw = _senders instanceof et2_core_widget_1.et2_widget ? _senders.egw() : et2_dialog._create_parent().egw();
+        var egw = _senders instanceof et2_core_widget_2.et2_widget ? _senders.egw() : et2_dialog._create_parent().egw();
         var callbackDialog = function (button_id) {
             if (button_id == et2_dialog.YES_BUTTON) {
                 if (_postSubmit) {
@@ -792,6 +799,6 @@ var et2_dialog = /** @class */ (function (_super) {
     et2_dialog.YES_BUTTON = 2;
     et2_dialog.NO_BUTTON = 3;
     return et2_dialog;
-}(et2_core_widget_1.et2_widget));
-et2_register_widget(et2_dialog, ["dialog"]);
+}(et2_core_widget_2.et2_widget));
+et2_core_widget_1.et2_register_widget(et2_dialog, ["dialog"]);
 //# sourceMappingURL=et2_widget_dialog.js.map

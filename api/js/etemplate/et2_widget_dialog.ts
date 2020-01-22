@@ -14,9 +14,11 @@
 	/vendor/bower-asset/jquery-ui/jquery-ui.js;
 */
 
-import {WidgetConfig} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_widget} from "./et2_core_widget";
 import {et2_button} from "./et2_widget_button";
+import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_DOMWidget} from "./et2_core_DOMWidget";
 
 /**
  * A common dialog widget that makes it easy to imform users or prompt for information.
@@ -262,7 +264,7 @@ class et2_dialog extends et2_widget {
     template: any = null;
 
     constructor(_parent?, _attrs? : WidgetConfig, _child? : object) {
-        super();
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
 
         // Define this as null to avoid breaking any hierarchies (eg: destroy())
         if (this.getParent() != null) this.getParent().removeChild(this);
