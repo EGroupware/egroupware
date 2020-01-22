@@ -832,3 +832,4 @@ class et2_dialog extends et2_widget {
         return dialog;
     }
 }
+et2_register_widget(et2_dialog, ["dialog"]);
