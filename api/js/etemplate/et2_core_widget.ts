@@ -368,7 +368,7 @@ export class et2_widget extends ClassWithAttributes
 	 * @param _node is the node which should be added. It has to be an instance
 	 * 	of et2_widget
 	 */
-	addChild(_node)
+	addChild(_node : et2_widget)
 	{
 		this.insertChild(_node, this._children.length);
 	}
@@ -380,7 +380,7 @@ export class et2_widget extends ClassWithAttributes
 	 * 	of et2_widget
 	 * @param _idx is the position at which the element should be added.
 	 */
-	insertChild(_node, _idx)
+	insertChild(_node : et2_widget, _idx: number)
 	{
 		// Check whether the node is one of the supported widget classes.
 		if (this.isOfSupportedWidgetClass(_node)) {
@@ -391,13 +391,15 @@ export class et2_widget extends ClassWithAttributes
 
 			_node._parent = this;
 			this._children.splice(_idx, 0, _node);
-
-			if (_node.implements(et2_IDOMNode) && this.implements(et2_IDOMNode) && _node.parentNode) {
+/*
+Comment this out (for now)
+			if (_node.implements(et2_IDOMNode) && this.implements(et2_IDOMNode) && typeof _node.hasOwnProperty('parentNode') )
+			{
 				_node.detachFromDOM();
 				_node.parentNode = (<et2_IDOMNode><unknown>this).getDOMNode(_node);
 				_node.attachToDOM();
 			}
-
+*/
 		} else {
 			this.egw().debug("error", "Widget " + _node._type + " is not supported by this widget class", this);
 //			throw("Widget is not supported by this widget class!");
