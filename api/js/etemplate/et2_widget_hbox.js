@@ -42,7 +42,7 @@ var et2_hbox = /** @class */ (function (_super) {
      * @memberOf et2_hbox
      */
     function et2_hbox(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_baseWidget_1.et2_baseWidget._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_hbox._attributes, _child || {})) || this;
         _this.createNamespace = true;
         _this.alignData = {
             "hasAlign": false,

@@ -31,7 +31,6 @@ var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_widget_2 = require("./et2_core_widget");
 var et2_widget_button_1 = require("./et2_widget_button");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 /**
  * A common dialog widget that makes it easy to imform users or prompt for information.
  *
@@ -108,7 +107,7 @@ var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 var et2_dialog = /** @class */ (function (_super) {
     __extends(et2_dialog, _super);
     function et2_dialog(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_dialog._attributes, _child || {})) || this;
         /**
          * Details for dialog type options
          */

@@ -43,7 +43,7 @@ class et2_hbox extends et2_baseWidget
 	 */
 	constructor(_parent?, _attrs? : WidgetConfig, _child? : object)
 	{
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_baseWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_hbox._attributes, _child || {}));
 
 		this.leftDiv = null;
 		this.rightDiv = null;
