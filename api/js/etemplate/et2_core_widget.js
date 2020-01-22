@@ -766,14 +766,14 @@ var et2_widget = /** @class */ (function (_super) {
     /**
      * Returns the array manager object for the given part
      *
-     * @param {string} _part name of array mgr to return
+     * @param {string} managed_array_type name of array mgr to return
      */
-    et2_widget.prototype.getArrayMgr = function (_part) {
-        if (this._mgrs && typeof this._mgrs[_part] != "undefined") {
-            return this._mgrs[_part];
+    et2_widget.prototype.getArrayMgr = function (managed_array_type) {
+        if (this._mgrs && typeof this._mgrs[managed_array_type] != "undefined") {
+            return this._mgrs[managed_array_type];
         }
         else if (this._parent) {
-            return this._parent.getArrayMgr(_part);
+            return this._parent.getArrayMgr(managed_array_type);
         }
         return null;
     };
