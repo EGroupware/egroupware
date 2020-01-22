@@ -109,11 +109,11 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 
 	parentNode : HTMLElement = null;
 	disabled : boolean = false;
-	private _attachSet: any  = {
+	protected _attachSet : any  = {
 		"node": null,
 		"parent": null
 	};
-	private _actionManager: any;
+	protected _actionManager: any;
 	width: number;
 	height: number;
 	dom_id: string;
@@ -194,7 +194,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 	 */
 	detachFromDOM()
 	{
-		if (this._attachSet.node && this._attachSet.parent)
+		if (this._attachSet && this._attachSet.node && this._attachSet.parent)
 		{
 			// Remove the current node from the parent node
 			try {
@@ -225,7 +225,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 		// Attach the DOM node of this widget (if existing) to the new parent
 		var node = this.getDOMNode(this);
 		if (node && this.parentNode &&
-		    (node != this._attachSet.node ||
+		    (!this._attachSet || this._attachSet && node != this._attachSet.node ||
 		    this.parentNode != this._attachSet.parent))
 		{
 			// If the surroundings manager exists, surround the DOM-Node of this
@@ -660,7 +660,6 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 		var action_links = this._get_action_links(actions);
 		widget_object.updateActionLinks(action_links);
 	}
-
 }
 
 /**
@@ -888,7 +887,7 @@ class et2_surroundingsMgr extends ClassWithAttributes
  * @param {Object} node
  *
  */
-class et2_action_object_impl
+export class et2_action_object_impl
 {
 	aoi : egwActionObjectInterface;
 
