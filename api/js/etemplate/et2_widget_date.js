@@ -156,7 +156,7 @@ var et2_date = /** @class */ (function (_super) {
      */
     et2_date.prototype.set_readonly = function (_ro) {
         if (this.input_date && !this.input_date.attr('disabled') != !_ro) {
-            this.input_date.attr('disabled', !_ro ? 0 : 1)
+            this.input_date.prop('disabled', !!_ro)
                 .datepicker('option', 'disabled', !!_ro);
         }
     };
@@ -573,6 +573,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
     };
     return et2_date;
 }(et2_core_inputWidget_1.et2_inputWidget));
+exports.et2_date = et2_date;
 et2_core_widget_1.et2_register_widget(et2_date, ["date", "date-time", "date-timeonly"]);
 /**
  * Class which implements the "date-duration" XET-Tag
@@ -820,6 +821,7 @@ var et2_date_duration = /** @class */ (function (_super) {
     };
     return et2_date_duration;
 }(et2_date));
+exports.et2_date_duration = et2_date_duration;
 et2_core_widget_1.et2_register_widget(et2_date_duration, ["date-duration"]);
 /**
  * r/o date-duration
@@ -885,6 +887,7 @@ var et2_date_duration_ro = /** @class */ (function (_super) {
     };
     return et2_date_duration_ro;
 }(et2_date_duration));
+exports.et2_date_duration_ro = et2_date_duration_ro;
 et2_core_widget_1.et2_register_widget(et2_date_duration_ro, ["date-duration_ro"]);
 /**
  * et2_date_ro is the readonly implementation of some date widget.
@@ -1090,6 +1093,7 @@ var et2_date_ro = /** @class */ (function (_super) {
     };
     return et2_date_ro;
 }(et2_core_valueWidget_1.et2_valueWidget));
+exports.et2_date_ro = et2_date_ro;
 et2_core_widget_1.et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date-time_today", "time_or_date", "date-timeonly_ro"]);
 /**
  * Widget for selecting a date range
@@ -1360,5 +1364,6 @@ var et2_date_range = /** @class */ (function (_super) {
     ];
     return et2_date_range;
 }(et2_core_inputWidget_1.et2_inputWidget));
+exports.et2_date_range = et2_date_range;
 et2_core_widget_1.et2_register_widget(et2_date_range, ["date-range"]);
 //# sourceMappingURL=et2_widget_date.js.map

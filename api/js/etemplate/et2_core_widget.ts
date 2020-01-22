@@ -775,7 +775,7 @@ export class et2_widget extends ClassWithAttributes
 	 *
 	 * @param {Promise[]} promises List of promises from widgets that are not done.  Pass an empty array, it will be filled if needed.
 	 */
-	loadingFinished(promises)
+	loadingFinished(promises?)
 	{
 		// Call all availble setters
 		this.initAttributes(this.options);
