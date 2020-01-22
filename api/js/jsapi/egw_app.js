@@ -1632,3 +1632,4 @@ var EgwApp = /** @class */ (function () {
     return EgwApp;
 }());
 exports.EgwApp = EgwApp;
+//# sourceMappingURL=egw_app.js.map
