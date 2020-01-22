@@ -69,7 +69,7 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_baseWidget._attributes, _child || {}));
 	}
 
 	destroy()

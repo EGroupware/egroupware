@@ -110,7 +110,7 @@ class et2_description extends et2_baseWidget implements et2_IDetachedDOM
 			"description": "Text to show as tooltip of defined action"
 		}
 
-	}
+	};
 
 	legacyOptions: string[] = ["font_style", "href", "activate_links", "for",
 		"extra_link_target", "extra_link_popup", "statustext"];
@@ -127,7 +127,7 @@ class et2_description extends et2_baseWidget implements et2_IDetachedDOM
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_description._attributes, _child || {}));
 
 		// Create the span/label tag which contains the label text
 		this.span = jQuery(document.createElement(this.options["for"] ? "label" : "span"))

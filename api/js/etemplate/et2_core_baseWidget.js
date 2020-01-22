@@ -47,7 +47,7 @@ var et2_baseWidget = /** @class */ (function (_super) {
     function et2_baseWidget(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_baseWidget._attributes, _child || {})) || this;
         _this.align = 'left';
         _this.node = null;
         _this.statustext = '';
