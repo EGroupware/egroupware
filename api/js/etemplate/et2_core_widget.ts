@@ -103,8 +103,7 @@ export function et2_createWidget(_name : string, _attrs : object, _parent? : any
 	}
 
 	// Do an sanity check for the attributes
-	constructor.prototype.generateAttributeSet(_attrs);
-
+	ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], _attrs);
 	// Create the new widget and return it
 	return new constructor(_parent, _attrs);
 }
