@@ -336,7 +336,7 @@ export class et2_widget extends ClassWithAttributes
 	/**
 	 * Returns the parent widget of this widget
 	 */
-	getParent()
+	getParent() : et2_widget | null
 	{
 		return this._parent;
 	}
@@ -346,7 +346,7 @@ export class et2_widget extends ClassWithAttributes
 	/**
 	 * Returns the list of children of this widget.
 	 */
-	getChildren()
+	getChildren() : et2_widget[]
 	{
 		return this._children;
 	}
@@ -354,7 +354,7 @@ export class et2_widget extends ClassWithAttributes
 	/**
 	 * Returns the base widget
 	 */
-	getRoot()
+	getRoot() : et2_widget
 	{
 		if (this._parent != null) {
 			return this._parent.getRoot();
@@ -428,7 +428,7 @@ export class et2_widget extends ClassWithAttributes
 	 *
 	 * @param _id is the id you're searching for
 	 */
-	getWidgetById(_id)
+	getWidgetById(_id) : et2_widget | null
 	{
 		if (this.id == _id) {
 			return this;
@@ -444,7 +444,7 @@ export class et2_widget extends ClassWithAttributes
 		}
 		if (this.id && _id.indexOf('[') > -1 && this._children.length) {
 			var ids = (new et2_arrayMgr()).explodeKey(_id);
-			var widget = this;
+			var widget : et2_widget = this;
 			for (var i = 0; i < ids.length && widget !== null; i++) {
 				widget = widget.getWidgetById(ids[i]);
 			}
@@ -952,14 +952,14 @@ export class et2_widget extends ClassWithAttributes
 	/**
 	 * Returns the array manager object for the given part
 	 *
-	 * @param {string} _part name of array mgr to return
+	 * @param {string} managed_array_type name of array mgr to return
 	 */
-	getArrayMgr(_part : string)
+	getArrayMgr(managed_array_type : string)
 	{
-		if (this._mgrs && typeof this._mgrs[_part] != "undefined") {
-			return this._mgrs[_part];
+		if (this._mgrs && typeof this._mgrs[managed_array_type] != "undefined") {
+			return this._mgrs[managed_array_type];
 		} else if (this._parent) {
-			return this._parent.getArrayMgr(_part);
+			return this._parent.getArrayMgr(managed_array_type);
 		}
 
 		return null;
