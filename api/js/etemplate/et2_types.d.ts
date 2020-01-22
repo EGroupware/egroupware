@@ -119,12 +119,7 @@ declare var et2_radioGroup : any;
 declare var et2_script : any;
 declare var et2_selectAccount : any;
 declare var et2_selectAccount_ro : any;
-declare class et2_selectbox extends et2_inputWidget {
-	loadingFinished()
-	getDOMNode()
-	set_value(s: string)
-	getValue()
-}
+declare class et2_selectbox extends et2_inputWidget {}
 declare var et2_selectbox_ro : any;
 declare var et2_menulist : any;
 declare var et2_split : any;
@@ -165,3 +160,4 @@ declare function et2_loadXMLFromURL(_url : string, _callback : Function, _contex
 declare function et2_directChildrenByTagName(_node, _tagName);
 declare function et2_filteredNodeIterator(_node, _callback, _context);
 declare function et2_readAttrWithDefault(_node, _name, _default?);
+declare function sprintf(format : string, ...args : any) : string;

@@ -22,6 +22,7 @@ import { ClassWithAttributes } from "./et2_core_inheritance";
 import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
 import { et2_valueWidget } from './et2_core_valueWidget'
 import { et2_inputWidget } from './et2_core_inputWidget'
+import { et2_selectbox } from './et2_widget_selectbox'
 import './et2_types';
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 
@@ -40,7 +41,7 @@ declare function date (format : string, timestamp? : string | number | Date);
  * Widgets uses jQuery date- and time-picker for desktop browsers and
  * HTML5 input fields for mobile devices to get their native UI for date/time entry.
  */
-class et2_date extends et2_inputWidget
+export class et2_date extends et2_inputWidget
 {
 	static readonly _attributes: any = {
 		"value": {
@@ -228,7 +229,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	{
 		if (this.input_date && !this.input_date.attr('disabled') != !_ro)
 		{
-			this.input_date.attr('disabled', !_ro ? 0 : 1)
+			this.input_date.prop('disabled', !!_ro)
 				.datepicker('option', 'disabled', !!_ro);
 		}
 	}
@@ -655,7 +656,7 @@ et2_register_widget(et2_date, ["date", "date-time", "date-timeonly"]);
 /**
  * Class which implements the "date-duration" XET-Tag
  */
-class et2_date_duration extends et2_date
+export class et2_date_duration extends et2_date
 {
 	static readonly _attributes: any = {
 		"data_format": {
@@ -963,7 +964,7 @@ et2_register_widget(et2_date_duration, ["date-duration"]);
 /**
  * r/o date-duration
  */
-class et2_date_duration_ro extends et2_date_duration implements et2_IDetachedDOM
+export class et2_date_duration_ro extends et2_date_duration implements et2_IDetachedDOM
 {
 	createInputWidget()
 	{
@@ -1037,7 +1038,7 @@ et2_register_widget(et2_date_duration_ro, ["date-duration_ro"]);
 /**
  * et2_date_ro is the readonly implementation of some date widget.
  */
-class et2_date_ro extends et2_valueWidget implements et2_IDetachedDOM
+export class et2_date_ro extends et2_valueWidget implements et2_IDetachedDOM
 {
 	/**
 	 * Ignore all more advanced attributes.
@@ -1282,7 +1283,7 @@ et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date
 /**
  * Widget for selecting a date range
  */
-class et2_date_range extends et2_inputWidget
+export class et2_date_range extends et2_inputWidget
 {
 	static readonly _attributes: any = {
 		value: {

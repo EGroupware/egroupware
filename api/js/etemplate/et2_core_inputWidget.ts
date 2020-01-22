@@ -146,7 +146,7 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 		super.detachFromDOM();
 	}
 
-	change(_node)
+	change(_node, _widget?, _value?)
 	{
 		var messages = [];
 		var valid = this.isValid(messages);

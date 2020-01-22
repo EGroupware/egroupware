@@ -96,7 +96,7 @@ var et2_inputWidget = /** @class */ (function (_super) {
         //		}
         _super.prototype.detachFromDOM.call(this);
     };
-    et2_inputWidget.prototype.change = function (_node) {
+    et2_inputWidget.prototype.change = function (_node, _widget, _value) {
         var messages = [];
         var valid = this.isValid(messages);
         // Passing false will clear any set messages
