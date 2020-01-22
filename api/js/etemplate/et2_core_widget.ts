@@ -27,7 +27,7 @@ var et2_attribute_registry = {};
 
 
 /**
- * Registers the widget class defined by the given constructor and associates it
+ * Registers the widget class defined by the given constructor, registers all its class attributes, and associates it
  * with the types in the _types array.
  *
  * @param {function} _constructor constructor

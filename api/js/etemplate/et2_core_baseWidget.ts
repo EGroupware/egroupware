@@ -18,7 +18,7 @@ import './et2_core_interfaces';
 import './et2_core_common';
 import {et2_DOMWidget} from './et2_core_DOMWidget';
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 
 /**
  * Class which manages the DOM node itself. The simpleWidget class is derrived
@@ -337,6 +337,8 @@ class et2_container extends et2_baseWidget
 	{
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+
+		this.setDOMNode(document.createElement("div"));
 	}
 
 	/**
@@ -362,6 +364,8 @@ class et2_container extends et2_baseWidget
 		}
 	}
 }
+// Register widget for attributes, but not for any xml tags
+et2_register_widget(et2_container, []);
 
 /**
  * Container object for not-yet supported widgets
@@ -446,4 +450,5 @@ class et2_placeholder extends et2_baseWidget implements et2_IDetachedDOM
 		this.placeDiv = jQuery(_nodes[0]);
 	}
 }
-
+// Register widget, but no tags
+et2_register_widget(et2_placeholder, []);
