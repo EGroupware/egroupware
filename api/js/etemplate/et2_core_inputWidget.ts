@@ -76,7 +76,7 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_inputWidget._attributes, _child || {}));
 
 		// mark value as not initialised, so set_value can determine if it is necessary to trigger change event
 		this._oldValue = et2_no_init;

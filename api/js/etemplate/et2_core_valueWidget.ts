@@ -17,6 +17,8 @@
 
 import { et2_baseWidget } from './et2_core_baseWidget'
 import './et2_core_common';
+import {WidgetConfig} from "./et2_core_widget";
+import {ClassWithAttributes} from "./et2_core_inheritance";
 
 /**
  * et2_valueWidget is the base class for et2_inputWidget - valueWidget introduces
@@ -45,9 +47,16 @@ export class et2_valueWidget extends et2_baseWidget
 	protected _labelContainer: JQuery = null;
 
 	/**
+	 * Constructor
+	 */
+	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
+	{
+		// Call the inherited constructor
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_valueWidget._attributes, _child || {}));
+	}
+
+	/**
 	 *
-	 *
-	 * @memberOf et2_valueWidget
 	 * @param _attrs
 	 */
 	transformAttributes(_attrs : object)

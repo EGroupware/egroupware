@@ -30,7 +30,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("./et2_core_common");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
 require("./et2_types");
@@ -47,7 +46,7 @@ var et2_textbox = /** @class */ (function (_super) {
     function et2_textbox(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_textbox._attributes, _child || {})) || this;
         _this.legacyOptions = ["size", "maxlength", "validator"];
         _this.input = null;
         _this.input = null;
@@ -301,7 +300,7 @@ var et2_textbox_ro = /** @class */ (function (_super) {
     function et2_textbox_ro(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_textbox_ro._attributes, _child || {})) || this;
         _this.value = "";
         _this.span = jQuery(document.createElement("label"))
             .addClass("et2_label");
@@ -397,7 +396,7 @@ var et2_searchbox = /** @class */ (function (_super) {
     function et2_searchbox(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_searchbox._attributes, _child || {})) || this;
         _this.value = "";
         _this.value = "";
         _this.div = jQuery(document.createElement('div'))

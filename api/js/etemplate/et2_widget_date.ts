@@ -106,7 +106,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_date._attributes, _child || {}));
 
 		this.date = new Date();
 		this.date.setUTCHours(0);
@@ -717,7 +717,7 @@ class et2_date_duration extends et2_date
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_date_duration._attributes, _child || {}));
 
 		// Legacy option put percent in with display format
 		if(this.options.display_format.indexOf("%") != -1)
@@ -1073,7 +1073,7 @@ class et2_date_ro extends et2_valueWidget implements et2_IDetachedDOM
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_date_ro._attributes, _child || {}));
 
 		this._labelContainer = jQuery(document.createElement("label"))
 			.addClass("et2_label");
@@ -1307,7 +1307,7 @@ class et2_date_range extends et2_inputWidget
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_date_range._attributes, _child || {}));
 
 		this.div = jQuery(document.createElement('div'))
 			.attr({	class:'et2_date_range'});

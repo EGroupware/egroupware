@@ -30,6 +30,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
 require("./et2_core_common");
+var et2_core_inheritance_1 = require("./et2_core_inheritance");
 /**
  * et2_valueWidget is the base class for et2_inputWidget - valueWidget introduces
  * the "value" attribute and automatically loads it from the "content" array
@@ -37,16 +38,19 @@ require("./et2_core_common");
  */
 var et2_valueWidget = /** @class */ (function (_super) {
     __extends(et2_valueWidget, _super);
-    function et2_valueWidget() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * Constructor
+     */
+    function et2_valueWidget(_parent, _attrs, _child) {
+        var _this = 
+        // Call the inherited constructor
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_valueWidget._attributes, _child || {})) || this;
         _this.label = '';
         _this._labelContainer = null;
         return _this;
     }
     /**
      *
-     *
-     * @memberOf et2_valueWidget
      * @param _attrs
      */
     et2_valueWidget.prototype.transformAttributes = function (_attrs) {

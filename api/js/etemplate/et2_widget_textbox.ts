@@ -99,7 +99,7 @@ export class et2_textbox extends et2_inputWidget implements et2_IResizeable
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_textbox._attributes, _child || {}));
 
 		this.input = null;
 
@@ -359,7 +359,7 @@ class et2_textbox_ro extends et2_valueWidget implements et2_IDetachedDOM
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_textbox_ro._attributes, _child || {}));
 
 		this.span = jQuery(document.createElement("label"))
 			.addClass("et2_label");
@@ -472,7 +472,7 @@ class et2_searchbox extends et2_textbox
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_searchbox._attributes, _child || {}));
 
 		this.value = "";
 		this.div = jQuery(document.createElement('div'))

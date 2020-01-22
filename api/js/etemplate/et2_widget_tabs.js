@@ -30,7 +30,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("./et2_core_common");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 require("./et2_types");
 /**
@@ -44,7 +43,7 @@ var et2_tabbox = /** @class */ (function (_super) {
     function et2_tabbox(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_tabbox._attributes, _child || {})) || this;
         /**
          * Currently selected tab
          */
@@ -482,3 +481,4 @@ var et2_tabbox = /** @class */ (function (_super) {
     return et2_tabbox;
 }(et2_core_valueWidget_1.et2_valueWidget));
 et2_core_widget_1.et2_register_widget(et2_tabbox, ["tabbox"]);
+//# sourceMappingURL=et2_widget_tabs.js.map
