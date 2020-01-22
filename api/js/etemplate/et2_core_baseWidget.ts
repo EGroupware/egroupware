@@ -336,7 +336,7 @@ class et2_container extends et2_baseWidget
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_container._attributes, _child || {}));
 
 		this.setDOMNode(document.createElement("div"));
 	}
@@ -388,7 +388,7 @@ class et2_placeholder extends et2_baseWidget implements et2_IDetachedDOM
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_placeholder._attributes, _child || {}));
 
 		this.attrNodes = {};
 
