@@ -81,7 +81,7 @@ class et2_template extends et2_DOMWidget
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_template._attributes, _child || {}));
 
 		// Set this early, so it's available for creating namespace
 		if(_attrs.content)

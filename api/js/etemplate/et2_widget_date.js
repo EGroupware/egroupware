@@ -56,7 +56,7 @@ var et2_date = /** @class */ (function (_super) {
     function et2_date(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_date._attributes, _child || {})) || this;
         _this.legacyOptions = ["data_format"];
         _this.input_date = null;
         _this.is_mobile = false;
@@ -585,7 +585,7 @@ var et2_date_duration = /** @class */ (function (_super) {
     function et2_date_duration(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_date_duration._attributes, _child || {})) || this;
         _this.legacyOptions = ["data_format", "display_format", "hours_per_day", "empty_not_0", "short_labels"];
         // Legacy option put percent in with display format
         if (_this.options.display_format.indexOf("%") != -1) {
@@ -897,7 +897,7 @@ var et2_date_ro = /** @class */ (function (_super) {
     function et2_date_ro(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_date_ro._attributes, _child || {})) || this;
         /**
          * Internal container for working easily with dates
          */
@@ -1102,7 +1102,7 @@ var et2_date_range = /** @class */ (function (_super) {
     function et2_date_range(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_date_range._attributes, _child || {})) || this;
         _this.div = jQuery(document.createElement('div'))
             .attr({ class: 'et2_date_range' });
         _this.from = null;

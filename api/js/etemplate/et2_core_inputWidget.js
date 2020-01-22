@@ -29,7 +29,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 require("./et2_core_common");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 require("./et2_types");
 /**
@@ -45,7 +44,7 @@ var et2_inputWidget = /** @class */ (function (_super) {
     function et2_inputWidget(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_inputWidget._attributes, _child || {})) || this;
         // mark value as not initialised, so set_value can determine if it is necessary to trigger change event
         _this._oldValue = et2_no_init;
         _this._labelContainer = null;

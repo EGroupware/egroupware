@@ -67,7 +67,7 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_tabbox._attributes, _child || {}));
 
 		// Create the outer tabbox container
 		this.container = jQuery(document.createElement("div"))

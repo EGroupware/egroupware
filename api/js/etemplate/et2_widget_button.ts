@@ -120,7 +120,7 @@ export class et2_button extends et2_baseWidget implements et2_IInput, et2_IDetac
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_button._attributes, _child || {}));
 
 		if (!this.options.background_image && (this.options.image || this.options.ro_image))
 		{

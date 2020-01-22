@@ -46,7 +46,7 @@ var et2_template = /** @class */ (function (_super) {
     function et2_template(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_template._attributes, _child || {})) || this;
         _this.createNamespace = true;
         // Set this early, so it's available for creating namespace
         if (_attrs.content) {
