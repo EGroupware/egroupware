@@ -240,32 +240,32 @@ class et2_dialog extends et2_widget {
      * Types
      * @constant
      */
-    readonly PLAIN_MESSAGE: number = 0;
-    readonly INFORMATION_MESSAGE: number = 1;
-    readonly QUESTION_MESSAGE: number = 2;
-    readonly WARNING_MESSAGE: number = 3;
-    readonly ERROR_MESSAGE: number = 4;
+    public static PLAIN_MESSAGE: number = 0;
+    public static INFORMATION_MESSAGE: number = 1;
+    public static QUESTION_MESSAGE: number = 2;
+    public static WARNING_MESSAGE: number = 3;
+    public static ERROR_MESSAGE: number = 4;
 
     /* Pre-defined Button combos */
-    readonly BUTTONS_OK: number = 0;
-    readonly BUTTONS_OK_CANCEL: number = 1;
-    readonly BUTTONS_YES_NO: number = 2;
-    readonly BUTTONS_YES_NO_CANCEL: number = 3;
+    public static BUTTONS_OK: number = 0;
+    public static BUTTONS_OK_CANCEL: number = 1;
+    public static BUTTONS_YES_NO: number = 2;
+    public static BUTTONS_YES_NO_CANCEL: number = 3;
 
     /* Button constants */
-    readonly CANCEL_BUTTON: number = 0;
-    readonly OK_BUTTON: number = 1;
-    readonly YES_BUTTON: number = 2;
-    readonly NO_BUTTON: number = 3;
+    public static CANCEL_BUTTON: number = 0;
+    public static OK_BUTTON: number = 1;
+    public static YES_BUTTON: number = 2;
+    public static NO_BUTTON: number = 3;
 
     div: JQuery = null;
     template: any = null;
 
-    constructor(_parent?, _attrs?: WidgetConfig, _child?: object) {
+    constructor(_parent?, _attrs? : WidgetConfig, _child? : object) {
         super();
 
         // Define this as null to avoid breaking any hierarchies (eg: destroy())
-        this._parent = null;
+        if (this.getParent() != null) this.getParent().removeChild(this);
 
         // Button callbacks need a reference to this
         let self = this;
@@ -477,9 +477,8 @@ class et2_dialog extends et2_widget {
             this.set_dialog_type(this.options.dialog_type);
         }
         this.set_buttons(typeof this.options.buttons == "number" ? this._buttons[this.options.buttons] : this.options.buttons);
-        var self = this;
 
-        var options = {
+        let options = {
             // Pass the internal object, not the option
             buttons: this.options.buttons,
             modal: this.options.modal,
@@ -509,7 +508,7 @@ class et2_dialog extends et2_widget {
         };
         // Leaving width unset lets it size itself according to contents
         if (this.options.width) {
-            options.width = this.options.width;
+            options['width'] = this.options.width;
         }
 
         this.div.dialog(options);
@@ -526,22 +525,23 @@ class et2_dialog extends et2_widget {
     /**
      * Create a parent to inject application specific egw object with loaded translations into et2_dialog
      *
-     * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
+     * @param {string|egw} _egw_or_appname egw object with already loaded translations or application name to load translations for
      */
-    static _create_parent(_egw_or_appname) {
+    static _create_parent(_egw_or_appname? : string) {
         if (typeof _egw_or_appname == 'undefined') {
+            // @ts-ignore
             _egw_or_appname = egw_appName;
         }
         // create a dummy parent with a correct reference to an application specific egw object
-        var parent = new et2_widget();
+        let parent = new et2_widget();
         // if egw object is passed in because called from et2, just use it
         if (typeof _egw_or_appname != 'string') {
-            parent._egw = _egw_or_appname;
+            parent.setApiInstance(_egw_or_appname);
         }
         // otherwise use given appname to create app-specific egw instance and load default translations
         else {
-            parent._egw = egw(_egw_or_appname);
-            parent._egw.langRequireApp(parent._egw.window, _egw_or_appname);
+            parent.setApiInstance(egw(_egw_or_appname));
+            parent.egw().langRequireApp(parent.egw().window, _egw_or_appname);
         }
         return parent;
     }
@@ -566,7 +566,7 @@ class et2_dialog extends et2_widget {
             callback: _callback || function () {
             },
             message: _message,
-            title: _title || parent._egw.lang('Confirmation required'),
+            title: _title || parent.egw().lang('Confirmation required'),
             buttons: typeof _buttons != 'undefined' ? _buttons : et2_dialog.BUTTONS_YES_NO,
             dialog_type: typeof _type != 'undefined' ? _type : et2_dialog.QUESTION_MESSAGE,
             icon: _icon,
@@ -582,8 +582,8 @@ class et2_dialog extends et2_widget {
      * @param {string} _title Text in the top bar of the dialog.
      * @param {integer} _type One of the message constants.  This defines the style of the message.
      */
-    static alert(_message, _title, _type) {
-        var parent = et2_dialog._create_parent(et2_dialog._create_parent()._egw);
+    static alert(_message? : string, _title? : string, _type?) {
+        let parent = et2_dialog._create_parent(et2_dialog._create_parent().egw());
         et2_createWidget("dialog", {
             callback: function () {
             },
@@ -642,7 +642,7 @@ class et2_dialog extends et2_widget {
         var buttonId = _senders.id;
         var dialogMsg = (typeof _dialogMsg != "undefined") ? _dialogMsg : '';
         var titleMsg = (typeof _titleMsg != "undefined") ? _titleMsg : '';
-        var egw = _senders instanceof et2_widget ? _senders.egw() : et2_dialog._create_parent()._egw;
+        var egw = _senders instanceof et2_widget ? _senders.egw() : et2_dialog._create_parent().egw();
         var callbackDialog = function (button_id) {
             if (button_id == et2_dialog.YES_BUTTON) {
                 if (_postSubmit) {
@@ -653,7 +653,7 @@ class et2_dialog extends et2_widget {
             }
         };
         et2_dialog.show_dialog(callbackDialog, egw.lang(dialogMsg), egw.lang(titleMsg), {},
-            et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+            et2_dialog.BUTTONS_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
     };
 
 
@@ -684,12 +684,13 @@ class et2_dialog extends et2_widget {
      *
      * @return {et2_dialog}
      */
-    static long_task(_callback, _message, _title, _menuaction, _list, _egw_or_appname) {
-        var parent = et2_dialog._create_parent(_egw_or_appname);
-        var egw = parent._egw;
+    static long_task(_callback, _message, _title, _menuaction, _list, _egw_or_appname)
+    {
+        let parent = et2_dialog._create_parent(_egw_or_appname);
+        let egw = parent.egw();
 
         // Special action for cancel
-        var buttons = [
+        let buttons = [
             {"button_id": et2_dialog.OK_BUTTON, "text": egw.lang('ok'), "default": true, "disabled": true},
             {
                 "button_id": et2_dialog.CANCEL_BUTTON, "text": egw.lang('cancel'), click: function () {
@@ -700,7 +701,7 @@ class et2_dialog extends et2_widget {
                 }
             }
         ];
-        var dialog = et2_createWidget("dialog", {
+        let dialog = et2_createWidget("dialog", {
             template: egw.webserverUrl + '/api/templates/default/long_task.xet',
             value: {
                 content: {
@@ -722,10 +723,10 @@ class et2_dialog extends et2_widget {
         // OK starts disabled
         jQuery("button[button_id=" + et2_dialog.OK_BUTTON + "]", dialog.div.parent()).button("disable");
 
-        var log = null;
-        var progressbar = null;
-        var cancel = false;
-        var totals = {
+        let log = null;
+        let progressbar = null;
+        let cancel = false;
+        let totals = {
             success: 0,
             skipped: 0,
             failed: 0,
@@ -733,9 +734,9 @@ class et2_dialog extends et2_widget {
         };
 
         // Updates progressbar & log, calls next step
-        var update = function (response) {
+        let update = function (response) {
             // context is index
-            var index = this || 0;
+            let index = this || 0;
 
             progressbar.set_value(100 * (index / _list.length));
             progressbar.set_label(index + ' / ' + _list.length);
@@ -787,7 +788,7 @@ class et2_dialog extends et2_widget {
                     }
             }
             // Scroll to bottom
-            var height = log[0].scrollHeight;
+            let height = log[0].scrollHeight;
             log.scrollTop(height);
 
             // Update totals

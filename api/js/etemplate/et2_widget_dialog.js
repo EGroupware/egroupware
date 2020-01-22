@@ -142,29 +142,11 @@ var et2_dialog = /** @class */ (function (_super) {
                 { "button_id": 0, "text": 'cancel', id: 'dialog[cancel]', image: 'cancel' }
             ]
         ];
-        /**
-         * Types
-         * @constant
-         */
-        _this.PLAIN_MESSAGE = 0;
-        _this.INFORMATION_MESSAGE = 1;
-        _this.QUESTION_MESSAGE = 2;
-        _this.WARNING_MESSAGE = 3;
-        _this.ERROR_MESSAGE = 4;
-        /* Pre-defined Button combos */
-        _this.BUTTONS_OK = 0;
-        _this.BUTTONS_OK_CANCEL = 1;
-        _this.BUTTONS_YES_NO = 2;
-        _this.BUTTONS_YES_NO_CANCEL = 3;
-        /* Button constants */
-        _this.CANCEL_BUTTON = 0;
-        _this.OK_BUTTON = 1;
-        _this.YES_BUTTON = 2;
-        _this.NO_BUTTON = 3;
         _this.div = null;
         _this.template = null;
         // Define this as null to avoid breaking any hierarchies (eg: destroy())
-        _this._parent = null;
+        if (_this.getParent() != null)
+            _this.getParent().removeChild(_this);
         // Button callbacks need a reference to this
         var self = _this;
         for (var i = 0; i < _this._buttons.length; i++) {
@@ -360,7 +342,6 @@ var et2_dialog = /** @class */ (function (_super) {
             this.set_dialog_type(this.options.dialog_type);
         }
         this.set_buttons(typeof this.options.buttons == "number" ? this._buttons[this.options.buttons] : this.options.buttons);
-        var self = this;
         var options = {
             // Pass the internal object, not the option
             buttons: this.options.buttons,
@@ -391,7 +372,7 @@ var et2_dialog = /** @class */ (function (_super) {
         };
         // Leaving width unset lets it size itself according to contents
         if (this.options.width) {
-            options.width = this.options.width;
+            options['width'] = this.options.width;
         }
         this.div.dialog(options);
         // Make sure dialog is wide enough for the title
@@ -405,22 +386,23 @@ var et2_dialog = /** @class */ (function (_super) {
     /**
      * Create a parent to inject application specific egw object with loaded translations into et2_dialog
      *
-     * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
+     * @param {string|egw} _egw_or_appname egw object with already loaded translations or application name to load translations for
      */
     et2_dialog._create_parent = function (_egw_or_appname) {
         if (typeof _egw_or_appname == 'undefined') {
+            // @ts-ignore
             _egw_or_appname = egw_appName;
         }
         // create a dummy parent with a correct reference to an application specific egw object
         var parent = new et2_core_widget_1.et2_widget();
         // if egw object is passed in because called from et2, just use it
         if (typeof _egw_or_appname != 'string') {
-            parent._egw = _egw_or_appname;
+            parent.setApiInstance(_egw_or_appname);
         }
         // otherwise use given appname to create app-specific egw instance and load default translations
         else {
-            parent._egw = egw(_egw_or_appname);
-            parent._egw.langRequireApp(parent._egw.window, _egw_or_appname);
+            parent.setApiInstance(egw(_egw_or_appname));
+            parent.egw().langRequireApp(parent.egw().window, _egw_or_appname);
         }
         return parent;
     };
@@ -443,7 +425,7 @@ var et2_dialog = /** @class */ (function (_super) {
             callback: _callback || function () {
             },
             message: _message,
-            title: _title || parent._egw.lang('Confirmation required'),
+            title: _title || parent.egw().lang('Confirmation required'),
             buttons: typeof _buttons != 'undefined' ? _buttons : et2_dialog.BUTTONS_YES_NO,
             dialog_type: typeof _type != 'undefined' ? _type : et2_dialog.QUESTION_MESSAGE,
             icon: _icon,
@@ -460,7 +442,7 @@ var et2_dialog = /** @class */ (function (_super) {
      * @param {integer} _type One of the message constants.  This defines the style of the message.
      */
     et2_dialog.alert = function (_message, _title, _type) {
-        var parent = et2_dialog._create_parent(et2_dialog._create_parent()._egw);
+        var parent = et2_dialog._create_parent(et2_dialog._create_parent().egw());
         et2_createWidget("dialog", {
             callback: function () {
             },
@@ -517,7 +499,7 @@ var et2_dialog = /** @class */ (function (_super) {
         var buttonId = _senders.id;
         var dialogMsg = (typeof _dialogMsg != "undefined") ? _dialogMsg : '';
         var titleMsg = (typeof _titleMsg != "undefined") ? _titleMsg : '';
-        var egw = _senders instanceof et2_core_widget_1.et2_widget ? _senders.egw() : et2_dialog._create_parent()._egw;
+        var egw = _senders instanceof et2_core_widget_1.et2_widget ? _senders.egw() : et2_dialog._create_parent().egw();
         var callbackDialog = function (button_id) {
             if (button_id == et2_dialog.YES_BUTTON) {
                 if (_postSubmit) {
@@ -528,7 +510,7 @@ var et2_dialog = /** @class */ (function (_super) {
                 }
             }
         };
-        et2_dialog.show_dialog(callbackDialog, egw.lang(dialogMsg), egw.lang(titleMsg), {}, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+        et2_dialog.show_dialog(callbackDialog, egw.lang(dialogMsg), egw.lang(titleMsg), {}, et2_dialog.BUTTONS_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
     };
     ;
     /**
@@ -560,7 +542,7 @@ var et2_dialog = /** @class */ (function (_super) {
      */
     et2_dialog.long_task = function (_callback, _message, _title, _menuaction, _list, _egw_or_appname) {
         var parent = et2_dialog._create_parent(_egw_or_appname);
-        var egw = parent._egw;
+        var egw = parent.egw();
         // Special action for cancel
         var buttons = [
             { "button_id": et2_dialog.OK_BUTTON, "text": egw.lang('ok'), "default": true, "disabled": true },
@@ -790,5 +772,25 @@ var et2_dialog = /** @class */ (function (_super) {
             default: "center"
         }
     };
+    /**
+     * Types
+     * @constant
+     */
+    et2_dialog.PLAIN_MESSAGE = 0;
+    et2_dialog.INFORMATION_MESSAGE = 1;
+    et2_dialog.QUESTION_MESSAGE = 2;
+    et2_dialog.WARNING_MESSAGE = 3;
+    et2_dialog.ERROR_MESSAGE = 4;
+    /* Pre-defined Button combos */
+    et2_dialog.BUTTONS_OK = 0;
+    et2_dialog.BUTTONS_OK_CANCEL = 1;
+    et2_dialog.BUTTONS_YES_NO = 2;
+    et2_dialog.BUTTONS_YES_NO_CANCEL = 3;
+    /* Button constants */
+    et2_dialog.CANCEL_BUTTON = 0;
+    et2_dialog.OK_BUTTON = 1;
+    et2_dialog.YES_BUTTON = 2;
+    et2_dialog.NO_BUTTON = 3;
     return et2_dialog;
 }(et2_core_widget_1.et2_widget));
+//# sourceMappingURL=et2_widget_dialog.js.map
