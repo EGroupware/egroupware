@@ -205,7 +205,7 @@ etemplate2.prototype.clear = function()
 		// Un-register handler
 		this.widgetContainer.egw().unregisterJSONPlugin(etemplate2_handle_assign, this, 'assign');
 
-		this.widgetContainer.free();
+		this.widgetContainer.destroy();
 		this.widgetContainer = null;
 	}
 	jQuery(this.DOMContainer).empty();
