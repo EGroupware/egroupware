@@ -264,7 +264,7 @@ class et2_dialog extends et2_widget {
     template: any = null;
 
     constructor(_parent?, _attrs? : WidgetConfig, _child? : object) {
-        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_dialog._attributes, _child || {}));
 
         // Define this as null to avoid breaking any hierarchies (eg: destroy())
         if (this.getParent() != null) this.getParent().removeChild(this);

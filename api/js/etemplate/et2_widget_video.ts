@@ -98,7 +98,7 @@ class et2_video  extends et2_baseWidget implements et2_IDOMNode
 
     constructor(_parent, _attrs? : WidgetConfig, _child? : object)
     {
-        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {}));
 
         //Create Video tag
         this.video = jQuery(document.createElement("video"));

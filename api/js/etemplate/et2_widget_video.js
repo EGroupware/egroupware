@@ -31,7 +31,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 /**
  * This widget represents the HTML5 video tag with all its optional attributes
  *
@@ -62,7 +61,7 @@ var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 var et2_video = /** @class */ (function (_super) {
     __extends(et2_video, _super);
     function et2_video(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {})) || this;
         _this.video = null;
         //Create Video tag
         _this.video = jQuery(document.createElement("video"));
