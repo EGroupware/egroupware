@@ -96,7 +96,7 @@ function et2_createWidget(_name, _attrs, _parent) {
         constructor = et2_registry[nodeName + "_ro"];
     }
     // Do an sanity check for the attributes
-    constructor.prototype.generateAttributeSet(_attrs);
+    et2_core_inheritance_1.ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], _attrs);
     // Create the new widget and return it
     return new constructor(_parent, _attrs);
 }
