@@ -30,7 +30,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("./et2_core_common");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
 require("./et2_types");
 /**
@@ -44,7 +43,7 @@ var et2_description = /** @class */ (function (_super) {
     function et2_description(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_description._attributes, _child || {})) || this;
         _this.legacyOptions = ["font_style", "href", "activate_links", "for",
             "extra_link_target", "extra_link_popup", "statustext"];
         _this._labelContainer = null;
@@ -354,3 +353,4 @@ var et2_description = /** @class */ (function (_super) {
     return et2_description;
 }(et2_core_baseWidget_1.et2_baseWidget));
 et2_core_widget_1.et2_register_widget(et2_description, ["description", "label"]);
+//# sourceMappingURL=et2_widget_description.js.map
