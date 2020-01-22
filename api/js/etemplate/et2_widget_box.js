@@ -30,7 +30,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
-var et2_core_xml_1 = require("./et2_core_xml");
 /**
  * Class which implements box and vbox tag
  *
@@ -81,7 +80,7 @@ var et2_box = /** @class */ (function (_super) {
                 continue;
             }
             // Create the new element, if no expansion needed
-            var id = et2_core_xml_1.et2_readAttrWithDefault(node, "id", "");
+            var id = et2_readAttrWithDefault(node, "id", "");
             if (id.indexOf('$') < 0 || widgetType != 'box') {
                 this.createElementFromNode(node);
                 childIndex++;

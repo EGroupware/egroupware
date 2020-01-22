@@ -31,6 +31,7 @@ require("./et2_core_interfaces");
 require("./et2_core_common");
 var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
+var et2_core_widget_1 = require("./et2_core_widget");
 /**
  * Class which manages the DOM node itself. The simpleWidget class is derrived
  * from et2_DOMWidget and implements the getDOMNode function. A setDOMNode
@@ -273,8 +274,11 @@ var et2_container = /** @class */ (function (_super) {
      * Constructor
      */
     function et2_container(_parent, _attrs, _child) {
+        var _this = 
         // Call the inherited constructor
-        return _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_core_DOMWidget_1.et2_DOMWidget._attributes, _child || {})) || this;
+        _this.setDOMNode(document.createElement("div"));
+        return _this;
     }
     /**
      * The destroy function destroys all children of the widget, removes itself
@@ -295,6 +299,8 @@ var et2_container = /** @class */ (function (_super) {
     };
     return et2_container;
 }(et2_baseWidget));
+// Register widget for attributes, but not for any xml tags
+et2_core_widget_1.et2_register_widget(et2_container, []);
 /**
  * Container object for not-yet supported widgets
  *
@@ -354,4 +360,6 @@ var et2_placeholder = /** @class */ (function (_super) {
     };
     return et2_placeholder;
 }(et2_baseWidget));
+// Register widget, but no tags
+et2_core_widget_1.et2_register_widget(et2_placeholder, []);
 //# sourceMappingURL=et2_core_baseWidget.js.map
