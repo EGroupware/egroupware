@@ -112,7 +112,7 @@ export class et2_box extends et2_baseWidget implements et2_IDetachedDOM
 				{
 					if(this.getArrayMgr(name).getEntry(childIndex))
 					{
-						this.getArrayMgr(name).perspectiveData.row = childIndex;
+						this.getArrayMgr(name).setRow(childIndex);
 					}
 				}
 
@@ -120,9 +120,8 @@ export class et2_box extends et2_baseWidget implements et2_IDetachedDOM
 			}
 
 			// Reset
-			for(var name in this.getArrayMgrs())
-			{
-				this.getArrayMgr(name).perspectiveData = currentPerspective;
+			for(var name in this.getArrayMgrs()) {
+				this.getArrayMgr(name).setPerspectiveData(currentPerspective);
 			}
 		}
 	}
@@ -184,25 +183,24 @@ export class et2_details extends et2_box
 		},
 		title: {
 			name: "title",
-			description:"Set a header title for box and shows it next to toggle button, default is no title",
-			type:"string",
+			description: "Set a header title for box and shows it next to toggle button, default is no title",
+			type: "string",
 			default: "",
 			translate: true
 		}
 	};
 
-	private title : JQuery;
-	private span : JQuery;
-	private wrapper : JQuery;
+	private title: JQuery;
+	private span: JQuery;
+	private readonly wrapper: JQuery;
 
-	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
-	{
+	constructor(_parent, _attrs?: WidgetConfig, _child?: object) {
 		super(_parent, _attrs, _child);
 
 		this.div = jQuery(document.createElement('div')).addClass('et2_details');
 		this.title = jQuery(document.createElement('span'))
-				.addClass('et2_label et2_details_title')
-				.appendTo(this.div);
+			.addClass('et2_label et2_details_title')
+			.appendTo(this.div);
 		this.span = jQuery(document.createElement('span'))
 				.addClass('et2_details_toggle')
 				.appendTo(this.div);
@@ -225,19 +223,19 @@ export class et2_details extends et2_box
 	/**
 	 * Create widget, set contents, and binds handlers
 	 */
-	_createWidget()
-	{
-		var self = this;
+	_createWidget() {
+		const self = this;
 
-		this.span.on('click', function (e){
+		this.span.on('click', function (e) {
 			self._toggle();
 		});
 
 		//Set header title
-		if (this.options.title)
-		{
+		if (this.options.title) {
 			this.title
-					.click (function(){self._toggle();})
+				.click(function () {
+					self._toggle();
+				})
 					.text(this.options.title);
 		}
 

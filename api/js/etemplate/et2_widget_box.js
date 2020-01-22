@@ -98,14 +98,14 @@ var et2_box = /** @class */ (function (_super) {
                 var mgrs = this.getArrayMgrs();
                 for (var name in mgrs) {
                     if (this.getArrayMgr(name).getEntry(childIndex)) {
-                        this.getArrayMgr(name).perspectiveData.row = childIndex;
+                        this.getArrayMgr(name).setRow(childIndex);
                     }
                 }
                 this.createElementFromNode(repeatNode);
             }
             // Reset
             for (var name in this.getArrayMgrs()) {
-                this.getArrayMgr(name).perspectiveData = currentPerspective;
+                this.getArrayMgr(name).setPerspectiveData(currentPerspective);
             }
         }
     };
