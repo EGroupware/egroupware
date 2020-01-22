@@ -13,25 +13,17 @@
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
-            ({__proto__: []} instanceof Array && function (d, b) {
-                d.__proto__ = b;
-            }) ||
-            function (d, b) {
-                for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-            };
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
         extendStatics(d, b);
-
-        function __() {
-            this.constructor = d;
-        }
-
+        function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Manage access to various template customisation arrays passed to etemplate->exec().
  *
@@ -46,9 +38,7 @@ var et2_arrayMgr = /** @class */ (function () {
      * @param _parentMgr
      */
     function et2_arrayMgr(_data, _parentMgr) {
-        if (_data === void 0) {
-            _data = {};
-        }
+        if (_data === void 0) { _data = {}; }
         this.splitIds = true;
         // Holds information about the current perspective
         this.perspectiveData = {
@@ -93,7 +83,6 @@ var et2_arrayMgr = /** @class */ (function () {
         }
         this.data = _data;
     }
-
     /**
      * Returns the root content array manager object
      */
@@ -231,11 +220,13 @@ var et2_arrayMgr = /** @class */ (function () {
                         // No row, compile for only top level content
                         // @ts-ignore
                         proto.compiledExpressions[_ident] = et2_compilePHPExpression(_ident, ["cont", "_cont"]);
-                    } else {
+                    }
+                    else {
                         // @ts-ignore
                         proto.compiledExpressions[_ident] = et2_compilePHPExpression(_ident, ["row", "cont", "row_cont", "_cont"]);
                     }
-                } catch (e) {
+                }
+                catch (e) {
                     proto.compiledExpressions[_ident] = null;
                     egw.debug("error", "Error while compiling PHP->JS ", e);
                 }
@@ -248,10 +239,12 @@ var et2_arrayMgr = /** @class */ (function () {
                     if (this.perspectiveData.row == null) {
                         // No row, exec with only top level content
                         _ident = proto.compiledExpressions[_ident](cont, _cont);
-                    } else {
+                    }
+                    else {
                         _ident = proto.compiledExpressions[_ident](row, cont, row_cont, _cont);
                     }
-                } catch (e) {
+                }
+                catch (e) {
                     // only log error, as they are no real errors but missing data
                     egw.debug("log", typeof e == 'object' ? e.message : e);
                     _ident = null;
@@ -263,7 +256,8 @@ var et2_arrayMgr = /** @class */ (function () {
             // the entry from the root element
             if (_ident.charAt(1) == '@') {
                 return this.getRoot().getEntry(_ident.substr(2));
-            } else {
+            }
+            else {
                 return this.getEntry(_ident.substr(1));
             }
         }
@@ -330,11 +324,9 @@ exports.et2_arrayMgr = et2_arrayMgr;
  */
 var et2_readonlysArrayMgr = /** @class */ (function (_super) {
     __extends(et2_readonlysArrayMgr, _super);
-
     function et2_readonlysArrayMgr() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-
     /**
      * Find out if the given ID is readonly, according to the array data
      *
@@ -391,7 +383,6 @@ var et2_readonlysArrayMgr = /** @class */ (function (_super) {
     return et2_readonlysArrayMgr;
 }(et2_arrayMgr));
 exports.et2_readonlysArrayMgr = et2_readonlysArrayMgr;
-
 /**
  * Creates a new set of array managers
  *
@@ -419,5 +410,4 @@ function et2_arrayMgrs_expand(_owner, _mgrs, _data, _row) {
     // Return the resulting managers object
     return result;
 }
-
 //# sourceMappingURL=et2_core_arrayMgr.js.map
