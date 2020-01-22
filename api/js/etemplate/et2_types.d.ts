@@ -7,7 +7,7 @@ declare class et2_widget{}
 declare class et2_DOMWidget extends et2_widget{}
 declare class et2_baseWidget extends et2_DOMWidget{}
 declare class et2_valueWidget extends et2_baseWidget{}
-declare class et2_inputWidget{
+declare class et2_inputWidget extends et2_valueWidget{
 	getInputNode() : HTMLElement
 }
 declare class et2_tabbox extends et2_valueWidget {
@@ -119,7 +119,12 @@ declare var et2_radioGroup : any;
 declare var et2_script : any;
 declare var et2_selectAccount : any;
 declare var et2_selectAccount_ro : any;
-declare var et2_selectbox : any;
+declare class et2_selectbox extends et2_inputWidget {
+	loadingFinished()
+	getDOMNode()
+	set_value(s: string)
+	getValue()
+}
 declare var et2_selectbox_ro : any;
 declare var et2_menulist : any;
 declare var et2_split : any;

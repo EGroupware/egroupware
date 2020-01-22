@@ -189,7 +189,7 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 	 *
 	 * @param {string} _value value to set
 	 */
-	set_value(_value)
+	set_value(_value : any | null)
 	{
 		var node = this.getInputNode();
 		if (node)
