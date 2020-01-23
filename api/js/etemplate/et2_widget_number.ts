@@ -23,7 +23,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
  */
 class et2_number extends et2_textbox
 {
-	static readonly	_attributes: {
+	static readonly	_attributes : any = {
 		"value": {
 			"type": "float"
 		},
@@ -160,7 +160,7 @@ et2_register_widget(et2_number, ["int", "integer", "float"]);
  */
 class et2_number_ro extends et2_textbox_ro
 {
-	static readonly _attributes: {
+	static readonly _attributes : any = {
 		min: { ignore: true},
 		max: { ignore: true},
 		precision: {

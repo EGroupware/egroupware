@@ -115,6 +115,35 @@ var et2_number = /** @class */ (function (_super_1) {
             this.input.attr("max", this.max);
         }
     };
+    et2_number._attributes = {
+        "value": {
+            "type": "float"
+        },
+        // Override default width, numbers are usually shorter
+        "size": {
+            "default": 5
+        },
+        "min": {
+            "name": "Minimum",
+            "type": "integer",
+            "default": et2_no_init,
+            "description": "Minimum allowed value"
+        },
+        "max": {
+            "name": "Maximum",
+            "type": "integer",
+            "default": et2_no_init,
+            "description": "Maximum allowed value"
+        },
+        "precision": {
+            // TODO: Implement this in some nice way other than HTML5's step attribute
+            "name": "Precision",
+            "type": "integer",
+            "default": et2_no_init,
+            "description": "Allowed precision - # of decimal places",
+            "ignore": true
+        }
+    };
     return et2_number;
 }(et2_widget_textbox_1.et2_textbox));
 et2_core_widget_1.et2_register_widget(et2_number, ["int", "integer", "float"]);
@@ -134,6 +163,18 @@ var et2_number_ro = /** @class */ (function (_super_1) {
             _value = parseFloat(_value).toFixed(this.options.precision);
         }
         this._super.call(this, _value);
+    };
+    et2_number_ro._attributes = {
+        min: { ignore: true },
+        max: { ignore: true },
+        precision: {
+            name: "Precision",
+            type: "integer",
+            default: et2_no_init,
+            description: "Allowed precision - # of decimal places",
+            ignore: true
+        },
+        value: { type: "float" }
     };
     return et2_number_ro;
 }(et2_textbox_ro));
