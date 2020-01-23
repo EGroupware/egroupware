@@ -395,6 +395,45 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 			//alert('egw_refresh() about to call '+href);
 			win.location.href = href;
-	   }
+	   },
+
+
+		/**
+		 * Handle a push notification about entry changes from the websocket
+		 *
+		 * @param  pushData
+		 * @param {string} pushData.app application name
+		 * @param {(string|number)} pushData.id id of entry to refresh or null
+		 * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
+		 * - update: request just modified data from given rows.  Sorting is not considered,
+		 *		so if the sort field is changed, the row will not be moved.
+		 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+		 * - delete: just delete the given rows clientside (no server interaction neccessary)
+		 * - add: requires full reload for proper sorting
+		 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
+		 * @param {number} pushData.account_id User that caused the notification
+		 */
+		push: function(pushData)
+		{
+			// Log for debugging purposes
+			this.debug("log", "push(%o)", pushData);
+
+			if (typeof pushData == "undefined")
+			{
+				this.debug('warn', "Push sent nothing");
+				return;
+			}
+
+			// notify app observers
+			for (var app in _wnd.egw.window.app)	// run observers in main window (eg. not iframe, which might be opener!)
+			{
+				var app_obj = _wnd.egw.window.app[app];
+				if (typeof app_obj.push == 'function')
+				{
+					app_obj.push(pushData);
+				}
+			}
+		}
 	};
+
 });
