@@ -56,6 +56,17 @@ var TimesheetApp = /** @class */ (function (_super) {
             this.filter2_change();
         }
     };
+    TimesheetApp.prototype.observer = function (_msg, _app, _id, _type, _msg_type, _links) {
+        switch (_app) {
+            case 'timesheet':
+                switch (_type) {
+                    case 'delete':
+                        egw.dataStoreUID(_app + '::' + _id, null);
+                        break;
+                }
+                break;
+        }
+    };
     /**
      *
      */
@@ -198,4 +209,3 @@ var TimesheetApp = /** @class */ (function (_super) {
     return TimesheetApp;
 }(egw_app_1.EgwApp));
 app.classes.timesheet = TimesheetApp;
-//# sourceMappingURL=app.js.map

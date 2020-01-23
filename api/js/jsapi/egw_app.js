@@ -152,7 +152,7 @@ var EgwApp = /** @class */ (function () {
     EgwApp.prototype.push = function (_type, _app, _id, _data) {
         // only handle delete by default, for simple case of uid === "$app::$id"
         if (_type === 'delete') {
-            egw.dataDeleteUID(_app + '::' + _id);
+            egw(window).refresh('', _app, _id, "delete");
         }
     };
     /**
@@ -1636,4 +1636,3 @@ var EgwApp = /** @class */ (function () {
     return EgwApp;
 }());
 exports.EgwApp = EgwApp;
-//# sourceMappingURL=egw_app.js.map

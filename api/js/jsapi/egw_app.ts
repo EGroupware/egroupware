@@ -225,7 +225,7 @@ export abstract class EgwApp
 		// only handle delete by default, for simple case of uid === "$app::$id"
 		if (_type === 'delete')
 		{
-			egw.dataDeleteUID(_app+'::'+_id);
+			egw(window).refresh('', _app, _id, "delete");
 		}
 	}
 

@@ -48,6 +48,22 @@ class TimesheetApp extends EgwApp
 		}
 	}
 
+	observer(_msg, _app, _id, _type, _msg_type, _links) {
+
+		switch(_app)
+		{
+			case 'timesheet':
+				switch(_type)
+				{
+					case 'delete':
+						egw.dataStoreUID(_app + '::' + _id, null);
+						break;
+				}
+				break;
+		}
+
+	}
+
 	/**
 	 *
 	 */
