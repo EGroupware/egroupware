@@ -182,7 +182,7 @@ class et2_hbox extends et2_baseWidget
 	 */
 	addChild(child) {
 		super.addChild(child);
-		if(child.instanceOf && child.instanceOf(et2_grid) || child._type == 'et2_grid')
+		if(child.instanceOf && child.instanceOf(et2_grid) && this.isAttached() || child._type == 'et2_grid' && this.isAttached())
 		{
 			jQuery(child.getDOMNode(child)).css("display", "inline-table");
 		}

@@ -160,7 +160,7 @@ var et2_hbox = /** @class */ (function (_super) {
      */
     et2_hbox.prototype.addChild = function (child) {
         _super.prototype.addChild.call(this, child);
-        if (child.instanceOf && child.instanceOf(et2_grid) || child._type == 'et2_grid') {
+        if (child.instanceOf && child.instanceOf(et2_grid) && this.isAttached() || child._type == 'et2_grid' && this.isAttached()) {
             jQuery(child.getDOMNode(child)).css("display", "inline-table");
         }
     };
