@@ -6,8 +6,6 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
- * @version $Id$
  */
 
 /*egw:uses
