@@ -1151,7 +1151,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			if(colName == 'actions' || colName == 'legacy_actions' || colName == 'legacy_actions_check_all')
 			{
 				remove_action_index = x;
-				continue;
+
 			}
 			else if (!colName)
 			{
@@ -1213,14 +1213,18 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 	},
 
 	_parseDataRow: function(_row, _rowData, _colData) {
-		var columnWidgets = new Array(this.columns.length);
+		var columnWidgets = [];
 
 		_row.sort(function(a,b) {
 			return a.colData.order - b.colData.order;
 		});
 
-		for (var x = 0; x < columnWidgets.length; x++)
+		for (var x = 0; x < this.columns.length; x++)
 		{
+			if (!this.columns[x].visible)
+			{
+				continue;
+			}
 			if (typeof _row[x] != "undefined" && _row[x].widget)
 			{
 				columnWidgets[x] = _row[x].widget;
@@ -1525,7 +1529,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 					var value = select.getValue();
 					if (data_id.match(/^col_/) && value.indexOf(data_id) != -1)
 					{
-						var col_id = data_id.replace('col_','')
+						var col_id = data_id.replace('col_','');
 						var col_widget = self.columns[col_id].widget;
 						if (col_widget.customfields)
 						{
@@ -2389,7 +2393,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 					},ctx);
 					count += 200;
-				} while (count < rows)
+				} while (count < rows);
 				nm.controller._grid.setScrollHeight(nm.controller._grid.getAverageHeight() * (rows+1));
 			}
 			else
