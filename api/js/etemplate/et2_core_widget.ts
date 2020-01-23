@@ -463,7 +463,7 @@ Comment this out (for now)
 	 * @param _type is an optional parameter which specifies a class/interface
 	 * 	the elements have to be instanceOf.
 	 */
-	iterateOver(_callback, _context, _type)
+	iterateOver(_callback, _context, _type?)
 	{
 		if (typeof _type == "undefined") {
 			_type = et2_widget;
