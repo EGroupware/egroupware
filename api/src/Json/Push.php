@@ -41,11 +41,20 @@ class Push extends Msg
 	protected $account_id;
 
 	/**
+	 * Push to all clients / broadcast
+	 */
+	const ALL = 0;
+	/**
+	 * Push to current session
+	 */
+	const SESSION = null;
+
+	/**
 	 *
 	 * @param int $account_id =null account_id to push message too or
-	 *	null: for current session only or 0 for whole instance / broadcast
+	 *	self::SESSION(=null): for current session only or self::ALL(=0) for whole instance / broadcast
 	 */
-	public function __construct($account_id=null)
+	public function __construct($account_id=self::SESSION)
 	{
 		$this->account_id = $account_id;
 	}
