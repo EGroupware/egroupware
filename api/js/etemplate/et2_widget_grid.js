@@ -311,7 +311,6 @@ var et2_grid = /** @class */ (function (_super) {
                     this._getCell(cells, x, y).widget = widget;
                 }
             }
-
             // If the node is a column, create the widgets which belong into
             // the column
             var y = 0;

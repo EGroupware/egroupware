@@ -7,8 +7,6 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
- * @version $Id$
  */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {

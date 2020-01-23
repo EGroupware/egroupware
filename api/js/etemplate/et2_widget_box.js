@@ -187,7 +187,9 @@ var et2_details = /** @class */ (function (_super) {
         //Set header title
         if (this.options.title) {
             this.title
-                .click(function () { self._toggle(); })
+                .click(function () {
+                self._toggle();
+            })
                 .text(this.options.title);
         }
         // Align toggle button left/right
