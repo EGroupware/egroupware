@@ -67,7 +67,8 @@ class timesheet_hooks
 			'file_access'=> TIMESHEET_APP.'.timesheet_bo.file_access',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
 			'notify'     => TIMESHEET_APP.'.timesheet_bo.notify',
-			'merge' => true,
+			'merge'      => true,
+			'push_data'  => 'ts_owner',
 		);
 	}
 

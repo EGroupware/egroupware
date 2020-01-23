@@ -58,7 +58,7 @@ namespace EGroupware\Api;
  *			'add_app'    => 'link_app',				// name of get parameter to add links to other app
  *			'add_id'     => 'link_id',				// --------------------- " ------------------- id
  *          'add_popup' => '400x300',				// size of popup (XxY), if add is in popup
- *			'notify' => 'app.class.method',			// method to be called if an other applications liks or unlinks with app: notify(array $data)
+ *			'notify' => 'app.class.method',			// method to be called if an other applications links or unlinks with app: notify(array $data)
  * 			'file_access' => 'app.class.method',	// method to be called to check file access rights of a given user, see links_stream_wrapper class
  *													// boolean file_access(string $id,int $check,string $rel_path=null,int $user=null)
  * 			'file_access_user' => false,			// true if file_access method supports 4th parameter $user, if app is NOT supporting it
@@ -91,6 +91,9 @@ namespace EGroupware\Api;
  *          ),
  *			'fetch'	=>	'app.class.method',			// method to return entry data for a given id. the method called should support id, and expected mime-type
  *													// basically you should return something like array(id, title, mimetype, body, linked-files)
+ *
+ *          'push_data' => "key" | ["key1", ...]    // keys of ACL relevant and privacy save data needed for push of changes to client
+ *
  *			'additional' => array(					// allow one app to register sub-types,
  *				'app-sub' => array(					// different from 'types' approach above
  *					// every value defined above
@@ -590,9 +593,9 @@ class Link extends Link\Storage
 					if (is_array($link)) $app_ids[$link['app']][] = $link['id'];
 				}
 			}
-			foreach($app_ids as $app => $a_ids)
+			foreach($app_ids as $a_app => $a_ids)
 			{
-				self::titles($app,array_unique($a_ids));
+				self::titles($a_app,array_unique($a_ids));
 			}
 		}
 		return $links;
@@ -694,6 +697,14 @@ class Link extends Link\Storage
 		{
 			if (!$link_id && !$app2 && !$id2 && $app2 != '!'.self::VFS_APPNAME)
 			{
+				// in case "someone" interested in all changes (used eg. for push)
+				Hooks::process([
+					'location' => 'notify-all',
+					'type'     => 'delete',
+					'app'      => $app,
+					'id'       => $id,
+				], null, true);
+
 				self::delete_attached($app,$id);	// deleting all attachments
 				self::delete_cache($app,$id);
 			}
@@ -1482,6 +1493,15 @@ class Link extends Link\Storage
 			// Update client side with new title
 			Json\Response::get()->apply('egw.link_title_callback',array(array($app => array($id => self::title($app, $id)))));
 		}
+
+		// in case "someone" interested in all changes (used eg. for push)
+		Hooks::process([
+			'location' => 'notify-all',
+			'type'     => 'edit',
+			'app'      => $app,
+			'id'       => $id,
+			'data'     => $data,
+		], null, true);
 	}
 
 	/**

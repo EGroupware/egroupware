@@ -170,6 +170,32 @@ var TimesheetApp = /** @class */ (function (_super) {
         if (widget)
             return widget.options.value;
     };
+    /**
+     * Push method receives push notification about updates to entries from the application
+     *
+     * It can use the extra _data parameter to determine if the client has read access to
+     * the entry - if an update of the list is necessary.
+     *
+     * @param _type either 'update', 'edit', 'delete', 'add' or null
+     * - update: request just modified data from given rows.  Sorting is not considered,
+     *		so if the sort field is changed, the row will not be moved.
+     * - edit: rows changed, but sorting may be affected.  Requires full reload.
+     * - delete: just delete the given rows clientside (no server interaction neccessary)
+     * - add: requires full reload for proper sorting
+     * @param _app application name incl. sub-type eg. "projectmanager-element"
+     * @param _id id of entry to refresh or null
+     * @param _data eg. owner or responsible to decide if update is necessary
+     * @returns {undefined}
+     */
+    TimesheetApp.prototype.push = function (_type, _app, _id, _data) {
+        console.log('app.timesheet.push', arguments);
+        switch (_type) {
+            case 'delete':
+                _super.prototype.push.apply(this, arguments);
+                break;
+        }
+    };
     return TimesheetApp;
 }(egw_app_1.EgwApp));
 app.classes.timesheet = TimesheetApp;
+//# sourceMappingURL=app.js.map

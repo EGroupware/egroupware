@@ -209,20 +209,24 @@ export abstract class EgwApp
 	 * It can use the extra _data parameter to determine if the client has read access to
 	 * the entry - if an update of the list is necessary.
 	 *
-	 * @param {string} _type either 'update', 'edit', 'delete', 'add' or null
+	 * @param _type either 'update', 'edit', 'delete', 'add' or null
 	 * - update: request just modified data from given rows.  Sorting is not considered,
 	 *		so if the sort field is changed, the row will not be moved.
 	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
 	 * - delete: just delete the given rows clientside (no server interaction neccessary)
 	 * - add: requires full reload for proper sorting
-	 * @param {string} _app application name
-	 * @param {(string|number)} _id id of entry to refresh or null
-	 * @param {mixed} _data eg. owner or responsible to decide if update is necessary
+	 * @param _app application name incl. sub-type eg. "projectmanager-element"
+	 * @param _id id of entry to refresh or null
+	 * @param _data eg. owner or responsible to decide if update is necessary
 	 * @returns {undefined}
 	 */
-	push(_type, _app, _id, _data)
+	push(_type : string, _app : string, _id : string|number, _data? : any)
 	{
-
+		// only handle delete by default, for simple case of uid === "$app::$id"
+		if (_type === 'delete')
+		{
+			egw.dataDeleteUID(_app+'::'+_id);
+		}
 	}
 
 	/**
