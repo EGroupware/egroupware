@@ -364,12 +364,12 @@ class setup_cmd_ldap extends setup_cmd
 				// need to write accountExpires for never expiring account, as samba-tool classicupgrade sets it to 2038-01-19
 				if (!isset($entry['shadowexpire']) || !$entry['shadowexpire'])
 				{
-					$entry['shadowexpire'] = accounts_ads::EXPIRES_NEVER;
+					$entry['shadowexpire'] = Api\Accounts\Ads::EXPIRES_NEVER;
 				}
 				else
 				{
 					if (is_null($utc_diff)) $utc_diff = date('Z');
-					$entry['shadowexpire'] = accounts_ads::convertUnixTimeToWindowsTime(
+					$entry['shadowexpire'] = Api\Accounts\Ads::convertUnixTimeToWindowsTime(
 						$entry['shadowexpire']*24*3600+$utc_diff);	// ldap time to unixTime
 				}
 			}
