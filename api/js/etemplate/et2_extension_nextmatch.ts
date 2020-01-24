@@ -228,6 +228,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_nextmatch._attributes, _child || {}));
 
 		this.activeFilters = {col_filter:{}};
+		this.columns = [];
+		// keeps sorted columns
+		this.sortedColumnsList = [];
 
 		// Directly set current col_filters from settings
 		jQuery.extend(this.activeFilters.col_filter, this.options.settings.col_filter);
@@ -275,8 +278,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		this.controller = null;
 		this.rowProvider = null;
 
-		// keeps sorted columns
-		this.sortedColumnsList = [];
 	}
 
 	/**
@@ -3369,8 +3370,10 @@ et2_register_widget(et2_nextmatch_header, ['nextmatch-header']);
  * Extend header to process customfields
  *
  * @augments et2_customfields_list
+ *
+ * TODO This should extend customfield widget when it's ready
  */
-export class et2_nextmatch_customfields extends et2_customfields_list implements et2_INextmatchHeader
+export class et2_nextmatch_customfields extends et2_container implements et2_INextmatchHeader
 {
 	static readonly _attributes: {
 		'customfields': {

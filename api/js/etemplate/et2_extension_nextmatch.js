@@ -91,6 +91,9 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
     function et2_nextmatch(_parent, _attrs, _child) {
         var _this = _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch._attributes, _child || {})) || this;
         _this.activeFilters = { col_filter: {} };
+        _this.columns = [];
+        // keeps sorted columns
+        _this.sortedColumnsList = [];
         // Directly set current col_filters from settings
         jQuery.extend(_this.activeFilters.col_filter, _this.options.settings.col_filter);
         /*
@@ -125,8 +128,6 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
         // instance, which can first be created once we have the columns
         _this.controller = null;
         _this.rowProvider = null;
-        // keeps sorted columns
-        _this.sortedColumnsList = [];
         return _this;
     }
     /**
@@ -2594,6 +2595,8 @@ et2_core_widget_1.et2_register_widget(et2_nextmatch_header, ['nextmatch-header']
  * Extend header to process customfields
  *
  * @augments et2_customfields_list
+ *
+ * TODO This should extend customfield widget when it's ready
  */
 var et2_nextmatch_customfields = /** @class */ (function (_super_1) {
     __extends(et2_nextmatch_customfields, _super_1);
@@ -2768,7 +2771,7 @@ var et2_nextmatch_customfields = /** @class */ (function (_super_1) {
         return name;
     };
     return et2_nextmatch_customfields;
-}(et2_customfields_list));
+}(et2_container));
 exports.et2_nextmatch_customfields = et2_nextmatch_customfields;
 et2_core_widget_1.et2_register_widget(et2_nextmatch_customfields, ['nextmatch-customfields']);
 /**
