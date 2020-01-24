@@ -181,8 +181,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	// Popup to select columns
 	private selectPopup: any;
 
-	legacyOptions: ["template","hide_header","header_left","header_right"];
-	createNamespace: true;
+	public static legacyOptions = ["template","hide_header","header_left","header_right"];
+	createNamespace : boolean = true;
 
 	private template: any;
 	columns: {widget: et2_widget}[];
@@ -1875,14 +1875,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 *
 	 * @param {string} _value template name
 	 */
-	set_template( template_name : string)
-	{
-		if(this.template)
-		{
+	set_template( template_name : string) {
+		if (this.template) {
 			// Stop early to prevent unneeded processing, and prevent infinite
 			// loops if the server changes the template in get_rows
-			if(this.template == template_name)
-			{
+			if (this.template == template_name) {
 				return;
 			}
 
@@ -1894,10 +1891,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// Free any children from previous template
 			// They may get left behind because of how detached nodes are processed
 			// We don't use iterateOver because it checks sub-children
-			for(var i = this._children.length-1; i >=0 ; i--)
-			{
+			for (var i = this._children.length - 1; i >= 0; i--) {
 				var _node = this._children[i];
-				if(_node != this.header) {
+				if (_node != this.header) {
 					this.removeChild(_node);
 					_node.destroy();
 				}
@@ -1905,15 +1901,17 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 			// Clear this setting if it's the same as the template, or
 			// the columns will not be loaded
-			if(this.template == this.options.settings.columnselection_pref)
-			{
+			if (this.template == this.options.settings.columnselection_pref) {
 				this.options.settings.columnselection_pref = template_name;
 			}
 			this.dataview = new et2_dataview(this.innerDiv, this.egw());
 		}
 
 		// Create the template
-		var template = et2_createWidget("template", {"id": template_name}, this);
+		if (template_name)
+		{
+			var template = et2_createWidget("template", {"id": template_name}, this);
+		}
 
 		if (!template)
 		{
@@ -2953,6 +2951,7 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 			(<et2_widget><unknown>existing).destroy();
 			this.headers[id] = null;
 		}
+		if(!template_name) return;
 
 		// Load the template
 		var self = this;
@@ -3007,7 +3006,7 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 		// Look in sel_options
 		if(!options) options = this.nextmatch.getArrayMgr("sel_options").getEntry(name);
 		// Check parent sel_options, because those are usually global and don't get passed down
-		if(!options) options = this.nextmatch.getArrayMgr("sel_options").parentMgr.getEntry(name);
+		if(!options) options = this.nextmatch.getArrayMgr("sel_options").getParentMgr()?.getEntry(name);
 		// Sometimes legacy stuff puts it in here
 		if(!options) options = mgr.getEntry('rows[sel_options]['+name+']');
 
@@ -3371,7 +3370,7 @@ et2_register_widget(et2_nextmatch_header, ['nextmatch-header']);
  *
  * @augments et2_customfields_list
  *
- * TODO This should extend customfield widget when it's ready
+ * TODO This should extend customfield widget when it's ready, put the whole column in constructor() back too
  */
 export class et2_nextmatch_customfields extends et2_container implements et2_INextmatchHeader
 {
@@ -3396,7 +3395,7 @@ export class et2_nextmatch_customfields extends et2_container implements et2_INe
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_nextmatch_customfields._attributes, _child || {}));
 
 		// Specifically take the whole column
-		this.table.css("width", "100%");
+//		this.table.css("width", "100%");
 	}
 
 	destroy( )
