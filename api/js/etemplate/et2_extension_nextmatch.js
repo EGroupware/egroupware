@@ -90,6 +90,7 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
      */
     function et2_nextmatch(_parent, _attrs, _child) {
         var _this = _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch._attributes, _child || {})) || this;
+        _this.createNamespace = true;
         _this.activeFilters = { col_filter: {} };
         _this.columns = [];
         // keeps sorted columns
@@ -1397,7 +1398,9 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
             this.dataview = new et2_dataview(this.innerDiv, this.egw());
         }
         // Create the template
-        var template = et2_createWidget("template", { "id": template_name }, this);
+        if (template_name) {
+            var template = et2_createWidget("template", { "id": template_name }, this);
+        }
         if (!template) {
             this.egw().debug("error", "Error while loading definition template for " +
                 "nextmatch widget.", template_name);
@@ -2007,6 +2010,7 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
             "default": {}
         }
     };
+    et2_nextmatch.legacyOptions = ["template", "hide_header", "header_left", "header_right"];
     return et2_nextmatch;
 }(et2_core_DOMWidget_1.et2_DOMWidget));
 exports.et2_nextmatch = et2_nextmatch;
@@ -2256,6 +2260,8 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super_1) {
             existing.destroy();
             this.headers[id] = null;
         }
+        if (!template_name)
+            return;
         // Load the template
         var self = this;
         var header = et2_createWidget("template", { "id": template_name }, this);
@@ -2292,6 +2298,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super_1) {
      * @param {object} extra
      */
     et2_nextmatch_header_bar.prototype._build_select = function (name, type, value, lang, extra) {
+        var _a;
         var widget_options = jQuery.extend({
             "id": name,
             "label": this.nextmatch.options.settings[name + "_label"],
@@ -2307,7 +2314,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super_1) {
             options = this.nextmatch.getArrayMgr("sel_options").getEntry(name);
         // Check parent sel_options, because those are usually global and don't get passed down
         if (!options)
-            options = this.nextmatch.getArrayMgr("sel_options").parentMgr.getEntry(name);
+            options = (_a = this.nextmatch.getArrayMgr("sel_options").getParentMgr()) === null || _a === void 0 ? void 0 : _a.getEntry(name);
         // Sometimes legacy stuff puts it in here
         if (!options)
             options = mgr.getEntry('rows[sel_options][' + name + ']');
@@ -2596,7 +2603,7 @@ et2_core_widget_1.et2_register_widget(et2_nextmatch_header, ['nextmatch-header']
  *
  * @augments et2_customfields_list
  *
- * TODO This should extend customfield widget when it's ready
+ * TODO This should extend customfield widget when it's ready, put the whole column in constructor() back too
  */
 var et2_nextmatch_customfields = /** @class */ (function (_super_1) {
     __extends(et2_nextmatch_customfields, _super_1);
@@ -2606,10 +2613,9 @@ var et2_nextmatch_customfields = /** @class */ (function (_super_1) {
      * @memberOf et2_nextmatch_customfields
      */
     function et2_nextmatch_customfields(_parent, _attrs, _child) {
-        var _this = _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_customfields._attributes, _child || {})) || this;
+        return _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_customfields._attributes, _child || {})) || this;
         // Specifically take the whole column
-        _this.table.css("width", "100%");
-        return _this;
+        //		this.table.css("width", "100%");
     }
     et2_nextmatch_customfields.prototype.destroy = function () {
         this.nextmatch = null;
