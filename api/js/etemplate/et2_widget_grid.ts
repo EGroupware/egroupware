@@ -572,9 +572,10 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 					//this.getArrayMgr(name).perspectiveData.row = y;
 				}
 
-				if(this._getCell(cells, x,y).rowData.id)
+				let cell = this._getCell(cells, x,y);
+				if(cell.rowData.id)
 				{
-					this.getArrayMgr("content").expandName(this.rowData[y].id);
+					this.getArrayMgr("content").expandName(cell.rowData.id);
 				}
 				// If row disabled, just skip it
 				let disabled = false;

@@ -414,8 +414,9 @@ var et2_grid = /** @class */ (function (_super) {
                 for (var name in this.getArrayMgrs()) {
                     //this.getArrayMgr(name).perspectiveData.row = y;
                 }
-                if (this._getCell(cells, x, y).rowData.id) {
-                    this.getArrayMgr("content").expandName(this.rowData[y].id);
+                var cell = this._getCell(cells, x, y);
+                if (cell.rowData.id) {
+                    this.getArrayMgr("content").expandName(cell.rowData.id);
                 }
                 // If row disabled, just skip it
                 var disabled = false;
