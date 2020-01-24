@@ -211,35 +211,34 @@ var et2_arrayMgr = /** @class */ (function () {
             // Check whether the expression has already been compiled - if not,
             // try to compile it first. If an error occurs, the identifier
             // function is set to null
-            var proto = this.constructor.prototype;
-            if (typeof proto.compiledExpressions[_ident] == "undefined") {
+            if (typeof et2_arrayMgr.compiledExpressions[_ident] == "undefined") {
                 try {
                     if (this.perspectiveData.row == null) {
                         // No row, compile for only top level content
                         // @ts-ignore
-                        proto.compiledExpressions[_ident] = et2_compilePHPExpression(_ident, ["cont", "_cont"]);
+                        et2_arrayMgr.compiledExpressions[_ident] = et2_compilePHPExpression(_ident, ["cont", "_cont"]);
                     }
                     else {
                         // @ts-ignore
-                        proto.compiledExpressions[_ident] = et2_compilePHPExpression(_ident, ["row", "cont", "row_cont", "_cont"]);
+                        et2_arrayMgr.compiledExpressions[_ident] = et2_compilePHPExpression(_ident, ["row", "cont", "row_cont", "_cont"]);
                     }
                 }
                 catch (e) {
-                    proto.compiledExpressions[_ident] = null;
+                    et2_arrayMgr.compiledExpressions[_ident] = null;
                     egw.debug("error", "Error while compiling PHP->JS ", e);
                 }
             }
             // Execute the previously compiled expression, if it is not "null"
             // because compilation failed. The parameters have to be in the same
             // order as defined during compilation.
-            if (proto.compiledExpressions[_ident]) {
+            if (et2_arrayMgr.compiledExpressions[_ident]) {
                 try {
                     if (this.perspectiveData.row == null) {
                         // No row, exec with only top level content
-                        _ident = proto.compiledExpressions[_ident](cont, _cont);
+                        _ident = et2_arrayMgr.compiledExpressions[_ident](cont, _cont);
                     }
                     else {
-                        _ident = proto.compiledExpressions[_ident](row, cont, row_cont, _cont);
+                        _ident = et2_arrayMgr.compiledExpressions[_ident](row, cont, row_cont, _cont);
                     }
                 }
                 catch (e) {
@@ -314,6 +313,7 @@ var et2_arrayMgr = /** @class */ (function () {
         }
         return mgr;
     };
+    et2_arrayMgr.compiledExpressions = {};
     return et2_arrayMgr;
 }());
 exports.et2_arrayMgr = et2_arrayMgr;

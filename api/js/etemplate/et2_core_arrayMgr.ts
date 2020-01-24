@@ -21,7 +21,8 @@ import {et2_widget} from "./et2_core_widget";
  *
  * This manages access to content, modifications and readonlys arrays
  */
-export class et2_arrayMgr {
+export class et2_arrayMgr
+{
 	splitIds: boolean = true;
 	public data: object;
 	// Holds information about the current perspective
@@ -30,7 +31,7 @@ export class et2_arrayMgr {
 		"key": null,
 		"row": null
 	};
-	compiledExpressions: {};
+	protected static compiledExpressions: object = {};
 	private readonly _parentMgr: et2_arrayMgr;
 	private readOnly: boolean = false;
 
@@ -235,21 +236,20 @@ export class et2_arrayMgr {
 			// Check whether the expression has already been compiled - if not,
 			// try to compile it first. If an error occurs, the identifier
 			// function is set to null
-			const proto = this.constructor.prototype;
-			if (typeof proto.compiledExpressions[_ident] == "undefined") {
+			if (typeof et2_arrayMgr.compiledExpressions[_ident] == "undefined") {
 				try {
 					if (this.perspectiveData.row == null) {
 						// No row, compile for only top level content
 						// @ts-ignore
-						proto.compiledExpressions[_ident] = et2_compilePHPExpression(
+						et2_arrayMgr.compiledExpressions[_ident] = et2_compilePHPExpression(
 							_ident, ["cont", "_cont"]);
 					} else {
 						// @ts-ignore
-						proto.compiledExpressions[_ident] = et2_compilePHPExpression(
+						et2_arrayMgr.compiledExpressions[_ident] = et2_compilePHPExpression(
 							_ident, ["row", "cont", "row_cont", "_cont"]);
 					}
 				} catch (e) {
-					proto.compiledExpressions[_ident] = null;
+					et2_arrayMgr.compiledExpressions[_ident] = null;
 					egw.debug("error", "Error while compiling PHP->JS ", e);
 				}
 			}
@@ -257,13 +257,13 @@ export class et2_arrayMgr {
 			// Execute the previously compiled expression, if it is not "null"
 			// because compilation failed. The parameters have to be in the same
 			// order as defined during compilation.
-			if (proto.compiledExpressions[_ident]) {
+			if (et2_arrayMgr.compiledExpressions[_ident]) {
 				try {
 					if (this.perspectiveData.row == null) {
 						// No row, exec with only top level content
-						_ident = proto.compiledExpressions[_ident](cont, _cont);
+						_ident = et2_arrayMgr.compiledExpressions[_ident](cont, _cont);
 					} else {
-						_ident = proto.compiledExpressions[_ident](row, cont, row_cont, _cont);
+						_ident = et2_arrayMgr.compiledExpressions[_ident](row, cont, row_cont, _cont);
 					}
 				} catch (e) {
 					// only log error, as they are no real errors but missing data
