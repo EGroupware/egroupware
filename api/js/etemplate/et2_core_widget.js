@@ -408,7 +408,9 @@ var et2_widget = /** @class */ (function (_super) {
             var attrName = _attrsObj[i].name;
             var attrValue = _attrsObj[i].value;
             // Special handling for the legacy options
-            if (attrName == "options" && _proto.legacyOptions && _proto.legacyOptions.length > 0) {
+            if (attrName == "options" && _proto.constructor.legacyOptions && _proto.constructor.legacyOptions.length > 0) {
+                var legacy = _proto.constructor.legacyOptions || [];
+                var attrs = et2_attribute_registry[Object.getPrototypeOf(_proto).constructor.name] || {};
                 // Check for modifications on legacy options here.  Normal modifications
                 // are handled in widget constructor, but it's too late for legacy options then
                 if (_target.id && this.getArrayMgr("modifications").getEntry(_target.id)) {
@@ -422,21 +424,21 @@ var et2_widget = /** @class */ (function (_super) {
                 }
                 // Parse the legacy options (as a string, other types not allowed)
                 var splitted = et2_csvSplit(attrValue + "");
-                for (var j = 0; j < splitted.length && j < _proto.legacyOptions.length; j++) {
+                for (var j = 0; j < splitted.length && j < legacy.length; j++) {
                     // Blank = not set, unless there's more legacy options provided after
-                    if (splitted[j].trim().length === 0 && _proto.legacyOptions.length >= splitted.length)
+                    if (splitted[j].trim().length === 0 && legacy.length >= splitted.length)
                         continue;
                     // Check to make sure we don't overwrite a current option with a legacy option
-                    if (typeof _target[_proto.legacyOptions[j]] === "undefined") {
+                    if (typeof _target[legacy[j]] === "undefined") {
                         attrValue = splitted[j];
                         /**
                         If more legacy options than expected, stuff them all in the last legacy option
                         Some legacy options take a comma separated list.
                          */
-                        if (j == _proto.legacyOptions.length - 1 && splitted.length > _proto.legacyOptions.length) {
+                        if (j == legacy.length - 1 && splitted.length > legacy.length) {
                             attrValue = splitted.slice(j);
                         }
-                        var attr = _proto.attributes[_proto.legacyOptions[j]];
+                        var attr = et2_attribute_registry[_proto.constructor.name][legacy[j]] || {};
                         // If the attribute is marked as boolean, parse the
                         // expression as bool expression.
                         if (attr.type == "boolean") {
@@ -445,7 +447,7 @@ var et2_widget = /** @class */ (function (_super) {
                         else if (typeof attrValue != "object") {
                             attrValue = mgr.expandName(attrValue);
                         }
-                        _target[_proto.legacyOptions[j]] = attrValue;
+                        _target[legacy[j]] = attrValue;
                     }
                 }
             }
