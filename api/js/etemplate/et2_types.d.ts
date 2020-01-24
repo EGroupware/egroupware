@@ -8,7 +8,9 @@ declare class et2_DOMWidget extends et2_widget{}
 declare class et2_baseWidget extends et2_DOMWidget{}
 declare class et2_valueWidget extends et2_baseWidget{}
 declare class et2_inputWidget extends et2_valueWidget{
-	getInputNode() : HTMLElement
+	getInputNode() : HTMLElement;
+	public set_value(value: string | object | number);
+	public getValue() : any;
 }
 declare class et2_tabbox extends et2_valueWidget {
 	tabData : any;
@@ -49,7 +51,13 @@ declare var et2_dataview_row : any;
 declare var et2_dataview_rowProvider : any;
 declare var et2_dataview_spacer : any;
 declare var et2_dataview_tile : any;
-declare var et2_customfields_list : any;
+declare class et2_customfields_list extends et2_valueWidget {
+	constructor(_parent: any, _attrs: WidgetConfig, object: object);
+
+	public static readonly prefix : string;
+	public customfields : any;
+	set_visible(visible : boolean);
+}
 declare var et2_INextmatchHeader : any;
 declare var et2_INextmatchSortable : any;
 declare var et2_nextmatch : any;
@@ -116,12 +124,16 @@ declare var et2_selectAccount_ro : any;
 declare class et2_selectbox extends et2_inputWidget {
 	protected options : any;
 	public createInputWidget();
+	public set_multiple(boolean);
+	public set_select_options(options: any);
 }
 declare var et2_selectbox_ro : any;
 declare var et2_menulist : any;
 declare var et2_split : any;
 declare var et2_styles : any;
-declare class et2_taglist extends et2_selectbox {}
+declare class et2_taglist extends et2_selectbox {
+	protected div : JQuery;
+}
 declare var et2_taglist_account : any;
 declare var et2_taglist_email : any;
 declare var et2_taglist_category : any;
