@@ -640,10 +640,14 @@ class timesheet_bo extends Api\Storage
 			}
 		}
 
+		$type = !isset($old) ? 'add' :
+			($new['ts_status'] == self::DELETED_STATUS ? 'delete' : 'update');
+
 		// Check for restore of deleted contact, restore held links
 		if($old && $old['ts_status'] == self::DELETED_STATUS && $new['ts_status'] != self::DELETED_STATUS)
 		{
 			Link::restore(TIMESHEET_APP, $new['ts_id']);
+			$type = 'add';
 		}
 
 		if (!($err = parent::save()))
@@ -659,7 +663,7 @@ class timesheet_bo extends Api\Storage
 				return implode(', ',$this->tracking->errors);
 			}
 			// notify the link-class about the update, as other apps may be subscribt to it
-			Link::notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
+			Link::notify_update(TIMESHEET_APP, $this->data['ts_id'], $this->data, $type);
 		}
 
 		return $err;

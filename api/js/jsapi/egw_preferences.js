@@ -25,6 +25,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 	 * @access: private, use egw.preferences() or egw.set_perferences()
 	 */
 	var prefs = {};
+	var grants = {};
 
 	// Return the actual extension
 	return {
@@ -171,6 +172,50 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 						break;
 				}
 			}
+		},
+
+		/**
+		 * Setting prefs for an app or 'common'
+		 *
+		 * @param {object} _data
+		 * @param {string} _app application name or undefined to set grants of all apps at once
+		 *	and therefore will be inaccessible in IE, after that window is closed
+		 */
+		set_grants: function(_data, _app)
+		{
+			if (_app)
+			{
+				grants[_app] = jQuery.extend(true, {}, _data);
+			}
+			else
+			{
+				grants = jQuery.extend(true, {}, _data);
+			}
+		},
+
+		/**
+		 * Query an EGroupware user preference
+		 *
+		 * We currently load grants from all apps in egw.js, so no need for a callback or promise.
+		 *
+		 * @param {string} _app app-name
+		 * @param {function|false|undefined} _callback optional callback, if preference needs loading first
+		 * if false given and preference is not loaded, undefined is return and no (synchronious) request is send to server
+		 * @param {object} _context context for callback
+		 * @return {object|undefined|false} grant object, false if not (yet) loaded and no callback or undefined
+		 */
+		grants: function( _app) //, _callback, _context)
+		{
+			/* we currently load grants from all apps in egw.js, so no need for a callback or promise
+			if (typeof grants[_app] == 'undefined')
+			{
+				if (_callback === false) return undefined;
+				var request = this.json('EGroupware\\Api\\Framework::ajax_get_preference', [_app], _callback, _context);
+				request.sendRequest(typeof _callback == 'function', 'GET');	// use synchronous (cachable) GET request
+				if (typeof grants[_app] == 'undefined') grants[_app] = {};
+				if (typeof _callback == 'function') return false;
+			}*/
+			return typeof grants[_app] === 'object' ? jQuery.extend({}, grants[_app]) : grants[_app];
 		}
 	};
 });

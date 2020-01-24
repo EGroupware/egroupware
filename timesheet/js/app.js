@@ -38,7 +38,9 @@ var egw_app_1 = require("../../api/js/jsapi/egw_app");
 var TimesheetApp = /** @class */ (function (_super) {
     __extends(TimesheetApp, _super);
     function TimesheetApp() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.appname = 'timesheet';
+        return _this;
     }
     /**
      * This function is called when the etemplate2 object is loaded
@@ -170,6 +172,46 @@ var TimesheetApp = /** @class */ (function (_super) {
         if (widget)
             return widget.options.value;
     };
+    /**
+     * Handle a push notification about entry changes from the websocket
+     *
+     * @param  pushData
+     * @param {string} pushData.app application name
+     * @param {(string|number)} pushData.id id of entry to refresh or null
+     * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
+     * - update: request just modified data from given rows.  Sorting is not considered,
+     *		so if the sort field is changed, the row will not be moved.
+     * - edit: rows changed, but sorting may be affected.  Requires full reload.
+     * - delete: just delete the given rows clientside (no server interaction neccessary)
+     * - add: requires full reload for proper sorting
+     * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
+     * @param {number} pushData.account_id User that caused the notification
+     */
+    TimesheetApp.prototype.push = function (pushData) {
+        var _a, _b, _c;
+        // timesheed does NOT care about other apps data
+        if (pushData.app !== this.appname)
+            return;
+        if (pushData.type === 'delete') {
+            return _super.prototype.push.call(this, pushData);
+        }
+        // all other cases (add, edit, update) are handled identical
+        // check visibility
+        if (typeof this._grants === 'undefined') {
+            this._grants = egw.grants(this.appname);
+        }
+        if (typeof this._grants[pushData.acl] === 'undefined')
+            return;
+        // check if we might not see it because of an owner filter
+        var nm = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getWidgetById('nm');
+        var nm_value = (_b = nm) === null || _b === void 0 ? void 0 : _b.getValue();
+        if (nm && nm_value && typeof ((_c = nm_value.col_filter) === null || _c === void 0 ? void 0 : _c.ts_owner) !== 'undefined') {
+            if (!nm_value.col_filter.ts_owner || nm_value.col_filter.ts_owner == pushData.acl) {
+                this.updateList(nm, pushData);
+            }
+        }
+    };
     return TimesheetApp;
 }(egw_app_1.EgwApp));
 app.classes.timesheet = TimesheetApp;
+//# sourceMappingURL=app.js.map

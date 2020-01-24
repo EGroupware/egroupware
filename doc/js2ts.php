@@ -23,7 +23,7 @@ $replace = array(
 				"\n});" => "\n}\n\napp.classes.$matches[1] = ".ucfirst($matches[1])."App;"
 			]);
 		},
-	"/^\tappname:\s*'([^']+)',/m" => "\treadonly appname: '$1';",
+	"/^\tappname:\s*'([^']+)',/m" => "\treadonly appname = '$1';",
 	"/^\t([^: ,;(]+):\s*([^()]+),/m" => "\t\$1: $2;",
 	"/^\t([^:\n]+):\s*function\s*\(.*this._super.(apply|call)\(/msU" =>
 		function($matches) {

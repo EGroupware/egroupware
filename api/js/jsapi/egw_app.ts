@@ -16,6 +16,19 @@ import '../jsapi/egw_global';
 import '../etemplate/et2_types';
 
 /**
+ * Type for push-message
+ */
+export interface PushData
+{
+	type: "add"|"edit"|"update"|"delete"|"unknown";
+	app: string;	// app-name, can include a subtype eg. "projectmanager-element"
+	id: string | number;
+	acl?: any;	// app-specific acl data, eg. the owner, or array of participants
+	account_id: number;	// user that caused the change
+	[propName:string]: any;	// arbitrary more parameters
+}
+
+/**
  * Common base class for application javascript
  * Each app should extend as needed.
  *
@@ -206,6 +219,9 @@ export abstract class EgwApp
 	/**
 	 * Handle a push notification about entry changes from the websocket
 	 *
+	 * Get's called for data of all apps, but should only handle data of apps it displays,
+	 * which is by default only it's own, but can be for multiple apps eg. for calendar.
+	 *
 	 * @param  pushData
 	 * @param {string} pushData.app application name
 	 * @param {(string|number)} pushData.id id of entry to refresh or null
@@ -218,12 +234,49 @@ export abstract class EgwApp
 	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
 	 * @param {number} pushData.account_id User that caused the notification
 	 */
-	push(pushData)
+	push(pushData : PushData)
 	{
+		// don't care about other apps data, reimplement if your app does care eg. calendar
+		if (pushData.app !== this.appname) return;
+
 		// only handle delete by default, for simple case of uid === "$app::$id"
 		if (pushData.type === 'delete')
 		{
-			egw.dataStoreUID(pushData.app + '::' + pushData.id, null);
+			egw.dataStoreUID(this.uid(pushData), null);
+		}
+	}
+
+	/**
+	 * Get (possible) app-specific uid
+	 *
+	 * @param {object} pushData see push method for individual attributes
+	 */
+	uid(pushData)
+	{
+		return pushData.app + '::' + pushData.id;
+	}
+
+	/**
+	 * Method called after apps push implementation checked visibility
+	 *
+	 * @param {et2_nextmatch} nm
+	 * @param pushData see push method for individual attributes
+	 * @todo implement better way to update nextmatch widget without disturbing the user / state
+	 * @todo show indicator that an update has happend
+	 * @todo rate-limit update frequency
+	 */
+	updateList(nm, pushData : PushData)
+	{
+		switch (pushData.type)
+		{
+			case 'add':
+			case 'unknown':
+				nm.applyFilters();
+				break;
+
+			default:
+				egw.dataRefreshUID(this.uid(pushData));
+				break;
 		}
 	}
 

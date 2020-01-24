@@ -417,6 +417,7 @@
 						egw_script.getAttribute('data-websocket-url'),
 						JSON.parse(egw_script.getAttribute('data-websocket-tokens'))
 					);
+					egw.set_grants(JSON.parse(egw_script.getAttribute('data-grants') || "{}"));
 				}
 			}
 			catch(e) {
@@ -440,7 +441,7 @@
 // get TypeScript modules working with our loader
 function require(_file)
 {
-	return { EgwApp: window.EgwApp};
+	return window.exports;
 }
 var exports = {};
 

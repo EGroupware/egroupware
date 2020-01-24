@@ -719,6 +719,38 @@ class Acl
 	}
 
 	/**
+	 * Get grants for a single app
+	 *
+	 * We use a "get-grants" hook, in case an app need more then what Acl::get_grants returns (with default parameters!).
+	 *
+	 * @param string $_app app-name
+	 * @return array
+	 */
+	function ajax_get_grants($_app=null)
+	{
+		if (!($grants = Hooks::single('get-grants', $_app)))
+		{
+			$grants = $this->get_grants($_app);
+		}
+		return $grants;
+	}
+
+	/**
+	 * Get grants for all apps
+	 *
+	 * @return array with app => array of grants pairs
+	 */
+	function ajax_get_all_grants()
+	{
+		$app_grants = [];
+		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
+		{
+			$app_grants[$app] = $this->get_grants($app);
+		}
+		return $app_grants;
+	}
+
+	/**
 	 * Deletes all ACL entries for an account (user or group)
 	 *
 	 * @param int $account_id acount-id

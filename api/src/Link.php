@@ -677,6 +677,7 @@ class Link extends Link\Storage
 	 */
 	static function unlink2($link_id,$app,&$id,$owner=0,$app2='',$id2='',$hold_for_purge=false)
 	{
+		error_log(__METHOD__."($link_id, '$app', $id, ...)");
 		if (self::DEBUG)
 		{
 			echo "<p>Link::unlink('$link_id','$app',".array2string($id).",'$owner','$app2','$id2', $hold_for_purge)</p>\n";
@@ -1479,8 +1480,9 @@ class Link extends Link\Storage
 	 * @param string $app name of app in which the updated happend
 	 * @param string $id id in $app of the updated entry
 	 * @param array $data =null updated data of changed entry, as the read-method of the BO-layer would supply it
+	 * @param string $type ="unknown" type of update: "add", "edit", "update" or default "unknown"
 	 */
-	static function notify_update($app,$id,$data=null)
+	static function notify_update($app,$id,$data=null,$type='unknown')
 	{
 		self::delete_cache($app,$id);
 		//error_log(__METHOD__."('$app', $id, $data)");
@@ -1497,7 +1499,7 @@ class Link extends Link\Storage
 		// in case "someone" interested in all changes (used eg. for push)
 		Hooks::process([
 			'location' => 'notify-all',
-			'type'     => 'edit',
+			'type'     => !empty($data[Link::OLD_LINK_TITLE]) ? 'update' : $type,
 			'app'      => $app,
 			'id'       => $id,
 			'data'     => $data,
