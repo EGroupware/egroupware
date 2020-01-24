@@ -145,7 +145,7 @@ declare var et2_textbox : any;
 declare var et2_textbox_ro : any;
 declare var et2_searchbox : any;
 declare var et2_timestamper : any;
-declare var et2_toolbar : any;
+declare class et2_toolbar extends et2_DOMWidget {}
 declare var et2_tree : any;
 declare var et2_url : any;
 declare var et2_url_ro : any;
