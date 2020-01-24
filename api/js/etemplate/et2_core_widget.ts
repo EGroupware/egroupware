@@ -535,7 +535,7 @@ Comment this out (for now)
 			var attrValue = _attrsObj[i].value;
 
 			// Special handling for the legacy options
-			if (attrName == "options" && _proto.legacyOptions.length > 0) {
+			if (attrName == "options" && _proto.legacyOptions && _proto.legacyOptions.length > 0) {
 				// Check for modifications on legacy options here.  Normal modifications
 				// are handled in widget constructor, but it's too late for legacy options then
 				if (_target.id && this.getArrayMgr("modifications").getEntry(_target.id)) {

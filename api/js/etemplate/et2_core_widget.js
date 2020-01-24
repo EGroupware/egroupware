@@ -285,11 +285,15 @@ var et2_widget = /** @class */ (function (_super) {
             }
             _node._parent = this;
             this._children.splice(_idx, 0, _node);
-            if (_node.implements(et2_IDOMNode) && this.implements(et2_IDOMNode) && _node.parentNode) {
-                _node.detachFromDOM();
-                _node.parentNode = this.getDOMNode(_node);
-                _node.attachToDOM();
-            }
+            /*
+            Comment this out (for now)
+                        if (_node.implements(et2_IDOMNode) && this.implements(et2_IDOMNode) && typeof _node.hasOwnProperty('parentNode') )
+                        {
+                            _node.detachFromDOM();
+                            _node.parentNode = (<et2_IDOMNode><unknown>this).getDOMNode(_node);
+                            _node.attachToDOM();
+                        }
+            */
         }
         else {
             this.egw().debug("error", "Widget " + _node._type + " is not supported by this widget class", this);
@@ -404,7 +408,7 @@ var et2_widget = /** @class */ (function (_super) {
             var attrName = _attrsObj[i].name;
             var attrValue = _attrsObj[i].value;
             // Special handling for the legacy options
-            if (attrName == "options" && _proto.legacyOptions.length > 0) {
+            if (attrName == "options" && _proto.legacyOptions && _proto.legacyOptions.length > 0) {
                 // Check for modifications on legacy options here.  Normal modifications
                 // are handled in widget constructor, but it's too late for legacy options then
                 if (_target.id && this.getArrayMgr("modifications").getEntry(_target.id)) {

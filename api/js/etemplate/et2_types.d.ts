@@ -56,12 +56,6 @@ declare var et2_nextmatch : any;
 declare var et2_nextmatch_header_bar : any;
 declare var et2_nextmatch_header : any;
 declare var et2_nextmatch_customfields : any;
-declare var et2_nextmatch_sortheader : any;
-declare var et2_nextmatch_filterheader : any;
-declare var et2_nextmatch_accountfilterheader : any;
-declare var et2_nextmatch_taglistheader : any;
-declare var et2_nextmatch_entryheader : any;
-declare var et2_nextmatch_customfilter : any;
 declare var et2_nextmatch_controller : any;
 declare var et2_dynheight : any;
 declare var et2_nextmatch_rowProvider : any;
@@ -119,12 +113,15 @@ declare var et2_radioGroup : any;
 declare var et2_script : any;
 declare var et2_selectAccount : any;
 declare var et2_selectAccount_ro : any;
-declare class et2_selectbox extends et2_inputWidget {}
+declare class et2_selectbox extends et2_inputWidget {
+	protected options : any;
+	public createInputWidget();
+}
 declare var et2_selectbox_ro : any;
 declare var et2_menulist : any;
 declare var et2_split : any;
 declare var et2_styles : any;
-declare var et2_taglist : any;
+declare class et2_taglist extends et2_selectbox {}
 declare var et2_taglist_account : any;
 declare var et2_taglist_email : any;
 declare var et2_taglist_category : any;
@@ -152,6 +149,12 @@ declare var et2_vfsUpload : any;
 declare var et2_vfsSelect : any;
 declare var et2_video : any;
 declare var et2_IExposable : any;
+declare class et2_nextmatch_sortheader extends et2_nextmatch_header {}
+declare class et2_nextmatch_filterheader extends et2_nextmatch_header {}
+declare class et2_nextmatch_accountfilterheader extends et2_nextmatch_header {}
+declare class et2_nextmatch_taglistheader  extends et2_nextmatch_header {}
+declare class et2_nextmatch_entryheader  extends et2_nextmatch_header {}
+declare class et2_nextmatch_customfilter extends et2_nextmatch_filterheader {}
 declare function et2_createWidget(type : string, params : {}, parent? : any) : any;
 declare function nm_action(_action : {}, _senders : [], _target : any, _ids? : any) : void;
 declare function et2_compileLegacyJS(_code : string, _widget : et2_widget, _context? : HTMLElement) : Function;

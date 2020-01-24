@@ -16,13 +16,13 @@
 	et2_core_xml;
 	et2_core_DOMWidget;
 	et2_core_inputWidget;
+	et2_extension_nextmatch;
 */
 
 import './et2_core_common';
-import { ClassWithAttributes } from "./et2_core_inheritance";
-import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
-import { et2_inputWidget } from './et2_core_inputWidget'
-import './et2_types';
+import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_inputWidget} from './et2_core_inputWidget'
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 
 // all calls to Chosen jQuery plugin as jQuery.(un)chosen() give errors which are currently suppressed with @ts-ignore
@@ -1093,7 +1093,8 @@ export class et2_selectbox extends et2_inputWidget
 
 		// First check type, there may be static options.  There's some special handling
 		// for filterheaders, which have the wrong type.
-		var type = widget.instanceOf(et2_nextmatch_filterheader) ? attrs.widget_type || '' : widget._type;
+		// TODO: filterheader should always be defined, find out why it's not
+		var type = /* widget.instanceOf(et2_nextmatch_filterheader) ? attrs.widget_type || '' :*/ widget._type;
 		var type_function = type.replace('select-','').replace('taglist-','').replace('_ro','')+'_options';
 		if(typeof this[type_function] == 'function')
 		{

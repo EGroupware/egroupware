@@ -30,12 +30,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
     et2_core_xml;
     et2_core_DOMWidget;
     et2_core_inputWidget;
+    et2_extension_nextmatch;
 */
 require("./et2_core_common");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
-require("./et2_types");
 var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 // all calls to Chosen jQuery plugin as jQuery.(un)chosen() give errors which are currently suppressed with @ts-ignore
 // adding npm package @types/chosen-js did NOT help :(
@@ -816,7 +816,8 @@ var et2_selectbox = /** @class */ (function (_super) {
         var content_options = {};
         // First check type, there may be static options.  There's some special handling
         // for filterheaders, which have the wrong type.
-        var type = widget.instanceOf(et2_nextmatch_filterheader) ? attrs.widget_type || '' : widget._type;
+        // TODO: filterheader should always be defined, find out why it's not
+        var type = /* widget.instanceOf(et2_nextmatch_filterheader) ? attrs.widget_type || '' :*/ widget._type;
         var type_function = type.replace('select-', '').replace('taglist-', '').replace('_ro', '') + '_options';
         if (typeof this[type_function] == 'function') {
             var old_type = widget._type;
