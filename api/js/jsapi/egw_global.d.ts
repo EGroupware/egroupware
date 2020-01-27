@@ -21,7 +21,24 @@ declare var egw : Iegw;
 /**
  * Interface for global egw with window global or local methods or as function returning an object allowing also application local methods
  */
-declare interface Iegw extends IegwWndLocal { (_app : string, _wnd? : Window) : IegwAppLocal }
+declare interface Iegw extends IegwWndLocal { (_app? : string, _wnd? : Window) : IegwAppLocal, webserverUrl : string }
+
+/**
+ * Return type for egw.app() call
+ */
+declare interface Iapplication
+{
+	title     : string;	// application title untranslated, better use egw.lang(app.name)
+	name      : string;	// app-name
+	enabled   : number;
+	status    : number;
+	id        : number;
+	order     : number;
+	version   : string;
+	index?    : string;
+	icon?     : string;
+	icon_app? : string;
+}
 
 /**
  * Interface for all window global methods (existing only in top window)
@@ -164,8 +181,11 @@ declare interface IegwGlobal
 	 * java script console. The first parameter specifies the debug
 	 * level, all other parameters are passed to the corresponding
 	 * console function.
+	 *
+	 * @param {String} _level "navigation", "log", "info", "warn", "error"
+	 * @param args arguments to egw.debug
 	 */
-	debug(_level : number, ...args : any[]) : void;
+	debug(_level : "navigation"|"log"|"info"|"warn"|"error", ...args : any[]) : void;
 	/**
 	 * Display log to user because he clicked on icon showed by raise_error
 	 *
@@ -487,9 +507,10 @@ declare interface IegwGlobal
 	 *
 	 * @param {string} _app
 	 * @param {string} _name attribute to return, default return whole app-data-object
-	 * @return object|string|undefined undefined if not found
+	 * @return Iapplication|string|undefined undefined if not found
 	 */
-	app(_app : string, _name? : string) : string|object|undefined;
+	app(_app : string, _name : string) : string|undefined;
+	app(_app : string) : Iapplication|undefined;
 	/**
 	 * Get a list of accounts the user has access to
 	 * The list is filtered by type, one of 'accounts','groups','both', 'owngroups'

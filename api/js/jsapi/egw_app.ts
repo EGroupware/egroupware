@@ -108,7 +108,7 @@ export abstract class EgwApp
 	 *
 	 * @var {egw}
 	 */
-	egw: any;
+	egw: IegwAppLocal;
 
 	sidebox: JQuery;
 
@@ -428,7 +428,7 @@ export abstract class EgwApp
 			url = egw.link('/index.php', jQuery.extend({'favorite': safe_name}, egw.link_get_registry(this.appname, 'list')));
 		}
 		// if no list try index value from application
-		else if (egw.app(this.appname).index)
+		else if (egw.app(this.appname)?.index)
 		{
 			url = egw.link('/index.php', 'menuaction='+egw.app(this.appname).index+'&favorite='+safe_name);
 		}
