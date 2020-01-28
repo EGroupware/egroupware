@@ -51,10 +51,16 @@ class ContentSecurityPolicy
 	 *
 	 * @param string $source valid CSP source types like 'script-src', 'style-src', 'connect-src', 'frame-src', ...
 	 * @param string|array $attrs 'unsafe-eval', 'unsafe-inline' (without quotes!), full URLs or protocols (incl. colon!)
+	 * 	'none' removes all other attributes, even ones set later!
+	 * @param bool $reset =false true: remove existing default or hook attributes
 	 */
-	public static function add($source, $attrs)
+	public static function add($source, $attrs, $reset=false)
 	{
-		if (!isset(self::$sources[$source]))
+		if ($reset)
+		{
+			self::$sources[$source] = [];
+		}
+		elseif (!isset(self::$sources[$source]))
 		{
 			// set frame-src attrs of API and apps via hook
 			if (in_array($source, ['frame-src', 'connect-src']) && !isset($attrs))
@@ -71,7 +77,7 @@ class ContentSecurityPolicy
 					}
 				}
 			}
-			self::$sources[$source] = array();
+			self::$sources[$source] = [];
 		}
 		foreach((array)$attrs as $attr)
 		{
