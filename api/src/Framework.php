@@ -96,7 +96,7 @@ abstract class Framework extends Framework\Extra
 	/**
 	 * Factory method to instanciate framework object
 	 *
-	 * @return egw_framwork
+	 * @return self
 	 */
 	public static function factory()
 	{
@@ -932,7 +932,10 @@ abstract class Framework extends Framework\Extra
 				self::includeCSS($theme_min_css);
 
 				// Global category styles
-				Categories::css(Categories::GLOBAL_APPNAME);
+				if (basename($_SERVER['PHP_SELF']) !== 'login.php')
+				{
+					Categories::css(Categories::GLOBAL_APPNAME);
+				}
 			}
 			else
 			{
@@ -949,7 +952,10 @@ abstract class Framework extends Framework\Extra
 				self::includeCSS('/api/templates/default/etemplate2.css');
 
 				// Category styles
-				Categories::css(Categories::GLOBAL_APPNAME);
+				if (basename($_SERVER['PHP_SELF']) !== 'login.php')
+				{
+					Categories::css(Categories::GLOBAL_APPNAME);
+				}
 
 				self::includeCSS($theme_css);
 
