@@ -13,6 +13,8 @@
 
 namespace EGroupware\Api;
 
+use EGroupware\Api\Storage\Customfields;
+
 /**
  * Generalized SQL Storage Object with build in custom field support
  *
@@ -220,7 +222,7 @@ class Storage extends Storage\Base
 	{
 		$id = isset($data[$this->autoinc_id]) ? $data[$this->autoinc_id] : $data[$this->db_key_cols[$this->autoinc_id]];
 
-		\EGroupware\Api\Storage\Customfields::handle_files($this->app, $id, $data, $this->customfields);
+		Customfields::handle_files($this->app, $id, $data, $this->customfields);
 
 		foreach (array_keys((array)$this->customfields) as $name)
 		{
@@ -586,7 +588,7 @@ class Storage extends Storage\Base
 				else if (stripos($col, 'AS') !== false && $order_by)
 				{
 					list($value, $alias) = explode(' AS ', $col);
-					if(stripos($order_by, $alias) !== FALSE)
+					if(stripos($order_by, $alias) !== FALSE && stripos($value, $this->table_name) === FALSE)
 					{
 						$order_by = str_replace($alias, $value, $order_by);
 					}
