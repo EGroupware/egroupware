@@ -73,8 +73,8 @@ class Content
 				$length += 5;
 			}
 		}
-		// mitigate risk of html downloads by using CSP or force download for IE
-		if (!$force_download && in_array($mime, array('text/html', 'application/xhtml+xml')))
+		// mitigate risk of html (or SVG) downloads by using CSP or force download for IE
+		if (!$force_download && in_array($mime, ['text/html', 'application/xhtml+xml', 'image/svg+xml']))
 		{
 			// use CSP only for current user-agents/versions I was able to positivly test
 			if (UserAgent::type() == 'chrome' && UserAgent::version() >= 24 ||
@@ -83,11 +83,8 @@ class Content
 				UserAgent::type() == 'safari' && !UserAgent::mobile() && UserAgent::version() >= 536 ||	// OS X
 				UserAgent::type() == 'safari' && UserAgent::mobile() && UserAgent::version() >= 9537)	// iOS 7
 			{
-				$csp = "script-src 'none'";	// forbid to execute any javascript
-				header("Content-Security-Policy: $csp");
-				header("X-Webkit-CSP: $csp");	// Chrome: <= 24, Safari incl. iOS
-				//header("X-Content-Security-Policy: $csp");	// FF <= 22
-				//error_log(__METHOD__."('$options[path]') ".UserAgent::type().'/'.UserAgent::version().(UserAgent::mobile()?'/mobile':'').": using Content-Security-Policy: $csp");
+				// forbid to execute any javascript (to be precise anything but images and styles)
+				ContentSecurityPolicy::header("image-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; default-src 'none'");
 			}
 			else	// everything else get's a Content-dispostion: attachment, to be on save side
 			{
@@ -95,7 +92,7 @@ class Content
 				$force_download = true;
 			}
 		}
-		// always tell browser to do not sniffing / use our content-type
+		// always tell browser to do no sniffing / use our content-type
 		header('X-Content-Type-Options: nosniff');
 
 		if ($no_content_type)

@@ -20,20 +20,30 @@ use EGroupware\Api;
 class ContentSecurityPolicy
 {
 	/**
-	 * Additional attributes or urls for CSP beside always added "self"
+	 * Additional attributes or urls for CSP beside always added 'self' for everything not 'none'
 	 *
 	 *	- "script-src 'self' 'unsafe-eval'" allows only self and eval, but forbids inline scripts, onchange, etc
 	 *	- "connect-src 'self'" allows ajax requests only to self
 	 *	- "style-src 'self' 'unsafe-inline'" allows only self and inline style, which we need
 	 *	- "frame-src 'self' manual.egroupware.org" allows frame and iframe content only for self or manual.egroupware.org
+	 *	- "manifest-src 'self'"
+	 *  - "'"frame-ancestors 'self'" does not allow to frame (embed in frameset) other then self / clickjacking protection
+	 *	- "media-src 'self' data:"
+	 *	- "img-src 'self' data: https:"
+	 *	- "default-src 'none'" disallows all not explicitly set sources
 	 *
 	 * @var array
 	 */
-	private static $sources = array(
-		'script-src'  => array("'unsafe-eval'"),
-		'style-src'   => array("'unsafe-inline'"),
-		'connect-src' => array(),
+	private static $sources = array(				// our dhtmlxcommon version (not the current) uses eval,
+		'script-src'  => array("'unsafe-eval'"),	// sidebox javascript links, et2_widget_date / jQueryUI datepicker, maybe more
+		'style-src'   => array("'unsafe-inline'"),	// eTemplate styles and custom framework colors
+		'connect-src' => null,	// NOT array(), to allow setting no default connect-src!
 		'frame-src'   => null,	// NOT array(), to allow setting no default frame-src!
+		'manifest-src'=> ["'self'"],
+		'frame-ancestors' => ["'self'"],	// does not allow to frame (embed in frameset) other then self / clickjacking protection
+		'media-src'   => ["data:"],
+		'img-src'     => ["data:", "https:"],
+		'default-src' => ["'none'"],	// disallows all not explicit set sources!
 	);
 
 	/**
@@ -41,27 +51,35 @@ class ContentSecurityPolicy
 	 *
 	 * Calling this method with an empty array for frame-src, sets no defaults but "'self'"!
 	 *
-	 * @param string|array $set =array() URL (incl. protocol!)
 	 * @param string $source valid CSP source types like 'script-src', 'style-src', 'connect-src', 'frame-src', ...
-	 * @param string|array $attrs 'unsafe-eval' and/or 'unsafe-inline' (without quotes!) or URL (incl. protocol!)
+	 * @param string|array $attrs 'unsafe-eval', 'unsafe-inline' (without quotes!), full URLs or protocols (incl. colon!)
+	 * 	'none' removes all other attributes, even ones set later!
+	 * @param bool $reset =false true: remove existing default or hook attributes
 	 */
-	public static function add($source, $attrs)
+	public static function add($source, $attrs, $reset=false)
 	{
-		if (!isset(self::$sources[$source]))
+		if ($reset)
+		{
+			self::$sources[$source] = [];
+		}
+		elseif (!isset(self::$sources[$source]))
 		{
 			// set frame-src attrs of API and apps via hook
-			if ($source == 'frame-src' && !isset($attrs))
+			if (in_array($source, ['frame-src', 'connect-src']) && !isset($attrs))
 			{
-				$attrs = array('www.egroupware.org');
-				if (($app_additional = Api\Hooks::process('csp-frame-src')))
+				$attrs = [];
+				// for regular (non login) pages, call hook allowing apps to add additional frame- and connect-src
+				if (basename($_SERVER['PHP_SELF']) !== 'login.php' &&
+					// no permission / user-run-rights check for connect-src
+					($app_additional = Api\Hooks::process('csp-'.$source, [], $source === 'connect-src')))
 				{
-					foreach($app_additional as $addtional)
+					foreach($app_additional as $app => $additional)
 					{
-						if ($addtional) $attrs = array_unique(array_merge($attrs, $addtional));
+						if ($additional) $attrs = array_unique(array_merge($attrs, $additional));
 					}
 				}
 			}
-			self::$sources[$source] = array();
+			self::$sources[$source] = [];
 		}
 		foreach((array)$attrs as $attr)
 		{
@@ -80,13 +98,11 @@ class ContentSecurityPolicy
 	/**
 	 * Set Content-Security-Policy attributes for script-src: 'unsafe-eval' and/or 'unsafe-inline'
 	 *
-	 * Using CK-Editor currently requires both to be set :(
-	 *
 	 * Old pre-et2 apps might need to call Api\Headers::script_src_attrs(array('unsafe-eval','unsafe-inline'))
 	 *
 	 * EGroupware itself currently still requires 'unsafe-eval'!
 	 *
-	 * @param string|array $set =array() 'unsafe-eval' and/or 'unsafe-inline' (without quotes!) or URL (incl. protocol!)
+	 * @param string|array $set 'unsafe-eval', 'unsafe-inline' (without quotes!), full URLs or protocols (incl. colon!)
 	 */
 	public static function add_script_src($set=null)
 	{
@@ -98,7 +114,7 @@ class ContentSecurityPolicy
 	 *
 	 * EGroupware itself currently still requires 'unsafe-inline'!
 	 *
-	 * @param string|array $set =array() 'unsafe-inline' (without quotes!) and/or URL (incl. protocol!)
+	 * @param string|array $set 'unsafe-eval', 'unsafe-inline' (without quotes!), full URLs or protocols (incl. colon!)
 	 */
 	public static function add_style_src($set=null)
 	{
@@ -108,7 +124,7 @@ class ContentSecurityPolicy
 	/**
 	 * Set Content-Security-Policy attributes for connect-src:
 	 *
-	 * @param string|array $set =array() URL (incl. protocol!)
+	 * @param string|array $set 'unsafe-eval', 'unsafe-inline' (without quotes!), full URLs or protocols (incl. colon!)
 	 */
 	public static function add_connect_src($set=null)
 	{
@@ -120,8 +136,7 @@ class ContentSecurityPolicy
 	 *
 	 * Calling this method with an empty array sets no frame-src, but "'self'"!
 	 *
-	 * @param string|array $set =array() URL (incl. protocol!)
-	 * @return string with attributes eg. "'unsafe-inline'"
+	 * @param string|array $set 'unsafe-eval', 'unsafe-inline' (without quotes!), full URLs or protocols (incl. colon!)
 	 */
 	public static function add_frame_src($set=null)
 	{
@@ -135,26 +150,43 @@ class ContentSecurityPolicy
 	 */
 	public static function send()
 	{
-		self::add('frame-src', null);	// set defaults for frame-src
+		self::add('connect-src', null);    // set defaults for connect-src (no run rights checked)
+		self::add('frame-src', null);    // set defaults for frame-src
+
+		// force default-src 'none'
+		self::$sources['default-src'] = ["'none'"];
 
 		$policies = array();
-		foreach(self::$sources as $source => $urls)
-		{
-			$policies[] = "$source 'self' ".implode(' ', $urls);
+		foreach (self::$sources as $source => $urls) {
+			// for 'none' remove source, as we use "default-src 'none'"
+			if (in_array("'none'", $urls)) {
+				if ($source !== 'default-src') continue;
+			}
+			// automatic add 'self', if not 'none'
+			elseif (!in_array("'self'", $urls)) {
+				array_unshift($urls, "'self'");
+			}
+			$policies[] = "$source " . implode(' ', $urls);
 		}
-		$csp = implode('; ', $policies);
+		self::header(implode('; ', $policies));
+	}
 
-		//$csp = "default-src * 'unsafe-eval' 'unsafe-inline'";	// allow everything
-
+	/**
+	 * Send a CSP header with given policy
+	 *
+	 * @param {string} $csp
+	 */
+	public static function header($csp)
+	{
 		$user_agent = UserAgent::type();
 		$version = UserAgent::version();
 
-		// recommendaton ist to not send regular AND deprecated headers together, as they can cause unexpected behavior
-		if ($user_agent == 'chrome' && $version < 25 || $user_agent == 'safari' && $version < 7)
+		// recommendation is to not send regular AND deprecated headers together, as they can cause unexpected behavior
+		if ($user_agent === 'chrome' && $version < 25 || $user_agent === 'safari' && $version < 7)
 		{
 			header("X-Webkit-CSP: $csp");	// Chrome: <= 24, Safari incl. iOS
 		}
-		elseif ($user_agent == 'firefox' && $version < 23 || $user_agent == 'msie')	// Edge is reported as 'edge'!
+		elseif ($user_agent === 'firefox' && $version < 23 || $user_agent === 'msie')	// Edge is reported as 'edge'!
 		{
 			header("X-Content-Security-Policy: $csp");
 		}
