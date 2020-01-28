@@ -46,7 +46,9 @@ class Login
 	*/
 	function screen($extra_vars, $change_passwd=null)
 	{
-		Api\Header\ContentSecurityPolicy::add('frame-src', array());	// array() no external frame-sources
+		// set a more limiting CSP for our login page
+		Api\Header\ContentSecurityPolicy::add('frame-src', 'none');
+		Api\Header\ContentSecurityPolicy::add('media-src', 'none');
 
 		//error_log(__METHOD__."() this->template=$this->framework->template, this->template_dir=$this->framework->template_dir, get_class(this)=".get_class($this));
 		try {
