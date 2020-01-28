@@ -27,6 +27,7 @@ class ContentSecurityPolicy
 	 *	- "style-src 'self' 'unsafe-inline'" allows only self and inline style, which we need
 	 *	- "frame-src 'self' manual.egroupware.org" allows frame and iframe content only for self or manual.egroupware.org
 	 *	- "manifest-src 'self'"
+	 *  - "'"frame-ancestors 'self'" does not allow to frame (embed in frameset) other then self / clickjacking protection
 	 *	- "media-src 'self' data:"
 	 *	- "img-src 'self' data: https:"
 	 *	- "default-src 'none'" disallows all not explicitly set sources
@@ -39,6 +40,7 @@ class ContentSecurityPolicy
 		'connect-src' => null,	// NOT array(), to allow setting no default connect-src!
 		'frame-src'   => null,	// NOT array(), to allow setting no default frame-src!
 		'manifest-src'=> ["'self'"],
+		'frame-ancestors' => ["'self'"],	// does not allow to frame (embed in frameset) other then self / clickjacking protection
 		'media-src'   => ["data:"],
 		'img-src'     => ["data:", "https:"],
 		'default-src' => ["'none'"],	// disallows all not explicit set sources!
