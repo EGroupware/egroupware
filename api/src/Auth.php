@@ -291,9 +291,12 @@ class Auth
 	}
 
 	/**
-	 * return a random string of letters [0-9a-zA-Z] of size $size
+	 * return a random string of size $size either just alphanumeric or with special chars
 	 *
 	 * @param $size int-size of random string to return
+	 * @param $use_specialchars =false false: only letters and numbers, true: incl. special chars
+	 * @return string
+	 * @throws \Exception if it was not possible to gather sufficient entropy.
 	 */
 	static function randomstring($size, $use_specialchars=false)
 	{
@@ -310,13 +313,10 @@ class Auth
 			$random_char = array_merge($random_char, str_split(str_replace('\\', '', self::SPECIALCHARS)), $random_char);
 		}
 
-		// use cryptographically secure random_int available in PHP 7+
-		$func = function_exists('random_int') ? 'random_int' : 'mt_rand';
-
 		$s = '';
 		for ($i=0; $i < $size; $i++)
 		{
-			$s .= $random_char[$func(0, count($random_char)-1)];
+			$s .= $random_char[random_int(0, count($random_char)-1)];
 		}
 		return $s;
 	}

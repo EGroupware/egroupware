@@ -335,12 +335,15 @@ class admin_acl
 	 * Checks access and throws an exception, if a change is attempted without proper access
 	 *
 	 * @param string|array $ids "$app:$account:$location" string used as row-id in list
-	 * @param int $rights =null null to delete, or new rights
-	 * @param Array $values =array() Additional values from UI
+	 * @param int $rights null to delete, or new rights
+	 * @param array $values Additional values from UI
+	 * @param string $etemplate_exec_id to check against CSRF
 	 * @throws Api\Exception\NoPermission
 	 */
-	public static function ajax_change_acl($ids, $rights=null, $values = array())
+	public static function ajax_change_acl($ids, $rights, $values, $etemplate_exec_id)
 	{
+		Api\Etemplate\Request::csrfCheck($etemplate_exec_id, __METHOD__, func_get_args());
+
 		try {
 			foreach((array)$ids as $id)
 			{

@@ -339,9 +339,12 @@ class admin_account
 	 *
 	 * @param int $account_id
 	 * @param String[] $data Optional data
+	 * @param string $etemplate_exec_id to check against CSRF
 	 */
-	public static function ajax_delete_group($account_id, $data)
+	public static function ajax_delete_group($account_id, $data, $etemplate_exec_id)
 	{
+		Api\Etemplate\Request::csrfCheck($etemplate_exec_id, __METHOD__, func_get_args());
+
 		$cmd = new admin_cmd_delete_account(Api\Accounts::id2name(Api\Accounts::id2name($account_id)), null, false, (array)$data['admin_cmd']);
 		$msg = $cmd->run();
 

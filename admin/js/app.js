@@ -4,9 +4,8 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2013-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2013-20 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: app.js 56051 2016-05-06 07:58:37Z ralfbecker $
  */
 
 /**
@@ -36,7 +35,7 @@ app.classes.admin = AppJS.extend(
 	nm: null,
 
 	/**
-	 * Refarence to div to hold AJAX loadable pages
+	 * Reference to div to hold AJAX loadable pages
 	 *
 	 * {et2_box}
 	 */
@@ -443,7 +442,7 @@ app.classes.admin = AppJS.extend(
 				break;
 
 			case 'delete':
-				this.egw.json('admin_account::ajax_delete_group', [account_id, _action.data]).sendRequest();
+				this.egw.json('admin_account::ajax_delete_group', [account_id, _action.data, this.et2._inst.etemplate_exec_id]).sendRequest();
 				break;
 			default:
 				if (!_action.data.url)
@@ -510,7 +509,7 @@ app.classes.admin = AppJS.extend(
 		var callback = function(_button_id, _value) {
 			if(_button_id != et2_dialog.OK_BUTTON) return;
 
-			var request = egw.json(className+'::ajax_change_acl', [ids,null,_value], this._acl_callback,this,false,this)
+			var request = egw.json(className+'::ajax_change_acl', [ids, null, _value, this.et2._inst.etemplate_exec_id], this._acl_callback,this,false,this)
 				.sendRequest();
 		}.bind(this);
 
@@ -674,7 +673,7 @@ app.classes.admin = AppJS.extend(
 						{
 							// Changed the account or location, remove previous or we
 							// get a new line instead of an edit
-							this.egw.json(className+'::ajax_change_acl', [content.id, 0], null,this,false,this)
+							this.egw.json(className+'::ajax_change_acl', [content.id, 0, [], this.et2._inst.etemplate_exec_id], null,this,false,this)
 								.sendRequest();
 						}
 						id = [id];
@@ -708,11 +707,11 @@ app.classes.admin = AppJS.extend(
 						// Remove any removed
 						if(removed.length > 0)
 						{
-							this.egw.json(className+'::ajax_change_acl', [removed, 0], callback ? callback : this._acl_callback,this,false,this)
+							this.egw.json(className+'::ajax_change_acl', [removed, 0, [], this.et2._inst.etemplate_exec_id], callback ? callback : this._acl_callback,this,false,this)
 								.sendRequest();
 						}
 					}
-					this.egw.json(className+'::ajax_change_acl', [id, rights, _value], callback ? callback : this._acl_callback,this,false,this)
+					this.egw.json(className+'::ajax_change_acl', [id, rights, _value, this.et2._inst.etemplate_exec_id], callback ? callback : this._acl_callback,this,false,this)
 						.sendRequest();
 				}
 			},this),
@@ -971,7 +970,7 @@ app.classes.admin = AppJS.extend(
 					value,
 					{appname: this.getRoot().getArrayMgr('content').getEntry('content_types[appname]')}
 				);
-				egw.json('admin.admin_customfields.ajax_delete_type', [values]).sendRequest();
+				egw.json('admin.admin_customfields.ajax_delete_type', [values, this.getInstanceManager().etemplate_exec_id]).sendRequest();
 
 				// Immediately remove the type
 				var types = this.getRoot().getWidgetById('types');
@@ -1025,7 +1024,6 @@ app.classes.admin = AppJS.extend(
 	 *
 	 * @param {egw_action} _action
 	 * @param {array} _selected selected users
-	 * @todo remove under construction message
 	 */
 	emailadminActiveAccounts: function (_action, _selected){
 
@@ -1035,7 +1033,7 @@ app.classes.admin = AppJS.extend(
 
 		for (var i=0;i< Object.keys(_selected).length;i++)
 		{
-			accounts[i] = {id:_selected[i]['id'].split('::')[1],qouta:"", domain:"", status:_action.id == 'active'?_action.id:''};
+			accounts[i] = [{id:_selected[i]['id'].split('::')[1],qouta:"", domain:"", status:_action.id == 'active'?_action.id:''}, this.et2._inst.etemplate_exec_id];
 		}
 		var callbackDialog = function (btn){
 			if (btn === et2_dialog.YES_BUTTON)
