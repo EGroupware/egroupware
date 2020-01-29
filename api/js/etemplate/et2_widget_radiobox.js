@@ -264,7 +264,6 @@ var et2_radioGroup = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_radioGroup._attributes, _child || {})) || this;
-        _this.createNamespace = false;
         _this.node = null;
         _this.value = null;
         _this.node = jQuery(document.createElement("div"))

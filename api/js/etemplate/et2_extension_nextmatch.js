@@ -62,6 +62,14 @@ var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
 var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
 var et2_widget_selectbox_1 = require("./et2_widget_selectbox");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
+var et2_INextmatchHeader = "et2_INextmatchHeader";
+function implements_et2_INextmatchHeader(obj) {
+    return implements_methods(obj, ["setNextmatch"]);
+}
+var et2_INextmatchSortable = "et2_INextmatchSortable";
+function implements_et2_INextmatchSortable(obj) {
+    return implements_methods(obj, ["setSortmode"]);
+}
 /**
  * Class which implements the "nextmatch" XET-Tag
  *
@@ -90,7 +98,6 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
      */
     function et2_nextmatch(_parent, _attrs, _child) {
         var _this = _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch._attributes, _child || {})) || this;
-        _this.createNamespace = true;
         _this.activeFilters = { col_filter: {} };
         _this.columns = [];
         // keeps sorted columns
@@ -529,6 +536,13 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
         }
     };
     /**
+     * Nextmatch needs a namespace
+     * @private
+     */
+    et2_nextmatch.prototype._createNamespace = function () {
+        return true;
+    };
+    /**
      * Create the dynamic height so nm fills all available space
      *
      * @returns {undefined}
@@ -895,13 +909,17 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
             _colData.splice(remove_action_index, remove_action_index);
         }
         // Create the column manager and update the grid container
-        this.dataview.setColumns(columnData);
+        // TODO this.dataview.setColumns(columnData);
         for (var x = 0; x < _row.length; x++) {
             // Append the widget to this container
             this.addChild(_row[x].widget);
         }
         // Create the nextmatch row provider
-        this.rowProvider = new et2_nextmatch_rowProvider(this.dataview.rowProvider, this._getSubgrid, this);
+        /* TODO
+        this.rowProvider = new et2_nextmatch_rowProvider(
+            this.dataview.rowProvider, this._getSubgrid, this);
+
+         */
         // Register handler to update preferences when column properties are changed
         var self = this;
         this.dataview.onUpdateColumns = function () {
@@ -945,6 +963,8 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
                 columnWidgets[x].align = _row[x].align;
             }
         }
+        return;
+        // TODO
         this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);
         // Create the grid controller
         this.controller = new et2_nextmatch_controller(null, this.egw(), this.getInstanceManager().etemplate_exec_id, this, null, this.dataview.grid, this.rowProvider, this.options.settings.action_links, null, this.options.actions);
@@ -1425,7 +1445,7 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
             }
             // Free the template again, but don't remove it
             setTimeout(function () {
-                template.free();
+                template.destroy();
             }, 1);
             // Call the "setNextmatch" function of all registered
             // INextmatchHeader widgets.  This updates this.activeFilters.col_filters according
@@ -1434,10 +1454,10 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
                 _node.setNextmatch(this);
             }, this, et2_INextmatchHeader);
             // Set filters to current values
-            this.controller.setFilters(this.activeFilters);
+            // TODO this.controller.setFilters(this.activeFilters);
             // If no data was sent from the server, and num_rows is 0, the nm will be empty.
             // This triggers a cache check.
-            if (!this.options.settings.num_rows) {
+            if (!this.options.settings.num_rows && this.controller) {
                 this.controller.update();
             }
             // Load the default sort order
@@ -2053,9 +2073,12 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super_1) {
             this._createHeader();
         }
         // Bind row count
+        /* TODO
         this.nextmatch.dataview.grid.setInvalidateCallback(function () {
             this.count_total.text(this.nextmatch.dataview.grid.getTotalCount() + "");
         }, this);
+
+         */
     };
     /**
      * Actions are handled by the controller, so ignore these
@@ -2644,7 +2667,8 @@ var et2_nextmatch_customfields = /** @class */ (function (_super_1) {
      * Build widgets for header - sortable for numeric, text, etc., filterables for selectbox, radio
      */
     et2_nextmatch_customfields.prototype.loadFields = function () {
-        if (this.nextmatch == null) {
+        // TODO if(this.nextmatch == null)
+        {
             // not ready yet
             return;
         }
@@ -2759,7 +2783,7 @@ var et2_nextmatch_customfields = /** @class */ (function (_super_1) {
         if (visible.length) {
             name += "_" + visible.join("_");
         }
-        else {
+        else if (this.rows) {
             // None hidden means all visible
             jQuery(this.rows[field_name]).parent().parent().children().show();
         }

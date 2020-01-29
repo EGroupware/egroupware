@@ -314,7 +314,6 @@ class et2_radioGroup extends et2_valueWidget implements et2_IDetachedDOM
 		}
 	};
 
-	createNamespace : boolean = false;
 	node : JQuery = null;
 	value : any = null;
 	/**

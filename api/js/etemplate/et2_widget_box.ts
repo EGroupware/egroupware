@@ -35,7 +35,6 @@ export class et2_box extends et2_baseWidget implements et2_IDetachedDOM
 		"cols": {"ignore": true}
 	};
 
-	createNamespace: boolean = true;
 	div: JQuery;
 
 	/**
@@ -52,6 +51,11 @@ export class et2_box extends et2_baseWidget implements et2_IDetachedDOM
 			.addClass("et2_box_widget");
 
 		this.setDOMNode(this.div[0]);
+	}
+
+	_createNamespace() : boolean
+	{
+		return true;
 	}
 
 	/**

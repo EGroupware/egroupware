@@ -43,7 +43,6 @@ var et2_hbox = /** @class */ (function (_super) {
      */
     function et2_hbox(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_hbox._attributes, _child || {})) || this;
-        _this.createNamespace = true;
         _this.alignData = {
             "hasAlign": false,
             "hasLeft": false,
@@ -62,6 +61,9 @@ var et2_hbox = /** @class */ (function (_super) {
         _super.prototype.setDOMNode.call(_this, _this.div[0]);
         return _this;
     }
+    et2_hbox.prototype._createNamespace = function () {
+        return true;
+    };
     et2_hbox.prototype._buildAlignCells = function () {
         if (this.alignData.hasAlign) {
             // Check whether we have more than one type of align

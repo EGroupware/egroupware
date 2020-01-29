@@ -185,11 +185,6 @@ export class et2_widget extends ClassWithAttributes
 	readonly: boolean;
 
 	/**
-	 * Set this variable to true if this widget can have namespaces
-	 */
-	createNamespace: boolean = false;
-
-	/**
 	 * Widget constructor
 	 *
 	 * To implement the attributes inheritance and overriding each extending class/widget needs to call:
@@ -237,7 +232,7 @@ export class et2_widget extends ClassWithAttributes
 
 		if (_attrs["id"]) {
 			// Create a namespace for this object
-			if (this.createNamespace) {
+			if (this._createNamespace()) {
 				this.checkCreateNamespace();
 			}
 		}
@@ -621,7 +616,7 @@ Comment this out (for now)
 				var data = this.getArrayMgr("modifications").getEntry(this.id);
 
 				// Check for already inside namespace
-				if (this.createNamespace && this.getArrayMgr("modifications").perspectiveData.owner == this) {
+				if (this._createNamespace() && this.getArrayMgr("modifications").perspectiveData.owner == this) {
 					data = this.getArrayMgr("modifications").data;
 				}
 				if (typeof data === 'object') {
@@ -1002,6 +997,19 @@ Comment this out (for now)
 	}
 
 	/**
+	 * Widgets that do support a namespace should override and return true.
+	 *
+	 * Since a private attribute doesn't get instanciated properly before it's needed,
+	 * we use a method so we can get what we need while still in the constructor.
+	 *
+	 * @private
+	 */
+	protected _createNamespace() : boolean
+	{
+		return false;
+	}
+
+	/**
 	 * This is used and therefore it we can not (yet) make it private
 	 *
 	 * @deprecated use this.getInstanceMgr()
@@ -1043,7 +1051,7 @@ Comment this out (for now)
 		var path = this.getArrayMgr("content").getPath();
 
 		// Prevent namespaced widgets with value from going an extra layer deep
-		if (this.id && this.createNamespace && path[path.length - 1] == this.id) path.pop();
+		if (this.id && this._createNamespace() && path[path.length - 1] == this.id) path.pop();
 
 		return path;
 	}

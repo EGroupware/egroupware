@@ -58,8 +58,6 @@ declare class et2_customfields_list extends et2_valueWidget {
 	public customfields : any;
 	set_visible(visible : boolean);
 }
-declare var et2_INextmatchHeader : any;
-declare var et2_INextmatchSortable : any;
 declare var et2_nextmatch : any;
 declare var et2_nextmatch_header_bar : any;
 declare var et2_nextmatch_header : any;

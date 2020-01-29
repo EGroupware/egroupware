@@ -24,7 +24,6 @@ import {et2_baseWidget} from "./et2_core_baseWidget";
  */
 class et2_hbox extends et2_baseWidget
 {
-	createNamespace: boolean = true;
 	alignData : any = {
 		"hasAlign": false,
 		"hasLeft": false,
@@ -53,6 +52,11 @@ class et2_hbox extends et2_baseWidget
 			.addClass("et2_box_widget");
 
 		super.setDOMNode(this.div[0]);
+	}
+
+	_createNamespace() : boolean
+	{
+		return true;
 	}
 
 	_buildAlignCells() {

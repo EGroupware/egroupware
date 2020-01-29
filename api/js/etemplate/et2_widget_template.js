@@ -47,7 +47,6 @@ var et2_template = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_template._attributes, _child || {})) || this;
-        _this.createNamespace = true;
         // Set this early, so it's available for creating namespace
         if (_attrs.content) {
             _this.content = _attrs.content;
@@ -147,6 +146,9 @@ var et2_template = /** @class */ (function (_super) {
             _super.prototype.checkCreateNamespace.apply(this, arguments);
             this.id = old_id;
         }
+    };
+    et2_template.prototype._createNamespace = function () {
+        return true;
     };
     et2_template.prototype.getDOMNode = function () {
         return this.div;

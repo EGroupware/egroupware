@@ -70,7 +70,6 @@ class et2_template extends et2_DOMWidget
 		}
 	};
 
-	createNamespace: boolean = true;
 	content: string;
 	div: HTMLDivElement;
 	loading: JQueryDeferred<unknown>;
@@ -201,6 +200,11 @@ class et2_template extends et2_DOMWidget
 			super.checkCreateNamespace.apply(this, arguments);
 			this.id = old_id;
 		}
+	}
+
+	_createNamespace() : boolean
+	{
+		return true;
 	}
 
 	getDOMNode()

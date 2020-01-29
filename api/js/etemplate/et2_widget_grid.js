@@ -54,7 +54,6 @@ var et2_grid = /** @class */ (function (_super) {
         var _this = 
         // Call the parent constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_grid._attributes, _child || {})) || this;
-        _this.createNamespace = true;
         // Counters for rows and columns
         _this.rowCount = 0;
         _this.columnCount = 0;
@@ -472,6 +471,9 @@ var et2_grid = /** @class */ (function (_super) {
             }
         }
     };
+    et2_grid.prototype._createNamespace = function () {
+        return true;
+    };
     /**
      * As the does not fit very well into the default widget structure, we're
      * overwriting the loadFromXML function and doing a two-pass reading -
@@ -731,8 +733,11 @@ var et2_grid = /** @class */ (function (_super) {
      * @param {array} actions [ {ID: attributes..}+] as for set_actions
      */
     et2_grid.prototype._link_actions = function (actions) {
+        // TODO
+        return;
         // Get the top level element for the tree
-        var objectManager = egw_action_js_1.egw_getAppObjectManager(true);
+        // @ts-ignore
+        var objectManager = window.egw_getAppObjectManager(true);
         objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId, 2) || objectManager;
         var widget_object = objectManager.getObjectById(this.id);
         if (widget_object == null) {

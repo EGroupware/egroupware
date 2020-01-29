@@ -54,7 +54,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 /**
  * Interface all special nextmatch header elements have to implement.
  */
-interface et2_INextmatchHeader {
+export interface et2_INextmatchHeader {
 
 	/**
 	 * The 'setNextmatch' function is called by the parent nextmatch widget
@@ -65,11 +65,21 @@ interface et2_INextmatchHeader {
 	 */
 	setNextmatch(nextmatch : et2_nextmatch)
 }
+var et2_INextmatchHeader = "et2_INextmatchHeader";
+function implements_et2_INextmatchHeader(obj : et2_widget)
+{
+	return implements_methods(obj, ["setNextmatch"]);
+}
 
-interface et2_INextmatchSortable{
+export interface et2_INextmatchSortable{
 
 	setSortmode(_sort_mode)
 
+}
+var et2_INextmatchSortable = "et2_INextmatchSortable";
+function implements_et2_INextmatchSortable(obj : et2_widget)
+{
+	return implements_methods(obj, ["setSortmode"]);
 }
 
 /**
@@ -182,7 +192,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	private selectPopup: any;
 
 	public static legacyOptions = ["template","hide_header","header_left","header_right"];
-	createNamespace : boolean = true;
 
 	private template: any;
 	columns: {widget: et2_widget}[];
@@ -789,6 +798,15 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	}
 
 	/**
+	 * Nextmatch needs a namespace
+	 * @private
+	 */
+	protected _createNamespace(): boolean
+	{
+		return true;
+	}
+
+	/**
 	 * Create the dynamic height so nm fills all available space
 	 *
 	 * @returns {undefined}
@@ -1251,7 +1269,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 		// Create the column manager and update the grid container
-		this.dataview.setColumns(columnData);
+		// TODO this.dataview.setColumns(columnData);
 
 		for (var x = 0; x < _row.length; x++)
 		{
@@ -1260,8 +1278,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 		// Create the nextmatch row provider
+		/* TODO
 		this.rowProvider = new et2_nextmatch_rowProvider(
 			this.dataview.rowProvider, this._getSubgrid, this);
+
+		 */
 
 		// Register handler to update preferences when column properties are changed
 		var self = this;
@@ -1321,6 +1342,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}
 		}
 
+		return;
+		// TODO
 		this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);
 
 
@@ -1946,7 +1969,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 			// Free the template again, but don't remove it
 			setTimeout(function() {
-				template.free();
+				template.destroy();
 			},1);
 
 			// Call the "setNextmatch" function of all registered
@@ -1957,11 +1980,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}, this, et2_INextmatchHeader);
 
 			// Set filters to current values
-			this.controller.setFilters(this.activeFilters);
+			// TODO this.controller.setFilters(this.activeFilters);
 
 			// If no data was sent from the server, and num_rows is 0, the nm will be empty.
 			// This triggers a cache check.
-			if(!this.options.settings.num_rows)
+			if(!this.options.settings.num_rows && this.controller)
 			{
 				this.controller.update();
 			}
@@ -2712,9 +2735,12 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 		}
 
 		// Bind row count
+		/* TODO
 		this.nextmatch.dataview.grid.setInvalidateCallback(function () {
 			this.count_total.text(this.nextmatch.dataview.grid.getTotalCount() + "");
 		}, this);
+
+		 */
 	}
 
 	/**
@@ -3433,7 +3459,7 @@ export class et2_nextmatch_customfields extends et2_container implements et2_INe
 	 */
 	loadFields( )
 	{
-		if(this.nextmatch == null)
+		// TODO if(this.nextmatch == null)
 		{
 			// not ready yet
 			return;
@@ -3581,7 +3607,7 @@ export class et2_nextmatch_customfields extends et2_container implements et2_INe
 		if(visible.length) {
 			name  +="_"+ visible.join("_");
 		}
-		else
+		else if (this.rows)
 		{
 			// None hidden means all visible
 			jQuery(this.rows[field_name]).parent().parent().children().show();

@@ -37,8 +37,6 @@ import {
  */
 export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAligned, et2_IResizeable
 {
-	createNamespace: boolean = true;
-
 	static readonly _attributes : any = {
 		// Better to use CSS, no need to warn about it
 		"border": {
@@ -653,6 +651,10 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		}
 	}
 
+	_createNamespace() : boolean
+	{
+		return true;
+	}
 	/**
 	 * As the does not fit very well into the default widget structure, we're
 	 * overwriting the loadFromXML function and doing a two-pass reading -
@@ -998,8 +1000,11 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	 */
 	_link_actions(actions : object[])
 	{
+		// TODO
+		return;
 		 // Get the top level element for the tree
-		let objectManager = egw_getAppObjectManager(true);
+		// @ts-ignore
+		let objectManager = window.egw_getAppObjectManager(true);
 		objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId,2) || objectManager;
 		let widget_object = objectManager.getObjectById(this.id);
 		if (widget_object == null) {

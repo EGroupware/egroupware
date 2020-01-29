@@ -47,13 +47,15 @@ var et2_box = /** @class */ (function (_super) {
      */
     function et2_box(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, _attrs, _child) || this;
-        _this.createNamespace = true;
         _this.div = jQuery(document.createElement("div"))
             .addClass("et2_" + _this.getType())
             .addClass("et2_box_widget");
         _this.setDOMNode(_this.div[0]);
         return _this;
     }
+    et2_box.prototype._createNamespace = function () {
+        return true;
+    };
     /**
      * Overriden so we can check for autorepeating children.  We only check for
      * $ in the immediate children & grandchildren of this node.
