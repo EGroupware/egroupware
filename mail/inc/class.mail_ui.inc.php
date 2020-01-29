@@ -3269,11 +3269,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			Api\Session::cache_control(true);
 
 			// more strict CSP for displaying mail
-			foreach(['frame-src', 'connect-src', 'manifest-src', 'media-src'] as $src)
+			foreach(['frame-src', 'connect-src', 'manifest-src'] as $src)
 			{
 				Api\Header\ContentSecurityPolicy::add($src, 'none');
 			}
 			Api\Header\ContentSecurityPolicy::add('script-src', 'self', true);	// true = remove default 'unsafe-eval'
+			Api\Header\ContentSecurityPolicy::add('img-src', 'http:');
+			Api\Header\ContentSecurityPolicy::add('media-src', ['https:','http:']);
 		}
 		// Compose the content of the frame
 		$frameHtml =
