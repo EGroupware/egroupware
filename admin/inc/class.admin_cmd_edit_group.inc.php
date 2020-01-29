@@ -61,6 +61,10 @@ class admin_cmd_edit_group extends admin_cmd
 			'account_status' => 'A',	// not used, but so we do the same thing as the web-interface
 			'account_expires' => -1,
 		);
+		if(!array_key_exists('account_email', $data))
+        {
+            $data['account_email'] = null;
+        }
 		if (!$data['account_lid'] && (!$this->account || !is_null($data['account_lid'])))
 		{
 			throw new Api\Exception\WrongUserinput(lang('You must enter a group name.'), 17);
@@ -68,7 +72,7 @@ class admin_cmd_edit_group extends admin_cmd
 		if (!is_null($data['account_lid']) && ($id = admin_cmd::$accounts->name2id($data['account_lid'],'account_lid','g')) &&
 			$id !== $data['account_id'])
 		{
-			throw new Api\Exception\WrongUserinput(lang('That loginid has already been taken'), 11);
+		    throw new Api\Exception\WrongUserinput(lang('That loginid has already been taken'), 11);
 		}
 		if (!$data['account_members'] && !$this->account)
 		{
