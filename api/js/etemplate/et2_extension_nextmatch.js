@@ -537,7 +537,6 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
     };
     /**
      * Nextmatch needs a namespace
-     * @private
      */
     et2_nextmatch.prototype._createNamespace = function () {
         return true;
@@ -909,7 +908,7 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
             _colData.splice(remove_action_index, remove_action_index);
         }
         // Create the column manager and update the grid container
-        // TODO this.dataview.setColumns(columnData);
+        this.dataview.setColumns(columnData);
         for (var x = 0; x < _row.length; x++) {
             // Append the widget to this container
             this.addChild(_row[x].widget);

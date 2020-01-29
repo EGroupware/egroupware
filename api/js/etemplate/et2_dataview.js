@@ -20,6 +20,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
     et2_dataview_view_grid;
     et2_dataview_view_resizeable;
 */
+var et2_dataview_model_columns_1 = require("./et2_dataview_model_columns");
+var et2_dataview_view_resizeable_1 = require("./et2_dataview_view_resizeable");
 /**
  * The et2_dataview class is the main class for displaying a dataview. The
  * dataview class manages the creation of the outer html nodes (like the table,
@@ -98,7 +100,7 @@ var et2_dataview = /** @class */ (function () {
         // Free all column objects which have been created till this moment
         this._clearHeader();
         // Copy the given column data
-        this.columnMgr = new et2_dataview_columns(_columnData);
+        this.columnMgr = new et2_dataview_model_columns_1.et2_dataview_columns(_columnData);
         // Create the stylesheets
         this.updateColumns();
         // Build the header row
@@ -189,7 +191,7 @@ var et2_dataview = /** @class */ (function () {
      */
     et2_dataview.prototype._clearHeader = function () {
         if (this.columnMgr) {
-            this.columnMgr.free();
+            this.columnMgr.destroy();
             this.columnMgr = null;
         }
         // Remove dynamic CSS,
@@ -305,16 +307,16 @@ var et2_dataview = /** @class */ (function () {
                 .attr("align", "left")
                 .append(cont)
                 .appendTo(this.headTr);
-            if (this.columnMgr && this.columnMgr.columns[i]) {
-                column.addClass(this.columnMgr.columns[i].fixedWidth ? 'fixedWidth' : 'relativeWidth');
-                if (this.columnMgr.columns[i].visibility === et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT) {
+            if (this.columnMgr && this.columnMgr.getColumnById(i)) {
+                column.addClass(this.columnMgr.getColumnById(i).fixedWidth ? 'fixedWidth' : 'relativeWidth');
+                if (this.columnMgr.getColumnById(i).visibility === et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT) {
                     column.addClass('noResize');
                 }
             }
             // make column resizable
             var enc_column = self.columnMgr.getColumnById(col.id);
             if (enc_column.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT) {
-                et2_dataview_view_resizable.makeResizeable(column, function (_w) {
+                et2_dataview_view_resizeable_1.et2_dataview_view_resizable.makeResizeable(column, function (_w) {
                     // User wants the column to stay where they put it, even for relative
                     // width columns, so set it explicitly first and adjust other relative
                     // columns to match.
@@ -328,10 +330,10 @@ var et2_dataview = /** @class */ (function () {
                         var relative = self.columnMgr.totalWidth - self.columnMgr.totalFixed + _w;
                         this.set_width(_w / relative);
                         for (var i = 0; i < self.columnMgr.columns.length; i++) {
-                            var col = self.columnMgr.columns[i];
+                            var col = self.columnMgr.getColumnById(i);
                             if (col == this || col.fixedWidth)
                                 continue;
-                            col.set_width(self.columnMgr.columnWidths[i] / relative);
+                            col.set_width(self.columnMgr.getColumnWidth(i) / relative);
                         }
                         // Triggers column change callback, which saves
                         self.updateColumns();

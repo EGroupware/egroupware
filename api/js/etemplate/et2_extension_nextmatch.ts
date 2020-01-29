@@ -799,7 +799,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 	/**
 	 * Nextmatch needs a namespace
-	 * @private
 	 */
 	protected _createNamespace(): boolean
 	{
@@ -1269,7 +1268,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 		// Create the column manager and update the grid container
-		// TODO this.dataview.setColumns(columnData);
+		this.dataview.setColumns(columnData);
 
 		for (var x = 0; x < _row.length; x++)
 		{
@@ -2613,7 +2612,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 		// Restore columns
-		var pref = [];
+		var pref: string | object | boolean = [];
 		var app = this.getInstanceManager().app;
 		if(this.options.settings.columnselection_pref.indexOf('nextmatch') == 0)
 		{
