@@ -31,6 +31,8 @@ class Csrf
 	 *
 	 * @param mixed $_purpose =true if given it need to be used in validate too! (It must NOT be NULL)
 	 * @return string CSRF token
+	 * @throws Exception\WrongParameter
+	 * @throws \Exception if it was not possible to gather sufficient entropy.
 	 */
 	public static function token($_purpose=true)
 	{
@@ -39,9 +41,7 @@ class Csrf
 			throw new Exception\WrongParameter(__METHOD__.'(NULL) $_purspose must NOT be NULL!');
 		}
 		// generate random token (using oppenssl if available otherwise mt_rand based Auth::randomstring)
-		$token = function_exists('openssl_random_pseudo_bytes') ?
-			base64_encode(openssl_random_pseudo_bytes(64)) :
-			Auth::randomstring(64);
+		$token = base64_encode(random_bytes(32));
 
 		// store it in session for later validation
 		Cache::setSession(__CLASS__, $token, $_purpose);
