@@ -7,7 +7,13 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
- */
+ *
+
+/*egw:uses
+    et2_core_common;
+    egw_inheritance;
+    et2_core_phpExpressionCompiler;
+*/
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -323,7 +329,9 @@ exports.et2_arrayMgr = et2_arrayMgr;
 var et2_readonlysArrayMgr = /** @class */ (function (_super) {
     __extends(et2_readonlysArrayMgr, _super);
     function et2_readonlysArrayMgr() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.readOnly = true;
+        return _this;
     }
     /**
      * Find out if the given ID is readonly, according to the array data

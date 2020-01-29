@@ -126,10 +126,6 @@ var et2_widget = /** @class */ (function (_super) {
         // Set the legacyOptions array to the names of the properties the "options"
         // attribute defines.
         _this.legacyOptions = [];
-        /**
-         * Set this variable to true if this widget can have namespaces
-         */
-        _this.createNamespace = false;
         _this._children = [];
         _this._mgrs = {};
         /**
@@ -164,7 +160,7 @@ var et2_widget = /** @class */ (function (_super) {
         _this.supportedWidgetClasses = [et2_widget];
         if (_attrs["id"]) {
             // Create a namespace for this object
-            if (_this.createNamespace) {
+            if (_this._createNamespace()) {
                 _this.checkCreateNamespace();
             }
         }
@@ -487,7 +483,7 @@ var et2_widget = /** @class */ (function (_super) {
             if (this.getArrayMgr("modifications")) {
                 var data = this.getArrayMgr("modifications").getEntry(this.id);
                 // Check for already inside namespace
-                if (this.createNamespace && this.getArrayMgr("modifications").perspectiveData.owner == this) {
+                if (this._createNamespace() && this.getArrayMgr("modifications").perspectiveData.owner == this) {
                     data = this.getArrayMgr("modifications").data;
                 }
                 if (typeof data === 'object') {
@@ -813,6 +809,17 @@ var et2_widget = /** @class */ (function (_super) {
         }
     };
     /**
+     * Widgets that do support a namespace should override and return true.
+     *
+     * Since a private attribute doesn't get instanciated properly before it's needed,
+     * we use a method so we can get what we need while still in the constructor.
+     *
+     * @private
+     */
+    et2_widget.prototype._createNamespace = function () {
+        return false;
+    };
+    /**
      * Sets the instance manager object (of type etemplate2, see etemplate2.js)
      *
      * @param {etemplate2} _inst
@@ -841,7 +848,7 @@ var et2_widget = /** @class */ (function (_super) {
     et2_widget.prototype.getPath = function () {
         var path = this.getArrayMgr("content").getPath();
         // Prevent namespaced widgets with value from going an extra layer deep
-        if (this.id && this.createNamespace && path[path.length - 1] == this.id)
+        if (this.id && this._createNamespace() && path[path.length - 1] == this.id)
             path.pop();
         return path;
     };

@@ -575,7 +575,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 
 		// Initialize the action manager and add some actions to it
 		// Only look 1 level deep
-		var gam = egw_getActionManager(this.egw().appName,true,1);
+		var gam = window.egw_getActionManager(this.egw().appName,true,1);
 		if(typeof this._actionManager != "object")
 		{
 			if(gam.getActionById(this.getInstanceManager().uniqueId,1) !== null)

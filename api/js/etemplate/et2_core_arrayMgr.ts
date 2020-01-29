@@ -6,7 +6,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
- */
+ *
 
 /*egw:uses
 	et2_core_common;
@@ -33,7 +33,7 @@ export class et2_arrayMgr
 	};
 	protected static compiledExpressions: object = {};
 	private readonly _parentMgr: et2_arrayMgr;
-	private readOnly: boolean = false;
+	protected readOnly: boolean = false;
 
 	/**
 	 * Constructor
@@ -357,6 +357,8 @@ export class et2_arrayMgr
  * @augments et2_arrayMgr
  */
 export class et2_readonlysArrayMgr extends et2_arrayMgr {
+
+	readOnly : boolean = true;
 
 	/**
 	 * Find out if the given ID is readonly, according to the array data
