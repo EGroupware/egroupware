@@ -142,9 +142,10 @@ class Request
 	 * the sesison to constantly grow).
 	 *
 	 * @param string $id =null
-	 * @return Request
+	 * @param bool $handle_not_found =true true: handle not found by trying to redirect, false: just return null
+	 * @return Request|null null if Request not found and $handle_not_found === false
 	 */
-	public static function read($id=null)
+	public static function read($id=null, $handle_not_found=true)
 	{
 		if (is_null(self::$request_class))
 		{
@@ -192,7 +193,7 @@ class Request
 				//error_log(__METHOD__."() size of request = ".bytes($id));
 			}
 		}
-		if (!$request)	// eT2 request/session expired
+		if (!$request && $handle_not_found)	// eT2 request/session expired
 		{
 			list($app) = explode('.', $_GET['menuaction']);
 			$global = false;
@@ -226,6 +227,33 @@ class Request
 			}
 		}
 		return $request;
+	}
+
+	/**
+	 * CSRF check using an etemplate-exec-id
+	 *
+	 * If eTemplate request object could not be read, the function will NOT return,
+	 * but send an Ajax error response and exit or die with the error-message!
+	 *
+	 * @param string $id etemplate-exec-id
+	 * @param string $caller calling method to log
+	 * @param array $args =[] arguments to log
+	 * @throws Api\Json\Exception
+	 */
+	public static function csrfCheck($id, $caller, $args=[])
+	{
+		if (!self::read($id, false))		// false: do NOT handle not found, but return null
+		{
+			error_log(__METHOD__."('$id', $caller, ".json_encode($args).") called with invalid/expired etemplate_exec_id: possible CSRF detected from IP ".$_SERVER['REMOTE_ADDR'].' to '.$_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI']);
+			$msg = lang('Request could not be processed, please reload your window (press F5 or Cmd R)!');
+
+			if (Api\Json\Request::isJSONRequest())
+			{
+				Api\Json\Response::get()->message($msg, 'error');
+				exit;
+			}
+			die($msg);
+		}
 	}
 
 	/**
@@ -381,17 +409,15 @@ class Request
 	 * creates a new unique request-id
 	 *
 	 * @return string
+	 * @throws \Exception if it was not possible to gather sufficient entropy.
 	 */
 	static function request_id()
 	{
 		// replace url-unsafe chars with _ to not run into url-encoding issues when used in a url
 		$userID = preg_replace('/[^a-z0-9_\\.@-]/i', '_', $GLOBALS['egw_info']['user']['account_lid']);
 
-		// generate random token (using oppenssl if available otherwise mt_rand based Auth::randomstring)
-		$token = function_exists('openssl_random_pseudo_bytes') ?
-			// replace + with _ to not run into url-encoding issues when used in a url
-			str_replace('+', '_', base64_encode(openssl_random_pseudo_bytes(32))) :
-			\EGroupware\Api\Auth::randomstring(44);
+		// replace + with _ to not run into url-encoding issues when used in a url
+		$token = str_replace('+', '_', base64_encode(random_bytes(32)));
 
 		return $GLOBALS['egw_info']['flags']['currentapp'].'_'.$userID.'_'.$token;
 	}

@@ -1568,10 +1568,13 @@ class admin_mail
 	 *		domain => mailLocalAddress,
 	 *		status => mail activation status('active'|'')
 	 *	)
+	 * @param string $etemplate_exec_id to check against CSRF
 	 * @return json response
 	 */
-	public function ajax_activeAccounts($_data)
+	public function ajax_activeAccounts($_data, $etemplate_exec_id)
 	{
+		Api\Etemplate\Request::csrfCheck($etemplate_exec_id, __METHOD__, func_get_args());
+
 		if (!$this->is_admin) die('no rights to be here!');
 		$response = Api\Json\Response::get();
 		if (($account = $GLOBALS['egw']->accounts->read($_data['id'])))

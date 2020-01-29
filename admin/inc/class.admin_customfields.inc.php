@@ -288,13 +288,17 @@ class admin_customfields
 	}
 
 	/**
-	 * Delete a type over ajax.  Used when Policy is involved, otherwise
-	 * things go normally
+	 * Delete a type over ajax.
 	 *
-	 * @param Array $content
+	 * Used when Policy is involved, otherwise things go normally
+	 *
+	 * @param array $content
+	 * @param string $etemplate_exec_id to check against CSRF
 	 */
-	public function ajax_delete_type($content)
+	public function ajax_delete_type($content, $etemplate_exec_id)
 	{
+		Api\Etemplate\Request::csrfCheck($etemplate_exec_id, __METHOD__, func_get_args());
+
 		// Read fields
 		$this->appname = $content['appname'];
 		$this->fields = Api\Storage\Customfields::get($content['appname'],true);
