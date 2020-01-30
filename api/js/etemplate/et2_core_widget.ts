@@ -854,14 +854,14 @@ Comment this out (for now)
 		return true;
 	}
 
-	private _egw: object;
+	private _egw: IegwAppLocal;
 
 	/**
 	 * The egw function returns the instance of the client side api belonging
 	 * to this widget tree. The api instance can be set in the "container"
 	 * widget using the setApiInstance function.
 	 */
-	egw()
+	egw() : IegwAppLocal
 	{
 		// The _egw property is not set
 		if (typeof this._egw === 'undefined') {
@@ -889,9 +889,9 @@ Comment this out (for now)
 	 * Sets the client side api instance. It can be retrieved by the widget tree
 	 * by using the "egw()" function.
 	 *
-	 * @param {egw} _egw egw object to set
+	 * @param {IegwAppLocal} _egw egw object to set
 	 */
-	setApiInstance(_egw)
+	setApiInstance(_egw : IegwAppLocal)
 	{
 		this._egw = _egw;
 	}
