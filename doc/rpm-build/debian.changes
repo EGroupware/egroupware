@@ -1,3 +1,19 @@
+egroupware-docker (19.1.20200130) hardy; urgency=low
+
+  * SECURITY AND MAINTENANCE RELEASE: PLEASE UPDATE IMMEDIATELY (includes 17.1 and before!)
+  * Sharing: temporary disable cleaning of deleted files, causing all shares to get deleted
+  * Api: Fix SQL error from doubled table name in group statement
+  * Admin: Fix group email got lost on save
+  * CalDAV/Calendar: fix for first recurence being an exception cause it to be deleted by mac calendar
+  * CalDAV/Calendar: virtual exceptions (different status for recurrences) were not exported
+  * Mail: Fix broken link mail in infolog via drag and drop action
+  * Collabora: explicit save creates no new version if last one was an autosave
+  * Projectmanager: Fix Gantt chart to use all available vertical space
+  * ProjectManager/PostgreSQL: fix SQL error / regression in last maintenance release
+  * Tracker: using RowsIterator to export more rows then the memory-limit
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 30 Jan 2020 13:56:32 +0100
+
 egroupware-docker (19.1.20191220) hardy; urgency=low
 
   * All apps: make list columns being sortable via column-selector dialog
