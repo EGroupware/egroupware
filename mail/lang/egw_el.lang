@@ -1,24 +1,58 @@
-(no subject)	mail	el	(κανένα θέμα)
+%1 attachments	mail	el	%1 συννημένα
+%1 mails selected	mail	el	%1 μηνύματα έχουν επιλεγεί
+(no subject)	mail	el	(χωρίς θέμα)
+action	mail	el	Ενέργεια
+add as new	mail	el	Προσθήκη ως νέο
+add files as %1	mail	el	Προσθήκη αρχείων ως %1
+add folder	mail	el	Προσθήκη φακέλου
 add to addressbook	mail	el	προσθήκη στο βιβλίο διευθύνσεων
+all	mail	el	όλα
+all adresses:	mail	el	Όλες οι διευθύνσεις:
 all of	mail	el	όλα από
 allow images from external sources in html emails	mail	el	Να επιτρέπονται οι εικόνες από εξωτερικές πηγές στα HTML emails
 allways a new window	mail	el	πάντα νέο παράθυρο
-always show html emails	mail	el	Να εμφανίζονται πάντοτε τα HTML emails
+always	mail	el	Πάντα
+always show html emails	mail	el	να εμφανίζονται πάντοτε τα μυνήματα τύπου HTML
 any of	mail	el	οποιοδήποτε
 any status	mail	el	οποιαδήποτε κατάσταση
-attachments	mail	el	Επισυνάψεις
+arrival	mail	el	Ελήφθη
+attach files	mail	el	Επισύναψη αρχείων
+attach vcard	mail	el	Επισύναψη vCard
+attachment	mail	el	Συνημμένο
+attachments	mail	el	Συνημμένα
 by date	mail	el	Βάσει ημερομηνίας
-compose	mail	el	Συνθέτω
-compress folder	mail	el	Φάκελος συμπίεσης
+choose file	mail	el	Επιλογή αρχείου
+common acl	mail	el	Κοινά δικαιώματα
+compose	mail	el	Σύνταξη
+compose as new	mail	el	Σύνταξη ως νεό μήνυμα
+compress folder	mail	el	Συμπίεση φακέλου
 condition	mail	el	κατάσταση
+configuration settings	mail	el	Παραμετροποίηση ρυθμίσεων
+confirm	mail	el	Επιβεβαίωση
+confirm attach message	mail	el	Επιβεβαίωση επισύναψης μηνύματος
+confirm move to folder	mail	el	Επιβεβαίωση μετακίνησης σε φάκελο
+connect to profile %1	mail	el	Σύνδεση στο προφίλ %1
+connection status	mail	el	Κατάσταση σύνδεσης
 contains	mail	el	περιέχει
+contains(*)	mail	el	Περιέχει(*)
 copy to	mail	el	Αντιγραφή στο
+create new account	mail	el	Δημιουργία νέου λογαριασμού
+current folder	mail	el	Τρέχον φάκελος
+current subject	mail	el	Τρέχον θέμα
 date(newest first)	mail	el	Ημερομηνία (πρώτα η πιο πρόσφατη)
 date(oldest first)	mail	el	Ημερομηνία (πρώτα η πιο παλιά)
 default sorting order	mail	el	Προεπιλεγμένη σειρά ταξινόμησης
 delete folder	mail	el	Διαγραφή Φακέλου
+delete folder %1 ?	mail	el	ΔΙΑΓΡΑΦΗ φακέλου %1 ;
+delete this acl	mail	el	Διαγραφή αυτού του δικαιώματος
 deleted	mail	el	διεγράφη
+deleted %1 messages in %2	mail	el	διαγραφή %1 μηνυμάτων στο %2
+deleted!	mail	el	διεγράφη!
+deleting %1 folders in progress ...	mail	el	Διαγραφή %1 φακέλων σε εξέλιξη ...
+deleting folders	mail	el	Διαδικασία διαγραφής φακέλων
+deny certain groups access to following features	mail	el	Αποκλεισμός ορισμένων ομάδων από τις παρακάτω λειτουργίες
 disable	mail	el	Απενεργοποίηση
+disabled!	mail	el	απενεργοποιημένο!
 discard	mail	el	απόρριψη
 discard message	mail	el	απόρριψη μηνύματων
 display messages in multiple windows	mail	el	προβολή μηνυμάτων σε πολλαπλά παράθυρα
@@ -29,13 +63,20 @@ does not contain	mail	el	δεν περιέχει
 does not match	mail	el	δεν συμπίπτει
 don't use draft folder	mail	el	Μην χρησιμοποιείτε των φάκελο προσχεδίων
 don't use sent	mail	el	Μην χρησιμοποιείτε τα Σταλθέντα
-don't use trash	mail	el	Μην χρησιμοποιείτε των Κάδο Αχρήστων
-draft folder	mail	el	προσχέδιος φάκελος
+don't use trash	mail	el	Απενεργοποίηση κάδου απορριμάτων
+draft folder	mail	el	Φάκελος για προσχέδια
+drafts	mail	el	Προσχέδια
+drafts folder	mail	el	φάκελος για προσχέδια
 edit account	mail	el	Επεξεργασία λογαριασμού
+edit account ...	mail	el	Επεξεργασία λογαριασμού ...
+edit folder acl	mail	el	Επεξεργασία δικαιωμάτων φακέλου
+edit folder acl ...	mail	el	Επεξεργασία δικαιωμάτων φακέλου ...
 edit vacation settings	mail	el	επεξεργασία ρυθμίσεων διακοπών
 emailaddress	admin	el	Διεύθυνση e-mail
 empty trash	mail	el	Άδειασμα κάδου αχρήστων
 enable	mail	el	ενεργοποίηση
+encrypt	mail	el	Κρυπτογράφιση
+encryption	mail	el	Κρυπτογράφιση
 event details follow	mail	el	Ακολουθούν λεπτομέρειες γεγονότων
 everyone	mail	el	όλοι
 extended	mail	el	Εκτεταμένος
@@ -62,15 +103,23 @@ imap server	mail	el	IMAP Server
 inbox	mail	el	Εισερχόμενα
 keep a copy of the message in your inbox	mail	el	κρατήστε ένα αντίγραφο του μηνύματος στα εισερχόμενα
 kilobytes	mail	el	kilobytes
-less than	mail	el	λιγότερο από
+later	mail	el	αργότερα
+less than	mail	el	μικρότερο από
 mail settings	mail	el	Ρυθμίσεις μηνυμάτων
 mark as deleted	mail	el	Σημείωση ως διαγραμένο
 matches	mail	el	συνδυάζεται
 matches regexp	mail	el	συνδυάζεται regexp
-move selected to	mail	el	μετακίνηση επιλεγμένων στο
-move to	mail	el	μετακίνηση επιλεγμένων στο
+message body	mail	el	Κορμός μηνύματος
+message preview area	mail	el	Περιοχή προεπισκόπησης μηνύματος
+move	mail	el	Μετακίνηση
+move folder	mail	el	Μετακίνηση φακέλου
+move selected to	mail	el	Μετακίνηση επιλεγμένων στο
+move to	mail	el	Μετακίνηση στο
 move to trash	mail	el	Μετακίνηση στον Κάδο Αχρήστων
+name of account	mail	el	Όνομα λογαριασμού
 never display html emails	mail	el	Να μην προβάλονται τα HTML emails
+new message type	mail	el	Νέος τύπος μηνύματος
+new subject	mail	el	Νέο θέμα
 no plain text part found	mail	el	δεν βρέθηκε μέρος αποκρυπτογραφημένου κειμένου
 on	mail	el	πάνω
 one address is not valid	mail	el	Κάποια διεύθυνση είναι άκυρη
@@ -89,7 +138,7 @@ rename folder	mail	el	Μετονομασία φακέλου
 replied	mail	el	απαντήθηκε
 reply	mail	el	Απάντηση
 reply all	mail	el	Απάντηση σε όλα
-reply to	mail	el	Απάντηση στο
+reply to	mail	el	Η απάντηση να ληφθεί στην διεύθυνση
 replyto	mail	el	Απάντησηστο
 row order style	mail	el	Στυλ ταξινόμησης σειράς
 save all	mail	el	Αποθήκευση όλων
@@ -115,3 +164,4 @@ view header lines	mail	el	Προβολή γραμμών τίτλου
 when deleting messages	mail	el	Όταν διαγράφονται τα μηνύματα
 write	mail	el	Γραφή
 wrote	mail	el	γράφτηκε
+you've got new mail	mail	el	Έχετε νέο μήνυμα
