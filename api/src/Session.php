@@ -1161,7 +1161,7 @@ class Session
 	 * Get the sessionid from Cookie, Get-Parameter or basic auth
 	 *
 	 * @param boolean $only_basic_auth =false return only a basic auth pseudo sessionid, default no
-	 * @return string
+	 * @return string|null (pseudo-)session-id use or NULL if no Cookie or Basic-Auth credentials
 	 */
 	static function get_sessionid($only_basic_auth=false)
 	{
@@ -1200,7 +1200,7 @@ class Session
 		}
 		else
 		{
-			$sessionid = false;
+			$sessionid = null;
 		}
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() _SERVER[REQUEST_URI]='$_SERVER[REQUEST_URI]' returning ".print_r($sessionid,true));
 		return $sessionid;
@@ -1566,6 +1566,11 @@ class Session
 	}
 
 	/**
+	 * Regexp to validate IPv4 and IPv6
+	 */
+	const IP_REGEXP = '/^(?>(?>([a-f0-9]{1,4})(?>:(?1)){7}|(?!(?:.*[a-f0-9](?>:|$)){8,})((?1)(?>:(?1)){0,6})?::(?2)?)|(?>(?>(?1)(?>:(?1)){5}:|(?!(?:.*[a-f0-9]:){6,})(?3)?::(?>((?1)(?>:(?1)){0,4}):)?)?(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(?>\.(?4)){3}))$/iD';
+
+	/**
 	 * Get the ip address of current users
 	 *
 	 * We remove further private IPs (from proxys) as they invalidate user
@@ -1575,9 +1580,15 @@ class Session
 	 */
 	public static function getuser_ip()
 	{
-		return isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
-			preg_replace('/, *10\..*$/', '', $_SERVER['HTTP_X_FORWARDED_FOR']) :
-			$_SERVER['REMOTE_ADDR'];
+		if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+		{
+			$forwarded_for = preg_replace('/, *10\..*$/', '', $_SERVER['HTTP_X_FORWARDED_FOR']);
+			if (preg_match(self::IP_REGEXP, $forwarded_for))
+			{
+				return $forwarded_for;
+			}
+		}
+		return $_SERVER['REMOTE_ADDR'];
 	}
 
 	/**
