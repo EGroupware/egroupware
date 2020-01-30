@@ -720,7 +720,7 @@ var et2_widget = /** @class */ (function (_super) {
      * Sets the client side api instance. It can be retrieved by the widget tree
      * by using the "egw()" function.
      *
-     * @param {egw} _egw egw object to set
+     * @param {IegwAppLocal} _egw egw object to set
      */
     et2_widget.prototype.setApiInstance = function (_egw) {
         this._egw = _egw;
