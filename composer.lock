@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bab03e42bfb2e9b015788370c6987eea",
+    "content-hash": "f3531ed6aeb71d5fea9e6f28038fa1cf",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -575,6 +575,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
+            "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
         },
         {
@@ -642,7 +643,7 @@
         },
         {
             "name": "egroupware/activesync",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
@@ -683,7 +684,7 @@
         },
         {
             "name": "egroupware/adodb-php",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
@@ -712,8 +713,8 @@
             "authors": [
                 {
                     "name": "John Lim",
-                    "role": "Author",
-                    "email": "jlim@natsoft.com"
+                    "email": "jlim@natsoft.com",
+                    "role": "Author"
                 },
                 {
                     "name": "Damien Regad",
@@ -737,16 +738,16 @@
         },
         {
             "name": "egroupware/bookmarks",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
-                "reference": "9d9ac16b07b5f584384d9bd935c80adbb6930c90"
+                "reference": "dbde24f236b7733b1e9b7b9187ff895c9e7df669"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/9d9ac16b07b5f584384d9bd935c80adbb6930c90",
-                "reference": "9d9ac16b07b5f584384d9bd935c80adbb6930c90",
+                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/dbde24f236b7733b1e9b7b9187ff895c9e7df669",
+                "reference": "dbde24f236b7733b1e9b7b9187ff895c9e7df669",
                 "shasum": ""
             },
             "require": {
@@ -765,20 +766,20 @@
             ],
             "description": "EGroupware app to manage bookmarks",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-08-02T16:24:52+00:00"
+            "time": "2019-10-31T11:45:53+00:00"
         },
         {
             "name": "egroupware/collabora",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "0ebf1211eb8bcab96242c8a46af1e31660334736"
+                "reference": "0e8362441bd3496149c6cb50394204af4e79e173"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/0ebf1211eb8bcab96242c8a46af1e31660334736",
-                "reference": "0ebf1211eb8bcab96242c8a46af1e31660334736",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/0e8362441bd3496149c6cb50394204af4e79e173",
+                "reference": "0e8362441bd3496149c6cb50394204af4e79e173",
                 "shasum": ""
             },
             "require": {
@@ -805,7 +806,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-08-03T08:56:06+00:00"
+            "time": "2020-01-09T14:47:13+00:00"
         },
         {
             "name": "egroupware/icalendar",
@@ -907,16 +908,16 @@
         },
         {
             "name": "egroupware/news_admin",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
-                "reference": "65858a6fe9b405150c838edff7dfa5f0d56aa531"
+                "reference": "b6371cad46d9eb77b549a378cbefcd0e51b35cb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/65858a6fe9b405150c838edff7dfa5f0d56aa531",
-                "reference": "65858a6fe9b405150c838edff7dfa5f0d56aa531",
+                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/b6371cad46d9eb77b549a378cbefcd0e51b35cb2",
+                "reference": "b6371cad46d9eb77b549a378cbefcd0e51b35cb2",
                 "shasum": ""
             },
             "require": {
@@ -935,20 +936,20 @@
             ],
             "description": "EGroupware app to supply and aggregate RSS/Atom feeds",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-16T08:13:20+00:00"
+            "time": "2019-12-04T22:00:04+00:00"
         },
         {
             "name": "egroupware/openid",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "8821e22d7de68b3450421029a022abd310e7bab5"
+                "reference": "ac4fe7a4841215ceaed89208ae7b829d4fd9206c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/8821e22d7de68b3450421029a022abd310e7bab5",
-                "reference": "8821e22d7de68b3450421029a022abd310e7bab5",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/ac4fe7a4841215ceaed89208ae7b829d4fd9206c",
+                "reference": "ac4fe7a4841215ceaed89208ae7b829d4fd9206c",
                 "shasum": ""
             },
             "require": {
@@ -984,20 +985,20 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-08-06T13:45:46+00:00"
+            "time": "2019-10-25T10:18:08+00:00"
         },
         {
             "name": "egroupware/projectmanager",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "d573782214cd9a7a651b76de448c85a1710dc01b"
+                "reference": "0dd32052f8bcd6203194f43bfa75d3a0f7e9432c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/d573782214cd9a7a651b76de448c85a1710dc01b",
-                "reference": "d573782214cd9a7a651b76de448c85a1710dc01b",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/0dd32052f8bcd6203194f43bfa75d3a0f7e9432c",
+                "reference": "0dd32052f8bcd6203194f43bfa75d3a0f7e9432c",
                 "shasum": ""
             },
             "require": {
@@ -1025,20 +1026,20 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-10-18T22:10:10+00:00"
+            "time": "2020-01-30T12:55:53+00:00"
         },
         {
             "name": "egroupware/registration",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
-                "reference": "3f26823a949a8eba459ad4878f3150e3afba6e6f"
+                "reference": "3194e153b0c54acd0871ee231b0dcce26260ede4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/registration/zipball/3f26823a949a8eba459ad4878f3150e3afba6e6f",
-                "reference": "3f26823a949a8eba459ad4878f3150e3afba6e6f",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/3194e153b0c54acd0871ee231b0dcce26260ede4",
+                "reference": "3194e153b0c54acd0871ee231b0dcce26260ede4",
                 "shasum": ""
             },
             "require": {
@@ -1074,20 +1075,20 @@
             ],
             "description": "EGroupware app to allow self-registration of users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-16T08:23:13+00:00"
+            "time": "2019-11-15T13:00:06+00:00"
         },
         {
             "name": "egroupware/rocketchat",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "53ed1a6cdaad0708c9d71dce192dcace5f51dfbe"
+                "reference": "c7ab533bef717b562ffd27f679b4dceb680849bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/53ed1a6cdaad0708c9d71dce192dcace5f51dfbe",
-                "reference": "53ed1a6cdaad0708c9d71dce192dcace5f51dfbe",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/c7ab533bef717b562ffd27f679b4dceb680849bb",
+                "reference": "c7ab533bef717b562ffd27f679b4dceb680849bb",
                 "shasum": ""
             },
             "require": {
@@ -1114,20 +1115,20 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-08-09T14:33:08+00:00"
+            "time": "2020-01-29T11:18:50+00:00"
         },
         {
             "name": "egroupware/status",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "66b0a35e4a9fa4f0dcb1d021769ac22336f7b17f"
+                "reference": "cc14517b816afe53077280a9e92ac99415862b7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/66b0a35e4a9fa4f0dcb1d021769ac22336f7b17f",
-                "reference": "66b0a35e4a9fa4f0dcb1d021769ac22336f7b17f",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/cc14517b816afe53077280a9e92ac99415862b7a",
+                "reference": "cc14517b816afe53077280a9e92ac99415862b7a",
                 "shasum": ""
             },
             "require": {
@@ -1154,20 +1155,20 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-08-01T22:24:59+00:00"
+            "time": "2020-01-30T12:52:54+00:00"
         },
         {
             "name": "egroupware/tracker",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "d331ad7e9e3a6c5f0717aeb8462d2e5ae061006f"
+                "reference": "eb5595646d5ffe806319c65b3ec8a2ed890c6376"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/d331ad7e9e3a6c5f0717aeb8462d2e5ae061006f",
-                "reference": "d331ad7e9e3a6c5f0717aeb8462d2e5ae061006f",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/eb5595646d5ffe806319c65b3ec8a2ed890c6376",
+                "reference": "eb5595646d5ffe806319c65b3ec8a2ed890c6376",
                 "shasum": ""
             },
             "require": {
@@ -1194,7 +1195,7 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-08-03T06:56:38+00:00"
+            "time": "2020-01-30T12:51:41+00:00"
         },
         {
             "name": "egroupware/z-push-dev",
@@ -3972,25 +3973,14 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-diactoros",
             "time": "2018-09-05T19:29:37+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "egroupware/activesync": 20,
-        "egroupware/adodb-php": 20,
-        "egroupware/bookmarks": 20,
-        "egroupware/collabora": 20,
-        "egroupware/news_admin": 20,
-        "egroupware/openid": 20,
-        "egroupware/projectmanager": 20,
-        "egroupware/registration": 20,
-        "egroupware/rocketchat": 20,
-        "egroupware/status": 20,
-        "egroupware/tracker": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
