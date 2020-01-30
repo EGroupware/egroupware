@@ -35,7 +35,7 @@ RUN apt-get update \
 		-e 's|^;\?max_execution_time \?=.*|max_execution_time = 90|g' \
 		-e 's|^;\?upload_max_filesize \?=.*|upload_max_filesize = 64M|g' \
 		-e 's|^;\?post_max_size \?=.*|post_max_size = 65M|g' \
-		-e 's|^;\?max_input_vars \?=.*|max_input_vars = 2000|g' \
+		-e 's|^;\?max_input_vars \?=.*|max_input_vars = 5000|g' \
 		-e 's|^;\?zlib.output_compression \?=.*|zlib.output_compression = On|g' \
 		-e 's|^;\?opcache.validate_timestamps \?=.*|opcache.validate_timestamps=0|g' \
 		-i /etc/php/$PHP_VERSION/fpm/php.ini \
