@@ -42,7 +42,7 @@ account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat k
 account "%1" has no plaintext password!	admin	de	Benutzer "%1" hat kein Klartext Passwort!
 account %1 %2	admin	de	Benutzerkonto %1 %2
 account '%1' deleted.	admin	de	Konto '%1' gelöscht.
-account '%1' not found !!!	admin	de	Mailkonto '%1' nicht gefunden !
+account '%1' not found !!!	admin	de	Mail-Konto '%1' nicht gefunden !
 account active	admin	de	Konto aktiv
 account deleted.	admin	de	Mail-Konto gelöscht.
 account has been created	common	de	Konto wurde erstellt
@@ -53,7 +53,7 @@ account list	admin	de	Benutzerkonten anzeigen
 account not found!	common	de	Mail-Konto nicht gefunden!
 account permissions	admin	de	Zugriffsrechte
 account preferences	admin	de	Einstellungen der Benutzerkonten
-account saved.	admin	de	Mailkonto gespeichert.
+account saved.	admin	de	E-Mail-Konto gespeichert.
 account-id's have to be integers!	admin	de	Konten-ID`s müssen vom Typ Integer (Zahl) sein!
 acl added.	admin	de	ACL hinzugefügt.
 acl csv export	admin	de	ACL CSV Export
@@ -703,8 +703,7 @@ php version	admin	de	PHP Version
 phpinfo	admin	de	PHP-Informationen
 phrase	admin	de	Phrase
 phrase deleted	admin	de	Phrase gelöscht
-please check email.  it gets automatically deleted if email integration is used.	admin	de	Bitte überprüfen Sie das E-Mailkonto des Benutzers, es wird automatisch gelöscht, wenn E-Mail-Integration verwendet wird.
-please check home folder.  all files and folders of the user will be unusable by other users.	admin	de	Bitte überprüfen Sie die Home-Ordner! Alle Dateien und Ordner des Benutzers werden für andere Benutzer unbrauchbar.
+please check email.  it gets automatically deleted if email integration is used.	admin	de	Bitte überprüfen Sie das E-Mail-Konto des Benutzers, es wird automatisch gelöscht, wenn E-Mail-Integration verwendet wird.
 please enter a name	admin	de	Bitte einen Namen eingeben
 please enter a name for that server !	admin	de	Bitte einen Namen für diesen Server eingeben!
 please manually deal with entries owned by the user:	admin	de	Bitte händisch um Einträge des Benutzers kümmern:

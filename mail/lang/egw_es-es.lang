@@ -70,8 +70,10 @@ attach vcard	mail	es-es	Adjuntar vCard
 attachment	mail	es-es	Adjunto
 attachment has been saved successfully.	mail	es-es	El archivo adjunto se ha guardado exitosamente.
 attachments	mail	es-es	Adjuntos
+attachments, ...	mail	es-es	Adjuntos, ...
 authentication	mail	es-es	Autenticación
 available personal email-accounts/profiles	mail	es-es	Cuentas de correo-e/perfiles personales disponibles
+be aware that all attachments will be sent as %1!	mail	es-es	¡Tenga en cuenta que todos los archivos adjuntos se enviarán como %1!
 before reply, visible during compose	mail	es-es	Antes de la respuesta, visible durante la composición
 blacklisted mails are marked as spam	mail	es-es	Los mensajes en la lista negra están marcados como spam
 but check shared folders	mail	es-es	pero compruebe las carpetas compartidas
@@ -79,6 +81,7 @@ by date	mail	es-es	por fecha
 can not open imap connection	mail	es-es	No se puede abrir la conexión IMAP
 can not resolve the winmail.dat attachment!	mail	es-es	¡No se puede resolver el archivo adjunto winmail.dat!
 canceled deletion due to user interaction	mail	es-es	supresión cancelada debido a la interacción del usuario
+certificate info for email %1	mail	es-es	Información del certificado para el correo-e %1
 change editor type	mail	es-es	cambiar el editor al modo HTML
 changed profile	mail	es-es	perfil cambiado
 check message against next rule also	mail	es-es	comprobar el mensaje también con la regla siguiente
@@ -109,6 +112,7 @@ could not append message:	mail	es-es	No se pudo agregar el mensaje:
 could not save the acl because some names are empty	mail	es-es	No se pudo guardar la lista de control de acceso porque algunos nombres están vacíos
 create new account	mail	es-es	crear nueva cuenta
 current folder	mail	es-es	carpeta actual
+current subject	mail	es-es	Asunto actual
 currently:	mail	es-es	Actualmente:
 date(newest first)	mail	es-es	fecha (la más reciente primero)
 date(oldest first)	mail	es-es	fecha (la más antigua primero)
@@ -246,6 +250,7 @@ get acl rights failed from imap server!	mail	es-es	¡Falló obtener los derechos
 greater than	mail	es-es	mayor que
 header	mail	es-es	Encabezado
 header lines	mail	es-es	Líneas de encabezado
+high	mail	es-es	alto
 hold %1 to drag files to your computer	mail	es-es	Sostenga %1 para arrastrar archivos a su computadora
 home page folders	mail	es-es	carpetas de la página de inicio
 hostname or ip	mail	es-es	Nombre de host o IP
@@ -298,6 +303,7 @@ less than	mail	es-es	menor que
 mail	common	es-es	Correo
 mail acl	mail	es-es	Lista de control de acceso del correo
 mail filter	mail	es-es	Filtro de correo
+mail filter rule	mail	es-es	Regla de filtro de correo
 mail settings	mail	es-es	Configuración del correo
 mail source	mail	es-es	Fuente de correo
 mail-address	mail	es-es	Dirección de correo
@@ -314,10 +320,12 @@ matches regexp	mail	es-es	coincide con la expresión
 message body	mail	es-es	cuerpo del mensaje
 message learned as spam and moved to spam folder	mail	es-es	Mensaje aprendido como spam y movido a la carpeta de spam
 message preview area	mail	es-es	Área de previsualización de mensajes
-message saved successfully.	common	es-es	Mensaje grabado exitosamente.
+message saved successfully.	mail	es-es	Mensaje grabado exitosamente.
 message send failed: %1	mail	es-es	Error al enviar el mensaje: %1
-message send successfully.	admin	es-es	Mensaje enviado exitosamente.
+message send successfully.	mail	es-es	Mensaje enviado exitosamente.
 miscellaneous	mail	es-es	Misceláneo
+modify subject	mail	es-es	Modificar asunto
+modify subject of this message	mail	es-es	Modificar asunto de este mensaje
 move	mail	es-es	Mover
 move folder	mail	es-es	Mover carpeta
 move selected mails to archive	mail	es-es	Mover los correos seleccionados al archivo
@@ -331,6 +339,7 @@ never display html emails	mail	es-es	nunca mostrar los correos en HTML
 never show	mail	es-es	nunca mostrar
 new mail notification	mail	es-es	Nueva notificación de correo
 new message type	mail	es-es	Nuevo tipo de mensaje
+new subject	mail	es-es	Nuevo asunto
 no access	mail	es-es	sin acceso
 no action defined!	mail	es-es	¡No hay acción definida!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	es-es	No se ha suministrado dirección para el campo A/CC/CCO, ni carpeta donde guardar el mensaje.

@@ -472,6 +472,7 @@ requested	calendar	es-es	Requerido
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	es-es	Fecha solicitada %1 fuera del rango permitido de %2 días: ¡eventos recurrentes omitidos!
 requested meeting is in the past!	calendar	es-es	¡La reunión solicitada está en el pasado!
 require an acl grant to invite other users and groups	admin	es-es	Requerir el permiso de una ACL para invitar a otros grupos
+required information (start, end, title, ...) missing!	calendar	es-es	¡Falta la información requerida (inicio, final, título, ...)!
 reset	calendar	es-es	Restablecer
 reset participant stati on event shifts	calendar	es-es	Restablecer el estado del participante en cambios de evento
 resources	calendar	es-es	Recursos
@@ -516,6 +517,7 @@ show all status incl. rejected events	calendar	es-es	Mostrar todos los estados, 
 show all status, but rejected	calendar	es-es	Mostrar todos los estados, excepto los rechazados
 show all status, but unknown	calendar	es-es	Mostrar todos los estados, excepto los desconocidos
 show also events just owned by selected user	calendar	es-es	Mostrar también los eventos cuyo único propietario es el usuario seleccionado
+show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	es-es	Mostrar como eventos sin bloqueo de todo el día , así como por medio del mouse sobre la fecha.
 show birthdays as events	calendar	es-es	Mostrar cumpleaños como eventos
 show birthdays from addressbook	admin	es-es	Mostrar cumpleaños de la libreta de direcciones
 show empty rows in planner	calendar	es-es	Mostrar filas vacías en el planificador
@@ -587,6 +589,7 @@ timezone	calendar	es-es	Zona horaria
 timezone in which recurrences have identical time	calendar	es-es	Zona horaria en que las repeticiones tienen la hora idéntica
 timezone of event exports	calendar	es-es	Zona horaria de los eventos exportados
 timezone of event ical file import/export	calendar	es-es	Zona horaria de eventos de importar/exportar fichero iCal
+timezones aliases updated to version %1 (%2 records updated).	calendar	es-es	Alias ​​de zonas horarias actualizadas a la versión %1 (%2 registros actualizados).
 timezones updated to version %1 (%2 records updated).	calendar	es-es	Las zonas horarias se han actualizado a la versión %1 (%2 registros actualizados)
 title of the event	calendar	es-es	Título del evento
 titles of any entries linked to the current record, excluding attached files	calendar	es-es	Títulos de cualquier entrada vinculada al registro actual, excluyendo los ficheros adjuntos
@@ -601,9 +604,11 @@ two weeks	calendar	es-es	Dos semanas
 type of planner	calendar	es-es	Tipo de planificador
 unable to save	calendar	es-es	No se puede guardar
 uninvited	calendar	es-es	Ya no está invitado
+update calendar view immediately when navigation calendar in sidebox is changed	calendar	es-es	Actualizar la vista del calendario inmediatamente cuando cambie el calendario de navegación en la barra lateral
 update timezones	common	es-es	Actualizar zonas horarias
 updated	calendar	es-es	Actualizado
 use end date	calendar	es-es	Usar fecha final
+use quick add or full edit dialog when creating a new event	calendar	es-es	Usar el añadido rápido o el cuadro de diálogo d eedición completa al crear un nuevo evento
 use the selected time and close the popup	calendar	es-es	usar la hora seleccionada y cerrar la ventana
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	es-es	Usar esta etiqueta para las etiquetas de direcciones. Ponga el contenido que quiera repetir entre dos etiquetas.
 use this timezone to export calendar data.	calendar	es-es	Usar esta zona horaria para exportar datos de calendario.
@@ -613,6 +618,7 @@ user or group	calendar	es-es	Usuario o grupo
 user selectable css file for the calendar setup	calendar	es-es	Fichero CSS seleccionable por el usuario para la configuración del calendario
 users + groups: inviting both always requires an invite grant	admin	es-es	Usuarios y grupos: invitar a ambos siempre requiere un permiso para invitar
 using already existing event on server.	calendar	es-es	Usando el evento ya existente en el servidor.
+utilities	calendar	es-es	Utilitarios
 view exception	calendar	es-es	Ver excepción
 view series	calendar	es-es	Ver serie
 view settings	calendar	es-es	Ver configuración

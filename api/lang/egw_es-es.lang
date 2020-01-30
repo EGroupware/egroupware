@@ -1095,6 +1095,7 @@ rename	common	es-es	Renombrar
 replace	common	es-es	Sustituir
 replace with	common	es-es	Sustituir por
 requests and full responses to files directory	common	es-es	Solicitudes y respuestas completas al directorio de archivos
+requests and truncated responses to apache error-log	groupdav	es-es	Solicitudes y respuestas truncadas al registro de errores de Apache
 required	common	es-es	Requerido
 required directory "%1" created.	admin	es-es	Directorio requerido "%1" creado.
 required directory "%1" has wrong mode %2 instead of %3!	admin	es-es	¡El directorio requerido "%1" tiene un modo incorrecto %2 en lugar de %3!
@@ -1251,6 +1252,7 @@ show as topmenu	common	es-es	Mostrar como menú superior
 show clock?	common	es-es	¿Mostrar el reloj?
 show home and logout button in main application bar?	common	es-es	¿Mostrar los botones de inicio y salir en el barra de aplicaciones principal?
 show in sidebox	common	es-es	Mostrar en el menú lateral
+show log of following device	groupdav	es-es	Mostrar bitácora del dispositivo siguiente
 show logo's on the desktop.	common	es-es	Mostrar logo en el escritorio
 show menu	common	es-es	mostrar menú
 show next login	common	es-es	Mostrar registro del siguiente dispositivo
@@ -1298,6 +1300,7 @@ starting up...	common	es-es	Iniciando...
 status	common	es-es	Estado
 store your public key in addressbook?	common	es-es	¿Almacena su clave pública en la libreta de direcciones?
 stretched	common	es-es	ajustado
+strikethrough	common	es-es	Tachado
 subject	common	es-es	Asunto
 submit	common	es-es	Enviar
 submit form	common	es-es	Enviar formulario
