@@ -144,7 +144,7 @@ class Taglist extends Etemplate\Widget
 
 			foreach((array) $value as $key => $val)
 			{
-				if($this->type == 'taglist-account')
+				if($this->type == 'taglist-account' && !$this->attrs['allowFreeEntries'])
 				{
 					// If in allowed options, skip account check to support app-specific options
 					if(count($allowed) > 0 && in_array($val, $allowed)) continue;
