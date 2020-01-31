@@ -59,3 +59,13 @@ sed    -e 's/egroupware-docker (/<h3>/g' \
 	   -e 's/^  \* \(.*\)/<li>\1<\/li>/g' > /tmp/README_UPDATE
 
 $debug univention-appcenter-control upload $ucs/egroupware=$version.$packaging$postfix /tmp/README_UPDATE
+
+# replace images so Univention can automatic fetch them into their repo
+#uni_version=$(curl https://appcenter-test.software-univention.de/univention-repository/4.4/maintained/component/ 2>/dev/null | grep egroupware_$packaging | sed 's|.*href="\(egroupware_[0-9]*\)/".*|\1|')
+#curl https://appcenter-test.software-univention.de/univention-repository/4.4/maintained/component/$uni_version/compose 2>/dev/null > /tmp/compose
+univention-appcenter-control get 4.4/egroupware=$version.$packaging$postfix --json | jq -r .compose > /tmp/compose
+sed -i "" \
+	-e "s|image:.*docker.software-univention.de/egroupware-egroupware.*|image:download.egroupware.org/egroupware/epl:$version.$packaging|" \
+	-e "s|image:.*docker.software-univention.de/egroupware-nginx.*|image:nginx:stable-alpine|" \
+	/tmp/compose
+$debug univention-appcenter-control upload $ucs/egroupware=$version.$packaging$postfix /tmp/compose
