@@ -9,7 +9,16 @@
  * @author Andreas Stöckel
  * @copyright Stylite 2011
  * @version $Id$
- */
+ *
+
+/*egw:uses
+    /vendor/bower-asset/jquery/dist/jquery.js;
+    et2_core_common;
+
+    et2_dataview_interfaces;
+    et2_dataview_view_container;
+    et2_dataview_view_spacer;
+*/
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -25,6 +34,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var et2_dataview_view_container_1 = require("./et2_dataview_view_container");
+var et2_dataview_view_spacer_1 = require("./et2_dataview_view_spacer");
 var et2_dataview_grid = /** @class */ (function (_super_1) {
     __extends(et2_dataview_grid, _super_1);
     /**
@@ -236,7 +246,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
      */
     et2_dataview_grid.prototype.getVisibleIndexRange = function (_viewRange) {
         function getElemIdx(_elem, _px) {
-            if (_elem instanceof et2_dataview_spacer) {
+            if (_elem instanceof et2_dataview_view_spacer_1.et2_dataview_spacer) {
                 return _elem.getIndex()
                     + Math.floor((_px - _elem.getTop()) / this.getAverageHeight());
             }
@@ -281,7 +291,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
         var idxTop = false;
         var idxBottom = false;
         for (var i = 0; i < this._map.length; i++) {
-            if (!(this._map[i] instanceof et2_dataview_spacer)) {
+            if (!(this._map[i] instanceof et2_dataview_view_spacer_1.et2_dataview_spacer)) {
                 var idx = this._map[i].getIndex();
                 if (idxTop === false) {
                     idxTop = idx;
@@ -439,7 +449,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
         // Get the map element
         var elem = this._map[mapIdx];
         // Get the element range
-        if (elem instanceof et2_dataview_spacer) {
+        if (elem instanceof et2_dataview_view_spacer_1.et2_dataview_spacer) {
             var avg = this.getAverageHeight();
             return et2_range(elem.getTop() + avg * (elem.getIndex() - _idx), avg);
         }
@@ -557,9 +567,9 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
         var _loop_1 = function (i) {
             var container = this_1._map[i];
             // Check which type the container object has
-            var isSpacer = container instanceof et2_dataview_spacer;
+            var isSpacer = container instanceof et2_dataview_view_spacer_1.et2_dataview_spacer;
             var hasIViewRange = !isSpacer
-                && container.implements(et2_dataview_IViewRange);
+                && implements_et2_dataview_IViewRange(container);
             // If the container has one of those special types, calculate the
             // view range and use that to update the view range of the element
             // or to request new elements for the spacer
@@ -699,7 +709,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
             // Add the new element after the old container
             _container.insertIntoTree(_mapElem.getLastNode());
             // Create a new spacer and add it after the newly inserted container
-            var newSpacer = new et2_dataview_spacer(this, this._rowProvider);
+            var newSpacer = new et2_dataview_view_spacer_1.et2_dataview_spacer(this, this._rowProvider);
             newSpacer.setCount(cntBottom, _avg);
             newSpacer.setIndex(_index + 1);
             newSpacer.insertIntoTree(_container.getLastNode());
@@ -726,7 +736,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
             // Append the new container to the current container and then
             // destroy the old container
             _container.insertIntoTree(_mapElem.getLastNode());
-            _mapElem.free();
+            _mapElem.destroy();
             this._map.splice(_mapIndex, 1, _container);
         }
     };
@@ -743,7 +753,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
             // Update the index of the element
             this._map[i].setIndex(_newIndex++);
             // We've found a spacer -- decrement its element count and abort
-            if (this._map[i] instanceof et2_dataview_spacer) {
+            if (this._map[i] instanceof et2_dataview_view_spacer_1.et2_dataview_spacer) {
                 this._decrementSpacerCount(i, _avg);
                 return;
             }
@@ -751,7 +761,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
         // We've found no spacer so far, remove the last element from the map in
         // order to obtain the "totalCount" (especially the last element is no
         // spacer, so the following code cannot remove a spacer)
-        this._map.pop().free();
+        this._map.pop().destroy();
     };
     /**
      * Inserts the given container at the given index.
@@ -760,7 +770,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
         // Check whether the given element at the map index is a spacer. If
         // yes, we have to split the spacer at that position.
         var mapElem = this._map[_mapIndex];
-        if (mapElem instanceof et2_dataview_spacer) {
+        if (mapElem instanceof et2_dataview_view_spacer_1.et2_dataview_spacer) {
             this._insertContainerAtSpacer(_index, _mapIndex, mapElem, _container, _avg);
         }
         else {
@@ -786,16 +796,16 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
         var spacerAbove = null;
         var spacerBelow = null;
         if (_mapIndex > 0
-            && this._map[_mapIndex - 1] instanceof et2_dataview_spacer) {
+            && this._map[_mapIndex - 1] instanceof et2_dataview_view_spacer_1.et2_dataview_spacer) {
             spacerAbove = this._map[_mapIndex - 1];
         }
         if (_mapIndex < this._map.length - 1
-            && this._map[_mapIndex + 1] instanceof et2_dataview_spacer) {
+            && this._map[_mapIndex + 1] instanceof et2_dataview_view_spacer_1.et2_dataview_spacer) {
             spacerBelow = this._map[_mapIndex + 1];
         }
         if (!spacerAbove && !spacerBelow) {
             // No spacer can be extended -- simply create a new one
-            spacer = new et2_dataview_spacer(this, this._rowProvider);
+            spacer = new et2_dataview_view_spacer_1.et2_dataview_spacer(this, this._rowProvider);
             spacer.setIndex(_mapElem.getIndex());
             spacer.addAvgHeight(_mapElem.getHeight());
             spacer.setCount(1, _mapElem.getHeight());
@@ -818,7 +828,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
             spacerAbove.addAvgHeight(_mapElem.getHeight());
             spacerAbove.setCount(totalCount, newAvg);
             // Delete the lower spacer and remove it from the mapping
-            spacerBelow.free();
+            spacerBelow.destroy();
             this._map.splice(_mapIndex + 1, 1);
         }
         else {
@@ -840,8 +850,8 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
      */
     et2_dataview_grid.prototype._consolidateSpacers = function (_mapIndex) {
         if (_mapIndex < this._map.length - 1
-            && this._map[_mapIndex] instanceof et2_dataview_spacer
-            && this._map[_mapIndex + 1] instanceof et2_dataview_spacer) {
+            && this._map[_mapIndex] instanceof et2_dataview_view_spacer_1.et2_dataview_spacer
+            && this._map[_mapIndex + 1] instanceof et2_dataview_view_spacer_1.et2_dataview_spacer) {
             var spacerAbove = this._map[_mapIndex];
             var spacerBelow = this._map[_mapIndex + 1];
             // Calculate the new height/count of both containers
@@ -851,7 +861,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
             // Extend the new spacer
             spacerAbove.setCount(totalCount, newAvg);
             // Delete the old spacer
-            spacerBelow.free();
+            spacerBelow.destroy();
             this._map.splice(_mapIndex + 1, 1);
         }
     };
@@ -874,7 +884,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
             this._map[_mapIndex].setCount(cnt, _avg);
         }
         else {
-            this._map[_mapIndex].free();
+            this._map[_mapIndex].destroy();
             this._map.splice(_mapIndex, 1);
         }
     };
@@ -891,7 +901,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
         var removedElement = false;
         // Check whether the map element is a spacer -- if yes, we have to do
         // some special treatment
-        if (mapElem instanceof et2_dataview_spacer) {
+        if (mapElem instanceof et2_dataview_view_spacer_1.et2_dataview_spacer) {
             // Do nothing if the "_replaceWithSpacer" flag is true as the
             // element already is a spacer
             if (!_replaceWithSpacer) {
@@ -907,7 +917,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
                 removedElement = true;
             }
             // Remove the complete (current) container, decrement the _mapIndex
-            this._map[_mapIndex].free();
+            this._map[_mapIndex].destroy();
             this._map.splice(_mapIndex, 1);
             _mapIndex--;
             // The delete operation may have created two joining spacers -- this
@@ -940,9 +950,9 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
         var spacer = null;
         var lastIndex = this._map.length - 1;
         if (this._map.length === 0 ||
-            !(this._map[lastIndex] instanceof et2_dataview_spacer)) {
+            !(this._map[lastIndex] instanceof et2_dataview_view_spacer_1.et2_dataview_spacer)) {
             // Create a new spacer
-            spacer = new et2_dataview_spacer(this, this._rowProvider);
+            spacer = new et2_dataview_view_spacer_1.et2_dataview_spacer(this, this._rowProvider);
             // Insert the spacer -- we have a special case if there currently is
             // no element inside the mapping
             if (this._map.length === 0) {
@@ -985,7 +995,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
         while (_delta > 0 && this._map.length > 0) {
             var cont = this._map[this._map.length - 1];
             // Remove as many containers as possible from spacers
-            if (cont instanceof et2_dataview_spacer) {
+            if (cont instanceof et2_dataview_view_spacer_1.et2_dataview_spacer) {
                 var diff = cont.getCount() - _delta;
                 if (diff > 0) {
                     // We're done as the spacer still has entries left
@@ -1003,7 +1013,7 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
                 _delta -= 1;
             }
             // Destroy the container if there are no rows left
-            cont.free();
+            cont.destroy();
             this._map.pop();
         }
         // Check whether _delta is really zero

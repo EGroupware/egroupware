@@ -9,21 +9,8 @@
  * @author Andreas Stöckel
  * @copyright Stylite 2011
  * @version $Id$
- */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
+ *
+
 /*egw:uses
 
     // Include the action system
@@ -46,14 +33,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
     et2_extension_customfields;
 
     // Include all nextmatch subclasses
-    et2_extension_nextmatch_controller;
     et2_extension_nextmatch_rowProvider;
+    et2_extension_nextmatch_controller;
     et2_extension_nextmatch_dynheight;
 
     // Include the grid classes
     et2_dataview;
 
 */
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 require("./et2_core_common");
 require("./et2_core_interfaces");
 var et2_core_widget_1 = require("./et2_core_widget");
@@ -62,6 +63,10 @@ var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
 var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
 var et2_widget_selectbox_1 = require("./et2_widget_selectbox");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
+var et2_extension_nextmatch_rowProvider_1 = require("./et2_extension_nextmatch_rowProvider");
+var et2_extension_nextmatch_controller_1 = require("./et2_extension_nextmatch_controller");
+var et2_dataview_1 = require("./et2_dataview");
+var et2_dataview_model_columns_1 = require("./et2_dataview_model_columns");
 var et2_INextmatchHeader = "et2_INextmatchHeader";
 function implements_et2_INextmatchHeader(obj) {
     return implements_methods(obj, ["setNextmatch"]);
@@ -89,15 +94,15 @@ function implements_et2_INextmatchSortable(obj) {
  *                                          +--------------+-----------+-------+
  * @augments et2_DOMWidget
  */
-var et2_nextmatch = /** @class */ (function (_super_1) {
-    __extends(et2_nextmatch, _super_1);
+var et2_nextmatch = /** @class */ (function (_super) {
+    __extends(et2_nextmatch, _super);
     /**
      * Constructor
      *
      * @memberOf et2_nextmatch
      */
     function et2_nextmatch(_parent, _attrs, _child) {
-        var _this = _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch._attributes, _child || {})) || this;
         _this.activeFilters = { col_filter: {} };
         _this.columns = [];
         // keeps sorted columns
@@ -128,7 +133,7 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
         // container.
         _this.dynheight = _this._getDynheight();
         // Create the outer grid container
-        _this.dataview = new et2_dataview(_this.innerDiv, _this.egw());
+        _this.dataview = new et2_dataview_1.et2_dataview(_this.innerDiv, _this.egw());
         // Blank placeholder
         _this.blank = jQuery(document.createElement("div"))
             .appendTo(_this.dataview.table);
@@ -151,15 +156,15 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
         jQuery(this.getInstanceManager().DOMContainer.parentNode).off('show.et2_nextmatch');
         jQuery(this.getInstanceManager().DOMContainer.parentNode).off('hide.et2_nextmatch');
         // Free the grid components
-        this.dataview.free();
+        this.dataview.destroy();
         if (this.rowProvider) {
-            this.rowProvider.free();
+            this.rowProvider.destroy();
         }
         if (this.controller) {
-            this.controller.free();
+            this.controller.destroy();
         }
-        this.dynheight.free();
-        _super_1.prototype.destroy.call(this);
+        this.dynheight.destroy();
+        _super.prototype.destroy.call(this);
     };
     /**
      * Loads the nextmatch settings
@@ -167,7 +172,7 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
      * @param {object} _attrs
      */
     et2_nextmatch.prototype.transformAttributes = function (_attrs) {
-        _super_1.prototype.transformAttributes.call(this, _attrs);
+        _super.prototype.transformAttributes.call(this, _attrs);
         if (this.id) {
             var entry = this.getArrayMgr("content").data;
             _attrs["settings"] = {};
@@ -188,7 +193,7 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
         }
     };
     et2_nextmatch.prototype.doLoadingFinished = function () {
-        _super_1.prototype.doLoadingFinished.call(this);
+        _super.prototype.doLoadingFinished.call(this);
         if (!this.dynheight) {
             this.dynheight = this._getDynheight();
         }
@@ -866,11 +871,11 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
                 "widget": _row[x].widget
             }, _colData[x]);
             var visibility = (!_colData[x] || _colData[x].visible) ?
-                et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE :
-                et2_dataview_grid.ET2_COL_VISIBILITY_INVISIBLE;
+                et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE :
+                et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE;
             if (_colData[x].disabled && _colData[x].disabled !== '' &&
                 this.getArrayMgr("content").parseBoolExpression(_colData[x].disabled)) {
-                visibility = et2_dataview_grid.ET2_COL_VISIBILITY_DISABLED;
+                visibility = et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_DISABLED;
             }
             columnData[x] = {
                 "id": "col_" + x,
@@ -914,11 +919,7 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
             this.addChild(_row[x].widget);
         }
         // Create the nextmatch row provider
-        /* TODO
-        this.rowProvider = new et2_nextmatch_rowProvider(
-            this.dataview.rowProvider, this._getSubgrid, this);
-
-         */
+        this.rowProvider = new et2_extension_nextmatch_rowProvider_1.et2_nextmatch_rowProvider(this.dataview.rowProvider, this._getSubgrid, this);
         // Register handler to update preferences when column properties are changed
         var self = this;
         this.dataview.onUpdateColumns = function () {
@@ -962,11 +963,9 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
                 columnWidgets[x].align = _row[x].align;
             }
         }
-        return;
-        // TODO
         this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);
         // Create the grid controller
-        this.controller = new et2_nextmatch_controller(null, this.egw(), this.getInstanceManager().etemplate_exec_id, this, null, this.dataview.grid, this.rowProvider, this.options.settings.action_links, null, this.options.actions);
+        this.controller = new et2_extension_nextmatch_controller_1.et2_nextmatch_controller(null, this.egw(), this.getInstanceManager().etemplate_exec_id, this, null, this.dataview.grid, this.rowProvider, this.options.settings.action_links, null, this.options.actions);
         // Need to trigger empty row the first time
         if (total == 0)
             this.controller._emptyRow();
@@ -1018,11 +1017,11 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
         // parent grid
         var grid = new et2_dataview_grid(_row, this.dataview.grid);
         // Create a new controller for the grid
-        var controller = new et2_nextmatch_controller(_controller, this.egw(), this.getInstanceManager().etemplate_exec_id, this, rowId, grid, this.rowProvider, this.options.settings.action_links, _controller.getObjectManager());
+        var controller = new et2_extension_nextmatch_controller_1.et2_nextmatch_controller(_controller, this.egw(), this.getInstanceManager().etemplate_exec_id, this, rowId, grid, this.rowProvider, this.options.settings.action_links, _controller.getObjectManager());
         controller.update();
         // Register inside the destruction callback of the grid
         grid.setDestroyCallback(function () {
-            controller.free();
+            controller.destroy();
         });
         return grid;
     };
@@ -1396,9 +1395,9 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
                 return;
             }
             // Free the grid components - they'll be re-created as the template is processed
-            this.dataview.free();
-            this.rowProvider.free();
-            this.controller.free();
+            this.dataview.destroy();
+            this.rowProvider.destroy();
+            this.controller.destroy();
             // Free any children from previous template
             // They may get left behind because of how detached nodes are processed
             // We don't use iterateOver because it checks sub-children
@@ -1414,7 +1413,7 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
             if (this.template == this.options.settings.columnselection_pref) {
                 this.options.settings.columnselection_pref = template_name;
             }
-            this.dataview = new et2_dataview(this.innerDiv, this.egw());
+            this.dataview = new et2_dataview_1.et2_dataview(this.innerDiv, this.egw());
         }
         // Create the template
         if (template_name) {
@@ -1549,7 +1548,7 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
      */
     et2_nextmatch.prototype.set_disabled = function (_value) {
         var previous = this.disabled;
-        _super_1.prototype.set_disabled.call(this, _value);
+        _super.prototype.set_disabled.call(this, _value);
         if (previous && !_value) {
             this.resize();
         }
@@ -1663,7 +1662,7 @@ var et2_nextmatch = /** @class */ (function (_super_1) {
                 // Fade out nicely
                 status.delay(linked ? 1 : 2000)
                     .fadeOut(500, function () {
-                    link.free();
+                    link.destroy();
                     status.remove();
                 });
             });
@@ -2041,8 +2040,8 @@ et2_core_widget_1.et2_register_widget(et2_nextmatch, ["nextmatch"]);
  * actually load templates from the server.
  * @augments et2_DOMWidget
  */
-var et2_nextmatch_header_bar = /** @class */ (function (_super_1) {
-    __extends(et2_nextmatch_header_bar, _super_1);
+var et2_nextmatch_header_bar = /** @class */ (function (_super) {
+    __extends(et2_nextmatch_header_bar, _super);
     /**
      * Constructor
      *
@@ -2051,7 +2050,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super_1) {
      * @memberOf et2_nextmatch_header_bar
      */
     function et2_nextmatch_header_bar(_parent, _attrs, _child) {
-        var _this = _super_1.call(this, _parent, [_parent, _parent.options.settings], et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_header_bar._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, [_parent, _parent.options.settings], et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_header_bar._attributes, _child || {})) || this;
         _this.nextmatch = _parent;
         _this.div = jQuery(document.createElement("div"))
             .addClass("nextmatch_header");
@@ -2062,7 +2061,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super_1) {
     }
     et2_nextmatch_header_bar.prototype.destroy = function () {
         this.nextmatch = null;
-        _super_1.prototype.destroy.call(this);
+        _super.prototype.destroy.call(this);
         this.div = null;
     };
     et2_nextmatch_header_bar.prototype.setNextmatch = function (nextmatch) {
@@ -2587,15 +2586,15 @@ et2_core_widget_1.et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_head
  *
  * @augments et2_baseWidget
  */
-var et2_nextmatch_header = /** @class */ (function (_super_1) {
-    __extends(et2_nextmatch_header, _super_1);
+var et2_nextmatch_header = /** @class */ (function (_super) {
+    __extends(et2_nextmatch_header, _super);
     /**
      * Constructor
      *
      * @memberOf et2_nextmatch_header
      */
     function et2_nextmatch_header(_parent, _attrs, _child) {
-        var _this = _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_header._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_header._attributes, _child || {})) || this;
         _this.labelNode = jQuery(document.createElement("span"));
         _this.nextmatch = null;
         _this.setDOMNode(_this.labelNode[0]);
@@ -2627,24 +2626,24 @@ et2_core_widget_1.et2_register_widget(et2_nextmatch_header, ['nextmatch-header']
  *
  * TODO This should extend customfield widget when it's ready, put the whole column in constructor() back too
  */
-var et2_nextmatch_customfields = /** @class */ (function (_super_1) {
-    __extends(et2_nextmatch_customfields, _super_1);
+var et2_nextmatch_customfields = /** @class */ (function (_super) {
+    __extends(et2_nextmatch_customfields, _super);
     /**
      * Constructor
      *
      * @memberOf et2_nextmatch_customfields
      */
     function et2_nextmatch_customfields(_parent, _attrs, _child) {
-        return _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_customfields._attributes, _child || {})) || this;
+        return _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_customfields._attributes, _child || {})) || this;
         // Specifically take the whole column
         //		this.table.css("width", "100%");
     }
     et2_nextmatch_customfields.prototype.destroy = function () {
         this.nextmatch = null;
-        _super_1.prototype.destroy.call(this);
+        _super.prototype.destroy.call(this);
     };
     et2_nextmatch_customfields.prototype.transformAttributes = function (_attrs) {
-        _super_1.prototype.transformAttributes.call(this, _attrs);
+        _super.prototype.transformAttributes.call(this, _attrs);
         // Add in settings that are objects
         if (!_attrs.customfields) {
             // Check for custom stuff (unlikely)
@@ -2744,7 +2743,7 @@ var et2_nextmatch_customfields = /** @class */ (function (_super_1) {
      * @param {array} _fields
      */
     et2_nextmatch_customfields.prototype.set_visible = function (_fields) {
-        _super_1.prototype.set_visible.call(this, _fields);
+        _super.prototype.set_visible.call(this, _fields);
         // Find data row, and do it too
         var self = this;
         if (this.nextmatch) {
@@ -2807,21 +2806,21 @@ et2_core_widget_1.et2_register_widget(et2_nextmatch_customfields, ['nextmatch-cu
  * @augments et2_nextmatch_header
  */
 // @ts-ignore
-var et2_nextmatch_sortheader = /** @class */ (function (_super_1) {
-    __extends(et2_nextmatch_sortheader, _super_1);
+var et2_nextmatch_sortheader = /** @class */ (function (_super) {
+    __extends(et2_nextmatch_sortheader, _super);
     /**
      * Constructor
      *
      * @memberOf et2_nextmatch_sortheader
      */
     function et2_nextmatch_sortheader(_parent, _attrs, _child) {
-        var _this = _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_sortheader._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_sortheader._attributes, _child || {})) || this;
         _this.sortmode = "none";
         _this.labelNode.addClass("nextmatch_sortheader none");
         return _this;
     }
     et2_nextmatch_sortheader.prototype.click = function (_event) {
-        if (this.nextmatch && _super_1.prototype.click.call(this, _event)) {
+        if (this.nextmatch && _super.prototype.click.call(this, _event)) {
             // Send default sort mode if not sorted, otherwise send undefined to calculate
             this.nextmatch.sortBy(this.id, this.sortmode == "none" ? !(this.options.sortmode.toUpperCase() == "DESC") : undefined);
             return true;
@@ -2857,10 +2856,10 @@ et2_core_widget_1.et2_register_widget(et2_nextmatch_sortheader, ['nextmatch-sort
 /**
  * @augments et2_selectbox
  */
-var et2_nextmatch_filterheader = /** @class */ (function (_super_1) {
-    __extends(et2_nextmatch_filterheader, _super_1);
+var et2_nextmatch_filterheader = /** @class */ (function (_super) {
+    __extends(et2_nextmatch_filterheader, _super);
     function et2_nextmatch_filterheader() {
-        return _super_1 !== null && _super_1.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
      * Override to add change handler
@@ -2872,7 +2871,7 @@ var et2_nextmatch_filterheader = /** @class */ (function (_super_1) {
         if (!this.options.empty_label && (!this.options.select_options || !this.options.select_options[""])) {
             this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
         }
-        _super_1.prototype.createInputWidget.call(this);
+        _super.prototype.createInputWidget.call(this);
         jQuery(this.getInputNode()).change(this, function (event) {
             if (typeof event.data.nextmatch == 'undefined') {
                 // Not fully set up yet
@@ -2911,10 +2910,10 @@ et2_core_widget_1.et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-fi
 /**
  * @augments et2_selectAccount
  */
-var et2_nextmatch_accountfilterheader = /** @class */ (function (_super_1) {
-    __extends(et2_nextmatch_accountfilterheader, _super_1);
+var et2_nextmatch_accountfilterheader = /** @class */ (function (_super) {
+    __extends(et2_nextmatch_accountfilterheader, _super);
     function et2_nextmatch_accountfilterheader() {
-        return _super_1 !== null && _super_1.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
      * Override to add change handler
@@ -2926,7 +2925,7 @@ var et2_nextmatch_accountfilterheader = /** @class */ (function (_super_1) {
         if (!this.options.empty_label && !this.options.select_options[""]) {
             this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
         }
-        this._super.apply(this, arguments);
+        _super.prototype.createInputWidget.call(this, this, arguments);
         this.input.change(this, function (event) {
             if (typeof event.data.nextmatch == 'undefined') {
                 // Not fully set up yet
@@ -2968,10 +2967,10 @@ et2_core_widget_1.et2_register_widget(et2_nextmatch_accountfilterheader, ['nextm
  *
  * @augments et2_taglist
  */
-var et2_nextmatch_taglistheader = /** @class */ (function (_super_1) {
-    __extends(et2_nextmatch_taglistheader, _super_1);
+var et2_nextmatch_taglistheader = /** @class */ (function (_super) {
+    __extends(et2_nextmatch_taglistheader, _super);
     function et2_nextmatch_taglistheader() {
-        return _super_1 !== null && _super_1.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
      * Override to add change handler
@@ -2983,7 +2982,7 @@ var et2_nextmatch_taglistheader = /** @class */ (function (_super_1) {
         if (!this.options.empty_label && (!this.options.select_options || !this.options.select_options[""])) {
             this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
         }
-        _super_1.prototype.createInputWidget.call(this);
+        _super.prototype.createInputWidget.call(this);
     };
     /**
      * Disable toggle if there are 2 or less options
@@ -2993,7 +2992,7 @@ var et2_nextmatch_taglistheader = /** @class */ (function (_super_1) {
         if (options && options.length <= 2 && this.options.multiple == 'toggle') {
             this.set_multiple(false);
         }
-        _super_1.prototype.set_select_options.call(this, options);
+        _super.prototype.set_select_options.call(this, options);
     };
     /**
      * Set nextmatch is the function which has to be implemented for the
@@ -3014,7 +3013,7 @@ var et2_nextmatch_taglistheader = /** @class */ (function (_super_1) {
     et2_nextmatch_taglistheader.prototype.resize = function () {
         this.div.css("height", '');
         this.div.css("max-width", jQuery(this.parentNode).innerWidth() + "px");
-        _super_1.prototype.resize.call(this);
+        _super.prototype.resize.call(this);
     };
     et2_nextmatch_taglistheader._attributes = {
         autocomplete_url: { default: '' },
@@ -3042,10 +3041,10 @@ et2_core_widget_1.et2_register_widget(et2_nextmatch_taglistheader, ['nextmatch-t
 /**
  * @augments et2_link_entry
  */
-var et2_nextmatch_entryheader = /** @class */ (function (_super_1) {
-    __extends(et2_nextmatch_entryheader, _super_1);
+var et2_nextmatch_entryheader = /** @class */ (function (_super) {
+    __extends(et2_nextmatch_entryheader, _super);
     function et2_nextmatch_entryheader() {
-        return _super_1 !== null && _super_1.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
      * Override to add change handler
@@ -3065,7 +3064,7 @@ var et2_nextmatch_entryheader = /** @class */ (function (_super_1) {
      * id, the original parent value is returned.
      */
     et2_nextmatch_entryheader.prototype.getValue = function () {
-        var value = _super_1.prototype.getValue.call(this);
+        var value = _super.prototype.getValue.call(this);
         if (typeof value == "object" && value != null) {
             if (!value.app || !value.id)
                 return null;
@@ -3108,8 +3107,8 @@ et2_core_widget_1.et2_register_widget(et2_nextmatch_entryheader, ['nextmatch-ent
 /**
  * @augments et2_nextmatch_filterheader
  */
-var et2_nextmatch_customfilter = /** @class */ (function (_super_1) {
-    __extends(et2_nextmatch_customfilter, _super_1);
+var et2_nextmatch_customfilter = /** @class */ (function (_super) {
+    __extends(et2_nextmatch_customfilter, _super);
     /**
      * Constructor
      *
@@ -3118,7 +3117,7 @@ var et2_nextmatch_customfilter = /** @class */ (function (_super_1) {
      * @memberOf et2_nextmatch_customfilter
      */
     function et2_nextmatch_customfilter(_parent, _attrs, _child) {
-        var _this = _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_customfilter._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_customfilter._attributes, _child || {})) || this;
         switch (_attrs.widget_type) {
             case "link-entry":
                 _attrs.type = 'nextmatch-entryheader';
@@ -3133,7 +3132,7 @@ var et2_nextmatch_customfilter = /** @class */ (function (_super_1) {
         }
         jQuery.extend(_attrs.widget_options, { id: _this.id });
         _attrs.id = '';
-        _this = _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_customfilter._attributes, _child || {})) || this;
+        _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_customfilter._attributes, _child || {})) || this;
         _this.real_node = et2_createWidget(_attrs.type, _attrs.widget_options, _this.getParent());
         var select_options = [];
         var correct_type = _attrs.type;

@@ -8,7 +8,7 @@
  * @author Andreas Stöckel
  * @copyright Stylite 2011
  * @version $Id$
- */
+ *
 
 /*egw:uses
 
@@ -32,8 +32,8 @@
 	et2_extension_customfields;
 
 	// Include all nextmatch subclasses
-	et2_extension_nextmatch_controller;
 	et2_extension_nextmatch_rowProvider;
+	et2_extension_nextmatch_controller;
 	et2_extension_nextmatch_dynheight;
 
 	// Include the grid classes
@@ -50,6 +50,11 @@ import {et2_baseWidget} from "./et2_core_baseWidget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_selectbox} from "./et2_widget_selectbox";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+
+import {et2_nextmatch_rowProvider} from "./et2_extension_nextmatch_rowProvider";
+import {et2_nextmatch_controller} from "./et2_extension_nextmatch_controller";
+import {et2_dataview} from "./et2_dataview";
+import {et2_dataview_column} from "./et2_dataview_model_columns";
 
 /**
  * Interface all special nextmatch header elements have to implement.
@@ -305,16 +310,16 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		jQuery(this.getInstanceManager().DOMContainer.parentNode).off('hide.et2_nextmatch');
 
 		// Free the grid components
-		this.dataview.free();
+		this.dataview.destroy();
 		if(this.rowProvider)
 		{
-			this.rowProvider.free();
+			this.rowProvider.destroy();
 		}
 		if(this.controller)
 		{
-			this.controller.free();
+			this.controller.destroy();
 		}
-		this.dynheight.free();
+		this.dynheight.destroy();
 
 		super.destroy();
 	}
@@ -1214,12 +1219,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			},_colData[x]);
 
 			var visibility = (!_colData[x] || _colData[x].visible) ?
-				et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE :
-				et2_dataview_grid.ET2_COL_VISIBILITY_INVISIBLE;
+				et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE :
+				et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE;
 			if(_colData[x].disabled && _colData[x].disabled !=='' &&
 				this.getArrayMgr("content").parseBoolExpression(_colData[x].disabled))
 			{
-				visibility = et2_dataview_grid.ET2_COL_VISIBILITY_DISABLED;
+				visibility = et2_dataview_column.ET2_COL_VISIBILITY_DISABLED;
 			}
 			columnData[x] = {
 				"id": "col_" + x,
@@ -1277,11 +1282,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 		// Create the nextmatch row provider
-		/* TODO
 		this.rowProvider = new et2_nextmatch_rowProvider(
 			this.dataview.rowProvider, this._getSubgrid, this);
-
-		 */
 
 		// Register handler to update preferences when column properties are changed
 		var self = this;
@@ -1341,10 +1343,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}
 		}
 
-		return;
-		// TODO
 		this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);
-
 
 		// Create the grid controller
 		this.controller = new et2_nextmatch_controller(
@@ -1445,7 +1444,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		// Register inside the destruction callback of the grid
 		grid.setDestroyCallback(function () {
-			controller.free();
+			controller.destroy();
 		});
 
 		return grid;
@@ -1906,9 +1905,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}
 
 			// Free the grid components - they'll be re-created as the template is processed
-			this.dataview.free();
-			this.rowProvider.free();
-			this.controller.free();
+			this.dataview.destroy();
+			this.rowProvider.destroy();
+			this.controller.destroy();
 
 			// Free any children from previous template
 			// They may get left behind because of how detached nodes are processed
@@ -2251,7 +2250,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				// Fade out nicely
 				status.delay(linked ? 1 : 2000)
 					.fadeOut(500, function() {
-						link.free();
+						link.destroy();
 						status.remove();
 					});
 
@@ -3783,7 +3782,7 @@ class et2_nextmatch_accountfilterheader extends et2_selectAccount implements et2
 		{
 			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
 		}
-		this._super.apply(this, arguments);
+		super.createInputWidget(this, arguments);
 
 		this.input.change(this, function(event) {
 			if(typeof event.data.nextmatch == 'undefined')

@@ -179,7 +179,7 @@ class et2_number_ro extends et2_textbox_ro
 		{
 			_value = parseFloat(_value).toFixed(this.options.precision);
 		}
-		this._super.call(this, _value);
+		super.set_value(_value);
 	}
 }
 et2_register_widget(et2_number_ro, ["int_ro", "integer_ro", "float_ro"]);

@@ -432,7 +432,7 @@ export class et2_readonlysArrayMgr extends et2_arrayMgr {
  *    existing array managers.
  * @param _row is the row for which the array managers will be opened.
  */
-function et2_arrayMgrs_expand(_owner: et2_widget, _mgrs: object, _data: object, _row: number) {
+export function et2_arrayMgrs_expand(_owner: et2_widget, _mgrs: object, _data: object, _row: number) {
 	// Create a copy of the given _mgrs associative array
 	let result = {};
 

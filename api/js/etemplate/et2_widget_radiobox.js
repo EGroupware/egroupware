@@ -297,7 +297,7 @@ var et2_radioGroup = /** @class */ (function (_super) {
     et2_radioGroup.prototype.set_options = function (_options) {
         // Call the destructor of all children
         for (var i = this._children.length - 1; i >= 0; i--) {
-            this._children[i].free();
+            this._children[i].destroy();
         }
         this._children = [];
         // create radio buttons for each option

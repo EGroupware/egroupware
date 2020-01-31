@@ -8,7 +8,7 @@
  * @author Andreas Stöckel
  * @copyright Stylite 2011
  * @version $Id$
- */
+ *
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
@@ -21,10 +21,11 @@
 
 import {et2_dataview_IViewRange} from "./et2_dataview_interfaces";
 import {et2_dataview_container} from "./et2_dataview_view_container";
+import {et2_dataview_spacer} from "./et2_dataview_view_spacer";
+import {et2_dataview_rowProvider} from "./et2_dataview_view_rowProvider";
 
 export class et2_dataview_grid extends et2_dataview_container implements et2_dataview_IViewRange
 {
-
 	/**
 	 * Determines how many pixels the view range of the gridview is extended inside
 	 * the scroll callback.
@@ -794,7 +795,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 			// Check which type the container object has
 			const isSpacer = container instanceof et2_dataview_spacer;
 			const hasIViewRange = !isSpacer
-				&& container.implements(et2_dataview_IViewRange);
+				&& implements_et2_dataview_IViewRange(container);
 
 			// If the container has one of those special types, calculate the
 			// view range and use that to update the view range of the element
@@ -1020,7 +1021,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 			// Append the new container to the current container and then
 			// destroy the old container
 			_container.insertIntoTree(_mapElem.getLastNode());
-			_mapElem.free();
+			_mapElem.destroy();
 
 			this._map.splice(_mapIndex, 1, _container);
 		}
@@ -1053,7 +1054,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 		// We've found no spacer so far, remove the last element from the map in
 		// order to obtain the "totalCount" (especially the last element is no
 		// spacer, so the following code cannot remove a spacer)
-		this._map.pop().free();
+		this._map.pop().destroy();
 	}
 
 	/**
@@ -1139,7 +1140,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 			spacerAbove.setCount(totalCount, newAvg);
 
 			// Delete the lower spacer and remove it from the mapping
-			spacerBelow.free();
+			spacerBelow.destroy();
 			this._map.splice(_mapIndex + 1, 1);
 		}
 		else
@@ -1181,7 +1182,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 			spacerAbove.setCount(totalCount, newAvg);
 
 			// Delete the old spacer
-			spacerBelow.free();
+			spacerBelow.destroy();
 			this._map.splice(_mapIndex + 1, 1);
 		}
 	}
@@ -1208,7 +1209,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 		}
 		else
 		{
-			this._map[_mapIndex].free();
+			this._map[_mapIndex].destroy();
 			this._map.splice(_mapIndex, 1);
 		}
 	}
@@ -1252,7 +1253,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 			}
 
 			// Remove the complete (current) container, decrement the _mapIndex
-			this._map[_mapIndex].free();
+			this._map[_mapIndex].destroy();
 			this._map.splice(_mapIndex, 1);
 			_mapIndex--;
 
@@ -1374,7 +1375,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 			}
 
 			// Destroy the container if there are no rows left
-			cont.free();
+			cont.destroy();
 			this._map.pop();
 		}
 

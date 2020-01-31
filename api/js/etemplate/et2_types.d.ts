@@ -64,7 +64,7 @@ declare var et2_nextmatch_header : any;
 declare var et2_nextmatch_customfields : any;
 declare var et2_nextmatch_controller : any;
 declare var et2_dynheight : any;
-declare var et2_nextmatch_rowProvider : any;
+declare class et2_nextmatch_rowProvider {}
 declare var et2_nextmatch_rowWidget : any;
 declare var et2_nextmatch_rowTemplateWidget : any;
 declare var et2_ajaxSelect : any;

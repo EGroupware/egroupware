@@ -367,7 +367,7 @@ class et2_radioGroup extends et2_valueWidget implements et2_IDetachedDOM
 		// Call the destructor of all children
 		for (let i = this._children.length - 1; i >= 0; i--)
 		{
-			this._children[i].free();
+			this._children[i].destroy();
 		}
 		this._children = [];
 		// create radio buttons for each option

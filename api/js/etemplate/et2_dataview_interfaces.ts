@@ -16,16 +16,21 @@
 
 export interface et2_dataview_IInvalidatable
 {
-
 	invalidate()
-
 }
-
+var et2_dataviewIInvalidatable = "et2_dataview_IInvalidatable";
+function implements_et2_dataview_IInvalidatable(obj : et2_widget)
+{
+	return implements_methods(obj, ["invalidate"]);
+}
 export interface et2_dataview_IViewRange
 {
-
 	setViewRange(_range)
-
+}
+var et2_dataview_IViewRange = "et2_dataview_IViewRange";
+function implements_et2_dataview_IViewRange(obj : et2_widget)
+{
+	return implements_methods(obj, ["setViewRange"]);
 }
 
 /**
@@ -95,6 +100,11 @@ export interface et2_IDataProvider
 	 */
 	dataUnregisterUID (_uid : string, _callback : Function, _context : object)
 
+}
+var et2_IDataProvider = "et2_IDataProvider";
+function implements_et2_IDataProvider(obj : et2_widget)
+{
+	return implements_methods(obj, ["dataFetch", "dataRegisterUID", "dataUnregisterUID"]);
 }
 
 

@@ -9,19 +9,22 @@
  * @author Andreas Stöckel
  * @copyright Stylite 2011-2012
  * @version $Id$
- */
-Object.defineProperty(exports, "__esModule", { value: true });
+ *
+
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_common;
 
     et2_dataview_model_columns;
-    et2_dataview_view_rowProvider;
     et2_dataview_view_grid;
+    et2_dataview_view_rowProvider;
     et2_dataview_view_resizeable;
 */
+Object.defineProperty(exports, "__esModule", { value: true });
 var et2_dataview_model_columns_1 = require("./et2_dataview_model_columns");
 var et2_dataview_view_resizeable_1 = require("./et2_dataview_view_resizeable");
+var et2_dataview_view_grid_1 = require("./et2_dataview_view_grid");
+var et2_dataview_view_rowProvider_1 = require("./et2_dataview_view_rowProvider");
 /**
  * The et2_dataview class is the main class for displaying a dataview. The
  * dataview class manages the creation of the outer html nodes (like the table,
@@ -64,11 +67,11 @@ var et2_dataview = /** @class */ (function () {
         this._clearHeader();
         // Free the grid
         if (this.grid) {
-            this.grid.free();
+            this.grid.destroy();
         }
         // Free the row provider
         if (this.rowProvider) {
-            this.rowProvider.free();
+            this.rowProvider.destroy();
         }
         // Detatch the outer element
         this.table.remove();
@@ -323,13 +326,13 @@ var et2_dataview = /** @class */ (function () {
                     if (this.relativeWidth) {
                         // Set to selected width
                         this.set_width(_w + "px");
-                        self.columnMgr.updated = true;
+                        self.columnMgr.updated();
                         // Just triggers recalculation
                         self.columnMgr.getColumnWidth(0);
                         // Set relative widths to match
                         var relative = self.columnMgr.totalWidth - self.columnMgr.totalFixed + _w;
                         this.set_width(_w / relative);
-                        for (var i = 0; i < self.columnMgr.columns.length; i++) {
+                        for (var i = 0; i < self.columnMgr.columnCount(); i++) {
                             var col = self.columnMgr.getColumnById(i);
                             if (col == this || col.fixedWidth)
                                 continue;
@@ -340,7 +343,7 @@ var et2_dataview = /** @class */ (function () {
                     }
                     else {
                         this.set_width(this.relativeWidth ? (_w / self.columnMgr.totalWidth) : _w + "px");
-                        self.columnMgr.updated = true;
+                        self.columnMgr.updated();
                         self.updateColumns();
                     }
                 }, enc_column);
@@ -383,13 +386,13 @@ var et2_dataview = /** @class */ (function () {
         }
         // Create the row provider
         if (this.rowProvider) {
-            this.rowProvider.free();
+            this.rowProvider.destroy();
         }
-        this.rowProvider = new et2_dataview_rowProvider(this.uniqueId, colIds);
+        this.rowProvider = new et2_dataview_view_rowProvider_1.et2_dataview_rowProvider(this.uniqueId, colIds);
         // Create the grid class and pass "19" as the starting average row height
-        this.grid = new et2_dataview_grid(null, null, this.egw, this.rowProvider, 19);
+        this.grid = new et2_dataview_view_grid_1.et2_dataview_grid(null, null, this.egw, this.rowProvider, 19);
         // Insert the grid into the DOM-Tree
-        var tr = jQuery(this.grid._nodes[0]);
+        var tr = jQuery(this.grid.getFirstNode());
         this.containerTr.replaceWith(tr);
         this.containerTr = tr;
     };

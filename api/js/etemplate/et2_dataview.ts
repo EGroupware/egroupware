@@ -8,20 +8,22 @@
  * @author Andreas Stöckel
  * @copyright Stylite 2011-2012
  * @version $Id$
- */
+ *
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
 	et2_core_common;
 
 	et2_dataview_model_columns;
-	et2_dataview_view_rowProvider;
 	et2_dataview_view_grid;
+	et2_dataview_view_rowProvider;
 	et2_dataview_view_resizeable;
 */
 
 import {et2_dataview_columns} from './et2_dataview_model_columns';
 import {et2_dataview_view_resizable} from "./et2_dataview_view_resizeable";
+import {et2_dataview_grid} from "./et2_dataview_view_grid";
+import {et2_dataview_rowProvider} from "./et2_dataview_view_rowProvider"
 
 /**
  * The et2_dataview class is the main class for displaying a dataview. The
@@ -122,13 +124,13 @@ export class et2_dataview
 		// Free the grid
 		if (this.grid)
 		{
-			this.grid.free();
+			this.grid.destroy();
 		}
 
 		// Free the row provider
 		if (this.rowProvider)
 		{
-			this.rowProvider.free();
+			this.rowProvider.destroy();
 		}
 
 		// Detatch the outer element
@@ -468,14 +470,14 @@ export class et2_dataview
 					{
 						// Set to selected width
 						this.set_width(_w + "px");
-						self.columnMgr.updated = true;
+						self.columnMgr.updated();
 						// Just triggers recalculation
 						self.columnMgr.getColumnWidth(0);
 
 						// Set relative widths to match
 						var relative = self.columnMgr.totalWidth - self.columnMgr.totalFixed + _w;
 						this.set_width(_w / relative);
-						for(var i = 0; i < self.columnMgr.columns.length; i++)
+						for(var i = 0; i < self.columnMgr.columnCount(); i++)
 						{
 							var col = self.columnMgr.getColumnById(i);
 							if(col == this || col.fixedWidth) continue;
@@ -487,7 +489,7 @@ export class et2_dataview
 					else
 					{
 						this.set_width(this.relativeWidth ? (_w / self.columnMgr.totalWidth) : _w + "px");
-						self.columnMgr.updated = true;
+						self.columnMgr.updated();
 						self.updateColumns();
 					}
 
@@ -541,7 +543,7 @@ export class et2_dataview
 		// Create the row provider
 		if (this.rowProvider)
 		{
-			this.rowProvider.free();
+			this.rowProvider.destroy();
 		}
 
 		this.rowProvider = new et2_dataview_rowProvider(this.uniqueId, colIds);
@@ -550,7 +552,7 @@ export class et2_dataview
 		this.grid = new et2_dataview_grid(null, null, this.egw, this.rowProvider, 19);
 
 		// Insert the grid into the DOM-Tree
-		var tr = jQuery(this.grid._nodes[0]);
+		var tr = jQuery(this.grid.getFirstNode());
 		this.containerTr.replaceWith(tr);
 		this.containerTr = tr;
 	}

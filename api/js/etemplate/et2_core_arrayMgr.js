@@ -416,4 +416,5 @@ function et2_arrayMgrs_expand(_owner, _mgrs, _data, _row) {
     // Return the resulting managers object
     return result;
 }
+exports.et2_arrayMgrs_expand = et2_arrayMgrs_expand;
 //# sourceMappingURL=et2_core_arrayMgr.js.map

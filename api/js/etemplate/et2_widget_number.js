@@ -33,21 +33,21 @@ var et2_core_inheritance_1 = require("./et2_core_inheritance");
  *
  * @augments et2_textbox
  */
-var et2_number = /** @class */ (function (_super_1) {
-    __extends(et2_number, _super_1);
+var et2_number = /** @class */ (function (_super) {
+    __extends(et2_number, _super);
     /**
      * Constructor
      *
      * @memberOf et2_number
      */
     function et2_number(_parent, _attrs, _child) {
-        var _this = _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_number._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_number._attributes, _child || {})) || this;
         _this.min = null;
         _this.max = null;
         return _this;
     }
     et2_number.prototype.transformAttributes = function (_attrs) {
-        _super_1.prototype.transformAttributes.call(this, _attrs);
+        _super.prototype.transformAttributes.call(this, _attrs);
         if (typeof _attrs.validator == 'undefined') {
             _attrs.validator = _attrs.type == 'float' ? '/^-?[0-9]*[,.]?[0-9]*$/' : '/^-?[0-9]*$/';
         }
@@ -64,7 +64,7 @@ var et2_number = /** @class */ (function (_super_1) {
             _messages.push(this.input[0].validationMessage);
             ok = false;
         }
-        return _super_1.prototype.isValid.call(this, _messages) && ok;
+        return _super.prototype.isValid.call(this, _messages) && ok;
     };
     et2_number.prototype.createInputWidget = function () {
         this.input = jQuery(document.createElement("input"));
@@ -153,16 +153,16 @@ et2_core_widget_1.et2_register_widget(et2_number, ["int", "integer", "float"]);
  * @augments et2_textbox_ro
  * @class
  */
-var et2_number_ro = /** @class */ (function (_super_1) {
-    __extends(et2_number_ro, _super_1);
+var et2_number_ro = /** @class */ (function (_super) {
+    __extends(et2_number_ro, _super);
     function et2_number_ro() {
-        return _super_1 !== null && _super_1.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     et2_number_ro.prototype.set_value = function (_value) {
         if (typeof this.options.precision != 'undefined' && "" + _value != "") {
             _value = parseFloat(_value).toFixed(this.options.precision);
         }
-        this._super.call(this, _value);
+        _super.prototype.set_value.call(this, _value);
     };
     et2_number_ro._attributes = {
         min: { ignore: true },

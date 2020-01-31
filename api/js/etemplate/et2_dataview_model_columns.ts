@@ -16,15 +16,6 @@
 */
 
 
-var ET2_COL_TYPE_DEFAULT = 0;
-var ET2_COL_TYPE_NAME_ICON_FIXED = 1;
-
-var ET2_COL_VISIBILITY_ALWAYS = 0;
-var ET2_COL_VISIBILITY_VISIBLE = 1;
-var ET2_COL_VISIBILITY_INVISIBLE = 2;
-var ET2_COL_VISIBILITY_ALWAYS_NOSELECT = 3;
-var ET2_COL_VISIBILITY_DISABLED = 4;
-
 /**
  * Class which stores the data of a single column.
  *
@@ -32,6 +23,15 @@ var ET2_COL_VISIBILITY_DISABLED = 4;
  */
 export class et2_dataview_column
 {
+
+	public static readonly ET2_COL_TYPE_DEFAULT = 0;
+	public static readonly ET2_COL_TYPE_NAME_ICON_FIXED = 1;
+
+	public static readonly ET2_COL_VISIBILITY_ALWAYS = 0;
+	public static readonly ET2_COL_VISIBILITY_VISIBLE = 1;
+	public static readonly ET2_COL_VISIBILITY_INVISIBLE = 2;
+	public static readonly ET2_COL_VISIBILITY_ALWAYS_NOSELECT = 3;
+	public static readonly ET2_COL_VISIBILITY_DISABLED = 4;
 
 	static readonly _attributes: any = {
 		"id": {
@@ -43,7 +43,7 @@ export class et2_dataview_column
 		"visibility": {
 			"name": "Visibility",
 			"type": "integer",
-			"default": ET2_COL_VISIBILITY_VISIBLE,
+			"default": et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE,
 			"description": "Defines the visibility state of this column."
 		},
 		"caption": {
@@ -55,7 +55,7 @@ export class et2_dataview_column
 		"type": {
 			"name": "Column type",
 			"type": "integer",
-			"default": ET2_COL_TYPE_DEFAULT,
+			"default": et2_dataview_column.ET2_COL_TYPE_DEFAULT,
 			"description": "Type of the column"
 		},
 		"width": {
@@ -89,7 +89,7 @@ export class et2_dataview_column
 	/**
 	 * Defines the visibility state of this column.
 	 */
-	public visibility: number = ET2_COL_VISIBILITY_VISIBLE;
+	public visibility: number = et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE;
 
 	public caption: string = '';
 
@@ -98,7 +98,7 @@ export class et2_dataview_column
 	 *
 	 * One of ET2_COL_TYPE_DEFAULT or ET2_COL_TYPE_NAME_ICON_FIXED
 	 */
-	public type: number = ET2_COL_TYPE_DEFAULT;
+	public type: number = et2_dataview_column.ET2_COL_TYPE_DEFAULT;
 
 	/**
 	 * Width of the column
@@ -120,6 +120,29 @@ export class et2_dataview_column
 	 */
 	 constructor(_attrs)
 	{
+		this.id = _attrs.id;
+
+		if(typeof _attrs.visibility !== "undefined")
+		{
+			this.visibility = _attrs.visibility;
+		}
+		this.caption = _attrs.caption;
+		if(typeof _attrs.type !== "undefined")
+		{
+			this.type = _attrs.type;
+		}
+		if(typeof _attrs.width !== "undefined")
+		{
+			this.set_width( _attrs.width );
+		}
+		if(typeof _attrs.maxWidth !== "undefined")
+		{
+			this.maxWidth = _attrs.maxWidth;
+		}
+		if(typeof _attrs.minWidth !== "undefined")
+		{
+			this.minWidth = _attrs.minWidth;
+		}
 	}
 
 	/**
@@ -167,15 +190,15 @@ export class et2_dataview_column
 	set_visibility(_value)
 	{
 		// If visibility is always, don't turn it off
-		if(this.visibility == ET2_COL_VISIBILITY_ALWAYS || this.visibility == ET2_COL_VISIBILITY_ALWAYS_NOSELECT) return;
+		if(this.visibility == et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS || this.visibility == et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT) return;
 
 		if(_value === true)
 		{
-			this.visibility = ET2_COL_VISIBILITY_VISIBLE;
+			this.visibility = et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE;
 		}
 		else if (_value === false)
 		{
-			this.visibility = ET2_COL_VISIBILITY_INVISIBLE;
+			this.visibility = et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE;
 		}
 		else if (typeof _value == "number")
 		{
@@ -197,16 +220,16 @@ export class et2_dataview_column
 export class et2_dataview_columns
 {
 	private _totalWidth: number;
-	private totalFixed: number | boolean;
+	private _totalFixed: number | boolean;
 	private columnWidths: any[];
 	private columns: et2_dataview_column[];
-	private updated: boolean;
+	private _updated: boolean;
 
 	constructor(_columnData)
 	{
 		// Initialize some variables
 		this._totalWidth = 0;
-		this.totalFixed = 0;
+		this._totalFixed = 0;
 		this.columnWidths = [];
 
 		// Create the columns object
@@ -216,7 +239,7 @@ export class et2_dataview_columns
 			this.columns[i] = new et2_dataview_column(_columnData[i]);
 		}
 
-		this.updated = true;
+		this._updated = true;
 	}
 
 	destroy() {
@@ -227,9 +250,25 @@ export class et2_dataview_columns
 		}
 	}
 
-	get totalWidth(): number {
+	public updated()
+	{
+		this._updated = true;
+	}
+
+	columnCount() : number
+	{
+		return this.columns.length;
+	}
+
+	get totalWidth(): number
+	{
 		return this._totalWidth;
 	}
+
+	get totalFixed(): number {
+		return this._totalFixed ? <number>this._totalFixed : 0;
+	}
+
 	/**
 	 * Set the total width of the header row
 	 *
@@ -240,7 +279,7 @@ export class et2_dataview_columns
 		if (_width != this._totalWidth && _width > 0)
 		{
 			this._totalWidth = _width;
-			this.updated = true;
+			this._updated = true;
 		}
 	}
 
@@ -282,10 +321,10 @@ export class et2_dataview_columns
 		if (this._totalWidth > 0 && _idx >= 0 && _idx < this.columns.length)
 		{
 			// Recalculate the column widths if something has changed.
-			if (this.updated)
+			if (this._updated)
 			{
 				this._calculateWidths();
-				this.updated = false;
+				this._updated = false;
 			}
 
 			// Return the calculated width for the column with the given index.
@@ -308,8 +347,8 @@ export class et2_dataview_columns
 			result.push({
 				"id": this.columns[i].id,
 				"width": this.getColumnWidth(i),
-				"visible": this.columns[i].visibility !== ET2_COL_VISIBILITY_INVISIBLE &&
-					this.columns[i].visibility !== ET2_COL_VISIBILITY_DISABLED
+				"visible": this.columns[i].visibility !== et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE &&
+					this.columns[i].visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED
 
 			});
 		}
@@ -327,14 +366,14 @@ export class et2_dataview_columns
 
 		for (var i = 0; i < this.columns.length; i++)
 		{
-			if (this.columns[i].visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
+			if (this.columns[i].visibility != et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
 			{
 				result[this.columns[i].id] = {
 					"caption": this.columns[i].caption,
-					"enabled": (this.columns[i].visibility != ET2_COL_VISIBILITY_ALWAYS) &&
-						(this.columns[i].visibility != ET2_COL_VISIBILITY_DISABLED) &&
-						(this.columns[i].type != ET2_COL_TYPE_NAME_ICON_FIXED),
-					"visible": this.columns[i].visibility != ET2_COL_VISIBILITY_INVISIBLE
+					"enabled": (this.columns[i].visibility != et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS) &&
+						(this.columns[i].visibility != et2_dataview_column.ET2_COL_VISIBILITY_DISABLED) &&
+						(this.columns[i].type != et2_dataview_column.ET2_COL_TYPE_NAME_ICON_FIXED),
+					"visible": this.columns[i].visibility != et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE
 				};
 			}
 		}
@@ -354,12 +393,12 @@ export class et2_dataview_columns
 			var col = this.getColumnById(k);
 			if (col)
 			{
-				col.set_visibility(_set[k].visible ? ET2_COL_VISIBILITY_VISIBLE :
-					ET2_COL_VISIBILITY_INVISIBLE);
+				col.set_visibility(_set[k].visible ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE :
+					et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE);
 			}
 		}
 
-		this.updated = true;
+		this._updated = true;
 	}
 
 	/* ---- PRIVATE FUNCTIONS ---- */
@@ -385,13 +424,13 @@ export class et2_dataview_columns
 		// relative or fixed width
 		var totalRelative: number = 0;
 		var fixedCount = 0;
-		this.totalFixed = 0;
+		this._totalFixed = 0;
 
 		for (var i = 0; i < this.columns.length; i++)
 		{
 			var col = this.columns[i];
-			if (col.visibility !== ET2_COL_VISIBILITY_INVISIBLE &&
-				col.visibility !== ET2_COL_VISIBILITY_DISABLED
+			if (col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE &&
+				col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED
 			)
 			{
 				// Some bounds sanity checking
@@ -409,7 +448,7 @@ export class et2_dataview_columns
 				}
 				else if (col.fixedWidth)
 				{
-					this.totalFixed += <number>col.fixedWidth;
+					this._totalFixed += <number>col.fixedWidth;
 					fixedCount++;
 				}
 			}
@@ -422,8 +461,8 @@ export class et2_dataview_columns
 		{
 			var w = 0;
 			var col = this.columns[i];
-			if (col.visibility != ET2_COL_VISIBILITY_INVISIBLE &&
-				col.visibility !== ET2_COL_VISIBILITY_DISABLED
+			if (col.visibility != et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE &&
+				col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED
 			)
 			{
 				if (_larger[i])
@@ -439,7 +478,7 @@ export class et2_dataview_columns
 					// Reset relative to an actual percentage (of 1.00) or
 					// resizing eventually sends them to 0
 					col.relativeWidth = <number>col.relativeWidth / totalRelative;
-					w = Math.round((tw-this.totalFixed) * col.relativeWidth);
+					w = Math.round((tw-this._totalFixed) * col.relativeWidth);
 				}
 				if (w > tw || (col.maxWidth && w > col.maxWidth))
 				{
@@ -463,8 +502,8 @@ export class et2_dataview_columns
 			// Pick the first relative column and use it
 			for(columnIndex = 0; columnIndex < this.columns.length; columnIndex++)
 			{
-				if(this.columns[columnIndex].visibility === ET2_COL_VISIBILITY_INVISIBLE ||
-					this.columns[columnIndex].visibility === ET2_COL_VISIBILITY_DISABLED ||
+				if(this.columns[columnIndex].visibility === et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE ||
+					this.columns[columnIndex].visibility === et2_dataview_column.ET2_COL_VISIBILITY_DISABLED ||
 					this.columnWidths[columnIndex] <= 0 ||
 					remaining_width > 0 && this.columnWidths[columnIndex] <= this.columns[columnIndex].minWidth)
 				{
