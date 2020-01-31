@@ -284,7 +284,7 @@ declare interface IegwGlobal
 	 * @param {string} _name name / key in the registry, eg. 'view'
 	 * @return {string|object|boolean} false if $app is not registered, otherwise string with the value for $name
 	 */
-	link_get_registry(_app : string, _name : string) : string|object|boolean;
+	link_get_registry(_app : string, _name? : string) : string|object|boolean;
 	/**
 	 * Get mime-type information from app-registry
 	 *
@@ -330,7 +330,7 @@ declare interface IegwGlobal
 	 * 	if string is used ambersands in vars have to be already urlencoded as '%26', function ensures they get NOT double encoded
 	 * @return {string} generated url
 	 */
-	link(_url : string, _extravars : string|object) : string;
+	link(_url : string, _extravars? : string|object) : string;
 	/**
 	 * Query a title of _app/_id
 	 *
