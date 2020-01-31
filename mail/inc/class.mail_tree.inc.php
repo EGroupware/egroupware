@@ -426,7 +426,7 @@ class mail_tree
 				//User defined folders icons
 				$data[Tree::IMAGE_LEAF] =
 					$data[Tree::IMAGE_FOLDER_OPEN] =
-					$data [Tree::IMAGE_FOLDER_CLOSED] = "MailFolder".$key.".png";
+					$data [Tree::IMAGE_FOLDER_CLOSED] = basename(Api\Image::find('mail', 'dhtmlxtree/'."MailFolder".$key));
 			}
 			elseif(stripos(array2string($data['folderarray']['attributes']),'\noselect')!== false)
 			{
