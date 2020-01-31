@@ -108,7 +108,7 @@ class mail_acl
 	/**
 	 * Edit folder ACLs of account(s)
 	 *
-	 * @param string $content = null
+	 * @param array $content = null
 	 * @param string $msg = ''
 	 *
 	 */
@@ -132,8 +132,7 @@ class mail_acl
 		$account = Mail\Account::read($acc_id, $account_id);
 		$this->imap = $account->imapServer(isset($account_id) ? (int)$account_id : false);
 
-		$mailbox = $_GET['mailbox']? base64_decode($_GET['mailbox']):
-			preg_replace("/^".$acc_id."::/",'',$content['mailbox'][0]);
+		$mailbox = $_GET['mailbox']? base64_decode($_GET['mailbox']): self::_extract_mailbox($content['mailbox'], $acc_id);
 		if (empty($mailbox))
 		{
 			$mailbox = $this->imap->isAdminConnection ? $this->imap->getUserMailboxString($account_id) : 'INBOX';
@@ -148,7 +147,7 @@ class mail_acl
 			//Todo: Implement autocomplete_url function with admin stuffs consideration
 		}
 		// Unset the content if folder is changed, in order to read acl rights for new selected folder
-		if (!is_array($content['button']) && is_array($content['mailbox']) && !is_array($content['grid']['delete'])) unset($content);
+		if (!is_array($content['button']) && self::_extract_mailbox($content['mailbox'], $acc_id) && !is_array($content['grid']['delete'])) unset($content);
 
 		if (!is_array($content))
 		{
@@ -210,13 +209,15 @@ class mail_acl
 			{
 				$button = 'delete';
 			}
+			$data = $content;
+			$data['mailbox'] = self::_extract_mailbox($content['mailbox'], $acc_id);
 			switch ($button)
 			{
 				case 'save':
 				case 'apply':
 					if ($content)
 					{
-						$validation_err = $this->update_acl($content,$msg);
+						$validation_err = $this->update_acl($data,$msg);
 						if ($validation_err)
 						{
 							foreach ($validation_err as &$row)
@@ -240,7 +241,7 @@ class mail_acl
 					exit;
 
 				case 'delete':
-					$aclRvmCnt = $this->remove_acl($content, $msg);
+					$aclRvmCnt = $this->remove_acl($data, $msg);
 					if (is_array($aclRvmCnt))
 					{
 						$content['grid'] = $aclRvmCnt;
@@ -333,15 +334,14 @@ class mail_acl
 		exit;
 	}
 
-	/**
-	 * Update ACL rights of a folder or including subfolders for an account(s)
-	 *
-	 * @param array $content content including the acl rights
-	 * @param Boolean $recursive boolean flag FALSE|TRUE. If it is FALSE, only the folder take in to account, but in case of TRUE
-	 *		the mailbox including all its subfolders will be considered.
-	 * @param string $msg Message
-	 *
-	 */
+    /**
+     * Update ACL rights of a folder or including subfolders for an account(s)
+     *
+     * @param array $content content including the acl rights
+     * @param string $msg Message
+     *
+     * @return Array | void return array of validation messages or nothing
+     */
 	function update_acl ($content, &$msg)
 	{
 		$validator = array();
@@ -401,7 +401,11 @@ class mail_acl
 
 	/**
 	 * Retrieve Folder ACL rights
-	 * @todo rights 'c' and 'd' should be fixed
+     * @param string $mailbox
+     * @param string &$msg
+	 *
+     * @return Array | Boolean returns array of acl or false on failure
+     * @todo rights 'c' and 'd' should be fixed
 	 */
 	function retrieve_acl ($mailbox, &$msg)
 	{
@@ -425,7 +429,7 @@ class mail_acl
 	 * @param Array $content content array of popup window
 	 * @param string $msg message
 	 *
-	 * @return Array An array as new content for grid
+	 * @return Array | Boolean An array as new content for grid or false in case of error
 	 */
 	function remove_acl($content, &$msg)
 	{
@@ -562,14 +566,13 @@ class mail_acl
 	 * Get ACL rights of a folder from an account
 	 *
 	 * @param String $mailbox folder name that needs to be read
-	 * @return Boolean FALSE in case of any exceptions and if TRUE in case of success,
+	 * @return Array|Boolean FALSE in case of any exceptions and returns Array in case of success,
 	 */
 	function getACL ($mailbox)
 	{
 		try
 		{
-			$acl = $this->imap->getACL($mailbox);
-			return $acl;
+			return $this->imap->getACL($mailbox);
 		} catch (Exception $e) {
 			error_log(__METHOD__. "Could not get ACL rights from folder " . $mailbox . "." .$e->getMessage());
 			return false;
@@ -587,4 +590,16 @@ class mail_acl
 	{
 		return is_array($acc_id)?$acc_id[0]:$acc_id;
 	}
+
+    /**
+     * @param string | array $mailbox
+     * @param string $acc_id
+     *
+     * @return string | NULL return sanitate mailbox of acc id and delimiter and return it as string
+     */
+	private static function _extract_mailbox ($mailbox, $acc_id)
+    {
+        $mailbox = is_array($mailbox) ? $mailbox[0] : $mailbox;
+        return preg_replace("/^".$acc_id."::/",'', $mailbox);
+    }
 }
