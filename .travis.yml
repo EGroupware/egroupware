@@ -1,9 +1,8 @@
 language: php
 php:
-  - 7.0
-  - 7.1
   - 7.2
   - 7.3
+  - 7.4
 # none of our dependencies allow 8.0
 #  - master
 
@@ -14,11 +13,11 @@ matrix:
 
 services:
   - memcached
-#  - mysql we use mariadb instead installed via addons below
-  - postgres
+  - mysql #we use mariadb instead installed via addons below
+# - postgres
 
-addons:
-  mariadb: '10.0'
+#addons:
+#  mariadb: '10.0'
 
 sudo: required
 
@@ -38,7 +37,7 @@ before_script:
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
       ;;
-    "7.3"|"master")
+    "7.3"|"7.4"|"master")
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
       ;;
     esac
@@ -53,7 +52,7 @@ before_script:
        composer require --ignore-platform-reqs 'phpunit/phpunit:~7';
       ;;
     esac
-  #- php -m
+  - php -m
   - php -i
   - php install-cli.php --ignore-platform-reqs
   # create data directory
