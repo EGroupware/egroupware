@@ -41,6 +41,15 @@ declare interface Iapplication
 }
 
 /**
+ * Data stored by egw_data
+ */
+declare interface IegwData
+{
+	timestamp: number;
+	data: {[key:string]: any};
+}
+
+/**
  * Interface for all window global methods (existing only in top window)
  */
 declare interface IegwGlobal
@@ -111,15 +120,15 @@ declare interface IegwGlobal
 	 * @param _uid is the uid for which should be checked whether it has some
 	 * 	data.
 	 */
-	dataGetUIDdata(_uid : string) : object;
+	dataGetUIDdata(_uid : string) : IegwData;
 	/**
 	 * Returns all uids that have the given prefix
 	 *
 	 * @param {string} _prefix
-	 * @return {array}
+	 * @return {array} of uids
 	 * TODO: Improve this
 	 */
-	dataKnownUIDs(_prefix : string) : any[];
+	dataKnownUIDs(_prefix : string) : string[];
 	/**
 	 * Stores data for the uid and calls all callback functions registered
 	 * for that uid.
@@ -682,6 +691,7 @@ declare class JsonRequest
  */
 declare interface IegwWndLocal extends IegwGlobal
 {
+	window : Window;
 	/**
 	 * implemented in egw_css.js
 	 */
@@ -938,7 +948,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param {boolean} _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
 	 * - This option only makes sense to be enabled when the open_link requested without user interaction
 	 */
-	open(id_data : string|number|object, app? : string, type? : "edit"|"view"|"view_list"|"add", 
+	open(id_data : string|number|object, app? : string, type? : "edit"|"view"|"view_list"|"add"|"list",
 				   extra? : string|object, target? : string, target_app? : string, _check_popup_blocker? : boolean) : string;
 	/**
 	 * Open a link, which can be either a menuaction, a EGroupware relative url or a full url
@@ -1185,12 +1195,13 @@ declare interface IegwAppLocal extends IegwWndLocal
 declare function egw_getFramework() : any;
 declare var chrome : any;
 declare var InstallTrigger : any;
-declare var app : {classes: any};
+declare var app : {classes: any, [propName: string]: any};
 declare var egw_globalObjectManager : any;
 declare var framework : any;
 declare var egw_LAB : any;
-declare function egwIsMobile() : boolean;
+declare function egwIsMobile() : string|null;
 
 declare var mailvelope : any;
 
 declare function egw_refresh(_msg : string, app : string, id? : string|number, _type?, targetapp?, replace?, _with?, msgtype?);
+declare function egw_open();

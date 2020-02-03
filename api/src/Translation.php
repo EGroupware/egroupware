@@ -783,10 +783,11 @@ class Translation
 	 * @param string $lang language code
 	 * @return the full path of the filename for the requested app and language
 	 */
-	static function get_lang_file($app,$lang)
+	static function get_lang_file($app,$lang,$root=EGW_SERVER_ROOT)
 	{
-		if ($app == 'common') $app = 'phpgwapi';
-		return EGW_SERVER_ROOT.'/'.$app.'/'.self::LANG_DIR.'/'.self::LANGFILE_PREFIX.$lang.self::LANGFILE_EXTENSION;
+		if ($app == 'common') $app = 'api';
+
+		return $root.'/'.$app.'/'.self::LANG_DIR.'/'.self::LANGFILE_PREFIX.$lang.self::LANGFILE_EXTENSION;
 	}
 
 	/**

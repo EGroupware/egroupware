@@ -440,7 +440,11 @@
 // get TypeScript modules working with our loader
 function require(_file)
 {
-	
+	switch(_file)
+	{
+		case 'jquery':	// cropper mistakes this for commonJS (typeof exports === 'object')
+			return window.jQuery;
+	}
 	return window.exports;
 }
 var exports = {};
