@@ -21,7 +21,7 @@ declare var egw : Iegw;
 /**
  * Interface for global egw with window global or local methods or as function returning an object allowing also application local methods
  */
-declare interface Iegw extends IegwWndLocal { (_app? : string, _wnd? : Window) : IegwAppLocal, webserverUrl : string }
+declare interface Iegw extends IegwWndLocal { (_app? : string, _wnd? : Window) : IegwAppLocal }
 
 /**
  * Return type for egw.app() call
@@ -54,6 +54,11 @@ declare interface IegwData
  */
 declare interface IegwGlobal
 {
+	/**
+	 * Base URL of EGroupware install "/egroupware" or full URL incl. schema and domain
+	 */
+	webserverUrl : string;
+
 	/**
 	 * implemented in egw_config.js
 	 */
