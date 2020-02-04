@@ -15,11 +15,11 @@ matrix:
 
 services:
   - memcached
-#  - mysql we use mariadb instead installed via addons below
-  - postgres
+  - mysql # using mysql service again, as MariaDB 10.0 addon fails
+# - postgres
 
-addons:
-  mariadb: '10.0'
+#addons:
+#  mariadb: '10.0'
 
 sudo: required
 
