@@ -30,7 +30,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
     et2_core_xml;
     et2_core_DOMWidget;
     et2_core_inputWidget;
-    et2_extension_nextmatch;
 */
 require("./et2_core_common");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");

@@ -43,13 +43,12 @@
 
 import './et2_core_common';
 import './et2_core_interfaces';
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
-import {et2_widget} from "./et2_core_widget";
+import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_selectbox} from "./et2_widget_selectbox";
-import {ClassWithAttributes} from "./et2_core_inheritance";
 
 import {et2_nextmatch_rowProvider} from "./et2_extension_nextmatch_rowProvider";
 import {et2_nextmatch_controller} from "./et2_extension_nextmatch_controller";
@@ -2642,7 +2641,7 @@ et2_register_widget(et2_nextmatch, ["nextmatch"]);
  */
 class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHeader
 {
-	static readonly _attributes: {
+	static readonly _attributes: any = {
 		"filter_label": {
 			"name": "Filter label",
 			"type": "string",
@@ -3339,7 +3338,7 @@ et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_header_bar"]);
  */
 export class et2_nextmatch_header extends et2_baseWidget implements et2_INextmatchHeader
 {
-	static readonly _attributes: {
+	static readonly _attributes: any = {
 		"label": {
 			"name": "Caption",
 			"type": "string",
@@ -3398,7 +3397,7 @@ et2_register_widget(et2_nextmatch_header, ['nextmatch-header']);
  */
 export class et2_nextmatch_customfields extends et2_container implements et2_INextmatchHeader
 {
-	static readonly _attributes: {
+	static readonly _attributes: any = {
 		'customfields': {
 			'name': 'Custom fields',
 			'description': 'Auto filled'
@@ -3633,7 +3632,7 @@ et2_register_widget(et2_nextmatch_customfields, ['nextmatch-customfields']);
 // @ts-ignore
 export class et2_nextmatch_sortheader extends et2_nextmatch_header implements et2_INextmatchSortable
 {
-	static readonly _attributes: {
+	static readonly _attributes: any = {
 		"sortmode": {
 			"name": "Sort order",
 			"type": "string",
@@ -3700,7 +3699,7 @@ export class et2_nextmatch_sortheader extends et2_nextmatch_header implements et
 et2_register_widget(et2_nextmatch_sortheader, ['nextmatch-sortheader']);
 
 /**
- * @augments et2_selectbox
+ * Filter from a provided list of options
  */
 export class et2_nextmatch_filterheader extends et2_selectbox implements et2_INextmatchHeader, et2_IResizeable
 {
@@ -3708,8 +3707,6 @@ export class et2_nextmatch_filterheader extends et2_selectbox implements et2_INe
 
 	/**
 	 * Override to add change handler
-	 *
-	 * @memberOf et2_nextmatch_filterheader
 	 */
 	createInputWidget( )
 	{
@@ -3766,7 +3763,7 @@ export class et2_nextmatch_filterheader extends et2_selectbox implements et2_INe
 et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader']);
 
 /**
- * @augments et2_selectAccount
+ * Filter by account
  */
 class et2_nextmatch_accountfilterheader extends et2_selectAccount implements et2_INextmatchHeader, et2_IResizeable
 {
@@ -3836,7 +3833,7 @@ et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter
  */
 class et2_nextmatch_taglistheader extends et2_taglist implements et2_INextmatchHeader, et2_IResizeable
 {
-	static readonly _attributes = {
+	static readonly _attributes : any = {
 		autocomplete_url: { default: ''},
 		multiple: { default: 'toggle'},
 		onchange: {
@@ -4000,7 +3997,7 @@ et2_register_widget(et2_nextmatch_entryheader, ['nextmatch-entryheader']);
  */
 class et2_nextmatch_customfilter extends et2_nextmatch_filterheader
 {
-	static readonly _attributes: {
+	static readonly _attributes: any = {
 		"widget_type": {
 			"name": "Actual type",
 			"type": "string",

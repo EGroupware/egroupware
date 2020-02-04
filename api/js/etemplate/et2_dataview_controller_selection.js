@@ -297,7 +297,6 @@ var et2_dataview_selectionManager = /** @class */ (function () {
             }
             return element;
         }
-
         _entry.ao.getPrevious = function (_step) {
             return getElementRelatively(-_step);
         };

@@ -57,12 +57,12 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 require("./et2_core_common");
 require("./et2_core_interfaces");
+var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
 var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
 var et2_widget_selectbox_1 = require("./et2_widget_selectbox");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_extension_nextmatch_rowProvider_1 = require("./et2_extension_nextmatch_rowProvider");
 var et2_extension_nextmatch_controller_1 = require("./et2_extension_nextmatch_controller");
 var et2_dataview_1 = require("./et2_dataview");
@@ -2578,6 +2578,34 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             sub_header.iterateOver(bind_change, this, et2_core_inputWidget_1.et2_inputWidget);
         }
     };
+    et2_nextmatch_header_bar._attributes = {
+        "filter_label": {
+            "name": "Filter label",
+            "type": "string",
+            "description": "Label for filter",
+            "default": "",
+            "translate": true
+        },
+        "filter_help": {
+            "name": "Filter help",
+            "type": "string",
+            "description": "Help message for filter",
+            "default": "",
+            "translate": true
+        },
+        "filter": {
+            "name": "Filter value",
+            "type": "any",
+            "description": "Current value for filter",
+            "default": ""
+        },
+        "no_filter": {
+            "name": "No filter",
+            "type": "boolean",
+            "description": "Remove filter",
+            "default": false
+        }
+    };
     return et2_nextmatch_header_bar;
 }(et2_core_DOMWidget_1.et2_DOMWidget));
 et2_core_widget_1.et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_header_bar"]);
@@ -2614,6 +2642,14 @@ var et2_nextmatch_header = /** @class */ (function (_super) {
         this.labelNode.text(_value);
         // add class if label is empty
         this.labelNode.toggleClass('et2_label_empty', !_value);
+    };
+    et2_nextmatch_header._attributes = {
+        "label": {
+            "name": "Caption",
+            "type": "string",
+            "description": "Caption for the nextmatch header",
+            "translate": true
+        }
     };
     return et2_nextmatch_header;
 }(et2_core_baseWidget_1.et2_baseWidget));
@@ -2798,6 +2834,16 @@ var et2_nextmatch_customfields = /** @class */ (function (_super) {
         }
         return name;
     };
+    et2_nextmatch_customfields._attributes = {
+        'customfields': {
+            'name': 'Custom fields',
+            'description': 'Auto filled'
+        },
+        'fields': {
+            'name': "Visible fields",
+            "description": "Auto filled"
+        }
+    };
     return et2_nextmatch_customfields;
 }(et2_container));
 exports.et2_nextmatch_customfields = et2_nextmatch_customfields;
@@ -2849,12 +2895,20 @@ var et2_nextmatch_sortheader = /** @class */ (function (_super) {
             .addClass(_mode);
         this.sortmode = _mode;
     };
+    et2_nextmatch_sortheader._attributes = {
+        "sortmode": {
+            "name": "Sort order",
+            "type": "string",
+            "description": "Default sort order",
+            "translate": false
+        }
+    };
     return et2_nextmatch_sortheader;
 }(et2_nextmatch_header));
 exports.et2_nextmatch_sortheader = et2_nextmatch_sortheader;
 et2_core_widget_1.et2_register_widget(et2_nextmatch_sortheader, ['nextmatch-sortheader']);
 /**
- * @augments et2_selectbox
+ * Filter from a provided list of options
  */
 var et2_nextmatch_filterheader = /** @class */ (function (_super) {
     __extends(et2_nextmatch_filterheader, _super);
@@ -2863,8 +2917,6 @@ var et2_nextmatch_filterheader = /** @class */ (function (_super) {
     }
     /**
      * Override to add change handler
-     *
-     * @memberOf et2_nextmatch_filterheader
      */
     et2_nextmatch_filterheader.prototype.createInputWidget = function () {
         // Make sure there's an option for all
@@ -2908,7 +2960,7 @@ var et2_nextmatch_filterheader = /** @class */ (function (_super) {
 exports.et2_nextmatch_filterheader = et2_nextmatch_filterheader;
 et2_core_widget_1.et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader']);
 /**
- * @augments et2_selectAccount
+ * Filter by account
  */
 var et2_nextmatch_accountfilterheader = /** @class */ (function (_super) {
     __extends(et2_nextmatch_accountfilterheader, _super);
@@ -3155,6 +3207,21 @@ var et2_nextmatch_customfilter = /** @class */ (function (_super) {
     et2_nextmatch_customfilter.prototype.setNextmatch = function (_nextmatch) {
         if (this.real_node && this.real_node.instanceOf(et2_INextmatchHeader)) {
             return this.real_node.setNextmatch(_nextmatch);
+        }
+    };
+    et2_nextmatch_customfilter._attributes = {
+        "widget_type": {
+            "name": "Actual type",
+            "type": "string",
+            "description": "The actual type of widget you should use",
+            "no_lang": 1
+        },
+        "widget_options": {
+            "name": "Actual options",
+            "type": "any",
+            "description": "The options for the actual widget",
+            "no_lang": 1,
+            "default": {}
         }
     };
     return et2_nextmatch_customfilter;

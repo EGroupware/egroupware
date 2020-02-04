@@ -16,7 +16,6 @@
 	et2_core_xml;
 	et2_core_DOMWidget;
 	et2_core_inputWidget;
-	et2_extension_nextmatch;
 */
 
 import './et2_core_common';
