@@ -9,11 +9,8 @@
 
   https://software.opensuse.org/download.html?project=server%3AeGroupWare&package=egroupware-epl
 
-### Installing EGroupware 19.1+ via Docker:
-EGroupware 19.1 can be installed via Docker, in fact the DEB/RPM packages also does that. Instructions on how to run EGroupware in Docker are in [doc/docker](https://github.com/EGroupware/egroupware/tree/master/doc/docker) subdirectory.
-
-### Installing EGroupware 17.1 from github:
-[switch to 17.1 branch](https://github.com/EGroupware/egroupware/tree/17.1) and follow instructions there
+### Installing EGroupware 19.1 via Docker:
+EGroupware 19.1 can be installed via Docker, in fact the DEB/RPM packages also does that. Instructions on how to run EGroupware in Docker are in [doc/docker](https://github.com/EGroupware/egroupware/tree/19.1/doc/docker) subdirectory.
 
 ### Installing EGroupware development version:
 * install composer.phar from https://getcomposer.org/download/
@@ -25,7 +22,7 @@ npm install -g grunt-cli
 * install EGroupware and dependencies
 ```
 cd /path/to/your/docroot
-git clone https://github.com/EGroupware/egroupware.git # or git@github.com:EGroupware/egroupware.git for ssh
+git clone -b 19.1 https://github.com/EGroupware/egroupware.git # or git@github.com:EGroupware/egroupware.git for ssh
 cd egroupware
 ./install-cli.php
 ```
