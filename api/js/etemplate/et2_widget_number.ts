@@ -83,9 +83,9 @@ class et2_number extends et2_textbox
 	{
 		let ok = true;
 		// if we have a html5 validation error, show it, as this.input.val() will be empty!
-		if (this.input && this.input[0] && this.input[0].validationMessage && !this.input[0].validity.stepMismatch)
+		if (this.input && this.input[0] && (<HTMLInputElement><unknown>this.input[0]).validationMessage && !(<HTMLInputElement><unknown>this.input[0]).validity.stepMismatch)
 		{
-			_messages.push(this.input[0].validationMessage);
+			_messages.push((<HTMLInputElement><unknown>this.input[0]).validationMessage);
 			ok = false;
 		}
 		return super.isValid(_messages) && ok;
