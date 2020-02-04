@@ -1262,7 +1262,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 					default:
 						if (self.options.method === 'download') submit_value.path = _data.content.download_baseUrl;
 						files = submit_value.path+'/'+submit_value.name;
-						if (self.options.method !== 'download' && !savemode)
+						if (self.options.mode === 'saveas'  && !savemode)
 						{
 							for(var p in _data.content.dir)
 							{
