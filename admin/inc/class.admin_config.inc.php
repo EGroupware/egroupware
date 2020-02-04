@@ -139,7 +139,10 @@ class admin_config
 			$_POST = array('newsettings' => &$_content['newsettings']);
 
 			// Remove actual files (cleanup) of deselected urls from login_background_file
-			$this->remove_anon_images(array_diff((array)$c->config_data['login_background_file'], $_content['newsettings']['login_background_file']));
+			if (!empty($c->config_data['login_background_file']))
+			{
+				$this->remove_anon_images(array_diff((array)$c->config_data['login_background_file'], (array)$_content['newsettings']['login_background_file']));
+			}
 
 			/* Load hook file with functions to validate each config (one/none/all) */
 			$errors = Api\Hooks::single(array(
