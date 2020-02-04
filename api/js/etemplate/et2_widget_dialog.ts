@@ -529,7 +529,7 @@ class et2_dialog extends et2_widget {
      *
      * @param {string|egw} _egw_or_appname egw object with already loaded translations or application name to load translations for
      */
-    static _create_parent(_egw_or_appname? : string) {
+    static _create_parent(_egw_or_appname? : string | IegwAppLocal) {
         if (typeof _egw_or_appname == 'undefined') {
             // @ts-ignore
             _egw_or_appname = egw_appName;
@@ -796,7 +796,7 @@ class et2_dialog extends et2_widget {
             // Update totals
             totals.widget.set_value(egw.lang(
                 "Total: %1 Successful: %2 Failed: %3 Skipped: %4",
-                _list.length, totals.success, totals.failed, totals.skipped
+                _list.length, <string><unknown>totals.success, <string><unknown>totals.failed, <string><unknown>totals.skipped
             ));
 
             // Fire next step
