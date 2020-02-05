@@ -560,8 +560,8 @@ class et2_dialog extends et2_widget {
      * @param {string} _icon URL of an icon to display.  If not provided, a type-specific icon will be used.
      * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
      */
-    static show_dialog(_callback, _message, _title, _value, _buttons, _type, _icon, _egw_or_appname) {
-        var parent = et2_dialog._create_parent(_egw_or_appname);
+    static show_dialog(_callback? : Function, _message? : string, _title? : string, _value? : object, _buttons?, _type? : number, _icon? : string, _egw_or_appname? : string | IegwAppLocal) {
+        let parent = et2_dialog._create_parent(_egw_or_appname);
 
         // Just pass them along, widget handles defaults & missing
         return et2_createWidget("dialog", {
