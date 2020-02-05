@@ -27,9 +27,8 @@ import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_selectbox} from "./et2_widget_selectbox";
 import {et2_button} from "./et2_widget_button";
 import {et2_vfs_select} from "./et2_widget_vfs";
-	import {et2_nextmatch} from "./et2_extension_nextmatch";
 
-/**
+	/**
  * UI widgets for Egroupware linking system
  */
 export class et2_link_to extends et2_inputWidget
@@ -94,8 +93,8 @@ export class et2_link_to extends et2_inputWidget
 	 *
 	 * @memberOf et2_link_to
 	 */
-	constructor(_parent : et2_nextmatch, _attrs? : WidgetConfig, _child? : object) {
-		super(_parent, [_parent,_parent.options.settings], ClassWithAttributes.extendAttributes(et2_link_to._attributes, _child || {}));
+	constructor(_parent : et2_widget, _attrs? : WidgetConfig, _child? : object) {
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_to._attributes, _child || {}));
 
 		this.div = jQuery(document.createElement("div")).addClass("et2_link_to et2_toolbar");
 
@@ -488,9 +487,9 @@ export class et2_link_apps extends et2_selectbox
 	 * Constructor
 	 *
 	 */
-	constructor(_parent : et2_nextmatch, _attrs? : WidgetConfig, _child? : object)
+	constructor(_parent : et2_widget, _attrs? : WidgetConfig, _child? : object)
 	{
-		super(_parent, [_parent,_parent.options.settings], ClassWithAttributes.extendAttributes(et2_link_apps._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_apps._attributes, _child || {}));
 
 
 		if (this.options.select_options != null)
@@ -611,8 +610,10 @@ export class et2_link_entry extends et2_inputWidget
 	 *
 	 * @memberOf et2_link_entry
 	 */
-	constructor(_parent : et2_nextmatch, _attrs? : WidgetConfig, _child? : object) {
-		super(_parent, [_parent,_parent.options.settings], ClassWithAttributes.extendAttributes(et2_link_entry._attributes, _child || {}));
+	constructor(_parent : et2_widget, _attrs? : WidgetConfig, _child? : object)
+	{
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_entry._attributes, _child || {}));
+
 
 
 		this.search = null;
@@ -1314,9 +1315,10 @@ export class et2_link extends et2_valueWidget implements et2_IDetachedDOM
 	 *
 	 * @memberOf et2_link
 	 */
-	constructor(_parent : et2_nextmatch, _attrs? : WidgetConfig, _child? : object)
+	constructor(_parent : et2_widget, _attrs? : WidgetConfig, _child? : object)
 	{
-		super(_parent, [_parent,_parent.options.settings], ClassWithAttributes.extendAttributes(et2_link._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link._attributes, _child || {}));
+
 
 		this.label_span = jQuery(document.createElement("label"))
 			.addClass("et2_label");
@@ -1521,9 +1523,10 @@ export class et2_link_string extends et2_valueWidget implements et2_IDetachedDOM
 	 *
 	 * @memberOf et2_link_string
 	 */
-	constructor(_parent : et2_nextmatch, _attrs? : WidgetConfig, _child? : object)
+	constructor(_parent : et2_widget, _attrs? : WidgetConfig, _child? : object)
 	{
-		super(_parent, [_parent,_parent.options.settings], ClassWithAttributes.extendAttributes(et2_link_string._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_string._attributes, _child || {}));
+
 
 		this.list = jQuery(document.createElement("ul"))
 			.addClass("et2_link_string");
@@ -1768,11 +1771,11 @@ export class et2_link_list extends et2_link_string
 	/**
 	 * Constructor
 	 *
-	 * @memberOf et2_link_list
 	 */
-	constructor(_parent : et2_nextmatch, _attrs? : WidgetConfig, _child? : object)
+	constructor(_parent : et2_widget, _attrs? : WidgetConfig, _child? : object)
 	{
-		super(_parent, [_parent,_parent.options.settings], ClassWithAttributes.extendAttributes(et2_link_list._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_list._attributes, _child || {}));
+
 
 		this.list = jQuery(document.createElement("table"))
 			.addClass("et2_link_list");
@@ -2300,12 +2303,11 @@ export class et2_link_add extends et2_inputWidget
 	private button: et2_button;
 	/**
 	 * Constructor
-	 *
-	 * @memberOf et2_link_add
 	 */
-	constructor(_parent : et2_nextmatch, _attrs? : WidgetConfig, _child? : object)
+	constructor(_parent : et2_widget, _attrs? : WidgetConfig, _child? : object)
 	{
-		super(_parent, [_parent,_parent.options.settings], ClassWithAttributes.extendAttributes(et2_link_add._attributes, _child || {}));
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_add._attributes, _child || {}));
+
 
 		this.span = jQuery(document.createElement("span"))
 				.text(this.egw().lang("Add new"))

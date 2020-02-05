@@ -39,8 +39,8 @@ var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
 var et2_widget_selectbox_1 = require("./et2_widget_selectbox");
 /**
- * UI widgets for Egroupware linking system
- */
+* UI widgets for Egroupware linking system
+*/
 var et2_link_to = /** @class */ (function (_super) {
     __extends(et2_link_to, _super);
     /**
@@ -49,7 +49,7 @@ var et2_link_to = /** @class */ (function (_super) {
      * @memberOf et2_link_to
      */
     function et2_link_to(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, [_parent, _parent.options.settings], et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_to._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_to._attributes, _child || {})) || this;
         _this.div = jQuery(document.createElement("div")).addClass("et2_link_to et2_toolbar");
         _this.link_button = null;
         _this.status_span = null;
@@ -395,7 +395,7 @@ var et2_link_apps = /** @class */ (function (_super) {
      *
      */
     function et2_link_apps(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, [_parent, _parent.options.settings], et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_apps._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_apps._attributes, _child || {})) || this;
         if (_this.options.select_options != null) {
             // Preset to last application
             if (!_this.options.value) {
@@ -451,7 +451,6 @@ var et2_link_apps = /** @class */ (function (_super) {
     return et2_link_apps;
 }(et2_widget_selectbox_1.et2_selectbox));
 exports.et2_link_apps = et2_link_apps;
-
 et2_core_widget_1.et2_register_widget(et2_link_apps, ["link-apps"]);
 /**
  * Search and select an entry for linking
@@ -464,7 +463,7 @@ var et2_link_entry = /** @class */ (function (_super) {
      * @memberOf et2_link_entry
      */
     function et2_link_entry(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, [_parent, _parent.options.settings], et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_entry._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_entry._attributes, _child || {})) || this;
         _this.cache = {};
         _this.processing = false;
         _this.search = null;
@@ -1052,7 +1051,7 @@ var et2_link = /** @class */ (function (_super) {
      * @memberOf et2_link
      */
     function et2_link(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, [_parent, _parent.options.settings], et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link._attributes, _child || {})) || this;
         _this.legacyOptions = ["only_app"];
         _this.label_span = jQuery(document.createElement("label"))
             .addClass("et2_label");
@@ -1232,7 +1231,7 @@ var et2_link_string = /** @class */ (function (_super) {
      * @memberOf et2_link_string
      */
     function et2_link_string(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, [_parent, _parent.options.settings], et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_string._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_string._attributes, _child || {})) || this;
         _this.list = jQuery(document.createElement("ul"))
             .addClass("et2_link_string");
         if (_this.options['class'])
@@ -1444,10 +1443,9 @@ var et2_link_list = /** @class */ (function (_super) {
     /**
      * Constructor
      *
-     * @memberOf et2_link_list
      */
     function et2_link_list(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, [_parent, _parent.options.settings], et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_list._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_list._attributes, _child || {})) || this;
         _this.list = jQuery(document.createElement("table"))
             .addClass("et2_link_list");
         if (_this.options['class'])
@@ -1886,11 +1884,9 @@ var et2_link_add = /** @class */ (function (_super) {
     __extends(et2_link_add, _super);
     /**
      * Constructor
-     *
-     * @memberOf et2_link_add
      */
     function et2_link_add(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, [_parent, _parent.options.settings], et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_add._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_add._attributes, _child || {})) || this;
         _this.span = jQuery(document.createElement("span"))
             .text(_this.egw().lang("Add new"))
             .addClass('et2_link_add_span');
