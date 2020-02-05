@@ -99,10 +99,8 @@ class Sieve extends Horde\ManageSieve
 			);
 		}
 		// try "PLAIN" first, in case IMAP wrongly reports some digest, it does not (correctly) implement
-		if (self::$supportedAuthMethods[0] !== self::AUTH_PLAIN)
-		{
-			array_unshift(self::$supportedAuthMethods, self::AUTH_PLAIN);
-		}
+		array_unshift($this->supportedAuthMethods, self::AUTH_PLAIN);
+
 		parent::__construct($params);
 
 		$this->displayCharset	= Translation::charset();
