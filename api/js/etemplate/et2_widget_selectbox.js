@@ -117,7 +117,7 @@ var et2_selectbox = /** @class */ (function (_super) {
             typeof _attrs.select_options == 'undefined' || _attrs.select_options === null) {
             // do not return inside nextmatch, as get_rows data might have changed select_options
             // for performance reasons we only do it for first row, which should have id "0[...]"
-            if (this.getParent().getType() != 'rowWidget' || !_attrs.id || _attrs.id[0] != '0')
+            if (this.getParent() && this.getParent().getType() != 'rowWidget' || !_attrs.id || _attrs.id[0] != '0')
                 return;
         }
         var sel_options = et2_selectbox.find_select_options(this, _attrs['select_options'], _attrs);
