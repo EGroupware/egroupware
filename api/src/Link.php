@@ -1154,6 +1154,19 @@ class Link extends Link\Storage
 	}
 
 	/**
+	 * Ajax function to access vfs_path
+	 *
+	 * @param array $_path 
+	 * @return string path 
+	 */
+	public static function ajax_vfs_path( $_path )
+	{
+		$path = self::vfs_path( $_path['app2'], $_path['id2'], $_path['id'], true );
+		$response = Json\Response::get();
+		$response->data( $path );
+	}
+
+	/**
 	 * path to the attached files of $app/$ip or the directory for $app if no $id,$file given
 	 *
 	 * All link-files are based in the vfs-subdir '/apps/'.$app
@@ -1170,23 +1183,38 @@ class Link extends Link\Storage
 
 		if ($app)
 		{
-			if( isset(self::$app_register[$app]) ) {
+			if( isset(self::$app_register[$app]) ) 
+			{
 				$reg = self::$app_register[$app];
 
-				if( isset($reg['file_dir']) ) {
+				if( isset($reg['file_dir']) ) 
+				{
 					$app = $reg['file_dir'];
 				}
 			}
 
-			$path .= '/'.$app;
-
-			if ($id)
+			if ( Hooks::exists( 'vfs_create_structure', $app ) ) 
 			{
-				$path .= '/'.$id;
-
-				if ($file)
+				$hook = Hooks::process( array(
+					'location' => 'vfs_create_structure', 
+					'app' => $app,
+					'path' => $path,
+					'id' => $id,
+					'file' => $file,
+				));
+				$path = $hook[ $app ];
+			}
+			else 
+			{
+				$path .= '/'.$app;
+				if ($id) 
 				{
-					$path .= '/'.$file;
+					$path .= '/'.$id;
+
+					if ($file) 
+					{
+						$path .= '/'.$file;
+					}
 				}
 			}
 		}
