@@ -3,7 +3,9 @@ declare module eT2
 
 }
 declare var etemplate2 : any;
-declare class et2_widget{}
+declare class et2_widget{
+	destroy()
+}
 declare class et2_DOMWidget extends et2_widget{}
 declare class et2_baseWidget extends et2_DOMWidget{}
 declare class et2_valueWidget extends et2_baseWidget{}
@@ -87,7 +89,7 @@ declare var et2_diff : any;
 declare var et2_dropdown_button : any;
 declare var et2_entry : any;
 declare var et2_favorites : any;
-declare var et2_file : any;
+declare class et2_file extends et2_widget {}
 declare var et2_grid : any;
 declare var et2_groupbox : any;
 declare var et2_groupbox_legend : any;

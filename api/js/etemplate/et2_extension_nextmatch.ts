@@ -49,6 +49,7 @@ import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_selectbox} from "./et2_widget_selectbox";
+//import {et2_selectAccount} from "./et2_widget_SelectAccount";
 
 import {et2_nextmatch_rowProvider} from "./et2_extension_nextmatch_rowProvider";
 import {et2_nextmatch_controller} from "./et2_extension_nextmatch_controller";
@@ -2703,7 +2704,8 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 	 * @param nm_div
 	 * @memberOf et2_nextmatch_header_bar
 	 */
-	constructor(_parent : et2_nextmatch, _attrs? : WidgetConfig, _child? : object) {
+	constructor(_parent : et2_nextmatch, _attrs? : WidgetConfig, _child? : object)
+	{
 		super(_parent, [_parent,_parent.options.settings], ClassWithAttributes.extendAttributes(et2_nextmatch_header_bar._attributes, _child || {}));
 		this.nextmatch = _parent;
 		this.div = jQuery(document.createElement("div"))
@@ -3765,65 +3767,64 @@ et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader']);
 /**
  * Filter by account
  */
-class et2_nextmatch_accountfilterheader extends et2_selectAccount implements et2_INextmatchHeader, et2_IResizeable
-{
-	/**
-	 * Override to add change handler
-	 *
-	 * @memberOf et2_nextmatch_accountfilterheader
-	 */
-	createInputWidget( )
-	{
-		// Make sure there's an option for all
-		if(!this.options.empty_label && !this.options.select_options[""])
-		{
-			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
-		}
-		super.createInputWidget(this, arguments);
-
-		this.input.change(this, function(event) {
-			if(typeof event.data.nextmatch == 'undefined')
-			{
-				// Not fully set up yet
-				return;
-			}
-			var col_filter = {};
-			col_filter[event.data.id] = event.data.getValue();
-			event.data.nextmatch.applyFilters({col_filter: col_filter});
-		});
-
-	}
-
-	/**
-	 * Set nextmatch is the function which has to be implemented for the
-	 * et2_INextmatchHeader interface.
-	 *
-	 * @param {et2_nextmatch} _nextmatch
-	 */
-	setNextmatch( _nextmatch)
-	{
-		this.nextmatch = _nextmatch;
-
-		// Set current filter value from nextmatch settings
-		if(this.nextmatch.activeFilters.col_filter && this.nextmatch.activeFilters.col_filter[this.id])
-		{
-			this.set_value(this.nextmatch.activeFilters.col_filter[this.id]);
-		}
-	}
-	// Make sure selectbox is not longer than the column
-	resize( )
-	{
-		var max = jQuery(this.parentNode).innerWidth() - 4;
-		var surroundings = this.getSurroundings()._widgetSurroundings;
-		for(var i = 0; i < surroundings.length; i++)
-		{
-			max -= jQuery(surroundings[i]).outerWidth();
-		}
-		this.input.css("max-width",max + "px");
-	}
-
-}
-et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter']);
+// class et2_nextmatch_accountfilterheader extends et2_selectAccount implements et2_INextmatchHeader, et2_IResizeable
+// {
+// 	/**
+// 	 * Override to add change handler
+// 	 *
+// 	 */
+// 	createInputWidget( )
+// 	{
+// 		// Make sure there's an option for all
+// 		if(!this.options.empty_label && !this.options.select_options[""])
+// 		{
+// 			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
+// 		}
+// 		super.createInputWidget(this, arguments);
+//
+// 		this.input.change(this, function(event) {
+// 			if(typeof event.data.nextmatch == 'undefined')
+// 			{
+// 				// Not fully set up yet
+// 				return;
+// 			}
+// 			var col_filter = {};
+// 			col_filter[event.data.id] = event.data.getValue();
+// 			event.data.nextmatch.applyFilters({col_filter: col_filter});
+// 		});
+//
+// 	}
+//
+// 	/**
+// 	 * Set nextmatch is the function which has to be implemented for the
+// 	 * et2_INextmatchHeader interface.
+// 	 *
+// 	 * @param {et2_nextmatch} _nextmatch
+// 	 */
+// 	setNextmatch( _nextmatch)
+// 	{
+// 		this.nextmatch = _nextmatch;
+//
+// 		// Set current filter value from nextmatch settings
+// 		if(this.nextmatch.activeFilters.col_filter && this.nextmatch.activeFilters.col_filter[this.id])
+// 		{
+// 			this.set_value(this.nextmatch.activeFilters.col_filter[this.id]);
+// 		}
+// 	}
+// 	// Make sure selectbox is not longer than the column
+// 	resize( )
+// 	{
+// 		var max = jQuery(this.parentNode).innerWidth() - 4;
+// 		var surroundings = this.getSurroundings()._widgetSurroundings;
+// 		for(var i = 0; i < surroundings.length; i++)
+// 		{
+// 			max -= jQuery(surroundings[i]).outerWidth();
+// 		}
+// 		this.input.css("max-width",max + "px");
+// 	}
+//
+// }
+// et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter']);
 
 /**
  * Filter allowing multiple values to be selected, base on a taglist instead
@@ -3831,93 +3832,93 @@ et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter
  *
  * @augments et2_taglist
  */
-class et2_nextmatch_taglistheader extends et2_taglist implements et2_INextmatchHeader, et2_IResizeable
-{
-	static readonly _attributes : any = {
-		autocomplete_url: { default: ''},
-		multiple: { default: 'toggle'},
-		onchange: {
-			// @ts-ignore
-			default: function(event) {
-				if(typeof this.nextmatch === 'undefined')
-					{
-						// Not fully set up yet
-						return;
-					}
-					var col_filter = {};
-				col_filter[this.id] = this.getValue();
-				// Set value so it's there for response (otherwise it gets cleared if options are updated)
-				//event.data.set_value(event.data.input.val());
-
-				this.nextmatch.applyFilters({col_filter: col_filter});
-			}
-		},
-		rows: { default: 2},
-		class: {default: 'nm_filterheader_taglist'}
-	};
-	private nextmatch: et2_nextmatch;
-
-	/**
-	 * Override to add change handler
-	 *
-	 * @memberOf et2_nextmatch_filterheader
-	 */
-	createInputWidget( )
-	{
-		// Make sure there's an option for all
-		if(!this.options.empty_label && (!this.options.select_options || !this.options.select_options[""]))
-		{
-			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
-		}
-		super.createInputWidget();
-	}
-
-	/**
-	 * Disable toggle if there are 2 or less options
-	 * @param {Object[]} options
-	 */
-	set_select_options(options)
-	{
-		if(options && options.length <= 2 && this.options.multiple == 'toggle')
-		{
-			this.set_multiple(false);
-		}
-		super.set_select_options(options)
-	}
-
-	/**
-	 * Set nextmatch is the function which has to be implemented for the
-	 * et2_INextmatchHeader interface.
-	 *
-	 * @param {et2_nextmatch} _nextmatch
-	 */
-	setNextmatch( _nextmatch)
-	{
-		this.nextmatch = _nextmatch;
-
-		// Set current filter value from nextmatch settings
-		if(this.nextmatch.activeFilters.col_filter && typeof this.nextmatch.activeFilters.col_filter[this.id] != "undefined")
-		{
-			this.set_value(this.nextmatch.activeFilters.col_filter[this.id]);
-
-			// Make sure it's set in the nextmatch
-			_nextmatch.activeFilters.col_filter[this.id] = this.getValue();
-		}
-	}
-
-	// Make sure selectbox is not longer than the column
-	resize( )
-	{
-		this.div.css("height",'');
-		this.div.css("max-width",jQuery(this.parentNode).innerWidth() + "px");
-		super.resize();
-	}
-
-}
-et2_register_widget(et2_nextmatch_taglistheader, ['nextmatch-taglistheader']);
+// class et2_nextmatch_taglistheader extends et2_taglist implements et2_INextmatchHeader, et2_IResizeable
+// {
+// 	static readonly _attributes : any = {
+// 		autocomplete_url: { default: ''},
+// 		multiple: { default: 'toggle'},
+// 		onchange: {
+// 			// @ts-ignore
+// 			default: function(event) {
+// 				if(typeof this.nextmatch === 'undefined')
+// 					{
+// 						// Not fully set up yet
+// 						return;
+// 					}
+// 					var col_filter = {};
+// 				col_filter[this.id] = this.getValue();
+// 				// Set value so it's there for response (otherwise it gets cleared if options are updated)
+// 				//event.data.set_value(event.data.input.val());
+//
+// 				this.nextmatch.applyFilters({col_filter: col_filter});
+// 			}
+// 		},
+// 		rows: { default: 2},
+// 		class: {default: 'nm_filterheader_taglist'}
+// 	};
+// 	private nextmatch: et2_nextmatch;
+//
+// 	/**
+// 	 * Override to add change handler
+// 	 *
+// 	 * @memberOf et2_nextmatch_filterheader
+// 	 */
+// 	createInputWidget( )
+// 	{
+// 		// Make sure there's an option for all
+// 		if(!this.options.empty_label && (!this.options.select_options || !this.options.select_options[""]))
+// 		{
+// 			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
+// 		}
+// 		super.createInputWidget();
+// 	}
+//
+// 	/**
+// 	 * Disable toggle if there are 2 or less options
+// 	 * @param {Object[]} options
+// 	 */
+// 	set_select_options(options)
+// 	{
+// 		if(options && options.length <= 2 && this.options.multiple == 'toggle')
+// 		{
+// 			this.set_multiple(false);
+// 		}
+// 		super.set_select_options(options)
+// 	}
+//
+// 	/**
+// 	 * Set nextmatch is the function which has to be implemented for the
+// 	 * et2_INextmatchHeader interface.
+// 	 *
+// 	 * @param {et2_nextmatch} _nextmatch
+// 	 */
+// 	setNextmatch( _nextmatch)
+// 	{
+// 		this.nextmatch = _nextmatch;
+//
+// 		// Set current filter value from nextmatch settings
+// 		if(this.nextmatch.activeFilters.col_filter && typeof this.nextmatch.activeFilters.col_filter[this.id] != "undefined")
+// 		{
+// 			this.set_value(this.nextmatch.activeFilters.col_filter[this.id]);
+//
+// 			// Make sure it's set in the nextmatch
+// 			_nextmatch.activeFilters.col_filter[this.id] = this.getValue();
+// 		}
+// 	}
+//
+// 	// Make sure selectbox is not longer than the column
+// 	resize( )
+// 	{
+// 		this.div.css("height",'');
+// 		this.div.css("max-width",jQuery(this.parentNode).innerWidth() + "px");
+// 		super.resize();
+// 	}
+//
+// }
+// et2_register_widget(et2_nextmatch_taglistheader, ['nextmatch-taglistheader']);
 
 /**
- * @augments et2_link_entry
+ * Nextmatch filter that can filter for a selected entry
  */
 class et2_nextmatch_entryheader extends et2_link_entry implements et2_INextmatchHeader
 {
