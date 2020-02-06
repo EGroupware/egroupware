@@ -30,7 +30,9 @@ declare var et2_placeholder : any;
 declare var et2_validTypes : string[];
 declare var et2_typeDefaults : object;
 //declare const et2_no_init : object;
-declare var et2_editableWidget : any;
+declare class et2_editableWidget extends et2_inputWidget {
+	public set_readonly(value : boolean);
+}
 /*declare var et2_IDOMNode : any;
 declare var et2_IInput : any;
 declare var et2_IResizeable : any;
@@ -161,6 +163,7 @@ declare var et2_vfsUpload : any;
 declare var et2_vfsSelect : any;
 declare var et2_video : any;
 declare var et2_IExposable : any;
+declare var tinymce : any;
 declare class et2_nextmatch_sortheader extends et2_nextmatch_header {}
 declare class et2_nextmatch_filterheader extends et2_nextmatch_header {}
 declare class et2_nextmatch_accountfilterheader extends et2_nextmatch_header {}
