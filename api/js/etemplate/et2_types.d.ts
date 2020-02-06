@@ -67,7 +67,12 @@ declare var et2_nextmatch_header_bar : any;
 declare var et2_nextmatch_header : any;
 declare var et2_nextmatch_customfields : any;
 declare var et2_nextmatch_controller : any;
-declare var et2_dynheight : any;
+declare class et2_dynheight {
+	constructor(_outerNode, _innerNode, _minHeight);
+	outerNode : any;
+	update : any;
+	free : any;
+}
 declare class et2_nextmatch_rowProvider {}
 declare var et2_nextmatch_rowWidget : any;
 declare var et2_nextmatch_rowTemplateWidget : any;
