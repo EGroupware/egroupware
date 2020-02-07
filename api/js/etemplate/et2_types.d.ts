@@ -192,3 +192,6 @@ declare function nm_submit_popup(button) : void;
 declare function nm_hide_popup(element, div_id) : false;
 declare function nm_activate_link(_action, _senders) : void;
 declare function egw_seperateJavaScript(_html) : void;
+declare class Resumable {
+	constructor(asyncOptions: any);
+}

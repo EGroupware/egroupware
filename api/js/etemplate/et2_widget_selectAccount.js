@@ -35,6 +35,7 @@ var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_widget_link_1 = require("./et2_widget_link");
 var et2_widget_dialog_1 = require("./et2_widget_dialog");
+var et2_widget_link_2 = require("./et2_widget_link");
 /**
  * Account selection widget
  * Changes according to the user's account_selection preference
@@ -719,7 +720,7 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
         }
     };
     return et2_selectAccount_ro;
-}(et2_link_string));
+}(et2_widget_link_2.et2_link_string));
 exports.et2_selectAccount_ro = et2_selectAccount_ro;
 et2_core_widget_1.et2_register_widget(et2_selectAccount_ro, ["select-account_ro"]);
 //# sourceMappingURL=et2_widget_selectAccount.js.map

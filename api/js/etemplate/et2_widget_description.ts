@@ -24,7 +24,7 @@ import './et2_types';
 /**
  * Class which implements the "description" XET-Tag
  */
-class et2_description extends et2_baseWidget implements et2_IDetachedDOM
+export class et2_description extends et2_baseWidget implements et2_IDetachedDOM
 {
 	static readonly _attributes : any = {
 		"label": {

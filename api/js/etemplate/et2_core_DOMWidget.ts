@@ -875,6 +875,11 @@ class et2_surroundingsMgr extends ClassWithAttributes
 		// Return the widget container
 		return this._widgetContainer;
 	}
+
+	getWidgetSurroundings() : HTMLElement []
+	{
+		return this._widgetSurroundings;
+	}
 }
 
 /**

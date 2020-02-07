@@ -383,6 +383,7 @@ var et2_textbox_ro = /** @class */ (function (_super) {
     };
     return et2_textbox_ro;
 }(et2_core_valueWidget_1.et2_valueWidget));
+exports.et2_textbox_ro = et2_textbox_ro;
 et2_core_widget_1.et2_register_widget(et2_textbox_ro, ["textbox_ro"]);
 /**
  * et2_searchbox is a widget which provides a collapsable input search

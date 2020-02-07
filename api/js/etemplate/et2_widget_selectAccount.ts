@@ -18,10 +18,11 @@
 */
 
 import {et2_selectbox} from "./et2_widget_selectbox";
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig, et2_widget} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_link_entry} from "./et2_widget_link";
 import {et2_dialog} from "./et2_widget_dialog";
+import {et2_link_string} from "./et2_widget_link";
 
 /**
  * Account selection widget
@@ -788,7 +789,7 @@ export class et2_selectAccount_ro extends et2_link_string
 		// Legacy options could have row count or empty label in first slot
 		if(typeof this.options.empty_label == "string")
 		{
-			if(isNaN(this.options.empty_label))
+			if(isNaN(<number><unknown>this.options.empty_label))
 			{
 				this.options.empty_label = this.egw().lang(this.options.empty_label);
 			}

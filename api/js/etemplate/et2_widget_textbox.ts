@@ -321,7 +321,7 @@ et2_register_widget(et2_textbox, ["textbox", "passwd", "hidden"]);
  *
  * @augments et2_valueWidget
  */
-class et2_textbox_ro extends et2_valueWidget implements et2_IDetachedDOM
+export class et2_textbox_ro extends et2_valueWidget implements et2_IDetachedDOM
 {
 	/**
 	 * Ignore all more advanced attributes.

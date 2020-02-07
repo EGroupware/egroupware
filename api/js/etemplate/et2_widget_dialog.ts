@@ -93,7 +93,7 @@ import {et2_DOMWidget} from "./et2_core_DOMWidget";
  * @augments et2_widget
  * @see http://api.jqueryui.com/dialog/
  */
-class et2_dialog extends et2_widget {
+export class et2_dialog extends et2_widget {
     static readonly _attributes: any = {
         callback: {
             name: "Callback",

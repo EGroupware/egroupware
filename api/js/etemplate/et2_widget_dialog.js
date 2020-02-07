@@ -799,5 +799,6 @@ var et2_dialog = /** @class */ (function (_super) {
     et2_dialog.NO_BUTTON = 3;
     return et2_dialog;
 }(et2_core_widget_2.et2_widget));
+exports.et2_dialog = et2_dialog;
 et2_core_widget_1.et2_register_widget(et2_dialog, ["dialog"]);
 //# sourceMappingURL=et2_widget_dialog.js.map

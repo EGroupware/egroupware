@@ -698,6 +698,9 @@ var et2_surroundingsMgr = /** @class */ (function (_super) {
         // Return the widget container
         return this._widgetContainer;
     };
+    et2_surroundingsMgr.prototype.getWidgetSurroundings = function () {
+        return this._widgetSurroundings;
+    };
     return et2_surroundingsMgr;
 }(et2_core_inheritance_1.ClassWithAttributes));
 /**
