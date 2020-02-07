@@ -451,7 +451,7 @@ var et2_widget = /** @class */ (function (_super) {
                 // do NOT overwrite already evaluated readonly attribute
             }
             else {
-                var attrs = et2_attribute_registry[Object.getPrototypeOf(_proto).constructor.name] || {};
+                var attrs = et2_attribute_registry[_proto.constructor.name] || {};
                 if (mgr != null && typeof attrs[attrName] != "undefined") {
                     var attr = attrs[attrName];
                     // If the attribute is marked as boolean, parse the

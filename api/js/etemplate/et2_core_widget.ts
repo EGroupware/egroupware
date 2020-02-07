@@ -578,7 +578,7 @@ Comment this out (for now)
 			} else if (attrName == "readonly" && typeof _target[attrName] != "undefined") {
 				// do NOT overwrite already evaluated readonly attribute
 			} else {
-				let attrs = et2_attribute_registry[Object.getPrototypeOf(_proto).constructor.name] || {};
+				let attrs = et2_attribute_registry[_proto.constructor.name] || {};
 				if (mgr != null && typeof attrs[attrName] != "undefined") {
 					var attr = attrs[attrName];
 

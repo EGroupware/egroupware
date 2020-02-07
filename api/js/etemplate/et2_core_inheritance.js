@@ -126,7 +126,7 @@ var ClassWithAttributes = /** @class */ (function () {
             class_prototype = Object.getPrototypeOf(class_prototype);
         } while (class_prototype !== ClassWithAttributes && n < 50);
         for (var i = class_tree.length - 1; i >= 0; i--) {
-            attributes = ClassWithAttributes.extendAttributes(attributes, class_tree[i]._attributes);
+            attributes = ClassWithAttributes.extendAttributes(class_tree[i]._attributes, attributes);
         }
         return attributes;
     };

@@ -168,7 +168,7 @@ export class ClassWithAttributes
 
 		for(let i = class_tree.length - 1; i >= 0; i--)
 		{
-			attributes = ClassWithAttributes.extendAttributes(attributes,class_tree[i]._attributes);
+			attributes = ClassWithAttributes.extendAttributes(class_tree[i]._attributes,attributes);
 		}
 		return attributes;
 	}
