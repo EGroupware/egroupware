@@ -434,7 +434,7 @@ var et2_link_apps = /** @class */ (function (_super) {
         _attrs.select_options = select_options;
         _super.prototype.transformAttributes.call(this, _attrs);
     };
-    et2_link_apps.attributes = {
+    et2_link_apps._attributes = {
         "only_app": {
             "name": "Application",
             "type": "string",
@@ -989,7 +989,7 @@ var et2_link_entry = /** @class */ (function (_super) {
             delete this.options.value.id;
         }
     };
-    et2_link_entry.attributes = {
+    et2_link_entry._attributes = {
         "value": {
             "type": "any",
             "default": {}
@@ -1401,7 +1401,7 @@ var et2_link_string = /** @class */ (function (_super) {
             this._labelContainer.contents().not(this.list).remove();
         }
     };
-    et2_link_string.attributes = {
+    et2_link_string._attributes = {
         "application": {
             "name": "Application",
             "type": "string",
@@ -1846,7 +1846,7 @@ var et2_link_list = /** @class */ (function (_super) {
             $td.html('<span style="display: inline-block; text-align: right; width:' + span_size + 'ex;">' + dirs.join('/') + ':</span> - ' + filename);
         }
     };
-    et2_link_list.attributes = {
+    et2_link_list._attributes = {
         "show_deleted": {
             "name": "Show deleted",
             "type": "boolean",

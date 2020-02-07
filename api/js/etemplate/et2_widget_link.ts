@@ -468,7 +468,7 @@ et2_register_widget(et2_link_to, ["link-to"]);
  */
 export class et2_link_apps extends et2_selectbox
 {
-	static readonly attributes: any = {
+	static readonly _attributes: any = {
 		"only_app": {
 			"name": "Application",
 			"type": "string",
@@ -545,7 +545,7 @@ et2_register_widget(et2_link_apps, ["link-apps"]);
  */
 export class et2_link_entry extends et2_inputWidget
 {
-	static readonly attributes : any = {
+	static readonly _attributes : any = {
 		"value": {
 			"type": "any",
 			"default": {}
@@ -614,8 +614,6 @@ export class et2_link_entry extends et2_inputWidget
 	{
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_entry._attributes, _child || {}));
 
-
-
 		this.search = null;
 		this.clear = null;
 		this.app_select = null;
@@ -663,10 +661,14 @@ export class et2_link_entry extends et2_inputWidget
 
 		// Application selection
 		jQuery.widget( "custom.iconselectmenu", jQuery.ui.selectmenu, {
-			_setText: function(element, value){
-				if(element === this.buttonText){
+			_setText: function(element, value)
+            {
+				if(element === this.buttonText)
+				{
 					this._setButtonText(value);
-				} else {
+				}
+				else
+                {
 					this._superApply(element, value);
 				}
 			},
@@ -699,7 +701,8 @@ export class et2_link_entry extends et2_inputWidget
 				var li = jQuery( "<li>", {class:"et2_link_entry_app_option"}),
 					wrapper = jQuery( "<div>", {text: item.label} );
 
-				if ( item.disabled ) {
+				if ( item.disabled )
+				{
 					li.addClass( "ui-state-disabled" );
 				}
 				ul.addClass(self.div.attr("class"));
@@ -728,7 +731,8 @@ export class et2_link_entry extends et2_inputWidget
 				self.options.value.app = self.app_select.val();
 			});
 		var opt_count = 0;
-		for(var key in this.options.select_options) {
+		for(var key in this.options.select_options)
+		{
 			opt_count++;
 			var option = jQuery(document.createElement("option"))
 				.attr("value", key)
@@ -817,7 +821,8 @@ export class et2_link_entry extends et2_inputWidget
 		});
 
 		// Custom display (colors)
-		this.search.data("uiAutocomplete")._renderItem = function(ul, item) {
+		this.search.data("uiAutocomplete")._renderItem = function(ul, item)
+        {
 			var li = jQuery(document.createElement('li'))
 				.data("item.autocomplete", item);
 			var extra : any = {};
@@ -852,7 +857,8 @@ export class et2_link_entry extends et2_inputWidget
 		};
 
 		// Bind to enter key to start search early
-		this.search.keydown(function(e) {
+		this.search.keydown(function(e)
+        {
 			var keycode = (e.keyCode ? e.keyCode : e.which);
 			if(keycode == 13 && !self.processing)
 			{
@@ -866,7 +872,8 @@ export class et2_link_entry extends et2_inputWidget
 		// Clear / last button
 		this.clear = jQuery(document.createElement("span"))
 			.addClass("ui-icon ui-icon-close")
-			.click(function(e){
+			.click(function(e)
+            {
 				if (!self.search) return;	// only gives an error, we should never get into that situation
 				// No way to tell if the results is open, so if they click the button while open, it clears
 				if(self.last_search && self.last_search != self.search.val())
@@ -1485,7 +1492,7 @@ et2_register_widget(et2_link, ["link", "link-entry_ro"]);
  */
 export class et2_link_string extends et2_valueWidget implements et2_IDetachedDOM
 {
-	static readonly attributes : any = {
+	static readonly _attributes : any = {
 		"application": {
 			"name": "Application",
 			"type": "string",
@@ -1740,7 +1747,7 @@ et2_register_widget(et2_link_string, ["link-string"]);
  */
 export class et2_link_list extends et2_link_string
 {
-	static readonly attributes : any = {
+	static readonly _attributes : any = {
 		"show_deleted": {
 			"name": "Show deleted",
 			"type": "boolean",
