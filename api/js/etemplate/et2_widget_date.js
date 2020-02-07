@@ -616,20 +616,6 @@ var et2_date_duration = /** @class */ (function (_super) {
             .addClass('et2_date_duration')
             .attr({ type: 'number', size: 3, step: this.options.step, lang: this.egw().preference('number_format')[0] === "," ? "en-150" : "en-001" });
         this.node.append(this.duration);
-        if (this.options.display_format.length > 1) {
-            this.format = jQuery(document.createElement("select"))
-                .addClass('et2_date_duration');
-            this.node.append(this.format);
-            for (var i = 0; i < this.options.display_format.length; i++) {
-                this.format.append("<option value='" + this.options.display_format[i] + "'>" + this.time_formats[this.options.display_format[i]] + "</option>");
-            }
-        }
-        else if (this.time_formats[this.options.display_format]) {
-            this.format = jQuery("<span>" + this.time_formats[this.options.display_format] + "</span>").appendTo(this.node);
-        }
-        else {
-            this.format = jQuery("<span>" + this.time_formats["m"] + "</span>").appendTo(this.node);
-        }
         var self = this;
         // seems the 'invalid' event doesn't work in all browsers, eg. FF therefore
         // we use focusout event to check the valifdity of input right after user
@@ -705,6 +691,32 @@ var et2_date_duration = /** @class */ (function (_super) {
             else {
                 this.format.text(display.unit ? this.time_formats[display.unit] : '');
             }
+        }
+    };
+    et2_date_duration.prototype.set_display_format = function (format)
+    {
+        if (format.length <= 1)
+        {
+            this.node.remove('select.et2_date_duration');
+        }
+        this.options.display_format = format;
+        if (this.options.display_format.length > 1)
+        {
+            this.format = jQuery(document.createElement("select"))
+                .addClass('et2_date_duration');
+            this.node.append(this.format);
+            for (var i = 0; i < this.options.display_format.length; i++)
+            {
+                this.format.append("<option value='" + this.options.display_format[i] + "'>" + this.time_formats[this.options.display_format[i]] + "</option>");
+            }
+        }
+        else if (this.time_formats[this.options.display_format])
+        {
+            this.format = jQuery("<span>" + this.time_formats[this.options.display_format] + "</span>").appendTo(this.node);
+        }
+        else
+        {
+            this.format = jQuery("<span>" + this.time_formats["m"] + "</span>").appendTo(this.node);
         }
     };
     /**

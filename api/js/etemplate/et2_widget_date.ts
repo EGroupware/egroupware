@@ -754,24 +754,6 @@ export class et2_date_duration extends et2_date
 						.attr({type: 'number', size: 3, step:this.options.step, lang: this.egw().preference('number_format')[0] === "," ? "en-150": "en-001"});
 		this.node.append(this.duration);
 
-		if(this.options.display_format.length > 1)
-		{
-			this.format = jQuery(document.createElement("select"))
-							.addClass('et2_date_duration');
-			this.node.append(this.format);
-
-			for(var i = 0; i < this.options.display_format.length; i++) {
-				this.format.append("<option value='"+this.options.display_format[i]+"'>"+this.time_formats[this.options.display_format[i]]+"</option>");
-			}
-		}
-		else if (this.time_formats[this.options.display_format])
-		{
-			this.format = jQuery("<span>"+this.time_formats[this.options.display_format]+"</span>").appendTo(this.node);
-		}
-		else
-		{
-			this.format = jQuery("<span>"+this.time_formats["m"]+"</span>").appendTo(this.node);
-		}
 		var self = this;
 		// seems the 'invalid' event doesn't work in all browsers, eg. FF therefore
 		// we use focusout event to check the valifdity of input right after user
@@ -874,6 +856,33 @@ export class et2_date_duration extends et2_date
 			}
 		}
 	}
+
+	set_display_format(format)
+    {
+        if (format.length <= 1)
+        {
+            this.node.remove('select.et2_date_duration');
+        }
+        this.options.display_format = format;
+        if(this.options.display_format.length > 1)
+		{
+			this.format = jQuery(document.createElement("select"))
+							.addClass('et2_date_duration');
+			this.node.append(this.format);
+
+			for(var i = 0; i < this.options.display_format.length; i++) {
+				this.format.append("<option value='"+this.options.display_format[i]+"'>"+this.time_formats[this.options.display_format[i]]+"</option>");
+			}
+		}
+		else if (this.time_formats[this.options.display_format])
+		{
+			this.format = jQuery("<span>"+this.time_formats[this.options.display_format]+"</span>").appendTo(this.node);
+		}
+		else
+		{
+			this.format = jQuery("<span>"+this.time_formats["m"]+"</span>").appendTo(this.node);
+		}
+    }
 
 	/**
 	 * Converts the value in data format into value in display format.
@@ -1295,7 +1304,7 @@ export class et2_date_range extends et2_inputWidget
 			type: 'boolean',
 			description: 'Is the date range relative (this week) or absolute (2016-02-15 - 2016-02-21).  This will affect the value returned.'
 		}
-	}
+	};
 
 	div: JQuery;
 	from: et2_date;
