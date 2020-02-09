@@ -21,7 +21,7 @@ declare var egw : Iegw;
 /**
  * Interface for global egw with window global or local methods or as function returning an object allowing also application local methods
  */
-declare interface Iegw extends IegwWndLocal { (_app? : string, _wnd? : Window) : IegwAppLocal }
+declare interface Iegw extends IegwWndLocal { (_app? : string|Window, _wnd? : Window) : IegwAppLocal }
 
 /**
  * Return type for egw.app() call
