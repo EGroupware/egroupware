@@ -44,9 +44,6 @@ require("../etemplate/et2_types");
  *		// Underscore private by convention
  *	}
  * });
- *
- * @class AppJS
- * @augments Class
  */
 var EgwApp = /** @class */ (function () {
     /**
@@ -263,6 +260,7 @@ var EgwApp = /** @class */ (function () {
      * @return {boolean} false - Returns false to stop event propagation
      */
     EgwApp.prototype.setState = function (state, template) {
+        var _a;
         // State should be an object, not a string, but we'll parse
         if (typeof state == "string") {
             if (state.indexOf('{') != -1 || state == 'null') {
@@ -310,7 +308,7 @@ var EgwApp = /** @class */ (function () {
             url = egw.link('/index.php', jQuery.extend({ 'favorite': safe_name }, egw.link_get_registry(this.appname, 'list')));
         }
         // if no list try index value from application
-        else if (egw.app(this.appname).index) {
+        else if ((_a = egw.app(this.appname)) === null || _a === void 0 ? void 0 : _a.index) {
             url = egw.link('/index.php', 'menuaction=' + egw.app(this.appname).index + '&favorite=' + safe_name);
         }
         egw.open_link(url, undefined, undefined, this.appname);

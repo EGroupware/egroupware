@@ -45,7 +45,7 @@ declare interface Iapplication
  */
 declare interface IegwData
 {
-	timestamp: number;
+	timestamp?: number;
 	data: {[key:string]: any};
 }
 
@@ -344,7 +344,7 @@ declare interface IegwGlobal
 	 * 	if string is used ambersands in vars have to be already urlencoded as '%26', function ensures they get NOT double encoded
 	 * @return {string} generated url
 	 */
-	link(_url : string, _extravars : string|object) : string;
+	link(_url : string, _extravars? : string|object) : string;
 	/**
 	 * Query a title of _app/_id
 	 *
@@ -771,7 +771,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param {object} _context
 	 * @param {string} _prefix prefix for _jsFiles
 	 */
-	includeJS(_jsFiles : string|string[], _callback : Function, _context : object, _prefix? : string);
+	includeJS(_jsFiles : string|string[], _callback : Function, _context? : object, _prefix? : string);
 	/**
 	 * Check if file is already included and optional mark it as included if not yet included
 	 *
@@ -1210,3 +1210,10 @@ declare var mailvelope : any;
 
 declare function egw_refresh(_msg : string, app : string, id? : string|number, _type?, targetapp?, replace?, _with?, msgtype?);
 declare function egw_open();
+
+declare function egw_getWindowLeft() : number;
+declare function egw_getWindowTop() : number;
+declare function egw_getWindowInnerWidth() : number;
+declare function egw_getWindowInnerHeight() : number;
+declare function egw_getWindowOuterWidth() : number;
+declare function egw_getWindowOuterHeight() : number;
