@@ -7,6 +7,10 @@ The container and docker-compose.yml file in this directory are the most easy wa
 * data: EGroupware stores it's files here, by default $PWD/data subdirectory, can also be your existing /var/lib/egroupware
 * db: volume for MariaDB (should be NOT a directory under Mac OS and Windows for performance reasons!)
 * sessions: volume for sessions, internal no need to change
+* sources-push: swoolpush sub-directory of sources
+* collabora-config: /etc/loolwsd for Collabora container, by default $PWD/data/default/loolwsd
+* rocketchat-uploads: Upload directory for Rocket.Chat, by default $PWD/data/default/rocketchat/uploads
+* rocketchat-dumps: Dump directory for MongoDB, by default $PWD/data/default/rocketchat/dump
 
 ### It runs the following containers:
 * egroupware: php-fpm
@@ -14,11 +18,9 @@ The container and docker-compose.yml file in this directory are the most easy wa
 * egroupware-db: MariaDB
 * egroupware-push: PHP Swoole based push server
 * egroupware-watchtower: to automatic keeps the containers up to date
-
-Planned, but not yet there:
-* egroupware-collabora: Collabora Online Office
-* egroupware-rocketchat: Rocket.Chat
-* egroupware-mongo: MongoDB for Rocket.Chat
+* collabora: Collabora Online Office
+* rocketchat: Rocket.Chat
+* rocketchat-mongo: MongoDB for Rocket.Chat
 
 ### Usage:
 ```
