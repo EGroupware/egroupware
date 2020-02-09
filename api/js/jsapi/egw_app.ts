@@ -57,9 +57,6 @@ export interface PushData
  *		// Underscore private by convention
  *	}
  * });
- *
- * @class AppJS
- * @augments Class
  */
 export abstract class EgwApp
 {
@@ -367,7 +364,7 @@ export abstract class EgwApp
 	 * @param {string} template template name to check, instead of trying all templates of current app
 	 * @return {boolean} false - Returns false to stop event propagation
 	 */
-	setState(state, template)
+	setState(state, template? : string)
 	{
 		// State should be an object, not a string, but we'll parse
 		if(typeof state == "string")

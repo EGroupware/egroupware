@@ -24,7 +24,7 @@ $replace = array(
 			]);
 		},
 	"/^\tappname:\s*'([^']+)',/m" => "\treadonly appname = '$1';",
-	"/^\t([^: ,;(]+):\s*([^()]+),/m" => "\t\$1: $2;",
+	"/^\t([^: ,;(\t]+?):\s*([^()]+?),/m" => "\t\$1 : any = $2;",
 	"/^\t([^:\n]+):\s*function\s*\(.*this._super.(apply|call)\(/msU" =>
 		function($matches) {
 	        return str_replace('this._super',
@@ -33,8 +33,10 @@ $replace = array(
 	"/^\t([^:\n]+):\s*function\s*\(/m" => function($matches) {
 		return "\t".($matches[1] === 'init' ? 'constructor' : $matches[1]).'(';
 	},
+    // TS does not like to call parent constructor with super.apply(this, arguments) and we dont have arguments ...
+    '/\tsuper.apply\(this, *arguments\)/' => "\tsuper()",
 	"/^\t},$/m" => "\t}",
-	'/^ \* @version \$Id\$\n/m' => '',
+	'/^ \* @version \$Id[^$]*\$\n/m' => '',
 	'#^ \* @link http://www.egroupware.org#m' => ' * @link: https://www.egroupware.org',
 );
 
