@@ -784,6 +784,7 @@ export class et2_selectAccount_ro extends et2_link_string
 		if(_parent.supportedWidgetClasses.indexOf(et2_selectAccount_ro) < 0)
 		{
 			_parent.supportedWidgetClasses.push(et2_selectAccount_ro);
+			_parent.addChild(this);
 		}
 
 		// Legacy options could have row count or empty label in first slot

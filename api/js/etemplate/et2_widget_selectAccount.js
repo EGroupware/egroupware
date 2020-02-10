@@ -634,6 +634,7 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
         */
         if (_parent.supportedWidgetClasses.indexOf(et2_selectAccount_ro) < 0) {
             _parent.supportedWidgetClasses.push(et2_selectAccount_ro);
+            _parent.addChild(_this);
         }
         // Legacy options could have row count or empty label in first slot
         if (typeof _this.options.empty_label == "string") {
