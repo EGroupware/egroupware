@@ -1494,11 +1494,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			var col = columnMgr.columns[i];
 			var widget = this.columns[i].widget;
 
-			if(col.caption && col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-				col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_DISABLED)
+			if(col.caption && col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
+				col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED)
 			{
 				columns[col.id] = col.caption;
-				if(col.visibility == et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(col.id);
+				if(col.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(col.id);
 			}
 			// Custom fields get listed separately
 			if(widget.instanceOf(et2_nextmatch_customfields))
@@ -1570,8 +1570,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				for (var i = 0; i < columnMgr.columns.length; i++)
 				{
 					var col = columnMgr.columns[i];
-					if(col.caption && col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-						col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_DISABLED )
+					if(col.caption && col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
+						col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED )
 					{
 						visibility[col.id] = {visible: false};
 					}

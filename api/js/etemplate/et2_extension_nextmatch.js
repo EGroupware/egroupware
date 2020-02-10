@@ -1055,10 +1055,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
         for (var i = 0; i < columnMgr.columns.length; i++) {
             var col = columnMgr.columns[i];
             var widget = this.columns[i].widget;
-            if (col.caption && col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-                col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_DISABLED) {
+            if (col.caption && col.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
+                col.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_DISABLED) {
                 columns[col.id] = col.caption;
-                if (col.visibility == et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE)
+                if (col.visibility == et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE)
                     columns_selected.push(col.id);
             }
             // Custom fields get listed separately
@@ -1122,8 +1122,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 var visibility = {};
                 for (var i = 0; i < columnMgr.columns.length; i++) {
                     var col = columnMgr.columns[i];
-                    if (col.caption && col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-                        col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_DISABLED) {
+                    if (col.caption && col.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
+                        col.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_DISABLED) {
                         visibility[col.id] = { visible: false };
                     }
                 }
