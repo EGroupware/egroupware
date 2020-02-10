@@ -161,7 +161,7 @@ var et2_widget = /** @class */ (function (_super) {
         if (_attrs["id"]) {
             // Create a namespace for this object
             if (_this._createNamespace()) {
-                _this.checkCreateNamespace();
+                _this.checkCreateNamespace(_attrs);
             }
         }
         if (_this.id) {
@@ -783,8 +783,10 @@ var et2_widget = /** @class */ (function (_super) {
      * Checks whether a namespace exists for this element in the content array.
      * If yes, an own perspective of the content array is created. If not, the
      * parent content manager is used.
+     *
+     * Constructor attributes are passed in case a child needs to make decisions
      */
-    et2_widget.prototype.checkCreateNamespace = function () {
+    et2_widget.prototype.checkCreateNamespace = function (_attrs) {
         // Get the content manager
         var mgrs = this.getArrayMgrs();
         for (var key in mgrs) {

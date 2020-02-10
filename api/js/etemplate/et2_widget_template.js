@@ -139,10 +139,10 @@ var et2_template = /** @class */ (function (_super) {
      * Templates always have ID set, but seldom do we want them to
      * create a namespace based on their ID.
      */
-    et2_template.prototype.checkCreateNamespace = function () {
-        if (this.content) {
-            var old_id = this.id;
-            this.id = this.content;
+    et2_template.prototype.checkCreateNamespace = function (_attrs) {
+        if (_attrs.content) {
+            var old_id = _attrs.id;
+            this.id = _attrs.content;
             _super.prototype.checkCreateNamespace.apply(this, arguments);
             this.id = old_id;
         }

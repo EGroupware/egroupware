@@ -233,7 +233,7 @@ export class et2_widget extends ClassWithAttributes
 		if (_attrs["id"]) {
 			// Create a namespace for this object
 			if (this._createNamespace()) {
-				this.checkCreateNamespace();
+				this.checkCreateNamespace(_attrs);
 			}
 		}
 
@@ -967,8 +967,10 @@ Comment this out (for now)
 	 * Checks whether a namespace exists for this element in the content array.
 	 * If yes, an own perspective of the content array is created. If not, the
 	 * parent content manager is used.
+	 *
+	 * Constructor attributes are passed in case a child needs to make decisions
 	 */
-	checkCreateNamespace()
+	checkCreateNamespace(_attrs? : any)
 	{
 		// Get the content manager
 		var mgrs = this.getArrayMgrs();

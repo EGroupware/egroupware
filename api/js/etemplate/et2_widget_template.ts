@@ -191,12 +191,12 @@ class et2_template extends et2_DOMWidget
 	 * Templates always have ID set, but seldom do we want them to
 	 * create a namespace based on their ID.
 	 */
-	checkCreateNamespace()
+	checkCreateNamespace(_attrs)
 	{
-		if(this.content)
+		if(_attrs.content)
 		{
-			var old_id = this.id;
-			this.id = this.content;
+			var old_id = _attrs.id;
+			this.id = _attrs.content;
 			super.checkCreateNamespace.apply(this, arguments);
 			this.id = old_id;
 		}
