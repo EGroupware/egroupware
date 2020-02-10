@@ -168,7 +168,7 @@ export class ClassWithAttributes
 
 		for(let i = class_tree.length - 1; i >= 0; i--)
 		{
-			attributes = ClassWithAttributes.extendAttributes(class_tree[i]._attributes,attributes);
+			attributes = ClassWithAttributes.extendAttributes(attributes, class_tree[i]._attributes);
 		}
 		return attributes;
 	}
@@ -180,7 +180,7 @@ export class ClassWithAttributes
 	 * @param _attributes
 	 * @param _parent
 	 */
-	static extendAttributes(_attributes : object, _parent : object) : object
+	static extendAttributes(_parent : object, _attributes : object) : object
 	{
 		function _copyMerge(_new, _old)
 		{
