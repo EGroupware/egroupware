@@ -169,6 +169,8 @@ declare var et2_vfsSelect : any;
 declare var et2_video : any;
 declare var et2_IExposable : any;
 declare var tinymce : any;
+declare var date : any;
+declare var tinyMCE : any;
 declare class et2_nextmatch_sortheader extends et2_nextmatch_header {}
 declare class et2_nextmatch_filterheader extends et2_nextmatch_header {}
 declare class et2_nextmatch_accountfilterheader extends et2_nextmatch_header {}
