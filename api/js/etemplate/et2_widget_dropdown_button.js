@@ -377,5 +377,6 @@ var et2_dropdown_button = /** @class */ (function (_super) {
     };
     return et2_dropdown_button;
 }(et2_core_inputWidget_1.et2_inputWidget));
+exports.et2_dropdown_button = et2_dropdown_button;
 et2_core_widget_1.et2_register_widget(et2_dropdown_button, ["dropdown_button"]);
 //# sourceMappingURL=et2_widget_dropdown_button.js.map
