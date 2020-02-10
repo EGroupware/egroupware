@@ -227,7 +227,7 @@ export class et2_arrayMgr
 		const pos_var = _ident.indexOf('$');
 		if (pos_var >= 0 && (this.perspectiveData.row != null || !_ident.match(/\$\{?row\}?/))) {
 			// Get the content array for the current row
-			const row = this.perspectiveData.row || '';
+			const row = typeof this.perspectiveData.row == 'number' ? this.perspectiveData.row : '';
 			const row_cont = this.data[row] || {};
 			// $cont is NOT root but current name-space in old eTemplate
 			const cont = this.data;//getRoot().data;

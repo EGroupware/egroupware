@@ -209,7 +209,7 @@ var et2_arrayMgr = /** @class */ (function () {
         var pos_var = _ident.indexOf('$');
         if (pos_var >= 0 && (this.perspectiveData.row != null || !_ident.match(/\$\{?row\}?/))) {
             // Get the content array for the current row
-            var row = this.perspectiveData.row || '';
+            var row = typeof this.perspectiveData.row == 'number' ? this.perspectiveData.row : '';
             var row_cont = this.data[row] || {};
             // $cont is NOT root but current name-space in old eTemplate
             var cont = this.data; //getRoot().data;
