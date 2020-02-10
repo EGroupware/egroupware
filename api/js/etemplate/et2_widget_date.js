@@ -675,7 +675,7 @@ var et2_date_duration = /** @class */ (function (_super) {
     };
     et2_date_duration.prototype.set_value = function (_value) {
         this.options.value = _value;
-        var display = this._convert_to_display(_value);
+        var display = this._convert_to_display(parseFloat(_value));
         // Set display
         if (this.duration[0].nodeName == "INPUT") {
             this.duration.val(display.value);
@@ -693,29 +693,26 @@ var et2_date_duration = /** @class */ (function (_super) {
             }
         }
     };
-    et2_date_duration.prototype.set_display_format = function (format)
-    {
-        if (format.length <= 1)
-        {
+    et2_date_duration.prototype.set_display_format = function (format) {
+        if (format.length <= 1) {
             this.node.remove('select.et2_date_duration');
         }
         this.options.display_format = format;
-        if (this.options.display_format.length > 1)
-        {
+        if (this.format) {
+            this.format.remove();
+        }
+        if (this.options.display_format.length > 1 && !this.options.readonly) {
             this.format = jQuery(document.createElement("select"))
                 .addClass('et2_date_duration');
             this.node.append(this.format);
-            for (var i = 0; i < this.options.display_format.length; i++)
-            {
+            for (var i = 0; i < this.options.display_format.length; i++) {
                 this.format.append("<option value='" + this.options.display_format[i] + "'>" + this.time_formats[this.options.display_format[i]] + "</option>");
             }
         }
-        else if (this.time_formats[this.options.display_format])
-        {
+        else if (this.time_formats[this.options.display_format]) {
             this.format = jQuery("<span>" + this.time_formats[this.options.display_format] + "</span>").appendTo(this.node);
         }
-        else
-        {
+        else {
             this.format = jQuery("<span>" + this.time_formats["m"] + "</span>").appendTo(this.node);
         }
     };

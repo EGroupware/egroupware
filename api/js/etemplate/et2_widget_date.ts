@@ -832,7 +832,7 @@ export class et2_date_duration extends et2_date
 	{
 		this.options.value = _value;
 
-		var display = this._convert_to_display(_value);
+		var display = this._convert_to_display(parseFloat(_value));
 
 		// Set display
 		if(this.duration[0].nodeName == "INPUT")
@@ -864,7 +864,11 @@ export class et2_date_duration extends et2_date
             this.node.remove('select.et2_date_duration');
         }
         this.options.display_format = format;
-        if(this.options.display_format.length > 1)
+        if(this.format)
+        {
+			this.format.remove();
+		}
+        if(this.options.display_format.length > 1 && !this.options.readonly)
 		{
 			this.format = jQuery(document.createElement("select"))
 							.addClass('et2_date_duration');
