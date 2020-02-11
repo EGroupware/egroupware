@@ -148,7 +148,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * Destroys all
      */
     et2_nextmatch.prototype.destroy = function () {
-        // Stop autorefresh
+        // Stop auto-refresh
         if (this._autorefresh_timer) {
             window.clearInterval(this._autorefresh_timer);
             this._autorefresh_timer = null;
@@ -205,13 +205,13 @@ var et2_nextmatch = /** @class */ (function (_super) {
             var appname = split[0];
             // Check link registry
             if (this.egw().link_get_registry(appname)) {
-                var self = this;
+                var self_1 = this;
                 // Register a handler
                 // @ts-ignore
                 jQuery(this.div)
                     .on('dragenter', '.egwGridView_grid tr', function (e) {
                     // Figure out _which_ row
-                    var row = self.controller.getRowByNode(this);
+                    var row = self_1.controller.getRowByNode(this);
                     if (!row || !row.uid) {
                         return false;
                     }
@@ -223,23 +223,23 @@ var et2_nextmatch = /** @class */ (function (_super) {
                     }
                     return false;
                 })
-                    .on('dragexit', '.egwGridView_grid tr', function (e) {
-                    self.controller._selectionMgr.setFocused();
+                    .on('dragexit', '.egwGridView_grid tr', function () {
+                    self_1.controller._selectionMgr.setFocused();
                 })
                     .on('dragover', '.egwGridView_grid tr', false).attr("dropzone", "copy")
                     .on('drop', '.egwGridView_grid tr', function (e) {
-                    self.handle_drop(e, this);
+                    self_1.handle_drop(e, this);
                     return false;
                 });
             }
         }
         // stop invalidation in no visible tabs
-        jQuery(this.getInstanceManager().DOMContainer.parentNode).on('hide.et2_nextmatch', jQuery.proxy(function (e) {
+        jQuery(this.getInstanceManager().DOMContainer.parentNode).on('hide.et2_nextmatch', jQuery.proxy(function () {
             if (this.controller && this.controller._grid) {
                 this.controller._grid.doInvalidate = false;
             }
         }, this));
-        jQuery(this.getInstanceManager().DOMContainer.parentNode).on('show.et2_nextmatch', jQuery.proxy(function (e) {
+        jQuery(this.getInstanceManager().DOMContainer.parentNode).on('show.et2_nextmatch', jQuery.proxy(function () {
             if (this.controller && this.controller._grid) {
                 this.controller._grid.doInvalidate = true;
             }
@@ -307,7 +307,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
     et2_nextmatch.prototype.resetSort = function () {
         // Check whether the nextmatch widget is currently sorted
         if (typeof this.activeFilters["sort"] != "undefined") {
-            // Reset the sortmode
+            // Reset the sort mode
             this.iterateOver(function (_widget) {
                 _widget.setSortmode("none");
             }, this, et2_INextmatchSortable);
@@ -789,9 +789,9 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 if (widget.instanceOf(et2_nextmatch_customfields)) {
                     // Just the ID for server side, not the whole nm name - some apps use it to skip custom fields
                     colName = widget.id;
-                    for (var name in widget.options.fields) {
-                        if (widget.options.fields[name])
-                            custom_fields.push(et2_nextmatch_customfields.prefix + name);
+                    for (var name_1 in widget.options.fields) {
+                        if (widget.options.fields[name_1])
+                            custom_fields.push(et2_nextmatch_customfields.prefix + name_1);
                     }
                 }
                 if (visibility[colMgr.columns[i].id].visible)
@@ -1037,7 +1037,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // Iterate over the rows
         for (var i = 0; i < len; i++) {
             // Get the uid from the data
-            var uid = this.egw().appName + '::' + _rows[i][_rowId];
+            var uid = this.egw().app_name() + '::' + _rows[i][_rowId];
             // Store the data for that uid
             this.egw().dataStoreUID(uid, _rows[i]);
             // Push the uid onto the order array
@@ -1084,20 +1084,20 @@ var et2_nextmatch = /** @class */ (function (_super) {
         }
         // Build the popup
         if (!this.selectPopup) {
-            var select = et2_createWidget("select", {
+            var select_1 = et2_createWidget("select", {
                 multiple: true,
                 rows: 8,
                 empty_label: this.egw().lang("select columns"),
                 selected_first: false,
                 value_class: "selcolumn_sortable_"
             }, this);
-            select.set_select_options(columns);
-            select.set_value(columns_selected);
-            var autoRefresh = et2_createWidget("select", {
+            select_1.set_select_options(columns);
+            select_1.set_value(columns_selected);
+            var autoRefresh_1 = et2_createWidget("select", {
                 "empty_label": "Refresh"
             }, this);
-            autoRefresh.set_id("nm_autorefresh");
-            autoRefresh.set_select_options({
+            autoRefresh_1.set_id("nm_autorefresh");
+            autoRefresh_1.set_select_options({
                 // Cause [unknown] problems with mail
                 //30: "30 seconds",
                 //60: "1 Minute",
@@ -1105,8 +1105,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 900: "15 Minutes",
                 1800: "30 Minutes"
             });
-            autoRefresh.set_value(this._get_autorefresh());
-            autoRefresh.set_statustext(egw.lang("Automatically refresh list"));
+            autoRefresh_1.set_value(this._get_autorefresh());
+            autoRefresh_1.set_statustext(egw.lang("Automatically refresh list"));
             var defaultCheck = et2_createWidget("select", { "empty_label": "Preference" }, this);
             defaultCheck.set_id('nm_col_preference');
             defaultCheck.set_select_options({
@@ -1121,13 +1121,13 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 // Update visibility
                 var visibility = {};
                 for (var i = 0; i < columnMgr.columns.length; i++) {
-                    var col = columnMgr.columns[i];
-                    if (col.caption && col.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-                        col.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_DISABLED) {
-                        visibility[col.id] = { visible: false };
+                    var col_1 = columnMgr.columns[i];
+                    if (col_1.caption && col_1.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
+                        col_1.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_DISABLED) {
+                        visibility[col_1.id] = { visible: false };
                     }
                 }
-                var value = select.getValue();
+                var value = select_1.getValue();
                 // Update & remove letter filter
                 if (self.header.lettersearch) {
                     var show_letters = true;
@@ -1168,17 +1168,17 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 }
                 columnMgr.setColumnVisibilitySet(visibility);
                 this.sortedColumnsList = [];
-                jQuery(select.getDOMNode()).find('li[class^="selcolumn_sortable_"]').each(function (i, v) {
+                jQuery(select_1.getDOMNode()).find('li[class^="selcolumn_sortable_"]').each(function (i, v) {
                     var data_id = v.getAttribute('data-value');
-                    var value = select.getValue();
+                    var value = select_1.getValue();
                     if (data_id.match(/^col_/) && value.indexOf(data_id) != -1) {
                         var col_id = data_id.replace('col_', '');
                         var col_widget = self.columns[col_id].widget;
                         if (col_widget.customfields) {
                             self.sortedColumnsList.push(col_widget.id);
-                            for (var field_name in col_widget.customfields) {
-                                if (jQuery.isEmptyObject(col_widget.options.fields) || col_widget.options.fields[field_name] == true) {
-                                    self.sortedColumnsList.push(et2_customfields_list.prefix + field_name);
+                            for (var field_name_1 in col_widget.customfields) {
+                                if (jQuery.isEmptyObject(col_widget.options.fields) || col_widget.options.fields[field_name_1] == true) {
+                                    self.sortedColumnsList.push(et2_customfields_list.prefix + field_name_1);
                                 }
                             }
                         }
@@ -1191,7 +1191,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 self.selectPopup.toggle();
                 self.dataview.updateColumns();
                 // Auto refresh
-                self._set_autorefresh(autoRefresh.get_value());
+                self._set_autorefresh(autoRefresh_1.get_value());
                 // Set default or clear forced
                 if (show_letters) {
                     self.activeFilters.selectcols.push('lettersearch');
@@ -1205,7 +1205,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 self.selectPopup.toggle();
                 self.selectPopup = null;
             };
-            var $select = jQuery(select.getDOMNode());
+            var $select = jQuery(select_1.getDOMNode());
             $select.find('.ui-multiselect-checkboxes').sortable({
                 placeholder: 'ui-fav-sortable-placeholder',
                 items: 'li[class^="selcolumn_sortable_col"]',
@@ -1240,11 +1240,11 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 .append(cancelButton.getDOMNode());
             this.selectPopup = jQuery(document.createElement("div"))
                 .addClass("colselection ui-dialog ui-widget-content")
-                .append(select.getDOMNode())
+                .append(select_1.getDOMNode())
                 .append($footerWrap)
                 .appendTo(this.innerDiv);
             // Add autorefresh
-            $footerWrap.append(autoRefresh.getSurroundings().getDOMNode(autoRefresh.getDOMNode()));
+            $footerWrap.append(autoRefresh_1.getSurroundings().getDOMNode(autoRefresh_1.getDOMNode()));
             // Add default checkbox for admins
             var apps = this.egw().user('apps');
             if (apps['admin']) {
@@ -1327,7 +1327,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             this.header.lettersearch.hide();
         }
         var lettersearch_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-lettersearch";
-        this.egw().set_preference(this.egw().getAppName(), lettersearch_preference, letters_on);
+        this.egw().set_preference(this.egw().app_name(), lettersearch_preference, letters_on);
     };
     /**
      * Set the auto-refresh time period, and starts the timer if not started
@@ -1386,9 +1386,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * When the template attribute is set, the nextmatch widget tries to load
      * that template and to fetch the grid which is inside of it. It then calls
      *
-     * @param {string} _value template name
+     * @param {string} template_name Full template name in the form app.template[.template]
      */
     et2_nextmatch.prototype.set_template = function (template_name) {
+        var template = et2_createWidget("template", { "id": template_name }, this);
         if (this.template) {
             // Stop early to prevent unneeded processing, and prevent infinite
             // loops if the server changes the template in get_rows
@@ -1418,7 +1419,6 @@ var et2_nextmatch = /** @class */ (function (_super) {
         }
         // Create the template
         if (template_name) {
-            var template = et2_createWidget("template", { "id": template_name }, this);
         }
         if (!template) {
             this.egw().debug("error", "Error while loading definition template for " +
@@ -1643,7 +1643,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         link.file_upload.set_drop_target(false);
         if (row.row.tr) {
             // Ignore most of the UI, just use the status indicators
-            var status = jQuery(document.createElement("div"))
+            var status_1 = jQuery(document.createElement("div"))
                 .addClass('et2_link_to')
                 .width(row.row.tr.width())
                 .position({ my: "left top", at: "left top", of: row.row.tr })
@@ -1661,10 +1661,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
                     link._parent.refresh(uid, 'edit');
                 }
                 // Fade out nicely
-                status.delay(linked ? 1 : 2000)
+                status_1.delay(linked ? 1 : 2000)
                     .fadeOut(500, function () {
                     link.destroy();
-                    status.remove();
+                    status_1.remove();
                 });
             });
         }
@@ -1776,7 +1776,9 @@ var et2_nextmatch = /** @class */ (function (_super) {
         var callback = jQuery.proxy(function (button, value) {
             if (button === et2_dialog.CANCEL_BUTTON) {
                 // Give dialog a chance to close, or it will be in the print
-                window.setTimeout(function () { defer.reject(); }, 0);
+                window.setTimeout(function () {
+                    defer.reject();
+                }, 0);
                 return;
             }
             // Set CSS for orientation
@@ -1814,59 +1816,65 @@ var et2_nextmatch = /** @class */ (function (_super) {
             }
             // We need more rows
             if (button === 'dialog[all]' || rows > loaded_count) {
-                var count = 0;
-                var fetchedCount = 0;
-                var cancel = false;
-                var nm = this;
-                var dialog = et2_dialog.show_dialog(
+                var count_1 = 0;
+                var fetchedCount_1 = 0;
+                var cancel_1 = false;
+                var nm_1 = this;
+                var dialog_1 = et2_dialog.show_dialog(
                 // Abort the long task if they canceled the data load
-                function () { count = total; cancel = true; window.setTimeout(function () { defer.reject(); }, 0); }, egw.lang('Loading'), egw.lang('please wait...'), {}, [
+                function () {
+                    count_1 = total;
+                    cancel_1 = true;
+                    window.setTimeout(function () {
+                        defer.reject();
+                    }, 0);
+                }, egw.lang('Loading'), egw.lang('please wait...'), {}, [
                     { "button_id": et2_dialog.CANCEL_BUTTON, "text": 'cancel', id: 'dialog[cancel]', image: 'cancel' }
                 ]);
-                // dataFetch() is asyncronous, so all these requests just get fired off...
+                // dataFetch() is asynchronous, so all these requests just get fired off...
                 // 200 rows chosen arbitrarily to reduce requests.
                 do {
                     var ctx = {
                         "self": this.controller,
-                        "start": count,
+                        "start": count_1,
                         "count": Math.min(rows, 200),
                         "lastModification": this.controller._lastModification
                     };
-                    if (nm.controller.dataStorePrefix) {
+                    if (nm_1.controller.dataStorePrefix) {
                         // @ts-ignore
-                        ctx.prefix = nm.controller.dataStorePrefix;
+                        ctx.prefix = nm_1.controller.dataStorePrefix;
                     }
-                    nm.controller.dataFetch({ start: count, num_rows: Math.min(rows, 200) }, function (data) {
+                    nm_1.controller.dataFetch({ start: count_1, num_rows: Math.min(rows, 200) }, function (data) {
                         // Keep track
                         if (data && data.order) {
-                            fetchedCount += data.order.length;
+                            fetchedCount_1 += data.order.length;
                         }
-                        nm.controller._fetchCallback.apply(this, arguments);
-                        if (fetchedCount >= rows) {
-                            if (cancel) {
-                                dialog.destroy();
+                        nm_1.controller._fetchCallback.apply(this, arguments);
+                        if (fetchedCount_1 >= rows) {
+                            if (cancel_1) {
+                                dialog_1.destroy();
                                 defer.reject();
                                 return;
                             }
                             // Use CSS to hide all but the requested rows
                             // Prevents us from showing more than requested, if actual height was less than average
-                            nm.print_row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
-                            egw.css(nm.print_row_selector, 'display: none');
+                            nm_1.print_row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
+                            egw.css(nm_1.print_row_selector, 'display: none');
                             // No scrollbar in print view
                             jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', 'hidden');
                             // Show it all
                             jQuery('.egwGridView_scrollarea', this.div).css('height', 'auto');
                             // Grid needs to redraw before it can be printed, so wait
                             window.setTimeout(jQuery.proxy(function () {
-                                dialog.destroy();
+                                dialog_1.destroy();
                                 // Should be OK to print now
                                 defer.resolve();
-                            }, nm), et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
+                            }, nm_1), et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
                         }
                     }, ctx);
-                    count += 200;
-                } while (count < rows);
-                nm.controller._grid.setScrollHeight(nm.controller._grid.getAverageHeight() * (rows + 1));
+                    count_1 += 200;
+                } while (count_1 < rows);
+                nm_1.controller._grid.setScrollHeight(nm_1.controller._grid.getAverageHeight() * (rows + 1));
             }
             else {
                 // Don't need more rows, limit to requested and finish
@@ -1879,7 +1887,9 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 // No scrollbar in print view
                 jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', 'hidden');
                 // Give dialog a chance to close, or it will be in the print
-                window.setTimeout(function () { defer.resolve(); }, 0);
+                window.setTimeout(function () {
+                    defer.resolve();
+                }, 0);
             }
         }, this);
         var value = {
@@ -1940,7 +1950,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         delete this.print.old_height;
         // Remove CSS rule hiding extra rows
         if (this.print.row_selector) {
-            egw.css(this.print.row_selector, false);
+            egw.css(this.print.row_selector, '');
             delete this.print.row_selector;
         }
         // Restore columns
@@ -1956,6 +1966,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         if (pref) {
             if (typeof pref === 'string')
                 pref = pref.split(',');
+            // @ts-ignore
             this.set_columns(pref, app);
         }
         this.dynheight.outerNode.css('max-width', 'inherit');
@@ -2046,9 +2057,9 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
     /**
      * Constructor
      *
-     * @param nextmatch
-     * @param nm_div
-     * @memberOf et2_nextmatch_header_bar
+     * @param _parent
+     * @param _attrs
+     * @param _child
      */
     function et2_nextmatch_header_bar(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, [_parent, _parent.options.settings], et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_header_bar._attributes, _child || {})) || this;
@@ -2072,12 +2083,9 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             this._createHeader();
         }
         // Bind row count
-        /* TODO
         this.nextmatch.dataview.grid.setInvalidateCallback(function () {
             this.count_total.text(this.nextmatch.dataview.grid.getTotalCount() + "");
         }, this);
-
-         */
     };
     /**
      * Actions are handled by the controller, so ignore these
@@ -2204,9 +2212,9 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
         this._setup_favorites(settings['favorites']);
         // Export
         if (typeof settings.csv_fields != "undefined" && settings.csv_fields != false) {
-            var definition = settings.csv_fields;
+            var definition_1 = settings.csv_fields;
             if (settings.csv_fields === true) {
-                definition = egw.preference('nextmatch-export-definition', this.nextmatch.egw().getAppName());
+                definition_1 = egw.preference('nextmatch-export-definition', this.nextmatch.egw().app_name());
             }
             var button_1 = et2_createWidget("buttononly", { id: "export", "statustext": "Export", image: "download", "background_image": true }, this);
             jQuery(button_1.getDOMNode())
@@ -2215,7 +2223,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
                 egw_openWindowCentered2(egw.link('/index.php', {
                     'menuaction': 'importexport.importexport_export_ui.export_dialog',
                     'appname': event.data.egw().getAppName(),
-                    'definition': definition
+                    'definition': definition_1
                 }), '_blank', 850, 440, 'yes');
             });
         }
@@ -2262,7 +2270,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
         }
         // Apply letter search preference
         var lettersearch_preference = "nextmatch-" + this.nextmatch.options.settings.columnselection_pref + "-lettersearch";
-        if (this.lettersearch && !egw.preference(lettersearch_preference, this.nextmatch.egw().getAppName())) {
+        if (this.lettersearch && !egw.preference(lettersearch_preference, this.nextmatch.egw().app_name())) {
             this.lettersearch.hide();
         }
     };
@@ -2347,7 +2355,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             if ((!options || options.length == 0) && (
             // perspectiveData.row in nm, data["${row}"] in an auto-repeat grid
             this.nextmatch.getArrayMgr("sel_options").perspectiveData.row || this.nextmatch.getArrayMgr("sel_options").data[row_stuck[i]])) {
-                var row_id = name.replace(/[0-9]+/, row_stuck[i]);
+                row_id = name.replace(/[0-9]+/, row_stuck[i]);
                 options = this.nextmatch.getArrayMgr("sel_options").getEntry(row_id);
                 if (!options) {
                     row_id = row_stuck[i] + "[" + name + "]";
@@ -2376,14 +2384,14 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
         select.attributes.select_options.ignore = true;
         if (this.nextmatch.options.settings[name + "_onchange"]) {
             // Get the onchange function string
-            var onchange = this.nextmatch.options.settings[name + "_onchange"];
+            var onchange_1 = this.nextmatch.options.settings[name + "_onchange"];
             // Real submits cause all sorts of problems
-            if (onchange.match(/this\.form\.submit/)) {
+            if (onchange_1.match(/this\.form\.submit/)) {
                 this.egw().debug("warn", "%s tries to submit form, which is not allowed.  Filter changes automatically refresh data with no reload.", name);
-                onchange = onchange.replace(/this\.form\.submit\([^)]*\);?/, 'return true;');
+                onchange_1 = onchange_1.replace(/this\.form\.submit\([^)]*\);?/, 'return true;');
             }
             // Connect it to the onchange event of the input element - may submit
-            select.change = et2_compileLegacyJS(onchange, this.nextmatch, select.getInputNode());
+            select.change = et2_compileLegacyJS(onchange_1, this.nextmatch, select.getInputNode());
             this._bindHeaderInput(select);
         }
         else // default request changed rows with new filters, previous this.form.submit()
@@ -2557,8 +2565,8 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
                     }
                     else {
                         // Not null is easy, just get values
-                        var value = this.getInstanceManager().getValues(sub_header);
-                        header.nextmatch.applyFilters(value[header.nextmatch.id]);
+                        var value_1 = this.getInstanceManager().getValues(sub_header);
+                        header.nextmatch.applyFilters(value_1[header.nextmatch.id]);
                     }
                 }
                 // In case this gets bound twice, it's important to return
@@ -2711,6 +2719,7 @@ var et2_nextmatch_customfields = /** @class */ (function (_super) {
         var nm_column = null;
         var set_fields = {};
         for (var i = 0; i < this.nextmatch.columns.length; i++) {
+            // @ts-ignore
             if (this.nextmatch.columns[i].widget == this) {
                 nm_column = columnMgr.columns[i];
                 break;
@@ -3171,7 +3180,6 @@ var et2_nextmatch_entryheader = /** @class */ (function (_super) {
             this.attributes.value.ignore = true;
             //this.attributes.select_options.ignore = true;
         }
-        var self = this;
         // Fire on lost focus, clear filter if user emptied box
     };
     return et2_nextmatch_entryheader;
@@ -3187,6 +3195,7 @@ var et2_nextmatch_customfilter = /** @class */ (function (_super) {
      *
      * @param _parent
      * @param _attrs
+     * @param _child
      * @memberOf et2_nextmatch_customfilter
      */
     function et2_nextmatch_customfilter(_parent, _attrs, _child) {

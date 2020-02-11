@@ -54,7 +54,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 	 * @memberOf et2_nextmatch_controller
 	 */
 	constructor( _parentController, _egw, _execId, _widget, _parentId,
-			_grid, _rowProvider, _actionLinks, _objectManager, _actions)
+			_grid, _rowProvider, _actionLinks, _objectManager, _actions?)
 	{
 
 		// Call the parent et2_dataview_controller constructor
