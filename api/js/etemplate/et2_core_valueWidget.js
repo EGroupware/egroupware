@@ -65,7 +65,7 @@ var et2_valueWidget = /** @class */ (function (_super) {
                 }
             }
             // Check for already inside namespace
-            if (this.createNamespace && this.getArrayMgr("content").perspectiveData.owner == this) {
+            if (this._createNamespace() && this.getArrayMgr("content").perspectiveData.owner == this) {
                 _attrs["value"] = this.getArrayMgr("content").data;
             }
         }

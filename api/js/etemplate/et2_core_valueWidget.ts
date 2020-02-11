@@ -75,7 +75,7 @@ export class et2_valueWidget extends et2_baseWidget
 				}
 			}
 			// Check for already inside namespace
-			if(this.createNamespace && this.getArrayMgr("content").perspectiveData.owner == this)
+			if(this._createNamespace() && this.getArrayMgr("content").perspectiveData.owner == this)
 			{
 				_attrs["value"] = this.getArrayMgr("content").data;
 			}
