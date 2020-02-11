@@ -364,7 +364,7 @@ export abstract class EgwApp
 	 * @param {string} template template name to check, instead of trying all templates of current app
 	 * @return {boolean} false - Returns false to stop event propagation
 	 */
-	setState(state, template? : string)
+	setState(state, template? : string) : string|false|void
 	{
 		// State should be an object, not a string, but we'll parse
 		if(typeof state == "string")
@@ -445,7 +445,7 @@ export abstract class EgwApp
 	 *
 	 * @return {object} Application specific map representing the current state
 	 */
-	getState()
+	getState() : {[propName:string]: any}
 	{
 		var state = {};
 

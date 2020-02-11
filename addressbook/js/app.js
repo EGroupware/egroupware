@@ -52,9 +52,9 @@ var AddressbookApp = /** @class */ (function (_super) {
     /**
      * Destructor
      */
-    AddressbookApp.prototype.destroy = function () {
+    AddressbookApp.prototype.destroy = function (_app) {
         // call parent
-        _super.prototype.destroy.apply(this, arguments);
+        _super.prototype.destroy.call(this, _app);
     };
     /**
      * This function is called when the etemplate2 object is loaded
@@ -71,7 +71,7 @@ var AddressbookApp = /** @class */ (function (_super) {
         if (name.match(/^infolog|tracker\./))
             return;
         // call parent
-        _super.prototype.et2_ready.apply(this, arguments);
+        _super.prototype.et2_ready.call(this, et2, name);
         switch (name) {
             case 'addressbook.edit':
                 var content = this.et2.getArrayMgr('content').data;
@@ -793,7 +793,7 @@ var AddressbookApp = /** @class */ (function (_super) {
      */
     AddressbookApp.prototype.getState = function () {
         // Most likely we're in the list view
-        var state = _super.prototype.observer.apply(this, arguments);
+        var state = _super.prototype.getState.call(this);
         if (jQuery.isEmptyObject(state)) {
             // Not in a list view.  Try to find contact ID
             var etemplates = etemplate2.getByApplication('addressbook');
@@ -818,7 +818,7 @@ var AddressbookApp = /** @class */ (function (_super) {
      *
      * @return {boolean} false - Returns false to stop event propagation
      */
-    AddressbookApp.prototype.setState = function (state) {
+    AddressbookApp.prototype.setState = function (state, template) {
         var current_state = this.getState();
         // State should be an object, not a string, but we'll parse
         if (typeof state == "string") {
@@ -836,7 +836,7 @@ var AddressbookApp = /** @class */ (function (_super) {
         }
         else if (jQuery.isEmptyObject(state)) {
             // Regular handling first to clear everything but advanced search
-            _super.prototype.setState.apply(this, arguments);
+            _super.prototype.setState.call(this, state);
             // Clear advanced search, which is in session and etemplate
             egw.json('addressbook.addressbook_ui.ajax_clear_advanced_search', [], function () {
                 framework.setWebsiteTitle('addressbook', '');
@@ -881,7 +881,7 @@ var AddressbookApp = /** @class */ (function (_super) {
         if (typeof state.state.advanced_search === 'undefined') {
             state.state.advanced_search = false;
         }
-        return _super.prototype.setState.apply(this, arguments);
+        return _super.prototype.setState.call(this, state);
     };
     /**
      * Field changed, call server validation
