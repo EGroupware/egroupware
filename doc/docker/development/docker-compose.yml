@@ -70,10 +70,13 @@ services:
     # 1. comment out the whole db service below AND
     # 2. set EGW_DB_HOST=localhost AND
     # 3. uncomment the next line and modify the host path (first one), it depends on your distro:
-    #    - RHEL/CentOS   /var/lib/mysql/mysql.sock
-    #    - openSUSE/SLE  /var/run/mysql/mysql.sock
-    #    - Debian/Ubuntu /var/run/mysqld/mysqld.sock
-    #- /var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock
+    #    - RHEL/CentOS   /var/lib/mysql/mysql.sock:/var/run/mysqld/mysqld.sock
+    #    - openSUSE/SLE  /var/run/mysql:/var/run/mysqld
+    #    - Debian/Ubuntu /var/run/mysqld:/var/run/mysqld
+    #- /var/run/mysqld:/var/run/mysqld
+    # private CA so egroupware can validate your certificate to talk to Collabora or Rocket.Chat
+    # multiple certificates (eg. a chain) have to be single files in a directory, with one named private-ca.crt!
+    #- /etc/egroupware-docker/private-ca.crt:/usr/local/share/ca-certificates/private-ca.crt:ro
     environment:
     #
     # MariaDB/MySQL host to use: for internal service use "db", for host database (socket bind-mounted into container) use "localhost"
