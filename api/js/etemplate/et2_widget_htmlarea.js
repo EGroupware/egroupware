@@ -453,8 +453,8 @@ var et2_htmlarea = /** @class */ (function (_super) {
      * @constant
      */
     et2_htmlarea.FONT_SIZE_FORMATS = {
-        pt: "8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
-        px: "8px 10px 12px 14px 18px 24px 36px 48px 72px"
+        pt: "8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
+        px: "8px 9px 10px 11px 12px 14px 18px 24px 36px 48px 72px"
     };
     /**
      * language code represention for TinyMCE lang code
@@ -471,4 +471,3 @@ var et2_htmlarea = /** @class */ (function (_super) {
     return et2_htmlarea;
 }(et2_core_editableWidget_1.et2_editableWidget));
 et2_core_widget_1.et2_register_widget(et2_htmlarea, ["htmlarea"]);
-//# sourceMappingURL=et2_widget_htmlarea.js.map
