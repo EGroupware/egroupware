@@ -285,7 +285,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 	 *
 	 * @returns {Object|null} Data for tab the widget is on
 	 */
-	get_tab_info() : {id: string, label: string, widget: et2_widget, contentDiv: JQuery} | null
+	get_tab_info() : {id: string, label: string, widget: et2_widget, contentDiv: JQuery, flagDiv: JQuery} | null
 	{
 		var parent : et2_widget = this;
 		do {
