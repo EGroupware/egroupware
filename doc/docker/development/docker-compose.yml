@@ -71,7 +71,7 @@ services:
     # 2. set EGW_DB_HOST=localhost AND
     # 3. uncomment the next line and modify the host path (first one), it depends on your distro:
     #    - RHEL/CentOS   /var/lib/mysql/mysql.sock:/var/run/mysqld/mysqld.sock
-    #    - openSUSE/SLE  /var/run/mysql:/var/run/mysqld
+    #    - openSUSE/SLE  /var/run/mysql/mysql.sock:/var/run/mysqld/mysqld.sock
     #    - Debian/Ubuntu /var/run/mysqld:/var/run/mysqld
     #- /var/run/mysqld:/var/run/mysqld
     # private CA so egroupware can validate your certificate to talk to Collabora or Rocket.Chat
