@@ -14,6 +14,9 @@ The provided docker-compose.yml will run the following container:
 * **egroupware-nginx** running Nginx as webserver (by default http only on port 8080)
 * **egroupware-db** latest MariaDB 10.4
 * **egroupware-watchtower** updating all above container automatically daily at 4am
+* **collabora-key** Collabora Online Office
+* **rocketchat** Rocket.Chat server
+* **rocketchat-mongodb** MongoDB for Rocket.Chat
 ```
 version: '3'
 volumes:
@@ -36,6 +39,29 @@ volumes:
   #    # location of deprecated EGroupware packages like Wiki, SiteMgr, KnowledgeBase
   #    device: /usr/share/egroupware
   #    #device: $PWD/extra
+  # collabora-config
+  collabora-config:
+    driver_opts:
+      type: none
+      o: bind
+      # to upgrade an existing non-docker installation most easy is to use the existing
+      # data directory /var/lib/egroupware AND the host database see below
+      #device: /var/lib/egroupware/default/loolwsd
+      # otherwise data is stored in data subdirectory of the current directory
+      device: $PWD/data/default/loolwsd
+  # store Rocket.Chat MongoDB on an (internal) Volume
+  mongo:
+  # directory to store MongoDB dumps
+  rocketchat-dumps:
+    driver_opts:
+      type: none
+      o: bind
+      device: $PWD/data/default/rocketchat/dump
+  rocketchat-uploads:
+    driver_opts:
+      type: none
+      o: bind
+      device: $PWD/data/default/rocketchat/uploads
 services:
   egroupware:
     image: egroupware/egroupware:latest
@@ -52,13 +78,18 @@ services:
     # 1. comment out the whole db service below AND
     # 2. set EGW_DB_HOST=localhost AND
     # 3. uncomment the next line and modify the host path (first one), it depends on your distro:
-    #    - RHEL/CentOS   /var/lib/mysql/mysql.sock
-    #    - openSUSE/SLE  /var/run/mysql/mysql.sock
-    #    - Debian/Ubuntu /var/run/mysqld/mysqld.sock
-    #- /var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock
+    #    - RHEL/CentOS   /var/lib/mysql/mysql.sock:/var/run/mysqld/mysqld.sock
+    #    - openSUSE/SLE  /var/run/mysql/mysql.sock:/var/run/mysqld/mysqld.sock
+    #    - Debian/Ubuntu /var/run/mysqld:/var/run/mysqld
+    #- /var/run/mysqld:/var/run/mysqld
+    # private CA so egroupware can validate your certificate to talk to Collabora or Rocket.Chat
+    # multiple certificates (eg. a chain) have to be single files in a directory, with one named private-ca.crt!
+    #- /etc/egroupware-docker/private-ca.crt:/usr/local/share/ca-certificates/private-ca.crt:ro
     environment:
     # MariaDB/MySQL host to use: for internal service use "db", for host database (socket bind-mounted into container) use "localhost"
     - EGW_DB_HOST=db
+    # grant host is needed for NOT using localhost / unix domain socket for MySQL/MariaDB
+    - EGW_DB_GRANT_HOST=172.%
     # for internal db service you should to specify a root password here AND in db service
     # a database "egroupware" with a random password is created for you on installation (password is stored in header.inc.php in data directory)
     #- EGW_DB_ROOT=root
@@ -133,4 +164,66 @@ services:
     command: --schedule "0 0 4 * * *"
     container_name: egroupware-watchtower
     restart: always
+
+  # Collabora Online Office
+  collabora-key:
+    image: "quay.io/egroupware/collabora-key:stable"
+    #image: collabora/code:latest
+    # needs to be initialised via: docker run --rm -v dev_collabora-config:/mnt --entrypoint '/bin/cp -r /etc/loolwsd /mnt' quay.io/egroupware/collabora-key:stable
+    volumes:
+      - collabora-config:/etc/loolwsd
+    # dont try to regenerate the (not used certificate) as volumn is readonly
+    environment:
+      - DONT_GEN_SSL_CERT=1
+    restart: always
+    container_name: collabora-key
+    # set the ip-address of your docker host AND your official DNS name so Collabora
+    # can access EGroupware without the need to go over your firewall
+    #extra_hosts:
+    #- "my.host.name:ip-address"
+
+  # Rocket.Chat server
+  rocketchat:
+    image: rocketchat/rocket.chat:latest
+    command: bash -c 'for i in `seq 1 30`; do node main.js && s=$$? && break || s=$$?; echo "Tried $$i times. Waiting 5 secs..."; sleep 5; done; (exit $$s)'
+    restart: unless-stopped
+    volumes:
+      - rocketchat-uploads:/app/uploads
+    # if EGroupware uses a certificate from a private CA, OAuth authentication will fail, you need to:
+    # - have the CA certificate stored at /etc/egroupware-docker/private-ca.crt
+    # - uncomment the next 2 lines about the private CA:
+    # - /etc/egroupware-docker/private-ca.crt:/usr/local/share/ca-certificates/private-ca.crt:ro
+    environment:
+      # - NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/private-ca.crt
+      # IMPORTANT: change ROOT_URL to your actual url eg. https://domain.com/rocketchat
+      - ROOT_URL=http://localhost/rocketchat
+      - PORT=3000
+      - MONGO_URL=mongodb://mongo:27017/rocketchat
+      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
+    #     - HTTP_PROXY=http://proxy.domain.com
+    #     - HTTPS_PROXY=http://proxy.domain.com
+    depends_on:
+      - mongo
+    container_name: rocketchat
+    # set the ip-address of your docker host AND your official DNS name so Rocket.Chat
+    # can access EGroupware without the need to go over your firewall
+    #extra_hosts:
+    #- "my.host.name:ip-address"
+
+  # MongoDB for Rocket.Chat
+  mongo:
+    image: mongo:4.0
+    restart: unless-stopped
+    volumes:
+      - mongo:/data/db
+      - rocketchat-dumps:/dump
+    command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
+    container_name: rocketchat-mongo
+  # this container's job is just run the command to initialize the replica set.
+  # it will run the command and remove himself (it will not stay running)
+  mongo-init-replica:
+    image: mongo:4.0
+    command: 'bash -c "for i in `seq 1 30`; do mongo mongo/rocketchat --eval \"rs.initiate({ _id: ''rs0'', members: [ { _id: 0, host: ''localhost:27017'' } ]})\" && s=$$? && break || s=$$?; echo \"Tried $$i times. Waiting 5 secs...\"; sleep 5; done; (exit $$s)"'
+    depends_on:
+      - mongo
 ```
