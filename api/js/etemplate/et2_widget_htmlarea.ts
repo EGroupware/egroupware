@@ -125,8 +125,8 @@ class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 	 * @constant
 	 */
 	public static readonly FONT_SIZE_FORMATS : {pt : string, px : string} = {
-		pt: "8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
-		px:"8px 9px 10px 11px 12px 14px 18px 24px 36px 48px 72px"
+		pt: "8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt",
+		px: "8px 9px 10px 11px 12px 14px 16px 18px 20px 22px 24px 26px 28px 36px 48px 72px"
 	};
 
 	/**
