@@ -42,10 +42,10 @@ class AddressbookApp extends EgwApp
 	/**
 	 * Destructor
 	 */
-	destroy()
+	destroy(_app)
 	{
 		// call parent
-		super.destroy.apply(this, arguments);
+		super.destroy(_app);
 	}
 
 	/**
@@ -64,7 +64,7 @@ class AddressbookApp extends EgwApp
 		if (name.match(/^infolog|tracker\./)) return;
 
 		// call parent
-		super.et2_ready.apply(this, arguments);
+		super.et2_ready(et2, name);
 
 		switch (name)
 		{
@@ -963,7 +963,7 @@ class AddressbookApp extends EgwApp
 	getState()
 	{
 		// Most likely we're in the list view
-		var state = super.observer.apply(this, arguments);
+		var state = super.getState();
 
 		if(jQuery.isEmptyObject(state))
 		{
@@ -994,7 +994,7 @@ class AddressbookApp extends EgwApp
 	 *
 	 * @return {boolean} false - Returns false to stop event propagation
 	 */
-	setState(state)
+	setState(state, template?)
 	{
 		var current_state = this.getState();
 
@@ -1020,7 +1020,7 @@ class AddressbookApp extends EgwApp
 		else if (jQuery.isEmptyObject(state))
 		{
 			// Regular handling first to clear everything but advanced search
-			super.setState.apply(this, arguments);
+			super.setState(state);
 
 			// Clear advanced search, which is in session and etemplate
 			egw.json('addressbook.addressbook_ui.ajax_clear_advanced_search',[], function() {
@@ -1076,7 +1076,7 @@ class AddressbookApp extends EgwApp
 		{
 			state.state.advanced_search = false;
 		}
-		return super.setState.apply(this, arguments);
+		return super.setState(state);
 	}
 
 	/**

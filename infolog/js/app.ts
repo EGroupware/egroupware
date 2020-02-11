@@ -42,10 +42,10 @@ class InfologApp extends EgwApp
 	/**
 	 * Destructor
 	 */
-	destroy()
+	destroy(_app)
 	{
 		// call parent
-		super.destroy.apply(this, arguments);
+		super.destroy(_app);
 	}
 
 	/**
@@ -59,7 +59,7 @@ class InfologApp extends EgwApp
 	et2_ready(_et2, _name)
 	{
 		// call parent
-		super.et2_ready.apply(this, arguments);
+		super.et2_ready(_et2, _name);
 
 		switch(_name)
 		{
@@ -163,7 +163,7 @@ class InfologApp extends EgwApp
 	getState()
 	{
 		// call parent
-		var state = super.observer.apply(this, arguments);
+		var state = super.getState();
 		var nm : any = {};
 
 		// Get index etemplate
@@ -200,7 +200,7 @@ class InfologApp extends EgwApp
 		{
 			if (typeof state.state[name] == 'undefined') state.state[name] = to_set[name];
 		}
-		return super.setState.apply(this, arguments);
+		return super.setState(state);
 	}
 
 	/**

@@ -43,15 +43,18 @@ var InfologApp = /** @class */ (function (_super) {
      * @memberOf app.infolog
      */
     function InfologApp() {
+        var _this = 
         // call parent
-        return _super.call(this) || this;
+        _super.call(this) || this;
+        _this.appname = 'infolog';
+        return _this;
     }
     /**
      * Destructor
      */
-    InfologApp.prototype.destroy = function () {
+    InfologApp.prototype.destroy = function (_app) {
         // call parent
-        _super.prototype.destroy.apply(this, arguments);
+        _super.prototype.destroy.call(this, _app);
     };
     /**
      * This function is called when the etemplate2 object is loaded
@@ -63,7 +66,7 @@ var InfologApp = /** @class */ (function (_super) {
      */
     InfologApp.prototype.et2_ready = function (_et2, _name) {
         // call parent
-        _super.prototype.et2_ready.apply(this, arguments);
+        _super.prototype.et2_ready.call(this, _et2, _name);
         switch (_name) {
             case 'infolog.index':
                 this.filter_change();
@@ -153,7 +156,7 @@ var InfologApp = /** @class */ (function (_super) {
      */
     InfologApp.prototype.getState = function () {
         // call parent
-        var state = _super.prototype.observer.apply(this, arguments);
+        var state = _super.prototype.getState.call(this);
         var nm = {};
         // Get index etemplate
         var et2 = etemplate2.getById('infolog-index');
@@ -185,7 +188,7 @@ var InfologApp = /** @class */ (function (_super) {
             if (typeof state.state[name] == 'undefined')
                 state.state[name] = to_set[name];
         }
-        return _super.prototype.setState.apply(this, arguments);
+        return _super.prototype.setState.call(this, state);
     };
     /**
      * Enable or disable the date filter
@@ -333,6 +336,7 @@ var InfologApp = /** @class */ (function (_super) {
             if (i < ab.options.length) {
                 cc.value += (cc.value ? ', ' : '') + ab.options[i].text.replace(/^.* <(.*)>$/, '$1');
                 ab.value = '';
+                // @ts-ignore
                 ab.onchange();
                 jQuery("tr.hiddenRow").css("display", "none");
             }
@@ -362,23 +366,24 @@ var InfologApp = /** @class */ (function (_super) {
             case status_id:
                 completed = status.value == 'done' || status.value == 'billed';
                 if (completed || status.value == 'not-started' ||
-                    (status.value == 'ongoing') != (percent.value > 0 && percent.value < 100)) {
+                    (status.value == 'ongoing') != (parseFloat(percent.value) > 0 && parseFloat(percent.value) < 100)) {
                     if (completed) {
-                        percent.value = 100;
+                        percent.value = '100';
                     }
                     else if (status.value == 'not-started') {
-                        percent.value = 0;
+                        percent.value = '0';
                     }
-                    else if (!completed && (percent.value == 0 || percent.value == 100)) {
-                        percent.value = 10;
+                    else if (!completed && (parseInt(percent.value) == 0 || parseInt(percent.value) == 100)) {
+                        percent.value = '10';
                     }
                 }
                 break;
             case percent_id:
-                completed = percent.value == 100;
+                completed = parseInt(percent.value) == 100;
                 if (completed != (status.value == 'done' || status.value == 'billed') ||
-                    (status.value == 'not-started') != (percent.value == 0)) {
-                    status.value = percent.value == 0 ? (jQuery('[value="not-started"]', status).length ? 'not-started' : 'ongoing') : (percent.value == 100 ? 'done' : 'ongoing');
+                    (status.value == 'not-started') != (parseInt(percent.value) == 0)) {
+                    status.value = parseInt(percent.value) == 0 ? (jQuery('[value="not-started"]', status).length ?
+                        'not-started' : 'ongoing') : (parseInt(percent.value) == 100 ? 'done' : 'ongoing');
                 }
                 break;
             case datecompleted_id + '[str]':
@@ -387,8 +392,8 @@ var InfologApp = /** @class */ (function (_super) {
                 if (completed != (status.value == 'done' || status.value == 'billed')) {
                     status.value = completed ? 'done' : 'not-started';
                 }
-                if (completed != (percent.value == 100)) {
-                    percent.value = completed ? 100 : 0;
+                if (completed != (parseInt(percent.value) == 100)) {
+                    percent.value = completed ? '100' : '0';
                 }
                 break;
         }
@@ -416,7 +421,7 @@ var InfologApp = /** @class */ (function (_super) {
                     if (template.isDirty()) {
                         template.submit();
                     }
-                    egw_open(id, 'infolog', 'edit', { print: 1 });
+                    egw.open(id, 'infolog', 'edit', { print: 1 });
                     break;
                 case 'ical':
                     template.postSubmit();
@@ -434,7 +439,7 @@ var InfologApp = /** @class */ (function (_super) {
      */
     InfologApp.prototype.infolog_menu_print = function (_action, _selected) {
         var id = _selected[0].id.replace(/^infolog::/g, '');
-        egw_open(id, 'infolog', 'edit', { print: 1 });
+        egw.open(id, 'infolog', 'edit', { print: 1 });
     };
     /**
      * Trigger print() onload window

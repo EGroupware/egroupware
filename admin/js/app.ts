@@ -73,7 +73,7 @@ class AdminApp extends EgwApp
 	/**
 	 * Destructor
 	 */
-	destroy()
+	destroy(_app)
 	{
 		this.iframe = null;
 		this.nm = null;
@@ -81,7 +81,7 @@ class AdminApp extends EgwApp
 		this.tree = null;
 
 		// call parent
-		super.destroy.apply(this, arguments);
+		super.destroy(_app);
 	}
 
 	/**
@@ -95,7 +95,7 @@ class AdminApp extends EgwApp
 	et2_ready(_et2, _name)
 	{
 		// call parent
-		super.et2_ready.apply(this, arguments);
+		super.et2_ready(_et2, _name);
 
 		switch(_name)
 		{

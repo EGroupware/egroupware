@@ -95,13 +95,13 @@ var AdminApp = /** @class */ (function (_super) {
     /**
      * Destructor
      */
-    AdminApp.prototype.destroy = function () {
+    AdminApp.prototype.destroy = function (_app) {
         this.iframe = null;
         this.nm = null;
         this.acl_dialog = null;
         this.tree = null;
         // call parent
-        _super.prototype.destroy.apply(this, arguments);
+        _super.prototype.destroy.call(this, _app);
     };
     /**
      * This function is called when the etemplate2 object is loaded
@@ -113,7 +113,7 @@ var AdminApp = /** @class */ (function (_super) {
      */
     AdminApp.prototype.et2_ready = function (_et2, _name) {
         // call parent
-        _super.prototype.et2_ready.apply(this, arguments);
+        _super.prototype.et2_ready.call(this, _et2, _name);
         switch (_name) {
             case 'admin.index':
                 var iframe = this.iframe = this.et2.getWidgetById('iframe');
