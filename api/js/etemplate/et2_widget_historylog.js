@@ -116,8 +116,6 @@ var et2_historylog = /** @class */ (function (_super) {
         if (this.options.status_id === this.id) {
             this.egw().debug("warn", "status_id attribute should not be the same as historylog ID");
         }
-        var _columns = typeof this.options.columns === "string" ?
-            this.options.columns.split(',') : this.options.columns;
         // Create the dynheight component which dynamically scales the inner
         // container.
         this.div.parentsUntil('.et2_tabs').height('100%');
@@ -141,7 +139,8 @@ var et2_historylog = /** @class */ (function (_super) {
         // Create widgets for columns that stay the same, and set up varying widgets
         this.createWidgets();
         // Create the gridview controller
-        var linkCallback = function () { };
+        var linkCallback = function () {
+        };
         this.controller = new et2_dataview_controller_1.et2_dataview_controller(null, this.dataview.grid);
         this.controller.setContext(this);
         this.controller.setDataProvider(this);
@@ -193,8 +192,6 @@ var et2_historylog = /** @class */ (function (_super) {
         for (var key in this.fields) {
             this.fields[key].widget.destroy();
         }
-        if (this.diff)
-            this.diff.widget.destroy();
         // Free the grid components
         if (this.dataview)
             this.dataview.destroy();
@@ -275,6 +272,7 @@ var et2_historylog = /** @class */ (function (_super) {
             // Save to use for each row
             var nodes_1 = widget._children.length ? [] : jQuery(widget.getDetachedNodes());
             for (var i_2 = 0; i_2 < widget._children.length; i_2++) {
+                // @ts-ignore
                 nodes_1.push(jQuery(widget._children[i_2].getDetachedNodes()));
             }
             this.fields[key] = {
@@ -437,6 +435,7 @@ var et2_historylog = /** @class */ (function (_super) {
                     nodes = self.fields[_data.status].nodes.clone();
                 }
                 for (var j = 0; j < widget._children.length; j++) {
+                    // @ts-ignore
                     nodes.push(self.fields[_data.status].nodes[j].clone());
                     if (widget._children[j].instanceOf(et2_widget_diff_1.et2_diff)) {
                         self._spanValueColumns(jQuery(this));

@@ -133,7 +133,7 @@ var et2_description = /** @class */ (function (_super) {
      * @returns {Array|Array.getMedia.mediaContent}
      */
     et2_description.prototype.getMedia = function (_value) {
-        var base_url = egw.webserverUrl.match(/^\//, 'ig') ? egw(window).window.location.origin : '';
+        var base_url = egw.webserverUrl.match(new RegExp(/^\//, 'ig')) ? egw(window).window.location.origin : '';
         var mediaContent = [];
         if (_value) {
             mediaContent = [{

@@ -118,26 +118,22 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		if(tab)
 		{
 			// Bind the action to when the tab is selected
-			var handler = function(e) {
+			const handler = function (e) {
 				e.data.div.unbind("click.history");
 				// Bind on click tap, because we need to update history size
 				// after a rezise happend and history log was not the active tab
-				e.data.div.bind("click.history",{"history": e.data.history, div: tab.flagDiv}, function(e){
-					if(e.data.history && e.data.history.dynheight)
-					{
-						e.data.history.dynheight.update(function(_w, _h)
-						{
+				e.data.div.bind("click.history", {"history": e.data.history, div: tab.flagDiv}, function (e) {
+					if (e.data.history && e.data.history.dynheight) {
+						e.data.history.dynheight.update(function (_w, _h) {
 							e.data.history.dataview.resize(_w, _h);
 						});
 					}
 				});
 
-				if (typeof e.data.history.dataview == "undefined")
-				{
+				if (typeof e.data.history.dataview == "undefined") {
 					e.data.history.finishInit();
-					if(e.data.history.dynheight)
-					{
-						e.data.history.dynheight.update(function(_w, _h) {
+					if (e.data.history.dynheight) {
+						e.data.history.dynheight.update(function (_w, _h) {
 							e.data.history.dataview.resize(_w, _h);
 						});
 					}
@@ -184,21 +180,19 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		{
 			this.egw().debug("warn", "status_id attribute should not be the same as historylog ID");
 		}
-		var _columns = typeof this.options.columns === "string" ?
-			this.options.columns.split(',') : this.options.columns;
 
 		// Create the dynheight component which dynamically scales the inner
 		// container.
 		this.div.parentsUntil('.et2_tabs').height('100%');
-		var parent = this.get_tab_info();
+		const parent = this.get_tab_info();
 		this.dynheight = new et2_dynheight(parent ? parent.contentDiv : this.div.parent(),
 				this.innerDiv, 250
 		);
 
 		// Create the outer grid container
 		this.dataview = new et2_dataview(this.innerDiv, this.egw());
-		var dataview_columns = [];
-		var _columns = typeof this.options.columns === "string" ?
+		const dataview_columns = [];
+		let _columns = typeof this.options.columns === "string" ?
 			this.options.columns.split(',') : this.options.columns;
 		for (var i = 0; i < et2_historylog.columns.length; i++)
 		{
@@ -216,7 +210,9 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		this.createWidgets();
 
 		// Create the gridview controller
-		var linkCallback = function() {};
+		const linkCallback = function ()
+		{
+		};
 		this.controller = new et2_dataview_controller(null, this.dataview.grid);
 		this.controller.setContext(this);
 		this.controller.setDataProvider(this);
@@ -224,7 +220,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		this.controller.setRowCallback(this.rowCallback);
 		this.controller.setActionObjectManager(null);
 
-		var total = typeof this.options.value.total !== "undefined" ?
+		const total = typeof this.options.value.total !== "undefined" ?
 			this.options.value.total : 0;
 
 		// This triggers an invalidate, which updates the grid
@@ -256,8 +252,9 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		}
 
 		// Register a resize callback
-		var self = this;
-		jQuery(window).on('resize.' +this.options.value.app + this.options.value.id, function() {
+		const self = this;
+		jQuery(window).on('resize.' +this.options.value.app + this.options.value.id, function()
+		{
 			if (self && typeof self.dynheight != 'undefined') self.dynheight.update(function(_w, _h) {
 				self.dataview.resize(_w, _h);
 			});
@@ -276,15 +273,14 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		}
 
 		// Free the widgets
-		for(var i = 0; i < et2_historylog.columns.length; i++)
+		for(let i = 0; i < et2_historylog.columns.length; i++)
 		{
 			if(et2_historylog.columns[i].widget) et2_historylog.columns[i].widget.destroy();
 		}
-		for(var key in this.fields)
+		for(let key in this.fields)
 		{
 			this.fields[key].widget.destroy();
 		}
-		if(this.diff) this.diff.widget.destroy();
 
 		// Free the grid components
 		if(this.dataview) this.dataview.destroy();
@@ -373,9 +369,9 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		for(var key in this.options.value['status-widgets'])
 		{
 			let attrs = jQuery.extend({'readonly': true, 'id': key}, this.getArrayMgr('modifications').getEntry(key));
-			var field = attrs.type || this.options.value['status-widgets'][key];
-			var options = null;
-			var widget = this._create_widget(key, field, attrs, options);
+			const field = attrs.type || this.options.value['status-widgets'][key];
+			const options = null;
+			const widget = this._create_widget(key, field, attrs, options);
 			if(widget === null)
 			{
 				continue;
@@ -387,6 +383,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			let nodes = widget._children.length ? [] : jQuery(widget.getDetachedNodes());
 			for(let i = 0; i < widget._children.length; i++)
 			{
+				// @ts-ignore
 				nodes.push(jQuery(widget._children[i].getDetachedNodes()));
 			}
 			this.fields[key] = {
@@ -406,14 +403,14 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 
 	_create_widget(key, field, attrs, options)
 	{
-		var widget = null;
+		let widget = null;
 
 		// If field has multiple parts (is object) and isn't an obvious select box
 		if(typeof field === 'object')
 		{
 			// Check for multi-part statuses needing multiple widgets
-			var need_box = false;//!this.getArrayMgr('sel_options').getEntry(key);
-			for(var j in field)
+			let need_box = false;//!this.getArrayMgr('sel_options').getEntry(key);
+			for(let j in field)
 			{
 				// Require widget to be a widget, to avoid invalid widgets
 				// (and template, which is a widget and an infolog todo status)
@@ -430,8 +427,8 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				widget = et2_createWidget('vbox', attrs, this);
 				for(var i in field)
 				{
-					var type = field[i];
-					var child_attrs = jQuery.extend({}, attrs);
+					let type = field[i];
+					const child_attrs = jQuery.extend({}, attrs);
 					if(typeof type === 'object')
 					{
 						child_attrs['select_options'] = field[i];
@@ -442,7 +439,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 						delete child_attrs['select_options'];
 					}
 					child_attrs.id = i;
-					var child = this._create_widget(i, type, child_attrs, options);
+					const child = this._create_widget(i, type, child_attrs, options);
 					widget.addChild(child);
 					child.transformAttributes(child_attrs);
 				}
@@ -473,14 +470,14 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		// Parse / set legacy options
 		if(options)
 		{
-			var mgr = this.getArrayMgr("content");
+			const mgr = this.getArrayMgr("content");
 			for(let i = 0; i < options.length && i < widget.legacyOptions.length; i++)
 			{
 				// Not set
 				if(options[i] === "") continue;
 
-				var attr = widget.attributes[widget.legacyOptions[i]];
-				var attrValue = options[i];
+				const attr = widget.attributes[widget.legacyOptions[i]];
+				let attrValue = options[i];
 
 				// If the attribute is marked as boolean, parse the
 				// expression as bool expression.
@@ -533,7 +530,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		if ( this.options.value['num_rows'] )
 			_queriedRange['num_rows'] = this.options.value['num_rows'];
 
-		var historylog = this;
+		const historylog = this;
 		// Pass the fetch call to the API
 		this.egw().dataFetch(
 			this.getInstanceManager().etemplate_exec_id,
@@ -608,6 +605,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				}
 				for(var j = 0; j < widget._children.length; j++)
 				{
+					// @ts-ignore
 					nodes.push(self.fields[_data.status].nodes[j].clone());
 					if(widget._children[j].instanceOf(et2_diff))
 					{
@@ -655,11 +653,11 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				if(widget._children.length)
 				{
 					// Multi-part values
-					var box = jQuery(widget.getDOMNode()).clone();
+					const box = jQuery(widget.getDOMNode()).clone();
 					for(var j = 0; j < widget._children.length; j++)
 					{
-						var id = widget._children[j].id;
-						var widget_value = value ? value[id] || "" : "";
+						const id = widget._children[j].id;
+						const widget_value = value ? value[id] || "" : "";
 						widget._children[j].setDetachedAttributes(nodes[j], {value:widget_value});
 						box.append(nodes[j]);
 					}
@@ -740,7 +738,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		// Resize diff widgets to match new space
 		if(this.dataview)
 		{
-			var columns = this.dataview.getColumnMgr();
+			const columns = this.dataview.getColumnMgr();
 			jQuery('.et2_diff', this.div).closest('.innerContainer')
 				.width(columns.getColumnWidth(et2_historylog.NEW_VALUE) + columns.getColumnWidth(et2_historylog.OLD_VALUE));
 		}

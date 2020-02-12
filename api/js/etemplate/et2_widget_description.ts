@@ -15,10 +15,9 @@
 */
 
 import './et2_core_common';
-import { ClassWithAttributes } from "./et2_core_inheritance";
-import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
-import { et2_DOMWidget } from './et2_core_DOMWidget'
-import { et2_baseWidget } from './et2_core_baseWidget'
+import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_baseWidget} from './et2_core_baseWidget'
 import './et2_types';
 
 /**
@@ -252,7 +251,7 @@ export class et2_description extends et2_baseWidget implements et2_IDetachedDOM
 	 */
 	getMedia(_value)
 	{
-		var base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin :'';
+		var base_url = egw.webserverUrl.match(new RegExp(/^\//,'ig'))?egw(window).window.location.origin :'';
 		var mediaContent = [];
 		if (_value)
 		{
