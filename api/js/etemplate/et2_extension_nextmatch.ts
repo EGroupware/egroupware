@@ -257,7 +257,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		const cfs = {};
 		for(let i = 0; i < prefs.visible.length; i++)
 		{
-			if(prefs.visible[i].indexOf(et2_nextmatch_customfields.prefix) == 0)
+			if(prefs.visible[i].indexOf(et2_nextmatch_customfields.PREFIX) == 0)
 			{
 				cfs[prefs.visible[i].substr(1)] = !prefs.negated;
 			}
@@ -1114,7 +1114,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					// Just the ID for server side, not the whole nm name - some apps use it to skip custom fields
 					colName = widget.id;
 					for(let name in widget.options.fields) {
-						 if(widget.options.fields[name]) custom_fields.push(et2_nextmatch_customfields.prefix+name);
+						 if(widget.options.fields[name]) custom_fields.push(et2_nextmatch_customfields.PREFIX+name);
 					}
 				}
 				if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
@@ -1515,9 +1515,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				}
 				for(var field_name in (<et2_nextmatch_customfields><unknown>widget).customfields)
 				{
-					columns[et2_nextmatch_customfields.prefix+field_name] = " - "+
+					columns[et2_nextmatch_customfields.PREFIX+field_name] = " - "+
 						(<et2_nextmatch_customfields><unknown>widget).customfields[field_name].label;
-					if(widget.options.fields[field_name]) columns_selected.push(et2_customfields_list.prefix+field_name);
+					if(widget.options.fields[field_name]) columns_selected.push(et2_customfields_list.PREFIX+field_name);
 				}
 			}
 		}
@@ -1622,7 +1622,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 						// Turn on selected custom fields - start from 0 in case they're not in order
 						for(let j = 0; j < value.length; j++)
 						{
-							if(value[j].indexOf(et2_customfields_list.prefix) != 0) continue;
+							if(value[j].indexOf(et2_customfields_list.PREFIX) != 0) continue;
 							visible[value[j].substring(1)] = true;
 							i++;
 						}
@@ -1646,7 +1646,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 							{
 								if(jQuery.isEmptyObject(col_widget.options.fields) || col_widget.options.fields[field_name] == true)
 								{
-									self.sortedColumnsList.push(et2_customfields_list.prefix + field_name);
+									self.sortedColumnsList.push(et2_customfields_list.PREFIX + field_name);
 								}
 							}
 						}
@@ -1796,7 +1796,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				// Turn on selected custom fields - start from 0 in case they're not in order
 				for(let j = 0; j < column_list.length; j++)
 				{
-					if(column_list[j].indexOf(et2_customfields_list.prefix) != 0) continue;
+					if(column_list[j].indexOf(et2_customfields_list.PREFIX) != 0) continue;
 					visible[column_list[j].substring(1)] = true;
 				}
 				(<et2_nextmatch_customfields><unknown>widget).set_visible(visible);
@@ -2381,10 +2381,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					columns[colName] = col.caption;
 					for(let field_name in (<et2_nextmatch_customfields><unknown>widget).customfields)
 					{
-						columns[et2_nextmatch_customfields.prefix+field_name] = " - "+(<et2_nextmatch_customfields><unknown>widget).customfields[field_name].label;
+						columns[et2_nextmatch_customfields.PREFIX+field_name] = " - "+(<et2_nextmatch_customfields><unknown>widget).customfields[field_name].label;
 						if(widget.options.fields[field_name] && columns_selected.indexOf(colName) >= 0)
 						{
-							columns_selected.push(et2_nextmatch_customfields.prefix+field_name);
+							columns_selected.push(et2_nextmatch_customfields.PREFIX+field_name);
 						}
 					}
 				}
@@ -3477,7 +3477,7 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 		for(let field_name in this.options.customfields)
 		{
 			const field = this.options.customfields[field_name];
-			const cf_id = et2_customfields_list.prefix + field_name;
+			const cf_id = et2_customfields_list.PREFIX + field_name;
 
 
 			if(this.rows[field_name]) continue;
@@ -3587,7 +3587,7 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 		{
 			if(jQuery.isEmptyObject(this.options.fields) || this.options.fields[field_name] == true)
 			{
-				visible.push(et2_customfields_list.prefix + field_name);
+				visible.push(et2_customfields_list.PREFIX + field_name);
 				jQuery(this.rows[field_name]).show();
 			}
 			else if (typeof this.rows[field_name] != "undefined")

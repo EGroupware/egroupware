@@ -51,9 +51,6 @@ var et2_customfields_list = /** @class */ (function (_super) {
             // Create a local copy of the options object
             _this.options = et2_cloneObject(_attrs);
         }
-        // Allows server side to override prefix - not an attribute though
-        if (typeof _this.options.prefix != 'undefined')
-            _this.prefix = _this.options.prefix;
         // Create the table body and the table
         _this.tbody = jQuery(document.createElement("tbody"));
         _this.table = jQuery(document.createElement("table"))
@@ -139,10 +136,10 @@ var et2_customfields_list = /** @class */ (function (_super) {
             if (this.getType() != 'customfields-list' && !jQuery.isEmptyObject(this.options.fields) && !this.options.fields[field_name])
                 continue;
             var field = this.options.customfields[field_name];
-            var id = this.prefix + field_name;
+            var id = et2_customfields_list.PREFIX + field_name;
             // Need curlies around ID for nm row expansion
             if (this.id == '$row') {
-                id = "{" + this.id + "}" + "[" + this.prefix + field_name + "]";
+                id = "{" + this.id + "}" + "[" + et2_customfields_list.PREFIX + field_name + "]";
             }
             else if (this.id != et2_customfields_list.DEFAULT_ID) {
                 // Prefix this ID to avoid potential ID collisions
@@ -163,7 +160,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
                     'statustext': field.help,
                     'needed': field.needed,
                     'readonly': this.getArrayMgr("readonlys").isReadOnly(id, null, this.options.readonly),
-                    'value': this.options.value[this.prefix + field_name]
+                    'value': this.options.value[et2_customfields_list.PREFIX + field_name]
                 };
                 // Can't have a required readonly, it will warn & be removed later, so avoid the warning
                 if (attrs.readonly === true)
@@ -247,13 +244,13 @@ var et2_customfields_list = /** @class */ (function (_super) {
                 var val = contentMgr.getEntry(this.id);
                 _attrs["value"] = {};
                 if (val !== null) {
-                    if (this.id.indexOf(this.prefix) === 0 && typeof data.fields != 'undefined' && data.fields[this.id.replace(this.prefix, '')] === true) {
+                    if (this.id.indexOf(et2_customfields_list.PREFIX) === 0 && typeof data.fields != 'undefined' && data.fields[this.id.replace(et2_customfields_list.PREFIX, '')] === true) {
                         _attrs['value'][this.id] = val;
                     }
                     else {
                         // Only set the values that match desired custom fields
                         for (var key_3 in val) {
-                            if (key_3.indexOf(this.prefix) == 0) {
+                            if (key_3.indexOf(et2_customfields_list.PREFIX) == 0) {
                                 _attrs["value"][key_3] = val[key_3];
                             }
                         }
@@ -263,7 +260,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
                 else {
                     // Check for custom fields directly in record
                     for (var key in _attrs.customfields) {
-                        _attrs["value"][this.prefix + key] = contentMgr.getEntry(this.prefix + key);
+                        _attrs["value"][et2_customfields_list.PREFIX + key] = contentMgr.getEntry(et2_customfields_list.PREFIX + key);
                     }
                 }
             }
@@ -284,10 +281,10 @@ var et2_customfields_list = /** @class */ (function (_super) {
             // Make sure widget is created, and has the needed function
             if (!this.widgets[field_name] || !this.widgets[field_name].set_value)
                 continue;
-            var value = _value[this.prefix + field_name] ? _value[this.prefix + field_name] : null;
+            var value = _value[et2_customfields_list.PREFIX + field_name] ? _value[et2_customfields_list.PREFIX + field_name] : null;
             // Check if ID was missing
-            if (value == null && this.id == et2_customfields_list.DEFAULT_ID && this.getArrayMgr("content").getEntry(this.prefix + field_name)) {
-                value = this.getArrayMgr("content").getEntry(this.prefix + field_name);
+            if (value == null && this.id == et2_customfields_list.DEFAULT_ID && this.getArrayMgr("content").getEntry(et2_customfields_list.PREFIX + field_name)) {
+                value = this.getArrayMgr("content").getEntry(et2_customfields_list.PREFIX + field_name);
             }
             switch (this.options.customfields[field_name].type) {
                 case 'date':
@@ -313,7 +310,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
         var value = {};
         for (var field_name in this.widgets) {
             if (this.widgets[field_name].getValue && !this.widgets[field_name].options.readonly) {
-                value[this.prefix + field_name] = this.widgets[field_name].getValue();
+                value[et2_customfields_list.PREFIX + field_name] = this.widgets[field_name].getValue();
             }
         }
         return value;
@@ -409,7 +406,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
         attrs.config.height = (((field.rows > 0 && field.rows != 'undefined') ? field.rows : 5) * 16) + 'px';
         // We have to push the config modifications into the modifications array, or they'll
         // be overwritten by the site config from the server
-        var data = this.getArrayMgr("modifications").getEntry(this.prefix + field_name);
+        var data = this.getArrayMgr("modifications").getEntry(et2_customfields_list.PREFIX + field_name);
         if (data)
             jQuery.extend(data.config, attrs.config);
         return true;
@@ -536,12 +533,12 @@ var et2_customfields_list = /** @class */ (function (_super) {
      */
     et2_customfields_list.prototype.set_visible = function (_fields) {
         for (var name_1 in _fields) {
-            if (this.rows[this.prefix + name_1]) {
+            if (this.rows[et2_customfields_list.PREFIX + name_1]) {
                 if (_fields[name_1]) {
-                    jQuery(this.rows[this.prefix + name_1]).show();
+                    jQuery(this.rows[et2_customfields_list.PREFIX + name_1]).show();
                 }
                 else {
-                    jQuery(this.rows[this.prefix + name_1]).hide();
+                    jQuery(this.rows[et2_customfields_list.PREFIX + name_1]).hide();
                 }
             }
             this.options.fields[name_1] = _fields[name_1];
@@ -562,7 +559,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
         for (var i = 0; i < _nodes.length; i++) {
             // toggle() needs a boolean to do what we want
             var key = _nodes[i].getAttribute('data-field');
-            jQuery(_nodes[i]).toggle(_values.fields[key] && _values.value[this.prefix + key] ? true : false);
+            jQuery(_nodes[i]).toggle(_values.fields[key] && _values.value[et2_customfields_list.PREFIX + key] ? true : false);
         }
     };
     et2_customfields_list._attributes = {
@@ -604,7 +601,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
             "description": "JS code which is executed when the value changes."
         }
     };
-    et2_customfields_list.prefix = '#';
+    et2_customfields_list.PREFIX = '#';
     et2_customfields_list.DEFAULT_ID = "custom_fields";
     return et2_customfields_list;
 }(et2_core_valueWidget_1.et2_valueWidget));
