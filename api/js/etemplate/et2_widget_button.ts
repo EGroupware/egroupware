@@ -15,10 +15,9 @@
 */
 
 import './et2_core_common';
-import { ClassWithAttributes } from "./et2_core_inheritance";
-import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
-import { et2_DOMWidget } from './et2_core_DOMWidget'
-import { et2_baseWidget } from './et2_core_baseWidget'
+import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_baseWidget} from './et2_core_baseWidget'
 import './et2_types';
 
 /**
@@ -44,7 +43,8 @@ export class et2_button extends et2_baseWidget implements et2_IInput, et2_IDetac
 			"description": "Use this icon instead of hiding for read-only"
 		},
 		"onclick": {
-			"description": "JS code which gets executed when the button is clicked"
+			"description": "JS code which gets executed when the button is clicked",
+			"type": "js"
 		},
 		"accesskey": {
 			"name": "Access Key",

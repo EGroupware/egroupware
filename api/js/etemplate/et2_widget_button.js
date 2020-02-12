@@ -325,7 +325,8 @@ var et2_button = /** @class */ (function (_super) {
             "description": "Use this icon instead of hiding for read-only"
         },
         "onclick": {
-            "description": "JS code which gets executed when the button is clicked"
+            "description": "JS code which gets executed when the button is clicked",
+            "type": "js"
         },
         "accesskey": {
             "name": "Access Key",
