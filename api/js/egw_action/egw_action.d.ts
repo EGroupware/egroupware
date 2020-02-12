@@ -46,7 +46,7 @@ declare function egw_getObjectManager(_id: any, _create?: boolean, _search_depth
  * @param {boolean} _create
  * @return {egwActionObjectManager}
  */
-declare function egw_getAppObjectManager(_create: boolean): typeof egwActionObjectManager;
+declare function egw_getAppObjectManager(_create?: boolean): typeof egwActionObjectManager;
 /**
  * Returns the action manager for the current application
  *
@@ -282,8 +282,8 @@ declare class egwActionObject {
     focusedChild: string | egwActionObject;
     setAOI(_aoi: egwActionObjectInterface): void;
     iface: egwActionObjectInterface;
-    getObjectById(_id: string, _search_depth: number): egwActionObject;
-    addObject(_id: any, _interface: any, _flags: number): any;
+    getObjectById(_id: string, _search_depth?: number): egwActionObject;
+    addObject(_id: any, _interface: any, _flags?: number): any;
     insertObject(_index: number, _id: any, _iface: any, _flags: number): any;
     clear(): void;
     remove(): void;
@@ -310,7 +310,7 @@ declare class egwActionObject {
     setAllSelected(_selected: boolean, _informParent: boolean): void;
     updateSelectedChildren(_child: string | egwActionObject, _selected: boolean): void;
     updateFocusedChild(_child: string | egwActionObject, _focused: boolean): void;
-    updateActionLinks(_actionLinks: any[], _recursive: boolean, _doCreate: boolean): void;
+    updateActionLinks(_actionLinks: any[], _recursive?: boolean, _doCreate?: boolean): void;
     _reconnectCallback(): void;
     registerActions(): void;
     unregisterActions(): void;
