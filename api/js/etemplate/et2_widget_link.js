@@ -1247,8 +1247,11 @@ var et2_link_string = /** @class */ (function (_super) {
     };
     et2_link_string.prototype.set_value = function (_value) {
         // Get data
-        if (!_value || _value == null) {
-            this.list.empty();
+        if (!_value || _value == null || !this.list) {
+            // List can be missing if the AJAX call returns after the form is destroyed
+            if (this.list) {
+                this.list.empty();
+            }
             return;
         }
         if (typeof _value == "string" && _value.indexOf(',') > 0) {

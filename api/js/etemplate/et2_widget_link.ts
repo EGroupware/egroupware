@@ -10,23 +10,23 @@
  * @version $Id$
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	/vendor/bower-asset/jquery-ui/jquery-ui.js;
-	et2_core_inputWidget;
-	et2_core_valueWidget;
+	/*egw:uses
+		/vendor/bower-asset/jquery/dist/jquery.js;
+		/vendor/bower-asset/jquery-ui/jquery-ui.js;
+		et2_core_inputWidget;
+		et2_core_valueWidget;
 
-	// Include menu system for list context menu
-	egw_action.egw_menu_dhtmlx;
-*/
+		// Include menu system for list context menu
+		egw_action.egw_menu_dhtmlx;
+	*/
 
-import {WidgetConfig, et2_widget, et2_register_widget} from "./et2_core_widget";
-import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_valueWidget} from "./et2_core_valueWidget";
-import {et2_inputWidget} from "./et2_core_inputWidget";
-import {et2_selectbox} from "./et2_widget_selectbox";
-import {et2_button} from "./et2_widget_button";
-import {et2_vfs_select} from "./et2_widget_vfs";
+	import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
+	import {ClassWithAttributes} from "./et2_core_inheritance";
+	import {et2_valueWidget} from "./et2_core_valueWidget";
+	import {et2_inputWidget} from "./et2_core_inputWidget";
+	import {et2_selectbox} from "./et2_widget_selectbox";
+	import {et2_button} from "./et2_widget_button";
+	import {et2_vfs_select} from "./et2_widget_vfs";
 
 	/**
  * UI widgets for Egroupware linking system
@@ -1553,9 +1553,13 @@ export class et2_link_string extends et2_valueWidget implements et2_IDetachedDOM
 	set_value( _value)
 	{
 		// Get data
-		if(!_value || _value == null)
+		if(!_value || _value == null || !this.list)
 		{
-			this.list.empty();
+			// List can be missing if the AJAX call returns after the form is destroyed
+			if (this.list)
+			{
+				this.list.empty();
+			}
 			return;
 		}
 		if(typeof _value == "string" && _value.indexOf(',') > 0)
@@ -1574,7 +1578,8 @@ export class et2_link_string extends et2_valueWidget implements et2_IDetachedDOM
 			return;
 		}
 		this.list.empty();
-		if(typeof _value == 'object' && _value.length > 0) {
+		if(typeof _value == 'object' && _value.length > 0)
+		{
 			// Have full info
 			// Don't store new value, just update display
 
@@ -1666,7 +1671,8 @@ export class et2_link_string extends et2_valueWidget implements et2_IDetachedDOM
 		if(_link_data.title) link.text(_link_data.title);
 
 		// Now that link is created, get title from server & update
-		if(!_link_data.title) {
+		if(!_link_data.title)
+		{
 			this.egw().link_title(_link_data.app, _link_data.id, function(title) {
 				if (title)
 					this.removeClass("loading").text(title);
@@ -1792,11 +1798,13 @@ export class et2_link_list extends et2_link_string
 		// Set up context menu
 		var self = this;
 		this.context = new egwMenu();
-		this.context.addItem("comment", this.egw().lang("Comment"), "", function() {
+		this.context.addItem("comment", this.egw().lang("Comment"), "", function()
+		{
 			var link_id = typeof self.context.data.link_id == 'number' ? self.context.data.link_id : self.context.data.link_id.replace(/[:\.]/g,'_');
 
 			et2_dialog.show_prompt(
-				function(button, comment) {
+				function(button, comment)
+				{
 					if(button != et2_dialog.OK_BUTTON) return;
 					var remark = jQuery('#link_'+(self.context.data.dom_id ? self.context.data.dom_id : link_id), self.list).children('.remark');
 					if(isNaN(self.context.data.link_id))	// new entry, not yet stored
@@ -1807,8 +1815,10 @@ export class et2_link_list extends et2_link_string
 						{
 							var _widget = link_id.widget || null;
 							self.getRoot().iterateOver(
-								function(widget) {
-									if(widget.id == self.id) {
+								function(widget)
+								{
+									if(widget.id == self.id)
+									{
 										_widget = widget;
 									}
 								},
@@ -1825,7 +1835,8 @@ export class et2_link_list extends et2_link_string
 					remark.addClass("loading");
 					var request = egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_comment",
 						[link_id, comment],
-						function() {
+						function()
+						{
 							if(remark)
 							{
 								// Append "" to make sure it's a string, not undefined
@@ -1841,7 +1852,8 @@ export class et2_link_list extends et2_link_string
 			);
 
 		});
-		this.context.addItem("file_info", this.egw().lang("File information"), this.egw().image("edit"), function(menu_item) {
+		this.context.addItem("file_info", this.egw().lang("File information"), this.egw().image("edit"), function(menu_item)
+		{
 			var link_data = self.context.data;
 			if(link_data.app == 'file')
 			{
@@ -1856,7 +1868,8 @@ export class et2_link_list extends et2_link_string
 			}
 		});
 		this.context.addItem("-", "-");
-		this.context.addItem("save", this.egw().lang("Save as"), this.egw().image('save'), function(menu_item) {
+		this.context.addItem("save", this.egw().lang("Save as"), this.egw().image('save'), function(menu_item)
+		{
 			var link_data = self.context.data;
 			// Download file
 			if(link_data.download_url)
@@ -1886,7 +1899,8 @@ export class et2_link_list extends et2_link_string
 
 			self.egw().open(link_data, "", "view",'download',link_data.target ? link_data.target : link_data.app,link_data.app);
 		});
-		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), function(menu_item) {
+		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), function(menu_item)
+		{
 			// Highlight files for nice UI indicating what will be in the zip.
 			// Files have negative IDs.
 			jQuery('[id^="link_-"]',this.list).effect('highlight',{},2000);
@@ -1899,7 +1913,8 @@ export class et2_link_list extends et2_link_string
 			});
 		});
 		this.context.addItem("-", "-");
-		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), function(menu_item) {
+		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), function(menu_item)
+		{
 			var link_id = isNaN(self.context.data.link_id) ? self.context.data : self.context.data.link_id;
 			var row = jQuery('#link_'+(self.context.data.dom_id ? self.context.data.dom_id : self.context.data.link_id), self.list);
 			et2_dialog.show_dialog(
@@ -2025,7 +2040,8 @@ export class et2_link_list extends et2_link_string
 		var columns = ['title','remark'];
 
 		var self = this;
-		for(var i = 0; i < columns.length; i++) {
+		for(var i = 0; i < columns.length; i++)
+		{
 			var $td = jQuery(document.createElement("td"))
 				.appendTo(row)
 				.addClass(columns[i])
@@ -2050,7 +2066,8 @@ export class et2_link_list extends et2_link_string
 					}
 					else
 					{
-						if( !self.options.target_app ){
+						if( !self.options.target_app )
+						{
 							self.options.target_app = _link_data.app;
 						}
 						self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,self.options.target_app);
@@ -2063,7 +2080,8 @@ export class et2_link_list extends et2_link_string
 		{
 			// Title will be fetched from server and then set
 			jQuery('td.title',row).addClass("loading");
-			var title = this.egw().link_title(_link_data.app, _link_data.id, function(title) {
+			var title = this.egw().link_title(_link_data.app, _link_data.id, function(title)
+			{
 				jQuery('td.title',this).removeClass("loading").text(title+"");
 			}, row);
 		}
@@ -2089,7 +2107,8 @@ export class et2_link_list extends et2_link_string
 				.appendTo(delete_button)
 				// We don't use ui-icon because it assigns a bg image
 				.addClass("delete icon")
-				.bind( 'click', function() {
+				.bind( 'click', function()
+				{
 					et2_dialog.show_dialog(
 						function(button) {
 							if(button == et2_dialog.YES_BUTTON)
@@ -2105,7 +2124,8 @@ export class et2_link_list extends et2_link_string
 				});
 		}
 		// Context menu
-		row.bind("contextmenu", function(e) {
+		row.bind("contextmenu", function(e)
+		{
 			// Comment only available if link_id is there and not readonly
 			self.context.getItem("comment").set_enabled(typeof _link_data.link_id != 'undefined' && !self.options.readonly);
 			// File info only available for existing files
@@ -2127,7 +2147,8 @@ export class et2_link_list extends et2_link_string
 		// // Unfortunately, dragging files is currently only supported by Chrome
 		if(navigator && navigator.userAgent.indexOf('Chrome') >= 0)
 		{
-			row.on("dragstart", _link_data, function(event) {
+			row.on("dragstart", _link_data, function(event)
+			{
 				if(event.dataTransfer == null) {
 					return;
 				}
@@ -2175,7 +2196,8 @@ export class et2_link_list extends et2_link_string
 
 				event.dataTransfer.setDragImage(div.get(0),0,0);
 			})
-			.on('drag', function() {
+			.on('drag', function()
+			{
 				jQuery('#drag_helper',self.list).remove();
 			});
 		}
@@ -2211,7 +2233,8 @@ export class et2_link_list extends et2_link_string
 				var _widget = link_id.widget || null;
 				this.getRoot().iterateOver(
 					function(widget) {
-						if(widget.id == self.id) {
+						if(widget.id == self.id)
+						{
 							_widget = widget;
 						}
 					},
