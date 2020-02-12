@@ -66,7 +66,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 	legacyOptions = ["type_filter","private", "fields"]; // Field restriction & private done server-side
 
-	prefix = '#';
+	public static readonly prefix = '#';
 
 	public static readonly DEFAULT_ID = "custom_fields";
 	private tbody: JQuery;

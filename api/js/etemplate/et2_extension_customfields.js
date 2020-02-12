@@ -39,7 +39,6 @@ var et2_customfields_list = /** @class */ (function (_super) {
     function et2_customfields_list(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_customfields_list._attributes, _child || {})) || this;
         _this.legacyOptions = ["type_filter", "private", "fields"]; // Field restriction & private done server-side
-        _this.prefix = '#';
         _this.rows = {};
         _this.widgets = {};
         _this.detachedNodes = [];
@@ -89,7 +88,6 @@ var et2_customfields_list = /** @class */ (function (_super) {
                 for (var i = 0; i < types.length; i++) {
                     if (jQuery.inArray(types[i], _this.options.type_filter) > -1) {
                         _this.options.fields[field_name] = true;
-
                     }
                 }
             }
@@ -606,6 +604,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
             "description": "JS code which is executed when the value changes."
         }
     };
+    et2_customfields_list.prefix = '#';
     et2_customfields_list.DEFAULT_ID = "custom_fields";
     return et2_customfields_list;
 }(et2_core_valueWidget_1.et2_valueWidget));

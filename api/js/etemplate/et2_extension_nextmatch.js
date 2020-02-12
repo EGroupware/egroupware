@@ -68,6 +68,7 @@ var et2_extension_nextmatch_rowProvider_1 = require("./et2_extension_nextmatch_r
 var et2_extension_nextmatch_controller_1 = require("./et2_extension_nextmatch_controller");
 var et2_dataview_1 = require("./et2_dataview");
 var et2_dataview_model_columns_1 = require("./et2_dataview_model_columns");
+var et2_extension_customfields_1 = require("./et2_extension_customfields");
 var et2_INextmatchHeader = "et2_INextmatchHeader";
 function implements_et2_INextmatchHeader(obj) {
     return implements_methods(obj, ["setNextmatch"]);
@@ -1055,8 +1056,11 @@ var et2_nextmatch = /** @class */ (function (_super) {
         for (var i = 0; i < columnMgr.columns.length; i++) {
             var col = columnMgr.columns[i];
             var widget = this.columns[i].widget;
-            if (col.caption && col.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-                col.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_DISABLED) {
+            if (col.visibility == et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_DISABLED ||
+                col.visibility == et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT) {
+                continue;
+            }
+            if (col.caption) {
                 columns[col.id] = col.caption;
                 if (col.visibility == et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE)
                     columns_selected.push(col.id);
@@ -1072,7 +1076,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                     columns[et2_nextmatch_customfields.prefix + field_name] = " - " +
                         widget.customfields[field_name].label;
                     if (widget.options.fields[field_name])
-                        columns_selected.push(et2_customfields_list.prefix + field_name);
+                        columns_selected.push(et2_extension_customfields_1.et2_customfields_list.prefix + field_name);
                 }
             }
         }
@@ -1158,7 +1162,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                         }
                         // Turn on selected custom fields - start from 0 in case they're not in order
                         for (var j = 0; j < value.length; j++) {
-                            if (value[j].indexOf(et2_customfields_list.prefix) != 0)
+                            if (value[j].indexOf(et2_extension_customfields_1.et2_customfields_list.prefix) != 0)
                                 continue;
                             visible[value[j].substring(1)] = true;
                             i++;
@@ -1178,7 +1182,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                             self.sortedColumnsList.push(col_widget.id);
                             for (var field_name_1 in col_widget.customfields) {
                                 if (jQuery.isEmptyObject(col_widget.options.fields) || col_widget.options.fields[field_name_1] == true) {
-                                    self.sortedColumnsList.push(et2_customfields_list.prefix + field_name_1);
+                                    self.sortedColumnsList.push(et2_extension_customfields_1.et2_customfields_list.prefix + field_name_1);
                                 }
                             }
                         }
@@ -1301,7 +1305,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 }
                 // Turn on selected custom fields - start from 0 in case they're not in order
                 for (var j = 0; j < column_list.length; j++) {
-                    if (column_list[j].indexOf(et2_customfields_list.prefix) != 0)
+                    if (column_list[j].indexOf(et2_extension_customfields_1.et2_customfields_list.prefix) != 0)
                         continue;
                     visible[column_list[j].substring(1)] = true;
                 }
@@ -2679,9 +2683,10 @@ var et2_nextmatch_customfields = /** @class */ (function (_super) {
      * @memberOf et2_nextmatch_customfields
      */
     function et2_nextmatch_customfields(_parent, _attrs, _child) {
-        return _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_customfields._attributes, _child || {})) || this;
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_customfields._attributes, _child || {})) || this;
         // Specifically take the whole column
-        //		this.table.css("width", "100%");
+        _this.table.css("width", "100%");
+        return _this;
     }
     et2_nextmatch_customfields.prototype.destroy = function () {
         this.nextmatch = null;
@@ -2710,8 +2715,7 @@ var et2_nextmatch_customfields = /** @class */ (function (_super) {
      * Build widgets for header - sortable for numeric, text, etc., filterables for selectbox, radio
      */
     et2_nextmatch_customfields.prototype.loadFields = function () {
-        // TODO if(this.nextmatch == null)
-        {
+        if (this.nextmatch == null) {
             // not ready yet
             return;
         }
@@ -2734,7 +2738,7 @@ var et2_nextmatch_customfields = /** @class */ (function (_super) {
         var apps = egw.link_app_list();
         for (var field_name in this.options.customfields) {
             var field = this.options.customfields[field_name];
-            var cf_id = et2_customfields_list.prefix + field_name;
+            var cf_id = et2_extension_customfields_1.et2_customfields_list.prefix + field_name;
             if (this.rows[field_name])
                 continue;
             // Table row
@@ -2797,7 +2801,7 @@ var et2_nextmatch_customfields = /** @class */ (function (_super) {
                 if (widget == self)
                     return;
                 widget.set_visible(_fields);
-            }, this, et2_customfields_list);
+            }, this, et2_extension_customfields_1.et2_customfields_list);
         }
     };
     /**
@@ -2817,7 +2821,7 @@ var et2_nextmatch_customfields = /** @class */ (function (_super) {
         var visible = [];
         for (var field_name in this.options.customfields) {
             if (jQuery.isEmptyObject(this.options.fields) || this.options.fields[field_name] == true) {
-                visible.push(et2_customfields_list.prefix + field_name);
+                visible.push(et2_extension_customfields_1.et2_customfields_list.prefix + field_name);
                 jQuery(this.rows[field_name]).show();
             }
             else if (typeof this.rows[field_name] != "undefined") {
@@ -2855,7 +2859,7 @@ var et2_nextmatch_customfields = /** @class */ (function (_super) {
         }
     };
     return et2_nextmatch_customfields;
-}(et2_container));
+}(et2_extension_customfields_1.et2_customfields_list));
 exports.et2_nextmatch_customfields = et2_nextmatch_customfields;
 et2_core_widget_1.et2_register_widget(et2_nextmatch_customfields, ['nextmatch-customfields']);
 /**

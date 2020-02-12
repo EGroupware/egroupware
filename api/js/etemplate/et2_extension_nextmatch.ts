@@ -49,12 +49,13 @@ import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_selectbox} from "./et2_widget_selectbox";
-//import {et2_selectAccount} from "./et2_widget_SelectAccount";
-
 import {et2_nextmatch_rowProvider} from "./et2_extension_nextmatch_rowProvider";
 import {et2_nextmatch_controller} from "./et2_extension_nextmatch_controller";
 import {et2_dataview} from "./et2_dataview";
 import {et2_dataview_column} from "./et2_dataview_model_columns";
+import {et2_customfields_list} from "./et2_extension_customfields";
+
+//import {et2_selectAccount} from "./et2_widget_SelectAccount";
 
 /**
  * Interface all special nextmatch header elements have to implement.
@@ -1493,8 +1494,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			var col = columnMgr.columns[i];
 			const widget = this.columns[i].widget;
 
-			if(col.caption && col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-				col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED)
+			if(col.visibility == et2_dataview_column.ET2_COL_VISIBILITY_DISABLED ||
+				col.visibility == et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
+			{
+				continue;
+			}
+			if(col.caption)
 			{
 				columns[col.id] = col.caption;
 				if(col.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(col.id);
@@ -3384,7 +3389,7 @@ et2_register_widget(et2_nextmatch_header, ['nextmatch-header']);
  *
  * TODO This should extend customfield widget when it's ready, put the whole column in constructor() back too
  */
-export class et2_nextmatch_customfields extends et2_container implements et2_INextmatchHeader
+export class et2_nextmatch_customfields extends et2_customfields_list implements et2_INextmatchHeader
 {
 	static readonly _attributes: any = {
 		'customfields': {
@@ -3407,7 +3412,7 @@ export class et2_nextmatch_customfields extends et2_container implements et2_INe
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_nextmatch_customfields._attributes, _child || {}));
 
 		// Specifically take the whole column
-//		this.table.css("width", "100%");
+		this.table.css("width", "100%");
 	}
 
 	destroy( )
@@ -3445,7 +3450,7 @@ export class et2_nextmatch_customfields extends et2_container implements et2_INe
 	 */
 	loadFields( )
 	{
-		// TODO if(this.nextmatch == null)
+		if(this.nextmatch == null)
 		{
 			// not ready yet
 			return;
