@@ -297,7 +297,8 @@ export class et2_arrayMgr
 		const parts = _expression.split('=');
 
 		// Expand the first value
-		const val = '' + this.expandName(parts[0]);
+		let val = this.expandName(parts[0]);
+		val = typeof val == "undefined" ? ''  : '' + val;
 
 		// If a second expression existed, test that one
 		if (typeof parts[1] != "undefined") {

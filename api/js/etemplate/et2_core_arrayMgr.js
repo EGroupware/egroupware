@@ -275,7 +275,8 @@ var et2_arrayMgr = /** @class */ (function () {
         // Split the expression at a possible "="
         var parts = _expression.split('=');
         // Expand the first value
-        var val = '' + this.expandName(parts[0]);
+        var val = this.expandName(parts[0]);
+        val = typeof val == "undefined" ? '' : '' + val;
         // If a second expression existed, test that one
         if (typeof parts[1] != "undefined") {
             // Expand the second value
