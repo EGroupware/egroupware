@@ -142,7 +142,7 @@ else
 	$passwd_type = $_POST['passwd_type'];
 
 	// forced password change
-	if($GLOBALS['egw']->session->cd_reason != Api\Session::CD_FORCE_PASSWORD_CHANGE)
+	if($GLOBALS['egw']->session->cd_reason == Api\Session::CD_FORCE_PASSWORD_CHANGE)
 	{
 		// no automatic login
 	}
