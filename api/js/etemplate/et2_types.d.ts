@@ -197,3 +197,6 @@ declare function egw_seperateJavaScript(_html) : void;
 declare class Resumable {
 	constructor(asyncOptions: any);
 }
+declare class dhtmlXTreeObject {
+	constructor(options : any);
+}
