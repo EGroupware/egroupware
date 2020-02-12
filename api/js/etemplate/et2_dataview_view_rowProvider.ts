@@ -53,6 +53,15 @@ export class et2_dataview_rowProvider
 		this._createLoadingPrototype();
 	}
 
+	public destroy()
+	{
+		this._template = null;
+		this._mgrs = null;
+		this._rootWidget = null;
+		this._prototypes = {};
+		this._columnIds = [];
+	}
+
 	public getColumnCount()
 	{
 		return this._columnIds.length;

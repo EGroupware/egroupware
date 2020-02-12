@@ -42,6 +42,13 @@ var et2_dataview_rowProvider = /** @class */ (function () {
         this._createEmptyPrototype();
         this._createLoadingPrototype();
     }
+    et2_dataview_rowProvider.prototype.destroy = function () {
+        this._template = null;
+        this._mgrs = null;
+        this._rootWidget = null;
+        this._prototypes = {};
+        this._columnIds = [];
+    };
     et2_dataview_rowProvider.prototype.getColumnCount = function () {
         return this._columnIds.length;
     };
