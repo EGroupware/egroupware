@@ -29,6 +29,7 @@ var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 var et2_dataview_1 = require("./et2_dataview");
 var et2_dataview_model_columns_1 = require("./et2_dataview_model_columns");
 var et2_dataview_controller_1 = require("./et2_dataview_controller");
+var et2_widget_diff_1 = require("./et2_widget_diff");
 /**
  * eTemplate history log widget displays a list of changes to the current record.
  * The widget is encapsulated, and only needs the record's ID, and a map of
@@ -200,7 +201,7 @@ var et2_historylog = /** @class */ (function (_super) {
         if (this.controller)
             this.controller.destroy();
         if (this.dynheight)
-            this.dynheight.free();
+            this.dynheight.destroy();
         _super.prototype.destroy.call(this);
     };
     /**
@@ -285,6 +286,7 @@ var et2_historylog = /** @class */ (function (_super) {
         // Widget for text diffs
         var diff = et2_createWidget('diff', {}, this);
         this.diff = {
+            // @ts-ignore
             widget: diff,
             nodes: jQuery(diff.getDetachedNodes())
         };
@@ -436,7 +438,7 @@ var et2_historylog = /** @class */ (function (_super) {
                 }
                 for (var j = 0; j < widget._children.length; j++) {
                     nodes.push(self.fields[_data.status].nodes[j].clone());
-                    if (widget._children[j].instanceOf(et2_diff)) {
+                    if (widget._children[j].instanceOf(et2_widget_diff_1.et2_diff)) {
                         self._spanValueColumns(jQuery(this));
                     }
                 }
@@ -543,8 +545,9 @@ var et2_historylog = /** @class */ (function (_super) {
         }
         // Resize diff widgets to match new space
         if (this.dataview) {
-            var columns = this.dataview.getColumnMgr().columnWidths;
-            jQuery('.et2_diff', this.div).closest('.innerContainer').width(columns[et2_historylog.NEW_VALUE] + columns[et2_historylog.OLD_VALUE]);
+            var columns = this.dataview.getColumnMgr();
+            jQuery('.et2_diff', this.div).closest('.innerContainer')
+                .width(columns.getColumnWidth(et2_historylog.NEW_VALUE) + columns.getColumnWidth(et2_historylog.OLD_VALUE));
         }
     };
     et2_historylog._attributes = {

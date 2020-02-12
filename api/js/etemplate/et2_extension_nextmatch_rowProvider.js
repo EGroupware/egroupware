@@ -67,6 +67,12 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
         this._context = _context;
         this._createEmptyPrototype();
     }
+    et2_nextmatch_rowProvider.prototype.destroy = function () {
+        this._rowProvider.destroy();
+        this._subgridCallback = null;
+        this._context = null;
+        this._dataRow = null;
+    };
     /**
      * Creates the data row prototype.
      *

@@ -25,6 +25,7 @@ import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_dataview} from "./et2_dataview";
 import {et2_dataview_column} from "./et2_dataview_model_columns";
 import {et2_dataview_controller} from "./et2_dataview_controller";
+import {et2_diff} from "./et2_widget_diff";
 
 /**
  * eTemplate history log widget displays a list of changes to the current record.
@@ -288,7 +289,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		// Free the grid components
 		if(this.dataview) this.dataview.destroy();
 		if(this.controller) this.controller.destroy();
-		if(this.dynheight) this.dynheight.free();
+		if(this.dynheight) this.dynheight.destroy();
 
 		super.destroy();
 	}
@@ -395,8 +396,9 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			};
 		}
 		// Widget for text diffs
-		var diff = et2_createWidget('diff', {}, this);
+		const diff = et2_createWidget('diff', {}, this);
 		this.diff = {
+		// @ts-ignore
 			widget: diff,
 			nodes: jQuery(diff.getDetachedNodes())
 		};
@@ -582,7 +584,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		let row = this.dataview.rowProvider.getPrototype("default");
 		let self = this;
 		jQuery("div", row).each(function (i) {
-			let nodes = [];
+			let nodes : any[] | JQuery = [];
 			let widget = et2_historylog.columns[i].widget;
 			let value = _data[et2_historylog.columns[i].id];
 			if(et2_historylog.OWNER === i && _data['share_email'])
@@ -738,8 +740,9 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		// Resize diff widgets to match new space
 		if(this.dataview)
 		{
-			var columns = this.dataview.getColumnMgr().columnWidths;
-			jQuery('.et2_diff', this.div).closest('.innerContainer').width(columns[et2_historylog.NEW_VALUE] + columns[et2_historylog.OLD_VALUE]);
+			var columns = this.dataview.getColumnMgr();
+			jQuery('.et2_diff', this.div).closest('.innerContainer')
+				.width(columns.getColumnWidth(et2_historylog.NEW_VALUE) + columns.getColumnWidth(et2_historylog.OLD_VALUE));
 		}
 	}
 }

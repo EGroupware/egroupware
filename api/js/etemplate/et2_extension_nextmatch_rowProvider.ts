@@ -21,7 +21,6 @@
 
 import {et2_widget} from "./et2_core_widget";
 import {et2_arrayMgrs_expand} from "./et2_core_arrayMgr";
-import {et2_dataview_rowProvider} from "./et2_dataview_view_rowProvider";
 
 /**
  * The row provider contains prototypes (full clonable dom-trees)
@@ -35,6 +34,7 @@ export class et2_nextmatch_rowProvider
 	private _context: any;
 	private _rootWidget: any;
 	private _template: any;
+	private _dataRow: any;
 	/**
 	 * Creates the nextmatch row provider.
 	 *
@@ -53,6 +53,14 @@ export class et2_nextmatch_rowProvider
 		this._context = _context;
 
 		this._createEmptyPrototype();
+	}
+
+	destroy()
+	{
+		this._rowProvider.destroy();
+		this._subgridCallback = null;
+		this._context = null;
+		this._dataRow = null;
 	}
 
 	/**
