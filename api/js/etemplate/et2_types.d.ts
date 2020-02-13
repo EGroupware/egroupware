@@ -177,7 +177,7 @@ declare class et2_nextmatch_accountfilterheader extends et2_nextmatch_header {}
 declare class et2_nextmatch_taglistheader  extends et2_nextmatch_header {}
 declare class et2_nextmatch_entryheader  extends et2_nextmatch_header {}
 declare class et2_nextmatch_customfilter extends et2_nextmatch_filterheader {}
-declare function et2_createWidget(type : string, params : {}, parent? : any) : any;
+declare function et2_createWidget(type : string, params? : {}, parent? : any) : any;
 declare function nm_action(_action : {}, _senders : [], _target : any, _ids? : any) : void;
 declare function et2_compileLegacyJS(_code : string, _widget : et2_widget, _context? : HTMLElement) : Function;
 // et2_core_xml.js
