@@ -588,6 +588,7 @@ var et2_date_duration = /** @class */ (function (_super) {
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_date_duration._attributes, _child || {})) || this;
         _this.legacyOptions = ["data_format", "display_format", "hours_per_day", "empty_not_0", "short_labels"];
+        _this.format = null;
         // Legacy option put percent in with display format
         if (_this.options.display_format.indexOf("%") != -1) {
             _this.options.percent_allowed = true;
@@ -696,24 +697,35 @@ var et2_date_duration = /** @class */ (function (_super) {
     et2_date_duration.prototype.set_display_format = function (format) {
         if (format.length <= 1) {
             this.node.remove('select.et2_date_duration');
+            this.format = null;
         }
         this.options.display_format = format;
-        if (this.format) {
-            this.format.remove();
+        if ((this.format == null || this.format.is('select')) && (this.options.display_format.length <= 1 || this.options.readonly)) {
+            if (this.format) {
+                this.format.remove();
+            }
+            this.format = jQuery(document.createElement('span')).appendTo(this.node);
         }
         if (this.options.display_format.length > 1 && !this.options.readonly) {
-            this.format = jQuery(document.createElement("select"))
-                .addClass('et2_date_duration');
-            this.node.append(this.format);
+            if (this.format && !this.format.is('select')) {
+                this.format.remove();
+                this.format = null;
+            }
+            if (!this.format) {
+                this.format = jQuery(document.createElement("select"))
+                    .addClass('et2_date_duration');
+                this.node.append(this.format);
+            }
+            this.format.empty();
             for (var i = 0; i < this.options.display_format.length; i++) {
                 this.format.append("<option value='" + this.options.display_format[i] + "'>" + this.time_formats[this.options.display_format[i]] + "</option>");
             }
         }
         else if (this.time_formats[this.options.display_format]) {
-            this.format = jQuery("<span>" + this.time_formats[this.options.display_format] + "</span>").appendTo(this.node);
+            this.format.text(this.time_formats[this.options.display_format]);
         }
         else {
-            this.format = jQuery("<span>" + this.time_formats["m"] + "</span>").appendTo(this.node);
+            this.format.text(this.time_formats["m"]);
         }
     };
     /**

@@ -18,11 +18,11 @@
 */
 
 import './et2_core_common';
-import { ClassWithAttributes } from "./et2_core_inheritance";
-import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
-import { et2_valueWidget } from './et2_core_valueWidget'
-import { et2_inputWidget } from './et2_core_inputWidget'
-import { et2_selectbox } from './et2_widget_selectbox'
+import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_valueWidget} from './et2_core_valueWidget'
+import {et2_inputWidget} from './et2_core_inputWidget'
+import {et2_selectbox} from './et2_widget_selectbox'
 import './et2_types';
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 
@@ -710,7 +710,7 @@ export class et2_date_duration extends et2_date
 	// @ts-ignore baseWidget defines node as HTMLElement
 	node: JQuery;
 	duration: JQuery;
-	format: JQuery;
+	format: JQuery = null;
 
 	/**
 	 * Constructor
@@ -862,29 +862,42 @@ export class et2_date_duration extends et2_date
         if (format.length <= 1)
         {
             this.node.remove('select.et2_date_duration');
+            this.format = null;
         }
         this.options.display_format = format;
-        if(this.format)
+        if((this.format == null || this.format.is('select')) && (this.options.display_format.length <= 1 || this.options.readonly))
         {
-			this.format.remove();
+			if (this.format)
+			{
+				this.format.remove();
+			}
+        	this.format = jQuery(document.createElement('span')).appendTo(this.node);
 		}
         if(this.options.display_format.length > 1 && !this.options.readonly)
 		{
-			this.format = jQuery(document.createElement("select"))
+			if(this.format && !this.format.is('select')) {
+				this.format.remove();
+				this.format = null;
+			}
+			if(!this.format)
+			{
+				this.format = jQuery(document.createElement("select"))
 							.addClass('et2_date_duration');
-			this.node.append(this.format);
+				this.node.append(this.format);
+			}
 
+			this.format.empty();
 			for(var i = 0; i < this.options.display_format.length; i++) {
 				this.format.append("<option value='"+this.options.display_format[i]+"'>"+this.time_formats[this.options.display_format[i]]+"</option>");
 			}
 		}
 		else if (this.time_formats[this.options.display_format])
 		{
-			this.format = jQuery("<span>"+this.time_formats[this.options.display_format]+"</span>").appendTo(this.node);
+			this.format.text(this.time_formats[this.options.display_format]);
 		}
 		else
 		{
-			this.format = jQuery("<span>"+this.time_formats["m"]+"</span>").appendTo(this.node);
+			this.format.text(this.time_formats["m"]);
 		}
     }
 
