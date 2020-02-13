@@ -22,7 +22,6 @@
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {egw_getAppObjectManager} from '../egw_action/egw_action.js';
 import {egw_keyHandler} from '../egw_action/egw_keymanager.js';
 import {et2_textbox, et2_textbox_ro} from "./et2_widget_textbox";
 import {et2_description} from "./et2_widget_description";
@@ -180,7 +179,7 @@ class et2_vfs extends et2_valueWidget implements et2_IDetachedDOM
 		let app = this.getInstanceManager().app;
 		while(links.length === 0 && widget.getParent())
 		{
-			object = egw_getAppObjectManager(app).getObjectById(widget.id);
+			object = (<egwActionObject><unknown>egw_getAppObjectManager(app)).getObjectById(widget.id);
 			if(object && object.manager && object.manager.children)
 			{
 				links = object.manager.children;

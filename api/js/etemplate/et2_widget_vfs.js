@@ -35,7 +35,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var egw_action_js_1 = require("../egw_action/egw_action.js");
 var egw_keymanager_js_1 = require("../egw_action/egw_keymanager.js");
 var et2_widget_textbox_1 = require("./et2_widget_textbox");
 var et2_widget_description_1 = require("./et2_widget_description");
@@ -160,7 +159,7 @@ var et2_vfs = /** @class */ (function (_super) {
         var object = null;
         var app = this.getInstanceManager().app;
         while (links.length === 0 && widget.getParent()) {
-            object = egw_action_js_1.egw_getAppObjectManager(app).getObjectById(widget.id);
+            object = egw_getAppObjectManager(app).getObjectById(widget.id);
             if (object && object.manager && object.manager.children) {
                 links = object.manager.children;
             }
