@@ -1083,7 +1083,7 @@ export class et2_selectbox extends et2_inputWidget
 	 * @param {object} attrs Widget attributes
 	 * @return {object} Select options, or empty object
 	 */
-	static find_select_options(widget, attr_options, attrs)
+	static find_select_options(widget, attr_options, attrs?)
 	{
 		var name_parts = widget.id.replace(/&#x5B;/g,'[').replace(/]|&#x5D;/g,'').split('[');
 
