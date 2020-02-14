@@ -1287,7 +1287,7 @@ var et2_link_string = /** @class */ (function (_super) {
             _value.only_app = this.options.only_app;
         }
         this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value], this.set_value, this);
-
+        return;
     };
     /**
      * Function to get media content to feed the expose
