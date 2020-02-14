@@ -207,7 +207,7 @@ class Sharing
 			header('WWW-Authenticate: Basic realm="'.$realm.'"');
 			return static::share_fail(
 				'401 Unauthorized',
-				"<html>\n<head>\n<title>401 Unauthorized</title>\n<body>\nAuthorization failed.\n</body>\n</html>\n"
+				"Authorization failed."
 			);
 		}
 
