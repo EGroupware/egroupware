@@ -1,15 +1,14 @@
 "use strict";
 /**
-* EGroupware eTemplate2 - JS Link object
-*
-* @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
-* @package etemplate
-* @subpackage api
-* @link http://www.egroupware.org
-* @author Nathan Gray
-* @copyright 2011 Nathan Gray
-* @version $Id$
-*/
+ * EGroupware eTemplate2 - JS Link object
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @subpackage api
+ * @link http://www.egroupware.org
+ * @author Nathan Gray
+ * @copyright 2011 Nathan Gray
+ */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -529,7 +528,7 @@ var et2_link_entry = /** @class */ (function (_super) {
                 buttonItem.css('background-image', 'url(' + url + ')');
             },
             _renderItem: function (ul, item) {
-                var li = jQuery("<li>", { class: "et2_link_entry_app_option" }), wrapper = jQuery("<div>", { text: item.label });
+                var li = jQuery("<li>", { "class": "et2_link_entry_app_option" }), wrapper = jQuery("<div>", { text: item.label });
                 if (item.disabled) {
                     li.addClass("ui-state-disabled");
                 }
@@ -1111,7 +1110,8 @@ var et2_link = /** @class */ (function (_super) {
                 if (!self.options.target_app) {
                     self.options.target_app = _value.app;
                 }
-                self.egw().open(_value, "", self.options.link_hook, _value.extra_args, _value.app, self.options.target_app);
+                var target = self.options.extra_link_target || _value.app;
+                self.egw().open(_value, "", self.options.link_hook, _value.extra_args, target, self.options.target_app);
                 e.stopImmediatePropagation();
             });
         }
@@ -1212,6 +1212,12 @@ var et2_link = /** @class */ (function (_super) {
             "type": "string",
             "default": "",
             "description": "Optional parameter to be passed to egw().open in order to open links in specified application"
+        },
+        "extra_link_target": {
+            "name": "Link target",
+            "type": "string",
+            "default": null,
+            "description": "Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank"
         }
     };
     return et2_link;
@@ -1430,7 +1436,7 @@ var et2_link_string = /** @class */ (function (_super) {
         "expose_view": {
             name: "Expose view",
             type: "boolean",
-            default: true,
+            "default": true,
             description: "Clicking on description with href value would popup an expose view, and will show content referenced by href."
         }
     };
@@ -1942,4 +1948,3 @@ var et2_link_add = /** @class */ (function (_super) {
 }(et2_core_inputWidget_1.et2_inputWidget));
 exports.et2_link_add = et2_link_add;
 et2_core_widget_1.et2_register_widget(et2_link_add, ["link-add"]);
-//# sourceMappingURL=et2_widget_link.js.map

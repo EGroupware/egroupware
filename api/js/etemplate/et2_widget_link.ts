@@ -1,4 +1,4 @@
-	/**
+/**
  * EGroupware eTemplate2 - JS Link object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @copyright 2011 Nathan Gray
- * @version $Id$
  */
 
 	/*egw:uses
@@ -1310,6 +1309,12 @@ export class et2_link extends et2_valueWidget implements et2_IDetachedDOM
 			"type": "string",
 			"default": "",
 			"description": "Optional parameter to be passed to egw().open in order to open links in specified application"
+		},
+		"extra_link_target": {
+			"name": "Link target",
+			"type": "string",
+			"default": null,
+			"description": "Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank"
 		}
 	};
 	legacyOptions = ["only_app"];
@@ -1395,7 +1400,8 @@ export class et2_link extends et2_valueWidget implements et2_IDetachedDOM
 				if( !self.options.target_app ){
 					self.options.target_app = _value.app;
 				}
-				self.egw().open(_value, "", self.options.link_hook,_value.extra_args,_value.app, self.options.target_app);
+				const target = self.options.extra_link_target || _value.app;
+				self.egw().open(_value, "", self.options.link_hook, _value.extra_args, target, self.options.target_app);
 				e.stopImmediatePropagation();
 			});
 		}
