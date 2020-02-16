@@ -1232,7 +1232,13 @@ var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 			"type": "string",
 			"default": "",
 			"description": "Optional parameter to be passed to egw().open in order to open links in specified application"
-		}
+		},
+		"extra_link_target": {
+			"name": "Link target",
+			"type": "string",
+			"default": null,
+			"description": "Link target descriptor"
+		},
 	},
 	legacyOptions: ["only_app"],
 
@@ -1307,7 +1313,8 @@ var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 				if( !self.options.target_app ){
 					self.options.target_app = _value.app;
 				}
-				self.egw().open(_value, "", self.options.link_hook,_value.extra_args,_value.app, self.options.target_app);
+				const target = self.options.extra_link_target || _value.app;
+				self.egw().open(_value, "", self.options.link_hook, _value.extra_args, target, self.options.target_app);
 				e.stopImmediatePropagation();
 			});
 		}
