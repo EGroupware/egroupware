@@ -456,6 +456,9 @@ div.mail-compose_fileselector {
   position: relative;
   background-color: white;
 }
+div#mail-index_mailPreview > div {
+  padding-left: 8px !important;
+}
 #mail-index_mailPreview .et2_email > span {
   display: inline;
 }
@@ -1668,7 +1671,7 @@ tr.flagged_unseen span.status_img {
   background-image: url(../pixelegg/images/unread_flagged_small.svg) !important;
 }
 tr.recent span.status_img {
-  background-image: url(../pixelegg/images/kmmsgnew.png) !important;
+  background-image: url(../pixelegg/images/kmmsgnew.svg) !important;
 }
 tr.replied span.status_img {
   background-image: url(../pixelegg/images/mail_reply.svg) !important;
