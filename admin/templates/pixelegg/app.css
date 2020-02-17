@@ -249,4 +249,7 @@ Admin command
     filter: initial;
     /* IE 6-9 */
   }
+  #admin-account-delete .dialogFooterToolbar .et2_button_delete {
+    margin-left: 0;
+  }
 }

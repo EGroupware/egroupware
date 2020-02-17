@@ -41,20 +41,31 @@
 		</vbox>
 	</template>
 	<template id="admin.account.delete" template="" lang="" group="0" version="18.1.001">
-		<box class="dialogHeader">
-			<select-account id="account_id" readonly="true" label="Delete" onchange="var apps = widget.getRoot().getWidgetById('delete_apps'); apps.set_enabled(widget.getValue());"/>
-		</box>
-		<tabbox id="tabs" width="99%" tab_height="400px">
-			<tabs>
-				<tab id="main" label="Delete"/>
-			</tabs>
-			<tabpanels>
-				<template template="admin.account.delete.delete" width="99%"/>
-			</tabpanels>
-		</tabbox>
-		<hbox class="dialogFooterToolbar">
-			<button id="delete" label="Delete"/>
-			<button id="cancel" label="Cancel" onclick="window.close()"/>
-		</hbox>
+	    <grid width="100%">
+	        <columns>
+	            <column width="100%"/>
+	        </columns>
+	        <rows>
+	            <row class="dialogHeader">
+                   	<select-account id="account_id" readonly="true" label="Delete" onchange="var apps = widget.getRoot().getWidgetById('delete_apps'); apps.set_enabled(widget.getValue());"/>
+	            </row>
+	            <row>
+	                <tabbox id="tabs" width="100%" tab_height="400px">
+                    	<tabs>
+                    		<tab id="main" label="Delete"/>
+                    	</tabs>
+                    	<tabpanels>
+                    		<template template="admin.account.delete.delete" width="100%"/>
+                    	</tabpanels>
+                    </tabbox>
+	            </row>
+	            <row class="dialogFooterToolbar">
+	                <hbox>
+                        <button id="delete" label="Delete"/>
+                        <button id="cancel" label="Cancel" onclick="window.close()"/>
+                    </hbox>
+	            </row>
+	        </rows>
+	    </grid>
 	</template>
 </overlay>
