@@ -444,6 +444,9 @@ div.mail-compose_fileselector {
   position: relative;
   background-color: white;
 }
+div#mail-index_mailPreview > div {
+  padding-left: 8px !important;
+}
 #mail-index_mailPreview .et2_email > span {
   display: inline;
 }
