@@ -66,6 +66,9 @@ td.admin_userAgent span {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+#admin-account-delete .dialogHeader label.et2_label {
+  font-size: 120%;
+}
 /* Global Category classes*/
 .globalCat_confirmDelete {
   position: absolute;
