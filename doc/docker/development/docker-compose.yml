@@ -139,6 +139,7 @@ services:
     depends_on:
     - egroupware
     - collabora-key
+    - rocketchat
     container_name: egroupware-nginx
 
   # run an own MariaDB:10.4 (you can use EGroupware's database backup and restore to add your existing database)
