@@ -1496,7 +1496,7 @@ et2_register_widget(et2_link, ["link", "link-entry_ro"]);
  *
  * TODO: This one used to have expose
  */
-export class et2_link_string extends et2_valueWidget implements et2_IDetachedDOM
+export const et2_link_string = expose(class et2_link_string extends et2_valueWidget implements et2_IDetachedDOM, et2_IExposable
 {
 	static readonly _attributes : any = {
 		"application": {
@@ -1751,7 +1751,7 @@ export class et2_link_string extends et2_valueWidget implements et2_IDetachedDOM
 			this._labelContainer.contents().not(this.list).remove();
 		}
 	}
-}
+});
 et2_register_widget(et2_link_string, ["link-string"]);
 
 /**

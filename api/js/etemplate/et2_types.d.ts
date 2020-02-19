@@ -167,7 +167,6 @@ declare var et2_vfsUid : any;
 declare var et2_vfsUpload : any;
 declare var et2_vfsSelect : any;
 declare var et2_video : any;
-declare var et2_IExposable : any;
 declare var tinymce : any;
 declare var date : any;
 declare var tinyMCE : any;
@@ -200,3 +199,4 @@ declare class Resumable {
 declare class dhtmlXTreeObject {
 	constructor(options : any);
 }
+declare function expose(widget:any) : any;

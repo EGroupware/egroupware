@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
@@ -528,7 +529,7 @@ var et2_link_entry = /** @class */ (function (_super) {
                 buttonItem.css('background-image', 'url(' + url + ')');
             },
             _renderItem: function (ul, item) {
-                var li = jQuery("<li>", { "class": "et2_link_entry_app_option" }), wrapper = jQuery("<div>", { text: item.label });
+                var li = jQuery("<li>", { class: "et2_link_entry_app_option" }), wrapper = jQuery("<div>", { text: item.label });
                 if (item.disabled) {
                     li.addClass("ui-state-disabled");
                 }
@@ -1229,188 +1230,190 @@ et2_core_widget_1.et2_register_widget(et2_link, ["link", "link-entry_ro"]);
  *
  * TODO: This one used to have expose
  */
-var et2_link_string = /** @class */ (function (_super) {
-    __extends(et2_link_string, _super);
-    /**
-     * Constructor
-     *
-     * @memberOf et2_link_string
-     */
-    function et2_link_string(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_string._attributes, _child || {})) || this;
-        _this.list = jQuery(document.createElement("ul"))
-            .addClass("et2_link_string");
-        if (_this.options['class'])
-            _this.list.addClass(_this.options['class']);
-        _this.setDOMNode(_this.list[0]);
-        return _this;
-    }
-    et2_link_string.prototype.destroy = function () {
-        _super.prototype.destroy.apply(this, arguments);
-        if (this.node != null) {
-            jQuery(this.node).children().unbind();
+exports.et2_link_string = expose((_a = /** @class */ (function (_super) {
+        __extends(et2_link_string, _super);
+        /**
+         * Constructor
+         *
+         * @memberOf et2_link_string
+         */
+        function et2_link_string(_parent, _attrs, _child) {
+            var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_string._attributes, _child || {})) || this;
+            _this.list = jQuery(document.createElement("ul"))
+                .addClass("et2_link_string");
+            if (_this.options['class'])
+                _this.list.addClass(_this.options['class']);
+            _this.setDOMNode(_this.list[0]);
+            return _this;
         }
-    };
-    et2_link_string.prototype.set_value = function (_value) {
-        // Get data
-        if (!_value || _value == null || !this.list) {
-            // List can be missing if the AJAX call returns after the form is destroyed
-            if (this.list) {
-                this.list.empty();
+        et2_link_string.prototype.destroy = function () {
+            _super.prototype.destroy.apply(this, arguments);
+            if (this.node != null) {
+                jQuery(this.node).children().unbind();
             }
-            return;
-        }
-        if (typeof _value == "string" && _value.indexOf(',') > 0) {
-            _value = _value.split(',');
-        }
-        if (!_value.to_app && typeof _value == "object" && this.options.application) {
-            _value.to_app = this.options.application;
-        }
-        if (typeof _value == 'object' && _value.to_app && _value.to_id) {
-            this.value = _value;
-            this._get_links();
-            return;
-        }
-        this.list.empty();
-        if (typeof _value == 'object' && _value.length > 0) {
-            // Have full info
-            // Don't store new value, just update display
-            // Make new links
-            for (var i = 0; i < _value.length; i++) {
-                if (!this.options.only_app || this.options.only_app && _value[i].app == this.options.only_app) {
-                    this._add_link(_value[i].id ? _value[i] : { id: _value[i], app: _value.to_app });
+        };
+        et2_link_string.prototype.set_value = function (_value) {
+            // Get data
+            if (!_value || _value == null || !this.list) {
+                // List can be missing if the AJAX call returns after the form is destroyed
+                if (this.list) {
+                    this.list.empty();
+                }
+                return;
+            }
+            if (typeof _value == "string" && _value.indexOf(',') > 0) {
+                _value = _value.split(',');
+            }
+            if (!_value.to_app && typeof _value == "object" && this.options.application) {
+                _value.to_app = this.options.application;
+            }
+            if (typeof _value == 'object' && _value.to_app && _value.to_id) {
+                this.value = _value;
+                this._get_links();
+                return;
+            }
+            this.list.empty();
+            if (typeof _value == 'object' && _value.length > 0) {
+                // Have full info
+                // Don't store new value, just update display
+                // Make new links
+                for (var i = 0; i < _value.length; i++) {
+                    if (!this.options.only_app || this.options.only_app && _value[i].app == this.options.only_app) {
+                        this._add_link(_value[i].id ? _value[i] : { id: _value[i], app: _value.to_app });
+                    }
                 }
             }
-        }
-        else if (this.options.application) {
-            this._add_link({ id: _value, app: this.options.application });
-        }
-    };
-    et2_link_string.prototype._get_links = function () {
-        var _value = this.value;
-        // Just IDs - get from server
-        if (this.options.only_app) {
-            _value.only_app = this.options.only_app;
-        }
-        this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value], this.set_value, this);
-        return;
-    };
-    /**
-     * Function to get media content to feed the expose
-     * @param {type} _value
-     * @returns {Array|Array.getMedia.mediaContent}
-     */
-    et2_link_string.prototype.getMedia = function (_value) {
-        var base_url = egw.webserverUrl.match(/^\//, 'ig') ? egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
-        var mediaContent = [];
-        if (_value && typeof _value.type != 'undefined' && _value.type.match(/video\//, 'ig')) {
-            mediaContent = [{
-                    title: _value.id,
-                    type: _value.type,
-                    poster: '',
-                    href: base_url + egw().mime_open(_value),
-                    download_href: base_url + egw().mime_open(_value) + '?download'
-                }];
-        }
-        else if (_value) {
-            mediaContent = [{
-                    title: _value.id,
-                    href: base_url + egw().mime_open(_value).url,
-                    download_href: base_url + egw().mime_open(_value).url + '?download',
-                    type: _value.type
-                }];
-        }
-        if (mediaContent[0].href && mediaContent[0].href.match(/\/webdav.php/, 'ig'))
-            mediaContent[0]["download_href"] = mediaContent[0].href + '?download';
-        return mediaContent;
-    };
-    et2_link_string.prototype._add_link = function (_link_data) {
-        var self = this;
-        var link = jQuery(document.createElement("li"))
-            .appendTo(this.list)
-            .addClass("et2_link loading")
-            .click(function (e) {
-            var fe = egw_get_file_editor_prefered_mimes(_link_data.type);
-            if (self.options.expose_view && typeof _link_data.type != 'undefined'
-                && _link_data.type.match(self.mime_regexp, 'ig')) {
-                self._init_blueimp_gallery(e, _link_data);
+            else if (this.options.application) {
+                this._add_link({ id: _value, app: this.options.application });
             }
-            else if (typeof _link_data.type != 'undefined' && fe && fe.mime && fe.mime[_link_data.type]) {
-                egw.open_link(egw.link('/index.php', {
-                    menuaction: fe.edit.menuaction,
-                    path: egw().mime_open(_link_data).url.replace('/webdav.php', '')
-                }), '', fe.edit_popup);
+        };
+        et2_link_string.prototype._get_links = function () {
+            var _value = this.value;
+            // Just IDs - get from server
+            if (this.options.only_app) {
+                _value.only_app = this.options.only_app;
             }
-            else {
-                self.egw().open(_link_data, "", "view", null, _link_data.app, _link_data.app);
+            this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value], this.set_value, this);
+            return;
+        };
+        /**
+         * Function to get media content to feed the expose
+         * @param {type} _value
+         * @returns {Array|Array.getMedia.mediaContent}
+         */
+        et2_link_string.prototype.getMedia = function (_value) {
+            var base_url = egw.webserverUrl.match(/^\//, 'ig') ? egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
+            var mediaContent = [];
+            if (_value && typeof _value.type != 'undefined' && _value.type.match(/video\//, 'ig')) {
+                mediaContent = [{
+                        title: _value.id,
+                        type: _value.type,
+                        poster: '',
+                        href: base_url + egw().mime_open(_value),
+                        download_href: base_url + egw().mime_open(_value) + '?download'
+                    }];
             }
-            e.stopImmediatePropagation();
-        });
-        if (_link_data.title)
-            link.text(_link_data.title);
-        // Now that link is created, get title from server & update
-        if (!_link_data.title) {
-            this.egw().link_title(_link_data.app, _link_data.id, function (title) {
-                if (title)
-                    this.removeClass("loading").text(title);
-                else
-                    this.remove(); // no rights or not found
-            }, link);
-        }
-    };
-    /**
-     * Creates a list of attributes which can be set when working in the
-     * "detached" mode. The result is stored in the _attrs array which is provided
-     * by the calling code.
-     *
-     * @param {Array} _attrs an array of attributes
-     */
-    et2_link_string.prototype.getDetachedAttributes = function (_attrs) {
-        // Create the label container if it didn't exist yet
-        if (this._labelContainer == null) {
-            this._labelContainer = jQuery(document.createElement("label"))
-                .addClass("et2_label");
-            this.getSurroundings().insertDOMNode(this._labelContainer[0]);
-            this.getSurroundings().update();
-        }
-        _attrs.push("value", "label");
-    };
-    /**
-     * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
-     * passed to the "setDetachedAttributes" function in the same order.
-     */
-    et2_link_string.prototype.getDetachedNodes = function () {
-        // Create the label container if it didn't exist yet
-        if (this._labelContainer == null) {
-            this._labelContainer = jQuery(document.createElement("label"))
-                .addClass("et2_label");
-            this.getSurroundings().insertDOMNode(this._labelContainer[0]);
-        }
-        return [this.list[0], this._labelContainer[0]];
-    };
-    /**
-     * Sets the given associative attribute->value array and applies the
-     * attributes to the given DOM-Node.
-     *
-     * @param _nodes is an array of nodes which have to be in the same order as
-     *      the nodes returned by "getDetachedNodes"
-     * @param _values is an associative array which contains a subset of attributes
-     *      returned by the "getDetachedAttributes" function and sets them to the
-     *      given values.
-     */
-    et2_link_string.prototype.setDetachedAttributes = function (_nodes, _values) {
-        this.list = jQuery(_nodes[0]);
-        this.set_value(_values["value"]);
-        // Special detached, to prevent DOM node modification of the normal method
-        this._labelContainer = _nodes.length > 1 ? jQuery(_nodes[1]) : null;
-        if (_values['label']) {
-            this.set_label(_values['label']);
-        }
-        else if (this._labelContainer) {
-            this._labelContainer.contents().not(this.list).remove();
-        }
-    };
-    et2_link_string._attributes = {
+            else if (_value) {
+                mediaContent = [{
+                        title: _value.id,
+                        href: base_url + egw().mime_open(_value).url,
+                        download_href: base_url + egw().mime_open(_value).url + '?download',
+                        type: _value.type
+                    }];
+            }
+            if (mediaContent[0].href && mediaContent[0].href.match(/\/webdav.php/, 'ig'))
+                mediaContent[0]["download_href"] = mediaContent[0].href + '?download';
+            return mediaContent;
+        };
+        et2_link_string.prototype._add_link = function (_link_data) {
+            var self = this;
+            var link = jQuery(document.createElement("li"))
+                .appendTo(this.list)
+                .addClass("et2_link loading")
+                .click(function (e) {
+                var fe = egw_get_file_editor_prefered_mimes(_link_data.type);
+                if (self.options.expose_view && typeof _link_data.type != 'undefined'
+                    && _link_data.type.match(self.mime_regexp, 'ig')) {
+                    self._init_blueimp_gallery(e, _link_data);
+                }
+                else if (typeof _link_data.type != 'undefined' && fe && fe.mime && fe.mime[_link_data.type]) {
+                    egw.open_link(egw.link('/index.php', {
+                        menuaction: fe.edit.menuaction,
+                        path: egw().mime_open(_link_data).url.replace('/webdav.php', '')
+                    }), '', fe.edit_popup);
+                }
+                else {
+                    self.egw().open(_link_data, "", "view", null, _link_data.app, _link_data.app);
+                }
+                e.stopImmediatePropagation();
+            });
+            if (_link_data.title)
+                link.text(_link_data.title);
+            // Now that link is created, get title from server & update
+            if (!_link_data.title) {
+                this.egw().link_title(_link_data.app, _link_data.id, function (title) {
+                    if (title)
+                        this.removeClass("loading").text(title);
+                    else
+                        this.remove(); // no rights or not found
+                }, link);
+            }
+        };
+        /**
+         * Creates a list of attributes which can be set when working in the
+         * "detached" mode. The result is stored in the _attrs array which is provided
+         * by the calling code.
+         *
+         * @param {Array} _attrs an array of attributes
+         */
+        et2_link_string.prototype.getDetachedAttributes = function (_attrs) {
+            // Create the label container if it didn't exist yet
+            if (this._labelContainer == null) {
+                this._labelContainer = jQuery(document.createElement("label"))
+                    .addClass("et2_label");
+                this.getSurroundings().insertDOMNode(this._labelContainer[0]);
+                this.getSurroundings().update();
+            }
+            _attrs.push("value", "label");
+        };
+        /**
+         * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
+         * passed to the "setDetachedAttributes" function in the same order.
+         */
+        et2_link_string.prototype.getDetachedNodes = function () {
+            // Create the label container if it didn't exist yet
+            if (this._labelContainer == null) {
+                this._labelContainer = jQuery(document.createElement("label"))
+                    .addClass("et2_label");
+                this.getSurroundings().insertDOMNode(this._labelContainer[0]);
+            }
+            return [this.list[0], this._labelContainer[0]];
+        };
+        /**
+         * Sets the given associative attribute->value array and applies the
+         * attributes to the given DOM-Node.
+         *
+         * @param _nodes is an array of nodes which have to be in the same order as
+         *      the nodes returned by "getDetachedNodes"
+         * @param _values is an associative array which contains a subset of attributes
+         *      returned by the "getDetachedAttributes" function and sets them to the
+         *      given values.
+         */
+        et2_link_string.prototype.setDetachedAttributes = function (_nodes, _values) {
+            this.list = jQuery(_nodes[0]);
+            this.set_value(_values["value"]);
+            // Special detached, to prevent DOM node modification of the normal method
+            this._labelContainer = _nodes.length > 1 ? jQuery(_nodes[1]) : null;
+            if (_values['label']) {
+                this.set_label(_values['label']);
+            }
+            else if (this._labelContainer) {
+                this._labelContainer.contents().not(this.list).remove();
+            }
+        };
+        return et2_link_string;
+    }(et2_core_valueWidget_1.et2_valueWidget)),
+    _a._attributes = {
         "application": {
             "name": "Application",
             "type": "string",
@@ -1436,14 +1439,12 @@ var et2_link_string = /** @class */ (function (_super) {
         "expose_view": {
             name: "Expose view",
             type: "boolean",
-            "default": true,
+            default: true,
             description: "Clicking on description with href value would popup an expose view, and will show content referenced by href."
         }
-    };
-    return et2_link_string;
-}(et2_core_valueWidget_1.et2_valueWidget));
-exports.et2_link_string = et2_link_string;
-et2_core_widget_1.et2_register_widget(et2_link_string, ["link-string"]);
+    },
+    _a));
+et2_core_widget_1.et2_register_widget(exports.et2_link_string, ["link-string"]);
 /**
  * UI widget for one or more links in a list (table)
  */
@@ -1882,7 +1883,7 @@ var et2_link_list = /** @class */ (function (_super) {
         }
     };
     return et2_link_list;
-}(et2_link_string));
+}(exports.et2_link_string));
 exports.et2_link_list = et2_link_list;
 et2_core_widget_1.et2_register_widget(et2_link_list, ["link-list"]);
 /**
@@ -1948,3 +1949,4 @@ var et2_link_add = /** @class */ (function (_super) {
 }(et2_core_inputWidget_1.et2_inputWidget));
 exports.et2_link_add = et2_link_add;
 et2_core_widget_1.et2_register_widget(et2_link_add, ["link-add"]);
+//# sourceMappingURL=et2_widget_link.js.map

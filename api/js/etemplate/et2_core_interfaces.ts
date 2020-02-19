@@ -211,3 +211,20 @@ function implements_et2_IPrint(obj : et2_widget)
 {
 	return implements_methods(obj, ["beforePrint", "afterPrint"]);
 }
+
+/**
+ * Interface all exposed widget must support in order to getMedia for the blueimp Gallery.
+ */
+interface et2_IExposable
+{
+	/**
+	 * get media an array of media objects to pass to blueimp Gallery
+	 * @param {array} _attrs
+	 */
+	getMedia(_attrs) : void;
+}
+var et2_IExposable = "et2_IExposable";
+function implements_et2_IExposable(obj : et2_widget)
+{
+	return implements_methods(obj, ["getMedia"]);
+}

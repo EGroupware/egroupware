@@ -49,4 +49,8 @@ var et2_IPrint = "et2_IPrint";
 function implements_et2_IPrint(obj) {
     return implements_methods(obj, ["beforePrint", "afterPrint"]);
 }
+var et2_IExposable = "et2_IExposable";
+function implements_et2_IExposable(obj) {
+    return implements_methods(obj, ["getMedia"]);
+}
 //# sourceMappingURL=et2_core_interfaces.js.map

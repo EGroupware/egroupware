@@ -606,7 +606,7 @@ function et2_insertLinkText(_text, _node, _target)
 				}
 			}
 		}
-		else if(s.text)	// no need to generate a link, if there is no content in it
+		else if(s?.text)	// no need to generate a link, if there is no content in it
 		{
 			if(!s.href)
 			{

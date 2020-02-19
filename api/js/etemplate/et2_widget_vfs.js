@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
@@ -429,157 +430,158 @@ et2_core_widget_1.et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
 * </span>
 *
 * span.overlayContainer is optional and only generated for symlinks
-* @todo implement mixin Expose class
 * @augments et2_valueWidget
 */
-var et2_vfsMime = /** @class */ (function (_super) {
-    __extends(et2_vfsMime, _super);
-    /**
-     * Constructor
-     *
-     * @memberOf et2_vfsMime
-     */
-    function et2_vfsMime(_parent, _attrs, _child) {
-        var _this = 
-        // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_vfsMime._attributes, _child || {})) || this;
-        _this.legacyOptions = ["size"];
-        _this.iconOverlayContainer = null;
-        _this.image = null;
-        _this.iconOverlayContainer = jQuery(document.createElement('span')).addClass('iconOverlayContainer');
-        _this.image = jQuery(document.createElement("img"));
-        _this.image.addClass("et2_vfs vfsMimeIcon");
-        _this.iconOverlayContainer.append(_this.image);
-        _this.setDOMNode(_this.iconOverlayContainer[0]);
-        return _this;
-    }
-    /**
-     * Handler for expose slide action, from expose
-     * Returns data needed for the given index, or false to let expose handle it
-     *
-     * @param {Gallery} gallery
-     * @param {integer} index
-     * @param {DOMNode} slide
-     * @return {Array} array of objects consist of media contnet
-     */
-    et2_vfsMime.prototype.expose_onslide = function (gallery, index, slide) {
-        var content = false;
-        if (this.options.expose_callback && typeof this.options.expose_callback == 'function') {
-            //Call the callback to load more items
-            content = this.options.expose_callback.call(this, [gallery, index]);
-            if (content)
-                this.add(content);
+exports.et2_vfsMime = expose((_a = /** @class */ (function (_super) {
+        __extends(et2_vfsMime, _super);
+        /**
+         * Constructor
+         *
+         * @memberOf et2_vfsMime
+         */
+        function et2_vfsMime(_parent, _attrs, _child) {
+            var _this = 
+            // Call the inherited constructor
+            _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_vfsMime._attributes, _child || {})) || this;
+            _this.legacyOptions = ["size"];
+            _this.iconOverlayContainer = null;
+            _this.image = null;
+            _this.iconOverlayContainer = jQuery(document.createElement('span')).addClass('iconOverlayContainer');
+            _this.image = jQuery(document.createElement("img"));
+            _this.image.addClass("et2_vfs vfsMimeIcon");
+            _this.iconOverlayContainer.append(_this.image);
+            _this.setDOMNode(_this.iconOverlayContainer[0]);
+            return _this;
         }
-        return content;
-    };
-    /**
-     * Function to get media content to feed the expose
-     *
-     * @param {type} _value
-     * @returns {Array} return an array of object consists of media content
-     */
-    et2_vfsMime.prototype.getMedia = function (_value) {
-        var base_url = egw.webserverUrl.match(/^\/ig/) ? egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
-        var mediaContent = [{
-                title: _value.name,
-                type: _value.mime,
-                href: _value.download_url
-            }];
-        // check if download_url is not already an url (some stream-wrappers allow to specify that!)
-        if (_value.download_url && (_value.download_url[0] == '/' || _value.download_url.substr(0, 4) != 'http')) {
-            mediaContent[0].href = base_url + _value.download_url;
-            if (mediaContent[0].href && mediaContent[0].href.match(/\/webdav.php/, 'ig')) {
-                mediaContent[0]["download_href"] = mediaContent[0].href + '?download';
+        /**
+         * Handler for expose slide action, from expose
+         * Returns data needed for the given index, or false to let expose handle it
+         *
+         * @param {Gallery} gallery
+         * @param {integer} index
+         * @param {DOMNode} slide
+         * @return {Array} array of objects consist of media contnet
+         */
+        et2_vfsMime.prototype.expose_onslide = function (gallery, index, slide) {
+            var content = false;
+            if (this.options.expose_callback && typeof this.options.expose_callback == 'function') {
+                //Call the callback to load more items
+                content = this.options.expose_callback.call(this, [gallery, index]);
+                if (content)
+                    this.add(content);
             }
-        }
-        if (_value && _value.mime && _value.mime.match(/video\//, 'ig')) {
-            mediaContent[0]["thumbnail"] = this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
-        }
-        else {
-            mediaContent[0]["thumbnail"] = _value.path && _value.mime ?
-                this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime) :
-                this.image.attr('src') + '&thheight=128';
-        }
-        return mediaContent;
-    };
-    et2_vfsMime.prototype.set_value = function (_value) {
-        if (typeof _value !== 'object') {
-            this.egw().debug("warn", "%s only has path, needs array with path & mime", this.id, _value);
-            // Keep going, will be 'unknown type'
-        }
-        var src = this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
-        if (src) {
-            // Set size of thumbnail
-            if (src.indexOf("thumbnail.php") > -1) {
-                if (this.options.size) {
-                    src += "&thsize=" + this.options.size;
+            return content;
+        };
+        /**
+         * Function to get media content to feed the expose
+         *
+         * @param {type} _value
+         * @returns {Array} return an array of object consists of media content
+         */
+        et2_vfsMime.prototype.getMedia = function (_value) {
+            var base_url = egw.webserverUrl.match(/^\/ig/) ? egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
+            var mediaContent = [{
+                    title: _value.name,
+                    type: _value.mime,
+                    href: _value.download_url
+                }];
+            // check if download_url is not already an url (some stream-wrappers allow to specify that!)
+            if (_value.download_url && (_value.download_url[0] == '/' || _value.download_url.substr(0, 4) != 'http')) {
+                mediaContent[0].href = base_url + _value.download_url;
+                if (mediaContent[0].href && mediaContent[0].href.match(/\/webdav.php/, 'ig')) {
+                    mediaContent[0]["download_href"] = mediaContent[0].href + '?download';
                 }
-                else if (this.options.thumb_mime_size) {
-                    var mime_size = this.options.thumb_mime_size.split(',');
-                    var mime_regex = RegExp(_value.mime.split('/')[0]);
-                    if (typeof mime_size != 'undefined' && jQuery.isArray(mime_size)
-                        && !isNaN(mime_size[mime_size.length - 1]) && isNaN(mime_size[0]) && this.options.thumb_mime_size.match(mime_regex[0], 'ig')) {
-                        src += "&thsize=" + mime_size[mime_size.length - 1];
+            }
+            if (_value && _value.mime && _value.mime.match(/video\//, 'ig')) {
+                mediaContent[0]["thumbnail"] = this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
+            }
+            else {
+                mediaContent[0]["thumbnail"] = _value.path && _value.mime ?
+                    this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime) :
+                    this.image.attr('src') + '&thheight=128';
+            }
+            return mediaContent;
+        };
+        et2_vfsMime.prototype.set_value = function (_value) {
+            if (typeof _value !== 'object') {
+                this.egw().debug("warn", "%s only has path, needs array with path & mime", this.id, _value);
+                // Keep going, will be 'unknown type'
+            }
+            var src = this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
+            if (src) {
+                // Set size of thumbnail
+                if (src.indexOf("thumbnail.php") > -1) {
+                    if (this.options.size) {
+                        src += "&thsize=" + this.options.size;
                     }
+                    else if (this.options.thumb_mime_size) {
+                        var mime_size = this.options.thumb_mime_size.split(',');
+                        var mime_regex = RegExp(_value.mime.split('/')[0]);
+                        if (typeof mime_size != 'undefined' && jQuery.isArray(mime_size)
+                            && !isNaN(mime_size[mime_size.length - 1]) && isNaN(mime_size[0]) && this.options.thumb_mime_size.match(mime_regex[0], 'ig')) {
+                            src += "&thsize=" + mime_size[mime_size.length - 1];
+                        }
+                    }
+                    this.image.css("max-width", "100%");
                 }
-                this.image.css("max-width", "100%");
+                this.image.attr("src", src);
+                // tooltip for mimetypes with available detailed thumbnail
+                if (_value.mime && _value.mime.match(/application\/vnd\.oasis\.opendocument\.(text|presentation|spreadsheet|chart)/)) {
+                    var tooltip_target = this.image.parent().parent().parent().length > 0 ?
+                        // Nextmatch row
+                        this.image.parent().parent().parent() :
+                        // Not in nextmatch
+                        this.image.parent();
+                    tooltip_target.tooltip({
+                        items: "img",
+                        position: { my: "right top", at: "left top", collision: "flipfit" },
+                        content: function () {
+                            return '<img src="' + this.src + '&thsize=512"/>';
+                        }
+                    });
+                }
             }
-            this.image.attr("src", src);
-            // tooltip for mimetypes with available detailed thumbnail
-            if (_value.mime && _value.mime.match(/application\/vnd\.oasis\.opendocument\.(text|presentation|spreadsheet|chart)/)) {
-                var tooltip_target = this.image.parent().parent().parent().length > 0 ?
-                    // Nextmatch row
-                    this.image.parent().parent().parent() :
-                    // Not in nextmatch
-                    this.image.parent();
-                tooltip_target.tooltip({
-                    items: "img",
-                    position: { my: "right top", at: "left top", collision: "flipfit" },
-                    content: function () {
-                        return '<img src="' + this.src + '&thsize=512"/>';
-                    }
-                });
+            // add/remove link icon, if file is (not) a symlink
+            if ((_value.mode & et2_vfsMode.types.l) == et2_vfsMode.types.l) {
+                if (typeof this.overlayContainer == 'undefined') {
+                    this.overlayContainer = jQuery(document.createElement('span')).addClass('overlayContainer');
+                    this.overlayContainer.append(jQuery(document.createElement('img'))
+                        .addClass('overlay').attr('src', this.egw().image('link', 'etemplate')));
+                    this.iconOverlayContainer.append(this.overlayContainer);
+                }
             }
-        }
-        // add/remove link icon, if file is (not) a symlink
-        if ((_value.mode & et2_vfsMode.types.l) == et2_vfsMode.types.l) {
-            if (typeof this.overlayContainer == 'undefined') {
-                this.overlayContainer = jQuery(document.createElement('span')).addClass('overlayContainer');
-                this.overlayContainer.append(jQuery(document.createElement('img'))
-                    .addClass('overlay').attr('src', this.egw().image('link', 'etemplate')));
-                this.iconOverlayContainer.append(this.overlayContainer);
+            else if (typeof this.overlayContainer != 'undefined') {
+                this.overlayContainer.remove();
+                delete this.overlayContainer;
             }
-        }
-        else if (typeof this.overlayContainer != 'undefined') {
-            this.overlayContainer.remove();
-            delete this.overlayContainer;
-        }
-    };
-    /**
-     * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
-     * Override to add needed attributes
-     *
-     * @param {array} _attrs array of attribute-names to push further names onto
-     */
-    et2_vfsMime.prototype.getDetachedAttributes = function (_attrs) {
-        _attrs.push("value", "class");
-    };
-    et2_vfsMime.prototype.getDetachedNodes = function () {
-        return [this.node, this.iconOverlayContainer[0], this.image[0]];
-    };
-    et2_vfsMime.prototype.setDetachedAttributes = function (_nodes, _values) {
-        this.iconOverlayContainer = jQuery(_nodes[1]);
-        this.image = jQuery(_nodes[2]);
-        this.node = _nodes[0];
-        this.overlayContainer = _nodes[0].children[1];
-        if (typeof _values['class'] != "undefined") {
-            this.image.addClass(_values['class']);
-        }
-        if (typeof _values['value'] != "undefined") {
-            this.set_value(_values['value']);
-        }
-    };
-    et2_vfsMime._attributes = {
+        };
+        /**
+         * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
+         * Override to add needed attributes
+         *
+         * @param {array} _attrs array of attribute-names to push further names onto
+         */
+        et2_vfsMime.prototype.getDetachedAttributes = function (_attrs) {
+            _attrs.push("value", "class");
+        };
+        et2_vfsMime.prototype.getDetachedNodes = function () {
+            return [this.node, this.iconOverlayContainer[0], this.image[0]];
+        };
+        et2_vfsMime.prototype.setDetachedAttributes = function (_nodes, _values) {
+            this.iconOverlayContainer = jQuery(_nodes[1]);
+            this.image = jQuery(_nodes[2]);
+            this.node = _nodes[0];
+            this.overlayContainer = _nodes[0].children[1];
+            if (typeof _values['class'] != "undefined") {
+                this.image.addClass(_values['class']);
+            }
+            if (typeof _values['value'] != "undefined") {
+                this.set_value(_values['value']);
+            }
+        };
+        return et2_vfsMime;
+    }(et2_core_valueWidget_1.et2_valueWidget)),
+    _a._attributes = {
         "value": {
             "type": "any",
             "description": "Array of (stat) information about the file"
@@ -608,10 +610,9 @@ var et2_vfsMime = /** @class */ (function (_super) {
             default: "",
             description: " Size of thumbnail in pixel for specified mime type with syntax of: mime_type(s),size (eg. image,video,128)"
         }
-    };
-    return et2_vfsMime;
-}(et2_core_valueWidget_1.et2_valueWidget));
-et2_core_widget_1.et2_register_widget(et2_vfsMime, ["vfs-mime"]);
+    },
+    _a));
+et2_core_widget_1.et2_register_widget(exports.et2_vfsMime, ["vfs-mime"]);
 /**
 * vfs-size
 * Human readable file sizes
