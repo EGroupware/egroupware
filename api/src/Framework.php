@@ -548,13 +548,13 @@ abstract class Framework extends Framework\Extra
 			$var['logo_header'] = self::get_login_logo_or_bg_url('login_logo_header', 'logo');
 		}
 
-		$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
+		$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.egroupware.org';
 
 		if (substr($var['logo_url'],0,4) != 'http')
 		{
 			$var['logo_url'] = 'http://'.$var['logo_url'];
 		}
-		$var['logo_title'] = $GLOBALS['egw_info']['server']['login_logo_title']?$GLOBALS['egw_info']['server']['login_logo_title']:'www.eGroupWare.org';
+		$var['logo_title'] = $GLOBALS['egw_info']['server']['login_logo_title']?$GLOBALS['egw_info']['server']['login_logo_title']:'www.egroupware.org';
 
 		return $var;
 	}
