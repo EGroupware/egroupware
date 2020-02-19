@@ -252,7 +252,13 @@ class Session
 				$config->value('num_unsuccessful_ip',$GLOBALS['egw_info']['server']['num_unsuccessful_ip']);
 				$config->value('install_id',$GLOBALS['egw_info']['server']['install_id']);
 				$config->value('max_history',$GLOBALS['egw_info']['server']['max_history']);
-				$config->save_repository();
+				try
+				{
+					$config->save_repository();
+				}
+				catch (Db\Exception $e) {
+					_egw_log_exception($e);	// ignore exception, as it blocks session creation, if database is not writable
+				}
 			}
 		}
 		self::set_cookiedomain();
