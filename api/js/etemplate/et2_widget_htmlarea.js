@@ -162,7 +162,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_editableWidget.extend([
 			valid_children : this.options.valid_children,
 			plugins: [
 				"print searchreplace autolink directionality ",
-				"visualblocks visualchars image link media template ",
+				"visualblocks visualchars image link media template | fullscreen",
 				"codesample table charmap hr pagebreak nonbreaking anchor toc ",
 				"insertdatetime advlist lists textcolor wordcount imagetools ",
 				"colorpicker textpattern help paste code searchreplace tabfocus"
@@ -466,14 +466,14 @@ jQuery.extend(et2_htmlarea, {
 	 */
 	TOOLBAR_EXTENDED: "fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
 					"link | alignleft aligncenter alignright alignjustify  | numlist "+
-					"bullist outdent indent | removeformat | image",
+					"bullist outdent indent | removeformat | image | fullscreen",
 	/**
 	 * arranged toolbars as advanced mode
 	 * @constant
 	 */
 	TOOLBAR_ADVANCED: "undo redo| formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
 					"link | alignleft aligncenter alignright alignjustify | numlist "+
-					"bullist outdent indent ltr rtl | removeformat code| image | searchreplace",
+					"bullist outdent indent ltr rtl | removeformat code| image | searchreplace | fullscreen",
 	/**
 	 * font size formats
 	 * @constant
