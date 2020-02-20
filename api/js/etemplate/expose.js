@@ -1,4 +1,3 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS object implementing expose view of media and a gallery view
  *
@@ -7,9 +6,12 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Hadi Nategh <hn[at]stylite.de>
- * @copyright Stylite AG
- * @version $Id$
  */
+/*egw:uses
+    /vendor/bower-asset/jquery/dist/jquery.js;
+    /api/js/jquery/blueimp/js/blueimp-gallery.min.js;
+*/
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -23,7 +25,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * This function extends the given widget with blueimp gallery plugin
  *
@@ -349,10 +350,12 @@ function expose(Base) {
         exposable.prototype.set_value = function (_value) {
             //todo: not sure if we need that with the new construction
             //if (typeof this._super == 'undefined') return;
+            // @ts-ignore
             _super.prototype.set_value.call(this, _value);
             // Do not run set value of expose if expose_view is not set
             // it causes a wired error on nested image widgets which
             // seems the expose is not its child widget
+            // @ts-ignore
             if (!this.options.expose_view) {
                 return;
             }
@@ -363,7 +366,9 @@ function expose(Base) {
                 && (!fe || fe.mime && !fe.mime[_value.mime])) || typeof _value.download_url == 'undefined') {
                 return;
             }
+            // @ts-ignore
             if (typeof this.options.expose_view != 'undefined' && this.options.expose_view) {
+                // @ts-ignore
                 jQuery(this.node).on('click', function (event) {
                     // Do not trigger expose view if one of the operator keys are held
                     if (!event.altKey && !event.ctrlKey && !event.shiftKey && !event.metaKey) {
@@ -406,11 +411,13 @@ function expose(Base) {
                 }, 1);
             }
             else {
+                // @ts-ignore
                 mediaContent = this.getMedia(_value);
                 // Do not show thumbnail indicator on single expose view
                 this.expose_options.thumbnailIndicators = false;
             }
             this.expose_options.index = current_index;
+            // @ts-ignore
             gallery = blueimp.Gallery(mediaContent, this.expose_options);
         };
         /**
@@ -425,6 +432,7 @@ function expose(Base) {
             var res = false;
             if (nm) {
                 if (!target) {
+                    // @ts-ignore
                     var target_1 = this.getDOMNode();
                 }
                 var entry = nm.controller.getRowByNode(target);
@@ -435,7 +443,7 @@ function expose(Base) {
             return res;
         };
         exposable.prototype.expose_onopen = function (event) { };
-        exposable.prototype.expose_onopened = function (event) {
+        exposable.prototype.expose_onopened = function () {
             // Check to see if we're in a nextmatch, do magic
             var nm = find_nextmatch(this);
             var self = this;
@@ -447,9 +455,11 @@ function expose(Base) {
                     $indicator.off()
                         .addClass('paginating')
                         .swipe(function (event, direction, distance) {
+                        // @ts-ignore
                         if (direction == jQuery.fn.swipe.directions.LEFT) {
                             distance *= -1;
                         }
+                        // @ts-ignore
                         else if (direction == jQuery.fn.swipe.directions.RIGHT) {
                             // OK.
                         }
@@ -479,15 +489,12 @@ function expose(Base) {
         };
         /**
          * Trigger on slide left/right
-         * @param {Gallery} gallery
-         * @param {integer} index
-         * @param {DOMNode} slide
          */
         exposable.prototype.expose_onslide = function (gallery, index, slide) {
             //todo
             //if (typeof this._super == 'undefined') return;
             // First let parent try
-            _this = _super.call(this, gallery, index, slide) || this;
+            _super.prototype.expose_onslide.call(this, gallery, index, slide);
             var nm = find_nextmatch(this);
             if (nm) {
                 // See if we need to move the indicator
@@ -498,7 +505,7 @@ function expose(Base) {
                 }
             }
         };
-        exposable.prototype.expose_onslideend = function (gallery, index, slide) {
+        exposable.prototype.expose_onslideend = function (gallery, index) {
             // Check to see if we're in a nextmatch, do magic
             var nm = find_nextmatch(this);
             if (nm) {
@@ -534,9 +541,8 @@ function expose(Base) {
                 }
             }
         };
-        exposable.prototype.expose_onslidecomplete = function (gallery, index, slide) {
-        };
-        exposable.prototype.expose_onclose = function (event) {
+        exposable.prototype.expose_onslidecomplete = function () { };
+        exposable.prototype.expose_onclose = function () {
             // Check to see if we're in a nextmatch, remove magic
             var nm = find_nextmatch(this);
             if (nm && !this._is_target_indepth(nm)) {
@@ -549,8 +555,7 @@ function expose(Base) {
                 nm.applyFilters({ col_filter: { mime: '' } });
             }
         };
-        exposable.prototype.expose_onclosed = function (event) {
-        };
+        exposable.prototype.expose_onclosed = function () { };
         return exposable;
     }(Base));
 }

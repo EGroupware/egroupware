@@ -36,7 +36,13 @@ require("./et2_types");
 /**
  * Class which implements the "description" XET-Tag
  */
-exports.et2_description = expose((_a = /** @class */ (function (_super) {
+var et2_description = /** @class */ (function (_super) {
+    __extends(et2_description, _super);
+    function et2_description() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return et2_description;
+}(expose((_a = /** @class */ (function (_super) {
         __extends(et2_description, _super);
         /**
          * Constructor
@@ -353,6 +359,8 @@ exports.et2_description = expose((_a = /** @class */ (function (_super) {
             "description": "Text to show as tooltip of defined action"
         }
     },
-    _a));
-et2_core_widget_1.et2_register_widget(exports.et2_description, ["description", "label"]);
+    _a))));
+exports.et2_description = et2_description;
+;
+et2_core_widget_1.et2_register_widget(et2_description, ["description", "label"]);
 //# sourceMappingURL=et2_widget_description.js.map

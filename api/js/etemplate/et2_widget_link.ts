@@ -1496,7 +1496,7 @@ et2_register_widget(et2_link, ["link", "link-entry_ro"]);
  *
  * TODO: This one used to have expose
  */
-export const et2_link_string = expose(class et2_link_string extends et2_valueWidget implements et2_IDetachedDOM, et2_IExposable
+export class et2_link_string extends expose(class et2_link_string extends et2_valueWidget implements et2_IDetachedDOM, et2_IExposable
 {
 	static readonly _attributes : any = {
 		"application": {
@@ -1623,8 +1623,8 @@ export const et2_link_string = expose(class et2_link_string extends et2_valueWid
 	 */
 	getMedia(_value)
 	{
-		var base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
-		var mediaContent = [];
+		let base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
+		let mediaContent = [];
 		if (_value && typeof _value.type !='undefined' && _value.type.match(/video\//,'ig'))
 		{
 			mediaContent = [{
@@ -1751,7 +1751,7 @@ export const et2_link_string = expose(class et2_link_string extends et2_valueWid
 			this._labelContainer.contents().not(this.list).remove();
 		}
 	}
-});
+}){};
 et2_register_widget(et2_link_string, ["link-string"]);
 
 /**

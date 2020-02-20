@@ -23,7 +23,7 @@ import './et2_types';
 /**
  * Class which implements the "description" XET-Tag
  */
-export const et2_description = expose(class et2_description extends et2_baseWidget implements et2_IDetachedDOM, et2_IExposable
+export class et2_description extends expose(class et2_description extends et2_baseWidget implements et2_IDetachedDOM, et2_IExposable
 {
 	static readonly _attributes : any = {
 		"label": {
@@ -251,8 +251,8 @@ export const et2_description = expose(class et2_description extends et2_baseWidg
 	 */
 	getMedia(_value)
 	{
-		var base_url = egw.webserverUrl.match(new RegExp(/^\//,'ig'))?egw(window).window.location.origin :'';
-		var mediaContent = [];
+		let base_url = egw.webserverUrl.match(new RegExp(/^\//,'ig'))?egw(window).window.location.origin :'';
+		let mediaContent = [];
 		if (_value)
 		{
 			mediaContent = [{
@@ -423,5 +423,5 @@ export const et2_description = expose(class et2_description extends et2_baseWidg
 				.tooltip("open");
 			}, {widget: this, span: this.span}));
 	}
-});
+}){};
 et2_register_widget(et2_description, ["description", "label"]);

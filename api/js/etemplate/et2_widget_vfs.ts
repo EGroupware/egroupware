@@ -485,7 +485,7 @@ et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
 * span.overlayContainer is optional and only generated for symlinks
 * @augments et2_valueWidget
 */
-export const et2_vfsMime = expose(class et2_vfsMime extends et2_valueWidget implements et2_IDetachedDOM, et2_IExposable
+class et2_vfsMime extends expose(class et2_vfsMime extends et2_valueWidget implements et2_IDetachedDOM, et2_IExposable
 {
 	static readonly _attributes : any = {
 		"value": {
@@ -693,7 +693,7 @@ export const et2_vfsMime = expose(class et2_vfsMime extends et2_valueWidget impl
 			this.set_value(_values['value']);
 		}
 	}
-});
+}){};
 et2_register_widget(et2_vfsMime, ["vfs-mime"]);
 
 /**
@@ -1528,6 +1528,6 @@ class et2_vfsSelect extends et2_inputWidget
 	{
 		return this.value;
 	}
-}
+};
 et2_register_widget(et2_vfsSelect, ["vfs-select"]);
 

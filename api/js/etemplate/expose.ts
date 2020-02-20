@@ -6,8 +6,6 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Hadi Nategh <hn[at]stylite.de>
- * @copyright Stylite AG
- * @version $Id$
  */
 
 /*egw:uses
@@ -15,9 +13,8 @@
 	/api/js/jquery/blueimp/js/blueimp-gallery.min.js;
 */
 
+"use strict";
 
-import {WidgetConfig} from "./et2_core_widget";
-import {ClassWithAttributes} from "./et2_core_inheritance";
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
@@ -60,8 +57,8 @@ function expose<TBase extends Constructor>(Base: TBase) {
 	 * @returns {et2_nextmatch | null}
 	 */
 	var find_nextmatch = function (widget) {
-		var current = widget;
-		var nextmatch = null;
+		let current = widget;
+		let nextmatch = null;
 		while (nextmatch == null && current) {
 			current = current.getParent();
 			if (typeof current != 'undefined' && current.instanceOf(et2_nextmatch)) {
@@ -87,10 +84,10 @@ function expose<TBase extends Constructor>(Base: TBase) {
 	 */
 	var read_from_nextmatch = function (nm, images, start_at) {
 		if (!start_at) start_at = 0;
-		var image_index = start_at;
-		var stop = Math.max.apply(null, Object.keys(nm.controller._indexMap));
+		let image_index = start_at;
+		let stop = Math.max.apply(null, Object.keys(nm.controller._indexMap));
 
-		for (var i = start_at; i <= stop; i++) {
+		for (let i = start_at; i <= stop; i++) {
 			if (!nm.controller._indexMap[i] || !nm.controller._indexMap[i].uid) {
 				// Returning instead of using IMAGE_DEFAULT means we stop as
 				// soon as a hole is found, instead of getting everything that is
@@ -98,11 +95,11 @@ function expose<TBase extends Constructor>(Base: TBase) {
 				images[image_index++] = IMAGE_DEFAULT;
 				continue;
 			}
-			var uid = nm.controller._indexMap[i].uid;
+			let uid = nm.controller._indexMap[i].uid;
 			if (!uid) continue;
-			var data = egw.dataGetUIDdata(uid);
+			let data = egw.dataGetUIDdata(uid);
 			if (data && data.data && data.data.mime && MIME_REGEX.test(data.data.mime)) {
-				var media = this.getMedia(data.data);
+				let media = this.getMedia(data.data);
 				images[image_index++] = jQuery.extend({}, data.data, media[0]);
 			}
 		}
@@ -117,7 +114,7 @@ function expose<TBase extends Constructor>(Base: TBase) {
 	 * @returns {undefined}
 	 */
 	var set_slide = function (index, image) {
-		var active = (index == gallery.index);
+		let active = (index == gallery.index);
 
 		// Pad with blanks until length is right
 		while (index > gallery.getNumber()) {
@@ -139,7 +136,7 @@ function expose<TBase extends Constructor>(Base: TBase) {
 		}
 
 		// Just use add to let gallery create everything it needs
-		var new_index = gallery.num;
+		let new_index = gallery.num;
 		gallery.add([image]);
 
 		// Move it to where we want it.
@@ -151,15 +148,15 @@ function expose<TBase extends Constructor>(Base: TBase) {
 		gallery.list.splice(new_index, 1);
 
 		// indicators & slides
-		var dom_nodes = ['indicators', 'slides'];
-		for (var i in dom_nodes) {
-			var var_name = dom_nodes[i];
+		let dom_nodes = ['indicators', 'slides'];
+		for (let i in dom_nodes) {
+			let var_name = dom_nodes[i];
 			// Remove old one from DOM
 			jQuery(gallery[var_name][index]).remove();
 			// Move new one into it's place in gallery
 			gallery[var_name][index] = gallery[var_name][new_index];
 			// Move into place in DOM
-			var node = jQuery(gallery[var_name][index]);
+			let node = jQuery(gallery[var_name][index]);
 			node.attr('data-index', index)
 				.insertAfter(jQuery("[data-index='" + (index - 1) + "']", node.parent()));
 			if (active) node.addClass(gallery.options.activeIndicatorClass);
@@ -366,22 +363,26 @@ function expose<TBase extends Constructor>(Base: TBase) {
 			//todo: not sure if we need that with the new construction
 			//if (typeof this._super == 'undefined') return;
 
+			// @ts-ignore
 			super.set_value(_value);
 			// Do not run set value of expose if expose_view is not set
 			// it causes a wired error on nested image widgets which
 			// seems the expose is not its child widget
+			// @ts-ignore
 			if (!this.options.expose_view) {
 				return;
 			}
 
-			var fe = egw_get_file_editor_prefered_mimes();
-			var self = this;
+			let fe = egw_get_file_editor_prefered_mimes();
+			let self = this;
 			// If the media type is not supported do not bind the click handler
 			if (!_value || typeof _value.mime != 'string' || (!_value.mime.match(MIME_REGEX, 'ig')
 				&& (!fe || fe.mime && !fe.mime[_value.mime])) || typeof _value.download_url == 'undefined') {
 				return;
 			}
+			// @ts-ignore
 			if (typeof this.options.expose_view != 'undefined' && this.options.expose_view) {
+				// @ts-ignore
 				jQuery(this.node).on('click', function (event) {
 					// Do not trigger expose view if one of the operator keys are held
 					if (!event.altKey && !event.ctrlKey && !event.shiftKey && !event.metaKey) {
@@ -425,11 +426,13 @@ function expose<TBase extends Constructor>(Base: TBase) {
 					nm.applyFilters({col_filter: {mime: '/' + MIME_REGEX.source + '/'}});
 				}, 1);
 			} else {
+				// @ts-ignore
 				mediaContent = this.getMedia(_value);
 				// Do not show thumbnail indicator on single expose view
 				this.expose_options.thumbnailIndicators = false;
 			}
 			this.expose_options.index = current_index;
+			// @ts-ignore
 			gallery = blueimp.Gallery(mediaContent, this.expose_options);
 		}
 
@@ -446,6 +449,7 @@ function expose<TBase extends Constructor>(Base: TBase) {
 			let res = false;
 			if (nm) {
 				if (!target) {
+					// @ts-ignore
 					let target = this.getDOMNode();
 				}
 				let entry = nm.controller.getRowByNode(target);
@@ -458,7 +462,7 @@ function expose<TBase extends Constructor>(Base: TBase) {
 
 		expose_onopen(event) {}
 
-		expose_onopened(event)
+		expose_onopened()
 		{
 			// Check to see if we're in a nextmatch, do magic
 			let nm = find_nextmatch(this);
@@ -471,11 +475,18 @@ function expose<TBase extends Constructor>(Base: TBase) {
 					$indicator.off()
 						.addClass('paginating')
 						.swipe(function (event, direction, distance) {
-							if (direction == jQuery.fn.swipe.directions.LEFT) {
+							// @ts-ignore
+							if (direction == jQuery.fn.swipe.directions.LEFT)
+							{
 								distance *= -1;
-							} else if (direction == jQuery.fn.swipe.directions.RIGHT) {
+							}
+							// @ts-ignore
+							else if (direction == jQuery.fn.swipe.directions.RIGHT)
+							{
 								// OK.
-							} else {
+							}
+							else
+							{
 								return;
 							}
 							jQuery(this).css('left', min(0, parseInt(jQuery(this).css('left')) - (distance * 30)) + 'px');
@@ -502,16 +513,13 @@ function expose<TBase extends Constructor>(Base: TBase) {
 
 		/**
 		 * Trigger on slide left/right
-		 * @param {Gallery} gallery
-		 * @param {integer} index
-		 * @param {DOMNode} slide
 		 */
 		expose_onslide(gallery, index, slide)
 		{
 			//todo
 			//if (typeof this._super == 'undefined') return;
 			// First let parent try
-			super(gallery, index, slide);
+			super.expose_onslide(gallery, index, slide);
 			let nm = find_nextmatch(this);
 			if (nm) {
 				// See if we need to move the indicator
@@ -524,7 +532,8 @@ function expose<TBase extends Constructor>(Base: TBase) {
 			}
 		}
 
-		expose_onslideend(gallery, index, slide?) {
+		expose_onslideend(gallery, index)
+		{
 			// Check to see if we're in a nextmatch, do magic
 			let nm = find_nextmatch(this);
 			if (nm) {
@@ -564,13 +573,14 @@ function expose<TBase extends Constructor>(Base: TBase) {
 			}
 		}
 
-		expose_onslidecomplete(gallery, index, slide) {
-		}
+		expose_onslidecomplete() {}
 
-		expose_onclose(event) {
+		expose_onclose()
+		{
 			// Check to see if we're in a nextmatch, remove magic
 			let nm = find_nextmatch(this);
-			if (nm && !this._is_target_indepth(nm)) {
+			if (nm && !this._is_target_indepth(nm))
+			{
 				// Remove scrolling from thumbnails
 				gallery.container.find('.indicator')
 					.removeClass('paginating')
@@ -582,8 +592,7 @@ function expose<TBase extends Constructor>(Base: TBase) {
 			}
 		}
 
-		expose_onclosed(event) {
-		}
+		expose_onclosed() {}
 	}
 }
 

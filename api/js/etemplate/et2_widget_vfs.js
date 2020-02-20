@@ -432,7 +432,13 @@ et2_core_widget_1.et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
 * span.overlayContainer is optional and only generated for symlinks
 * @augments et2_valueWidget
 */
-exports.et2_vfsMime = expose((_a = /** @class */ (function (_super) {
+var et2_vfsMime = /** @class */ (function (_super) {
+    __extends(et2_vfsMime, _super);
+    function et2_vfsMime() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return et2_vfsMime;
+}(expose((_a = /** @class */ (function (_super) {
         __extends(et2_vfsMime, _super);
         /**
          * Constructor
@@ -611,8 +617,9 @@ exports.et2_vfsMime = expose((_a = /** @class */ (function (_super) {
             description: " Size of thumbnail in pixel for specified mime type with syntax of: mime_type(s),size (eg. image,video,128)"
         }
     },
-    _a));
-et2_core_widget_1.et2_register_widget(exports.et2_vfsMime, ["vfs-mime"]);
+    _a))));
+;
+et2_core_widget_1.et2_register_widget(et2_vfsMime, ["vfs-mime"]);
 /**
 * vfs-size
 * Human readable file sizes
@@ -1314,5 +1321,6 @@ var et2_vfsSelect = /** @class */ (function (_super) {
     };
     return et2_vfsSelect;
 }(et2_core_inputWidget_1.et2_inputWidget));
+;
 et2_core_widget_1.et2_register_widget(et2_vfsSelect, ["vfs-select"]);
 //# sourceMappingURL=et2_widget_vfs.js.map

@@ -1230,7 +1230,13 @@ et2_core_widget_1.et2_register_widget(et2_link, ["link", "link-entry_ro"]);
  *
  * TODO: This one used to have expose
  */
-exports.et2_link_string = expose((_a = /** @class */ (function (_super) {
+var et2_link_string = /** @class */ (function (_super) {
+    __extends(et2_link_string, _super);
+    function et2_link_string() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return et2_link_string;
+}(expose((_a = /** @class */ (function (_super) {
         __extends(et2_link_string, _super);
         /**
          * Constructor
@@ -1443,8 +1449,10 @@ exports.et2_link_string = expose((_a = /** @class */ (function (_super) {
             description: "Clicking on description with href value would popup an expose view, and will show content referenced by href."
         }
     },
-    _a));
-et2_core_widget_1.et2_register_widget(exports.et2_link_string, ["link-string"]);
+    _a))));
+exports.et2_link_string = et2_link_string;
+;
+et2_core_widget_1.et2_register_widget(et2_link_string, ["link-string"]);
 /**
  * UI widget for one or more links in a list (table)
  */
@@ -1883,7 +1891,7 @@ var et2_link_list = /** @class */ (function (_super) {
         }
     };
     return et2_link_list;
-}(exports.et2_link_string));
+}(et2_link_string));
 exports.et2_link_list = et2_link_list;
 et2_core_widget_1.et2_register_widget(et2_link_list, ["link-list"]);
 /**
