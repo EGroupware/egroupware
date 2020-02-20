@@ -11,10 +11,10 @@
  */
 
 use EGroupware\Api;
-use EGroupware\Api\Link;
-use EGroupware\Api\Framework;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Link;
 
 /**
  * Class to generate the calendar listview and the search
@@ -137,7 +137,7 @@ class calendar_uilist extends calendar_ui
 	 			'filter_no_lang'  => True,	// I  set no_lang for filter (=dont translate the options)
 				'no_filter2'      => True,	// I  disable the 2. filter (params are the same as for filter)
 				'no_cat'          => True,	// I  disable the cat-selectbox
-				'filter'          => 'after',
+				'filter'          => 'month',
 				'order'           => 'cal_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'            => 'ASC',// IO direction of the sort: 'ASC' or 'DESC'
 				'default_cols'    => '!week,weekday,cal_title,cal_description,recure,cal_location,cal_owner,cat_id,pm_id',
@@ -353,6 +353,7 @@ class calendar_uilist extends calendar_ui
 				break;
 
 			case 'month':
+			default:
 				$this->first = $this->bo->date2array($params['date'] ? $params['date'] : $this->date);
 				$this->first['day'] = 1;
 				unset($this->first['raw']);
@@ -368,9 +369,7 @@ class calendar_uilist extends calendar_ui
 				$params['enddate'] = Api\DateTime::to($this->last, Api\DateTime::ET2);
 				break;
 
-				// fall through to after given date
 			case 'after':
-			default:
 				$this->date = $params['startdate'] ? Api\DateTime::to($params['startdate'],'ts') : $this->date;
 				$label = lang('After %1',$this->bo->long_date($this->date));
 				$search_params['start'] = $this->date;
