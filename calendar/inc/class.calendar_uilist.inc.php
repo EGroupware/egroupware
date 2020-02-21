@@ -150,6 +150,12 @@ class calendar_uilist extends calendar_ui
 		}
 		$content['nm']['actions'] = $this->get_actions();
 
+		// Skip first load if view is not listview
+		if($this->view && $this->view !== 'listview')
+		{
+			$content['nm']['num_rows'] = 0;
+		}
+
 		if (isset($_GET['filter']) && in_array($_GET['filter'],array_keys($this->date_filters)))
 		{
 			$content['nm']['filter'] = $_GET['filter'];
