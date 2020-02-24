@@ -744,7 +744,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 *	locally.  Global handlers must stay around, so should be used
 	 *	for global modules.
 	 */
-	registerJSONPlugin(_callback : Function, _context, _type, _global);
+	registerJSONPlugin(_callback : Function, _context, _type?, _global?);
 	/**
 	 * Removes a previously registered plugin.
 	 *
@@ -757,7 +757,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * 	handling.
 	 * @param {boolean} [_global=false] Remove a global or local handler.
 	 */
-	unregisterJSONPlugin(_callback : Function, _context, _type : string, _global : boolean);
+	unregisterJSONPlugin(_callback : Function, _context, _type? : string, _global? : boolean);
 
 	/**
 	 * implemented in egw_files.js

@@ -328,7 +328,7 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 /**
  * Simple container object
  */
-class et2_container extends et2_baseWidget
+export class et2_container extends et2_baseWidget
 {
 	/**
 	 * Constructor

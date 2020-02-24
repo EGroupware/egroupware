@@ -299,6 +299,7 @@ var et2_container = /** @class */ (function (_super) {
     };
     return et2_container;
 }(et2_baseWidget));
+exports.et2_container = et2_container;
 // Register widget for attributes, but not for any xml tags
 et2_core_widget_1.et2_register_widget(et2_container, []);
 /**

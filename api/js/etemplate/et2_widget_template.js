@@ -68,7 +68,7 @@ var et2_template = /** @class */ (function (_super) {
             var template_name = parts.pop();
             // Check to see if XML is known
             var xml = null;
-            var templates = etemplate2.prototype.templates; // use global eTemplate cache
+            var templates = etemplate2.templates; // use global eTemplate cache
             if (!(xml = templates[template_name])) {
                 // Check to see if ID is short form --> prepend parent/top-level name
                 if (template_name.indexOf('.') < 0) {

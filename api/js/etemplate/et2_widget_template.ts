@@ -15,9 +15,9 @@
 
 import './et2_core_interfaces';
 import './et2_core_common';
-import { et2_DOMWidget } from './et2_core_DOMWidget';
-import { ClassWithAttributes } from "./et2_core_inheritance";
-import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
+import {et2_DOMWidget} from './et2_core_DOMWidget';
+import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import './et2_types';
 
 /**
@@ -110,7 +110,7 @@ class et2_template extends et2_DOMWidget
 
 			// Check to see if XML is known
 			var xml = null;
-			var templates = etemplate2.prototype.templates;	// use global eTemplate cache
+			var templates = etemplate2.templates;	// use global eTemplate cache
 			if(!(xml = templates[template_name]))
 			{
 				// Check to see if ID is short form --> prepend parent/top-level name
