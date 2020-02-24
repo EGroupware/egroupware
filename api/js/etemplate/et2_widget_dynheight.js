@@ -31,6 +31,11 @@ var et2_dynheight = /** @class */ (function () {
         this.innerNode = jQuery(_innerNode);
         this.minHeight = _minHeight;
     }
+    et2_dynheight.prototype.destroy = function () {
+        this.outerNode = null;
+        this.innerNode = null;
+        this.bottomNodes = [];
+    };
     /**
      * Resizes the inner node. When this is done, the callback function is
      * called.

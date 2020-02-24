@@ -39,6 +39,13 @@ export class et2_dynheight
 		this.minHeight = _minHeight;
 	}
 
+	destroy()
+	{
+		this.outerNode = null;
+		this.innerNode = null;
+		this.bottomNodes = [];
+	}
+
 	/**
 	 * Resizes the inner node. When this is done, the callback function is
 	 * called.
