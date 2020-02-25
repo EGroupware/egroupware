@@ -8,7 +8,7 @@
  * @author Andreas Stöckel
  * @copyright Stylite 2011
  * @version $Id$
- */
+ *
 
 /*egw:uses
 	// Include all widget classes here
@@ -96,7 +96,7 @@ export class etemplate2
 
 
 	private etemplate_exec_id: string;
-	private menuaction: string;
+	private readonly menuaction: string;
 	name: string;
 	private uniqueId: void | string;
 	private template_base_url: string;
@@ -109,7 +109,7 @@ export class etemplate2
 	private app_obj: EgwApp;
 	app: string;
 
-	constructor(_container, _menuaction)
+	constructor(_container : HTMLElement, _menuaction? : string)
 	{
 		if (typeof _menuaction == "undefined")
 		{
