@@ -606,7 +606,7 @@ export class et2_dialog extends et2_widget {
      * @param {integer|array} _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
      * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
      */
-    static show_prompt(_callback, _message, _title, _value, _buttons, _egw_or_appname) {
+    static show_prompt(_callback, _message, _title?, _value?, _buttons?, _egw_or_appname?) {
         var callback = _callback;
         // Just pass them along, widget handles defaults & missing
         return et2_createWidget("dialog", {

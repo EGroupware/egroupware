@@ -213,6 +213,7 @@ var et2_vfs = /** @class */ (function (_super) {
     et2_vfs.DIR_MIME_TYPE = 'httpd/unix-directory';
     return et2_vfs;
 }(et2_core_valueWidget_1.et2_valueWidget));
+exports.et2_vfs = et2_vfs;
 et2_core_widget_1.et2_register_widget(et2_vfs, ["vfs"]);
 /**
 * vfs-name
@@ -378,6 +379,7 @@ var et2_vfsPath = /** @class */ (function (_super) {
     };
     return et2_vfsPath;
 }(et2_vfsName));
+exports.et2_vfsPath = et2_vfsPath;
 et2_core_widget_1.et2_register_widget(et2_vfsPath, ["vfs-path"]);
 /**
 * vfs-name
@@ -1321,6 +1323,7 @@ var et2_vfsSelect = /** @class */ (function (_super) {
     };
     return et2_vfsSelect;
 }(et2_core_inputWidget_1.et2_inputWidget));
+exports.et2_vfsSelect = et2_vfsSelect;
 ;
 et2_core_widget_1.et2_register_widget(et2_vfsSelect, ["vfs-select"]);
 //# sourceMappingURL=et2_widget_vfs.js.map

@@ -35,7 +35,7 @@ import {et2_inputWidget} from "./et2_core_inputWidget";
  *
  * @augments et2_valueWidget
  */
-class et2_vfs extends et2_valueWidget implements et2_IDetachedDOM
+export class et2_vfs extends et2_valueWidget implements et2_IDetachedDOM
 {
 	static readonly _attributes : any = {
 		"value": {
@@ -284,7 +284,7 @@ et2_register_widget(et2_vfsName, ["vfs-name"]);
 *
 * @augments et2_textbox
 */
-class et2_vfsPath extends et2_vfsName
+export class et2_vfsPath extends et2_vfsName
 {
 	static readonly _attributes : any = {
 		noicon: {
@@ -1128,7 +1128,7 @@ class et2_vfsUpload extends et2_file
 et2_register_widget(et2_vfsUpload, ["vfs-upload"]);
 
 
-class et2_vfsSelect extends et2_inputWidget
+export class et2_vfsSelect extends et2_inputWidget
 {
 	// Allowed mode options
 	modes : string[] = ['open','open-multiple','saveas','select-dir'];
@@ -1244,7 +1244,7 @@ class et2_vfsSelect extends et2_inputWidget
 		this.setDOMNode(this.button[0]);
 	}
 
-	private _content(_content, _callback)
+	_content(_content, _callback)
 	{
 		egw(window).loading_prompt('vfs-select', true, '', 'body');
 		let self = this;
