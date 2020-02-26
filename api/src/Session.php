@@ -550,7 +550,10 @@ class Session
 			// --> allows this stateless protocolls which use basic auth to use sessions!
 			if (($this->sessionid = self::get_sessionid(true)))
 			{
-				session_id($this->sessionid);
+				if (session_status() !== PHP_SESSION_ACTIVE)	// gives warning including password
+				{
+					session_id($this->sessionid);
+				}
 			}
 			else
 			{
