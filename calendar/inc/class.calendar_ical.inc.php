@@ -448,7 +448,7 @@ class calendar_ical extends calendar_boupdate
 							$quantity = $role = null;
 							calendar_so::split_status($status, $quantity, $role);
 							// do not include event owner/ORGANIZER as participant in his own calendar, if he is only participant
-							if (count($event['participants']) == 1 && $event['owner'] == $uid) continue;
+							if (count($event['participants']) == 1 && $event['owner'] == $uid && $uid == $this->user) continue;
 
 							if (!($info = $this->resource_info($uid))) continue;
 
@@ -497,15 +497,15 @@ class calendar_ical extends calendar_boupdate
 									{
 										$user = $this->resource_info($this->user);
 										$attributes['ATTENDEE'][] = 'mailto:' . $user['email'];
-			    						$parameters['ATTENDEE'][] = array(
-			    							'CN'		=>	$user['name'],
-			    							'ROLE'		=> 'REQ-PARTICIPANT',
+										$parameters['ATTENDEE'][] = array(
+											'CN'		=>	$user['name'],
+											'ROLE'		=> 'REQ-PARTICIPANT',
 											'PARTSTAT'	=> 'NEEDS-ACTION',
 											'CUTYPE'	=> 'INDIVIDUAL',
 											'RSVP'		=> 'TRUE',
 											'X-EGROUPWARE-UID'	=> (string)$this->user,
-			    						);
-			    						$event['participants'][$this->user] = true;
+										);
+										$event['participants'][$this->user] = true;
 									}
 									break;
 								case 'r':
@@ -561,33 +561,33 @@ class calendar_ical extends calendar_boupdate
 						}
 						break;
 
-    				case 'ORGANIZER':
-	    				if (!$organizerURL)
-	    				{
-	    					$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
-			    				. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
-			    			$organizerEMail = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
-			    			if ($version == '1.0')
-			    			{
-		    					$organizerURL = trim($organizerCN . (empty($organizerURL) ? '' : ' <' . $organizerURL .'>'));
-			    			}
-			    			else
-			    			{
-		    					$organizerURL = empty($organizerEMail) ? '' : 'mailto:' . $organizerEMail;
-			    			}
-			    			$organizerUID = $event['owner'];
-	    				}
-    					// do NOT use ORGANIZER for events without further participants or a different organizer
-	    				if (count($event['participants']) > 1 || !isset($event['participants'][$event['owner']]))
-	    				{
-		    				$attributes['ORGANIZER'] = $organizerURL;
-		    				$parameters['ORGANIZER']['CN'] = $organizerCN;
-		    				if (!empty($organizerUID))
-		    				{
-			    				$parameters['ORGANIZER']['X-EGROUPWARE-UID'] = $organizerUID;
-		    				}
-	    				}
-	    				break;
+					case 'ORGANIZER':
+						if (!$organizerURL)
+						{
+							$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
+								. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
+							$organizerEMail = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
+							if ($version == '1.0')
+							{
+								$organizerURL = trim($organizerCN . (empty($organizerURL) ? '' : ' <' . $organizerURL .'>'));
+							}
+							else
+							{
+								$organizerURL = empty($organizerEMail) ? '' : 'mailto:' . $organizerEMail;
+							}
+							$organizerUID = $event['owner'];
+						}
+						// do NOT use ORGANIZER for events without further participants or a different organizer
+						if (count($event['participants']) > 1 || !isset($event['participants'][$event['owner']]) || $event['owner'] != $this->user)
+						{
+							$attributes['ORGANIZER'] = $organizerURL;
+							$parameters['ORGANIZER']['CN'] = $organizerCN;
+							if (!empty($organizerUID))
+							{
+								$parameters['ORGANIZER']['X-EGROUPWARE-UID'] = $organizerUID;
+							}
+						}
+						break;
 
 					case 'DTSTART':
 						if (empty($event['whole_day']))
@@ -1014,12 +1014,12 @@ class calendar_ical extends calendar_boupdate
 				foreach (is_array($value) && $parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
 				{
 					$valueData = Api\Translation::convert($valueData,Api\Translation::charset(),$charset);
-                    $paramData = (array) Api\Translation::convert(is_array($value) ?
-                    		$parameters[$key][$valueID] : $parameters[$key],
-                            Api\Translation::charset(),$charset);
-                    $valuesData = (array) Api\Translation::convert($values[$key],
-                    		Api\Translation::charset(),$charset);
-                    $content = $valueData . implode(';', $valuesData);
+	                $paramData = (array) Api\Translation::convert(is_array($value) ?
+	                		$parameters[$key][$valueID] : $parameters[$key],
+	                        Api\Translation::charset(),$charset);
+	                $valuesData = (array) Api\Translation::convert($values[$key],
+	                		Api\Translation::charset(),$charset);
+	                $content = $valueData . implode(';', $valuesData);
 
 					if ($version == '1.0' && (preg_match('/[^\x20-\x7F]/', $content) ||
 						($paramData['CN'] && preg_match('/[^\x20-\x7F]/', $paramData['CN']))))
@@ -2325,7 +2325,7 @@ class calendar_ical extends calendar_boupdate
 	 * @param string|resource $_vcalData
 	 * @param string $principalURL ='' Used for CalDAV imports
 	 * @param string $charset  The encoding charset for $text. Defaults to
-     *                         utf-8 for new format, iso-8859-1 for old format.
+	 *                         utf-8 for new format, iso-8859-1 for old format.
 	 * @return Iterator|array|boolean Iterator if resource given or array of events on success, false on failure
 	 */
 	function icaltoegw($_vcalData, $principalURL='', $charset=null)
@@ -2744,10 +2744,10 @@ class calendar_ical extends calendar_boupdate
 					// work around Ligthning sending @ as %40
 					$attributes['value'] = str_replace('%40', '@', $attributes['value']);
 					if (isset($attributes['params']['PARTSTAT']))
-				    {
-				    	$attributes['params']['STATUS'] = $attributes['params']['PARTSTAT'];
-				    }
-				    if (isset($attributes['params']['STATUS']))
+					{
+						$attributes['params']['STATUS'] = $attributes['params']['PARTSTAT'];
+					}
+					if (isset($attributes['params']['STATUS']))
 					{
 						$status = $this->status_ical2egw[strtoupper($attributes['params']['STATUS'])];
 						if (empty($status)) $status = 'X';
@@ -3165,7 +3165,7 @@ class calendar_ical extends calendar_boupdate
 				array2string($event)."\n",3,$this->logfile);
 		}
 		//Horde::logMessage("vevent2egw:\n" . print_r($event, true),
-        //    	__FILE__, __LINE__, PEAR_LOG_DEBUG);
+	    //    	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 		return $event;
 	}
 
