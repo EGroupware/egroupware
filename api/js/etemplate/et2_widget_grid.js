@@ -34,7 +34,7 @@ require("./et2_core_interfaces");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
-var egw_action_js_1 = require("../egw_action/egw_action.js");
+require("../egw_action/egw_action.js");
 /**
  * Class which implements the "grid" XET-Tag
  *
@@ -733,8 +733,6 @@ var et2_grid = /** @class */ (function (_super) {
      * @param {array} actions [ {ID: attributes..}+] as for set_actions
      */
     et2_grid.prototype._link_actions = function (actions) {
-        // TODO
-        return;
         // Get the top level element for the tree
         // @ts-ignore
         var objectManager = window.egw_getAppObjectManager(true);
@@ -743,7 +741,7 @@ var et2_grid = /** @class */ (function (_super) {
         if (widget_object == null) {
             // Add a new container to the object manager which will hold the widget
             // objects
-            widget_object = objectManager.insertObject(false, new egw_action_js_1.egwActionObject(this.id, objectManager, new et2_core_DOMWidget_1.et2_action_object_impl(this), this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager));
+            widget_object = objectManager.insertObject(false, new egwActionObject(this.id, objectManager, new et2_core_DOMWidget_1.et2_action_object_impl(this).getAOI(), this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager));
         }
         // Delete all old objects
         widget_object.clear();
@@ -759,7 +757,7 @@ var et2_grid = /** @class */ (function (_super) {
             if (content) {
                 // Add a new action object to the object manager
                 var row = jQuery('tr', this.tbody)[r];
-                var aoi = new et2_core_DOMWidget_1.et2_action_object_impl(this, row);
+                var aoi = new et2_core_DOMWidget_1.et2_action_object_impl(this, row).getAOI();
                 var obj = widget_object.addObject(content.id || "row_" + r, aoi);
                 // Set the data to the content so it's available for the action
                 obj.data = content;

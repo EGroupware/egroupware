@@ -5,6 +5,7 @@ declare module eT2
 declare var etemplate2 : any;
 declare class et2_widget{
 	destroy()
+	getWidgetById(string) : et2_widget;
 }
 declare class et2_DOMWidget extends et2_widget{}
 declare class et2_baseWidget extends et2_DOMWidget{}
@@ -19,8 +20,9 @@ declare class et2_tabbox extends et2_valueWidget {
 	activateTab(et2_widget);
 }
 declare class et2_button extends et2_DOMWidget {
-	click() : boolean
-	onclick: Function
+	click() : boolean;
+	onclick: Function;
+	set_disabled(b: boolean) : void;
 }
 declare var et2_surroundingsMgr : any;
 declare var et2_arrayMgr : any;
@@ -62,7 +64,9 @@ declare class et2_customfields_list extends et2_valueWidget {
 	public customfields : any;
 	set_visible(visible : boolean);
 }
-declare var et2_nextmatch : any;
+declare class et2_nextmatch extends et2_DOMWidget {
+
+}
 declare var et2_nextmatch_header_bar : any;
 declare var et2_nextmatch_header : any;
 declare var et2_nextmatch_customfields : any;
@@ -105,7 +109,9 @@ declare var et2_historylog : any;
 declare var et2_hrule : any;
 declare var et2_html : any;
 declare var et2_htmlarea : any;
-declare var et2_iframe : any;
+declare class et2_iframe extends et2_valueWidget {
+	public set_src(string);
+}
 declare var et2_image : any;
 declare var et2_appicon : any;
 declare var et2_avatar : any;
@@ -177,7 +183,7 @@ declare class et2_nextmatch_taglistheader  extends et2_nextmatch_header {}
 declare class et2_nextmatch_entryheader  extends et2_nextmatch_header {}
 declare class et2_nextmatch_customfilter extends et2_nextmatch_filterheader {}
 declare function et2_createWidget(type : string, params? : {}, parent? : any) : any;
-declare function nm_action(_action : {}, _senders : [], _target : any, _ids? : any) : void;
+declare function nm_action(_action : {}, _senders : [], _target? : any, _ids? : any) : void;
 declare function et2_compileLegacyJS(_code : string, _widget : et2_widget, _context? : HTMLElement) : Function;
 // et2_core_xml.js
 declare function et2_loadXMLFromURL(_url : string, _callback : Function, _context? : object, _fail_callback? : Function) : void;

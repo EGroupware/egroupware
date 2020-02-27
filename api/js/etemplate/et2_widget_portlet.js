@@ -164,7 +164,7 @@ var et2_portlet = /** @class */ (function (_super) {
         if (widget_object == null) {
             // Add a new container to the object manager which will hold the widget
             // objects
-            widget_object = objectManager.insertObject(false, new egwActionObject(this.id, objectManager, new et2_core_DOMWidget_1.et2_action_object_impl(this), this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager));
+            widget_object = objectManager.insertObject(false, new egwActionObject(this.id, objectManager, new et2_core_DOMWidget_1.et2_action_object_impl(this).getAOI(), this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager));
         }
         // Delete all old objects
         widget_object.clear();

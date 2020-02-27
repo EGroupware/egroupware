@@ -19,11 +19,7 @@
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {
-	egw_getObjectManager,
-	egwActionObject,
-	egwActionObjectManager
-} from '../egw_action/egw_action.js';
+import '../egw_action/egw_action.js';
 import './et2_types';
 
 /**
@@ -631,7 +627,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 					}
 				}
 				return egwActionObject.prototype.handleKeyPress.call(this, _keyCode,_shift,_ctrl,_alt);
-			}
+			};
 			this._objectManager.parent.updateFocusedChild(this._objectManager, true);
 		}
 	}

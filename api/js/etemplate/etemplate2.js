@@ -87,7 +87,7 @@ var etemplate2 = /** @class */ (function () {
             _menuaction = "EGroupware\\Api\\Etemplate::ajax_process_content";
         }
         // Copy the given parameters
-        this.DOMContainer = _container;
+        this._DOMContainer = _container;
         this.menuaction = _menuaction;
         // Unique ID to prevent DOM collisions across multiple templates
         this.uniqueId = _container.getAttribute("id") ? _container.getAttribute("id").replace('.', '-') : '';
@@ -95,7 +95,7 @@ var etemplate2 = /** @class */ (function () {
          * Preset the object variable
          * @type {et2_container}
          */
-        this.widgetContainer = null;
+        this._widgetContainer = null;
         // List of templates (XML) that are known, not always used.  Indexed by id.
         // We share list of templates with iframes and popups
         try {
@@ -136,30 +136,30 @@ var etemplate2 = /** @class */ (function () {
             }
             this.resize_timeout = setTimeout(function () {
                 self.resize_timeout = false;
-                if (self.widgetContainer) {
+                if (self._widgetContainer) {
                     var appHeader = jQuery('#divAppboxHeader');
                     //Calculate the excess height
-                    excess_height = egw(window).is_popup() ? jQuery(window).height() - jQuery(self.DOMContainer).height() - appHeader.outerHeight() + 11 : 0;
+                    excess_height = egw(window).is_popup() ? jQuery(window).height() - jQuery(self._DOMContainer).height() - appHeader.outerHeight() + 11 : 0;
                     // Recalculate excess height if the appheader is shown
                     if (appHeader.length > 0 && appHeader.is(':visible'))
                         excess_height -= appHeader.outerHeight() - 9;
                     // Do not resize if the template height is bigger than screen available height
                     // For templates which have sub templates and they are bigger than screenHeight
-                    if (screen.availHeight < jQuery(self.DOMContainer).height())
+                    if (screen.availHeight < jQuery(self._DOMContainer).height())
                         excess_height = 0;
                     // Call the "resize" event of all functions which implement the
                     // "IResizeable" interface
-                    self.widgetContainer.iterateOver(function (_widget) {
+                    self._widgetContainer.iterateOver(function (_widget) {
                         _widget.resize(excess_height);
                     }, self, et2_IResizeable);
                 }
             }, 100);
         }
         // Initial resize needs to be resized immediately (for instance for nextmatch resize)
-        else if (this.widgetContainer) {
+        else if (this._widgetContainer) {
             // Call the "resize" event of all functions which implement the
             // "IResizeable" interface
-            this.widgetContainer.iterateOver(function (_widget) {
+            this._widgetContainer.iterateOver(function (_widget) {
                 _widget.resize(excess_height);
             }, this, et2_IResizeable);
         }
@@ -169,7 +169,7 @@ var etemplate2 = /** @class */ (function () {
      * Clears the current instance.
      */
     etemplate2.prototype.clear = function () {
-        jQuery(this.DOMContainer).trigger('clear');
+        jQuery(this._DOMContainer).trigger('clear');
         // Remove any handlers on window (resize)
         if (this.uniqueId) {
             jQuery(window).off("." + this.uniqueId);
@@ -179,13 +179,13 @@ var etemplate2 = /** @class */ (function () {
             this.destroy_session();
             this.unbind_unload();
         }
-        if (this.widgetContainer != null) {
+        if (this._widgetContainer != null) {
             // Un-register handler
-            this.widgetContainer.egw().unregisterJSONPlugin(this.handle_assign, this, 'assign');
-            this.widgetContainer.destroy();
-            this.widgetContainer = null;
+            this._widgetContainer.egw().unregisterJSONPlugin(this.handle_assign, this, 'assign');
+            this._widgetContainer.destroy();
+            this._widgetContainer = null;
         }
-        jQuery(this.DOMContainer).empty();
+        jQuery(this._DOMContainer).empty();
         // Remove self from the index
         for (var name_1 in etemplate2.templates) {
             if (typeof etemplate2._byTemplate[name_1] == "undefined")
@@ -197,6 +197,27 @@ var etemplate2 = /** @class */ (function () {
             }
         }
     };
+    Object.defineProperty(etemplate2.prototype, "widgetContainer", {
+        get: function () {
+            return this._widgetContainer;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(etemplate2.prototype, "DOMContainer", {
+        get: function () {
+            return this._DOMContainer;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(etemplate2.prototype, "etemplate_exec_id", {
+        get: function () {
+            return this._etemplate_exec_id;
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * Creates an associative array containing the data array managers for each part
      * of the associative data array. A part is something like "content", "readonlys"
@@ -227,11 +248,11 @@ var etemplate2 = /** @class */ (function () {
                     break;
                 case "readonlys":
                     result[key] = new et2_readonlysArrayMgr(_data[key]);
-                    result[key].perspectiveData.owner = this.widgetContainer;
+                    result[key].perspectiveData.owner = this._widgetContainer;
                     break;
                 default:
                     result[key] = new et2_arrayMgr(_data[key]);
-                    result[key].perspectiveData.owner = this.widgetContainer;
+                    result[key].perspectiveData.owner = this._widgetContainer;
             }
         }
         return result;
@@ -243,9 +264,9 @@ var etemplate2 = /** @class */ (function () {
      * calls, eg. via et2_dialog.
      */
     etemplate2.prototype.bind_unload = function () {
-        if (this.etemplate_exec_id) {
+        if (this._etemplate_exec_id) {
             this.destroy_session = jQuery.proxy(function (ev) {
-                var request = egw.json("EGroupware\\Api\\Etemplate::ajax_destroy_session", [this.etemplate_exec_id], null, null, false);
+                var request = egw.json("EGroupware\\Api\\Etemplate::ajax_destroy_session", [this._etemplate_exec_id], null, null, false);
                 request.sendRequest();
             }, this);
             if (!window.onbeforeunload) {
@@ -325,7 +346,7 @@ var etemplate2 = /** @class */ (function () {
         egw(currentapp, window).registerJSONPlugin(this.handle_assign, this, 'assign');
         if (egw.debug_level() >= 3) {
             if (console.groupCollapsed) {
-                egw.window.console.groupCollapsed("Loading %s into ", _name, '#' + this.DOMContainer.id);
+                egw.window.console.groupCollapsed("Loading %s into ", _name, '#' + this._DOMContainer.id);
             }
         }
         // Timing & profiling on debug level 'log' (4)
@@ -365,13 +386,13 @@ var etemplate2 = /** @class */ (function () {
             // Clear any existing instance
             this.clear();
             // Create the basic widget container and attach it to the DOM
-            this.widgetContainer = new et2_core_baseWidget_1.et2_container(null);
-            this.widgetContainer.setApiInstance(egw(currentapp, egw.elemWindow(this.DOMContainer)));
-            this.widgetContainer.setInstanceManager(this);
-            this.widgetContainer.setParentDOMNode(this.DOMContainer);
+            this._widgetContainer = new et2_core_baseWidget_1.et2_container(null);
+            this._widgetContainer.setApiInstance(egw(currentapp, egw.elemWindow(this._DOMContainer)));
+            this._widgetContainer.setInstanceManager(this);
+            this._widgetContainer.setParentDOMNode(this._DOMContainer);
             // store the id to submit it back to server
             if (_data) {
-                this.etemplate_exec_id = _data.etemplate_exec_id;
+                this._etemplate_exec_id = _data.etemplate_exec_id;
                 // set app_header
                 if (typeof _data.app_header == 'string') {
                     // @ts-ignore
@@ -392,11 +413,11 @@ var etemplate2 = /** @class */ (function () {
                 }
                 etemplate2._byTemplate[_name].push(this);
                 // Read the XML structure of the requested template
-                this.widgetContainer.loadFromXML(etemplate2.templates[this.name]);
+                this._widgetContainer.loadFromXML(etemplate2.templates[this.name]);
                 // List of Promises from widgets that are not quite fully loaded
                 var deferred = [];
                 // Inform the widget tree that it has been successfully loaded.
-                this.widgetContainer.loadingFinished(deferred);
+                this._widgetContainer.loadingFinished(deferred);
                 // Connect to the window resize event
                 jQuery(window).on("resize." + this.uniqueId, this, function (e) {
                     e.data.resize(e);
@@ -424,8 +445,8 @@ var etemplate2 = /** @class */ (function () {
                     // Trigger the "resize" event
                     this.resize();
                     // Automatically set focus to first visible input for popups
-                    if (this.widgetContainer._egw.is_popup() && jQuery('[autofocus]', this.DOMContainer).focus().length == 0) {
-                        var $input = jQuery('input:visible', this.DOMContainer)
+                    if (this._widgetContainer._egw.is_popup() && jQuery('[autofocus]', this._DOMContainer).focus().length == 0) {
+                        var $input = jQuery('input:visible', this._DOMContainer)
                             // Date fields open the calendar popup on focus
                             .not('.et2_date')
                             .filter(function () {
@@ -450,13 +471,13 @@ var etemplate2 = /** @class */ (function () {
                         // Let the application that loaded it know too
                         app[this.app].et2_ready(this, this.name);
                     }
-                    jQuery(this.DOMContainer).trigger('load', this);
+                    jQuery(this._DOMContainer).trigger('load', this);
                     if (etemplate2.templates[this.name].attributes.onload) {
                         var onload_1 = et2_checkType(etemplate2.templates[this.name].attributes.onload.value, 'js', 'onload', {});
                         if (typeof onload_1 === 'string') {
-                            onload_1 = et2_compileLegacyJS(onload_1, this, this.widgetContainer);
+                            onload_1 = et2_compileLegacyJS(onload_1, this, this._widgetContainer);
                         }
-                        onload_1.call(this.widgetContainer);
+                        onload_1.call(this._widgetContainer);
                     }
                     // Profiling
                     if (egw.debug_level() >= 4) {
@@ -479,7 +500,7 @@ var etemplate2 = /** @class */ (function () {
             try {
                 if (etemplate2.templates[_name]) {
                     // Set array managers first, or errors will happen
-                    this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+                    this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
                     // Already have it
                     _load.apply(this, []);
                     return;
@@ -510,7 +531,7 @@ var etemplate2 = /** @class */ (function () {
             }, this);
             // Split the given data into array manager objects and pass those to the
             // widget container - do this here because file is loaded async
-            this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+            this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
         }, this);
     };
     /**
@@ -520,7 +541,7 @@ var etemplate2 = /** @class */ (function () {
      */
     etemplate2.prototype.isDirty = function () {
         var dirty = false;
-        this.widgetContainer.iterateOver(function (_widget) {
+        this._widgetContainer.iterateOver(function (_widget) {
             if (_widget.isDirty && _widget.isDirty()) {
                 dirty = true;
             }
@@ -532,7 +553,7 @@ var etemplate2 = /** @class */ (function () {
      */
     etemplate2.prototype.autocomplete_fixer = function () {
         var self = this;
-        var form = self.DOMContainer;
+        var form = self._DOMContainer;
         // Safari always do the autofill for password field regardless of autocomplete = off
         // and since there's no other way to switch the autocomplete of, we should switch the
         // form autocomplete off (e.g. compose dialog, attachment password field)
@@ -558,7 +579,7 @@ var etemplate2 = /** @class */ (function () {
     };
     etemplate2.prototype._set_button = function (button, values) {
         if (typeof button == 'string') {
-            button = this.widgetContainer.getWidgetById(button);
+            button = this._widgetContainer.getWidgetById(button);
         }
         // Button parameter used for submit buttons in datagrid
         // TODO: This should probably go in nextmatch's getValues(), along with selected rows somehow.
@@ -608,11 +629,11 @@ var etemplate2 = /** @class */ (function () {
      * @return {boolean} true if submit was send, false if eg. validation stoped submit
      */
     etemplate2.prototype.submit = function (button, async, no_validation, _container) {
-        var api = this.widgetContainer.egw();
+        var api = this._widgetContainer.egw();
         if (typeof no_validation == 'undefined') {
             no_validation = false;
         }
-        var container = _container || this.widgetContainer;
+        var container = _container || this._widgetContainer;
         // Get the form values
         var values = this.getValues(container);
         // Trigger the submit event
@@ -637,13 +658,13 @@ var etemplate2 = /** @class */ (function () {
                 this.autocomplete_fixer();
                 // unbind our session-destroy handler, as we are submitting
                 this.unbind_unload();
-                var request = api.json(this.menuaction, [this.etemplate_exec_id, values, no_validation], function () {
+                var request = api.json(this.menuaction, [this._etemplate_exec_id, values, no_validation], function () {
                     api.loading_prompt('et2_submit_spinner', false);
                 }, this, async);
                 request.sendRequest();
             }
             else {
-                this.widgetContainer.egw().debug("warn", "Missing menuaction for submit.  Values: ", values);
+                this._widgetContainer.egw().debug("warn", "Missing menuaction for submit.  Values: ", values);
             }
         }
         return canSubmit;
@@ -658,10 +679,10 @@ var etemplate2 = /** @class */ (function () {
      */
     etemplate2.prototype.postSubmit = function (button) {
         // Get the form values
-        var values = this.getValues(this.widgetContainer);
+        var values = this.getValues(this._widgetContainer);
         // Trigger the submit event
         var canSubmit = true;
-        this.widgetContainer.iterateOver(function (_widget) {
+        this._widgetContainer.iterateOver(function (_widget) {
             if (_widget.submit(values) === false) {
                 canSubmit = false;
             }
@@ -672,11 +693,11 @@ var etemplate2 = /** @class */ (function () {
             // unbind our session-destroy handler, as we are submitting
             this.unbind_unload();
             var form = jQuery("<form id='form' action='" + egw().webserverUrl +
-                "/index.php?menuaction=" + this.widgetContainer.egw().getAppName() + ".EGroupware\\Api\\Etemplate.process_exec&ajax=true' method='POST'>");
+                "/index.php?menuaction=" + this._widgetContainer.egw().getAppName() + ".EGroupware\\Api\\Etemplate.process_exec&ajax=true' method='POST'>");
             var etemplate_id = jQuery(document.createElement("input"))
                 .attr("name", 'etemplate_exec_id')
                 .attr("type", 'hidden')
-                .val(this.etemplate_exec_id)
+                .val(this._etemplate_exec_id)
                 .appendTo(form);
             var input = document.createElement("input");
             input.type = "hidden";
@@ -790,7 +811,7 @@ var etemplate2 = /** @class */ (function () {
         // msg, app;	// unused but required by function signature
         var refresh_done = false;
         // Refresh nextmatches
-        this.widgetContainer.iterateOver(function (_widget) {
+        this._widgetContainer.iterateOver(function (_widget) {
             // Trigger refresh
             _widget.refresh(id, type);
             refresh_done = true;
@@ -829,11 +850,11 @@ var etemplate2 = /** @class */ (function () {
         // Sometimes changes take time
         var deferred = [];
         // Skip hidden etemplates
-        if (jQuery(this.DOMContainer).filter(':visible').length === 0) {
+        if (jQuery(this._DOMContainer).filter(':visible').length === 0) {
             return [];
         }
         // Allow any widget to change for printing
-        this.widgetContainer.iterateOver(function (_widget) {
+        this._widgetContainer.iterateOver(function (_widget) {
             // Skip widgets from a different etemplate (home)
             if (_widget.getInstanceManager() != this)
                 return;
@@ -891,7 +912,7 @@ var etemplate2 = /** @class */ (function () {
         for (var name_3 in etemplate2._byTemplate) {
             for (var i = 0; i < etemplate2._byTemplate[name_3].length; i++) {
                 var et = etemplate2._byTemplate[name_3][i];
-                if (et.DOMContainer.getAttribute("id") == id) {
+                if (et._DOMContainer.getAttribute("id") == id) {
                     return et;
                 }
             }
@@ -945,7 +966,7 @@ var etemplate2 = /** @class */ (function () {
         // regular et2 re-load
         if (typeof data.url == "string" && typeof data.data === 'object') {
             // @ts-ignore
-            if (typeof this.load == 'function') {
+            if (this && typeof this.load == 'function') {
                 // Called from etemplate
                 // @ts-ignore
                 this.load(data.name, data.url, data.data);
@@ -983,7 +1004,7 @@ var etemplate2 = /** @class */ (function () {
         // Display validation errors
         for (var id in _response.data) {
             // @ts-ignore
-            var widget = this.widgetContainer.getWidgetById(id);
+            var widget = this._widgetContainer.getWidgetById(id);
             if (widget && widget.instanceOf(et2_core_baseWidget_1.et2_baseWidget)) {
                 widget.showMessage(_response.data[id], 'validation_error');
                 // Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
@@ -1018,20 +1039,20 @@ var etemplate2 = /** @class */ (function () {
             (typeof res.data.key != 'undefined') &&
             (typeof res.data.value != 'undefined')) {
             if (typeof res.data.etemplate_exec_id == 'undefined' ||
-                res.data.etemplate_exec_id != this.etemplate_exec_id) {
+                res.data.etemplate_exec_id != this._etemplate_exec_id) {
                 // Not for this etemplate, but not an error
                 return false;
             }
             if (res.data.key == 'etemplate_exec_id') {
-                this.etemplate_exec_id = res.data.value;
+                this._etemplate_exec_id = res.data.value;
                 return true;
             }
-            if (this.widgetContainer == null) {
+            if (this._widgetContainer == null) {
                 // Right etemplate, but it's already been cleared.
                 egw.debug('warn', "Tried to call assign on an un-loaded etemplate", res.data);
                 return false;
             }
-            var widget = this.widgetContainer.getWidgetById(res.data.id);
+            var widget = this._widgetContainer.getWidgetById(res.data.id);
             if (widget) {
                 if (typeof widget['set_' + res.data.key] != 'function') {
                     egw.debug('warn', "Cannot set %s attribute %s via JSON assign, no set_%s()", res.data.id, res.data.key, res.data.key);

@@ -32,7 +32,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var egw_action_js_1 = require("../egw_action/egw_action.js");
+require("../egw_action/egw_action.js");
 require("./et2_types");
 /**
  * This toolbar gets its contents from its actions
@@ -79,7 +79,7 @@ var et2_toolbar = /** @class */ (function (_super) {
         _this._build_menu(et2_toolbar.default_toolbar, true);
         return _this;
     }
-    ;
+
     et2_toolbar.prototype.destroy = function () {
         // Destroy widget
         if (this.div && this.div.data('ui-menu'))
@@ -498,9 +498,9 @@ var et2_toolbar = /** @class */ (function (_super) {
     et2_toolbar.prototype._link_actions = function (actions) {
         this._build_menu(actions);
         var self = this;
-        var gom = egw_action_js_1.egw_getObjectManager(this.egw().appName, true, 1);
+        var gom = egw_getObjectManager(this.egw().appName, true, 1);
         if (this._objectManager == null) {
-            this._objectManager = gom.addObject(new egw_action_js_1.egwActionObjectManager(this.id, this._actionManager));
+            this._objectManager = gom.addObject(new egwActionObjectManager(this.id, this._actionManager));
             this._objectManager.handleKeyPress = function (_keyCode, _shift, _ctrl, _alt) {
                 for (var i = 0; i < self._actionManager.children.length; i++) {
                     var action = self._actionManager.children[i];
@@ -515,7 +515,7 @@ var et2_toolbar = /** @class */ (function (_super) {
                         return true;
                     }
                 }
-                return egw_action_js_1.egwActionObject.prototype.handleKeyPress.call(this, _keyCode, _shift, _ctrl, _alt);
+                return egwActionObject.prototype.handleKeyPress.call(this, _keyCode, _shift, _ctrl, _alt);
             };
             this._objectManager.parent.updateFocusedChild(this._objectManager, true);
         }

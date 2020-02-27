@@ -226,7 +226,7 @@ class et2_portlet extends et2_valueWidget
 			// Add a new container to the object manager which will hold the widget
 			// objects
 			widget_object = objectManager.insertObject(false, new egwActionObject(
-				this.id, objectManager, <egwActionObjectInterface><unknown>new et2_action_object_impl(<et2_DOMWidget><unknown>this),
+				this.id, objectManager, <egwActionObjectInterface><unknown>new et2_action_object_impl(<et2_DOMWidget><unknown>this).getAOI(),
 				this._actionManager || (<egwAction><unknown>objectManager.manager).getActionById(this.id) || objectManager.manager
 			));
 		}

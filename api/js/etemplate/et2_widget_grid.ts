@@ -18,13 +18,10 @@
 
 import './et2_core_common';
 import './et2_core_interfaces';
-import {et2_register_widget, WidgetConfig, et2_widget} from "./et2_core_widget";
+import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_DOMWidget, et2_action_object_impl} from "./et2_core_DOMWidget";
-import {
-	egw_getAppObjectManager,
-	egwActionObject
-} from '../egw_action/egw_action.js';
+import {et2_action_object_impl, et2_DOMWidget} from "./et2_core_DOMWidget";
+import '../egw_action/egw_action.js';
 
 
 /**
@@ -1000,8 +997,6 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	 */
 	_link_actions(actions : object[])
 	{
-		// TODO
-		return;
 		 // Get the top level element for the tree
 		// @ts-ignore
 		let objectManager = window.egw_getAppObjectManager(true);
@@ -1011,7 +1006,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			// Add a new container to the object manager which will hold the widget
 			// objects
 			widget_object = objectManager.insertObject(false, new egwActionObject(
-				this.id, objectManager, new et2_action_object_impl(this),
+				this.id, objectManager, new et2_action_object_impl(this).getAOI(),
 				this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager
 			));
 		}
@@ -1033,7 +1028,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			{
 				// Add a new action object to the object manager
 				const row = jQuery('tr', this.tbody)[r];
-				const aoi = new et2_action_object_impl(this, row);
+				const aoi = new et2_action_object_impl(this, row).getAOI();
 				const obj = widget_object.addObject(content.id || "row_" + r, aoi);
 
 				// Set the data to the content so it's available for the action

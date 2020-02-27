@@ -31,7 +31,7 @@ var et2_core_inheritance_1 = require("./et2_core_inheritance");
 require("./et2_core_interfaces");
 require("./et2_core_common");
 var et2_core_widget_1 = require("./et2_core_widget");
-var egw_action_js_1 = require("../egw_action/egw_action.js");
+require("../egw_action/egw_action.js");
 require("./et2_types");
 /**
  * Abstract widget class which can be inserted into the DOM. All widget classes
@@ -70,7 +70,7 @@ var et2_DOMWidget = /** @class */ (function (_super) {
         this.parentNode = null;
         this._attachSet = {};
         if (this._actionManager) {
-            var app_om = egw_action_js_1.egw_getObjectManager(this.egw().getAppName(), false, 1);
+            var app_om = egw_getObjectManager(this.egw().getAppName(), false, 1);
             if (app_om) {
                 var om = app_om.getObjectById(this.id);
                 if (om)
@@ -448,12 +448,12 @@ var et2_DOMWidget = /** @class */ (function (_super) {
      */
     et2_DOMWidget.prototype._link_actions = function (actions) {
         // Get the top level element for the tree
-        var objectManager = egw_action_js_1.egw_getAppObjectManager(true);
+        var objectManager = egw_getAppObjectManager(true);
         var widget_object = objectManager.getObjectById(this.id);
         if (widget_object == null) {
             // Add a new container to the object manager which will hold the widget
             // objects
-            widget_object = objectManager.insertObject(false, new egw_action_js_1.egwActionObject(this.id, objectManager, (new et2_action_object_impl(this)).getAOI(), this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager));
+            widget_object = objectManager.insertObject(false, new egwActionObject(this.id, objectManager, (new et2_action_object_impl(this)).getAOI(), this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager));
         }
         else {
             widget_object.setAOI((new et2_action_object_impl(this, this.getDOMNode())).getAOI());
@@ -717,7 +717,7 @@ var et2_action_object_impl = /** @class */ (function () {
     function et2_action_object_impl(_widget, _node) {
         var widget = _widget;
         var objectNode = _node;
-        this.aoi = new egw_action_js_1.egwActionObjectInterface();
+        this.aoi = new egwActionObjectInterface();
         this.aoi.getWidget = function () {
             return widget;
         };
@@ -734,10 +734,10 @@ var et2_action_object_impl = /** @class */ (function () {
         // or EGW_AI_DRAG_OUT
         this.aoi.doTriggerEvent = function (_event, _data) {
             switch (_event) {
-                case egw_action_js_1.EGW_AI_DRAG_OVER:
+                case EGW_AI_DRAG_OVER:
                     jQuery(this.node).addClass("ui-state-active");
                     break;
-                case egw_action_js_1.EGW_AI_DRAG_OUT:
+                case EGW_AI_DRAG_OUT:
                     jQuery(this.node).removeClass("ui-state-active");
                     break;
             }

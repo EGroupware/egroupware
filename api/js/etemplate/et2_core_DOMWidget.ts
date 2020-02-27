@@ -18,15 +18,7 @@ import {ClassWithAttributes} from './et2_core_inheritance';
 import './et2_core_interfaces';
 import './et2_core_common';
 import {et2_widget, WidgetConfig} from "./et2_core_widget";
-import {
-	EGW_AI_DRAG_OUT,
-	EGW_AI_DRAG_OVER,
-	egw_getActionManager,
-	egw_getAppObjectManager,
-	egw_getObjectManager,
-	egwActionObject,
-	egwActionObjectInterface
-} from '../egw_action/egw_action.js';
+import '../egw_action/egw_action.js';
 import './et2_types';
 
 /**
