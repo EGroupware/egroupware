@@ -60,7 +60,7 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 	node: HTMLElement = null;
 	statustext: string = '';
 	private _messageDiv: JQuery = null;
-	private _tooltipElem: JQuery = null;
+	protected _tooltipElem: JQuery = null;
 	onclick: any;
 
 	/**
