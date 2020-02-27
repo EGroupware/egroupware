@@ -264,7 +264,7 @@ declare interface IegwGlobal
 	 * @param _args optional parameters (%{number} replacements)
 	 * @return {string}
 	 */
-	lang(_msg : string, ..._args : string[]) : string;
+	lang(_msg : string, ..._args : string[] | number[]) : string;
 	/**
 	 * Load default langfiles for an application: common, _appname, custom
 	 *
@@ -639,7 +639,7 @@ declare interface IegwGlobal
 	 * @author Ryan Wheale
 	 * @see http://www.foliotek.com/devblog/getting-the-width-of-a-hidden-element-with-jquery-using-width/
 	 */
-	getHiddenDimensions(element : HTMLElement, boolOuter? : boolean) : {h: number, w: number, top: number, left: number};
+	getHiddenDimensions(element : HTMLElement | JQuery, boolOuter? : boolean) : {h: number, w: number, top: number, left: number};
 	/**
 	 * Store a window's name in egw.store so we can have a list of open windows
 	 *
