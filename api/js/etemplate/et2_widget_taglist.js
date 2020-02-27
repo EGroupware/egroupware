@@ -700,10 +700,12 @@ var et2_taglist = /** @class */ (function (_super) {
             "description": "Restricts or allows the user to type in arbitrary entries"
         },
         "onchange": {
-            "description": "Callback when tags are changed.  Argument is the new selection."
+            "description": "Callback when tags are changed.  Argument is the new selection.",
+            "type": "js"
         },
         "onclick": {
-            "description": "Callback when a tag is clicked.  The clicked tag is passed."
+            "description": "Callback when a tag is clicked.  The clicked tag is passed.",
+            "type": "js"
         },
         "tagRenderer": {
             "name": "Tag renderer",

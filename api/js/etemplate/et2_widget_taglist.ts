@@ -71,10 +71,12 @@ class et2_taglist extends et2_selectbox implements et2_IResizeable
 		},
 
 		"onchange": {
-			"description": "Callback when tags are changed.  Argument is the new selection."
+			"description": "Callback when tags are changed.  Argument is the new selection.",
+			"type":"js"
 		},
 		"onclick": {
-			"description": "Callback when a tag is clicked.  The clicked tag is passed."
+			"description": "Callback when a tag is clicked.  The clicked tag is passed.",
+			"type":"js"
 		},
 		"tagRenderer": {
 			"name": "Tag renderer",
