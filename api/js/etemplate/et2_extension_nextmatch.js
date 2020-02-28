@@ -167,6 +167,9 @@ var et2_nextmatch = /** @class */ (function (_super) {
         this.dynheight.destroy();
         _super.prototype.destroy.call(this);
     };
+    et2_nextmatch.prototype.getController = function () {
+        return this.controller;
+    };
     /**
      * Loads the nextmatch settings
      *

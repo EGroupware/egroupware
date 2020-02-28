@@ -324,6 +324,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		super.destroy();
 	}
 
+	getController()
+	{
+		return this.controller;
+	}
+
 	/**
 	 * Loads the nextmatch settings
 	 *
