@@ -145,7 +145,7 @@ declare class egwAction {
         previous: string;
         close: string;
     };
-    updateActions(_actions: any, _app: string): void;
+    updateActions(_actions: any, _app?: string): void;
     not_disableClass(_action: any, _senders: any, _target: any): boolean;
     enableClass(_action: any, _senders: any, _target: any): boolean;
     enableId(_action: any, _senders: any, _target: any): any;

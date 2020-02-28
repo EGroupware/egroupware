@@ -461,7 +461,7 @@ declare interface IegwGlobal
 	 * @param {string} key
 	 * @param {string | array} value
 	 */
-	setSessionItem(application : string, key : string, value : string[]) : void;
+	setSessionItem(application : string, key : string, value : string[] | string) : void;
 	/**
 	 * Remove a value from session storage
 	 * @param {string} application
