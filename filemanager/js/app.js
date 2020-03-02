@@ -1100,5 +1100,6 @@ var filemanagerAPP = /** @class */ (function (_super) {
     };
     return filemanagerAPP;
 }(egw_app_1.EgwApp));
+exports.filemanagerAPP = filemanagerAPP;
 app.classes.filemanager = filemanagerAPP;
 //# sourceMappingURL=app.js.map

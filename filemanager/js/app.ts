@@ -14,7 +14,7 @@ import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 /**
  * UI for filemanager
  */
-class filemanagerAPP extends EgwApp
+export class filemanagerAPP extends EgwApp
 {
 	static readonly appname: 'filemanager';
 	/**
