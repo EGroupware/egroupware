@@ -285,9 +285,9 @@ etemplate2.prototype.bind_unload = function()
 	{
 		this.destroy_session = jQuery.proxy(function(ev)
 		{
-			var request = egw.json("EGroupware\\Api\\Etemplate::ajax_destroy_session",
-				[this.etemplate_exec_id], null, null, false);
-			request.sendRequest();
+			// need to use async === "keepalive" to run via beforeunload
+			egw.json("EGroupware\\Api\\Etemplate::ajax_destroy_session",
+				[this.etemplate_exec_id], null, null, "keepalive").sendRequest();
 		}, this);
 
 		if (!window.onbeforeunload)
