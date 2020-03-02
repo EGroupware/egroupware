@@ -11,9 +11,10 @@
  */
 
 use EGroupware\Api;
-use EGroupware\Api\Link;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Etemplate;
+use EGroupware\Api\Etemplate\Widget\Tree;
+use EGroupware\Api\Link;
 
 /**
  * UI for admin
@@ -152,6 +153,13 @@ class admin_ui
 					'caption' => 'Add user',
 					'onExecute' => 'javaScript:app.admin.account',
 					'group' => $group,
+				),
+				'copy' => array(
+					'caption' => 'Copy',
+					'url' => 'menuaction=addressbook.addressbook_ui.edit&makecp=1&contact_id=$id',
+					'onExecute' => 'javaScript:app.admin.account',
+					'allowOnMultiple' => false,
+					'icon' => 'copy',
 				),
 			);
 			// generate urls for add/edit accounts via addressbook
@@ -418,7 +426,7 @@ class admin_ui
 	 */
 	public static function tree_data($root = '/')
 	{
-		$tree = array('id' => $root === '/' ? 0 : $root, 'item' => array(), 'child' => 1);
+		$tree = array(Tree::ID => $root === '/' ? 0 : $root, Tree::CHILDREN => array(), 'child' => 1);
 
 		if ($root == '/')
 		{
@@ -438,32 +446,32 @@ class admin_ui
 							'link' => $data,
 						);
 					}
-					if (empty($data['text'])) $data['text'] = $text;
-					if (empty($data['id']))
+					if (empty($data[Tree::LABEL])) $data[Tree::LABEL] = $text;
+					if (empty($data[Tree::ID]))
 					{
 						$data['id'] = $root.($app == 'admin' ? 'admin' : 'apps/'.$app).'/';
 						$matches = null;
 						if (preg_match_all('/(menuaction|load)=([^&]+)/', $data['link'], $matches))
 						{
-							$data['id'] .= $matches[2][(int)array_search('load', $matches[1])];
+							$data[Tree::ID] .= $matches[2][(int)array_search('load', $matches[1])];
 						}
 					}
 					if (!empty($data['icon']))
 					{
 						$icon = Etemplate\Widget\Tree::imagePath($data['icon']);
-						if ($data['child'] || $data['item'])
+						if ($data['child'] || $data[Tree::CHILDREN])
 						{
-							$data['im1'] = $data['im2'] = $icon;
+							$data[Tree::IMAGE_FOLDER_OPEN] = $data[Tree::IMAGE_FOLDER_CLOSED] = $icon;
 						}
 						else
 						{
-							$data['im0'] = $icon;
+							$data[Tree::IMAGE_LEAF] = $icon;
 						}
 					}
 					unset($data['icon']);
-					$parent =& $tree['item'];
-					$parts = explode('/', $data['id']);
-					if ($data['id'][0] == '/') array_shift($parts);	// remove root
+					$parent =& $tree[Tree::CHILDREN];
+					$parts = explode('/', $data[Tree::ID]);
+					if ($data[Tree::ID][0] == '/') array_shift($parts);	// remove root
 					array_pop($parts);
 					$path = '';
 					foreach($parts as $part)
@@ -474,23 +482,23 @@ class admin_ui
 							$icon = Etemplate\Widget\Tree::imagePath($part == 'apps' ? Api\Image::find('api', 'home') :
 								(($i=Api\Image::find($part, 'navbar')) ? $i : Api\Image::find('api', 'nonav')));
 							$parent[$path] = array(
-								'id' => $path,
-								'text' => $part == 'apps' ? lang('Applications') : lang($part),
+								Tree::ID => $path,
+								Tree::LABEL => $part == 'apps' ? lang('Applications') : lang($part),
 								//'im0' => 'folderOpen.gif',
-								'im1' => $icon,
-								'im2' => $icon,
-								'item' => array(),
+								Tree::IMAGE_FOLDER_OPEN => $icon,
+								Tree::IMAGE_FOLDER_CLOSED => $icon,
+								Tree::CHILDREN => array(),
 								'child' => 1,
 							);
 							if ($path == '/admin') $parent[$path]['open'] = true;
 						}
-						$parent =& $parent[$path]['item'];
+						$parent =& $parent[$path][Tree::CHILDREN];
 					}
-					$data['text'] = lang($data['text']);
+					$data[Tree::LABEL] = lang($data[Tree::LABEL]);
 					if (!empty($data['tooltip'])) $data['tooltip'] = lang($data['tooltip']);
 					// make sure keys are unique, as we overwrite tree entries otherwise
-					if (isset($parent[$data['id']])) $data['id'] .= md5($data['link']);
-					$parent[$data['id']] = self::fix_userdata($data);
+					if (isset($parent[$data[Tree::ID]])) $data[Tree::ID] .= md5($data['link']);
+					$parent[$data[Tree::ID]] = self::fix_userdata($data);
 				}
 			}
 		}
@@ -502,14 +510,14 @@ class admin_ui
 				'sort' => 'ASC',
 			)) as $group)
 			{
-				$tree['item'][] = self::fix_userdata(array(
-					'text' => $group['account_lid'],
-					'tooltip' => $group['account_description'],
-					'id' => $root.'/'.$group['account_id'],
+				$tree[Tree::CHILDREN][] = self::fix_userdata(array(
+					Tree::LABEL => $group['account_lid'],
+					Tree::TOOLTIP => $group['account_description'],
+					Tree::ID => $root.'/'.$group['account_id'],
 				));
 			}
 		}
-		self::strip_item_keys($tree['item']);
+		self::strip_item_keys($tree[Tree::CHILDREN]);
 		//_debug_array($tree); exit;
 		return $tree;
 	}
@@ -522,9 +530,13 @@ class admin_ui
 	 */
 	private static function fix_userdata(array $data)
 	{
+		if(!$data[Tree::LABEL])
+		{
+			$data[Tree::LABEL] = $data['text'];
+		}
 		// store link as userdata, maybe we should store everything not directly understood by tree this way ...
 		foreach(array_diff_key($data, array_flip(array(
-			'id','text','tooltip','im0','im1','im2','item','child','select','open','call',
+			Tree::ID,Tree::LABEL,Tree::TOOLTIP,'im0','im1','im2','item','child','select','open','call',
 		))) as $name => $content)
 		{
 			$data['userdata'][] = array(
