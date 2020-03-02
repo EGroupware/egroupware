@@ -243,7 +243,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					{
 						window.onbeforeunload = function () {
 							this.egw.json('calendar.calendar_uiforms.ajax_unlock',
-							[content.data.id, content.data.lock_token],null,true,null,null).sendRequest(true);
+							[content.data.id, content.data.lock_token],null,true,"keepalive",null).sendRequest();
 						};
 					}
 				}
