@@ -25,7 +25,7 @@ class DateTimeTest extends TestCase {
 	/**
 	 * Work in server time, so tests match expectations
 	 */
-	public static function setUpBeforeClass()
+	public static function setUpBeforeClass() : void
 	{
 		parent::setUpBeforeClass();
 
@@ -41,7 +41,7 @@ class DateTimeTest extends TestCase {
 		// Set user time to server time for consistency
 		DateTime::setUserPrefs(date_default_timezone_get());
 	}
-	public static function tearDownAfterClass()
+	public static function tearDownAfterClass() : void
 	{
 		// Reset
 		DateTime::setUserPrefs(static::$usertime->getName());

@@ -35,7 +35,7 @@ abstract class LoggedInTest extends TestCase
 	/**
 	 * Start session once before each test case
 	 */
-	public static function setUpBeforeClass()
+	public static function setUpBeforeClass() : void
 	{
 		try
 		{
@@ -63,7 +63,7 @@ abstract class LoggedInTest extends TestCase
 		}
 	}
 
-	public function assertPreConditions()
+	protected function assertPreConditions() : void
 	{
 		// Do some checks to make sure things we expect are there
 		$this->assertTrue(static::sanity_check(), 'Unable to connect to Egroupware - failed sanity check');
@@ -72,7 +72,7 @@ abstract class LoggedInTest extends TestCase
 	/**
 	 * End session when done - every test class gets its own session
 	 */
-	public static function tearDownAfterClass()
+	public static function tearDownAfterClass() : void
 	{
 		if($GLOBALS['egw'])
 		{

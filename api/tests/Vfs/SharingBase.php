@@ -61,7 +61,7 @@ class SharingBase extends LoggedInTest
 		'maxdepth' => 5
 	);
 
-	public function setUp()
+	protected function setUp() : void
 	{
 		// Check we have basic access
 		if(!is_readable($GLOBALS['egw_info']['server']['files_dir']))
@@ -75,7 +75,7 @@ class SharingBase extends LoggedInTest
 
 	}
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		LoggedInTest::tearDownAfterClass();
 		LoggedInTest::setupBeforeClass();
@@ -239,7 +239,7 @@ class SharingBase extends LoggedInTest
 				break;
 			case Sharing::WRITABLE:
 				// Root is not writable
-				if($file == '/') continue;
+				if($file == '/') break;
 
 				$this->assertTrue(Vfs::is_writable($file), $file . ' was not writable');
 				if(!Vfs::is_dir($file))

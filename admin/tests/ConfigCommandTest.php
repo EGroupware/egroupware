@@ -23,7 +23,7 @@ class ConfigCommandTest extends CommandBase
 	// If we add a config, make sure we can delete it for clean up
 	protected $config_name = 'test_config';
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		if($this->config_name)
 		{

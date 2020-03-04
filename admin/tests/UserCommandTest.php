@@ -29,7 +29,7 @@ class UserCommandTest extends CommandBase {
 		'account_lastname' => 'Test'
 	);
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		if($this->account_id)
 		{

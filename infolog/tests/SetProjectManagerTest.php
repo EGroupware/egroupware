@@ -34,7 +34,7 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	protected $pm_id = null;
 
 
-	public function setUp()
+	protected function setUp() : void
 	{
 		$this->ui = new \infolog_ui();
 
@@ -63,7 +63,7 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->makeProject();
 	}
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		// Remove infolog under test
 		if($this->info_id)

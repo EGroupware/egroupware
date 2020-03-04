@@ -28,7 +28,7 @@ class GroupCommandTest extends CommandBase {
 		'account_members' => array()
 	);
 
-	public function setUp()
+	protected function setUp() : void
 	{
 		// Can't set this until now - value is not available
 		$this->group['account_members'] = array($GLOBALS['egw_info']['user']['account_id']);
@@ -39,7 +39,7 @@ class GroupCommandTest extends CommandBase {
 			$GLOBALS['egw']->accounts->delete($account_id);
 		}
 	}
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		// Delete the accounts we created
 		if($this->group_id)

@@ -28,7 +28,7 @@ class ContactTest extends \EGroupware\Api\AppTest
 	// Infolog under test
 	protected $info_id = null;
 
-	public function setUp()
+	protected function setUp() : void
 	{
 		$this->ui = new \infolog_ui();
 
@@ -39,7 +39,7 @@ class ContactTest extends \EGroupware\Api\AppTest
 		$this->mockTracking($this->bo, 'infolog_tracking');
 	}
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		// Double delete to make sure it's gone, not preserved due to history setting
 		if($this->info_id)

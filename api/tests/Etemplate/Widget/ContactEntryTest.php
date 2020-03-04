@@ -26,11 +26,11 @@ class EntryTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 
 	const TEST_TEMPLATE = 'api.entry_test_contact';
 
-	public static function setUpBeforeClass() {
+	public static function setUpBeforeClass() : void {
 		parent::setUpBeforeClass();
 	}
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		// Delete all elements
 		foreach($this->elements as $id)
