@@ -104,7 +104,7 @@
 		"guzzlehttp/guzzle": "^6.5",
 		"phpunit/phpunit": "~8"
 	},
-	"suggests": {
+	"suggest": {
 		"ext-opcache": "Opcode cache to speed up PHP",
 		"ext-apcu": "Used for in-memory caching",
 		"ext-tidy": "Used for tidying up docx templates",
