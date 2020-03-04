@@ -25,9 +25,9 @@ $GLOBALS['egw_info'] = array(
 		'currentapp' => 'setup',
 		'noapi' => True
 ));
-if(file_exists('../header.inc.php'))
+if(file_exists(__DIR__.'/../../header.inc.php'))
 {
-	include('../header.inc.php');
+	include_once(__DIR__.'/../../header.inc.php');
 }
 // for an old header we need to setup a reference for the domains
 if (!is_array($GLOBALS['egw_domain'])) $GLOBALS['egw_domain'] =& $GLOBALS['phpgw_domain'];
@@ -56,14 +56,17 @@ require_once(EGW_INCLUDE_ROOT . '/api/src/loader/common.php');
  * function to handle multilanguage support
  *
  */
-function lang($key,$vars=null)
+if (!function_exists('lang'))
 {
-	if(!is_array($vars))
+	function lang($key, $vars = null)
 	{
-		$vars = func_get_args();
-		array_shift($vars);	// remove $key
+		if (!is_array($vars))
+		{
+			$vars = func_get_args();
+			array_shift($vars);    // remove $key
+		}
+		return $GLOBALS['egw_setup']->translation->translate("$key", $vars);
 	}
-	return $GLOBALS['egw_setup']->translation->translate("$key", $vars);
 }
 
 if(file_exists(EGW_SERVER_ROOT.'/api/setup/setup.inc.php'))

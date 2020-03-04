@@ -101,6 +101,8 @@
 		"tinymce/tinymce": "^5.0"
 	},
 	"require-dev": {
+		"guzzlehttp/guzzle": "^6.5",
+		"phpunit/phpunit": "^6.5"
 	},
 	"suggests": {
 		"ext-opcache": "Opcode cache to speed up PHP",

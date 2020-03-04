@@ -395,7 +395,11 @@ class Translation
 	static function &load_app($app,$lang)
 	{
 		//$start = microtime(true);
-		if (is_null(self::$db)) self::init(false);
+		if (!isset(self::$db))
+		{
+			self::init(false);
+			if (!isset(self::$db)) return;
+		}
 		$loaded = array();
 		foreach(self::$db->select(self::LANG_TABLE,'message_id,content',array(
 			'lang'		=> $lang,
