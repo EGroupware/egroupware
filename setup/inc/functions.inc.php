@@ -25,9 +25,9 @@ $GLOBALS['egw_info'] = array(
 		'currentapp' => 'setup',
 		'noapi' => True
 ));
-if(file_exists('../header.inc.php'))
+if(file_exists(__DIR__.'/../../header.inc.php'))
 {
-	include('../header.inc.php');
+	include_once(__DIR__.'/../../header.inc.php');
 }
 // for an old header we need to setup a reference for the domains
 if (!is_array($GLOBALS['egw_domain'])) $GLOBALS['egw_domain'] =& $GLOBALS['phpgw_domain'];
