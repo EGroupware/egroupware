@@ -647,12 +647,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
-                "reference": "8f30989c1b58159a4fd20ef4318727833a41b24e"
+                "reference": "bb8aa14fd33e59e95ca85c47e39de43e232ff6eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/8f30989c1b58159a4fd20ef4318727833a41b24e",
-                "reference": "8f30989c1b58159a4fd20ef4318727833a41b24e",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/bb8aa14fd33e59e95ca85c47e39de43e232ff6eb",
+                "reference": "bb8aa14fd33e59e95ca85c47e39de43e232ff6eb",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +680,7 @@
             ],
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-06-14T15:24:10+00:00"
+            "time": "2019-08-03T06:55:13+00:00"
         },
         {
             "name": "egroupware/adodb-php",
@@ -742,12 +742,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
-                "reference": "a009853e9285d7c837e905fdf49211ca85a37b17"
+                "reference": "22ef4ee85272b65c65ca348ddf69339ccc1553b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/a009853e9285d7c837e905fdf49211ca85a37b17",
-                "reference": "a009853e9285d7c837e905fdf49211ca85a37b17",
+                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/22ef4ee85272b65c65ca348ddf69339ccc1553b8",
+                "reference": "22ef4ee85272b65c65ca348ddf69339ccc1553b8",
                 "shasum": ""
             },
             "require": {
@@ -766,7 +766,7 @@
             ],
             "description": "EGroupware app to manage bookmarks",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-09T08:25:03+00:00"
+            "time": "2020-02-09T09:53:28+00:00"
         },
         {
             "name": "egroupware/collabora",
@@ -774,12 +774,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "c9b8bbdf43d0fd9aedf9768772d02c6f63e744bd"
+                "reference": "cc6c59bb8397cc61cc419dfd5e5af8c92c1294b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/c9b8bbdf43d0fd9aedf9768772d02c6f63e744bd",
-                "reference": "c9b8bbdf43d0fd9aedf9768772d02c6f63e744bd",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/cc6c59bb8397cc61cc419dfd5e5af8c92c1294b7",
+                "reference": "cc6c59bb8397cc61cc419dfd5e5af8c92c1294b7",
                 "shasum": ""
             },
             "require": {
@@ -806,7 +806,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-09T14:43:13+00:00"
+            "time": "2020-03-04T17:42:36+00:00"
         },
         {
             "name": "egroupware/icalendar",
@@ -912,12 +912,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
-                "reference": "dc00bc2958d396ac53c5d8b65ea4885b0d6bf3f1"
+                "reference": "9568c6ebd7746b8a10be3e3c04d92f68423ae03e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/dc00bc2958d396ac53c5d8b65ea4885b0d6bf3f1",
-                "reference": "dc00bc2958d396ac53c5d8b65ea4885b0d6bf3f1",
+                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/9568c6ebd7746b8a10be3e3c04d92f68423ae03e",
+                "reference": "9568c6ebd7746b8a10be3e3c04d92f68423ae03e",
                 "shasum": ""
             },
             "require": {
@@ -936,7 +936,7 @@
             ],
             "description": "EGroupware app to supply and aggregate RSS/Atom feeds",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-09T08:25:03+00:00"
+            "time": "2019-12-04T21:55:05+00:00"
         },
         {
             "name": "egroupware/openid",
@@ -944,12 +944,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "9aeab3624b41df393fa2405eb3497dc9e2cb8b7e"
+                "reference": "66b328fe2f84bfa7fe1c88ad90cf30a3df967eef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/9aeab3624b41df393fa2405eb3497dc9e2cb8b7e",
-                "reference": "9aeab3624b41df393fa2405eb3497dc9e2cb8b7e",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/66b328fe2f84bfa7fe1c88ad90cf30a3df967eef",
+                "reference": "66b328fe2f84bfa7fe1c88ad90cf30a3df967eef",
                 "shasum": ""
             },
             "require": {
@@ -985,7 +985,7 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-06-17T13:29:36+00:00"
+            "time": "2020-02-09T17:57:08+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -993,12 +993,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "4f9b75118069fe60ddb13e91157cb3689ad92f64"
+                "reference": "8bcd7c8ea0094969481e10ecc943ff1b24760943"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/4f9b75118069fe60ddb13e91157cb3689ad92f64",
-                "reference": "4f9b75118069fe60ddb13e91157cb3689ad92f64",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/8bcd7c8ea0094969481e10ecc943ff1b24760943",
+                "reference": "8bcd7c8ea0094969481e10ecc943ff1b24760943",
                 "shasum": ""
             },
             "require": {
@@ -1026,7 +1026,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-10-29T15:27:39+00:00"
+            "time": "2020-03-04T17:41:07+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -1034,12 +1034,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
-                "reference": "0347a76d200317610202847825ff1d5650e93fd8"
+                "reference": "f79de7c3ce88cdb86ae2019a55995b9a4daecec0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/registration/zipball/0347a76d200317610202847825ff1d5650e93fd8",
-                "reference": "0347a76d200317610202847825ff1d5650e93fd8",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/f79de7c3ce88cdb86ae2019a55995b9a4daecec0",
+                "reference": "f79de7c3ce88cdb86ae2019a55995b9a4daecec0",
                 "shasum": ""
             },
             "require": {
@@ -1052,6 +1052,15 @@
             ],
             "authors": [
                 {
+                    "name": "Padraic Renaghan"
+                },
+                {
+                    "name": "Joseph Engo"
+                },
+                {
+                    "name": "Michael Totschnig"
+                },
+                {
                     "name": "Ralf Becker",
                     "email": "rb@egroupware.org"
                 },
@@ -1062,20 +1071,11 @@
                 {
                     "name": "Nathan Gray",
                     "email": "ng@egroupware.org"
-                },
-                {
-                    "name": "Padraic Renaghan"
-                },
-                {
-                    "name": "Joseph Engo"
-                },
-                {
-                    "name": "Michael Totschnig"
                 }
             ],
             "description": "EGroupware app to allow self-registration of users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-09T08:25:03+00:00"
+            "time": "2019-11-15T12:59:37+00:00"
         },
         {
             "name": "egroupware/rocketchat",
@@ -1083,12 +1083,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "800913216736cc1319af4b04a975df32fcce8904"
+                "reference": "7920b76943bda974f3f073061bc26a02893c9f25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/800913216736cc1319af4b04a975df32fcce8904",
-                "reference": "800913216736cc1319af4b04a975df32fcce8904",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/7920b76943bda974f3f073061bc26a02893c9f25",
+                "reference": "7920b76943bda974f3f073061bc26a02893c9f25",
                 "shasum": ""
             },
             "require": {
@@ -1115,7 +1115,7 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-11T15:47:23+00:00"
+            "time": "2020-02-27T12:02:09+00:00"
         },
         {
             "name": "egroupware/status",
@@ -1123,12 +1123,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "0c5160baa7a1c655bf18c40b516a5aa1f125ccb6"
+                "reference": "42763c4b6da901825e4cf489173e8f6b00d84012"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/0c5160baa7a1c655bf18c40b516a5aa1f125ccb6",
-                "reference": "0c5160baa7a1c655bf18c40b516a5aa1f125ccb6",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/42763c4b6da901825e4cf489173e8f6b00d84012",
+                "reference": "42763c4b6da901825e4cf489173e8f6b00d84012",
                 "shasum": ""
             },
             "require": {
@@ -1155,7 +1155,7 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-09T11:56:12+00:00"
+            "time": "2020-02-28T18:36:19+00:00"
         },
         {
             "name": "egroupware/tracker",
@@ -1163,12 +1163,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "166ba2df3ffa1cbdcfa94a0a0b74b0ff5f39c5b8"
+                "reference": "52c9f50ed3f5eea8ec3a86a992c3bd3368c3181b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/166ba2df3ffa1cbdcfa94a0a0b74b0ff5f39c5b8",
-                "reference": "166ba2df3ffa1cbdcfa94a0a0b74b0ff5f39c5b8",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/52c9f50ed3f5eea8ec3a86a992c3bd3368c3181b",
+                "reference": "52c9f50ed3f5eea8ec3a86a992c3bd3368c3181b",
                 "shasum": ""
             },
             "require": {
@@ -1195,7 +1195,7 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-07-08T22:07:07+00:00"
+            "time": "2020-03-04T17:40:21+00:00"
         },
         {
             "name": "egroupware/z-push-dev",
