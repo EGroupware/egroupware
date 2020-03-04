@@ -125,7 +125,7 @@ class Ldap
 	 *
 	 * @var Api\Accounts
 	 */
-	private $frontend;
+	protected $frontend;
 
 	/**
 	 * Instance of the ldap class
