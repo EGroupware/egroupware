@@ -12,6 +12,7 @@
  */
 
 // autoloader & check_load_extension
+define('NO_LANG', true);	// do NOT define lang(), as setup/inc/functions.inc.php also defines it
 require_once realpath(__DIR__.'/../api/src/loader/common.php');
 
 // backward compatibility with PHPunit 5.7
