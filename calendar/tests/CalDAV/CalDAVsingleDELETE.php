@@ -38,7 +38,7 @@ class CalDAVsingleDELETE extends CalDAVTest
 	 *
 	 * @var array
 	 */
-	protected $users = [
+	protected static $users = [
 		'boss' => [],
 		'secretary' => [
 			'rights'    => [
@@ -51,11 +51,11 @@ class CalDAVsingleDELETE extends CalDAVTest
 	/**
 	 * Create some users incl. ACL
 	 */
-	public function setUp()
+	public static function setUpBeforeClass() : void
 	{
-		parent::setUp();
+		parent::setUpBeforeClass();
 
-		$this->createUsersACL($this->users, 'calendar');
+		self::createUsersACL(self::$users, 'calendar');
 	}
 
 	/**
@@ -63,7 +63,7 @@ class CalDAVsingleDELETE extends CalDAVTest
 	 */
 	public function testPrincipals()
 	{
-		foreach($this->users as $user => &$data)
+		foreach(self::$users as $user => &$data)
 		{
 			$response = $this->getClient()->propfind($this->url('/principals/users/'.$user.'/'), [
 				RequestOptions::HEADERS => [
