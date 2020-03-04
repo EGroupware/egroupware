@@ -1658,8 +1658,6 @@ class Session
 	 */
 	private static function set_cookiedomain()
 	{
-		if (PHP_SAPI === "cli") return;	// gives warnings and has no benefit
-
 		if ($GLOBALS['egw_info']['server']['cookiedomain'])
 		{
 			// Admin set domain, eg. .domain.com to allow egw.domain.com and www.domain.com

@@ -253,7 +253,6 @@ class setup
 			case PHP_SESSION_DISABLED:
 				throw new \ErrorException('EGroupware requires PHP session extension!');
 			case PHP_SESSION_NONE:
-				if (headers_sent()) return false;
 				ini_set('session.use_cookie', true);
 				session_name(self::SESSIONID);
 				session_set_cookie_params(0, '/', self::cookiedomain(),

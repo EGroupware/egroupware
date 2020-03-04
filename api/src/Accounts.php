@@ -983,7 +983,7 @@ class Accounts
 		if (!is_array($app_users))
 		{
 			self::setup_cache();
-			$cache = &self::$cache['account_split'][$app_users];
+			$cache = &self::$cache['account_split'][$app_user];
 
 			if (is_array($cache))
 			{
