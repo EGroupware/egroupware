@@ -11,11 +11,10 @@
  */
 
 use EGroupware\Api;
-use EGroupware\Api\Link;
-use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Etemplate;
-
+use EGroupware\Api\Framework;
+use EGroupware\Api\Link;
 use EGroupware\Api\Vfs;
 
 /**
@@ -1020,6 +1019,10 @@ class filemanager_ui
 		if($query['col_filter']['mime'])
 		{
 			$vfs_options['mime'] = $query['col_filter']['mime'];
+		}
+		if($namefilter)
+		{
+			$vfs_options['name'] = $query['search'];
 		}
 
 		return $vfs_options;
