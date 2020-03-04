@@ -23,13 +23,13 @@ class PreferencesCommandTest extends CommandBase
 	// If we add a preference, make sure we can delete it for clean up
 	protected $preference_name = 'test_preference';
 
-	public function setUp()
+	protected function setUp() : void
 	{
 		Api\Cache::unsetInstance(Api\Preferences::class, 'forced');
 		Api\Cache::unsetInstance(Api\Preferences::class, 'default');
 		Api\Cache::unsetInstance(Api\Preferences::class, $GLOBALS['egw_info']['user']['account_id']);
 	}
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		if($this->preference_name)
 		{

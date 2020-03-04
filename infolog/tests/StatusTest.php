@@ -37,7 +37,7 @@ class StatusTest extends \EGroupware\Api\AppTest
 	/**
 	 * Create a custom status we can use to test
 	 */
-	public static function setUpBeforeClass()
+	public static function setUpBeforeClass() : void
 	{
 		parent::setUpBeforeClass();
 
@@ -47,7 +47,7 @@ class StatusTest extends \EGroupware\Api\AppTest
 
 		Api\Config::save_value('status',$bo->status,'infolog');
 	}
-	public static function tearDownAfterClass()
+	public static function tearDownAfterClass() : void
 	{
 		// Remove custom status
 		$bo = new \infolog_bo();
@@ -58,14 +58,14 @@ class StatusTest extends \EGroupware\Api\AppTest
 		parent::tearDownAfterClass();
 	}
 
-	public function setUp()
+	protected function setUp() : void
 	{
 		$this->bo = new \infolog_bo();
 
 		$this->mockTracking($this->bo, 'infolog_tracking');
 	}
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		$this->bo = null;
 	}

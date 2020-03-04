@@ -29,7 +29,7 @@ class DeleteAccountCommandTest extends CommandBase {
 		'account_lastname' => 'Test'
 	);
 
-	public function setUp()
+	protected function setUp() : void
 	{
 		if(($account_id = $GLOBALS['egw']->accounts->name2id($this->account['account_lid'])))
 		{
@@ -44,7 +44,7 @@ class DeleteAccountCommandTest extends CommandBase {
 		$this->assertNotEmpty($this->account_id, 'Did not create test user account');
 	}
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		if($this->account_id && ($GLOBALS['egw']->accounts->id2name($this->account_id)))
 		{

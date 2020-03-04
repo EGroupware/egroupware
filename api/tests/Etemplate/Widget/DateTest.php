@@ -29,7 +29,7 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	/**
 	 * Work in server time, so tests match expectations
 	 */
-	public static function setUpBeforeClass()
+	public static function setUpBeforeClass() : void
 	{
 		parent::setUpBeforeClass();
 
@@ -41,7 +41,7 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		date_default_timezone_set('UTC');
 		DateTime::$server_timezone = new \DateTimeZone('UTC');
 	}
-	public static function tearDownAfterClass()
+	public static function tearDownAfterClass() : void
 	{
 		// Reset
 		DateTime::setUserPrefs(static::$usertime->getName());

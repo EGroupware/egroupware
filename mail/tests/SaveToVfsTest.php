@@ -18,23 +18,23 @@ class SaveToVfsTest extends \PHPUnit\Framework\TestCase
 	/**
 	 * Create a custom status we can use to test
 	 */
-	public static function setUpBeforeClass()
+	public static function setUpBeforeClass() : void
 	{
 		parent::setUpBeforeClass();
 
 	}
-	public static function tearDownAfterClass()
+	public static function tearDownAfterClass() : void
 	{
 
 		// Have to remove custom status first, before the DB is gone
 		parent::tearDownAfterClass();
 	}
 
-	public function setUp()
+	protected function setUp() : void
 	{
 	}
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 	}
 

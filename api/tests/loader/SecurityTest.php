@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase as TestCase;
 
 class SecurityTest extends TestCase {
 
-	public function setUp()
+	protected function setUp() : void
 	{
 		// _check_script_tag uses HtmLawed, which calls GLOBALS['egw']->link()
 		$GLOBALS['egw'] = $this->getMockBuilder('Egw')
@@ -30,7 +30,7 @@ class SecurityTest extends TestCase {
 			->getMock();
 	}
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		unset($GLOBALS['egw_inset_vars']);
 

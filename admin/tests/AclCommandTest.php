@@ -28,7 +28,7 @@ class AclCommandTest extends CommandBase {
 	/**
 	 * Create accounts for testing
 	 */
-	public function setUp()
+	protected function setUp() : void
 	{
 		parent::setUp();
 
@@ -74,7 +74,7 @@ class AclCommandTest extends CommandBase {
 		$this->assertNotEmpty($this->account_id, 'Did not create test user account');
 	}
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		// Delete the accounts we created
 		if($this->group_id)
