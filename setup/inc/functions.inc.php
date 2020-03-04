@@ -56,17 +56,14 @@ require_once(EGW_INCLUDE_ROOT . '/api/src/loader/common.php');
  * function to handle multilanguage support
  *
  */
-if (!function_exists('lang'))
+function lang($key,$vars=null)
 {
-	function lang($key, $vars = null)
+	if(!is_array($vars))
 	{
-		if (!is_array($vars))
-		{
-			$vars = func_get_args();
-			array_shift($vars);    // remove $key
-		}
-		return $GLOBALS['egw_setup']->translation->translate("$key", $vars);
+		$vars = func_get_args();
+		array_shift($vars);	// remove $key
 	}
+	return $GLOBALS['egw_setup']->translation->translate("$key", $vars);
 }
 
 if(file_exists(EGW_SERVER_ROOT.'/api/setup/setup.inc.php'))
