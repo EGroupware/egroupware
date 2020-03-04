@@ -45,12 +45,12 @@
     ],
 	"config": {
 		"platform": {
-			"php": "7.2"
+			"php": "7.0"
 		},
 		"sort-packages": true
 	},
 	"require": {
-		"php": ">=7.2,<=8.0.0alpha1",
+		"php": ">=7.0,<=8.0.0alpha1",
 		"ext-gd": "*",
 		"ext-json": "*",
 		"ext-mysqli": "*",
@@ -102,7 +102,7 @@
 	},
 	"require-dev": {
 		"guzzlehttp/guzzle": "^6.5",
-		"phpunit/phpunit": "~8"
+		"phpunit/phpunit": "^6.5"
 	},
 	"suggests": {
 		"ext-opcache": "Opcode cache to speed up PHP",

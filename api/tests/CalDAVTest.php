@@ -89,12 +89,12 @@ abstract class CalDAVTest extends TestCase
 	 *
 	 * Example with boss granting secretary full rights on his calendar, plus one other user:
 	 *
-	 * $users = [
+	 * $this->users = [
 	 * 	'boss' => [],
 	 * 	'secretary' => ['rights' => ['boss'  => Acl::READ|Acl::ADD|Acl::EDIT|Acl::DELETE]],
 	 * 	'other' => [],
 	 * ];
-	 * self::createUsersACL($users);
+	 * $this->createUsersACL($this->users);
 	 *
 	 * @param array& $users $account_lid => array with values for keys with (defaults) "firstname" ($_acount_lid), "lastname" ("User"),
 	 *    "email" ("$_account_lid@example.org"), "password" (random string), "primary_group" ("NoGroups" to not set rights)
@@ -106,11 +106,11 @@ abstract class CalDAVTest extends TestCase
 	{
 		foreach($users as $user => $data)
 		{
-			$data['id'] = self::createUser($user, $data);
+			$data['id'] = $this->createUser($user, $data);
 
 			foreach($data['rights'] ?? [] as $grantee => $rights)
 			{
-				self::addAcl('calendar', $data['id'], $grantee, $rights);
+				$this->addAcl('calendar', $data['id'], $grantee, $rights);
 			}
 		}
 	}
@@ -120,7 +120,7 @@ abstract class CalDAVTest extends TestCase
 	 *
 	 * @var array $account_lid => array with other data pairs
 	 */
-	private static $created_users = [];
+	private $created_users = [];
 
 	/**
 	 * Create a user
@@ -135,7 +135,7 @@ abstract class CalDAVTest extends TestCase
 	 * @return int account_id of created user
 	 * @throws \Exception
 	 */
-	protected static function createUser($_account_lid, array &$data=[])
+	protected function createUser($_account_lid, array &$data=[])
 	{
 		// add some defaults
 		$data = array_merge([
@@ -146,13 +146,13 @@ abstract class CalDAVTest extends TestCase
 			'primary_group' => 'NoGroup',
 		], $data);
 
-		$data['id'] = self::getSetup()->add_account($_account_lid, $data['firstname'], $data['lastname'],
+		$data['id'] = $this->getSetup()->add_account($_account_lid, $data['firstname'], $data['lastname'],
 			$data['password'], $data['primary_group'], false, $data['email']);
 
 		// give use run rights for CalDAV apps, as NoGroup does NOT!
-		self::addAcl(['groupdav','calendar','infolog','addressbook'], 'run', $data['id']);
+		$this->addAcl(['groupdav','calendar','infolog','addressbook'], 'run', $data['id']);
 
-		self::$created_users[$_account_lid] = $data;
+		$this->created_users[$_account_lid] = $data;
 
 		return $data['id'];
 	}
@@ -169,13 +169,13 @@ abstract class CalDAVTest extends TestCase
 		{
 			$password = 'guest';
 		}
-		elseif (!isset(self::$created_users[$_account_lid]))
+		elseif (!isset($this->created_users[$_account_lid]))
 		{
 			throw new \InvalidArgumentException("No user '$_account_lid' exist, need to create it with createUser('$_account_lid')");
 		}
 		else
 		{
-			$password = self::$created_users[$_account_lid]['password'];
+			$password = $this->created_users[$_account_lid]['password'];
 		}
 		return [RequestOptions::AUTH => [$_account_lid, $password]];
 	}
@@ -183,17 +183,15 @@ abstract class CalDAVTest extends TestCase
 	/**
 	 * Tear down:
 	 * - delete users created by createUser() incl. their ACL and data
-	 *
-	 * @ToDo: implement eg. with admin_cmd_delete_user to also delete ACL and data
 	 */
-	public static function tearDownAfterClass() : void
+	public function tearDown()
 	{
-		$setup = self::getSetup();
+		$setup = $this->getSetup();
 
-		foreach(self::$created_users as $account_lid => $data)
+		foreach($this->created_users as $account_lid => $data)
 		{
 //			if ($id) $setup->accounts->delete($data['id']);
-			unset(self::$created_users[$account_lid]);
+			unset($this->created_users[$account_lid]);
 		}
 	}
 
@@ -205,9 +203,9 @@ abstract class CalDAVTest extends TestCase
 	 * @param int|string $account accountid or account_lid
 	 * @param int $rights rights to set, default 1
 	 */
-	protected static function addAcl($apps, $location, $account, $rights=1)
+	function addAcl($apps, $location, $account, $rights=1)
 	{
-		return self::getSetup()->add_acl($apps, $location, $account, $rights);
+		return $this->getSetup()->add_acl($apps, $location, $account, $rights);
 	}
 
 	/**
@@ -215,7 +213,7 @@ abstract class CalDAVTest extends TestCase
 	 *
 	 * @return \setup
 	 */
-	private static function getSetup()
+	private function getSetup()
 	{
 		if (!isset($_REQUEST['domain']))
 		{
@@ -358,5 +356,20 @@ abstract class CalDAVTest extends TestCase
 			$idx_by_type[$type]++;
 		}
 		return $msgs;
+	}
+
+	public static function setUpBeforeClass()
+	{
+		parent::setUpBeforeClass();
+	}
+
+	public static function tearDownAfterClass()
+	{
+		parent::tearDownAfterClass();
+	}
+
+	public function setUp()
+	{
+
 	}
 }
