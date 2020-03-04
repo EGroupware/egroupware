@@ -1338,7 +1338,7 @@ class calendar_bo
 					elseif ($grants[$uid] & Acl::READ)
 					{
 						// if we have a READ grant from a participant, we dont give an implicit privat grant too
-						$grant |= Acl::READ;
+						$grant |= self::ACL_FREEBUSY | Acl::READ;
 						// we cant break here, as we might be a participant too, and would miss the privat grant
 					}
 					elseif (!is_numeric($uid))

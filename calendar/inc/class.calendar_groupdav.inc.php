@@ -1375,35 +1375,56 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			return true;	// simply ignore DELETE in inbox for now
 		}
 		$return_no_access = true;	// to allow to check if current use is a participant and reject the event for him
-		if (!is_array($event = $this->_common_get_put_delete('DELETE',$options,$id,$return_no_access)) || !$return_no_access ||
-			// Work around problems with Outlook CalDAV Synchroniser (https://caldavsynchronizer.org/)
-			// - sends a DELETE to reject a meeting request --> deletes event for all participants, if user has delete rights on the calendar
-			// --> only set status for everyone else but the organizer
-			self::get_agent() == 'caldavsynchronizer' && is_array($event) && $event['owner'] != $user)
+		$event = $this->_common_get_put_delete('DELETE',$options,$id,$return_no_access);
+
+		// no event found --> 404 Not Found
+		if (!is_array($event))
 		{
- 			if (is_array($event) && (!$return_no_access || $event['owner'] != $user))
+			$ret = $event;
+			error_log("_common_get_put_delete('DELETE', ..., $id) user=$user, return_no_access=".array2string($return_no_access)." returned ".array2string($event));
+		}
+		// Work around problems with Outlook CalDAV Synchronizer (https://caldavsynchronizer.org/)
+		// - sends a DELETE to reject a meeting request --> deletes event for all participants, if user has delete rights from the organizer
+		// --> only set status for everyone else but the organizer
+		// OR no delete rights and deleting an event in someone else calendar --> check if calendar owner is a participant --> reject him
+		elseif ((!$return_no_access || (self::get_agent() === 'caldavsynchronizer' && $event['owner'] != $user)) &&
+			// check if current user has edit rights for calendar of $user, can change status / reject invitation for him
+			$this->bo->check_perms(Acl::EDIT, 0, $user))
+		{
+			// check if user is a participant or one of the groups he is a member of --> reject the meeting request
+			$ret = '403 Forbidden';
+			$memberships = $GLOBALS['egw']->accounts->memberships($user, true);
+			foreach(array_keys($event['participants']) as $uid)
 			{
-				// check if user is a participant or one of the groups he is a member of --> reject the meeting request
-				$ret = '403 Forbidden';
-				$memberships = $GLOBALS['egw']->accounts->memberships($this->bo->user, true);
-				foreach(array_keys($event['participants']) as $uid)
+				if ($user == $uid || in_array($uid, $memberships))
 				{
-					if ($this->bo->user == $uid || in_array($uid, $memberships))
-					{
-						$this->bo->set_status($event,$this->bo->user, 'R');
-						$ret = true;
-						break;
-					}
+					$this->bo->set_status($event, $user, 'R');
+					$ret = true;
+					break;
 				}
 			}
-			else
+		}
+		// current user has no delete rights for event --> reject invitation, if he is a participant
+		elseif (!$return_no_access)
+		{
+			// check if current user is a participant or one of the groups he is a member of --> reject the meeting request
+			$ret = '403 Forbidden';
+			$memberships = $GLOBALS['egw']->accounts->memberships($this->bo->user, true);
+			foreach(array_keys($event['participants']) as $uid)
 			{
-				$ret = $event;
+				if ($this->bo->user == $uid || in_array($uid, $memberships))
+				{
+					$this->bo->set_status($event, $this->bo->user, 'R');
+					$ret = true;
+					break;
+				}
 			}
 		}
+		// we have delete rights on the event and (try to) delete it
 		else
 		{
 			$ret = $this->bo->delete($event['id']);
+			if (!$ret) { error_log("delete($event[id]) returned FALSE"); $ret = '400 Failed to delete event';}
 		}
 		if ($this->debug) error_log(__METHOD__."(,$id) return_no_access=$return_no_access, event[participants]=".array2string(is_array($event)?$event['participants']:null).", user={$this->bo->user} --> return ".array2string($ret));
 		return $ret;
