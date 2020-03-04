@@ -45,6 +45,7 @@ before_script:
   - sudo journalctl -u apache2
   - curl -i http://localhost/doc/rpm-build/debian.changes
   - curl -i http://localhost/egroupware/doc/rpm-build/debian.changes
+  - sudo journalctl -u apache2
   - php -m
   - php -i
   - php install-cli.php --ignore-platform-reqs
@@ -71,7 +72,6 @@ script:
   #  --account-auth ldap --ldap_suffix dc=local --ldap_admin 'cn=admin,$suffix' --ldap_admin_pw secret
   #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   - curl -i http://localhost/egroupware/groupdav.php/
-  - grep -n -r 'function setUp' */tests
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - vendor/bin/phpunit -c doc -dapc.enable_cli=1
   # do not run syntax check for hhvm, as it always fails / get terminated after 10m
