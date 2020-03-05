@@ -21,10 +21,12 @@
 
 namespace EGroupware\Api;
 
-use PragmaRX\Google2FA;
+use DateInterval;
 use EGroupware\Api\Mail\Credentials;
 use EGroupware\OpenID;
+use ErrorException;
 use League\OAuth2\Server\Exception\OAuthServerException;
+use PragmaRX\Google2FA;
 
 /**
  * Create, verifies or destroys an EGroupware session
@@ -938,7 +940,7 @@ class Session
 		if ($ts)
 		{
 			$expiration = new DateTime('now', DateTime::$server_timezone);
-			$expiration->add(new \DateInterval($lifetime));
+			$expiration->add(new DateInterval($lifetime));
 			return $expiration->format('ts');
 		}
 		return $lifetime;
@@ -1171,7 +1173,7 @@ class Session
 	 * @var array
 	 */
 	static $pseudo_session_scripts = array(
-		'webdav.php', 'groupdav.php', 'remote.php', 'share.php'
+		'webdav.php', 'groupdav.php', 'remote.php'
 	);
 
 	/**
@@ -1967,14 +1969,14 @@ class Session
 	 * Initialise the used session handler
 	 *
 	 * @return boolean true if we have a session, false otherwise
-	 * @throws \ErrorException if there is no PHP session support
+	 * @throws ErrorException if there is no PHP session support
 	 */
 	public static function init_handler()
 	{
 		switch(session_status())
 		{
 			case PHP_SESSION_DISABLED:
-				throw new \ErrorException('EGroupware requires PHP session extension!');
+				throw new ErrorException('EGroupware requires PHP session extension!');
 			case PHP_SESSION_NONE:
 				if (headers_sent()) return false;	// only gives warnings
 				ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
