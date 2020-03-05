@@ -13,6 +13,9 @@
 
 namespace EGroupware\Api\Cache;
 
+// fix warning in tests, if memcache extension not available
+if (!defined('MEMCACHE_COMPRESSED')) define('MEMCACHE_COMPRESSED', 2);
+
 /**
  * Caching provider storing data in memcached via PHP's memcache extension
  *

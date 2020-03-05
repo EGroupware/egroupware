@@ -252,7 +252,13 @@ class Session
 				$config->value('num_unsuccessful_ip',$GLOBALS['egw_info']['server']['num_unsuccessful_ip']);
 				$config->value('install_id',$GLOBALS['egw_info']['server']['install_id']);
 				$config->value('max_history',$GLOBALS['egw_info']['server']['max_history']);
-				$config->save_repository();
+				try
+				{
+					$config->save_repository();
+				}
+				catch (Db\Exception $e) {
+					_egw_log_exception($e);	// ignore exception, as it blocks session creation, if database is not writable
+				}
 			}
 		}
 		self::set_cookiedomain();
@@ -544,9 +550,12 @@ class Session
 			// --> allows this stateless protocolls which use basic auth to use sessions!
 			if (($this->sessionid = self::get_sessionid(true)))
 			{
-				session_id($this->sessionid);
+				if (session_status() !== PHP_SESSION_ACTIVE)	// gives warning including password
+				{
+					session_id($this->sessionid);
+				}
 			}
-			else
+			elseif (!headers_sent())	// only gives warnings, nothing we can do
 			{
 				self::cache_control();
 				session_start();
@@ -556,6 +565,10 @@ class Session
 					session_regenerate_id(true);
 				}
 				$this->sessionid = session_id();
+			}
+			else
+			{
+				$this->sessionid = session_id() ?: Auth::randomstring(24);
 			}
 			$this->kp3       = Auth::randomstring(24);
 
@@ -635,26 +648,30 @@ class Session
 			}
 			$GLOBALS['egw']->db->transaction_commit();
 
-			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session)
+			if (!headers_sent())
 			{
-				self::egw_setcookie(self::EGW_SESSION_NAME,$this->sessionid);
-				self::egw_setcookie('kp3',$this->kp3);
-				self::egw_setcookie('domain',$this->account_domain);
-			}
-			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session || isset($_COOKIE['last_loginid']))
-			{
-				self::egw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
-				self::egw_setcookie('last_domain',$this->account_domain,$now+1209600);
-			}
+				if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session)
+				{
+					self::egw_setcookie(self::EGW_SESSION_NAME, $this->sessionid);
+					self::egw_setcookie('kp3', $this->kp3);
+					self::egw_setcookie('domain', $this->account_domain);
+				}
+				if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session || isset($_COOKIE['last_loginid']))
+				{
+					self::egw_setcookie('last_loginid', $this->account_lid, $now + 1209600); /* For 2 weeks */
+					self::egw_setcookie('last_domain', $this->account_domain, $now + 1209600);
+				}
 
-			// set new remember me token/cookie, if requested and necessary
-			$expiration = null;
-			if (($token = $this->checkSetRememberMeToken($remember_me, $_COOKIE[self::REMEMBER_ME_COOKIE], $expiration)))
-			{
-				self::egw_setcookie(self::REMEMBER_ME_COOKIE, $token, $expiration);
-			}
+				// set new remember me token/cookie, if requested and necessary
+				$expiration = null;
+				if (($token = $this->checkSetRememberMeToken($remember_me, $_COOKIE[self::REMEMBER_ME_COOKIE], $expiration)))
+				{
+					self::egw_setcookie(self::REMEMBER_ME_COOKIE, $token, $expiration);
+				}
 
-			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
+				if (self::ERROR_LOG_DEBUG) error_log(__METHOD__ . "($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
+			}
+			elseif (self::ERROR_LOG_DEBUG) error_log(__METHOD__ . "($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) could NOT set session cookies, headers already sent");
 
 			// hook called once session is created
 			Hooks::process(array(
@@ -1649,6 +1666,8 @@ class Session
 	 */
 	private static function set_cookiedomain()
 	{
+		if (PHP_SAPI === "cli") return;	// gives warnings and has no benefit
+
 		if ($GLOBALS['egw_info']['server']['cookiedomain'])
 		{
 			// Admin set domain, eg. .domain.com to allow egw.domain.com and www.domain.com
@@ -1957,6 +1976,7 @@ class Session
 			case PHP_SESSION_DISABLED:
 				throw new \ErrorException('EGroupware requires PHP session extension!');
 			case PHP_SESSION_NONE:
+				if (headers_sent()) return false;	// only gives warnings
 				ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
 				session_name(self::EGW_SESSION_NAME);
 				if (($sessionid = self::get_sessionid()))

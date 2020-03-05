@@ -367,7 +367,7 @@ function function_backtrace($remove=0)
 	return $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(EGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
 }
 
-if (!function_exists('lang') || defined('NO_LANG'))	// setup declares an own version
+if (!function_exists('lang') && !defined('NO_LANG'))	// setup declares an own version
 {
 	/**
 	 * function to handle multilanguage support

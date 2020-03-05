@@ -98,6 +98,9 @@ class Sieve extends Horde\ManageSieve
 				//'logger' => new \admin_mail_logger('/tmp/sieve.log'),
 			);
 		}
+		// try "PLAIN" first, in case IMAP wrongly reports some digest, it does not (correctly) implement
+		array_unshift($this->supportedAuthMethods, self::AUTH_PLAIN);
+
 		parent::__construct($params);
 
 		$this->displayCharset	= Translation::charset();

@@ -1809,7 +1809,6 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background: white;
   opacity: 0.94;
   margin-left: 20px;
-  border-radius: 5px;
   margin-right: 20px;
   padding: 20px;
   margin-top: 20px;
@@ -1888,7 +1887,6 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   width: 280px;
 }
 #loginMainDiv div#centerBox form {
-  border-radius: 5px;
   opacity: 0.94;
   background-color: white;
   padding: 1em;

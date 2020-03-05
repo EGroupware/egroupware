@@ -35,7 +35,7 @@ class CustomfieldsTest extends LoggedInTest
 			'private'     => array()
 		);
 
-	public function assertPreConditions()
+	protected function assertPreConditions() : void
 	{
 		parent::assertPreConditions();
 		$tables = $GLOBALS['egw']->db->table_names(true);

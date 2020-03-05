@@ -769,9 +769,10 @@ class Cache
 if (is_null(Cache::$default_provider))
 {
 	Cache::$default_provider =
-		function_exists('apcu_fetch') && Cache\Apcu::available() ? 'EGroupware\Api\Cache\Apcu' :
-			(function_exists('apc_fetch') && Cache\Apc::available() ? 'EGroupware\Api\Cache\Apc' :
-				'EGroupware\Api\Cache\Files');
+		PHP_SAPI === 'cli' ? 'EGroupware\Api\Cache\Files' :
+			(function_exists('apcu_fetch') && Cache\Apcu::available() ? 'EGroupware\Api\Cache\Apcu' :
+				(function_exists('apc_fetch') && Cache\Apc::available() ? 'EGroupware\Api\Cache\Apc' :
+					'EGroupware\Api\Cache\Files'));
 }
 
 //error_log('Cache::$default_provider='.array2string(Cache::$default_provider));

@@ -59,7 +59,7 @@ class SchemaTest extends LoggedInTest {
 	/**
 	 * Get a database connection
 	 */
-	public static function setUpBeforeClass()
+	public static function setUpBeforeClass() : void
 	{
 		parent::setUpBeforeClass();
 

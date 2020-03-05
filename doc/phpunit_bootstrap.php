@@ -24,6 +24,17 @@ if (!class_exists('\PHPUnit\Framework\TestCase') && class_exists('\PHPUnit_Frame
 // Needed to let Cache work
 $GLOBALS['egw_info']['server']['temp_dir'] = '/tmp';
 $GLOBALS['egw_info']['server']['install_id'] = 'PHPUnit test';
+// setting a working session.save_path
+if (ini_get('session.save_handler') === 'files' && !is_writable(ini_get('session.save_path')) &&
+	is_dir('/tmp') && is_writable('/tmp'))
+{
+	ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
+}
+// set domain from doc/phpunit.xml
+if (!isset($_SERVER['HTTP_HOST']) && $GLOBALS['EGW_DOMAIN'] !== 'default')
+{
+	$_SERVER['HTTP_HOST'] = $GLOBALS['EGW_DOMAIN'];
+}
 
 // Symlink api/src/fixtures/apps/* to root
 foreach(scandir($path=__DIR__.'/../api/tests/fixtures/apps') as $app)

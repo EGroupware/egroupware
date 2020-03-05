@@ -28,20 +28,20 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	protected $recur_end;
 	protected $cal_id;
 
-	public static function setUpBeforeClass()
+	public static function setUpBeforeClass() : void
 	{
 		parent::setUpBeforeClass();
 
 		static::$server_tz = date_default_timezone_get();
 	}
-	public static function tearDownAfterClass()
+	public static function tearDownAfterClass() : void
 	{
 		date_default_timezone_set(static::$server_tz);
 
 		parent::tearDownAfterClass();
 	}
 
-	public function setUp()
+	protected function setUp() : void
 	{
 		$this->bo = new \calendar_boupdate();
 
@@ -50,7 +50,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		$this->recur_end = new Api\DateTime(mktime(0,0,0,date('m'), date('d') + static::RECUR_DAYS, date('Y')));
 	}
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		$this->bo->delete($this->cal_id);
 		// Delete again to remove from delete history

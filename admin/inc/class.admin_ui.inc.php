@@ -11,10 +11,10 @@
  */
 
 use EGroupware\Api;
-use EGroupware\Api\Link;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Etemplate\Widget\Tree;
+use EGroupware\Api\Link;
 
 /**
  * UI for admin
@@ -153,6 +153,13 @@ class admin_ui
 					'caption' => 'Add user',
 					'onExecute' => 'javaScript:app.admin.account',
 					'group' => $group,
+				),
+				'copy' => array(
+					'caption' => 'Copy',
+					'url' => 'menuaction=addressbook.addressbook_ui.edit&makecp=1&contact_id=$id',
+					'onExecute' => 'javaScript:app.admin.account',
+					'allowOnMultiple' => false,
+					'icon' => 'copy',
 				),
 			);
 			// generate urls for add/edit accounts via addressbook

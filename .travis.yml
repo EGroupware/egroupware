@@ -6,32 +6,22 @@ php:
 # none of our dependencies allow 8.0
 #  - master
 
-matrix:
+os: linux
+
+jobs:
   fast_finish: true
 #  allow_failures:
 #    - php: master
 
 services:
   - memcached
-  - mysql #we use mariadb instead installed via addons below
+  - mysql
 # - postgres
-
-#addons:
-#  mariadb: '10.0'
-
-sudo: required
 
 before_script:
   - sudo apt-get update -qq
-  - sudo apt-get install -y libpcre3-dev
+  - sudo apt-get install -y libpcre3-dev apache2 libapache2-mod-fastcgi
   - case $(phpenv version-name) in
-    "5.6")
-       yes "" | pecl install memcache;
-       yes "" | pecl install apcu-4.0.11;
-       yes "" | pecl install igbinary;
-       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
-       phpenv config-rm xdebug.ini;
-       ;;
     "7"|"7.0"|"7.1"|"7.2")
        yes "" | pecl install apcu;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
@@ -41,17 +31,19 @@ before_script:
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
       ;;
     esac
-  - case $(phpenv version-name) in
-    "5.6")
-       composer require 'phpunit/phpunit:~5.7';
-       ;;
-    "7"|"7.0")
-       composer require 'phpunit/phpunit:~6';
-       ;;
-    *)
-       composer require --ignore-platform-reqs 'phpunit/phpunit:~7';
-      ;;
-    esac
+  # enable apache with php-fpm see https://docs.travis-ci.com/user/languages/php/#apache--php
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
+  - sudo chown -R travis:travis /var/lib/apache2/fastcgi
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  # configure apache virtual hosts
+  - sudo cp -f doc/travis-ci-apache.conf /etc/apache2/sites-available/000-default.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
+  # remove .htaccess as it is read by Apache, but content is for mod_php
+  - rm -f .htaccess
+  - sudo service apache2 restart
   - php -m
   - php -i
   - php install-cli.php --ignore-platform-reqs
@@ -64,7 +56,7 @@ script:
   # install egroupware using MariaDB as domain "default"
   # and add an admin user "demo" with password "guest"
   - php doc/rpm-build/post_install.php --domain default
-    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --autostart_webserver '' --webserver_user ''
     --admin_user demo --admin_passwd guest --admin_email noreply@example.com
   # disable PostgreSQL install as it fails in Travis with Fatal error: Call to unimplemented native function pg_set_client_encoding
   # install egroupware using PostgreSQL as domain "pgsql", need some specific handling we can not create users via sql
@@ -79,8 +71,12 @@ script:
   #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - vendor/bin/phpunit -c doc -dapc.enable_cli=1
+  # output Apache error.log to diagnose PHP errors in requests send by unit-tests
+  - echo "travis_fold:start:SCRIPT folding starts"
+  - sudo cat /var/log/apache2/error.log
   # do not run syntax check for hhvm, as it always fails / get terminated after 10m
-  - test $(phpenv version-name) = 'hhvm' || ./doc/php_syntax_check.sh
+  - ./doc/php_syntax_check.sh
+  - echo "travis_fold:start:SCRIPT folding ends"
 
 cache:
   directories:

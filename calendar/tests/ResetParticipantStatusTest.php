@@ -24,17 +24,17 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 	// Method under test with modified access
 	private $check_method = null;
 
-	public static function setUpBeforeClass()
+	public static function setUpBeforeClass() : void
 	{
 		parent::setUpBeforeClass();
 
 	}
-	public static function tearDownAfterClass()
+	public static function tearDownAfterClass() : void
 	{
 		parent::tearDownAfterClass();
 	}
 
-	public function setUp()
+	protected function setUp() : void
 	{
 		$this->bo = new \calendar_boupdate();
 
@@ -47,7 +47,7 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
         $this->check_method->setAccessible(true);
 	}
 
-	public function tearDown()
+	protected function tearDown() : void
 	{
 
 		// Clean up user

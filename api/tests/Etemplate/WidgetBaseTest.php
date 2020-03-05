@@ -39,7 +39,7 @@ abstract class WidgetBaseTest extends \EGroupware\Api\LoggedInTest {
 
 	protected $ajax_response = null;
 
-	public static function setUpBeforeClass()
+	public static function setUpBeforeClass() : void
 	{
 		parent::setUpBeforeClass();
 
@@ -49,12 +49,12 @@ abstract class WidgetBaseTest extends \EGroupware\Api\LoggedInTest {
 		new \EGroupware\Api\Etemplate();
 	}
 
-	public function setUp()
+	protected function setUp() : void
 	{
 		// Mock AJAX response
 		$this->ajax_response = $this->mock_ajax_response();
 	}
-	public function tearDown()
+	protected function tearDown() : void
 	{
 		// Clean up AJAX response
 		$this->ajax_response->initResponseArray();

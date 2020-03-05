@@ -3,58 +3,85 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="admin.account.delete.delete" template="" lang="" group="0" version="18.1.001">
-		<vbox class="admin_account_delete">
-			<description value="Who would you like to transfer records owned by the deleted user to?" class="dialogHeader2"/>
-			<select-account id="new_owner" empty_label="Delete all records" class="dialogHeader3"/>
-			<description value="Automatically transfer entries owned by the user:"/>
-			<select id="delete_apps" rows="6" multiple="true" span="2"/>
-			<description value="Please manually deal with entries owned by the user:"/>
-			<grid id="counts" disabled="!@counts">
-				<columns>
-					<column width="150"/>
-					<column/>
-				</columns>
-				<rows>
-					<row>
-						<select-app id="${row}[app]" readonly="true"/>
-						<description id="${row}[count]"/>
-					</row>
-				</rows>
-			</grid>
-			<grid>
-				<columns>
-					<column width="150"/>
-					<column/>
-				</columns>
-				<rows>
-					<row>
-						<select-app value="filemanager" readonly="true"/>
-						<description value="Change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username."/>
-					</row>
-					<row>
-						<select-app value="mail" readonly="true"/>
-						<description value="Please check email.  It gets automatically deleted if email integration is used."/>
-					</row>
-				</rows>
-			</grid>
-			<description value="If you delete the user without selecting an account to move the data to, all entries get deleted!" font_style="b"/>
-		</vbox>
+		<grid width="100%" height="100%">
+			<columns>
+				<column width="60%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Who would you like to transfer records owned by the deleted user to?" class="dialogHeader2"/>
+					<select-account id="new_owner" empty_label="Delete all records" class="dialogHeader3"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="Automatically transfer entries owned by the user:"/>
+						<select id="delete_apps" rows="6" multiple="true" span="2"/>
+					</vbox>
+				</row>
+				<row>
+					<vbox>
+						<description value="Please manually deal with entries owned by the user:"/>
+						<grid id="counts" disabled="!@counts">
+							<columns>
+								<column width="150"/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<select-app id="${row}[app]" readonly="true"/>
+									<description id="${row}[count]"/>
+								</row>
+							</rows>
+						</grid>
+						<grid>
+							<columns>
+								<column width="150"/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<select-app value="filemanager" readonly="true"/>
+									<description value="Change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username."/>
+								</row>
+								<row>
+									<select-app value="mail" readonly="true"/>
+									<description value="Please check email.  It gets automatically deleted if email integration is used."/>
+								</row>
+							</rows>
+						</grid>
+						<description value="If you delete the user without selecting an account to move the data to, all entries get deleted!" font_style="b"/>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
 	</template>
 	<template id="admin.account.delete" template="" lang="" group="0" version="18.1.001">
-		<box class="dialogHeader">
-			<select-account id="account_id" readonly="true" label="Delete" onchange="var apps = widget.getRoot().getWidgetById('delete_apps'); apps.set_enabled(widget.getValue());"/>
-		</box>
-		<tabbox id="tabs" width="99%" tab_height="400px">
-			<tabs>
-				<tab id="main" label="Delete"/>
-			</tabs>
-			<tabpanels>
-				<template template="admin.account.delete.delete" width="99%"/>
-			</tabpanels>
-		</tabbox>
-		<hbox class="dialogFooterToolbar">
-			<button id="delete" label="Delete"/>
-			<button id="cancel" label="Cancel" onclick="window.close()"/>
-		</hbox>
+	    <grid width="100%">
+	        <columns>
+	            <column width="100%"/>
+	        </columns>
+	        <rows>
+	            <row class="dialogHeader">
+                   	<select-account id="account_id" readonly="true" label="Delete" onchange="var apps = widget.getRoot().getWidgetById('delete_apps'); apps.set_enabled(widget.getValue());"/>
+	            </row>
+	            <row>
+	                <tabbox id="tabs" width="100%" tab_height="400px">
+                    	<tabs>
+                    		<tab id="main" label="Delete"/>
+                    	</tabs>
+                    	<tabpanels>
+                    		<template template="admin.account.delete.delete" width="100%"/>
+                    	</tabpanels>
+                    </tabbox>
+	            </row>
+	            <row class="dialogFooterToolbar">
+	                <hbox>
+                        <button id="delete" label="Delete"/>
+                        <button id="cancel" label="Cancel" onclick="window.close()"/>
+                    </hbox>
+	            </row>
+	        </rows>
+	    </grid>
 	</template>
 </overlay>

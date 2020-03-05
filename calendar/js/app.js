@@ -391,7 +391,7 @@ var CalendarApp = /** @class */ (function (_super) {
                     //set onbeforeunload with json request to send request when the window gets close by X button
                     if (content.data.lock_token) {
                         window.onbeforeunload = function () {
-                            this.egw.json('calendar.calendar_uiforms.ajax_unlock', [content.data.id, content.data.lock_token], null, true, null, null).sendRequest(true);
+                            this.egw.json('calendar.calendar_uiforms.ajax_unlock', [content.data.id, content.data.lock_token], null, true, "keepalive", null).sendRequest();
                         };
                     }
                 }

@@ -27,7 +27,7 @@ class BaseTest extends TestCase
 	 */
 	private $storage;
 
-	public static function setUpBeforeClass()
+	public static function setUpBeforeClass() : void
 	{
 		if (ini_get('session.save_handler') == 'files' && !is_writable(ini_get('session.save_path')) && is_dir('/tmp') && is_writable('/tmp'))
 		{
@@ -49,12 +49,12 @@ class BaseTest extends TestCase
 		self::$db->connect();
 	}
 
-	protected function setUp()
+	protected function setUp() : void
 	{
 		$this->storage = new Api\Storage\Base('test', 'egw_test', self::$db);
 	}
 
-	protected function assertPreConditions()
+	protected function assertPreConditions() : void
 	{
 		$tables = self::$db->table_names(true);
 		$this->assertContains('egw_test', $tables, 'Could not find DB table "egw_test", make sure test app is installed');

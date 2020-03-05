@@ -760,11 +760,17 @@ var AdminApp = /** @class */ (function (_super) {
     AdminApp.prototype.account = function (_action, _senders) {
         var params = jQuery.extend({}, this.egw.link_get_registry('addressbook', 'edit'));
         var popup = this.egw.link_get_registry('addressbook', 'edit_popup');
-        if (_action.id == 'add') {
-            params.owner = '0';
-        }
-        else {
-            params.account_id = _senders[0].id.split('::').pop(); // get last :: separated part
+        switch (_action.id) {
+            case 'add':
+                params.owner = '0';
+                break;
+            case 'copy':
+                params.owner = '0';
+                params.copy = true;
+            // Fall through
+            default:
+                params.account_id = _senders[0].id.split('::').pop(); // get last :: separated part
+                break;
         }
         this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup);
     };

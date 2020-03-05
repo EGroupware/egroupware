@@ -45,12 +45,12 @@
     ],
 	"config": {
 		"platform": {
-			"php": "7.0"
+			"php": "7.2"
 		},
 		"sort-packages": true
 	},
 	"require": {
-		"php": ">=7.0,<=8.0.0alpha1",
+		"php": ">=7.2,<=8.0.0alpha1",
 		"ext-gd": "*",
 		"ext-json": "*",
 		"ext-mysqli": "*",
@@ -101,8 +101,10 @@
 		"tinymce/tinymce": "^5.0"
 	},
 	"require-dev": {
+		"guzzlehttp/guzzle": "^6.5",
+		"phpunit/phpunit": "~8"
 	},
-	"suggests": {
+	"suggest": {
 		"ext-opcache": "Opcode cache to speed up PHP",
 		"ext-apcu": "Used for in-memory caching",
 		"ext-tidy": "Used for tidying up docx templates",

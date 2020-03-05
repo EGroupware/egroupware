@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -53,7 +52,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {array} _parameters
 	 * @param {function} _callback
 	 * @param {object} _context
-	 * @param {boolean} _async
+	 * @param {boolean|"keepalive"} _async true: asynchronious request, false: synchronious request,
+	 * 	"keepalive": async. request with keepalive===true / sendBeacon, to be used in boforeunload event
 	 * @param {object} _sender
 	 * @param {egw} _egw
 	 */
@@ -154,11 +154,12 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 	/**
 	 * Sends the assembled request to the server
-	 * @param {boolean} [async=false] Overrides async provided in constructor to give an easy way to make simple async requests
+	 * @param {boolean|"keepalive"} _async Overrides async provided in constructor: true: asynchronious request,
+	 * 	false: synchronious request, "keepalive": async. request with keepalive===true / sendBeacon, to be used in beforeunload event
 	 * @param {string} method ='POST' allow to eg. use a (cachable) 'GET' request instead of POST
 	 * @param {function} error option error callback(_xmlhttp, _err) used instead our default this.error
 	 *
-	 * @return {jqXHR} jQuery jqXHR request object
+	 * @return {jqXHR|boolean} jQuery jqXHR request object or for async==="keepalive" boolean is returned
 	 */
 	json_request.prototype.sendRequest = function(async, method, error)
 	{
@@ -175,6 +176,15 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				parameters: this.parameters
 			}
 		});
+
+		// send with keepalive===true or sendBeacon to be used in beforeunload event
+		if (this.async === "keepalive" && typeof navigator.sendBeacon !== "undefined")
+		{
+			const data = new FormData();
+			data.append('json_data', request_obj);
+			//(window.opener||window).console.log("navigator.sendBeacon", this.url, request_obj, data.getAll('json_data'));
+			return navigator.sendBeacon(this.url, data);
+		}
 
 		// Send the request via AJAX using the jquery ajax function
 		// we need to use jQuery of window of egw object, as otherwise the one from main window is used!

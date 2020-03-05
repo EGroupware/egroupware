@@ -673,13 +673,14 @@ declare class JsonRequest
 {
 	/**
 	 * Sends the assembled request to the server
-	 * @param {boolean} [async=false] Overrides async provided in constructor to give an easy way to make simple async requests
+	 * @param {boolean|"keepalive"} _async true: asynchronious request, false: synchronious request,
+	 * 	"keepalive": async. request with keepalive===true / sendBeacon, to be used in beforeunload event
 	 * @param {string} method ='POST' allow to eg. use a (cachable) 'GET' request instead of POST
 	 * @param {function} error option error callback(_xmlhttp, _err) used instead our default this.error
 	 *
 	 * @return {jqXHR} jQuery jqXHR request object
 	 */
-	sendRequest(async? : boolean, method? : "POST"|"GET", error? : Function)
+	sendRequest(async? : boolean|"keepalive", method? : "POST"|"GET", error? : Function)
 	/**
 	 * Open websocket to push server (and keeps it open)
 	 *
@@ -721,14 +722,14 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * 	which handles the actual request. If the menuaction is a full featured
 	 * 	url, this one will be used instead.
 	 * @param _parameters which should be passed to the menuaction function.
-	 * @param _async specifies whether the request should be asynchronous or
-	 * 	not.
+	 * @param {boolean|"keepalive"} _async true: asynchronious request, false: synchronious request,
+	 * 	"keepalive": async. request with keepalive===true / sendBeacon, to be used in beforeunload event
 	 * @param _callback specifies the callback function which should be
 	 * 	called, once the request has been sucessfully executed.
 	 * @param _context is the context which will be used for the callback function
 	 * @param _sender is a parameter being passed to the _callback function
 	 */
-	json(_menuaction : string, _parameters? : any[], _callback? : Function, _context? : object, _async? : boolean, _sender?) : JsonRequest;
+	json(_menuaction : string, _parameters? : any[], _callback? : Function, _context? : object, _async? : boolean|"keepalive", _sender?) : JsonRequest;
 	/**
 	 * Registers a new handler plugin.
 	 *

@@ -58,10 +58,7 @@ td.admin_userAgent span {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.admin_account_delete > * {
-	padding: 8px;
-}
-form#admin-account-delete div.dialogHeader > label {
+#admin-account-delete .dialogHeader label.et2_label {
 	font-size: 120%;
 }
 /* Global Category classes*/

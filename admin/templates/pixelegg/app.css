@@ -66,10 +66,7 @@ td.admin_userAgent span {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.admin_account_delete > * {
-  padding: 8px;
-}
-form#admin-account-delete div.dialogHeader > label {
+#admin-account-delete .dialogHeader label.et2_label {
   font-size: 120%;
 }
 /* Global Category classes*/
@@ -248,5 +245,8 @@ Admin command
     /*filter: url(grayscale.svg);  Firefox 4+ */
     filter: initial;
     /* IE 6-9 */
+  }
+  #admin-account-delete .dialogFooterToolbar .et2_button_delete {
+    margin-left: 0;
   }
 }
