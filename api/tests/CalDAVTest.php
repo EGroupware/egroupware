@@ -217,14 +217,29 @@ abstract class CalDAVTest extends TestCase
 	 */
 	private static function getSetup()
 	{
-		if (!isset($_REQUEST['domain']))
+		static $setup=null;
+		if (!isset($setup))
 		{
-			$_REQUEST['domain'] = $GLOBALS['EGW_DOMAIN'] ?? 'default';
-		}
-		$_REQUEST['ConfigDomain'] = $_REQUEST['domain'];
-		require_once __DIR__.'/../../setup/inc/functions.inc.php';
+			if (!isset($_REQUEST['domain']))
+			{
+				$_REQUEST['domain'] = $GLOBALS['EGW_DOMAIN'] ?? 'default';
+			}
+			$_REQUEST['ConfigDomain'] = $_REQUEST['domain'];
 
-		return $GLOBALS['egw_setup'];
+			$GLOBALS['egw_info'] = array(
+				'flags' => array(
+					'noheader' => True,
+					'nonavbar' => True,
+					'currentapp' => 'setup',
+					'noapi' => True
+				));
+			if (file_exists(__DIR__ . '/../../header.inc.php'))
+			{
+				include_once(__DIR__ . '/../../header.inc.php');
+			}
+			$setup = new \setup();
+		}
+		return $setup;
 	}
 
 	/**
