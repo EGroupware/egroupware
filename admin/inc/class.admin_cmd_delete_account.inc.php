@@ -35,6 +35,10 @@ class admin_cmd_delete_account extends admin_cmd
 				'is_user' => $is_user,
 			)+$extra;
 		}
+		if (empty($account['change_apps']))
+		{
+			$account['change_apps'] = [];
+		}
 		admin_cmd::__construct($account);
 	}
 
@@ -201,7 +205,7 @@ class admin_cmd_delete_account extends admin_cmd
 		// First do apps that were not selected
 		$skip_apps = array();
 		$do_last = array('preferences','admin','api');
-		foreach(array_diff(array_keys($GLOBALS['egw_info']['apps']), array_merge($this->change_apps,$do_last)) as $app)
+		foreach(array_diff(array_keys($GLOBALS['egw_info']['apps'] ?? []), array_merge($this->change_apps,$do_last)) as $app)
 		{
 			$skip_apps[] = $app;
 			Api\Hooks::single(array_merge($GLOBALS['hook_values'], array('new_owner' => 0)), $app, true);
@@ -295,7 +299,7 @@ class admin_cmd_delete_account extends admin_cmd
 	 *
 	 * @return string
 	 */
-	function __tostring()
+	function __toString()
 	{
 		return lang('Delete account %1',
 			// use own data to display deleted name of user/group
