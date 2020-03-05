@@ -153,6 +153,13 @@ class admin_ui
 					'onExecute' => 'javaScript:app.admin.account',
 					'group' => $group,
 				),
+				'copy' => array(
+					'caption' => 'Copy',
+					'url' => 'menuaction=addressbook.addressbook_ui.edit&makecp=1&contact_id=$id',
+					'onExecute' => 'javaScript:app.admin.account',
+					'allowOnMultiple' => false,
+					'icon' => 'copy',
+				),
 			);
 			// generate urls for add/edit accounts via addressbook
 			$edit = Link::get_registry('addressbook', 'edit');
