@@ -43,9 +43,9 @@ before_script:
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
   - sudo service apache2 restart
   - curl -i http://localhost/doc/rpm-build/debian.changes
-  - tail /var/log/apache2/error.log
+  - sudo tail /var/log/apache2/error.log
   - curl -i http://localhost/egroupware/doc/rpm-build/debian.changes
-  - tail /var/log/apache2/error.log
+  - sudo tail /var/log/apache2/error.log
   - php -m
   - php -i
   - php install-cli.php --ignore-platform-reqs
