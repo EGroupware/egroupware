@@ -989,7 +989,6 @@ var et2_calendar_event = /** @class */ (function (_super) {
     et2_calendar_event.drag_helper = function (event, ui) {
         ui.helper.width(ui.width());
     };
-    ;
     /**
     * splits the combined status, quantity and role
     *
@@ -1037,7 +1036,6 @@ var et2_calendar_event = /** @class */ (function (_super) {
         };
         return aoi;
     };
-
     et2_calendar_event._attributes = {
         "value": {
             type: "any",

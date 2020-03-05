@@ -1255,9 +1255,10 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		}
 	}
 
-	public static drag_helper (event,ui) {
+	public static drag_helper (event,ui)
+	{
 		ui.helper.width(ui.width());
-	};
+	}
 
 	/**
 	* splits the combined status, quantity and role
@@ -1311,7 +1312,6 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		};
 
 		return aoi;
-	};
-
+	}
 }
 et2_register_widget(et2_calendar_event, ["calendar-event"]);
