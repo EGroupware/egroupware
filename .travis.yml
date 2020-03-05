@@ -41,12 +41,9 @@ before_script:
   # configure apache virtual hosts
   - sudo cp -f doc/travis-ci-apache.conf /etc/apache2/sites-available/000-default.conf
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
+  # remove .htaccess as it is read by Apache, but content is for mod_php
   - rm -f .htaccess
   - sudo service apache2 restart
-  - curl -i http://localhost/doc/rpm-build/debian.changes
-  - sudo tail /var/log/apache2/error.log
-  - curl -i http://localhost/egroupware/doc/rpm-build/debian.changes
-  - sudo tail /var/log/apache2/error.log
   - php -m
   - php -i
   - php install-cli.php --ignore-platform-reqs
@@ -59,7 +56,7 @@ script:
   # install egroupware using MariaDB as domain "default"
   # and add an admin user "demo" with password "guest"
   - php doc/rpm-build/post_install.php --domain default
-    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --autostart_webserver='' --webserver_user ''
     --admin_user demo --admin_passwd guest --admin_email noreply@example.com
   # disable PostgreSQL install as it fails in Travis with Fatal error: Call to unimplemented native function pg_set_client_encoding
   # install egroupware using PostgreSQL as domain "pgsql", need some specific handling we can not create users via sql
@@ -72,7 +69,6 @@ script:
   #- php doc/rpm-build/post_install.php --domain ldap --db_name ldap --db_user ldap
   #  --account-auth ldap --ldap_suffix dc=local --ldap_admin 'cn=admin,$suffix' --ldap_admin_pw secret
   #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
-  - curl -i http://localhost/egroupware/groupdav.php/
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - vendor/bin/phpunit -c doc -dapc.enable_cli=1
   # do not run syntax check for hhvm, as it always fails / get terminated after 10m

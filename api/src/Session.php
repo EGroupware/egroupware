@@ -555,7 +555,7 @@ class Session
 					session_id($this->sessionid);
 				}
 			}
-			else
+			elseif (!headers_sent())	// only gives warnings, nothing we can do
 			{
 				self::cache_control();
 				session_start();
@@ -565,6 +565,10 @@ class Session
 					session_regenerate_id(true);
 				}
 				$this->sessionid = session_id();
+			}
+			else
+			{
+				$this->sessionid = session_id() ?: Auth::randomstring(24);
 			}
 			$this->kp3       = Auth::randomstring(24);
 
@@ -644,26 +648,30 @@ class Session
 			}
 			$GLOBALS['egw']->db->transaction_commit();
 
-			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session)
+			if (!headers_sent())
 			{
-				self::egw_setcookie(self::EGW_SESSION_NAME,$this->sessionid);
-				self::egw_setcookie('kp3',$this->kp3);
-				self::egw_setcookie('domain',$this->account_domain);
-			}
-			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session || isset($_COOKIE['last_loginid']))
-			{
-				self::egw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
-				self::egw_setcookie('last_domain',$this->account_domain,$now+1209600);
-			}
+				if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session)
+				{
+					self::egw_setcookie(self::EGW_SESSION_NAME, $this->sessionid);
+					self::egw_setcookie('kp3', $this->kp3);
+					self::egw_setcookie('domain', $this->account_domain);
+				}
+				if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session || isset($_COOKIE['last_loginid']))
+				{
+					self::egw_setcookie('last_loginid', $this->account_lid, $now + 1209600); /* For 2 weeks */
+					self::egw_setcookie('last_domain', $this->account_domain, $now + 1209600);
+				}
 
-			// set new remember me token/cookie, if requested and necessary
-			$expiration = null;
-			if (($token = $this->checkSetRememberMeToken($remember_me, $_COOKIE[self::REMEMBER_ME_COOKIE], $expiration)))
-			{
-				self::egw_setcookie(self::REMEMBER_ME_COOKIE, $token, $expiration);
-			}
+				// set new remember me token/cookie, if requested and necessary
+				$expiration = null;
+				if (($token = $this->checkSetRememberMeToken($remember_me, $_COOKIE[self::REMEMBER_ME_COOKIE], $expiration)))
+				{
+					self::egw_setcookie(self::REMEMBER_ME_COOKIE, $token, $expiration);
+				}
 
-			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
+				if (self::ERROR_LOG_DEBUG) error_log(__METHOD__ . "($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
+			}
+			elseif (self::ERROR_LOG_DEBUG) error_log(__METHOD__ . "($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) could NOT set session cookies, headers already sent");
 
 			// hook called once session is created
 			Hooks::process(array(
