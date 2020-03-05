@@ -71,6 +71,8 @@ script:
   #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - vendor/bin/phpunit -c doc -dapc.enable_cli=1
+  # output Apache error.log to diagnose PHP errors in requests send by unit-tests
+  - sudo cat /var/log/apache2/error.log
   # do not run syntax check for hhvm, as it always fails / get terminated after 10m
   - test $(phpenv version-name) = 'hhvm' || ./doc/php_syntax_check.sh
 

@@ -30,6 +30,11 @@ if (ini_get('session.save_handler') === 'files' && !is_writable(ini_get('session
 {
 	ini_set('session.save_path','/tmp');	// regular users may have no rights to apache's session dir
 }
+// set domain from doc/phpunit.xml
+if (!isset($_SERVER['HTTP_HOST']) && $GLOBALS['EGW_DOMAIN'] !== 'default')
+{
+	$_SERVER['HTTP_HOST'] = $GLOBALS['EGW_DOMAIN'];
+}
 
 // Symlink api/src/fixtures/apps/* to root
 foreach(scandir($path=__DIR__.'/../api/tests/fixtures/apps') as $app)
