@@ -1976,6 +1976,7 @@ class Session
 			case PHP_SESSION_DISABLED:
 				throw new \ErrorException('EGroupware requires PHP session extension!');
 			case PHP_SESSION_NONE:
+				if (headers_sent()) return false;	// only gives warnings
 				ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
 				session_name(self::EGW_SESSION_NAME);
 				if (($sessionid = self::get_sessionid()))
