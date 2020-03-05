@@ -79,7 +79,6 @@ var et2_toolbar = /** @class */ (function (_super) {
         _this._build_menu(et2_toolbar.default_toolbar, true);
         return _this;
     }
-
     et2_toolbar.prototype.destroy = function () {
         // Destroy widget
         if (this.div && this.div.data('ui-menu'))
@@ -90,7 +89,6 @@ var et2_toolbar = /** @class */ (function (_super) {
         this.actionbox.empty().remove();
         this.actionlist.empty().remove();
     };
-    ;
     /**
      * Fix function in order to fix toolbar preferences with the new preference structure
      * @param {action object} _action
@@ -161,7 +159,6 @@ var et2_toolbar = /** @class */ (function (_super) {
         }
         return totalCount;
     };
-    ;
     /**
      * Go through actions and build buttons for the toolbar
      *

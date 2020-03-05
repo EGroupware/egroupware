@@ -99,9 +99,10 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		this.preference = {};
 
 		this._build_menu(et2_toolbar.default_toolbar, true);
-	};
+	}
 
-	destroy() {
+	destroy()
+	{
 		// Destroy widget
 		if(this.div && this.div.data('ui-menu')) this.menu.menu("destroy");
 
@@ -111,7 +112,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		this.div.empty().remove();
 		this.actionbox.empty().remove();
 		this.actionlist.empty().remove();
-	};
+	}
 
 	/**
 	 * Fix function in order to fix toolbar preferences with the new preference structure
@@ -197,7 +198,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			}
 		}
 		return totalCount;
-	};
+	}
 
 	/**
 	 * Go through actions and build buttons for the toolbar
