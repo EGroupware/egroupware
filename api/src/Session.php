@@ -1171,7 +1171,7 @@ class Session
 	 * @var array
 	 */
 	static $pseudo_session_scripts = array(
-		'webdav.php', 'groupdav.php', 'remote.php', 'share.php'
+		'webdav.php', 'groupdav.php', 'remote.php'
 	);
 
 	/**
