@@ -357,7 +357,7 @@
 					this.loading_prompt('connectionLost', true, '', null);
 				}, egw(window));
 				window.Offline.on('up', function(){
-					jQuery('#egw_message').click()
+					jQuery('#egw_message').click();
 					this.loading_prompt('connectionLost', false);
 				}, egw(window));
 			}
@@ -417,7 +417,6 @@
 						egw_script.getAttribute('data-websocket-url'),
 						JSON.parse(egw_script.getAttribute('data-websocket-tokens'))
 					);
-					egw.set_grants(JSON.parse(egw_script.getAttribute('data-grants') || "{}"));
 				}
 			}
 			catch(e) {

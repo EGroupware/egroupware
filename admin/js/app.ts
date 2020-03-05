@@ -17,7 +17,7 @@ import 'jqueryui';
 import '../jsapi/egw_global';
 import '../etemplate/et2_types';
 
-import {EgwApp} from '../../api/js/jsapi/egw_app';
+import { EgwApp } from '../../api/js/jsapi/egw_app';
 
 /**
  * UI for Admin

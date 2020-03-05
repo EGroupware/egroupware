@@ -19,32 +19,32 @@
  * Object which resizes an inner node to the maximum extend of an outer node
  * (without creating a scrollbar) - it achieves that by performing some very
  * nasty and time consuming calculations.
- *
- * @augments Class
  */
-var et2_dynheight = (function(){ "use strict"; return Class.extend(
+export class et2_dynheight
 {
-	/**
-	 * Constructor for the dynheight object
-	 *
-	 * @param _outerNode is the node which surrounds the _innerNode and to
-	 * 	which extend the innerNode should be expanded without creating a
-	 * 	scrollbar. Note: The outer node must be a parent of the inner node.
-	 * @param _innerNode is the node which should be scaled. Call update to
-	 * 	scale the node.
-	 * @param _minHeight is the minimum height the inner node should have
-	 * @memberOf et2_dynheight
-	 */
-	init: function(_outerNode, _innerNode, _minHeight) {
+	private initialized: boolean = false;
+
+	private outerNode: JQuery;
+	private innerNode: JQuery;
+	private minHeight: number = 0;
+
+	private bottomNodes: any[] = [];
+	private innerMargin: number = 0;
+	private outerMargin: number = 0;
+
+	constructor(_outerNode, _innerNode, _minHeight) 
+	{
 		this.outerNode = jQuery(_outerNode);
 		this.innerNode = jQuery(_innerNode);
 		this.minHeight = _minHeight;
+	}
 
+	destroy()
+	{
+		this.outerNode = null;
+		this.innerNode = null;
 		this.bottomNodes = [];
-		this.initialized = false;
-		this.innerMargin = 0;
-		this.outerMargin = 0;
-	},
+	}
 
 	/**
 	 * Resizes the inner node. When this is done, the callback function is
@@ -53,7 +53,8 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 	 * @param {function} _callback
 	 * @param {object} _context
 	 */
-	update: function(_callback, _context) {
+	update( _callback, _context)
+	{
 		// Check whether the inner node is actually visible - if not, don't
 		// trigger the callback function
 		if (this.innerNode.is(":visible"))
@@ -62,16 +63,16 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 			this._initialize();
 
 			// Get the outer container height and offset, if available
-			var oh = this.outerNode.height();
-			var ot = this.outerNode.offset() ? this.outerNode.offset().top : 0;
+			const oh = this.outerNode.height();
+			const ot = this.outerNode.offset() ? this.outerNode.offset().top : 0;
 
 			// Get top and height of the inner node
-			var it = this.innerNode.offset().top;
+			const it = this.innerNode.offset().top;
 
 			// Calculate the height of the "bottomNodes"
-			var bminTop = this.bottomNodes.length ? Infinity : 0;
-			var bmaxBot = 0;
-			for (var i = 0; i < this.bottomNodes.length; i++)
+			let bminTop = this.bottomNodes.length ? Infinity : 0;
+			let bmaxBot = 0;
+			for (let i = 0; i < this.bottomNodes.length; i++)
 			{
 				// Ignore hidden popups
 				if(this.bottomNodes[i].find('.action_popup').length)
@@ -85,9 +86,9 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 				if(!this.bottomNodes[i].is(':visible')) continue;
 
 				// Get height, top and bottom and calculate the maximum/minimum
-				var bh = this.bottomNodes[i].outerHeight(true);
-				var bt = this.bottomNodes[i].offset().top;
-				var bb = bh + bt;
+				let bh = this.bottomNodes[i].outerHeight(true);
+				let bt = this.bottomNodes[i].offset().top;
+				const bb = bh + bt;
 
 				if (i == 0 || bminTop > bt)
 				{
@@ -101,17 +102,17 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 			}
 
 			// Get the height of the bottom container
-			var bh = Math.max(0,bmaxBot - bminTop);
+			const bh = Math.max(0, bmaxBot - bminTop);
 
 			// Calculate the new height of the inner container
-			var h = Math.max(this.minHeight, oh + ot - it - bh -
+			const h = Math.max(this.minHeight, oh + ot - it - bh -
 				this.innerMargin - this.outerMargin);
 			this.innerNode.height(h);
 
 			// Update the width
 			// Some checking to make sure it doesn't overflow the width when user
 			// resizes the window
-			var w = this.outerNode.width();
+			let w = this.outerNode.width();
 			if (w > jQuery(window).width())
 			{
 				// 50px border, totally arbitrary, but we just need to make sure it's inside
@@ -128,16 +129,17 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 				_callback.call(_context, w, h);
 			}
 		}
-	},
+	}
 
 	/**
 	 * Function used internally which collects all DOM-Nodes which are located
 	 * below this element.
 	 *
-	 * @param {DOMElement} _node
+	 * @param {HTMLElement} _node
 	 * @param {number} _bottom
 	 */
-	_collectBottomNodes: function(_node, _bottom) {
+	_collectBottomNodes( _node : any, _bottom? : number)
+	{
 		// Calculate the bottom position of the inner node
 		if (typeof _bottom == "undefined")
 		{
@@ -147,18 +149,18 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 		if (_node)
 		{
 			// Accumulate the outer margin of the parent elements
-			var node = jQuery(_node);
-			var ooh = node.outerHeight(true);
-			var oh = node.height();
+			const node = jQuery(_node);
+			const ooh = node.outerHeight(true);
+			const oh = node.height();
 			this.outerMargin += (ooh - oh) / 2; // Divide by 2 as the value contains margin-top and -bottom
 
 			// Iterate over the children of the given node and do the same
 			// recursively to the parent nodes until the _outerNode or body is
 			// reached.
-			var self = this;
+			const self = this;
 			jQuery(_node).children().each(function() {
-				var $this = jQuery(this);
-				var top = $this.offset().top;
+				const $this = jQuery(this);
+				const top = $this.offset().top;
 				if (this != self.innerNode[0] && top >= _bottom)
 				{
 					self.bottomNodes.push($this);
@@ -170,13 +172,14 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 				this._collectBottomNodes(_node.parentNode, _bottom);
 			}
 		}
-	},
+	}
 
 	/**
 	 * Used internally to calculate some information which will not change over
 	 * the time.
 	 */
-	_initialize: function() {
+	_initialize( )
+	{
 		if (!this.initialized)
 		{
 			// Collect all bottomNodes and calculates the outer margin
@@ -185,13 +188,12 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 			this._collectBottomNodes(this.innerNode[0].parentNode);
 
 			// Calculate the inner margin
-			var ioh = this.innerNode.outerHeight(true);
-			var ih = this.innerNode.height();
+			const ioh = this.innerNode.outerHeight(true);
+			const ih = this.innerNode.height();
 			this.innerMargin = ioh - ih;
 
 			this.initialized = true;
 		}
 	}
 
-});}).call(this);
-
+}

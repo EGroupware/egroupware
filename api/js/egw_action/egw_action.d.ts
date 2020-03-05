@@ -145,7 +145,7 @@ declare class egwAction {
         previous: string;
         close: string;
     };
-    updateActions(_actions: any, _app: string): void;
+    updateActions(_actions: any, _app?: string): void;
     not_disableClass(_action: any, _senders: any, _target: any): boolean;
     enableClass(_action: any, _senders: any, _target: any): boolean;
     enableId(_action: any, _senders: any, _target: any): any;
@@ -250,7 +250,7 @@ declare class egwActionLink {
  * @param {number} _flags a set of additional flags being applied to the object,
  * 	defaults to 0
  */
-declare function egwActionObject(_id: string, _parent: egwActionObject, _iface: egwActionObjectInterface, _manager: typeof egwActionManager, _flags: number): void;
+declare function egwActionObject(_id: string, _parent: egwActionObject, _iface?: egwActionObjectInterface, _manager?: typeof egwActionManager, _flags?: number): void;
 declare class egwActionObject {
     /**
      * The egwActionObject represents an abstract object to which actions may be
@@ -268,7 +268,7 @@ declare class egwActionObject {
      * @param {number} _flags a set of additional flags being applied to the object,
      * 	defaults to 0
      */
-    constructor(_id: string, _parent: egwActionObject, _iface: egwActionObjectInterface, _manager: typeof egwActionManager, _flags: number);
+    constructor(_id: string, _parent: egwActionObject, _iface?: egwActionObjectInterface, _manager?: typeof egwActionManager, _flags?: number);
     id: string;
     parent: egwActionObject;
     children: any[];
@@ -284,7 +284,7 @@ declare class egwActionObject {
     iface: egwActionObjectInterface;
     getObjectById(_id: string, _search_depth?: number): egwActionObject;
     addObject(_id: any, _interface: any, _flags?: number): any;
-    insertObject(_index: number, _id: any, _iface: any, _flags: number): any;
+    insertObject(_index: number | boolean, _id: any, _iface?: any, _flags?: number): any;
     clear(): void;
     remove(): void;
     getRootObject(): any;
@@ -478,7 +478,7 @@ declare class egwEventQueue {
  * @param array _acceptedTypes is an array of types which contains the "typeof"
  * 	strings of accepted non-functions in setValue
  */
-declare function egwFnct(_context: any, _default: any, _acceptedTypes: any): void;
+declare function egwFnct(_context: any, _default: any, _acceptedTypes?: any): void;
 declare class egwFnct {
     /**
      * Class which is used to be able to handle references to JavaScript functions
@@ -491,7 +491,7 @@ declare class egwFnct {
      * @param array _acceptedTypes is an array of types which contains the "typeof"
      * 	strings of accepted non-functions in setValue
      */
-    constructor(_context: any, _default: any, _acceptedTypes: any);
+    constructor(_context: any, _default: any, _acceptedTypes?: any);
     context: any;
     acceptedTypes: any;
     fnct: any;

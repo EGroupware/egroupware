@@ -6,6 +6,7 @@
 *.min.js.map
 *.min.css
 *.min.css.map
+*.js.map
 *.sql
 *.diff
 *.patch
@@ -43,6 +44,8 @@
 /sambaadmin/
 /sitemgr/
 /stylite/
+/swool/
+/test/
 /tracker/
 /usage/
 /vendor/

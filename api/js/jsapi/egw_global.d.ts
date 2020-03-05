@@ -264,7 +264,7 @@ declare interface IegwGlobal
 	 * @param _args optional parameters (%{number} replacements)
 	 * @return {string}
 	 */
-	lang(_msg : string, ..._args : string[]) : string;
+	lang(_msg : string, ..._args : string[] | number[]) : string;
 	/**
 	 * Load default langfiles for an application: common, _appname, custom
 	 *
@@ -298,7 +298,7 @@ declare interface IegwGlobal
 	 * @param {string} _name name / key in the registry, eg. 'view'
 	 * @return {string|object|boolean} false if $app is not registered, otherwise string with the value for $name
 	 */
-	link_get_registry(_app : string, _name : string) : string|object|boolean;
+	link_get_registry(_app : string, _name? : string) : string|object|boolean;
 	/**
 	 * Get mime-type information from app-registry
 	 *
@@ -459,9 +459,9 @@ declare interface IegwGlobal
 	 *
 	 * @param {string} application Name of application, or common
 	 * @param {string} key
-	 * @param {string} value
+	 * @param {string | array} value
 	 */
-	setSessionItem(application : string, key : string, value : string) : void;
+	setSessionItem(application : string, key : string, value : string[] | string) : void;
 	/**
 	 * Remove a value from session storage
 	 * @param {string} application
@@ -639,7 +639,7 @@ declare interface IegwGlobal
 	 * @author Ryan Wheale
 	 * @see http://www.foliotek.com/devblog/getting-the-width-of-a-hidden-element-with-jquery-using-width/
 	 */
-	getHiddenDimensions(element : HTMLElement, boolOuter? : boolean) : {h: number, w: number, top: number, left: number};
+	getHiddenDimensions(element : HTMLElement | JQuery, boolOuter? : boolean) : {h: number, w: number, top: number, left: number};
 	/**
 	 * Store a window's name in egw.store so we can have a list of open windows
 	 *
@@ -745,7 +745,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 *	locally.  Global handlers must stay around, so should be used
 	 *	for global modules.
 	 */
-	registerJSONPlugin(_callback : Function, _context, _type, _global);
+	registerJSONPlugin(_callback : Function, _context, _type?, _global?);
 	/**
 	 * Removes a previously registered plugin.
 	 *
@@ -758,7 +758,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * 	handling.
 	 * @param {boolean} [_global=false] Remove a global or local handler.
 	 */
-	unregisterJSONPlugin(_callback : Function, _context, _type : string, _global : boolean);
+	unregisterJSONPlugin(_callback : Function, _context, _type? : string, _global? : boolean);
 
 	/**
 	 * implemented in egw_files.js
