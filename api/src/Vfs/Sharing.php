@@ -339,7 +339,7 @@ class Sharing extends \EGroupware\Api\Sharing
 	 */
 	protected static function check_path($share)
 	{
-		return file_exists($share['share_path']);
+		return Vfs::file_exists($share['share_path']);
 	}
 
 	/**

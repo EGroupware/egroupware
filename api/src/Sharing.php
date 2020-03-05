@@ -794,8 +794,8 @@ class Sharing
 			}
 
 			// Now check the remaining shares
-			/* temporary disabled, as the check does not correctly check user permissions nor account for pathes without vfs prefix
-			static::cleanup_missing_paths();*/
+			/* temporary disabled, as the check does not correctly check user permissions nor account for pathes without vfs prefix*/
+			static::cleanup_missing_paths();
 		}
 		catch (\Exception $e) {
 			_egw_log_exception($e);
