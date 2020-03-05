@@ -22,7 +22,6 @@
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {egw_keyHandler} from '../egw_action/egw_keymanager.js';
 import {et2_textbox, et2_textbox_ro} from "./et2_widget_textbox";
 import {et2_description} from "./et2_widget_description";
 import {et2_selectAccount_ro} from "./et2_widget_selectAccount";

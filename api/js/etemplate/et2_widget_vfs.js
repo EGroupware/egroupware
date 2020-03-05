@@ -36,7 +36,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var egw_keymanager_js_1 = require("../egw_action/egw_keymanager.js");
 var et2_widget_textbox_1 = require("./et2_widget_textbox");
 var et2_widget_description_1 = require("./et2_widget_description");
 var et2_widget_selectAccount_1 = require("./et2_widget_selectAccount");
@@ -177,7 +176,7 @@ var et2_vfs = /** @class */ (function (_super) {
                 // Wait until object selection happens
                 window.setTimeout(function () {
                     // execute default action
-                    egw_keymanager_js_1.egw_keyHandler(EGW_KEY_ENTER, false, false, false);
+                    egw_keyHandler(EGW_KEY_ENTER, false, false, false);
                 });
                 // Select row
                 return true;
