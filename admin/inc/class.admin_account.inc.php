@@ -10,9 +10,9 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
-use EGroupware\Api\Framework;
 
 /**
  * UI for admin: edit/add account
@@ -26,13 +26,6 @@ class admin_account
 	 */
 	public $public_functions = array(
 		'delete' => true,
-	);
-
-	// Copying account uses addressbook fields, but we explicitly clear these
-	protected static $copy_clear_fields = array(
-		'account_firstname','account_lastname','account_fullname', 'person_id',
-		'account_id','account_lid',
-		'account_lastlogin','accountlastloginfrom','account_lastpwd_change'
 	);
 
 	/**
@@ -111,24 +104,18 @@ class admin_account
 				}
 				$readonlys['account_passwd'] = $readonlys['account_passwd2'] = true;
 			}
-			// save old values to only trigger save, if one of the following values change (contact data get saved anyway)
-			$preserve = empty($content['id']) ? array() :
-				array('old_account' => array_intersect_key($account, array_flip(array(
-						'account_lid', 'account_status', 'account_groups', 'anonymous', 'changepassword',
-						'mustchangepassword', 'account_primary_group', 'homedirectory', 'loginshell',
-						'account_expires', 'account_firstname', 'account_lastname', 'account_email'))),
-						'deny_edit' => $deny_edit);
-
-			if($content && $_GET['copy'])
-			{
-				$this->copy($content, $account, $preserve);
-			}
 			return array(
 				'name' => 'admin.account',
 				'prepend' => true,
 				'label' => 'Account',
 				'data' => $account,
-				'preserve' => $preserve,
+				// save old values to only trigger save, if one of the following values change (contact data get saved anyway)
+				'preserve' => empty($content['id']) ? array() :
+					array('old_account' => array_intersect_key($account, array_flip(array(
+						'account_lid', 'account_status', 'account_groups', 'anonymous', 'changepassword',
+						'mustchangepassword', 'account_primary_group', 'homedirectory', 'loginshell',
+						'account_expires', 'account_firstname', 'account_lastname', 'account_email'))),
+						'deny_edit' => $deny_edit),
 				'readonlys' => $readonlys,
 				'pre_save_callback' => $deny_edit ? null : 'admin_account::addressbook_pre_save',
 			);
@@ -253,35 +240,6 @@ class admin_account
 		else	// for updated account, we need to refresh etag
 		{
 			$content['etag'] = $contact['etag'];
-		}
-	}
-
-	public function copy(array &$content, array &$account, array &$preserve)
-	{
-		// We skipped the addressbook copy, call it now
-		$ab_ui = new addressbook_ui();
-		$ab_ui->copy_contact($content, true);
-
-		// copy_contact() reset the owner, fix it
-		$content['owner'] = '0';
-
-		// Explicitly, always clear these
-		static $clear_content = Array(
-			'n_family','n_given','n_middle','n_suffix','n_fn','n_fileas',
-			'account_id','contact_id','id','etag','carddav_name','uid'
-		);
-		foreach($clear_content as $field)
-		{
-			$account[$field] ='';
-			$preserve[$field] = '';
-		}
-		$account['link_to']['to_id'] = 0;
-		unset($preserve['old_account']);
-
-		// Never copy these on an account
-		foreach(static::$copy_clear_fields as $field)
-		{
-			unset($account[$field]);
 		}
 	}
 
