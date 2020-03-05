@@ -272,8 +272,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					const w = et2_registry[attrs.type ? attrs.type : field.type];
 					for(let attr_name in field.values)
 					{
-						if (typeof w.prototype.attributes[attr_name] != "undefined")
-						attrs[attr_name] = field.values[attr_name];
+						if (typeof w._attributes[attr_name] != "undefined")
+						{
+							attrs[attr_name] = field.values[attr_name];
+						}
 					}
 				}
 				// Create widget

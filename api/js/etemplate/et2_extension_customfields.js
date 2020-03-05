@@ -196,8 +196,9 @@ var et2_customfields_list = /** @class */ (function (_super) {
                 if (['select', 'radio', 'radiogroup', 'checkbox', 'button'].indexOf(field.type) == -1 && !jQuery.isEmptyObject(field.values)) {
                     var w = et2_registry[attrs.type ? attrs.type : field.type];
                     for (var attr_name in field.values) {
-                        if (typeof w.prototype.attributes[attr_name] != "undefined")
+                        if (typeof w._attributes[attr_name] != "undefined") {
                             attrs[attr_name] = field.values[attr_name];
+                        }
                     }
                 }
                 // Create widget
