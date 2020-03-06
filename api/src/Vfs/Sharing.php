@@ -339,6 +339,11 @@ class Sharing extends \EGroupware\Api\Sharing
 	 */
 	protected static function check_path($share)
 	{
+		// remove VFS::PREFIX (vfs://default), as Vfs::file_exists returns false if path does NOT start with a /
+		if ($share['share_path'][0] !== '/')
+		{
+			$share['share_path'] = Api\Vfs::parse_url($share['share_path'], PHP_URL_PATH);
+		}
 		return Vfs::file_exists($share['share_path']);
 	}
 
