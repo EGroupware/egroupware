@@ -17,8 +17,8 @@ namespace EGroupware\Api\Vfs;
 require_once __DIR__ . '/../LoggedInTest.php';
 
 use EGroupware\Api;
-use EGroupware\Api\Vfs;
 use EGroupware\Api\LoggedInTest as LoggedInTest;
+use EGroupware\Api\Vfs;
 use EGroupware\Stylite\Vfs\Versioning;
 
 
@@ -421,6 +421,19 @@ class SharingBase extends LoggedInTest
 		return $share;
 	}
 
+	public function readShare($share_id)
+	{
+		foreach ($GLOBALS['egw']->db->select(Sharing::TABLE, '*',
+				array(
+						'share_id' => (int)$share_id
+				),
+				__LINE__, __FILE__, false) as $share)
+		{
+			return $share;
+		}
+		return array();
+	}
+
 	/**
 	 * Make an infolog entry
 	 */
@@ -428,9 +441,9 @@ class SharingBase extends LoggedInTest
 	{
 		$bo = new \infolog_bo();
 		$element = array(
-			'info_subject' => "Test infolog for #{$this->getName()}",
-			'info_des'     => 'Test element for ' . $this->getName() ."\n". Api\DateTime::to(),
-			'info_status'  => 'open'
+				'info_subject' => "Test infolog for #{$this->getName()}",
+				'info_des' => 'Test element for ' . $this->getName() . "\n" . Api\DateTime::to(),
+				'info_status' => 'open'
 		);
 
 		$element_id = $bo->write($element, true, true, true, true);

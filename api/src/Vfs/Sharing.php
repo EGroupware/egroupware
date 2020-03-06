@@ -15,8 +15,6 @@ namespace EGroupware\Api\Vfs;
 
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
-use EGroupware\Collabora\Wopi;
-
 use filemanager_ui;
 
 /**
@@ -398,6 +396,52 @@ class Sharing extends \EGroupware\Api\Sharing
 		return $actions;
 	}
 
+	/**
+	 * Hook callback to watch VFS and remove any shares for files that get moved or removed
+	 */
+	public static function vfsUpdate($data)
+	{
+		$path = $data['location'] == 'vfs_rename' ? $data['from'] : $data['path'];
+		if (parse_url($path, PHP_URL_SCHEME) !== 'vfs')
+		{
+			$path = Api\Vfs::PREFIX . ($path[0] == '/' ? '' : '/') . $path;
+		}
+		if ($data['location'] == 'vfs_rmdir')
+		{
+			// Normally removing a directory removes the files first, so any shares inside the directory would
+			// be handled already, but just in case, get it all.
+			$path .= '%';
+		}
+
+		$shares = array();
+		foreach ($GLOBALS['egw']->db->select(self::TABLE, array(
+				'share_id', 'share_path', 'share_owner'
+		),
+				array(
+						"share_path LIKE '$path'"
+				),
+				__LINE__, __FILE__, false) as $share)
+		{
+			$shares[] = $share;
+		}
+		foreach ($shares as $share)
+		{
+			if ($data['location'] == 'vfs_rename')
+			{
+				if (parse_url($data['to'], PHP_URL_SCHEME) !== 'vfs')
+				{
+					$data['to'] = $path = Api\Vfs::PREFIX . ($data['to'][0] == '/' ? '' : '/') . $data['to'];
+				}
+				$GLOBALS['egw']->db->update(self::TABLE, array(
+						'share_path' => $data['to']
+				), $share, __LINE__, __FILE__);
+			}
+			else
+			{
+				static::delete($share['share_id']);
+			}
+		}
+	}
 }
 
 if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'))

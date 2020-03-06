@@ -54,24 +54,29 @@ $setup_info['api']['tables'][]  = 'egw_ea_valid';
 $setup_info['api']['tables'][]  = 'egw_ea_notifications';
 
 // hooks used by vfs_home_hooks to manage user- and group-directories for the new stream based VFS
-$setup_info['api']['hooks']['addaccount']     = array('EGroupware\\Api\\Vfs\\Hooks::addAccount', 'EGroupware\\Api\\Mail\\Hooks::addaccount');
-$setup_info['api']['hooks']['deleteaccount']  = array('EGroupware\\Api\\Vfs\\Hooks::deleteAccount', 'EGroupware\\Api\\Mail\\Hooks::deleteaccount');
-$setup_info['api']['hooks']['editaccount']    = array('EGroupware\\Api\\Vfs\\Hooks::editAccount', 'EGroupware\\Api\\Mail\\Hooks::addaccount');
-$setup_info['api']['hooks']['addgroup']       = 'EGroupware\\Api\\Vfs\\Hooks::addGroup';
-$setup_info['api']['hooks']['deletegroup']    = array('EGroupware\\Api\\Vfs\\Hooks::deleteGroup', 'EGroupware\\Api\\Mail\\Hooks::deletegroup');
-$setup_info['api']['hooks']['editgroup']      = 'EGroupware\\Api\\Vfs\\Hooks::editGroup';
+$setup_info['api']['hooks']['addaccount'] = array('EGroupware\\Api\\Vfs\\Hooks::addAccount', 'EGroupware\\Api\\Mail\\Hooks::addaccount');
+$setup_info['api']['hooks']['deleteaccount'] = array('EGroupware\\Api\\Vfs\\Hooks::deleteAccount', 'EGroupware\\Api\\Mail\\Hooks::deleteaccount');
+$setup_info['api']['hooks']['editaccount'] = array('EGroupware\\Api\\Vfs\\Hooks::editAccount', 'EGroupware\\Api\\Mail\\Hooks::addaccount');
+$setup_info['api']['hooks']['addgroup'] = 'EGroupware\\Api\\Vfs\\Hooks::addGroup';
+$setup_info['api']['hooks']['deletegroup'] = array('EGroupware\\Api\\Vfs\\Hooks::deleteGroup', 'EGroupware\\Api\\Mail\\Hooks::deletegroup');
+$setup_info['api']['hooks']['editgroup'] = 'EGroupware\\Api\\Vfs\\Hooks::editGroup';
 $setup_info['api']['hooks']['changepassword'] = 'EGroupware\\Api\\Mail\\Hooks::changepassword';
 $setup_info['api']['hooks']['sidebox_all'] = 'EGroupware\\Api\\Framework\\Tutorial::tutorial_menu';
 
+// Hooks to delete shares when file is deleted
+$setup_info['api']['hooks']['vfs_unlink'] = 'EGroupware\\Api\\Vfs\\Sharing::vfsUpdate';
+$setup_info['api']['hooks']['vfs_rename'] = 'EGroupware\\Api\\Vfs\\Sharing::vfsUpdate';
+$setup_info['api']['hooks']['vfs_rmdir'] = 'EGroupware\\Api\\Vfs\\Sharing::vfsUpdate';
+
 // installation checks
 $setup_info['api']['check_install'] = array(
-	'' => array(
-		'func' => 'pear_check',
-		'from' => 'Api/Mail',
-	),
-	'pear.horde.org/Horde_Imap_Client' => array(
-		'func' => 'pear_check',
-		'from' => 'Api/Mail',
+		'' => array(
+				'func' => 'pear_check',
+				'from' => 'Api/Mail',
+		),
+		'pear.horde.org/Horde_Imap_Client' => array(
+				'func' => 'pear_check',
+				'from' => 'Api/Mail',
 		'version' => '2.24.2',
 	),
 	'pear.horde.org/Horde_Nls' => array(
