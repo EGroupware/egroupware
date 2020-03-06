@@ -609,14 +609,14 @@ var filemanagerAPP = /** @class */ (function (_super) {
             }
             // Toggle button icon to the other view
             //todo: nm.controller needs to be changed to nm.getController after merging typescript branch into master
-            button_widget.set_image("list_" + (view == nm.controller.VIEW_ROW ? nm.controller.VIEW_TILE : nm.controller.VIEW_ROW));
-            button_widget.set_statustext(view == nm.controller.VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
+            button_widget.set_image("list_" + (view == nm.getController().VIEW_ROW ? nm.getController().VIEW_TILE : nm.getController().VIEW_ROW));
+            button_widget.set_statustext(view == nm.getController().VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
         }
         nm.set_view(view);
         // Put it into active filters (but don't refresh)
         nm.activeFilters["view"] = view;
         // Change template to match
-        var template = view == nm.controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile';
+        var template = view == nm.getController().VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile';
         nm.set_template(template);
         // Wait for template to load, then refresh
         template = nm.getWidgetById(template);
