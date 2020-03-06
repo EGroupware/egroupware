@@ -19,15 +19,15 @@ import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
  */
 export class filemanagerAPP extends EgwApp
 {
-	static readonly appname: 'filemanager';
+	static readonly appname = 'filemanager';
 	/**
 	 * path widget, by template
 	 */
-	path_widget : {} = {};
+	path_widget: {} = {};
 	/**
 	 * Are files cut into clipboard - need to be deleted at source on paste
 	 */
-	clipboard_is_cut : boolean = false;
+	clipboard_is_cut: boolean = false;
 
 	/**
 	 * Regexp to convert id to a path, use this.id2path(_id)
@@ -356,17 +356,23 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_upload_callback(_data)
 	{
-		if (_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname);
+		if(_data.msg || _data.uploaded) window.egw_refresh(_data.msg, filemanagerAPP.appname);
 
 		let that = this;
-		for(let file in _data.uploaded)
+		for (let file in _data.uploaded)
 		{
-			if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
+			if(_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
 			{
 				let buttons = [
-					{text: this.egw.lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true, image: 'check'},
-					{text: this.egw.lang("Rename"), id:"rename", image: 'edit'},
-					{text: this.egw.lang("Cancel"), id:"cancel"}
+					{
+						text: this.egw.lang("Yes"),
+						id: "overwrite",
+						class: "ui-priority-primary",
+						"default": true,
+						image: 'check'
+					},
+					{text: this.egw.lang("Rename"), id: "rename", image: 'edit'},
+					{text: this.egw.lang("Cancel"), id: "cancel"}
 				];
 				if (_data.uploaded[file].confirm === "is_dir")
 					buttons.shift();
@@ -615,7 +621,7 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_do_action_callback(_data)
 	{
-		window.egw_refresh(_data.msg, this.appname);
+		window.egw_refresh(_data.msg, filemanagerAPP.appname);
 	}
 
 	/**
@@ -869,25 +875,25 @@ export class filemanagerAPP extends EgwApp
 		let target_dir = this.id2path(_target.id);
 		dir = egw.dataGetUIDdata(_target.id);
 		actions.push({
-			id: _action.id+'_target',
-			caption: target_dir,
-			path: target_dir,
-			enabled: _target && _target.iface && jQuery(_target.iface.getDOMNode()).hasClass('isDir') &&
-				(dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 || !dir)
-		});
+			             id: _action.id + '_target',
+			             caption: target_dir,
+			             path: target_dir,
+			             enabled: _target && _target.iface && jQuery(_target.iface.getDOMNode()).hasClass('isDir') &&
+				             (dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 || !dir)
+		             });
 
 		// Last 10 folders
-		let previous_dsts = jQuery.extend([], <any><unknown>egw.preference('drop_history',this.appname));
+		let previous_dsts = jQuery.extend([], <any><unknown>egw.preference('drop_history', filemanagerAPP.appname));
 		let action_index = 0;
-		for(let i = 0; i < 10; i++)
+		for (let i = 0; i < 10; i++)
 		{
 			let path = i < previous_dsts.length ? previous_dsts[i] : '';
 			actions.push({
-				id: _action.id+'_target_'+action_index++,
-				caption: path,
-				path: path,
-				group: 2,
-				enabled: path && !(current_dir && path === current_dir || target_dir && path === target_dir)
+				             id: _action.id + '_target_' + action_index++,
+				             caption: path,
+				             path: path,
+				             group: 2,
+				             enabled: path && !(current_dir && path === current_dir || target_dir && path === target_dir)
 			});
 		}
 
@@ -969,7 +975,7 @@ export class filemanagerAPP extends EgwApp
 			if(_target.id)
 			{
 				let data = egw.dataGetUIDdata(_target.id);
-				if (!data || data.data.mime != 'httpd/unix-directory')
+				if(!data || data.data.mime != 'httpd/unix-directory')
 				{
 					dst = this.dirname(dst);
 				}
@@ -977,14 +983,14 @@ export class filemanagerAPP extends EgwApp
 		}
 
 		// Remember the target for next time
-		let previous_dsts = jQuery.extend([], egw.preference('drop_history',this.appname));
+		let previous_dsts = jQuery.extend([], egw.preference('drop_history', filemanagerAPP.appname));
 		previous_dsts.unshift(dst);
-		previous_dsts = Array.from(new Set(previous_dsts)).slice(0,9);
-		egw.set_preference(this.appname, 'drop_history', previous_dsts);
+		previous_dsts = Array.from(new Set(previous_dsts)).slice(0, 9);
+		egw.set_preference(filemanagerAPP.appname, 'drop_history', previous_dsts);
 
 		// Actual action id will be something like file_drop_{move|copy|link}[_other_id],
 		// but we need to send move, copy or link
-		let action_id = _action.id.replace("file_drop_",'').split('_',1)[0];
+		let action_id = _action.id.replace("file_drop_", '').split('_', 1)[0];
 		this._do_action(action_id, src, false, dst || nm_dst);
 	}
 
@@ -1181,17 +1187,20 @@ export class filemanagerAPP extends EgwApp
 	 * Share-link callback
 	 * @param {object} _data
 	 */
-	_share_link_callback(_data) {
-		if (_data.msg || _data.share_link) window.egw_refresh(_data.msg, this.appname);
+	_share_link_callback(_data)
+	{
+		if(_data.msg || _data.share_link) window.egw_refresh(_data.msg, filemanagerAPP.appname);
 		console.log("_data", _data);
 		let app = this;
 
-		let copy_link_to_clipboard = function(evt){
+		let copy_link_to_clipboard = function (evt)
+		{
 			let $target = jQuery(evt.target);
 			$target.select();
-			try {
+			try
+			{
 				let successful = document.execCommand('copy');
-				if (successful)
+				if(successful)
 				{
 					egw.message(app.egw.lang('Share link copied into clipboard'));
 					return true;

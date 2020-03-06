@@ -302,7 +302,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
      */
     filemanagerAPP.prototype._upload_callback = function (_data) {
         if (_data.msg || _data.uploaded)
-            window.egw_refresh(_data.msg, this.appname);
+            window.egw_refresh(_data.msg, filemanagerAPP.appname);
         var that = this;
         for (var file in _data.uploaded) {
             if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed) {
@@ -513,7 +513,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param _data
      */
     filemanagerAPP.prototype._do_action_callback = function (_data) {
-        window.egw_refresh(_data.msg, this.appname);
+		window.egw_refresh(_data.msg, filemanagerAPP.appname);
     };
     /**
      * Force download of a file by appending '?download' to it's download url
@@ -724,8 +724,8 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 (dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 || !dir)
         });
         // Last 10 folders
-        var previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
-        var action_index = 0;
+		var previous_dsts = jQuery.extend([], egw.preference('drop_history', filemanagerAPP.appname));
+		var action_index = 0;
         for (var i = 0; i < 10; i++) {
             var path = i < previous_dsts.length ? previous_dsts[i] : '';
             actions.push({
@@ -806,10 +806,10 @@ var filemanagerAPP = /** @class */ (function (_super) {
             }
         }
         // Remember the target for next time
-        var previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
+		var previous_dsts = jQuery.extend([], egw.preference('drop_history', filemanagerAPP.appname));
         previous_dsts.unshift(dst);
-        previous_dsts = Array.from(new Set(previous_dsts)).slice(0, 9);
-        egw.set_preference(this.appname, 'drop_history', previous_dsts);
+		previous_dsts = Array.from(new Set(previous_dsts)).slice(0, 9);
+		egw.set_preference(filemanagerAPP.appname, 'drop_history', previous_dsts);
         // Actual action id will be something like file_drop_{move|copy|link}[_other_id],
         // but we need to send move, copy or link
         var action_id = _action.id.replace("file_drop_", '').split('_', 1)[0];
@@ -976,7 +976,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
      */
     filemanagerAPP.prototype._share_link_callback = function (_data) {
         if (_data.msg || _data.share_link)
-            window.egw_refresh(_data.msg, this.appname);
+			window.egw_refresh(_data.msg, filemanagerAPP.appname);
         console.log("_data", _data);
         var app = this;
         var copy_link_to_clipboard = function (evt) {
@@ -1091,16 +1091,17 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {object} _selected either widget or selected row
      *
      * @return {boolean} returns true
-     */
-    filemanagerAPP.prototype.create_new = function (_action, _selected) {
-        var fe = egw.link_get_registry('filemanager-editor');
-        if (fe && fe["edit"]) {
-            egw.open_link(egw.link('/index.php', {
-                menuaction: fe["edit"].menuaction
-            }), '', fe["popup_edit"]);
-        }
-        return true;
-    };
+	 */
+	filemanagerAPP.prototype.create_new = function (_action, _selected) {
+		var fe = egw.link_get_registry('filemanager-editor');
+		if (fe && fe["edit"]) {
+			egw.open_link(egw.link('/index.php', {
+				menuaction: fe["edit"].menuaction
+			}), '', fe["popup_edit"]);
+		}
+		return true;
+	};
+	filemanagerAPP.appname = 'filemanager';
     return filemanagerAPP;
 }(egw_app_1.EgwApp));
 exports.filemanagerAPP = filemanagerAPP;
