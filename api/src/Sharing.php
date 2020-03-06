@@ -780,7 +780,7 @@ class Sharing
 				if ($share_ids)
 				{
 					$class = self::get_share_class($row);
-					$class::delete($share_ids);
+					$class::delete(['share_id' => $share_ids]);
 				}
 			}
 
