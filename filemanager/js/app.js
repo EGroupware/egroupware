@@ -22,6 +22,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+/*egw:uses
+    /api/js/jsapi/egw_app.js;
+ */
 var egw_app_1 = require("../../api/js/jsapi/egw_app");
 /**
  * UI for filemanager
