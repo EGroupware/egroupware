@@ -90,9 +90,8 @@ class Sharing extends \EGroupware\Api\Sharing
 	 */
 	public static function setup_share($keep_session, &$share)
 	{
-
 		// need to reset fs_tab, as resolve_url does NOT work with just share mounted
-		if (count($GLOBALS['egw_info']['server']['vfs_fstab']) <= 1)
+		if (empty($GLOBALS['egw_info']['server']['vfs_fstab']) || count($GLOBALS['egw_info']['server']['vfs_fstab']) <= 1)
 		{
 			unset($GLOBALS['egw_info']['server']['vfs_fstab']);	// triggers reset of fstab in mount()
 			$GLOBALS['egw_info']['server']['vfs_fstab'] = Vfs::mount();
@@ -340,7 +339,7 @@ class Sharing extends \EGroupware\Api\Sharing
 	 */
 	protected static function check_path($share)
 	{
-		return file_exists($share['share_path']);
+		return Vfs::file_exists($share['share_path']);
 	}
 
 	/**
