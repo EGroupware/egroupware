@@ -2188,7 +2188,7 @@ div.ui-dialog div.ui-dialog-content > div[id] {
 	padding: 0 !important;
 }
 .et2_toolbar .et2_toolbar_more h .toolbar-admin-pref {
-	background-image: url(../../../pixelegg/images/gear.png);
+	background-image: url(../../../pixelegg/images/setup.svg);
     background-repeat: no-repeat;
     background-size: 12px;
     width: 20px;
@@ -2201,6 +2201,18 @@ div.ui-dialog div.ui-dialog-content > div[id] {
 }
 .et2_toolbar .et2_toolbar_more h .toolbar-admin-pref:hover {
 	background-color: #ffd555;
+}
+.et2_toolbar .et2_toolbar_more span.ui-accordion-header-icon {
+    background-image: url(../../../pixelegg/images/arrow_right.svg);
+    background-position: center;
+    background-size: 12px;
+    background-repeat: no-repeat;
+}
+.et2_toolbar .et2_toolbar_more .ui-toolbar-menulistHeader.ui-accordion-header-active.ui-state-active span.ui-accordion-header-icon{
+    background-image: url(../../../pixelegg/images/arrow_down.svg);
+    background-size: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .et2_toolbar .et2_toolbar_actionlist span[data-group]:not(:first-child) > button.et2_button:first-child {
 	margin-left: 7px;
