@@ -127,7 +127,7 @@ export class et2_editableWidget extends et2_inputWidget implements et2_ISubmitLi
 	 *
 	 * @param {DOMNode} _node
 	 */
-	dblclick(_node)
+	dblclick(_node?)
 	{
 		// Turn off readonly
 		this.set_readonly(false);

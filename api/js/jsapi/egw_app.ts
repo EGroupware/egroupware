@@ -469,7 +469,7 @@ export abstract class EgwApp
 	 * @param {boolean} _noEdit defines whether to set edit button or not default is false
 	 * @param {function} et2_callback function to run after et2 is loaded
 	 */
-	viewEntry(_action, _senders, _noEdit, et2_callback)
+	viewEntry(_action, _senders, _noEdit?, et2_callback?)
 	{
 		//full id in nm
 		var id = _senders[0].id;
@@ -1988,7 +1988,7 @@ export abstract class EgwApp
 	 * @param {Function} _callback Callback with results
 	 * @returns {Boolean} returns false if not successful
 	 */
-	share_link(_action, _senders, _target, _writable, _files, _callback){
+	share_link(_action, _senders, _target, _writable?, _files?, _callback?){
 		var path = _senders[0].id;
 		if(!path)
 		{
