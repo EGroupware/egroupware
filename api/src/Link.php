@@ -677,7 +677,6 @@ class Link extends Link\Storage
 	 */
 	static function unlink2($link_id,$app,&$id,$owner=0,$app2='',$id2='',$hold_for_purge=false)
 	{
-		error_log(__METHOD__."($link_id, '$app', $id, ...)");
 		if (self::DEBUG)
 		{
 			echo "<p>Link::unlink('$link_id','$app',".array2string($id).",'$owner','$app2','$id2', $hold_for_purge)</p>\n";
