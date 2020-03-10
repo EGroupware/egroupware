@@ -95,19 +95,22 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 			'pm_id'	=> $this->pm_id
 		);
 
-		if($custom)
+		if ($custom)
 		{
-			$element['info_subject'] .= "\tCustomized:\t".\array2string($custom);
-			$element['info_des'] .= "\nCustomized:\n".\array2string($custom);
+			$element['info_subject'] .= "\tCustomized:\t" . \array2string($custom);
+			$element['info_des'] .= "\nCustomized:\n" . \array2string($custom);
 			$element += $custom;
 		}
 
 		$element_id = $bo->write($element, true, true, true, true);
-		$this->elements[] = 'infolog:'.$element_id;
+		$this->assertIsNumeric($element_id, "Problem creating test infolog entry");
+		$this->assertNotEquals(false, $element_id, "Problem creating test infolog entry");
 
-		if($custom)
+		$this->elements[] = 'infolog:' . $element_id;
+
+		if ($custom)
 		{
-			$this->customizations['infolog:'.$element_id] = $custom;
+			$this->customizations['infolog:' . $element_id] = $custom;
 		}
 	}
 
@@ -123,12 +126,18 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 		$indexed_elements = array();
 		$unmatched_elements = $this->elements;
 
-		foreach($element_bo->search(array('pm_id' => $clone_id), false, 'pe_id ASC') as $element)
+		echo __METHOD__;
+		echo "Checking on (copied) PM ID $clone_id";
+		$elements = $element_bo->search(array('pm_id' => $clone_id), false, 'pe_id ASC');
+		// Expect 1 sub-project, 2 infologs
+		$this->assertCount(3, $elements, "Incorrect number of project elements");
+
+		foreach ($elements as $element)
 		{
 			echo "\tPM:" . $element['pm_id'] . ' ' . $element['pe_id'] . "\t" . $element['pe_app'] . ':' . $element['pe_app_id'] . "\t" . $element['pe_title'] . "\n" . Link::title($element['pe_app'], $element['pe_app_id']) . "\n";
 			$indexed_elements[$element['pe_app']][] = $element;
 		}
-		foreach($this->elements as $key => $_id)
+		foreach ($this->elements as $key => $_id)
 		{
 			list($app, $id) = explode(':', $_id);
 
