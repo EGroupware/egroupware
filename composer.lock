@@ -1,9 +1,9 @@
 {
     "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
+			"This file locks the dependencies of your project to a known state",
+			"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+			"This file is @generated automatically"
+		],
     "content-hash": "92e5456bf6c24dfb568926895cf688bd",
     "packages": [
         {
@@ -774,14 +774,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "cc6c59bb8397cc61cc419dfd5e5af8c92c1294b7"
+							"reference": "fe9a216bb21004f6ed771c2deb16b9b8928788b7"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/cc6c59bb8397cc61cc419dfd5e5af8c92c1294b7",
-                "reference": "cc6c59bb8397cc61cc419dfd5e5af8c92c1294b7",
-                "shasum": ""
-            },
+							"type": "zip",
+							"url": "https://api.github.com/repos/EGroupware/collabora/zipball/fe9a216bb21004f6ed771c2deb16b9b8928788b7",
+							"reference": "fe9a216bb21004f6ed771c2deb16b9b8928788b7",
+							"shasum": ""
+						},
             "require": {
                 "egroupware/egroupware": "self.version"
             },
@@ -806,7 +806,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-03-04T17:42:36+00:00"
+					"time": "2020-03-09T21:21:56+00:00"
         },
         {
             "name": "egroupware/icalendar",

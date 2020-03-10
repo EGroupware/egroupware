@@ -46,7 +46,6 @@ before_script:
   - sudo service apache2 restart
   - php -m
   - php -i
-  - rm composer.lock
   - php install-cli.php --ignore-platform-reqs
   # create data directory
   - sudo mkdir /var/lib/egroupware
