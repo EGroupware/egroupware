@@ -27,12 +27,14 @@ find ${@-.} -name '*.php' -exec ${PHP:-php} -l {} \; 2>&1 | \
 	grep -v 'vendor/pear/pear/tests/' | \
 	# exclude composer conditional included autoload_static.php, as it requires PHP 5.6+
 	grep -v 'vendor/composer/autoload_static.php' | \
-	# exclude vendor/phpunit it shows many PHP Parse errors in PHP < 7.0
+	# exclude vendor/phpunit it shows many PHP Parse errors in PHP < 7.4
 	grep -v 'vendor/phpunit' | \
 	# suppress PHP Parse errors in PHP < 7.0 in dependency of phpunit: phpspec/prophecy
 	grep -v 'vendor/phpspec/prophecy' | \
 	# phpFreeChat does not work with PHP7
 	grep -v 'phpfreechat/phpfreechat/' | \
+	# vendor/myclabs gives errors in PHP < 7.4
+	grep -v 'vendor/myclabs/' | \
 	# not used part of ADOdb give PHP Fatal error: Cannot unset $this
 	grep -v 'adodb-xmlschema' | \
 	perl -pe 'END { exit $status } $status=1 if /^(PHP Fatal|(PHP )?Parse error)/;'  > /dev/null
