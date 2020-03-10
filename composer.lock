@@ -24,16 +24,16 @@
 				"php": ">=5.3.0"
 			},
 			"suggest": {
-                "ext-ldap": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
+				"ext-ldap": "*"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-0": {
+					"": "src/"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
                 "MIT"
             ],
             "authors": [
@@ -748,16 +748,16 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/22ef4ee85272b65c65ca348ddf69339ccc1553b8",
                 "reference": "22ef4ee85272b65c65ca348ddf69339ccc1553b8",
-                "shasum": ""
-            },
-            "require": {
-                "egroupware/egroupware": "self.version"
-            },
-            "type": "egroupware-app",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
+							"shasum": ""
+						},
+					"require": {
+						"egroupware/egroupware": "self.version"
+					},
+					"type": "egroupware-app",
+					"notification-url": "https://packagist.org/downloads/",
+					"license": [
+						"GPL-2.0-or-later"
+					],
 					"authors": [
 						{
 							"name": "Nathan Gray",
@@ -802,16 +802,16 @@
 				{
 					"name": "Nathan Gray",
 					"email": "ng@egroupware.org"
-                }
-            ],
-            "description": "EGroupware integration for Collabora Online Office",
-            "homepage": "https://www.egroupware.org/",
+				}
+			],
+			"description": "EGroupware integration for Collabora Online Office",
+			"homepage": "https://www.egroupware.org/",
 			"time": "2020-03-09T21:21:56+00:00"
-        },
-        {
-            "name": "egroupware/icalendar",
-            "version": "2.1.9",
-            "source": {
+		},
+		{
+			"name": "egroupware/icalendar",
+			"version": "2.1.9",
+			"source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Icalendar.git",
                 "reference": "181ff25b3837bb8e9fd2c1a188078829639767d6"
@@ -977,28 +977,28 @@
             "license": [
                 "GPL-2.0-or-later"
             ],
-            "authors": [
-                {
-                    "name": "Ralf Becker",
-                    "email": "rb@egroupware.org"
-                }
-            ],
-            "description": "EGroupware OpenID Connect / OAuth2 server",
-            "homepage": "https://www.egroupware.org/",
-            "time": "2020-02-09T17:57:08+00:00"
-        },
+					"authors": [
+						{
+							"name": "Ralf Becker",
+							"email": "rb@egroupware.org"
+						}
+					],
+					"description": "EGroupware OpenID Connect / OAuth2 server",
+					"homepage": "https://www.egroupware.org/",
+					"time": "2020-02-09T17:57:08+00:00"
+				},
 		{
 			"name": "egroupware/projectmanager",
 			"version": "dev-master",
 			"source": {
 				"type": "git",
 				"url": "https://github.com/EGroupware/projectmanager.git",
-				"reference": "825a11936f3d8ae0ad4f99b9c90b814b860a5236"
+				"reference": "4e366850d265b93b9b0a7b0df013aeecf33b446e"
 			},
 			"dist": {
 				"type": "zip",
-				"url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/825a11936f3d8ae0ad4f99b9c90b814b860a5236",
-				"reference": "825a11936f3d8ae0ad4f99b9c90b814b860a5236",
+				"url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/4e366850d265b93b9b0a7b0df013aeecf33b446e",
+				"reference": "4e366850d265b93b9b0a7b0df013aeecf33b446e",
 				"shasum": ""
 			},
 			"require": {
@@ -1011,22 +1011,22 @@
 				"GPL-2.0-or-later"
 			],
 			"authors": [
-                {
-                    "name": "Ralf Becker",
-                    "email": "rb@egroupware.org"
-                },
-                {
-                    "name": "Hadi Nategh",
-                    "email": "hn@egroupware.org"
-                },
-                {
-                    "name": "Nathan Gray",
+				{
+					"name": "Ralf Becker",
+					"email": "rb@egroupware.org"
+				},
+				{
+					"name": "Hadi Nategh",
+					"email": "hn@egroupware.org"
+				},
+				{
+					"name": "Nathan Gray",
                     "email": "ng@egroupware.org"
                 }
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-			"time": "2020-03-10T19:47:15+00:00"
+			"time": "2020-03-10T20:39:40+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -1592,10 +1592,11 @@
             "name": "npm-asset/as-jqplot",
             "version": "1.0.8",
             "dist": {
-                "type": "tar",
-                "url": "https://registry.npmjs.org/as-jqplot/-/as-jqplot-1.0.8.tgz",
-                "shasum": "97061e0f32167597b87c98dfd42c93f10a2fb249"
-            },
+							"type": "tar",
+							"url": "https://registry.npmjs.org/as-jqplot/-/as-jqplot-1.0.8.tgz",
+							"reference": null,
+							"shasum": "97061e0f32167597b87c98dfd42c93f10a2fb249"
+						},
             "type": "npm-asset-library",
             "extra": {
                 "npm-asset-main": "index.js",
@@ -1616,10 +1617,11 @@
             "name": "npm-asset/dhtmlx-gantt",
             "version": "6.2.7",
             "dist": {
-                "type": "tar",
-                "url": "https://registry.npmjs.org/dhtmlx-gantt/-/dhtmlx-gantt-6.2.7.tgz",
-                "shasum": "86689f36c1f10e2bfaa5126445b4c560d82b4587"
-            },
+							"type": "tar",
+							"url": "https://registry.npmjs.org/dhtmlx-gantt/-/dhtmlx-gantt-6.2.7.tgz",
+							"reference": null,
+							"shasum": "86689f36c1f10e2bfaa5126445b4c560d82b4587"
+						},
             "type": "npm-asset-library",
             "extra": {
                 "npm-asset-bugs": {
@@ -1659,10 +1661,11 @@
             "name": "npm-asset/gridster",
             "version": "0.5.6",
             "dist": {
-                "type": "tar",
-                "url": "https://registry.npmjs.org/gridster/-/gridster-0.5.6.tgz",
-                "shasum": "4024713aabd559093a72e9b713f1e41f9bded76f"
-            },
+							"type": "tar",
+							"url": "https://registry.npmjs.org/gridster/-/gridster-0.5.6.tgz",
+							"reference": null,
+							"shasum": "4024713aabd559093a72e9b713f1e41f9bded76f"
+						},
             "require": {
                 "npm-asset/jquery": "2.0.3"
             },
@@ -1898,9 +1901,11 @@
             "name": "pear-pear.horde.org/Horde_Compress",
             "version": "2.2.2",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Compress-2.2.2.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Compress-2.2.2.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "pear-pear.horde.org/horde_mime": "<3.0.0.0",
@@ -1929,9 +1934,11 @@
             "name": "pear-pear.horde.org/Horde_Crypt",
             "version": "2.7.12",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Crypt-2.7.12.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Crypt-2.7.12.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "ext-hash": "*",
                 "ext-openssl": "*",
@@ -1966,9 +1973,11 @@
             "name": "pear-pear.horde.org/Horde_Crypt_Blowfish",
             "version": "1.1.2",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Crypt_Blowfish-1.1.2.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Crypt_Blowfish-1.1.2.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "pear-pear.horde.org/horde_support": "<3.0.0.0",
@@ -1995,9 +2004,11 @@
             "name": "pear-pear.horde.org/Horde_Date",
             "version": "2.4.1",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Date-2.4.1.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Date-2.4.1.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "pear-pear.horde.org/horde_nls": "<3.0.0.0",
@@ -2025,9 +2036,11 @@
             "name": "pear-pear.horde.org/Horde_Exception",
             "version": "2.0.8",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Exception-2.0.8.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Exception-2.0.8.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_translation": "<3.0.0.0",
                 "php": "<8.0.0.0"
@@ -2053,9 +2066,11 @@
             "name": "pear-pear.horde.org/Horde_Http",
             "version": "2.1.7",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Http-2.1.7.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Http-2.1.7.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "pear-pear.horde.org/horde_support": "<3.0.0.0",
@@ -2082,9 +2097,11 @@
             "name": "pear-pear.horde.org/Horde_Idna",
             "version": "1.1.1",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Idna-1.1.1.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Idna-1.1.1.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "pear-pear.horde.org/horde_util": "<3.0.0.0",
@@ -2111,9 +2128,11 @@
             "name": "pear-pear.horde.org/Horde_Imap_Client",
             "version": "2.29.17",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.17.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.17.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "ext-hash": "*",
                 "ext-json": "*",
@@ -2149,9 +2168,11 @@
             "name": "pear-pear.horde.org/Horde_ListHeaders",
             "version": "1.2.5",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_ListHeaders-1.2.5.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_ListHeaders-1.2.5.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_mail": "<3.0.0.0",
                 "pear-pear.horde.org/horde_translation": "<3.0.0.0",
@@ -2179,9 +2200,11 @@
             "name": "pear-pear.horde.org/Horde_Mail",
             "version": "2.6.5",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mail-2.6.5.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Mail-2.6.5.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "pear-pear.horde.org/horde_idna": "<2.0.0.0",
@@ -2212,9 +2235,11 @@
             "name": "pear-pear.horde.org/Horde_ManageSieve",
             "version": "1.0.2",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_ManageSieve-1.0.2.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_ManageSieve-1.0.2.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "pear-pear.horde.org/horde_socket_client": "<3.0.0.0",
@@ -2242,9 +2267,11 @@
             "name": "pear-pear.horde.org/Horde_Mapi",
             "version": "1.0.10",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mapi-1.0.10.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Mapi-1.0.10.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "ext-bcmath": "*",
                 "pear-pear.horde.org/horde_date": "<3.0.0.0",
@@ -2272,9 +2299,11 @@
             "name": "pear-pear.horde.org/Horde_Mime",
             "version": "2.11.0",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mime-2.11.0.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Mime-2.11.0.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "pear-pear.horde.org/horde_listheaders": "<2.0.0.0",
@@ -2308,9 +2337,11 @@
             "name": "pear-pear.horde.org/Horde_Nls",
             "version": "2.2.1",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Nls-2.2.1.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Nls-2.2.1.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_translation": "<3.0.0.0",
                 "pear-pear.horde.org/horde_util": "<3.0.0.0",
@@ -2337,9 +2368,11 @@
             "name": "pear-pear.horde.org/Horde_Secret",
             "version": "2.0.6",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Secret-2.0.6.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Secret-2.0.6.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "ext-hash": "*",
                 "pear-pear.horde.org/horde_crypt_blowfish": "<2.0.0.0",
@@ -2368,9 +2401,11 @@
             "name": "pear-pear.horde.org/Horde_Smtp",
             "version": "1.9.5",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Smtp-1.9.5.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Smtp-1.9.5.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "pear-pear.horde.org/horde_mail": "<3.0.0.0",
@@ -2401,9 +2436,11 @@
             "name": "pear-pear.horde.org/Horde_Socket_Client",
             "version": "2.1.2",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Socket_Client-2.1.2.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Socket_Client-2.1.2.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "php": "<8.0.0.0"
@@ -2429,9 +2466,11 @@
             "name": "pear-pear.horde.org/Horde_Stream",
             "version": "1.6.3",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Stream-1.6.3.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Stream-1.6.3.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "php": "<8.0.0.0"
@@ -2457,9 +2496,11 @@
             "name": "pear-pear.horde.org/Horde_Stream_Filter",
             "version": "2.0.4",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Stream_Filter-2.0.4.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Stream_Filter-2.0.4.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "php": "<8.0.0.0"
             },
@@ -2484,9 +2525,11 @@
             "name": "pear-pear.horde.org/Horde_Stream_Wrapper",
             "version": "2.1.4",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Stream_Wrapper-2.1.4.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Stream_Wrapper-2.1.4.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "php": "<8.0.0.0"
             },
@@ -2511,9 +2554,11 @@
             "name": "pear-pear.horde.org/Horde_Support",
             "version": "2.2.0",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Support-2.2.0.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Support-2.2.0.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "pear-pear.horde.org/horde_stream_wrapper": "<3.0.0.0",
@@ -2541,9 +2586,11 @@
             "name": "pear-pear.horde.org/Horde_Text_Diff",
             "version": "2.2.0",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Text_Diff-2.2.0.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Text_Diff-2.2.0.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "pear-pear.horde.org/horde_util": "<3.0.0.0",
@@ -2570,9 +2617,11 @@
             "name": "pear-pear.horde.org/Horde_Text_Flowed",
             "version": "2.0.3",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Text_Flowed-2.0.3.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Text_Flowed-2.0.3.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_util": "<3.0.0.0",
                 "php": "<8.0.0.0"
@@ -2598,9 +2647,11 @@
             "name": "pear-pear.horde.org/Horde_Translation",
             "version": "2.2.2",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Translation-2.2.2.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Translation-2.2.2.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "php": "<8.0.0.0"
             },
@@ -2625,9 +2676,11 @@
             "name": "pear-pear.horde.org/Horde_Url",
             "version": "2.2.6",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Url-2.2.6.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Url-2.2.6.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "php": "<8.0.0.0"
@@ -2653,9 +2706,11 @@
             "name": "pear-pear.horde.org/Horde_Util",
             "version": "2.5.8",
             "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Util-2.5.8.tgz"
-            },
+							"type": "file",
+							"url": "https://pear.horde.org/get/Horde_Util-2.5.8.tgz",
+							"reference": null,
+							"shasum": null
+						},
             "require": {
                 "ext-dom": "*",
                 "php": "<8.0.0.0"
