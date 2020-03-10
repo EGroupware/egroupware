@@ -1,19 +1,19 @@
 {
-    "_readme": [
-			"This file locks the dependencies of your project to a known state",
-			"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
-			"This file is @generated automatically"
-		],
-    "content-hash": "92e5456bf6c24dfb568926895cf688bd",
-    "packages": [
-        {
-            "name": "adldap2/adldap2",
-            "version": "v4.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Adldap2/Adldap2.git",
-                "reference": "58702274158a785817c1e983343180051c44a6f4"
-            },
+	"_readme": [
+		"This file locks the dependencies of your project to a known state",
+		"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+		"This file is @generated automatically"
+	],
+	"content-hash": "92e5456bf6c24dfb568926895cf688bd",
+	"packages": [
+		{
+			"name": "adldap2/adldap2",
+			"version": "v4.0.4",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/Adldap2/Adldap2.git",
+				"reference": "58702274158a785817c1e983343180051c44a6f4"
+			},
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/58702274158a785817c1e983343180051c44a6f4",
@@ -768,30 +768,30 @@
             "homepage": "https://www.egroupware.org/",
             "time": "2020-02-09T09:53:28+00:00"
         },
-        {
-            "name": "egroupware/collabora",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/EGroupware/collabora.git",
-							"reference": "fe9a216bb21004f6ed771c2deb16b9b8928788b7"
-            },
-            "dist": {
-							"type": "zip",
-							"url": "https://api.github.com/repos/EGroupware/collabora/zipball/fe9a216bb21004f6ed771c2deb16b9b8928788b7",
-							"reference": "fe9a216bb21004f6ed771c2deb16b9b8928788b7",
-							"shasum": ""
-						},
-            "require": {
-                "egroupware/egroupware": "self.version"
-            },
-            "type": "egroupware-app",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
+		{
+			"name": "egroupware/collabora",
+			"version": "dev-master",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/EGroupware/collabora.git",
+				"reference": "fe9a216bb21004f6ed771c2deb16b9b8928788b7"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/EGroupware/collabora/zipball/fe9a216bb21004f6ed771c2deb16b9b8928788b7",
+				"reference": "fe9a216bb21004f6ed771c2deb16b9b8928788b7",
+				"shasum": ""
+			},
+			"require": {
+				"egroupware/egroupware": "self.version"
+			},
+			"type": "egroupware-app",
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"GPL-2.0-or-later"
+			],
+			"authors": [
+				{
                     "name": "Ralf Becker",
                     "email": "rb@egroupware.org"
                 },
@@ -806,7 +806,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-					"time": "2020-03-09T21:21:56+00:00"
+			"time": "2020-03-09T21:21:56+00:00"
         },
         {
             "name": "egroupware/icalendar",
@@ -993,14 +993,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "8bcd7c8ea0094969481e10ecc943ff1b24760943"
+							"reference": "3a4e5faac28e441b9a475149f3ec240b9acc5f91"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/8bcd7c8ea0094969481e10ecc943ff1b24760943",
-                "reference": "8bcd7c8ea0094969481e10ecc943ff1b24760943",
-                "shasum": ""
-            },
+							"type": "zip",
+							"url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/3a4e5faac28e441b9a475149f3ec240b9acc5f91",
+							"reference": "3a4e5faac28e441b9a475149f3ec240b9acc5f91",
+							"shasum": ""
+						},
             "require": {
                 "fxp/composer-asset-plugin": "^1.2.2",
                 "npm-asset/dhtmlx-gantt": "~6.2"
@@ -1026,7 +1026,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-03-04T17:41:07+00:00"
+					"time": "2020-03-10T17:49:01+00:00"
         },
         {
             "name": "egroupware/registration",

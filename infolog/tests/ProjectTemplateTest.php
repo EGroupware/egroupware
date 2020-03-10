@@ -126,10 +126,11 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 		$indexed_elements = array();
 		$unmatched_elements = $this->elements;
 
-		echo __METHOD__;
-		echo "Checking on (copied) PM ID $clone_id";
+		echo "\n" . __METHOD__ . "\n";
+		echo "Checking on (copied) PM ID $clone_id\n";
 		$elements = $element_bo->search(array('pm_id' => $clone_id), false, 'pe_id ASC');
 		// Expect 1 sub-project, 2 infologs
+		$this->assertIsArray($elements, "Did not find any project elements in copy");
 		$this->assertCount(3, $elements, "Incorrect number of project elements");
 
 		foreach ($elements as $element)
