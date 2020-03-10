@@ -14,16 +14,16 @@
 				"url": "https://github.com/Adldap2/Adldap2.git",
 				"reference": "58702274158a785817c1e983343180051c44a6f4"
 			},
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/58702274158a785817c1e983343180051c44a6f4",
-                "reference": "58702274158a785817c1e983343180051c44a6f4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "suggest": {
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/58702274158a785817c1e983343180051c44a6f4",
+				"reference": "58702274158a785817c1e983343180051c44a6f4",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=5.3.0"
+			},
+			"suggest": {
                 "ext-ldap": "*"
             },
             "type": "library",
@@ -758,16 +758,16 @@
             "license": [
                 "GPL-2.0-or-later"
             ],
-            "authors": [
-                {
-                    "name": "Nathan Gray",
-                    "email": "ng@egroupware.org"
-                }
-            ],
-            "description": "EGroupware app to manage bookmarks",
-            "homepage": "https://www.egroupware.org/",
-            "time": "2020-02-09T09:53:28+00:00"
-        },
+					"authors": [
+						{
+							"name": "Nathan Gray",
+							"email": "ng@egroupware.org"
+						}
+					],
+					"description": "EGroupware app to manage bookmarks",
+					"homepage": "https://www.egroupware.org/",
+					"time": "2020-02-09T09:53:28+00:00"
+				},
 		{
 			"name": "egroupware/collabora",
 			"version": "dev-master",
@@ -792,16 +792,16 @@
 			],
 			"authors": [
 				{
-                    "name": "Ralf Becker",
-                    "email": "rb@egroupware.org"
-                },
-                {
-                    "name": "Hadi Nategh",
-                    "email": "hn@egroupware.org"
-                },
-                {
-                    "name": "Nathan Gray",
-                    "email": "ng@egroupware.org"
+					"name": "Ralf Becker",
+					"email": "rb@egroupware.org"
+				},
+				{
+					"name": "Hadi Nategh",
+					"email": "hn@egroupware.org"
+				},
+				{
+					"name": "Nathan Gray",
+					"email": "ng@egroupware.org"
                 }
             ],
             "description": "EGroupware integration for Collabora Online Office",
@@ -987,30 +987,30 @@
             "homepage": "https://www.egroupware.org/",
             "time": "2020-02-09T17:57:08+00:00"
         },
-        {
-            "name": "egroupware/projectmanager",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/EGroupware/projectmanager.git",
-							"reference": "3a4e5faac28e441b9a475149f3ec240b9acc5f91"
-            },
-            "dist": {
-							"type": "zip",
-							"url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/3a4e5faac28e441b9a475149f3ec240b9acc5f91",
-							"reference": "3a4e5faac28e441b9a475149f3ec240b9acc5f91",
-							"shasum": ""
-						},
-            "require": {
-                "fxp/composer-asset-plugin": "^1.2.2",
-                "npm-asset/dhtmlx-gantt": "~6.2"
-            },
-            "type": "egroupware-app",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
+		{
+			"name": "egroupware/projectmanager",
+			"version": "dev-master",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/EGroupware/projectmanager.git",
+				"reference": "825a11936f3d8ae0ad4f99b9c90b814b860a5236"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/825a11936f3d8ae0ad4f99b9c90b814b860a5236",
+				"reference": "825a11936f3d8ae0ad4f99b9c90b814b860a5236",
+				"shasum": ""
+			},
+			"require": {
+				"fxp/composer-asset-plugin": "^1.2.2",
+				"npm-asset/dhtmlx-gantt": "~6.2"
+			},
+			"type": "egroupware-app",
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"GPL-2.0-or-later"
+			],
+			"authors": [
                 {
                     "name": "Ralf Becker",
                     "email": "rb@egroupware.org"
@@ -1026,7 +1026,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-					"time": "2020-03-10T17:49:01+00:00"
+			"time": "2020-03-10T19:47:15+00:00"
         },
         {
             "name": "egroupware/registration",
