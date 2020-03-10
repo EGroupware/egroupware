@@ -65,11 +65,16 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 
 		// Make one with a custom from
 		$this->make_infolog(array(
-			'info_from' => 'Custom from'
+				'info_from' => 'Custom from'
 		));
 
 		// Need to do this from parent to keep IDs where expected
 		$this->make_projectmanager();
+
+		// We got this far, there should be elements
+		$this->assertGreaterThan(0, count($this->elements), "No project elements created");
+		echo __METHOD__ . " Created test elements: \n";
+		print_r($this->elements);
 
 		// Force links to run notification now, or we won't get elements since it
 		// usually waits until Egw::on_shutdown();
