@@ -51,23 +51,23 @@ class SaveToVfsTest extends \PHPUnit\Framework\TestCase
 	{
 		$cleaned = VfsTestMail::clean_subject_for_filename($filename);
 
-		$this->assertNotContains('<', $cleaned);
-		$this->assertNotContains('>', $cleaned);
-		$this->assertNotContains('"', $cleaned);
-		$this->assertNotContains('#', $cleaned);
-		$this->assertNotContains(':', $cleaned);
-		$this->assertNotContains('|', $cleaned);
-		$this->assertNotContains('\\', $cleaned);
-		$this->assertNotContains('*', $cleaned);
-		$this->assertNotContains('/', $cleaned);
-		$this->assertNotContains('?', $cleaned);
-		$this->assertNotContains('\x0b', $cleaned);
-		$this->assertNotContains('😂', $cleaned);
+		$this->assertStringNotContainsString('<', $cleaned);
+		$this->assertStringNotContainsString('>', $cleaned);
+		$this->assertStringNotContainsString('"', $cleaned);
+		$this->assertStringNotContainsString('#', $cleaned);
+		$this->assertStringNotContainsString(':', $cleaned);
+		$this->assertStringNotContainsString('|', $cleaned);
+		$this->assertStringNotContainsString('\\', $cleaned);
+		$this->assertStringNotContainsString('*', $cleaned);
+		$this->assertStringNotContainsString('/', $cleaned);
+		$this->assertStringNotContainsString('?', $cleaned);
+		$this->assertStringNotContainsString('\x0b', $cleaned);
+		$this->assertStringNotContainsString('😂', $cleaned);
 
 		// Check if the filename is not empty
 		$this->assertGreaterThan(0, strlen($cleaned), 'File name is empty');
 
-		if(!$replacements)
+		if (!$replacements)
 		{
 			$this->assertEquals($filename, $cleaned);
 		}

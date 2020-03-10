@@ -12,7 +12,6 @@
 
 namespace EGroupware\Api\Storage;
 
-use EGroupware\Api;
 use EGroupware\Api\LoggedInTest as LoggedInTest;
 
 class CustomfieldsTest extends LoggedInTest
@@ -180,10 +179,10 @@ class CustomfieldsTest extends LoggedInTest
 	public function testGetOptionsFromGoodFile($expected, $file)
 	{
 		// Load
-		$options = Customfields::get_options_from_file('api/tests/fixtures/Storage/'.$file);
+		$options = Customfields::get_options_from_file('api/tests/fixtures/Storage/' . $file);
 
 		// Check
-		$this->assertInternalType('array', $options);
+		$this->assertIsArray($options);
 		$this->assertEquals($expected, $options);
 	}
 
@@ -237,7 +236,7 @@ class CustomfieldsTest extends LoggedInTest
 	public function testGetOptionsFromMissingFile()
 	{
 		$options = Customfields::get_options_from_file('totally invalid');
-		$this->assertInternalType('array', $options);
+		$this->assertIsArray($options);
 		$this->assertCount(1, $options);
 	}
 

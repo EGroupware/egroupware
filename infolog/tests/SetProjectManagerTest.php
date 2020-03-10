@@ -6,8 +6,8 @@ namespace EGroupware\Infolog;
 require_once realpath(__DIR__.'/../../api/tests/AppTest.php');	// Application test base
 
 use Egroupware\Api;
-use Egroupware\Api\Link;
 use Egroupware\Api\Etemplate;
+use Egroupware\Api\Link;
 
 /**
  * Test setting a project manager project on an infolog entry
@@ -129,16 +129,16 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->bo->tracking->expects($this->exactly(2))
                 ->method('track')
 				->withConsecutive(
-					// First call - creation
-					[$this->callback(function($subject) { return is_null($subject['pm_status']);})],
-					// Second call - after setting project
-					[$this->callback(function($subject) { return $subject['pm_id'] == $this->pm_id;})]
+				// First call - creation
+						[$this->callback(function ($subject) { return is_null($subject['pm_status']); })],
+						// Second call - after setting project
+						[$this->callback(function ($subject) { return $subject['pm_id'] == $this->pm_id; })]
 				);
 
 		$info = $this->getTestInfolog();
 
 		$this->info_id = $this->bo->write($info);
-		$this->assertInternalType('integer', $this->info_id);
+		$this->assertIsInt($this->info_id);
 		$this->assertGreaterThan(0, $this->info_id);
 
 		// Force links to run notification now so we get valid testing - it
@@ -176,16 +176,16 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->bo->tracking->expects($this->exactly(2))
                 ->method('track')
 				->withConsecutive(
-					// First call - creation
-					[$this->callback(function($subject) { return is_null($subject['pm_status']);})],
-					// Second call - after setting project
-					[$this->callback(function($subject) { return $subject['pm_id'] == $this->pm_id;})]
+				// First call - creation
+						[$this->callback(function ($subject) { return is_null($subject['pm_status']); })],
+						// Second call - after setting project
+						[$this->callback(function ($subject) { return $subject['pm_id'] == $this->pm_id; })]
 				);
 
 		$info = $this->getTestInfolog();
 
 		$this->info_id = $this->bo->write($info);
-		$this->assertInternalType('integer', $this->info_id);
+		$this->assertIsInt($this->info_id);
 		$this->assertGreaterThan(0, $this->info_id);
 
 		// Force links to run notification now so we get valid testing - it
@@ -288,10 +288,12 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->assertEquals($this->pm_id, $info['pm_id'], 'Project went missing');
 
 		// Check that infolog still has contact
-		$this->assertArraySubset(
-				array('app' => 'addressbook', 'id' =>$GLOBALS['egw_info']['user']['person_id']),
-				$info['info_contact']
-		);
+		$keys = array('app' => 'addressbook', 'id' => $GLOBALS['egw_info']['user']['person_id']);
+		foreach ($keys as $check_key => $check_value)
+		{
+			$this->assertArrayHasKey($check_key, $info['info_contact'], 'Infolog lost contact');
+			$this->assertEquals($check_value, $info['info_contact'][$check_key], 'Infolog lost contact');
+		}
 
 		// Force links to run notification now so we get valid testing - it
 		// usually waits until Egw::on_shutdown();

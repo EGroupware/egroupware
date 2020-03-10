@@ -14,6 +14,9 @@ use EGroupware\Api\Link;
  */
 class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 {
+
+	protected $debug = false;
+
 	// List of extra customizations to check
 	protected $customizations = array();
 
@@ -73,8 +76,11 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 
 		// We got this far, there should be elements
 		$this->assertGreaterThan(0, count($this->elements), "No project elements created");
-		echo __METHOD__ . " Created test elements: \n";
-		print_r($this->elements);
+		if ($this->debug)
+		{
+			echo __METHOD__ . " Created test elements: \n";
+			print_r($this->elements);
+		}
 
 		// Force links to run notification now, or we won't get elements since it
 		// usually waits until Egw::on_shutdown();
@@ -131,8 +137,12 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 		$indexed_elements = array();
 		$unmatched_elements = $this->elements;
 
-		echo "\n" . __METHOD__ . "\n";
-		echo "Checking on (copied) PM ID $clone_id\n";
+		if ($this->debug)
+		{
+			echo "\n" . __METHOD__ . "\n";
+			echo "Checking on (copied) PM ID $clone_id\n";
+		}
+
 		$elements = $element_bo->search(array('pm_id' => $clone_id), false, 'pe_id ASC');
 		// Expect 1 sub-project, 2 infologs
 		$this->assertIsArray($elements, "Did not find any project elements in copy");
@@ -140,7 +150,10 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 
 		foreach ($elements as $element)
 		{
-			echo "\tPM:" . $element['pm_id'] . ' ' . $element['pe_id'] . "\t" . $element['pe_app'] . ':' . $element['pe_app_id'] . "\t" . $element['pe_title'] . "\n" . Link::title($element['pe_app'], $element['pe_app_id']) . "\n";
+			if ($this->debug)
+			{
+				echo "\tPM:" . $element['pm_id'] . ' ' . $element['pe_id'] . "\t" . $element['pe_app'] . ':' . $element['pe_app_id'] . "\t" . $element['pe_title'] . "\n" . Link::title($element['pe_app'], $element['pe_app_id']) . "\n";
+			}
 			$indexed_elements[$element['pe_app']][] = $element;
 		}
 		foreach ($this->elements as $key => $_id)
@@ -156,7 +169,10 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 
 			$copied = array_shift($indexed_elements[$app]);
 
-			echo "$_id:\tCopied element - PM:" . $copied['pm_id'] . ' ' . $copied['pe_app'] . ':' . $copied['pe_app_id'] . "\t" . $copied['pe_title'] . "\n";
+			if ($this->debug)
+			{
+				echo "$_id:\tCopied element - PM:" . $copied['pm_id'] . ' ' . $copied['pe_app'] . ':' . $copied['pe_app_id'] . "\t" . $copied['pe_title'] . "\n";
+			}
 
 			$this->assertNotNull($copied, "$app entry $_id did not get copied");
 

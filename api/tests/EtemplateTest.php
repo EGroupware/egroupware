@@ -104,18 +104,30 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 
 		// Check for the load
 		$data = array();
-		foreach($result as $command)
+		foreach ($result as $command)
 		{
-			if($command['type'] == 'et2_load')
+			if ($command['type'] == 'et2_load')
 			{
 				$data = $command['data'];
 				break;
 			}
 		}
 
-		$this->assertArraySubset($this->content, $data['data']['content'], false, 'Content does not match');
-		$this->assertArraySubset($this->sel_options, $data['data']['sel_options'], false, 'Select options do not match');
-		$this->assertArraySubset($this->readonlys, $data['data']['readonlys'], false, 'Readonlys does not match');
+		foreach ($this->content as $check_key => $check_value)
+		{
+			$this->assertArrayHasKey($check_key, $data['data']['content'], 'Content does not match');
+			$this->assertEquals($check_value, $data['data']['content'][$check_key], 'Content does not match');
+		}
+		foreach ($this->sel_options as $check_key => $check_value)
+		{
+			$this->assertArrayHasKey($check_key, $data['data']['sel_options'], 'Select options does not match');
+			$this->assertEquals($check_value, $data['data']['sel_options'][$check_key], 'Select options does not match');
+		}
+		foreach ($this->readonlys as $check_key => $check_value)
+		{
+			$this->assertArrayHasKey($check_key, $data['data']['readonlys'], 'Readonlys does not match');
+			$this->assertEquals($check_value, $data['data']['readonlys'][$check_key], 'Readonlys does not match');
+		}
 	}
 
 	/**
@@ -188,8 +200,16 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 		$result2 = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys, $preserve);
 
 		// The only input widget is readonly, expect preserve + content back
-		$this->assertArraySubset($this->content, $result2);
-		$this->assertArraySubset($preserve, $result2);
+		foreach ($this->content as $check_key => $check_value)
+		{
+			$this->assertArrayHasKey($check_key, $result2, 'Content does not match');
+			$this->assertEquals($check_value, $result2[$check_key], 'Content does not match');
+		}
+		foreach ($preserve as $check_key => $check_value)
+		{
+			$this->assertArrayHasKey($check_key, $result2, 'Preserve does not match');
+			$this->assertEquals($check_value, $result2[$check_key], 'Preserve does not match');
+		}
 	}
 
 	/**

@@ -10,8 +10,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-use PHPUnit\Framework\TestCase;
 use EGroupware\Api;
+use PHPUnit\Framework\TestCase;
 
 class BaseTest extends TestCase
 {
@@ -64,23 +64,23 @@ class BaseTest extends TestCase
 	{
 		$this->storage->data = $data = array(
 			't_title' => 'Test',
-			't_desc' => "First Line\nSecond Line\n\n...",
-			't_start' => $start=Api\DateTime::to('now', 'ts'),
-			't_end' => $end=Api\DateTime::to('now', 'ts'),
-			't_modifier' => 123,
+				't_desc' => "First Line\nSecond Line\n\n...",
+				't_start' => $start = Api\DateTime::to('now', 'ts'),
+				't_end' => $end = Api\DateTime::to('now', 'ts'),
+				't_modifier' => 123,
 		);
 		$this->storage->Save();
 		$this->assertGreaterThan(0, $this->storage->data['t_id']);
 
 		$row = self::$db->select('egw_test', '*', array('t_id' => $this->storage->data['t_id']),
-			__LINE__, __FILE__, false, '', 'test')->fetch();
-		$this->assertInternalType('array', $row);
+				__LINE__, __FILE__, false, '', 'test')->fetch();
+		$this->assertIsArray($row);
 		$this->assertEquals($data['t_title'], $row['t_title']);
 		$this->assertEquals($data['t_desc'], $row['t_desc']);
 		$this->assertEquals($data['t_modifier'], $row['t_modifier']);
 		$this->assertEquals(Api\DateTime::user2server($start), $row['t_start']);
 		$this->assertEquals(Api\DateTime::user2server($end, Api\DateTime::DATABASE), $row['t_end']);
-		$this->assertEquals(new DateTime('now'), new DateTime($row['t_modified']), '', 1);
+		$this->assertEqualsWithDelta(new DateTime('now'), new DateTime($row['t_modified']), 1);
 
 		return $this->storage->data;
 	}

@@ -237,7 +237,12 @@ class UserCommandTest extends CommandBase {
 		// Changing primary group does not remove membership of previous
 		$this->assertEquals($pre_groups + array($this->group_id => $group['account_lid']), $post_groups);
 
-		$this->assertArraySubset($this->account, $GLOBALS['egw']->accounts->read($this->account_id));
+		$read_account = $GLOBALS['egw']->accounts->read($this->account_id);
+		foreach ($this->account as $check_key => $check_value)
+		{
+			$this->assertArrayHasKey($check_key, $read_account);
+			$this->assertEquals($check_value, $read_account[$check_key]);
+		}
 	}
 
 	/**
@@ -282,6 +287,11 @@ class UserCommandTest extends CommandBase {
 		$this->assertEquals($pre_group, $post_group);
 		$this->assertEquals($pre_groups + array($this->group_id => $group['account_lid']), $post_groups);
 
-		$this->assertArraySubset($this->account, $GLOBALS['egw']->accounts->read($this->account_id));
+		$read_account = $GLOBALS['egw']->accounts->read($this->account_id);
+		foreach ($this->account as $check_key => $check_value)
+		{
+			$this->assertArrayHasKey($check_key, $read_account);
+			$this->assertEquals($check_value, $read_account[$check_key]);
+		}
 	}
 }
