@@ -5,8 +5,6 @@ namespace EGroupware\Infolog;
 
 require_once realpath(__DIR__.'/../../projectmanager/tests/TemplateTest.php');
 
-use EGroupware\Api\Config;
-use EGroupware\Api\Etemplate;
 use EGroupware\Api\Link;
 
 /**
@@ -127,7 +125,7 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 
 		foreach($element_bo->search(array('pm_id' => $clone_id), false, 'pe_id ASC') as $element)
 		{
-			//echo "\tPM:".$element['pm_id'] . ' '. $element['pe_id']."\t".$element['pe_app'] . ':'.$element['pe_app_id'] . "\t".$element['pe_title']."\n".Link::title($element['pe_app'],$element['pe_app_id'])."\n";
+			echo "\tPM:" . $element['pm_id'] . ' ' . $element['pe_id'] . "\t" . $element['pe_app'] . ':' . $element['pe_app_id'] . "\t" . $element['pe_title'] . "\n" . Link::title($element['pe_app'], $element['pe_app_id']) . "\n";
 			$indexed_elements[$element['pe_app']][] = $element;
 		}
 		foreach($this->elements as $key => $_id)
@@ -135,7 +133,7 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 			list($app, $id) = explode(':', $_id);
 
 			// Don't care about other apps here
-			if($app !== 'infolog')
+			if ($app !== 'infolog')
 			{
 				unset($unmatched_elements[$key]);
 				continue;
@@ -143,7 +141,7 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 
 			$copied = array_shift($indexed_elements[$app]);
 
-			//echo "$_id:\tCopied element - PM:".$copied['pm_id'] . ' '.$copied['pe_app'] . ':'.$copied['pe_app_id'] . "\t".$copied['pe_title']."\n";
+			echo "$_id:\tCopied element - PM:" . $copied['pm_id'] . ' ' . $copied['pe_app'] . ':' . $copied['pe_app_id'] . "\t" . $copied['pe_title'] . "\n";
 
 			$this->assertNotNull($copied, "$app entry $_id did not get copied");
 
@@ -160,7 +158,11 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 			if($this->customizations[$_id])
 			{
 				$this->assertNotNull($entry);
-				$this->assertArraySubSet($this->customizations[$_id], $entry);
+				foreach ($this->customizations[$_id] as $custom_key => $custom_value)
+				{
+					$this->assertArrayHasKey($custom_key, $entry);
+					$this->assertEquals($custom_value, $entry[$custom_key]);
+				}
 			}
 		}
 
