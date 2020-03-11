@@ -465,11 +465,11 @@ class SharingBase extends LoggedInTest
 		$_SERVER['HTTP_HOST'] = 'localhost';
 		$share = $this->createShare($path, $mode, $extra);
 		$link = Vfs\Sharing::share2link($share);
-		echo __METHOD__ . " link: $link\n";
 
 		if(static::LOG_LEVEL)
 		{
-			echo __METHOD__ . " share: " . array2string($share)."\n";
+			echo __METHOD__ . " link: $link\n";
+			echo __METHOD__ . " share: " . array2string($share) . "\n";
 		}
 
 		// Setup for share to load

@@ -11,8 +11,8 @@
  */
 
 use EGroupware\Api;
-use EGroupware\Api\Link;
 use EGroupware\Api\Acl;
+use EGroupware\Api\Link;
 
 include_once(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.datasource.inc.php');
 
@@ -95,13 +95,16 @@ class calendar_datasource extends datasource
 			if (!is_array($this->pm_config))
 			{
 				$this->pm_config = Api\Config::read('projectmanager');
-				if (!$this->pm_config['hours_per_workday']) $this->pm_config['hours_per_workday'] = 8;
+				if (!$this->pm_config['hours_per_workday'])
+				{
+					$this->pm_config['hours_per_workday'] = 8;
+				}
 			}
 			$ds['pe_planned_time'] -= $nights * 60 * (24 - $this->pm_config['hours_per_workday']);
 		}
-		foreach($data['participants'] as $uid => $status)
+		foreach ((array)$data['participants'] as $uid => $status)
 		{
-			if ($status != 'R' && is_numeric($uid))	// only users for now
+			if ($status != 'R' && is_numeric($uid))  // only users for now
 			{
 				$ds['pe_resources'][] = $uid;
 			}
@@ -109,14 +112,14 @@ class calendar_datasource extends datasource
 		// if we have multiple participants we have to multiply the time by the number of participants to get the total time
 		$ds['pe_planned_time'] *= count($ds['pe_resources']);
 
-/*
-		// ToDO: this does not change automatically after the event is over,
-		// maybe we need a flag for that in egw_pm_elements
-		if ($data['end']['raw'] <= time()+$GLOBALS['egw']->datetime->tz_offset)
-		{
-			$ds['pe_used_time'] = $ds['pe_planned_time'];
-		}
-*/
+		/*
+				// ToDO: this does not change automatically after the event is over,
+				// maybe we need a flag for that in egw_pm_elements
+				if ($data['end']['raw'] <= time()+$GLOBALS['egw']->datetime->tz_offset)
+				{
+					$ds['pe_used_time'] = $ds['pe_planned_time'];
+				}
+		*/
 		if ($this->debug)
 		{
 			echo "datasource_calendar($data_id) data="; _debug_array($data);

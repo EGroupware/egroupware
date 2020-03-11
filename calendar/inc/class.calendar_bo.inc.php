@@ -12,8 +12,8 @@
  */
 
 use EGroupware\Api;
-use EGroupware\Api\Link;
 use EGroupware\Api\Acl;
+use EGroupware\Api\Link;
 
 if (!defined('ACL_TYPE_IDENTIFER'))	// used to mark ACL-values for the debug_message methode
 {
@@ -417,12 +417,12 @@ class calendar_bo
 	function enum_groups(&$event)
 	{
 		$added = 0;
-		foreach(array_keys($event['participants']) as $uid)
+		foreach (array_keys((array)$event['participants']) as $uid)
 		{
 			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'g' &&
-				($members = $GLOBALS['egw']->accounts->members($uid, true)))
+					($members = $GLOBALS['egw']->accounts->members($uid, true)))
 			{
-				foreach($members as $member)
+				foreach ($members as $member)
 				{
 					if (!isset($event['participants'][$member]))
 					{

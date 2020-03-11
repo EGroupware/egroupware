@@ -12,8 +12,8 @@
  */
 
 use EGroupware\Api;
-use EGroupware\Api\Link;
 use EGroupware\Api\Acl;
+use EGroupware\Api\Link;
 
 // types of messsages send by calendar_boupdate::send_update
 define('MSG_DELETED',0);
@@ -547,9 +547,9 @@ class calendar_boupdate extends calendar_bo
 		//echo "<p>calendar_boupdate::check4update() new participants = ".print_r($new_event['participants'],true).", old participants =".print_r($old_event['participants'],true)."</p>\n";
 
 		// Find modified and deleted participants ...
-		foreach($old_event['participants'] as $old_userid => $old_status)
+		foreach ((array)$old_event['participants'] as $old_userid => $old_status)
 		{
-			if(isset($new_event['participants'][$old_userid]))
+			if (isset($new_event['participants'][$old_userid]))
 			{
 				$modified[$old_userid] = $new_event['participants'][$old_userid];
 			}
