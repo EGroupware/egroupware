@@ -258,9 +258,10 @@ export class et2_nextmatch_rowProvider
 	 */
 	_getVariableAttributeSet( _widget)
 	{
-		var variableAttributes = [];
+		let variableAttributes = [];
 
-		_widget.iterateOver(function(_widget) {
+		const process = function (_widget)
+		{
 			// Create the attribtues
 			var hasAttr = false;
 			var widgetData = {
@@ -269,32 +270,43 @@ export class et2_nextmatch_rowProvider
 			};
 
 			// Get all attribute values
-			for (var key in _widget.attributes)
+			for (const key in _widget.attributes)
 			{
-				if (!_widget.attributes[key].ignore &&
-				    typeof _widget.options[key] != "undefined")
+				if(!_widget.attributes[key].ignore &&
+					typeof _widget.options[key] != "undefined")
 				{
-					var val = _widget.options[key];
+					const val = _widget.options[key];
 
 					// TODO: Improve detection
-					if (typeof val == "string" && val.indexOf("$") >= 0)
+					if(typeof val == "string" && val.indexOf("$") >= 0)
 					{
 						hasAttr = true;
 						widgetData.data.push({
-							"attribute": key,
-							"expression": val
-						});
+							                     "attribute": key,
+							                     "expression": val
+						                     });
 					}
 				}
 			}
 
 			// Add the entry if there is any data in it
-			if (hasAttr)
+			if(hasAttr)
 			{
 				variableAttributes.push(widgetData);
 			}
+		};
 
-		}, this);
+		// Check each column
+		const columns = _widget.getChildren();
+		for (var i = 0; i < columns.length; i++)
+		{
+			// If column is hidden, don't process it
+			if(this._context && this._context.columns && this._context.columns[i] && !this._context.columns[i].visible)
+			{
+				continue;
+			}
+			columns[i].iterateOver(process, this);
+		}
 
 		return variableAttributes;
 	}
@@ -603,7 +615,8 @@ class et2_nextmatch_rowWidget extends et2_widget implements et2_IDOMNode
 	createWidgets( _widgets)
 	{
 		// Clone the given the widgets with this element as parent
-		this._widgets = new Array(_widgets.length);
+		this._widgets = [];
+		let row_id = 0;
 		for (var i = 0; i < _widgets.length; i++)
 		{
 			// Disabled columns might be missing widget - skip it
@@ -614,8 +627,9 @@ class et2_nextmatch_rowWidget extends et2_widget implements et2_IDOMNode
 			// Set column alignment from widget
 			if(this._widgets[i].align)
 			{
-				this._row.childNodes[i].align = this._widgets[i].align;
+				this._row.childNodes[row_id].align = this._widgets[i].align;
 			}
+			row_id++;
 		}
 	}
 
@@ -627,12 +641,16 @@ class et2_nextmatch_rowWidget extends et2_widget implements et2_IDOMNode
 	 */
 	getDOMNode( _sender)
 	{
+		var row_id = 0;
 		for (var i = 0; i < this._widgets.length; i++)
 		{
-			if (this._widgets[i] == _sender)
+			// Disabled columns might be missing widget - skip it
+			if(!this._widgets[i]) continue;
+			if(this._widgets[i] == _sender)
 			{
-				return this._row.childNodes[i].childNodes[0]; // Return the i-th td tag
+				return this._row.childNodes[row_id].childNodes[0]; // Return the i-th td tag
 			}
+			row_id++;
 		}
 
 		return null;

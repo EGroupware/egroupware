@@ -219,35 +219,44 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
      */
     et2_nextmatch_rowProvider.prototype._getVariableAttributeSet = function (_widget) {
         var variableAttributes = [];
-        _widget.iterateOver(function (_widget) {
-            // Create the attribtues
-            var hasAttr = false;
-            var widgetData = {
-                "widget": _widget,
-                "data": []
-            };
-            // Get all attribute values
-            for (var key in _widget.attributes) {
-                if (!_widget.attributes[key].ignore &&
-                    typeof _widget.options[key] != "undefined") {
+		var process = function (_widget) {
+			// Create the attribtues
+			var hasAttr = false;
+			var widgetData = {
+				"widget": _widget,
+				"data": []
+			};
+			// Get all attribute values
+			for (var key in _widget.attributes) {
+				if (!_widget.attributes[key].ignore &&
+					typeof _widget.options[key] != "undefined") {
                     var val = _widget.options[key];
                     // TODO: Improve detection
                     if (typeof val == "string" && val.indexOf("$") >= 0) {
                         hasAttr = true;
                         widgetData.data.push({
-                            "attribute": key,
-                            "expression": val
-                        });
-                    }
-                }
-            }
-            // Add the entry if there is any data in it
-            if (hasAttr) {
-                variableAttributes.push(widgetData);
-            }
-        }, this);
-        return variableAttributes;
-    };
+							"attribute": key,
+							"expression": val
+						});
+					}
+				}
+			}
+			// Add the entry if there is any data in it
+			if (hasAttr) {
+				variableAttributes.push(widgetData);
+			}
+		};
+		// Check each column
+		var columns = _widget.getChildren();
+		for (var i = 0; i < columns.length; i++) {
+			// If column is hidden, don't process it
+			if (this._context && this._context.columns && this._context.columns[i] && !this._context.columns[i].visible) {
+				continue;
+			}
+			columns[i].iterateOver(process, this);
+		}
+		return variableAttributes;
+	};
     et2_nextmatch_rowProvider.prototype._seperateWidgets = function (_varAttrs) {
         // The detachable array contains all widgets which implement the
         // et2_IDetachedDOM interface for all needed attributes
@@ -467,18 +476,20 @@ var et2_nextmatch_rowWidget = /** @class */ (function (_super) {
      * @param {array} _widgets
      */
     et2_nextmatch_rowWidget.prototype.createWidgets = function (_widgets) {
-        // Clone the given the widgets with this element as parent
-        this._widgets = new Array(_widgets.length);
-        for (var i = 0; i < _widgets.length; i++) {
-            // Disabled columns might be missing widget - skip it
-            if (!_widgets[i])
-                continue;
-            this._widgets[i] = _widgets[i].clone(this);
-            this._widgets[i].loadingFinished();
-            // Set column alignment from widget
-            if (this._widgets[i].align) {
-                this._row.childNodes[i].align = this._widgets[i].align;
-            }
+		// Clone the given the widgets with this element as parent
+		this._widgets = [];
+		var row_id = 0;
+		for (var i = 0; i < _widgets.length; i++) {
+			// Disabled columns might be missing widget - skip it
+			if (!_widgets[i])
+				continue;
+			this._widgets[i] = _widgets[i].clone(this);
+			this._widgets[i].loadingFinished();
+			// Set column alignment from widget
+			if (this._widgets[i].align) {
+				this._row.childNodes[row_id].align = this._widgets[i].align;
+			}
+			row_id++;
         }
     };
     /**
@@ -488,11 +499,16 @@ var et2_nextmatch_rowWidget = /** @class */ (function (_super) {
      * @return {DOMElement}
      */
     et2_nextmatch_rowWidget.prototype.getDOMNode = function (_sender) {
+		var row_id = 0;
         for (var i = 0; i < this._widgets.length; i++) {
-            if (this._widgets[i] == _sender) {
-                return this._row.childNodes[i].childNodes[0]; // Return the i-th td tag
-            }
-        }
+			// Disabled columns might be missing widget - skip it
+			if (!this._widgets[i])
+				continue;
+			if (this._widgets[i] == _sender) {
+				return this._row.childNodes[row_id].childNodes[0]; // Return the i-th td tag
+			}
+			row_id++;
+		}
         return null;
     };
     return et2_nextmatch_rowWidget;

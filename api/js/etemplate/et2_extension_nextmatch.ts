@@ -196,10 +196,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	// Popup to select columns
 	private selectPopup: any;
 
-	public static legacyOptions = ["template","hide_header","header_left","header_right"];
+	public static legacyOptions = ["template", "hide_header", "header_left", "header_right"];
 
 	private template: any;
-	columns: {widget: et2_widget}[];
+	columns: { visible: boolean, widget: et2_widget }[];
 	private sortedColumnsList: string[];
 
 	// If we need the nextmatch to have a value, keep it here.
@@ -1322,15 +1322,20 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 	_parseDataRow( _row, _rowData, _colData)
 	{
-		const columnWidgets = new Array(this.columns.length);
+		const columnWidgets = [];
 
-		_row.sort(function(a,b) {
-			return a.colData.order - b.colData.order;
-		});
+		_row.sort(function (a, b)
+		          {
+			          return a.colData.order - b.colData.order;
+		          });
 
-		for (let x = 0; x < columnWidgets.length; x++)
+		for (let x = 0; x < this.columns.length; x++)
 		{
-			if (typeof _row[x] != "undefined" && _row[x].widget)
+			if(!this.columns[x].visible)
+			{
+				continue;
+			}
+			if(typeof _row[x] != "undefined" && _row[x].widget)
 			{
 				columnWidgets[x] = _row[x].widget;
 

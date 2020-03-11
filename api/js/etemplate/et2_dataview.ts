@@ -534,14 +534,17 @@ export class et2_dataview
 	private _buildGrid()
 	{
 		// Create the collection of column ids
-		var colIds = new Array(this.columns.length);
+		var colIds = [];
 		for (var i = 0; i < this.columns.length; i++)
 		{
-			colIds[i] = this.columns[i].id;
+			if(this.columns[i].visible)
+			{
+				colIds[i] = this.columns[i].id;
+			}
 		}
 
 		// Create the row provider
-		if (this.rowProvider)
+		if(this.rowProvider)
 		{
 			this.rowProvider.destroy();
 		}

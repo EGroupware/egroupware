@@ -949,21 +949,23 @@ var et2_nextmatch = /** @class */ (function (_super) {
         }
     };
     et2_nextmatch.prototype._parseDataRow = function (_row, _rowData, _colData) {
-        var columnWidgets = new Array(this.columns.length);
-        _row.sort(function (a, b) {
-            return a.colData.order - b.colData.order;
-        });
-        for (var x = 0; x < columnWidgets.length; x++) {
-            if (typeof _row[x] != "undefined" && _row[x].widget) {
-                columnWidgets[x] = _row[x].widget;
-                // Append the widget to this container
-                this.addChild(_row[x].widget);
-            }
-            else {
-                columnWidgets[x] = _row[x].widget;
-            }
-            // Pass along column alignment
-            if (_row[x].align && columnWidgets[x]) {
+		var columnWidgets = [];
+		_row.sort(function (a, b) {
+			return a.colData.order - b.colData.order;
+		});
+		for (var x = 0; x < this.columns.length; x++) {
+			if (!this.columns[x].visible) {
+				continue;
+			}
+			if (typeof _row[x] != "undefined" && _row[x].widget) {
+				columnWidgets[x] = _row[x].widget;
+				// Append the widget to this container
+				this.addChild(_row[x].widget);
+			} else {
+				columnWidgets[x] = _row[x].widget;
+			}
+			// Pass along column alignment
+			if (_row[x].align && columnWidgets[x]) {
                 columnWidgets[x].align = _row[x].align;
             }
         }

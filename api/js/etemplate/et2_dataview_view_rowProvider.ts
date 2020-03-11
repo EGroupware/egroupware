@@ -117,13 +117,15 @@ export class et2_dataview_rowProvider
 		var tr = jQuery(document.createElement("tr"));
 
 		// Append a td for each column
-		for (var i = 0; i < this._columnIds.length; i++)
+		for (var column of this._columnIds)
 		{
+			if(!column) continue;
+
 			var td = jQuery(document.createElement("td"))
-				.addClass(this._outerId + "_td_" + this._columnIds[i])
+				.addClass(this._outerId + "_td_" + column)
 				.appendTo(tr);
 			var div = jQuery(document.createElement("div"))
-				.addClass(this._outerId + "_div_" + this._columnIds[i])
+				.addClass(this._outerId + "_div_" + column)
 				.addClass("innerContainer")
 				.appendTo(td);
 		}
