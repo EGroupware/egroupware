@@ -30,7 +30,8 @@ export class et2_editableWidget extends et2_inputWidget implements et2_ISubmitLi
 			name: "readonly",
 			type: "string", // | boolean
 			default: false,
-			description: "If set to 'editable' will start readonly, double clicking will make it editable and clicking out will save"
+			description: "If set to 'editable' will start readonly, double clicking will make it editable and clicking out will save",
+			ignore: true // todo: not sure why this used to be ignored before migration by default but not anymore
 		},
 		toggle_readonly: {
 			name: "toggle_readonly",
