@@ -175,16 +175,16 @@ var et2_calendar_event = /** @class */ (function (_super) {
             this._values_check(value);
         }
         // Check for changing days in the grid view
-        if (!this._sameday_check(value)) {
-            // May need to update parent to remove out-of-view events
-            parent.removeChild(this);
-            if (event === null && parent && parent.instanceOf(et2_widget_daycol_1.et2_calendar_daycol)) {
-                parent._out_of_view();
-            }
-            // This should now cease to exist, as new events have been created
-            this.destroy();
-            return;
-        }
+        if (!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent.options.owner)) {
+			// May need to update parent to remove out-of-view events
+			parent.removeChild(this);
+			if (event === null && parent && parent.instanceOf(et2_widget_daycol_1.et2_calendar_daycol)) {
+				parent._out_of_view();
+			}
+			// This should now cease to exist, as new events have been created
+			this.destroy();
+			return;
+		}
         // Copy to avoid changes, which may cause nm problems
         this.options.value = jQuery.extend({}, value);
         if (this.getParent().options.date) {
@@ -662,26 +662,107 @@ var et2_calendar_event = /** @class */ (function (_super) {
         if (new_cache_id != old_cache_id) {
             var old_daywise = egw.dataGetUIDdata(old_cache_id);
             old_daywise = old_daywise && old_daywise.data ? old_daywise.data : [];
-            old_daywise.splice(old_daywise.indexOf(this.options.value.row_id), 1);
-            egw.dataStoreUID(old_cache_id, old_daywise);
-            if (new_daywise.indexOf(event.row_id) < 0) {
-                new_daywise.push(event.row_id);
-            }
-            if (egw.dataHasUID(new_cache_id)) {
-                egw.dataStoreUID(new_cache_id, new_daywise);
-            }
-        }
-        return false;
-    };
-    et2_calendar_event.prototype.attachToDOM = function () {
-        var result = _super.prototype.attachToDOM.call(this);
-        // Remove the binding for the click handler, unless there's something
-        // custom here.
-        if (!this.onclick) {
-            jQuery(this.node).off("click");
-        }
-        return result;
-    };
+			old_daywise.splice(old_daywise.indexOf(this.options.value.row_id), 1);
+			egw.dataStoreUID(old_cache_id, old_daywise);
+			if (new_daywise.indexOf(event.row_id) < 0) {
+				new_daywise.push(event.row_id);
+			}
+			if (egw.dataHasUID(new_cache_id)) {
+				egw.dataStoreUID(new_cache_id, new_daywise);
+			}
+		}
+		return false;
+	};
+	/**
+	 * Check that the event passes the given status filter.
+	 * Status filter is set in the sidebox and used when fetching several events, but if user changes their status
+	 * for an event, it may no longer match and have to be removed.
+	 *
+	 * @param event
+	 * @param filter
+	 * @private
+	 */
+	et2_calendar_event.prototype._status_check = function (event, filter, owner) {
+		if (!owner || !event) {
+			return false;
+		}
+		// If we're doing a bunch, just one passing is enough
+		if (typeof owner !== "string") {
+			var pass = false;
+			for (var j = 0; j < owner.length && pass == false; j++) {
+				pass = pass || this._status_check(event, filter, owner[j]);
+			}
+			return pass;
+		}
+		// Show also events just owned by selected user
+		if (filter == 'owner') {
+			return owner == event.owner;
+		}
+		// Get the relevant participant
+		var participant = event.participants[owner];
+		// If filter says don't look in groups, skip it all
+		if (!participant && filter === 'no-enum-groups') {
+			return false;
+		}
+		// Couldn't find the current owner in the participant list, check groups & resources
+		if (!participant) {
+			var options = null;
+			if (app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner')) {
+				options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+			}
+			if ((isNaN(parseInt(owner)) || parseInt(owner) < 0) && options && typeof options.find == "function") {
+				var resource = options.find(function (element) {
+					return element.id == owner;
+				}) || {};
+				if (resource && resource.resources) {
+					var matching_participant = resource.resources.filter(function (id) {
+						return typeof event.participants[id] != "undefined";
+					});
+					return this._status_check(event, filter, matching_participant);
+				}
+			}
+		}
+		var status = et2_calendar_event.split_status(participant);
+		switch (filter) {
+			default:
+			case 'all':
+				return true;
+			case 'default': // Show all status, but rejected
+				return status !== 'R';
+			case 'accepted': //Show only accepted events
+				return status === 'A';
+			case 'unknown': // Show only invitations, not yet accepted or rejected
+				return status === 'U';
+			case 'tentative': // Show only tentative accepted events
+				return status === 'T';
+			case 'delegated': // Show only delegated events
+				return status === 'D';
+			case 'rejected': // Show only rejected events
+				return status === 'R';
+			// Handled above
+			//case 'owner': // Show also events just owned by selected user
+			case 'hideprivate': // Show all events, as if they were private
+				// handled server-side
+				return true;
+			case 'showonlypublic': // Show only events flagged as public, -not checked as private
+				return event.public == '1';
+			// Handled above
+			// case 'no-enum-groups': // Do not include events of group members
+			case 'not-unknown': // Show all status, but unknown
+				return status !== 'U';
+			case 'deleted': // Show events that have been deleted
+				return event.deleted;
+		}
+	};
+	et2_calendar_event.prototype.attachToDOM = function () {
+		var result = _super.prototype.attachToDOM.call(this);
+		// Remove the binding for the click handler, unless there's something
+		// custom here.
+		if (!this.onclick) {
+			jQuery(this.node).off("click");
+		}
+		return result;
+	};
     /**
      * Click handler calling custom handler set via onclick attribute to this.onclick.
      * All other handling is done by the timegrid widget.
