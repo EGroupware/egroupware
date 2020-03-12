@@ -101,8 +101,14 @@ select {
 	-webkit-appearance:none;
 	-moz-appearance: none;
 	margin:0;
-	background:  #ffffff url(../images/selectarrowdown.png) no-repeat center right;
-	background-size: 16px auto;
+	background:  #ffffff url(../images/arrow_down.svg) no-repeat center right;
+	background-size: 8px auto;
+	background-position-x: ~"calc(100% - 8px)";
+}
+select:active {
+	background:  #ffffff url(../images/arrow_up.svg) no-repeat center right;
+	background-size: 8px auto;
+	background-position-x: ~"calc(100% - 8px)";
 }
 /*IE has no appearance but we can remove arrows by ms-expand*/
 select::-ms-expand {
