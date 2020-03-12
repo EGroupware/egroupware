@@ -53,7 +53,7 @@ var TimesheetApp = /** @class */ (function (_super) {
     TimesheetApp.prototype.et2_ready = function (et2, name) {
         // call parent
         _super.prototype.et2_ready.call(this, et2, name);
-        if (typeof et2.templates['timesheet.index'] != "undefined") {
+        if (name == 'timesheet.index') {
             this.filter_change();
             this.filter2_change();
         }

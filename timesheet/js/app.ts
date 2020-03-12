@@ -41,7 +41,7 @@ class TimesheetApp extends EgwApp
 		// call parent
 		super.et2_ready(et2, name);
 
-		if (typeof et2.templates['timesheet.index'] != "undefined")
+		if (name == 'timesheet.index')
 		{
 			this.filter_change();
 			this.filter2_change();
