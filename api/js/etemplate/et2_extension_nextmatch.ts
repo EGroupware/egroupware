@@ -1557,13 +1557,14 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}, this);
 			autoRefresh.set_id("nm_autorefresh");
 			autoRefresh.set_select_options({
-				// Cause [unknown] problems with mail
-				//30: "30 seconds",
-				//60: "1 Minute",
-				300: "5 Minutes",
-				900: "15 Minutes",
-				1800: "30 Minutes"
-			});
+				                               // Cause [unknown] problems with mail
+				                               //30: "30 seconds",
+				                               //60: "1 Minute",
+				                               180: "3 Minutes",
+				                               300: "5 Minutes",
+				                               900: "15 Minutes",
+				                               1800: "30 Minutes"
+			                               });
 			autoRefresh.set_value(this._get_autorefresh());
 			autoRefresh.set_statustext(egw.lang("Automatically refresh list"));
 

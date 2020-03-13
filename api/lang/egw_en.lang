@@ -45,6 +45,7 @@
 13 (ntp)	admin	en	13 (ntp)
 15 minutes	common	en	15 minutes
 2-factor-authentication	common	en	2-Factor-Authentication
+3 minutes	common	en	3 minutes
 30 minutes	common	en	30 minutes
 30 seconds	common	en	30 seconds
 5 minutes	common	en	5 minutes

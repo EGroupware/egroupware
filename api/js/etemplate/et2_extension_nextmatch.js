@@ -966,16 +966,16 @@ var et2_nextmatch = /** @class */ (function (_super) {
 			}
 			// Pass along column alignment
 			if (_row[x].align && columnWidgets[x]) {
-                columnWidgets[x].align = _row[x].align;
-            }
-        }
-        this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);
-        // Create the grid controller
-        this.controller = new et2_extension_nextmatch_controller_1.et2_nextmatch_controller(null, this.egw(), this.getInstanceManager().etemplate_exec_id, this, null, this.dataview.grid, this.rowProvider, this.options.settings.action_links, null, this.options.actions);
-        // Need to trigger empty row the first time
-        if (total == 0)
-            this.controller._emptyRow();
-        // Set data cache prefix to either provided custom or auto
+				columnWidgets[x].align = _row[x].align;
+			}
+		}
+		this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);
+		// Create the grid controller
+		this.controller = new et2_extension_nextmatch_controller_1.et2_nextmatch_controller(null, this.egw(), this.getInstanceManager().etemplate_exec_id, this, null, this.dataview.grid, this.rowProvider, this.options.settings.action_links, null, this.options.actions);
+		// Need to trigger empty row the first time
+		if (total == 0)
+			this.controller._emptyRow();
+		// Set data cache prefix to either provided custom or auto
         if (!this.options.settings.dataStorePrefix && this.options.settings.get_rows) {
             // Use jsapi data module to update
             var list = this.options.settings.get_rows.split('.', 2);
@@ -1106,13 +1106,14 @@ var et2_nextmatch = /** @class */ (function (_super) {
             }, this);
             autoRefresh_1.set_id("nm_autorefresh");
             autoRefresh_1.set_select_options({
-                // Cause [unknown] problems with mail
-                //30: "30 seconds",
-                //60: "1 Minute",
-                300: "5 Minutes",
-                900: "15 Minutes",
-                1800: "30 Minutes"
-            });
+				// Cause [unknown] problems with mail
+				//30: "30 seconds",
+				//60: "1 Minute",
+				180: "3 Minutes",
+				300: "5 Minutes",
+				900: "15 Minutes",
+				1800: "30 Minutes"
+			});
             autoRefresh_1.set_value(this._get_autorefresh());
             autoRefresh_1.set_statustext(egw.lang("Automatically refresh list"));
             var defaultCheck = et2_createWidget("select", { "empty_label": "Preference" }, this);
