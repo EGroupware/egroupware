@@ -1432,6 +1432,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				// Cause [unknown] problems with mail
 				//30: "30 seconds",
 				//60: "1 Minute",
+				180: "3 Minutes",
 				300: "5 Minutes",
 				900: "15 Minutes",
 				1800: "30 Minutes"
