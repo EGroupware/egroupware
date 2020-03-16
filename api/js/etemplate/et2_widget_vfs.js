@@ -855,7 +855,7 @@ var et2_vfsUpload = /** @class */ (function (_super) {
         while (this._children.length > 0) {
             var node = this._children[this._children.length - 1];
             this.removeChild(node);
-            node.free();
+			node.destroy();
         }
         this.progress.empty();
         this.list.empty();
@@ -918,8 +918,8 @@ var et2_vfsUpload = /** @class */ (function (_super) {
             for (var child_index = this._children.length - 1; child_index >= 0; child_index--) {
                 var child = this._children[child_index];
                 if (child.options.value.path === file_data.path) {
-                    this.removeChild(child);
-                    child.free();
+					this.removeChild(child);
+					child.destroy();
                 }
             }
         }

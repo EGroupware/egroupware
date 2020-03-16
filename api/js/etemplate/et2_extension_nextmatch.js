@@ -976,16 +976,16 @@ var et2_nextmatch = /** @class */ (function (_super) {
 		if (total == 0)
 			this.controller._emptyRow();
 		// Set data cache prefix to either provided custom or auto
-        if (!this.options.settings.dataStorePrefix && this.options.settings.get_rows) {
-            // Use jsapi data module to update
-            var list = this.options.settings.get_rows.split('.', 2);
-            if (list.length < 2)
-                list = this.options.settings.get_rows.split('_'); // support "app_something::method"
-            this.options.settings.dataStorePrefix = list[0];
-        }
-        this.controller.setPrefix(this.options.settings.dataStorePrefix);
-        // Set the view
-        this.controller._view = this.view;
+		if (!this.options.settings.dataStorePrefix && this.options.settings.get_rows) {
+			// Use jsapi data module to update
+			var list = this.options.settings.get_rows.split('.', 2);
+			if (list.length < 2)
+				list = this.options.settings.get_rows.split('_'); // support "app_something::method"
+			this.options.settings.dataStorePrefix = list[0];
+		}
+		this.controller.setPrefix(this.options.settings.dataStorePrefix);
+		// Set the view
+		this.controller._view = this.view;
         // Load the initial order
         /*this.controller.loadInitialOrder(this._getInitialOrder(
             this.options.settings.rows, this.options.settings.row_id
@@ -1104,8 +1104,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
             var autoRefresh_1 = et2_createWidget("select", {
                 "empty_label": "Refresh"
             }, this);
-            autoRefresh_1.set_id("nm_autorefresh");
-            autoRefresh_1.set_select_options({
+			autoRefresh_1.set_id("nm_autorefresh");
+			autoRefresh_1.set_select_options({
 				// Cause [unknown] problems with mail
 				//30: "30 seconds",
 				//60: "1 Minute",
@@ -1114,7 +1114,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
 				900: "15 Minutes",
 				1800: "30 Minutes"
 			});
-            autoRefresh_1.set_value(this._get_autorefresh());
+			autoRefresh_1.set_value(this._get_autorefresh());
             autoRefresh_1.set_statustext(egw.lang("Automatically refresh list"));
             var defaultCheck = et2_createWidget("select", { "empty_label": "Preference" }, this);
             defaultCheck.set_id('nm_col_preference');

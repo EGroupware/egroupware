@@ -136,7 +136,7 @@ widget_browser.prototype.select_widget = function(e,f)
 	if(this.widget)
 	{
 		this.et2.widgetContainer.removeChild(this.widget);
-		this.widget.free();
+		this.widget.destroy();
 		this.widget = null;
 	}
 

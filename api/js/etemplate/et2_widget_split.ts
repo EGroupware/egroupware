@@ -17,7 +17,7 @@ jquery.splitter;
 */
 
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
-import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 
 /**
@@ -109,7 +109,7 @@ class et2_split extends et2_DOMWidget implements et2_IResizeable, et2_IPrint
 		this.div.trigger("destroy");
 
 		// Destroy dynamic full-height
-		this.dynheight.free();
+		this.dynheight.destroy();
 
 		super.destroy();
 

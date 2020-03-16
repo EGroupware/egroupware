@@ -70,8 +70,8 @@ var et2_split = /** @class */ (function (_super) {
         // Destroy splitter, restore children
         this.div.trigger("destroy");
         // Destroy dynamic full-height
-        this.dynheight.free();
-        _super.prototype.destroy.call(this);
+        this.dynheight.destroy();
+		_super.prototype.destroy.call(this);
         // Remove placeholder children
         if (this._children.length == 0) {
             this.div.empty();

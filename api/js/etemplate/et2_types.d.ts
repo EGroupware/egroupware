@@ -71,13 +71,19 @@ declare var et2_nextmatch_header_bar : any;
 declare var et2_nextmatch_header : any;
 declare var et2_nextmatch_customfields : any;
 declare var et2_nextmatch_controller : any;
-declare class et2_dynheight {
+declare class et2_dynheight
+{
 	constructor(_outerNode, _innerNode, _minHeight);
-	outerNode : any;
-	update : any;
-	free : any;
+
+	outerNode: any;
+	update: any;
+
+	destroy();
 }
-declare class et2_nextmatch_rowProvider {}
+
+declare class et2_nextmatch_rowProvider
+{
+}
 declare var et2_nextmatch_rowWidget : any;
 declare var et2_nextmatch_rowTemplateWidget : any;
 declare var et2_ajaxSelect : any;

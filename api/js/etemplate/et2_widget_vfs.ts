@@ -976,9 +976,9 @@ class et2_vfsUpload extends et2_file
 		// Remove previous
 		while(this._children.length > 0)
 		{
-			var node = this._children[this._children.length-1];
+			var node = this._children[this._children.length - 1];
 			this.removeChild(node);
-			node.free();
+			node.destroy();
 		}
 		this.progress.empty();
 		this.list.empty();
@@ -1058,7 +1058,7 @@ class et2_vfsUpload extends et2_file
 				if(child.options.value.path === file_data.path)
 				{
 					this.removeChild(child);
-					child.free();
+					child.destroy();
 				}
 			}
 		}
