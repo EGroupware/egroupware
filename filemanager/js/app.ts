@@ -364,13 +364,7 @@ export class filemanagerAPP extends EgwApp
 			if(_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
 			{
 				let buttons = [
-					{
-						text: this.egw.lang("Yes"),
-						id: "overwrite",
-						class: "ui-priority-primary",
-						"default": true,
-						image: 'check'
-					},
+					{text: this.egw.lang("Yes"), id: "overwrite",	class: "ui-priority-primary", "default": true, image: 'check'},
 					{text: this.egw.lang("Rename"), id: "rename", image: 'edit'},
 					{text: this.egw.lang("Cancel"), id: "cancel"}
 				];
