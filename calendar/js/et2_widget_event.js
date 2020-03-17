@@ -205,7 +205,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}
 
 		// Check for changing days in the grid view
-		if(!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent.options.owner)))
+		if(!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent.options.owner))
 		{
 			// May need to update parent to remove out-of-view events
 			parent.removeChild(this);
@@ -880,7 +880,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		// Couldn't find the current owner in the participant list, check groups & resources
 		if(!participant)
 		{
-			let options: any = null;
+			let options = null;
 			if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 			{
 				options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
@@ -909,7 +909,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			case 'default': // Show all status, but rejected
 				return status !== 'R';
 			case 'accepted': //Show only accepted events
-				return status === 'A'
+				return status === 'A';
 			case 'unknown': // Show only invitations, not yet accepted or rejected
 				return status === 'U';
 			case 'tentative': // Show only tentative accepted events
