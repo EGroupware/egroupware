@@ -218,7 +218,7 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
      * @param {et2_widget} _widget
      */
     et2_nextmatch_rowProvider.prototype._getVariableAttributeSet = function (_widget) {
-        var variableAttributes = [];
+		var variableAttributes = [];
 		var process = function (_widget) {
 			// Create the attribtues
 			var hasAttr = false;
@@ -230,11 +230,11 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
 			for (var key in _widget.attributes) {
 				if (!_widget.attributes[key].ignore &&
 					typeof _widget.options[key] != "undefined") {
-                    var val = _widget.options[key];
-                    // TODO: Improve detection
-                    if (typeof val == "string" && val.indexOf("$") >= 0) {
-                        hasAttr = true;
-                        widgetData.data.push({
+					var val = _widget.options[key];
+					// TODO: Improve detection
+					if (typeof val == "string" && val.indexOf("$") >= 0) {
+						hasAttr = true;
+						widgetData.data.push({
 							"attribute": key,
 							"expression": val
 						});
@@ -247,26 +247,26 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
 			}
 		};
 		// Check each column
-		var columns = _widget.getChildren();
+		var columns = _widget._widgets;
 		for (var i = 0; i < columns.length; i++) {
 			// If column is hidden, don't process it
-			if (this._context && this._context.columns && this._context.columns[i] && !this._context.columns[i].visible) {
+			if (typeof columns[i] === 'undefined' || this._context && this._context.columns && this._context.columns[i] && !this._context.columns[i].visible) {
 				continue;
 			}
 			columns[i].iterateOver(process, this);
 		}
 		return variableAttributes;
 	};
-    et2_nextmatch_rowProvider.prototype._seperateWidgets = function (_varAttrs) {
-        // The detachable array contains all widgets which implement the
-        // et2_IDetachedDOM interface for all needed attributes
-        var detachable = [];
-        // The remaining array creates all widgets which have to be completely
-        // cloned when the widget tree is created
-        var remaining = [];
-        // Iterate over the widgets
-        for (var i = 0; i < _varAttrs.length; i++) {
-            var widget = _varAttrs[i].widget;
+	et2_nextmatch_rowProvider.prototype._seperateWidgets = function (_varAttrs) {
+		// The detachable array contains all widgets which implement the
+		// et2_IDetachedDOM interface for all needed attributes
+		var detachable = [];
+		// The remaining array creates all widgets which have to be completely
+		// cloned when the widget tree is created
+		var remaining = [];
+		// Iterate over the widgets
+		for (var i = 0; i < _varAttrs.length; i++) {
+			var widget = _varAttrs[i].widget;
             // Check whether the widget parents are not allready in the "remaining"
             // slot -  if this is the case do not include the widget at all.
             var insertWidget = true;
@@ -490,8 +490,8 @@ var et2_nextmatch_rowWidget = /** @class */ (function (_super) {
 				this._row.childNodes[row_id].align = this._widgets[i].align;
 			}
 			row_id++;
-        }
-    };
+		}
+	};
     /**
      * Returns the column node for the given sender
      *

@@ -297,11 +297,11 @@ export class et2_nextmatch_rowProvider
 		};
 
 		// Check each column
-		const columns = _widget.getChildren();
+		const columns = _widget._widgets;
 		for (var i = 0; i < columns.length; i++)
 		{
 			// If column is hidden, don't process it
-			if(this._context && this._context.columns && this._context.columns[i] && !this._context.columns[i].visible)
+			if(typeof columns[i] === 'undefined' || this._context && this._context.columns && this._context.columns[i] && !this._context.columns[i].visible)
 			{
 				continue;
 			}
