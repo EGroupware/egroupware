@@ -629,7 +629,7 @@ class et2_searchbox extends et2_textbox
 	 */
 	doLoadingFinished()
 	{
-		let ret = super.doLoadingFinished();
+		super.doLoadingFinished();
 
 		if (!this.get_value()) {
 			this._show_hide(false);
@@ -638,7 +638,7 @@ class et2_searchbox extends et2_textbox
 			this._show_hide(!this.options.overlay);
 			this._searchToggleState();
 		}
-		return ret;
+		return false;
 	}
 
 	/**

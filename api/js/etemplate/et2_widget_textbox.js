@@ -534,7 +534,7 @@ var et2_searchbox = /** @class */ (function (_super) {
      * override doLoadingFinished in order to set initial state
      */
     et2_searchbox.prototype.doLoadingFinished = function () {
-        var ret = _super.prototype.doLoadingFinished.call(this);
+        _super.prototype.doLoadingFinished.call(this);
         if (!this.get_value()) {
             this._show_hide(false);
         }
@@ -542,7 +542,7 @@ var et2_searchbox = /** @class */ (function (_super) {
             this._show_hide(!this.options.overlay);
             this._searchToggleState();
         }
-        return ret;
+        return false;
     };
     /**
      * Overrride attachToDOM in order to unbind change handler
