@@ -1,34 +1,160 @@
+%1 attachments	mail	bg	%1 прикачени файлове
+%1 has been added to blacklisted email addresses	mail	bg	%1 е добавен към имейл адресите в "черения списък"
+%1 has been added to whiltelisted email addresses	mail	bg	%1 е добавен към имейл адресите в "белия списък"
+%1 has been removed from blacklisted email addresses	mail	bg	%1 е премахнат от имейл адресите в "черения списък"
+%1 has been removed from whiltelisted email addresses	mail	bg	%1 е премахнат от имейл адресите в "белия списък"
+%1 is not writable by you!	mail	bg	% 1 НЕ е писан от вас!
+%1 mails selected	mail	bg	% 1 избрани писма
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	bg	(*) Моля, да имате в предвид, че пренасочването към няколко адреса няма да работи, ако броят на адресите надвишава зададения лимит. За повечето Пощенски сървъри лимитът е 4 (по подразбиране). Моля, свържете се с Администратора на вашия Пощенски сървър за допълнителна информация.
+(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	bg	(*) могат да се използват "заместващи символи" (* ,?) Ако се опитвате да съчетаете помежду си * или ?, трябва да ги избегнете с наклонена черта (\). Ако поставите отметка „Използване на регулярни изрази“, трябва да използвате валидни регулярни изрази.
+(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash (\) (e.g. \!)	mail	bg	(*) могат да се използват "заместващи символи" (* ,?) Ако се опитвате да съчетаете помежду си * или ?, трябва да ги избегнете с наклонена черта (\). Ако поставите отметка „Използване на регулярни изрази“, трябва да използвате валидни регулярни изрази. За да избегнете удивителен знак (!) в началото, който не се използва като "НЕ", използвайте регекс и обратна черта (\) (например \!)
 (no subject)	mail	bg	(без тема)
+(not connected)	mail	bg	(няма връзка)
+(select mails by clicking on the line, like a checkbox)	mail	bg	(изберете имейли, като щракнете върху линията, като например: квадратче за отметка)
+(with checkbox enforced)	mail	bg	(изисква да се постави отметка)
+account editable by user	mail	bg	акаунт редактируем от потребителя
+acl rights retrieve failed, seems there are no rights set!	mail	bg	Извличането на ACL права не бе успешно, изглежда няма зададени права!
+acl rights retrieved successfully	mail	bg	ACL правата са изтеглени успешно
+action	mail	bg	Действие
 activating by date requires a start- and end-date!	mail	bg	Активиране по дата изисква начална И крайна дата!
-add to addressbook	mail	bg	добави към Адресния указател
+add "%1" into blacklisted domains	mail	bg	Добавете "%1" в черния списък на домейните
+add "%1" into blacklisted emails	mail	bg	Добавете "%1" в черния списък на имейлите
+add "%1" into whiltelisted domains	mail	bg	Добавете "%1" в "белия списък" на домейните
+add "%1" into whitelisted emails	mail	bg	Добавете "%1" в "белия списък" на имейлите
+add a new folder to %1:	mail	bg	Добавете нова папка към %1:
+add as new	mail	bg	Добавете като нов(а)
+add files as %1	mail	bg	Добавете файлове като %1
+add folder	mail	bg	Добавете папка
+add this certificate into contact	mail	bg	Добавете този сертификат в контакта
+add to addressbook	mail	bg	Добави към Адресния указател
+add your domain as "%1" in options to list of email providers and enable api.	mail	bg	Добавете вашия домейн като "%1" в опции към списъка на имейл доставчици и активирайте API.
+adding %1 to blacklisted email addresses failed because of %2	mail	bg	Добавянето на %1 в черния списък на имейл адресите не бе успешно поради %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	bg	Добавянето на %1 в белия списък на имейл адресите не бе успешно поради %2
+all	mail	bg	Всичко(и)
+all adresses:	mail	bg	Всички адреси:
+all available info	admin	bg	цялата налична информация
+all filtered	mail	bg	всички филтрирани
+all messages in the folder will be lost	mail	bg	Всички съобщения в папката ще бъдат загубени
+all my email addresses	mail	bg	Всички мои имейл адреси
 all of	mail	bg	всички
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	bg	Всички под-папки също ще бъдат изтрити и всички съобщения във всички засегнати папки ще бъдат загубени
+allow	mail	bg	Покажи
+allow external images	mail	bg	Покажи външни изображения
+allow external images from listed domains	mail	bg	Показване на външни изображения от изброените домейни
 allow images from external sources in html emails	mail	bg	Показване на изображения от външни източници в HTML съобщения?
+allow images from listed domains in html emails	mail	bg	Показване на изображения от изброени домейни в HTML съобщения?
+allow users to create further identities	mail	bg	позволява на потребителите да създават допълнителни самоличности
 allways a new window	mail	bg	винаги в нов прозорец
+always	mail	bg	Винаги
+always allow external sources from %1	mail	bg	Винаги позволява външни източници от %1
 always show html emails	mail	bg	Винаги показва HTML съобщения
+an error happend while trying to remove acl rights from the account %1!	mail	bg	Възникна грешка, докато се опитвате да премахнете ACL права от акаунта %1!
+and the rule with priority %1, now got the priority %2	mail	bg	И правилото с приоритет %1, сега получи приоритет %2
 any of	mail	bg	някой от
 any status	mail	bg	без значение
+append	mail	bg	Добавяне
+appended after reply before sending	mail	bg	Добавя се след отговор преди изпращане
+application mail expected but got: %1	mail	bg	Очаква се имейл, но получих: %1
+archive folder	mail	bg	Папка за архивиране
+are you sure you want to delete all selected folders?	mail	bg	Сигурни ли сте, че искате да изтриете всички селектирани папки?
+are you sure you want to move folder %1 to folder %2?	mail	bg	Сигурни ли сте, че искате преместите папка %1 в папка %2?
+arrival	mail	bg	Приет(и)
+ask for permission	mail	bg	Попитайте за разрешение
+attach files	mail	bg	Прикачи файлове
+attach vcard	mail	bg	Прикачете vCard
+attachment	mail	bg	Приложение
+attachment has been saved successfully.	mail	bg	Приложението е запазено успешно.
 attachments	mail	bg	Приложения
+attachments, ...	mail	bg	приложения, ...
+authentication	mail	bg	Заверка
+available personal email-accounts/profiles	mail	bg	налични лични имейл акаунти / профили
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r would you like to proceed?	mail	bg	Имайте в предвид, че като добавите всички избрани файлове като стил %1, той също така ще промени всички съществуващи прикачени файлове в списъка в стил %2. \n\r\n\r Искате ли да продължите?
+be aware that all attachments will be sent as %1!	mail	bg	Имайте предвид, че всички прикачени файлове ще бъдат изпратени като %1!
+before reply, visible during compose	mail	bg	Да бъде видим докато се съставя, преди отговор
+blacklisted mails are marked as spam	mail	bg	Имейли от "черния списък" да се маркират като спам
+but check shared folders	mail	bg	но проверете споделените папки
 by date	mail	bg	по дата
+can not open imap connection	mail	bg	Не може да се отвори IMAP връзка
+can not resolve the winmail.dat attachment!	mail	bg	Не може да разреши прикачения winmail.dat файл !
+canceled deletion due to user interaction	mail	bg	анулирано изтриване поради взаимодействие с потребителя
+certificate info for email %1	mail	bg	Информация за сертификат за имейл %1
+change editor type	mail	bg	превключете редактора в режим HTML
+changed profile	mail	bg	променен профил
+changing subject failed because of %1	mail	bg	Промяната на субекта не бе успешна поради %1
+changing subject failed folder %1 does not exist	mail	bg	Промяната на субекта не бе успешна защото папка %1 не съществува
 check message against next rule also	mail	bg	провери съобщението и съгласно следващото правило
+check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	bg	проверете дали ще получите известие, когато съобщението е прочетено (забележка: не всички клиенти поддържат това и/или получателят може да не разреши уведомлението)
+check to save as calendar event on send	mail	bg	поставете отметка, за да запазите като събитие при изпращане
+check to save as infolog on send	mail	bg	поставете отметка, за да запазите като infolog при изпращане
+check to save as tracker entry on send	mail	bg	поставете отметка, за да запазите като запис за проследяване при изпращане
+choose file	mail	bg	Изберете файл
+common acl	mail	bg	Общ ACL
 compose	mail	bg	Ново съобщение
-compose as new	mail	bg	създай като ново
+compose as new	mail	bg	Създай като ново
 compress folder	mail	bg	Компресиране на папката
 condition	mail	bg	условие
+configuration settings	mail	bg	Настройки за конфигурацията
+confirm	mail	bg	Потвърди
+confirm attach message	mail	bg	Потвърди прикаченото съобщение
+confirm move to folder	mail	bg	Потвърди преместването в папката
+connect to profile %1	mail	bg	Свържете се с профил %1
+connection status	mail	bg	Статус на връзката
 contains	mail	bg	съдържа
+contains(*)	mail	bg	Съдържа(*)
+convert mail to item and attach its attachments to this item (standard)	mail	bg	конвертирайте Поща/Mail в елемент и прикачете своите прикачени файлове към този елемент (стандартно)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	bg	конвертирайте Поща/Mail в елемент, прикачете неговите прикачени файлове и добавете необработено съобщение (message/rfc822 (.eml)) като прикачен файл
+convert only mail to item (ignore possible attachments)	mail	bg	конвертиране само Поща/Mail в елемент (игнорирайте възможни прикачени файлове)
+copied %1 message(s) from %2 to %3	mail	bg	копира %1 съобщение(я) от %2 до %3
 copy to	mail	bg	Копиране в
+could not append message:	mail	bg	Съобщение не можа да се добави:
+could not save the acl because some names are empty	mail	bg	ACL не можа да се запази, защото някои имена са празни
+create new account	mail	bg	Създаване на нов акаунт
+current folder	mail	bg	текуща папка
+current subject	mail	bg	текуща тема
+currently:	mail	bg	Понастоящем:
 date(newest first)	mail	bg	По дата (първо най-новите)
 date(oldest first)	mail	bg	По дата (първо най-старите)
+deactive	mail	bg	Деактивиране
 default sorting order	mail	bg	Подреждане по подразбиране
+default your name and email	common	bg	Вашето име и имейл, по подразбиране
+defines what to show as identity label on mail folder header	common	bg	Дефинира какво да се показва като етикет за самоличност в header-а на пощенската папка
 delete folder	mail	bg	Изтриване на Папка
-deleted	mail	bg	изтрит
+delete folder %1 ?	mail	bg	ИЗТРИВАНЕ на Папка %1?
+delete this acl	mail	bg	Изтриване на  този ACL
+deleted	mail	bg	изтрит(и)
+deleted %1 messages in %2	mail	bg	изтрити %1 съобщения в %2
+deleted!	mail	bg	изтрит(и)!
+deleting %1 folders in progress ...	mail	bg	Изтриването на %1 папки в ход ...
+deleting folders	mail	bg	Изтриване на папки
+deny certain groups access to following features	mail	bg	Забранете на определени групи достъп до следните функции
+directories have to be shared.	mail	bg	Директориите трябва да бъдат споделени.
 disable	mail	bg	Забранява
-discard	mail	bg	изоставяне
-discard message	mail	bg	изоставяне на съобщението
-display messages in multiple windows	mail	bg	показване на съобщенията в отделни прозорци
+disable horizontal rule for separation of mail body from signature	mail	bg	Деактивиране на "хоризонталното правило" за отделяне на основния текст от подписа в съобщението
+disable use of flowed lines in plain text mails (rfc3676)	mail	bg	Деактивира използването на поточни линии в обикновени текстови съобщения (RFC3676)
+disabled!	mail	bg	Деактивиран!
+discard	mail	bg	Изоставяне
+discard message	mail	bg	Изоставяне на съобщението
+display messages in multiple windows	mail	bg	Показване на съобщенията в отделни прозорци
 display of html emails	mail	bg	Показване на HTML съобщения
+display of identities	admin	bg	Показване на самоличност
 display only when no plain text is available	mail	bg	Показва само, когато няма текст
 displaying html messages is disabled	mail	bg	Показването на HTML съобщения е забранено!
+displaying plain messages is disabled	mail	bg	Показването на обикновени съобщения е деактивирано
+do not auto create folders	mail	bg	Не създавайте автоматично папки
+do not forward	mail	bg	Не препращай
+do you really want to apply %1 to all messages in the current view?	mail	bg	Наистина ли искате да приложите %1 към ВСИЧКИ съобщения в текущия изглед?
+do you really want to delete folder %1 ?	mail	bg	Наистина ли искате да изтриете папка %1?
+do you really want to delete this rule	mail	bg	Наистина ли искате да изтриете това правило?
+do you really want to mark all messages as read in the current folder?	mail	bg	Наистина ли искате да маркирате ВСИЧКИ съобщения като прочетени в текущата папка?
+do you really want to remove all labels from all messages in the current folder?	mail	bg	Наистина ли искате да премахнете ВСИЧКИ етикети от ВСИЧКИ съобщения в текущата папка?
+do you really want to remove all rights from this account?	mail	bg	Наистина ли искате да премахнете всички права на този акаунт?
+do you really want to toggle flag %1 for all messages in the current view?	mail	bg	Наистина ли искате да включите флаг %1 за ВСИЧКИ съобщения в текущия изглед?
+do you really want to toggle label %1 for all messages in the current view?	mail	bg	Наистина ли искате да превключите етикета %1 за ВСИЧКИ съобщения в текущия изглед?
+do you want to be asked for confirmation before attaching selected messages to new mail?	mail	bg	Искате ли да ви бъде поискано потвърждение, преди да прикачите избрани съобщения към нов имейл?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	bg	Потвърждение преди преместване на избрани съобщения в друга папка?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	bg	Искате ли да предотвратите редактирането/настройката на правила за филтриране (, дори и при активиран SIEVE)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	bg	Искате ли да предотвратите редактирането/настройката на известията по пощата на други e-mail адреси, ако пристигнат (, дори и при активиран SIEVE)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	bg	Искате ли да предотвратите редактирането/настройката на известието за отсъствие/почивка (, дори и при активиран SIEVE)?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	bg	Желаете ли да забраните управлението на папките (създаване, права на достъп И абонамент)?
 does not contain	mail	bg	не съдържа
 does not exist on imap server.	mail	bg	не съществува на IMAP сървъра.
@@ -38,39 +164,124 @@ don't use draft folder	mail	bg	Не използвай "Чернови"
 don't use sent	mail	bg	Не използвай "Изпратени"
 don't use template folder	mail	bg	Не използвай папка "Шаблони"
 don't use trash	mail	bg	Не използвай "Кошче"
+download attachments	mail	bg	Изтеглете прикачени файлове
 draft folder	mail	bg	папка "Чернови"
 drafts	mail	bg	Чернови
+drafts folder	mail	bg	Папка "Чернови"
+edit account	mail	bg	Редактиране на акаунта
+edit account ...	mail	bg	Редактиране на акаунта...
+edit folder acl	mail	bg	Редактиране на ACL папката
+edit folder acl ...	mail	bg	Редактиране на ACL папката...
 edit vacation settings	mail	bg	редактиране на настройките за "ваканция"
+effective only if server supports acl at all	admin	bg	използваем, само ако сървърът изобщо поддържа ACL
+email notification successfully updated!	mail	bg	Актуализацията на e-mail известието е успешно!
 email notification update failed	mail	bg	Актуализацията на e-mail известието беше неуспешна.
+email notification update failed! you need to set an email address!	mail	bg	Актуализацията на e-mail известието беше неуспешна. Трябва да зададете e-mail адрес!
 emailaddress	admin	bg	e-mail адрес
+emailadmin: profilemanagement	mail	bg	eMailAdmin: Управление на профили
+emails in blacklisted domains are marked as spam	mail	bg	Имейлите в домейни от "черния списък" се маркират като спам
+emails in whitelisted domains are not marked as spam	mail	bg	Имейлите в домейни от "белия списък" не се маркират като спам
+empty junk	mail	bg	изпразване на папка с отпадъци / спам
 empty trash	mail	bg	изпразване на кошчето
+empty trash and junk	mail	bg	Празно кошче и отпадъци
 enable	mail	bg	позволява
+enabled!	mail	bg	активиран!
+encrypt	mail	bg	Криптиране
+encrypt your message with smime certificate	mail	bg	Кодирай съобщението си със S / MIME сертификат
+encryption	mail	bg	Кодиране
+enter the name for the new folder:	mail	bg	Въведете името на новата папка:
+error saving %1!	mail	bg	Грешка при запазването на %1!
+error while setting acl for folder %1!	mail	bg	Грешка при настройката на ACL за папка %1!
+error while setting folder	mail	bg	Грешка при настройката на папка
 error:	mail	bg	Грешка:
+error: could not save acl	mail	bg	Грешка: ACL не можа да се запази
 error: could not save message as draft	mail	bg	Грешка: неуспешно запазване на съобщнието като Чернова
+error: could not save rule	mail	bg	Грешка: Правилото не може да бъде запазено
+error: could not send message.	mail	bg	Грешка: Съобщението не можа да се изпрати.
+error: message could not be displayed.	mail	bg	ГРЕШКА: Съобщението не може да бъде показано.
+esync will fail without a working email configuration!	mail	bg	eSync няма да бъде успешно, без работеща конфигурация на електронната поща!
 event details follow	mail	bg	Следват подробности за събитието
+everyone	mail	bg	Всеки
 extended	mail	bg	Разширен
+extra sent folders	mail	bg	Допълнително изпратени папки
+failed to delete %1	mail	bg	Изтриването на %1 не бе успешно
+failed to delete %1 ! reason: %2	mail	bg	Изтриването на %1 не бе успешно! Причина: %2
+failed to delete %1. server responded:	mail	bg	Изтриването% 1 не бе успешно. Сървърът отговори:
+failed to move %1 ! reason: %2	mail	bg	Преместването на %1 не бе успешно! Причина: %2
+failed to rename %1 ! reason: %2	mail	bg	Преименуването на %1 не бе успешно! Причина: %2
 file into	mail	bg	файл в
+file into:	mail	bg	Файл в:
+file rejected, no %2. is:%1	mail	bg	Файлът е отхвърлен, без %2. На негово място е: 1%
 filemanager	mail	bg	Файл мениджър
+files	mail	bg	Файлове
+flag / unflag	mail	bg	Маркирай/ Размаркирай с флагче
+flag or unflag a mail	mail	bg	Маркирайте или отмаркирайте имейл с флагче
 flagged	mail	bg	с флагче
-folder	mail	bg	папка
+flagged %1 messages as %2 in %3	mail	bg	маркирани %1 съобщение(я) с флагче като %2 в %3
+flagged %1 messages as flagged in %2	mail	bg	маркирани %1 съобщение(я), като "маркирани с флаг" в %2
+flagged %1 messages as unflagged in %2	mail	bg	маркирани %1 съобщение(я), като "размаркирани с флаг" в %2
+flagged / unflagged	mail	bg	Маркирани/ Размаркирани
+folder	mail	bg	Папка
+folder %1 %2 failed because of %3!	mail	bg	Папка %1 %2 не бе успешна поради %3!
+folder %1 %2 failed!	mail	bg	Папка %1 %2 не бе успешна!
+folder %1 has been created successfully, although the subscription failed because of %2	mail	bg	Папка %1 е създадена успешно, въпреки че абонаментът не бе успешен поради %2
+folder %1 is moving to folder %2	mail	bg	Папка %1 се премества в папка %2
+folder management	mail	bg	Управление на папката
+folder management ...	mail	bg	Управление на папката...
 folder settings	mail	bg	Настройки на папката
+force html	mail	bg	форсиране на HTML
+force plain text	mail	bg	форсиране на обикновен текст
 forward	mail	bg	Препращане
 forward as attachment	mail	bg	препращане като приложение
 forward inline	mail	bg	препращане в съобщението
+forward messages to:	mail	bg	Препращане на съобщения към:
+forward messages:	mail	bg	Препращащи съобщения:
 forward to	mail	bg	препрати до
+forward to address (*):	mail	bg	Препрати до адрес (*):
+forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	bg	Предаването на това съобщение не бе успешно, изглежда че съдържанието на това съобщение е криптирано и не може да бъде дешифрирано правилно. 
+Ако все пак искате да препратите съдържание на това криптирано съобщение, можете да опитате като прикачен файл.
+forwards	mail	bg	Препраща
 from	mail	bg	От
 from(a->z)	mail	bg	Подател (A->Z)
 from(z->a)	mail	bg	Подател (Z->A)
 general	admin	bg	Общи
+general settings	mail	bg	Основни настройки
+get acl rights failed from imap server!	mail	bg	Получете ACL права от сървъра за IMAP!
 greater than	mail	bg	по-голямо от
+ham folder	mail	bg	Папка "Ham"
+header	mail	bg	Заглавка (Header)
 header lines	mail	bg	Заглавна част
-how to forward messages	mail	bg	как да се препращат съобщенията
+high	mail	bg	високо
+hold %1 to drag files to your computer	mail	bg	Натиснете и задръжте %1, за да плъзнете файлове към вашия компютър
+home page folders	mail	bg	Папки за начална страница
+hostname or ip	mail	bg	Име на хост или IP
+how often to check with the server for new mail	mail	bg	Колко често да бъде проверявано за нова поща със сървъра?
+how should the available information on identities be displayed	admin	bg	Как да се показва наличната информация за самоличността
+how to forward messages	mail	bg	Как да се препращат съобщенията
 html	mail	bg	HTML
-identity	mail	bg	самоличност
+html mode	mail	bg	HTML режим
+ident name	mail	bg	Идентично име
+ident name email	mail	bg	Идентично име [имейл]
+ident name organization email	mail	bg	Идентично име на организацията [имейл]
+identity	mail	bg	Самоличност
+identity label	mail	bg	Етикет за самоличност
+identity+signature	mail	bg	Самоличност + подпис
 if	mail	bg	АКО
+if authentication required	mail	bg	ако се изисква удостоверяване
+if different from email address	mail	bg	ако е различен от е-mail адреса
+if from contains:(*)	mail	bg	Ако от съдържа: (*)
+if mail body content / attachment type	mail	bg	Ако е от вида на основното съдържание на съобщението или прикачения файл
+if mail body message type	mail	bg	Ако е от вида "основен текст" на съобщението (body message)
 if mail header	mail	bg	ако заглавната част
 if message size	mail	bg	ако размерът на съобщението
+if shown, which folders should appear on the home page	mail	bg	ако е показано, кои папки да се показват на Началната страница
+if subject contains:(*)	mail	bg	Ако темата съдържа: (*)
+if to contains:(*)	mail	bg	Ако съдържа: (*)
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	bg	Активирайте това, ако желаете да видите предварителен преглед на имейл, при кликване върху темата с едно щракване.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	bg	Ако искате да изберете няколко папки с едно действие, можете да задържите клавиша "ctrl", като маркирате първата и крайната папка в същото ниво, така всички папки между тях ще бъдат селектирани, въз основа на текущото им състояние.
 imap	mail	bg	IMAP
+imap - incoming mail	mail	bg	IMAP - входяща поща
+imap administration	mail	bg	IMAP администрация
 imap server	mail	bg	IMAP сървър
 inbox	mail	bg	Входящи
 junk	mail	bg	Нежелани

@@ -208,12 +208,12 @@ exports infolog entries into a csv file.	infolog	en	Exports InfoLog entries into
 favorites	infolog	en	Favorites
 fax	infolog	en	Fax
 field must not be empty !!!	infolog	en	Field must not be empty!
-fields to exclude when copying an infolog:	infolog	en	Fields to exclude when copying an infolog:
+fields to exclude when copying an infolog:	infolog	en	Fields to exclude when copying an InfoLog:
 fields to exclude when creating a sub-entry:	infolog	en	Fields to exclude when creating a sub-entry:
 fieldseparator	infolog	en	Field separator
 finish	infolog	en	Finish
 first argument for preg_replace	infolog	en	First argument for preg_replace
-for infolog type %1, %2 is required	infolog	en	For infolog type %1, %2 is required
+for infolog type %1, %2 is required	infolog	en	For InfoLog type %1, %2 is required
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	en	For serial letter use this tag. Place the content you want to repeat between two tags.
 for which types should this field be used	infolog	en	For which types should this field be used
 from	infolog	en	From
@@ -239,7 +239,7 @@ if you specify an export definition, it will be used when you export	infolog	en	
 import next set	infolog	en	Import next set
 importance	infolog	en	Importance
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	en	Imports entries into the InfoLog from a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
-imports todos into infolog from an ical file.	infolog	en	Imports TODOs into Infolog from an iCal File.
+imports todos into infolog from an ical file.	infolog	en	Imports TODOs into InfoLog from an iCal File.
 info log	common	en	InfoLog
 infolog	common	en	InfoLog
 infolog - delete	infolog	en	InfoLog - Delete
@@ -255,8 +255,8 @@ infolog entry deleted	infolog	en	InfoLog entry deleted
 infolog entry saved	infolog	en	InfoLog entry saved
 infolog fields:	infolog	en	InfoLog fields:
 infolog filter for the home screen	infolog	en	InfoLog filter for the home screen
-infolog ical export	infolog	en	Infolog iCal export
-infolog ical import	infolog	en	Infolog iCal import
+infolog ical export	infolog	en	InfoLog iCal export
+infolog ical import	infolog	en	InfoLog iCal import
 infolog id	infolog	en	InfoLog ID
 infolog list	infolog	en	InfoLog list
 infolog preferences	common	en	InfoLog preferences
@@ -365,7 +365,7 @@ prefix for sub-entries (default: re:)	infolog	en	Prefix for sub-entries (default
 price	infolog	en	Price
 pricelist	infolog	en	Price list
 primary link	infolog	en	Primary link
-print this infolog	infolog	en	Print this infolog
+print this infolog	infolog	en	Print this InfoLog
 printing...	infolog	en	Printing...
 priority	infolog	en	Priority
 private	infolog	en	Private
@@ -461,8 +461,8 @@ startdate must be before enddate!!!	infolog	en	Startdate must be before due date
 starting %1	infolog	en	Starting %1
 startrecord	infolog	en	Start record
 status	infolog	en	Status
-status, percent and date completed are always allowed.	infolog	en	Status, percent and date completed are always allowed.
 status ...	infolog	en	Status ...
+status, percent and date completed are always allowed.	infolog	en	Status, percent and date completed are always allowed.
 sub	infolog	en	Sub
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	en	Sub entries become subs of the parent or main entries, if there's no parent
 sub-entries will not be closed	infolog	en	Sub entries will not be closed

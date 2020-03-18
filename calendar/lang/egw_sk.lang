@@ -175,6 +175,7 @@ do not include events of group members	calendar	sk	Nezahrnúť udalosti členov 
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	sk	Naozaj si želáte zmeniť začiatok tejto série? Ak to urobíte, pôvodná séria bude %1 ukončená a bude vytvorená nová séria pre budúcnosť, v ktorej budú zohľadnené vaše zmeny.
 do you want a weekview with or without weekend?	calendar	sk	Želáte si týždenný pohľad s víkendom alebo bez?
 do you want non-egroupware participants of events you created to be automatically notified about new or changed appointments?	calendar	sk	Chcete, aby účastníci mimo EGroupware, pri udalostiach ktoré ste vytvorili, boli automaticky upozornení na zmeny alebo nové udalosti?
+do you want responses from events you created, but are not participating in?	calendar	sk	Chcete dostávať odpovede ohľadom udalostí ktoré ste vytvorili, ale ktorých nie ste účastníkom?
 do you want to be notified about changes of appointments you modified?	calendar	sk	Chcete dostávať upozornenia na zmeny tých udalostí, ktoré ste upravili?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	sk	Chcete dostávať správy, ktoré Vás upovedomia o nových alebo zmenených udalostiach? Budete informovaní aj o zmenách ktoré sami urobíte.<br>Upovedomenia sa dajú aj obmedziť na určité typy zmien. Každý prvok obsahuje zároveň všetky predošlé upovedomenia. Všetky zmeny zahŕňajú zmeny titulku, opisu, účastníkov, ale nie odpovede účastníkov. Ak vlastník udalosti žiada akékoľvek správy o zmenách, dostane vždy aj odozvy účastníkov, napríklad prijatia a odmietnutia.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	sk	Chcete dostávať upozornenia na zmeny nových alebo zmenených udalostí? Budete upozorňovaní na zmeny, ktoré sami urobíte.<br>Upozornenia môžete obmedziť na niektoré vybrané zmeny. Každá položka obsahuje všetky upozornenia, ktoré sú nad ňou vymenované. Všetky úpravy zahŕňa: zmeny v titulku, opise, účastníkoch, ale bez odpovedí účastníkov. Ak si vlastník udalosti vyžiadal nejaké upozornenia, bude vždy dostávať odpovede účastníkov ako napríklad potvrdenia a odmietnutia účasti.
@@ -443,7 +444,7 @@ private and global public	calendar	sk	Súkromné i verejne prístupné
 private and group public	calendar	sk	Prístupné súkromne i pre skupinu
 private only	calendar	sk	Iba súkromne
 quantity	calendar	sk	Množstvo
-quick add	calendar	sk	Rýchlo pridať
+quick add	calendar	sk	Rýchle pridanie
 range fields	calendar	sk	Polia intervalu
 re-edit event	calendar	sk	Znovu uprav
 receive email updates	calendar	sk	Dostávať informácie elektronickou poštou?
@@ -455,6 +456,7 @@ recurrence	calendar	sk	Pravidelné opakovanie
 recurrence enddate	calendar	sk	Dáum ukončenia opakovania
 recurrences and conflict check	calendar	sk	Opakovania a zisťovanie konfliktov
 recurring event	calendar	sk	Opakujúca sa udalosť
+regular edit	calendar	sk	Normálna úprava
 reject	calendar	sk	Odmietnuť
 rejected	calendar	sk	Odmietnuté
 repeat days	calendar	sk	Opakované dni
@@ -621,6 +623,7 @@ user or group	calendar	sk	Používateľ alebo skupina
 user selectable css file for the calendar setup	calendar	sk	Používateľom vyberateľný CSS súbor pre nastavenie kalendára
 users + groups: inviting both always requires an invite grant	admin	sk	Používatelia + skupiny: pre pozývanie oboch sa vždy vyžaduje pozývacie oprávnenie
 using already existing event on server.	calendar	sk	Používam už existujúcu udalosť na serveri.
+utilities	calendar	sk	Pomôcky
 view exception	calendar	sk	Zobraziť výnimku
 view series	calendar	sk	Zobraziť sériu
 view settings	calendar	sk	Zobraziť nastavenia
@@ -671,5 +674,5 @@ you need to select some events first	calendar	sk	Najprv treba vybrať niektoré 
 you need to set either a day or a occurrence !!!	calendar	sk	Musíte nastaviť buď deň alebo výskyt!!!
 you requested more than available for the selected resource:	calendar	sk	Požadujete z vybraného zdroja viac, než je k dispozícii:
 your meeting scheduled for %1 has been canceled	calendar	sk	Stretnutie, ktoré bolo naplánované na %1, bolo zrušené
-your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	sk	Stretnutie, pôvodne plánované na %1, bolo preložené na %2.
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	sk	Stretnutie, ktoré bolo pôvodne plánované na %1, sa preložilo na %2.
 your php extension pdo_sqlite is broken!	calendar	sk	Vaše rozšírenie PHP pdo_sqlite je pokazené!

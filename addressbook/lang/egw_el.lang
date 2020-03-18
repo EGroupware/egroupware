@@ -198,7 +198,7 @@ import next set	addressbook	el	Εισαγωγή επόμενου σετ
 import_instructions	addressbook	el	Στο Netscape, ανοίξτε την ατζέντα διευθύνσεων και επιλέξτε <b>Εξαγωγή</b> από το <b>Αρχείο</b>. Το εξαγώγιμο αρχείο θα είναι σε LDIF μορφή.<p>Ή, στο Outlook, επιλέξτε το φάκελο Eπαφών, επιλέξτε<b>Import and Export...</b> από το <b>File</b> menu και εξάγετε τις επαφές σας σε ένα CSV αρχείο.<p>Ή, στο Palm Desktop 4.0 ή μεγαλύτερο, επισκεφθείτε το βιβλίο διευθύνσεων σας και επιλέξτε <b>Export</b> από το <b>File</b> menu.Το εξαγώγιμο αρχείο θα ειναι σε VCard μορφή.
 in %1 days (%2) is %3's birthday.	addressbook	el	Σε %1 ημέρες (%2) είναι του/της %3 τα γενέθλια.
 income	addressbook	el	Εισόδημα
-infolog	addressbook	el	Infolog
+infolog	addressbook	el	InfoLog
 insufficent rights to delete this list!	addressbook	el	Ανεπαρκή δικαιώματα για διαγραφή αυτής της λίστας!
 international	addressbook	el	Διεθνείς
 label	addressbook	el	Ετικέττα
@@ -318,7 +318,6 @@ type	addressbook	el	Τύπος
 update a single entry by passing the fields.	addressbook	el	Ενημέρωση συγκεκριμένης καταχώρησης εισάγωντας τα πεδία
 updated	addressbook	el	Ενημερώθηκε
 upload or delete the photo	addressbook	el	Φορτώστε ή διαγράψτε τη φωτογραφία
-use an extra category tab?	addressbook	el	Χρήση μιας επιπλέον ετικέτας κατηγοριών
 use country list	addressbook	el	Χρήση καταλόγου χωρών
 use setup for a full account-migration	admin	el	χρήση της εγκατάστασης για πλήρη μετανάστευση λογαριασμού
 used for links and for the own sorting of the list	addressbook	el	χρησιμοποιείται για συνδέσμους και προσωπικές ταξινομήσεις της λίστας

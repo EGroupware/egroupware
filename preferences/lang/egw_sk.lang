@@ -6,13 +6,16 @@
 24 hour	preferences	sk	24 hodinový
 a template defines the layout of egroupware and it contains icons for each application.	preferences	sk	Šablóna definuje vzhľad EGroupware a obsahuje ikony pre jednotlivé aplikácie.
 a theme defines the colors and fonts used by the template.	preferences	sk	Téma určuje farby a písma použité šablónou.
+access token revoked.	preferences	sk	Prístupový token bol odvolaný.
 acl grants have been updated	preferences	sk	Práva ACL boli aktualizované.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sk	Akýkoľvek zoznam v EGroupware zobrazí tento počet riadkov na stránku.<br>Ak dáte priveľa, stránka sa bude zobrazovať pomaly. Ak dáte málo, zúži sa váš rozhľad.
+applications list scroll area	preferences	sk	Posuvná oblasť so zoznamom aplikácií
 are you sure you want to delete this category ?	preferences	sk	Skutočne chcete odstrániť túto kategóriu?
 audio effect	preferences	sk	Zvukový efekt
 audio effect enables|disables sound effects used in the theme	preferences	sk	Zvukový efekt - zapne/vypne zvukvé efekty použité v tejto téme
 automatically start with this font	preferences	sk	Automaticky začať s týmto písmom
 automatically start with this font size	preferences	sk	Automaticky začať s touto veľkosťou písma
+automatically start with this format block.<br/><b>custom paragraph</b> adds less line space between new lines.	preferences	sk	Automaticky začať týmto formátovacím blokom.<br/><b>Vlastný odstavec</b> pridáva menej odsadenia medzi novými riadkami.
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sk	Zmeniť používateľské heslo zadaním starého a nového hesla. Vráti TRUE v prípade úspechu a FALSE v prípade neúspechu.
 change password	preferences	sk	Zmeniť heslo
 change your password	preferences	sk	Zmeniť heslo
@@ -27,6 +30,7 @@ color	preferences	sk	Farba
 country	preferences	sk	Krajina
 current password	preferences	sk	Súčasné heslo
 custom login box color, defaults to above color darkened	preferences	sk	Vlastná farba pre prihlasovacie okno, predvolený je tmavší odtieň vyššieuvedenej farby
+custom paragraph	preferences	sk	Vlastný odstavec
 custom sidebar menu active color, defaults to above color darkened	preferences	sk	Vlastná farba pre bočný panel, predvolený je tmavší odtieň vyššieuvedenej farby
 dark moono theme	preferences	sk	Tmavá Moono téma
 data exchange settings	preferences	sk	Nastavenia pre výmenu údajov
@@ -35,11 +39,13 @@ default	preferences	sk	Predvolený
 default application	preferences	sk	Predvolená aplikácia
 default font	preferences	sk	Predvolené písmo
 default font size	preferences	sk	Predvolená veľkosť písma
+default format block	preferences	sk	Predvolený formátovací blok
 default preferences	preferences	sk	Predvolené nastavenia
 delete categories	preferences	sk	Zmazať kategórie
 deny following groups access to acl (grant access)	admin	sk	Zakázať nasledovným skupinám prístup do ACL (pridelenie práv)
 deny following groups access to edit categories	admin	sk	Zakázať nasledovným skupinám prístup k úprave kategórií
 deny following groups access to preferences	admin	sk	Zakázať nasledovným skupinám prístup k predvoľbám
+deny following groups access to security popup	admin	sk	Zakázať nasledovným skupinám prístup k bezpečnostným oznámeniam
 description can not exceed 255 characters in length !	preferences	sk	Dĺžka opisu nesmie prekročiť 255 znakov!
 disable	preferences	sk	Vypnúť
 disable two factor auth	preferences	sk	Vypnúť dvojfaktorovú autentifikáciu
@@ -49,7 +55,10 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	sk	Upraviť vlastné polia
 enable	preferences	sk	Zapnúť
 enable drag and drop functionality (experimental)	preferences	sk	Povoliť funkcionalitu ťahaj-a-pusť
+enable menubar	preferences	sk	Zapnúť panel
 enable selectbox dropdown resizing for ie (experimental)	preferences	sk	Povoliť zmenu veľkosti pre výberovú roletovú ponuku v prehliadači IE (experimentálne)
+enable/disable menubar from top of the editor.	preferences	sk	Zapnúť panel navrchu editora
+enabled features in toolbar	preferences	sk	Zapnuté funkcie v paneli nástrojov
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže funkcie ťahaj-a-pusť vo všetkých aplikáciách. Ak váš prehliadač nepodporuje ťahaj-a-pusť, automaticky sa zakáže.
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti pre výberovú roletovú ponuku v prehliadači IE pre všetky aplikácie EGroupware. Ak prehliadačom nie je IE, táto voľba sa neuplatní.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti pre výberovú roletu v prehliadači IE pre všetky aplikácie EGroupware. Ak prehliadačom nie je IE, táto voľba sa neuplatní. Táto funkcia je v zatiaľ experimentálna.
@@ -68,6 +77,9 @@ forced preferences	preferences	sk	Vynútené nastavenia
 formatting & general settings	preferences	sk	Formátovanie a všeobecné nastavenia
 general settings	preferences	sk	Všeobecné nastavenia
 generate new qrcode to disable existing one, after enabling the new one!	preferences	sk	Vygenerovať nový QR kód, čím sa po jeho zapnutí zablokuje predošlý.
+google authenticator for android	preferences	sk	Overovacia služba Google pre Android
+google authenticator for ios	preferences	sk	Overovacia služba Google pre iOS
+heading %1	preferences	sk	Hlavička %1
 help off	preferences	sk	Skryť Pomocníka
 holding ctrl/cmd key and click on the line	preferences	sk	držaním klávesy Ctrl/Cmd a kliknutím na riadok
 hours	preferences	sk	hodín
@@ -89,6 +101,7 @@ kama theme	preferences	sk	Kama téma
 language	preferences	sk	Jazyk
 look & feel	preferences	sk	Vzhľad a použiteľnosť
 lowercase letters	preferences	sk	malé písmená
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	sk	Nastaviť zoznam aplikácií posúvateľný pomocou posuvných tlačítok (užitočné pre používateľov s myšou bez kolieska)
 max matches per page	preferences	sk	Maximum záznamov na stránku
 max number of icons in navbar	preferences	sk	Maximálny počet ikoniek v navigačnom paneli
 moono color theme	preferences	sk	Moono farebná téma
@@ -104,6 +117,7 @@ numbers	preferences	sk	čísla
 old password and new password are the same. this is invalid. you must enter a new password	preferences	sk	Staré a nové heslo sú rovnaké. Toto je nesprávne. Musíte zadať nové heslo.
 or other compatible apps	preferences	sk	alebo iné kompatibilné aplikácie
 p: paragraph	preferences	sk	p: Odstavec
+paragraph	preferences	sk	Odstavec
 password changed	preferences	sk	Heslo zmenené
 password contains only %1 of required %2 character classes: no %3	preferences	sk	heslo obsahuje iba %1 z požadovaných %2 znakových tried: nie %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	sk	heslo obsahuje s "%1" časti používateľského alebo plného mena (v dĺžke aspoň 3 znaky)
@@ -115,11 +129,15 @@ please select your timezone.	preferences	sk	Prosím, vyberte svoje časové pás
 please, select a new theme	preferences	sk	Prosím, vyberte novú farebnú tému
 popup with search	preferences	sk	Vyhľadaním
 preferences saved.	preferences	sk	Predvoľby boli uložené.
+preformatted	preferences	sk	Predformátované
 pt: points (1/72 inch)	preferences	sk	pt: body (1/72 palca)
 px: display pixels	preferences	sk	px: zobrazovacie pixle
 re-enter your password	preferences	sk	Zadajte heslo znovu
 read prefs for the specified application.	preferences	sk	Načítať predvoľby pre vybranú aplikáciu.
 reset qrcode	preferences	sk	Reset QR kódu
+revoke	preferences	sk	Odvolať
+revoke acccess tokens	preferences	sk	Odvolať prístupový token
+revoke this token	preferences	sk	Odvolať tento token
 rich text editor theme	preferences	sk	Téma textového editora
 scan qrcode with a time-based one-time password (totp) app:	preferences	sk	Naskenujte QR kód aplikáciou pre časové jednorázové heslo (TOTP):
 secret deleted, two factor authentication disabled.	preferences	sk	Tajomstvo odstránené, dvojfaktorová autentifikácia vypnutá.
