@@ -1,3 +1,23 @@
+egroupware-docker (19.1.20200318) hardy; urgency=low
+
+  * Calendar: initial load speed improvement
+  * CalDAV/OutlookSynchronizer: reject invitations when client deletes them without appropriate rights in his calendar
+  * CalDAV/Calendar: always set organizer and participants outside own calendar
+  * Filemanager/Sharing: fix lost session on first load in sharing links with Firefox
+  * Collabora: fix issue of inserting an image into document pops a rename dialog
+  * Collabora: fix limit of one samba connection per person
+  * Admin: add copy account action
+  * Html Editor: add fullscreen feature into html editor
+  * Html Editor: add 9pt, 9px, 11pt and 11px into Html editor's font options
+  * Timesheet: fix project link was missing when changing project after clicking "Save & New"
+  * Mail: fix mail acl can't save or retrieve after changing mailbox via folder selectbox
+  * Projectmanager: add preference to force filemanager subdirectories
+  * All apps: fix error closing / updating window in Chrome 80+
+  * RocketChat: fix diverse connection and status update errors
+  * Updated translations for EL, SK, BG and DE
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 18 Mar 2020 11:46:02 +0100
+
 egroupware-docker (19.1.20200130) hardy; urgency=low
 
   * SECURITY AND MAINTENANCE RELEASE: PLEASE UPDATE IMMEDIATELY (includes 17.1 and before!)
