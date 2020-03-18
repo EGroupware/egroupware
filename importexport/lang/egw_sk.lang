@@ -20,7 +20,7 @@ all encodings	importexport	sk	Všetky kódovania
 all users	importexport	sk	Všetci používatelia
 allowed users	importexport	sk	Oprávnení používatelia
 automatically created by importexport	importexport	sk	Automaticky vytvorené aplikáciou importexport
-basic csv import	importexport	sk	Základný CSV import
+basic csv import	importexport	sk	Základný import CSV
 change allowed users	importexport	sk	Zmeniť oprávnených používateľov
 change owner when updating	importexport	sk	Zmeniť vlastníka pri aktualizácii
 changed	importexport	sk	Zmenil
@@ -29,10 +29,10 @@ changed owner	importexport	sk	Zmena vlastníka
 charset of file	importexport	sk	Znaková sada súboru
 check all	importexport	sk	Označiť všetko
 choose a name for this definition	importexport	sk	Vyberte názov pre túto definíciu
-choose a plugin	importexport	sk	Vyberte si zásuvný modul (plugin)
+choose a plugin	importexport	sk	Vyberte si modul
 choose an application	importexport	sk	Vyberte si aplikáciu
 choose fields to export	importexport	sk	Vyberte si, ktoré polia exportovať
-choose seperator and charset	importexport	sk	Vyberte si oddeľovač a znakovú sadu
+choose seperator and charset	importexport	sk	Vyberte oddeľovač a znakovú sadu
 column mismatch.  expected %1 columns, your file has %2.	importexport	sk	Zmätok v stĺpcoch. Očakával som %1 stĺpcov, váš súbor má %2.
 column mismatch: %1 should be %2, not %3	importexport	sk	Zmätok v stĺpcoch: %1 má byť %2, nie %3
 condition	importexport	sk	Podmienka
@@ -41,7 +41,7 @@ create a <a href="%1">new definition</a> for this file	importexport	sk	Vytvoriť
 create a matching export definition based on this import definition	importexport	sk	Vytvoriť zodpovedajúcu exportnú definíciu na základe tejto importnej definície
 create export	importexport	sk	Vytvoriť export
 created	importexport	sk	vytvorené
-csv field	importexport	sk	pole CSV
+csv field	importexport	sk	Pole CSV
 database values	importexport	sk	Databázové hodnoty
 day of week	importexport	sk	Deň v týždni
 define imports|exports	common	sk	Definovať importy|exporty
@@ -76,8 +76,8 @@ from definition	importexport	sk	Z definície
 from file	importexport	sk	Zo súboru
 general	preferences	sk	Hlavné
 general fields:	preferences	sk	Hlavné polia:
-header lines to skip	importexport	sk	Preskočiť riadky hlavičky:
-how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	sk	Akým spôsobom zlúčiť s xistujúcimi údajmi? Pre každý záznam, všetky podmienky sa vyhodnocujú od vrchu, alebo zastavia. Ak chcete slepý vstup, ponechajte prázdne.
+header lines to skip	importexport	sk	Koľko riadkov hlavičky preskočiť
+how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	sk	Akým spôsobom zlúčiť s existujúcimi údajmi? Pre každý záznam, všetky podmienky sa vyhodnocujú od vrchu, alebo zastavia. Ak chcete slepý vstup, ponechajte prázdne.
 human friendly values	importexport	sk	Hodnoty čitateľné pre človeka
 if you specify an export definition, it will be used when you export	preferences	sk	Ak určíte exportnú definíciu, použije sa pri exporte.
 import	importexport	sk	Import
@@ -95,7 +95,7 @@ just me	importexport	sk	Iba mne
 last run	importexport	sk	Posledný prechod
 load sample file	importexport	sk	Nahrajte vzorový súbor
 lock expired on previous run	importexport	sk	Zámok vypršal pri predchádzajúcom prechode
-manage mapping	importexport	sk	Správa mapovania
+manage mapping	importexport	sk	Nastavte mapovanie
 next	importexport	sk	Ďalej
 next run	importexport	sk	Ďalší prechod
 no custom field "%1" for %2.	importexport	sk	Nie je tu používateľské pole "%1" pre %2.
@@ -106,7 +106,7 @@ no records selected	importexport	sk	Neboli vybrané žiadne záznamy
 none found	importexport	sk	Nenašlo sa
 old fixed definition	preferences	sk	Stará pevná definícia
 please select file to import	importexport	sk	Prosím vyberte súbor pre import
-plugin	importexport	sk	Zásuvný modul
+plugin	importexport	sk	Modul
 preview	importexport	sk	Náhľad
 preview not supported by %1	importexport	sk	Náhľad nie je podporovaný %1
 previous	importexport	sk	Späť
@@ -116,11 +116,11 @@ schedule	common	sk	Plánovanie
 schedule import / export	common	sk	Plánovanie importu / exportu
 schedule import | export	importexport	sk	Naplánovať import | export
 schedule not found	importexport	sk	Plánovanie sa nenašlo.
-schedule times are server time!  currently %s.	importexport	sk	Plánované časy sú na časom servera! Súčasný %s.
+schedule times are server time!  currently %s.	importexport	sk	Plánované časy sú podľa času na serveri! Súčasný čas: %s.
 select definition	importexport	sk	Vybrať definíciu
 select groups	importexport	sk	Vybrať skupiny
 select owner	importexport	sk	Vybrať vlastníka
-select plugin	importexport	sk	Vybrať zásuvný modul
+select plugin	importexport	sk	Vybrať modul
 select...	importexport	sk	Vyberte..
 set import values	importexport	sk	Nastaviť importné hodnoty
 skipped	importexport	sk	Preskočené

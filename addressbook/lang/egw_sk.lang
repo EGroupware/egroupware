@@ -6,7 +6,7 @@
 %1 key(s) added to public keyserver "%2".	addressbook	sk	%1 kľúčov bolo pridaných na server verejných kľúčov "%2".
 %1 not implemented for %2!	addressbook	sk	%1 nebolo implementované pre %2!
 %1 public keys added.	addressbook	sk	%1 verejných kľúčov pridaných.
-%1 records imported	addressbook	sk	Bolo naimportovaných %1 záznamov
+%1 records imported	addressbook	sk	Bolo naimportovaných %1 záznamov.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sk	Bolo prečítaných %1 záznamov (zatiaľ neimportované, môžete se vrátit %2späť%3 a odznačit Test importu)
 %1 starts with '%2'	addressbook	sk	%1 začína na '%2'
 %s please calculate the result	addressbook	sk	%s prosím spočítajte výsledok
@@ -47,8 +47,8 @@ address line 2	addressbook	sk	Adresa riadok 2
 address line 2 (private)	addressbook	sk	Adresa riadok 2 (súkromné)
 address type	addressbook	sk	Typ adresy
 addressbook	common	sk	Adresár
-addressbook csv export	addressbook	sk	CSV export Adresára
-addressbook csv import	addressbook	sk	CSV import Adresára
+addressbook csv export	addressbook	sk	Adresár - export CSV
+addressbook csv import	addressbook	sk	Adresár - import CSV
 addressbook field	addressbook	sk	Pole Adresára
 addressbook list	addressbook	sk	Zoznam Adresára
 addressbook menu	addressbook	sk	Ponuka Adresára
@@ -259,7 +259,7 @@ fax number	common	sk	Číslo faxu
 field %1 has been added !	addressbook	sk	Pole %1 bolo pridané
 field %1 has been updated !	addressbook	sk	Pole %1 bolo aktualizované
 field name	addressbook	sk	Názov poľa
-fields for the csv export	addressbook	sk	Polia pre CSV export
+fields for the csv export	addressbook	sk	Polia pre export CSV
 fields the user is allowed to edit himself	admin	sk	Polia, ktoré smie používateľ upravovať
 fields to check for duplicates	addressbook	sk	Polia ktoré sa majú skontrolovať na duplikáty
 fields to consider when looking for duplicate contacts.	addressbook	sk	Polia ktoré sa majú skontrolovať pri hľadaní duplicitných kontaktov
@@ -317,6 +317,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	sk	Naimpor
 in %1 days (%2) is %3's birthday.	addressbook	sk	O %1 dní (%2) bude mať narodeniny %3.
 income	addressbook	sk	Príjem
 infolog	addressbook	sk	Záznamník
+infolog-organisation	addressbook	sk	Otvoriť CRM pohľad Záznamníka pre túto organizáciu
 insert	addressbook	sk	Vložiť
 insufficent rights to delete this list!	addressbook	sk	Nemáte dostatočné práva k odstráneniu tohto zoznamu!
 insufficent rights to edit this list!	addressbook	sk	Nemáte dostatočné práva k úprave tohto zoznamu!
@@ -341,6 +342,7 @@ list already exists!	addressbook	sk	Zoznam už existuje!
 list created	addressbook	sk	Zoznam bol vytvorený
 list creation failed, no rights!	addressbook	sk	Nepodarilo sa vytvoriť zoznam, nemáte práva!
 list of files linked to the current record	addressbook	sk	Zoznam súborov priložených k súčasnému záznamu
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	sk	Nahrať vlastné polia do indexu aj v prípade, keď je vlastné pole vypnuté (napr. aby sa dali zobraziť v určitom stĺpci indexu)
 load vcard	addressbook	sk	Nahrať vizitku VCard
 location	addressbook	sk	Umiestnenie
 locations	addressbook	sk	Umiestnenia

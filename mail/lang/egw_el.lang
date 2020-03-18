@@ -15,11 +15,13 @@ always	mail	el	Πάντα
 always show html emails	mail	el	να εμφανίζονται πάντοτε τα μυνήματα τύπου HTML
 any of	mail	el	οποιοδήποτε
 any status	mail	el	οποιαδήποτε κατάσταση
+archive folder	mail	el	Φάκελος αρχειοθέτησης
 arrival	mail	el	Ελήφθη
 attach files	mail	el	Επισύναψη αρχείων
 attach vcard	mail	el	Επισύναψη vCard
 attachment	mail	el	Συνημμένο
 attachments	mail	el	Συνημμένα
+attachments, ...	mail	el	συνημμένα, ...
 by date	mail	el	Βάσει ημερομηνίας
 choose file	mail	el	Επιλογή αρχείου
 common acl	mail	el	Κοινά δικαιώματα
@@ -56,8 +58,8 @@ disabled!	mail	el	απενεργοποιημένο!
 discard	mail	el	απόρριψη
 discard message	mail	el	απόρριψη μηνύματων
 display messages in multiple windows	mail	el	προβολή μηνυμάτων σε πολλαπλά παράθυρα
-display of html emails	mail	el	Προβολή των HTML emails
-display only when no plain text is available	mail	el	Προβολή μόνο όταν είναι δεν διαθέσιμο κανένα αποκρυπτογραφημένο κείμενο
+display of html emails	mail	el	προβολή των HTML emails
+display only when no plain text is available	mail	el	προβολή μόνο όταν είναι δεν διαθέσιμο κανένα αποκρυπτογραφημένο κείμενο
 displaying html messages is disabled	mail	el	η προβολή των html μηνυμάτων είναι απενεργοποιημένη
 does not contain	mail	el	δεν περιέχει
 does not match	mail	el	δεν συμπίπτει
@@ -82,7 +84,11 @@ everyone	mail	el	όλοι
 extended	mail	el	Εκτεταμένος
 file into	mail	el	αρχείο μέσα στο
 filemanager	mail	el	Διαχειριστής αρχείων
-flagged	mail	el	σημαιοστολισμένο
+flagged	mail	el	με σήμανση
+flagged %1 messages as %2 in %3	mail	el	Τέθηκε η σήμανση %2 σε %1 μήνυμα(τα) στο %3
+flagged %1 messages as flagged in %2	mail	el	Σημάνθηκαν %1 μήνυμα(τα) στο %2
+flagged %1 messages as unflagged in %2	mail	el	Αφαιρέθηκε ή σημάνση από %1 μήνυμα(τα) στο %2
+flagged / unflagged	mail	el	Με σήμανση / Χωρίς σήμανση
 folder	mail	el	Φάκελος
 folder settings	mail	el	Ρυθμίσεις φακέλου
 forward	mail	el	Προώθηση
@@ -137,16 +143,34 @@ remove immediately	mail	el	Άμεση μετακίνηση
 rename folder	mail	el	Μετονομασία φακέλου
 replied	mail	el	απαντήθηκε
 reply	mail	el	Απάντηση
-reply all	mail	el	Απάντηση σε όλα
+reply all	mail	el	Απάντηση σε όλους
+reply message type	mail	el	Τύπος μηνύματος απάντησης
 reply to	mail	el	Η απάντηση να ληφθεί στην διεύθυνση
 replyto	mail	el	Απάντησηστο
 row order style	mail	el	Στυλ ταξινόμησης σειράς
 save all	mail	el	Αποθήκευση όλων
+save as default	mail	el	αποθήκευση ως προεπιλογή
 save as draft	mail	el	Αποθήκευση ως προσχέδιο
-save as infolog	mail	el	Αποθήκευση ως infolog
+save as infolog	mail	el	Αποθήκευση ως InfoLog
+save attachment	mail	el	Αποθήκευση συνημμένου
+save attachments	mail	el	Αποθήκευση συνημμένων
+save email	mail	el	Αποθήκευση μηνύματος
 save message to disk	mail	el	αποθήκευση αλλαγών στο δίσκο
+save to disk	mail	el	Αποθήκευση στον δίσκο
+save:	mail	el	Αποθήκευση:
+saves this rule	mail	el	Αποθήκευση αυτού του κανόνα
+saving the rule failed:	mail	el	Η αποθήκευση του κανόνα απέτυχε:
 select all	mail	el	Επιλογή όλων
+select file(s) from vfs	mail	el	Επιλογή αρχείων από VFS
+select files to upload	mail	el	Επιλογή αρχείων για αναφόρτωση
+select multiple	mail	el	Επιλογή πολλαπλών
+send files as	mail	el	Αποστολή αρχείου ως
+sent	mail	el	Αποστολή
 sent folder	mail	el	Φάκελος σταλθέντων
+show	mail	el	εμφάνιση
+show horizontal	mail	el	εμφάνιση οριζοντίως
+show horizontal, hide if none selected	mail	el	εμφάνιση οριζοντίως, απόκρυψη εάν δεν έχει επιλεγεί κάποιο μήνυμα
+show new messages on home page	mail	el	εμφάνιση νέων μηνυμάτων στην αρχική σελίδα
 sieve script name	mail	el	όνομα sieve σεναρίου
 signature	mail	el	Υπογραφή
 size(...->0)	mail	el	Μέγεθος (...->0)
@@ -154,14 +178,19 @@ size(0->...)	mail	el	Μέγεθος (0->...)
 small view	mail	el	μικρή προβολή
 subject(a->z)	mail	el	Θέμα (Α->Ω)
 subject(z->a)	mail	el	Θέμα (Ω->Α)
+text	mail	el	Κείμενο
 then	mail	el	ΜΕΤΑ
-trash folder	mail	el	Φάκελος Κάδου Αχρήστων
-unflagged	mail	el	αποσημαιοστολίστηκε
-unread	mail	el	Αδιάβαστα
+trash	mail	el	Κάδος αχρήστων
+trash folder	mail	el	Φάκελος κάδου αχρήστων
+undelete	mail	el	Επαναφορά
+unflagged	mail	el	Αφαιρέθηκε η σήμανση
+unread	mail	el	μη διαβασμένο
+upload files...	mail	el	Αναφόρτωση αρχείων...
 vacation notice	mail	el	ειδοποίηση διακοπών
 vacation notice is active	mail	el	Η ειδοποίηση διακοπών είναι ενεργή
 view header lines	mail	el	Προβολή γραμμών τίτλου
 when deleting messages	mail	el	Όταν διαγράφονται τα μηνύματα
+wizard	mail	el	Βοηθός
 write	mail	el	Γραφή
 wrote	mail	el	γράφτηκε
 you've got new mail	mail	el	Έχετε νέο μήνυμα
