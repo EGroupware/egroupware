@@ -79,13 +79,23 @@ function implements_et2_INextmatchHeader(obj : et2_widget)
 
 export interface et2_INextmatchSortable
 {
-	setSortmode(_sort_mode) : void
+	setSortmode(_sort_mode): void
 }
+
 var et2_INextmatchSortable = "et2_INextmatchSortable";
-function implements_et2_INextmatchSortable(obj : et2_widget)
+
+function implements_et2_INextmatchSortable(obj: et2_widget)
 {
 	return implements_methods(obj, ["setSortmode"]);
 }
+
+// For holding settings while whe print
+interface PrintSettings
+{
+	old_height: number,
+	row_selector: string,
+	orientation_style: HTMLStyleElement
+};
 
 /**
  * Class which implements the "nextmatch" XET-Tag
@@ -227,10 +237,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	private _autorefresh_timer: number;
 
 	// When printing, we change the layout around.  Keep some values so it can be restored after
-	private print: {
-		old_height: number,
-		row_selector: string,
-		orientation_style: HTMLStyleElement
+	private print: PrintSettings = {
+		old_height: 0,
+		row_selector: '',
+		orientation_style: null
 	};
 
 	/**
@@ -238,7 +248,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 *
 	 * @memberOf et2_nextmatch
 	 */
-	constructor(_parent?, _attrs? : WidgetConfig, _child? : object) {
+	constructor(_parent?, _attrs?: WidgetConfig, _child?: object)
+	{
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_nextmatch._attributes, _child || {}));
 
 		this.activeFilters = {col_filter:{}};
