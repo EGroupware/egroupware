@@ -209,7 +209,8 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 	{
 		// Copy to avoid changes, which may cause nm problems
 		const value = event === null ? null : jQuery.extend({}, event);
-		let parent = this.getParent();
+		let parent = <et2_DOMWidget>this.getParent();
+		let parent_owner = parent.getDOMNode(parent).dataset['owner'] || parent.getParent().options.owner;
 
 		// Make sure id is a string, check values
 		if(value)
@@ -218,7 +219,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		}
 
 		// Check for changing days in the grid view
-		if(!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent.options.owner))
+		if(!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent_owner))
 		{
 			// May need to update parent to remove out-of-view events
 			parent.removeChild(this);

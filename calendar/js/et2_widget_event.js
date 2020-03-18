@@ -167,15 +167,16 @@ var et2_calendar_event = /** @class */ (function (_super) {
      * Callback for changes in cached data
      */
     et2_calendar_event.prototype._UID_callback = function (event) {
-        // Copy to avoid changes, which may cause nm problems
-        var value = event === null ? null : jQuery.extend({}, event);
-        var parent = this.getParent();
-        // Make sure id is a string, check values
-        if (value) {
-            this._values_check(value);
-        }
-        // Check for changing days in the grid view
-        if (!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent.options.owner)) {
+		// Copy to avoid changes, which may cause nm problems
+		var value = event === null ? null : jQuery.extend({}, event);
+		var parent = this.getParent();
+		var parent_owner = parent.getDOMNode(parent).dataset['owner'] || parent.getParent().options.owner;
+		// Make sure id is a string, check values
+		if (value) {
+			this._values_check(value);
+		}
+		// Check for changing days in the grid view
+		if (!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent_owner)) {
 			// May need to update parent to remove out-of-view events
 			parent.removeChild(this);
 			if (event === null && parent && parent.instanceOf(et2_widget_daycol_1.et2_calendar_daycol)) {
@@ -185,16 +186,16 @@ var et2_calendar_event = /** @class */ (function (_super) {
 			this.destroy();
 			return;
 		}
-        // Copy to avoid changes, which may cause nm problems
-        this.options.value = jQuery.extend({}, value);
-        if (this.getParent().options.date) {
-            this.options.value.date = this.getParent().options.date;
-        }
-        // Let parent position - could also be et2_calendar_planner_row
-        this.getParent().position_event(this);
-        // Parent may remove this if the date isn't the same
-        if (this.getParent()) {
-            this._update();
+		// Copy to avoid changes, which may cause nm problems
+		this.options.value = jQuery.extend({}, value);
+		if (this.getParent().options.date) {
+			this.options.value.date = this.getParent().options.date;
+		}
+		// Let parent position - could also be et2_calendar_planner_row
+		this.getParent().position_event(this);
+		// Parent may remove this if the date isn't the same
+		if (this.getParent()) {
+			this._update();
         }
     };
     /**
@@ -652,16 +653,16 @@ var et2_calendar_event = /** @class */ (function (_super) {
             this._actionObject = null;
         }
         // Update daywise caches
-        var new_cache_id = CalendarApp._daywise_cache_id(event.date, this.getParent().options.owner);
-        var new_daywise = egw.dataGetUIDdata(new_cache_id);
-        new_daywise = new_daywise && new_daywise.data ? new_daywise.data : [];
-        var old_cache_id = '';
-        if (this.options.value && this.options.value.date) {
-            old_cache_id = CalendarApp._daywise_cache_id(this.options.value.date, parent.options.owner);
-        }
-        if (new_cache_id != old_cache_id) {
-            var old_daywise = egw.dataGetUIDdata(old_cache_id);
-            old_daywise = old_daywise && old_daywise.data ? old_daywise.data : [];
+		var new_cache_id = CalendarApp._daywise_cache_id(event.date, this.getParent().options.owner);
+		var new_daywise = egw.dataGetUIDdata(new_cache_id);
+		new_daywise = new_daywise && new_daywise.data ? new_daywise.data : [];
+		var old_cache_id = '';
+		if (this.options.value && this.options.value.date) {
+			old_cache_id = CalendarApp._daywise_cache_id(this.options.value.date, parent.options.owner);
+		}
+		if (new_cache_id != old_cache_id) {
+			var old_daywise = egw.dataGetUIDdata(old_cache_id);
+			old_daywise = old_daywise && old_daywise.data ? old_daywise.data : [];
 			old_daywise.splice(old_daywise.indexOf(this.options.value.row_id), 1);
 			egw.dataStoreUID(old_cache_id, old_daywise);
 			if (new_daywise.indexOf(event.row_id) < 0) {
@@ -763,16 +764,16 @@ var et2_calendar_event = /** @class */ (function (_super) {
 		}
 		return result;
 	};
-    /**
-     * Click handler calling custom handler set via onclick attribute to this.onclick.
-     * All other handling is done by the timegrid widget.
-     *
-     * @param {Event} _ev
-     * @returns {boolean}
-     */
-    et2_calendar_event.prototype.click = function (_ev) {
-        var result = true;
-        if (typeof this.onclick == 'function') {
+	/**
+	 * Click handler calling custom handler set via onclick attribute to this.onclick.
+	 * All other handling is done by the timegrid widget.
+	 *
+	 * @param {Event} _ev
+	 * @returns {boolean}
+	 */
+	et2_calendar_event.prototype.click = function (_ev) {
+		var result = true;
+		if (typeof this.onclick == 'function') {
             // Make sure function gets a reference to the widget, splice it in as 2. argument if not
             var args = Array.prototype.slice.call(arguments);
             if (args.indexOf(this) == -1)
