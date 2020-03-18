@@ -11,10 +11,10 @@
  */
 
 use EGroupware\Api;
-use EGroupware\Api\Acl;
-use EGroupware\Api\Egw;
-use EGroupware\Api\Etemplate;
 use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
 
 /**
  * Shared base-class of all calendar UserInterface classes
@@ -667,12 +667,7 @@ class calendar_ui
 		if(!$event || !$filter_match)
 		{
 			// Sending null will trigger a removal
-			$uid = 'calendar::' . $event_id;
-			if ($recurrence_date)
-			{
-				$uid .= ':' . $recurrence_date->getTimestamp();
-			}
-			$response->generic('data', array('uid' => $uid, 'data' => null));
+			$response->generic('data', array('uid' => 'calendar::'.$event_id, 'data' => null));
 			return false;
 		}
 
