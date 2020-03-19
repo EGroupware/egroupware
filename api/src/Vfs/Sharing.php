@@ -116,11 +116,12 @@ class Sharing extends \EGroupware\Api\Sharing
 		if (!$keep_session)	// do NOT change to else, as we might have set $keep_session=false!
 		{
 			// only allow filemanager app & collabora
-			// (In some cases, $GLOBALS['egw_info']['apps'] is not yet set)
+			// In some cases, $GLOBALS['egw_info']['apps'] is not yet set at all.  Set it to app => true, it will be used
+			// in Session->read_repositories() to make sure we get access to these apps when the session loads the apps.
 			$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
 			$GLOBALS['egw_info']['user']['apps'] = array(
-				'filemanager' => $GLOBALS['egw_info']['apps']['filemanager'] || true,
-				'collabora' => $GLOBALS['egw_info']['apps']['collabora'] || $apps['collabora']
+					'filemanager' => $GLOBALS['egw_info']['apps']['filemanager'] || true,
+					'collabora' => $GLOBALS['egw_info']['apps']['collabora'] || $apps['collabora']
 			);
 
 			$share['share_root'] = '/';
