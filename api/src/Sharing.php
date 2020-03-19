@@ -482,7 +482,8 @@ class Sharing
 		// sharing is for a different share, change to current share
 		if ($this->share['share_token'] !== self::get_token())
 		{
-			self::create_session($GLOBALS['egw']->session->session_flags === 'N');
+			self::create_session($GLOBALS['egw']->session->session_flags === 'N' ||
+				$GLOBALS['egw_info']['user']['account_lid'] === 'anonymous');
 
 			return $GLOBALS['egw']->sharing->ServeRequest();
 		}
