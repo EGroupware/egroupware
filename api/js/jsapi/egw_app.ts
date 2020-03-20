@@ -124,15 +124,16 @@ export abstract class EgwApp
 	 * Initialization and setup goes here, but the etemplate2 object
 	 * is not yet ready.
 	 */
-	constructor()
+	constructor(appname: string)
 	{
+		this.appname = appname;
 		this.egw = egw(this.appname, window);
 
 		// Initialize sidebox for non-popups.
 		// ID set server side
 		if(!this.egw.is_popup())
 		{
-			var sidebox = jQuery('#favorite_sidebox_'+this.appname);
+			var sidebox = jQuery('#favorite_sidebox_' + this.appname);
 			if(sidebox.length == 0 && egw_getFramework() != null)
 			{
 				var egw_fw = egw_getFramework();

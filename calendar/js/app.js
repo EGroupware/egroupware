@@ -95,12 +95,8 @@ var CalendarApp = /** @class */ (function (_super) {
             );
         }
     */
-        // call parent
-        _super.call(this) || this;
-        /**
-         * application name
-         */
-        _this.appname = 'calendar';
+			// call parent
+			_super.call(this, 'calendar') || this;
         /**
          * Needed for JSON callback
          */

@@ -38,9 +38,7 @@ var egw_app_1 = require("../../api/js/jsapi/egw_app");
 var TimesheetApp = /** @class */ (function (_super) {
     __extends(TimesheetApp, _super);
     function TimesheetApp() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.appname = 'timesheet';
-        return _this;
+        return _super.call(this, 'timesheet') || this;
     }
     /**
      * This function is called when the etemplate2 object is loaded

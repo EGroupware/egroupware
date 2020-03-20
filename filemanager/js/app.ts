@@ -19,7 +19,6 @@ import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
  */
 export class filemanagerAPP extends EgwApp
 {
-	static readonly appname = 'filemanager';
 	/**
 	 * path widget, by template
 	 */
@@ -44,12 +43,12 @@ export class filemanagerAPP extends EgwApp
 	constructor()
 	{
 		// call parent
-		super();
+		super('filemanager');
 
 		// Loading filemanager in its tab and home causes us problems with
 		// unwanted destruction, so we check for already existing path widgets
 		let lists = etemplate2.getByApplication('home');
-		for(let i = 0; i < lists.length; i++)
+		for (let i = 0; i < lists.length; i++)
 		{
 			if(lists[i].app == 'filemanager' && lists[i].widgetContainer.getWidgetById('path'))
 			{
@@ -356,7 +355,7 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_upload_callback(_data)
 	{
-		if(_data.msg || _data.uploaded) window.egw_refresh(_data.msg, filemanagerAPP.appname);
+		if(_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname);
 
 		let that = this;
 		for (let file in _data.uploaded)
@@ -364,7 +363,13 @@ export class filemanagerAPP extends EgwApp
 			if(_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
 			{
 				let buttons = [
-					{text: this.egw.lang("Yes"), id: "overwrite",	class: "ui-priority-primary", "default": true, image: 'check'},
+					{
+						text: this.egw.lang("Yes"),
+						id: "overwrite",
+						class: "ui-priority-primary",
+						"default": true,
+						image: 'check'
+					},
 					{text: this.egw.lang("Rename"), id: "rename", image: 'edit'},
 					{text: this.egw.lang("Cancel"), id: "cancel"}
 				];
@@ -615,7 +620,7 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_do_action_callback(_data)
 	{
-		window.egw_refresh(_data.msg, filemanagerAPP.appname);
+		window.egw_refresh(_data.msg, this.appname);
 	}
 
 	/**
@@ -877,7 +882,7 @@ export class filemanagerAPP extends EgwApp
 		             });
 
 		// Last 10 folders
-		let previous_dsts = jQuery.extend([], <any><unknown>egw.preference('drop_history', filemanagerAPP.appname));
+		let previous_dsts = jQuery.extend([], <any><unknown>egw.preference('drop_history', this.appname));
 		let action_index = 0;
 		for (let i = 0; i < 10; i++)
 		{
@@ -977,10 +982,10 @@ export class filemanagerAPP extends EgwApp
 		}
 
 		// Remember the target for next time
-		let previous_dsts = jQuery.extend([], egw.preference('drop_history', filemanagerAPP.appname));
+		let previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
 		previous_dsts.unshift(dst);
 		previous_dsts = Array.from(new Set(previous_dsts)).slice(0, 9);
-		egw.set_preference(filemanagerAPP.appname, 'drop_history', previous_dsts);
+		egw.set_preference(this.appname, 'drop_history', previous_dsts);
 
 		// Actual action id will be something like file_drop_{move|copy|link}[_other_id],
 		// but we need to send move, copy or link
@@ -1183,7 +1188,7 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_share_link_callback(_data)
 	{
-		if(_data.msg || _data.share_link) window.egw_refresh(_data.msg, filemanagerAPP.appname);
+		if(_data.msg || _data.share_link) window.egw_refresh(_data.msg, this.appname);
 		console.log("_data", _data);
 		let app = this;
 

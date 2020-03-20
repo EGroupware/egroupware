@@ -33,7 +33,7 @@ var resourcesApp = /** @class */ (function (_super) {
      * Constructor
      */
     function resourcesApp() {
-        return _super.call(this) || this;
+        return _super.call(this, 'resources') || this;
     }
     /**
      * Destructor
@@ -137,7 +137,6 @@ var resourcesApp = /** @class */ (function (_super) {
             rBtn.set_value('own_src');
         }
     };
-    resourcesApp.appname = 'resources';
     return resourcesApp;
 }(egw_app_1.EgwApp));
 app.classes.resources = resourcesApp;

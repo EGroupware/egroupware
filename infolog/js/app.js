@@ -43,11 +43,8 @@ var InfologApp = /** @class */ (function (_super) {
      * @memberOf app.infolog
      */
     function InfologApp() {
-        var _this = 
         // call parent
-        _super.call(this) || this;
-        _this.appname = 'infolog';
-        return _this;
+        return _super.call(this, 'infolog') || this;
     }
     /**
      * Destructor

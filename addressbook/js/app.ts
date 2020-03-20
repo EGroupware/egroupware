@@ -17,7 +17,7 @@ import 'jqueryui';
 import '../jsapi/egw_global';
 import '../etemplate/et2_types';
 
-import { EgwApp } from '../../api/js/jsapi/egw_app';
+import {EgwApp} from '../../api/js/jsapi/egw_app';
 
 /**
  * UI for Addressbook
@@ -26,8 +26,6 @@ import { EgwApp } from '../../api/js/jsapi/egw_app';
  */
 class AddressbookApp extends EgwApp
 {
-	readonly appname = 'addressbook';
-
 	/**
 	 * Constructor
 	 *
@@ -36,7 +34,7 @@ class AddressbookApp extends EgwApp
 	constructor()
 	{
 		// call parent
-		super();
+		super('addressbook');
 	}
 
 	/**

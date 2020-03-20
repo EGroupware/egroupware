@@ -43,10 +43,9 @@ var AdminApp = /** @class */ (function (_super) {
      * @memberOf app.classes.admin
      */
     function AdminApp() {
-        var _this = 
-        // call parent
-        _super.call(this) || this;
-        _this.appname = 'admin';
+        var _this =
+			// call parent
+			_super.call(this, 'admin') || this;
         /**
          * reference to iframe
          *

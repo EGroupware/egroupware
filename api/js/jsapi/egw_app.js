@@ -50,11 +50,12 @@ var EgwApp = /** @class */ (function () {
      * Initialization and setup goes here, but the etemplate2 object
      * is not yet ready.
      */
-    function EgwApp() {
+    function EgwApp(appname) {
         /**
          * Mailvelope "egroupware" Keyring
          */
         this.mailvelope_keyring = undefined;
+        this.appname = appname;
         this.egw = egw(this.appname, window);
         // Initialize sidebox for non-popups.
         // ID set server side

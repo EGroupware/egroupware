@@ -17,7 +17,7 @@ import 'jqueryui';
 import '../jsapi/egw_global';
 import '../etemplate/et2_types';
 
-import { EgwApp } from '../../api/js/jsapi/egw_app';
+import {EgwApp} from '../../api/js/jsapi/egw_app';
 
 /**
  * UI for Infolog
@@ -26,7 +26,6 @@ import { EgwApp } from '../../api/js/jsapi/egw_app';
  */
 class InfologApp extends EgwApp
 {
-	readonly appname = 'infolog';
 
 	/**
 	 * Constructor
@@ -36,7 +35,7 @@ class InfologApp extends EgwApp
 	constructor()
 	{
 		// call parent
-		super();
+		super('infolog');
 	}
 
 	/**

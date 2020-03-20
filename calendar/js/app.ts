@@ -55,10 +55,6 @@ import {et2_calendar_event} from "./et2_widget_event";
  */
 class CalendarApp extends EgwApp
 {
-	/**
-	 * application name
-	 */
-	public readonly appname = 'calendar';
 
 	/**
 	 * Needed for JSON callback
@@ -161,14 +157,14 @@ class CalendarApp extends EgwApp
 		}
 	*/
 		// call parent
-		super();
+		super('calendar');
 
 		// Scroll
-		jQuery(jQuery.proxy(this._scroll,this));
-		jQuery.extend(this.state, this.egw.preference('saved_states','calendar'));
+		jQuery(jQuery.proxy(this._scroll, this));
+		jQuery.extend(this.state, this.egw.preference('saved_states', 'calendar'));
 
 		// Set custom color for events without category
-		if(this.egw.preference('no_category_custom_color','calendar'))
+		if(this.egw.preference('no_category_custom_color', 'calendar'))
 		{
 			this.egw.css(
 				'.calendar_calEvent:not([class*="cat_"])',

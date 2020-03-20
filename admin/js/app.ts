@@ -17,7 +17,7 @@ import 'jqueryui';
 import '../jsapi/egw_global';
 import '../etemplate/et2_types';
 
-import { EgwApp } from '../../api/js/jsapi/egw_app';
+import {EgwApp} from '../../api/js/jsapi/egw_app';
 
 /**
  * UI for Admin
@@ -29,7 +29,6 @@ class AdminApp extends EgwApp
  * @lends app.classes.admin
  */
 {
-	readonly appname = 'admin';
 
 	/**
 	 * reference to iframe
@@ -67,7 +66,7 @@ class AdminApp extends EgwApp
 	constructor()
 	{
 		// call parent
-		super();
+		super('admin');
 	}
 
 	/**

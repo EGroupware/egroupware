@@ -17,7 +17,7 @@ import 'jqueryui';
 import '../jsapi/egw_global';
 import '../etemplate/et2_types';
 
-import { EgwApp } from '../../api/js/jsapi/egw_app';
+import {EgwApp} from '../../api/js/jsapi/egw_app';
 
 /**
  * UI for timesheet
@@ -26,7 +26,11 @@ import { EgwApp } from '../../api/js/jsapi/egw_app';
  */
 class TimesheetApp extends EgwApp
 {
-	readonly appname = 'timesheet';
+
+	constructor()
+	{
+		super('timesheet');
+	}
 
 	/**
 	 * This function is called when the etemplate2 object is loaded
@@ -36,7 +40,7 @@ class TimesheetApp extends EgwApp
 	 * @param et2 etemplate2 Newly ready object
 	 * @param string name
 	 */
-	et2_ready(et2, name : string)
+	et2_ready(et2, name: string)
 	{
 		// call parent
 		super.et2_ready(et2, name);

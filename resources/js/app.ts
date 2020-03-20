@@ -16,14 +16,13 @@ import {EgwApp} from "../../api/js/jsapi/egw_app";
  */
 class resourcesApp extends EgwApp
 {
-	static readonly appname: string =  'resources';
 
 	/**
 	 * Constructor
 	 */
 	constructor()
 	{
-		super();
+		super('resources');
 	}
 
 	/**

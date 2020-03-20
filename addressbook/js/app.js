@@ -43,11 +43,8 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @memberOf app.addressbook
      */
     function AddressbookApp() {
-        var _this = 
         // call parent
-        _super.call(this) || this;
-        _this.appname = 'addressbook';
-        return _this;
+        return _super.call(this, 'addressbook') || this;
     }
     /**
      * Destructor
