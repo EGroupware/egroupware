@@ -641,18 +641,21 @@ class Accounts
 				$old['account_lastname'] != $data['account_lastname'] ||
 				$old['account_email'] != $data['account_email']))
 			{
-				if (!$data['person_id']) $data['person_id'] = $old['person_id'];
+				if (!$data['person_id'])
+				{
+					$data['person_id'] = $old['person_id'];
+				}
 
 				// Include previous contact information to avoid blank history rows
-				$contact = (array)$GLOBALS['egw']->contacts->read($data['person_id']) + array(
-					'n_given'    => $data['account_firstname'],
-					'n_family'   => $data['account_lastname'],
-					'email'      => $data['account_email'],
-					'account_id' => $data['account_id'],
-					'id'         => $data['person_id'],
-					'owner'      => 0,
-				);
-				$GLOBALS['egw']->contacts->save($contact,true);		// true = ignore addressbook acl
+				$contact = array_merge((array)$GLOBALS['egw']->contacts->read($data['person_id']), array(
+						'n_given' => $data['account_firstname'],
+						'n_family' => $data['account_lastname'],
+						'email' => $data['account_email'],
+						'account_id' => $data['account_id'],
+						'id' => $data['person_id'],
+						'owner' => 0,
+				));
+				$GLOBALS['egw']->contacts->save($contact, true);    // true = ignore addressbook acl
 			}
 			// save primary group if necessary
 			if ($data['account_primary_group'] && (!($memberships = $this->memberships($id,true)) ||
