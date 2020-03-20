@@ -223,6 +223,11 @@ class calendar_hooks
 			$export_tzs += Api\DateTime::getTimezones();
 		}
 		$link_title_options = calendar_bo::get_link_options();
+		$whole_day_behaviour_options = array(
+		    'all_appointments' => lang('All as one-liners'),
+            'except_me' => lang('All as one-liners except mine'),
+            'default' => lang('Non-blocking as one-liners')
+        );
 		$settings = array(
 			'1.section' => array(
 				'type'  => 'section',
@@ -431,6 +436,14 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 			),
+            'whole_day_behaviour' => array(
+                'type'	 => 'select',
+                'label'  => 'Display behavior of whole-day appointments',
+                'name'   => 'whole_day_behaviour',
+                'help'   => 'How should a whole-day appointment be displayed?<br>By default blocking appointments are displayed spanning an entire day, non-blocking appointments are shown as one-liner above the dayview.',
+                'values' => $whole_day_behaviour_options,
+                'default'=> 'default',
+            ),
 			'2.5.section' => array(
 				'type'  => 'section',
 				'title' => lang('Configuration settings'),

@@ -63,7 +63,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	private event_wrapper: JQuery;
 	private user_spacer: JQuery;
 	private all_day: JQuery;
-	
+
 	private _date_helper : et2_date;
 	private registeredUID: string = null;
 
@@ -956,7 +956,19 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			}
 			if(!event.start.getUTCHours() && !event.start.getUTCMinutes() && event.end.getUTCHours() == 23 && event.end.getUTCMinutes() == 59)
 			{
-				event.whole_day_on_top = (event.non_blocking && event.non_blocking != '0');
+				let wholeDayBehaviour:string|boolean|object = egw.preference('whole_day_behaviour', 'calendar');
+				if(wholeDayBehaviour === 'all_appointments')
+				{
+					event.whole_day_on_top = true;
+				}
+				else if(wholeDayBehaviour === 'except_me')
+				{
+					event.whole_day_on_top = (event.creator != egw.user('account_id') && event.owner != egw.user('account_id'));
+				}
+				else
+				{
+					event.whole_day_on_top = (event.non_blocking && event.non_blocking != '0');
+				}
 			}
 			if (!event['whole_day_on_top'])
 			{
