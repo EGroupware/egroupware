@@ -115,7 +115,7 @@ class preferences_hooks
 			'undo', 'redo', 'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor',
 			'link', 'alignleft', 'aligncenter', 'alignright', 'alignjustify',
 			'numlist', 'bullist', 'outdent', 'indent', 'ltr', 'rtl',
-			'removeformat', 'code', 'image', 'searchreplace','formatselect', 'fontselect', 'fontsizeselect'
+			'removeformat', 'code', 'image', 'searchreplace','formatselect', 'fontselect', 'fontsizeselect', 'fullscreen'
 		);
 		$rte_toolbar_selOptions = array();
 		foreach ($rte_toolbar_list as $toolbar)
@@ -124,7 +124,7 @@ class preferences_hooks
 				'id' => $toolbar,
 				'label' => lang($toolbar),
 				'title' => lang($toolbar),
-				'icon' => Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url']).'/api/templates/default/images/htmlarea/'.$toolbar.'.png',
+				'icon' => Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url']).'/api/templates/default/images/htmlarea/'.$toolbar.'.svg',
 				'app' => 'api'
 			);
 		}
