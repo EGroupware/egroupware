@@ -104,9 +104,9 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		}
 
 		$data['changepassword'] = admin_cmd::parse_boolean($data['changepassword'],$this->account ? null : true);
-		$data['anonymous'] = admin_cmd::parse_boolean($data['anonymous'],$this->account ? null : false) ||
-			// automatic set anonymous flag for username "anonymous", to not allow to create anonymous user without it
-			($data['account_lid'] ?: admin_cmd::$accounts->id2name($this->account)) === 'anonymous';
+		// automatic set anonymous flag for username "anonymous", to not allow to create anonymous user without it
+		$data['anonymous'] = ($data['account_lid'] ?: admin_cmd::$accounts->id2name($this->account)) === 'anonymous' ?
+			true : admin_cmd::parse_boolean($data['anonymous'],$this->account ? null : false);
 
 		if ($data['mustchangepassword'] && $data['changepassword'])
 		{
