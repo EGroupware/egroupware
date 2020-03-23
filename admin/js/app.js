@@ -43,19 +43,19 @@ var AdminApp = /** @class */ (function (_super) {
      * @memberOf app.classes.admin
      */
     function AdminApp() {
-        var _this =
+		var _this =
 			// call parent
 			_super.call(this, 'admin') || this;
-        /**
-         * reference to iframe
-         *
-         * {et2_iframe}
-         */
-        _this.iframe = null;
-        /**
-         * reference to nextmatch
-         *
-         * {et2_extension_nextmatch}
+		/**
+		 * reference to iframe
+		 *
+		 * {et2_iframe}
+		 */
+		_this.iframe = null;
+		/**
+		 * reference to nextmatch
+		 *
+		 * {et2_extension_nextmatch}
          */
         _this.nm = null;
         /**
@@ -771,7 +771,7 @@ var AdminApp = /** @class */ (function (_super) {
                 params.account_id = _senders[0].id.split('::').pop(); // get last :: separated part
                 break;
         }
-        this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup);
+		this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup, 'admin');
     };
     /**
      * Submit statistic

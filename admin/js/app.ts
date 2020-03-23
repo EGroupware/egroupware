@@ -895,13 +895,13 @@ class AdminApp extends EgwApp
 			case 'copy':
 				params.owner = '0';
 				params.copy = true;
-				// Fall through
+			// Fall through
 			default:
 				params.account_id = _senders[0].id.split('::').pop();	// get last :: separated part
 				break;
 		}
 
-		this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup);
+		this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup, 'admin');
 	}
 
 	/**

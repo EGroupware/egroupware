@@ -2616,7 +2616,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_displayHeaderLines: function(_url) {
 		// only used by right clickaction
-		egw_openWindowCentered(_url,'mail_display_headerLines','870','600',window.outerWidth/2,window.outerHeight/2);
+		egw.openPopup(_url, '870', '600', null, 'mail');
 	},
 
 	/**
