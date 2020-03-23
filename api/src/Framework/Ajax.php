@@ -599,7 +599,7 @@ abstract class Ajax extends Api\Framework
 				}
 
 				$var = array();
-				$var['icon_or_star'] = $GLOBALS['egw_info']['server']['webserver_url'] . $this->template_dir.'/images/bullet.png';
+				$var['icon_or_star'] = $GLOBALS['egw_info']['server']['webserver_url'] . $this->template_dir.'/images/bullet.svg';
 				$var['target'] = '';
 				if(is_array($item_link))
 				{
