@@ -170,12 +170,13 @@ var et2_calendar_event = /** @class */ (function (_super) {
         // Copy to avoid changes, which may cause nm problems
         var value = event === null ? null : jQuery.extend({}, event);
         var parent = this.getParent();
+        var parent_owner = parent.getDOMNode(parent).dataset['owner'] || parent.getParent().options.owner;
         // Make sure id is a string, check values
         if (value) {
             this._values_check(value);
         }
         // Check for changing days in the grid view
-        if (!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent.options.owner)) {
+        if (!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent_owner)) {
             // May need to update parent to remove out-of-view events
             parent.removeChild(this);
             if (event === null && parent && parent.instanceOf(et2_widget_daycol_1.et2_calendar_daycol)) {
