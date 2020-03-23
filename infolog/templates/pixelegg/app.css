@@ -158,8 +158,8 @@ div#infolog-edit_infolog-edit-description {
 #infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid ul.et2_link_string li.et2_link {
   display: inline-block;
 }
-#infolog-index select#infolog-index_cat_id {
-  width: 200px;
+#infolog-index #infolog-index_nm .filtersContainer {
+  width: 60%;
 }
 #infolog-index select#infolog-index_filter {
   width: 150px;
@@ -169,6 +169,10 @@ div#infolog-edit_infolog-edit-description {
 }
 #infolog-edit_clean_history {
   display: none;
+}
+#infolog_index_cat_id_chzn {
+  min-width: auto;
+  width: 40% !important;
 }
 /*###########################################
 #                                           #
