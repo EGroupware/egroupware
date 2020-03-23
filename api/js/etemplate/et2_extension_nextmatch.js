@@ -104,23 +104,23 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * @memberOf et2_nextmatch
      */
     function et2_nextmatch(_parent, _attrs, _child) {
-		var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch._attributes, _child || {})) || this;
-		// When printing, we change the layout around.  Keep some values so it can be restored after
-		_this.print = {
-			old_height: 0,
-			row_selector: '',
-			orientation_style: null
-		};
-		_this.activeFilters = {col_filter: {}};
-		_this.columns = [];
-		// keeps sorted columns
-		_this.sortedColumnsList = [];
-		// Directly set current col_filters from settings
-		jQuery.extend(_this.activeFilters.col_filter, _this.options.settings.col_filter);
-		/*
-		Process selected custom fields here, so that the settings are correctly
-		set before the row template is parsed
-		*/
+        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch._attributes, _child || {})) || this;
+        // When printing, we change the layout around.  Keep some values so it can be restored after
+        _this.print = {
+            old_height: 0,
+            row_selector: '',
+            orientation_style: null
+        };
+        _this.activeFilters = { col_filter: {} };
+        _this.columns = [];
+        // keeps sorted columns
+        _this.sortedColumnsList = [];
+        // Directly set current col_filters from settings
+        jQuery.extend(_this.activeFilters.col_filter, _this.options.settings.col_filter);
+        /*
+        Process selected custom fields here, so that the settings are correctly
+        set before the row template is parsed
+        */
         var prefs = _this._getPreferences();
         var cfs = {};
         for (var i = 0; i < prefs.visible.length; i++) {
@@ -740,6 +740,17 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 else {
                     colName = this._getColumnName(_row[i].widget);
                 }
+                _colData[i].visible = negated;
+                var stop_1 = false;
+                for (var j = 0; j < columnDisplay.length && !stop_1; j++) {
+                    if (columnDisplay[j] == colName) {
+                        _colData[i].visible = !negated;
+                        stop_1 = true;
+                    }
+                }
+                if (!negated) {
+                    _colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
+                }
                 if (!colName)
                     continue;
                 if (size[colName]) {
@@ -751,16 +762,6 @@ var et2_nextmatch = /** @class */ (function (_super) {
                         _colData[i].width = parseInt(size[colName]) + 'px';
                     }
                 }
-                if (!negated) {
-                    _colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
-                }
-                for (var j = 0; j < columnDisplay.length; j++) {
-                    if (columnDisplay[j] == colName) {
-                        _colData[i].visible = !negated;
-                        continue RowLoop;
-                    }
-                }
-                _colData[i].visible = negated;
             }
         }
         _colData.sort(function (a, b) {
@@ -956,53 +957,54 @@ var et2_nextmatch = /** @class */ (function (_super) {
         }
     };
     et2_nextmatch.prototype._parseDataRow = function (_row, _rowData, _colData) {
-		var columnWidgets = [];
-		_row.sort(function (a, b) {
-			return a.colData.order - b.colData.order;
-		});
-		for (var x = 0; x < this.columns.length; x++) {
-			if (!this.columns[x].visible) {
-				continue;
-			}
-			if (typeof _row[x] != "undefined" && _row[x].widget) {
-				columnWidgets[x] = _row[x].widget;
-				// Append the widget to this container
-				this.addChild(_row[x].widget);
-			} else {
-				columnWidgets[x] = _row[x].widget;
-			}
-			// Pass along column alignment
-			if (_row[x].align && columnWidgets[x]) {
-				columnWidgets[x].align = _row[x].align;
-			}
-		}
-		this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);
-		// Create the grid controller
-		this.controller = new et2_extension_nextmatch_controller_1.et2_nextmatch_controller(null, this.egw(), this.getInstanceManager().etemplate_exec_id, this, null, this.dataview.grid, this.rowProvider, this.options.settings.action_links, null, this.options.actions);
-		// Need to trigger empty row the first time
-		if (total == 0)
-			this.controller._emptyRow();
-		// Set data cache prefix to either provided custom or auto
-		if (!this.options.settings.dataStorePrefix && this.options.settings.get_rows) {
-			// Use jsapi data module to update
-			var list = this.options.settings.get_rows.split('.', 2);
-			if (list.length < 2)
-				list = this.options.settings.get_rows.split('_'); // support "app_something::method"
-			this.options.settings.dataStorePrefix = list[0];
-		}
-		this.controller.setPrefix(this.options.settings.dataStorePrefix);
-		// Set the view
-		this.controller._view = this.view;
-		// Load the initial order
-		/*this.controller.loadInitialOrder(this._getInitialOrder(
-			this.options.settings.rows, this.options.settings.row_id
-		));*/
-		// Set the initial row count
-		var total = typeof this.options.settings.total != "undefined" ?
-			this.options.settings.total : 0;
-		// This triggers an invalidate, which updates the grid
-		this.dataview.grid.setTotalCount(total);
-		// Insert any data sent from server, so invalidate finds data already
+        var columnWidgets = [];
+        _row.sort(function (a, b) {
+            return a.colData.order - b.colData.order;
+        });
+        for (var x = 0; x < this.columns.length; x++) {
+            if (!this.columns[x].visible) {
+                continue;
+            }
+            if (typeof _row[x] != "undefined" && _row[x].widget) {
+                columnWidgets[x] = _row[x].widget;
+                // Append the widget to this container
+                this.addChild(_row[x].widget);
+            }
+            else {
+                columnWidgets[x] = _row[x].widget;
+            }
+            // Pass along column alignment
+            if (_row[x].align && columnWidgets[x]) {
+                columnWidgets[x].align = _row[x].align;
+            }
+        }
+        this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);
+        // Create the grid controller
+        this.controller = new et2_extension_nextmatch_controller_1.et2_nextmatch_controller(null, this.egw(), this.getInstanceManager().etemplate_exec_id, this, null, this.dataview.grid, this.rowProvider, this.options.settings.action_links, null, this.options.actions);
+        // Need to trigger empty row the first time
+        if (total == 0)
+            this.controller._emptyRow();
+        // Set data cache prefix to either provided custom or auto
+        if (!this.options.settings.dataStorePrefix && this.options.settings.get_rows) {
+            // Use jsapi data module to update
+            var list = this.options.settings.get_rows.split('.', 2);
+            if (list.length < 2)
+                list = this.options.settings.get_rows.split('_'); // support "app_something::method"
+            this.options.settings.dataStorePrefix = list[0];
+        }
+        this.controller.setPrefix(this.options.settings.dataStorePrefix);
+        // Set the view
+        this.controller._view = this.view;
+        // Load the initial order
+        /*this.controller.loadInitialOrder(this._getInitialOrder(
+            this.options.settings.rows, this.options.settings.row_id
+        ));*/
+        // Set the initial row count
+        var total = typeof this.options.settings.total != "undefined" ?
+            this.options.settings.total : 0;
+        // This triggers an invalidate, which updates the grid
+        this.dataview.grid.setTotalCount(total);
+        // Insert any data sent from server, so invalidate finds data already
         if (this.options.settings.rows && this.options.settings.num_rows) {
             this.controller.loadInitialData(this.options.settings.dataStorePrefix, this.options.settings.row_id, this.options.settings.rows);
             // Remove, to prevent duplication
@@ -1101,37 +1103,37 @@ var et2_nextmatch = /** @class */ (function (_super) {
         if (!this.selectPopup) {
             var select_1 = et2_createWidget("select", {
                 multiple: true,
-				rows: 8,
-				empty_label: this.egw().lang("select columns"),
-				selected_first: false,
-				value_class: "selcolumn_sortable_"
-			}, this);
-			select_1.set_select_options(columns);
-			select_1.set_value(columns_selected);
-			var autoRefresh_1 = et2_createWidget("select", {
-				"empty_label": "Refresh"
-			}, this);
-			autoRefresh_1.set_id("nm_autorefresh");
-			autoRefresh_1.set_select_options({
-				// Cause [unknown] problems with mail
-				//30: "30 seconds",
-				//60: "1 Minute",
-				180: "3 Minutes",
-				300: "5 Minutes",
-				900: "15 Minutes",
-				1800: "30 Minutes"
-			});
-			autoRefresh_1.set_value(this._get_autorefresh());
-			autoRefresh_1.set_statustext(egw.lang("Automatically refresh list"));
-			var defaultCheck = et2_createWidget("select", {"empty_label": "Preference"}, this);
-			defaultCheck.set_id('nm_col_preference');
-			defaultCheck.set_select_options({
-				'default': {label: 'Default', title: 'Set these columns as the default'},
-				'reset': {label: 'Reset', title: "Reset all user's column preferences"},
-				'force': {label: 'Force', title: 'Force column preference so users cannot change it'}
-			});
-			defaultCheck.set_value(this.options.settings.columns_forced ? 'force' : '');
-			var okButton = et2_createWidget("buttononly", {"background_image": true, image: "check"}, this);
+                rows: 8,
+                empty_label: this.egw().lang("select columns"),
+                selected_first: false,
+                value_class: "selcolumn_sortable_"
+            }, this);
+            select_1.set_select_options(columns);
+            select_1.set_value(columns_selected);
+            var autoRefresh_1 = et2_createWidget("select", {
+                "empty_label": "Refresh"
+            }, this);
+            autoRefresh_1.set_id("nm_autorefresh");
+            autoRefresh_1.set_select_options({
+                // Cause [unknown] problems with mail
+                //30: "30 seconds",
+                //60: "1 Minute",
+                180: "3 Minutes",
+                300: "5 Minutes",
+                900: "15 Minutes",
+                1800: "30 Minutes"
+            });
+            autoRefresh_1.set_value(this._get_autorefresh());
+            autoRefresh_1.set_statustext(egw.lang("Automatically refresh list"));
+            var defaultCheck = et2_createWidget("select", { "empty_label": "Preference" }, this);
+            defaultCheck.set_id('nm_col_preference');
+            defaultCheck.set_select_options({
+                'default': { label: 'Default', title: 'Set these columns as the default' },
+                'reset': { label: 'Reset', title: "Reset all user's column preferences" },
+                'force': { label: 'Force', title: 'Force column preference so users cannot change it' }
+            });
+            defaultCheck.set_value(this.options.settings.columns_forced ? 'force' : '');
+            var okButton = et2_createWidget("buttononly", { "background_image": true, image: "check" }, this);
             okButton.set_label(this.egw().lang("ok"));
             okButton.onclick = function () {
                 // Update visibility
@@ -1421,7 +1423,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             // We don't use iterateOver because it checks sub-children
             for (var i = this._children.length - 1; i >= 0; i--) {
                 var _node = this._children[i];
-                if (_node != this.header) {
+                if (_node != this.header && _node !== template) {
                     this.removeChild(_node);
                     _node.destroy();
                 }
@@ -1432,9 +1434,6 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 this.options.settings.columnselection_pref = template_name;
             }
             this.dataview = new et2_dataview_1.et2_dataview(this.innerDiv, this.egw());
-        }
-        // Create the template
-        if (template_name) {
         }
         if (!template) {
             this.egw().debug("error", "Error while loading definition template for " +

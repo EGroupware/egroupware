@@ -1054,6 +1054,20 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				{
 					colName = this._getColumnName(_row[i].widget);
 				}
+				_colData[i].visible = negated;
+				let stop = false;
+				for(var j = 0; j < columnDisplay.length && !stop; j++)
+				{
+					if(columnDisplay[j] == colName)
+					{
+						_colData[i].visible = !negated;
+						stop = true;
+					}
+				}
+				if(!negated)
+				{
+					_colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
+				}
 				if(!colName) continue;
 
 				if(size[colName])
@@ -1068,20 +1082,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 						_colData[i].width = parseInt(size[colName])+'px';
 					}
 				}
-				if(!negated)
-				{
-					_colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
-				}
-				for(var j = 0; j < columnDisplay.length; j++)
-				{
-					if(columnDisplay[j] == colName)
-					{
-						_colData[i].visible = !negated;
-
-						continue RowLoop;
-					}
-				}
-				_colData[i].visible = negated;
 			}
 		}
 
@@ -1941,7 +1941,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// We don't use iterateOver because it checks sub-children
 			for (let i = this._children.length - 1; i >= 0; i--) {
 				const _node = this._children[i];
-				if (_node != this.header) {
+				if (_node != this.header && _node !== template) {
 					this.removeChild(_node);
 					_node.destroy();
 				}
@@ -1953,11 +1953,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				this.options.settings.columnselection_pref = template_name;
 			}
 			this.dataview = new et2_dataview(this.innerDiv, this.egw());
-		}
-
-		// Create the template
-		if (template_name)
-		{
 		}
 
 		if (!template)

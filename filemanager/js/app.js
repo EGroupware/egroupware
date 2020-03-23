@@ -37,9 +37,9 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @memberOf app.filemanager
      */
     function filemanagerAPP() {
-        var _this =
-			// call parent
-			_super.call(this, 'filemanager') || this;
+        var _this = 
+        // call parent
+        _super.call(this, 'filemanager') || this;
         /**
          * path widget, by template
          */
@@ -302,12 +302,18 @@ var filemanagerAPP = /** @class */ (function (_super) {
      */
     filemanagerAPP.prototype._upload_callback = function (_data) {
         if (_data.msg || _data.uploaded)
-			window.egw_refresh(_data.msg, this.appname);
+            window.egw_refresh(_data.msg, this.appname);
         var that = this;
         for (var file in _data.uploaded) {
             if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed) {
                 var buttons = [
-                    { text: this.egw.lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true, image: 'check' },
+                    {
+                        text: this.egw.lang("Yes"),
+                        id: "overwrite",
+                        class: "ui-priority-primary",
+                        "default": true,
+                        image: 'check'
+                    },
                     { text: this.egw.lang("Rename"), id: "rename", image: 'edit' },
                     { text: this.egw.lang("Cancel"), id: "cancel" }
                 ];
@@ -513,7 +519,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param _data
      */
     filemanagerAPP.prototype._do_action_callback = function (_data) {
-		window.egw_refresh(_data.msg, this.appname);
+        window.egw_refresh(_data.msg, this.appname);
     };
     /**
      * Force download of a file by appending '?download' to it's download url
@@ -612,14 +618,14 @@ var filemanagerAPP = /** @class */ (function (_super) {
             }
             // Toggle button icon to the other view
             //todo: nm.controller needs to be changed to nm.getController after merging typescript branch into master
-            button_widget.set_image("list_" + (view == nm.getController().VIEW_ROW ? nm.getController().VIEW_TILE : nm.getController().VIEW_ROW));
-            button_widget.set_statustext(view == nm.getController().VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
+            button_widget.set_image("list_" + (view == et2_nextmatch_controller.VIEW_ROW ? et2_nextmatch_controller.VIEW_TILE : et2_nextmatch_controller.VIEW_ROW));
+            button_widget.set_statustext(view == et2_nextmatch_controller.VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
         }
         nm.set_view(view);
         // Put it into active filters (but don't refresh)
         nm.activeFilters["view"] = view;
         // Change template to match
-        var template = view == nm.getController().VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile';
+        var template = view == et2_nextmatch_controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile';
         nm.set_template(template);
         // Wait for template to load, then refresh
         template = nm.getWidgetById(template);
@@ -724,8 +730,8 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 (dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 || !dir)
         });
         // Last 10 folders
-		var previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
-		var action_index = 0;
+        var previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
+        var action_index = 0;
         for (var i = 0; i < 10; i++) {
             var path = i < previous_dsts.length ? previous_dsts[i] : '';
             actions.push({
@@ -806,10 +812,10 @@ var filemanagerAPP = /** @class */ (function (_super) {
             }
         }
         // Remember the target for next time
-		var previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
+        var previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
         previous_dsts.unshift(dst);
-		previous_dsts = Array.from(new Set(previous_dsts)).slice(0, 9);
-		egw.set_preference(this.appname, 'drop_history', previous_dsts);
+        previous_dsts = Array.from(new Set(previous_dsts)).slice(0, 9);
+        egw.set_preference(this.appname, 'drop_history', previous_dsts);
         // Actual action id will be something like file_drop_{move|copy|link}[_other_id],
         // but we need to send move, copy or link
         var action_id = _action.id.replace("file_drop_", '').split('_', 1)[0];
@@ -976,7 +982,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
      */
     filemanagerAPP.prototype._share_link_callback = function (_data) {
         if (_data.msg || _data.share_link)
-			window.egw_refresh(_data.msg, this.appname);
+            window.egw_refresh(_data.msg, this.appname);
         console.log("_data", _data);
         var app = this;
         var copy_link_to_clipboard = function (evt) {
