@@ -176,15 +176,15 @@ var et2_calendar_event = /** @class */ (function (_super) {
         }
         // Check for changing days in the grid view
         if (!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent.options.owner)) {
-			// May need to update parent to remove out-of-view events
-			parent.removeChild(this);
-			if (event === null && parent && parent.instanceOf(et2_widget_daycol_1.et2_calendar_daycol)) {
-				parent._out_of_view();
-			}
-			// This should now cease to exist, as new events have been created
-			this.destroy();
-			return;
-		}
+            // May need to update parent to remove out-of-view events
+            parent.removeChild(this);
+            if (event === null && parent && parent.instanceOf(et2_widget_daycol_1.et2_calendar_daycol)) {
+                parent._out_of_view();
+            }
+            // This should now cease to exist, as new events have been created
+            this.destroy();
+            return;
+        }
         // Copy to avoid changes, which may cause nm problems
         this.options.value = jQuery.extend({}, value);
         if (this.getParent().options.date) {
@@ -216,7 +216,9 @@ var et2_calendar_event = /** @class */ (function (_super) {
         var im = this.getInstanceManager();
         et2_selectbox.cat_options({
             _type: 'select-cat',
-            getInstanceManager: function () { return im; }
+            getInstanceManager: function () {
+                return im;
+            }
         }, { application: event.app || 'calendar' });
         // Need cleaning? (DnD helper removes content)
         // @ts-ignore
@@ -267,11 +269,9 @@ var et2_calendar_event = /** @class */ (function (_super) {
         this.div.toggleClass('calendar_calEventUnknown', event.participants[egw.user('account_id')] ? event.participants[egw.user('account_id')][0] === 'U' : false);
         this.div.addClass(status_class);
         this.body.toggleClass('calendar_calEventBodySmall', event.whole_day_on_top || false);
-        // Header
-        var title = !event.is_private ? egw.htmlspecialchars(event['title']) : egw.lang('private');
         this.title
             .html('<span class="calendar_calTimespan">' + this._get_timespan(event) + '<br /></span>')
-            .append('<span class="calendar_calEventTitle">' + title + '</span>');
+            .append('<span class="calendar_calEventTitle">' + this._getTitle(event) + '</span>');
         // Colors - don't make them transparent if there is no color
         // @ts-ignore
         if (jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div, 'background-color').toRgbaString()) {
@@ -282,7 +282,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
             .html(this._icons().join(''));
         // Body
         if (event.whole_day_on_top) {
-            this.body.html(title);
+            this.body.html(this._getTitle(event));
         }
         else {
             // @ts-ignore
@@ -293,7 +293,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
                 timezone: 0
             }, { "ampm": (egw.preference("timeformat") === "12") }).trim();
             this.body
-                .html('<span class="calendar_calEventTitle">' + title + '</span>')
+                .html('<span class="calendar_calEventTitle">' + this._getTitle(event) + '</span>')
                 .append('<span class="calendar_calTimespan">' + start_time + '</span>');
             if (this.options.value.description.trim()) {
                 this.body
@@ -428,9 +428,11 @@ var et2_calendar_event = /** @class */ (function (_super) {
             '<span class="calendar_calEventTitle">' + egw.htmlspecialchars(this.options.value.title) + '</span><br>' +
             egw.htmlspecialchars(this.options.value.description) + '</p>' +
             '<p style="margin: 2px 0px;">' + times + '</p>' +
-            (this.options.value.location ? '<p><span class="calendar_calEventLabel">' + this.egw().lang('Location') + '</span>:' +
+            (this.options.value.location ? '<p><span class="calendar_calEventLabel">' + this.egw()
+                .lang('Location') + '</span>:' +
                 egw.htmlspecialchars(this.options.value.location) + '</p>' : '') +
-            (cat_label ? '<p><span class="calendar_calEventLabel">' + this.egw().lang('Category') + '</span>:' + cat_label + '</p>' : '') +
+            (cat_label ? '<p><span class="calendar_calEventLabel">' + this.egw()
+                .lang('Category') + '</span>:' + cat_label + '</p>' : '') +
             '<p><span class="calendar_calEventLabel">' + this.egw().lang('Participants') + '</span>:<br />' +
             participants + '</p>' + this._participant_summary(this.options.value.participants) +
             '</div>' +
@@ -447,7 +449,8 @@ var et2_calendar_event = /** @class */ (function (_super) {
         }
         var participant_status = { A: 0, R: 0, T: 0, U: 0, D: 0 };
         var status_label = { A: 'accepted', R: 'rejected', T: 'tentative', U: 'unknown', D: 'delegated' };
-        var participant_summary = Object.keys(this.options.value.participants).length + ' ' + this.egw().lang('Participants') + ': ';
+        var participant_summary = Object.keys(this.options.value.participants).length + ' ' + this.egw()
+            .lang('Participants') + ': ';
         var status_totals = [];
         for (var id in this.options.value.participants) {
             var status = this.options.value.participants[id].substr(0, 1);
@@ -471,17 +474,20 @@ var et2_calendar_event = /** @class */ (function (_super) {
         }
         else {
             if (this.options.value.app !== 'calendar') {
-                icons.push('<img src="' + this.egw().image('navbar', this.options.value.app) + '" title="' + this.egw().lang(this.options.value.app) + '"/>');
+                icons.push('<img src="' + this.egw().image('navbar', this.options.value.app) + '" title="' + this.egw()
+                    .lang(this.options.value.app) + '"/>');
             }
             if (this.options.value.priority == 3) {
-                icons.push('<img src="' + this.egw().image('high', 'calendar') + '" title="' + this.egw().lang('high priority') + '"/>');
+                icons.push('<img src="' + this.egw().image('high', 'calendar') + '" title="' + this.egw()
+                    .lang('high priority') + '"/>');
             }
             if (this.options.value.public == '0') {
                 // Show private flag
                 icons.push('<img src="' + this.egw().image('private', 'calendar') + '"/>');
             }
             if (this.options.value['recur_type']) {
-                icons.push('<img src="' + this.egw().image('recur', 'calendar') + '" title="' + this.egw().lang('recurring event') + '"/>');
+                icons.push('<img src="' + this.egw().image('recur', 'calendar') + '" title="' + this.egw()
+                    .lang('recurring event') + '"/>');
             }
             // icons for single user, multiple users or group(s) and resources
             var single = '<img src="' + this.egw().image('single', 'calendar') + '" title="' + '"/>';
@@ -508,15 +514,18 @@ var et2_calendar_event = /** @class */ (function (_super) {
                 */
             }
             if (this.options.value.alarm && !jQuery.isEmptyObject(this.options.value.alarm) && !this.options.value.is_private) {
-                icons.push('<img src="' + this.egw().image('alarm', 'calendar') + '" title="' + this.egw().lang('alarm') + '"/>');
+                icons.push('<img src="' + this.egw().image('alarm', 'calendar') + '" title="' + this.egw()
+                    .lang('alarm') + '"/>');
             }
             if (this.options.value.participants[egw.user('account_id')] && this.options.value.participants[egw.user('account_id')][0] == 'U') {
-                icons.push('<img src="' + this.egw().image('needs-action', 'calendar') + '" title="' + this.egw().lang('Needs action') + '"/>');
+                icons.push('<img src="' + this.egw().image('needs-action', 'calendar') + '" title="' + this.egw()
+                    .lang('Needs action') + '"/>');
             }
         }
         // Always include non-blocking, regardless of privacy
         if (this.options.value.non_blocking) {
-            icons.push('<img src="' + this.egw().image('nonblocking', 'calendar') + '" title="' + this.egw().lang('non blocking') + '"/>');
+            icons.push('<img src="' + this.egw().image('nonblocking', 'calendar') + '" title="' + this.egw()
+                .lang('non blocking') + '"/>');
         }
         return icons;
     };
@@ -662,107 +671,105 @@ var et2_calendar_event = /** @class */ (function (_super) {
         if (new_cache_id != old_cache_id) {
             var old_daywise = egw.dataGetUIDdata(old_cache_id);
             old_daywise = old_daywise && old_daywise.data ? old_daywise.data : [];
-			old_daywise.splice(old_daywise.indexOf(this.options.value.row_id), 1);
-			egw.dataStoreUID(old_cache_id, old_daywise);
-			if (new_daywise.indexOf(event.row_id) < 0) {
-				new_daywise.push(event.row_id);
-			}
-			if (egw.dataHasUID(new_cache_id)) {
-				egw.dataStoreUID(new_cache_id, new_daywise);
-			}
-		}
-		return false;
-	};
-	/**
-	 * Check that the event passes the given status filter.
-	 * Status filter is set in the sidebox and used when fetching several events, but if user changes their status
-	 * for an event, it may no longer match and have to be removed.
-	 *
-	 * @param event
-	 * @param filter
-	 * @private
-	 */
-	et2_calendar_event.prototype._status_check = function (event, filter, owner) {
-		if (!owner || !event) {
-			return false;
-		}
-		// If we're doing a bunch, just one passing is enough
-		if (typeof owner !== "string") {
-			var pass = false;
-			for (var j = 0; j < owner.length && pass == false; j++) {
-				pass = pass || this._status_check(event, filter, owner[j]);
-			}
-			return pass;
-		}
-		// Show also events just owned by selected user
-		if (filter == 'owner') {
-			return owner == event.owner;
-		}
-		// Get the relevant participant
-		var participant = event.participants[owner];
-		// If filter says don't look in groups, skip it all
-		if (!participant && filter === 'no-enum-groups') {
-			return false;
-		}
-		// Couldn't find the current owner in the participant list, check groups & resources
-		if (!participant) {
-			var options = null;
-			if (app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner')) {
-				options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
-			}
-			if ((isNaN(parseInt(owner)) || parseInt(owner) < 0) && options && typeof options.find == "function") {
-				var resource = options.find(function (element) {
-					return element.id == owner;
-				}) || {};
-				if (resource && resource.resources) {
-					var matching_participant = resource.resources.filter(function (id) {
-						return typeof event.participants[id] != "undefined";
-					});
-					return this._status_check(event, filter, matching_participant);
-				}
-			}
-		}
-		var status = et2_calendar_event.split_status(participant);
-		switch (filter) {
-			default:
-			case 'all':
-				return true;
-			case 'default': // Show all status, but rejected
-				return status !== 'R';
-			case 'accepted': //Show only accepted events
-				return status === 'A';
-			case 'unknown': // Show only invitations, not yet accepted or rejected
-				return status === 'U';
-			case 'tentative': // Show only tentative accepted events
-				return status === 'T';
-			case 'delegated': // Show only delegated events
-				return status === 'D';
-			case 'rejected': // Show only rejected events
-				return status === 'R';
-			// Handled above
-			//case 'owner': // Show also events just owned by selected user
-			case 'hideprivate': // Show all events, as if they were private
-				// handled server-side
-				return true;
-			case 'showonlypublic': // Show only events flagged as public, -not checked as private
-				return event.public == '1';
-			// Handled above
-			// case 'no-enum-groups': // Do not include events of group members
-			case 'not-unknown': // Show all status, but unknown
-				return status !== 'U';
-			case 'deleted': // Show events that have been deleted
-				return event.deleted;
-		}
-	};
-	et2_calendar_event.prototype.attachToDOM = function () {
-		var result = _super.prototype.attachToDOM.call(this);
-		// Remove the binding for the click handler, unless there's something
-		// custom here.
-		if (!this.onclick) {
-			jQuery(this.node).off("click");
-		}
-		return result;
-	};
+            old_daywise.splice(old_daywise.indexOf(this.options.value.row_id), 1);
+            egw.dataStoreUID(old_cache_id, old_daywise);
+            if (new_daywise.indexOf(event.row_id) < 0) {
+                new_daywise.push(event.row_id);
+            }
+            if (egw.dataHasUID(new_cache_id)) {
+                egw.dataStoreUID(new_cache_id, new_daywise);
+            }
+        }
+        return false;
+    };
+    /**
+     * Check that the event passes the given status filter.
+     * Status filter is set in the sidebox and used when fetching several events, but if user changes their status
+     * for an event, it may no longer match and have to be removed.
+     *
+     * @param event
+     * @param filter
+     * @private
+     */
+    et2_calendar_event.prototype._status_check = function (event, filter, owner) {
+        if (!owner || !event) {
+            return false;
+        }
+        // If we're doing a bunch, just one passing is enough
+        if (typeof owner !== "string") {
+            var pass = false;
+            for (var j = 0; j < owner.length && pass == false; j++) {
+                pass = pass || this._status_check(event, filter, owner[j]);
+            }
+            return pass;
+        }
+        // Show also events just owned by selected user
+        if (filter == 'owner') {
+            return owner == event.owner;
+        }
+        // Get the relevant participant
+        var participant = event.participants[owner];
+        // If filter says don't look in groups, skip it all
+        if (!participant && filter === 'no-enum-groups') {
+            return false;
+        }
+        // Couldn't find the current owner in the participant list, check groups & resources
+        if (!participant) {
+            var options = null;
+            if (app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner')) {
+                options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+            }
+            if ((isNaN(parseInt(owner)) || parseInt(owner) < 0) && options && typeof options.find == "function") {
+                var resource = options.find(function (element) {
+                    return element.id == owner;
+                }) || {};
+                if (resource && resource.resources) {
+                    var matching_participant = resource.resources.filter(function (id) { return typeof event.participants[id] != "undefined"; });
+                    return this._status_check(event, filter, matching_participant);
+                }
+            }
+        }
+        var status = et2_calendar_event.split_status(participant);
+        switch (filter) {
+            default:
+            case 'all':
+                return true;
+            case 'default': // Show all status, but rejected
+                return status !== 'R';
+            case 'accepted': //Show only accepted events
+                return status === 'A';
+            case 'unknown': // Show only invitations, not yet accepted or rejected
+                return status === 'U';
+            case 'tentative': // Show only tentative accepted events
+                return status === 'T';
+            case 'delegated': // Show only delegated events
+                return status === 'D';
+            case 'rejected': // Show only rejected events
+                return status === 'R';
+            // Handled above
+            //case 'owner': // Show also events just owned by selected user
+            case 'hideprivate': // Show all events, as if they were private
+                // handled server-side
+                return true;
+            case 'showonlypublic': // Show only events flagged as public, -not checked as private
+                return event.public == '1';
+            // Handled above
+            // case 'no-enum-groups': // Do not include events of group members
+            case 'not-unknown': // Show all status, but unknown
+                return status !== 'U';
+            case 'deleted': // Show events that have been deleted
+                return event.deleted;
+        }
+    };
+    et2_calendar_event.prototype.attachToDOM = function () {
+        var result = _super.prototype.attachToDOM.call(this);
+        // Remove the binding for the click handler, unless there's something
+        // custom here.
+        if (!this.onclick) {
+            jQuery(this.node).off("click");
+        }
+        return result;
+    };
     /**
      * Click handler calling custom handler set via onclick attribute to this.onclick.
      * All other handling is done by the timegrid widget.
@@ -833,7 +840,8 @@ var et2_calendar_event = /** @class */ (function (_super) {
         if (!this._actionObject) {
             // Get the top level element - timegrid or so
             var objectManager = this.getParent()._actionObject || this.getParent().getParent()._actionObject ||
-                egw_getAppObjectManager(true).getObjectById(this.getParent().getParent().getParent().id) || egw_getAppObjectManager(true);
+                egw_getAppObjectManager(true)
+                    .getObjectById(this.getParent().getParent().getParent().id) || egw_getAppObjectManager(true);
             this._actionObject = objectManager.getObjectById('calendar::' + this.options.value.row_id);
         }
         if (this._actionObject == null) {
@@ -909,7 +917,9 @@ var et2_calendar_event = /** @class */ (function (_super) {
                 // Handle groups & grouped resources like mailing lists, they won't match so
                 // we need the list - pull it from sidebox owner
                 if ((isNaN(parent_owner[i]) || parent_owner[i] < 0) && options && typeof options.find == "function") {
-                    var resource = options.find(function (element) { return element.id == parent_owner[i]; }) || {};
+                    var resource = options.find(function (element) {
+                        return element.id == parent_owner[i];
+                    }) || {};
                     if (resource && resource.resources) {
                         parent_owner.splice(i, 1);
                         parent_owner = parent_owner.concat(resource.resources);
@@ -921,7 +931,9 @@ var et2_calendar_event = /** @class */ (function (_super) {
                 var id = participants_1[i];
                 // Expand group invitations
                 if (parseInt(id) < 0) {
-                    if (options && options.find && (resource = options.find(function (element) { return element.id === id; })) && resource.resources) {
+                    if (options && options.find && (resource = options.find(function (element) {
+                        return element.id === id;
+                    })) && resource.resources) {
                         participants_1 = participants_1.concat(resource.resources);
                     }
                     else {
@@ -1020,7 +1032,9 @@ var et2_calendar_event = /** @class */ (function (_super) {
                 { text: egw.lang("Edit series"), id: "series" },
                 { text: egw.lang("Cancel"), id: "cancel" }
             ];
-            et2_dialog.show_dialog(function (button_id) { callback.call(that, button_id, event_data); }, (!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
+            et2_dialog.show_dialog(function (button_id) {
+                callback.call(that, button_id, event_data);
+            }, (!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
                 egw.lang("Do you want to edit this event as an exception or the whole series?"), egw.lang("This event is part of a series"), {}, buttons, et2_dialog.QUESTION_MESSAGE);
         }
         else {
@@ -1063,7 +1077,9 @@ var et2_calendar_event = /** @class */ (function (_super) {
         var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours(), -tempDate.getTimezoneOffset(), tempDate.getSeconds());
         var termination_date = instance_date < today ? egw.lang('today') : date(egw.preference('dateformat'), instance_date);
         if (parseInt(event_data.recur_type)) {
-            et2_dialog.show_dialog(function (button_id) { callback.call(that, button_id, event_data); }, (!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
+            et2_dialog.show_dialog(function (button_id) {
+                callback.call(that, button_id, event_data);
+            }, (!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
                 egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.", termination_date), egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL, et2_dialog.WARNING_MESSAGE);
         }
     };
@@ -1071,13 +1087,13 @@ var et2_calendar_event = /** @class */ (function (_super) {
         ui.helper.width(ui.width());
     };
     /**
-    * splits the combined status, quantity and role
-    *
-    * @param {string} status - combined value, O: status letter: U, T, A, R
-    * @param {int} [quantity] - quantity
-    * @param {string} [role]
-    * @return string status U, T, A or R, same as $status parameter on return
-    */
+     * splits the combined status, quantity and role
+     *
+     * @param {string} status - combined value, O: status letter: U, T, A, R
+     * @param {int} [quantity] - quantity
+     * @param {string} [role]
+     * @return string status U, T, A or R, same as $status parameter on return
+     */
     et2_calendar_event.split_status = function (status, quantity, role) {
         quantity = 1;
         role = 'REQ-PARTICIPANT';
@@ -1116,6 +1132,40 @@ var et2_calendar_event = /** @class */ (function (_super) {
         aoi.doSetState = function (_state, _outerCall) {
         };
         return aoi;
+    };
+    /**
+     * Creates the title-string for an event
+     * @param event {Object} the current event.
+     * @return {string} the resulting title.
+     */
+    et2_calendar_event.prototype._getTitle = function (event) {
+        var title = "";
+        if (!event.is_private) {
+            title = egw.htmlspecialchars(event['title']);
+            title += this._getParticipants(event);
+        }
+        else {
+            title = egw.lang('private');
+        }
+        return title;
+    };
+    et2_calendar_event.prototype._getParticipants = function (event) {
+        var participants = "";
+        if (this._hasParticipantNames(event)) {
+            return '<span style="font-weight: normal"> // ' + event["participant_names"] + "</span>";
+        }
+        return participants;
+    };
+    /**
+     * Tries to detect provided names of participants for an event.
+     * Names will only be shown when provided with the event.
+     *
+     * @param event {Object} the current event
+     * @return boolean whether the event contains participant-names or not
+     */
+    et2_calendar_event.prototype._hasParticipantNames = function (event) {
+        return event["participant_names"] !== undefined
+            && event["participant_names"] !== null;
     };
     et2_calendar_event._attributes = {
         "value": {
