@@ -888,7 +888,7 @@ app.classes.admin = AppJS.extend(
 				params.account_id = _senders[0].id.split('::').pop();	// get last :: separated part
 				break;
 		}
-		this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup);
+		this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup, 'admin');
 	},
 
 	/**
