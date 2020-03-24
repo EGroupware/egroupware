@@ -16,7 +16,7 @@
 
 namespace EGroupware\Api;
 
-use calendar_bo;	// to_do: do NOT require it, just use if there
+use calendar_bo;  // to_do: do NOT require it, just use if there
 
 /**
  * Business object for contacts
@@ -1672,7 +1672,12 @@ class Contacts extends Contacts\Storage
 	 */
 	function read_calendar($uids,$extra_title=true)
 	{
-		if (!$GLOBALS['egw_info']['user']['apps']['calendar']) return array();
+		if (!$GLOBALS['egw_info']['user']['apps']['calendar'] ||
+				$GLOBALS['egw_info']['server']['disable_event_column'] == 'True'
+		)
+		{
+			return array();
+		}
 
 		$split_uids = array();
 		$events = array();
