@@ -290,8 +290,9 @@ export class filemanagerAPP extends EgwApp
 	 * @param {event} _event
 	 * @param {number} _file_count
 	 * @param {string=} _path where the file is uploaded to, default current directory
+	 * @param {string} _conflict What to do if the file conflicts with one on the server
 	 */
-	upload(_event, _file_count : number, _path? : string)
+	upload(_event, _file_count : number, _path? : string, _conflict = "ask")
 	{
 		if(typeof _path == 'undefined')
 		{
@@ -300,7 +301,9 @@ export class filemanagerAPP extends EgwApp
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			let widget = _event.data;
-			egw.json('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path],
+			let value = widget.getValue();
+			value.conflict = _conflict;
+			egw.json('filemanager_ui::ajax_action', ['upload', value, _path, _conflict],
 				this._upload_callback, this, true, this
 			).sendRequest();
 			widget.set_value('');
@@ -1179,7 +1182,8 @@ export class filemanagerAPP extends EgwApp
 		{
 			_senders[0] = {id: this.get_path()};
 		}
-		super.share_link(_action, _senders, _target, _writable, _files, _callback);
+		let _extra = {};
+		super.share_link(_action, _senders, _target, _writable, _files, _callback, _extra);
 	}
 
 	/**
@@ -1221,6 +1225,19 @@ export class filemanagerAPP extends EgwApp
 			width: 450,
 			value: {content:{ "share_link": _data.share_link }}
 		});
+	}
+
+	/**
+	 * Check if a row can have the Hidden Uploads action
+	 * Needs to be a directory
+	 */
+	hidden_upload_enabled(_action: egwAction, _senders: egwActionObject[])
+	{
+		let data = egw.dataGetUIDdata(_senders[0].id);
+		let readonly = (data.data.class || '').split(/ +/).indexOf('noEdit') >= 0;
+
+		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
+		return (data.data.is_dir && !readonly);
 	}
 
 	/**

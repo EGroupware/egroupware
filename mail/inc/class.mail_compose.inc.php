@@ -11,13 +11,13 @@
  */
 
 use EGroupware\Api;
-use EGroupware\Api\Link;
-use EGroupware\Api\Framework;
-use EGroupware\Api\Egw;
 use EGroupware\Api\Acl;
+use EGroupware\Api\Egw;
 use EGroupware\Api\Etemplate;
-use EGroupware\Api\Vfs;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Link;
 use EGroupware\Api\Mail;
+use EGroupware\Api\Vfs;
 
 /**
  * Mail interface class for compose mails in popup
@@ -2664,11 +2664,11 @@ class mail_compose
 			// create share
 			if ($filemode == Vfs\Sharing::WRITABLE || $expiration || $password)
 			{
-				$share = stylite_sharing::create($path, $filemode, $attachment['name'], $recipients, $expiration, $password);
+				$share = stylite_sharing::create('', $path, $filemode, $attachment['name'], $recipients, $expiration, $password);
 			}
 			else
 			{
-				$share = Vfs\Sharing::create($path, $filemode, $attachment['name'], $recipients);
+				$share = Vfs\Sharing::create('', $path, $filemode, $attachment['name'], $recipients);
 			}
 			$link = Vfs\Sharing::share2link($share);
 

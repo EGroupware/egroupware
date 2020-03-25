@@ -89,7 +89,7 @@ export class et2_file extends et2_inputWidget
 		},
 		onFinishOne: {
 			"name": "Finish event handler for each one",
-			"type": "any",
+			"type": "js",
 			"default": et2_no_init,
 			"description": "A (js) function called when a file to be uploaded is finished."
 		},
@@ -665,9 +665,13 @@ export class et2_file extends et2_inputWidget
 		event.data = this;
 
 		// Callback
-		if(this.options.onFinishOne)
+		if(typeof this.onFinishOne == 'function')
 		{
-			return et2_call(this.options.onFinishOne,event,response,name);
+			this.onFinishOne(event, response, name);
+		}
+		else if (this.options.onFinishOne)
+		{
+			et2_call(this.options.onFinishOne,event,response,name);
 		}
 		return true;
 	}

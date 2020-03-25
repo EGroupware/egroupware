@@ -1587,9 +1587,10 @@ var EgwApp = /** @class */ (function () {
      * @param {Boolean} _writable Allow edit access from the share.
      * @param {Boolean} _files Allow access to files from the share.
      * @param {Function} _callback Callback with results
+     * @param {Object} _extra Additional (app-specific or special) parameters
      * @returns {Boolean} returns false if not successful
      */
-    EgwApp.prototype.share_link = function (_action, _senders, _target, _writable, _files, _callback) {
+    EgwApp.prototype.share_link = function (_action, _senders, _target, _writable, _files, _callback, _extra) {
         var path = _senders[0].id;
         if (!path) {
             return this.egw.message(this.egw.lang('Missing share path.  Unable to create share.'), 'error');
@@ -1606,7 +1607,7 @@ var EgwApp = /** @class */ (function () {
         if (typeof _files === 'undefined' && _action.parent && _action.parent.getActionById('shareFiles')) {
             _files = _action.parent.getActionById('shareFiles').checked || false;
         }
-        return egw.json('EGroupware\\Api\\Sharing::ajax_create', [_action.id, path, _writable, _files], _callback ? _callback : this._share_link_callback, this, true, this).sendRequest();
+        return egw.json('EGroupware\\Api\\Sharing::ajax_create', [_action.id, path, _writable, _files, _extra], _callback ? _callback : this._share_link_callback, this, true, this).sendRequest();
     };
     EgwApp.prototype.share_merge = function (_action, _senders, _target) {
         var parent = _action.parent.parent;

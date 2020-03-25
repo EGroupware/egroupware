@@ -254,14 +254,18 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {event} _event
      * @param {number} _file_count
      * @param {string=} _path where the file is uploaded to, default current directory
+     * @param {string} _conflict What to do if the file conflicts with one on the server
      */
-    filemanagerAPP.prototype.upload = function (_event, _file_count, _path) {
+    filemanagerAPP.prototype.upload = function (_event, _file_count, _path, _conflict) {
+        if (_conflict === void 0) { _conflict = "ask"; }
         if (typeof _path == 'undefined') {
             _path = this.get_path();
         }
         if (_file_count && !jQuery.isEmptyObject(_event.data.getValue())) {
             var widget = _event.data;
-            egw.json('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path], this._upload_callback, this, true, this).sendRequest();
+            var value = widget.getValue();
+            value.conflict = _conflict;
+            egw.json('filemanager_ui::ajax_action', ['upload', value, _path, _conflict], this._upload_callback, this, true, this).sendRequest();
             widget.set_value('');
         }
     };
@@ -974,7 +978,8 @@ var filemanagerAPP = /** @class */ (function (_super) {
         if (!path) {
             _senders[0] = { id: this.get_path() };
         }
-        _super.prototype.share_link.call(this, _action, _senders, _target, _writable, _files, _callback);
+        var _extra = {};
+        _super.prototype.share_link.call(this, _action, _senders, _target, _writable, _files, _callback, _extra);
     };
     /**
      * Share-link callback
@@ -1010,6 +1015,16 @@ var filemanagerAPP = /** @class */ (function (_super) {
             width: 450,
             value: { content: { "share_link": _data.share_link } }
         });
+    };
+    /**
+     * Check if a row can have the Hidden Uploads action
+     * Needs to be a directory
+     */
+    filemanagerAPP.prototype.hidden_upload_enabled = function (_action, _senders) {
+        var data = egw.dataGetUIDdata(_senders[0].id);
+        var readonly = (data.data.class || '').split(/ +/).indexOf('noEdit') >= 0;
+        // symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
+        return (data.data.is_dir && !readonly);
     };
     /**
      * View the link from an existing share

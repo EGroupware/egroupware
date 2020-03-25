@@ -13,16 +13,15 @@
 
 namespace EGroupware\Api\Storage;
 
+use DOMDocument;
 use EGroupware\Api;
 use EGroupware\Stylite;
-
-use DOMDocument;
-use XSLTProcessor;
 use tidy;
+use uiaccountsel;
+use XSLTProcessor;
 use ZipArchive;
 
 // explicit import old, non-namespaced phpgwapi classes
-use uiaccountsel;
 
 /**
  * Document merge print
@@ -519,7 +518,7 @@ abstract class Merge
 
 		//$extra['share_writable'] |=  ($mode == Sharing::WRITABLE ? 1 : 0);
 
-		return \EGroupware\Stylite\Link\Sharing::create($path, $mode, NULL, $recipients, $extra);
+		return \EGroupware\Stylite\Link\Sharing::create('', $path, $mode, NULL, $recipients, $extra);
 	}
 
 	/**

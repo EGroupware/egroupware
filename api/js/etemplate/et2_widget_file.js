@@ -478,8 +478,11 @@ var et2_file = /** @class */ (function (_super) {
         var event = jQuery.Event('upload');
         event.data = this;
         // Callback
-        if (this.options.onFinishOne) {
-            return et2_call(this.options.onFinishOne, event, response, name);
+        if (typeof this.onFinishOne == 'function') {
+            this.onFinishOne(event, response, name);
+        }
+        else if (this.options.onFinishOne) {
+            et2_call(this.options.onFinishOne, event, response, name);
         }
         return true;
     };
@@ -596,7 +599,7 @@ var et2_file = /** @class */ (function (_super) {
         },
         onFinishOne: {
             "name": "Finish event handler for each one",
-            "type": "any",
+            "type": "js",
             "default": et2_no_init,
             "description": "A (js) function called when a file to be uploaded is finished."
         },

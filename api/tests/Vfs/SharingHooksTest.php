@@ -36,7 +36,7 @@ class SharingHooksTest extends SharingBase
 		Sharing::delete(array('share_path' => $test_file));
 
 		// Create share
-		$this->shares[] = $created_share = Sharing::create($test_file, Sharing::READONLY, '', '');
+		$this->shares[] = $created_share = Sharing::create('', $test_file, Sharing::READONLY, '', '');
 
 		$this->assertEquals(Vfs::PREFIX . $test_file, $created_share['share_path']);
 
@@ -64,7 +64,7 @@ class SharingHooksTest extends SharingBase
 		Sharing::delete(array('share_path' => $test_file));
 
 		// Create share
-		$this->shares[] = $created_share = Sharing::create($test_file, Sharing::READONLY, '', '');
+		$this->shares[] = $created_share = Sharing::create('', $test_file, Sharing::READONLY, '', '');
 
 		$this->assertEquals(Vfs::PREFIX . $test_file, $created_share['share_path']);
 
@@ -91,7 +91,7 @@ class SharingHooksTest extends SharingBase
 		Sharing::delete(array('share_path' => $test_file));
 
 		// Create share
-		$this->shares[] = $created_share = Sharing::create($test_file, Sharing::READONLY, '', '');
+		$this->shares[] = $created_share = Sharing::create('', $test_file, Sharing::READONLY, '', '');
 
 		$this->assertEquals(Vfs::PREFIX . $test_file, $created_share['share_path']);
 

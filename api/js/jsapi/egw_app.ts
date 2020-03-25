@@ -1987,9 +1987,10 @@ export abstract class EgwApp
 	 * @param {Boolean} _writable Allow edit access from the share.
 	 * @param {Boolean} _files Allow access to files from the share.
 	 * @param {Function} _callback Callback with results
+	 * @param {Object} _extra Additional (app-specific or special) parameters
 	 * @returns {Boolean} returns false if not successful
 	 */
-	share_link(_action, _senders, _target, _writable?, _files?, _callback?){
+	share_link(_action, _senders, _target, _writable?, _files?, _callback?, _extra?){
 		var path = _senders[0].id;
 		if(!path)
 		{
@@ -2011,7 +2012,7 @@ export abstract class EgwApp
 			_files = _action.parent.getActionById('shareFiles').checked || false;
 		}
 
-		return egw.json('EGroupware\\Api\\Sharing::ajax_create', [_action.id, path, _writable, _files],
+		return egw.json('EGroupware\\Api\\Sharing::ajax_create', [_action.id, path, _writable, _files, _extra],
 			_callback ? _callback : this._share_link_callback, this, true, this).sendRequest();
 	}
 

@@ -44,6 +44,9 @@ class Sharing extends \EGroupware\Api\Sharing
 	const READONLY = 'share_ro';
 	const WRITABLE = 'share_rw';
 
+	const HIDDEN_UPLOAD = 9; // 8 is the next bitwise flag + 1 for writable
+	const HIDDEN_UPLOAD_DIR = '/Upload';
+
  	/**
 	 * Modes for sharing files
 	 *
@@ -185,17 +188,18 @@ class Sharing extends \EGroupware\Api\Sharing
 	/**
 	 * Create a new share
 	 *
+	 * @param string $action_id Name of the action used to create the share.  Allows for customization.
 	 * @param string $path either path in temp_dir or vfs with optional vfs scheme
 	 * @param string $mode self::LINK: copy file in users tmp-dir or self::READABLE share given vfs file,
-	 *	if no vfs behave as self::LINK
+	 *  if no vfs behave as self::LINK
 	 * @param string $name filename to use for $mode==self::LINK, default basename of $path
 	 * @param string|array $recipients one or more recipient email addresses
 	 * @param array $extra =array() extra data to store
+	 * @return array with share data, eg. value for key 'share_token'
 	 * @throw Api\Exception\NotFound if $path not found
 	 * @throw Api\Exception\AssertionFailed if user temp. directory does not exist and can not be created
-	 * @return array with share data, eg. value for key 'share_token'
 	 */
-	public static function create($path, $mode, $name, $recipients, $extra=array())
+	public static function create(string $action_id, $path, $mode, $name, $recipients, $extra = array())
 	{
 		if (!isset(self::$db)) self::$db = $GLOBALS['egw']->db;
 
@@ -245,10 +249,17 @@ class Sharing extends \EGroupware\Api\Sharing
 		{
 			throw new Api\Exception\NotFound("'$path' NOT found!");
 		}
+
+		// Set up anonymous upload directory
+		if($action_id == 'shareUploadDir')
+		{
+			static::create_hidden_upload($path, $mode, $name, $recipients, $extra);
+		}
+
 		// check if file has been shared before, with identical attributes
 		if (($mode != self::LINK ))
 		{
-			return parent::create($vfs_path ? $vfs_path : $path, $mode, $name, $recipients, $extra);
+			return parent::create($action_id, $vfs_path ? $vfs_path : $path, $mode, $name, $recipients, $extra);
 		}
 		else
 		{
@@ -286,8 +297,52 @@ class Sharing extends \EGroupware\Api\Sharing
 				$vfs_path = $tmp_file;
 			}
 
-			return parent::create($vfs_path, $mode, $name, $recipients, $extra);
+			return parent::create($action_id, $vfs_path, $mode, $name, $recipients, $extra);
 		}
+	}
+
+	/**
+	 * Check the given path for an anonymous upload directory, and create it if it does not
+	 * exist yet.  Anon upload directory is not visible over the share, and any files uploaded
+	 * to the share are placed inside it instead.
+	 *
+	 * @param $path
+	 * @param $mode
+	 * @param $name
+	 * @param $recipients
+	 * @param $extra
+	 *
+	 * @throws Api\Exception\AssertionFailed
+	 * @throws Api\Exception\NoPermission
+	 * @throws Api\Exception\WrongParameter
+	 */
+	protected static function create_hidden_upload($path, $mode, $name, $recipients, &$extra)
+	{
+		$upload_dir = Vfs::concat($path, self::HIDDEN_UPLOAD_DIR);
+
+		if(($stat = Vfs::stat($upload_dir)) && !Vfs::check_access($upload_dir, Vfs::WRITABLE, $stat))
+		{
+			throw new Api\Exception\NoPermission("Upload directory exists, but you have no write permission");
+		}
+		if (!($stat = Vfs::stat($upload_dir)))
+		{
+			// Directory is not there, create it
+			if (!mkdir($upload_dir))
+			{
+				throw new Api\Exception\NoPermission("Could not make upload directory");
+			}
+		}
+
+		// Set flags so things work
+		$extra['share_writable'] = self::HIDDEN_UPLOAD;
+	}
+
+	/**
+	 * Does this share have a hidden upload directory
+	 */
+	public function has_hidden_upload()
+	{
+		return (int)$this->share['share_writable'] == self::HIDDEN_UPLOAD;
 	}
 
 	/**
@@ -363,6 +418,17 @@ class Sharing extends \EGroupware\Api\Sharing
 		$actions['share']['children']['shareReadonlyLink']['group'] = 2;
 		$actions['share']['children']['shareReadonlyLink']['order'] = 22;
 		$actions['share']['children']['shareWritable']['group'] = 3;
+
+		// Add in a hidden upload directory
+		$actions['share']['children']['shareUploadDir'] = array(
+			'caption' => 'Hidden uploads',
+			'group' => 1,
+			'order' => 30,
+			'enabled' => 'javaScript:app.filemanager.hidden_upload_enabled',
+			'onExecute' => 'javaScript:app.filemanager.share_link',
+			'icon' => 'upload',
+			'hideOnDisabled' => true
+		);
 
 		// Add in merge to document
 		if (class_exists($appname.'_merge'))
@@ -452,6 +518,43 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 	class SharingUi extends filemanager_ui
 	{
 		/**
+		 * Get active view - override so it points to this class
+		 *
+		 * @return string
+		 */
+		public static function get_view()
+		{
+			return array(new SharingUi(), 'listview');
+		}
+
+		/**
+		 * Filemanager listview
+		 *
+		 * @param array $content
+		 * @param string $msg
+		 */
+		function listview(array $content=null,$msg=null)
+		{
+			$this->etemplate = new Api\Etemplate(static::LIST_TEMPLATE);
+
+			// Override and take over get_rows so we can filter out upload directory, or other customisations
+			$content['nm']['get_rows'] = '.' . __CLASS__ . '.get_rows';
+
+			if (isset($GLOBALS['egw']->sharing) && $GLOBALS['egw']->sharing->has_hidden_upload())
+			{
+				// No new anything
+				$this->etemplate->disableElement('nm[new]');
+				$this->etemplate->setElementAttribute('nm[button][createdir]', 'readonly', true);
+
+				// Take over upload, change target and conflict strategy
+				$path = Vfs::concat(static::get_home_dir(), Vfs\Sharing::HIDDEN_UPLOAD_DIR);
+				$this->etemplate->setElementAttribute('nm[upload]', 'onFinishOne', "app.filemanager.upload(ev, 1, '$path', 'rename')");
+			}
+
+			return parent::listview($content, $msg);
+		}
+
+		/**
 		 * Get the configured start directory for the current user
 		 *
 		 * @return string
@@ -472,7 +575,7 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 			$group = 1;
 			// do not add edit setting action when we are in sharing
 			unset($actions['edit']);
-			if(Vfs::is_writable($GLOBALS['egw']->sharing->get_root()))
+			if (Vfs::is_writable($GLOBALS['egw']->sharing->get_root()))
 			{
 				return $actions;
 			}
@@ -501,9 +604,69 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 			$options = parent::get_vfs_options($query);
 
 			// Hide symlinks
-			$options['type'] = '!l';
+			// TODO: This hides everything, see Vfs::_check_add() line 648
+			//$options['type'] = '!l';
 
 			return $options;
+		}
+
+		protected function is_hidden_upload_dir($directory)
+		{
+			if (!isset($GLOBALS['egw']->sharing)) return false;
+			return Vfs::is_dir($directory) && $directory == Vfs::concat( $GLOBALS['egw']->sharing->get_root(), Vfs\Sharing::HIDDEN_UPLOAD_DIR );
+		}
+
+		/**
+		 * Callback to fetch the rows for the nextmatch widget
+		 *
+		 * @param array $query
+		 * @param array &$rows
+		 * @return int
+		 */
+		function get_rows(&$query, &$rows)
+		{
+			$hidden_upload = (isset($GLOBALS['egw']->sharing) && $GLOBALS['egw']->sharing->has_hidden_upload());
+
+			// Check for navigating outside share, redirect back to share
+			if (!Vfs::stat($query['path'],false) || !Vfs::is_dir($query['path']) || !Vfs::check_access($query['path'],Vfs::READABLE) ||
+
+					// Not allowed in hidden upload dir
+					$hidden_upload && strpos($query['path'], Sharing::HIDDEN_UPLOAD_DIR) === 0)
+			{
+				// only redirect, if it would be to some other location, gives redirect-loop otherwise
+				if ($query['path'] != ($path = static::get_home_dir()))
+				{
+					// we will leave here, since we are not allowed, go back to root
+					// TODO: Give message about it, redirect to home dir
+				}
+				$rows = array();
+				return 0;
+			}
+
+			// Get file list from parent
+			$total = parent::get_rows($query, $rows);
+
+			if(! $hidden_upload )
+			{
+				return $total;
+			}
+
+			// tell client-side if directory is writeable or not
+			$response = Api\Json\Response::get();
+			$response->call('app.filemanager.set_readonly', $query['path'], true);
+
+			// Hide the hidden upload directory, mark everything else as readonly
+			foreach($rows as $key => &$row)
+			{
+				if($this->is_hidden_upload_dir($row['path']))
+				{
+					unset($rows[$key]);
+					$total--;
+					continue;
+				}
+				$row['class'] .= 'noEdit noDelete ';
+			}
+			return $total;
 		}
 	}
 }

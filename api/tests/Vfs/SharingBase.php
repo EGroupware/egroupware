@@ -416,7 +416,7 @@ class SharingBase extends LoggedInTest
 		}
 
 		// Create share
-		$this->shares[] = $share = TestSharing::create($path, $mode, $name, $recipients, $extra);
+		$this->shares[] = $share = TestSharing::create('', $path, $mode, $name, $recipients, $extra);
 
 		return $share;
 	}

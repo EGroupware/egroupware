@@ -48,6 +48,8 @@ class filemanager_ui
 	 *
 	 */
 	public static $merge_prop_namespace = '';
+	protected $etemplate;
+	const LIST_TEMPLATE = 'filemanager.index';
 
 	/**
 	 * Constructor
@@ -466,7 +468,7 @@ class filemanager_ui
 	 */
 	function listview(array $content=null,$msg=null)
 	{
-		$tpl = new Etemplate('filemanager.index');
+		$tpl = $this->etemplate ? $this->etemplate : new Etemplate(static::LIST_TEMPLATE);
 
 		if($msg) Framework::message($msg);
 
@@ -569,7 +571,7 @@ class filemanager_ui
 		// sharing has no divAppbox, we need to set popupMainDiv instead, to be able to drop files everywhere
 		if (substr($_SERVER['SCRIPT_FILENAME'], -10) == '/share.php')
 		{
-			$tpl->setElementAttribute('nm[buttons][upload]', 'drop_target', 'popupMainDiv');
+			$tpl->setElementAttribute('nm[upload]', 'drop_target', 'popupMainDiv');
 		}
 		// Set view button to match current settings
 		if($content['nm']['view'] == 'tile')
@@ -1483,82 +1485,20 @@ class filemanager_ui
 		switch($action)
 		{
 			case 'upload':
-				$script_error = 0;
-				foreach($selected as $tmp_name => &$data)
-				{
-					$path = Vfs::concat($dir, Vfs::encodePathComponent($data['name']));
-
-					if(Vfs::deny_script($path))
-					{
-						if (!isset($script_error))
-						{
-							$arr['msg'] .= ($arr['msg'] ? "\n" : '').lang('You are NOT allowed to upload a script!');
-						}
-						++$script_error;
-						++$arr['errs'];
-						unset($selected[$tmp_name]);
-					}
-					elseif (Vfs::is_dir($path))
-					{
-						$data['confirm'] = 'is_dir';
-					}
-					elseif (!$data['confirmed'] && Vfs::stat($path))
-					{
-						$data['confirm'] = true;
-					}
-					else
-					{
-						if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
-						{
-							$tmp_path = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . basename($tmp_name);
-						}
-						else
-						{
-							$tmp_path = ini_get('upload_tmp_dir').'/'.basename($tmp_name);
-						}
-
-						if (Vfs::copy_uploaded($tmp_path, $path, $props, false))
-						{
-							++$arr['files'];
-							$uploaded[] = $data['name'];
-						}
-						else
-						{
-							++$arr['errs'];
-						}
-					}
-				}
-				if ($arr['errs'] > $script_error)
-				{
-					$arr['msg'] .= ($arr['msg'] ? "\n" : '').lang('Error uploading file!');
-				}
-				if ($arr['files'])
-				{
-					$arr['msg'] .= ($arr['msg'] ? "\n" : '').lang('%1 successful uploaded.', implode(', ', $uploaded));
-				}
-				$arr['uploaded'] = $selected;
-				$arr['path'] = $dir;
-				$arr['props'] = $props;
+				static::handle_upload_action($action, $selected, $dir, $props, $arr);
 				break;
 			case 'shareWritableLink':
 			case 'shareReadonlyLink':
 				if ($action === 'shareWritableLink')
 				{
 					$share = Vfs\Sharing::create(
-						$selected,
-						Vfs\Sharing::WRITABLE,
-						basename($selected),
-						array(),
-						array('share_writable' => true)
+							'', $selected, Vfs\Sharing::WRITABLE, basename($selected), array(), array('share_writable' => true)
 					);
 				}
 				else
 				{
 					$share = Vfs\Sharing::create(
-						$selected,
-						Vfs\Sharing::READONLY,
-						basename($selected),
-						array()
+							'', $selected, Vfs\Sharing::READONLY, basename($selected), array()
 					);
 				}
 				$arr["share_link"] = $link = Vfs\Sharing::share2link($share);
@@ -1590,6 +1530,102 @@ class filemanager_ui
 		$response->data($arr);
 		//error_log(__METHOD__."('$action',".array2string($selected).') returning '.array2string($arr));
 		return $arr;
+	}
+
+	/**
+	 * Deal with an uploaded file
+	 *
+	 * @param string $action Should be 'upload'
+	 * @param $selected Array of file information
+	 * @param string $dir Target directory
+	 * @param $props
+	 * @param string[] $arr Result
+	 *
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	protected static function handle_upload_action(string $action, $selected, $dir, $props, &$arr)
+	{
+		$script_error = 0;
+		$conflict = $selected['conflict'];
+		unset($selected['conflict']);
+
+		foreach($selected as $tmp_name => &$data)
+		{
+			$path = Vfs::concat($dir, Vfs::encodePathComponent($data['name']));
+
+			if(Vfs::deny_script($path))
+			{
+				if (!isset($script_error))
+				{
+					$arr['msg'] .= ($arr['msg'] ? "\n" : '').lang('You are NOT allowed to upload a script!');
+				}
+				++$script_error;
+				++$arr['errs'];
+				unset($selected[$tmp_name]);
+				continue;
+			}
+			elseif (Vfs::is_dir($path))
+			{
+				$data['confirm'] = 'is_dir';
+				continue;
+			}
+			elseif (!$data['confirmed'] && Vfs::stat($path))
+			{
+				// File exists, what to do?
+				switch($conflict)
+				{
+					case 'overwrite':
+						unset($data['confirm']);
+						$data['confirmed'] = true;
+						break;
+					case 'rename':
+						// Find a unique name
+						$i = 1;
+						$info = pathinfo($path);
+						while(Vfs::file_exists($path))
+						{
+							$path = $info['dirname'] . '/'. $info['filename'] . " ($i)." . $info['extension'];
+							$i++;
+						}
+						break;
+					case 'ask':
+					default:
+						$data['confirm'] = true;
+				}
+			}
+			if(!$data['confirm'])
+			{
+				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
+				{
+					$tmp_path = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . basename($tmp_name);
+				}
+				else
+				{
+					$tmp_path = ini_get('upload_tmp_dir') . '/' . basename($tmp_name);
+				}
+
+				if (Vfs::copy_uploaded($tmp_path, $path, $props, false))
+				{
+					++$arr['files'];
+					$uploaded[] = $data['name'];
+				}
+				else
+				{
+					++$arr['errs'];
+				}
+			}
+		}
+		if ($arr['errs'] > $script_error)
+		{
+			$arr['msg'] .= ($arr['msg'] ? "\n" : '').lang('Error uploading file!');
+		}
+		if ($arr['files'])
+		{
+			$arr['msg'] .= ($arr['msg'] ? "\n" : '').lang('%1 successful uploaded.', implode(', ', $uploaded));
+		}
+		$arr['uploaded'] = $selected;
+		$arr['path'] = $dir;
+		$arr['props'] = $props;
 	}
 
 	/**
