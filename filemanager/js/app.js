@@ -301,7 +301,7 @@ app.classes.filemanager = AppJS.extend(
 	 * @param {number} _file_count
 	 * @param {string=} _path where the file is uploaded to, default current directory
 	 */
-	upload: function(_event, _file_count, _path)
+	upload: function(_event, _file_count, _path, _conflict)
 	{
 		if(typeof _path == 'undefined')
 		{
@@ -310,7 +310,9 @@ app.classes.filemanager = AppJS.extend(
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			var widget = _event.data;
-			var request = egw.json('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path],
+			let value = widget.getValue();
+			value.conflict = _conflict;
+			var request = egw.json('filemanager_ui::ajax_action', ['upload', value, _path],
 				this._upload_callback, this, true, this
 			).sendRequest();
 			widget.set_value('');
@@ -1194,7 +1196,8 @@ app.classes.filemanager = AppJS.extend(
 		{
 			_senders[0] = {id: this.get_path()};
 		}
-		this._super.call(this, _action, _senders, _target, _writable, _files, _callback);
+		let _extra = {}
+		this._super.call(this, _action, _senders, _target, _writable, _files, _callback, _extra);
 	},
 
 	/**
@@ -1235,6 +1238,19 @@ app.classes.filemanager = AppJS.extend(
 			width: 450,
 			value: {content:{ "share_link": _data.share_link }}
 		});
+	},
+
+	/**
+	 * Check if a row can have the Hidden Uploads action
+	 * Needs to be a directory
+	 */
+	hidden_upload_enabled(_action, _senders)
+	{
+		let data = egw.dataGetUIDdata(_senders[0].id);
+		let readonly = (data.data.class || '').split(/ +/).indexOf('noEdit') >= 0;
+
+		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
+		return (data.data.is_dir && !readonly);
 	},
 
 	/**

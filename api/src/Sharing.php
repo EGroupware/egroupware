@@ -552,17 +552,18 @@ class Sharing
 	/**
 	 * Create a new share
 	 *
+	 * @param string $action_id Specific type of share being created, default ''
 	 * @param string $path either path in temp_dir or vfs with optional vfs scheme
 	 * @param string $mode self::LINK: copy file in users tmp-dir or self::READABLE share given vfs file,
-	 *	if no vfs behave as self::LINK
+	 *  if no vfs behave as self::LINK
 	 * @param string $name filename to use for $mode==self::LINK, default basename of $path
 	 * @param string|array $recipients one or more recipient email addresses
 	 * @param array $extra =array() extra data to store
+	 * @return array with share data, eg. value for key 'share_token'
 	 * @throw Api\Exception\NotFound if $path not found
 	 * @throw Api\Exception\AssertionFailed if user temp. directory does not exist and can not be created
-	 * @return array with share data, eg. value for key 'share_token'
 	 */
-	public static function create($path, $mode, $name, $recipients, $extra=array())
+	public static function create(string $action_id, $path, $mode, $name, $recipients, $extra = array())
 	{
 		if (!isset(static::$db)) static::$db = $GLOBALS['egw']->db;
 
@@ -646,8 +647,9 @@ class Sharing
 	 *
 	 * @param String $action
 	 * @param String $path
-	 * @param boolean $writable
-	 * @param boolean $files
+	 * @param boolean $writable Allow editing the shared entry / folder / file
+	 * @param boolean $files For sharing an application entry, allow access to the linked files
+	 * @param $extra Additional extra parameters
 	 */
 	public static function ajax_create($action, $path, $writable = false, $files = false, $extra = array())
 	{
@@ -661,6 +663,7 @@ class Sharing
 			'include_files'  => $files
 		);
 		$share = $class::create(
+			$action,
 			$path,
 			$writable ? Sharing::WRITABLE : Sharing::READONLY,
 			basename($path),
