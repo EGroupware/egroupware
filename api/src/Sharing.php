@@ -12,6 +12,8 @@
 
 namespace EGroupware\Api;
 
+use EGroupware\Api\Vfs\HiddenUploadSharing;
+
 /**
  * VFS sharing
  *
@@ -339,9 +341,13 @@ class Sharing
 					return '\\EGroupware\\Stylite\\Link\\Sharing';
 				}
 			}
-			else if (class_exists ('\EGroupware\Collabora\Wopi') && $share['share_writable'] == \EGroupware\Collabora\Wopi::WOPI_SHARED)
+			else if (class_exists ('\EGroupware\Collabora\Wopi') && (int)$share['share_writable'] === \EGroupware\Collabora\Wopi::WOPI_SHARED)
 			{
 				return '\\EGroupware\\Collabora\\Wopi';
+			}
+			else if ((int)$share['share_writable'] == HiddenUploadSharing::HIDDEN_UPLOAD)
+			{
+				return '\\'.__NAMESPACE__ . '\\'. 'Vfs\\HiddenUploadSharing';
 			}
 		}
 		catch(Exception $e){throw $e;}
@@ -657,11 +663,11 @@ class Sharing
 		{
 			throw new Exception\WrongParameter('Missing share path.  Unable to create share.');
 		}
-		$class = self::get_share_class(array('share_path' => $path));
 		$extra = $extra + array(
 			'share_writable' => $writable,
 			'include_files'  => $files
 		);
+		$class = self::get_share_class(array('share_path' => $path) + $extra);
 		$share = $class::create(
 			$action,
 			$path,
@@ -683,6 +689,10 @@ class Sharing
 		{
 			case 'shareFilemanager':
 				$arr['title'] = lang('Filemanager directory');
+				break;
+			case 'shareUploadDir':
+				$arr['title'] = lang('Upload directory');
+				break;
 		}
 		$response = Json\Response::get();
 		$response->data($arr);

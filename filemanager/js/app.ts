@@ -1182,7 +1182,15 @@ export class filemanagerAPP extends EgwApp
 		{
 			_senders[0] = {id: this.get_path()};
 		}
+		// Pass along any action data
 		let _extra = {};
+		for(let i in _action.data)
+		{
+			if(i.indexOf('share') == 0)
+			{
+				_extra[i] = _action.data[i];
+			}
+		}
 		super.share_link(_action, _senders, _target, _writable, _files, _callback, _extra);
 	}
 

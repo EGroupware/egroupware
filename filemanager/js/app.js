@@ -978,7 +978,13 @@ var filemanagerAPP = /** @class */ (function (_super) {
         if (!path) {
             _senders[0] = { id: this.get_path() };
         }
+        // Pass along any action data
         var _extra = {};
+        for (var i in _action.data) {
+            if (i.indexOf('share') == 0) {
+                _extra[i] = _action.data[i];
+            }
+        }
         _super.prototype.share_link.call(this, _action, _senders, _target, _writable, _files, _callback, _extra);
     };
     /**

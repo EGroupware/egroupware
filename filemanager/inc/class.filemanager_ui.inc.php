@@ -216,7 +216,7 @@ class filemanager_ui
 				'order' => 10,
 				'onExecute' => 'javaScript:app.filemanager.copy_link'
 			),
-			'share' => EGroupware\Api\Vfs\Sharing::get_actions('filemanager', ++$group)['share'],
+			'share' => EGroupware\Api\Vfs\HiddenUploadSharing::get_actions('filemanager', ++$group)['share'],
 			'documents' => filemanager_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir'],
 				++$group, 'Insert in document', 'document_',
@@ -470,44 +470,77 @@ class filemanager_ui
 	{
 		$tpl = $this->etemplate ? $this->etemplate : new Etemplate(static::LIST_TEMPLATE);
 
-		if($msg) Framework::message($msg);
+		if ($msg)
+		{
+			Framework::message($msg);
+		}
 
 		if (($content['nm']['action'] || $content['nm']['rows']) && (empty($content['button']) || !isset($content['button'])))
 		{
 			if ($content['nm']['action'])
 			{
-				$msg = static::action($content['nm']['action'],$content['nm']['selected'],$content['nm']['path']);
-				if($msg) Framework::message($msg);
+				$msg = static::action($content['nm']['action'], $content['nm']['selected'], $content['nm']['path']);
+				if ($msg)
+				{
+					Framework::message($msg);
+				}
 
 				// clean up after action
 				unset($content['nm']['selected']);
 				// reset any occasion where action may be stored, as it may be ressurected out of the helpers by etemplate, which is quite unconvenient in case of action delete
-				if (isset($content['nm']['action'])) unset($content['nm']['action']);
-				if (isset($content['nm']['nm_action'])) unset($content['nm']['nm_action']);
-				if (isset($content['nm_action'])) unset($content['nm_action']);
+				if (isset($content['nm']['action']))
+				{
+					unset($content['nm']['action']);
+				}
+				if (isset($content['nm']['nm_action']))
+				{
+					unset($content['nm']['nm_action']);
+				}
+				if (isset($content['nm_action']))
+				{
+					unset($content['nm_action']);
+				}
 				// we dont use ['nm']['rows']['delete'], so unset it, if it is present
-				if (isset($content['nm']['rows']['delete'])) unset($content['nm']['rows']['delete']);
+				if (isset($content['nm']['rows']['delete']))
+				{
+					unset($content['nm']['rows']['delete']);
+				}
 			}
-			elseif($content['nm']['rows']['delete'])
+			elseif ($content['nm']['rows']['delete'])
 			{
-				$msg = static::action('delete',array_keys($content['nm']['rows']['delete']),$content['nm']['path']);
-				if($msg) Framework::message($msg);
+				$msg = static::action('delete', array_keys($content['nm']['rows']['delete']), $content['nm']['path']);
+				if ($msg)
+				{
+					Framework::message($msg);
+				}
 
 				// clean up after action
 				unset($content['nm']['rows']['delete']);
 				// reset any occasion where action may be stored, as we use ['nm']['rows']['delete'] anyhow
 				// we clean this up, as it may be ressurected out of the helpers by etemplate, which is quite unconvenient in case of action delete
-				if (isset($content['nm']['action'])) unset($content['nm']['action']);
-				if (isset($content['nm']['nm_action'])) unset($content['nm']['nm_action']);
-				if (isset($content['nm_action'])) unset($content['nm_action']);
-				if (isset($content['nm']['selected'])) unset($content['nm']['selected']);
+				if (isset($content['nm']['action']))
+				{
+					unset($content['nm']['action']);
+				}
+				if (isset($content['nm']['nm_action']))
+				{
+					unset($content['nm']['nm_action']);
+				}
+				if (isset($content['nm_action']))
+				{
+					unset($content['nm_action']);
+				}
+				if (isset($content['nm']['selected']))
+				{
+					unset($content['nm']['selected']);
+				}
 			}
 			unset($content['nm']['rows']);
-			Api\Cache::setSession('filemanager', 'index',$content['nm']);
+			Api\Cache::setSession('filemanager', 'index', $content['nm']);
 		}
 
 		// be tolerant with (in previous versions) not correct urlencoded pathes
-		if ($content['nm']['path'][0] == '/' && !Vfs::stat($content['nm']['path'],true) && Vfs::stat(urldecode($content['nm']['path'])))
+		if ($content['nm']['path'][0] == '/' && !Vfs::stat($content['nm']['path'], true) && Vfs::stat(urldecode($content['nm']['path'])))
 		{
 			$content['nm']['path'] = urldecode($content['nm']['path']);
 		}
@@ -518,22 +551,22 @@ class filemanager_ui
 				$button = key($content['button']);
 				unset($content['button']);
 			}
-			switch($button)
+			switch ($button)
 			{
 				case 'upload':
 					if (!$content['upload'])
 					{
-						Framework::message(lang('You need to select some files first!'),'error');
+						Framework::message(lang('You need to select some files first!'), 'error');
 						break;
 					}
 					$upload_success = $upload_failure = array();
-					foreach(isset($content['upload'][0]) ? $content['upload'] : array($content['upload']) as $upload)
+					foreach (isset($content['upload'][0]) ? $content['upload'] : array($content['upload']) as $upload)
 					{
 						// encode chars which special meaning in url/vfs (some like / get removed!)
-						$to = Vfs::concat($content['nm']['path'],Vfs::encodePathComponent($upload['name']));
+						$to = Vfs::concat($content['nm']['path'], Vfs::encodePathComponent($upload['name']));
 						if ($upload &&
-							(Vfs::is_writable($content['nm']['path']) || Vfs::is_writable($to)) &&
-							copy($upload['tmp_name'],Vfs::PREFIX.$to))
+								(Vfs::is_writable($content['nm']['path']) || Vfs::is_writable($to)) &&
+								copy($upload['tmp_name'], Vfs::PREFIX . $to))
 						{
 							$upload_success[] = $upload['name'];
 						}
@@ -545,12 +578,12 @@ class filemanager_ui
 					$content['nm']['msg'] = '';
 					if ($upload_success)
 					{
-						Framework::message( count($upload_success) == 1 && !$upload_failure ? lang('File successful uploaded.') :
-							lang('%1 successful uploaded.',implode(', ',$upload_success)));
+						Framework::message(count($upload_success) == 1 && !$upload_failure ? lang('File successful uploaded.') :
+								lang('%1 successful uploaded.', implode(', ', $upload_success)));
 					}
 					if ($upload_failure)
 					{
-						Framework::message(lang('Error uploading file!')."\n".etemplate::max_upload_size_message(),'error');
+						Framework::message(lang('Error uploading file!') . "\n" . etemplate::max_upload_size_message(), 'error');
 					}
 					break;
 			}
@@ -558,12 +591,12 @@ class filemanager_ui
 		$readonlys['button[mailpaste]'] = !isset($GLOBALS['egw_info']['user']['apps']['mail']);
 
 		$sel_options['filter'] = array(
-			'' => 'Current directory',
-			'2' => 'Directories sorted in',
-			'3' => 'Show hidden files',
-			'4' => 'All subdirectories',
-			'5' => 'Files from links',
-			'0'  => 'Files from subdirectories',
+				'' => 'Current directory',
+				'2' => 'Directories sorted in',
+				'3' => 'Show hidden files',
+				'4' => 'All subdirectories',
+				'5' => 'Files from links',
+				'0' => 'Files from subdirectories',
 		);
 
 		$sel_options['new'] = self::convertActionsToselOptions($content['nm']['actions']['new']['children']);
@@ -574,14 +607,17 @@ class filemanager_ui
 			$tpl->setElementAttribute('nm[upload]', 'drop_target', 'popupMainDiv');
 		}
 		// Set view button to match current settings
-		if($content['nm']['view'] == 'tile')
+		if ($content['nm']['view'] == 'tile')
 		{
-			$tpl->setElementAttribute('nm[button][change_view]','statustext',lang('List view'));
-			$tpl->setElementAttribute('nm[button][change_view]','image','list_row');
+			$tpl->setElementAttribute('nm[button][change_view]', 'statustext', lang('List view'));
+			$tpl->setElementAttribute('nm[button][change_view]', 'image', 'list_row');
 		}
 		// if initial load is done via GET request (idots template or share.php)
 		// get_rows cant call app.filemanager.set_readonly, so we need to do that here
-		$content['initial_path_readonly'] = !Vfs::is_writable($content['nm']['path']);
+		if (!array_key_exists('initial_path_readonly', $content))
+		{
+			$content['initial_path_readonly'] = !Vfs::is_writable($content['nm']['path']);
+		}
 
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
