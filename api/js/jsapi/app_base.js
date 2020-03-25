@@ -1898,6 +1898,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 * @param {Boolean} _writable Allow edit access from the share.
 	 * @param {Boolean} _files Allow access to files from the share.
 	 * @param {Function} _callback Callback with results
+	 * @param {string[]} _extra Extra share parameters
 	 * @returns {Boolean} returns false if not successful
 	 */
 	share_link: function(_action, _senders, _target, _writable, _files, _callback, _extra){

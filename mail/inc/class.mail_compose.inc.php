@@ -2664,7 +2664,7 @@ class mail_compose
 			// create share
 			if ($filemode == Vfs\Sharing::WRITABLE || $expiration || $password)
 			{
-				$share = stylite_sharing::create('', $path, $filemode, $attachment['name'], $recipients, $expiration, $password);
+				$share = stylite_sharing::create($path, $filemode, $attachment['name'], $recipients, $expiration, $password);
 			}
 			else
 			{

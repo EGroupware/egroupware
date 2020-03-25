@@ -1196,7 +1196,14 @@ app.classes.filemanager = AppJS.extend(
 		{
 			_senders[0] = {id: this.get_path()};
 		}
-		let _extra = {}
+		let _extra = {};
+		for(let i in _action.data)
+		{
+			if(i.indexOf('share') == 0)
+			{
+				_extra[i] = _action.data[i];
+			}
+		}
 		this._super.call(this, _action, _senders, _target, _writable, _files, _callback, _extra);
 	},
 
