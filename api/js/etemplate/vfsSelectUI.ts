@@ -36,7 +36,7 @@ export class vfsSelectUI extends EgwApp
 	constructor()
 	{
 		// call parent
-		super();
+		super('vfsSelectUI');
 
 		this.egw.langRequireApp(this.egw.window, 'filemanager');
 	}

@@ -42,7 +42,7 @@ var vfsSelectUI = /** @class */ (function (_super) {
     function vfsSelectUI() {
         var _this = 
         // call parent
-        _super.call(this) || this;
+        _super.call(this, 'vfsSelectUI') || this;
         _this.egw.langRequireApp(_this.egw.window, 'filemanager');
         return _this;
     }

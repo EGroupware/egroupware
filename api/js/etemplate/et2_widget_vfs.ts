@@ -1398,6 +1398,8 @@ export class et2_vfsSelect extends et2_inputWidget
 				resizable: false
 			}, et2_dialog._create_parent('api'));
 		this.dialog.template.uniqueId = 'api.vfsSelectUI';
+		app.vfsSelectUI.et2 = this.dialog.template.widgetContainer;
+		app.vfsSelectUI.vfsSelectWidget = this;
 
 		// Don't rely only on app_name to fetch et2 object as app_name may not
 		// always represent current app of the window, e.g.: mail admin account.
@@ -1417,10 +1419,8 @@ export class et2_vfsSelect extends et2_inputWidget
 		// for dialog template our best shot is to inherit its parent etemplate_exec_id.
 		this.dialog.template.etemplate_exec_id = et2.etemplate_exec_id;
 
-		app.vfsSelectUI.et2 = this.dialog.template.widgetContainer;
 		// Keep the dialog always at the top
 		this.dialog.div.parent().css({"z-index": 100000});
-		app.vfsSelectUI.vfsSelectWidget = this;
 		this.dialog.div.on('load', function(e) {
 			app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');
 		});

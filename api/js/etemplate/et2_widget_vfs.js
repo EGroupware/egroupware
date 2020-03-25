@@ -855,7 +855,7 @@ var et2_vfsUpload = /** @class */ (function (_super) {
         while (this._children.length > 0) {
             var node = this._children[this._children.length - 1];
             this.removeChild(node);
-			node.destroy();
+            node.destroy();
         }
         this.progress.empty();
         this.list.empty();
@@ -918,8 +918,8 @@ var et2_vfsUpload = /** @class */ (function (_super) {
             for (var child_index = this._children.length - 1; child_index >= 0; child_index--) {
                 var child = this._children[child_index];
                 if (child.options.value.path === file_data.path) {
-					this.removeChild(child);
-					child.destroy();
+                    this.removeChild(child);
+                    child.destroy();
                 }
             }
         }
@@ -1144,6 +1144,8 @@ var et2_vfsSelect = /** @class */ (function (_super) {
             resizable: false
         }, et2_widget_dialog_1.et2_dialog._create_parent('api'));
         this.dialog.template.uniqueId = 'api.vfsSelectUI';
+        app.vfsSelectUI.et2 = this.dialog.template.widgetContainer;
+        app.vfsSelectUI.vfsSelectWidget = this;
         // Don't rely only on app_name to fetch et2 object as app_name may not
         // always represent current app of the window, e.g.: mail admin account.
         // Try to fetch et2 from its template name.
@@ -1159,10 +1161,8 @@ var et2_vfsSelect = /** @class */ (function (_super) {
         // widgets and since we can not have a etemplate_exec_id specifically
         // for dialog template our best shot is to inherit its parent etemplate_exec_id.
         this.dialog.template.etemplate_exec_id = et2.etemplate_exec_id;
-        app.vfsSelectUI.et2 = this.dialog.template.widgetContainer;
         // Keep the dialog always at the top
         this.dialog.div.parent().css({ "z-index": 100000 });
-        app.vfsSelectUI.vfsSelectWidget = this;
         this.dialog.div.on('load', function (e) {
             app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');
         });
