@@ -103,10 +103,7 @@ class HiddenUploadSharing extends Sharing
 		$path = parent::validate_path($path, $mode);
 
 		// Set up anonymous upload directory
-		if ($action_id == 'shareUploadDir')
-		{
-			static::create_hidden_upload($path, $extra);
-		}
+		static::create_hidden_upload($path, $extra);
 
 		return parent::create($action_id, $path, $mode, $name, $recipients, $extra);
 	}

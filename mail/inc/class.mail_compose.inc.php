@@ -983,7 +983,7 @@ class mail_compose
 				if (isset($_REQUEST['preset']['file']))
 				{
 					$content['filemode'] = !empty($_REQUEST['preset']['filemode']) &&
-						isset(Vfs\Sharing::$modes[$_REQUEST['preset']['filemode']]) ?
+							(isset(Vfs\Sharing::$modes[$_REQUEST['preset']['filemode']]) || isset(Vfs\HiddenUploadSharing::$modes[$_REQUEST['preset']['filemode']])) ?
 							$_REQUEST['preset']['filemode'] : Vfs\Sharing::ATTACH;
 
 					$this->addPresetFiles($content, $insertSigOnTop, $alwaysAttachVCardAtCompose);

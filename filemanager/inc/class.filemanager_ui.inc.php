@@ -290,6 +290,18 @@ class filemanager_ui
 					$actions['share']['children']['share_mail']['children']['mail_'.$mode]['disableClass'] = 'isDir';
 				}
 			}
+			foreach(Vfs\HiddenUploadSharing::$modes as $mode => $data)
+			{
+				$actions['share']['children']['share_mail']['children']['mail_shareUploadDir'] = array(
+					'caption' => $data['label'],
+					'hint' => $data['title'],
+					'icon' => 'upload',
+					'group' => 3,
+					'data' => ['share_writable' => $mode],
+					'enabled' => 'javaScript:app.filemanager.hidden_upload_enabled',
+					'onExecute' => 'javaScript:app.filemanager.mail_share_link',
+				);
+			}
 		}
 
 		// This would be done automatically, but we're overriding
