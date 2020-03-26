@@ -133,11 +133,21 @@ class pixelegg_framework extends Api\Framework\Ajax
 		{
 			if (!Api\Header\UserAgent::mobile())
 			{
+				if ($GLOBALS['egw_info']['server']['login_logo_header'])
+				{
+					$header = Api\Framework::get_login_logo_or_bg_url('login_logo_header', 'logo');
+				}
 				$ret['app_css'] .= "
 /**
  * theme changes to color pixelegg for color: $color
  */
-
+/*
+sharing
+*/
+div#popupMainDiv:before {
+	background-color: $color;
+	background-image: url($header);
+}
 /*
 -Top window framework header
 -sidebar actiuve category :hover
