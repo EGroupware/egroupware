@@ -691,6 +691,7 @@ class Sharing
 				$arr['title'] = lang('Filemanager directory');
 				break;
 			case 'shareUploadDir':
+			case 'mail_shareUploadDir':
 				$arr['title'] = lang('Upload directory');
 				break;
 		}

@@ -276,6 +276,51 @@ export class filemanagerAPP extends EgwApp
 	}
 
 	/**
+	 * Mail files action: open compose with already linked files
+	 * We're only interested in hidden upload shares here, open_mail can handle
+	 * the rest
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _selected
+	 */
+	mail_share_link(_action, _selected)
+	{
+		if(_action.id !== 'mail_shareUploadDir')
+		{
+			return this.mail(_action, _selected);
+		}
+		let path = this.id2path(_selected[0].id);
+
+		this.share_link(_action, _selected, null, false, false, this._mail_link_callback);
+
+		return true;
+	}
+
+	/**
+	 * Callback with the share link to append to an email
+	 *
+	 * @param {Object} _data
+	 * @param {String} _data.share_link Link to the share
+	 * @param {String} _data.title Title for the link
+	 * @param {String} [_data.msg] Error message
+	 */
+	_mail_link_callback(_data)
+	{
+		debugger;
+		if (_data.msg || !_data.share_link) window.egw_refresh(_data.msg, this.appname);
+
+		let params = {
+			'preset[body]': '<a href="'+_data.share_link + '">'+_data.title+'</a>',
+			'mimeType': 'html'// always open compose in html mode, as attachment links look a lot nicer in html
+		};
+		let content = {
+			mail_htmltext: ['<br /><a href="'+_data.share_link + '">'+_data.title+'</a>'],
+			mail_plaintext: ["\n"+_data.share_link]
+		};
+		return egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/);
+	}
+
+	/**
 	 * Trigger Upload after each file is uploaded
 	 * @param {type} _event
 	 */
