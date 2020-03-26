@@ -83,8 +83,6 @@ div#filemanager-index_buttons div.et2_file {
 div#popupMainDiv:before {
   content: ' ';
   width: 100%;
-  background-image: url(../../../api/templates/default/images/logo64x64.png);
-  background-repeat: no-repeat;
   background-position: 15px;
   background-size: 40px;
   height: 45px;
@@ -94,6 +92,19 @@ div#popupMainDiv:before {
   top: 0;
   left: 0;
   border-bottom: 1px solid silver;
+}
+div#popupMainDiv:after {
+  content: ' ';
+  width: 180px;
+  height: 45px;
+  display: block;
+  background-size: contain;
+  background-image: url(../../../api/templates/default/images/logo.svg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 form#filemanager-index {
   margin-left: 200px !important;
