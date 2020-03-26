@@ -172,6 +172,7 @@ go home	filemanager	de	Gehe zum Heimverzeichnis
 go to	filemanager	de	Gehe zu
 go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
 go up	filemanager	de	in das übergeordnete Verzeichnis wechseln
+hidden uploads	filemanager	de	Hochladen nicht einsehbar
 id	filemanager	de	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	de	Wenn Sie hier ein Verzeichnis angeben (vollständiger Pfad des virtuellen Dateisystems), zeigt %1 einen Befehl für jedes Dokument an. Dieser Befehl erlaubt es, das Dokument mit %1 Daten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	de	Wenn Sie hier ein Dokument angeben (vollständiger Pfad des virtuellen Dateisystems), zeigt %1 ein zusätzliches Dokumentsymbol für jeden Eintrag an. Dieses Symbol erlaubt es, das Dokument mit eingefügten Daten herunterzuladen.

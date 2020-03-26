@@ -159,7 +159,7 @@ class HiddenUploadSharing extends Sharing
 		// Add in a hidden upload directory
 		$actions['share']['children']['shareUploadDir'] = array(
 				'caption' => 'Hidden uploads',
-				'group' => 1,
+				'group' => 2,
 				'order' => 30,
 				'enabled' => 'javaScript:app.filemanager.hidden_upload_enabled',
 				'onExecute' => 'javaScript:app.filemanager.share_link',
