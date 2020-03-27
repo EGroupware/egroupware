@@ -293,9 +293,11 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {number} _file_count
      * @param {string=} _path where the file is uploaded to, default current directory
      * @param {string} _conflict What to do if the file conflicts with one on the server
+     * @param {string} _target Upload processing target.  Sharing classes can override this.
      */
-    filemanagerAPP.prototype.upload = function (_event, _file_count, _path, _conflict) {
+    filemanagerAPP.prototype.upload = function (_event, _file_count, _path, _conflict, _target) {
         if (_conflict === void 0) { _conflict = "ask"; }
+        if (_target === void 0) { _target = 'filemanager_ui::ajax_action'; }
         if (typeof _path == 'undefined') {
             _path = this.get_path();
         }
@@ -303,7 +305,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
             var widget = _event.data;
             var value = widget.getValue();
             value.conflict = _conflict;
-            egw.json('filemanager_ui::ajax_action', ['upload', value, _path, _conflict], this._upload_callback, this, true, this).sendRequest();
+            egw.json(_target, ['upload', value, _path, _conflict], this._upload_callback, this, true, this).sendRequest();
             widget.set_value('');
         }
     };
@@ -344,7 +346,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
      */
     filemanagerAPP.prototype._upload_callback = function (_data) {
         if (_data.msg || _data.uploaded)
-            window.egw_refresh(_data.msg, this.appname);
+            window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
         var that = this;
         for (var file in _data.uploaded) {
             if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed) {
@@ -561,7 +563,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param _data
      */
     filemanagerAPP.prototype._do_action_callback = function (_data) {
-        window.egw_refresh(_data.msg, this.appname);
+        window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
     };
     /**
      * Force download of a file by appending '?download' to it's download url

@@ -295,7 +295,7 @@ class filemanager_ui
 				$actions['share']['children']['share_mail']['children']['mail_shareUploadDir'] = array(
 					'caption' => $data['label'],
 					'hint' => $data['title'],
-					'icon' => 'upload',
+					'icon' => 'api/link',
 					'group' => 3,
 					'data' => ['share_writable' => $mode],
 					'enabled' => 'javaScript:app.filemanager.hidden_upload_enabled',

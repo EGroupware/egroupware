@@ -336,8 +336,9 @@ export class filemanagerAPP extends EgwApp
 	 * @param {number} _file_count
 	 * @param {string=} _path where the file is uploaded to, default current directory
 	 * @param {string} _conflict What to do if the file conflicts with one on the server
+	 * @param {string} _target Upload processing target.  Sharing classes can override this.
 	 */
-	upload(_event, _file_count : number, _path? : string, _conflict = "ask")
+	upload(_event, _file_count : number, _path? : string, _conflict = "ask", _target: string = 'filemanager_ui::ajax_action')
 	{
 		if(typeof _path == 'undefined')
 		{
@@ -348,7 +349,7 @@ export class filemanagerAPP extends EgwApp
 			let widget = _event.data;
 			let value = widget.getValue();
 			value.conflict = _conflict;
-			egw.json('filemanager_ui::ajax_action', ['upload', value, _path, _conflict],
+			egw.json(_target, ['upload', value, _path, _conflict],
 				this._upload_callback, this, true, this
 			).sendRequest();
 			widget.set_value('');
@@ -403,7 +404,7 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_upload_callback(_data)
 	{
-		if(_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname);
+		if(_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
 
 		let that = this;
 		for (let file in _data.uploaded)
@@ -668,7 +669,7 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_do_action_callback(_data)
 	{
-		window.egw_refresh(_data.msg, this.appname);
+		window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
 	}
 
 	/**

@@ -236,10 +236,30 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 
 				// Take over upload, change target and conflict strategy
 				$path = Vfs::concat(self::get_home_dir(), Sharing::HIDDEN_UPLOAD_DIR);
-				$this->etemplate->setElementAttribute('nm[upload]', 'onFinishOne', "app.filemanager.upload(ev, 1, '$path', 'rename')");
+				$target = str_replace('\\', '\\\\', __CLASS__);
+				$this->etemplate->setElementAttribute('nm[upload]', 'onFinishOne', "app.filemanager.upload(ev, 1, '$path', 'rename', '{$target}::ajax_action')");
 			}
 
 			return parent::listview($content, $msg);
+		}
+
+		/**
+		 * Deal with an uploaded file.
+		 * Overridden from the parent to change the message and message type
+		 *
+		 * @param string $action Should be 'upload'
+		 * @param $selected Array of file information
+		 * @param string $dir Target directory
+		 * @param $props
+		 * @param string[] $arr Result
+		 *
+		 * @throws Api\Exception\AssertionFailed
+		 */
+		protected static function handle_upload_action(string $action, $selected, $dir, $props, &$arr)
+		{
+			parent::handle_upload_action($action, $selected, $dir, $props, $arr);
+			$arr['msg'] .= "\n" . lang("The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.");
+			$arr['type'] = 'notice';
 		}
 
 		protected function is_hidden_upload_dir($directory)
