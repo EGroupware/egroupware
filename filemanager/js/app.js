@@ -271,7 +271,7 @@ app.classes.filemanager = AppJS.extend(
 		params.mimeType = 'html';
 		return egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/);
 	},
-	
+
 	/**
 	 * Mail files action: open compose with already linked files
 	 * We're only interested in hidden upload shares here, open_mail can handle
@@ -345,19 +345,25 @@ app.classes.filemanager = AppJS.extend(
 	 * @param {event} _event
 	 * @param {number} _file_count
 	 * @param {string=} _path where the file is uploaded to, default current directory
+	 * @param {string} _conflict What to do if the file conflicts with one on the server
+	 * @param {string} _target Upload processing target.  Sharing classes can override this.
 	 */
-	upload: function(_event, _file_count, _path, _conflict)
+	upload: function(_event, _file_count, _path, _conflict, _target)
 	{
 		if(typeof _path == 'undefined')
 		{
 			_path = this.get_path();
+		}
+		if(typeof _target == 'undefined')
+		{
+			_target = 'filemanager_ui::ajax_action';
 		}
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			var widget = _event.data;
 			let value = widget.getValue();
 			value.conflict = _conflict;
-			var request = egw.json('filemanager_ui::ajax_action', ['upload', value, _path],
+			var request = egw.json(_target, ['upload', value, _path],
 				this._upload_callback, this, true, this
 			).sendRequest();
 			widget.set_value('');
@@ -413,7 +419,7 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	_upload_callback: function(_data)
 	{
-		if (_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname);
+		if (_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
 
 		var that = this;
 		for(var file in _data.uploaded)
@@ -672,7 +678,7 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	_do_action_callback: function(_data)
 	{
-		window.egw_refresh(_data.msg, this.appname);
+		window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
 	},
 
 	/**
