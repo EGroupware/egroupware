@@ -833,7 +833,7 @@ class Sharing
 		if (!isset(self::$db)) self::$db = $GLOBALS['egw']->db;
 
 		foreach(self::$db->select(self::TABLE, array(
-			'share_id','share_path'
+			'share_id','share_path', 'share_writable'
 			), array(), __LINE__, __FILE__, false) as $share)
 		{
 			$class = self::get_share_class($share);

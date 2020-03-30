@@ -390,7 +390,10 @@ class Sharing extends \EGroupware\Api\Sharing
 	 */
 	protected static function check_path($share)
 	{
-		return Vfs::file_exists($share['share_path']);
+		Vfs::$is_root = true;
+		$exists = Vfs::file_exists($share['share_path']);
+		Vfs::$is_root = false;
+		return $exists;
 	}
 
 	/**

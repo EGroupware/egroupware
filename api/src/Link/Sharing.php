@@ -126,6 +126,10 @@ class Sharing extends \EGroupware\Api\Sharing
 	protected static function check_path($share)
 	{
 		list($app, $id) = explode('::', $share['share_path']);
+		if(!\EGroupware\Api\Link::$app_register[$app])
+		{
+			\EGroupware\Api\Link::init_static();
+		}
 		return (boolean) \EGroupware\Api\Link::title($app, $id);
 	}
 
