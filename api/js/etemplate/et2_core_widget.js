@@ -278,15 +278,6 @@ var et2_widget = /** @class */ (function (_super) {
             }
             _node._parent = this;
             this._children.splice(_idx, 0, _node);
-            /*
-            Comment this out (for now)
-                        if (_node.implements(et2_IDOMNode) && this.implements(et2_IDOMNode) && typeof _node.hasOwnProperty('parentNode') )
-                        {
-                            _node.detachFromDOM();
-                            _node.parentNode = (<et2_IDOMNode><unknown>this).getDOMNode(_node);
-                            _node.attachToDOM();
-                        }
-            */
         }
         else {
             this.egw().debug("error", "Widget " + _node._type + " is not supported by this widget class", this);

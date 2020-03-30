@@ -156,6 +156,25 @@ var et2_DOMWidget = /** @class */ (function (_super) {
         }
         return false;
     };
+    /**
+     * Inserts a child at the given index.
+     *
+     * @param _node is the node which should be added. It has to be an instance
+     * 	of et2_widget
+     * @param _idx is the position at which the element should be added.
+     */
+    et2_DOMWidget.prototype.insertChild = function (_node, _idx) {
+        _super.prototype.insertChild.call(this, _node, _idx);
+        if (_node.instanceOf(et2_DOMWidget) && typeof _node.hasOwnProperty('parentNode') && this.getDOMNode(this)) {
+            try {
+                _node.setParentDOMNode(this.getDOMNode(_node));
+            }
+            catch (_a) {
+                // Not ready to be added, usually due to construction order,
+                // will probably try again in doLoadingFinished()
+            }
+        }
+    };
     et2_DOMWidget.prototype.isAttached = function () {
         return this.parentNode != null;
     };

@@ -250,6 +250,31 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 		return false;
 	}
 
+	/**
+	 * Inserts a child at the given index.
+	 *
+	 * @param _node is the node which should be added. It has to be an instance
+	 * 	of et2_widget
+	 * @param _idx is the position at which the element should be added.
+	 */
+	insertChild(_node : et2_widget, _idx: number)
+	{
+		super.insertChild(_node, _idx);
+
+		if(_node.instanceOf(et2_DOMWidget) && typeof _node.hasOwnProperty('parentNode') && this.getDOMNode(this))
+		{
+			try
+			{
+				(<et2_DOMWidget><unknown>_node).setParentDOMNode(this.getDOMNode(_node));
+			}
+			catch
+			{
+				// Not ready to be added, usually due to construction order,
+				// will probably try again in doLoadingFinished()
+			}
+		}
+	}
+
 	isAttached() {
 		return this.parentNode != null;
 	}
