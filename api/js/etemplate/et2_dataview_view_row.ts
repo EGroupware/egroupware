@@ -189,7 +189,7 @@ export class et2_dataview_row extends et2_dataview_container implements et2_data
 	setViewRange( _range)
 	{
 		if (this.expansionContainer && this.expansionVisible
-		    && this.expansionContainer.implements(et2_dataview_IViewRange))
+			&& implements_et2_dataview_IViewRange(this.expansionContainer))
 		{
 			// Substract the height of the own row from the container
 			var oh = jQuery(this._nodes[0]).height();

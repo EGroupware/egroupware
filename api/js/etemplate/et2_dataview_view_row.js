@@ -146,7 +146,7 @@ var et2_dataview_row = /** @class */ (function (_super) {
     /** -- Implementation of et2_dataview_IViewRange -- **/
     et2_dataview_row.prototype.setViewRange = function (_range) {
         if (this.expansionContainer && this.expansionVisible
-            && this.expansionContainer.implements(et2_dataview_IViewRange)) {
+            && implements_et2_dataview_IViewRange(this.expansionContainer)) {
             // Substract the height of the own row from the container
             var oh = jQuery(this._nodes[0]).height();
             _range.top -= oh;
