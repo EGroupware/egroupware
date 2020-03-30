@@ -223,6 +223,9 @@ var et2_toolbar = /** @class */ (function (_super) {
             var action = actions[name_1];
             if (typeof action == 'string')
                 action = { id: name_1, caption: action };
+            if (typeof action.group == 'undefined') {
+                action.group = 'default';
+            }
             // Add in divider
             if (last_group_id != action.group) {
                 last_group = jQuery('[data-group="' + action.group + '"]', this_1.actionlist);

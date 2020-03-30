@@ -276,6 +276,10 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		{
 			let action = actions[name];
 			if (typeof action == 'string') action = {id: name, caption: action};
+			if(typeof action.group == 'undefined')
+			{
+				action.group = 'default';
+			}
 
 			// Add in divider
 			if(last_group_id != action.group)
