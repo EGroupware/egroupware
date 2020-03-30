@@ -51,10 +51,11 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 		}
 
 		// Call the resize handler (we have to use the jquery object of the iframe!)
-		if (wnd && typeof wnd.jQuery != "undefined")
-		{
-			wnd.jQuery(wnd).trigger("resize");
-		}
+		try {
+			if (wnd && typeof wnd.jQuery != "undefined") {
+				wnd.jQuery(wnd).trigger("resize");
+			}
+		} catch(e) {}	// ignore if iframe runs of a different origin
 	},
 
 	/**

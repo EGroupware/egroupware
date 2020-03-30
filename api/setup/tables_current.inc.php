@@ -30,9 +30,9 @@ $phpgw_baseline = array(
 			'app_order' => array('type' => 'int','precision' => '4','nullable' => False),
 			'app_tables' => array('type' => 'ascii','precision' => '8192','nullable' => False),
 			'app_version' => array('type' => 'ascii','precision' => '20','nullable' => False,'default' => '0.0'),
-			'app_icon' => array('type' => 'ascii','precision' => '32'),
+			'app_icon' => array('type' => 'ascii','precision' => '128'),
 			'app_icon_app' => array('type' => 'ascii','precision' => '16'),
-			'app_index' => array('type' => 'ascii','precision' => '64')
+			'app_index' => array('type' => 'ascii','precision' => '128')
 		),
 		'pk' => array('app_id'),
 		'fk' => array(),
