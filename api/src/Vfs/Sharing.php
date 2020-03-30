@@ -364,7 +364,10 @@ class Sharing extends \EGroupware\Api\Sharing
 		{
 			$share['share_path'] = Api\Vfs::parse_url($share['share_path'], PHP_URL_PATH);
 		}
-		return Vfs::file_exists($share['share_path']);
+		Vfs::$is_root = true;
+		$exists = Vfs::file_exists($share['share_path']);
+		Vfs::$is_root = false;
+		return $exists;
 	}
 
 	/**
