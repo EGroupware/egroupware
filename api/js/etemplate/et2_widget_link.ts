@@ -9,25 +9,25 @@
  * @copyright 2011 Nathan Gray
  */
 
-	/*egw:uses
-		/vendor/bower-asset/jquery/dist/jquery.js;
-		/vendor/bower-asset/jquery-ui/jquery-ui.js;
-		et2_core_inputWidget;
-		et2_core_valueWidget;
+/*egw:uses
+	/vendor/bower-asset/jquery/dist/jquery.js;
+	/vendor/bower-asset/jquery-ui/jquery-ui.js;
+	et2_core_inputWidget;
+	et2_core_valueWidget;
 
-		// Include menu system for list context menu
-		egw_action.egw_menu_dhtmlx;
-	*/
+	// Include menu system for list context menu
+	egw_action.egw_menu_dhtmlx;
+*/
 
-	import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
-	import {ClassWithAttributes} from "./et2_core_inheritance";
-	import {et2_valueWidget} from "./et2_core_valueWidget";
-	import {et2_inputWidget} from "./et2_core_inputWidget";
-	import {et2_selectbox} from "./et2_widget_selectbox";
-	import {et2_button} from "./et2_widget_button";
-	import {et2_vfs_select} from "./et2_widget_vfs";
+import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
+import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_valueWidget} from "./et2_core_valueWidget";
+import {et2_inputWidget} from "./et2_core_inputWidget";
+import {et2_selectbox} from "./et2_widget_selectbox";
+import {et2_button} from "./et2_widget_button";
+import {et2_vfs_select} from "./et2_widget_vfs";
 
-	/**
+/**
  * UI widgets for Egroupware linking system
  */
 export class et2_link_to extends et2_inputWidget
@@ -1317,7 +1317,7 @@ export class et2_link extends et2_valueWidget implements et2_IDetachedDOM
 			"description": "Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank"
 		}
 	};
-	legacyOptions = ["only_app"];
+	public static readonly legacyOptions = ["only_app"];
 
 	private label_span: JQuery;
 	private link: JQuery;

@@ -57,7 +57,6 @@ var et2_date = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_date._attributes, _child || {})) || this;
-        _this.legacyOptions = ["data_format"];
         _this.input_date = null;
         _this.is_mobile = false;
         _this.date = new Date();
@@ -571,6 +570,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
             "description": "Instead of an input field with a popup calendar, the calendar is displayed inline, with no input field"
         }
     };
+    et2_date.legacyOptions = ["data_format"];
     return et2_date;
 }(et2_core_inputWidget_1.et2_inputWidget));
 exports.et2_date = et2_date;
@@ -587,7 +587,6 @@ var et2_date_duration = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_date_duration._attributes, _child || {})) || this;
-        _this.legacyOptions = ["data_format", "display_format", "hours_per_day", "empty_not_0", "short_labels"];
         _this.format = null;
         // Legacy option put percent in with display format
         if (_this.options.display_format.indexOf("%") != -1) {
@@ -840,6 +839,7 @@ var et2_date_duration = /** @class */ (function (_super) {
             "description": "Works with the min and max attributes to limit the increments at which a numeric or date-time value can be set."
         }
     };
+    et2_date_duration.legacyOptions = ["data_format", "display_format", "hours_per_day", "empty_not_0", "short_labels"];
     return et2_date_duration;
 }(et2_date));
 exports.et2_date_duration = et2_date_duration;

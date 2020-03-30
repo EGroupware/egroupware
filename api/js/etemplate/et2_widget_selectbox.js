@@ -50,7 +50,6 @@ var et2_selectbox = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_selectbox._attributes, _child || {})) || this;
-        _this.legacyOptions = ["rows", "other"]; // Other is sub-type specific
         _this.input = null;
         _this.value = '';
         _this.selected_first = true;
@@ -1243,6 +1242,7 @@ var et2_selectbox = /** @class */ (function (_super) {
             description: "Allow to set a custom css class combined with selected value. (e.g. cat_23)"
         }
     };
+    et2_selectbox.legacyOptions = ["rows", "other"]; // Other is sub-type specific
     et2_selectbox.type_cache = {};
     return et2_selectbox;
 }(et2_core_inputWidget_1.et2_inputWidget));

@@ -51,8 +51,6 @@ var et2_description = /** @class */ (function (_super) {
             var _this = 
             // Call the inherited constructor
             _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_description._attributes, _child || {})) || this;
-            _this.legacyOptions = ["font_style", "href", "activate_links", "for",
-                "extra_link_target", "extra_link_popup", "statustext"];
             _this._labelContainer = null;
             // Create the span/label tag which contains the label text
             _this.span = jQuery(document.createElement(_this.options["for"] ? "label" : "span"))
@@ -359,6 +357,8 @@ var et2_description = /** @class */ (function (_super) {
             "description": "Text to show as tooltip of defined action"
         }
     },
+    _a.legacyOptions = ["font_style", "href", "activate_links", "for",
+        "extra_link_target", "extra_link_popup", "statustext"],
     _a))));
 exports.et2_description = et2_description;
 ;

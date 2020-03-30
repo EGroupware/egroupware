@@ -16,8 +16,9 @@
 */
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from './et2_core_valueWidget';
+
 /**
  * Class which implements the "radiobox" XET-Tag
  *
@@ -50,7 +51,7 @@ class et2_radiobox extends et2_inputWidget
 		}
 	};
 
-	legacyOptions : string[]  = ["set_value", "ro_true", "ro_false"];
+	public static readonly legacyOptions : string[]  = ["set_value", "ro_true", "ro_false"];
 	input : JQuery = null;
 	id : string = "";
 
@@ -204,7 +205,7 @@ class et2_radiobox_ro extends et2_valueWidget implements et2_IDetachedDOM
 		}
 	};
 
-	legacyOptions : string[] = ["set_value", "ro_true", "ro_false"];
+	public static readonly legacyOptions : string[] = ["set_value", "ro_true", "ro_false"];
 	value : string = "";
 	span : JQuery = null;
 

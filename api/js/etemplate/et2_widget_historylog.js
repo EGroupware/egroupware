@@ -49,7 +49,6 @@ var et2_historylog = /** @class */ (function (_super) {
      */
     function et2_historylog(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_historylog._attributes, _child || {})) || this;
-        _this.legacyOptions = ["status_id"];
         _this.div = jQuery(document.createElement("div"))
             .addClass("et2_historylog");
         _this.innerDiv = jQuery(document.createElement("div"))
@@ -574,6 +573,7 @@ var et2_historylog = /** @class */ (function (_super) {
             "description": "Method to get rows"
         }
     };
+    et2_historylog.legacyOptions = ["status_id"];
     et2_historylog.columns = [
         { 'id': 'user_ts', caption: 'Date', 'width': '120px', widget_type: 'date-time', widget: null, nodes: null },
         { 'id': 'owner', caption: 'User', 'width': '150px', widget_type: 'select-account', widget: null, nodes: null },

@@ -48,7 +48,6 @@ var et2_image = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_image._attributes, _child || {})) || this;
-        _this.legacyOptions = ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"];
         _this.image = null;
         // Create the image or a/image tag
         _this.image = jQuery(document.createElement("img"));
@@ -249,6 +248,7 @@ var et2_image = /** @class */ (function (_super) {
             description: "Clicking on an image with href value would popup an expose view, and will show image referenced by href."
         }
     };
+    et2_image.legacyOptions = ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"];
     return et2_image;
 }(et2_core_baseWidget_1.et2_baseWidget));
 et2_core_widget_1.et2_register_widget(et2_image, ["image"]);

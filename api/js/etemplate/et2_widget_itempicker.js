@@ -52,7 +52,6 @@ var et2_itempicker = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_itempicker._attributes, _child || {})) || this;
-        _this.legacyOptions = ["application"];
         _this.last_search = ""; // Remember last search value
         _this.action = null; // Action function for button
         _this.current_app = ""; // Remember currently chosen application
@@ -347,6 +346,7 @@ var et2_itempicker = /** @class */ (function (_super) {
             "description": "Callback before query to server.  Must return true, or false to abort query."
         }
     };
+    et2_itempicker.legacyOptions = ["application"];
     return et2_itempicker;
 }(et2_core_inputWidget_1.et2_inputWidget));
 et2_core_widget_1.et2_register_widget(et2_itempicker, ["itempicker"]);

@@ -71,7 +71,7 @@ var et2_split = /** @class */ (function (_super) {
         this.div.trigger("destroy");
         // Destroy dynamic full-height
         this.dynheight.destroy();
-		_super.prototype.destroy.call(this);
+        _super.prototype.destroy.call(this);
         // Remove placeholder children
         if (this._children.length == 0) {
             this.div.empty();

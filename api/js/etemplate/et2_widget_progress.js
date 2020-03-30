@@ -46,7 +46,6 @@ var et2_progress = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_progress._attributes, _child || {})) || this;
-        _this.legacyOptions = ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"];
         _this.progress = null;
         var outer = document.createElement("div");
         outer.className = "et2_progress";
@@ -165,6 +164,7 @@ var et2_progress = /** @class */ (function (_super) {
             "translate": true
         }
     };
+    et2_progress.legacyOptions = ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"];
     return et2_progress;
 }(et2_core_valueWidget_1.et2_valueWidget));
 et2_core_widget_1.et2_register_widget(et2_progress, ["progress"]);

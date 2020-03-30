@@ -72,7 +72,7 @@ class et2_checkbox extends et2_inputWidget
 		}
 	};
 
-	legacyOptions : string[]  = ["selected_value", "unselected_value", "ro_true", "ro_false"];
+	public static readonly legacyOptions : string[]  = ["selected_value", "unselected_value", "ro_true", "ro_false"];
 	input : JQuery = null;
 	toggle : JQuery = null;
 	value : string | boolean;

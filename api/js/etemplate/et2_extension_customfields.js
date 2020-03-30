@@ -38,7 +38,6 @@ var et2_customfields_list = /** @class */ (function (_super) {
     __extends(et2_customfields_list, _super);
     function et2_customfields_list(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_customfields_list._attributes, _child || {})) || this;
-        _this.legacyOptions = ["type_filter", "private", "fields"]; // Field restriction & private done server-side
         _this.rows = {};
         _this.widgets = {};
         _this.detachedNodes = [];
@@ -602,6 +601,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
             "description": "JS code which is executed when the value changes."
         }
     };
+    et2_customfields_list.legacyOptions = ["type_filter", "private", "fields"]; // Field restriction & private done server-side
     et2_customfields_list.PREFIX = '#';
     et2_customfields_list.DEFAULT_ID = "custom_fields";
     return et2_customfields_list;

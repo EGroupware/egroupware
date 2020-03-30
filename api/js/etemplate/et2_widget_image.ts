@@ -19,7 +19,7 @@
 */
 
 import {et2_baseWidget} from './et2_core_baseWidget';
-import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 
 /**
@@ -75,7 +75,7 @@ class et2_image extends et2_baseWidget implements et2_IDetachedDOM
 		}
 	};
 
-	legacyOptions : string[] = ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"];
+	public static readonly legacyOptions : string[] = ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"];
 
 	image : JQuery = null;
 

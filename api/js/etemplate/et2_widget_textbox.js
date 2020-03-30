@@ -47,7 +47,6 @@ var et2_textbox = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_textbox._attributes, _child || {})) || this;
-        _this.legacyOptions = ["size", "maxlength", "validator"];
         _this.input = null;
         _this.input = null;
         _this.createInputWidget();
@@ -283,6 +282,7 @@ var et2_textbox = /** @class */ (function (_super) {
             description: "JS code or app.$app.$method called when key is pressed, return false cancels it."
         }
     };
+    et2_textbox.legacyOptions = ["size", "maxlength", "validator"];
     return et2_textbox;
 }(et2_core_inputWidget_1.et2_inputWidget));
 exports.et2_textbox = et2_textbox;

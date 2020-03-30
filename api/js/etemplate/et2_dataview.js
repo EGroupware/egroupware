@@ -382,10 +382,10 @@ var et2_dataview = /** @class */ (function () {
         // Create the collection of column ids
         var colIds = [];
         for (var i = 0; i < this.columns.length; i++) {
-			if (this.columns[i].visible) {
-				colIds[i] = this.columns[i].id;
-			}
-		}
+            if (this.columns[i].visible) {
+                colIds[i] = this.columns[i].id;
+            }
+        }
         // Create the row provider
         if (this.rowProvider) {
             this.rowProvider.destroy();

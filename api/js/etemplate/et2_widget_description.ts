@@ -111,7 +111,7 @@ export class et2_description extends expose(class et2_description extends et2_ba
 
 	};
 
-	legacyOptions: string[] = ["font_style", "href", "activate_links", "for",
+	public static readonly legacyOptions: string[] = ["font_style", "href", "activate_links", "for",
 		"extra_link_target", "extra_link_popup", "statustext"];
 
 	span: JQuery;

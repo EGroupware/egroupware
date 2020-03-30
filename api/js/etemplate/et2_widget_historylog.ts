@@ -65,7 +65,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		}
 	};
 
-	legacyOptions = ["status_id"];
+	public static readonly legacyOptions = ["status_id"];
 	protected static columns = [
 		{'id': 'user_ts', caption: 'Date', 'width': '120px', widget_type: 'date-time', widget: null, nodes: null},
 		{'id': 'owner', caption: 'User', 'width': '150px', widget_type: 'select-account', widget: null, nodes: null},

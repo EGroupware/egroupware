@@ -50,7 +50,6 @@ var et2_radiobox = /** @class */ (function (_super) {
      */
     function et2_radiobox(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_radiobox._attributes, _child || {})) || this;
-        _this.legacyOptions = ["set_value", "ro_true", "ro_false"];
         _this.input = null;
         _this.id = "";
         _this.createInputWidget();
@@ -159,6 +158,7 @@ var et2_radiobox = /** @class */ (function (_super) {
             "description": "What should be displayed when readonly and not selected"
         }
     };
+    et2_radiobox.legacyOptions = ["set_value", "ro_true", "ro_false"];
     return et2_radiobox;
 }(et2_core_inputWidget_1.et2_inputWidget));
 et2_core_widget_1.et2_register_widget(et2_radiobox, ["radio"]);
@@ -176,7 +176,6 @@ var et2_radiobox_ro = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_radiobox_ro._attributes, _child || {})) || this;
-        _this.legacyOptions = ["set_value", "ro_true", "ro_false"];
         _this.value = "";
         _this.span = null;
         _this.span = jQuery(document.createElement("span"))
@@ -243,6 +242,7 @@ var et2_radiobox_ro = /** @class */ (function (_super) {
             "type": "string"
         }
     };
+    et2_radiobox_ro.legacyOptions = ["set_value", "ro_true", "ro_false"];
     return et2_radiobox_ro;
 }(et2_core_valueWidget_1.et2_valueWidget));
 et2_core_widget_1.et2_register_widget(et2_radiobox_ro, ["radio_ro"]);

@@ -33,16 +33,16 @@
 							</columns>
 							<rows>
 								<row class="row">
-									<vfs-mime align="center" id="$row" options="16" class="selectIcon"/>
+									<vfs-mime align="center" id="$row" size="16" class="selectIcon"/>
 									<vfs id="$row" onclick="app.vfsSelectUI.select_clicked"/>
-									<checkbox align="right" id="selected[]" options="&quot;$row_cont[name]&quot;"/>
+									<checkbox align="right" id="selected[]" selected_value="&quot;$row_cont[name]&quot;"/>
 								</row>
 							</rows>
 						</grid>
 					</hbox>
 				</row>
 				<row disabled="!@showmime">
-					<select id="mime" onchange="app.vfsSelectUI.do_action('mime', widget)" options="All files" class="et2_fullWidth"/>
+					<select id="mime" onchange="app.vfsSelectUI.do_action('mime', widget)" empty_label="All files" class="et2_fullWidth"/>
 				</row>
 			</rows>
 		</grid>

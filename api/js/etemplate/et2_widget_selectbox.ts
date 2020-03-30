@@ -112,7 +112,7 @@ export class et2_selectbox extends et2_inputWidget
 		}
 	};
 
-	legacyOptions: string[] = ["rows","other"]; // Other is sub-type specific
+	public static readonly legacyOptions: string[] = ["rows","other"]; // Other is sub-type specific
 	input: JQuery = null;
 	value: string | string[] = '';
 	expand_button: JQuery;

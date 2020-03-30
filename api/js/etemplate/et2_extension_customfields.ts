@@ -64,7 +64,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		}
 	};
 
-	legacyOptions = ["type_filter","private", "fields"]; // Field restriction & private done server-side
+	public static readonly legacyOptions = ["type_filter","private", "fields"]; // Field restriction & private done server-side
 
 	public static readonly PREFIX = '#';
 

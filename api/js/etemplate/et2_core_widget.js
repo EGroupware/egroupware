@@ -123,9 +123,6 @@ var et2_widget = /** @class */ (function (_super) {
      */
     function et2_widget(_parent, _attrs, _child) {
         var _this = _super.call(this) || this;
-        // Set the legacyOptions array to the names of the properties the "options"
-        // attribute defines.
-        _this.legacyOptions = [];
         _this._children = [];
         _this._mgrs = {};
         /**
@@ -900,6 +897,9 @@ var et2_widget = /** @class */ (function (_super) {
             "description": "Object of widget attributes"
         }
     };
+    // Set the legacyOptions array to the names of the properties the "options"
+    // attribute defines.
+    et2_widget.legacyOptions = [];
     return et2_widget;
 }(et2_core_inheritance_1.ClassWithAttributes));
 exports.et2_widget = et2_widget;

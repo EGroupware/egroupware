@@ -93,7 +93,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		}
 	};
 
-	legacyOptions: string[] = ["data_format"];
+	public static readonly legacyOptions: string[] = ["data_format"];
 	date: Date;
 	span: JQuery;
 	input_date: JQuery = null;
@@ -703,7 +703,7 @@ export class et2_date_duration extends et2_date
 		}
 	};
 
-	legacyOptions: string[] = ["data_format","display_format", "hours_per_day", "empty_not_0", "short_labels"];
+	public static readonly legacyOptions: string[] = ["data_format","display_format", "hours_per_day", "empty_not_0", "short_labels"];
 
 	time_formats: {"d":"d","h":"h","m":"m"};
 
@@ -1085,7 +1085,7 @@ export class et2_date_ro extends et2_valueWidget implements et2_IDetachedDOM
 		year_range: {ignore: true}
 	};
 
-	legacyOptions: ["data_format"];
+	public static readonly legacyOptions: ["data_format"];
 
 	/**
 	 * Internal container for working easily with dates

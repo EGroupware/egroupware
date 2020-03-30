@@ -47,7 +47,6 @@ var et2_entry = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_entry._attributes, _child || {})) || this;
-        _this.legacyOptions = ["field", "compare", "alternate_fields"];
         _this.widget = null;
         // Often the ID conflicts, so check prefix
         if (_attrs.id && _attrs.id.indexOf(et2_entry.prefix) < 0) {
@@ -163,6 +162,7 @@ var et2_entry = /** @class */ (function (_super) {
             default: true
         }
     };
+    et2_entry.legacyOptions = ["field", "compare", "alternate_fields"];
     return et2_entry;
 }(et2_core_valueWidget_1.et2_valueWidget));
 et2_core_widget_1.et2_register_widget(et2_entry, ["entry", 'contact-value', 'contact-account', 'contact-template', 'infolog-value', 'tracker-value', 'records-value']);

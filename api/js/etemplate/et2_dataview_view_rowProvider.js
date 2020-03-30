@@ -85,22 +85,22 @@ var et2_dataview_rowProvider = /** @class */ (function () {
         this._prototypes["fullRow"] = tr;
     };
     et2_dataview_rowProvider.prototype._createDefaultPrototype = function () {
-		var tr = jQuery(document.createElement("tr"));
-		// Append a td for each column
-		for (var _i = 0, _a = this._columnIds; _i < _a.length; _i++) {
-			var column = _a[_i];
-			if (!column)
-				continue;
-			var td = jQuery(document.createElement("td"))
-				.addClass(this._outerId + "_td_" + column)
-				.appendTo(tr);
-			var div = jQuery(document.createElement("div"))
-				.addClass(this._outerId + "_div_" + column)
-				.addClass("innerContainer")
-				.appendTo(td);
-		}
-		this._prototypes["default"] = tr;
-	};
+        var tr = jQuery(document.createElement("tr"));
+        // Append a td for each column
+        for (var _i = 0, _a = this._columnIds; _i < _a.length; _i++) {
+            var column = _a[_i];
+            if (!column)
+                continue;
+            var td = jQuery(document.createElement("td"))
+                .addClass(this._outerId + "_td_" + column)
+                .appendTo(tr);
+            var div = jQuery(document.createElement("div"))
+                .addClass(this._outerId + "_div_" + column)
+                .addClass("innerContainer")
+                .appendTo(td);
+        }
+        this._prototypes["default"] = tr;
+    };
     et2_dataview_rowProvider.prototype._createEmptyPrototype = function () {
         this._prototypes["empty"] = jQuery(document.createElement("tr"));
     };

@@ -76,7 +76,7 @@ export class et2_button extends et2_baseWidget implements et2_IInput, et2_IDetac
 		}
 	};
 
-	legacyOptions: string[] = ["image", "ro_image"];
+	public static readonly legacyOptions: string[] = ["image", "ro_image"];
 
 	/**
 	 * images to be used as background-image, if none is explicitly applied and id matches given regular expression

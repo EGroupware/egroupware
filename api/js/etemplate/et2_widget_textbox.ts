@@ -15,12 +15,11 @@
 */
 
 import './et2_core_common';
-import { ClassWithAttributes } from "./et2_core_inheritance";
-import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
-import { et2_DOMWidget } from './et2_core_DOMWidget'
-import { et2_valueWidget } from './et2_core_valueWidget'
-import { et2_inputWidget } from './et2_core_inputWidget'
-import { et2_button } from './et2_widget_button'
+import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_valueWidget} from './et2_core_valueWidget'
+import {et2_inputWidget} from './et2_core_inputWidget'
+import {et2_button} from './et2_widget_button'
 import './et2_types';
 
 /**
@@ -88,7 +87,7 @@ export class et2_textbox extends et2_inputWidget implements et2_IResizeable
 		}
 	};
 
-	legacyOptions: string[] = ["size", "maxlength", "validator"];
+	public static readonly legacyOptions: string[] = ["size", "maxlength", "validator"];
 	input: JQuery = null;
 	size: number;
 	maxLength: number;

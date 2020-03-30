@@ -518,7 +518,7 @@ class et2_vfsMime extends expose(class et2_vfsMime extends et2_valueWidget imple
 
 	};
 
-	legacyOptions : string[] = ["size"];
+	public static readonly legacyOptions : string[] = ["size"];
 	iconOverlayContainer : JQuery = null;
 	overlayContainer : JQuery;
 	image : JQuery = null;
@@ -932,7 +932,7 @@ class et2_vfsUpload extends et2_file
 		}
 	};
 
-	legacyOptions : string[] = ["mime"];
+	public static readonly legacyOptions : string[] = ["mime"];
 
 	asyncOptions : {target : any} = {
 		target: egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_upload")

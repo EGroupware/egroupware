@@ -1052,7 +1052,6 @@ var et2_link = /** @class */ (function (_super) {
      */
     function et2_link(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link._attributes, _child || {})) || this;
-        _this.legacyOptions = ["only_app"];
         _this.label_span = jQuery(document.createElement("label"))
             .addClass("et2_label");
         _this.link = jQuery(document.createElement("span"))
@@ -1221,6 +1220,7 @@ var et2_link = /** @class */ (function (_super) {
             "description": "Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank"
         }
     };
+    et2_link.legacyOptions = ["only_app"];
     return et2_link;
 }(et2_core_valueWidget_1.et2_valueWidget));
 exports.et2_link = et2_link;

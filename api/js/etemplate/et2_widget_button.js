@@ -44,7 +44,6 @@ var et2_button = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_button._attributes, _child || {})) || this;
-        _this.legacyOptions = ["image", "ro_image"];
         _this.label = "";
         _this.clicked = false;
         _this.btn = null;
@@ -357,6 +356,7 @@ var et2_button = /** @class */ (function (_super) {
             "ignore": true
         }
     };
+    et2_button.legacyOptions = ["image", "ro_image"];
     /**
      * images to be used as background-image, if none is explicitly applied and id matches given regular expression
      */

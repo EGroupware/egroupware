@@ -450,7 +450,6 @@ var et2_vfsMime = /** @class */ (function (_super) {
             var _this = 
             // Call the inherited constructor
             _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_vfsMime._attributes, _child || {})) || this;
-            _this.legacyOptions = ["size"];
             _this.iconOverlayContainer = null;
             _this.image = null;
             _this.iconOverlayContainer = jQuery(document.createElement('span')).addClass('iconOverlayContainer');
@@ -618,6 +617,7 @@ var et2_vfsMime = /** @class */ (function (_super) {
             description: " Size of thumbnail in pixel for specified mime type with syntax of: mime_type(s),size (eg. image,video,128)"
         }
     },
+    _a.legacyOptions = ["size"],
     _a))));
 ;
 et2_core_widget_1.et2_register_widget(et2_vfsMime, ["vfs-mime"]);
@@ -828,7 +828,6 @@ var et2_vfsUpload = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_vfsUpload._attributes, _child || {})) || this;
-        _this.legacyOptions = ["mime"];
         _this.asyncOptions = {
             target: egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_upload")
         };
@@ -989,6 +988,7 @@ var et2_vfsUpload = /** @class */ (function (_super) {
             "default": ''
         }
     };
+    et2_vfsUpload.legacyOptions = ["mime"];
     return et2_vfsUpload;
 }(et2_widget_file_1.et2_file));
 et2_core_widget_1.et2_register_widget(et2_vfsUpload, ["vfs-upload"]);

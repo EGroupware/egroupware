@@ -51,7 +51,7 @@ class et2_progress extends et2_valueWidget implements et2_IDetachedDOM
 		}
 	};
 
-	legacyOptions : string[] = ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"];
+	public static readonly legacyOptions : string[] = ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"];
 	private progress : HTMLElement = null;
 
 	/**

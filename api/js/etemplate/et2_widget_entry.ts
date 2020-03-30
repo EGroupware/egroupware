@@ -76,7 +76,7 @@ class et2_entry extends et2_valueWidget
 		}
 	};
 
-	legacyOptions : string[] = ["field","compare","alternate_fields"];
+	public static readonly legacyOptions : string[] = ["field","compare","alternate_fields"];
 
 	static readonly prefix: '~';
 	protected widget = null;

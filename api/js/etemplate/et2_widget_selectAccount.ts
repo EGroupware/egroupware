@@ -18,11 +18,10 @@
 */
 
 import {et2_selectbox} from "./et2_widget_selectbox";
-import {et2_register_widget, WidgetConfig, et2_widget} from "./et2_core_widget";
+import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_link_entry} from "./et2_widget_link";
+import {et2_link_entry, et2_link_string} from "./et2_widget_link";
 import {et2_dialog} from "./et2_widget_dialog";
-import {et2_link_string} from "./et2_widget_link";
 
 /**
  * Account selection widget
@@ -767,7 +766,7 @@ export class et2_selectAccount_ro extends et2_link_string
 		}
 	};
 
-	legacyOptions : string[] =  ["empty_label"];
+	public static readonly legacyOptions : string[] =  ["empty_label"];
 
 	/**
 	 * Constructor

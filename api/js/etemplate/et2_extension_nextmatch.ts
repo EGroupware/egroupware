@@ -3652,7 +3652,7 @@ export class et2_nextmatch_sortheader extends et2_nextmatch_header implements et
 			"translate": false
 		}
 	};
-	legacyOptions: ['sortmode'];
+	public static readonly legacyOptions: ['sortmode'];
 	private sortmode: string;
 
 	/**
@@ -4022,7 +4022,7 @@ class et2_nextmatch_customfilter extends et2_nextmatch_filterheader
 			"default": {}
 		}
 	};
-	legacyOptions: ["widget_type","widget_options"];
+	public static readonly legacyOptions: ["widget_type","widget_options"];
 
 	real_node: et2_selectbox;
 

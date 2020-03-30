@@ -70,7 +70,7 @@ class et2_itempicker extends et2_inputWidget
 		}
 	};
 
-	legacyOptions : string[] = ["application"];
+	public static readonly legacyOptions : string[] = ["application"];
 	private last_search : string =  "";	// Remember last search value
 	private action : egwFnct = null;	// Action function for button
 	private current_app : string =  "";	// Remember currently chosen application

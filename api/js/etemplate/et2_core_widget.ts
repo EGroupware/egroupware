@@ -16,7 +16,7 @@
 	et2_core_arrayMgr;
 */
 
-import { ClassWithAttributes } from './et2_core_inheritance';
+import {ClassWithAttributes} from './et2_core_inheritance';
 
 /**
  * The registry contains all XML tag names and the corresponding widget
@@ -176,7 +176,7 @@ export class et2_widget extends ClassWithAttributes
 
 	// Set the legacyOptions array to the names of the properties the "options"
 	// attribute defines.
-	legacyOptions: string[] = [];
+	public static readonly legacyOptions: string[] = [];
 
 	private _type: string;
 	id: string;

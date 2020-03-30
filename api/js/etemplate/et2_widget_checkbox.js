@@ -48,7 +48,6 @@ var et2_checkbox = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_checkbox._attributes, _child || {})) || this;
-        _this.legacyOptions = ["selected_value", "unselected_value", "ro_true", "ro_false"];
         _this.input = null;
         _this.toggle = null;
         _this.input = null;
@@ -189,6 +188,7 @@ var et2_checkbox = /** @class */ (function (_super) {
             "translate": true
         }
     };
+    et2_checkbox.legacyOptions = ["selected_value", "unselected_value", "ro_true", "ro_false"];
     return et2_checkbox;
 }(et2_core_inputWidget_1.et2_inputWidget));
 et2_core_widget_1.et2_register_widget(et2_checkbox, ["checkbox"]);

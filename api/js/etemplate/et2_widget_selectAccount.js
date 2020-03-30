@@ -626,7 +626,6 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
      */
     function et2_selectAccount_ro(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_selectAccount_ro._attributes, _child || {})) || this;
-        _this.legacyOptions = ["empty_label"];
         /**
         Resolve some circular dependency problems here
         selectAccount extends link, link is in a file that needs select,
@@ -720,6 +719,7 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
             translate: true
         }
     };
+    et2_selectAccount_ro.legacyOptions = ["empty_label"];
     return et2_selectAccount_ro;
 }(et2_widget_link_2.et2_link_string));
 exports.et2_selectAccount_ro = et2_selectAccount_ro;
