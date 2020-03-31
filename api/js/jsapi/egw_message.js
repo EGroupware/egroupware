@@ -288,12 +288,12 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				var $animator = jQuery(_wnd.document.createElement('div'))
 						.addClass('egw-loading-prompt-'+mode+'-animator')
 						.appendTo($container);
-				if (jQuery('#'+id).length == 0) $container.insertBefore($node);
+				if (!_wnd.document.getElementById(id)) $container.insertBefore($node);
 				return $container;
 			}
 			else
 			{
-				$container = jQuery('#'+id);
+				$container = jQuery(_wnd.document.getElementById(id));
 				if ($container.length > 0) $container.remove();
 				return null;
 			}
