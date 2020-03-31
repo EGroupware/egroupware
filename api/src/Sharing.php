@@ -456,7 +456,7 @@ class Sharing
 						'hint' => lang('Include access to any linked files (Links tab)')
 					),
 					'shareFilemanager' => array(
-						'caption' => lang('Filemanager directory'),
+						'caption' => lang('share filemanager directory'),
 						'group' => 10,
 						'icon' => 'link',
 						'order' => 20,
