@@ -1607,6 +1607,9 @@ var EgwApp = /** @class */ (function () {
         if (typeof _files === 'undefined' && _action.parent && _action.parent.getActionById('shareFiles')) {
             _files = _action.parent.getActionById('shareFiles').checked || false;
         }
+        if (typeof _extra === 'undefined') {
+            _extra = {};
+        }
         return egw.json('EGroupware\\Api\\Sharing::ajax_create', [_action.id, path, _writable, _files, _extra], _callback ? _callback : this._share_link_callback, this, true, this).sendRequest();
     };
     EgwApp.prototype.share_merge = function (_action, _senders, _target) {

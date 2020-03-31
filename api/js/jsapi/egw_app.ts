@@ -2011,6 +2011,10 @@ export abstract class EgwApp
 		{
 			_files = _action.parent.getActionById('shareFiles').checked || false;
 		}
+		if(typeof _extra === 'undefined')
+		{
+			_extra = {};
+		}
 
 		return egw.json('EGroupware\\Api\\Sharing::ajax_create', [_action.id, path, _writable, _files, _extra],
 			_callback ? _callback : this._share_link_callback, this, true, this).sendRequest();
