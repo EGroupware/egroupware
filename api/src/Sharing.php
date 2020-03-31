@@ -435,7 +435,8 @@ class Sharing
 						'icon' => 'link',
 						'order' => 11,
 						'enabled' => "javaScript:app.$appname.is_share_enabled",
-						'onExecute' => "javaScript:app.$appname.share_link"
+						'onExecute' => "javaScript:app.$appname.share_link",
+						'hint' => lang("Share this %1 via URL", Link::get_registry($appname, 'entry'))
 					),
 					'shareWritable' => array(
 						'caption' => lang('Writable'),
@@ -443,14 +444,16 @@ class Sharing
 						'icon' => 'edit',
 						'allowOnMultiple' => true,
 						'enabled' => "javaScript:app.$appname.is_share_enabled",
-						'checkbox' => true
+						'checkbox' => true,
+						'hint' => lang("Allow editing the %1", Link::get_registry($appname, 'entry'))
 					),
 					'shareFiles' => array(
 						'caption' => lang('Share files'),
 						'group' => 2,
 						'allowOnMultiple' => true,
 						'enabled' => "javaScript:app.$appname.is_share_enabled",
-						'checkbox' => true
+						'checkbox' => true,
+						'hint' => lang('Include access to any linked files (Links tab)')
 					),
 					'shareFilemanager' => array(
 						'caption' => lang('Filemanager directory'),
@@ -458,7 +461,8 @@ class Sharing
 						'icon' => 'link',
 						'order' => 20,
 						'enabled' => "javaScript:app.$appname.is_share_enabled",
-						'onExecute' => "javaScript:app.$appname.share_link"
+						'onExecute' => "javaScript:app.$appname.share_link",
+						'hint' => lang('Share just the associated filemanager directory, not the %1', Link::get_registry($appname, 'entry'))
 					),
 				),
 		));
