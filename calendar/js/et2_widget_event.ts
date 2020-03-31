@@ -898,9 +898,10 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		}
 
 		// Show also events just owned by selected user
-		if(filter == 'owner')
+		// Group members can be owner too, those get handled when we check group memberships below
+		if(filter == 'owner' && owner == event.owner)
 		{
-			return owner == event.owner;
+			return true;
 		}
 
 		// Get the relevant participant
@@ -923,9 +924,9 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			if((isNaN(parseInt(owner)) || parseInt(owner) < 0) && options && typeof options.find == "function")
 			{
 				let resource = options.find(function (element)
-				                            {
-					                            return element.id == owner;
-				                            }) || {};
+                {
+                    return element.id == owner;
+                }) || {};
 				if(resource && resource.resources)
 				{
 					let matching_participant = resource.resources.filter(id => typeof event.participants[id] != "undefined");

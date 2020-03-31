@@ -696,8 +696,9 @@ var et2_calendar_event = /** @class */ (function (_super) {
             return pass;
         }
         // Show also events just owned by selected user
-        if (filter == 'owner') {
-            return owner == event.owner;
+        // Group members can be owner too, those get handled when we check group memberships below
+        if (filter == 'owner' && owner == event.owner) {
+            return true;
         }
         // Get the relevant participant
         var participant = event.participants[owner];
