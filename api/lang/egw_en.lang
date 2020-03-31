@@ -119,6 +119,7 @@ all in one	groupdav	en	All in one
 all languages	common	en	All languages
 all operations save the template!	common	en	All operations save the template!
 all users	common	en	All users
+allow editing the %1	common	en	Allow editing the %1
 allowed file type: %1	common	en	Allowed file type: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	en	Allows to modify responsible users from devices not supporting them, by setting EMail address of a user as category.
 alt	common	en	Alt
@@ -686,6 +687,7 @@ import an etemplate from a xml-file	common	en	Import an eTemplate from a xml-fil
 import table-definitions from existing db-table	common	en	Import table definitions from existing DB table
 import xml	common	en	Import XML
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	en	In order to copy to clipboard, you need to allow Flash player by clicking on gray box.\nYou can permanently allow Flash player for EGroupware in your browser settings.
+include access to any linked files (links tab)	common	en	Include access to any linked files (Links tab)
 increment version to not overwrite the existing template	common	en	Increment version to not overwrite the existing template.
 indent	common	en	Indent
 index/name of returned content (name of the template, link / method for image)	common	en	Index/name of returned content, name of the Template, link / method for image.
@@ -1249,7 +1251,9 @@ setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
 share	common	en	Share
 share files	common	en	Share files
+share just the associated filemanager directory, not the %1	common	en	Share just the associated filemanager directory, not the %1
 share link	common	en	Share link
+share this %1 via url	common	en	Share this %1 via URL
 shift	common	en	Shift
 shift ⇧	common	en	Shift ⇧
 should the form be submitted or any custom javascript be executed	common	en	Should form be submitted or any custom javascript executed
