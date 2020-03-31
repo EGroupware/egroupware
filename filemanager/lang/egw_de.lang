@@ -282,6 +282,7 @@ the default start folder is your personal folder. the default is used, if you le
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, diese werden mit den entsprechenden Daten ersetzt (%1Liste der Platzhalter%2)
 the following document-types are supported:	filemanager	de	Die folgenden Dokumenttypen werden unterstützt:
 the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung
+the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	de	Die hochgeladene Datei ist nur für die Person sichtbar, die Ihnen diese Dateien zur Verfügung gestellt hat, nicht für Sie selbst oder andere Personen die diesen Sharing Link kennen.
 there's already a directory with that name!	filemanager	de	Es gibt bereits ein Verzeichnis mit diesem Namen!
 there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei mit diesem Namen!
 tile view	filemanager	de	Kachelansicht
