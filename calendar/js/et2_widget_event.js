@@ -863,9 +863,11 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}
 
 		// Show also events just owned by selected user
-		if(filter == 'owner')
+		// Group members can be owner too, those get handled when we check group memberships below
+		if(filter == 'owner' && owner == event.owner)
 		{
 			return owner == event.owner;
+			return true;
 		}
 
 		// Get the relevant participant
