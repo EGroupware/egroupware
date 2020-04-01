@@ -257,6 +257,7 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 		 */
 		protected static function handle_upload_action(string $action, $selected, $dir, $props, &$arr)
 		{
+			Api\Translation::add_app('filemanager');
 			parent::handle_upload_action($action, $selected, $dir, $props, $arr);
 			$arr['msg'] .= "\n" . lang("The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.");
 			$arr['type'] = 'notice';

@@ -423,6 +423,18 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 	class SharingUi extends filemanager_ui
 	{
 		/**
+		 * Constructor
+		 *
+		 * Reimplemented to load filemanager translations
+		 */
+		function __construct()
+		{
+			parent::__construct();
+
+			Api\Translation::add_app('filemanager');
+		}
+
+		/**
 		 * Get active view - override so it points to this class
 		 *
 		 * @return callable
