@@ -250,3 +250,4 @@ class Date extends Transformer
 		}
 	}
 }
+\EGroupware\Api\Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Date', array('time_or_date'));
