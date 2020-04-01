@@ -1054,6 +1054,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				{
 					colName = this._getColumnName(_row[i].widget);
 				}
+				if(!negated)
+				{
+					_colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
+				}
+				if(!colName) continue;
 				_colData[i].visible = negated;
 				let stop = false;
 				for(var j = 0; j < columnDisplay.length && !stop; j++)
@@ -1064,11 +1069,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 						stop = true;
 					}
 				}
-				if(!negated)
-				{
-					_colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
-				}
-				if(!colName) continue;
 
 				if(size[colName])
 				{
@@ -1275,7 +1275,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			else if (!colName)
 			{
 				// Unnamed column cannot be toggled or saved
-				columnData[x].visibility = et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT;
+				columnData[x].visibility = et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT;
+				this.columns[x].visible = true;
 			}
 
 		}

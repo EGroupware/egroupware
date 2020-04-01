@@ -740,6 +740,11 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 else {
                     colName = this._getColumnName(_row[i].widget);
                 }
+                if (!negated) {
+                    _colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
+                }
+                if (!colName)
+                    continue;
                 _colData[i].visible = negated;
                 var stop_1 = false;
                 for (var j = 0; j < columnDisplay.length && !stop_1; j++) {
@@ -748,11 +753,6 @@ var et2_nextmatch = /** @class */ (function (_super) {
                         stop_1 = true;
                     }
                 }
-                if (!negated) {
-                    _colData[i].order = typeof order[colName] === 'undefined' ? i : order[colName];
-                }
-                if (!colName)
-                    continue;
                 if (size[colName]) {
                     // Make sure percentages stay percentages, and forget any preference otherwise
                     if (_colData[i].width.charAt(_colData[i].width.length - 1) == "%") {
@@ -915,7 +915,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
             }
             else if (!colName) {
                 // Unnamed column cannot be toggled or saved
-                columnData[x].visibility = et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT;
+                columnData[x].visibility = et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT;
+                this.columns[x].visible = true;
             }
         }
         // Remove action column
