@@ -9,10 +9,11 @@
  * @package api
  * @subpackage framework
  * @access public
- * @version $Id$
  */
 
 namespace EGroupware\Api;
+
+use EGroupware\Api\Header\ContentSecurityPolicy;
 
 /**
  * Framework: virtual base class for all template sets
@@ -146,6 +147,16 @@ abstract class Framework extends Framework\Extra
 	{
 		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
 		header('Content-type: text/html; charset='.Translation::charset());
+
+		// add CSP frame-src for apps which are just iframes
+		foreach($GLOBALS['egw_info']['user']['apps'] as $app => $data)
+		{
+			if ($GLOBALS['egw_info']['apps'][$app]['status'] == 1 && !empty($data['index']) &&
+				preg_match('|^(https?://[^/]+)|', $data['index'], $matches))
+			{
+				ContentSecurityPolicy::add_frame_src($matches[1]);
+			}
+		}
 
 		Header\ContentSecurityPolicy::send();
 
@@ -743,6 +754,10 @@ abstract class Framework extends Framework\Extra
 		$index = '/'.$app.'/index.php';
 		if (isset($data['index']))
 		{
+			if (preg_match('|^https?://|', $data['index']))
+			{
+				return $data['index'];
+			}
 			if ($data['index'][0] == '/')
 			{
 				$index = $data['index'];
@@ -845,9 +860,17 @@ abstract class Framework extends Framework\Extra
 				// for instance: applications with status 5 will run in background
 				$apps[$app]['status'] = $data['status'];
 
-				$icon = isset($data['icon']) ?  $data['icon'] : 'navbar';
-				$icon_app = isset($data['icon_app']) ? $data['icon_app'] : $app;
-				$apps[$app]['icon']  = $apps[$app]['icon_hover']  = Image::find($icon_app,Array($icon,'nonav'),'');
+				if (!empty($data['icon']) && preg_match('#^(https?://|/)#', $data['icon']))
+				{
+					$icon_url =  $data['icon'];
+				}
+				else
+				{
+					$icon = isset($data['icon']) ?  $data['icon'] : 'navbar';
+					$icon_app = isset($data['icon_app']) ? $data['icon_app'] : $app;
+					$icon_url = Image::find($icon_app,Array($icon,'nonav'),'');
+				}
+				$apps[$app]['icon']  = $apps[$app]['icon_hover'] = $icon_url;
 			}
 		}
 

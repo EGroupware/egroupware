@@ -128,6 +128,17 @@ class pixelegg_framework extends Api\Framework\Ajax
 		{
 			$loginbox_color = $color_darker;
 		}
+		//alway set header logo used  in sharing regardless of custom color being set
+		$header = $GLOBALS['egw_info']['server']['login_logo_header'] ? Api\Framework::get_login_logo_or_bg_url('login_logo_header', 'logo')
+			: Api\Framework::get_login_logo_or_bg_url('login_logo_file', 'logo');
+		$ret['app_css'] .= "
+			/*
+			sharing
+			*/
+			div#popupMainDiv:after {
+				background-image: url($header);
+			}
+		";
 
 		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color) || preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$loginbox_color))	// a little xss check
 		{
@@ -137,7 +148,12 @@ class pixelegg_framework extends Api\Framework\Ajax
 /**
  * theme changes to color pixelegg for color: $color
  */
-
+/*
+sharing
+*/
+div#popupMainDiv:before {
+	background-color: $color;
+}
 /*
 -Top window framework header
 -sidebar actiuve category :hover

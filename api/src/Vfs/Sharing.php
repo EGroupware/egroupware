@@ -46,6 +46,9 @@ class Sharing extends \EGroupware\Api\Sharing
 	const READONLY = 'share_ro';
 	const WRITABLE = 'share_rw';
 
+	const HIDDEN_UPLOAD = 9; // 8 is the next bitwise flag + 1 for writable
+	const HIDDEN_UPLOAD_DIR = '/Upload';
+
  	/**
 	 * Modes for sharing files
 	 *
@@ -186,70 +189,30 @@ class Sharing extends \EGroupware\Api\Sharing
 	/**
 	 * Create a new share
 	 *
+	 * @param string $action_id Name of the action used to create the share.  Allows for customization.
 	 * @param string $path either path in temp_dir or vfs with optional vfs scheme
 	 * @param string $mode self::LINK: copy file in users tmp-dir or self::READABLE share given vfs file,
-	 *	if no vfs behave as self::LINK
+	 *  if no vfs behave as self::LINK
 	 * @param string $name filename to use for $mode==self::LINK, default basename of $path
 	 * @param string|array $recipients one or more recipient email addresses
 	 * @param array $extra =array() extra data to store
+	 * @return array with share data, eg. value for key 'share_token'
 	 * @throw Api\Exception\NotFound if $path not found
 	 * @throw Api\Exception\AssertionFailed if user temp. directory does not exist and can not be created
-	 * @return array with share data, eg. value for key 'share_token'
 	 */
-	public static function create($path, $mode, $name, $recipients, $extra=array())
+	public static function create(string $action_id, $path, $mode, $name, $recipients, $extra = array())
 	{
 		if (!isset(self::$db)) self::$db = $GLOBALS['egw']->db;
 
-		// Parent puts the application as a prefix.  If we're coming from there, pull it off
-		if(strpos($path, 'filemanager::') === 0)
-		{
-			list(,$path) = explode('::', $path);
-		}
+		$path2tmp =& Api\Cache::getSession(__CLASS__, 'path2tmp');
+		$path = static::validate_path($path, $mode);
+
 		if (empty($name)) $name = $path;
 
-		$path2tmp =& Api\Cache::getSession(__CLASS__, 'path2tmp');
-
-		// allow filesystem path only for temp_dir
-		$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/';
-		if (substr($path, 0, strlen($temp_dir)) == $temp_dir)
-		{
-			$mode = self::LINK;
-			$exists = file_exists($path) && is_readable($path);
-		}
-		else
-		{
-			if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
-			{
-				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
-			}
-
-			// We don't allow sharing links, share target instead
-			if(($target = Vfs::readlink($path)))
-			{
-				$path = $target;
-			}
-
-			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
-			{
-				// Make sure we get the correct path if sharing from a share
-				if(isset($GLOBALS['egw']->sharing) && $exists)
-				{
-					$resolved_stat = Vfs::parse_url($stat['url']);
-					$path = 'vfs://default'. $resolved_stat['path'];
-				}
-
-				$vfs_path = $path;
-			}
-		}
-		// check if file exists and is readable
-		if (!$exists)
-		{
-			throw new Api\Exception\NotFound("'$path' NOT found!");
-		}
 		// check if file has been shared before, with identical attributes
 		if (($mode != self::LINK ))
 		{
-			return parent::create($vfs_path ? $vfs_path : $path, $mode, $name, $recipients, $extra);
+			return parent::create($action_id, $path, $mode, $name, $recipients, $extra);
 		}
 		else
 		{
@@ -287,8 +250,66 @@ class Sharing extends \EGroupware\Api\Sharing
 				$vfs_path = $tmp_file;
 			}
 
-			return parent::create($vfs_path, $mode, $name, $recipients, $extra);
+			return parent::create($action_id, $vfs_path, $mode, $name, $recipients, $extra);
 		}
+	}
+
+	/**
+	 * Clean and validate the share path
+	 *
+	 * @param $path Proposed share path
+	 * @param $mode Share mode
+	 * @return string
+	 *
+	 * @throws Api\Exception\AssertionFailed
+	 * @throws Api\Exception\NotFound
+	 * @throws Api\Exception\WrongParameter
+	 */
+	protected static function validate_path($path, &$mode)
+	{
+		// Parent puts the application as a prefix.  If we're coming from there, pull it off
+		if(strpos($path, 'filemanager::') === 0)
+		{
+			list(,$path) = explode('::', $path);
+		}
+
+		// allow filesystem path only for temp_dir
+		$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/';
+		if (substr($path, 0, strlen($temp_dir)) == $temp_dir)
+		{
+			$mode = self::LINK;
+			$exists = file_exists($path) && is_readable($path);
+		}
+		else
+		{
+			if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
+			{
+				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
+			}
+
+			// We don't allow sharing links, share target instead
+			if(($target = Vfs::readlink($path)))
+			{
+				$path = $target;
+			}
+
+			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
+			{
+				// Make sure we get the correct path if sharing from a share
+				if(isset($GLOBALS['egw']->sharing) && $exists)
+				{
+					$resolved_stat = Vfs::parse_url($stat['url']);
+					$path = 'vfs://default'. $resolved_stat['path'];
+				}
+			}
+		}
+		// check if file exists and is readable
+		if (!$exists)
+		{
+			throw new Api\Exception\NotFound("'$path' NOT found!");
+		}
+
+		return $path;
 	}
 
 	/**
@@ -402,6 +423,44 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 	class SharingUi extends filemanager_ui
 	{
 		/**
+		 * Constructor
+		 *
+		 * Reimplemented to load filemanager translations
+		 */
+		function __construct()
+		{
+			parent::__construct();
+
+			Api\Translation::add_app('filemanager');
+		}
+
+		/**
+		 * Get active view - override so it points to this class
+		 *
+		 * @return callable
+		 */
+		public static function get_view()
+		{
+			return array(new SharingUi(), 'listview');
+		}
+
+		/**
+		 * Filemanager listview
+		 *
+		 * @param array $content
+		 * @param string $msg
+		 */
+		function listview(array $content=null,$msg=null)
+		{
+			$this->etemplate = $this->etemplate ? $this->etemplate : new Api\Etemplate(static::LIST_TEMPLATE);
+
+			// Override and take over get_rows so we can customize
+			$content['nm']['get_rows'] = '.' . get_class($this) . '.get_rows';
+
+			return parent::listview($content, $msg);
+		}
+
+		/**
 		 * Get the configured start directory for the current user
 		 *
 		 * @return string
@@ -422,7 +481,7 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 			$group = 1;
 			// do not add edit setting action when we are in sharing
 			unset($actions['edit']);
-			if(Vfs::is_writable($GLOBALS['egw']->sharing->get_root()))
+			if (Vfs::is_writable($GLOBALS['egw']->sharing->get_root()))
 			{
 				return $actions;
 			}
@@ -451,9 +510,38 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 			$options = parent::get_vfs_options($query);
 
 			// Hide symlinks
-			$options['type'] = '!l';
+			// TODO: This hides everything, see Vfs::_check_add() line 648
+			//$options['type'] = '!l';
 
 			return $options;
+		}
+
+		/**
+		 * Callback to fetch the rows for the nextmatch widget
+		 *
+		 * @param array $query
+		 * @param array &$rows
+		 * @return int
+		 */
+		function get_rows(&$query, &$rows)
+		{
+			// Check for navigating outside share, redirect back to share
+			if (!Vfs::stat($query['path'],false) || !Vfs::is_dir($query['path']) || !Vfs::check_access($query['path'],Vfs::READABLE))
+			{
+				// only redirect, if it would be to some other location, gives redirect-loop otherwise
+				if ($query['path'] != ($path = static::get_home_dir()))
+				{
+					// we will leave here, since we are not allowed, go back to root
+					// TODO: Give message about it, redirect to home dir
+				}
+				$rows = array();
+				return 0;
+			}
+
+			// Get file list from parent
+			$total = parent::get_rows($query, $rows);
+
+			return $total;
 		}
 	}
 }

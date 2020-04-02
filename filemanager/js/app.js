@@ -273,6 +273,51 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
+	 * Mail files action: open compose with already linked files
+	 * We're only interested in hidden upload shares here, open_mail can handle
+	 * the rest
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _selected
+	 */
+	mail_share_link(_action, _selected)
+	{
+		if(_action.id !== 'mail_shareUploadDir')
+		{
+			return this.mail(_action, _selected);
+		}
+		let path = this.id2path(_selected[0].id);
+
+		this.share_link(_action, _selected, null, false, false, this._mail_link_callback);
+
+		return true;
+	},
+
+	/**
+	 * Callback with the share link to append to an email
+	 *
+	 * @param {Object} _data
+	 * @param {String} _data.share_link Link to the share
+	 * @param {String} _data.title Title for the link
+	 * @param {String} [_data.msg] Error message
+	 */
+	_mail_link_callback(_data)
+	{
+		debugger;
+		if (_data.msg || !_data.share_link) window.egw_refresh(_data.msg, this.appname);
+
+		let params = {
+			'preset[body]': '<a href="'+_data.share_link + '">'+_data.title+'</a>',
+			'mimeType': 'html'// always open compose in html mode, as attachment links look a lot nicer in html
+		};
+		let content = {
+			mail_htmltext: ['<br /><a href="'+_data.share_link + '">'+_data.title+'</a>'],
+			mail_plaintext: ["\n"+_data.share_link]
+		};
+		return egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/);
+	},
+
+	/**
 	 * Mail files action: open compose with already attached files
 	 *
 	 * @param _action
@@ -300,17 +345,25 @@ app.classes.filemanager = AppJS.extend(
 	 * @param {event} _event
 	 * @param {number} _file_count
 	 * @param {string=} _path where the file is uploaded to, default current directory
+	 * @param {string} _conflict What to do if the file conflicts with one on the server
+	 * @param {string} _target Upload processing target.  Sharing classes can override this.
 	 */
-	upload: function(_event, _file_count, _path)
+	upload: function(_event, _file_count, _path, _conflict, _target)
 	{
 		if(typeof _path == 'undefined')
 		{
 			_path = this.get_path();
 		}
+		if(typeof _target == 'undefined')
+		{
+			_target = 'filemanager_ui::ajax_action';
+		}
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			var widget = _event.data;
-			var request = egw.json('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path],
+			let value = widget.getValue();
+			value.conflict = _conflict;
+			var request = egw.json(_target, ['upload', value, _path],
 				this._upload_callback, this, true, this
 			).sendRequest();
 			widget.set_value('');
@@ -366,7 +419,7 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	_upload_callback: function(_data)
 	{
-		if (_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname);
+		if (_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
 
 		var that = this;
 		for(var file in _data.uploaded)
@@ -625,7 +678,7 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	_do_action_callback: function(_data)
 	{
-		window.egw_refresh(_data.msg, this.appname);
+		window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
 	},
 
 	/**
@@ -1194,7 +1247,15 @@ app.classes.filemanager = AppJS.extend(
 		{
 			_senders[0] = {id: this.get_path()};
 		}
-		this._super.call(this, _action, _senders, _target, _writable, _files, _callback);
+		let _extra = {};
+		for(let i in _action.data)
+		{
+			if(i.indexOf('share') == 0)
+			{
+				_extra[i] = _action.data[i];
+			}
+		}
+		this._super.call(this, _action, _senders, _target, _writable, _files, _callback, _extra);
 	},
 
 	/**
@@ -1235,6 +1296,19 @@ app.classes.filemanager = AppJS.extend(
 			width: 450,
 			value: {content:{ "share_link": _data.share_link }}
 		});
+	},
+
+	/**
+	 * Check if a row can have the Hidden Uploads action
+	 * Needs to be a directory
+	 */
+	hidden_upload_enabled(_action, _senders)
+	{
+		let data = egw.dataGetUIDdata(_senders[0].id);
+		let readonly = (data.data.class || '').split(/ +/).indexOf('noEdit') >= 0;
+
+		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
+		return (data.data.is_dir && !readonly);
 	},
 
 	/**

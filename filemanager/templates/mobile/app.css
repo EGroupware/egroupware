@@ -57,7 +57,7 @@ input#filemanager-index_path {
   height: 22px;
   padding: 0;
   background-position-x: 3px;
-  background-image: url(../../../pixelegg/images/add.png);
+  background-image: url(../../../pixelegg/images/add.svg);
   overflow: hidden;
   text-indent: 100px;
 }
@@ -289,27 +289,7 @@ div#filemanager-file_tabs span.ui-icon-search {
   position: relative;
   top: 3px;
   margin-left: 3px;
-}
-div#filemanager-file_tabs span.ui-icon-search:hover {
-  /*.background_color_20_gray;*/
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-div#filemanager-file_tabs span.ui-icon-search:active {
-  /*.background_color_30_gray;*/
-  border: 1px solid rgba(0, 0, 0, 0.9);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  background-color: #b3e4a6;
+  background-position: 3px;
 }
 div#filemanager-file_tabs #filemanager-file_filemanager-file-eacl {
   /*Owner*/
@@ -403,7 +383,7 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #filemanager-index_new_wrapper .ui-icon-triangle-1-s {
-  background-image: url(../../../pixelegg/images/add.png);
+  background-image: url(../../../pixelegg/images/add.svg);
   background-size: 12px;
   background-repeat: no-repeat;
   background-position: center;
@@ -512,16 +492,15 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
     height: auto;
     position: relative !important;
   }
-  .et2_file.plus_button {
-    position: absolute !important;
+  #filemanager-index_filemanager-index-header_left .et2_file.plus_button {
+    position: fixed !important;
     right: 15px;
     bottom: 15px;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 60px !important;
+    height: 60px !important;
     background-position: center;
     z-index: 100;
-    background-color: #0c5da5;
     box-shadow: 0px 1px 5px 3px silver;
     background-image: url(../../../pixelegg/images/topmenu_items/mobile/plus_white.svg) !important;
     background-repeat: no-repeat;
@@ -530,19 +509,22 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
     padding: 0;
     border: none;
   }
-  .et2_file.plus_button .et2_file_span {
+  #filemanager-index_filemanager-index-header_left .et2_file.plus_button .et2_file_span {
     width: 50px;
     height: 50px;
     border: none;
     background: none;
   }
-  .et2_file.plus_button .et2_file_upload {
+  #filemanager-index_filemanager-index-header_left .et2_file.plus_button .et2_file_upload {
     width: 60px;
     height: 60px;
     top: 0;
   }
-  .et2_file.plus_button div.progress {
-    display: none !important;
+  #filemanager-index_filemanager-index-header_left .et2_file.plus_button div.progress {
+    position: fixed;
+    left: 0;
+    top: 0px;
+    width: 93%;
   }
   .previewImage img {
     max-width: 100%;

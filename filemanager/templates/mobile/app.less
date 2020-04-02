@@ -98,37 +98,44 @@
 		select#filemanager-index_filter {width:100%;}
 		.nextmatch_header_row div.header_row_right {height:auto;position: relative !important;}
 	}
-	.et2_file.plus_button {
-		position: absolute !important;
-		right: 15px;
-		bottom: 15px;
-		border-radius: 50%;
-		width: 60px;
-		height: 60px;
-		background-position: center;
-		z-index: 100;
-		background-color: #0c5da5;
-		box-shadow: 0px 1px 5px 3px silver;
-		background-image: url(../../../pixelegg/images/topmenu_items/mobile/plus_white.svg) !important;
-		background-repeat: no-repeat;
-		background-size: 24px 24px;
-		border: none;
-		margin: 0;
-		padding: 0;
-		border: none;
-		.et2_file_span{
-			width:50px;
-			height: 50px;
+	#filemanager-index_filemanager-index-header_left {
+		.et2_file.plus_button {
+			position: fixed !important;
+			right: 15px;
+			bottom: 15px;
+			border-radius: 50%;
+			width: 60px !important;
+			height: 60px !important;
+			background-position: center;
+			z-index: 100;
+			box-shadow: 0px 1px 5px 3px silver;
+			background-image: url(../../../pixelegg/images/topmenu_items/mobile/plus_white.svg) !important;
+			background-repeat: no-repeat;
+			background-size: 24px 24px;
 			border: none;
-			background: none;
+			margin: 0;
+			padding: 0;
+			border: none;
+			.et2_file_span{
+				width:50px;
+				height: 50px;
+				border: none;
+				background: none;
+			}
+			.et2_file_upload {
+				width: 60px;
+				height: 60px;
+				top: 0;
+			}
+			div.progress {
+				position: fixed;
+				left: 0;
+				top: 0px;
+				width: 93%;
+			}
 		}
-		.et2_file_upload {
-			width: 60px;
-			height: 60px;
-			top: 0;
-		}
-		div.progress {display: none !important;}
 	}
+
 	.previewImage img {max-width: 100%;}
 	div#filemanager-file_tabs td.eaclAccount,td.eaclRights {display: block;}
 }

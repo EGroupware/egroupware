@@ -20,7 +20,6 @@ namespace EGroupware\Api\Vfs;
 require_once __DIR__ . '/SharingBase.php';
 
 use EGroupware\Api\Vfs;
-use EGroupware\Api\LoggedInTest as LoggedInTest;
 
 
 class SharingTest extends SharingBase
@@ -231,7 +230,7 @@ class SharingTest extends SharingBase
 		);
 
 		// Create share
-		$this->shares[] = $created_share = Sharing::create($symlink, Sharing::READONLY, '', '');
+		$this->shares[] = $created_share = Sharing::create('', $symlink, Sharing::READONLY, '', '');
 
 		$this->assertEquals($file, $created_share['share_path']);
 	}
@@ -257,7 +256,7 @@ class SharingTest extends SharingBase
 		);
 
 		// Create share
-		$this->shares[] = $created_share = Sharing::create($symlink, Sharing::READONLY, '', '');
+		$this->shares[] = $created_share = Sharing::create('', $symlink, Sharing::READONLY, '', '');
 
 		$this->assertEquals($file, $created_share['share_path']);
 	}

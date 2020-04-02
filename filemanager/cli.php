@@ -16,6 +16,8 @@
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
 
+require_once(__DIR__ .  '/../api/src/autoload.php');
+
 chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
 error_reporting(error_reporting() & ~E_NOTICE & ~E_DEPRECATED);

@@ -12,6 +12,8 @@
 
 namespace EGroupware\Api;
 
+use EGroupware\Api\Vfs\HiddenUploadSharing;
+
 /**
  * VFS sharing
  *
@@ -339,9 +341,13 @@ class Sharing
 					return '\\EGroupware\\Stylite\\Link\\Sharing';
 				}
 			}
-			else if (class_exists ('\EGroupware\Collabora\Wopi') && $share['share_writable'] == \EGroupware\Collabora\Wopi::WOPI_SHARED)
+			else if (class_exists ('\EGroupware\Collabora\Wopi') && (int)$share['share_writable'] === \EGroupware\Collabora\Wopi::WOPI_SHARED)
 			{
 				return '\\EGroupware\\Collabora\\Wopi';
+			}
+			else if ((int)$share['share_writable'] == HiddenUploadSharing::HIDDEN_UPLOAD)
+			{
+				return '\\'.__NAMESPACE__ . '\\'. 'Vfs\\HiddenUploadSharing';
 			}
 		}
 		catch(Exception $e){throw $e;}
@@ -482,7 +488,8 @@ class Sharing
 		// sharing is for a different share, change to current share
 		if ($this->share['share_token'] !== self::get_token())
 		{
-			self::create_session($GLOBALS['egw']->session->session_flags === 'N');
+			self::create_session($GLOBALS['egw']->session->session_flags === 'N' ||
+				$GLOBALS['egw_info']['user']['account_lid'] === 'anonymous');
 
 			return $GLOBALS['egw']->sharing->ServeRequest();
 		}
@@ -551,17 +558,18 @@ class Sharing
 	/**
 	 * Create a new share
 	 *
+	 * @param string $action_id Specific type of share being created, default ''
 	 * @param string $path either path in temp_dir or vfs with optional vfs scheme
 	 * @param string $mode self::LINK: copy file in users tmp-dir or self::READABLE share given vfs file,
-	 *	if no vfs behave as self::LINK
+	 *  if no vfs behave as self::LINK
 	 * @param string $name filename to use for $mode==self::LINK, default basename of $path
 	 * @param string|array $recipients one or more recipient email addresses
 	 * @param array $extra =array() extra data to store
+	 * @return array with share data, eg. value for key 'share_token'
 	 * @throw Api\Exception\NotFound if $path not found
 	 * @throw Api\Exception\AssertionFailed if user temp. directory does not exist and can not be created
-	 * @return array with share data, eg. value for key 'share_token'
 	 */
-	public static function create($path, $mode, $name, $recipients, $extra=array())
+	public static function create(string $action_id, $path, $mode, $name, $recipients, $extra = array())
 	{
 		if (!isset(static::$db)) static::$db = $GLOBALS['egw']->db;
 
@@ -645,8 +653,9 @@ class Sharing
 	 *
 	 * @param String $action
 	 * @param String $path
-	 * @param boolean $writable
-	 * @param boolean $files
+	 * @param boolean $writable Allow editing the shared entry / folder / file
+	 * @param boolean $files For sharing an application entry, allow access to the linked files
+	 * @param $extra Additional extra parameters
 	 */
 	public static function ajax_create($action, $path, $writable = false, $files = false, $extra = array())
 	{
@@ -654,12 +663,13 @@ class Sharing
 		{
 			throw new Exception\WrongParameter('Missing share path.  Unable to create share.');
 		}
-		$class = self::get_share_class(array('share_path' => $path));
 		$extra = $extra + array(
 			'share_writable' => $writable,
 			'include_files'  => $files
 		);
+		$class = self::get_share_class(array('share_path' => $path) + $extra);
 		$share = $class::create(
+			$action,
 			$path,
 			$writable ? Sharing::WRITABLE : Sharing::READONLY,
 			basename($path),
@@ -679,6 +689,11 @@ class Sharing
 		{
 			case 'shareFilemanager':
 				$arr['title'] = lang('Filemanager directory');
+				break;
+			case 'shareUploadDir':
+			case 'mail_shareUploadDir':
+				$arr['title'] = lang('Upload directory');
+				break;
 		}
 		$response = Json\Response::get();
 		$response->data($arr);

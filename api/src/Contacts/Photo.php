@@ -114,10 +114,7 @@ class Photo
 			$path = $tmp;
 		}
 		return Api\Vfs\Sharing::share2link(Api\Vfs\Sharing::create(
-			$path,
-			Api\Vfs\Sharing::READONLY,
-			basename($path),
-			array()
+				'', $path, Api\Vfs\Sharing::READONLY, basename($path), array()
 		));
 	}
 }
