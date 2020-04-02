@@ -262,6 +262,8 @@ class calendar_uiforms extends calendar_ui
 			'recur_exception' => array(),
 			'title' => $title ? $title : '',
 			'category' => $cat_id,
+			'videoconference' => !empty($_GET['videoconference']),
+			'notify_externals' => !empty($_GET['videoconference']) ? 'yes' : $this->cal_prefs['notify_externals'],
 		);
 	}
 
@@ -1507,6 +1509,16 @@ class calendar_uiforms extends calendar_ui
 				'mail' => array('label' => 'Mail all participants', 'title' => 'Compose a mail to all participants after the event is saved'),
 				'sendrequest' => array('label' => 'Meetingrequest to all participants', 'title' => 'Send meetingrequest to all participants after the event is saved'),
 			),
+			'participants[nofify_externals]' => [
+				'yes'            => ['label' => 'Yes', 'title' => 'Notify all externals (non-users) about this event'],
+				'no'             => ['label' => 'No', 'title' => 'Do NOT notify externals (non-users) about this event'],
+				'never'          => ['label' => 'Never', 'title' => 'Never notify externals (non-users) about events I create'],
+				'add_cancel'     => ['label' => 'Always', 'title' => 'on invitation / cancellation only'],
+				'time_change_4h' => ['label' => 'Always', 'title' => 'on time change of more than 4 hours too'],
+				'time_change'    => ['label' => 'Always', 'title' => 'on any time change too'],
+				'modifications'  => ['label' => 'Always', 'title' => 'on all modification, but responses'],
+				'responses'      => ['label' => 'Always', 'title' => 'on participant responses too'],
+			],
 		);
 		unset($sel_options['status']['G']);
 		if (!is_array($event))

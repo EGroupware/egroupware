@@ -56,14 +56,14 @@
 				<row class="th"></row>
 				<row disabled="@no_add" height="60" class="et2_toolbar">
 					<calendar-owner id="participant" allowFreeEntries="true" span="4" empty_label="Add new participants or resource" onchange="app.calendar.participantOnChange"/>
-					<hbox>
+					<hbox width="100%">
 						<textbox type="integer" id="quantity" min="1" size="3"/>
-						<menulist>
-							<menupopup class="selectRole" id="role" align="left"/>
-						</menulist>
-						<button id="add" image="add" novalidate="1" statustext="Please first select participants on the left and then use plus button to add them" background_image="1" readonly="true" ro_image="add"/>
+						<select class="selectRole" id="role" align="center"/>
+						<button id="add" align="right" image="add" novalidate="1" statustext="Please first select participants on the left and then use plus button to add them" background_image="1" readonly="true" ro_image="add"/>
 					</hbox>
-
+				</row>
+				<row>
+					<select label="Notify externals" id="nofify_externals" span="all" align="right"/>
 				</row>
 				<row class="th thb">
 					<description value="Type"/>
@@ -216,7 +216,7 @@
 					<date-time id="end" onchange="app.calendar.edit_update_participant"/>
 				</row>
 				<row class="dialogHeader2" height="28">
-					<label value="options"/>
+					<label value="Options"/>
 					<checkbox statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"/>
 					<checkbox label="Private" id="public" options="0,1" statustext="Mark event as private to hide title and description"/>
 					<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,"/>
@@ -230,7 +230,10 @@
 				</row>
 				<row class="dialogHeader3" height="28">
 					<label for="location" value="Location"/>
-					<textbox id="location" maxlength="255" class="et2_fullWidth" span="2"/>
+					<hbox span="2">
+						<textbox id="location" maxlength="255" class="et2_fullWidth"/>
+						<checkbox label="Videoconference" id="videoconference"/>
+					</hbox>
 					<description/>
 					<taglist-cat id="category" height="190" empty_label="Categories" multiple="toggle" class="et2_fullWidth" rows="1" />
 				</row>
