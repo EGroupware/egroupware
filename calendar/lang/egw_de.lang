@@ -109,6 +109,7 @@ close the window	calendar	de	Schließt das Fenster
 compose a mail to all participants after the event is saved	calendar	de	Schreibe eine E-Mail an alle Teilnehmer, nachdem der Termin gespeichert wurde.
 configuration settings	calendar	de	Einstellungen der Konfiguration
 conflict	calendar	de	Konflikt
+controls whether names of participants are shown alongside the title of an appointment.	calendar	de	Steuert, ob die Namen von Teilnehmern auf einem Termin (neben dem Titel) angezeigt werden.
 copy of:	calendar	de	Kopie von:
 copy this event	calendar	de	Kopiert diesen Termin
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	de	Kopieren Sie ihre Änderungen in die Zwischenablage, %1laden den Eintrag neu%2 und fügen diese wieder ein.
@@ -531,6 +532,7 @@ show only invitations, not yet accepted or rejected	calendar	de	Zeige nur Einlad
 show only rejected events	calendar	de	Zeige nur abgesagte Termine
 show only tentative accepted events	calendar	de	Zeige nur vorläufig zugesagte Termine
 show only the date, not the year	admin	de	Zeige nur das Datum nicht das Jahr
+show participant names on event	calendar	de	Zeige Teilnehmer auf einem Termin an
 show this month	calendar	de	Diesen Monat anzeigen
 show this week	calendar	de	Diese Woche anzeigen
 show year and age	calendar	de	Zeige Jahr und Alter

@@ -69,7 +69,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		this.div = jQuery(document.createElement("div"))
 			.addClass("calendar_calEvent")
 			.addClass(this.options.class)
-			.css('width',this.options.width)
+			.css('width', this.options.width)
 			.on('mouseenter', function() {
 				// Bind actions on first mouseover for faster creation
 				if(event._need_actions_linked)
@@ -89,22 +89,22 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				// Hacky to remove egw's tooltip border and let the mouse in
 				window.setTimeout(function() {
 					jQuery('body .egw_tooltip')
-						.css('border','none')
+						.css('border', 'none')
 						.on('mouseenter', function() {
 							event.div.off('mouseleave.tooltip');
 							jQuery('body.egw_tooltip').remove();
 							jQuery('body').append(this);
 							jQuery(this).stop(true).fadeTo(400, 1)
-								.on('mouseleave', function() {
-									jQuery(this).fadeOut('400', function() {
-										jQuery(this).remove();
-										// Set up to work again
-										event.set_statustext(event._tooltip());
-									});
-								});
+										.on('mouseleave', function() {
+											jQuery(this).fadeOut('400', function() {
+												jQuery(this).remove();
+												// Set up to work again
+												event.set_statustext(event._tooltip());
+											});
+										});
 						});
 
-				},105);
+				}, 105);
 			});
 		this.title = jQuery(document.createElement('div'))
 			.addClass("calendar_calEventHeader")
@@ -128,7 +128,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		if(this.options.value && this.options.value.row_id)
 		{
 			egw.dataRegisterUID(
-				'calendar::'+this.options.value.row_id,
+				'calendar::' + this.options.value.row_id,
 				this._UID_callback,
 				this,
 				this.getInstanceManager().execId,
@@ -162,7 +162,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		if(this.options.value)
 		{
 			var old_app_id = this.options.value.row_id;
-			egw.dataUnregisterUID('calendar::'+old_app_id,false,this);
+			egw.dataUnregisterUID('calendar::' + old_app_id, false, this);
 		}
 	},
 
@@ -173,7 +173,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			var old_id = this.options.value.row_id;
 			if(!_value || !_value.row_id || old_id !== _value.row_id)
 			{
-				egw.dataUnregisterUID('calendar::'+old_id,false,this);
+				egw.dataUnregisterUID('calendar::' + old_id, false, this);
 			}
 		}
 		this.options.value = _value;
@@ -182,11 +182,11 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		var id = this.options.value.row_id;
 		if(!old_id || old_id !== id)
 		{
-			egw.dataRegisterUID('calendar::'+id, this._UID_callback ,this,this.getInstanceManager().execId,this.id);
+			egw.dataRegisterUID('calendar::' + id, this._UID_callback, this, this.getInstanceManager().execId, this.id);
 		}
-		if(_value && !egw.dataHasUID('calendar::'+id))
+		if(_value && !egw.dataHasUID('calendar::' + id))
 		{
-			egw.dataStoreUID('calendar::'+id, _value);
+			egw.dataStoreUID('calendar::' + id, _value);
 		}
 	},
 
@@ -195,7 +195,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 */
 	_UID_callback: function _UID_callback(event) {
 		// Copy to avoid changes, which may cause nm problems
-		var value = event === null ? null : jQuery.extend({},event);
+		var value = event === null ? null : jQuery.extend({}, event);
 		let parent = this.getParent();
 		let parent_owner = parent.getDOMNode(parent).dataset['owner'] || parent.getParent().options.owner;
 
@@ -221,7 +221,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}
 
 		// Copy to avoid changes, which may cause nm problems
-		this.options.value = jQuery.extend({},value);
+		this.options.value = jQuery.extend({}, value);
 
 		if(this._parent.options.date)
 		{
@@ -246,7 +246,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		// Update to reflect new information
 		var event = this.options.value;
 
-		var id = event.row_id ? event.row_id : event.id + (event.recur_type ? ':'+event.recur_date : '');
+		var id = event.row_id ? event.row_id : event.id + (event.recur_type ? ':' + event.recur_date : '');
 		var formatted_start = event.start.toJSON();
 
 		this.set_id('event_' + id);
@@ -262,9 +262,11 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		// immediately.
 		var im = this.getInstanceManager();
 		et2_selectbox.cat_options({
-			_type:'select-cat',
-			getInstanceManager: function() {return im}
-		}, {application:event.app||'calendar'});
+			_type: 'select-cat',
+			getInstanceManager: function() {
+				return im
+			}
+		}, {application: event.app || 'calendar'});
 
 		// Need cleaning? (DnD helper removes content)
 		if(!this.div.has(this.title).length)
@@ -278,7 +280,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		{
 			this.div
 				// Let timegrid always get the drag
-				.droppable('option','greedy',false);
+				.droppable('option', 'greedy', false);
 		}
 		// DOM nodes
 		this.div
@@ -292,11 +294,11 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			.attr('data-start', formatted_start)
 			.attr('data-owner', event.owner)
 			.attr('data-recur_type', event.recur_type)
-			.attr('data-resize', event.whole_day ? 'WD' : '' + (event.recur_type ? 'S':''))
+			.attr('data-resize', event.whole_day ? 'WD' : '' + (event.recur_type ? 'S' : ''))
 			.attr('data-priority', event.priority)
 			// Remove any category classes
 			.removeClass(function(index, css) {
-				return (css.match (/(^|\s)cat_\S+/g) || []).join(' ');
+				return (css.match(/(^|\s)cat_\S+/g) || []).join(' ');
 			})
 			// Remove any status classes
 			.removeClass(function(index, css) {
@@ -327,14 +329,15 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		var title = !event.is_private ? egw.htmlspecialchars(event['title']) : egw.lang('private');
 
 		this.title
-			.html('<span class="calendar_calTimespan">'+this._get_timespan(event) + '<br /></span>')
-			.append('<span class="calendar_calEventTitle">'+title+'</span>')
+			.html('<span class="calendar_calTimespan">' + this._get_timespan(event) + '<br /></span>')
+			.append('<span class="calendar_calEventTitle">' + this._getTitle(event) + '</span>')
 
 		// Colors - don't make them transparent if there is no color
-		if(jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div,'background-color').toRgbaString())
+		if(jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div, 'background-color')
+																 .toRgbaString())
 		{
 			// Most statuses use colored borders
-			this.div.css('border-color',this.div.css('background-color') );
+			this.div.css('border-color', this.div.css('background-color'));
 		}
 
 		this.icons.appendTo(this.title)
@@ -343,7 +346,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		// Body
 		if(event.whole_day_on_top)
 		{
-			this.body.html(title);
+			this.body.html(this._getTitle(event));
 		}
 		else
 		{
@@ -359,12 +362,12 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			).trim();
 
 			this.body
-				.html('<span class="calendar_calEventTitle">'+title+'</span>')
-				.append('<span class="calendar_calTimespan">'+start_time + '</span>');
+				.html('<span class="calendar_calEventTitle">' + this._getTitle(event) + '</span>')
+				.append('<span class="calendar_calTimespan">' + start_time + '</span>');
 			if(this.options.value.description.trim())
 			{
 				this.body
-					.append('<p>'+egw.htmlspecialchars(this.options.value.description)+'</p>');
+					.append('<p>' + egw.htmlspecialchars(this.options.value.description) + '</p>');
 			}
 		}
 
@@ -407,24 +410,24 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			// Handle sizing while hidden, such as when calendar is not the active tab
 			visible_lines = Math.floor(egw.getHiddenDimensions(this.div).h / egw.getHiddenDimensions(this.title).h);
 		}
-		visible_lines = Math.max(1,visible_lines);
+		visible_lines = Math.max(1, visible_lines);
 
 		if(this.getParent() && this.getParent().instanceOf(et2_calendar_daycol))
 		{
-			this.div.toggleClass('calendar_calEventSmall',visible_lines < 4);
+			this.div.toggleClass('calendar_calEventSmall', visible_lines < 4);
 			this.div
 				.attr('data-visible_lines', visible_lines);
 		}
-		else if (this.getParent() && this.getParent().instanceOf(et2_calendar_planner_row))
+		else if(this.getParent() && this.getParent().instanceOf(et2_calendar_planner_row))
 		{
 			// Less than 8 hours is small
-			this.div.toggleClass('calendar_calEventSmall',this.options.value.end.valueOf() - this.options.value.start.valueOf() < 28800000);
+			this.div.toggleClass('calendar_calEventSmall', this.options.value.end.valueOf() - this.options.value.start.valueOf() < 28800000);
 		}
 
 
 		if(this.body.height() > this.div.height() - this.title.height() && visible_lines >= 4)
 		{
-			this.body.css('height', Math.floor((visible_lines-1)*line_height - this.title.height()) + 'px');
+			this.body.css('height', Math.floor((visible_lines - 1) * line_height - this.title.height()) + 'px');
 		}
 		else
 		{
@@ -445,7 +448,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 
 			status = et2_calendar_event.split_status(status);
 
-			switch (status)
+			switch(status)
 			{
 				case 'A':
 				case '':	// app without status
@@ -480,13 +483,13 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		var end = this._parent.date_helper.input_date.val();
 
 		var times = !this.options.value.multiday ?
-			'<span class="calendar_calEventLabel">'+this.egw().lang('Time')+'</span>:' + timespan :
-			'<span class="calendar_calEventLabel">'+this.egw().lang('Start') + '</span>:' +start+ ' ' +
-			'<span class="calendar_calEventLabel">'+this.egw().lang('End') + '</span>:' + end;
+			'<span class="calendar_calEventLabel">' + this.egw().lang('Time') + '</span>:' + timespan :
+			'<span class="calendar_calEventLabel">' + this.egw().lang('Start') + '</span>:' + start + ' ' +
+			'<span class="calendar_calEventLabel">' + this.egw().lang('End') + '</span>:' + end;
 		var cat_label = '';
 		if(this.options.value.category)
 		{
-			var cat = et2_createWidget('select-cat',{'readonly':true},this);
+			var cat = et2_createWidget('select-cat', {'readonly': true}, this);
 			cat.set_value(this.options.value.category);
 			cat_label = this.options.value.category.indexOf(',') <= 0 ? cat.span.text() : [];
 			if(typeof cat_label != 'string')
@@ -507,29 +510,31 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		{
 			if(type_name)
 			{
-				participants += '</p><p><span class="calendar_calEventLabel">'+type_name+'</span>:<br />';
+				participants += '</p><p><span class="calendar_calEventLabel">' + type_name + '</span>:<br />';
 				participants += this.options.value.participant_types[type_name].join("<br />");
 			}
 		}
 
-		return '<div class="calendar_calEventTooltip ' + this._status_class() +' '+ this.options.class +
-			'" style="border-color: '+border+'; background-color: '+bg_color+';">'+
-			'<div class="calendar_calEventHeaderSmall">'+
-				'<font style="color:'+header_color+'">'+timespan+'</font>'+
-				this.icons[0].outerHTML+
-			'</div>'+
-			'<div class="calendar_calEventBody">'+
-				'<p style="margin: 0px;">'+
-				'<span class="calendar_calEventTitle">'+egw.htmlspecialchars(this.options.value.title)+'</span><br>'+
-				egw.htmlspecialchars(this.options.value.description)+'</p>'+
-				'<p style="margin: 2px 0px;">'+times+'</p>'+
-				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' +
-				egw.htmlspecialchars(this.options.value.location)+'</p>' : '')+
-				(cat_label ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Category') + '</span>:' + cat_label +'</p>' : '')+
-				'<p><span class="calendar_calEventLabel">'+this.egw().lang('Participants')+'</span>:<br />'+
-					participants + '</p>'+ this._participant_summary(this.options.value.participants) +
-			'</div>'+
-		'</div>';
+		return '<div class="calendar_calEventTooltip ' + this._status_class() + ' ' + this.options.class +
+			'" style="border-color: ' + border + '; background-color: ' + bg_color + ';">' +
+			'<div class="calendar_calEventHeaderSmall">' +
+			'<font style="color:' + header_color + '">' + timespan + '</font>' +
+			this.icons[0].outerHTML +
+			'</div>' +
+			'<div class="calendar_calEventBody">' +
+			'<p style="margin: 0px;">' +
+			'<span class="calendar_calEventTitle">' + egw.htmlspecialchars(this.options.value.title) + '</span><br>' +
+			egw.htmlspecialchars(this.options.value.description) + '</p>' +
+			'<p style="margin: 2px 0px;">' + times + '</p>' +
+			(this.options.value.location ? '<p><span class="calendar_calEventLabel">' + this.egw()
+																							.lang('Location') + '</span>:' +
+				egw.htmlspecialchars(this.options.value.location) + '</p>' : '') +
+			(cat_label ? '<p><span class="calendar_calEventLabel">' + this.egw()
+																		  .lang('Category') + '</span>:' + cat_label + '</p>' : '') +
+			'<p><span class="calendar_calEventLabel">' + this.egw().lang('Participants') + '</span>:<br />' +
+			participants + '</p>' + this._participant_summary(this.options.value.participants) +
+			'</div>' +
+			'</div>';
 	},
 
 	/**
@@ -537,21 +542,21 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 *
 	 * @returns {String}
 	 */
-	_participant_summary: function(participants)
-	{
-		if( Object.keys(this.options.value.participants).length < 2)
+	_participant_summary: function(participants) {
+		if(Object.keys(this.options.value.participants).length < 2)
 		{
 			return '';
 		}
 
 		var participant_status = {A: 0, R: 0, T: 0, U: 0, D: 0};
 		var status_label = {A: 'accepted', R: 'rejected', T: 'tentative', U: 'unknown', D: 'delegated'};
-		var participant_summary = Object.keys(this.options.value.participants).length + ' ' + this.egw().lang('Participants')+': ';
+		var participant_summary = Object.keys(this.options.value.participants).length + ' ' + this.egw()
+																								  .lang('Participants') + ': ';
 		var status_totals = [];
 
 		for(var id in this.options.value.participants)
 		{
-			var status = this.options.value.participants[id].substr(0,1);
+			var status = this.options.value.participants[id].substr(0, 1);
 			participant_status[status]++;
 		}
 		for(var status in participant_status)
@@ -574,30 +579,34 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		if(this.options.value.is_private)
 		{
 			// Hide everything
-			icons.push('<img src="'+this.egw().image('private','calendar')+'"/>');
+			icons.push('<img src="' + this.egw().image('private', 'calendar') + '"/>');
 		}
 		else
 		{
 			if(this.options.value.app !== 'calendar')
 			{
-				icons.push('<img src="'+this.egw().image('navbar',this.options.value.app)+'" title="'+this.egw().lang(this.options.value.app)+'"/>');
+				icons.push('<img src="' + this.egw()
+											  .image('navbar', this.options.value.app) + '" title="' + this.egw()
+																										   .lang(this.options.value.app) + '"/>');
 			}
 			if(this.options.value.priority == 3)
 			{
-				icons.push('<img src="'+this.egw().image('high','calendar')+'" title="'+this.egw().lang('high priority')+'"/>');
+				icons.push('<img src="' + this.egw().image('high', 'calendar') + '" title="' + this.egw()
+																								   .lang('high priority') + '"/>');
 			}
 			if(this.options.value.public == '0')
 			{
 				// Show private flag
-				icons.push('<img src="'+this.egw().image('private','calendar')+'"/>');
+				icons.push('<img src="' + this.egw().image('private', 'calendar') + '"/>');
 			}
 			if(this.options.value['recur_type'])
 			{
-				icons.push('<img src="'+this.egw().image('recur','calendar')+'" title="'+this.egw().lang('recurring event')+'"/>');
+				icons.push('<img src="' + this.egw().image('recur', 'calendar') + '" title="' + this.egw()
+																									.lang('recurring event') + '"/>');
 			}
 			// icons for single user, multiple users or group(s) and resources
-			var single = '<img src="'+this.egw().image('single','calendar')+'" title="'+'"/>';
-			var multiple = '<img src="'+this.egw().image('users','calendar')+'" title="'+'"/>';
+			var single = '<img src="' + this.egw().image('single', 'calendar') + '" title="' + '"/>';
+			var multiple = '<img src="' + this.egw().image('users', 'calendar') + '" title="' + '"/>';
 			for(var uid in this.options.value['participants'])
 			{
 				if(Object.keys(this.options.value.participants).length == 1 && !isNaN(uid))
@@ -613,28 +622,32 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				 * TODO: resource icons
 				elseif(!isset($icons[$uid[0]]) && isset($this->bo->resources[$uid[0]]) && isset($this->bo->resources[$uid[0]]['icon']))
 				{
-				 	$icons[$uid[0]] = html::image($this->bo->resources[$uid[0]]['app'],
-				 		($this->bo->resources[$uid[0]]['icon'] ? $this->bo->resources[$uid[0]]['icon'] : 'navbar'),
-				 		lang($this->bo->resources[$uid[0]]['app']),
-				 		'width="16px" height="16px"');
+					 $icons[$uid[0]] = html::image($this->bo->resources[$uid[0]]['app'],
+						 ($this->bo->resources[$uid[0]]['icon'] ? $this->bo->resources[$uid[0]]['icon'] : 'navbar'),
+						 lang($this->bo->resources[$uid[0]]['app']),
+						 'width="16px" height="16px"');
 				}
 				*/
 			}
 
 			if(this.options.value.alarm && !jQuery.isEmptyObject(this.options.value.alarm) && !this.options.value.is_private)
 			{
-				icons.push('<img src="'+this.egw().image('alarm','calendar')+'" title="'+this.egw().lang('alarm')+'"/>');
+				icons.push('<img src="' + this.egw().image('alarm', 'calendar') + '" title="' + this.egw()
+																									.lang('alarm') + '"/>');
 			}
 			if(this.options.value.participants[egw.user('account_id')] && this.options.value.participants[egw.user('account_id')][0] == 'U')
 			{
-				icons.push('<img src="'+this.egw().image('needs-action','calendar')+'" title="'+this.egw().lang('Needs action')+'"/>');
+				icons.push('<img src="' + this.egw()
+											  .image('needs-action', 'calendar') + '" title="' + this.egw()
+																									 .lang('Needs action') + '"/>');
 			}
 		}
 
 		// Always include non-blocking, regardless of privacy
 		if(this.options.value.non_blocking)
 		{
-			icons.push('<img src="'+this.egw().image('nonblocking','calendar')+'" title="'+this.egw().lang('non blocking')+'"/>');
+			icons.push('<img src="' + this.egw().image('nonblocking', 'calendar') + '" title="' + this.egw()
+																									  .lang('non blocking') + '"/>');
 		}
 		return icons;
 	},
@@ -651,9 +664,9 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 */
 	_get_timespan: function(event) {
 		var timespan = '';
-		if (event['start_m'] === 0 && event['end_m'] >= 24*60-1)
+		if(event['start_m'] === 0 && event['end_m'] >= 24 * 60 - 1)
 		{
-			if (event['end_m'] > 24*60)
+			if(event['end_m'] > 24 * 60)
 			{
 				timespan = jQuery.datepicker.formatTime(
 					egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
@@ -664,7 +677,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 						timezone: 0
 					},
 					{"ampm": (egw.preference("timeformat") === "12")}
-				).trim()+' - '+jQuery.datepicker.formatTime(
+				).trim() + ' - ' + jQuery.datepicker.formatTime(
 					egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
 					{
 						hour: event.end_m / 60,
@@ -685,7 +698,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			var duration = event.multiday ?
 				(event.end - event.start) / 60000 :
 				(event.end_m - event.start_m);
-			duration = Math.floor(duration/60) + this.egw().lang('h')+(duration%60 ? duration%60 : '');
+			duration = Math.floor(duration / 60) + this.egw().lang('h') + (duration % 60 ? duration % 60 : '');
 
 			timespan = jQuery.datepicker.formatTime(
 				egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
@@ -715,15 +728,62 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	},
 
 	/**
+	 * Creates the title-string for an event
+	 * @param {Object} event the current event.
+	 * @return {string} the resulting title.
+	 */
+	_getTitle: function(event) {
+		let title = "";
+		if(!event.is_private)
+		{
+			title = egw.htmlspecialchars(event['title']);
+			title += this._getParticipants(event);
+		}
+		else
+		{
+			title = egw.lang('private');
+		}
+		return title;
+	},
+
+	/**
+	 * Retrieves participant names from an event
+	 * @param {Object} event the current event
+	 * @return {string} the participants as span-objects
+	 */
+	_getParticipants: function(event) {
+		let participants = "";
+		if(this._hasParticipantNames(event))
+		{
+			return '<span style="font-weight: normal"> // ' + event["participant_names"] + "</span>"
+		}
+		return participants;
+	},
+
+	/**
+	 * Tries to detect provided names of participants for an event.
+	 * Names will only be shown when provided with the event.
+	 *
+	 * @param {Object} event the current event
+	 * @return boolean whether the event contains participant-names or not
+	 */
+	_hasParticipantNames: function(event)
+	{
+		return event["participant_names"] !== undefined
+			&& event["participant_names"] !== null;
+	},
+
+
+
+	/**
 	 * Make sure event data has all proper values, and format them as expected
 	 * @param {Object} event
 	 */
-	_values_check: function _values_check(event)
-	{
+	_values_check: function _values_check(event) {
 		// Make sure ID is a string
 		if(event.id)
 		{
-			event.id = ''+event.id;
+			event.id = '' + event.id;
 		}
 
 		// Use dates as objects
@@ -773,8 +833,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 *
 	 * @return {Boolean} Provided event data is for the same date
 	 */
-	_sameday_check: function(event)
-	{
+	_sameday_check: function(event) {
 		// Event somehow got orphaned, or deleted
 		if(!this._parent || event === null)
 		{
@@ -807,23 +866,23 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}
 
 		// Update daywise caches
-		var new_cache_id = app.classes.calendar._daywise_cache_id(event.date,this._parent.options.owner);
+		var new_cache_id = app.classes.calendar._daywise_cache_id(event.date, this._parent.options.owner);
 		var new_daywise = egw.dataGetUIDdata(new_cache_id);
 		new_daywise = new_daywise && new_daywise.data ? new_daywise.data : [];
 		var old_cache_id = false;
 		if(this.options.value && this.options.value.date)
 		{
-			old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date,this._parent.options.owner);
+			old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date, this._parent.options.owner);
 		}
 
 		if(new_cache_id != old_cache_id)
 		{
 			var old_daywise = egw.dataGetUIDdata(old_cache_id);
 			old_daywise = old_daywise && old_daywise.data ? old_daywise.data : [];
-			old_daywise.splice(old_daywise.indexOf(this.options.value.row_id),1);
-			egw.dataStoreUID(old_cache_id,old_daywise);
+			old_daywise.splice(old_daywise.indexOf(this.options.value.row_id), 1);
+			egw.dataStoreUID(old_cache_id, old_daywise);
 
-			if (new_daywise.indexOf(event.row_id) < 0)
+			if(new_daywise.indexOf(event.row_id) < 0)
 			{
 				new_daywise.push(event.row_id);
 			}
@@ -844,8 +903,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 * @param filter
 	 * @private
 	 */
-	_status_check: function(event, filter, owner)
-	{
+	_status_check: function(event, filter, owner) {
 		if(!owner || !event)
 		{
 			return false;
@@ -855,7 +913,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		if(typeof owner !== "string")
 		{
 			let pass = false;
-			for (let j = 0; j < owner.length && pass == false; j++)
+			for(let j = 0; j < owner.length && pass == false; j++)
 			{
 				pass = pass || this._status_check(event, filter, owner[j]);
 			}
@@ -887,8 +945,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			}
 			if((isNaN(parseInt(owner)) || parseInt(owner) < 0) && options && typeof options.find == "function")
 			{
-				let resource = options.find(function (element)
-				{
+				let resource = options.find(function(element) {
 					return element.id == owner;
 				}) || {};
 				if(resource && resource.resources)
@@ -901,7 +958,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 
 		let status = et2_calendar_event.split_status(participant);
 
-		switch (filter)
+		switch(filter)
 		{
 			default:
 			case 'all':
@@ -934,13 +991,12 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}
 	},
 
-	attachToDOM: function()
-	{
+	attachToDOM: function() {
 		this._super.apply(this, arguments);
 
 		// Remove the binding for the click handler, unless there's something
 		// custom here.
-		if (!this.onclick)
+		if(!this.onclick)
 		{
 			jQuery(this.node).off("click");
 		}
@@ -974,9 +1030,8 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 * @param {et2_calendar_event~prompt_callback} callback
 	 * @param {Object} [extra_data]
 	 */
-	recur_prompt: function(callback, extra_data)
-	{
-		et2_calendar_event.recur_prompt(this.options.value,callback,extra_data);
+	recur_prompt: function(callback, extra_data) {
+		et2_calendar_event.recur_prompt(this.options.value, callback, extra_data);
 	},
 
 	/**
@@ -986,9 +1041,8 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 *
 	 * @param {et2_calendar_event~prompt_callback} callback
 	 */
-	series_split_prompt: function(callback)
-	{
-		et2_calendar_event.series_split_prompt(this.options.value,this.options.value.recur_date, callback);
+	series_split_prompt: function(callback) {
+		et2_calendar_event.series_split_prompt(this.options.value, this.options.value.recur_date, callback);
 	},
 
 	/**
@@ -996,22 +1050,23 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 *
 	 * This can take a while to do, so we try to do it only when needed - on mouseover
 	 */
-	_copy_parent_actions: function()
-	{
+	_copy_parent_actions: function() {
 		// Copy actions set in parent
 		if(!this.options.readonly && !this._parent.options.readonly)
 		{
 			var action_parent = this;
 			while(action_parent != null && !action_parent.options.actions &&
 				!action_parent.instanceOf(et2_container)
-			)
+				)
 			{
 				action_parent = action_parent.getParent();
 			}
-			try {
-				this._link_actions(action_parent.options.actions||{});
+			try
+			{
+				this._link_actions(action_parent.options.actions || {});
 				this._need_actions_linked = false;
-			} catch (e) {
+			} catch(e)
+			{
 				// something went wrong, but keep quiet about it
 			}
 		}
@@ -1022,22 +1077,23 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 *
 	 * @param {object} actions {ID: {attributes..}+} map of egw action information
 	 */
-	_link_actions: function(actions)
-	{
+	_link_actions: function(actions) {
 		if(!this._actionObject)
 		{
 			// Get the top level element - timegrid or so
 			var objectManager = this.getParent()._actionObject || this.getParent().getParent()._actionObject ||
-			   egw_getAppObjectManager(true).getObjectById(this._parent._parent._parent.id) || egw_getAppObjectManager(true);
-			this._actionObject = objectManager.getObjectById('calendar::'+this.options.value.row_id);
+				egw_getAppObjectManager(true)
+					.getObjectById(this._parent._parent._parent.id) || egw_getAppObjectManager(true);
+			this._actionObject = objectManager.getObjectById('calendar::' + this.options.value.row_id);
 		}
 
-		if (this._actionObject == null) {
+		if(this._actionObject == null)
+		{
 			// Add a new container to the object manager which will hold the widget
 			// objects
 			this._actionObject = objectManager.insertObject(false, new egwActionObject(
-				'calendar::'+this.options.value.row_id, objectManager, new et2_event_action_object_impl(this,this.getDOMNode()),
-				this._actionManager || objectManager.manager.getActionById('calendar::'+this.options.value.row_id) || objectManager.manager
+				'calendar::' + this.options.value.row_id, objectManager, new et2_event_action_object_impl(this, this.getDOMNode()),
+				this._actionManager || objectManager.manager.getActionById('calendar::' + this.options.value.row_id) || objectManager.manager
 			));
 		}
 		else
@@ -1077,7 +1133,8 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	setDetachedAttributes: function(_nodes, _values) {
 
 	},
-});}).call(this);
+});
+}).call(this);
 et2_register_widget(et2_calendar_event, ["calendar-event"]);
 
 // Static class stuff
@@ -1098,8 +1155,7 @@ et2_register_widget(et2_calendar_event, ["calendar-event"]);
  *
  * @return {boolean} Should the event be displayed
  */
-et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
-{
+et2_calendar_event.owner_check = function owner_check(event, parent, owner_too) {
 	var owner_match = true;
 	if(typeof owner_too === 'undefined' && app.calendar.state.status_filter)
 	{
@@ -1121,38 +1177,42 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 			parent.options.owner);
 		owner_match = false;
 		var length = parent_owner.length;
-		for(var i = 0; i < length; i++ )
+		for(var i = 0; i < length; i++)
 		{
 			// Handle groups & grouped resources like mailing lists, they won't match so
 			// we need the list - pull it from sidebox owner
 			if((isNaN(parent_owner[i]) || parent_owner[i] < 0) && options && options.find)
 			{
-				var resource = options.find(function(element) {return element.id == parent_owner[i];}) || {};
+				var resource = options.find(function(element) {
+					return element.id == parent_owner[i];
+				}) || {};
 				if(resource && resource.resources)
 				{
-					parent_owner.splice(i,1);
+					parent_owner.splice(i, 1);
 					parent_owner = parent_owner.concat(resource.resources);
 					continue;
 				}
 			}
 		}
-		var participants = jQuery.extend([],Object.keys(event.participants));
-		for(var i = 0; i < participants.length; i++ )
+		var participants = jQuery.extend([], Object.keys(event.participants));
+		for(var i = 0; i < participants.length; i++)
 		{
 			var id = participants[i];
 			// Expand group invitations
-			if (parseInt(id) < 0)
+			if(parseInt(id) < 0)
 			{
 				// Add in groups, if we can get them from options, great
 				var resource;
-				if(options && options.find && (resource = options.find(function(element) {return element.id === id;})) && resource.resources)
+				if(options && options.find && (resource = options.find(function(element) {
+					return element.id === id;
+				})) && resource.resources)
 				{
 					participants = participants.concat(resource.resources);
 				}
 				else
 				{
 					// Add in groups, if we can get them (this is asynchronous)
-					egw.accountData(id,'account_id',true,function(members) {
+					egw.accountData(id, 'account_id', true, function(members) {
 						participants = participants.concat(Object.keys(members));
 					});
 				}
@@ -1205,17 +1265,17 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
  *
  * @augments {et2_calendar_event}
  */
-et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
-{
+et2_calendar_event.recur_prompt = function(event_data, callback, extra_data) {
 	var edit_id = event_data.app_id;
 	var edit_date = event_data.start;
 
 	// seems window.opener somehow in certian conditions could be from different origin
 	// we try to catch the exception and in this case retrive the egw object from current window.
-	try {
-		var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar'):window.egw('calendar');
-	}
-	catch(e){
+	try
+	{
+		var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar') : window.egw('calendar');
+	} catch(e)
+	{
 		var egw = window.egw('calendar');
 	}
 
@@ -1225,17 +1285,16 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
 	extra_params.date = edit_date.toJSON ? edit_date.toJSON() : edit_date;
 	if(typeof callback != 'function')
 	{
-		callback = function(_button_id)
-		{
+		callback = function(_button_id) {
 			switch(_button_id)
 			{
 				case 'exception':
 					extra_params.exception = '1';
-					egw.open(edit_id, event_data.app||'calendar', 'edit', extra_params);
+					egw.open(edit_id, event_data.app || 'calendar', 'edit', extra_params);
 					break;
 				case 'series':
 				case 'single':
-					egw.open(edit_id, event_data.app||'calendar', 'edit', extra_params);
+					egw.open(edit_id, event_data.app || 'calendar', 'edit', extra_params);
 					break;
 				case 'cancel':
 				default:
@@ -1247,11 +1306,13 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
 	{
 		var buttons = [
 			{text: egw.lang("Edit exception"), id: "exception", class: "ui-priority-primary", "default": true},
-			{text: egw.lang("Edit series"), id:"series"},
-			{text: egw.lang("Cancel"), id:"cancel"}
+			{text: egw.lang("Edit series"), id: "series"},
+			{text: egw.lang("Cancel"), id: "cancel"}
 		];
 		et2_dialog.show_dialog(
-			function(button_id) {callback.call(that, button_id, event_data);},
+			function(button_id) {
+				callback.call(that, button_id, event_data);
+			},
 			(!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
 			egw.lang("Do you want to edit this event as an exception or the whole series?"),
 			egw.lang("This event is part of a series"), {}, buttons, et2_dialog.QUESTION_MESSAGE
@@ -1259,7 +1320,7 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
 	}
 	else
 	{
-		callback.call(this,'single',event_data);
+		callback.call(this, 'single', event_data);
 	}
 };
 
@@ -1280,14 +1341,14 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
  *	called with the button (ok or cancel) and the event data.
  * @augments {et2_calendar_event}
  */
-et2_calendar_event.series_split_prompt = function(event_data, instance_date, callback)
-{
+et2_calendar_event.series_split_prompt = function(event_data, instance_date, callback) {
 	// seems window.opener somehow in certian conditions could be from different origin
 	// we try to catch the exception and in this case retrive the egw object from current window.
-	try {
-		var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar'):window.egw('calendar');
-	}
-	catch(e){
+	try
+	{
+		var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar') : window.egw('calendar');
+	} catch(e)
+	{
 		var egw = window.egw('calendar');
 	}
 
@@ -1300,48 +1361,49 @@ et2_calendar_event.series_split_prompt = function(event_data, instance_date, cal
 
 	// Check for modifying a series that started before today
 	var tempDate = new Date();
-	var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),tempDate.getHours(),-tempDate.getTimezoneOffset(),tempDate.getSeconds());
-	var termination_date = instance_date < today ? egw.lang('today') : date(egw.preference('dateformat'),instance_date);
+	var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours(), -tempDate.getTimezoneOffset(), tempDate.getSeconds());
+	var termination_date = instance_date < today ? egw.lang('today') : date(egw.preference('dateformat'), instance_date);
 
 	if(parseInt(event_data.recur_type))
 	{
 		et2_dialog.show_dialog(
-			function(button_id) {callback.call(that, button_id, event_data);},
+			function(button_id) {
+				callback.call(that, button_id, event_data);
+			},
 			(!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
 			egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.", termination_date),
-			egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL , et2_dialog.WARNING_MESSAGE
+			egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL, et2_dialog.WARNING_MESSAGE
 		);
 	}
 };
 
-et2_calendar_event.drag_helper = function(event,ui) {
+et2_calendar_event.drag_helper = function(event, ui) {
 	ui.helper.width(ui.width());
 };
 /**
-* splits the combined status, quantity and role
-*
-* @param {string} status - combined value, O: status letter: U, T, A, R
-* @param {int} [quantity] - quantity
-* @param {string} [role]
-* @return string status U, T, A or R, same as $status parameter on return
-*/
-et2_calendar_event.split_status = function(status,quantity,role)
-{
+ * splits the combined status, quantity and role
+ *
+ * @param {string} status - combined value, O: status letter: U, T, A, R
+ * @param {int} [quantity] - quantity
+ * @param {string} [role]
+ * @return string status U, T, A or R, same as $status parameter on return
+ */
+et2_calendar_event.split_status = function(status, quantity, role) {
 	quantity = 1;
 	role = 'REQ-PARTICIPANT';
 	//error_log(__METHOD__.__LINE__.array2string($status));
 	var matches = null;
-	if (typeof status === 'string' && status.length > 1)
+	if(typeof status === 'string' && status.length > 1)
 	{
 		matches = status.match(/^.([0-9]*)(.*)$/gi);
 	}
 	if(matches)
 	{
-		if (parseInt(matches[1]) > 0) quantity = parseInt(matches[1]);
-		if (matches[2]) role = matches[2];
+		if(parseInt(matches[1]) > 0) quantity = parseInt(matches[1]);
+		if(matches[2]) role = matches[2];
 		status = status[0];
 	}
-	else if (status === true)
+	else if(status === true)
 	{
 		status = 'U';
 	}
