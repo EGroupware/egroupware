@@ -1316,6 +1316,62 @@ class AddressbookApp extends EgwApp
 		}
 		return enabled;
 	}
+
+	/**
+	 * Check if selected user(s) is online then enable action
+	 * @param _action
+	 * @param _selected
+	 */
+	private videoconference_isUserOnline(_action, _selected)
+	{
+		let list = app.status.getEntireList();
+		for (let sel in _selected)
+		{
+			let row = egw.dataGetUIDdata(_selected[sel]['id']);
+			let enabled = false;
+			for(let entry in list)
+			{
+				if (row.data?.account_id == list[entry]['account_id'])
+				{
+					enabled = list[entry]['data']['status']['active'];
+				}
+			}
+			if (!enabled) return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Call action
+	 * @param _action
+	 * @param _selected
+	 */
+	private videoconference_actionCall(_action, _selected)
+	{
+		let data = [];
+		for (let sel in _selected)
+		{
+			let row = egw.dataGetUIDdata(_selected[sel]['id']);
+			data.push({
+				id: row.data.account_id,
+				name: row.data.n_fn,
+				avatar: "account:"+row.data.account_id
+			});
+		}
+		app.status.makeCall(data);
+	}
+
+	/**
+	 *
+	 * @param _action
+	 * @param _selected
+	 * @todo
+	 */
+	private videoconference_scheduleCall(_action, _selected)
+	{
+
+	}
+
 }
 
 app.classes.addressbook = AddressbookApp;

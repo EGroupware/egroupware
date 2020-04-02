@@ -1079,6 +1079,52 @@ var AddressbookApp = /** @class */ (function (_super) {
         }
         return enabled;
     };
+    /**
+     * Check if selected user(s) is online then enable action
+     * @param _action
+     * @param _selected
+     */
+    AddressbookApp.prototype.videoconference_isUserOnline = function (_action, _selected) {
+        var _a;
+        var list = app.status.getEntireList();
+        for (var sel in _selected) {
+            var row = egw.dataGetUIDdata(_selected[sel]['id']);
+            var enabled = false;
+            for (var entry in list) {
+                if (((_a = row.data) === null || _a === void 0 ? void 0 : _a.account_id) == list[entry]['account_id']) {
+                    enabled = list[entry]['data']['status']['active'];
+                }
+            }
+            if (!enabled)
+                return false;
+        }
+        return true;
+    };
+    /**
+     * Call action
+     * @param _action
+     * @param _selected
+     */
+    AddressbookApp.prototype.videoconference_actionCall = function (_action, _selected) {
+        var data = [];
+        for (var sel in _selected) {
+            var row = egw.dataGetUIDdata(_selected[sel]['id']);
+            data.push({
+                id: row.data.account_id,
+                name: row.data.n_fn,
+                avatar: "account:" + row.data.account_id
+            });
+        }
+        app.status.makeCall(data);
+    };
+    /**
+     *
+     * @param _action
+     * @param _selected
+     * @todo
+     */
+    AddressbookApp.prototype.videoconference_scheduleCall = function (_action, _selected) {
+    };
     return AddressbookApp;
 }(egw_app_1.EgwApp));
 app.classes.addressbook = AddressbookApp;
