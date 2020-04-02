@@ -577,23 +577,29 @@ class addressbook_ui extends addressbook_bo
 
 		++$group;	// integration with other apps: infolog, calendar, filemanager, messenger
 
-		// Integrate Messenger app actions for adding new buddy into roster list
-		if ($GLOBALS['egw_info']['user']['apps']['messenger'])
+		// Integrate Status Videoconference actions
+		if ($GLOBALS['egw_info']['user']['apps']['status'])
 		{
-			$actions['messenger_app'] = array(
-				'caption' => 'Messenger',
-				'icon' => 'messenger/navbar',
+			$actions['videoconference'] = [
+				'caption' => 'Video Conference',
+				'icon' => 'video_call',
 				'group' => $group,
-				'children' => array(
-					'addBuddy' => array(
-						'caption' => lang('Add contact'),
-						'icon' => 'add',
+				'children' => [
+					'call' => [
+						'caption' => lang('Call'),
+						'icon' => 'call',
 						'allowOnMultiple' => true,
-						'onExecute' => 'javaScript:app.messenger.addBuddy',
-						'enabled' => 'javaScript:app.messenger.addBuddyEnabaled'
-					)
-				)
-			);
+						'onExecute' => 'javaScript:app.addressbook.videoconference_actionCall',
+						'enabled' => 'javaScript:app.addressbook.videoconference_isUserOnline'
+					],
+					'schedule_call' => [
+						'caption' => lang('Schedule a call'),
+						'icon' => 'calendar',
+						'allowOnMultiple' => true,
+						'onExecute' => 'javaScript:app.addressbook.videoconference_scheduleCall',
+					]
+				]
+			];
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['infolog'])

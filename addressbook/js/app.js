@@ -1308,5 +1308,60 @@ app.classes.addressbook = AppJS.extend(
 			}
 		}
 		return enabled;
+	},
+
+	/**
+	 * Check if selected user(s) is online then enable action
+	 * @param _action
+	 * @param _selected
+	 */
+	videoconference_isUserOnline: function(_action, _selected)
+	{
+		let list = app.status.getEntireList();
+		for (let sel in _selected)
+		{
+			let row = egw.dataGetUIDdata(_selected[sel]['id']);
+			let enabled = false;
+			for(let entry in list)
+			{
+				if (row.data['account_id'] && row.data.account_id == list[entry]['account_id'])
+				{
+					enabled = list[entry]['data']['status']['active'];
+				}
+			}
+			if (!enabled) return false;
+		}
+		return true;
+	},
+
+	/**
+	 * Call action
+	 * @param _action
+	 * @param _selected
+	 */
+	videoconference_actionCall: function(_action, _selected)
+	{
+		let data = [];
+		for (let sel in _selected)
+		{
+			let row = egw.dataGetUIDdata(_selected[sel]['id']);
+			data.push({
+				id: row.data.account_id,
+				name: row.data.n_fn,
+				avatar: "account:"+row.data.account_id
+			});
+		}
+		app.status.makeCall(data);
+	},
+
+	/**
+	 *
+	 * @param _action
+	 * @param _selected
+	 * @todo
+	 */
+	videoconference_scheduleCall: function(_action, _selected)
+	{
+
 	}
 });
