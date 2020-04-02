@@ -249,7 +249,7 @@ class filemanager_merge extends Api\Storage\Merge
 		$recipients = array();
 		$extra = array();
 
-		return \EGroupware\Api\Vfs\Sharing::create($path, $mode, NULL, $recipients, $extra);
+		return \EGroupware\Api\Vfs\Sharing::create('', $path, $mode, NULL, $recipients, $extra);
 	}
 
 	/**

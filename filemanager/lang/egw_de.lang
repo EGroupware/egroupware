@@ -171,6 +171,7 @@ go home	filemanager	de	Gehe zum Heimverzeichnis
 go to	filemanager	de	Gehe zu
 go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
 go up	filemanager	de	in das übergeordnete Verzeichnis wechseln
+hidden uploads	filemanager	de	Hochladen nicht einsehbar
 id	filemanager	de	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	de	Wenn Sie hier ein Verzeichnis angeben (vollständiger Pfad des virtuellen Dateisystems), zeigt %1 einen Befehl für jedes Dokument an. Dieser Befehl erlaubt es, das Dokument mit %1 Daten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	de	Wenn Sie hier ein Dokument angeben (vollständiger Pfad des virtuellen Dateisystems), zeigt %1 ein zusätzliches Dokumentsymbol für jeden Eintrag an. Dieses Symbol erlaubt es, das Dokument mit eingefügten Daten herunterzuladen.
@@ -280,6 +281,7 @@ the default start folder is your personal folder. the default is used, if you le
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, diese werden mit den entsprechenden Daten ersetzt (%1Liste der Platzhalter%2)
 the following document-types are supported:	filemanager	de	Die folgenden Dokumenttypen werden unterstützt:
 the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung
+the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	de	Die hochgeladene Datei ist nur für die Person sichtbar, die Ihnen diese Dateien zur Verfügung gestellt hat, nicht für Sie selbst oder andere Personen die diesen Sharing Link kennen.
 there's already a directory with that name!	filemanager	de	Es gibt bereits ein Verzeichnis mit diesem Namen!
 there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei mit diesem Namen!
 tile view	filemanager	de	Kachelansicht

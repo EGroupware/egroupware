@@ -313,6 +313,8 @@ table.egwGridView_grid{
     span.arrow {
         -moz-user-select: none;
         background-repeat: no-repeat;
+        background-size: 12px;
+        background-position: center;
         display: inline-block;
         height: 8px;
         margin-right: 2px;
@@ -321,13 +323,11 @@ table.egwGridView_grid{
     }
 
     span.arrow.opened {
-        background-image: url("../images/egw_action/arrows.png");
-        background-position: -8px 0;
+        background-image: url("../images/arrow_down.svg");
         cursor: pointer;
     }
     span.arrow.closed {
-        background-image: url("../images/egw_action/arrows.png");
-        background-position: 0 0;
+        background-image: url("../images/arrow_right.svg");
         cursor: pointer;
     }
     span.arrow.loading {

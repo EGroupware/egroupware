@@ -171,6 +171,7 @@ go home	filemanager	en	Go home
 go to	filemanager	en	Go to
 go to your home directory	filemanager	en	Go to your home directory
 go up	filemanager	en	Go up
+hidden uploads	filemanager	en	Hidden uploads
 id	filemanager	en	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
@@ -280,6 +281,7 @@ the default start folder is your personal folder. the default is used, if you le
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	en	The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).
 the following document-types are supported:	filemanager	en	The following document-types are supported:
 the requested path %1 is not available.	filemanager	en	The requested path %1 is not available!
+the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	en	The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.
 there's already a directory with that name!	filemanager	en	There's already a directory with that name!
 there's already a file with that name!	filemanager	en	There's already a file with that name!
 tile view	filemanager	en	Tile view
