@@ -39,6 +39,10 @@ class notifications_push implements Json\PushBackend
 
 	public static function get()
 	{
+		if (session_status() === PHP_SESSION_NONE)
+		{
+			$session_reopened = session_start();
+		}
 		$already_send =& Api\Cache::getSession(__CLASS__, 'already_send');
 		$max_id = Api\Cache::getInstance(__CLASS__, 'max_id');
 
@@ -71,6 +75,10 @@ class notifications_push implements Json\PushBackend
 				}
 				$already_send = $row['notify_id'];
 			}
+		}
+		if (!empty($session_reopened))
+		{
+			session_write_close();
 		}
 		//error_log(__METHOD__."() max_id=$max_id, already_sent=$already_send");
 	}
