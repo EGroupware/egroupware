@@ -3026,7 +3026,7 @@ a.chzn-single.et2_country-select span.img {
 	padding-top: 0;
 }
 .et2_avatar {
-
+    width: 40px;
 }
 
 .tox-tbtn.tox-tbtn--select.tox-tbtn--bespoke:nth-child(2) {width: 60px;}
