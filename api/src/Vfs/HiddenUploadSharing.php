@@ -57,16 +57,21 @@ class HiddenUploadSharing extends Sharing
 	 */
 	public static function setup_share($keep_session, &$share)
 	{
-		// Get these before root is mounted readonly
+		// Get these before parent is mounted to make sure we get the right path
+		unset($GLOBALS['egw_info']['server']['vfs_fstab']);	// triggers reset of fstab in mount()
+		$GLOBALS['egw_info']['server']['vfs_fstab'] = Vfs::mount();
+		Vfs::clearstatcache();
 		$resolve_url = Vfs::resolve_url($share['share_path'], true, true, true, true);
 		$upload_dir = Vfs::concat($resolve_url, self::HIDDEN_UPLOAD_DIR);
 
 		// Parent mounts the root read-only
-		parent::setup_share($keep_session, $share);
+		parent::setup_share(true, $share);
+
+		$upload_mount = Vfs::concat($share['share_root'], self::HIDDEN_UPLOAD_DIR);
 
 		// Mounting upload dir, has original share owner access (write)
 		Vfs::$is_root = true;
-		if (!Vfs::mount($upload_dir, Vfs::concat($share['share_root'], self::HIDDEN_UPLOAD_DIR), false, false, false))
+		if (!Vfs::mount($upload_dir, $upload_mount, false, false, false))
 		{
 			sleep(1);
 			return static::share_fail(
@@ -74,6 +79,7 @@ class HiddenUploadSharing extends Sharing
 					"Requested resource '/" . htmlspecialchars($share['share_token']) . "' does NOT exist!\n"
 			);
 		}
+		static::session_mount($upload_mount, $upload_dir);
 
 		Vfs::$is_root = false;
 		Vfs::clearstatcache();
@@ -192,6 +198,11 @@ class HiddenUploadSharing extends Sharing
 	{
 		return (int)$this->share['share_writable'] == self::HIDDEN_UPLOAD;
 	}
+
+	public function redo()
+	{
+		static::setup_share(true, $this->share);
+	}
 }
 
 if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'))
@@ -258,6 +269,8 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 		protected static function handle_upload_action(string $action, $selected, $dir, $props, &$arr)
 		{
 			Api\Translation::add_app('filemanager');
+			$vfs = Vfs::mount();
+			$GLOBALS['egw']->sharing->redo();
 			parent::handle_upload_action($action, $selected, $dir, $props, $arr);
 			$arr['msg'] .= "\n" . lang("The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.");
 			$arr['type'] = 'notice';
@@ -266,7 +279,10 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 		protected function is_hidden_upload_dir($directory)
 		{
 			if (!isset($GLOBALS['egw']->sharing)) return false;
-			return Vfs::is_dir($directory) && $directory == Vfs::concat( $GLOBALS['egw']->sharing->get_root(), Sharing::HIDDEN_UPLOAD_DIR );
+			// Just hide anything that is 'Upload' mounted where we expect, not just this share, to avoid exposing when
+			// more than one share is used
+			$mounts = Vfs::mount();
+			return Vfs::is_dir($directory) && '/'.Vfs::basename($directory) == Sharing::HIDDEN_UPLOAD_DIR && $mounts[$directory];
 		}
 
 		/**
@@ -283,7 +299,8 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 			$hidden_upload = (isset($GLOBALS['egw']->sharing) && $GLOBALS['egw']->sharing->has_hidden_upload());
 
 			// Not allowed in hidden upload dir
-			if($hidden_upload && strpos($query['path'], Sharing::HIDDEN_UPLOAD_DIR) === 0)
+			$check_path = Sharing::HIDDEN_UPLOAD_DIR . (substr($query['path'], -1) == '/' ? '/' : '');
+			if(($length = strlen($check_path)) && (substr($query['path'], -$length) === $check_path))
 			{
 				// only redirect, if it would be to some other location, gives redirect-loop otherwise
 				if ($query['path'] != ($path = static::get_home_dir()))
