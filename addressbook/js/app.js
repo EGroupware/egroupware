@@ -275,6 +275,8 @@ var AddressbookApp = /** @class */ (function (_super) {
             }
             var extra = {};
             extra[_action.data && _action.data.url && _action.data.url.indexOf('owner') > 0 ? 'owner' : 'participants'] = ids;
+            if (_action.id === 'schedule_call')
+                extra['videoconference'] = 1;
             // Use framework to add calendar entry
             egw.open('', 'calendar', 'add', extra);
         }
