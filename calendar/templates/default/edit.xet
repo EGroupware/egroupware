@@ -231,14 +231,10 @@
 				</row>
 				<row class="dialogHeader3" height="28">
 					<label for="location" value="Location"/>
-<<<<<<< HEAD
-					<textbox id="location" maxlength="255" class="et2_fullWidth" span="2"/>
-=======
 					<hbox span="2">
 						<textbox id="location" maxlength="255" class="et2_fullWidth"/>
 						<checkbox label="Videoconference" id="videoconference" onchange="if (this.checked) document.getElementById('calendar-edit_notify_externals').value='yes';"/>
 					</hbox>
->>>>>>> 075362984a... * Calendar: allow to schedule a videoconference via Jitsi
 					<description/>
 					<taglist-cat id="category" height="190" empty_label="Categories" multiple="toggle" class="et2_fullWidth" rows="1" />
 				</row>
