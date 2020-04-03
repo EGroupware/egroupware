@@ -1651,6 +1651,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			//options.template = 'calendar.add';
 			return this.egw.open(null, 'calendar', 'edit', options, '_blank', 'calendar');
 		}
+		// Hold on to options, may have to pass them into edit (rather than all, just send what the programmer wanted)
+		this.quick_add = options;
 
 		// Open dialog to use as target
 		var add_dialog = et2_dialog.show_dialog(null, '', ' ', null, [], et2_dialog.PLAIN_MESSAGE, this.egw);
@@ -1770,9 +1772,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		{
 			title.set_value(title.egw().lang('Event'));
 		}
+		let options = jQuery.extend(this._add_dialog_values(widget), this.quick_add);
 
 		// Open regular edit
-		egw.open(null,'calendar','edit',this._add_dialog_values(widget));
+		egw.open(null,'calendar','edit',options);
 
 		// Close the dialog
 		jQuery(widget.getInstanceManager().DOMContainer.parentNode).dialog('close');
@@ -1817,10 +1820,14 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				values.participants.push(participant.uid);
 			}
 		}
-		return jQuery.extend(
-				values,
-				widget.getInstanceManager().getValues(widget.getRoot())
+		let send = jQuery.extend(
+			values,
+			widget.getInstanceManager().getValues(widget.getRoot())
 		);
+		// Don't need the checkbox
+		delete send.new_event_dialog;
+
+		return send;
 	},
 
 	/**
