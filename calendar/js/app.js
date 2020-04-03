@@ -95,8 +95,8 @@ var CalendarApp = /** @class */ (function (_super) {
             );
         }
     */
-			// call parent
-			_super.call(this, 'calendar') || this;
+        // call parent
+        _super.call(this, 'calendar') || this;
         /**
          * Needed for JSON callback
          */
@@ -1579,6 +1579,8 @@ var CalendarApp = /** @class */ (function (_super) {
             //options.template = 'calendar.add';
             return this.egw.open(null, 'calendar', 'edit', options, '_blank', 'calendar');
         }
+        // Hold on to options, may have to pass them into edit (rather than all, just send what the programmer wanted)
+        this.quick_add = options;
         // Open dialog to use as target
         var add_dialog = et2_dialog.show_dialog(null, '', ' ', null, [], et2_dialog.PLAIN_MESSAGE, this.egw);
         // Call the server, get it into the dialog
@@ -1665,8 +1667,9 @@ var CalendarApp = /** @class */ (function (_super) {
         if (title && !title.get_value()) {
             title.set_value(title.egw().lang('Event'));
         }
+        var options = jQuery.extend(this._add_dialog_values(widget), this.quick_add);
         // Open regular edit
-        egw.open(null, 'calendar', 'edit', this._add_dialog_values(widget));
+        egw.open(null, 'calendar', 'edit', options);
         // Close the dialog
         jQuery(widget.getInstanceManager().DOMContainer.parentNode).dialog('close');
         // Do not submit this etemplate
@@ -1702,7 +1705,10 @@ var CalendarApp = /** @class */ (function (_super) {
                 values.participants.push(participant.uid);
             }
         }
-        return jQuery.extend(values, widget.getInstanceManager().getValues(widget.getRoot()));
+        var send = jQuery.extend(values, widget.getInstanceManager().getValues(widget.getRoot()));
+        // Don't need the checkbox
+        delete send.new_event_dialog;
+        return send;
     };
     /**
      * Open calendar entry, taking into accout the calendar integration of other apps
