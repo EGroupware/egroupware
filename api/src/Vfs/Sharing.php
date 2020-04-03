@@ -108,10 +108,9 @@ class Sharing extends \EGroupware\Api\Sharing
 		}
 		//_debug_array($share);
 
+		$share['share_root'] = '/'.Vfs::basename($share['share_path']);
 		if ($keep_session)	// add share to existing session
 		{
-			$share['share_root'] = '/'.$share['share_token'];
-
 			// if current user is not the share owner, we cant just mount share
 			if (Vfs::$user != $share['share_owner'])
 			{
@@ -128,7 +127,6 @@ class Sharing extends \EGroupware\Api\Sharing
 				'collabora' => $GLOBALS['egw_info']['apps']['collabora'] || $apps['collabora']
 			);
 
-			$share['share_root'] = '/';
 			Vfs::$user = $share['share_owner'];
 
 			// Need to re-init stream wrapper, as some of them look at
@@ -142,7 +140,8 @@ class Sharing extends \EGroupware\Api\Sharing
 
 		// mounting share
 		Vfs::$is_root = true;
-		if (!Vfs::mount($share['resolve_url'], $share['share_root'], false, false, !$keep_session))
+		$clear_fstab = !$GLOBALS['egw_info']['user']['account_lid'] || $GLOBALS['egw_info']['user']['account_lid'] == 'anonymous';
+		if (!Vfs::mount($share['resolve_url'], $share['share_root'], false, false, $clear_fstab))
 		{
 			sleep(1);
 			return static::share_fail(
@@ -150,10 +149,41 @@ class Sharing extends \EGroupware\Api\Sharing
 				"Requested resource '/".htmlspecialchars($share['share_token'])."' does NOT exist!\n"
 			);
 		}
+
+		$session_fstab =& Api\Cache::getSession('api', 'fstab');
+		if(!$session_fstab)
+		{
+			$session_fstab = array();
+		}
+		foreach($session_fstab as $mount => $info)
+		{
+			Vfs::mount($info['mount'], $mount, false, false);
+		}
+		static::session_mount($share['share_root'], $share['resolve_url']);
+
+
 		Vfs::$is_root = false;
 		Vfs::clearstatcache();
 		// clear link-cache and load link registry without permission check to access /apps
 		Api\Link::init_static(true);
+	}
+
+	/**
+	 * Just temporary until we get the share streamwrapper in
+	 * @param $target
+	 * @param $mount
+	 */
+	protected static function session_mount($target, $mount)
+	{
+		$session_fstab =& Api\Cache::getSession('api', 'fstab');
+		if(!$session_fstab)
+		{
+			$session_fstab = array();
+		}
+		$session_fstab[$target] = array(
+			'mount' => $mount,
+			'class' => get_called_class()
+		);
 	}
 
 	protected function after_login()
