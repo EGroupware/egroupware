@@ -248,6 +248,16 @@ class calendar_boupdate extends calendar_bo
 		// See if we need to reset any participant statuses
 		$this->check_reset_stati($event, $old_event);
 
+		// generate a video-room-url, if we need one and not already have one
+		if ($event['videoconference'] && empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call'))
+		{
+			$event['##videoconference'] = EGroupware\Status\Videoconference\Call::genUniqueRoomID();
+		}
+		elseif(empty($event['videoconference']))
+		{
+			$event['##videoconference'] = '';
+		}
+
 		//echo "saving $event[id]="; _debug_array($event);
 		$event2save = $event;
 
@@ -681,9 +691,10 @@ class calendar_boupdate extends calendar_bo
 	 * @param int|string $user_or_email
 	 * @param string $ical_method ='REQUEST'
 	 * @param string $role ='REQ-PARTICIPANT'
+	 * @param string $notify_externals =null event-specific overwrite, default preferences
 	 * @return boolean true if user requested to be notified, false if not
 	 */
-	static public function email_update_requested($user_or_email, $ical_method='REQUEST', $role='REQ-PARTICIPANT')
+	static public function email_update_requested($user_or_email, $ical_method='REQUEST', $role='REQ-PARTICIPANT',$notify_externals=null)
 	{
 		// check if email is from a user
 		if (is_numeric($user_or_email))
@@ -703,7 +714,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$prefs = array(
 				'calendar' => array(
-					'receive_updates' => $GLOBALS['egw_info']['user']['preferences']['calendar']['notify_externals'],
+					'receive_updates' => $notify_externals ?: $GLOBALS['egw_info']['user']['preferences']['calendar']['notify_externals'],
 				)
 			);
 		}
@@ -803,7 +814,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $to_notify numerical user-ids as keys (!) (value is not used)
 	 * @param array $old_event Event before the change
 	 * @param array $new_event =null Event after the change
-	 * @param int/string $user =0 User/participant who started the notify, default current user
+	 * @param int|string $user =0 User/participant who started the notify, default current user
 	 * @return bool true/false
 	 */
 	function send_update($msg_type,$to_notify,$old_event,$new_event=null,$user=0)
@@ -813,6 +824,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$to_notify = array();
 		}
+		$notify_externals = $new_event ? $new_event['##notify_externals'] : $old_event['##notify_externals'];
 		$disinvited = $msg_type == MSG_DISINVITE ? array_keys($to_notify) : array();
 
 		$owner = $old_event ? $old_event['owner'] : $new_event['owner'];
@@ -879,7 +891,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		// unless we notfiy externals about everything aka 'responses'
 		// we will notify only an external chair, if only one exists
-		if ($GLOBALS['egw_info']['user']['calendar']['notify_externals'] !== 'responses')
+		if (($notify_externals ?: $GLOBALS['egw_info']['user']['calendar']['notify_externals']) !== 'responses')
 		{
 			// check if we have *only* an external chair
 			$chair = null;
@@ -912,6 +924,9 @@ class calendar_boupdate extends calendar_bo
 			calendar_so::split_status($statusid, $quantity, $role);
 			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid ($role)");
 
+			// hack to add videoconference in event description, by allways setting $cleared_event
+			$cleared_event = $this->read($event['id'], null, true, 'server');
+
 			if (!is_numeric($userid))
 			{
 				$res_info = $this->resource_info($userid);
@@ -922,7 +937,7 @@ class calendar_boupdate extends calendar_bo
 				{
 					// --> use only details from (private-)cleared event only containing resource ($userid)
 					// reading server timezone, to be able to use cleared event for iCal generation further down
-					$cleared_event = $this->read($event['id'], null, true, 'server');
+					//$cleared_event = $this->read($event['id'], null, true, 'server');
 					$this->clear_private_infos($cleared_event, array($userid));
 				}
 				$userid = $res_info['responsible'];
@@ -935,6 +950,7 @@ class calendar_boupdate extends calendar_bo
 					{
 						$preferences = new Api\Preferences($owner);
 						$owner_prefs = $preferences->read_repository();
+						if (!empty($notify_externals)) $owner_prefs['calendar']['notify_externals'] = $notify_externals;
 					}
 					if ($role != 'CHAIR' &&		// always notify externals CHAIRs
 						(empty($owner_prefs['calendar']['notify_externals']) ||
@@ -971,6 +987,7 @@ class calendar_boupdate extends calendar_bo
 					{
 						$preferences = new Api\Preferences($owner);
 						$GLOBALS['egw_info']['user']['preferences'] = $owner_prefs = $preferences->read_repository();
+						if (!empty($notify_externals)) $owner_prefs['calendar']['notify_externals'] = $notify_externals;
 					}
 					$part_prefs = $owner_prefs;
 					$part_prefs['calendar']['receive_updates'] = $owner_prefs['calendar']['notify_externals'];
@@ -1030,6 +1047,26 @@ class calendar_boupdate extends calendar_bo
 				{
 					$olddate->setTimezone($timezone);
 					$details['olddate'] = $olddate->format($timeformat);
+				}
+				// generate a personal videoconference url, if we need one
+				if (!empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call'))
+				{
+					$details['videoconference'] = EGroupware\Status\Videoconference\Call::genMeetingUrl($event['##videoconference'], [
+						'name' => $fullname,
+						'email' => is_numeric($userid) ? Api\Accounts::id2name($userid, 'account_email') : $userid,
+						// todo: contacts and email-addresses (eg. Gravatar-Url)
+						'avatar' => Api\Framework::getUrl(Api\Egw::link('/api/avatar.php', array('account_id' => $userid))),
+						'account_id' => $userid
+					]);
+					$event_arr['videoconference'] = [
+						'field' => lang('Videoconference'),
+						'data'  => $details['videoconference'],
+					];
+					// hack to add videoconference-url to ical, only if description was NOT cleared
+					if (isset($cleared_event['description']))
+					{
+						$cleared_event['description'] = lang('Videoconference').': '.$details['videoconference']."\n\n".$event['description'];
+					}
 				}
 				//error_log(__METHOD__."() userid=$userid, timezone=".$timezone->getName().", startdate=$details[startdate], enddate=$details[enddate], updated=$details[updated], olddate=$details[olddate]");
 
@@ -1113,7 +1150,8 @@ class calendar_boupdate extends calendar_bo
 								'user_id' => $userid,
 								'type' => $m_type,
 								'id' => $event['id'],
-								'app' => 'calendar'
+								'app' => 'calendar',
+								'videoconference' => $details['videoconference'],
 							));
 						}
 						if ($m_type === MSG_ALARM) $notification->set_popupdata('calendar', array('egw_pr_notify' => 1, 'type' => $m_type));

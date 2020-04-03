@@ -262,8 +262,8 @@ class calendar_uiforms extends calendar_ui
 			'recur_exception' => array(),
 			'title' => $title ? $title : '',
 			'category' => $cat_id,
-			'videoconference' => !empty($_GET['videoconference']),
-			'notify_externals' => !empty($_GET['videoconference']) ? 'yes' : $this->cal_prefs['notify_externals'],
+			'##videoconference' => !empty($_GET['videoconference']),
+			'##notify_externals' => !empty($_GET['videoconference']) ? 'yes' : $this->cal_prefs['notify_externals'],
 		);
 	}
 
@@ -434,6 +434,9 @@ class calendar_uiforms extends calendar_ui
 						case 'cal_resources':
 						case 'status_date':
 							break;
+						case 'notify_externals':
+							$event['##notify_externals'] = $data;
+							break;
 						case 'participant':
 							foreach($data as $participant)
 							{
@@ -536,7 +539,7 @@ class calendar_uiforms extends calendar_ui
 							break;
 
 						default:		// existing participant row
-							if (!is_array($data)) continue;	// widgets in participant tab, above participant list
+							if (!is_array($data)) continue 2;	// widgets in participant tab, above participant list
 							$quantity = $status = $role = null;
 							foreach(array('uid','status','quantity','role') as $name)
 							{
@@ -1509,7 +1512,7 @@ class calendar_uiforms extends calendar_ui
 				'mail' => array('label' => 'Mail all participants', 'title' => 'Compose a mail to all participants after the event is saved'),
 				'sendrequest' => array('label' => 'Meetingrequest to all participants', 'title' => 'Send meetingrequest to all participants after the event is saved'),
 			),
-			'participants[nofify_externals]' => [
+			'participants[notify_externals]' => [
 				'yes'            => ['label' => 'Yes', 'title' => 'Notify all externals (non-users) about this event'],
 				'no'             => ['label' => 'No', 'title' => 'Do NOT notify externals (non-users) about this event'],
 				'never'          => ['label' => 'Never', 'title' => 'Never notify externals (non-users) about events I create'],
@@ -1680,6 +1683,11 @@ class calendar_uiforms extends calendar_ui
 				}
 			}
 		}
+		// set videoconference from existence of url in cfs
+		if (!isset($event['videoconference']) && !empty($event['##videoconference']))
+		{
+			$event['videoconference'] = !empty($event['##videoconference']);
+		}
 
 		$etpl = new Etemplate();
 		if (!$etpl->read($preserv['template']))
@@ -1818,6 +1826,15 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 		$content['participants']['status_date'] = $preserv['actual_date'];
+		// set notify_externals in participants from cfs
+		if (!empty($event['##notify_externals']))
+		{
+			$content['participants']['notify_externals'] = $event['##notify_externals'];
+		}
+		else
+		{
+			$content['participants']['notify_externals'] = $this->cal_prefs['notify_externals'];
+		}
 		$preserved = array_merge($preserv,$content);
 		$event['new_alarm']['options'] = $content['new_alarm']['options'];
 		if ($event['alarm'])
@@ -1987,7 +2004,9 @@ class calendar_uiforms extends calendar_ui
 		}
 		else
 		{
-			$etpl->exec('calendar.calendar_uiforms.process_edit',$content,$sel_options,$readonlys,$preserved,$preserved['no_popup'] ? 0 : 2);
+			$etpl->exec('calendar.calendar_uiforms.process_edit',$content,$sel_options,$readonlys,$preserved+[
+				'##videoconference' => $content['##videoconference'],
+			],$preserved['no_popup'] ? 0 : 2);
 		}
 	}
 

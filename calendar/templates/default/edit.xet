@@ -53,7 +53,9 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="th"></row>
+				<row>
+					<select label="Notify externals" id="notify_externals" span="all" align="right"/>
+				</row>
 				<row disabled="@no_add" height="60" class="et2_toolbar">
 					<calendar-owner id="participant" allowFreeEntries="true" span="4" empty_label="Add new participants or resource" onchange="app.calendar.participantOnChange"/>
 					<hbox width="100%">
@@ -61,9 +63,6 @@
 						<select class="selectRole" id="role" align="center"/>
 						<button id="add" align="right" image="add" novalidate="1" statustext="Please first select participants on the left and then use plus button to add them" background_image="1" readonly="true" ro_image="add"/>
 					</hbox>
-				</row>
-				<row>
-					<select label="Notify externals" id="nofify_externals" span="all" align="right"/>
 				</row>
 				<row class="th thb">
 					<description value="Type"/>
@@ -232,7 +231,7 @@
 					<label for="location" value="Location"/>
 					<hbox span="2">
 						<textbox id="location" maxlength="255" class="et2_fullWidth"/>
-						<checkbox label="Videoconference" id="videoconference"/>
+						<checkbox label="Videoconference" id="videoconference" onchange="if (this.checked) document.getElementById('calendar-edit_notify_externals').value='yes';"/>
 					</hbox>
 					<description/>
 					<taglist-cat id="category" height="190" empty_label="Categories" multiple="toggle" class="et2_fullWidth" rows="1" />
