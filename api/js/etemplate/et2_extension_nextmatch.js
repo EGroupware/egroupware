@@ -1073,7 +1073,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			);
 			// Save adjusted column sizes and inform user about it
 			this.egw().set_preference(app, pref+"-size", colSize);
-			this.egw().message('Saved column sizes to prefences.');
+			this.egw().message(egw().lang("Saved column sizes to preferences."));
 		}
 
 		// No significant change (just normal columns shown) and no need to wait,
