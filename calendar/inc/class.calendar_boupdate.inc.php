@@ -1051,11 +1051,13 @@ class calendar_boupdate extends calendar_bo
 				// generate a personal videoconference url, if we need one
 				if (!empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call'))
 				{
+					$avatar = new Api\Contacts\Photo(is_numeric($userid) ? "account:$userid" :
+						(isset($res_info) && $res_info['type'] === 'c' ? $res_info['res_id'] : $userid));
+
 					$details['videoconference'] = EGroupware\Status\Videoconference\Call::genMeetingUrl($event['##videoconference'], [
 						'name' => $fullname,
 						'email' => is_numeric($userid) ? Api\Accounts::id2name($userid, 'account_email') : $userid,
-						// todo: contacts and email-addresses (eg. Gravatar-Url)
-						'avatar' => Api\Framework::getUrl(Api\Egw::link('/api/avatar.php', array('account_id' => $userid))),
+						'avatar' => (string)$avatar,
 						'account_id' => $userid
 					]);
 					$event_arr['videoconference'] = [

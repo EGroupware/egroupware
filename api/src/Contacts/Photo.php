@@ -36,8 +36,9 @@ class Photo
 	protected $path;
 
 	/**
+	 * Contructor
 	 *
-	 * @param int|str|array $id_data contact-id or array with data
+	 * @param int|string|array $id_data contact-id, "account:$account_id", array with contact-data or email for gravatar-url
 	 */
 	function __construct($id_data)
 	{
@@ -51,7 +52,8 @@ class Photo
 
 			if (!($this->contact = $contact->read($id_data)))
 			{
-				throw Api\Exception\NotFound("Contact '$id_data' not found!");
+				$this->contact = $id_data;
+				//throw Api\Exception\NotFound("Contact '$id_data' not found!");
 			}
 		}
 	}
@@ -79,6 +81,10 @@ class Photo
 	 */
 	function hasPhoto()
 	{
+		if (!is_array($this->contact))
+		{
+			return null;
+		}
 		if (!empty($this->contact['jpegphoto']))
 		{
 			return $this->contact['jpegphoto'];
@@ -88,6 +94,24 @@ class Photo
 			return $this->path;
 		}
 		return NULL;
+	}
+
+	/**
+	 * Return URL for anonymous letter-avatar or Gravatar for email-addresses
+	 *
+	 * @return string
+	 */
+	function anonLavatar()
+	{
+		if (!is_array($this->contact))
+		{
+			return 'https://gravatar.com/'.md5(trim(strtolower($this->contact)));
+		}
+		return Api\Framework::getUrl(Api\Egw::link('/api/anon_lavatar.php', [
+			'firstname' => $this->contact['firstname'],
+			'lastname'  => $this->contact['lastname'],
+			'id'        => $this->contact['id'],
+		]));
 	}
 
 	/**
@@ -101,7 +125,7 @@ class Photo
 
 		if (empty($path))
 		{
-			return null;
+			return $this->anonLavatar();
 		}
 		// if we got photo, we have to create a temp. file to share
 		if ($path[0] !== '/')
@@ -109,12 +133,12 @@ class Photo
 			$tmp = tempnam($GLOBALS['egw_info']['server']['temp_dir'], '.jpeg');
 			if (!file_put_contents($tmp, $path))
 			{
-				return null;
+				return $this->anonLavatar();
 			}
 			$path = $tmp;
 		}
 		return Api\Vfs\Sharing::share2link(Api\Vfs\Sharing::create(
-				'', $path, Api\Vfs\Sharing::READONLY, basename($path), array()
+			'', $path, Api\Vfs\Sharing::READONLY, basename($path), array()
 		));
 	}
 }
