@@ -227,7 +227,7 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 	{
 		unset($this->component);
 
-		while (($line = $this->read_line()) && substr($line,0,6) !== 'BEGIN:')
+		while (($line = $this->read_line()) && strcasecmp(substr($line,0,6), 'BEGIN:')!==0)
 		{
 			error_log("'".$line."'");
 			// ignore it
@@ -242,7 +242,7 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 		//error_log(__METHOD__."() found $type component");
 
 		$data = $line;
-		while (($line = $this->read_line()) && substr($line,0,4+strlen($type)) !== 'END:'.$type)
+		while (($line = $this->read_line()) && strcasecmp(substr($line,0,4+strlen($type)), 'END:'.$type) !== 0)
 		{
 			$data .= $line;
 		}
