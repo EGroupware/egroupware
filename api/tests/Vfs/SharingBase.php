@@ -473,6 +473,7 @@ class SharingBase extends LoggedInTest
 		}
 
 		// Setup for share to load
+		$_GET['access_token'] = $share['share_token'];
 		$_SERVER['REQUEST_URI'] = $link;
 		preg_match('|^https?://[^/]+(/.*)share.php/'.$share['share_token'].'$|', $path_info=$_SERVER['REQUEST_URI'], $matches);
         $_SERVER['SCRIPT_NAME'] = $matches[1];
