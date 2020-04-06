@@ -48,6 +48,7 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *			body: // DOM body
 		 *			icon: // parse icon URL, default icon is app icon
 		 *			tag: // a string value used for tagging an instance of notification, default is app name
+		 *			requireInteraction: // boolean value indicating that a notification should remain active until the user clicks or dismisses it
 		 *			onclick: // Callback function dispatches on click on notification message
 		 *			onshow: // Callback function dispatches when notification is shown
 		 *			onclose: // Callback function dispateches on notification close
@@ -76,7 +77,8 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				dir: options.dir || 'ltr',
 				lang: options.lang || egw.preference('lang', 'common'),
 				body: options.body || '',
-				icon: options.icon || egw.image('navbar', egw.app_name())
+				icon: options.icon || egw.image('navbar', egw.app_name()),
+				requireInteraction: options.requireInteraction || false
 			};
 
 			// Create an  instance of Notification object
