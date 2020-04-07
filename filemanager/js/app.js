@@ -1304,6 +1304,7 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	hidden_upload_enabled(_action, _senders)
 	{
+		if (_senders[0].id == 'nm') return false;
 		let data = egw.dataGetUIDdata(_senders[0].id);
 		let readonly = (data.data.class || '').split(/ +/).indexOf('noEdit') >= 0;
 
