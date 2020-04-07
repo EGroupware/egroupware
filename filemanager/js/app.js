@@ -1067,6 +1067,8 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * Needs to be a directory
      */
     filemanagerAPP.prototype.hidden_upload_enabled = function (_action, _senders) {
+        if (_senders[0].id == 'nm')
+            return false;
         var data = egw.dataGetUIDdata(_senders[0].id);
         var readonly = (data.data.class || '').split(/ +/).indexOf('noEdit') >= 0;
         // symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
