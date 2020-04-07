@@ -481,7 +481,13 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 		}
 		this.set_buttons(typeof this.options.buttons == "number" ? this._buttons[this.options.buttons] : this.options.buttons);
 		var self = this;
-
+		var position_my, position_at = '';
+		if (this.options.position)
+		{
+			var positions = this.options.position.split(',');
+			position_my = positions[0] ? positions[0].trim() : 'center';
+			position_at = positions[1] ? positions[1].trim() : position_my;
+		}
 		var options = {
 			// Pass the internal object, not the option
 			buttons: this.options.buttons,
@@ -495,17 +501,18 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			open: function() {
 				// Focus default button so enter works
 				jQuery(this).parents('.ui-dialog-buttonpane button[default]').focus();
-				window.setTimeout(function() {
-				jQuery(this).dialog('option','position',{
-					my: "center",
-					at: "center",
-					of: window
-				});}.bind(this),0);
+				window.setTimeout(function () {
+					jQuery(this).dialog('option', 'position', {
+						my: position_my,
+						at: position_at,
+						of: window
+					});
+				}.bind(this), 0);
 			},
 			close: jQuery.proxy(function() {this.destroy();},this),
 			beforeClose: this.options.beforeClose,
 			closeText: this.egw().lang('close'),
-			position: {my:this.options.position, at:this.options.position, of:window}
+			position: {my: "center", at: "center", of:window}
 		};
 		// Leaving width unset lets it size itself according to contents
 		if(this.options.width )
