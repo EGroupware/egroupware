@@ -250,7 +250,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$event['##videoconference'] = EGroupware\Status\Videoconference\Call::genUniqueRoomID();
 		}
-		elseif(empty($event['videoconference']))
+		elseif (isset($event['videoconference']) && !$event['videoconference'])
 		{
 			$event['##videoconference'] = '';
 		}
@@ -964,7 +964,7 @@ class calendar_boupdate extends calendar_bo
 				continue;	// dont notify rejected participants or groups
 			}
 
-			if($userid != $GLOBALS['egw_info']['user']['account_id'] ||
+			if ($userid != $GLOBALS['egw_info']['user']['account_id'] ||
 				($userid == $GLOBALS['egw_info']['user']['account_id'] &&
 					$user_prefs['calendar']['receive_own_updates']==1) ||
 				$msg_type == MSG_ALARM)

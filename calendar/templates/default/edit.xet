@@ -233,7 +233,7 @@
 					<label for="location" value="Location"/>
 					<hbox span="2">
 						<textbox id="location" maxlength="255" class="et2_fullWidth"/>
-						<checkbox label="Videoconference" id="videoconference" onchange="if (this.checked) document.getElementById('calendar-edit_notify_externals').value='yes';"/>
+						<checkbox label="Videoconference" id="videoconference" onchange="app.calendar.videoconferenceOnChange"/>
 					</hbox>
 					<description/>
 					<taglist-cat id="category" height="190" empty_label="Categories" multiple="toggle" class="et2_fullWidth" rows="1" />

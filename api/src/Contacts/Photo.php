@@ -108,8 +108,8 @@ class Photo
 			return 'https://gravatar.com/'.md5(trim(strtolower($this->contact)));
 		}
 		return Api\Framework::getUrl(Api\Egw::link('/api/anon_lavatar.php', [
-			'firstname' => $this->contact['firstname'],
-			'lastname'  => $this->contact['lastname'],
+			'firstname' => $this->contact['n_given'],
+			'lastname'  => $this->contact['n_family'],
 			'id'        => $this->contact['id'],
 		]));
 	}
