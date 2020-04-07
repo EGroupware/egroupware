@@ -356,6 +356,10 @@
 				switch (notifymessages[id]['extra_data']['egw_pr_notify'])
 				{
 					case EGW_PR_NOTIFY_HEIGH:
+						if (notifymessages[id]['extra_data']['videoconference'])
+						{
+							app.status.notificationPopup(notifymessages[id]['extra_data']['videoconference']);
+						}
 						poped.push(id);
 						this.toggle(true);
 						break;
