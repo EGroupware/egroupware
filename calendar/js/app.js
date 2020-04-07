@@ -3350,6 +3350,20 @@ var CalendarApp = /** @class */ (function (_super) {
         return CalendarApp.DAYWISE_CACHE_ID + '::' + date + (_owner ? '-' + _owner : '');
     };
     /**
+     * Videoconference checkbox checked
+     */
+    CalendarApp.prototype.videoconferenceOnChange = function () {
+        var widget = this.et2.getWidgetById('videoconference');
+        if (widget && widget.get_value()) {
+            // notify all participants
+            this.et2.getWidgetById('participants[notify_externals]').set_value('yes');
+            // add alarm for all participants 5min before videoconference
+            this.et2.getWidgetById('new_alarm[options]').set_value('300');
+            this.et2.getWidgetById('new_alarm[owner]').set_value('0'); // all participants
+            this.et2.getWidgetById('button[add_alarm]').click();
+        }
+    };
+    /**
      * These are the keys we keep to set & remember the status, others are discarded
      */
     CalendarApp.states_to_save = ['owner', 'status_filter', 'filter', 'cat_id', 'view', 'sortby', 'planner_view', 'weekend'];

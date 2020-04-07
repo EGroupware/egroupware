@@ -241,11 +241,23 @@ class calendar_uiforms extends calendar_ui
 			$offset = 60 * $this->cal_prefs[$alarm_pref];
 			$alarms[1] =  array(
 				'default' => 1,
-				'offset' => $offset ,
+				'offset' => $offset,
 				'time'   => $start - $offset,
 				'all'    => false,
 				'owner'  => $owner,
 				'id'	=> 1,
+			);
+		}
+		// add automatic alarm 5min before videoconference for all participants
+		if (!empty($_GET['videoconference']))
+		{
+			$offset = -5 * 60;
+			$alarms[1+count($alarms)] =  array(
+				'offset' => $offset,
+				'time'   => $start - $offset,
+				'all'    => true,
+				'owner'  => $owner,
+				'id'	=> 2,
 			);
 		}
 

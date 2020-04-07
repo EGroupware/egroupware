@@ -4142,6 +4142,25 @@ class CalendarApp extends EgwApp
 		}
 		return CalendarApp.DAYWISE_CACHE_ID+'::'+date+(_owner ? '-' + _owner : '');
 	}
+
+	/**
+	 * Videoconference checkbox checked
+	 */
+	public videoconferenceOnChange()
+	{
+		let widget = this.et2.getWidgetById('videoconference');
+
+		if (widget && widget.get_value())
+		{
+			// notify all participants
+			this.et2.getWidgetById('participants[notify_externals]').set_value('yes');
+
+			// add alarm for all participants 5min before videoconference
+			this.et2.getWidgetById('new_alarm[options]').set_value('300');
+			this.et2.getWidgetById('new_alarm[owner]').set_value('0');	// all participants
+			this.et2.getWidgetById('button[add_alarm]').click();
+		}
+	}
 }
 
 app.classes.calendar = CalendarApp;
