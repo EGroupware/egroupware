@@ -1328,6 +1328,7 @@ class AddressbookApp extends EgwApp
 		let list = app.status.getEntireList();
 		for (let sel in _selected)
 		{
+			if (sel == '0' && _selected[sel]['id'] == 'nm') continue;
 			let row = egw.dataGetUIDdata(_selected[sel]['id']);
 			let enabled = false;
 			for(let entry in list)

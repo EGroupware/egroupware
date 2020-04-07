@@ -1090,6 +1090,8 @@ var AddressbookApp = /** @class */ (function (_super) {
         var _a;
         var list = app.status.getEntireList();
         for (var sel in _selected) {
+            if (sel == '0' && _selected[sel]['id'] == 'nm')
+                continue;
             var row = egw.dataGetUIDdata(_selected[sel]['id']);
             var enabled = false;
             for (var entry in list) {
