@@ -360,7 +360,10 @@
 						{
 							app.status.notificationPopup(notifymessages[id]['extra_data']['videoconference']);
 						}
-						poped.push(id);
+						else {
+							poped.push(id);
+						}
+
 						this.toggle(true);
 						break;
 					case EGW_PR_NOTIFY_MEDIUM:
