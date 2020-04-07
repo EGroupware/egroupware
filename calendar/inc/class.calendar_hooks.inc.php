@@ -880,7 +880,21 @@ END:VALARM';
 	{
 		Api\Translation::add_app('calendar');
 		// do not set actions for alarm type
-		if ($params['data']['type'] == 6) return array();
+		if ($params['data']['type'] == 6)
+		{
+			if (!empty($params['data']['videoconference']))
+			{
+				return [
+					array(
+						'id' => 'J',
+						'caption' => lang('Join'),
+						'icon' => 'accept_call',
+						'onExecute' => 'app.status.openCall("'.$params['data']['videoconference'].'");'
+					)
+				];
+			}
+			return array();
+		}
 		return array(
 			array(
 				'id' => 'A',

@@ -1159,7 +1159,7 @@ class calendar_boupdate extends calendar_bo
 								'videoconference' => $details['videoconference'],
 							) + ($alarm ? ['alarm-offset' => (int)$alarm['offset']] : []));
 						}
-						if ($m_type === MSG_ALARM) $notification->set_popupdata('calendar', array('egw_pr_notify' => 1, 'type' => $m_type));
+						if ($m_type === MSG_ALARM) $notification->set_popupdata('calendar', array('egw_pr_notify' => 1, 'type' => $m_type, 'videoconference' => $details['videoconference']));
 						$notification->set_popupmessage($subject."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");
 						$notification->set_popuplinks(array($details['link_arr']+array('app'=>'calendar')));
 
