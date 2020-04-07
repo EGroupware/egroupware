@@ -1320,12 +1320,9 @@ app.classes.addressbook = AppJS.extend(
 	{
 		let list = app.status.getEntireList();
 
-		//todo: this is a hack to get selectall action works, since the selected object includes nm parent object as
-		// first object in the list which is not expected at all. This should be removed after fixing action system.
-		if (_selected[0]['id'] == 'nm') _selected.splice(0,1);
-
 		for (let sel in _selected)
 		{
+			if (sel == '0' && _selected[sel]['id'] == 'nm') continue;
 			let row = egw.dataGetUIDdata(_selected[sel]['id']);
 			let enabled = false;
 			for(let entry in list)
