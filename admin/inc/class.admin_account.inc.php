@@ -292,6 +292,7 @@ class admin_account
 	 */
 	public static function delete(array $content=null)
 	{
+		Api\Translation::add_app('admin');
 		if (!is_array($content))
 		{
 			if (isset($_GET['contact_id']) && ($account_id = $GLOBALS['egw']->accounts->name2id((int)$_GET['contact_id'], 'person_id')))
