@@ -683,6 +683,7 @@
 					tag: data.app+":"+_rawData[i]['id'],
 					body: data.message,
 					icon: data.icon,
+					requireInteraction: true,
 					onclose:function(e){
 						// notification id
 						var id = this.tag.split(":");
