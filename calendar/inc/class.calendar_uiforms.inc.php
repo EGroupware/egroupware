@@ -251,7 +251,7 @@ class calendar_uiforms extends calendar_ui
 		// add automatic alarm 5min before videoconference for all participants
 		if (!empty($_GET['videoconference']))
 		{
-			$offset = -5 * 60;
+			$offset = 5 * 60;
 			$alarms[1+count($alarms)] =  array(
 				'offset' => $offset,
 				'time'   => $start - $offset,
@@ -274,7 +274,7 @@ class calendar_uiforms extends calendar_ui
 			'recur_exception' => array(),
 			'title' => $title ? $title : '',
 			'category' => $cat_id,
-			'##videoconference' => !empty($_GET['videoconference']),
+			'videoconference' => !empty($_GET['videoconference']),
 			'##notify_externals' => !empty($_GET['videoconference']) ? 'yes' : $this->cal_prefs['notify_externals'],
 		);
 	}
