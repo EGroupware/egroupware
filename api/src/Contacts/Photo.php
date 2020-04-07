@@ -36,11 +36,18 @@ class Photo
 	protected $path;
 
 	/**
+	 * @var bool
+	 */
+	protected $no_sharing_link=false;
+
+	/**
 	 * Contructor
 	 *
 	 * @param int|string|array $id_data contact-id, "account:$account_id", array with contact-data or email for gravatar-url
+	 * @param boolean $no_sharing_link =false true: do NOT generate sharing link, as we currently destroy the EGroupware
+	 * session, if the link is from an other EGroupware user
 	 */
-	function __construct($id_data)
+	function __construct($id_data, $no_sharing_link=false)
 	{
 		if (is_array($id_data))
 		{
@@ -56,6 +63,7 @@ class Photo
 				//throw Api\Exception\NotFound("Contact '$id_data' not found!");
 			}
 		}
+		$this->no_sharing_link = $no_sharing_link;
 	}
 
 	/**
@@ -126,6 +134,13 @@ class Photo
 		if (empty($path))
 		{
 			return $this->anonLavatar();
+		}
+		// do we want a sharing link or not
+		if ($this->no_sharing_link)
+		{
+			return Api\Framework::getUrl(Api\Egw::link('/api/avatar.php', [
+				'contact_id' => $this->contact['id'],
+			]));
 		}
 		// if we got photo, we have to create a temp. file to share
 		if ($path[0] !== '/')

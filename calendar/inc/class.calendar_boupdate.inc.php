@@ -812,9 +812,10 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $old_event Event before the change
 	 * @param array $new_event =null Event after the change
 	 * @param int|string $user =0 User/participant who started the notify, default current user
+	 * @param array $alarm =null values for "offset", "start", etc.
 	 * @return bool true/false
 	 */
-	function send_update($msg_type,$to_notify,$old_event,$new_event=null,$user=0)
+	function send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, array $alarm=null)
 	{
 		//error_log(__METHOD__."($msg_type,".array2string($to_notify).",...) ".array2string($new_event));
 		if (!is_array($to_notify))
@@ -1049,7 +1050,9 @@ class calendar_boupdate extends calendar_bo
 				if (!empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call'))
 				{
 					$avatar = new Api\Contacts\Photo(is_numeric($userid) ? "account:$userid" :
-						(isset($res_info) && $res_info['type'] === 'c' ? $res_info['res_id'] : $userid));
+						(isset($res_info) && $res_info['type'] === 'c' ? $res_info['res_id'] : $userid),
+						// disable sharing links currently, as sharing links from a different EGroupware user destroy the session
+						true);
 
 					$details['videoconference'] = EGroupware\Status\Videoconference\Call::genMeetingUrl($event['##videoconference'], [
 						'name' => $fullname,
@@ -1151,7 +1154,7 @@ class calendar_boupdate extends calendar_bo
 								'id' => $event['id'],
 								'app' => 'calendar',
 								'videoconference' => $details['videoconference'],
-							));
+							) + ($alarm ? ['alarm-offset' => (int)$alarm['offset']] : []));
 						}
 						if ($m_type === MSG_ALARM) $notification->set_popupdata('calendar', array('egw_pr_notify' => 1, 'type' => $m_type));
 						$notification->set_popupmessage($subject."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");
@@ -1240,7 +1243,7 @@ class calendar_boupdate extends calendar_bo
 		Api\Translation::add_app('calendar');
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
 
-		$ret = $this->send_update(MSG_ALARM,$to_notify,$event,False,$alarm['owner']);
+		$ret = $this->send_update(MSG_ALARM, $to_notify, $event, False, $alarm['owner'], $alarm);
 
 		// create a new alarm for recuring events for the next event, if one exists
 		if ($event['recur_type'] != MCAL_RECUR_NONE && ($event = $this->read($alarm['cal_id'],$event_time_user+1)))
