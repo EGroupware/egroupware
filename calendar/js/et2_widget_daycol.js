@@ -754,7 +754,16 @@ var et2_calendar_daycol = /** @class */ (function (_super) {
                 event_3['multiday'] = true;
             }
             if (!event_3.start.getUTCHours() && !event_3.start.getUTCMinutes() && event_3.end.getUTCHours() == 23 && event_3.end.getUTCMinutes() == 59) {
-                event_3.whole_day_on_top = (event_3.non_blocking && event_3.non_blocking != '0');
+                var wholeDayBehaviour = egw.preference('whole_day_behaviour', 'calendar');
+                if (wholeDayBehaviour === 'all_appointments') {
+                    event_3.whole_day_on_top = true;
+                }
+                else if (wholeDayBehaviour === 'except_me') {
+                    event_3.whole_day_on_top = (event_3.creator != egw.user('account_id') && event_3.owner != egw.user('account_id'));
+                }
+                else {
+                    event_3.whole_day_on_top = (event_3.non_blocking && event_3.non_blocking != '0');
+                }
             }
             if (!event_3['whole_day_on_top']) {
                 for (c = 0; event_3['start_m'] < col_ends[c]; ++c)

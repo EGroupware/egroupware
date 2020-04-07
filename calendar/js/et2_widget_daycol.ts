@@ -63,17 +63,17 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	private event_wrapper: JQuery;
 	private user_spacer: JQuery;
 	private all_day: JQuery;
-	
-	private _date_helper : et2_date;
+
+	private _date_helper: et2_date;
 	private registeredUID: string = null;
 
 	// Init to defaults, just in case - they will be updated from parent
 	private display_settings: any = {
-		wd_start:	60*9,
-		wd_end:		60*17,
-		granularity:	30,
-		rowsToDisplay:	10,
-		rowHeight:	20,
+		wd_start: 60 * 9,
+		wd_end: 60 * 17,
+		granularity: 30,
+		rowsToDisplay: 10,
+		rowHeight: 20,
 		// Percentage; not yet available
 		titleHeight: 2.0
 	};
@@ -83,7 +83,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	/**
 	 * Constructor
 	 */
-	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
+	constructor(_parent, _attrs?: WidgetConfig, _child?: object)
 	{
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_calendar_daycol._attributes, _child || {}));
@@ -91,11 +91,11 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		// Main container
 		this.div = jQuery(document.createElement("div"))
 			.addClass("calendar_calDayCol")
-			.css('width',this.options.width)
+			.css('width', this.options.width)
 			.css('left', this.options.left);
 		this.header = jQuery(document.createElement('div'))
 			.addClass("calendar_calDayColHeader")
-			.css('width',this.options.width)
+			.css('width', this.options.width)
 			.css('left', this.options.left);
 		this.title = jQuery(document.createElement('div'))
 			.addClass('et2_clickable et2_link')
@@ -105,7 +105,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			.appendTo(this.header);
 		this.all_day = jQuery(document.createElement('div'))
 			.addClass("calendar_calDayColAllDay")
-			.css('max-height', (egw.preference('limit_all_day_lines', 'calendar') || 3 ) * 1.4 + 'em')
+			.css('max-height', (egw.preference('limit_all_day_lines', 'calendar') || 3) * 1.4 + 'em')
 			.appendTo(this.header);
 		this.event_wrapper = jQuery(document.createElement('div'))
 			.addClass("event_wrapper")
@@ -119,7 +119,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		this._date_helper.loadingFinished();
 	}
 
-	doLoadingFinished( )
+	doLoadingFinished()
 	{
 		let result = super.doLoadingFinished();
 
@@ -141,7 +141,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		return result;
 	}
 
-	destroy( )
+	destroy()
 	{
 		super.destroy();
 		this.div.off();
@@ -156,7 +156,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		this._date_helper.destroy();
 		this._date_helper = null;
 
-		egw.dataUnregisterUID(this.registeredUID,null,this);
+		egw.dataUnregisterUID(this.registeredUID, null, this);
 	}
 
 	getDOMNode(sender)
@@ -180,16 +180,16 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	/**
 	 * Draw the individual divs for clicking to add an event
 	 */
-	_draw( )
+	_draw()
 	{
 		// Remove any existing
-		jQuery('.calendar_calAddEvent',this.div).remove();
+		jQuery('.calendar_calAddEvent', this.div).remove();
 
 		// Grab real values from parent
 		if(this.getParent() && this.getParent().instanceOf(et2_calendar_timegrid))
 		{
-			this.display_settings.wd_start = 60*this.getParent().options.day_start;
-			this.display_settings.wd_end = 60*this.getParent().options.day_end;
+			this.display_settings.wd_start = 60 * this.getParent().options.day_start;
+			this.display_settings.wd_end = 60 * this.getParent().options.day_end;
 			this.display_settings.granularity = this.getParent().options.granularity;
 			const header = this.getParent().dayHeader.children();
 
@@ -207,14 +207,14 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			}
 			else if(header.length)
 			{
-				header.eq(Math.min(header.length,idx)-1).after(this.header);
+				header.eq(Math.min(header.length, idx) - 1).after(this.header);
 			}
 		}
 
 		this.div.attr('data-date', this.options.date);
 	}
 
-	getDate() : Date
+	getDate(): Date
 	{
 		return this.date;
 	}
@@ -256,7 +256,8 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		{
 			// Need a new date to avoid invalid month/date combinations when setting
 			// month then day.  Use a string to avoid browser timezone.
-			this.getParent().date_helper.set_value(_date.substring(0,4)+'-'+(_date.substring(4,6))+'-'+_date.substring(6,8)+'T00:00:00Z');
+			this.getParent().date_helper
+				.set_value(_date.substring(0, 4) + '-' + (_date.substring(4, 6)) + '-' + _date.substring(6, 8) + 'T00:00:00Z');
 		}
 
 		this.date = new Date(this.getParent().date_helper.getValue());
@@ -272,16 +273,16 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			// Add timezone offset back in, or formatDate will lose those hours
 			const formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
 
-			this.title.html('<span class="long_date">'+jQuery.datepicker.formatDate('DD',formatDate)+
-				'</span><span class="short_date">'+jQuery.datepicker.formatDate('D',formatDate)+'</span>'+
-				jQuery.datepicker.formatDate('d',formatDate));
+			this.title.html('<span class="long_date">' + jQuery.datepicker.formatDate('DD', formatDate) +
+				'</span><span class="short_date">' + jQuery.datepicker.formatDate('D', formatDate) + '</span>' +
+				jQuery.datepicker.formatDate('d', formatDate));
 		}
 		this.title
 			.attr("data-date", new_date)
 			.toggleClass('et2_label', !!this.options.label);
 		this.header
-			.attr('data-date',new_date)
-			.attr('data-whole_day',true);
+			.attr('data-date', new_date)
+			.attr('data-whole_day', true);
 
 		// Avoid redrawing if date is the same
 		if(new_date === this.options.date &&
@@ -296,7 +297,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		if(this.options.date && this.registeredUID &&
 			cache_id !== this.registeredUID)
 		{
-			egw.dataUnregisterUID(this.registeredUID,null,this);
+			egw.dataUnregisterUID(this.registeredUID, null, this);
 
 			// Remove existing events
 			while(this._children.length > 0)
@@ -320,7 +321,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		if(this.registeredUID !== cache_id)
 		{
 			this.registeredUID = cache_id;
-			egw.dataRegisterUID(this.registeredUID, this._data_callback,this,this.getInstanceManager().execId,this.id);
+			egw.dataRegisterUID(this.registeredUID, this._data_callback, this, this.getInstanceManager().execId, this.id);
 		}
 	}
 
@@ -332,13 +333,13 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	 *	necessarily an entry from the resource app), or a list containing a
 	 *	combination of both.
 	 */
-	set_owner( _owner)
+	set_owner(_owner)
 	{
 
 		this.title
 			.attr("data-owner", _owner);
-		this.header.attr('data-owner',_owner);
-		this.div.attr('data-owner',_owner);
+		this.header.attr('data-owner', _owner);
+		this.div.attr('data-owner', _owner);
 
 		// Simple comparison, both numbers
 		if(_owner === this.options.owner) return;
@@ -356,17 +357,17 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		if(this.options.date && this.registeredUID &&
 			cache_id !== this.registeredUID)
 		{
-			egw.dataUnregisterUID(this.registeredUID,null,this);
+			egw.dataUnregisterUID(this.registeredUID, null, this);
 		}
 
 		if(this.registeredUID !== cache_id)
 		{
 			this.registeredUID = cache_id;
-			egw.dataRegisterUID(this.registeredUID, this._data_callback,this,this.getInstanceManager().execId,this.id);
+			egw.dataRegisterUID(this.registeredUID, this._data_callback, this, this.getInstanceManager().execId, this.id);
 		}
 	}
 
-	set_class( classnames)
+	set_class(classnames)
 	{
 		this.header.removeClass(this.class);
 		super.set_class(classnames);
@@ -382,13 +383,13 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	 * @param {String[]} event_ids
 	 * @returns {undefined}
 	 */
-	_data_callback( event_ids)
+	_data_callback(event_ids)
 	{
 		const events = [];
 		if(event_ids == null || typeof event_ids.length == 'undefined') event_ids = [];
 		for(let i = 0; i < event_ids.length; i++)
 		{
-			let event : any = egw.dataGetUIDdata('calendar::'+event_ids[i]);
+			let event: any = egw.dataGetUIDdata('calendar::' + event_ids[i]);
 			event = event && event.data || false;
 			if(event && event.date && et2_calendar_event.owner_check(event, this) && (
 				event.date === this.options.date ||
@@ -398,29 +399,31 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			{
 				events.push(event);
 			}
-			else if (event)
+			else if(event)
 			{
 				// Got an ID that doesn't belong
-				event_ids.splice(i--,1);
+				event_ids.splice(i--, 1);
 			}
 		}
 		if(!this.getParent().disabled)
 			this._update_events(events);
 	}
 
-	set_label( label)
+	set_label(label)
 	{
 		this.options.label = label;
 		this.title.text(label);
-		this.title.toggleClass('et2_clickable et2_link',label === '');
+		this.title.toggleClass('et2_clickable et2_link', label === '');
 	}
-	set_left( left)
+
+	set_left(left)
 	{
 		if(this.div)
 		{
-			this.div.css('left',left);
+			this.div.css('left', left);
 		}
 	}
+
 	set_width(width)
 	{
 		this.options.width = width;
@@ -435,22 +438,22 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	/**
 	 * Applies class for today, and any holidays for current day
 	 */
-	day_class_holiday( )
+	day_class_holiday()
 	{
 		this.title
 			// Remove all special day classes
 			.removeClass('calendar_calToday calendar_calBirthday calendar_calHoliday')
 			// Except this one...
 			.addClass("et2_clickable et2_link");
-		this.title.attr('data-holiday','');
+		this.title.attr('data-holiday', '');
 
 		// Set today class - note +1 when dealing with today, as months in JS are 0-11
 		const today = new Date();
 		today.setUTCMinutes(today.getUTCMinutes() - today.getTimezoneOffset());
 
-		this.title.toggleClass("calendar_calToday", this.options.date === ''+today.getUTCFullYear()+
-			sprintf("%02d",today.getUTCMonth()+1)+
-			sprintf("%02d",today.getUTCDate())
+		this.title.toggleClass("calendar_calToday", this.options.date === '' + today.getUTCFullYear() +
+			sprintf("%02d", today.getUTCMonth() + 1) +
+			sprintf("%02d", today.getUTCDate())
 		);
 
 		// Holidays and birthdays
@@ -477,17 +480,17 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			holidays = holidays[this.options.date];
 			for(let i = 0; i < holidays.length; i++)
 			{
-				if (typeof holidays[i]['birthyear'] !== 'undefined')
+				if(typeof holidays[i]['birthyear'] !== 'undefined')
 				{
 					// Show birthdays as events on mobile or by preference
 					if(birthdays_as_events)
 					{
 						// Create event
-						this.getParent().date_helper.set_value(this.options.date.substring(0,4)+'-'+
-							(this.options.date.substring(4,6))+'-'+this.options.date.substring(6,8)+
+						this.getParent().date_helper.set_value(this.options.date.substring(0, 4) + '-' +
+							(this.options.date.substring(4, 6)) + '-' + this.options.date.substring(6, 8) +
 							'T00:00:00Z');
-						var event = et2_createWidget('calendar-event',{
-							id:'event_'+holidays[i].name,
+						var event = et2_createWidget('calendar-event', {
+							id: 'event_' + holidays[i].name,
 							value: {
 								title: holidays[i].name,
 								whole_day: true,
@@ -501,11 +504,11 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 							},
 							readonly: true,
 							class: 'calendar_calBirthday'
-						},this);
+						}, this);
 						event.doLoadingFinished();
 						event._update();
 					}
-					if (!egwIsMobile())
+					if(!egwIsMobile())
 					{
 						//If the birthdays are already displayed as event, don't
 						//show them in the caption
@@ -519,11 +522,11 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					if(holidays_as_events)
 					{
 						// Create event
-						this.getParent().date_helper.set_value(this.options.date.substring(0,4)+'-'+
-							(this.options.date.substring(4,6))+'-'+this.options.date.substring(6,8)+
+						this.getParent().date_helper.set_value(this.options.date.substring(0, 4) + '-' +
+							(this.options.date.substring(4, 6)) + '-' + this.options.date.substring(6, 8) +
 							'T00:00:00Z');
-						var event = et2_createWidget('calendar-event',{
-							id:'event_'+holidays[i].name,
+						var event = et2_createWidget('calendar-event', {
+							id: 'event_' + holidays[i].name,
 							value: {
 								title: holidays[i].name,
 								whole_day: true,
@@ -537,7 +540,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 							},
 							readonly: true,
 							class: 'calendar_calHoliday'
-						},this);
+						}, this);
 						event.doLoadingFinished();
 						event._update();
 					}
@@ -548,7 +551,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 
 						//If the birthdays are already displayed as event, don't
 						//show them in the caption
-						if (!this.options.display_holiday_as_event)
+						if(!this.options.display_holiday_as_event)
 						{
 							holiday_list.push(holidays[i]['name']);
 						}
@@ -580,7 +583,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		}
 
 		// Make sure children are in cronological order, or columns are backwards
-		events.sort(function(a,b) {
+		events.sort(function(a, b) {
 			const start = new Date(a.start) - new Date(b.start);
 			const end = new Date(a.end) - new Date(b.end);
 			// Whole day events sorted by ID, normal events by start / end time
@@ -588,7 +591,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			{
 				return (a.app_id - b.app_id);
 			}
-			else if (a.whole_day || b.whole_day)
+			else if(a.whole_day || b.whole_day)
 			{
 				return a.whole_day ? -1 : 1;
 			}
@@ -598,16 +601,16 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		for(c = 0; c < events.length; c++)
 		{
 			// Create event
-			var event = et2_createWidget('calendar-event',{
-				id:'event_'+events[c].id,
+			var event = et2_createWidget('calendar-event', {
+				id: 'event_' + events[c].id,
 				value: events[c]
-			},this);
+			}, this);
 		}
 
 		// Seperate loop so column sorting finds all children in the right place
 		for(c = 0; c < events.length && c < this._children.length; c++)
 		{
-			let event = this.getWidgetById('event_'+events[c].id);
+			let event = this.getWidgetById('event_' + events[c].id);
 			if(!event) continue;
 			if(this.isInTree())
 			{
@@ -617,7 +620,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 
 
 		// Show holidays as events on mobile or by preference
-		if(egwIsMobile() || egw.preference('birthdays_as_events','calendar'))
+		if(egwIsMobile() || egw.preference('birthdays_as_events', 'calendar'))
 		{
 			this.day_class_holiday();
 		}
@@ -651,14 +654,15 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		// Reset
 		this.header.children('.hiddenEventBefore').remove();
 		this.div.children('.hiddenEventAfter').remove();
-		this.event_wrapper.css('overflow','visible');
+		this.event_wrapper.css('overflow', 'visible');
 		this.all_day.removeClass('overflown');
-		jQuery('.calendar_calEventBody', this.div).css({'padding-top': '','margin-top':''});
+		jQuery('.calendar_calEventBody', this.div).css({'padding-top': '', 'margin-top': ''});
 
 		const timegrid = <et2_calendar_timegrid>this.getParent();
 
 		// elem is jquery div of event
-		function isHidden(elem) {
+		function isHidden(elem)
+		{
 			// Add an extra 5px top and bottom to include events just on the
 			// edge of visibility
 			const docViewTop = timegrid.scrolling.scrollTop() + 5,
@@ -685,7 +689,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		// In gridlist view, we can quickly check if we need it at all
 		if(this.display_settings.granularity === 0 && this._children.length)
 		{
-			jQuery('div.calendar_calEvent',this.div).show(0);
+			jQuery('div.calendar_calEvent', this.div).show(0);
 			if(Math.ceil(this.div.height() / this._children[0].div.height()) > this._children.length)
 			{
 				return;
@@ -706,8 +710,8 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				return;
 			}
 			// Reset
-			event.title.css({'top':'','background-color':''});
-			event.body.css({'padding-top':'','margin-top':''});
+			event.title.css({'top': '', 'background-color': ''});
+			event.body.css({'padding-top': '', 'margin-top': ''});
 			const hidden = isHidden.call(this, event.div);
 			const day = this;
 			if(!hidden)
@@ -725,15 +729,15 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				});
 				event.body.css({
 					'padding-top': timegrid.scrolling.scrollTop() - event.div.position().top + title_height,
-					'margin-top' : -title_height
+					'margin-top': -title_height
 				});
 			}
 			// Too many in gridlist view, show indicator
-			else if (this.display_settings.granularity === 0 && hidden)
+			else if(this.display_settings.granularity === 0 && hidden)
 			{
-				if(jQuery('.hiddenEventAfter',this.div).length == 0)
+				if(jQuery('.hiddenEventAfter', this.div).length == 0)
 				{
-					this.event_wrapper.css('overflow','hidden');
+					this.event_wrapper.css('overflow', 'hidden');
 				}
 				this._hidden_indicator(event, false, function() {
 					app.calendar.update_state({view: 'day', date: day.date});
@@ -743,9 +747,9 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				event.div.hide(0);
 			}
 			// Completely out of view, show indicator
-			else if (hidden.completely)
+			else if(hidden.completely)
 			{
-				this._hidden_indicator(event, hidden.hidden == 'top',false);
+				this._hidden_indicator(event, hidden.hidden == 'top', false);
 			}
 		}, this, et2_calendar_event);
 	}
@@ -773,7 +777,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		if(top)
 		{
 			// Create if not already there
-			if(jQuery('.hiddenEventBefore',this.header).length === 0)
+			if(jQuery('.hiddenEventBefore', this.header).length === 0)
 			{
 				indicator = jQuery('<div class="hiddenEventBefore"></div>')
 					.appendTo(this.header)
@@ -783,26 +787,26 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					indicator
 						.text(event.options.value.title)
 						.on('click', typeof onclick === 'function' ? onclick : function() {
-								jQuery('.calendar_calEvent',day.div).first()[0].scrollIntoView();
+							jQuery('.calendar_calEvent', day.div).first()[0].scrollIntoView();
 							return false;
 						});
 				}
 			}
 			else
 			{
-				indicator = jQuery('.hiddenEventBefore',this.header);
+				indicator = jQuery('.hiddenEventBefore', this.header);
 				indicator.attr('data-hidden_count', parseInt(indicator.attr('data-hidden_count')) + 1);
 
-				if (!fixed_height)
+				if(!fixed_height)
 				{
-					indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
+					indicator.text(day.egw().lang('%1 event(s) %2', indicator.attr('data-hidden_count'), ''));
 				}
 			}
 		}
 		// Event is after displayed times
 		else
 		{
-			indicator = jQuery('.hiddenEventAfter',this.div);
+			indicator = jQuery('.hiddenEventAfter', this.div);
 			// Create if not already there
 			if(indicator.length === 0)
 			{
@@ -813,7 +817,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				{
 					indicator
 						.on('click', typeof onclick === 'function' ? onclick : function() {
-							jQuery('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
+							jQuery('.calendar_calEvent', day.div).last()[0].scrollIntoView(false);
 							// Better re-run this to clean up
 							day._out_of_view();
 							return false;
@@ -824,8 +828,8 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					indicator
 						.on('mouseover', function() {
 							indicator.css({
-								'height': (indicator.attr('data-hidden_count')*1.2) + 'em',
-								'margin-top': -(indicator.attr('data-hidden_count')*1.2) + 'em'
+								'height': (indicator.attr('data-hidden_count') * 1.2) + 'em',
+								'margin-top': -(indicator.attr('data-hidden_count') * 1.2) + 'em'
 							});
 						})
 						.on('mouseout', function() {
@@ -841,21 +845,22 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			if(this.display_settings.granularity === 0)
 			{
 				indicator.append(event.div.clone());
-				indicator.attr('data-hidden_label', day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
+				indicator.attr('data-hidden_label', day.egw()
+													   .lang('%1 event(s) %2', indicator.attr('data-hidden_count'), ''));
 			}
-			else if (!fixed_height)
+			else if(!fixed_height)
 			{
-				indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
+				indicator.text(day.egw().lang('%1 event(s) %2', indicator.attr('data-hidden_count'), ''));
 			}
-			indicator.css('top',timegrid.scrolling.height() + timegrid.scrolling.scrollTop()-indicator.innerHeight());
+			indicator.css('top', timegrid.scrolling.height() + timegrid.scrolling.scrollTop() - indicator.innerHeight());
 		}
 		// Show different stuff for fixed height
 		if(fixed_height)
 		{
 			indicator
-				.append("<div id='"+event.dom_id +
-					"' data-id='"+event.options.value.id+"'>"+
-						event.options.value.title+
+				.append("<div id='" + event.dom_id +
+					"' data-id='" + event.options.value.id + "'>" +
+					event.options.value.title +
 					"</div>"
 				);
 		}
@@ -864,7 +869,8 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		{
 			// Avoid white, which is hard to see
 			// Use border-bottom-color, Firefox doesn't give a value with border-color
-			const color = jQuery.Color(event.div.css('background-color')).toString() !== jQuery.Color('white').toString() ?
+			const color = jQuery.Color(event.div.css('background-color')).toString() !== jQuery.Color('white')
+																							   .toString() ?
 				event.div.css('background-color') : event.div.css('border-bottom-color');
 			if(color !== 'rgba(0, 0, 0, 0)')
 			{
@@ -897,7 +903,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		const eventCols = [], col_ends = [];
 
 		// Make sure children are in cronological order, or columns are backwards
-		this._children.sort(function(a,b) {
+		this._children.sort(function(a, b) {
 			const start = new Date(a.options.value.start) - new Date(b.options.value.start);
 			const end = new Date(a.options.value.end) - new Date(b.options.value.end);
 			// Whole day events sorted by ID, normal events by start / end time
@@ -910,7 +916,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 
 				return duration ? duration : (a.options.value.app_id - b.options.value.app_id);
 			}
-			else if (a.options.value.whole_day || b.options.value.whole_day)
+			else if(a.options.value.whole_day || b.options.value.whole_day)
 			{
 				return a.options.value.whole_day ? -1 : 1;
 			}
@@ -923,7 +929,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			if(!event) continue;
 			if(event.date && event.date != this.options.date &&
 				// Multi-day events date may be different
-				(new Date(event.start) >= this.date || new Date(event.end) < this.date )
+				(new Date(event.start) >= this.date || new Date(event.end) < this.date)
 			)
 			{
 				// Still have a child event that has changed date (DnD)
@@ -942,25 +948,37 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			{
 				event.end = new Date(event.end);
 			}
-			event['start_m'] = (event.start.valueOf()/1000 - day_start) / 60;
-			if (event['start_m'] < 0)
+			event['start_m'] = (event.start.valueOf() / 1000 - day_start) / 60;
+			if(event['start_m'] < 0)
 			{
 				event['start_m'] = 0;
 				event['multiday'] = true;
 			}
-			event['end_m'] = (event.end.valueOf()/1000 - day_start) / 60;
-			if (event['end_m'] >= 24*60)
+			event['end_m'] = (event.end.valueOf() / 1000 - day_start) / 60;
+			if(event['end_m'] >= 24 * 60)
 			{
-				event['end_m'] = 24*60-1;
+				event['end_m'] = 24 * 60 - 1;
 				event['multiday'] = true;
 			}
 			if(!event.start.getUTCHours() && !event.start.getUTCMinutes() && event.end.getUTCHours() == 23 && event.end.getUTCMinutes() == 59)
 			{
-				event.whole_day_on_top = (event.non_blocking && event.non_blocking != '0');
+				let wholeDayBehaviour: string | boolean | object = egw.preference('whole_day_behaviour', 'calendar');
+				if(wholeDayBehaviour === 'all_appointments')
+				{
+					event.whole_day_on_top = true;
+				}
+				else if(wholeDayBehaviour === 'except_me')
+				{
+					event.whole_day_on_top = (event.creator != egw.user('account_id') && event.owner != egw.user('account_id'));
+				}
+				else
+				{
+					event.whole_day_on_top = (event.non_blocking && event.non_blocking != '0');
+				}
 			}
-			if (!event['whole_day_on_top'])
+			if(!event['whole_day_on_top'])
 			{
-				for(c = 0; event['start_m'] < col_ends[c]; ++c);
+				for(c = 0; event['start_m'] < col_ends[c]; ++c) ;
 				col_ends[c] = event['end_m'];
 			}
 			if(typeof eventCols[c] === 'undefined')
@@ -992,10 +1010,10 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			// Calculate horizontal positioning
 			let left = Math.ceil(5 + (1.5 * 100 / (parseFloat(this.options.width) || 100)));
 			let right = 2;
-			if (columns.length !== 1)
+			if(columns.length !== 1)
 			{
 				right = !c ? 30 : 2;
-				left += c * (100.0-left) / columns.length;
+				left += c * (100.0 - left) / columns.length;
 			}
 
 			for(let i = 0; (columns[c].indexOf(event) >= 0 || !event) && i < columns[c].length; i++)
@@ -1015,7 +1033,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					columns[c][i].div.css('left', '');
 					columns[c][i].div.css('right', '');
 					// Strip out of view padding
-					columns[c][i].body.css('padding-top','');
+					columns[c][i].body.css('padding-top', '');
 					continue;
 				}
 				if(columns[c][i].options.value.whole_day_on_top)
@@ -1023,12 +1041,12 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					if(!this.all_day.has(columns[c][i].div).length)
 					{
 						columns[c][i].div.css('top', '');
-						columns[c][i].div.css('height','');
+						columns[c][i].div.css('height', '');
 						columns[c][i].div.css('left', '');
 						columns[c][i].div.css('right', '');
-						columns[c][i].body.css('padding-top','');
+						columns[c][i].body.css('padding-top', '');
 						columns[c][i].div
-							.appendTo(this.all_day);
+									 .appendTo(this.all_day);
 						this.getParent().resizeTimes();
 					}
 					continue;
@@ -1041,25 +1059,25 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 						this.getParent().resizeTimes();
 					}
 					top = this._time_to_position(columns[c][i].options.value.start_m);
-					height = this._time_to_position(columns[c][i].options.value.end_m)-top;
+					height = this._time_to_position(columns[c][i].options.value.end_m) - top;
 				}
 
 				// Position the event
 				if(event && columns[c].indexOf(event) >= 0 || !event)
 				{
-					columns[c][i].div.css('top', top+'%');
-					columns[c][i].div.css('height', height+'%');
+					columns[c][i].div.css('top', top + '%');
+					columns[c][i].div.css('height', height + '%');
 					// Remove spacing from border, but only if visible or the height will be wrong
 					if(columns[c][i].div.is(':visible'))
 					{
 						const border_diff = columns[c][i].div.outerHeight() - columns[c][i].div.height();
-						columns[c][i].div.css('height','calc('+height+'% - ' +border_diff+')');
+						columns[c][i].div.css('height', 'calc(' + height + '% - ' + border_diff + ')');
 					}
 					// This gives the wrong height
 					//columns[c][i].div.outerHeight(height+'%');
-					columns[c][i].div.css('left', left.toFixed(1)+'%');
-					columns[c][i].div.css('right', right.toFixed(1)+'%');
-					columns[c][i].div.css('z-index',parseInt(20)+c);
+					columns[c][i].div.css('left', left.toFixed(1) + '%');
+					columns[c][i].div.css('right', right.toFixed(1) + '%');
+					columns[c][i].div.css('z-index', parseInt(20) + c);
 					columns[c][i]._small_size();
 				}
 			}
@@ -1095,7 +1113,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 
 		// Remove the binding for the click handler, unless there's something
 		// custom here.
-		if (!this.onclick)
+		if(!this.onclick)
 		{
 			jQuery(this.node).off("click");
 		}
@@ -1120,13 +1138,13 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	 */
 	click(_ev)
 	{
-		if(this.getParent().options.readonly ) return;
+		if(this.getParent().options.readonly) return;
 
 		// Drag to create in progress
 		if(this.getParent().drag_create.start !== null) return;
 
 		// Click on the title
-		if (jQuery(_ev.target).hasClass('calendar_calAddEvent'))
+		if(jQuery(_ev.target).hasClass('calendar_calAddEvent'))
 		{
 			if(this.header.has(_ev.target).length == 0 && !_ev.target.dataset.whole_day)
 			{
@@ -1141,7 +1159,8 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				return false;
 			}
 			// Header, all day non-blocking
-			else if (this.header.has(_ev.target).length && !jQuery('.hiddenEventBefore',this.header).has(_ev.target).length ||
+			else if(this.header.has(_ev.target).length && !jQuery('.hiddenEventBefore', this.header)
+					.has(_ev.target).length ||
 				this.header.is(_ev.target)
 			)
 			{
@@ -1160,7 +1179,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		// Day label
 		else if(this.title.is(_ev.target) || this.title.has(_ev.target).length)
 		{
-			app.calendar.update_state({view: 'day',date: this.date.toJSON()});
+			app.calendar.update_state({view: 'day', date: this.date.toJSON()});
 			return false;
 		}
 
@@ -1171,16 +1190,17 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	 *
 	 * @param {array} _attrs array to add further attributes to
 	 */
-	getDetachedAttributes( _attrs)
+	getDetachedAttributes(_attrs)
 	{
 
 	}
 
-	getDetachedNodes() {
+	getDetachedNodes()
+	{
 		return [this.getDOMNode(this)];
 	}
 
-	setDetachedAttributes( _nodes, _values)
+	setDetachedAttributes(_nodes, _values)
 	{
 
 	}
@@ -1192,7 +1212,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	 * Parent takes care of setting proper width & height for the containing div
 	 * here we just need to adjust the events to fit the new size.
 	 */
-	resize ()
+	resize()
 	{
 		if(this.disabled || !this.div.is(':visible') || this.getParent().disabled)
 		{
@@ -1218,4 +1238,5 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		this._out_of_view();
 	}
 }
+
 et2_register_widget(et2_calendar_daycol, ["calendar-daycol"]);

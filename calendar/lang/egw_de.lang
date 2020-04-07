@@ -44,6 +44,8 @@ alarm deleted	calendar	de	Alarm gelöscht
 alarm for %1 at %2 in %3	calendar	de	Alarm für %1 am %2 in %3
 alarm management	calendar	de	Alarm Management
 alarms	calendar	de	Alarme
+all as one-liners	calendar	de	Alle als Einzeiler
+all as one-liners except mine	calendar	de	Alle als Einzeiler (außer eigenen)
 all categories	calendar	de	Alle Kategorien
 all day	calendar	de	ganztägig
 all events	calendar	de	Alle Termine
@@ -164,6 +166,7 @@ delete this series of recurring events	calendar	de	Diese Serie von wiederholende
 deleted	calendar	de	Gelöscht
 deny resources reservation for private events	calendar	de	Verbiete die Reservierung von Ressourcen für private Termine
 directory with documents to insert entries	calendar	de	Verzeichnis mit Dokumenten zum Einfügen von Kalendereinträgen
+display behavior of whole-day appointments	calendar	de	Anzeigeverhalten ganztägiger Termine
 display holidays or birthdays as events in dayview	calendar	de	Zeige Feier- oder Geburtstage in der Tagesansicht als Termine
 display in header	calendar	de	Im Titel anzeigen
 display status of events	calendar	de	Status von Terminen anzeigen
@@ -296,6 +299,7 @@ how many minutes should each interval last?	calendar	de	Wie viele Minuten soll j
 how many separate calendars to show before merging them together	calendar	de	Ab der eingestellten Anzahl Benutzer werden die Kalender nicht mehr getrennt, sondern zusammenfasst in einem Kalender angezeigt.<br>So können die Kalender eines kleinen Teams getrennt dargestellt werden. Aber auch viele Kalender können durch die Konsolidierung dargestellt werden.<br>In der getrennten Darstellung können Termine zwischen den Kalendern verschoben oder eine Einladung per DnD ausgelöst werden.
 how many weeks should the multiple week view show?	calendar	de	Wie viele Wochen soll die Mehrwochenansicht zeigen?
 how much entries to skip	calendar	de	Wie viele Einträge sollen übersprungen werden
+how should a whole-day appointment be displayed?<br>By default blocking appointments are displayed spanning an entire day, non-blocking appointments are shown as one-liner above the dayview.	calendar	de	Wie soll ein ganztägiger Termin dargestellt werden?<br>Blockierende Termine werden als Block über den gesamten Tag dargestellt, nicht-blockierende Termine als Einzeiler oberhalb der Tagesansicht.
 html link to the current record	calendar	de	HTML-Link zum aktuellen Datensatz
 ical	calendar	de	iCal
 ical / rfc2445	calendar	de	iCal / RFC2445
@@ -387,6 +391,7 @@ no response	calendar	de	Keine Antwort
 no rights to export more than %1 entries!	calendar	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
 no, users will need to contact users with direct booking permission	calendar	de	Nein, Benutzer müssen sich mit Benutzern mit direkter Buchungsberechtigung in Verbindung setzen.
 non blocking	calendar	de	nicht blockierend
+non-blocking as one-liners	calendar	de	Nicht-blockierende als Einzeiler
 not	calendar	de	nicht
 not rejected	calendar	de	Nicht abgesagt
 nothing to update, version is already %1.	calendar	de	Nichts aktualisiert, Version ist bereits %1
