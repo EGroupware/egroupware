@@ -436,6 +436,7 @@ class admin_acl
 				($GLOBALS['egw_info']['flags']['currentapp'] != 'admin' ? 'other' :
 					$GLOBALS['egw_info']['user']['preferences']['admin']['acl_filter']),
 			'filter2' => !empty($_GET['acl_app']) ? $_GET['acl_app'] : '',
+			'filter2_onchange' => 'app.admin.acl_app_change',
 			'lettersearch' => false,
 			'order' => 'acl_appname',
 			'sort' => 'ASC',

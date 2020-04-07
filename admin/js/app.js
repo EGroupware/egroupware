@@ -625,6 +625,10 @@ app.classes.admin = AppJS.extend(
 			// Load checkboxes & their values
 			content.acl_rights = content.acl_rights ? parseInt(content.acl_rights) : null;
 			jQuery.extend(content, {acl:[],right:[],label:[]});
+
+			// Use this to make sure we get correct app translations
+			let app_egw = egw(content.acl_appname, window);
+
 			for( var right in acl_rights[content.acl_appname])
 			{
 				// only user himself is allowed to grant private (16) rights
@@ -634,7 +638,7 @@ app.classes.admin = AppJS.extend(
 				}
 				content.acl.push(content.acl_rights & right);
 				content.right.push(right);
-				content.label.push(egw.lang(acl_rights[content.acl_appname][right]));
+				content.label.push(app_egw.lang(acl_rights[content.acl_appname][right]));
 			}
 		}
 
@@ -765,6 +769,20 @@ app.classes.admin = AppJS.extend(
 		}
 		// Re-open the dialog
 		this._acl_dialog(content);
+	},
+
+	/**
+	 * Load the new application's lang files when the app filter is changed
+	 */
+	acl_app_change(event, nm)
+	{
+		let appname = nm.getWidgetById('filter2').getValue() || '';
+		if(appname)
+		{
+			let app_egw = egw(appname);
+			app_egw.langRequireApp(window, appname);
+			nm.getRoot().setApiInstance(app_egw);
+		}
 	},
 
 	/**
