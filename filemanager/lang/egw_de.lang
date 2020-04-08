@@ -300,6 +300,7 @@ user color indicator	filemanager	de	Benutzer-Farbe
 users and groups	filemanager	de	Benutzer und Gruppen
 versioning	filemanager	de	Versionierung
 vfs mounts and versioning	common	de	VFS einhängen und versionieren
+view link	filemanager	de	Zeige Link
 webdav link copied into clipboard	filemanager	de	WebDAV-Link in die Zwischenablage kopiert
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	de	Wer soll gelöschte Dateien oder ältere Versionen endgültig löschen dürfen:
 writable share link	filemanager	de	Beschreibbare Freigabe - Link

@@ -1,20 +1,152 @@
+%1 definition(s) %2	importexport	bg	%1 дефиниция(и) %2
+%1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	bg	%1 дефиниция(и) %2, %3 се провали поради недостатъчни права !!!
+%1 definitions %2	importexport	bg	%1 определения %2
+%1 is not a known user or group	importexport	bg	%1 е неизвестен потребител или група
+%1 is not readable	importexport	bg	%1 не се чете.
+%1 is not writable	importexport	bg	%1 не може да се записва.
+%1 records processed	importexport	bg	%1 обработени записи.
+%s all users	importexport	bg	%s всички потребители
+%s just me	importexport	bg	%s само мен
+(* for all)	importexport	bg	(* за всички)
+(0-23)	importexport	bg	(0-23)
+(0-6, 0=sun)	importexport	bg	(0-6, 0=Sun)
+*contact id cannot be changed by import	importexport	bg	* ID за контакт не може да бъде променен чрез импортиране
+add a new definition	importexport	bg	Добавете ново определение
+add an additional condition	importexport	bg	Добавете допълнително условие
+admin disabled exporting	importexport	bg	Експортирането на администратор е деактивирано
+all encodings	importexport	bg	Всички кодировки
 all users	importexport	bg	Всички потребители
+allowed users	importexport	bg	Допуснати (разрешени) потребители
+automatically created by importexport	importexport	bg	Създаден(и) автоматично от Импорт | Експорт
+basic csv import	importexport	bg	Основен CSV импорт
+change allowed users	importexport	bg	Промяна на разрешените потребители
+change owner when updating	importexport	bg	Промяна на собственика при актуализиране
+changed	importexport	bg	Променен(и)
+changed allowed_users	importexport	bg	Променени разрешени потребители
+changed owner	importexport	bg	Променен собственик
 charset of file	importexport	bg	Символен набор на файла
 check all	importexport	bg	Маркира всички
+choose a name for this definition	importexport	bg	Изберете име за това определение
+choose a plugin	importexport	bg	Изберете плъгин
+choose an application	importexport	bg	Изберете приложение
+choose fields to export	importexport	bg	Изберете полета за експортиране
 choose seperator and charset	importexport	bg	Избор на разделител и символен набор
-condition	importexport	bg	условие
-copied	importexport	bg	копиран(и)
+column mismatch.  expected %1 columns, your file has %2.	importexport	bg	Несъответствие при колоните. Очакват се %1 колони, файлът ви има %2.
+column mismatch: %1 should be %2, not %3	importexport	bg	Несъответствие при колоните: %1 трябва да бъде %2, а не %3
+condition	importexport	bg	Условие
+copied	importexport	bg	Копиран(и)
+create a <a href="%1">new definition</a> for this file	importexport	bg	Създайте <a href="%1"> нова дефиниция </a> за този файл
+create a matching export definition based on this import definition	importexport	bg	Създайте съвпадение на определение за експорт, въз основа на това определение за импортиране
+create export	importexport	bg	Създайте експорт
 created	importexport	bg	Създаден
-deleted	importexport	bg	изтрит
-export	importexport	bg	експорт
-exported	importexport	bg	експортиран(и)
-finish	importexport	bg	край
+csv field	importexport	bg	CSV поле
+database values	importexport	bg	Стойности на базата данни
+day of week	importexport	bg	Ден от седмицата
+define imports|exports	common	bg	Определяне на Импорт | Експорт
+definition	importexport	bg	Дефиниция
+delete all selected definitions	importexport	bg	Изтриване на ВСИЧКИ избрани дефиниции
+delete files after import	importexport	bg	Изтриване на файловете след импортирането
+deleted	importexport	bg	Изтрит(и).
+delimiter	importexport	bg	Разделител
+duplicate name, please choose another.	importexport	bg	Дублирано име, моля изберете друго.
+edit conditions	importexport	bg	Редактиране на условията
+edit definition <a href="%1">%2</a> to match your file	importexport	bg	Редактирайте дефиницията <a href="%1">%2</a>, за да съответства на вашия файл
+edit your file to match the definition:	importexport	bg	Редактирайте файла си, за да съответства на определението:
+errors	importexport	bg	Грешки
+execute	importexport	bg	Изпълни
+expert options	importexport	bg	Експертни опции
+export	importexport	bg	Експорт
+export all selected definitions	importexport	bg	Експортира ВСИЧКИ избрани дефиниции
+export data as	importexport	bg	Експорт на данни като:
+export definition to use for nextmatch export	preferences	bg	Определение за експорт, което да се използва за nextmatch експорт
+export spreadsheet	importexport	bg	Експортиране на електронна таблица (Spreadsheet)
+exported	importexport	bg	Експортиран(и)
+extra %1	importexport	bg	Допълнителни %1
+extra charsets for import / export	importexport	bg	Допълнителнен символен набор за внос / износ
+extra encodings	importexport	bg	Допълнителни кодировки
+false	importexport	bg	Грешен
+field labels	importexport	bg	Етикети на полета
+field names	importexport	bg	Имена на полета
+fieldseperator	importexport	bg	Разделител на полета
+filters	importexport	bg	Филтри
+finish	importexport	bg	Край
+from definition	importexport	bg	от дефиницията
+from file	importexport	bg	от файла
 general	preferences	bg	Общи
 general fields:	preferences	bg	Общи полета:
+header lines to skip	importexport	bg	Линии на хедър-а (заглавка), които да пропуснете
+how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	bg	Как да обединим съществуващите данни? За всеки запис, всички условия се оценяват отгоре надолу или спират.
+if you specify an export definition, it will be used when you export	preferences	bg	Ако посочите дефиниция за експортиране, тя ще се използва, когато експортирате.
 import	importexport	bg	Импорт
+import aborted	importexport	bg	Импортирането прекъсна
+import data is	importexport	bg	Данните за импортиране са
+import definition	importexport	bg	Определение за Импорт
+import definitions	common	bg	Определения за Импорт
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	bg	Определения за Импорт. Внимание: Съществуващите определения с еднакви имена ще бъдат презаписани!
+imported	importexport	bg	импортиран
+importexport	common	bg	Импорт | Експорт (Внос / Износ)
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	bg	Импортира информация от CSV файл. Това е само базов клас и не прави нищо самостоятелно.
+include header	importexport	bg	Включете хедър-а (заглавката)
+just me	importexport	bg	Само мен
+last run	importexport	bg	Последно изпълнение
 load sample file	importexport	bg	Зареждане на примерен файл
+lock expired on previous run	importexport	bg	Заключването изтече при предишно изпълнение
 manage mapping	importexport	bg	Управление на съответствията
-preview	importexport	bg	преглед
+next	importexport	bg	Следващ
+next run	importexport	bg	Следващо изпълнение
+no custom field "%1" for %2.	importexport	bg	Няма персонализирано поле "%1" за %2.
+no matches	importexport	bg	Няма съвпадения
+no matching records	importexport	bg	Няма съвпадащи записи
+no notifications	importexport	bg	Няма известия
+no records selected	importexport	bg	Няма избрани записи!
+none found	importexport	bg	Няма намерен(и)
+old fixed definition	preferences	bg	Стара фиксирана дефиниция
+please select file to import	importexport	bg	Моля, изберете файл, който да импортирате
+plugin	importexport	bg	Плъгин
+preview	importexport	bg	Преглед
+preview not supported by %1	importexport	bg	Визуализацията не се поддържа от %1
 previous	importexport	bg	Предишно
+problems during import:	importexport	bg	Проблеми по време на импортиране:
+save as definition	importexport	bg	Запазване като определение
+schedule	common	bg	Програма (График)
+schedule import / export	common	bg	Програма Импорт | Експорт
+schedule import | export	importexport	bg	Програма Импорт | Експорт
+schedule not found	importexport	bg	Програмата не е намерена.
+schedule times are server time!  currently %s.	importexport	bg	Времената на графика са време за сървър! В момента %s.
+select definition	importexport	bg	Изберете дефиниция
+select groups	importexport	bg	Изберете групи
+select owner	importexport	bg	Изберете собственик (автор)
+select plugin	importexport	bg	Изберете плъгин
+select...	importexport	bg	Изберете ...
+set import values	importexport	bg	Задайте стойности за импортиране
+skipped	importexport	bg	Пропуснат(и)
+some nice text	importexport	bg	Някакъв хубав текст
+some records may not have been imported	importexport	bg	Някои записи може да не са импортирани.
+stop	importexport	bg	Стоп
+target	importexport	bg	Цел
+target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	bg	Примерни цели: vfs://default/home/user/export.csv или http://server.net/prices.csv
+target field	importexport	bg	Целево поле
+test only	importexport	bg	Само тест
+too many matches	importexport	bg	твърде много съвпадения
 translation	importexport	bg	Превод
+true	importexport	bg	Вярно
+try	importexport	bg	Опит
+unable to delete	importexport	bg	Не може да бъде изтрит
+unable to link to %1 "%2"	importexport	bg	Не може да се свърже с %1 "%2"
+unable to schedule	importexport	bg	Не може да се планира.
+update categories	importexport	bg	Актуализиране на категории
+update default-definitions	importexport	bg	Актуализиране на дефинициите по подразбиране
 use default	importexport	bg	Използване на стойност по подразбиране
+use definition filter	importexport	bg	Използване на филтър за дефиниция
+use field from csv if possible	importexport	bg	Ако е възможно използвайте CSV поле
+use search results	common	bg	Използване на резултати от търсенето
+user preference	importexport	bg	Предпочитания на потребителя
+user template folder	importexport	bg	Папка с потребителски шаблон
+users allowed to create their own definitions	importexport	bg	Позволява на потребителите да създават свои собствени определения
+users allowed to share their own definitions	importexport	bg	Позволява на потребителите да споделят свои собствени определения
+warnings	importexport	bg	Предупреждения
+what should be done with unknown values?	importexport	bg	Какво трябва да се направи с неизвестни стойности?
+which useres are allowed for this definition	importexport	bg	Кои потребители могат да използват това определение
+which users are allowed to use this definition	importexport	bg	Кои потребители могат да използват това определение
+you may want to <a href="%1" target="_new">backup</a> first.	importexport	bg	Първо може да искате да <a href="%1" target="_new">backup</a>
+you need to select an app and format first!	importexport	bg	Първо трябва да изберете приложение и формат!

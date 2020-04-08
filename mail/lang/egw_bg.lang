@@ -238,8 +238,7 @@ forward messages to:	mail	bg	Препращане на съобщения към
 forward messages:	mail	bg	Препращащи съобщения:
 forward to	mail	bg	препрати до
 forward to address (*):	mail	bg	Препрати до адрес (*):
-forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	bg	Предаването на това съобщение не бе успешно, изглежда че съдържанието на това съобщение е криптирано и не може да бъде дешифрирано правилно. 
-Ако все пак искате да препратите съдържание на това криптирано съобщение, можете да опитате като прикачен файл.
+forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	bg	Предаването на това съобщение не бе успешно, изглежда че съдържанието на това съобщение е криптирано и не може да бъде дешифрирано правилно.
 forwards	mail	bg	Препраща
 from	mail	bg	От
 from(a->z)	mail	bg	Подател (A->Z)
@@ -283,6 +282,10 @@ imap	mail	bg	IMAP
 imap - incoming mail	mail	bg	IMAP - входяща поща
 imap administration	mail	bg	IMAP администрация
 imap server	mail	bg	IMAP сървър
+imap timeout	mail	bg	Време за изчакване на IMAP
+import message	mail	bg	съобщение за импортиране
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	bg	Импортирането на съобщение %1 не бе успешно. Не можа да се запише съобщение в папка %2 поради: %3
+import of message %1 failed. destination folder %2 does not exist.	mail	bg	Импортирането на съобщение% 1 не бе успешно. Дестинация папка% 2 не съществува.
 inbox	mail	bg	Входящи
 junk	mail	bg	Нежелани
 keep a copy of the message in your inbox	mail	bg	запазване на копие от съобщението във Входящи

@@ -300,6 +300,7 @@ user color indicator	filemanager	en	User color indicator
 users and groups	filemanager	en	Users and groups
 versioning	filemanager	en	Versioning
 vfs mounts and versioning	common	en	VFS mounts and versioning
+view link	filemanager	en	View link
 webdav link copied into clipboard	filemanager	en	WebDAV link copied into clipboard
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	en	Who should be allowed to finally delete deleted files or old versions of a file:
 writable share link	filemanager	en	Writable Share link

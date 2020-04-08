@@ -380,6 +380,7 @@ prevent managing notifications	mail	es-es	Impedir la gestión de notificaciones
 prevent managing vacation notice	mail	es-es	Impedir la gestión de aviso de vacaciones
 preview pane	mail	es-es	Panel de vista previa
 primary profile	mail	es-es	Perfil principal
+printing	mail	es-es	imprimiendo
 printview	mail	es-es	vista de impresión
 processing of file %1 failed. failed to meet basic restrictions.	mail	es-es	Error al procesar el archivo %1. No se cumplieron las restricciones básicas.
 quicksearch	mail	es-es	Búsqueda rápida
@@ -388,6 +389,8 @@ quota not provided by server	mail	es-es	Cuota no proporcionada por el servidor
 quota: %1	mail	es-es	Cuota: %1
 read	mail	es-es	leer
 readable	mail	es-es	ilegible
+real name	mail	es-es	Nombre real
+real name email	mail	es-es	Nombre real [Correo-e]
 reason!	mail	es-es	¡razón!
 receive notification	mail	es-es	Recibir notificación
 recursively	mail	es-es	Recursivamente
@@ -434,9 +437,11 @@ save as draft and print	mail	es-es	Grabar como borrador e imprimir
 save as infolog	mail	es-es	Grabar como registro de notas y tareas
 save as ticket	mail	es-es	Grabar como gestión (ticket)
 save as tracker on send	mail	es-es	Grabar como seguimiento al enviar
+save email	mail	es-es	Grabar correo-e
 save message to disk	mail	es-es	Grabar mensaje en el disco
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	es-es	Error al guardar el mensaje %1. No se pudo guardar el mensaje en la carpeta %2 debido a: %3
 save to disk	mail	es-es	Grabar en el disco
+save to filemanager	mail	es-es	Grabar en el Administrador de archivos
 save:	mail	es-es	Grabar:
 saves subscription changes	mail	es-es	Grabar cambios de suscripción
 saves this acl	mail	es-es	Grabar esta lista de control de acceso
