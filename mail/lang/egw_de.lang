@@ -5,7 +5,7 @@
 %1 has been removed from whiltelisted email addresses	mail	de	%1 wurde als E-Mailadresse von der Whiteliste entfernt
 %1 is not writable by you!	mail	de	%1 ist nicht beschreibbar für Sie
 %1 mails selected	mail	de	%1 E-Mail(s)  ausgewählt
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	de	(*)  Achtung: Weiterleitung an mehr als 4 E-Mail-Adressen, funktioniert bei den meisten Mailservern nicht. Daher ist das als Limit zur Eingabe festgelegt. Für weitere Informationen kontaktieren sie Ihren Administrator.
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	de	(*)  Achtung: Eine Weiterleitung an mehr als 4 E-Mail-Adressen funktioniert bei den einigen Mailservern nicht. Daher ist das als Limit zur Eingabe festgelegt. Für weitere Informationen kontaktieren sie bitte Ihren Administrator.
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben.
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash (\) (e.g. \!)	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben. Zur Verwendung von Ausrufezeichen (!), das NICHT als "NICHT" interprtiert werden soll, muss ein regulärer Ausdruck verwendet werden und ein Backslash - also "\!".
 (leave empty for no quota)	mail	de	(Leer lassen, um einen die Begrenzung zu deaktivieren)
@@ -122,6 +122,7 @@ date(newest first)	mail	de	Datum (neue zuerst)
 date(oldest first)	mail	de	Datum (alte zuerst)
 deactive	mail	de	Deaktiviert
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
+default value for remembering s/mime passphrase in minutes	mail	de	Standardwert für die Erinnerung an die S/MIME-Passphrase in Minuten
 default your name and email	common	de	z.B. Ihr Name und Ihre E-Mail-Adresse
 defines what to show as identity label on mail folder header	common	de	Definiert, was im Kopf des E-Mail-Postfach angezeigt werden soll.
 delete folder	mail	de	Ordner löschen
@@ -287,7 +288,7 @@ if shown, which folders should appear on the home page	mail	de	Welche E-Mail Ord
 if subject contains:(*)	mail	de	wenn Betreff enthält:(*)
 if to contains:(*)	mail	de	wenn An enthält:(*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	de	Wenn Sie die Vorschau einer E-Mail durch einfaches Anklicken sehen wollen, wählen Sie diese Option aus.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	de	Wenn Sie mehrere Ordner einer Ebene selektieren wollen in einer Aktion, können sie mit der STR-Taste gedrückt den ersten und letzten Ordner auswählen. Dann werden alle Ordner dazwischen selektiert oder de-selektiert.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	de	Wenn Sie mehrere Ordner einer Ebene selektieren wollen in einer Aktion, können sie mit der Strg-Taste gedrückt den ersten und letzten Ordner auswählen. Dann werden alle Ordner dazwischen selektiert oder de-selektiert.
 imap	mail	de	Posteingang-Server
 imap - incoming mail	mail	de	IMAP-Posteingang-Server
 imap administration	mail	de	Administrator IMAP-Server
@@ -420,6 +421,7 @@ processing of file %1 failed. failed to meet basic restrictions.	mail	de	Das Ver
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	de	Vorschlagstext für eine Abwesenheitsnotiz (wenn noch kein eigener Benachrichtigungstext vorhanden ist)
 quicksearch	mail	de	Schnellsuche
 quicksearch (with cc)	mail	de	Schnellsuche (+ Kopie)
+quota limit warning in megabyte (recommended value is 30 mb).	mail	de	Quota-Limit-Warnung in MegaByte (empfohlener Wert ist 30 MB).
 quota not provided by server	mail	de	Quota wird vom Mailserver nicht unterstützt
 quota: %1	mail	de	Quota: %1
 read	mail	de	gelesen
@@ -569,7 +571,7 @@ subject(z->a)	mail	de	Betreff (Z->A)
 subscribe folder	mail	de	Abonnieren
 subscribe folder ...	mail	de	Ordner abonnieren ...
 subscribe to folder %1	mail	de	Ordner %1 abonieren
-subscription folders	mail	de	Ordner Abonnieren
+subscription folders	mail	de	Ordner abonnieren
 subscription successfully saved.	mail	de	Das Abonnieren der Ordner wurde erfolgreich gespeichert.
 successfully connected	mail	de	erfolgreich verbunden
 switch off encryption?	mail	de	Verschlüsselung ausschalten?

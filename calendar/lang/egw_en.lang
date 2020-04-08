@@ -397,6 +397,7 @@ notification messages for uninvited participants	calendar	en	Notification messag
 notification messages for your alarms	calendar	en	Notification messages for your alarms
 notification messages for your responses	calendar	en	Notification messages for your responses
 notification settings	calendar	en	Notification settings
+notify externals	calendar	en	Notify externals
 notify non-egroupware users about event updates	calendar	en	Notify non-EGroupware users about event updates
 number of records to read (%1)	calendar	en	Number of records to read (%1)
 number of weeks to show	calendar	en	Number of weeks to show
@@ -626,6 +627,7 @@ user selectable css file for the calendar setup	calendar	en	User selectable CSS 
 users + groups: inviting both always requires an invite grant	admin	en	Users + groups: inviting both always requires an invite grant
 using already existing event on server.	calendar	en	Using already existing event on server.
 utilities	calendar	en	Utilities
+videoconference	calendar	en	Videoconference
 view exception	calendar	en	View exception
 view series	calendar	en	View series
 view settings	calendar	en	View settings

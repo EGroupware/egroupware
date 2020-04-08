@@ -91,7 +91,9 @@ extra sent folders	mail	ru	Дополнительные каталоги отп�
 file into	mail	ru	В файл
 file rejected, no %2. is:%1	mail	ru	Файл отвергнут, no %2. Is:%1
 filemanager	mail	ru	ФайлМенеджер
-flagged	mail	ru	Отмечено флажком
+flag / unflag	mail	ru	Отметить/Cнять отметку
+flag or unflag a mail	mail	ru	Отметить/Cнять отметку сообщения
+flagged	mail	ru	Отмечено
 folder	mail	ru	Папка
 folder settings	mail	ru	Установки папки
 force html	mail	ru	Выводить как html
@@ -136,7 +138,9 @@ less than	mail	ru	Меньше чем
 mail	common	ru	Почта
 mail settings	mail	ru	Установки почты
 mail source	mail	ru	Источник почты
-mark as deleted	mail	ru	Отметить как стертое
+mark all as read	mail	ru	Пометить всё как прочитанное
+mark all messages in folder as read	mail	ru	Пометить всю папку как прочитанное
+mark as deleted	mail	ru	Пометить как удалённое
 matches	mail	ru	Совпадения
 matches regexp	mail	ru	Совпадает с регулярным выражением
 message body	mail	ru	Текст сообщения
@@ -208,6 +212,7 @@ required pear class mail/mimedecode.php not found.	mail	ru	Необходимы�
 restrict acl management	admin	ru	Ограничение управления правами ACL
 row order style	mail	ru	Порядок сортировки строк
 save all	mail	ru	Сохранить всё
+save as calendar	mail	ru	Сохранить как событие Календаря
 save as draft	mail	ru	Сохранить как черновик
 save as infolog	mail	ru	Сохранить в ИнфоЖурнале
 save as ticket	mail	ru	Сохранить как запись Трекера
@@ -219,10 +224,11 @@ saving of message %1 failed. destination folder %2 does not exist.	mail	ru	Со�
 saving of message %1 succeeded. check folder %2.	mail	ru	Сохранение сообщения %1 прошло успешно. Проверьте папку %2.
 select all	mail	ru	Выбрать все
 select an existing entry in order to append mail content to it	mail	ru	Выберите существующую запись для добавления в неё содержимого письма
+select an item to read	mail	ru	Выберите сообщение для просмотра
 selected	mail	ru	Выбранный
 send message and move to send folder (if configured)	mail	ru	Отправить сообщение и переместить в папку Отправленные
 sender	mail	ru	Отправитель
-sent	mail	ru	Отправлено
+sent	mail	ru	Отправленные
 sent folder	mail	ru	Отправленные
 should new messages show up on the home page	mail	ru	отображать новые сообщения на домашней странице
 show all folders	mail	ru	Отображать все каталоги

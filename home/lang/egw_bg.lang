@@ -1,7 +1,24 @@
+a quick note	home	bg	Бърза бележка
+birthday reminders	home	bg	Напомняния за рожден ден
 color	home	bg	Цвят
+configure	home	bg	Конфигуриране
+displays home	home	bg	Показва начална страница
+egroupware	home	bg	EGroupware
+entry	home	bg	Вписване / Вход
+favorite	home	bg	Любим(и)
+home	home	bg	Начална страница (Home)
 in %1 days (%2) is %3's birthday.	home	bg	Рожденият ден на %3 е след %1 дни (%2).
-remove	home	bg	премахване
+list of entries	home	bg	Списък на записите
+remove	home	bg	Премахване
+remove default %1	home	bg	Премахване по подразбиране на %1
+removed default	home	bg	Премахнат(а) по подразбиране
 set as default	home	bg	По подразбиране
+set default	home	bg	Задаване по подразбиране
+show a list of entries	home	bg	Показване на списък с записи
+show all the entries using a favorite	home	bg	Показване на всички записи, като използвате "любими"
+show one entry	home	bg	Показване на един запис
+single entry	home	bg	Единичен запис
+there is a new version of egroupware available	home	bg	Налична е нова версия на EGroupware
 today is %1's birthday!	home	bg	Днес е рожденият ден на %1!
 tomorrow is %1's birthday.	home	bg	Утре е рожденият ден на %1!
 yes, for the next three days	home	bg	Да, за следващите три дни
