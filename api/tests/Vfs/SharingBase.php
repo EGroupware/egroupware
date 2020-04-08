@@ -494,6 +494,11 @@ class SharingBase extends LoggedInTest
 		{
 			$this->checkDirectoryLink($link, $share);
 		}
+		else
+		{
+			// If it's a file, check to make sure we get the file
+			$this->checkSharedFile($link, $path);
+		}
 
 		// Load share
 		$this->setup_info();
@@ -564,6 +569,46 @@ class SharingBase extends LoggedInTest
 		unset($data->data->content->nm->actions);
 		//var_dump($data->data->content->nm);
 	}
+
+	/**
+	 * Check that we actually find the file we shared at the target link
+	 *
+	 * @param $link Share URL
+	 * @param $file Vfs path to file
+	 */
+	public function checkSharedFile($link, $mimetype)
+	{
+		stream_context_set_default(
+				array(
+						'http' => array(
+								'method' => 'HEAD'
+						)
+				)
+		);
+		$headers = get_headers($link);
+		$this->assertEquals('200', substr($headers[0], 9, 3), 'Did not find the file, got ' . $headers[0]);
+
+		$indexed_headers = array();
+		foreach($headers as &$header)
+		{
+			list($key, $value) = explode(': ', $header);
+			if(is_string($indexed_headers[$key]))
+			{
+				$indexed_headers[$key] = array($indexed_headers[$key]);
+			}
+			if(is_array($indexed_headers[$key]))
+			{
+				$indexed_headers[$key][] = $value;
+			}
+			else
+			{
+				$indexed_headers[$key] = $value;
+			}
+		}
+
+		$this->assertStringContainsString($mimetype, $indexed_headers['Content-Type'], 'Wrong file type');
+	}
+
 	protected function setup_info()
 	{
 		// Copied from share.php

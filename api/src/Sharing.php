@@ -95,16 +95,16 @@ class Sharing
 	 */
 	public static function get_token()
 	{
-        // WebDAV has no concept of a query string and clients (including cadaver)
-        // seem to pass '?' unencoded, so we need to extract the path info out
-        // of the request URI ourselves
-        // if request URI contains a full url, remove schema and domain
+    // WebDAV has no concept of a query string and clients (including cadaver)
+    // seem to pass '?' unencoded, so we need to extract the path info out
+    // of the request URI ourselves
+    // if request URI contains a full url, remove schema and domain
 		$matches = null;
-        if (preg_match('|^https?://[^/]+(/.*)$|', $path_info=$_SERVER['REQUEST_URI'], $matches))
-        {
-        	$path_info = $matches[1];
-        }
-        $path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
+    if (preg_match('|^https?://[^/]+(/.*)$|', $path_info=$_SERVER['REQUEST_URI'], $matches))
+    {
+      $path_info = $matches[1];
+    }
+    $path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
 		list(, $token/*, $path*/) = preg_split('|[/?]|', $path_info, 3);
 
 		list($token) = explode(':', $token);
@@ -521,8 +521,15 @@ class Sharing
 				Header\Content::disposition(Vfs::basename($this->share['share_path']), false);
 			}
 			$GLOBALS['egw']->session->commit_session();
+
+			// WebDAV always looks at the original request for a single file so make sure the file is found at the root
+			Vfs::$is_root = true;
+			unset($GLOBALS['egw_info']['server']['vfs_fstab']);
+			Vfs::mount($this->share['resolve_url'], '/', false, false, true);
+			Vfs::clearstatcache();
+
 			$webdav_server = new Vfs\WebDAV();
-			$webdav_server->ServeRequest(Vfs::concat($this->share['share_root'], $this->share['share_token']));
+			$webdav_server->ServeRequest(Vfs::concat('/', $this->share['share_token']));
 			return;
 		}
 		return $this->get_ui();
