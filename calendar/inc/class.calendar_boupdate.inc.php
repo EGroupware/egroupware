@@ -1161,7 +1161,10 @@ class calendar_boupdate extends calendar_bo
 							$notification->set_popupdata('calendar',
 								array('egw_pr_notify' => 1,
 									'type' => $m_type,
-									'videoconference' => $details['videoconference'])
+									'videoconference' => $details['videoconference'],
+									'account_id' => $userid,
+									'name' => $fullname
+								)
 								+ ($alarm ? ['alarm-offset' => (int)$alarm['offset']] : []));
 						}
 						$notification->set_popupmessage($subject."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");

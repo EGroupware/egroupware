@@ -1373,6 +1373,7 @@ span.ui-icon-search {
   background: #CDCDCD;
 }
 .ui-dialog {
+  z-index: 1000;
   box-shadow: -2px 1px 9px 3px #B4B4B4;
 }
 .ui-dialog .ui-dialog-buttonpane {

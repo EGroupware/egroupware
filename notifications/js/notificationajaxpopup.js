@@ -358,13 +358,13 @@
 					case EGW_PR_NOTIFY_HEIGH:
 						if (notifymessages[id]['extra_data']['videoconference'] && notifymessages[id]['extra_data']['alarm-offset'] <= 300)
 						{
-							app.status.notificationPopup(notifymessages[id]['extra_data']['videoconference']);
+							app.status.notificationPopup(notifymessages[id]['extra_data']['videoconference'],
+								notifymessages[id]['extra_data']['account_id'], notifymessages[id]['extra_data']['name']);
 						}
 						else {
-							poped.push(id);
+							this.toggle(true);
 						}
-
-						this.toggle(true);
+						poped.push(id);
 						break;
 					case EGW_PR_NOTIFY_MEDIUM:
 					case EGW_PR_NOTIFY_LOW:
