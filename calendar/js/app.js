@@ -4199,6 +4199,27 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			this.et2.getWidgetById('new_alarm[owner]').set_value('0');	// all participants
 			this.et2.getWidgetById('button[add_alarm]').click();
 		}
+	},
+
+	isVideoConference(_action, _selected)
+	{
+		let data = egw.dataGetUIDdata(_selected[0].id);
+		return data && data.data ? data.data['##videoconference'] : false;
+	},
+
+	joinVideoConference(_action, _sender)
+	{
+		let data = egw.dataGetUIDdata(_sender[0].id)['data'];
+		egw.json(
+			"EGroupware\\Status\\Videoconference\\Call::ajax_genMeetingUrl",
+			[data['##videoconference'],
+				{
+					name:egw.user('account_fullname'),
+					account_id:egw.user('account_id'),
+					email:egw.user('account_email')
+				}], function(_url){
+				app.status.openCall(_url);
+			}).sendRequest();
 	}
 });}).call(this);
 

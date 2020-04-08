@@ -941,6 +941,27 @@ class calendar_uilist extends calendar_ui
 			'group' => ++$group,
 		);
 		++$group;	// integration with other apps: infolog, calendar, filemanager
+
+		if ($GLOBALS['egw_info']['user']['apps']['status'])
+		{
+			$actions['videoconference'] = [
+				'icon' => 'status/videoconference',
+				'caption' => 'Video conference',
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'disableClass' => 'rowNoView',
+				'enabled' => 'javaScript:app.calendar.isVideoConference',
+				'children' => [
+					'join' => [
+						'caption' => 'Join',
+						'icon' => 'status/videoconference_join',
+						'onExecute' => 'javaScript:app.calendar.joinVideoConference',
+						'allowOnMultiple' => false,
+					]
+				]
+			];
+		}
+
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
 			$actions['filemanager'] = array(
