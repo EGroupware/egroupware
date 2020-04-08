@@ -43,19 +43,19 @@ var AdminApp = /** @class */ (function (_super) {
      * @memberOf app.classes.admin
      */
     function AdminApp() {
-		var _this =
-			// call parent
-			_super.call(this, 'admin') || this;
-		/**
-		 * reference to iframe
-		 *
-		 * {et2_iframe}
-		 */
-		_this.iframe = null;
-		/**
-		 * reference to nextmatch
-		 *
-		 * {et2_extension_nextmatch}
+        var _this = 
+        // call parent
+        _super.call(this, 'admin') || this;
+        /**
+         * reference to iframe
+         *
+         * {et2_iframe}
+         */
+        _this.iframe = null;
+        /**
+         * reference to nextmatch
+         *
+         * {et2_extension_nextmatch}
          */
         _this.nm = null;
         /**
@@ -562,6 +562,8 @@ var AdminApp = /** @class */ (function (_super) {
             // Load checkboxes & their values
             content.acl_rights = content.acl_rights ? parseInt(content.acl_rights) : null;
             jQuery.extend(content, { acl: [], right: [], label: [] });
+            // Use this to make sure we get correct app translations
+            var app_egw = egw(content.acl_appname, window);
             for (var right in acl_rights[content.acl_appname]) {
                 // only user himself is allowed to grant private (16) rights
                 if (right == '16' && content['acl_account'] != egw.user('account_id')) {
@@ -569,7 +571,7 @@ var AdminApp = /** @class */ (function (_super) {
                 }
                 content.acl.push(content.acl_rights & parseInt(right));
                 content.right.push(right);
-                content.label.push(egw.lang(acl_rights[content.acl_appname][right]));
+                content.label.push(app_egw.lang(acl_rights[content.acl_appname][right]));
             }
         }
         if (content.acl_account && !egw.user('apps')['admin']) {
@@ -679,6 +681,17 @@ var AdminApp = /** @class */ (function (_super) {
         this._acl_dialog(content);
     };
     /**
+     * Load the new application's lang files when the app filter is changed
+     */
+    AdminApp.prototype.acl_app_change = function (event, nm) {
+        var appname = nm.getWidgetById('filter2').getValue() || '';
+        if (appname) {
+            var app_egw = egw(appname);
+            app_egw.langRequireApp(window, appname);
+            nm.getRoot().setApiInstance(app_egw);
+        }
+    };
+    /**
      * Callback called on successfull call of serverside ACL handling
      *
      * @param {object} _data returned from server
@@ -771,7 +784,7 @@ var AdminApp = /** @class */ (function (_super) {
                 params.account_id = _senders[0].id.split('::').pop(); // get last :: separated part
                 break;
         }
-		this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup, 'admin');
+        this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup, 'admin');
     };
     /**
      * Submit statistic
