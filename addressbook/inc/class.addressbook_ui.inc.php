@@ -582,12 +582,12 @@ class addressbook_ui extends addressbook_bo
 		{
 			$actions['videoconference'] = [
 				'caption' => 'Video Conference',
-				'icon' => 'video_call',
+				'icon' => 'status/videoconference',
 				'group' => $group,
 				'children' => [
 					'call' => [
 						'caption' => lang('Call'),
-						'icon' => 'call',
+						'icon' => 'status/videoconference_call',
 						'allowOnMultiple' => true,
 						'onExecute' => 'javaScript:app.addressbook.videoconference_actionCall',
 						'enabled' => 'javaScript:app.addressbook.videoconference_isUserOnline'
