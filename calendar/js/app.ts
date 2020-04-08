@@ -1760,11 +1760,15 @@ class CalendarApp extends EgwApp
 				else if (template)
 				{
 					// Open conflicts
-					var data = jQuery.extend({},template.widgetContainer.getArrayMgr('content').data, app.calendar.quick_add);
+					var data = jQuery.extend(
+					{menuaction: 'calendar.calendar_uiforms.ajax_conflicts'},
+				        template.widgetContainer.getArrayMgr('content').data,
+						app.calendar.quick_add
+					);
 
 					egw.openPopup(
 						egw.link(
-							'/index.php?menuaction=calendar.calendar_uiforms.ajax_conflicts',
+							'/index.php',
 							data
 						),
 						850, 300,

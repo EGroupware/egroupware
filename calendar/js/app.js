@@ -1625,8 +1625,8 @@ var CalendarApp = /** @class */ (function (_super) {
                     }
                     else if (template) {
                         // Open conflicts
-                        var data = jQuery.extend({}, template.widgetContainer.getArrayMgr('content').data, app.calendar.quick_add);
-                        egw.openPopup(egw.link('/index.php?menuaction=calendar.calendar_uiforms.ajax_conflicts', data), 850, 300, 'conflicts', 'calendar');
+                        var data = jQuery.extend({ menuaction: 'calendar.calendar_uiforms.ajax_conflicts' }, template.widgetContainer.getArrayMgr('content').data, app.calendar.quick_add);
+                        egw.openPopup(egw.link('/index.php', data), 850, 300, 'conflicts', 'calendar');
                         delete app.calendar.quick_add;
                         // Close the JS dialog
                         this.dialog.destroy();
