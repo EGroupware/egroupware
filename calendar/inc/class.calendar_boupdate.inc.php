@@ -1162,8 +1162,8 @@ class calendar_boupdate extends calendar_bo
 								array('egw_pr_notify' => 1,
 									'type' => $m_type,
 									'videoconference' => $details['videoconference'],
-									'account_id' => $userid,
-									'name' => $fullname
+									'account_id' => $senderid,
+									'name' =>  Api\Accounts::username($senderid)
 								)
 								+ ($alarm ? ['alarm-offset' => (int)$alarm['offset']] : []));
 						}
