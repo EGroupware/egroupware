@@ -774,12 +774,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "53fc64d4d7a7b20bdce8c830dcd32880f6599364"
+                "reference": "0a5de2c97d1a4f71864b2f8e952bd64629e43592"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/53fc64d4d7a7b20bdce8c830dcd32880f6599364",
-                "reference": "53fc64d4d7a7b20bdce8c830dcd32880f6599364",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/0a5de2c97d1a4f71864b2f8e952bd64629e43592",
+                "reference": "0a5de2c97d1a4f71864b2f8e952bd64629e43592",
                 "shasum": ""
             },
             "require": {
@@ -806,7 +806,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-04-02T16:36:02+00:00"
+            "time": "2020-04-08T16:59:28+00:00"
         },
         {
             "name": "egroupware/icalendar",
