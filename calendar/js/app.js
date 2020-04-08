@@ -3364,8 +3364,19 @@ var CalendarApp = /** @class */ (function (_super) {
         }
     };
     CalendarApp.prototype.isVideoConference = function (_action, _selected) {
-        var data = egw.dataGetUIDdata(_selected[0].id)['data'];
-        return data['##videoconference'];
+        var data = egw.dataGetUIDdata(_selected[0].id);
+        return data && data.data ? data.data['##videoconference'] : false;
+    };
+    CalendarApp.prototype.joinVideoConference = function (_action, _sender) {
+        var data = egw.dataGetUIDdata(_sender[0].id)['data'];
+        egw.json("EGroupware\\Status\\Videoconference\\Call::ajax_genMeetingUrl", [data['##videoconference'],
+            {
+                name: egw.user('account_fullname'),
+                account_id: egw.user('account_id'),
+                email: egw.user('account_email')
+            }], function (_url) {
+            app.status.openCall(_url);
+        }).sendRequest();
     };
     /**
      * These are the keys we keep to set & remember the status, others are discarded
