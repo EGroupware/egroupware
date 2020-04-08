@@ -478,6 +478,7 @@ class SharingBase extends LoggedInTest
 		preg_match('|^https?://[^/]+(/.*)share.php/'.$share['share_token'].'$|', $path_info=$_SERVER['REQUEST_URI'], $matches);
         $_SERVER['SCRIPT_NAME'] = $matches[1];
 		$is_dir = Vfs::is_dir($path);
+		$mimetype = Vfs::mime_content_type($path);
 
 
 		// Re-init, since they look at user, fstab, etc.
@@ -497,7 +498,7 @@ class SharingBase extends LoggedInTest
 		else
 		{
 			// If it's a file, check to make sure we get the file
-			$this->checkSharedFile($link, $path);
+			$this->checkSharedFile($link, $mimetype);
 		}
 
 		// Load share
