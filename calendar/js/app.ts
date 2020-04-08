@@ -4161,6 +4161,12 @@ class CalendarApp extends EgwApp
 			this.et2.getWidgetById('button[add_alarm]').click();
 		}
 	}
+
+	public isVideoConference(_action, _selected)
+	{
+		let data = egw.dataGetUIDdata(_selected[0].id)['data'];
+		return data['##videoconference'];
+	}
 }
 
 app.classes.calendar = CalendarApp;

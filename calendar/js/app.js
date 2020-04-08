@@ -3363,6 +3363,10 @@ var CalendarApp = /** @class */ (function (_super) {
             this.et2.getWidgetById('button[add_alarm]').click();
         }
     };
+    CalendarApp.prototype.isVideoConference = function (_action, _selected) {
+        var data = egw.dataGetUIDdata(_selected[0].id)['data'];
+        return data['##videoconference'];
+    };
     /**
      * These are the keys we keep to set & remember the status, others are discarded
      */
