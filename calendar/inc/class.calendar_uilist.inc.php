@@ -312,7 +312,7 @@ class calendar_uilist extends calendar_ui
 		}
 		// check if we have videoconferences enabled and need to query the room url
 		$status_config = Api\Config::read('status');
-		if (!empty($config['videoconference']['jitsi']['jitsi_domain']))
+		if (!empty($status_config['videoconference']['jitsi']['jitsi_domain']))
 		{
 			$cfs[] = '#videoconference';
 		}
