@@ -1,3 +1,27 @@
+egroupware-docker (19.1.20200409) hardy; urgency=low
+
+  #CoronaVirus #StayAtHome #HomeOffice release featuring
+  * Free Video Calls through an IONOS and EGroupware GmbH sponsored Jitsi server in Frankfurt/Germany
+  * Status: integrated Jitsi video conferencing into Status app by simple double-click on avatar
+  * Addressbook: direct video calls to loged in uses and schedule conferences to contacts
+  * Calendar: allow to schedule a videoconference via Jitsi
+  * Filemanager: allow schools to make home-work available via sharing and collect it again (new HiddenUpload sharing type)
+  * Guacamole: make windows PCs in office available through EGroupware from the outside
+  * OpenIDConnect: added id_token to implicit flow and /jwks endpoint to support eg. Guacamole
+  * OpenIDConnect/OAuth: manage access and display OAuth apps inside EGroupware
+  * EPL: allow specify IP-range as second factor in Admin >> EPL-Function >> Site configuration
+  * Api: If addressbook event column is disabled, disable next / last dates in edit dialog as well.
+  * Calendar: Fix conflict popup opened with an error
+  * Api: Fix missing translations in ACL dialog and when deleting an account
+  * Addressbook: Case insensitive check for vCard BEGIN & END flags fixes lowercase vcards would not import
+  * Bookmarks: Tree view no longer shows bookmarks from sub-categories at every higher tree level
+  * OpenIDConnect: Fix missing translation in delete token confirm
+  * OpenIDConnect: fix error if scopes are specified in a client
+  * Rocketchat: Fix missing translation in Rocket Chat side menu
+  * Rocketchat: Fix server_url is not getting stored/replaced once a wrong url has been stored.
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 09 Apr 2020 11:30:08 +0200
+
 egroupware-docker (19.1.20200318) hardy; urgency=low
 
   * Calendar: initial load speed improvement
