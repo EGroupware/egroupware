@@ -586,14 +586,14 @@ class addressbook_ui extends addressbook_bo
 				'group' => $group,
 				'children' => [
 					'call' => [
-						'caption' => lang('Call'),
+						'caption' => lang('Video Call'),
 						'icon' => 'status/videoconference_call',
 						'allowOnMultiple' => true,
 						'onExecute' => 'javaScript:app.addressbook.videoconference_actionCall',
 						'enabled' => 'javaScript:app.addressbook.videoconference_isUserOnline'
 					],
 					'schedule_call' => [
-						'caption' => lang('Schedule a call'),
+						'caption' => lang('Schedule a video conference'),
 						'icon' => 'calendar',
 						'allowOnMultiple' => true,
 						'onExecute' => 'javaScript:app.addressbook.add_cal',
