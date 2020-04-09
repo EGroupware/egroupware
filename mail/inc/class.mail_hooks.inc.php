@@ -704,6 +704,7 @@ class mail_hooks
 		return [
 			'mail' => [
 				'caption' => 'Mail',
+				'icon' => 'mail/navbar',
 				'allowOnMultiple' => false,
 				'onExecute' => 'javaScript:app.status.handle_actions',
 			]
