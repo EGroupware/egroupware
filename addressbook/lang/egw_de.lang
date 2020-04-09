@@ -96,7 +96,6 @@ business zip code	addressbook	de	PLZ gesch채ftlich
 calendar fields:	addressbook	de	Kalender Felder:
 calendar integration	addressbook	de	Kalender Integration
 calendar uri	addressbook	de	Kalender URI
-call	addressbook	de	Videokonferenz
 can be changed via setup >> configuration	admin	de	Kann 체ber Setup >> Konfiguration ge채ndert werden
 can't create dn %1	addressbook	de	dn %1 kann nicht erstellt werden
 car phone	addressbook	de	Autotelefon
@@ -433,7 +432,7 @@ replacements for inserting contacts into documents	addressbook	de	Platzhalter f�
 required fields *	addressbook	de	unbedingt auszuf체llende Felder *
 role	addressbook	de	Beruf
 room	addressbook	de	Raum
-schedule a call	addressbook	de	Videokonferenz planen
+schedule a video conference	addressbook	de	Videokonferenz planen
 search letter	addressbook	de	Suche nach Buchstaben
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	de	W채hlen Sie ein hochformatiges jpeg Foto. Es wird 60 Pixel breit skaliert.
 select a source address to be used in geolocation routing system	addressbook	de	Legen Sie fest, wie der Startpunkt f체r die Routenplanung gesetzt wird.

@@ -627,7 +627,6 @@ user selectable css file for the calendar setup	calendar	en	User selectable CSS 
 users + groups: inviting both always requires an invite grant	admin	en	Users + groups: inviting both always requires an invite grant
 using already existing event on server.	calendar	en	Using already existing event on server.
 utilities	calendar	en	Utilities
-videoconference	calendar	en	Videoconference
 view exception	calendar	en	View exception
 view series	calendar	en	View series
 view settings	calendar	en	View settings

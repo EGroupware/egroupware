@@ -627,7 +627,6 @@ user selectable css file for the calendar setup	calendar	de	Benutzer können aus
 users + groups: inviting both always requires an invite grant	admin	de	Benutzer + Gruppen: Einladungen beider brauchen eine Freigabe
 using already existing event on server.	calendar	de	Benutze bereits existierenden Termin auf dem Server
 utilities	calendar	de	Zubehör
-videoconference	calendar	de	Videokonferenz
 view exception	calendar	de	Ausnahme anzeigen
 view series	calendar	de	Terminserie anzeigen
 view settings	calendar	de	Einträge anzeigen

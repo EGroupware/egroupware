@@ -96,7 +96,6 @@ business zip code	addressbook	en	Business postal code
 calendar fields:	addressbook	en	Calendar fields:
 calendar integration	addressbook	en	Calendar integration
 calendar uri	addressbook	en	Calendar URI
-call	addressbook	en	Call
 can be changed via setup >> configuration	admin	en	Can be changed via Setup >> Configuration
 can't create dn %1	addressbook	en	Can't create dn %1
 car phone	addressbook	en	Car phone
@@ -433,7 +432,7 @@ replacements for inserting contacts into documents	addressbook	en	Replacements f
 required fields *	addressbook	en	Required fields *
 role	addressbook	en	Occupation
 room	addressbook	en	Room
-schedule a call	addressbook	en	Schedule a call
+schedule a video conference addressbook	en	Schedule a video conference
 search letter	addressbook	en	Search letter
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	en	Select a portrait format jpeg photo. It will be re-sized to 60 pixel width.
 select a source address to be used in geolocation routing system	addressbook	en	Select a source address to be used in GeoLocation routing system

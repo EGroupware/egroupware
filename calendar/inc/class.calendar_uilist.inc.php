@@ -953,7 +953,7 @@ class calendar_uilist extends calendar_ui
 		{
 			$actions['videoconference'] = [
 				'icon' => 'status/videoconference',
-				'caption' => 'Video conference',
+				'caption' => 'Video Conference',
 				'group' => $group,
 				'allowOnMultiple' => false,
 				'disableClass' => 'rowNoView',

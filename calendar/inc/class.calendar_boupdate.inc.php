@@ -1061,7 +1061,7 @@ class calendar_boupdate extends calendar_bo
 						'account_id' => $userid
 					]);
 					$event_arr['videoconference'] = [
-						'field' => lang('Videoconference'),
+						'field' => lang('Video Conference'),
 						'data'  => $details['videoconference'],
 					];
 					// hack to add videoconference-url to ical, only if description was NOT cleared
