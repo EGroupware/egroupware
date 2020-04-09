@@ -769,7 +769,7 @@ var et2_dialog = /** @class */ (function (_super) {
             name: "width",
             type: "string",
             description: "Define width of dialog, the default is auto",
-            "default": 'auto'
+            "default": et2_no_init
         },
         height: {
             name: "height",

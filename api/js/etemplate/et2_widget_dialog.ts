@@ -95,106 +95,106 @@ import {et2_DOMWidget} from "./et2_core_DOMWidget";
  */
 export class et2_dialog extends et2_widget {
     static readonly _attributes: any = {
-        callback: {
-            name: "Callback",
-            type: "js",
-            description: "Callback function is called with the value when the dialog is closed",
-            "default": function (button_id) {
-                egw.debug("log", "Button ID: %d", button_id);
-            }
-        },
-        beforeClose: {
-            name: "before close callback",
-            type: "js",
-            description: "Callback function before dialog is closed, return false to prevent that",
-            "default": function () {
-            }
-        },
-        message: {
-            name: "Message",
-            type: "string",
-            description: "Dialog message (plain text, no html)",
-            "default": "Somebody forgot to set this..."
-        },
-        dialog_type: {
-            name: "Dialog type",
-            type: "integer",
-            description: "To use a pre-defined dialog style, use et2_dialog.ERROR_MESSAGE, INFORMATION_MESSAGE,WARNING_MESSAGE,QUESTION_MESSAGE,PLAIN_MESSAGE constants.  Default is et2_dialog.PLAIN_MESSAGE",
-            "default": 0 //this.PLAIN_MESSAGE
-        },
-        buttons: {
-            name: "Buttons",
-            type: "any",
-            "default": 0, //this.BUTTONS_OK,
-            description: "Buttons that appear at the bottom of the dialog.  You can use the constants et2_dialog.BUTTONS_OK, BUTTONS_YES_NO, BUTTONS_YES_NO_CANCEL, BUTTONS_OK_CANCEL, or pass in an array for full control"
-        },
-        icon: {
-            name: "Icon",
-            type: "string",
-            description: "URL of an icon for the dialog.  If omitted, an icon based on dialog_type will be used.",
-            "default": ""
-        },
-        title: {
-            name: "Title",
-            type: "string",
-            description: "Title for the dialog box (plain text, no html)",
-            "default": ""
-        },
-        modal: {
-            name: "Modal",
-            type: "boolean",
-            description: "Prevent the user from interacting with the page",
-            "default": true
-        },
-        resizable: {
-            name: "Resizable",
-            type: "boolean",
-            description: "Allow the user to resize the dialog",
-            "default": true
-        },
-        value: {
-            "name": "Value",
-            "description": "The (default) value of the dialog.  Use with template.",
-            "type": "any",
-            "default": et2_no_init
-        },
-        template: {
-            "name": "Template",
-            "description": "Instead of displaying a simple message, a full template can be loaded instead.  Set defaults with value.",
-            "type": "string",
-            "default": et2_no_init
-        },
-        minWidth: {
-            name: "minimum width",
-            type: "integer",
-            description: "Define minimum width of dialog",
-            "default": 0
-        },
-        minHeight: {
-            name: "minimum height",
-            type: "integer",
-            description: "Define minimum height of dialog",
-            "default": 0
-        },
-        width: {
-            name: "width",
-            type: "string",
-            description: "Define width of dialog, the default is auto",
-            "default": 'auto'
-        },
-        height: {
-            name: "height",
-            type: "string",
-            description: "Define width of dialog, the default is auto",
-            "default": 'auto'
-        },
-        position: {
-            name: "position",
-            type: "string",
-            description: "Define position of dialog in the main window",
-            default: "center"
-        }
-    };
+		callback: {
+		    name: "Callback",
+		    type: "js",
+		    description: "Callback function is called with the value when the dialog is closed",
+		    "default": function (button_id) {
+				egw.debug("log", "Button ID: %d", button_id);
+		    }
+		},
+		beforeClose: {
+		    name: "before close callback",
+		    type: "js",
+		    description: "Callback function before dialog is closed, return false to prevent that",
+				"default": function () {
+		    }
+		},
+		message: {
+			name: "Message",
+			type: "string",
+			description: "Dialog message (plain text, no html)",
+			"default": "Somebody forgot to set this..."
+		},
+		dialog_type: {
+			name: "Dialog type",
+			type: "integer",
+			description: "To use a pre-defined dialog style, use et2_dialog.ERROR_MESSAGE, INFORMATION_MESSAGE,WARNING_MESSAGE,QUESTION_MESSAGE,PLAIN_MESSAGE constants.  Default is et2_dialog.PLAIN_MESSAGE",
+			"default": 0 //this.PLAIN_MESSAGE
+		},
+		buttons: {
+			name: "Buttons",
+			type: "any",
+			"default": 0, //this.BUTTONS_OK,
+			description: "Buttons that appear at the bottom of the dialog.  You can use the constants et2_dialog.BUTTONS_OK, BUTTONS_YES_NO, BUTTONS_YES_NO_CANCEL, BUTTONS_OK_CANCEL, or pass in an array for full control"
+		},
+		icon: {
+			name: "Icon",
+			type: "string",
+			description: "URL of an icon for the dialog.  If omitted, an icon based on dialog_type will be used.",
+			"default": ""
+		},
+		title: {
+			name: "Title",
+			type: "string",
+			description: "Title for the dialog box (plain text, no html)",
+			"default": ""
+		},
+		modal: {
+			name: "Modal",
+			type: "boolean",
+			description: "Prevent the user from interacting with the page",
+			"default": true
+		},
+		resizable: {
+			name: "Resizable",
+			type: "boolean",
+			description: "Allow the user to resize the dialog",
+			"default": true
+		},
+		value: {
+			"name": "Value",
+			"description": "The (default) value of the dialog.  Use with template.",
+			"type": "any",
+			"default": et2_no_init
+		},
+		template: {
+			"name": "Template",
+			"description": "Instead of displaying a simple message, a full template can be loaded instead.  Set defaults with value.",
+			"type": "string",
+			"default": et2_no_init
+		},
+		minWidth: {
+			name: "minimum width",
+			type: "integer",
+			description: "Define minimum width of dialog",
+			"default": 0
+		},
+		minHeight: {
+			name: "minimum height",
+			type: "integer",
+			description: "Define minimum height of dialog",
+			"default": 0
+		},
+		width: {
+		    name: "width",
+		    type: "string",
+		    description: "Define width of dialog, the default is auto",
+		   "default": et2_no_init
+		},
+		height: {
+			name: "height",
+			type: "string",
+			description: "Define width of dialog, the default is auto",
+			"default": 'auto'
+		},
+		position: {
+			name: "position",
+			type: "string",
+			description: "Define position of dialog in the main window",
+			default: "center"
+		}
+	};
 
     /**
      * Details for dialog type options
