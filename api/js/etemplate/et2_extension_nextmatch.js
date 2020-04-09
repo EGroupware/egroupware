@@ -847,14 +847,18 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // If a custom field column was added, throw away cache to deal with
         // efficient apps that didn't send all custom fields in the first request
         var cf_added = jQuery(changed).filter(jQuery(custom_fields)).length > 0;
-        // Save visible columns
-        // 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
-        this.egw().set_preference(app, pref, this.activeFilters.selectcols.join(","), 
-        // Use callback after the preference gets set to trigger refresh, in case app
-        // isn't looking at selectcols and just uses preference
-        cf_added ? jQuery.proxy(function () { if (this.controller)
-            this.controller.update(true); }, this) : null);
-        // Save adjusted column sizes
+        // Save visible columns and sizes if selectcols is not emtpy (an empty selectcols actually deletes the prefrence)
+        if (!jQuery.isEmptyObject(this.activeFilters.selectcols)) {
+            // 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
+            this.egw().set_preference(app, pref, this.activeFilters.selectcols.join(","), 
+            // Use callback after the preference gets set to trigger refresh, in case app
+            // isn't looking at selectcols and just uses preference
+            cf_added ? jQuery.proxy(function () { if (this.controller)
+                this.controller.update(true); }, this) : null);
+            // Save adjusted column sizes and inform user about it
+            this.egw().set_preference(app, pref + "-size", colSize);
+            this.egw().message(this.egw().lang("Saved column sizes to preferences."));
+        }
         this.egw().set_preference(app, pref + "-size", colSize);
         // No significant change (just normal columns shown) and no need to wait,
         // but the grid still needs to be redrawn if a custom field was removed because
