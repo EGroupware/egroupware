@@ -92,6 +92,7 @@ class timesheet_import_csv extends importexport_basic_import_csv
 	{
 		// Reset BO data for new record
 		$this->bo->data = array();
+		$_definition = $this->definition;
 		
 		// Automatically handle text Api\Categories without explicit Api\Translation
 		foreach(array('ts_status','cat_id') as $field)
@@ -230,9 +231,10 @@ class timesheet_import_csv extends importexport_basic_import_csv
 				{
 					// exists
 					case 'exists' :
-						if($record->$condition['string'])
+						$key = $condition['string'];
+						if($record->$key)
 						{
-							$results = $this->bo->search(array($condition['string'] => $record->$condition['string']));
+							$results = $this->bo->search(array($condition['string'] => $record->$key));
 						}
 
 						if ( is_array( $results ) && count( array_keys( $results )) >= 1 )
