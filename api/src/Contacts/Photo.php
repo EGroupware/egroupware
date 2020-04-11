@@ -113,7 +113,7 @@ class Photo
 	{
 		if (!is_array($this->contact))
 		{
-			return 'https://gravatar.com/'.md5(trim(strtolower($this->contact)));
+			return 'https://www.gravatar.com/avatar/'.md5(trim(strtolower($this->contact)));
 		}
 		return Api\Framework::getUrl(Api\Egw::link('/api/anon_lavatar.php', [
 			'firstname' => $this->contact['n_given'],
