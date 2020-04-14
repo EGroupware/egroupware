@@ -6,7 +6,6 @@
  * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
  * @package api
  * @subpackage authentication
- * @version $Id$
  */
 
 namespace EGroupware\Api\Auth;
@@ -17,9 +16,14 @@ use phpCAS;
 /**
  * Authentication based on CAS (Central Authetication Service)
  */
-class Cas implements Backend
+class Cas implements BackendSSO
 {
 	var $previous_login = -1;
+
+	function __construct()
+	{
+		require_once('CAS/CAS.php');
+	}
 
 	/**
 	 * authentication against CAS
@@ -69,5 +73,69 @@ class Cas implements Backend
 	{
 		/* Not allowed */
 		return false;
+	}
+
+	/**
+	 * Attempt SSO login
+	 *
+	 * @return string sessionid on successful login, null otherwise
+	 */
+	function login()
+	{
+		ob_end_clean();
+
+		//phpCAS::setDebug('/var/log/log_phpcas.php');
+
+		if($GLOBALS['egw_info']['server']['cas_authentication_mode'] == 'Proxy')
+		{
+			phpCAS::proxy(CAS_VERSION_2_0,
+				$GLOBALS['egw_info']['server']['cas_server_host_name'],
+				(int) $GLOBALS['egw_info']['server']['cas_server_port'],
+				$GLOBALS['egw_info']['server']['cas_server_uri'] );
+		}
+		else
+		{
+			phpCAS::client(CAS_VERSION_2_0,
+				$GLOBALS['egw_info']['server']['cas_server_host_name'],
+				(int) $GLOBALS['egw_info']['server']['cas_server_port'],
+				$GLOBALS['egw_info']['server']['cas_server_uri'] );
+		}
+
+		if($GLOBALS['egw_info']['server']['cas_ssl_validation'] == 'PEMCertificate')
+		{
+			// Set the certificate of the CAS server (PEM Certificate)
+			phpCAS::setCasServerCert($GLOBALS['egw_info']['server']['cas_cert']);
+		}
+		elseif($GLOBALS['egw_info']['server']['cas_ssl_validation'] == 'CACertificate')
+		{
+			// Set the CA certificate of the CAS server
+			phpCAS::setCasServerCACert($GLOBALS['egw_info']['server']['cas_cert']);
+		}
+		elseif($GLOBALS['egw_info']['server']['cas_ssl_validation'] == 'No')
+		{
+			// no SSL validation for the CAS server
+			phpCAS::setNoCasServerValidation();
+		}
+
+		phpCAS::forceAuthentication();
+
+		ob_start();
+
+		$login = phpCAS::getUser();
+		$password = phpCAS::retrievePT("imap://".$GLOBALS['egw_info']['server']['mail_server'],$err_code,$output);
+
+		return $GLOBALS['egw']->session->create($login,$password,'text');
+	}
+
+	/**
+	 * Logout SSO system
+	 */
+	function logout()
+	{
+		phpCAS::client(CAS_VERSION_2_0,
+			$GLOBALS['egw_info']['server']['cas_server_host_name'],
+			(int) $GLOBALS['egw_info']['server']['cas_server_port'],
+			$GLOBALS['egw_info']['server']['cas_server_uri'] );
+		phpCAS::logout(array('url'=>$GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=1&domain='.$GLOBALS['egw_info']['user']['domain']));
 	}
 }

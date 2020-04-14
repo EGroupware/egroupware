@@ -51,56 +51,10 @@ if(isset($GLOBALS['sitemgr_info']) && $GLOBALS['egw_info']['user']['userid'] == 
 	}
 }
 
-// CAS :
-if($GLOBALS['egw_info']['server']['auth_type'] == 'cas')
+// SSO login: CAS, SAML, ...
+if (($GLOBALS['sessionid'] = Api\Auth::login()))
 {
-	ob_end_clean();
-
-	require_once('CAS/CAS.php');
-
-	//phpCAS::setDebug('/var/log/log_phpcas.php');
-
-	if($GLOBALS['egw_info']['server']['cas_authentication_mode'] == 'Proxy')
-	{
-		phpCAS::proxy(CAS_VERSION_2_0,
-			$GLOBALS['egw_info']['server']['cas_server_host_name'],
-			(int) $GLOBALS['egw_info']['server']['cas_server_port'],
-			$GLOBALS['egw_info']['server']['cas_server_uri'] );
-	}
-	else
-	{
-		phpCAS::client(CAS_VERSION_2_0,
-			$GLOBALS['egw_info']['server']['cas_server_host_name'],
-			(int) $GLOBALS['egw_info']['server']['cas_server_port'],
-			$GLOBALS['egw_info']['server']['cas_server_uri'] );
-	}
-
-	if($GLOBALS['egw_info']['server']['cas_ssl_validation'] == 'PEMCertificate')
-	{
-		// Set the certificate of the CAS server (PEM Certificate)
-		phpCAS::setCasServerCert($GLOBALS['egw_info']['server']['cas_cert']);
-	}
-	elseif($GLOBALS['egw_info']['server']['cas_ssl_validation'] == 'CACertificate')
-	{
-		// Set the CA certificate of the CAS server
-		phpCAS::setCasServerCACert($GLOBALS['egw_info']['server']['cas_cert']);
-	}
-	elseif($GLOBALS['egw_info']['server']['cas_ssl_validation'] == 'No')
-	{
-		// no SSL validation for the CAS server
-		phpCAS::setNoCasServerValidation();
-	}
-
-	phpCAS::forceAuthentication();
-
-	ob_start();
-
-	$login = phpCAS::getUser();
-	$password = phpCAS::retrievePT("imap://".$GLOBALS['egw_info']['server']['mail_server'],$err_code,$output);
-	$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login,$password,'text');
-
-	/* set auth_cookie */
-	$GLOBALS['egw']->redirect_link($forward,$extra_vars);
+	$GLOBALS['egw']->redirect_link($forward, $extra_vars);
 }
 else
 {

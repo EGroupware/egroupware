@@ -86,6 +86,47 @@ class Auth
 	}
 
 	/**
+	 * Attempt a SSO login
+	 *
+	 * @return string sessionid on successful login or null
+	 * @throws Exception\AssertionFailed
+	 */
+	static function login()
+	{
+		$backend = self::backend();
+
+		return $backend instanceof  Auth\BackendSSO ? $backend->login() : null;
+	}
+
+	/**
+	 * Attempt SSO logout
+	 *
+	 * @return null
+	 * @throws Exception\AssertionFailed
+	 */
+	static function logout()
+	{
+		$backend = self::backend();
+
+		return $backend instanceof Auth\BackendSSO ? $backend->logout() : null;
+	}
+
+	/**
+	 * Return (which) parts of session needed by current auth backend
+	 *
+	 * If this returns any key(s), the session is NOT destroyed by Api\Session::destroy,
+	 * just everything but the keys is removed.
+	 *
+	 * @return array of needed keys in session
+	 */
+	static function needSession()
+	{
+		$backend = self::backend();
+
+		return method_exists($backend, 'needSession') ? $backend->needSession() : [];
+	}
+
+	/**
 	 * check if users are supposed to change their password every x sdays, then check if password is of old age
 	 * or the devil-admin reset the users password and forced the user to change his password on next login.
 	 *

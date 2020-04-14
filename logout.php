@@ -37,7 +37,7 @@ elseif(strpos($redirectTarget, '[?&]cd=') !== false)
 	$redirectTarget = preg_replace('/([?&])cd=[^&]+/', '$1cd=1', $redirectTarget);
 }
 
-if($verified)
+if ($verified)
 {
 	// remove remember me cookie on explicit logout, unless it is a second factor
 	if ($GLOBALS['egw']->session->removeRememberMeTokenOnLogout())
@@ -52,16 +52,8 @@ Api\Session::egw_setcookie('sessionid');
 Api\Session::egw_setcookie('kp3');
 Api\Session::egw_setcookie('domain');
 
-if($GLOBALS['egw_info']['server']['auth_type'] == 'cas')
-{
-	require_once('CAS/CAS.php');
-
-	phpCAS::client(CAS_VERSION_2_0,
-								$GLOBALS['egw_info']['server']['cas_server_host_name'],
-								(int) $GLOBALS['egw_info']['server']['cas_server_port'],
-								$GLOBALS['egw_info']['server']['cas_server_uri'] );
-	phpCAS::logout(array('url'=>$GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=1&domain='.$GLOBALS['egw_info']['user']['domain']));
-}
+// SSO Logout (does not return for SSO systems)
+Api\Auth::logout();
 
 // $GLOBALS['egw']->redirect($redirectTarget);
 ?>
