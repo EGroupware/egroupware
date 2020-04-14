@@ -671,7 +671,7 @@ class Sharing
 		{
 			throw new Exception\WrongParameter('Missing share path.  Unable to create share.');
 		}
-		$extra = $extra + array(
+		$extra = (array)$extra + array(
 			'share_writable' => $writable,
 			'include_files'  => $files
 		);
