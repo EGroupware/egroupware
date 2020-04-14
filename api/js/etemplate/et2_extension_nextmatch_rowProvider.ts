@@ -172,7 +172,15 @@ export class et2_nextmatch_rowProvider
 			{
 				// Use the previously compiled node function to get the node
 				// from the entry
-				nodes[j] = entry.nodeFuncs[j](row);
+				try
+				{
+					nodes[j] = entry.nodeFuncs[j](row);
+				}
+				catch (e)
+				{
+					debugger;
+					continue;
+				}
 			}
 
 			// Set the array managers first

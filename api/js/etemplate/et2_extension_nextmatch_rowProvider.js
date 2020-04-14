@@ -154,7 +154,13 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
             for (var j = 0; j < nodes.length; j++) {
                 // Use the previously compiled node function to get the node
                 // from the entry
-                nodes[j] = entry.nodeFuncs[j](row);
+                try {
+                    nodes[j] = entry.nodeFuncs[j](row);
+                }
+                catch (e) {
+                    debugger;
+                    continue;
+                }
             }
             // Set the array managers first
             entry.widget._mgrs = mgrs;
