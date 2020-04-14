@@ -72,6 +72,10 @@ class timesheet_egw_record implements importexport_iface_egw_record
 		$this->timesheetentry[$_attribute_name] = $data;
 	}
 
+	public function __unset($_attribute_name)
+	{
+		unset($this->timesheetentry[$_attribute_name]);
+	}
 	/**
 	 * converts this object to array.
 	 * @abstract We need such a function cause PHP5
