@@ -486,7 +486,7 @@ var et2_nextmatch_rowWidget = /** @class */ (function (_super) {
             this._widgets[i] = _widgets[i].clone(this);
             this._widgets[i].loadingFinished();
             // Set column alignment from widget
-            if (this._widgets[i].align) {
+            if (this._widgets[i].align && this._row.childNodes[row_id]) {
                 this._row.childNodes[row_id].align = this._widgets[i].align;
             }
             row_id++;
@@ -504,7 +504,7 @@ var et2_nextmatch_rowWidget = /** @class */ (function (_super) {
             // Disabled columns might be missing widget - skip it
             if (!this._widgets[i])
                 continue;
-            if (this._widgets[i] == _sender) {
+            if (this._widgets[i] == _sender && this._row.childNodes[row_id]) {
                 return this._row.childNodes[row_id].childNodes[0]; // Return the i-th td tag
             }
             row_id++;
