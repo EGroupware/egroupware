@@ -1291,7 +1291,7 @@ export class et2_vfsSelect extends et2_inputWidget
 				image: _data.content.mode.match(/saveas|select-dir/) ? "save" : this.options.button_icon
 			}
 		];
-		let extra_buttons_action;
+		let extra_buttons_action = {};
 
 		if (this.options.extra_buttons && this.options.method)
 		{

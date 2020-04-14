@@ -1063,7 +1063,7 @@ var et2_vfsSelect = /** @class */ (function (_super) {
                 image: _data.content.mode.match(/saveas|select-dir/) ? "save" : this.options.button_icon
             }
         ];
-        var extra_buttons_action;
+        var extra_buttons_action = {};
         if (this.options.extra_buttons && this.options.method) {
             for (var i = 0; i < this.options.extra_buttons.length; i++) {
                 delete (this.options.extra_buttons[i]['click']);
