@@ -316,11 +316,29 @@ class Sharing extends \EGroupware\Api\Sharing
 				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
 			}
 
-			// We don't allow sharing links, share target instead
+			// We don't allow sharing paths that contain links, resolve to target instead
 			if(($target = Vfs::readlink($path)))
 			{
 				$path = $target;
 			}
+			$check = $path;
+			do
+			{
+				if(($delinked = Vfs::readlink($check)))
+				{
+					if($delinked[strlen($delinked)-1] == '/') $check .='/';
+					$path = str_replace($check, $delinked, $path);
+					if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
+					{
+						$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
+					}
+					$check = $path;
+				}
+				else
+				{
+					$check = Vfs::dirname($check);
+				}
+			} while ($check && $check != '/');
 
 			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
 			{

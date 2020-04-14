@@ -262,6 +262,28 @@ class SharingTest extends SharingBase
 		$this->assertEquals($file, $created_share['share_path']);
 	}
 
+	public function testShareFileInsideSymlinkDirectory()
+	{
+		$target = Vfs::get_home_dir();
+
+		$this->files = $this->addFiles($target);
+		$target_file = $target.'/sub_dir/'.'subdir_test_file.txt';
+
+		// Make symlink
+		$this->files[] = $symlink = $target.'/symlinked_dir/';
+		$file = $symlink.'subdir_test_file.txt';
+		if(Vfs::file_exists($symlink)) Vfs::remove($symlink);
+		$this->assertTrue(
+			Vfs::symlink($target.'/sub_dir/', $symlink),
+			"Unable to create symlink $symlink => $target/sub_dir/"
+		);
+
+		// Create share
+		$this->shares[] = $created_share = Sharing::create('', $file, Sharing::READONLY, '', '');
+
+		$this->assertEquals(Vfs::PREFIX . $target_file, $created_share['share_path']);
+	}
+
 	/**
 	 * Test that a share of a single file gives the file (uses WebDAV)
 	 */
