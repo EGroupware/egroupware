@@ -432,7 +432,7 @@ class preferences_hooks
 					'pre' => lang("Preformatted"),
 					'customparagraph' => lang("Custom Paragraph")
 				),
-				'help'   => 'Automatically start with this format block.<br/><b>Custom Paragraph</b> adds less line space between new lines.',
+				'help'   => 'Automatically start with this format block. Custom Paragraph adds less line space between new lines.',
 				'xmlrpc' => True,
 				'admin'  => false,
 				'default' => 'p'
