@@ -119,7 +119,7 @@ class importexport_wizard_basic_export_csv
 		{
 			$content['text'] = $this->steps['wizard_step30'];
 			$content['step'] = 'wizard_step30';
-			$this->export_fields += array('all_custom_fields' => 'All custom fields');
+			$this->export_fields += array('all_custom_fields' => lang('All custom fields'));
 			$sel_options['field'] = $this->export_fields;
 			$preserv = $content;
 			unset ($preserv['button']);
