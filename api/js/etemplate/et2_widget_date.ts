@@ -1503,12 +1503,12 @@ export class et2_date_range extends et2_inputWidget
 		// or Date objects
 		{
 			value: 'Today',
-			label: 'Today',
+			label: egw.lang('Today'),
 			from(date) {return date;},
 			to(date) {return date;}
 		},
 		{
-			label: 'Yesterday',
+			label: egw.lang('Yesterday'),
 			value: 'Yesterday',
 			from(date) {
 				date.setUTCDate(date.getUTCDate() - 1);
@@ -1517,7 +1517,7 @@ export class et2_date_range extends et2_inputWidget
 			to: ''
 		},
 		{
-			label: 'This week',
+			label: egw.lang('This week'),
 			value: 'This week',
 			from(date) {return egw.week_start(date);},
 			to(date) {
@@ -1526,7 +1526,7 @@ export class et2_date_range extends et2_inputWidget
 			}
 		},
 		{
-			label: 'Last week',
+			label: egw.lang('Last week'),
 			value: 'Last week',
 			from(date) {
 				var d = egw.week_start(date);
@@ -1539,7 +1539,7 @@ export class et2_date_range extends et2_inputWidget
 			}
 		},
 		{
-			label: 'This month',
+			label: egw.lang('This month'),
 			value: 'This month',
 			from(date)
 			{
@@ -1554,7 +1554,7 @@ export class et2_date_range extends et2_inputWidget
 			}
 		},
 		{
-			label: 'Last month',
+			label: egw.lang('Last month'),
 			value: 'Last month',
 			from(date)
 			{
@@ -1570,7 +1570,7 @@ export class et2_date_range extends et2_inputWidget
 			}
 		},
 		{
-			label: 'Last 3 months',
+			label: egw.lang('Last 3 months'),
 			value: 'Last 3 months',
 			from(date)
 			{
@@ -1590,7 +1590,7 @@ export class et2_date_range extends et2_inputWidget
 		'Last quarter'=> array(0,-4,0,0, 0,-4,0,0),     // Just a marker
 		*/
 		{
-			label: 'This year',
+			label: egw.lang('This year'),
 			value: 'This year',
 			from(d) {
 				d.setUTCMonth(0);
@@ -1604,7 +1604,7 @@ export class et2_date_range extends et2_inputWidget
 			}
 		},
 		{
-			label: 'Last year',
+			label: egw.lang('Last year'),
 			value: 'Last year',
 			from(d) {
 				d.setUTCMonth(0);

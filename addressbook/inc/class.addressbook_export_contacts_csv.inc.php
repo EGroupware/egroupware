@@ -455,7 +455,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		}
 		$filters['owner'] = array(
 			'name'		=> 'owner',
-			'label'		=> 'addressbook',
+			'label'		=> lang('addressbook'),
 			'type'		=> 'select',
 			'rows'		=> 5,
 			'tags'		=> true,

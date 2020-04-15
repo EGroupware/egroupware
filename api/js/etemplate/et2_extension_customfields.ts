@@ -225,13 +225,13 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				if(!field.type) field.type = 'text";';
 				const setup_function = '_setup_' + (apps[field.type] ? 'link_entry' : field.type.replace("-", "_"));
 
-				const attrs: any = {
+				const attrs: any = jQuery.extend({},this.options[field_name] ? this.options[field_name] : {}, {
 					'id': id,
 					'statustext': field.help,
 					'needed': field.needed,
 					'readonly': this.getArrayMgr("readonlys").isReadOnly(id, null, this.options.readonly),
 					'value': this.options.value[et2_customfields_list.PREFIX + field_name]
-				};
+				});
 				// Can't have a required readonly, it will warn & be removed later, so avoid the warning
 				if(attrs.readonly === true) delete attrs.needed;
 
