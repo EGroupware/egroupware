@@ -1077,7 +1077,7 @@ class calendar_ical extends calendar_boupdate
 
 		// hack to fix iCalendar exporting EXDATE always postfixed with a Z
 		// EXDATE can have multiple values and therefore be folded into multiple lines
-		return preg_replace_callback("/\nEXDATE;TZID=[^:]+:[0-9TZ \n,]+/", function($matches)
+		return preg_replace_callback("/\nEXDATE;TZID=[^:]+:[0-9TZ \r\n,]+/", function($matches)
 			{
 				return preg_replace('/([0-9 ])Z/', '$1', $matches[0]);
 			}, $retval);
