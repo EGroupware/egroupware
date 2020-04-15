@@ -1420,12 +1420,12 @@ jQuery.extend(et2_date_range,
 		// or Date objects
 		{
 			value: 'Today',
-			label: 'Today',
+			label: egw.lang('Today'),
 			from: function(date) {return date;},
 			to: function(date) {return date;}
 		},
 		{
-			label: 'Yesterday',
+			label: egw.lang('Yesterday'),
 			value: 'Yesterday',
 			from: function(date) {
 				date.setUTCDate(date.getUTCDate() - 1);
@@ -1434,7 +1434,7 @@ jQuery.extend(et2_date_range,
 			to: ''
 		},
 		{
-			label: 'This week',
+			label: egw.lang('This week'),
 			value: 'This week',
 			from: function(date) {return egw.week_start(date);},
 			to: function(date) {
@@ -1443,7 +1443,7 @@ jQuery.extend(et2_date_range,
 			}
 		},
 		{
-			label: 'Last week',
+			label: egw.lang('Last week'),
 			value: 'Last week',
 			from: function(date) {
 				var d = egw.week_start(date);
@@ -1456,7 +1456,7 @@ jQuery.extend(et2_date_range,
 			}
 		},
 		{
-			label: 'This month',
+			label: egw.lang('This month'),
 			value: 'This month',
 			from: function(date)
 			{
@@ -1471,7 +1471,7 @@ jQuery.extend(et2_date_range,
 			}
 		},
 		{
-			label: 'Last month',
+			label: egw.lang('Last month'),
 			value: 'Last month',
 			from: function(date)
 			{
@@ -1487,7 +1487,7 @@ jQuery.extend(et2_date_range,
 			}
 		},
 		{
-			label: 'Last 3 months',
+			label: egw.lang('Last 3 months'),
 			value: 'Last 3 months',
 			from: function(date)
 			{
@@ -1507,7 +1507,7 @@ jQuery.extend(et2_date_range,
 		'Last quarter'=> array(0,-4,0,0, 0,-4,0,0),     // Just a marker
 		*/
 		{
-			label: 'This year',
+			label: egw.lang('This year'),
 			value: 'This year',
 			from: function(d) {
 				d.setUTCMonth(0);
@@ -1521,7 +1521,7 @@ jQuery.extend(et2_date_range,
 			}
 		},
 		{
-			label: 'Last year',
+			label: egw.lang('Last year'),
 			value: 'Last year',
 			from: function(d) {
 				d.setUTCMonth(0);

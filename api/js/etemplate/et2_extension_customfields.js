@@ -215,13 +215,13 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 				if(!field.type) field.type = 'text";'
 				var setup_function = '_setup_'+(apps[field.type] ? 'link_entry' : field.type.replace("-","_"));
 
-				var attrs = {
+				var attrs = jQuery.extend({},this.options[field_name] ? this.options[field_name] : {}, {
 					'id': 		id,
 					'statustext':	field.help,
 					'needed':	field.needed,
 					'readonly':	this.getArrayMgr("readonlys").isReadOnly(id, null, this.options.readonly),
 					'value':	this.options.value[this.prefix+field_name]
-				};
+				});
 				// Can't have a required readonly, it will warn & be removed later, so avoid the warning
 				if(attrs.readonly === true) delete attrs.needed;
 
