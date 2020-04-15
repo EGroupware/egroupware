@@ -16,6 +16,7 @@ add an additional condition	importexport	en	Add an additional condition
 addressbook csv import	importexport	en	Addressbook CSV Import
 addressbook vcard import	importexport	en	Addressbook vCard import
 admin disabled exporting	importexport	en	Admin disabled exporting
+all custom fields	importexport	en	All custom fields
 all encodings	importexport	en	All encodings
 all users	importexport	en	all users
 allowed users	importexport	en	Allowed users

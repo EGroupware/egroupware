@@ -16,6 +16,7 @@ add an additional condition	importexport	de	Eine zusätzliche Bedingung hinzufü
 addressbook csv import	importexport	de	Adressen per CSV Importieren
 addressbook vcard import	importexport	de	Adressen per vCard Importieren
 admin disabled exporting	importexport	de	Ihr Administrator hat den Export deaktiviert
+all custom fields	importexport	de	Alle benutzerdefinierten Felder
 all encodings	importexport	de	Alle Enkodierungen
 all users	importexport	de	Alle Benutzer
 allowed users	importexport	de	Erlaubte Benutzer
