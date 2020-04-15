@@ -402,7 +402,7 @@ export class et2_description extends expose(class et2_description extends et2_ba
 					tooltipClass: "et2_email_popup",
 					content()
 					{
-						return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="'+egw.lang(widget.options.hover_action_title)+'"><img src="'
+						return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="'+widget.egw().lang(widget.options.hover_action_title)+'"><img src="'
 								+egw.image("edit") +'"/></a>')
 							.on('click', function() {
 								widget.options.hover_action.call(self, self.widget, content);
