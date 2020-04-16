@@ -1361,6 +1361,7 @@ the following document-types are supported:	preferences	de	Im Moment werden die 
 the mail server returned	common	de	Der E-Mail-Server liefert zurück
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	de	Es gibt schon einen System Benutzer mit dem selben Namen. Die Benutzer sollten nicht die gleichen Namen haben, wie die Systembenutzer.
 they will be sub-folders in users home (%1 attribute).	common	de	Diese werden Unterordner im Homeverzeichnis des Benutzers (%1 Attribute).
+this feature is only available in epl version.	common	de	diese Funktion ist nur in der EPL-Version verfügbar.
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
 this text gets displayed if the input-field is empty and has no focus (blur)	common	de	dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	de	Hiermit werden die Toolbar-Einstellungen für alle Benutzer zurückgesetzt und auf die konfigurierten Standardeinstellungen gesetzt.

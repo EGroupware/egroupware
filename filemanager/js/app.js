@@ -991,11 +991,12 @@ var filemanagerAPP = /** @class */ (function (_super) {
             this.egw.open_link('/index.php?menuaction=stylite.stylite_filemanager.upload&path=' + this.get_path(), '_blank', '670x320');
         }
         else {
+            // This is shown if stylite code is there, but the app is not available
             et2_dialog.show_dialog(function (_button) {
                 if (_button == et2_dialog.YES_BUTTON)
                     window.open('http://www.egroupware.org/EPL', '_blank');
                 return true;
-            }, this.egw.lang('File a file is only available with an EPL subscription.') + "\n\n" +
+            }, this.egw.lang('this feature is only available in epl version.') + "\n\n" +
                 this.egw.lang('You can use regular upload [+] button to upload files.') + "\n\n" +
                 this.egw.lang('Do you want more information about EPL subscription?'), this.egw.lang('File a file'), undefined, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
         }
