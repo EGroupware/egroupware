@@ -141,7 +141,7 @@ class Ldap implements Backend
 				{
 					$matches = null;
 					// try to query password from ldap server (might fail because of ACL) and check if we need to migrate the hash
-					if (($sri = ldap_search($ldap, $userDN,"(objectclass=*)", array('userPassword'))) &&
+					if (($sri = @ldap_search($ldap, $userDN,"(objectclass=*)", array('userPassword'))) &&
 						($values = ldap_get_entries($ldap, $sri)) && isset($values[0]['userpassword'][0]) &&
 						($type = preg_match('/^{(.+)}/',$values[0]['userpassword'][0],$matches) ? strtolower($matches[1]) : 'plain') &&
 						// for crypt use Api\Auth::crypt_compare to detect correct sub-type, strlen("{crypt}")=7
@@ -189,8 +189,8 @@ class Ldap implements Backend
 		{
 			$filter = "(&$filter(objectclass=posixaccount))";
 		}
-		$sri = ldap_search($ldap, $GLOBALS['egw_info']['server']['ldap_context'], $filter, $attributes);
-		$allValues = ldap_get_entries($ldap, $sri);
+		$sri = @ldap_search($ldap, $GLOBALS['egw_info']['server']['ldap_context'], $filter, $attributes);
+		$allValues = $sri ? ldap_get_entries($ldap, $sri) : [];
 
 		if ($allValues['count'] > 0)
 		{
