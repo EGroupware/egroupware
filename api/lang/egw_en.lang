@@ -553,6 +553,7 @@ file %1 has no content in physical filesystem %2 --> failed to remove file!	admi
 file %1 has no content in physical filesystem %2 --> file removed!	admin	en	File %1 has no content in physical filesystem %2 --> file removed!
 file %1 has no content in physical filesystem %2!	admin	en	File %1 has no content in physical filesystem %2!
 file '%1' not found!	common	en	File '%1' not found!
+file a file	common	en	File a file
 file contains more than one etemplate, last one is shown !!!	common	en	File contains more than one eTemplate, last one is shown!
 file information	common	en	File information
 file is of wrong type (%1 != %2)!	common	en	File is wrong type (%1 != %2)!
@@ -1358,6 +1359,7 @@ the following document-types are supported:	preferences	en	The following documen
 the mail server returned	common	en	The mail server returned
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	en	There already is a system user with this name. Please, select another name.
 they will be sub-folders in users home (%1 attribute).	common	en	They will be sub-folders in users home (%1 attribute).
+this feature is only available in epl version.	common	en	This feature is only available in EPL version.
 this name has been used already	common	en	This name has been used already!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	en	Text gets displayed if the input field is empty and has no focus (blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	en	This will reset toolbar preferences for all users and set them to configured default prefs.
