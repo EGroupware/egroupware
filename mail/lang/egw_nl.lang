@@ -2,7 +2,7 @@
 %1 is not writable by you!	mail	nl	%1 is NIET door uw te bewerken
 %1 mails selected	mail	nl	%1 bericht(en) geselcteerd
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	nl	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions.
-seive_edit_instructions	mail	nl	*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
+sieve_edit_instructions	mail	nl	*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 (leave empty for no quota)	mail	nl	(laat leeg indien geen quota)
 (no subject)	mail	nl	(geen onderwerp)
 (not connected)	mail	nl	(niet verbonden)
