@@ -3073,8 +3073,8 @@ class addressbook_ui extends addressbook_bo
 		// configure search options
 		$sel_options['owner'] = $this->get_addressbooks(Acl::READ,lang('all'));
 		$sel_options['operator'] =  array(
-			'AND' => 'AND',
-			'OR' => 'OR',
+			'AND' => lang('AND'),
+			'OR' => lang('OR'),
 		);
 		$sel_options['meth_select'] = array(
 			'%'		=> lang('contains'),
