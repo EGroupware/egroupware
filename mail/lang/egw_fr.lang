@@ -4,7 +4,7 @@
 %1 more	mail	fr	%1 plus
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	fr	(*) Veuillez considérer que le fait d'envoyer à plusieurs destinataires peut ne pas fonctionner selon la limite définie par le serveur. Veuillez contacter votre administrateur pour plus d'informations.
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	fr	(*) des caractères de remplacement (*,?) peuvent être utilisés.
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash (\) (e.g. \!)	mail	fr	(*) des caractères de remplacement (*,?) peuvent être utilisés.
+seive_edit_instructions	mail	fr	(*) des caractères de remplacement (*,?) peuvent être utilisés.
 (leave empty for no quota)	mail	fr	(laisser vide pour ne ne pas mettre de quota)
 (no subject)	mail	fr	Pas de sujet
 (not connected)	mail	fr	(non connecté)

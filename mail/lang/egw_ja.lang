@@ -8,7 +8,7 @@ st.	mail	ja	状態
 %1 mails selected	mail	ja	%1 件のメールが選択済み
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	ja	(*) 転送先アドレス数が制限値を越える可能性があるため、複数宛先の転送は失敗する恐れがあります。多くのサーバーでは転送先は 4 個までに制限されています。詳細はサーバー管理者にお問い合わせ下さい。
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	ja	(*) ワイルドカード (*,?) を使用できます。文字 * や ? とマッチするには、バックスラッシュ（\）でエスケープする必要があります。正規表現を使う場合は、ワイルドカードでなく正規表現を使用してください。
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash (\) (e.g. \!)	mail	ja	(*) ワイルドカード (*,?) を使用できます。文字 * や ? とマッチするには、バックスラッシュ（\）でエスケープする必要があります。正規表現を使う場合は、ワイルドカードでなく正規表現を使用してください。論理否定の目的でない行頭のエクスクラメーション記号（!）をエスケープする場合は、エスケープした正規表現（\!）を使用してください。
+seive_edit_instructions	mail	ja	(*) ワイルドカード (*,?) を使用できます。文字 * や ? とマッチするには、バックスラッシュ（\）でエスケープする必要があります。正規表現を使う場合は、ワイルドカードでなく正規表現を使用してください。論理否定の目的でない行頭のエクスクラメーション記号（!）をエスケープする場合は、エスケープした正規表現（\!）を使用してください。
 (leave empty for no quota)	mail	ja	（空欄にするとクォータ設定無し）
 (no subject)	mail	ja	(件名無し)
 (not connected)	mail	ja	(接続されていません)
