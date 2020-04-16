@@ -129,7 +129,7 @@ function egwDragActionImplementation()
 				var restRows = pseudoNumRows - maxRows;
 				if (restRows)
 				{
-					moreRow.text((pseudoNumRows - maxRows) +' '+egw.lang('more %1 selected ...', itemLabel));
+					moreRow.text(egw.lang("%1 more %2 selected ...", (pseudoNumRows - maxRows), itemLabel));
 				}
 				table.append(moreRow);
 				break;
