@@ -1968,7 +1968,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					$attachments = $header['attachments'];
 					if (count($attachments) == 1)
 					{
-						$image = Api\Html::image('mail','attach',$attachments[0]['name'].(!empty($attachments[0]['mimeType'])?' ('.$attachments[0]['mimeType'].')':''));
+						$image = Api\Html::image('mail','attach',$attachments[0]['name']);
 					}
 					else
 					{
