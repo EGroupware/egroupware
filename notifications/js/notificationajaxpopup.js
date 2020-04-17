@@ -519,6 +519,11 @@
 			var request = egw.json("notifications.notifications_ajax.update_status", [ids, "SEEN"]);
 			request.sendRequest(true);
 			this.update_message_status(id, "SEEN");
+			if (notifymessages[id]['extra_data']['onSeenAction'])
+			{
+				var func = new Function(notifymessages[id]['extra_data']['onSeenAction']);
+				func.apply(this,[notifymessages[id]['extra_data']]);
+			}
 		}
 	};
 
