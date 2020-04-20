@@ -50,6 +50,18 @@ class Push extends Msg
 	const SESSION = null;
 
 	/**
+	 * How long to cache online status / maximum frequency for querying
+	 */
+	const INSTANCE_ONLINE_CACHE_EXPIRATION = 10;
+
+	/**
+	 * account_id's of users currently online
+	 *
+	 * @var array|null
+	 */
+	protected static $online;
+
+	/**
 	 *
 	 * @param int $account_id =null account_id to push message too or
 	 *	self::SESSION(=null): for current session only or self::ALL(=0) for whole instance / broadcast
@@ -67,6 +79,37 @@ class Push extends Msg
 	 * @throws Exception\NotOnline if $account_id is not online
 	 */
 	protected function addGeneric($key, $data)
+	{
+		self::checkSetBackend();
+
+		self::$backend->addGeneric($this->account_id, $key, $data);
+	}
+
+	/**
+	 * Get users online / connected to push-server
+	 *
+	 * @return array of integer account_id currently available for push
+	 */
+	public function online()
+	{
+		if (!isset(self::$online))
+		{
+			self::$online = Api\Cache::getInstance(__CLASS__, 'online', function()
+			{
+				self::checkSetBackend();
+
+				return self::$backend->online();
+			}, [], self::INSTANCE_ONLINE_CACHE_EXPIRATION);
+		}
+		return self::$online;
+	}
+
+	/**
+	 * Check and if neccessary set push backend
+	 *
+	 * @throws Exception\NotOnline
+	 */
+	protected function checkSetBackend()
 	{
 		if (!isset(self::$backend))
 		{

@@ -135,5 +135,20 @@ class notifications_push implements Json\PushBackend
 	{
 		self::$db =& $GLOBALS['egw']->db;
 	}
+
+	/**
+	 * Get users online / connected to push-server
+	 *
+	 * @return array of integer account_id currently available for push
+	 */
+	public function online()
+	{
+		$online = [];
+		foreach($GLOBALS['egw']->session->session_list(0, 'DESC', 'session_dla', true, ['notification_heartbeat IS NOT NULL']) as $row)
+		{
+			$online[] = (int)$row['account_id'];
+		}
+		return array_unique($online);
+	}
 }
 notifications_push::init_static();

@@ -685,11 +685,12 @@ declare class JsonRequest
 	 * Open websocket to push server (and keeps it open)
 	 *
 	 * @param {string} url this.websocket(s)://host:port
-	 * @param {array} tokens tokens to subscribe too
+	 * @param {array} tokens tokens to subscribe too: sesssion-, user- and instance-token (in that order!)
+	 * @param {number} account_id to connect for
 	 * @param {function} error option error callback(_msg) used instead our default this.error
 	 * @param {int} reconnect timeout in ms (internal)
 	 */
-	openWebSocket(url : string, tokens : string[], error : Function, reconnect : number);
+	openWebSocket(url : string, tokens : string[], account_id : number, error : Function, reconnect : number);
 }
 
 /**
