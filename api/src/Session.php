@@ -1443,6 +1443,12 @@ class Session
 		// Only do the following, if where working with the current user
 		if (!$GLOBALS['egw_info']['user']['sessionid'] || $sessionid == $GLOBALS['egw_info']['user']['sessionid'])
 		{
+			// eg. SAML logout will fail, if there is no more session --> remove everything else
+			if (($needed = Auth::needSession()) && array_intersect($needed, array_keys($_SESSION)))
+			{
+				$_SESSION = array_intersect_key($_SESSION['SimpleSAMLphp_SESSION'], array_flip($needed));
+				return true;
+			}
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__." ********* about to call session_destroy!");
 			session_unset();
 			@session_destroy();
@@ -1623,6 +1629,13 @@ class Session
 	private static $cookie_path = '/';
 
 	/**
+	 * secure cookie / send via https only
+	 *
+	 * @var bool
+	 */
+	private static $cookie_secure = false;
+
+	/**
 	 * iOS web-apps will loose cookie if set with a livetime of 0 / session-cookie
 	 *
 	 * Therefore we set a fixed lifetime of 24h from session-start instead.
@@ -1662,6 +1675,25 @@ class Session
 	}
 
 	/**
+	 * Get cookie-domain and other cookie parameters used by EGroupware
+	 *
+	 * @param string& $path =null on return cookie path, by default "/", but can be configured
+	 * @param bool& $secure =null on return
+	 * @return string domain-name used (either configured one or current one with a leading dot eg. ".example.org")
+	 */
+	public function getCookieDomain(&$path=null, &$secure=null)
+	{
+		if (empty(self::$cookie_domain) || empty(self::$cookie_path))
+		{
+			self::set_cookiedomain();
+		}
+		$path = self::$cookie_path;
+		$secure = self::$cookie_secure;
+
+		return self::$cookie_domain;
+	}
+
+	/**
 	 * Set the domain and path used for cookies
 	 */
 	private static function set_cookiedomain()
@@ -1695,9 +1727,10 @@ class Session
 			self::$cookie_path = '/';
 		}
 
-		session_set_cookie_params(0, self::$cookie_path, self::$cookie_domain,
-			// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
-			empty($GLOBALS['egw_info']['server']['insecure_cookies']) && Header\Http::schema() === 'https', true);
+		// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
+		self::$cookie_secure = empty($GLOBALS['egw_info']['server']['insecure_cookies']) && Header\Http::schema() === 'https';
+
+		session_set_cookie_params(0, self::$cookie_path, self::$cookie_domain, self::$cookie_secure, true);
 	}
 
 	/**
