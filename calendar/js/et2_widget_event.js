@@ -198,6 +198,10 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		var value = event === null ? null : jQuery.extend({},event);
 		var parent = this._parent;
 		var parent_owner = parent.getDOMNode(parent).dataset['owner'] || parent.getParent().options.owner;
+		if(parent_owner.indexOf(','))
+		{
+			parent_owner = parent_owner.split(',');
+		}
 
 		// Make sure id is a string, check values
 		if(value)
@@ -1133,6 +1137,7 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 				if(resource && resource.resources)
 				{
 					parent_owner.splice(i,1);
+					i--;
 					parent_owner = parent_owner.concat(resource.resources);
 					continue;
 				}
