@@ -415,7 +415,8 @@
 				{
 					egw.json('websocket', {}, undefined, this).openWebSocket(
 						egw_script.getAttribute('data-websocket-url'),
-						JSON.parse(egw_script.getAttribute('data-websocket-tokens'))
+						JSON.parse(egw_script.getAttribute('data-websocket-tokens')),
+						parseInt(egw_script.getAttribute('data-websocket-account_id'))
 					);
 				}
 			}

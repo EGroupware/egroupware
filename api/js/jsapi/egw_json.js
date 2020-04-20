@@ -98,11 +98,12 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * Open websocket to push server (and keeps it open)
 	 *
 	 * @param {string} url this.websocket(s)://host:port
-	 * @param {array} tokens tokens to subscribe too
+	 * @param {array} tokens tokens to subscribe too: sesssion-, user- and instance-token (in that order!)
+	 * @param {number} account_id to connect for
 	 * @param {function} error option error callback(_msg) used instead our default this.error
 	 * @param {int} reconnect timeout in ms (internal)
 	 */
-	json_request.prototype.openWebSocket = function(url, tokens, error, reconnect)
+	json_request.prototype.openWebSocket = function(url, tokens, account_id, error, reconnect)
 	{
 		const min_reconnect_time = 1000;
 		const max_reconnect_time = 300000;
@@ -113,7 +114,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		{
 			reconnect_time = min_reconnect_time;
 			this.websocket.send(JSON.stringify({
-				subscribe: tokens
+				subscribe: tokens,
+				account_id: parseInt(account_id)
 			}));
 		}, this);
 
@@ -147,7 +149,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				// e.g. server process killed or network down
 				// event.code is usually 1006 in this case
 				console.log('[close] Connection died --> reconnect in '+reconnect_time+'ms');
-				window.setTimeout(jQuery.proxy(this.openWebSocket, this, url, tokens, error, reconnect_time), reconnect_time);
+				window.setTimeout(jQuery.proxy(this.openWebSocket, this, url, tokens, account_id, error, reconnect_time), reconnect_time);
 			}
 		}, this);
 	},
