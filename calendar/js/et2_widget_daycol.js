@@ -470,7 +470,8 @@ var et2_calendar_daycol = /** @class */ (function (_super) {
             }, this);
         }
         // Seperate loop so column sorting finds all children in the right place
-        for (c = 0; c < events.length && c < this._children.length; c++) {
+        var child_length = this._children.length;
+        for (c = 0; c < events.length && c < child_length; c++) {
             var event_2 = this.getWidgetById('event_' + events[c].id);
             if (!event_2)
                 continue;

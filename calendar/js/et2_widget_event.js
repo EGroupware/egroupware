@@ -171,6 +171,9 @@ var et2_calendar_event = /** @class */ (function (_super) {
         var value = event === null ? null : jQuery.extend({}, event);
         var parent = this.getParent();
         var parent_owner = parent.getDOMNode(parent).dataset['owner'] || parent.getParent().options.owner;
+        if (parent_owner.indexOf(',')) {
+            parent_owner = parent_owner.split(',');
+        }
         // Make sure id is a string, check values
         if (value) {
             this._values_check(value);
@@ -912,6 +915,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
                     var resource = options.find(function (element) { return element.id == parent_owner[i]; }) || {};
                     if (resource && resource.resources) {
                         parent_owner.splice(i, 1);
+                        i--;
                         parent_owner = parent_owner.concat(resource.resources);
                     }
                 }
