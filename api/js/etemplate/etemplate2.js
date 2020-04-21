@@ -74,6 +74,7 @@
 */
 Object.defineProperty(exports, "__esModule", { value: true });
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
+var egw_app_1 = require("../jsapi/egw_app");
 /**
  * The etemplate2 class manages a certain etemplate2 instance.
  *
@@ -193,6 +194,14 @@ var etemplate2 = /** @class */ (function () {
             for (var i = 0; i < etemplate2._byTemplate[name_1].length; i++) {
                 if (etemplate2._byTemplate[name_1][i] == this) {
                     etemplate2._byTemplate[name_1].splice(i, 1);
+                }
+            }
+        }
+        // If using a private app object, remove all of them
+        if (this.app_obj !== window.app) {
+            for (var app_name in this.app_obj) {
+                if (this.app_obj[app_name] instanceof egw_app_1.EgwApp) {
+                    this.app_obj[app_name].destroy();
                 }
             }
         }
@@ -383,8 +392,6 @@ var etemplate2 = /** @class */ (function () {
                     app[appname].et2_ready(_et2, _name);
                 };
             }
-            // Clear any existing instance
-            this.clear();
             // Create the basic widget container and attach it to the DOM
             this._widgetContainer = new et2_core_baseWidget_1.et2_container(null);
             this._widgetContainer.setApiInstance(egw(currentapp, egw.elemWindow(this._DOMContainer)));

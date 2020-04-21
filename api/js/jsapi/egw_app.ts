@@ -121,6 +121,13 @@ export abstract class EgwApp
 	mailvelopeSyncHandlerObj : any;
 
 	/**
+	 * In some cases (CRM) a private, disconnected app instance is created instead of
+	 * using the global.  We want to be able to access them for observer() & push(), so
+	 * we track all instances.
+	 */
+	static _instances: EgwApp[] = [];
+
+	/**
 	 * Initialization and setup goes here, but the etemplate2 object
 	 * is not yet ready.
 	 */
@@ -152,6 +159,9 @@ export abstract class EgwApp
 			}
 		}
 		this.mailvelopeSyncHandlerObj = this.mailvelopeSyncHandler();
+
+		// Keep track of this instance
+		EgwApp._register_instance(this);
 	}
 
 	/**
@@ -165,6 +175,11 @@ export abstract class EgwApp
 			this.sidebox.off();
 		delete this.sidebox;
 		if (!_app) delete app[this.appname];
+		let index = -1;
+		if((index = EgwApp._instances.indexOf(this)) >= 0)
+		{
+			EgwApp._instances.splice(index,1);
+		}
 	}
 
 	/**
@@ -2083,5 +2098,31 @@ export abstract class EgwApp
 			width: 450,
 			value: {content:{ "share_link": _data.share_link }}
 		});
+	}
+
+	/**
+	 * Keep a list of all EgwApp instances
+	 *
+	 * This is not just the globals available in window.app, it also includes private instances as well
+	 *
+	 * @private
+	 * @param app_obj
+	 */
+	private static _register_instance(app_obj: EgwApp)
+	{
+		// Reject improper objects
+		if(!app_obj.appname) return;
+
+		EgwApp._instances.push(app_obj);
+	}
+
+	/**
+	 * Iterator over all app instances
+	 *
+	 * Use for(const app of EgwApp) {...} to iterate over all app objects.
+	 */
+	static [Symbol.iterator]()
+	{
+		return EgwApp._instances[Symbol.iterator]();
 	}
 }

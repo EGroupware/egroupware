@@ -337,9 +337,8 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			// notify app observers: if observer for _app itself returns false, no regular refresh will take place
 			// app's own observer can replace current app_refresh functionality
 			var no_regular_refresh = false;
-			for(var app in _wnd.egw.window.app)	// run observers in main window (eg. not iframe, which might be opener!)
+			for(var app_obj of _wnd.egw.window.EgwApp)	// run observers in main window (eg. not iframe, which might be opener!)
 			{
-				var app_obj = _wnd.egw.window.app[app];
 				if (typeof app_obj.observer == 'function' &&
 					app_obj.observer(_msg, _app, _id, _type, _msg_type, _links) === false && app === _app)
 				{
@@ -425,9 +424,8 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 
 			// notify app observers
-			for (var app in _wnd.egw.window.app)	// run observers in main window (eg. not iframe, which might be opener!)
+			for (var app_obj of _wnd.egw.window.EgwApp)	// run observers in main window (eg. not iframe, which might be opener!)
 			{
-				var app_obj = _wnd.egw.window.app[app];
 				if (typeof app_obj.push == 'function')
 				{
 					app_obj.push(pushData);

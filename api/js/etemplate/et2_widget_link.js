@@ -39,8 +39,8 @@ var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
 var et2_widget_selectbox_1 = require("./et2_widget_selectbox");
 /**
-* UI widgets for Egroupware linking system
-*/
+ * UI widgets for Egroupware linking system
+ */
 var et2_link_to = /** @class */ (function (_super) {
     __extends(et2_link_to, _super);
     /**
