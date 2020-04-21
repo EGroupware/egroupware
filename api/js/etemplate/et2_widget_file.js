@@ -352,7 +352,7 @@ var et2_file = /** @class */ (function (_super) {
      * Re-enables submit buttons when done
      */
     et2_file.prototype.onFinish = function () {
-        this.disabled_buttons.attr("disabled", 0).css('cursor', 'pointer').removeClass('et2_button_ro');
+        this.disabled_buttons.removeAttr("disabled").css('cursor', 'pointer').removeClass('et2_button_ro');
         var file_count = this.resumable.files.length;
         // Remove files from list
         while (this.resumable.files.length > 0) {

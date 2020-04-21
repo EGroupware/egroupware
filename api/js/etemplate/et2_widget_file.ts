@@ -497,7 +497,7 @@ export class et2_file extends et2_inputWidget
 	 * Re-enables submit buttons when done
 	 */
 	onFinish() {
-		this.disabled_buttons.attr("disabled", 0).css('cursor','pointer').removeClass('et2_button_ro');
+		this.disabled_buttons.removeAttr("disabled").css('cursor','pointer').removeClass('et2_button_ro');
 
 		var file_count = this.resumable.files.length;
 
