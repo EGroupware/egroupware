@@ -1,6 +1,10 @@
 %1 already exists as a file	filemanager	el	%1 υπάρχει ήδη ως αρχείο
 %1 starts with '%2'	filemanager	el	%1 ξεκινά με '%2'
+accessrights	filemanager	el	Δικαιώματα πρόσβασης
 actions	filemanager	el	Ενέργειες
+add to clipboard	filemanager	el	Προσθήκη στο πρόχειρο
+all files	filemanager	el	Όλα τα αρχεία
+all types	filemanager	el	Όλοι οι τύποι
 applications	common	el	Εφαρμογές
 cancel editing %1 without saving	filemanager	el	Ακύρωση επεξεργασίας %1 χωρίς αποθήκευση
 cannot create directory because it begins or ends in a space	filemanager	el	Δεν μπορεί να δημιουργηθεί ο φάκελος γιατί ξεκινά ή τελειώνει με κενό
@@ -14,28 +18,50 @@ could not create %1	filemanager	el	Δεν μπόρεσε να δημιουργη
 could not delete %1	filemanager	el	Δεν μπόρεσε να διαγραφεί %1
 could not move %1 to %2	filemanager	el	Δεν μπόρεσε να μετακινηθεί το %1 στο %2
 could not rename %1 to %2	filemanager	el	Δεν μπόρεσε να μετονομασθεί το %1 σε %2
+create a link	filemanager	el	Δημιουργία ενός συνδέσμου
+create directory	filemanager	el	Δημιουργία καταλόγου
 create file	filemanager	el	Δημιουργία αρχείου
-create folder	filemanager	el	Δημιουργία Φακέλου
+create folder	filemanager	el	Δημιουργία φακέλου
 created	filemanager	el	Δημιουργήθηκε
 created %1,%2	filemanager	el	Δημιουργήθηκαν %1, %2
 created directory %1	filemanager	el	Δημιουργήθηκε ο κατάλογος %1
+current directory	filemanager	el	Τρέχον κατάλογος
 custom fields	filemanager	el	Προσαρμοσμένα πεδία
+cut	filemanager	el	Αποκοπή (Cut)
+cut to clipboard	filemanager	el	Αποκοπή (Cut) στο πρόχειρο
+default action on double-click	filemanager	el	Προεπιλεγμένη ενέργεια διπλού κλικ
+default document to insert entries	filemanager	el	Προεπιλεγμένο έγγραφο για την καταχώρηση εγγραφών
+defines how to open a merge print document	filemanager	el	Ορίζει το πως να ανοίγει ένα έγγραφο merge print
 deleted %1	filemanager	el	Διεγράφη %1
 directory	filemanager	el	Κατάλογος
 directory %1 already exists	filemanager	el	Ο κατάλογος %1 υπάρχει ήδη
 directory %1 does not exist	filemanager	el	Ο κατάλογος %1 δεν υπάρχει
 disable	filemanager	el	Απενεργοποίηση
+display of content	filemanager	el	Εμφάνιση περιαχομένου
 download	filemanager	el	Φόρτωση
 edit comments	filemanager	el	Επεξεργασία σχολίων
-enable	filemanager	el	ενεργοποίηση
+edit settings	filemanager	el	Επεξεργασία ρυθμίσεων
+enable	filemanager	el	Ενεργοποίηση
+enter your file name	filemanager	el	Καταχωρήστε το όνομα του αρχείου σας
 everyone	filemanager	el	όλοι
 expires	filemanager	el	Λήγει
+favorites	filemanager	el	Αγαπημένα
 file	common	el	Αρχείο
 file %1 could not be created.	filemanager	el	Το αρχείο %1 δεν μπόρεσε να δημιουργηθεί.
+file deleted.	filemanager	el	Το αρχείο διαγράφηκε.
 file names cannot contain "%1"	filemanager	el	Τα ονόματα αρχείων δεν μπορούν να περιέχουν "%1"
+file or directory not found!	filemanager	el	Το αρχείο ή ο κατάλογος δεν βρέθηκε!
 filemanager	common	el	Διαχειριστής αρχείων
+filemanager configuration	admin	el	Ρυθμίσεις διαχειριστή αρχείων
+filemanager fields:	filemanager	el	Πεδία διαχειριστή αρχείων
+files	common	el	Αρχεία
+files from links	filemanager	el	Αρχεία από συνδέσμους
+files from subdirectories	filemanager	el	Αρχεία από υπό - καταλόγους
 files in this directory	filemanager	el	Αρχεία σε αυτόν τον κατάλογο
-folder up	filemanager	el	Φάκελος πίσω
+finally delete	filemanager	el	Οριστική διαγραφή
+finally delete this version	filemanager	el	Οριστική διαγραφή αυτής της έκδοσης
+fix reported problems	filemanager	el	Διόρθωση προβλημάτων που αναφέρθηκαν
+folder up	filemanager	el	Φάκελος πάνω
 general	filemanager	el	Γενικά
 general fields:	filemanager	el	Γενικά πεδία:
 go home	filemanager	el	επιστροφή στην αρχική σελίδα
@@ -44,25 +70,40 @@ go to your home directory	filemanager	el	Πήγαινε στον αρχικό κ
 go up	filemanager	el	πήγαινε πίσω
 id	filemanager	el	Id
 link	filemanager	el	Σύνδεσμος
+link %1: %2	filemanager	el	Σύνδεσμός %1: %2
+link into folder	filemanager	el	Σύνδεσμος στον φάκελο
+link target	filemanager	el	Στόχος συνδέσμου
+link target %1 not found!	filemanager	el	Δεν βρέθηκε ο στόχος συνδέσμου %1!
+list view	filemanager	el	Εμφάνιση λίστας
 location	filemanager	el	Τοποθεσία
-mime type	filemanager	el	MIME τύπος
+mime type	filemanager	el	τύπος MIME
 modified	filemanager	el	Τροποποιήθηκε
-move	filemanager	el	μετακίνηση
+move	filemanager	el	Μετακίνηση
+move into folder	filemanager	el	Μετακίνηση στο φάκελο
 move to	filemanager	el	Μετακίνηση στο
 moved %1 to %2	filemanager	el	Μετακινήθηκε το %1 στο %2
+new directory	filemanager	el	Νέος φάκελος
+no access	filemanager	el	Χωρίς πρόσβαση
 no files in this directory.	filemanager	el	Κενός κατάλογος
+no preview available	filemanager	el	Δεν υπάρχει διαθέσιμη προ-επισκόπηση
 no version history for this file/directory	filemanager	el	Δεν υπάρχει ιστορικό έκδοσης για αυτλο το αρχείο/κατάλογος
-open	filemanager	el	ανοικτά
+open	filemanager	el	Άνοιγμα
 operation	filemanager	el	Λειτουργία
+paste link	filemanager	el	Επικόληση συνδέσμου
+percentage	filemanager	el	Ποσοστό
 permissions	filemanager	el	Δικαιώματα
+permissions of %1 changed.	filemanager	el	Έγινε μεταβολή δικαιωμάτων στο %1.
 please select a file to delete.	filemanager	el	Παρακαλώ επιλέξτε ένα αρχείο προς διαγραφή
 preview	filemanager	el	Προεπισκόπηση
 preview %1	filemanager	el	Προεπισκόπηση %1
 preview of %1	filemanager	el	Προεπισκόπηση του %1
 quick jump to	filemanager	el	Γρήγορη μετάβαση στο
 reload	filemanager	el	επαναφόρτωση
+rename of %1 to %2 failed!	filemanager	el	Η μετονομασία από  %1 σε %2 απέτυχε!
 renamed %1 to %2	filemanager	el	Μετονομάστηκε από %1 σε %2
+renamed %1 to %2.	filemanager	el	Μετονομάστηκε από %1 σε %2
 replaced %1	filemanager	el	Αντικαταστάθηκε %1
+rights	filemanager	el	Δικαιώματα
 save %1	filemanager	el	Αποθήκευση %1
 save %1, and go back to file listing	filemanager	el	Αποθήκευση %1, και επιστροφή στη  σύνταξη καταλόγου
 save changes	filemanager	el	Αποθήκευση αλλαγών
@@ -70,12 +111,15 @@ saved %1	filemanager	el	Αποθηκεύθηκε %1
 search for '%1'	filemanager	el	Αναζήτηση για '%1'
 show	filemanager	el	Προβολή
 size	filemanager	el	Μέγεθος
-total files	filemanager	el	Συνολικά Αρχεία
+start search	filemanager	el	Έναρξη αναζήτησης
+total files	filemanager	el	Συνολικά αρχεία
 unused space	filemanager	el	Αχρησιμοποίητο κενό
 up	filemanager	el	Πίσω
 updated comment for %1	filemanager	el	Ενημέρωση σχολίου για %1
 upload fields	filemanager	el	φόρτωση πεδίων
 upload files	filemanager	el	φόρτωση αρχείων
-used space	filemanager	el	Χρησιμοποιημένο Κενό
-you do not have access to %1	filemanager	el	Δεν έχετε άδεια εισόδου στο %1
+used space	filemanager	el	Χώρος που χρησιμοποιείται
+versioning	filemanager	el	Λειτουργία εκδόσεων
+view link	filemanager	el	Εμφάνιση συνδέσμου
+you do not have access to %1	filemanager	el	Δεν έχετε πρόσβαση στο %1
 your home dir did not exist, egroupware created a new one.	filemanager	el	Ο Αρχικός Κατ δεν υπήρχε, το EGroupware δημιούργησε ένα νέο.
