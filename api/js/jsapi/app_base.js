@@ -174,7 +174,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		// Highlights the favorite based on initial list state
 		this.highlight_favorite();
 
-
+		AppJS._register_instance(this);
 	},
 
 	/**
@@ -1995,3 +1995,37 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	}
 
 });}).call(this);
+
+
+/**
+ * In some cases (CRM) a private, disconnected app instance is created instead of
+ * using the global.  We want to be able to access them for observer() & push(), so
+ * we track all instances.
+ */
+AppJS._instances = [];
+
+/**
+ * Keep a list of all EgwApp instances
+ *
+ * This is not just the globals available in window.app, it also includes private instances as well
+ *
+ * @private
+ * @param app_obj
+ */
+AppJS._register_instance = function(app_obj)
+{
+	// Reject improper objects
+	if(!app_obj.appname) return;
+
+	AppJS._instances.push(app_obj);
+}
+
+/**
+ * Iterator over all app instances
+ *
+ * Use for(const app of EgwApp) {...} to iterate over all app objects.
+ */
+AppJS[Symbol.iterator] = function()
+{
+	return AppJS._instances[Symbol.iterator]();
+}

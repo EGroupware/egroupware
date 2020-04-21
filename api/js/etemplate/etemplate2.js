@@ -222,6 +222,18 @@ etemplate2.prototype.clear = function()
 			}
 		}
 	}
+
+	// If using a private app object, remove all of them
+	if(this.app_obj !== window.app)
+	{
+		for(var app_name in this.app_obj)
+		{
+			if(this.app_obj[app_name] instanceof EgwApp)
+			{
+				this.app_obj[app_name].destroy();
+			}
+		}
+	}
 };
 
 /**
@@ -433,9 +445,6 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et
 				app[appname].et2_ready(_et2, _name);
 			};
 		}
-
-		// Clear any existing instance
-		this.clear();
 
 		// Create the basic widget container and attach it to the DOM
 		this.widgetContainer = new et2_container(null);
