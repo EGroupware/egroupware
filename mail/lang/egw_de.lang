@@ -472,6 +472,7 @@ row order style	mail	de	Spaltenanordnung
 rule priority position	mail	de	Priorität der Filterregel
 rule with priority	mail	de	Regel mit Priorität
 rules	mail	de	Filter Regeln
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	de	Die S/MIME-Verschlüsselung ist fehlgeschlagen, weil kein Zertifikat für die Absenderadresse gefunden wurde: %1
 save all	mail	de	Alle speichern
 save all attachments to filemanager	mail	de	Alle Anhänge im Dateimanager speichern
 save as calendar	mail	de	Als Termin speichern
