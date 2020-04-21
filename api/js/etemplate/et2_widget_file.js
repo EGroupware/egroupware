@@ -479,7 +479,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 	 * Re-enables submit buttons when done
 	 */
 	onFinish: function() {
-		this.disabled_buttons.attr("disabled", false).css('cursor','pointer').removeClass('et2_button_ro');
+		this.disabled_buttons.removeAttr("disabled").css('cursor','pointer').removeClass('et2_button_ro');
 
 		var file_count = this.resumable.files.length;
 
