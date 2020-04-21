@@ -375,9 +375,9 @@ class et2_avatar extends et2_image
 	/**
 	 * Text color
 	 */
-	static LAVATAR_TEXT_COLOR: '#ffffff';
+	static LAVATAR_TEXT_COLOR: string = '#ffffff';
 
-	static LAVATAR_SIZE: 128;
+	static LAVATAR_SIZE: number = 128;
 
 	/**
 	 * Generate letter avatar with given data

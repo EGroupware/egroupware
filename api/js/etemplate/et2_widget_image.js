@@ -542,6 +542,11 @@ var et2_avatar = /** @class */ (function (_super) {
         '#b2b7bb', '#72acae', '#9c8ab4', '#5a8770',
         '#eeb424', '#407887'
     ];
+    /**
+     * Text color
+     */
+    et2_avatar.LAVATAR_TEXT_COLOR = '#ffffff';
+    et2_avatar.LAVATAR_SIZE = 128;
     return et2_avatar;
 }(et2_image));
 et2_core_widget_1.et2_register_widget(et2_avatar, ["avatar"]);
