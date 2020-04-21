@@ -472,6 +472,7 @@ row order style	mail	en	row order style
 rule priority position	mail	en	Rule priority position
 rule with priority	mail	en	rule with priority
 rules	mail	en	rules
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	en	S/MIME Encryption failed because no certificate has been found for sender address: %1
 save all	mail	en	Save all
 save all attachments to filemanager	mail	en	Save all attachments to filemanager
 save as calendar	mail	en	Save as Calendar
