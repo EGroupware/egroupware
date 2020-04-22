@@ -13,7 +13,9 @@
 	et2_widget_taglist;
 */
 
-import {et2_register_widget} from "../../api/js/etemplate/et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
+import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
+import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 
 /**
  * Tag list widget customised for calendar owner, which can be a user
@@ -63,6 +65,13 @@ export class et2_calendar_owner extends et2_taglist_email
 	};
 
 
+
+	transformAttributes( _attrs)
+	{
+		super.transformAttributes(_attrs);
+		_attrs.select_options = this._get_accounts(_attrs.select_options);
+	}
+
 	doLoadingFinished()
 	{
 		super.doLoadingFinished();
@@ -107,6 +116,47 @@ export class et2_calendar_owner extends et2_taglist_email
 	}
 
 	/**
+	 * Get account info for select options from common client-side account cache
+	 *
+	 * @return {Array} select options
+	 */
+	_get_accounts(select_options)
+	{
+		if (!jQuery.isArray(select_options))
+		{
+			var options = jQuery.extend({}, select_options);
+			select_options = [];
+			for(var key in options)
+			{
+				if (typeof options[key] == 'object')
+				{
+					if (typeof(options[key].key) == 'undefined')
+					{
+						options[key].value = key;
+					}
+					select_options.push(options[key]);
+				}
+				else
+				{
+					select_options.push({value: key, label: options[key]});
+				}
+			}
+		}
+		var type = this.egw().preference('account_selection', 'common');
+		var accounts = this.egw().accounts('accounts');
+		for(const option of accounts)
+		{
+			if(!select_options.find(element => element.value == option.value))
+			{
+				option.app = this.egw().lang('api-accounts');
+				select_options.push(option);
+			}
+		}
+
+		return select_options
+	}
+
+	/**
 	 * Override parent to handle our special additional data types (c#,r#,etc.) when they
 	 * are not available client side.
 	 *
@@ -124,7 +174,7 @@ export class et2_calendar_owner extends et2_taglist_email
 			var value = this.options.value[i];
 			if(value.id == value.label)
 			{
-				// Proper label was not fount by parent - ask directly
+				// Proper label was not found by parent - ask directly
 				egw.json('calendar_owner_etemplate_widget::ajax_owner',value.id,function(data) {
 					this.widget.options.value[this.i].label = data;
 					this.widget.set_value(this.widget.options.value);

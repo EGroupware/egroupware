@@ -48,50 +48,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		}
 		$sel_options =& self::$request->sel_options[$form_name];
 
-		// Get user accounts, formatted nicely for grouping and matching
-		// the ajax call calendar_uiforms->ajax_owner() - users first
-		$accounts = array();
-		$list = array('accounts', 'owngroups');
-		foreach($list as $type)
-		{
-			$account_options = array('account_type' => $type);
-			$accounts_type = Api\Accounts::link_query('',$account_options);
-			if($type == 'accounts')
-			{
-				$accounts_type = array_intersect_key($accounts_type, $GLOBALS['egw']->acl->get_grants('calendar'));
-			}
-			$accounts += $accounts_type;
-		}
-		$sel_options += array_map(
-			function($account_id, $account_name)
-			{
-				$data = array(
-					'value' => ''.$account_id,
-					'label' => $account_name,
-					'app' => lang('api-accounts'),
-				);
-				if ($account_id > 0)
-				{
-					$contact_obj = new Api\Contacts();
-					if (($contact = $contact_obj->read('account:'.$account_id, true)))
-					{
-						$data['icon'] = Api\Framework::link('/api/avatar.php', array(
-							'contact_id' => $contact['id'],
-							'etag' => $contact['etag'] ? $contact['etag'] : 1
-						));
-					}
-				}
-				else
-				{
-					// Add in group memberships as strings
-					$data['resources'] = array_map(function($a) { return ''.$a;},$GLOBALS['egw']->accounts->members($account_id, true));
-				}
-				return $data;
-			},
-			array_keys($accounts), $accounts
-		);
-
-		if(!is_array($value))
+		if($value && !is_array($value))
 		{
 			// set value with an empty string only if sel options are not
 			// loaded, for example: setting calendar owner via URL when
@@ -215,11 +172,13 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			// Handle Api\Accounts seperately
 			if($type == '')
 			{
+				$owngroup_options = $options+array('account_type'=>'owngroups');
+				$own_groups = Api\Accounts::link_query('',$owngroup_options);
 				$account_options = $options + array('account_type' => 'both');
 				$_results += $remove_contacts = Api\Accounts::link_query($query, $account_options);
 				if (!empty($_REQUEST['checkgrants']))
 				{
-					$grants = $GLOBALS['egw']->acl->get_grants('calendar');
+					$grants = (array)$GLOBALS['egw']->acl->get_grants('calendar') + $own_groups;
 					$_results = array_intersect_key($_results, $grants);
 				}
 			}
