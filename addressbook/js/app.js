@@ -1318,7 +1318,7 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	videoconference_isUserOnline: function(_action, _selected)
 	{
-		let list = app.status.getEntireList();
+		let list = app.status ? app.status.getEntireList() : {};
 
 		for (let sel in _selected)
 		{
