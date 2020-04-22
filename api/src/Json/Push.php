@@ -141,6 +141,5 @@ class Push extends Msg
 				throw new Exception\NotOnline('No valid push-backend found!');
 			}
 		}
-		self::$backend->addGeneric($this->account_id, $key, $data);
 	}
 }
