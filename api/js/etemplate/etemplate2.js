@@ -372,6 +372,7 @@ var etemplate2 = /** @class */ (function () {
         if (!jQuery.isArray(_data.langRequire))
             _data.langRequire = [];
         egw(currentapp, window).langRequire(window, _data.langRequire, function () {
+            this.clear();
             // Initialize application js
             var app_callback = null;
             // Only initialize once

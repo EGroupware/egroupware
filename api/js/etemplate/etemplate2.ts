@@ -472,6 +472,8 @@ export class etemplate2
 		if (!jQuery.isArray(_data.langRequire)) _data.langRequire = [];
 		egw(currentapp, window).langRequire(window, _data.langRequire, function ()
 		{
+			this.clear();
+
 			// Initialize application js
 			let app_callback = null;
 			// Only initialize once
