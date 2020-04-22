@@ -69,7 +69,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 					continue;	// ignore that resource, we would get a PHP Fatal: Unsupported operand types
 				}
 			}
-			else if (!in_array($owner, array_keys($accounts)))
+			else
 			{
 				$resource = array('app'=> 'api-accounts');
 			}
