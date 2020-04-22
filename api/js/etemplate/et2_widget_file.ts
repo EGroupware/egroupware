@@ -665,7 +665,7 @@ export class et2_file extends et2_inputWidget
 		event.data = this;
 
 		// Callback
-		if(typeof this.onFinishOne == 'function')
+		if(typeof this.onFinishOne == 'function' && !this.options.onFinishOne)
 		{
 			this.onFinishOne(event, response, name);
 		}
