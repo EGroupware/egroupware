@@ -64,14 +64,6 @@ export class et2_calendar_owner extends et2_taglist_email
 		toggleOnClick: true
 	};
 
-
-
-	transformAttributes( _attrs)
-	{
-		super.transformAttributes(_attrs);
-		_attrs.select_options = this._get_accounts(_attrs.select_options);
-	}
-
 	doLoadingFinished()
 	{
 		super.doLoadingFinished();
@@ -113,47 +105,6 @@ export class et2_calendar_owner extends et2_taglist_email
 	{
 		if(this.taglist == null) return null;
 		return this.taglist.getValue();
-	}
-
-	/**
-	 * Get account info for select options from common client-side account cache
-	 *
-	 * @return {Array} select options
-	 */
-	_get_accounts(select_options)
-	{
-		if (!jQuery.isArray(select_options))
-		{
-			var options = jQuery.extend({}, select_options);
-			select_options = [];
-			for(var key in options)
-			{
-				if (typeof options[key] == 'object')
-				{
-					if (typeof(options[key].key) == 'undefined')
-					{
-						options[key].value = key;
-					}
-					select_options.push(options[key]);
-				}
-				else
-				{
-					select_options.push({value: key, label: options[key]});
-				}
-			}
-		}
-		var type = this.egw().preference('account_selection', 'common');
-		var accounts = this.egw().accounts('accounts');
-		for(const option of accounts)
-		{
-			if(!select_options.find(element => element.value == option.value))
-			{
-				option.app = this.egw().lang('api-accounts');
-				select_options.push(option);
-			}
-		}
-
-		return select_options
 	}
 
 	/**

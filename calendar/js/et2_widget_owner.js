@@ -53,10 +53,6 @@ var et2_calendar_owner = /** @class */ (function (_super) {
         };
         return _this;
     }
-    et2_calendar_owner.prototype.transformAttributes = function (_attrs) {
-        _super.prototype.transformAttributes.call(this, _attrs);
-        _attrs.select_options = this._get_accounts(_attrs.select_options);
-    };
     et2_calendar_owner.prototype.doLoadingFinished = function () {
         _super.prototype.doLoadingFinished.call(this);
         var widget = this;
@@ -92,42 +88,6 @@ var et2_calendar_owner = /** @class */ (function (_super) {
         if (this.taglist == null)
             return null;
         return this.taglist.getValue();
-    };
-    /**
-     * Get account info for select options from common client-side account cache
-     *
-     * @return {Array} select options
-     */
-    et2_calendar_owner.prototype._get_accounts = function (select_options) {
-        if (!jQuery.isArray(select_options)) {
-            var options = jQuery.extend({}, select_options);
-            select_options = [];
-            for (var key in options) {
-                if (typeof options[key] == 'object') {
-                    if (typeof (options[key].key) == 'undefined') {
-                        options[key].value = key;
-                    }
-                    select_options.push(options[key]);
-                }
-                else {
-                    select_options.push({ value: key, label: options[key] });
-                }
-            }
-        }
-        var type = this.egw().preference('account_selection', 'common');
-        var accounts = this.egw().accounts('accounts');
-        var _loop_1 = function (option) {
-            if (!select_options.find(function (element) { return element.value == option.value; })) {
-                option.app = this_1.egw().lang('api-accounts');
-                select_options.push(option);
-            }
-        };
-        var this_1 = this;
-        for (var _i = 0, accounts_1 = accounts; _i < accounts_1.length; _i++) {
-            var option = accounts_1[_i];
-            _loop_1(option);
-        }
-        return select_options;
     };
     /**
      * Override parent to handle our special additional data types (c#,r#,etc.) when they
