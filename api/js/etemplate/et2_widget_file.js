@@ -643,7 +643,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 		event.data = this;
 
 		// Callback
-		if(typeof this.onFinishOne == 'function')
+		if(typeof this.onFinishOne == 'function'  && !this.options.onFinishOne)
 		{
 			return this.onFinishOne(event, response, name);
 		}
