@@ -71,6 +71,12 @@ var et2_calendar_owner = (function(){ "use strict"; return et2_taglist_email.ext
 		return true;
 	},
 
+	transformAttributes: function( _attrs)
+	{
+		this._super.apply(this, arguments);
+		_attrs.select_options = this._get_accounts(_attrs.select_options);
+	},
+
 	selectionRenderer: function(item)
 	{
 		if(this && this.options && this.options.allowFreeEntries)
@@ -104,6 +110,47 @@ var et2_calendar_owner = (function(){ "use strict"; return et2_taglist_email.ext
 	},
 
 	/**
+	 * Get account info for select options from common client-side account cache
+	 *
+	 * @return {Array} select options
+	 */
+	_get_accounts: function(select_options)
+	{
+		if (!jQuery.isArray(select_options))
+		{
+			var options = jQuery.extend({}, select_options);
+			select_options = [];
+			for(var key in options)
+			{
+				if (typeof options[key] == 'object')
+				{
+					if (typeof(options[key].key) == 'undefined')
+					{
+						options[key].value = key;
+					}
+					select_options.push(options[key]);
+				}
+				else
+				{
+					select_options.push({value: key, label: options[key]});
+				}
+			}
+		}
+		var type = this.egw().preference('account_selection', 'common');
+		var accounts = this.egw().accounts('accounts');
+		for(const option of accounts)
+		{
+			if(!select_options.find(element => element.value == option.value))
+			{
+				option.app = this.egw().lang('api-accounts');
+				select_options.push(option);
+			}
+		}
+
+		return select_options;
+	},
+
+	/**
 	 * Override parent to handle our special additional data types (c#,r#,etc.) when they
 	 * are not available client side.
 	 *
@@ -121,7 +168,7 @@ var et2_calendar_owner = (function(){ "use strict"; return et2_taglist_email.ext
 			var value = this.options.value[i];
 			if(value.id == value.label)
 			{
-				// Proper label was not fount by parent - ask directly
+				// Proper label was not found by parent - ask directly
 				egw.json('calendar_owner_etemplate_widget::ajax_owner',value.id,function(data) {
 					this.widget.options.value[this.i].label = data;
 					this.widget.set_value(this.widget.options.value);

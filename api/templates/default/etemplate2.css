@@ -1186,6 +1186,7 @@ div.et2_vfsPath li img {
   position: relative;
   margin: 0px auto -16px auto;
   top: 5px;
+  background-image: url('images/ajax-loader.gif');
 }
 .et2_taglist .ms-input-readonly {display: none;}
 .et2_taglist div.ms-sel-ctn .ms-close-btn {
