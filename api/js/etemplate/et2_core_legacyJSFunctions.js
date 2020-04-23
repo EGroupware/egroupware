@@ -123,6 +123,28 @@
 			context = _widget.getDOMNode();
 		}
 
+		// Check to see if it's referring to an existing function with no arguments specified.
+		// If so, bind context & use it directly
+		var parts = _code.split(".");
+		var existing_func = parts.pop();
+		var parent = _widget.egw().window;
+		for(var i=0; i < parts.length; ++i)
+		{
+			if (typeof parent[parts[i]] !== "undefined")
+			{
+				parent = parent[parts[i]];
+			}
+			// Nope
+			else
+			{
+				break;
+			}
+		}
+		if (typeof parent[existing_func] === "function")
+		{
+			return parent[existing_func].bind(context);
+		}
+
 		// Generate the function itself, if it fails, log the error message and
 		// return a function which always returns false
 		try {
