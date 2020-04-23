@@ -1121,14 +1121,6 @@ var AddressbookApp = /** @class */ (function (_super) {
         }
         app.status.makeCall(data);
     };
-    /**
-     *
-     * @param _action
-     * @param _selected
-     * @todo
-     */
-    AddressbookApp.prototype.videoconference_scheduleCall = function (_action, _selected) {
-    };
     return AddressbookApp;
 }(egw_app_1.EgwApp));
 app.classes.addressbook = AddressbookApp;

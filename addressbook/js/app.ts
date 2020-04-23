@@ -1363,17 +1363,6 @@ class AddressbookApp extends EgwApp
 		app.status.makeCall(data);
 	}
 
-	/**
-	 *
-	 * @param _action
-	 * @param _selected
-	 * @todo
-	 */
-	private videoconference_scheduleCall(_action, _selected)
-	{
-
-	}
-
 }
 
 app.classes.addressbook = AddressbookApp;
