@@ -481,9 +481,6 @@ var et2_file = /** @class */ (function (_super) {
         if (typeof this.onFinishOne == 'function') {
             this.onFinishOne(event, response, name);
         }
-        else if (this.options.onFinishOne) {
-            et2_call(this.options.onFinishOne, event, response, name);
-        }
         return true;
     };
     /**
