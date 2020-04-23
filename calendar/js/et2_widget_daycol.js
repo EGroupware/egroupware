@@ -566,8 +566,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		}
 
 		// Seperate loop so column sorting finds all children in the right place
-		let child_length = this._children.length;
-		for(var c = 0; c < events.length && c < child_length; c++)
+		for(var c = 0; c < events.length && c < this._children.length; c++)
 		{
 			var event = this.getWidgetById('event_'+events[c].id);
 			if(!event) continue;
