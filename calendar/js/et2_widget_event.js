@@ -684,9 +684,11 @@ var et2_calendar_event = /** @class */ (function (_super) {
      *
      * @param event
      * @param filter
+     * @param owner The owner of the target / parent, not the event owner
      * @private
      */
     et2_calendar_event.prototype._status_check = function (event, filter, owner) {
+        var _a;
         if (!owner || !event) {
             return false;
         }
@@ -717,11 +719,15 @@ var et2_calendar_event = /** @class */ (function (_super) {
             }
             if ((isNaN(parseInt(owner)) || parseInt(owner) < 0) && options && typeof options.find == "function") {
                 var resource = options.find(function (element) {
-                    return element.id == owner;
+                    return element.id == owner && element.resources;
                 }) || {};
-                if (resource && resource.resources) {
-                    var matching_participant = resource.resources.filter(function (id) { return typeof event.participants[id] != "undefined"; });
+                var matching_participant = (_a = resource) === null || _a === void 0 ? void 0 : _a.resources.filter(function (id) { return typeof event.participants[id] != "undefined"; });
+                if (matching_participant.length > 0) {
                     return this._status_check(event, filter, matching_participant);
+                }
+                else if (filter == 'owner' && resource && resource.resources.indexOf(event.owner)) {
+                    // owner param was a group but event is owned by someone in that group
+                    return true;
                 }
             }
         }

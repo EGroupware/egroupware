@@ -881,6 +881,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 	 *
 	 * @param event
 	 * @param filter
+	 * @param owner The owner of the target / parent, not the event owner
 	 * @private
 	 */
 	_status_check(event, filter: string, owner: string | string[]): boolean
@@ -929,12 +930,17 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			{
 				let resource = options.find(function (element)
                 {
-                    return element.id == owner;
+                    return element.id == owner && element.resources;
                 }) || {};
-				if(resource && resource.resources)
+				let matching_participant = resource?.resources.filter(id => typeof event.participants[id] != "undefined");
+				if(matching_participant.length > 0)
 				{
-					let matching_participant = resource.resources.filter(id => typeof event.participants[id] != "undefined");
 					return this._status_check(event, filter, matching_participant);
+				}
+				else if (filter == 'owner' && resource && resource.resources.indexOf(event.owner))
+				{
+					// owner param was a group but event is owned by someone in that group
+					return true;
 				}
 			}
 		}
