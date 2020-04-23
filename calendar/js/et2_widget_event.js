@@ -898,7 +898,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				{
 					return element.id == owner && element.resources;
 				}) || {};
-				let matching_participant = resource?.resources.filter(id => typeof event.participants[id] != "undefined");
+				let matching_participant = resource.resources.filter(id => typeof event.participants[id] != "undefined");
 				if(matching_participant.length > 0)
 				{
 					return this._status_check(event, filter, matching_participant);
