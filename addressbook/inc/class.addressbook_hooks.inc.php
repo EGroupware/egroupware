@@ -576,4 +576,50 @@ class addressbook_hooks
 		if (empty($config['geolocation_url']))	$ret ['geolocation_url'] = $geoLocation[0]['value'];
 		return $ret;
 	}
+
+
+	/**
+	 * get actions
+	 *
+	 * @return array return an array of actions
+	 */
+	public static function status_get_actions()
+	{
+		$config = Api\Config::read('stylite');
+
+		return [
+			'addressbook_phonecall' => [
+				'caption' => 'Phone Call',
+				'icon' => 'call',
+				'group' => 2,
+				'enabled' => !empty($config['pbx_type']) && !empty($config['pbx_api_key']),
+				'disableIfNoEPL' => !$GLOBALS['egw_info']['apps']['stylite'],
+				'children' => [
+					'addressbook_tel_work' => [
+						'caption' => lang('Business phone'),
+						'icon' => 'phone',
+						'onExecute' => 'javaScript:app.status.phoneCall',
+						'enabled' => 'javaScript:app.status.phoneIsAvailable'
+					],
+					'addressbook_tel_cell' => [
+						'caption' => lang('Mobile phone'),
+						'icon' => 'personal',
+						'onExecute' => 'javaScript:app.status.phoneCall',
+						'enabled' => 'javaScript:app.status.phoneIsAvailable'
+					],
+					'addressbook_tel_home' => [
+						'caption' => lang('Home phone'),
+						'icon' => 'home',
+						'onExecute' => 'javaScript:app.status.phoneCall',
+						'enabled' => 'javaScript:app.status.phoneIsAvailable'
+					],
+					'addressbook_tel_prefer' => [
+						'caption' => lang('Favorite phone'),
+						'icon' => 'fav_filter',
+						'onExecute' => 'javaScript:app.status.phoneCall',
+						'enabled' => 'javaScript:app.status.phoneIsAvailable'
+					]
+				]
+			]
+		];
 }

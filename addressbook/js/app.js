@@ -1355,16 +1355,5 @@ app.classes.addressbook = AppJS.extend(
 			});
 		}
 		app.status.makeCall(data);
-	},
-
-	/**
-	 *
-	 * @param _action
-	 * @param _selected
-	 * @todo
-	 */
-	videoconference_scheduleCall: function(_action, _selected)
-	{
-
 	}
 });
