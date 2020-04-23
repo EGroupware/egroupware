@@ -517,6 +517,9 @@ var et2_calendar_event = /** @class */ (function (_super) {
             if (this.options.value.participants[egw.user('account_id')] && this.options.value.participants[egw.user('account_id')][0] == 'U') {
                 icons.push('<img src="' + this.egw().image('needs-action', 'calendar') + '" title="' + this.egw().lang('Needs action') + '"/>');
             }
+            if (this.options.value["##videoconference"]) {
+                icons.push('<img src="' + this.egw().image('videoconference', 'calendar') + '" title="' + this.egw().lang('videoconference') + '"/>');
+            }
         }
         // Always include non-blocking, regardless of privacy
         if (this.options.value.non_blocking) {

@@ -658,6 +658,10 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			{
 				icons.push('<img src="'+this.egw().image('needs-action','calendar')+'" title="'+this.egw().lang('Needs action')+'"/>');
 			}
+			if(this.options.value["##videoconference"])
+			{
+				icons.push('<img src="' + this.egw().image('videoconference','calendar') + '" title="' + this.egw().lang('videoconference') + '"/>');
+			}
 		}
 
 		// Always include non-blocking, regardless of privacy
