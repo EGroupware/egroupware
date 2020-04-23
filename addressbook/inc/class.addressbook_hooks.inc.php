@@ -622,4 +622,5 @@ class addressbook_hooks
 				]
 			]
 		];
+	}
 }
