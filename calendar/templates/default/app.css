@@ -807,6 +807,11 @@ Hide subsequent headers in week view with non-consolidated owners
 }
 .calendar_calEventTooltip img {
 	max-width: 1.5em;
+	vertical-align: middle;
+	padding-left: 5px;
+}
+.calendar_calEventTooltip [data-videoconference] {
+	cursor: pointer;
 }
 
 .calendar_calAddEvent{

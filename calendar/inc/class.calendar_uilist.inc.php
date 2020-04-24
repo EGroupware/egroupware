@@ -962,7 +962,7 @@ class calendar_uilist extends calendar_ui
 					'join' => [
 						'caption' => 'Join',
 						'icon' => 'status/videoconference_join',
-						'onExecute' => 'javaScript:app.calendar.joinVideoConference',
+						'onExecute' => 'javaScript:app.calendar.joinVideoConferenceAction',
 						'allowOnMultiple' => false,
 					]
 				]

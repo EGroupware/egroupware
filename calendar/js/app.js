@@ -4211,12 +4211,31 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		return data && data.data ? data.data['##videoconference'] : false;
 	},
 
-	joinVideoConference(_action, _sender)
+	/**
+	 * Action handler for join videoconference context menu
+	 *
+	 * @param _action
+	 * @param _sender
+	 */
+	joinVideoConferenceAction(_action, _sender)
 	{
 		let data = egw.dataGetUIDdata(_sender[0].id)['data'];
-		egw.json(
+
+		return this.joinVideoConference(data['##videoconference']);
+	},
+
+	/**
+	 * Join a videoconference
+	 *
+	 * Using the videoconference tag/ID, generate the URL and open it via JSON
+	 *
+	 * @param {string} videoconference
+	 */
+	joinVideoConference(videoconference)
+	{
+		return egw.json(
 			"EGroupware\\Status\\Videoconference\\Call::ajax_genMeetingUrl",
-			[data['##videoconference'],
+			[videoconference,
 				{
 					name:egw.user('account_fullname'),
 					account_id:egw.user('account_id'),
