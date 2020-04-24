@@ -4172,12 +4172,31 @@ class CalendarApp extends EgwApp
 		return data && data.data ? data.data['##videoconference'] : false;
 	}
 
-	public joinVideoConference(_action, _sender)
+	/**
+	 * Action handler for join videoconference context menu
+	 *
+	 * @param _action
+	 * @param _sender
+	 */
+	public joinVideoConferenceAction(_action : egwAction, _sender : egwActionObject[])
 	{
 		let data = egw.dataGetUIDdata(_sender[0].id)['data'];
-		egw.json(
+
+		return this.joinVideoConference(data['##videoconference']);
+	}
+
+	/**
+	 * Join a videoconference
+	 *
+	 * Using the videoconference tag/ID, generate the URL and open it via JSON
+	 *
+	 * @param {string} videoconference
+	 */
+	public joinVideoConference(videoconference)
+	{
+		return egw.json(
 			"EGroupware\\Status\\Videoconference\\Call::ajax_genMeetingUrl",
-			[data['##videoconference'],
+			[videoconference,
 				{
 					name:egw.user('account_fullname'),
 					account_id:egw.user('account_id'),

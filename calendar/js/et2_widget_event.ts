@@ -525,6 +525,25 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			}
 			cat.destroy();
 		}
+
+		// Location + Videoconference
+		let location = '';
+		if(this.options.value.location || this.options.value['##videoconference'])
+		{
+			location += '<p><span class="calendar_calEventLabel">' + this.egw().lang('Location') + '</span>:' +
+				egw.htmlspecialchars(this.options.value.location);
+			if(this.options.value['##videoconference'])
+			{
+				// Click handler is set in _bind_videoconference()
+				location += (this.options.value.location.trim() ? '<br />' : '') +
+					'<span data-videoconference="'+this.options.value['##videoconference']+ '">' + this.egw().lang('Videoconference') +
+					'<img src="' + this.egw().image('videoconference', 'calendar') + '"/></span>';
+				this._bind_videoconference();
+			}
+			location += '</p>';
+		}
+
+		// Participants
 		let participants = '';
 		if(this.options.value.participant_types[''])
 		{
@@ -550,8 +569,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				'<span class="calendar_calEventTitle">'+egw.htmlspecialchars(this.options.value.title)+'</span><br>'+
 				egw.htmlspecialchars(this.options.value.description)+'</p>'+
 				'<p style="margin: 2px 0px;">'+times+'</p>'+
-				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' +
-				egw.htmlspecialchars(this.options.value.location)+'</p>' : '')+
+				location +
 				(cat_label ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Category') + '</span>:' + cat_label +'</p>' : '')+
 				'<p><span class="calendar_calEventLabel">'+this.egw().lang('Participants')+'</span>:<br />'+
 					participants + '</p>'+ this._participant_summary(this.options.value.participants) +
@@ -672,6 +690,19 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		return icons;
 	}
 
+	/**
+	 * Bind the click handler for opening the video conference
+	 *
+	 * Tooltips are placed in the DOM directly in the body, managed by egw.
+	 */
+	_bind_videoconference()
+	{
+		let vc_event = 'click.calendar_videoconference';
+		jQuery('body').off(vc_event)
+			.on(vc_event, '[data-videoconference]',function(event) {
+				app.calendar.joinVideoConference(this.dataset.videoconference);
+			});
+	}
 	/**
 	 * Get a text representation of the timespan of the event.  Either start
 	 * - end, or 'all day'
