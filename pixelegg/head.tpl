@@ -6,9 +6,9 @@
 		<meta name="keywords" content="EGroupware" />
 		<meta name="description" content="EGroupware" />
 		<meta name="keywords" content="EGroupware" />
-		<meta name="copyright" content="EGroupware GmbH http://www.egroupware.org (c) 2018" />
+		<meta name="copyright" content="EGroupware GmbH https://www.egroupware.org (c) 2020" />
 		<meta name="language" content="{lang_code}" />
-		<meta name="author" content="EGroupware GmbH http://www.egroupware.org" />
+		<meta name="author" content="EGroupware GmbH https://www.egroupware.org" />
 		{pngfix}
 		{meta_robots}
 		<link rel="manifest" href="{webserver_url}/manifest.json"/>
