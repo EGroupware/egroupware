@@ -6,9 +6,9 @@
 		<meta name="keywords" content="EGroupware" />
 		<meta name="description" content="EGroupware" />
 		<meta name="keywords" content="EGroupware" />
-		<meta name="copyright" content="Stylite AG 2013, see http://www.stylite.de/EPL" />
+		<meta name="copyright" content="EGroupware GmbH http://www.egroupware.org (c) 2020" />
 		<meta name="language" content="{lang_code}" />
-		<meta name="author" content="Stylite AG www.stylite.de" />
+		<meta name="author" content="EGroupware GmbH https://www.egroupware.org" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="viewport" content="user-scalable=no,width=device-width" />
 		<link rel="apple-touch-icon" href="{webserver_url}/api/templates/default/images/logo64x64.png" />
