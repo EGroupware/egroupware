@@ -1060,7 +1060,7 @@ class Accounts
 				'table' => $table,
 				'cols'  => array(
 					"'$app' AS app",
-					'"total" AS type',
+					"'total' AS type",
 					'count(' . $column['key'] . ') AS count'
 				),
 				'where' => array(
