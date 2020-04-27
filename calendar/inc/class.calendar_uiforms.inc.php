@@ -3375,7 +3375,8 @@ class calendar_uiforms extends calendar_ui
 			));
 
 			// Prepare calendar event draft
-			$event = array(
+			$event = $this->default_add_event();
+			$event = array_merge($event, array(
 				'title' => $mailContent['subject'],
 				'description' => $mailContent['message'],
 				'participants' => $participants,
@@ -3383,10 +3384,16 @@ class calendar_uiforms extends calendar_ui
 					'to_app' => 'calendar',
 					'to_id' => 0,
 				),
-				'start' => $mailContent['date'],
 				'duration' => 60 * $this->cal_prefs['interval'],
 				'owner' => $GLOBALS['egw_info']['user']['account_id']
-			);
+			));
+			$ts = new Api\DateTime();
+			$ts->setUser();
+			if($mailContent['date'] >= $ts->format('ts'))
+			{
+				// Mail from the future!  Ok, use that date
+				$event['start'] = $mailContent['date'];
+			}
 
 			if (is_array($mailContent['attachments']))
 			{
