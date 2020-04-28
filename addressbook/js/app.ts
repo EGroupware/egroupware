@@ -1343,6 +1343,11 @@ class AddressbookApp extends EgwApp
 		return true;
 	}
 
+	private videoconference_isThereAnyCall(_action, _selected)
+	{
+		return this.videoconference_isUserOnline(_action, _selected) && egw.getSessionItem('status', 'videoconference-session');
+	}
+
 	/**
 	 * Call action
 	 * @param _action
@@ -1360,7 +1365,14 @@ class AddressbookApp extends EgwApp
 				avatar: "account:"+row.data.account_id
 			});
 		}
-		app.status.makeCall(data);
+		if (_action.id == 'invite')
+		{
+			app.status.inviteToCall(data, egw.getSessionItem('status', 'videoconference-session'));
+		}
+		else
+		{
+			app.status.makeCall(data);
+		}
 	}
 
 }
