@@ -149,7 +149,7 @@ abstract class Framework extends Framework\Extra
 		header('Content-type: text/html; charset='.Translation::charset());
 
 		// add CSP frame-src for apps which are just iframes
-		foreach($GLOBALS['egw_info']['user']['apps'] as $app => $data)
+		foreach($GLOBALS['egw_info']['user']['apps'] ?: [] as $app => $data)
 		{
 			if ($GLOBALS['egw_info']['apps'][$app]['status'] == 1 && !empty($data['index']) &&
 				preg_match('|^(https?://[^/]+)|', $data['index'], $matches))
