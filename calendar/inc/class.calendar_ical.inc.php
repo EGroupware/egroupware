@@ -672,10 +672,11 @@ class calendar_ical extends calendar_boupdate
 							{
 								foreach ($event['recur_exception'] as $key => $timestamp)
 								{
-									// current Horde_Icalendar 2.1.4 exports EXDATE always postfixed with a Z :(
+									// current Horde_Icalendar 2.1.4 exports EXDATE always in UTC, postfixed with a Z :(
 									// so if we set a timezone here, we have to remove the Z, see the hack at the end of this method
 									// Apple calendar on OS X 10.11.4 uses a timezone, so does Horde eg. for Recurrence-ID
-									$event['recur_exception'][$key] = self::getDateTime($timestamp, $tzid, $parameters['EXDATE']);
+									$ex_date = new Api\DateTime($timestamp, Api\DateTime::$server_timezone);
+									$event['recur_exception'][$key] = self::getDateTime($ex_date->format('ts') + $ex_date->getOffset(), $tzid, $parameters['EXDATE']);
 								}
 							}
 							else
