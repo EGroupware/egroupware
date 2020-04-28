@@ -97,8 +97,6 @@ class Hooks
 
 			}
 			Api\Vfs::rename('/home/'.$data['account_lid'],$new_dir);
-			// make the new owner the owner of the dir and it's content
-			Api\Vfs::find($new_dir, array(), 'EGroupware\Api\Vfs::chown', $data['new_owner']);
 		}
 		elseif(!empty($data['account_lid']) && $data['account_lid'] != '/')
 		{
@@ -110,12 +108,8 @@ class Hooks
 			throw new Api\Exception\AssertionFailed(__METHOD__.'('.array2string($data).') account_lid NOT set!');
 		}
 
-		// Other files in home
-		Api\Vfs::find(
-				'/home',
-				array('user' => $data['account_lid']),
-				$data['new_owner'] ? 'EGroupware\Api\Vfs::chown' : 'EGroupware\Api\Vfs::remove', $data['new_owner']
-		);
+		// Change owner of all files
+		Api\Vfs\Sqlfs\StreamWrapper::chownAll($data['account_id'], $data['new_owner'] ? $data['new_owner'] : 0);
 
 		Api\Vfs::$is_root = false;
 	}
