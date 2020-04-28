@@ -962,6 +962,21 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	}
 
 	/**
+	 * chown but for all files a user owns
+	 *
+	 * @param $old_uid
+	 * @param $new_uid
+	 */
+	public static function chownAll($old_uid, $new_uid)
+	{
+		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_uid=:fs_uid WHERE fs_uid=:old_uid');
+		return $stmt->execute(array(
+			'fs_uid' => (int) $new_uid,
+			'old_uid' => $old_uid,
+		));
+	}
+
+	/**
 	 * Chgrp command, not yet a stream-wrapper function, but necessary
 	 *
 	 * @param string $url
