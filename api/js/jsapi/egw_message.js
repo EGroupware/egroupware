@@ -340,7 +340,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			for(var app_obj of _wnd.egw.window.EgwApp)	// run observers in main window (eg. not iframe, which might be opener!)
 			{
 				if (typeof app_obj.observer == 'function' &&
-					app_obj.observer(_msg, _app, _id, _type, _msg_type, _links) === false && app === _app)
+					app_obj.observer(_msg, _app, _id, _type, _msg_type, _links) === false && app_obj.appname === _app)
 				{
 					no_regular_refresh = true;
 				}
