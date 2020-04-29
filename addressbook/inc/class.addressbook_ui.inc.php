@@ -592,6 +592,13 @@ class addressbook_ui extends addressbook_bo
 						'onExecute' => 'javaScript:app.addressbook.videoconference_actionCall',
 						'enabled' => 'javaScript:app.addressbook.videoconference_isUserOnline'
 					],
+					'audiocall' => [
+						'caption' => lang('Audio Call'),
+						'icon' => 'accept_call',
+						'allowOnMultiple' => true,
+						'onExecute' => 'javaScript:app.addressbook.videoconference_actionCall',
+						'enabled' => 'javaScript:app.addressbook.videoconference_isUserOnline'
+					],
 					'invite' => [
 						'caption' => lang('Invite to current call'),
 						'icon' => 'status/videoconference_join',
