@@ -1119,7 +1119,8 @@ var AddressbookApp = /** @class */ (function (_super) {
             data.push({
                 id: row.data.account_id,
                 name: row.data.n_fn,
-                avatar: "account:" + row.data.account_id
+                avatar: "account:" + row.data.account_id,
+                audioonly: _action.id == 'audiocall' ? true : false
             });
         }
         if (_action.id == 'invite') {
