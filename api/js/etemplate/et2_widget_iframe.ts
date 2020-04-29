@@ -58,6 +58,12 @@ class et2_iframe extends et2_valueWidget
 			"default": "",
 			description: "Specifies URL for the iframe",
 			type: "string"
+		},
+		allow: {
+			name: "Allow",
+			"default": "",
+			description: "Specifies list of allow features, e.g. camera",
+			type: "string"
 		}
 	};
 
@@ -99,6 +105,11 @@ class et2_iframe extends et2_valueWidget
 		this.htmlNode.attr('name', _name);
 	}
 
+	set_allow (_allow)
+	{
+		this.options.allow = _allow;
+		this.htmlNode.attr('allow', _allow);
+	}
 	/**
 	 * Make it look like part of the containing document
 	 *
