@@ -55,6 +55,12 @@ var et2_iframe = (function(){ "use strict"; return et2_valueWidget.extend(
 			"default": "",
 			description: "Specifies URL for the iframe",
 			type: "string"
+		},
+		allow: {
+			name: "Allow",
+			"default": "",
+			description: "Specifies list of allow features, e.g. camera",
+			type: "string"
 		}
 	},
 
@@ -88,6 +94,12 @@ var et2_iframe = (function(){ "use strict"; return et2_valueWidget.extend(
 	 */
 	set_name: function(_name) {
 		this.htmlNode.attr('name', this.htmlNode.name = _name);
+	},
+
+	set_allow: function(_allow)
+	{
+		this.options.allow = _allow;
+		this.htmlNode.attr('allow', _allow);
 	},
 
 	/**
