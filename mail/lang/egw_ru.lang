@@ -17,6 +17,8 @@ any status	mail	ru	Любое состояние
 append	mail	ru	Дополнить
 attach users vcard at compose to every new mail	mail	ru	Вкладывать визитку пользователя в каждое новое письмо
 attach vcard	mail	ru	Вложить vCard (визитку)
+attachment	mail	ru	Вложение
+attachment has been saved successfully.	mail	ru	Вложение успешно сохранено
 attachments	mail	ru	Вложения
 available personal email-accounts/profiles	mail	ru	доступные личные адреса эл.почты/Профили
 but check shared folders	mail	ru	Не проверены папки, к которым дан доступ
@@ -37,6 +39,7 @@ convert mail to item and attach its attachments to this item (standard)	mail	ru	
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ru	конвертировать сообщение как отдельное сообщение,прикрепить и добавить  raw message (message/rfc822 (.eml)) как вложение
 copy to	mail	ru	Копировать в
 could not append message:	mail	ru	Не могу добавить сообщение
+create new account	mail	ru	Создать учётную запись
 date(newest first)	mail	ru	Дата (новые - первыми)
 date(oldest first)	mail	ru	Дата (старые - первыми)
 default sorting order	mail	ru	Порядок сортировки по умолчанию
@@ -108,6 +111,7 @@ from(z->a)	mail	ru	От (Я->А)
 general	admin	ru	Общие
 general settings	mail	ru	Основные установки
 greater than	mail	ru	Больше чем
+header	mail	ru	Заголовок
 header lines	mail	ru	Строки заголовка
 home page folders	mail	ru	Заголовки домашней страницы
 how often to check with the server for new mail	mail	ru	Интервал проверки почты на сервере
@@ -127,13 +131,14 @@ import of message %1 failed. destination folder %2 does not exist.	mail	ru	Не�
 import of message %1 failed. destination folder not set.	mail	ru	Невозможно импортировать %1 сообщение. Папка назначения не установлена.
 import of message %1 failed. no contacts to merge and send to specified.	mail	ru	Невозможно импортировать сообщение %1. Не указаны контакты для объединения и отправления.
 importance	mail	ru	Значение
+important	mail	ru	Важное
 inbox	mail	ru	Входящие (INBOX)
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	ru	Вставить подпись в начало нового сообщения  при открытии диалогового окна "создать"(или "ответить")
-job	mail	ru	работа
+job	mail	ru	Работа
 junk	mail	ru	Спам
 keep a copy of the message in your inbox	mail	ru	Хранить копию сообщений в вашей папке Входящие (inbox)
 kilobytes	mail	ru	Килобайт
-later	mail	ru	отложить
+later	mail	ru	Отложить
 less than	mail	ru	Меньше чем
 mail	common	ru	Почта
 mail settings	mail	ru	Установки почты
@@ -208,6 +213,8 @@ reply all	mail	ru	Ответить всем
 reply message type	mail	ru	Тип сообщения-ответа
 reply to	mail	ru	Ответить
 replyto	mail	ru	Ответить
+report as ham	mail	ru	Пометить как не-спам
+report as spam	mail	ru	Пометить как спам
 required pear class mail/mimedecode.php not found.	mail	ru	Необходимый PEAR class Mail / mimeDecode.php не найден.
 restrict acl management	admin	ru	Ограничение управления правами ACL
 row order style	mail	ru	Порядок сортировки строк
@@ -218,6 +225,7 @@ save as infolog	mail	ru	Сохранить в ИнфоЖурнале
 save as ticket	mail	ru	Сохранить как запись Трекера
 save message to disk	mail	ru	Сохранить сообщение на диск
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	ru	Невозможно сохранить сообщение %1 . Не могу сохранить сообщение в папку %2 по причине: %3
+save to disk	mail	ru	Сохранить на диск
 save to filemanager	mail	ru	Сохранить с помощью файл-менеджера
 save:	mail	ru	Сохранить
 saving of message %1 failed. destination folder %2 does not exist.	mail	ru	Сохранение сообщения %1 не удалось. Папка назначения %2 не существует.
@@ -242,9 +250,11 @@ signature	mail	ru	Подпись
 signature at top	mail	ru	Подпись сверху
 size(...->0)	mail	ru	Размер (...->0)
 size(0->...)	mail	ru	Размер (0->...)
-small view	mail	ru	просмотр в небольшом окне
+small view	mail	ru	Просмотр в небольшом окне
 sneak preview in list	mail	ru	Предварительный просмотр в списке
-sort order	mail	ru	Порядок Сортировки
+sort order	mail	ru	Порядок сортировки
+source	mail	ru	Исходный код
+sources	mail	ru	Исходные коды
 start new messages with mime type plain/text or html?	mail	ru	новые сообщения начинать как текст или html?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	ru	Создать ответ на сообщение как текст (или html), или использовать формат сообщения по умолчанию?
 subject(a->z)	mail	ru	Тема (А->Я)
@@ -279,6 +289,7 @@ vacation notice is active	mail	ru	Автоответчик активен.
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	ru	Автоответчик ещё не сохранен! (Но мы заполнили некоторые значения по умолчанию, чтобы исправить некоторые ошибки.Проверьте и исправьте настройки и сохраните снова.)
 vacation notice update failed	mail	ru	Обновить уведомление об отпуске не удалось
 vacation start-date must be before the end-date!	mail	ru	Дата начала действия автоответчика должно быть РАНЬШЕ даты окончания!
+view full mail source	mail	ru	Показать полный исходный код сообщения
 view header lines	mail	ru	Просмотр строк заголовка
 what do do with html email	mail	ru	Что делать с почтой в формате HTML
 what order the list columns are in	mail	ru	Порядок расположения столбцов в списке сообщений

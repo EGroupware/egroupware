@@ -5,14 +5,18 @@
 %1 is not readable	importexport	fr	%1 n'est pas lisible.
 %1 is not writable	importexport	fr	%1 n'est pas inscriptible.
 %1 records processed	importexport	fr	%1 enregistrements traités.
+%s all users	importexport	fr	%s tous les utilisateurs
 %s just me	importexport	fr	%s seulement moi
 (* for all)	importexport	fr	(* pour tous)
 (0-23)	importexport	fr	(0-23)
 (0-6, 0=sun)	importexport	fr	(0-6, 0=Dim=
 *contact id cannot be changed by import	importexport	fr	* l'id du contact ne peut pas être changé par l'import
+add a new definition	importexport	fr	Ajouter une nouvelle définition
+add an additional condition	importexport	fr	Ajouter une nouvelle condition
 addressbook csv import	importexport	fr	Import csv du carnet d'adresses
 addressbook vcard import	importexport	fr	Import vCard du carnet d'adresses
 admin disabled exporting	importexport	fr	L'administrateur a désactivé les exports
+all custom fields	importexport	fr	Tous les champs personnalisés
 all encodings	importexport	fr	Tous les encodages
 all users	importexport	fr	Tous les utilisateurs
 allowed users	importexport	fr	Utilisateurs autorisés
