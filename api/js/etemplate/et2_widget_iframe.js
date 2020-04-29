@@ -65,6 +65,10 @@ var et2_iframe = /** @class */ (function (_super) {
         this.options.name = _name;
         this.htmlNode.attr('name', _name);
     };
+    et2_iframe.prototype.set_allow = function (_allow) {
+        this.options.allow = _allow;
+        this.htmlNode.attr('allow', _allow);
+    };
     /**
      * Make it look like part of the containing document
      *
@@ -157,6 +161,12 @@ var et2_iframe = /** @class */ (function (_super) {
             name: "Source",
             "default": "",
             description: "Specifies URL for the iframe",
+            type: "string"
+        },
+        allow: {
+            name: "Allow",
+            "default": "",
+            description: "Specifies list of allow features, e.g. camera",
             type: "string"
         }
     };
