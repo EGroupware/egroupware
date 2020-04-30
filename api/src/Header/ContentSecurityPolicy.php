@@ -37,8 +37,8 @@ class ContentSecurityPolicy
 	private static $sources = array(				// our dhtmlxcommon version (not the current) uses eval,
 		'script-src'  => array("'unsafe-eval'"),	// sidebox javascript links, et2_widget_date / jQueryUI datepicker, maybe more
 		'style-src'   => array("'unsafe-inline'"),	// eTemplate styles and custom framework colors
-		'connect-src' => null,	// NOT array(), to allow setting no default connect-src!
-		'frame-src'   => null,	// NOT array(), to allow setting no default frame-src!
+		'connect-src' => null,	// NOT array(), to call the hook
+		'frame-src'   => null,	// NOT array(), to call the hook
 		'manifest-src'=> ["'self'"],
 		'frame-ancestors' => ["'self'"],	// does not allow to frame (embed in frameset) other then self / clickjacking protection
 		'media-src'   => ["data:"],
@@ -49,7 +49,7 @@ class ContentSecurityPolicy
 	/**
 	 * Add Content-Security-Policy sources
 	 *
-	 * Calling this method with an empty array for frame-src, sets no defaults but "'self'"!
+	 * Calling this method with an empty array for frame-src or connect-src causes the hook to NOT run and just set 'self'!
 	 *
 	 * @param string $source valid CSP source types like 'script-src', 'style-src', 'connect-src', 'frame-src', ...
 	 * @param string|array $attrs 'unsafe-eval', 'unsafe-inline' (without quotes!), full URLs or protocols (incl. colon!)
@@ -65,9 +65,8 @@ class ContentSecurityPolicy
 		elseif (!isset(self::$sources[$source]))
 		{
 			// set frame-src attrs of API and apps via hook
-			if (in_array($source, ['frame-src', 'connect-src']) && !isset($attrs))
+			if (in_array($source, ['frame-src', 'connect-src']) && $attrs !== [])
 			{
-				$attrs = [];
 				// for regular (non login) pages, call hook allowing apps to add additional frame- and connect-src
 				if (basename($_SERVER['PHP_SELF']) !== 'login.php' &&
 					// no permission / user-run-rights check for connect-src
@@ -75,7 +74,7 @@ class ContentSecurityPolicy
 				{
 					foreach($app_additional as $app => $additional)
 					{
-						if ($additional) $attrs = array_unique(array_merge($attrs, $additional));
+						if ($additional) $attrs = array_unique(array_merge((array)$attrs, $additional));
 					}
 				}
 			}
@@ -124,6 +123,8 @@ class ContentSecurityPolicy
 	/**
 	 * Set Content-Security-Policy attributes for connect-src:
 	 *
+	 * Calling this method with an empty array for caused the hook to NOT run and just set 'self'!
+	 *
 	 * @param string|array $set 'unsafe-eval', 'unsafe-inline' (without quotes!), full URLs or protocols (incl. colon!)
 	 */
 	public static function add_connect_src($set=null)
@@ -134,7 +135,7 @@ class ContentSecurityPolicy
 	/**
 	 * Set/get Content-Security-Policy attributes for frame-src:
 	 *
-	 * Calling this method with an empty array sets no frame-src, but "'self'"!
+	 * Calling this method with an empty array for caused the hook to NOT run and just set 'self'!
 	 *
 	 * @param string|array $set 'unsafe-eval', 'unsafe-inline' (without quotes!), full URLs or protocols (incl. colon!)
 	 */
