@@ -228,7 +228,7 @@ etemplate2.prototype.clear = function()
 	{
 		for(var app_name in this.app_obj)
 		{
-			if(this.app_obj[app_name] instanceof EgwApp)
+			if(this.app_obj[app_name] instanceof AppJS)
 			{
 				this.app_obj[app_name].destroy();
 			}
