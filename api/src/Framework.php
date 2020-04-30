@@ -148,16 +148,6 @@ abstract class Framework extends Framework\Extra
 		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
 		header('Content-type: text/html; charset='.Translation::charset());
 
-		// add CSP frame-src for apps which are just iframes
-		foreach($GLOBALS['egw_info']['user']['apps'] ?: [] as $app => $data)
-		{
-			if ($GLOBALS['egw_info']['apps'][$app]['status'] == 1 && !empty($data['index']) &&
-				preg_match('|^(https?://[^/]+)|', $data['index'], $matches))
-			{
-				ContentSecurityPolicy::add_frame_src($matches[1]);
-			}
-		}
-
 		Header\ContentSecurityPolicy::send();
 
 		// allow client-side to detect first load aka just logged in
