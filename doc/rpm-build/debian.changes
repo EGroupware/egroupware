@@ -1,3 +1,31 @@
+egroupware-docker (19.1.20200430) hardy; urgency=low
+
+  * Jitsi/Status: many of improvments for easier video conferences and calls
+  *  added a ringtone when being called and also signaling it via a link in Rocket.Chat
+  *  ask user to try again, if a call is not answered and tell called one he missed the call
+  *  display alarms for videoconferences and offer easy joining
+  *  allow to invite users to already running video calls or sheduled meetings
+  * Status: add phone call actions (only if telephony system is integrated)
+  * Calendar: video conference links in notifications expired before the meeting date
+  * Calendar: add clickable link to videoconference in event tooltip
+  * Calendar: add videoconference icon to event tooltip
+  * Calendar: disable some owner/participant pre-loading for faster initial open
+  * Calendar: fix events later in the day would not show if one was filtered out
+  * Calendar: fix more than 2 exceptions caused missed exceptions with CalDAV under iOS
+  * Mail: automatic remove some invisible Unicode chars breaking email addresses
+  * Timesheet: fix update via import without category or status cleared original
+  * Timesheet: fix import condition checks
+  * Api: make sure share cleanup job doesn't remove shares just because of access rights
+  * Collabora: fix document revision history only available in english
+  * Collabora: fix document's previous versions were only available in english
+  * News: display link to categories in sidebox-menu and administration
+  * OpenIDConnect: fix JWT don't validate for client in certain proxying situations because of wrong issuer
+  * Admin: deleting accounts no longer fails because of memmory limit on huge installations
+  * Addressbook: fixed not working avatar upload
+  * Guacamole: fixing diverse glichtes in usage and installation
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 30 Apr 2020 19:26:46 +0200
+
 egroupware-docker (19.1.20200409) hardy; urgency=low
 
   #CoronaVirus #StayAtHome #HomeOffice release featuring
