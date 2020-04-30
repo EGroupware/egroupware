@@ -232,7 +232,7 @@ class Hooks
 	/**
 	 * Read all hooks into self::$locations
 	 *
-	 * @param boolan $force_rescan =false true: do not use instance cache
+	 * @param boolean $force_rescan =false true: do not use instance cache
 	 */
 	public static function read($force_rescan=false)
 	{
@@ -280,7 +280,8 @@ class Hooks
 
 	/**
 	 * Static function to build pgp encryption sidebox menu
-	 * @param type $appname application name
+	 *
+	 * @param string $appname application name
 	 */
 	public static function pgp_encryption_menu($appname)
 	{
