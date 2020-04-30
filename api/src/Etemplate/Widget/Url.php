@@ -32,7 +32,9 @@ class Url extends Etemplate\Widget
 	 * but NOT:
 	 * - "Becker, Ralf <rb@stylite.de>" (contains comma outside " or ' enclosed block)
 	 * - "Becker < Ralf <rb@stylite.de>" (contains <    ----------- " ---------------)
-	 * - ToDo: "\u200Bfrancesca.klein@ikem.de" (starts with a "zero width space")
+	 * automatic cleaning of common mistakes (makes no sense to complain about them, as they are not visible to the user)
+	 * - "\u200Bfrancesca.klein@ikem.de" (starts with an unicode "zero width space")
+	 * - "info︃@joswieg.de" (Unicode variation selector "\uFE0X" before the @, meaning eg. not to be displayed as Emotji)
 	 *
 	 * About umlaut or IDN domains: we currently only allow German umlauts in domain part!
 	 * Client-side forbids all non-ascii chars in local part, as Horde does not yet support SMTPUTF8 extension (rfc6531)
@@ -119,6 +121,8 @@ class Url extends Etemplate\Widget
 						}
 						break;
 					case 'url-email':
+						// some automatic cleaning: unicode variation selectors, zero width space
+						$value = preg_replace('/[\x{FE00}-\x{FE0F}\x{200B}]/u', '', $value);
 						$this->attrs['preg'] = self::EMAIL_PREG;
 						break;
 				}
