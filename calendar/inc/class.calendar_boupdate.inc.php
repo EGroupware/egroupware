@@ -1059,7 +1059,7 @@ class calendar_boupdate extends calendar_bo
 						'email' => is_numeric($userid) ? Api\Accounts::id2name($userid, 'account_email') : $userid,
 						'avatar' => (string)$avatar,
 						'account_id' => $userid
-					]);
+					], [], $startdate, $enddate);
 					$event_arr['videoconference'] = [
 						'field' => lang('Video Conference'),
 						'data'  => $details['videoconference'],
