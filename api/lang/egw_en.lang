@@ -1251,8 +1251,8 @@ setup	common	en	Setup
 setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
 share	common	en	Share
-share files	common	en	Share files
 share filemanager directory	common	en	Filemanager directory
+share files	common	en	Share files
 share just the associated filemanager directory, not the %1	common	en	Share just the associated filemanager directory, not the %1
 share link	common	en	Share link
 share this %1 via url	common	en	Share this %1 via URL

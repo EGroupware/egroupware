@@ -1248,8 +1248,8 @@ setup	common	de	Setup
 setup main menu	common	de	Setup Hauptmenü
 seychelles	common	de	SEYCHELLEN
 share	common	de	Teilen
-share files	common	de	Dateien teilen
 share filemanager directory	common	de	Dateimanager Verzeichnis
+share files	common	de	Dateien teilen
 share link	common	de	Link teilen
 shift	common	de	Shift
 shift ⇧	common	de	Umschalten ⇧
@@ -1280,7 +1280,7 @@ showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
 shows / allows you to enter values into the etemplate for testing	common	de	zeigt den Inhalt / Werte an und erlaubt welche zum Testen des eTemplates einzugeben
 shows/displays etemplate for testing, does not save it before	common	de	zeigt eTemplate zum Testen an, speichert es NICHT davor
 sierra leone	common	de	SIERRA LEONE
-sign up	common	de	Anmelden
+sign up	common	de	Registrieren
 simple	common	de	Einfach
 singapore	common	de	SINGAPUR
 site configuration	common	de	Konfiguration der Anwendung
