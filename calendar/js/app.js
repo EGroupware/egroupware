@@ -3358,6 +3358,19 @@ var CalendarApp = /** @class */ (function (_super) {
             // notify all participants
             this.et2.getWidgetById('participants[notify_externals]').set_value('yes');
             // add alarm for all participants 5min before videoconference
+            var start = new Date(widget.getRoot().getWidgetById('start').getValue());
+            var alarms = this.et2.getArrayMgr('content').getEntry('alarm') || {};
+            for (var _i = 0, alarms_1 = alarms; _i < alarms_1.length; _i++) {
+                var alarm = alarms_1[_i];
+                // Check for already existing alarm
+                if (!alarm || typeof alarm != "object" || !alarm.all)
+                    continue;
+                var alarm_time = new Date(alarm.time);
+                if (start.getTime() - alarm_time.getTime() == 5 * 60 * 1000) {
+                    // Alarm exists
+                    return;
+                }
+            }
             this.et2.getWidgetById('new_alarm[options]').set_value('300');
             this.et2.getWidgetById('new_alarm[owner]').set_value('0'); // all participants
             this.et2.getWidgetById('button[add_alarm]').click();
