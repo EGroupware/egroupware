@@ -948,3 +948,4 @@ write tables	common	no	Lagre tabeller
 xml-file to import	common	no	xml-fil som skal importeres
 xslt template	common	no	XSLT Mal
 year	common	no	År
+id	common	no	Id

@@ -454,6 +454,7 @@ class Accounts
 			$lid       = $GLOBALS['egw_info']['user']['account_lid'];
 			$firstname = $GLOBALS['egw_info']['user']['account_firstname'];
 			$lastname  = $GLOBALS['egw_info']['user']['account_lastname'];
+			$accountid = $GLOBALS['egw_info']['user']['account_id'];
 		}
 		$is_group = $GLOBALS['egw']->accounts->get_type($accountid ? $accountid : $lid) == 'g';
 
@@ -501,6 +502,12 @@ class Accounts
 			case 'lastgroup':
 				$group = Accounts::id2name($lid, 'account_primary_group');
 				$name = $lastname . $delimiter . $firstname . ($is_group ? '' : ' ('.Accounts::id2name($group).')');
+				break;
+			case 'firstinital':
+				$name = $firstname.' '.mb_substr($lastname, 0, 1).'.';
+				break;
+			case 'firstid':
+				$name = $firstname.' ['.$accountid.']';
 				break;
 			case 'all':
 				/* fall through */

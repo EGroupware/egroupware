@@ -923,3 +923,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	common	hr	xml-file to import
 xslt template	common	hr	XSLT Template
 year	common	hr	Year
+id	common	hr	identitet

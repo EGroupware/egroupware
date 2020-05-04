@@ -928,3 +928,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	common	fa	پرونده xml برای ورود
 xslt template	common	fa	فرم XSLT
 year	common	fa	سال
+id	common	fa	کد
