@@ -53,6 +53,11 @@ class Egw extends Egw\Base
 	var $accounts;
 
 	/**
+	 * @var Session
+	 */
+	public $session;
+
+	/**
 	 * Constructor: Instantiates the sub-classes
 	 *
 	 * @author RalfBecker@outdoor-training.de
