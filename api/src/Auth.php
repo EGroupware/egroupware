@@ -428,6 +428,8 @@ class Auth
 		'md5_crypt' => array('CRYPT_MD5', '$1$', 8, '$'),
 		//'old_blowfish_crypt' => array('CRYPT_BLOWFISH', '$2$', 13, ''),	// old blowfish hash not in line with php.net docu, but could be in use
 		'blowfish_crypt' => array('CRYPT_BLOWFISH', '$2a$12$', 22, ''),	// $2a$12$ = 2^12 = 4096 rounds
+		// password_hash($pwd, PASSWORD_BCRYPT) uses $2y$10$
+		'password_bcrypt' => array('CRYPT_BLOWFISH', '$2y$10$', 22, ''),	// $2y$10$ = 2^10 = 1024 rounds
 		'sha256_crypt' => array('CRYPT_SHA256', '$5$', 16, '$'),	// no "round=N$" --> default of 5000 rounds
 		'sha512_crypt' => array('CRYPT_SHA512', '$6$', 16, '$'),	// no "round=N$" --> default of 5000 rounds
 	);
