@@ -902,3 +902,5 @@ xml-file to import	common	id	berkas xml untuk impor
 xslt template	common	id	Templat XSLT
 year	common	id	Tahun
 you can respond by visiting:	common	id	Untuk melihatnya, kunjungi:
+initial	common	id	Initial
+id	common	id	ID

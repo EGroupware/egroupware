@@ -1175,3 +1175,5 @@ xml-file to import	common	zh	要导入的 XML-文件
 xslt template	common	zh	XSLT 模板
 year	common	zh	年
 you can respond by visiting:	common	zh	查看访问：
+initial	common	zh	初始的
+id	common	zh	编号

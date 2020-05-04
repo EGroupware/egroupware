@@ -763,3 +763,5 @@ update a single entry by passing the fields.	common	el	Ενημέρωση συγ
 view this linked entry in its application	common	el	εμφάνιση αυτής της συνδεδεμένης καταχώρησης στην αίτησή της
 wk	common	el	Εβδ
 you can respond by visiting:	common	el	Για να το δείτε επισκεφθείτε:
+initial	common	el	Αρχικό
+id	common	el	Id

@@ -913,3 +913,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	common	lv	xml datne importēšanai
 xslt template	common	lv	XSLT veidne
 year	common	lv	Gads
+id	common	lv	ID

@@ -1045,3 +1045,5 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	common	ca	fichero xml a importar
 xslt template	common	ca	Plantilla XSLT
 year	common	ca	Año
+initial	common	ca	Inicial
+id	common	ca	id

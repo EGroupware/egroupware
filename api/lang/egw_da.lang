@@ -699,3 +699,4 @@ update a single entry by passing the fields.	common	da	opdater et enkelt element
 upload	common	da	Upload
 view this linked entry in its application	common	da	se det linkede emne i dets program
 wk	common	da	Uge
+id	common	da	ID

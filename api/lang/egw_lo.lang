@@ -790,3 +790,5 @@ select a category	common	lo	ເລືອກໝວດໝູ່
 selectbox	common	lo	ຊ່ອງສໍາລັບເລືອກ
 show	common	lo	ສະແດງ
 wk	common	lo	ອາທິດໜຶ່ງ
+initial	common	lo	ເບືອງຕົ້ນ
+id	common	lo	ລະຫັດ

@@ -82,6 +82,8 @@ class preferences_hooks
 			'all'       => '['.lang('username').'] '.lang('Lastname').','.lang('Firstname'),
 			'firstgroup'=> lang('Firstname').' '.lang('Lastname').' ('.lang('primary group').')',
 			'lastgroup' => lang('Lastname').', '.lang('Firstname').' ('.lang('primary group').')',
+			'firstinital' => lang('Firstname').' '.lang('Initial'),
+			'firstid'   => lang('Firstname').' ['.lang('ID').']',
 		);
 
 		if ($hook_data['setup'])	// called via setup

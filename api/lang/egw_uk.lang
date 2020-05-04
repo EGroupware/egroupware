@@ -502,3 +502,4 @@ type	common	uk	Тип
 unlink	common	uk	Викинути
 update a single entry by passing the fields.	common	uk	Змінити один запис шляхом заповнення полів.
 view this linked entry in its application	common	uk	переглянути посилання в відповідному приложенні
+id	common	uk	Id

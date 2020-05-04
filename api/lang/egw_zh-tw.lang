@@ -1154,3 +1154,5 @@ xml-file to import	common	zh-tw	要匯入的XML檔案
 xslt template	common	zh-tw	XSLT樣版
 year	common	zh-tw	年
 you can respond by visiting:	common	zh-tw	檢視網址：
+initial	common	zh-tw	初始的
+id	common	zh-tw	編號
