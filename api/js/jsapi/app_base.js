@@ -151,6 +151,11 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			this.sidebox.off();
 		delete this.sidebox;
 		if (!_app) delete app[this.appname];
+		let index = -1;
+		if((index = AppJS._instances.indexOf(this)) >= 0)
+		{
+			AppJS._instances.splice(index,1);
+		}
 	},
 
 	/**
