@@ -201,7 +201,7 @@ var et2_url = /** @class */ (function (_super_1) {
                 }
                 break;
             case "url-email":
-                if (!e.data.EMAIL_PREG.test(value) ||
+                if (!et2_url.EMAIL_PREG.test(value) ||
                     // If they use Text <email>, make sure the <> match
                     (value.indexOf("<") > 0 && value.indexOf(">") != value.length - 1) ||
                     (value.indexOf(">") > 0 && value.indexOf("<") < 0)) {
