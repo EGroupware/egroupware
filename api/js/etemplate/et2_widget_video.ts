@@ -49,7 +49,7 @@ import {WidgetConfig} from "./et2_core_widget";
  *
  * @augments et2_baseWidget
  */
-class et2_video  extends et2_baseWidget implements et2_IDOMNode
+export class et2_video  extends et2_baseWidget implements et2_IDOMNode
 {
     static readonly _attributes: any  = {
         "video_src": {
@@ -101,7 +101,7 @@ class et2_video  extends et2_baseWidget implements et2_IDOMNode
         super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {}));
 
         //Create Video tag
-        this.video = jQuery(document.createElement("video"));
+		this.video = jQuery(document.createElement("video"));
         if (this.options.controls)
         {
             this.video.attr("controls", 1);
