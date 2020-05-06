@@ -1070,7 +1070,7 @@ class calendar_boupdate extends calendar_bo
 					// hack to add videoconference-url to ical, only if description was NOT cleared
 					if (isset($cleared_event['description']))
 					{
-						$cleared_event['description'] = lang('Videoconference').': '.$details['videoconference']."\n\n".$event['description'];
+						$cleared_event['description'] = lang('Video conference').': '.$details['videoconference']."\n\n".$event['description'];
 					}
 				}
 				//error_log(__METHOD__."() userid=$userid, timezone=".$timezone->getName().", startdate=$details[startdate], enddate=$details[enddate], updated=$details[updated], olddate=$details[olddate]");

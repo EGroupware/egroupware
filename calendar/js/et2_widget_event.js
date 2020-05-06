@@ -419,7 +419,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
             if (this.options.value['##videoconference']) {
                 // Click handler is set in _bind_videoconference()
                 location += (this.options.value.location.trim() ? '<br />' : '') +
-                    '<span data-videoconference="' + this.options.value['##videoconference'] + '">' + this.egw().lang('Videoconference') +
+                    '<span data-videoconference="' + this.options.value['##videoconference'] + '">' + this.egw().lang('Video conference') +
                     '<img src="' + this.egw().image('videoconference', 'calendar') + '"/></span>';
                 this._bind_videoconference();
             }
@@ -532,7 +532,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
                 icons.push('<img src="' + this.egw().image('needs-action', 'calendar') + '" title="' + this.egw().lang('Needs action') + '"/>');
             }
             if (this.options.value["##videoconference"]) {
-                icons.push('<img src="' + this.egw().image('videoconference', 'calendar') + '" title="' + this.egw().lang('videoconference') + '"/>');
+                icons.push('<img src="' + this.egw().image('videoconference', 'calendar') + '" title="' + this.egw().lang('video conference') + '"/>');
             }
         }
         // Always include non-blocking, regardless of privacy

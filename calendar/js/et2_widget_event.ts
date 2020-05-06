@@ -536,7 +536,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			{
 				// Click handler is set in _bind_videoconference()
 				location += (this.options.value.location.trim() ? '<br />' : '') +
-					'<span data-videoconference="'+this.options.value['##videoconference']+ '">' + this.egw().lang('Videoconference') +
+					'<span data-videoconference="'+this.options.value['##videoconference']+ '">' + this.egw().lang('Video conference') +
 					'<img src="' + this.egw().image('videoconference', 'calendar') + '"/></span>';
 				this._bind_videoconference();
 			}
@@ -678,7 +678,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			}
 			if(this.options.value["##videoconference"])
 			{
-				icons.push('<img src="' + this.egw().image('videoconference','calendar') + '" title="' + this.egw().lang('videoconference') + '"/>');
+				icons.push('<img src="' + this.egw().image('videoconference','calendar') + '" title="' + this.egw().lang('video conference') + '"/>');
 			}
 		}
 
