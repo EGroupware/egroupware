@@ -965,9 +965,11 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			{
 				let resource = options.find(function (element)
                 {
-                    return element.id == owner && element.resources;
+                    return element.id == owner;
                 }) || {};
-				let matching_participant = resource?.resources.filter(id => typeof event.participants[id] != "undefined");
+				let matching_participant =  typeof resource.resources == "undefined" ?
+					resource :
+					resource?.resources.filter(id => typeof event.participants[id] != "undefined");
 				if(matching_participant.length > 0)
 				{
 					return this._status_check(event, filter, matching_participant);

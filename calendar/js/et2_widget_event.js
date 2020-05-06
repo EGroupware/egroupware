@@ -748,9 +748,10 @@ var et2_calendar_event = /** @class */ (function (_super) {
             }
             if ((isNaN(parseInt(owner)) || parseInt(owner) < 0) && options && typeof options.find == "function") {
                 var resource = options.find(function (element) {
-                    return element.id == owner && element.resources;
+                    return element.id == owner;
                 }) || {};
-                var matching_participant = (_a = resource) === null || _a === void 0 ? void 0 : _a.resources.filter(function (id) { return typeof event.participants[id] != "undefined"; });
+                var matching_participant = typeof resource.resources == "undefined" ?
+                    resource : (_a = resource) === null || _a === void 0 ? void 0 : _a.resources.filter(function (id) { return typeof event.participants[id] != "undefined"; });
                 if (matching_participant.length > 0) {
                     return this._status_check(event, filter, matching_participant);
                 }
