@@ -206,7 +206,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 					);
 					foreach($lists as $list_id => $list)
 					{
-						$_results[$list_id] = array(
+						$_results[''+$list_id] = array(
 							'label' => $list,
 							'resources' => $bo->enum_mailing_list($type.$list_id)
 						);
@@ -247,7 +247,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 							));
 							if($id < 0)
 							{
-								$value['resources'] = $GLOBALS['egw']->accounts->members($id, true);
+								$value['resources'] = array_map('strval',$GLOBALS['egw']->accounts->members($id, true));
 							}
 							break;
 						default :
