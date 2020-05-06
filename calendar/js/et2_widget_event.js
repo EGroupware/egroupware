@@ -755,7 +755,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
                 if (matching_participant.length > 0) {
                     return this._status_check(event, filter, matching_participant);
                 }
-                else if (filter == 'owner' && resource && resource.resources.indexOf(event.owner)) {
+                else if (filter == 'owner' && resource && resource.resources && resource.resources.indexOf(event.owner)) {
                     // owner param was a group but event is owned by someone in that group
                     return true;
                 }
