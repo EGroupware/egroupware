@@ -936,12 +936,12 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				}) || {};
 				let matching_participant =  typeof resource.resources == "undefined" ?
 					resource :
-					resource?.resources.filter(id => typeof event.participants[id] != "undefined");
+					resource.resources.filter(id => typeof event.participants[id] != "undefined");
 				if(matching_participant.length > 0)
 				{
 					return this._status_check(event, filter, matching_participant);
 				}
-				else if (filter == 'owner' && resource && resource.resources.indexOf(event.owner))
+				else if (filter == 'owner' && resource && resource.resources && resource.resources.indexOf(event.owner))
 				{
 					// owner param was a group but event is owned by someone in that group
 					return true;
