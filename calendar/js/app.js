@@ -2372,7 +2372,9 @@ var CalendarApp = /** @class */ (function (_super) {
                 state.state.last = state.state.last.toJSON();
             // Toggle todos
             if ((state.state.view == 'day' || this.state.view == 'day') && jQuery(view.etemplates[0].DOMContainer).is(':visible')) {
-                if (state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0 && !egwIsMobile()) {
+                if (state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0 && !egwIsMobile()
+                    // Check preferences and permissions
+                    && egw.user('apps')['infolog'] && egw.preference('cal_show', 'infolog') !== '0') {
                     // Set width to 70%, otherwise if a scrollbar is needed for the view, it will conflict with the todo list
                     jQuery(CalendarApp.views.day.etemplates[0].DOMContainer).css("width", "70%");
                     jQuery(view.etemplates[1].DOMContainer).css({ "left": "70%", "height": (jQuery(framework.tabsUi.activeTab.contentDiv).height() - 30) + 'px' });
