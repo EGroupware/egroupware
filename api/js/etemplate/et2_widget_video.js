@@ -31,6 +31,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
+var et2_core_widget_1 = require("./et2_core_widget");
 /**
  * This widget represents the HTML5 video tag with all its optional attributes
  *
@@ -175,4 +176,5 @@ var et2_video = /** @class */ (function (_super) {
     return et2_video;
 }(et2_core_baseWidget_1.et2_baseWidget));
 exports.et2_video = et2_video;
+et2_core_widget_1.et2_register_widget(et2_video, ["video"]);
 //# sourceMappingURL=et2_widget_video.js.map

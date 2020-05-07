@@ -19,7 +19,7 @@
 import { et2_baseWidget } from './et2_core_baseWidget'
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
-import {WidgetConfig} from "./et2_core_widget";
+import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
 
 /**
  * This widget represents the HTML5 video tag with all its optional attributes
@@ -186,3 +186,4 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         }
     }
 }
+et2_register_widget(et2_video, ["video"]);
