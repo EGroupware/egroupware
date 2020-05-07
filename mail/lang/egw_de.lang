@@ -343,6 +343,8 @@ message preview area	mail	de	Vorschaubereich
 message saved successfully.	mail	de	Nachricht wurde erfolgreich gespeichert.
 message send failed: %1	mail	de	Nachricht konnte nicht versendet werden: %1
 message send successfully.	mail	de	Nachricht wurde erfolgreich versendet.
+message verified successfully.	mail	de	Nachricht erfolgreich verifiziert.
+message verified successfully but the signer’s certificate could not be verified.	mail	de	Nachricht erfolgreich verifiziert, aber das Zertifikat des Unterzeichners konnte nicht verifiziert werden.
 miscellaneous	mail	de	Verschiedenes
 modify subject	mail	de	Betreff ändern
 modify subject of this message	mail	de	Betreff dieser Nachricht ändern
