@@ -2655,7 +2655,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// Toggle todos
 			if((state.state.view == 'day' || this.state.view == 'day') && jQuery(view.etemplates[0].DOMContainer).is(':visible'))
 			{
-				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0 && !egwIsMobile())
+				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0 && !egwIsMobile()
+					// Check preferences and permissions
+					&& egw.user('apps')['infolog'] && egw.preference('cal_show','infolog') !== '0'
+				)
 				{
 					// Set width to 70%, otherwise if a scrollbar is needed for the view, it will conflict with the todo list
 					jQuery(app.classes.calendar.views.day.etemplates[0].DOMContainer).css("width","70%");
