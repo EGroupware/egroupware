@@ -343,6 +343,8 @@ message preview area	mail	en	Message preview area
 message saved successfully.	mail	en	Message saved successfully.
 message send failed: %1	mail	en	Message send failed: %1
 message send successfully.	mail	en	Message send successfully.
+message verified successfully.	mail	en	Message verified successfully.
+message verified successfully but the signer’s certificate could not be verified.	mail	en	Message verified successfully but the signer’s certificate could not be verified.
 miscellaneous	mail	en	Miscellaneous
 modify subject	mail	en	Modify subject
 modify subject of this message	mail	en	Modify subject of this message

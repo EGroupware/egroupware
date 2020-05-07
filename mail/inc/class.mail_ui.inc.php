@@ -3207,6 +3207,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$structure = $this->mail_bo->getStructure($uid, $partID, $mailbox, false);
 			if (($smime = $structure->getMetadata('X-EGroupware-Smime')))
 			{
+				$smime['msg'] = lang($smime['msg']);
 				$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
 				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,true,false,true, $mailbox);
 				$push = new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']);
