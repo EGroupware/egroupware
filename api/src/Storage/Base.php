@@ -942,13 +942,19 @@ class Base
 		// add table-name to otherwise ambiguous id over which we join (incl. "AS id" to return it with the right name)
 		if ($join && $this->autoinc_id)
 		{
+			if (!is_array($colums) && strpos($colums, '*') !== false) $colums = explode(',', $colums);
+			if (is_array($colums) && ($key = array_search('*', $colums)) !== false)
+			{
+				unset($colums[$key]);
+				$colums = array_merge($colums, array_keys($this->db_cols));
+			}
 			if (is_array($colums) && ($key = array_search($this->autoinc_id, $colums)) !== false)
 			{
 				$colums[$key] = $this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id;
 			}
 			elseif (!is_array($colums) && strpos($colums,$this->autoinc_id) !== false)
 			{
-				$colums = preg_replace('/(?<! AS)([ ,]+)'.preg_quote($this->autoinc_id).'([ ,]+)/','\\1'.$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id.'\\2',$colums);
+				$colums = preg_replace('/(?<! AS)([ ,]+)'.preg_quote($this->autoinc_id, '/').'([ ,]+)/','\\1'.$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id.'\\2',$colums);
 			}
 		}
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
