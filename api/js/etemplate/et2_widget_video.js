@@ -124,10 +124,13 @@ var et2_video = /** @class */ (function (_super) {
      * Set poster attribute in order to specify
      * an image to be shown while video is loading or before user play it
      *
-     * @param {string} _url
+     * @param {string} _url url or image spec like "api/mime128_video"
      */
     et2_video.prototype.set_poster = function (_url) {
         if (_url) {
+            if (_url[0] !== '/' && !_url.match(/^https?:\/\//)) {
+                _url = this.egw().image(_url);
+            }
             this.video.attr("poster", _url);
         }
     };

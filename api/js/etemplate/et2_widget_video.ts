@@ -176,12 +176,16 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      * Set poster attribute in order to specify
      * an image to be shown while video is loading or before user play it
      *
-     * @param {string} _url
+     * @param {string} _url url or image spec like "api/mime128_video"
      */
     set_poster(_url: string)
     {
         if (_url)
         {
+            if (_url[0] !== '/' && !_url.match(/^https?:\/\//))
+            {
+                _url = this.egw().image(_url);
+            }
             this.video.attr("poster", _url);
         }
     }
