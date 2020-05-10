@@ -680,7 +680,7 @@ declare class JsonRequest
 	 *
 	 * @return {jqXHR} jQuery jqXHR request object
 	 */
-	sendRequest(async? : boolean|"keepalive", method? : "POST"|"GET", error? : Function)
+	sendRequest(async? : boolean|"keepalive", method? : "POST"|"GET", error? : Function) : Promise<any>
 	/**
 	 * Open websocket to push server (and keeps it open)
 	 *

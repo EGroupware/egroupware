@@ -94,7 +94,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         }
     };
 
-    video: JQuery = null;
+    video: JQuery<HTMLVideoElement> = null;
 
     constructor(_parent, _attrs? : WidgetConfig, _child? : object)
     {
@@ -188,6 +188,40 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             }
             this.video.attr("poster", _url);
         }
+    }
+
+    /**
+     * Seek to a time / position
+     *
+     * @param _vtime in seconds
+     */
+    public seek_video(_vtime : number)
+    {
+        this.video[0].currentTime = _vtime;
+    }
+
+    /**
+     * Play video
+     */
+    public play_video() : Promise<void>
+    {
+        return this.video[0].play();
+    }
+
+    /**
+     * Pause video
+     */
+    public pause_video()
+    {
+        this.video[0].pause();
+    }
+
+    /**
+     * Get current video time / position in seconds
+     */
+    public currentTime() : number
+    {
+        return this.video[0].currentTime;
     }
 }
 et2_register_widget(et2_video, ["video"]);

@@ -15,6 +15,7 @@ require("jquery");
 require("jqueryui");
 require("../jsapi/egw_global");
 require("../etemplate/et2_types");
+var etemplate2_1 = require("../etemplate/etemplate2");
 /**
  * Common base class for application javascript
  * Each app should extend as needed.
@@ -287,7 +288,7 @@ var EgwApp = /** @class */ (function () {
         }
         // Try and find a nextmatch widget, and set its filters
         var nextmatched = false;
-        var et2 = template ? etemplate2.getByTemplate(template) : etemplate2.getByApplication(this.appname);
+        var et2 = template ? etemplate2_1.etemplate2.getByTemplate(template) : etemplate2_1.etemplate2.getByApplication(this.appname);
         for (var i = 0; i < et2.length; i++) {
             et2[i].widgetContainer.iterateOver(function (_widget) {
                 // Firefox has trouble with spaces in search
@@ -336,7 +337,7 @@ var EgwApp = /** @class */ (function () {
     EgwApp.prototype.getState = function () {
         var state = {};
         // Try and find a nextmatch widget, and set its filters
-        var et2 = etemplate2.getByApplication(this.appname);
+        var et2 = etemplate2_1.etemplate2.getByApplication(this.appname);
         for (var i = 0; i < et2.length; i++) {
             et2[i].widgetContainer.iterateOver(function (_widget) {
                 state = _widget.getValue();
@@ -437,7 +438,7 @@ var EgwApp = /** @class */ (function () {
             'validation_errors': this.et2.getArrayMgr('validation_errors').data
         };
         // etemplate2 object for view
-        this.et2_view = new etemplate2(this.viewTemplate[0], false);
+        this.et2_view = new etemplate2_1.etemplate2(this.viewTemplate[0], '');
         framework.pushState('view');
         if (templateName) {
             this.et2_view.load(this.appname + '.' + templateName, templateURL, data, typeof et2_callback == 'function' ? et2_callback : function () { }, app);
@@ -597,8 +598,8 @@ var EgwApp = /** @class */ (function () {
      */
     EgwApp.prototype._refresh_fav_nm = function () {
         var self = this;
-        if (etemplate2 && etemplate2.getByApplication) {
-            var et2 = etemplate2.getByApplication(self.appname);
+        if (etemplate2_1.etemplate2 && etemplate2_1.etemplate2.getByApplication) {
+            var et2 = etemplate2_1.etemplate2.getByApplication(self.appname);
             for (var i = 0; i < et2.length; i++) {
                 et2[i].widgetContainer.iterateOver(function (_widget) {
                     _widget.stored_filters = _widget.load_favorites(self.appname);
@@ -1020,7 +1021,7 @@ var EgwApp = /** @class */ (function () {
      */
     EgwApp.prototype.egwTutorial_init = function (div) {
         // et2 object
-        var etemplate = new etemplate2(div, false);
+        var etemplate = new etemplate2_1.etemplate2(div, '');
         var template = egw.webserverUrl + '/api/templates/default/egw_tutorial.xet?1';
         this.egwTutorialGetData().then(function (_data) {
             var lang = egw.preference('lang');
@@ -1062,7 +1063,7 @@ var EgwApp = /** @class */ (function () {
      * @param {string} _url
      */
     EgwApp.prototype.tutorial_videoOnClick = function (_url) {
-        var frame = etemplate2.getByApplication('api')[0].widgetContainer.getWidgetById('src');
+        var frame = etemplate2_1.etemplate2.getByApplication('api')[0].widgetContainer.getWidgetById('src');
         if (frame) {
             frame.set_value(_url);
         }

@@ -30,6 +30,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
     et2_core_arrayMgr;
 */
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
+var et2_core_arrayMgr_1 = require("./et2_core_arrayMgr");
 /**
  * The registry contains all XML tag names and the corresponding widget
  * constructor.
@@ -316,7 +317,7 @@ var et2_widget = /** @class */ (function (_super) {
             }
         }
         if (this.id && _id.indexOf('[') > -1 && this._children.length) {
-            var ids = (new et2_arrayMgr()).explodeKey(_id);
+            var ids = (new et2_core_arrayMgr_1.et2_arrayMgr()).explodeKey(_id);
             var widget = this;
             for (var i = 0; i < ids.length && widget !== null; i++) {
                 widget = widget.getWidgetById(ids[i]);
@@ -526,7 +527,7 @@ var et2_widget = /** @class */ (function (_super) {
                 }
                 else {
                     // Try the root, in case a namespace got missed
-                    var entry = modifications.getRoot().getEntry(_node.getAttribute("id"));
+                    entry = modifications.getRoot().getEntry(_node.getAttribute("id"));
                 }
             }
             if (entry && entry.type && typeof entry.type === 'string') {

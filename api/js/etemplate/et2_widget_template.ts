@@ -26,7 +26,7 @@ import './et2_types';
  * exists. If yes, this template is removed from the DOM tree, copied and
  * inserted in place of this template.
  */
-class et2_template extends et2_DOMWidget
+export class et2_template extends et2_DOMWidget
 {
 	static readonly _attributes : any = {
 		"template": {

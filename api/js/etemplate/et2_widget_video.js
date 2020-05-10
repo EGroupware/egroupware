@@ -134,6 +134,32 @@ var et2_video = /** @class */ (function (_super) {
             this.video.attr("poster", _url);
         }
     };
+    /**
+     * Seek to a time / position
+     *
+     * @param _vtime in seconds
+     */
+    et2_video.prototype.seek_video = function (_vtime) {
+        this.video[0].currentTime = _vtime;
+    };
+    /**
+     * Play video
+     */
+    et2_video.prototype.play_video = function () {
+        return this.video[0].play();
+    };
+    /**
+     * Pause video
+     */
+    et2_video.prototype.pause_video = function () {
+        this.video[0].pause();
+    };
+    /**
+     * Get current video time / position in seconds
+     */
+    et2_video.prototype.currentTime = function () {
+        return this.video[0].currentTime;
+    };
     et2_video._attributes = {
         "video_src": {
             "name": "Video",

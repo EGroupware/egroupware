@@ -17,6 +17,7 @@
 */
 
 import {ClassWithAttributes} from './et2_core_inheritance';
+import {et2_arrayMgr, et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
 
 /**
  * The registry contains all XML tag names and the corresponding widget
@@ -527,7 +528,7 @@ export class et2_widget extends ClassWithAttributes
 				// Check for modifications on legacy options here.  Normal modifications
 				// are handled in widget constructor, but it's too late for legacy options then
 				if (_target.id && this.getArrayMgr("modifications").getEntry(_target.id)) {
-					var mod = this.getArrayMgr("modifications").getEntry(_target.id);
+					var mod : any = this.getArrayMgr("modifications").getEntry(_target.id);
 					if (typeof mod.options != "undefined") attrValue = _attrsObj[i].value = mod.options;
 				}
 				// expand legacyOptions with content
@@ -652,14 +653,14 @@ export class et2_widget extends ClassWithAttributes
 		var _nodeName = attributes["type"] = _node.getAttribute("type") ?
 			_node.getAttribute("type") : _node.nodeName.toLowerCase();
 		var readonly = attributes["readonly"] = this.getArrayMgr("readonlys") ?
-			this.getArrayMgr("readonlys").isReadOnly(
+			(<any>this.getArrayMgr("readonlys")).isReadOnly(
 				_node.getAttribute("id"), _node.getAttribute("readonly"),
 				typeof this.readonly !== 'undefined' ? this.readonly : this.options.readonly) : false;
 
 		// Check to see if modifications change type
 		var modifications = this.getArrayMgr("modifications");
 		if (modifications && _node.getAttribute("id")) {
-			var entry = modifications.getEntry(_node.getAttribute("id"));
+			var entry : any = modifications.getEntry(_node.getAttribute("id"));
 			if (entry == null) {
 				// Try again, but skip the fancy stuff
 				// TODO: Figure out why the getEntry() call doesn't always work
@@ -668,7 +669,7 @@ export class et2_widget extends ClassWithAttributes
 					this.egw().debug("warn", "getEntry(" + _node.getAttribute("id") + ") failed, but the data is there.", modifications, entry);
 				} else {
 					// Try the root, in case a namespace got missed
-					var entry = modifications.getRoot().getEntry(_node.getAttribute("id"));
+					entry = modifications.getRoot().getEntry(_node.getAttribute("id"));
 				}
 			}
 			if (entry && entry.type && typeof entry.type === 'string') {
@@ -933,7 +934,7 @@ export class et2_widget extends ClassWithAttributes
 	 * @param {string} _part which array mgr to set
 	 * @param {object} _mgr
 	 */
-	setArrayMgr(_part : string, _mgr)
+	setArrayMgr(_part : string, _mgr : et2_arrayMgr)
 	{
 		this._mgrs[_part] = _mgr;
 	}
@@ -943,7 +944,7 @@ export class et2_widget extends ClassWithAttributes
 	 *
 	 * @param {string} managed_array_type name of array mgr to return
 	 */
-	getArrayMgr(managed_array_type : string)
+	getArrayMgr(managed_array_type : string) : et2_arrayMgr | null
 	{
 		if (this._mgrs && typeof this._mgrs[managed_array_type] != "undefined") {
 			return this._mgrs[managed_array_type];

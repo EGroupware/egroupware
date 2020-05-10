@@ -14,6 +14,8 @@ import 'jquery';
 import 'jqueryui';
 import '../jsapi/egw_global';
 import '../etemplate/et2_types';
+import {etemplate2} from "../etemplate/etemplate2";
+import {et2_container} from "../etemplate/et2_core_baseWidget";
 
 /**
  * Type for push-message
@@ -98,7 +100,7 @@ export abstract class EgwApp
 	 *
 	 * @var {et2_container}
 	 */
-	et2: any;
+	et2: et2_container;
 
 	/**
 	 * Internal reference to egw client-side api object for current app and window
@@ -191,7 +193,7 @@ export abstract class EgwApp
 	 * @param {etemplate2} et2
 	 * @param {string} name template name
 	 */
-	et2_ready(et2, name : string)
+	et2_ready(et2 : etemplate2, name : string)
 	{
 		if(this.et2 !== null)
 		{
@@ -581,7 +583,7 @@ export abstract class EgwApp
 		};
 
 		// etemplate2 object for view
-		this.et2_view = new etemplate2 (this.viewTemplate[0], false);
+		this.et2_view = new etemplate2 (this.viewTemplate[0], '');
 		framework.pushState('view');
 		if(templateName)
 		{
@@ -1284,7 +1286,7 @@ export abstract class EgwApp
 	egwTutorial_init(div)
 	{
 		// et2 object
-		var etemplate = new etemplate2 (div, false);
+		var etemplate = new etemplate2 (div, '');
 		var template = egw.webserverUrl+'/api/templates/default/egw_tutorial.xet?1';
 
 		this.egwTutorialGetData().then(function(_data){
