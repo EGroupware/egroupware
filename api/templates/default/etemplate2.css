@@ -323,10 +323,29 @@ button#cancel {
  * Color picker widget
  */
 .et2_color {
+	width: 40px;
+	display:inline-block;
+	position:relative;
+}
+.et2_color input {
   padding: 0px;
   height: 20px;
   width: 20px;
   border: 1px solid silver;
+}
+span.et2_color img[src] {
+	/* Extra-specific to make sure we work in grids & preference popup */
+	height: 24px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.et2_color .clear {
+	background-position: -95px -126px;
+	display:none;
+}
+.et2_color:hover .clear {
+	display: inline-block;
 }
 /**
  * Text box

@@ -46,23 +46,44 @@ var et2_color = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_color._attributes, _child || {})) || this;
+        _this.cleared = true;
         // included via etemplate2.css
         //this.egw().includeCSS("phpgwapi/js/jquery/jpicker/css/jPicker-1.1.6.min.css");
-        _this.input = jQuery("<input type='color' class='et2_color'/>");
-        _this.setDOMNode(_this.input[0]);
+        _this.span = jQuery("<span class='et2_color'/>");
+        _this.image = jQuery("<img src='" + _this.egw().image("non_loaded_bg") + "'/>")
+            .appendTo(_this.span)
+            .on("click", function () {
+            this.input.trigger('click');
+        }.bind(_this));
+        _this.input = jQuery("<input type='color'/>").appendTo(_this.span)
+            .on('change', function () {
+            this.cleared = false;
+            this.image.hide();
+        }.bind(_this));
+        if (!_this.options.readonly && !_this.options.needed) {
+            _this.clear = jQuery("<span class='ui-icon clear'/>")
+                .appendTo(_this.span)
+                .on("click", function () {
+                this.set_value('');
+                return false;
+            }.bind(_this));
+        }
+        _this.setDOMNode(_this.span[0]);
         return _this;
     }
     et2_color.prototype.getValue = function () {
         var value = this.input.val();
-        if (value === '#FFFFFF' || value === '#ffffff') {
+        if (this.cleared || value === '#FFFFFF' || value === '#ffffff') {
             return '';
         }
         return value;
     };
     et2_color.prototype.set_value = function (color) {
         if (!color) {
-            color = '#ffffff';
+            color = '';
         }
+        this.cleared = !color;
+        this.image.toggle(!color);
         this.input.val(color);
     };
     return et2_color;

@@ -28,6 +28,10 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 export class et2_color extends et2_inputWidget
 {
 	private input: JQuery;
+	private span: JQuery<HTMLElement>;
+	private clear: JQuery<HTMLElement>;
+	private image: JQuery<HTMLImageElement>;
+	private cleared: boolean = true;
 	/**
 	 * Constructor
 	 */
@@ -37,15 +41,35 @@ export class et2_color extends et2_inputWidget
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_color._attributes, _child || {}));
 		// included via etemplate2.css
 		//this.egw().includeCSS("phpgwapi/js/jquery/jpicker/css/jPicker-1.1.6.min.css");
-		this.input = jQuery("<input type='color' class='et2_color'/>");
-
-		this.setDOMNode(this.input[0]);
+		this.span = jQuery("<span class='et2_color'/>");
+		this.image = <JQuery<HTMLImageElement>>jQuery("<img src='" + this.egw().image("non_loaded_bg") + "'/>")
+			.appendTo(this.span)
+			.on("click", function() {
+				this.input.trigger('click')
+			}.bind(this));
+		this.input = jQuery("<input type='color'/>").appendTo(this.span)
+			.on('change', function() {
+				this.cleared = false;
+				this.image.hide();
+			}.bind(this));
+		if (!this.options.readonly && !this.options.needed)
+		{
+			this.clear = jQuery("<span class='ui-icon clear'/>")
+				.appendTo(this.span)
+				.on("click", function()
+			         {
+				         this.set_value('');
+				         return false;
+			         }.bind(this)
+				);
+		}
+		this.setDOMNode(this.span[0]);
 	}
 
 	getValue( )
 	{
 		var value = this.input.val();
-		if(value === '#FFFFFF' || value === '#ffffff')
+		if(this.cleared || value === '#FFFFFF' || value === '#ffffff')
 		{
 			return '';
 		}
@@ -56,8 +80,11 @@ export class et2_color extends et2_inputWidget
 	{
 		if(!color)
 		{
-			color = '#ffffff';
+			color = '';
 		}
+		this.cleared = !color;
+		this.image.toggle(!color);
+
 		this.input.val(color);
 	}
 }
