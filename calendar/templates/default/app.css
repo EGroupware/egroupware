@@ -819,7 +819,7 @@ Hide subsequent headers in week view with non-consolidated owners
 	z-index: 10;
 }
 
-.calendar_calAddEvent:hover{
+.calendar_calDayColHeader .calendar_calAddEvent:hover{
 	background-color: #D2D7FF;
 	cursor: pointer;
 }
