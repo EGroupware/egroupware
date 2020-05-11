@@ -36,15 +36,34 @@ var et2_color = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		// included via etemplate2.css
 		//this.egw().includeCSS("phpgwapi/js/jquery/jpicker/css/jPicker-1.1.6.min.css");
-		this.input = this.$node = jQuery("<input type='color' class='et2_color'/>");
-
-		this.setDOMNode(this.$node[0]);
-		this.set_value(this.options.value);
+		this.span = jQuery("<span class='et2_color'/>");
+		this.image = jQuery("<img src='" + this.egw().image("non_loaded_bg") + "'/>")
+			.appendTo(this.span)
+			.on("click", function() {
+				this.input.trigger('click')
+			}.bind(this));
+		this.input = jQuery("<input type='color'/>").appendTo(this.span)
+			.on('change', function() {
+				this.cleared = false;
+				this.image.hide();
+			}.bind(this));
+		if (!this.options.readonly && !this.options.needed)
+		{
+			this.clear = jQuery("<span class='ui-icon clear'/>")
+				.appendTo(this.span)
+				.on("click", function()
+					{
+						this.set_value('');
+						return false;
+					}.bind(this)
+				);
+		}
+		this.setDOMNode(this.span[0]);
 	},
 
 	getValue: function() {
-		var value = this.$node.val();
-		if(value === '#FFFFFF' || value === '#ffffff')
+		var value = this.input.val();
+		if(this.cleared || value === '#FFFFFF' || value === '#ffffff')
 		{
 			return '';
 		}
@@ -54,9 +73,12 @@ var et2_color = (function(){ "use strict"; return et2_inputWidget.extend(
 	set_value: function(color) {
 		if(!color)
 		{
-			color = '#ffffff';
+			color = '';
 		}
-		this.$node.val(color);
+		this.cleared = !color;
+		this.image.toggle(!color);
+
+		this.input.val(color);
 	}
 });}).call(this);
 et2_register_widget(et2_color, ["colorpicker"]);
