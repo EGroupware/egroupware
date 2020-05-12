@@ -87,10 +87,10 @@ else
 if ($_POST['save_backup_settings'])
 {
 	$matches = array();
-	preg_match('/^[1-9][0-9]*$/', $_POST['backup_mincount'], $matches);
-	$minCount = $matches[0];
+	preg_match('/^\d*$/', $_POST['backup_mincount'], $matches);
+	$minCount = (int)$matches[0];
 	$filesBackup = $_POST['backup_files'] === 'backup_files';
-	if (empty($minCount))
+	if (empty($minCount) && $matches[0] != '0')
 	{
 		$minCount = 0;
 		$setup_tpl->set_var('error_msg',htmlspecialchars(lang("'%1' must be integer", lang("backup min count"))));
