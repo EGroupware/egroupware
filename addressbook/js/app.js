@@ -569,8 +569,6 @@ app.classes.addressbook = AppJS.extend(
 		if (region)
 		{
 			region.set_country_code(selectbox.value);
-			region.options.select_options = {};
-			region.transformAttributes(region.options);
 		}
 	},
 
