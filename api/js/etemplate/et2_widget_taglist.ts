@@ -1478,8 +1478,16 @@ class et2_taglist_state extends et2_taglist
 	set_country_code(_country_code)
 	{
 		let country_code = _country_code || '';
+		let old_code = this.options.country_code;
 		this.country_code = country_code;
 		this.options.country_code = country_code;
+
+		// Reload if needed
+		if(this.options.country_code !== old_code && this.isInTree())
+		{
+			var sel_options = et2_selectbox.find_select_options(this, {}, this.options);
+			this.set_select_options(sel_options);
+		}
 	}
 }
 et2_register_widget(et2_taglist_state, ["taglist-state"]);

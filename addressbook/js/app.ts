@@ -577,8 +577,6 @@ class AddressbookApp extends EgwApp
 		if (region)
 		{
 			region.set_country_code(selectbox.value);
-			region.options.select_options = {};
-			region.transformAttributes(region.options);
 		}
 	}
 

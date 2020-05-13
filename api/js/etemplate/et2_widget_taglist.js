@@ -1255,8 +1255,14 @@ var et2_taglist_state = /** @class */ (function (_super) {
     };
     et2_taglist_state.prototype.set_country_code = function (_country_code) {
         var country_code = _country_code || '';
+        var old_code = this.options.country_code;
         this.country_code = country_code;
         this.options.country_code = country_code;
+        // Reload if needed
+        if (this.options.country_code !== old_code && this.isInTree()) {
+            var sel_options = et2_widget_selectbox_1.et2_selectbox.find_select_options(this, {}, this.options);
+            this.set_select_options(sel_options);
+        }
     };
     et2_taglist_state._attributes = {
         "minChars": {
