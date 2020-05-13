@@ -174,6 +174,7 @@ class et2_checkbox extends et2_inputWidget
 	set_readonly(_ro)
 	{
 		jQuery(this.getDOMNode()).attr('disabled', _ro);
+		this.input.prop('disabled', _ro);
 	}
 
 	/**

@@ -128,6 +128,7 @@ var et2_checkbox = /** @class */ (function (_super) {
      */
     et2_checkbox.prototype.set_readonly = function (_ro) {
         jQuery(this.getDOMNode()).attr('disabled', _ro);
+        this.input.prop('disabled', _ro);
     };
     /**
      * Override default to return unchecked value
