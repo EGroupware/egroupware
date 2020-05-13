@@ -144,6 +144,18 @@ var et2_checkbox = /** @class */ (function (_super) {
             return this.options.unselected_value;
         }
     };
+    et2_checkbox.prototype.set_disabled = function (_value) {
+        var parentNode = jQuery(this.getDOMNode()).parent();
+        if (parentNode[0] && parentNode[0].nodeName == "label" && parentNode.hasClass('.et2_checkbox_label')) {
+            if (_value) {
+                parentNode.hide();
+            }
+            else {
+                parentNode.show();
+            }
+        }
+        _super.prototype.set_disabled.call(this, _value);
+    };
     et2_checkbox._attributes = {
         "selected_value": {
             "name": "Set value",
