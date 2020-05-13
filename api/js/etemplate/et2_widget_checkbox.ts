@@ -189,6 +189,23 @@ class et2_checkbox extends et2_inputWidget
 			return this.options.unselected_value;
 		}
 	}
+
+	set_disabled(_value)
+	{
+		let parentNode = jQuery(this.getDOMNode()).parent();
+		if (parentNode[0] && parentNode[0].nodeName == "label" && parentNode.hasClass('.et2_checkbox_label'))
+		{
+			if (_value)
+			{
+				parentNode.hide();
+			}
+			else
+			{
+				parentNode.show();
+			}
+		}
+		super.set_disabled(_value);
+	}
 }
 et2_register_widget(et2_checkbox, ["checkbox"]);
 
