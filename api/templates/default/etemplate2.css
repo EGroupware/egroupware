@@ -2608,7 +2608,9 @@ span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container a {
 .et2_radiobox {
 	margin-right: 10px;
 }
-
+.et2_radiobox[disabled] {
+    opacity: 0.5;
+}
 /**
  * Do not wrap content of a single widget incl. a label or children of a hbox.
  * Taking into eg. select-account widget rendered as ul and prefixed with a label

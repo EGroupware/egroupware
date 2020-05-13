@@ -171,6 +171,23 @@ class et2_radiobox extends et2_inputWidget
 		}
 		return ok;
 	}
+
+	/**
+	 * Set radio readonly attribute.
+	 * Do not confuse this with etemplate readonly, which would use et_textbox_ro instead
+	 * @param _readonly Boolean
+	 */
+	set_readonly(_readonly)
+	{
+		this.getRoot().iterateOver(function(radio)
+		{
+			if (radio.id == this.id)
+			{
+				radio.input.prop('disabled',_readonly);
+			}
+		}, this, et2_radiobox);
+	}
+
 }
 et2_register_widget(et2_radiobox, ["radio"]);
 

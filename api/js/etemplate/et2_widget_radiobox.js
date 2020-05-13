@@ -138,6 +138,18 @@ var et2_radiobox = /** @class */ (function (_super) {
         }
         return ok;
     };
+    /**
+     * Set radio readonly attribute.
+     * Do not confuse this with etemplate readonly, which would use et_textbox_ro instead
+     * @param _readonly Boolean
+     */
+    et2_radiobox.prototype.set_readonly = function (_readonly) {
+        this.getRoot().iterateOver(function (radio) {
+            if (radio.id == this.id) {
+                radio.input.prop('disabled', _readonly);
+            }
+        }, this, et2_radiobox);
+    };
     et2_radiobox._attributes = {
         "set_value": {
             "name": "Set value",
