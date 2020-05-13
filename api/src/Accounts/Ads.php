@@ -1036,10 +1036,13 @@ class Ads
 				$type_filter = '(samaccounttype='.adLDAP::ADLDAP_NORMAL_ACCOUNT.')';
 				break;
 			case 'g':
-				$type_filter = '(samaccounttype='.adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP.')';
+				$type_filter = '(|(samaccounttype='.adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP.
+					')(samaccounttype='.adLDAP::ADLDAP_SECURITY_LOCAL_GROUP.'))';
 				break;
 			default:
-				$type_filter = '(|(samaccounttype='.adLDAP::ADLDAP_NORMAL_ACCOUNT.')(samaccounttype='.adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP.'))';
+				$type_filter = '(|(samaccounttype='.adLDAP::ADLDAP_NORMAL_ACCOUNT.
+					')(samaccounttype='.adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP.
+					')(samaccounttype='.adLDAP::ADLDAP_SECURITY_LOCAL_GROUP.'))';
 				break;
 		}
 		if (!$attr_filter)
@@ -1078,7 +1081,8 @@ class Ads
 				if ($key === 'count') continue;
 
 				if ($account_type && !($account_type == 'u' && $data['samaccounttype'][0] == adLDAP::ADLDAP_NORMAL_ACCOUNT ||
-					$account_type == 'g' && $data['samaccounttype'][0] == adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP))
+					$account_type == 'g' && in_array($data['samaccounttype'][0],
+						[adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP, adLDAP::ADLDAP_SECURITY_LOCAL_GROUP])))
 				{
 					continue;
 				}
@@ -1089,7 +1093,7 @@ class Ads
 				{
 					continue;	// ignore system accounts incl. "Administrator"
 				}
-				$accounts[($data['samaccounttype'][0] == adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP ? '-' : '').$rid] =
+				$accounts[($data['samaccounttype'][0] == adLDAP::ADLDAP_NORMAL_ACCOUNT ? '' : '-').$rid] =
 					$attrs ? $data : Api\Translation::convert($data['samaccountname'][0], 'utf-8');
 			}
 		}
