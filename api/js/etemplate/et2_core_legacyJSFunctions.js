@@ -140,7 +140,7 @@
 				}
 			}
 			if (typeof parent[existing_func] === "function") {
-				return parent[existing_func].bind(context);
+				parent[existing_func];
 			}
 		}
 
