@@ -37,7 +37,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	function calendarPreferences(_egw)
 	{
 		// Date format in jQuery UI date format
-		var dateformat = dateTimeFormat(_egw.preference("dateformat"));
+		var dateformat = dateTimeFormat(_egw.preference("dateformat") || "Y-m-d");
 
 		// First day of the week
 		var first_day = {"Monday": 1, "Sunday": 0, "Saturday": 6};
