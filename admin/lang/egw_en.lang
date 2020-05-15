@@ -324,6 +324,7 @@ disable all	admin	en	Disable all
 disable minifying of javascript and css files	admin	en	Disable minifying of javascript and CSS files
 disable pgp encryption (mailvelope)	admin	en	Disable PGP encryption (Mailvelope)
 disable wysiwyg-editor	admin	en	Disable WYSIWYG-editor
+disabled	admin	en	Disabled
 disabled (not recomended)	admin	en	Disabled (not recommended)
 disabled, do not show on login page	admin	en	disabled, do not show on login page
 display	admin	en	Display
@@ -379,6 +380,7 @@ enable sieve	admin	en	Enable Sieve
 enable spellcheck in rich text editor	admin	en	Enable spellcheck in rich text editor
 enable the soap service	admin	en	Enable the soap service.
 enable the xmlrpc service	admin	en	Enable the xmlrpc service.
+enabled	admin	en	Enabled
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enabled - popup window	admin	en	Enabled - Popup window
 encrypted connection	admin	en	Encrypted connection
@@ -655,6 +657,7 @@ no profile defined for user %1	admin	en	No profile defined for user %1
 no sieve support detected, either fix configuration manually or leave it switched off.	admin	en	No sieve support detected, either fix configuration manually or leave it switched off.
 no supported imap authentication method could be found.	admin	en	No supported IMAP authentication method could be found.
 non profit: clubs, associations, ...	admin	en	Non profit: Clubs, Associations, ...
+not enabled	admin	en	Not enabled
 note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with curl support.
 notification mail	admin	en	Notification mail
 notify user by email	admin	en	Notify user by email

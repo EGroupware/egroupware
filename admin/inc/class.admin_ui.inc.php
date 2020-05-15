@@ -55,7 +55,6 @@ class admin_ui
 		$content['nm'] = array(
 			'get_rows' => 'admin_ui::get_users',
 			'no_cat' => true,
-			'no_filter2' => true,
 			'filter_no_lang' => true,
 			'lettersearch' => true,
 			'order' => 'account_lid',
@@ -92,6 +91,14 @@ class admin_ui
 		}
 		$sel_options['account_primary_group'] = $sel_options['filter'];
 		unset($sel_options['account_primary_group']['']);
+
+		$sel_options['filter2'] = array(
+			'enabled'     => 'Enabled',
+			'disabled'    => 'Disabled',
+			'expired'     => 'Expired',
+			'expires'     => 'Expires',
+			'not_enabled' => 'Not enabled'
+		);
 
 		$tpl->setElementAttribute('tree', 'actions', self::tree_actions());
 
@@ -325,7 +332,22 @@ class admin_ui
 			'order' => $query['order'],
 			'sort' => $query['sort'],
 			'active' => !empty($query['active']) ? $query['active'] : false,
+			'status' => $query['filter2']
 		);
+		// Make sure active filter give status what it needs
+		switch($query['filter2'])
+		{
+			case 'disabled':
+			case 'expired':
+			case 'not_enabled':
+				$params['active'] = false;
+				break;
+			case 'enabled':
+			default:
+				$params['active'] = true;
+				break;
+		}
+
 		if ($query['searchletter'])
 		{
 			$params['query'] = $query['searchletter'];
@@ -340,8 +362,15 @@ class admin_ui
 		$rows = array_values(self::$accounts->search($params));
 		//error_log(__METHOD__."() accounts->search(".array2string($params).") total=".self::$accounts->total);
 
-		foreach($rows as &$row)
+		foreach($rows as $key => &$row)
 		{
+			// Filter by status
+			if($params['status'] && !static::filter_status($params['status'], $row))
+			{
+				unset($rows[$key]);
+				self::$accounts->total--;
+				continue;
+			}
 			$row['status'] = self::$accounts->is_expired($row) ?
 				lang('Expired').' '.Api\DateTime::to($row['account_expires'], true) :
 					(!self::$accounts->is_active($row) ? lang('Disabled') :
@@ -352,6 +381,36 @@ class admin_ui
 		}
 
 		return self::$accounts->total;
+	}
+
+
+	/**
+	 * Filter the account based on given status.
+	 *
+	 * Status is one of enabled, disabled, expired, expires, not_enabled
+	 * @param $status
+	 * @param $account
+	 */
+	protected static function filter_status($status, &$account)
+	{
+		switch($status)
+		{
+			case 'enabled':
+				return $account['account_status'] == 'A';
+
+			case 'disabled':
+				return $account['account_status'] !== 'A';
+
+			case 'expired':
+				return $account['account_expires'] !== '-1' && $account['account_status'] != 'A';
+
+			case 'expires':
+				return $account['account_expires'] != '-1' && $account['account_status'] == 'A';
+
+			case 'not_enabled':
+				return static::filter_status('disabled', $account) || static::filter_status('expired', $account);
+		}
+		return false;
 	}
 
 	/**
