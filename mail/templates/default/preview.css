@@ -69,7 +69,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
     position: fixed;
     height: auto;
     width: 100%;
-    top: 0px;
+    bottom: 0px;
     left: 0px;
     background: rgb(255, 229, 165);
     border-top: 1px solid rgb(143, 139, 139);
