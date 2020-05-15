@@ -327,6 +327,9 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 
 /**
  * Simple container object
+ *
+ * There is no tag to put this in a template.  By convention we only make one of these per etemplate,
+ * and it's the top level object.
  */
 export class et2_container extends et2_baseWidget
 {
@@ -362,6 +365,108 @@ export class et2_container extends et2_baseWidget
 				this._mgrs[key].destroy();
 			}
 		}
+	}
+
+	/**
+	 * Searches for a DOM widget by id in the tree, descending into the child levels.
+	 *
+	 * @param _id is the id you're searching for
+	 */
+	getDOMWidgetById(_id) : et2_DOMWidget | null
+	{
+		let widget = this.getWidgetById(_id);
+		if(widget && widget.instanceOf(et2_DOMWidget))
+		{
+			return <et2_DOMWidget>widget;
+		}
+		return null
+	}
+
+	/**
+	 * Searches for a Value widget by id in the tree, descending into the child levels.
+	 *
+	 * @param _id is the id you're searching for
+	 */
+	getValueWidgetById(_id) : et2_valueWidget | null
+	{
+		let widget = this.getWidgetById(_id);
+		if(widget && widget.instanceOf(et2_valueWidget))
+		{
+			return <et2_valueWidget>widget;
+		}
+		return null
+	}
+
+	/**
+	 * Set the value for a child widget, specified by the given ID
+	 *
+	 * @param id  string The ID you're searching for
+	 * @param value Value for the widget
+	 *
+	 * @return Returns the result of widget's set_value(), though this is usually undefined
+	 *
+	 * @throws Error If the widget cannot be found or it does not have a set_value() function
+	 */
+	setValueById(id: string, value): any
+	{
+		let widget = this.getWidgetById(id);
+		if(!widget) throw 'Could not find widget ' + id;
+
+		// Don't care about what class it is, just that it has the function
+		// @ts-ignore
+		if(typeof widget.set_value !== 'function')
+		{
+			throw 'Widget ' + id + ' does not have a set_value() function';
+		}
+
+		// @ts-ignore
+		return widget.set_value(value);
+	}
+
+	/**
+	 * Get the current value of a child widget, specified by the given ID
+	 *
+	 * This is the current value of the widget, which may be different from the original value given in content
+	 *
+	 * @param id  string The ID you're searching for
+	 * @throws Error If the widget cannot be found or it does not have a set_value() function
+	 */
+	getValueById(id: string)
+	{
+		let widget = this.getWidgetById(id);
+		if(!widget) throw 'Could not find widget ' + id;
+
+		// Don't care about what class it is, just that it has the function
+		// @ts-ignore
+		if(typeof widget.get_value !== 'function')
+		{
+			throw 'Widget ' + id + ' does not have a get_value() function';
+		}
+
+		// @ts-ignore
+		return widget.get_value();
+	}
+
+	/**
+	 * Set the value for a child widget, specified by the given ID
+	 *
+	 * @param id  string The ID you're searching for
+	 * @throws Error If the widget cannot be found or it does not have a set_value() function
+	 */
+	setDisabledById(id: string, value : boolean)
+	{
+		let widget = this.getWidgetById(id);
+		if(!widget)  throw 'Could not find widget ' + id;
+
+		// Don't care about what class it is, just that it has the function
+		// @ts-ignore
+		if(typeof widget.set_disabled !== 'function')
+		{
+			throw 'Widget ' + id + ' does not have a set_disabled() function';
+		}
+
+		// @ts-ignore
+		return widget.set_disabled(value);
 	}
 }
 // Register widget for attributes, but not for any xml tags
