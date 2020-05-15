@@ -674,7 +674,7 @@ var AdminApp = /** @class */ (function (_super) {
         if (this.acl_dialog != null) {
             content = this.acl_dialog.get_value() || {};
             // Destroy the dialog
-            this.acl_dialog.free();
+            this.acl_dialog.destroy();
             this.acl_dialog = null;
         }
         // Re-open the dialog

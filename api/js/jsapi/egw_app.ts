@@ -796,7 +796,7 @@ export abstract class EgwApp
 		// Clear old, if existing
 		if(this.favorite_popup && this.favorite_popup.group)
 		{
-			this.favorite_popup.group.free();
+			this.favorite_popup.group.destroy();
 			delete this.favorite_popup;
 		}
 
