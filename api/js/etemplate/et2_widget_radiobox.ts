@@ -28,7 +28,7 @@ import {et2_valueWidget} from './et2_core_valueWidget';
  *
  * @augments et2_inputWidget
  */
-class et2_radiobox extends et2_inputWidget
+export class et2_radiobox extends et2_inputWidget
 {
 	static readonly _attributes : any = {
 		"set_value": {
