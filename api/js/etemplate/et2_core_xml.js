@@ -33,7 +33,7 @@ function et2_loadXMLFromURL(_url, _callback, _context, _fail_callback) {
         // catch security exception if opener is from a different domain
     }
     if (typeof win == "undefined") {
-        win = top;
+        win = egw.top;
     }
     win.jQuery.ajax({
         // we add the full url (protocol and domain) as sometimes just the path

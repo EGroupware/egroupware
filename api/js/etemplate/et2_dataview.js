@@ -406,7 +406,7 @@ var et2_dataview = /** @class */ (function () {
         if (typeof this.scrollbarWidth === 'undefined') {
             // Clone the table and attach it to the outer body tag
             var clone = this.table.clone();
-            jQuery(window.top.document.getElementsByTagName("body")[0])
+            jQuery(egw.top.document.getElementsByTagName("body")[0])
                 .append(clone);
             // Read the scrollbar width
             this.scrollbarWidth = this.constructor.prototype.scrollbarWidth =

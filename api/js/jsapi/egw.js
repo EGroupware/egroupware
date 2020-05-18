@@ -145,6 +145,11 @@
 			webserverUrl: egw_webserverUrl
 		};
 	}
+	// set top window in egw object
+	if (typeof window.egw.top === "undefined")
+	{
+		window.egw.top = window;
+	}
 
 	// focus window / call window.focus(), if data-window-focus is specified
 	var window_focus = egw_script.getAttribute('data-window-focus');

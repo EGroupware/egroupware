@@ -149,17 +149,7 @@ function egw_insertJS(_html)
  */
 function egw_topWindow()
 {
-	if (typeof window.parent != "undefined" && typeof window.parent.top != "undefined")
-	{
-		return window.parent.top;
-	}
-
-	if (typeof window.opener != "undefined" && typeof window.opener.top != "undefined")
-	{
-		return window.opener.top;
-	}
-
-	return window.top;
+	return egw.top;
 }
 
 /**
@@ -288,14 +278,15 @@ window.egw_getFramework = function()
 	{
 		return framework;
 	}
-	else if (typeof window.parent.egw_getFramework != "undefined" && window != window.parent)
-	{
-		return window.parent.egw_getFramework();
+	try {
+		if (typeof window.parent.egw_getFramework != "undefined" && window != window.parent)
+		{
+			return window.parent.egw_getFramework();
+		}
 	}
-	else
-	{
-		return null;
-	}
+	catch (e) {}
+
+	return null;
 }
 
 /**

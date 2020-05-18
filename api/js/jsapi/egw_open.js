@@ -366,7 +366,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			if (typeof(_app) == 'undefined') _app = false;
 			if (typeof(_returnID) == 'undefined') _returnID = false;
 
-			var $wnd = jQuery(_wnd.top);
+			var $wnd = jQuery(egw.top);
 			var positionLeft = ($wnd.outerWidth()/2)-(_width/2)+_wnd.screenX;
 			var positionTop  = ($wnd.outerHeight()/2)-(_height/2)+_wnd.screenY;
 

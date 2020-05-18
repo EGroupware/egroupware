@@ -60,6 +60,11 @@ declare interface IegwGlobal
 	webserverUrl : string;
 
 	/**
+	 * Reference to top window of EGroupware (no need to check for security exceptions!)
+	 */
+	top : Window;
+
+	/**
 	 * implemented in egw_config.js
 	 */
 	/**

@@ -39,7 +39,7 @@ function et2_loadXMLFromURL(_url : string, _callback : Function, _context : obje
 	}
 	if (typeof win == "undefined")
 	{
-		win = top;
+		win = egw.top;
 	}
 	win.jQuery.ajax({
 		// we add the full url (protocol and domain) as sometimes just the path

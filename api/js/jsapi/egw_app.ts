@@ -150,10 +150,10 @@ export abstract class EgwApp
 			}
 			// Make sure we're running in the top window when we init sidebox
 			//@ts-ignore
-			if(window.app[this.appname] === this && window.top.app[this.appname] !== this && window.top.app[this.appname])
+			if(window.app[this.appname] === this && egw.top.app[this.appname] !== this && egw.top.app[this.appname])
 			{
 				//@ts-ignore
-				window.top.app[this.appname]._init_sidebox(sidebox);
+				egw.top.app[this.appname]._init_sidebox(sidebox);
 			}
 			else
 			{
