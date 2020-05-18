@@ -586,7 +586,7 @@ class Vfs
 		if (isset($options['limit']))
 		{
 			list($limit,$start) = explode(',',$options['limit']);
-			if (!$limit && !($limit = $GLOBALS['egw_info']['user']['preferences']['comman']['maxmatches'])) $limit = 15;
+			if (!$limit && !($limit = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatches'])) $limit = 15;
 			//echo "total=".self::$find_total.", limit=$options[limit] --> start=$start, limit=$limit<br>\n";
 
 			if ((int)$start || self::$find_total > $limit)
