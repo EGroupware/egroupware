@@ -174,6 +174,7 @@ var et2_radiobox = /** @class */ (function (_super) {
     et2_radiobox.legacyOptions = ["set_value", "ro_true", "ro_false"];
     return et2_radiobox;
 }(et2_core_inputWidget_1.et2_inputWidget));
+exports.et2_radiobox = et2_radiobox;
 et2_core_widget_1.et2_register_widget(et2_radiobox, ["radio"]);
 /**
  * @augments et2_valueWidget
