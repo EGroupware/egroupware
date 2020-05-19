@@ -245,9 +245,6 @@ class calendar_boupdate extends calendar_bo
 			return $conflicts;
 		}
 
-		// See if we need to reset any participant statuses
-		$this->check_reset_stati($event, $old_event);
-
 		// generate a video-room-url, if we need one and not already have one
 		if ($event['videoconference'] && empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call'))
 		{
@@ -1305,6 +1302,8 @@ class calendar_boupdate extends calendar_bo
 			$old_event = null;
 		}
 		if (!isset($event['whole_day'])) $event['whole_day'] = $this->isWholeDay($event);
+
+		$this->check_reset_statuses($event, $old_event);
 
 		// set recur-enddate/range-end to real end-date of last recurrence
 		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'] && $event['start'])
@@ -3011,7 +3010,7 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @return boolean true if any statuses were reset
 	 */
-	protected function check_reset_stati(&$event, $old_event)
+	protected function check_reset_statuses(&$event, $old_event)
 	{
 		if(!$old_event || !is_array($old_event) || $event['start'] == $old_event['start'])
 		{

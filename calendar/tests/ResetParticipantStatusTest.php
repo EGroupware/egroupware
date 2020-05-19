@@ -43,7 +43,7 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 
 		// Make check_reset_status method accessable
 		$class = new \ReflectionClass($this->bo);
-        $this->check_method = $class->getMethod('check_reset_stati');
+        $this->check_method = $class->getMethod('check_reset_statuses');
         $this->check_method->setAccessible(true);
 	}
 
