@@ -444,6 +444,33 @@ abstract class Framework extends Framework\Extra
 		return $js;
 	}
 
+	protected static $body_classes = [];
+
+	/**
+	 * Set a CSS class on the body tag
+	 *
+	 * @param string $class =null
+	 * @return array with all currently set css classes
+	 */
+	public static function bodyClass($class=null)
+	{
+		if (!empty($class))
+		{
+			self::$body_classes[] = $class;
+		}
+		return self::$body_classes;
+	}
+
+	/**
+	 * Get class attribute for body tag
+	 *
+	 * @return string
+	 */
+	protected static function bodyClassAttribute()
+	{
+		return self::$body_classes ? ' class="'.htmlspecialchars(implode(' ', self::$body_classes)).'"' : '';
+	}
+
 	/**
 	 * Get header as array to eg. set as vars for a template (from idots' head.inc.php)
 	 *
@@ -498,7 +525,7 @@ abstract class Framework extends Framework\Extra
 			'lang_code'			=> $lang_code,
 			'charset'       	=> Translation::charset(),
 			'website_title' 	=> $site_title,
-			'body_tags'         => self::_get_body_attribs(),
+			'body_tags'         => self::_get_body_attribs().self::bodyClassAttribute(),
 			'java_script'   	=> self::_get_js($extra),
 			'meta_robots'		=> $robots,
 			'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
