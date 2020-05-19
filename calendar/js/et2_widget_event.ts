@@ -211,7 +211,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		const value = event === null ? null : jQuery.extend({}, event);
 		let parent = <et2_DOMWidget>this.getParent();
 		let parent_owner = parent.getDOMNode(parent).dataset['owner'] || parent.getParent().options.owner;
-		if(parent_owner.indexOf(','))
+		if(parent_owner.indexOf(',') >= 0)
 		{
 			parent_owner = parent_owner.split(',');
 		}

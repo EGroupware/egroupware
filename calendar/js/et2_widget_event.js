@@ -171,7 +171,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
         var value = event === null ? null : jQuery.extend({}, event);
         var parent = this.getParent();
         var parent_owner = parent.getDOMNode(parent).dataset['owner'] || parent.getParent().options.owner;
-        if (parent_owner.indexOf(',')) {
+        if (parent_owner.indexOf(',') >= 0) {
             parent_owner = parent_owner.split(',');
         }
         // Make sure id is a string, check values
