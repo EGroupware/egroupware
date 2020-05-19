@@ -71,7 +71,7 @@ class ImportParticipantsTest extends \EGroupware\Api\AppTest
 		$record = new ParticipantRecord($test_string);
 
 		// Parse the string
-        $parsed = $this->parse_method->invokeArgs($this->import, array($record, &$warning));
+		$parsed = $this->parse_method->invokeArgs($this->import, array($record, &$warning));
 
 		// Get numeric ID for this system
 		foreach ($expected as $id => $status)

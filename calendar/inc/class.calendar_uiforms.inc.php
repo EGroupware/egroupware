@@ -3164,18 +3164,6 @@ class calendar_uiforms extends calendar_ui
 			$response->call('egw.message',  implode('<br />', $message));
 		}
 		if($event['id'] != $eventId ) $this->update_client($_eventId);
-		if ($status_reset_to_unknown)
-		{
-			foreach((array)$event['participants'] as $uid => $status)
-			{
-				if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user)
-				{
-					calendar_so::split_status($status,$q,$r);
-					$status = calendar_so::combine_status('U',$q,$r);
-					$this->bo->set_status($event['id'], $uid, $status, 0, true);
-				}
-			}
-		}
 	}
 
 	/**
