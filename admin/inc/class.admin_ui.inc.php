@@ -93,6 +93,7 @@ class admin_ui
 		unset($sel_options['account_primary_group']['']);
 
 		$sel_options['filter2'] = array(
+			''            => 'All',
 			'enabled'     => 'Enabled',
 			'disabled'    => 'Disabled',
 			'expired'     => 'Expired',
@@ -337,6 +338,7 @@ class admin_ui
 		// Make sure active filter give status what it needs
 		switch($query['filter2'])
 		{
+			case '':
 			case 'disabled':
 			case 'expired':
 			case 'not_enabled':
@@ -399,10 +401,10 @@ class admin_ui
 				return $account['account_status'] == 'A';
 
 			case 'disabled':
-				return $account['account_status'] !== 'A';
+				return $account['account_status'] !== 'A' && $account['account_expires'] == '-1';
 
 			case 'expired':
-				return $account['account_expires'] !== '-1' && $account['account_status'] != 'A';
+				return $account['account_expires'] !== '-1' && $account['account_expires'] <= time();
 
 			case 'expires':
 				return $account['account_expires'] != '-1' && $account['account_status'] == 'A';
