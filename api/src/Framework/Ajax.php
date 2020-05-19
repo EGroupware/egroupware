@@ -248,7 +248,8 @@ abstract class Ajax extends Api\Framework
 			if (!in_array($GLOBALS['egw_info']['flags']['currentapp'], array('manual', 'login', 'logout', 'sitemgr')))
 			{
 				if (empty($GLOBALS['egw_info']['flags']['java_script'])) $GLOBALS['egw_info']['flags']['java_script']='';
-				$extra['check-framework'] = $_GET['cd'] !== 'no';
+				// eT2 sets $GLOBALS['egw_info']['flags']['nonavbar'] === 'popup' for popups, Etemplate::exec($outputmode === 2)
+				$extra['check-framework'] = $_GET['cd'] !== 'no' && $GLOBALS['egw_info']['flags']['nonavbar'] !== 'popup';
 			}
 		}
 		// allow apps to load JavaScript or CSS files, knowing we're loading the framework or not
