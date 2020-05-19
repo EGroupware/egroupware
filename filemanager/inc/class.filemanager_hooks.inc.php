@@ -198,7 +198,7 @@ class filemanager_hooks
 		);
 
 		$editorLink = self::getEditorLink();
-		$mimes = array();
+		$mimes = array('0' => lang('None'));
 
 		foreach ((array)$editorLink['mime'] as $mime => $value)
 		{
