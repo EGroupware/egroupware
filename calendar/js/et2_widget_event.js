@@ -198,7 +198,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		var value = event === null ? null : jQuery.extend({},event);
 		var parent = this._parent;
 		var parent_owner = parent.getDOMNode(parent).dataset['owner'] || parent.getParent().options.owner;
-		if(parent_owner.indexOf(','))
+		if(parent_owner.indexOf(',') >= 0)
 		{
 			parent_owner = parent_owner.split(',');
 		}
