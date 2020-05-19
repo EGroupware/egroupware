@@ -139,6 +139,8 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				this._init_sidebox(sidebox);
 			}
 		}
+
+		AppJS._register_instance(this);
 	},
 
 	/**
@@ -178,8 +180,6 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 
 		// Highlights the favorite based on initial list state
 		this.highlight_favorite();
-
-		AppJS._register_instance(this);
 	},
 
 	/**
