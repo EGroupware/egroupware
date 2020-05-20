@@ -557,6 +557,7 @@ class addressbook_ui extends addressbook_bo
 				'hideOnMobile' => true
 			);
 		}
+		$actions['change_type'] = $this->change_type_actions($group);
 		$actions['merge'] = array(
 			'caption' => 'Merge contacts',
 			'confirm' => 'Merge into first or account, deletes all other!',
@@ -849,6 +850,32 @@ class addressbook_ui extends addressbook_bo
 		);
 		*/
 		return $actions;
+	}
+
+	protected function change_type_actions($group)
+	{
+
+		$types = array();
+		foreach($this->content_types as $key => $type)
+		{
+			// Skip deleted
+			if($key == self::DELETED_TYPE) continue;
+
+			$types[$key] = array(
+					'caption' => $type['name'],
+			);
+		}
+
+		return array(
+			'caption' => 'Type',
+			'children' => $types,
+			'prefix' => 'to_type_',
+			'group' => $group,
+			'disableClass' => 'rowNoEdit',
+			'hideOnDisabled' => true,
+			'disabled' => (count($types) <= 1),
+			'hideOnMobile' => true
+		);
 	}
 
 	/**
@@ -1147,6 +1174,11 @@ class addressbook_ui extends addressbook_bo
 			$to_list = (int)substr($action,8);
 			$action = 'to_list';
 		}
+		elseif (substr($action, 0, 8) == 'to_type_')
+		{
+			$to_type = substr($action,8);
+			$action = 'to_type';
+		}
 		elseif (substr($action,0,9) == 'document_')
 		{
 			$document = substr($action,9);
@@ -1351,7 +1383,21 @@ class addressbook_ui extends addressbook_bo
 						$Ok = $this->add2list($id,$to_list) !== false;
 					}
 					break;
-
+				case 'to_type':
+					$action_msg = lang('changed type to %1', lang($this->content_types[$to_type]['name']));
+					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(Acl::EDIT,$contact)))
+					{
+						if (!$contact['owner'])		// no change of Api\Accounts
+						{
+							$Ok = false;
+						}
+						else
+						{
+							$contact['tid'] = $to_type;
+							$Ok = $this->save($contact);
+						}
+					}
+					break;
 				default:	// move to an other addressbook
 					if (!(int)$action || !($this->grants[(string) (int) $action] & Acl::EDIT))	// might be ADD in the future
 					{
