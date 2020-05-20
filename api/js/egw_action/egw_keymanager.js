@@ -267,10 +267,11 @@ function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
 
 	// Get the object manager and fetch the container of the currently
 	// focused object
+	var focusedObject = egw_globalObjectManager.getFocusedObject();
 	var appMgr = egw_getAppObjectManager(false);
-	if (appMgr)
+	if (appMgr && !focusedObject)
 	{
-		var focusedObject = appMgr.getFocusedObject();
+		focusedObject = appMgr.getFocusedObject();
 
 		if (!focusedObject)
 		{
@@ -296,34 +297,33 @@ function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
 				focusedObject = cntr.children[0];
 			}
 		}
+	}
+	if (focusedObject)
+	{
+		// Handle the default keys (arrow_up, down etc.)
+		var cntr = focusedObject.getContainerRoot();
+		var handled = false;
 
-		if (focusedObject)
+		if (cntr)
 		{
-
-			// Handle the default keys (arrow_up, down etc.)
-			var cntr = focusedObject.getContainerRoot();
-			var handled = false;
-
-			if (cntr)
-			{
-				handled = cntr.handleKeyPress(_keyCode, _shift, _ctrl, _alt);
-			}
-
-			// Execute the egw_popup key handler of the focused object
-			if (!handled) {
-				return focusedObject.executeActionImplementation(
-				{
-					"keyEvent": {
-						"keyCode": _keyCode,
-						"shift": _shift,
-						"ctrl": _ctrl,
-						"alt": _alt
-					}
-				}, "popup", EGW_AO_EXEC_SELECTED);
-			}
-
-			return handled;
+			handled = cntr.handleKeyPress(_keyCode, _shift, _ctrl, _alt);
 		}
+
+		// Execute the egw_popup key handler of the focused object
+		if (!handled)
+		{
+			return focusedObject.executeActionImplementation(
+			{
+				"keyEvent": {
+					"keyCode": _keyCode,
+					"shift": _shift,
+					"ctrl": _ctrl,
+					"alt": _alt
+				}
+			}, "popup", EGW_AO_EXEC_SELECTED);
+		}
+
+		return handled;
 	}
 
 	return false;
