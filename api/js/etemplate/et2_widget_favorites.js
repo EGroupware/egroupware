@@ -103,6 +103,12 @@ var et2_favorites = (function(){ "use strict"; return et2_dropdown_button.extend
 		var apps = egw().user('apps');
 		this.is_admin = (typeof apps['admin'] != "undefined");
 
+		// Make sure we have an app
+		if(!this.options.app)
+		{
+			this.options.app = this.getInstanceManager().app;
+		}
+
 		this.stored_filters = this.load_favorites(this.options.app);
 
 		this.preferred = egw.preference(this.options.default_pref,this.options.app);
