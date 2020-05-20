@@ -1331,7 +1331,7 @@ class AddressbookApp extends EgwApp
 			let enabled = false;
 			for(let entry in list)
 			{
-				if (row.data?.account_id == list[entry]['account_id'])
+				if (row.data && row.data.account_id && row.data.account_id == list[entry]['account_id'])
 				{
 					enabled = list[entry]['data']['status']['active'];
 				}

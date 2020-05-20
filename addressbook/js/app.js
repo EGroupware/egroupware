@@ -1085,7 +1085,6 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param _selected
      */
     AddressbookApp.prototype.videoconference_isUserOnline = function (_action, _selected) {
-        var _a;
         var list = app.status ? app.status.getEntireList() : {};
         for (var sel in _selected) {
             if (sel == '0' && _selected[sel]['id'] == 'nm')
@@ -1093,7 +1092,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             var row = egw.dataGetUIDdata(_selected[sel]['id']);
             var enabled = false;
             for (var entry in list) {
-                if (((_a = row.data) === null || _a === void 0 ? void 0 : _a.account_id) == list[entry]['account_id']) {
+                if (row.data && row.data.account_id && row.data.account_id == list[entry]['account_id']) {
                     enabled = list[entry]['data']['status']['active'];
                 }
             }
