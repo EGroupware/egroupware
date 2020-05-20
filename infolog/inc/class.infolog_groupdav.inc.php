@@ -106,7 +106,14 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	 */
 	private function get_infolog_filter($path, $user)
 	{
-		if (!($infolog_types = $GLOBALS['egw_info']['user']['preferences']['groupdav']['infolog-types']))
+		$infolog_types = $GLOBALS['egw_info']['user']['preferences']['groupdav']['infolog-types'];
+
+		// 'None' selected for types, make sure filter gives no results
+		if($infolog_types == '0')
+		{
+			return array('info_type' => '**NONE**');
+		}
+		if (!$infolog_types)
 		{
 			$infolog_types = 'task';
 		}
@@ -872,7 +879,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			'label'  => 'InfoLog types to sync',
 			'name'   => 'infolog-types',
 			'help'   => 'Which InfoLog types should be synced with the device, default only tasks.',
-			'values' => $types,
+			'values' => array('0' => lang('none')) + $types,
 			'default' => 'task',
 			'xmlrpc' => True,
 			'admin'  => False,
