@@ -82,6 +82,10 @@ var et2_favorites = /** @class */ (function (_super) {
         _this.favSortedList = ['blank'];
         var apps = egw().user('apps');
         et2_favorites.is_admin = (typeof apps['admin'] != "undefined");
+        // Make sure we have an app
+        if (!_this.options.app) {
+            _this.options.app = _this.getInstanceManager().app;
+        }
         _this.stored_filters = _this.load_favorites(_this.options.app);
         _this.preferred = egw.preference(_this.options.default_pref, _this.options.app);
         if (!_this.preferred || typeof _this.stored_filters[_this.preferred] == "undefined") {
@@ -165,8 +169,8 @@ var et2_favorites = /** @class */ (function (_super) {
         // Load saved favorites
         var preferences = egw.preference("*", app);
         for (var pref_name in preferences) {
-            if (pref_name.indexOf(this.favorite_prefix) == 0 && typeof preferences[pref_name] == 'object') {
-                var name_1 = pref_name.substr(this.favorite_prefix.length);
+            if (pref_name.indexOf(et2_favorites.PREFIX) == 0 && typeof preferences[pref_name] == 'object') {
+                var name_1 = pref_name.substr(et2_favorites.PREFIX.length);
                 stored_filters[name_1] = preferences[pref_name];
                 // Keep older favorites working - they used to store nm filters in 'filters',not state
                 if (preferences[pref_name]["filters"]) {
@@ -337,6 +341,7 @@ var et2_favorites = /** @class */ (function (_super) {
         image: { "default": egw().image('fav_filter') },
         statustext: { "default": "Favorite queries", "type": "string" }
     };
+    et2_favorites.PREFIX = "favorite_";
     return et2_favorites;
 }(et2_widget_dropdown_button_1.et2_dropdown_button));
 et2_core_widget_1.et2_register_widget(et2_favorites, ["favorites"]);

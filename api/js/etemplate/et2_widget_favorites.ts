@@ -82,7 +82,7 @@ class et2_favorites extends et2_dropdown_button implements et2_INextmatchHeader
 	// Some convenient variables, used in closures / event handlers
 	header = null;
 	nextmatch = null;
-	favorite_prefix: "favorite_";
+	public static readonly PREFIX = "favorite_";
 	private stored_filters: {};
 	private favSortedList : any = null;
 	private sidebox_target : JQuery = null;
@@ -112,6 +112,12 @@ class et2_favorites extends et2_dropdown_button implements et2_INextmatchHeader
 
 		let apps = egw().user('apps');
 		et2_favorites.is_admin = (typeof apps['admin'] != "undefined");
+
+		// Make sure we have an app
+		if(!this.options.app)
+		{
+			this.options.app = this.getInstanceManager().app;
+		}
 
 		this.stored_filters = this.load_favorites(this.options.app);
 
@@ -224,9 +230,9 @@ class et2_favorites extends et2_dropdown_button implements et2_INextmatchHeader
 		let preferences : any = egw.preference("*",app);
 		for(let pref_name in preferences)
 		{
-			if(pref_name.indexOf(this.favorite_prefix) == 0 && typeof preferences[pref_name] == 'object')
+			if(pref_name.indexOf(et2_favorites.PREFIX) == 0 && typeof preferences[pref_name] == 'object')
 			{
-				let name = pref_name.substr(this.favorite_prefix.length);
+				let name = pref_name.substr(et2_favorites.PREFIX.length);
 				stored_filters[name] = preferences[pref_name];
 				// Keep older favorites working - they used to store nm filters in 'filters',not state
 				if(preferences[pref_name]["filters"])
