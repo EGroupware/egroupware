@@ -257,9 +257,9 @@ export class weekN extends View
 	{
 		state.days = '' + (state.days >= 5 ? state.days : egw.preference('days_in_weekview', 'calendar') || 7);
 
-		var d = app.calendar.date.start_of_week(app.calendar.View.start_date.call(this, state));
+		var d = app.calendar.date.start_of_week(super.start_date(state));
 		// Always 7 days, we just turn weekends on or off
-		d.setUTCHours(24 * 7 * (parseInt(this.egw.preference('multiple_weeks', 'calendar')) || 3) - 1);
+		d.setUTCHours(24 * 7 * (parseInt(app.calendar.egw.preference('multiple_weeks', 'calendar')) || 3) - 1);
 		return d;
 	}
 }

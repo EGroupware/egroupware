@@ -30,6 +30,7 @@ var et2_core_inheritance_1 = require("../../api/js/etemplate/et2_core_inheritanc
 var et2_widget_view_1 = require("./et2_widget_view");
 var et2_core_DOMWidget_1 = require("../../api/js/etemplate/et2_core_DOMWidget");
 var et2_dataview_view_grid_1 = require("../../api/js/etemplate/et2_dataview_view_grid");
+var et2_widget_daycol_1 = require("./et2_widget_daycol");
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days
  *
@@ -450,6 +451,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             if (this.trigger) {
                 this.widget.change();
             }
+            this.widget._updateNow();
             // Hide loader
             window.setTimeout(jQuery.proxy(function () { this.loader.hide(); }, this.widget), 200);
         }, { widget: this, "trigger": trigger }), et2_dataview_view_grid_1.et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
@@ -484,7 +486,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         if (_sender === this || !_sender) {
             return this.div ? this.div[0] : null;
         }
-        else if (_sender.instanceOf(et2_calendar_daycol)) {
+        else if (_sender.instanceOf(et2_widget_daycol_1.et2_calendar_daycol)) {
             return this.days ? this.days[0] : null;
         }
         else if (_sender) {
@@ -503,6 +505,29 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             // to the top, so add 2px;
             this.scrolling.scrollTop(this._top_time + 2);
         }
+    };
+    /**
+     * Update the 'now' line
+     * @private
+     */
+    et2_calendar_timegrid.prototype._updateNow = function () {
+        var now = _super.prototype._updateNow.call(this);
+        if (now === false || this.options.granularity == 0) {
+            this.now_div.hide();
+            return false;
+        }
+        for (var i = 0; i < this.day_widgets.length; i++) {
+            var day = this.day_widgets[i];
+            if (day.getDate() >= now) {
+                day = this.day_widgets[i - 1];
+                this.now_div.appendTo(day.getDOMNode()).show();
+                var pos = day._time_to_position(now.getHours() * 60 + now.getMinutes());
+                //this.now_div.position({my: 'left', at: 'left', of: day.getDOMNode()});
+                this.now_div.css('top', pos + '%');
+                break;
+            }
+        }
+        return true;
     };
     /**
      * Clear everything, and redraw the whole grid
@@ -541,7 +566,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             this.days.css('height', '100%');
             this.iterateOver(function (day) {
                 day.resize();
-            }, this, et2_calendar_daycol);
+            }, this, et2_widget_daycol_1.et2_calendar_daycol);
             return;
         }
         var wd_start = 60 * this.options.day_start;
@@ -768,6 +793,8 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         }
         // Handle not fully visible elements
         this._scroll();
+        // Set 'now' line
+        this._updateNow();
         // TODO: Figure out how to do this with detached nodes
         /*
         var nodes = this.day_col.getDetachedNodes();
@@ -893,7 +920,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
                             owner_match = owner_match || col.options.owner.indexOf(id) !== -1;
                             own_timegrid = (col === event.getParent());
                         }
-                    }, this, et2_calendar_daycol);
+                    }, this, et2_widget_daycol_1.et2_calendar_daycol);
                 }
             }
             var enabled = !owner_match &&
@@ -1112,7 +1139,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
                                     if (col.div.has(timegrid.gridHover).length || col.header.has(timegrid.gridHover).length) {
                                         add_owner = col.options.owner;
                                     }
-                                }, this, et2_calendar_daycol);
+                                }, this, et2_widget_daycol_1.et2_calendar_daycol);
                             }
                             egw().json('calendar.calendar_uiforms.ajax_invite', [
                                 button_id === 'series' ? event_data.id : event_data.app_id,

@@ -668,6 +668,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             }
             this.widget.update_timer = null;
             this.widget.doInvalidate = true;
+            this.widget._updateNow();
             window.setTimeout(jQuery.proxy(function () { if (this.loader)
                 this.loader.hide(); }, this.widget), 500);
         }, { widget: this, "trigger": trigger }), et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
@@ -818,6 +819,31 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         }
         content += "</div>\n";
         return content;
+    };
+    /**
+     * Update the 'now' line
+     * @private
+     */
+    et2_calendar_planner.prototype._updateNow = function () {
+        var now = _super.prototype._updateNow.call(this);
+        if (now === false || this.grouper == this.groupers.month) {
+            this.now_div.hide();
+            return false;
+        }
+        // Planner uses the dates, not just the times so need things right
+        now = new Date(now.valueOf() - now.getTimezoneOffset() * 60000);
+        var row = null;
+        for (var i = 0; i < this._children.length && row == null; i++) {
+            if (this._children[i].instanceOf(et2_widget_planner_row_1.et2_calendar_planner_row)) {
+                row = this._children[i];
+            }
+        }
+        if (!row) {
+            this.now_div.hide();
+            return false;
+        }
+        this.now_div.appendTo(this.grid)
+            .css('left', row._time_to_position(now) + '%');
     };
     /**
      * Make a header showing the months

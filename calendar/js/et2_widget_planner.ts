@@ -855,6 +855,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			this.widget.update_timer = null;
 			this.widget.doInvalidate = true;
 
+		this.widget._updateNow();
 			window.setTimeout(jQuery.proxy(function() {if(this.loader) this.loader.hide();},this.widget),500);
 		},{widget:this,"trigger":trigger}),et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
 	}
@@ -1053,6 +1054,37 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		content += "</div>\n";
 
 		return content;
+	}
+	/**
+	 * Update the 'now' line
+	 * @private
+	 */
+	public _updateNow()
+	{
+		let now = super._updateNow();
+		if(now === false || this.grouper == this.groupers.month)
+		{
+			this.now_div.hide();
+			return false;
+		}
+
+		// Planner uses the dates, not just the times so need things right
+		now = new Date(now.valueOf() - now.getTimezoneOffset()*60000);
+		let row = null;
+		for(let i = 0; i < this._children.length && row == null; i++)
+		{
+			if(this._children[i].instanceOf(et2_calendar_planner_row))
+			{
+				row = this._children[i];
+			}
+		}
+		if(!row)
+		{
+			this.now_div.hide();
+			return false;
+		}
+		this.now_div.appendTo(this.grid)
+		    .css('left', row._time_to_position(now) + '%');
 	}
 
 	/**

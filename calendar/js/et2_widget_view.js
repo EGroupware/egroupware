@@ -45,11 +45,14 @@ var et2_calendar_view = /** @class */ (function (_super) {
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_calendar_view._attributes, _child || {})) || this;
         _this.dataStorePrefix = 'calendar';
         _this.update_timer = null;
+        _this.now_timer = null;
         // Used for its date calculations
         _this._date_helper = et2_createWidget('date-time', {}, null);
         _this._date_helper.loadingFinished();
         _this.loader = jQuery('<div class="egw-loading-prompt-container ui-front loading"></div>');
+        _this.now_div = jQuery('<div class="calendar_now"/>');
         _this.update_timer = null;
+        _this.now_timer = null;
         // Used to support dragging on empty space to create an event
         _this.drag_create = {
             start: null,
@@ -68,12 +71,19 @@ var et2_calendar_view = /** @class */ (function (_super) {
         if (this.update_timer) {
             window.clearTimeout(this.update_timer);
         }
+        // Stop the 'now' line
+        if (this.now_timer) {
+            window.clearInterval(this.now_timer);
+        }
     };
     et2_calendar_view.prototype.doLoadingFinished = function () {
         _super.prototype.doLoadingFinished.call(this);
         this.loader.hide(0).prependTo(this.div);
+        this.div.append(this.now_div);
         if (this.options.owner)
             this.set_owner(this.options.owner);
+        // Start moving 'now' line
+        this.now_timer = window.setInterval(this._updateNow.bind(this), 60000);
         return true;
     };
     /**
@@ -273,6 +283,25 @@ var et2_calendar_view = /** @class */ (function (_super) {
     });
     et2_calendar_view.prototype._createNamespace = function () {
         return true;
+    };
+    /**
+     * Update the 'now' line
+     *
+     * Here we just do some limit checks and return the current date/time.
+     * Extending widgets should handle position.
+     *
+     * @private
+     */
+    et2_calendar_view.prototype._updateNow = function () {
+        var now = new Date();
+        // Use date widget's existing functions to deal
+        this._date_helper.set_value(now);
+        now = new Date(this._date_helper.getValue());
+        if (this.get_start_date() <= now && this.get_end_date() >= now) {
+            return now;
+        }
+        this.now_div.hide();
+        return false;
     };
     /**
      * Calendar supports many different owner types, including users & resources.

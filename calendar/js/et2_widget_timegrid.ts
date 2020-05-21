@@ -18,6 +18,7 @@ import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_calendar_view} from "./et2_widget_view";
 import {et2_action_object_impl} from "../../api/js/etemplate/et2_core_DOMWidget";
 import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
+import {et2_calendar_daycol} from "./et2_widget_daycol";
 
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days
@@ -618,6 +619,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			{
 				this.widget.change();
 			}
+			this.widget._updateNow();
+
 			// Hide loader
 			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this.widget),200);
 		},{widget:this,"trigger":trigger}),et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
@@ -690,6 +693,34 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			this.scrolling.scrollTop(this._top_time+2);
 		}
 
+	}
+
+	/**
+	 * Update the 'now' line
+	 * @private
+	 */
+	public _updateNow()
+	{
+		let now = super._updateNow();
+		if(now === false || this.options.granularity == 0)
+		{
+			this.now_div.hide();
+			return false;
+		}
+		for(var i = 0; i < this.day_widgets.length; i++)
+		{
+			let day = this.day_widgets[i];
+			if(day.getDate() >= now)
+			{
+				day = this.day_widgets[i-1];
+				this.now_div.appendTo(day.getDOMNode()).show();
+				let pos = day._time_to_position(now.getHours() * 60 + now.getMinutes());
+				//this.now_div.position({my: 'left', at: 'left', of: day.getDOMNode()});
+				this.now_div.css('top', pos + '%');
+				break;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -1031,6 +1062,9 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 
 		// Handle not fully visible elements
 		this._scroll();
+
+		// Set 'now' line
+		this._updateNow();
 
 		// TODO: Figure out how to do this with detached nodes
 		/*

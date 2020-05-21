@@ -16,6 +16,7 @@ import {et2_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_date} from "../../api/js/etemplate/et2_widget_date";
+import {et2_calendar_event} from "./et2_widget_event";
 
 /**
  * Parent class for the various calendar views to reduce copied code
@@ -48,8 +49,10 @@ export class et2_calendar_view extends et2_valueWidget
 	protected _date_helper: et2_date;
 	protected loader: JQuery;
 	protected div: JQuery;
+	protected now_div: JQuery;
 
 	protected update_timer: number = null;
+	protected now_timer: number = null;
 	protected drag_create: { parent: et2_widget; start: any; end: any; event: et2_calendar_event };
 	protected value: any;
 
@@ -70,7 +73,9 @@ export class et2_calendar_view extends et2_valueWidget
 		this._date_helper.loadingFinished();
 
 		this.loader = jQuery('<div class="egw-loading-prompt-container ui-front loading"></div>');
+		this.now_div = jQuery('<div class="calendar_now"/>');
 		this.update_timer = null;
+		this.now_timer = null;
 
 		// Used to support dragging on empty space to create an event
 		this.drag_create = {
@@ -93,14 +98,23 @@ export class et2_calendar_view extends et2_valueWidget
 		{
 			window.clearTimeout(this.update_timer);
 		}
+
+		// Stop the 'now' line
+		if(this.now_timer)
+		{
+			window.clearInterval(this.now_timer);
+		}
 	}
 
 	doLoadingFinished( )
 	{
 		super.doLoadingFinished();
 		this.loader.hide(0).prependTo(this.div);
+		this.div.append(this.now_div);
 		if(this.options.owner) this.set_owner(this.options.owner);
 
+		// Start moving 'now' line
+		this.now_timer = window.setInterval(this._updateNow.bind(this), 60000);
 		return true;
 	}
 
@@ -339,6 +353,30 @@ export class et2_calendar_view extends et2_valueWidget
 	}
 	_createNamespace() {
 		return true;
+	}
+
+	/**
+	 * Update the 'now' line
+	 *
+	 * Here we just do some limit checks and return the current date/time.
+	 * Extending widgets should handle position.
+	 *
+	 * @private
+	 */
+	public _updateNow()
+	{
+		let now = new Date();
+		// Use date widget's existing functions to deal
+		this._date_helper.set_value(now);
+
+		now = new Date(this._date_helper.getValue());
+		if(this.get_start_date() <= now && this.get_end_date() >= now)
+		{
+			return now;
+		}
+
+		this.now_div.hide();
+		return false;
 	}
 
 	/**
