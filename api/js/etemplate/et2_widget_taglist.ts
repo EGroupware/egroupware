@@ -27,7 +27,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
  * @see http://nicolasbize.github.io/magicsuggest/
  * @augments et2_selectbox
  */
-class et2_taglist extends et2_selectbox implements et2_IResizeable
+export class et2_taglist extends et2_selectbox implements et2_IResizeable
 {
 	static readonly _attributes : any = {
 		"empty_label": {

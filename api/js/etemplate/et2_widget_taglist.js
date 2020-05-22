@@ -771,6 +771,7 @@ var et2_taglist = /** @class */ (function (_super) {
     };
     return et2_taglist;
 }(et2_widget_selectbox_1.et2_selectbox));
+exports.et2_taglist = et2_taglist;
 et2_core_widget_1.et2_register_widget(et2_taglist, ["taglist"]);
 /**
  * Taglist customized specificlly for egw acccounts, fetches accounts and groups list,
