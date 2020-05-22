@@ -2435,12 +2435,11 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             // No favorites configured
             return;
         }
-        var list = et2_csvSplit(this.options.get_rows, 2, ".");
         var widget_options = {
             default_pref: "nextmatch-" + this.nextmatch.options.settings.columnselection_pref + "-favorite",
-            app: list[0],
+            app: this.getInstanceManager().app,
             filters: filters,
-            sidebox_target: 'favorite_sidebox_' + list[0]
+            sidebox_target: 'favorite_sidebox_' + this.getInstanceManager().app
         };
         this.favorites = et2_createWidget('favorites', widget_options, this);
         // Add into header

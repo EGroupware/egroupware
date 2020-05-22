@@ -3140,12 +3140,11 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 			return;
 		}
 
-		const list = et2_csvSplit(this.options.get_rows, 2, ".");
 		const widget_options = {
 			default_pref: "nextmatch-" + this.nextmatch.options.settings.columnselection_pref + "-favorite",
-			app: list[0],
+			app: this.getInstanceManager().app,
 			filters: filters,
-			sidebox_target: 'favorite_sidebox_' + list[0]
+			sidebox_target: 'favorite_sidebox_' + this.getInstanceManager().app
 		};
 		this.favorites = et2_createWidget('favorites', widget_options, this);
 
