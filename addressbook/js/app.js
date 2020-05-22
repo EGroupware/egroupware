@@ -527,18 +527,19 @@ var AddressbookApp = /** @class */ (function (_super) {
      */
     AddressbookApp.prototype._add_new_list_prompt = function (owner, contacts) {
         var lists = this.et2.getWidgetById('filter2');
-        et2_dialog.show_prompt(function (button, name) {
+        var owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
+        var callback = function (button, values) {
             if (button == et2_dialog.OK_BUTTON) {
-                egw.json('addressbook.addressbook_ui.ajax_set_list', [0, name, owner, contacts], function (result) {
+                egw.json('addressbook.addressbook_ui.ajax_set_list', [0, values.name, values.owner, contacts], function (result) {
                     if (typeof result == 'object')
                         return; // This response not for us
                     // Update list
                     if (result) {
-                        lists.options.select_options.unshift({ value: result, label: name });
+                        lists.options.select_options.unshift({ value: result, label: values.name });
                         lists.set_select_options(lists.options.select_options);
                         // Set to new list so they can see it easily
                         lists.set_value(result);
-                        // Call cahnge event manually after setting the value
+                        // Call change event manually after setting the value
                         // Not sure why our selectbox does not trigger change event
                         jQuery(lists.node).change();
                     }
@@ -547,12 +548,28 @@ var AddressbookApp = /** @class */ (function (_super) {
                     var dist_lists = null;
                     if (addressbook_actions && (dist_lists = addressbook_actions.getActionById('to_list'))) {
                         var id = 'to_list_' + result;
-                        var action = dist_lists.addAction('popup', id, name);
+                        var action = dist_lists.addAction('popup', id, values.name);
                         action.updateAction({ group: 1 });
                     }
                 }).sendRequest(true);
             }
-        }, this.egw.lang('Name for the distribution list'), this.egw.lang('Add a new list'));
+        };
+        var dialog = et2_createWidget("dialog", {
+            callback: callback,
+            title: this.egw.lang('Add a new list'),
+            buttons: et2_dialog.BUTTONS_OK_CANCEL,
+            value: {
+                content: {
+                    owner: owner
+                },
+                sel_options: {
+                    owner: owner_options
+                }
+            },
+            template: egw.webserverUrl + '/addressbook/templates/default/add_list_dialog.xet',
+            class: "et2_prompt",
+            minWidth: 400
+        }, this.et2);
     };
     /**
      * Rename the current distribution list selected in the nextmatch filter2

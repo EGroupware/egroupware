@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.add_list_dialog" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+			<row>
+				<description value="Name for the distribution list"/>
+				<textbox id="name"/>
+			</row>
+			<row>
+			<description value="Addressbook"/>
+			<select id="owner"/>
+			</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
