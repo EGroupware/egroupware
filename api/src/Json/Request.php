@@ -103,6 +103,8 @@ class Request
 		{
 			$this->handleRequest($menuaction, $parameters);
 		}
+		// check if we have push notifications, if notifications app available
+		if (class_exists('notifications_push')) notifications_push::get();
 	}
 
 	/**
@@ -191,7 +193,6 @@ class Request
 		call_user_func_array(array($ajaxClass, $functionName),
 			Api\Translation::convert($parameters, 'utf-8'));
 
-		// check if we have push notifications, if notifications app available
-		if (class_exists('notifications_push')) notifications_push::get();
+
 	}
 }
