@@ -90,7 +90,7 @@ class infolog_hooks
 		if ($location == 'sidebox_menu')
 		{
 			// Magic etemplate2 favorites menu (from nextmatch widget)
-			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname));
+			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname, 'nextmatch-nextmatch-infolog.index.rows-favorite'));
 
 			$file = array(
 				'infolog list' => Egw::link('/index.php',array(

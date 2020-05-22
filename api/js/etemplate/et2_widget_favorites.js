@@ -135,7 +135,7 @@ var et2_favorites = (function(){ "use strict"; return et2_dropdown_button.extend
 			// Update sidebox, if there
 			if(self.sidebox_target.length)
 			{
-				self.sidebox_target.find("div.ui-icon-heart")
+				jQuery("div.ui-icon-heart", self.sidebox_target)
 					.replaceWith("<div class='sideboxstar'/>");
 				jQuery("li[data-id='"+self.preferred+"'] div.sideboxstar",self.sidebox_target)
 					.replaceWith("<div class='ui-icon ui-icon-heart'/>");

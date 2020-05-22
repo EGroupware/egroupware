@@ -1810,6 +1810,13 @@ div.message.floating {
 .favorites img {
   margin-right: 1ex;
 }
+.favorites li.ui-menu-item img {
+	width: 12px;
+	height: 12px;
+	margin-top: -3px;
+	margin-left: 2px;
+	vertical-align: middle;
+}
 .favorites div.ui-icon-trash {
   position: relative;
   float: right;
