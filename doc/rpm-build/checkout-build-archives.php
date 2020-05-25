@@ -22,9 +22,9 @@ $config = array(
 	'packaging' => date('Ymd'), // '20160520'
 	'branch'  => 'master',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
-	'checkoutdir' => '~/epl-19.1-checkout',	//realpath(__DIR__.'/../..'),
-	'egw_buildroot' => '/tmp/build_root/epl_19.1_buildroot',
-	'sourcedir' => '~/download/archives/egroupware-19.1',
+	'checkoutdir' => '~/epl-20.1-checkout',	//realpath(__DIR__.'/../..'),
+	'egw_buildroot' => '/tmp/build_root/epl_20.1_buildroot',
+	'sourcedir' => '~/download/archives/egroupware-20.1',
 	/* svn-config no longer used
 	'svntag' => 'tags/$version.$packaging',
 	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
