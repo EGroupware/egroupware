@@ -18,7 +18,7 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 $verbose = 0;
 $config = array(
 	'packagename' => 'egroupware-docker',
-	'version' => '19.1',        // '19.1'
+	'version' => '20.1',        // '20.1'
 	'packaging' => date('Ymd'), // '20160520'
 	'branch'  => 'master',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
@@ -66,7 +66,7 @@ $config = array(
 	//'sfuser' => 'ralfbecker',
 	//'release' => '$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
 	// what gets uploaded with upload
-	'upload' => '$sourcedir/*egroupware-$version.$packaging*',
+	'upload' => '$sourcedir/*$packagename-$version.$packaging*',
 	'copychangelog' => '$sourcedir/README', //'$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
 	'run' => array('checkout','editchangelog','tag','copy','virusscan','create','sign',/*'obs',*/'copychangelog','release'),
@@ -416,7 +416,7 @@ function do_release()
 	$tag = config_translate('tag');
 	run_cmd($config['git'].' push -f origin '.$tag);
 	// checkout release-branch again (we are on the tag!)
-	run_cmd($config['git'].' checkout '.'master');// we have no 19.1 branch yet $config['version']);
+	run_cmd($config['git'].' checkout '.$config['branch']);
 
 	if (!empty($config['github_user']) || empty($config['github_token']))
 	{
@@ -1108,7 +1108,7 @@ function do_virusscan()
 	if (file_exists($config['freshclam']))
 	{
 		echo "Updating virus signatures\n";
-		$cmd = '/usr/bin/sudo '.$config['freshclam'];
+		$cmd = '/usr/bin/sudo bash -c "cd /; '.$config['freshclam'].'"';
 		if (!$verbose && function_exists('posix_getuid') && posix_getuid()) echo $cmd."\n";
 		$output = null;
 		run_cmd($cmd,$output,1);	// 1 = ignore already up to date database
