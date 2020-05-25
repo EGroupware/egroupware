@@ -2620,22 +2620,21 @@ var CalendarApp = /** @class */ (function (_super) {
      *
      * @param {widget object} _widget new_alarm[options] selectbox
      */
-    CalendarApp.prototype.alarm_custom_date = function (_widget) {
-        var alarm_date = this.et2.getWidgetById('new_alarm[date]');
-        var alarm_options = _widget || this.et2.getWidgetById('new_alarm[options]');
-        var start = this.et2.getWidgetById('start');
-        if (alarm_date && alarm_options
-            && start) {
-            if (alarm_options.get_value() != '0') {
+    CalendarApp.prototype.alarm_custom_date = function (selectbox, _widget) {
+        var alarm_date = this.et2.getInputWidgetById('new_alarm[date]');
+        var alarm_options = _widget || this.et2.getInputWidgetById('new_alarm[options]');
+        var start = this.et2.getInputWidgetById('start');
+        if (alarm_date && alarm_options && start) {
+            if (alarm_options.getValue() != '0') {
                 alarm_date.set_class('calendar_alarm_date_display');
             }
             else {
                 alarm_date.set_class('');
             }
-            var startDate = typeof start.get_value != 'undefined' ? start.get_value() : start.value;
+            var startDate = typeof start.getValue != 'undefined' ? start.getValue() : start.value;
             if (startDate) {
                 var date = new Date(startDate);
-                date.setTime(date.getTime() - 1000 * parseInt(alarm_options.get_value()));
+                date.setTime(date.getTime() - 1000 * parseInt(alarm_options.getValue()));
                 alarm_date.set_value(date);
             }
         }
