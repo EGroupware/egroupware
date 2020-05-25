@@ -22,10 +22,10 @@ docker pull ubuntu:18.04
 docker build --no-cache --build-arg "VERSION=$VERSION" -t egroupware/egroupware:$TAG . && {
 	docker push egroupware/egroupware:$TAG
 	# tag only stable releases as latest
-	[ $TAG != "master" ] && {
-		docker tag egroupware/egroupware:$TAG egroupware/egroupware:latest
-		docker push egroupware/egroupware:latest
-	}
+	#[ $TAG != "master" ] && {
+	#	docker tag egroupware/egroupware:$TAG egroupware/egroupware:latest
+	#	docker push egroupware/egroupware:latest
+	#}
 	[ "$BRANCH" != $VERSION -a "${BRANCH}.x-dev" != $VERSION ] && {
 		docker tag egroupware/egroupware:$VERSION egroupware/egroupware:$BRANCH
 		docker push egroupware/egroupware:$BRANCH
