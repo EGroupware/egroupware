@@ -31,10 +31,10 @@ $config = array(
 	'stylitebase' => 'svn+ssh://stylite@svn.stylite.de/stylite',
 	'svnbranch' => 'branches/16.1',         //'trunk', // 'branches/1.6' or 'tags/1.6.001'
 	'svnalias' => 'aliases/default-ssh',    // default alias
-	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro', '$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
+	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro'), //'$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	*/
 	// create an extra archive for given apps
-	'extra' => array('functions' => array('stylite'), 'esyncpro', 'policy', 'webauthn', 'archive',
+	'extra' => array('functions' => array('stylite'), 'esyncpro', 'policy', 'webauthn', //'archive',
 		// these apps are placed in egroupware-epl-contrib archive
 		//'contrib' => array('phpgwapi', 'etemplate', 'jdots', 'phpbrain', 'wiki', 'sitemgr')
 	),
