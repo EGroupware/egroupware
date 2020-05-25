@@ -387,12 +387,12 @@ export class et2_container extends et2_baseWidget
 	 *
 	 * @param _id is the id you're searching for
 	 */
-	getValueWidgetById(_id) : et2_valueWidget | null
+	getInputWidgetById(_id) : et2_inputWidget | null
 	{
 		let widget = this.getWidgetById(_id);
 		if(widget && widget.instanceOf(et2_valueWidget))
 		{
-			return <et2_valueWidget>widget;
+			return <et2_inputWidget><unknown>widget;
 		}
 		return null
 	}

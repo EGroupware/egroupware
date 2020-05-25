@@ -317,7 +317,7 @@ var et2_container = /** @class */ (function (_super) {
      *
      * @param _id is the id you're searching for
      */
-    et2_container.prototype.getValueWidgetById = function (_id) {
+    et2_container.prototype.getInputWidgetById = function (_id) {
         var widget = this.getWidgetById(_id);
         if (widget && widget.instanceOf(et2_valueWidget)) {
             return widget;

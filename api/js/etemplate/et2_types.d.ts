@@ -7,7 +7,9 @@ declare class et2_widget{
 	destroy()
 	getWidgetById(string) : et2_widget;
 }
-declare class et2_DOMWidget extends et2_widget{}
+declare class et2_DOMWidget extends et2_widget{
+	public set_class(value: string);
+}
 declare class et2_baseWidget extends et2_DOMWidget{}
 declare class et2_valueWidget extends et2_baseWidget{}
 declare class et2_inputWidget extends et2_valueWidget{
