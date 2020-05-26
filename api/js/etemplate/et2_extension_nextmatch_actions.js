@@ -107,7 +107,7 @@ function nm_action(_action, _senders, _target, _ids)
 		case 'location':
 			if (typeof _action.data.targetapp != 'undefined')
 			{
-				top.egw_appWindowOpen(_action.data.targetapp, url);
+				egw.top.egw_appWindowOpen(_action.data.targetapp, url);
 			}
 			else if(target)
 			{
