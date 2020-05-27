@@ -38,10 +38,10 @@ var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
  *
  * @augments et2_textbox
  */
-var et2_url = /** @class */ (function (_super_1) {
-    __extends(et2_url, _super_1);
+var et2_url = /** @class */ (function (_super) {
+    __extends(et2_url, _super);
     function et2_url() {
-        var _this = _super_1 !== null && _super_1.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
         _this._button = null;
         _this.value = "";
         return _this;
@@ -64,7 +64,7 @@ var et2_url = /** @class */ (function (_super_1) {
             this.input.unbind();
         }
         this._button = null;
-        _super_1.prototype.destroy.call(this);
+        _super.prototype.destroy.call(this);
     };
     /**
      * Override parent to update href of 'button'
@@ -73,7 +73,7 @@ var et2_url = /** @class */ (function (_super_1) {
      */
     et2_url.prototype.set_value = function (_value) {
         this.update_button(_value);
-        _super_1.prototype.set_value.call(this, _value);
+        _super.prototype.set_value.call(this, _value);
     };
     et2_url.prototype.update_button = function (_value) {
         if (this.value == _value)
@@ -210,7 +210,7 @@ var et2_url = /** @class */ (function (_super_1) {
         }
     };
     et2_url.prototype.attachToDOM = function () {
-        var res = _super_1.prototype.attachToDOM.call(this);
+        var res = _super.prototype.attachToDOM.call(this);
         if (this.input[0].parentNode)
             jQuery(this.input[0].parentNode).addClass('et2_url_span');
         return res;
@@ -265,8 +265,8 @@ et2_core_widget_1.et2_register_widget(et2_url, ["url", "url-email", "url-phone"]
 *
 * @augments et2_valueWidget
 */
-var et2_url_ro = /** @class */ (function (_super_1) {
-    __extends(et2_url_ro, _super_1);
+var et2_url_ro = /** @class */ (function (_super) {
+    __extends(et2_url_ro, _super);
     /**
      * Constructor
      *
@@ -275,7 +275,7 @@ var et2_url_ro = /** @class */ (function (_super_1) {
     function et2_url_ro(_parent, _attrs, _child) {
         var _this = 
         // Call the inherited constructor
-        _super_1.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_url_ro._attributes, _child || {})) || this;
+        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_url_ro._attributes, _child || {})) || this;
         _this.value = "";
         _this.span = null;
         _this.value = "";
