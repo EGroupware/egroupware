@@ -177,7 +177,7 @@ export class et2_arrayMgr
 	 * @param _skipEmpty returns null if _key is not present in this content array.
 	 *    Defaults to false.
 	 */
-	getEntry(_key: string, _referenceInto?: boolean, _skipEmpty?: boolean): string | object {
+	getEntry(_key: string, _referenceInto?: boolean, _skipEmpty?: boolean): any {
 		if (typeof _referenceInto == "undefined") {
 			_referenceInto = false;
 		}
