@@ -168,8 +168,12 @@ function egwPopupActionImplementation()
 				sel.removeAllRanges();
 			}
 
-			_callback.call(_context, "default", ai);
-
+			if (!(_context.manager.getActionsByAttr('singleClick', true).length > 0 &&
+					e.originalEvent.target.classList.contains('et2_clickable')))
+			{
+				_callback.call(_context, "default", ai);
+			}
+			
 			// Stop action from bubbling up to parents
 			e.stopPropagation();
 			e.cancelBubble = true;
