@@ -36,6 +36,11 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 	action.checked = false;
 	action.confirm_mass_selection = null;
 	action.shortcut = null;
+	action.singleClick = false;
+
+	action.set_singleClick = function(_value) {
+		action["singleClick"] = _value;
+	};
 
 	action.set_default = function(_value) {
 		action["default"] = _value;
@@ -175,7 +180,7 @@ function egwPopupActionImplementation()
 			return false;
 		};
 
-		if (egwIsMobile()) {
+		if (egwIsMobile() || _context.manager.getActionsByAttr('singleClick', true).length > 0) {
 			jQuery(_node).bind('click', defaultHandler);
 		} else {
 			_node.ondblclick = defaultHandler;
