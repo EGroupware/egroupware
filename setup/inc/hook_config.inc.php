@@ -182,6 +182,10 @@ function auth_type_activesync($config)
 {
 	return _options_from(setup_cmd_config::auth_types(),$config['auth_type_activesync']);
 }
+function auth_type_host($config)
+{
+	return _options_from(setup_cmd_config::auth_types(),$config['auth_type_host']);
+}
 
 /**
  * Make account-repository-types from setup_cmd_config available

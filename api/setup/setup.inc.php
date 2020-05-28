@@ -68,6 +68,9 @@ $setup_info['api']['hooks']['vfs_unlink'] = 'EGroupware\\Api\\Vfs\\Sharing::vfsU
 $setup_info['api']['hooks']['vfs_rename'] = 'EGroupware\\Api\\Vfs\\Sharing::vfsUpdate';
 $setup_info['api']['hooks']['vfs_rmdir'] = 'EGroupware\\Api\\Vfs\\Sharing::vfsUpdate';
 
+// hook to update SimpleSAMLphp config
+$setup_info['api']['hooks']['setup_config'] = \EGroupware\Api\Auth\Saml::class.'::setupConfig';
+
 // installation checks
 $setup_info['api']['check_install'] = array(
 		'' => array(

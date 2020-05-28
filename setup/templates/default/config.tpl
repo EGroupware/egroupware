@@ -123,7 +123,7 @@
     <td colspan="2"><b>{lang_Authentication_/_Accounts}</b></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
      <select name="newsettings[auth_type]">
@@ -132,7 +132,7 @@
     </td>
    </tr>
 
-    <tr class="row_on">
+    <tr class="row_off">
     <td>{lang_Authentication_type_for_application}: <b>CalDAV/CardDAV Sync</b></td>
     <td>
      <select name="newsettings[auth_type_groupdav]">
@@ -142,12 +142,25 @@
     </td>
    </tr>
 
-    <tr class="row_off">
+    <tr class="row_on">
     <td>{lang_Authentication_type_for_application}: <b>eSync (ActiveSync)</b></td>
     <td>
      <select name="newsettings[auth_type_activesync]">
       <option value="">{lang_Standard,_as_defined_above}</option>
 {hook_auth_type_activesync}
+     </select>
+    </td>
+   </tr>
+
+   <tr class="row_off">
+    <td>
+     {lang_Authentication_type_for_HTTP_Host}:
+     <input name="newsettings[auth_type_hostname]" value="{value_auth_type_hostname}" size="40"/>
+    </td>
+    <td>
+     <select name="newsettings[auth_type_host]">
+      <option value="">{lang_Standard,_as_defined_above}</option>
+{hook_auth_type_host}
      </select>
     </td>
    </tr>
@@ -461,6 +474,74 @@
     <td colspan="2">&nbsp;</td>
    </tr>
 
+   <tr class="th">
+    <td colspan="2"><b>{lang_If_using_SAML_2.0 / Shibboleth / SimpleSAMLphp}:</b></td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Identity_Provider}:</td>
+    <td><input name="newsettings[saml_idp]" placeholder="https://idp.rhrk.uni-kl.de/idp/shibboleth" value="{value_saml_idp}" size="64" /></td>
+   </tr>
+
+   <tr class="row_off">
+    <td>
+     {lang_Metadata}:
+     {lang_refresh}
+     <select name="newsettings[saml_metadata_refresh]">
+      <option value="daily"{selected_saml_metadata_refresh_daily}>{lang_daily}</option>
+      <option value="weekly"{selected_saml_metadata_refresh_weekly}>{lang_weekly}</option>
+      <option value="hourly"{selected_saml_metadata_refresh_hourly}>{lang_hourly}</option>
+      <option value="no"{selected_saml_metadata_refresh_no}>{lang_not_automatic}</option>
+      <option value="now"{selected_saml_metadata_refresh_now}>{lang_just_now}</option>
+     </select>
+    </td>
+    <td>
+     <input name="newsettings[saml_metadata]" placeholder="https://www.aai.dfn.de/fileadmin/metadata/dfn-aai-metadata.xml" value="{value_saml_metadata}" size="64" /><br/>
+    </td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Certificate_Metadata_is_signed_with}: ({lang_Will_be_downloaded_once,_unless_changed.})</td>
+    <td><input name="newsettings[saml_certificate]" placeholder="https://www.aai.dfn.de/fileadmin/metadata/dfn-aai.pem" value="{value_saml_certificate}" size="64" /></td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_Result_data_to_use_as_username}:</td>
+    <td>
+     <select name="newsettings[saml_username]">
+      <option value="eduPersonPrincipalName"{selected_saml_username_eduPersonPrincipalName}>eduPersonPrincipalName</option>
+      <option value="emailAddress"{selected_saml_username_emailAddress}>emailAddress</option>
+      <option value="custom"{selected_saml_username_customOid}>{lang_custom_OID}</option>
+     </select>
+     <input name="newsettings[saml_username_oid]" value="{value_saml_username_oid}" placeholder="urn:oid:x.x.x.x" size="40" />
+    </td>
+   </tr>
+
+   <tr class="row_on" height="25">
+    <td>{lang_Some_information_for_the_own_Service_Provider_metadata}:</td>
+    <td><a href="{value_webserver_url}/saml/module.php/saml/sp/metadata.php/default-sp">{lang_Metadata_URL}</a></td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_Name_for_Service_Provider}:</td>
+    <td><input name="newsettings[saml_sp]" placeholder="EGroupware" value="{value_saml_sp}" size="40" /></td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Technical_contact}:</td>
+    <td>
+     <input name="newsettings[saml_contact_name]" value="{value_saml_contact_name}" placeholder="{lang_Name}" size="24" />
+     <input name="newsettings[saml_contact_email]" value="{value_saml_contact_email}" placeholder="{lang_Email}" size="24" />
+    </td>
+   </tr>
+
+   <tr class="row_off">
+    <td colspan="2">{lang_The_used_SimpleSAMLphp_allows_a_lot_more_configuration_/_different_authentication_types_via_its_config_files in} {value_files_dir}/saml</td>
+   </tr>
+
+   <tr class="row_off">
+    <td colspan="2">&nbsp;</td>
+   </tr>
    <tr class="th">
     <td colspan="2"><b>{lang_If_using_CAS_(Central_Authentication_Service):}</b></td>
    </tr>

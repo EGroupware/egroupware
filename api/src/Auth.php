@@ -67,6 +67,12 @@ class Auth
 	 */
 	static function backend($type=null)
 	{
+		// do we have a hostname specific auth type set
+		if (is_null($type) && !empty($GLOBALS['egw_info']['server']['auth_type_host']) &&
+			Header\Http::host() === $GLOBALS['egw_info']['server']['auth_type_hostname'])
+		{
+			$type = $GLOBALS['egw_info']['server']['auth_type_host'];
+		}
 		if (is_null($type)) $type = $GLOBALS['egw_info']['server']['auth_type'];
 
 		$backend_class = __CLASS__.'\\'.ucfirst($type);

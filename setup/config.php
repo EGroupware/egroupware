@@ -60,6 +60,18 @@ if(@$_POST['submit'] && @$newsettings)
 	/* Load hook file with functions to validate each config (one/none/all) */
 	$GLOBALS['egw_setup']->hook('config_validate','setup');
 
+	try
+	{
+		// allow apps to register hooks throwing Exceptions for errors
+		Api\Hooks::process([
+			'location' => 'setup_config',
+			'newsettings' => &$newsettings,
+		], [], true);
+	}
+	catch (\Exception $e) {
+		$GLOBALS['error'] .= '<b>'.$e->getMessage()."</b><br />\n";
+	}
+
 	$newsettings['tz_offset'] = date('Z')/3600;
 
 	$GLOBALS['egw_setup']->db->transaction_begin();
