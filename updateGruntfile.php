@@ -37,7 +37,7 @@ if (!preg_match('/grunt\.initConfig\(({.+})\);/s', $content, $matches) ||
 }
 //print_r($config); exit;
 
-$uglify =& $config['uglify'];
+$uglify =& $config['terser'];
 
 // some files are not in a bundle, because loaded otherwise or are big enough themselfs
 $exclude = array(

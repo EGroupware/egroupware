@@ -43,12 +43,13 @@
  */
 module.exports = function (grunt) {
 	grunt.initConfig({
-		uglify: {
+		terser: {
 			options: {
-				banner: "/*!\n * EGroupware (http://www.egroupware.org/) minified Javascript\n *\n * full sources are available under https://github.com/EGroupware/egroupware/\n *\n * build <%= grunt.template.today() %>\n */\n",
 				mangle: false,
 				sourceMap: true,
-				screwIE8: true
+				output: {
+					preamble: "/*!\n * EGroupware (http://www.egroupware.org/) minified Javascript\n *\n * full sources are available under https://github.com/EGroupware/egroupware/\n *\n * build <%= grunt.template.today() %>\n */\n"
+				}
 			},
 			api: {
 				files: {
@@ -84,6 +85,7 @@ module.exports = function (grunt) {
 						"api/js/jsapi/egw_notification.js",
 						"api/js/es6-promise.min.js",
 						"api/js/jsapi/app_base.js",
+						"api/js/jsapi/egw_app.js",
 						"api/js/dhtmlxtree/codebase/dhtmlxcommon.js",
 						"api/js/dhtmlxtree/sources/dhtmlxtree.js",
 						"api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js",
@@ -106,9 +108,9 @@ module.exports = function (grunt) {
 				files: {
 					"api/js/etemplate/etemplate2.min.js": [
 						"api/js/etemplate/et2_core_xml.js",
+						"api/js/etemplate/et2_core_interfaces.js",
 						"api/js/etemplate/et2_core_common.js",
 						"api/js/etemplate/et2_core_inheritance.js",
-						"api/js/etemplate/et2_core_interfaces.js",
 						"api/js/etemplate/et2_core_phpExpressionCompiler.js",
 						"api/js/etemplate/et2_core_arrayMgr.js",
 						"api/js/etemplate/et2_core_widget.js",
@@ -148,20 +150,20 @@ module.exports = function (grunt) {
 						"vendor/egroupware/magicsuggest/magicsuggest.js",
 						"api/js/etemplate/et2_widget_taglist.js",
 						"api/js/etemplate/et2_extension_customfields.js",
-						"api/js/etemplate/et2_dataview_interfaces.js",
+						"api/js/etemplate/et2_dataview_view_rowProvider.js",
+						"api/js/etemplate/et2_extension_nextmatch_rowProvider.js",
 						"api/js/etemplate/et2_dataview_view_container.js",
 						"api/js/etemplate/et2_dataview_view_row.js",
+						"api/js/etemplate/et2_dataview_interfaces.js",
 						"vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js",
 						"api/js/etemplate/et2_dataview_view_aoi.js",
 						"api/js/etemplate/et2_dataview_controller_selection.js",
-						"api/js/etemplate/et2_dataview_controller.js",
 						"api/js/etemplate/et2_dataview_view_tile.js",
+						"api/js/etemplate/et2_dataview_controller.js",
 						"api/js/etemplate/et2_extension_nextmatch_actions.js",
 						"api/js/etemplate/et2_extension_nextmatch_controller.js",
-						"api/js/etemplate/et2_extension_nextmatch_rowProvider.js",
-						"api/js/etemplate/et2_extension_nextmatch_dynheight.js",
+						"api/js/etemplate/et2_widget_dynheight.js",
 						"api/js/etemplate/et2_dataview_model_columns.js",
-						"api/js/etemplate/et2_dataview_view_rowProvider.js",
 						"api/js/etemplate/et2_dataview_view_spacer.js",
 						"api/js/etemplate/et2_dataview_view_grid.js",
 						"api/js/etemplate/et2_dataview_view_resizeable.js",
@@ -208,6 +210,7 @@ module.exports = function (grunt) {
 			calendar: {
 				files: {
 					"calendar/js/app.min.js": [
+						"calendar/js/View.js",
 						"calendar/js/et2_widget_owner.js",
 						"calendar/js/et2_widget_view.js",
 						"calendar/js/et2_widget_timegrid.js",
@@ -269,9 +272,6 @@ module.exports = function (grunt) {
 			projectmanager: {
 				files: {
 					"projectmanager/js/app.min.js": [
-						"vendor/npm-asset/dhtmlx-gantt/codebase/dhtmlxgantt.js",
-						"vendor/npm-asset/dhtmlx-gantt/codebase/ext/dhtmlxgantt_marker.js",
-						"projectmanager/js/et2_widget_gantt.js",
 						"projectmanager/js/app.js"
 					]
 				}
@@ -368,6 +368,24 @@ module.exports = function (grunt) {
 						"pixelegg/css/monochrome.css",
 						"api/templates/default/print.css",
 						"pixelegg/print.css"
+					],
+					"pixelegg/css/modern.min.css": [
+						"api/js/jquery/chosen/chosen.css",
+						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
+						"vendor/egroupware/magicsuggest/magicsuggest.css",
+						"api/js/jquery/jquery-ui-timepicker-addon.css",
+						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
+						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
+						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
+						"vendor/bower-asset/diff2html/dist/diff2html.css",
+						"vendor/bower-asset/cropper/dist/cropper.min.css",
+						"api/templates/default/css/flags.css",
+						"api/templates/default/css/htmlarea.css",
+						"api/templates/default/def_tutorials.css",
+						"api/templates/default/etemplate2.css",
+						"pixelegg/css/pixelegg.css",
+						"api/templates/default/print.css",
+						"pixelegg/print.css"
 					]
 				}
 			},
@@ -447,17 +465,17 @@ module.exports = function (grunt) {
 		}
 	});
 	// Load the plugin that provides the "uglify" task.
-	grunt.loadNpmTasks('grunt-contrib-uglify-es');
+	grunt.loadNpmTasks("grunt-terser");
 
 	// Load plugin for css minificaton
-	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks("grunt-contrib-cssmin");
 
 	// Load the plugin that runs tasks only on modified files
-	grunt.loadNpmTasks('grunt-newer');
+	grunt.loadNpmTasks("grunt-newer");
 
 	// uncomment to run Gruntfile.js in apps / sub-directories
 	//grunt.loadNpmTasks('grunt-hub');
 
 	// Default task(s).
-	grunt.registerTask('default', ['newer:uglify', 'newer:cssmin']);//, 'hub']);
+	grunt.registerTask("default", ["newer:terser", "newer:cssmin"]);//, 'hub']);
 };

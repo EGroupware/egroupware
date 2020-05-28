@@ -34,6 +34,7 @@
 	egw_message;
 	egw_notification;
 	app_base;
+	egw_app;
 */
 
 (function()
