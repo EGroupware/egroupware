@@ -194,7 +194,7 @@ class Saml implements BackendSSO
 			return substr($key, 0, 5) === 'saml_' || $key === 'auth_type';
 		}, ARRAY_FILTER_USE_BOTH), JSON_UNESCAPED_SLASHES));*/
 
-		if ($newsettings['auth_type'] !== 'saml') return;	// nothing to do
+		if (empty($config['saml_idp'])) return;	// nothing to do, if not idp defined
 
 		if (file_exists($config['files_dir'].'/saml/config.php'))
 		{
