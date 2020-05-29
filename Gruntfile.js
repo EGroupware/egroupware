@@ -5,7 +5,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Ralf Becker <rb@egroupware.org>
  * @copyright (c) 2016 by Ralf Becker <rb@egroupware.org>
- * @version $Id$
  */
 
 /**
@@ -17,7 +16,7 @@
  * To generate the now existing package.json:
  *		npm init
  *		npm install grunt --save-dev
- *		npm install grunt-contrib-uglify-es --save-dev
+ *		npm install grunt-terser --save-dev
  *		npm install grunt-newer --save-dev
  *		npm install grunt-contrib-cssmin --save-dev
  *		npm install grunt-hub --save-dev
@@ -26,7 +25,7 @@
  *
  *		grunt	# runs uglify and cssmin for all targets with changed files
  * or
- *		grunt [newer:]uglify:<target>	# targets: api, et2, pixelegg, mobile, mail, calendar, ...
+ *		grunt [newer:]terser:<target>	# targets: api, et2, pixelegg, mobile, mail, calendar, ...
  * or
  *		grunt [newer:]cssmin:<target>	# targets: pixelegg, jdots
  *
@@ -273,19 +272,6 @@ module.exports = function (grunt) {
 				files: {
 					"projectmanager/js/app.min.js": [
 						"projectmanager/js/app.js"
-					]
-				}
-			},
-			messenger: {
-				files: {
-					"messenger/js/app.min.js": [
-						"messenger/jsxc/lib/jquery.slimscroll.js",
-						"messenger/jsxc/lib/jquery.fullscreen.js",
-						"messenger/jsxc/lib/jsxc.dep.js",
-						"messenger/jsxc/jsxc.js",
-						"messenger/js/init.js",
-						"messenger/js/templates.js",
-						"messenger/js/app.js"
 					]
 				}
 			}
