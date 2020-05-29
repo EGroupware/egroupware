@@ -30,7 +30,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("./et2_core_common");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
-require("./et2_types");
 /**
  * et2_inputWidget derrives from et2_simpleWidget and implements the IInput
  * interface. When derriving from this class, call setDOMNode with an input

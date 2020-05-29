@@ -19,7 +19,6 @@ import { ClassWithAttributes } from "./et2_core_inheritance";
 import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
 import { et2_DOMWidget } from './et2_core_DOMWidget'
 import { et2_valueWidget } from './et2_core_valueWidget'
-import './et2_types';
 
 /**
  * et2_inputWidget derrives from et2_simpleWidget and implements the IInput

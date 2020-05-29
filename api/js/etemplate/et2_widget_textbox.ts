@@ -20,7 +20,6 @@ import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_wi
 import {et2_valueWidget} from './et2_core_valueWidget'
 import {et2_inputWidget} from './et2_core_inputWidget'
 import {et2_button} from './et2_widget_button'
-import './et2_types';
 
 /**
  * Class which implements the "textbox" XET-Tag

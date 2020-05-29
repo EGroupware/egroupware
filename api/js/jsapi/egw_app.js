@@ -14,7 +14,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("jquery");
 require("jqueryui");
 require("../jsapi/egw_global");
-require("../etemplate/et2_types");
 var etemplate2_1 = require("../etemplate/etemplate2");
 /**
  * Common base class for application javascript

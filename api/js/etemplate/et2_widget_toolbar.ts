@@ -17,11 +17,12 @@
 */
 
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import '../egw_action/egw_action.js';
-import './et2_types';
-
+import {et2_dialog} from "./et2_widget_dialog";
+import {et2_dropdown_button} from "./et2_widget_dropdown_button";
+import {et2_checkbox} from "./et2_widget_checkbox";
 /**
  * This toolbar gets its contents from its actions
  *
@@ -72,7 +73,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 	private dropdowns : object = {};
 	private preference : object = {};
 	menu : any = null;
-	private _objectManager : egw_getObjectManager = null;
+	private _objectManager : egwActionObject = null;
 
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
@@ -232,7 +233,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				}).sendRequest(true);
 			});
 		}
-		let pref = (!egwIsMobile())? egw.preference(this.dom_id, this.egw().getAppName()): undefined;
+		let pref = (!egwIsMobile())? egw.preference(this.dom_id, this.egw().app_name()): undefined;
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
 
 		//Set the default actions for the first time
@@ -352,7 +353,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 					continue;
 				}
 
-				let dropdown = et2_createWidget("dropdown_button", {
+				let dropdown = <et2_dropdown_button>et2_createWidget("dropdown_button", {
 					id: action.id
 				},this);
 
@@ -451,7 +452,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				if (that.actionlist.find(".ui-draggable").length == 0)
 				{
 					that.preference = {};
-					egw.set_preference(that.egw().getAppName(),that.dom_id,that.preference);
+					egw.set_preference(that.egw().app_name(),that.dom_id,that.preference);
 				}
 			},
 			tolerance:"touch"
@@ -511,7 +512,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 	{
 		this.preference[_action] = _state;
 		if (egwIsMobile()) return;
-		egw.set_preference(this.egw().getAppName(),this.dom_id,this.preference);
+		egw.set_preference(this.egw().app_name(),this.dom_id,this.preference);
 	}
 
 	/**
@@ -535,7 +536,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		{
 			if (action.data.toggle_on || action.data.toggle_off)
 			{
-				let toggle = et2_createWidget('checkbox', {
+				let toggle = <et2_checkbox>et2_createWidget('checkbox', {
 					id: this.id+'-'+action.id,
 					toggle_on: action.data.toggle_on,
 					toggle_off: action.data.toggle_off
@@ -543,11 +544,11 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				toggle.doLoadingFinished();
 				toggle.set_value(action.checked);
 				action.data.widget = toggle;
-				toggle =toggle.toggle;
-				toggle.appendTo(button.parent())
+				let toggle_div = toggle.toggle;
+				toggle_div.appendTo(button.parent())
 					.attr('id', this.id+'-'+action.id);
 				button.remove();
-				button = toggle;
+				button = toggle_div;
 
 			}
 			else
@@ -608,7 +609,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		this._build_menu(actions);
 
 		let self = this;
-		let gom = egw_getObjectManager(this.egw().appName,true,1);
+		let gom = egw_getObjectManager(this.egw().app_name(),true,1);
 		if(this._objectManager == null)
 		{
 			this._objectManager = gom.addObject(

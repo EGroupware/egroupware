@@ -31,7 +31,7 @@ require("./et2_core_common");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
-require("./et2_types");
+var et2_extension_nextmatch_1 = require("./et2_extension_nextmatch");
 /**
  * Class which implements the tabbox-tag
  */
@@ -92,7 +92,7 @@ var et2_tabbox = /** @class */ (function (_super) {
         var i = 0;
         et2_filteredNodeIterator(tabs, function (node, nodeName) {
             if (nodeName == "tab") {
-                var index_name = et2_readAttrWithDefault(node, "id");
+                var index_name = et2_readAttrWithDefault(node, "id", '');
                 var hide = false;
                 var widget_options = {};
                 if (index_name) {
@@ -102,7 +102,7 @@ var et2_tabbox = /** @class */ (function (_super) {
                         hide = true;
                     }
                     // Get the class attribute and add it as widget_options
-                    var classAttr = et2_readAttrWithDefault(node, "class");
+                    var classAttr = et2_readAttrWithDefault(node, "class", '');
                     if (classAttr) {
                         widget_options = { 'class': classAttr };
                     }
@@ -350,7 +350,7 @@ var et2_tabbox = /** @class */ (function (_super) {
             this.tabData[_idx]['widget'].iterateOver(function (nm) {
                 if (nm && nm._type == 'nextmatch')
                     nm.resize();
-            }, this.tabData[_idx]['widget'], et2_nextmatch);
+            }, this.tabData[_idx]['widget'], et2_extension_nextmatch_1.et2_nextmatch);
         }
     };
     /**

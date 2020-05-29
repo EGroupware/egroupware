@@ -16,7 +16,13 @@
 import {EgwApp} from "../jsapi/egw_app";
 import {et2_vfs, et2_vfsPath, et2_vfsSelect} from "./et2_widget_vfs";
 import '../jsapi/egw_global';
-import '../etemplate/et2_types';
+import {et2_dialog} from "./et2_widget_dialog";
+import {et2_file} from "./et2_widget_file";
+import {et2_textbox} from "./et2_widget_textbox";
+import {et2_button} from "./et2_widget_button";
+import {et2_selectbox} from "./et2_widget_selectbox";
+import {et2_checkbox} from "./et2_widget_checkbox";
+
 
 /**
  * UI for VFS Select widget
@@ -62,7 +68,7 @@ export class vfsSelectUI extends EgwApp
 	 */
 	et2_ready(et2,name)
 	{
-		this.path_widget = this.et2.getWidgetById('path');
+		this.path_widget = <et2_vfsPath>this.et2.getWidgetById('path');
 		this.dirContent = this.et2.getArrayMgr('content').data.dir;
 	}
 
@@ -247,11 +253,7 @@ export class vfsSelectUI extends EgwApp
 		}
 		else if (this.et2 && this.et2.getArrayMgr('content').getEntry('mode') != 'open-multiple')
 		{
-			let editfield = this.et2.getWidgetById('name');
-			if(editfield)
-			{
-				editfield.set_value(widget.value.name);
-			}
+			this.et2.setValueById('name', widget.value.name);
 		}
 		else
 		{
@@ -280,7 +282,7 @@ export class vfsSelectUI extends EgwApp
 	do_action(action : string, widget : et2_button | et2_selectbox | et2_vfsPath)
 	{
 		if (!action) return;
-		let field = '', value = '';
+		let field = '', value : string|string[] = '' ;
 		switch (action)
 		{
 			case 'path': field = 'path'; value = (<et2_vfsPath>widget).getValue(); break;
@@ -323,7 +325,7 @@ export class vfsSelectUI extends EgwApp
 	 */
 	search(_widget)
 	{
-		let dir = this.et2.getWidgetById('dir');
+		let dir = <et2_vfsPath>this.et2.getWidgetById('dir');
 		let query = _widget.get_value();
 		if (query == "")
 		{

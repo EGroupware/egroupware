@@ -19,7 +19,7 @@
  * @param {object} _context for _callback
  * @param {function} _fail_callback function(_xml)
  */
-function et2_loadXMLFromURL(_url : string, _callback : Function, _context : object, _fail_callback : Function)
+function et2_loadXMLFromURL(_url : string, _callback : Function, _context : object, _fail_callback? : Function)
 {
 	if (typeof _context == "undefined")
 	{

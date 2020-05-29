@@ -31,7 +31,7 @@ require("./et2_core_common");
 var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
-require("./et2_types");
+var etemplate2_1 = require("./etemplate2");
 /**
  * Class which implements the "template" XET-Tag. When the id parameter is set,
  * the template class checks whether another template with this id already
@@ -68,7 +68,7 @@ var et2_template = /** @class */ (function (_super) {
             var template_name = parts.pop();
             // Check to see if XML is known
             var xml = null;
-            var templates = etemplate2.templates; // use global eTemplate cache
+            var templates = etemplate2_1.etemplate2.templates; // use global eTemplate cache
             if (!(xml = templates[template_name])) {
                 // Check to see if ID is short form --> prepend parent/top-level name
                 if (template_name.indexOf('.') < 0) {

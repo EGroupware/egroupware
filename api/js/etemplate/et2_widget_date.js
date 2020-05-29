@@ -35,7 +35,6 @@ var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
-require("./et2_types");
 var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 // all calls to jQueryUI.datetimepicker as jQuery.datepicker give errors which are currently suppressed with @ts-ignore
 // adding npm package @types/jquery.ui.datetimepicker did NOT help :(

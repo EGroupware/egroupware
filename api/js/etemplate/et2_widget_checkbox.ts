@@ -25,7 +25,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
  *
  * @augments et2_inputWidget
  */
-class et2_checkbox extends et2_inputWidget
+export class et2_checkbox extends et2_inputWidget
 {
 	static readonly _attributes : any = {
 		"selected_value": {

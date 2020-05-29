@@ -32,7 +32,6 @@ var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
-require("./et2_types");
 /**
  * Class which implements the "textbox" XET-Tag
  *

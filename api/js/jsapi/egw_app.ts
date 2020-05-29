@@ -13,7 +13,6 @@
 import 'jquery';
 import 'jqueryui';
 import '../jsapi/egw_global';
-import '../etemplate/et2_types';
 import {etemplate2} from "../etemplate/etemplate2";
 import {et2_container} from "../etemplate/et2_core_baseWidget";
 

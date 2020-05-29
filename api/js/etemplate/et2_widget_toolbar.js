@@ -33,7 +33,7 @@ var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 require("../egw_action/egw_action.js");
-require("./et2_types");
+var et2_widget_dialog_1 = require("./et2_widget_dialog");
 /**
  * This toolbar gets its contents from its actions
  *
@@ -189,7 +189,7 @@ var et2_toolbar = /** @class */ (function (_super) {
                 }).sendRequest(true);
             });
         }
-        var pref = (!egwIsMobile()) ? egw.preference(this.dom_id, this.egw().getAppName()) : undefined;
+        var pref = (!egwIsMobile()) ? egw.preference(this.dom_id, this.egw().app_name()) : undefined;
         if (pref && !jQuery.isArray(pref))
             this.preference = pref;
         //Set the default actions for the first time
@@ -280,7 +280,7 @@ var et2_toolbar = /** @class */ (function (_super) {
                 if (this_1.options.flat_list && children) {
                     return "continue";
                 }
-                var dropdown = et2_createWidget("dropdown_button", {
+                var dropdown = et2_core_widget_1.et2_createWidget("dropdown_button", {
                     id: action.id
                 }, this_1);
                 dropdown.set_select_options(children);
@@ -365,7 +365,7 @@ var et2_toolbar = /** @class */ (function (_super) {
                 ui.draggable.appendTo(menulist);
                 if (that.actionlist.find(".ui-draggable").length == 0) {
                     that.preference = {};
-                    egw.set_preference(that.egw().getAppName(), that.dom_id, that.preference);
+                    egw.set_preference(that.egw().app_name(), that.dom_id, that.preference);
                 }
             },
             tolerance: "touch"
@@ -420,7 +420,7 @@ var et2_toolbar = /** @class */ (function (_super) {
         this.preference[_action] = _state;
         if (egwIsMobile())
             return;
-        egw.set_preference(this.egw().getAppName(), this.dom_id, this.preference);
+        egw.set_preference(this.egw().app_name(), this.dom_id, this.preference);
     };
     /**
      * Make a button based on the given action
@@ -437,7 +437,7 @@ var et2_toolbar = /** @class */ (function (_super) {
         this.egw().tooltipBind(button, action.hint ? action.hint : action.caption) + (action.shortcut ? ' (' + action.shortcut.caption + ')' : '');
         if (action && action.checkbox) {
             if (action.data.toggle_on || action.data.toggle_off) {
-                var toggle = et2_createWidget('checkbox', {
+                var toggle = et2_core_widget_1.et2_createWidget('checkbox', {
                     id: this.id + '-' + action.id,
                     toggle_on: action.data.toggle_on,
                     toggle_off: action.data.toggle_off
@@ -445,11 +445,11 @@ var et2_toolbar = /** @class */ (function (_super) {
                 toggle.doLoadingFinished();
                 toggle.set_value(action.checked);
                 action.data.widget = toggle;
-                toggle = toggle.toggle;
-                toggle.appendTo(button.parent())
+                var toggle_div = toggle.toggle;
+                toggle_div.appendTo(button.parent())
                     .attr('id', this.id + '-' + action.id);
                 button.remove();
-                button = toggle;
+                button = toggle_div;
             }
             else {
                 if (this.checkbox(action.id))
@@ -498,7 +498,7 @@ var et2_toolbar = /** @class */ (function (_super) {
     et2_toolbar.prototype._link_actions = function (actions) {
         this._build_menu(actions);
         var self = this;
-        var gom = egw_getObjectManager(this.egw().appName, true, 1);
+        var gom = egw_getObjectManager(this.egw().app_name(), true, 1);
         if (this._objectManager == null) {
             this._objectManager = gom.addObject(new egwActionObjectManager(this.id, this._actionManager));
             this._objectManager.handleKeyPress = function (_keyCode, _shift, _ctrl, _alt) {
@@ -638,7 +638,7 @@ var et2_toolbar = /** @class */ (function (_super) {
         }
         if (_default_prefs && _default_prefs.length > 0)
             content.actions = _default_prefs;
-        et2_createWidget("dialog", {
+        et2_core_widget_1.et2_createWidget("dialog", {
             callback: function (_button_id, _value) {
                 if (_button_id == 'save' && _value) {
                     if (_value.actions) {
@@ -662,7 +662,7 @@ var et2_toolbar = /** @class */ (function (_super) {
             value: { content: content, sel_options: sel_options },
             template: egw.webserverUrl + '/api/templates/default/toolbarAdminSettings.xet?1',
             resizable: false
-        }, et2_dialog._create_parent('api'));
+        }, et2_widget_dialog_1.et2_dialog._create_parent('api'));
     };
     et2_toolbar._attributes = {
         "view_range": {

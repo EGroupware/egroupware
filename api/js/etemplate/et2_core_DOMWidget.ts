@@ -19,7 +19,7 @@ import './et2_core_interfaces';
 import './et2_core_common';
 import {et2_widget, WidgetConfig} from "./et2_core_widget";
 import '../egw_action/egw_action.js';
-import './et2_types';
+
 
 /**
  * Abstract widget class which can be inserted into the DOM. All widget classes

@@ -2516,7 +2516,7 @@ var egwActionObjectDummyInterface = egwActionObjectInterface;
  * The egwActionObjectManager is a dummy class which only contains a dummy
  * AOI. It may be used as root object or as object containers.
  *
- * @param {egwAction} _id
+ * @param {string} _id
  * @param {string} _manager
  * @return {egwActionObjectManager}
  */

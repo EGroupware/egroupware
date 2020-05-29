@@ -18,7 +18,6 @@ import './et2_core_common';
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_baseWidget} from './et2_core_baseWidget'
-import './et2_types';
 
 /**
  * Class which implements the "description" XET-Tag

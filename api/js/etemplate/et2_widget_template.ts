@@ -18,7 +18,7 @@ import './et2_core_common';
 import {et2_DOMWidget} from './et2_core_DOMWidget';
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
-import './et2_types';
+import {etemplate2} from "./etemplate2";
 
 /**
  * Class which implements the "template" XET-Tag. When the id parameter is set,

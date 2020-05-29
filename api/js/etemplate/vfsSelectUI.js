@@ -28,7 +28,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var egw_app_1 = require("../jsapi/egw_app");
 require("../jsapi/egw_global");
-require("../etemplate/et2_types");
+var et2_widget_dialog_1 = require("./et2_widget_dialog");
+var et2_widget_file_1 = require("./et2_widget_file");
+var et2_widget_textbox_1 = require("./et2_widget_textbox");
+var et2_widget_checkbox_1 = require("./et2_widget_checkbox");
 /**
  * UI for VFS Select widget
  *
@@ -129,7 +132,7 @@ var vfsSelectUI = /** @class */ (function (_super) {
                 ];
                 if (_data.uploaded[file].confirm === "is_dir")
                     buttons.shift();
-                var dialog = et2_dialog.show_prompt(function (_button_id, _value) {
+                var dialog = et2_widget_dialog_1.et2_dialog.show_prompt(function (_button_id, _value) {
                     var uploaded = {};
                     uploaded[this.my_data.file] = this.my_data.data;
                     switch (_button_id) {
@@ -146,7 +149,7 @@ var vfsSelectUI = /** @class */ (function (_super) {
                             // Remove that file from every file widget...
                             that.et2.iterateOver(function (_widget) {
                                 _widget.remove_file(this.my_data.data.name);
-                            }, this, et2_file);
+                            }, this, et2_widget_file_1.et2_file);
                     }
                 }, _data.uploaded[file].confirm === "is_dir" ?
                     this.egw.lang("There's already a directory with that name!") :
@@ -171,7 +174,7 @@ var vfsSelectUI = /** @class */ (function (_super) {
      */
     vfsSelectUI.prototype.createdir = function (action, selected) {
         var self = this;
-        et2_dialog.show_prompt(function (button, dir) {
+        et2_widget_dialog_1.et2_dialog.show_prompt(function (button, dir) {
             if (button && dir) {
                 var path_1 = self.get_path();
                 self.egw.json('EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_create_dir', [dir, path_1], function (msg) {
@@ -209,16 +212,13 @@ var vfsSelectUI = /** @class */ (function (_super) {
             widget.getRoot().iterateOver(function (widget) {
                 if (widget.id == "path")
                     path_2 = widget;
-            }, null, et2_textbox);
+            }, null, et2_widget_textbox_1.et2_textbox);
             if (path_2) {
                 path_2.set_value(widget.value.path);
             }
         }
         else if (this.et2 && this.et2.getArrayMgr('content').getEntry('mode') != 'open-multiple') {
-            var editfield = this.et2.getWidgetById('name');
-            if (editfield) {
-                editfield.set_value(widget.value.name);
-            }
+            this.et2.setValueById('name', widget.value.name);
         }
         else {
             var file_1 = widget.value.name;
@@ -226,7 +226,7 @@ var vfsSelectUI = /** @class */ (function (_super) {
                 if (widget.options.selected_value == file_1) {
                     widget.set_value(widget.get_value() == file_1 ? widget.options.unselected_value : file_1);
                 }
-            }, null, et2_checkbox);
+            }, null, et2_widget_checkbox_1.et2_checkbox);
         }
         // Stop event or it will toggle back off
         event.preventDefault();

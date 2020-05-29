@@ -204,6 +204,7 @@ var et2_checkbox = /** @class */ (function (_super) {
     et2_checkbox.legacyOptions = ["selected_value", "unselected_value", "ro_true", "ro_false"];
     return et2_checkbox;
 }(et2_core_inputWidget_1.et2_inputWidget));
+exports.et2_checkbox = et2_checkbox;
 et2_core_widget_1.et2_register_widget(et2_checkbox, ["checkbox"]);
 /**
 * et2_checkbox_ro is the dummy readonly implementation of the checkbox

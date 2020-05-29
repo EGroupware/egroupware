@@ -23,7 +23,6 @@ import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from ".
 import {et2_valueWidget} from './et2_core_valueWidget'
 import {et2_inputWidget} from './et2_core_inputWidget'
 import {et2_selectbox} from './et2_widget_selectbox'
-import './et2_types';
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 
 // lib/date.js:

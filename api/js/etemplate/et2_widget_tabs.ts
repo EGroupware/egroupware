@@ -19,7 +19,7 @@ import { ClassWithAttributes } from "./et2_core_inheritance";
 import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
 import { et2_DOMWidget } from './et2_core_DOMWidget'
 import { et2_valueWidget } from './et2_core_valueWidget'
-import './et2_types';
+import {et2_nextmatch} from "./et2_extension_nextmatch";
 
 /**
  * Class which implements the tabbox-tag
@@ -122,7 +122,7 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 		et2_filteredNodeIterator(tabs, function(node, nodeName) {
 			if (nodeName == "tab")
 			{
-				var index_name = et2_readAttrWithDefault(node, "id");
+				const index_name = et2_readAttrWithDefault(node, "id", '');
 				var hide = false;
 				var widget_options = {};
 				if(index_name) {
@@ -131,7 +131,7 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 						hide = true;
 					}
 					// Get the class attribute and add it as widget_options
-					var classAttr = et2_readAttrWithDefault(node,"class");
+					const classAttr = et2_readAttrWithDefault(node, "class", '');
 					if (classAttr)
 					{
 						widget_options = {'class':classAttr};
