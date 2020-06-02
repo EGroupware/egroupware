@@ -811,26 +811,11 @@
     margin-right: 10px;
     margin-top: -3px;
   }
-  .sidebox-favorites ul.favorites li.ui-menu-item [data-id="blank"] div.ui-icon-heart {
-    background-image: url(../images/delete.svg);
-    background-size: 12px 12px;
-    background-position: 0 0;
-  }
   .sidebox-favorites ul.favorites li.ui-menu-item.ui-state-highlight {
     color: #000000;
     background: rgba(102, 153, 204, 0.7);
     padding: 3px 0;
     border: none;
-  }
-  .sidebox-favorites ul.favorites li:first-child a div.ui-icon-heart {
-    background-image: url(../images/delete.svg);
-    background-size: 12px 12px;
-    background-position: 0 0;
-  }
-  .sidebox-favorites ul.favorites li:first-child a div.sideboxstar {
-    background-image: url(../images/delete.svg);
-    background-size: 12px 12px;
-    background-position: 0 0;
   }
   .favorites img {
     width: 12px;

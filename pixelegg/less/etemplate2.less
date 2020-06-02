@@ -769,21 +769,12 @@ div.header_row_right{
 			// Aktuelle Ansicht als Favorit
 			img {.dimension_width_height_xs; margin-left: 5px;margin-right:10px;margin-top:-3px;}
 
-			// Filter aufheben
-			[data-id="blank"] {
-				div.ui-icon-heart {background-image: url(../images/delete.svg); background-size: 12px 12px;background-position: 0 0;}
-			}
 		} // Ende li
 		li.ui-menu-item.ui-state-highlight {
 			.color_100_gray;
 			background: @color_selected_row;
 			padding: 3px 0;
 			border: none;
-		}
-		// Filter aufheben
-		li:first-child {
-		   a div.ui-icon-heart {background-image: url(../images/delete.svg); background-size: 12px 12px;background-position: 0 0;}
-		   a div.sideboxstar {background-image: url(../images/delete.svg); background-size: 12px 12px;background-position: 0 0;}
 		}
 	}
 } // sidebox-favorites
