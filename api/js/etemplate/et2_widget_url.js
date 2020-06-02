@@ -388,7 +388,7 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 							{
 								// Ask server if we know this email
 								this.widget.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact',
-									this.value, this.widget._add_contact_tooltip, this
+									this.value, this.widget._add_contact_tooltip, this.widget
 								);
 							}
 						},{widget: this, span: this.span, value: this.value}));
