@@ -387,6 +387,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 	 */
 	checkMime: function(f) {
 		let mime = '';
+		if (!this.options.mime) return true;
 		if(this.options.mime.indexOf("/") != 0)
 		{
 			// Lower case it now, if it's not a regex
