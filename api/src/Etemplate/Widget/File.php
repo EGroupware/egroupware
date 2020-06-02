@@ -156,8 +156,8 @@ class File extends Etemplate\Widget
 				$file['type'] = $type = Api\MimeMagic::analyze_file($file['tmp_name']);
 			}
 
-			// Mime check
-			if($mime)
+			// Mime check (can only work for the first chunk, further ones will always fail!)
+			if ($mime && (int)$_POST['resumableChunkNumber'] === 1)
 			{
 				$is_preg = $mime[0] == '/';
 				if (!$is_preg && strcasecmp($mime,$type) ||
