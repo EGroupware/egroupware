@@ -381,9 +381,7 @@ export class et2_file extends et2_inputWidget
 		}
 		else
 		{
-			// Convert into a js regex
-			var parts = mime.substr(1).match(/(.*)\/([igm]?)$/);
-			this.options.mime = new RegExp(parts[1],parts.length > 2 ? parts[2] : "");
+			this.options.mime = mime;
 		}
 	}
 
@@ -405,11 +403,24 @@ export class et2_file extends et2_inputWidget
 	 */
 	checkMime(f)
 	{
-		// If missing, let the server handle it
-		if(!this.options.mime || !f.type) return true;
+		let mime: string | RegExp = '';
+		if(this.options.mime.indexOf("/") != 0)
+		{
+			// Lower case it now, if it's not a regex
+			mime = this.options.mime.toLowerCase();
+		}
+		else
+		{
+			// Convert into a js regex
+			var parts = this.options.mime.substr(1).match(/(.*)\/([igm]?)$/);
+			mime = new RegExp(parts[1],parts.length > 2 ? parts[2] : "");
+		}
 
-		var is_preg = (typeof this.options.mime == "object");
-		if(!is_preg && f.type.toLowerCase() == this.options.mime || is_preg && this.options.mime.test(f.type))
+		// If missing, let the server handle it
+		if(!mime || !f.type) return true;
+
+		var is_preg = (typeof mime == "object");
+		if(!is_preg && f.type.toLowerCase() == mime || is_preg && mime.test(f.type))
 		{
 			return true;
 		}

@@ -264,9 +264,7 @@ var et2_file = /** @class */ (function (_super) {
             this.options.mime = mime.toLowerCase();
         }
         else {
-            // Convert into a js regex
-            var parts = mime.substr(1).match(/(.*)\/([igm]?)$/);
-            this.options.mime = new RegExp(parts[1], parts.length > 2 ? parts[2] : "");
+            this.options.mime = mime;
         }
     };
     et2_file.prototype.set_multiple = function (_multiple) {
@@ -283,11 +281,21 @@ var et2_file = /** @class */ (function (_super) {
      * @return boolean
      */
     et2_file.prototype.checkMime = function (f) {
+        var mime = '';
+        if (this.options.mime.indexOf("/") != 0) {
+            // Lower case it now, if it's not a regex
+            mime = this.options.mime.toLowerCase();
+        }
+        else {
+            // Convert into a js regex
+            var parts = this.options.mime.substr(1).match(/(.*)\/([igm]?)$/);
+            mime = new RegExp(parts[1], parts.length > 2 ? parts[2] : "");
+        }
         // If missing, let the server handle it
-        if (!this.options.mime || !f.type)
+        if (!mime || !f.type)
             return true;
-        var is_preg = (typeof this.options.mime == "object");
-        if (!is_preg && f.type.toLowerCase() == this.options.mime || is_preg && this.options.mime.test(f.type)) {
+        var is_preg = (typeof mime == "object");
+        if (!is_preg && f.type.toLowerCase() == mime || is_preg && mime.test(f.type)) {
             return true;
         }
         // Not right mime
