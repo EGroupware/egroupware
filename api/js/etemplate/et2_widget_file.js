@@ -281,6 +281,8 @@ var et2_file = /** @class */ (function (_super) {
      * @return boolean
      */
     et2_file.prototype.checkMime = function (f) {
+        if (!this.options.mime)
+            return true;
         var mime = '';
         if (this.options.mime.indexOf("/") != 0) {
             // Lower case it now, if it's not a regex

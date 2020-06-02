@@ -403,6 +403,8 @@ export class et2_file extends et2_inputWidget
 	 */
 	checkMime(f)
 	{
+		if(!this.options.mime) return true;
+
 		let mime: string | RegExp = '';
 		if(this.options.mime.indexOf("/") != 0)
 		{
