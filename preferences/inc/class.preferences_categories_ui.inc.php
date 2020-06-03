@@ -23,6 +23,7 @@ class preferences_categories_ui extends admin_categories {
 	protected $list_link = 'preferences.preferences_categories_ui.index';
 	protected $edit_link = 'preferences.preferences_categories_ui.edit';
 	protected $add_link = 'preferences.preferences_categories_ui.edit';
+	protected $delete_link = 'preferences.preferences_categories_ui.delete';
 
 	function __construct()
 	{

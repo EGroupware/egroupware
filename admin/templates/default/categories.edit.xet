@@ -80,7 +80,7 @@
 						<button label="Save" id="button[save]" onclick="return app.admin.check_owner(widget);" image="save" background_image="1"/>
 						<button label="Apply" id="button[apply]" onclick="return app.admin.check_owner(widget);" image="apply" background_image="1"/>
 						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-						<buttononly align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="egw.open_link('admin.admin_categories.delete&amp;cat_id='+widget.getRoot().getArrayMgr('content').getEntry('id'),'_browser','450x400');window.close();" image="delete" background_image="1"/>
+						<buttononly align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="egw.open_link('$cont[delete_link]&amp;cat_id='+widget.getRoot().getArrayMgr('content').getEntry('id'),'_browser','450x400');window.close();" image="delete" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>
