@@ -42,6 +42,7 @@ class admin_categories
 	protected $list_link = 'admin.admin_categories.index';
 	protected $add_link = 'admin.admin_categories.edit';
 	protected $edit_link = 'admin.admin_categories.edit';
+	protected $delete_link = 'admin.admin_categories.delete';
 
 	/**
 	 * Stupid old admin ACL - dont think anybody uses or understands it ;-)
@@ -322,6 +323,8 @@ class admin_categories
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete ||		// cant delete not yet saved category
 			$appname != $content['appname'] || // Can't edit a category from a different app
 			 ($this->appname != 'admin' && $content['owner'] != $GLOBALS['egw_info']['user']['account_id']);
+		$content['delete_link'] = $this->delete_link;
+
 		// Make sure $content['owner'] is an array otherwise it wont show up values in the multiselectbox
 		if (!is_array($content['owner'])) $content['owner'] = explode(',',$content['owner']);
 		$tmpl = new Etemplate('admin.categories.edit');
@@ -662,7 +665,7 @@ class admin_categories
 			}
 		}
 		$tpl = new Etemplate('admin.categories.delete');
-		$tpl->exec('admin.admin_categories.delete', $content, array(), array(), $content, 2);
+		$tpl->exec($this->delete_link, $content, array(), array(), $content, 2);
 	}
 
 	protected function get_actions($appname=Api\Categories::GLOBAL_APPNAME) {
@@ -706,7 +709,7 @@ class admin_categories
 				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
 				'popup' => '450x400',
-				'url' => 'menuaction=admin.admin_categories.delete&cat_id=$id',
+				'url' => 'menuaction='.$this->delete_link.'&cat_id=$id',
 			),
 		);
 
