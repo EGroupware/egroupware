@@ -649,8 +649,10 @@ function egwPopupActionImplementation()
 		var drag = _selected[0].getSelectedLinks('drag').links;
 		var drop = _selected[0].getSelectedLinks('drop').links;
 
-		// No drags & no drops means early exit
-		if((!drag || jQuery.isEmptyObject(drag)) && (!drop || jQuery.isEmptyObject(drop)))
+		// No drags & no drops means early exit (only by default added egw_cancel_drop does NOT count!)
+		if ((!drag || jQuery.isEmptyObject(drag)) &&
+			(!drop || jQuery.isEmptyObject(drop) ||
+				Object.keys(drop).length === 1 && typeof drop.egw_cancel_drop !== 'undefined'))
 		{
 			return;
 		}
