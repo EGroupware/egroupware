@@ -885,7 +885,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		{
 			for (var j=0; j < popups.length; j++)
 			{
-				if (typeof param === 'object' && !(param instanceof RegExp))
+				if (typeof param === 'object' && param.constructor.name != 'RegExp')
 				{
 					var key = Object.keys(param)[0];
 					if (!popups[j][key].match(new RegExp(param[key])))
@@ -1165,7 +1165,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			}
 		}
 	},
-	
+
 	/**
 	 * Set a notification message for topmenu info item
 	 *
