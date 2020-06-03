@@ -93,7 +93,7 @@ foreach($trs[2] as $n => $tr)
 						if ($commented)
 						{
 							echo $tr;
-							continue;
+							continue 2;
 						}
 						echo "\t\t\t\t\t<!-- ".trim($matches[3])." -->\n";
 					}

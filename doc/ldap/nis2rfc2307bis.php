@@ -71,7 +71,7 @@ foreach($lines as $l => $line)
 				break;
 			case 'memberUid':
 				$member_dn = 'uid='.$value.','.preg_replace($replace,$replace_with,$dn);
-				if (!in_array('dn: '.$member_dn,$lines)) continue;	// member does not exist --> ignore him!
+				if (!in_array('dn: '.$member_dn,$lines)) continue 2;	// member does not exist --> ignore him!
 				$members[] = 'member: '.$member_dn;
 				// fall-through
 			default:
