@@ -774,12 +774,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "5aaa268a80fa25ce876cd6167bbb0c1e3caecaf5"
+                "reference": "86070ce4257e926dc56bc876d1d57625a82ed44c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/5aaa268a80fa25ce876cd6167bbb0c1e3caecaf5",
-                "reference": "5aaa268a80fa25ce876cd6167bbb0c1e3caecaf5",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/86070ce4257e926dc56bc876d1d57625a82ed44c",
+                "reference": "86070ce4257e926dc56bc876d1d57625a82ed44c",
                 "shasum": ""
             },
             "require": {
