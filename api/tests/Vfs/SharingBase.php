@@ -31,7 +31,7 @@ class SharingBase extends LoggedInTest
 	 * 1 = info
 	 * 2 = debug
 	 */
-	const LOG_LEVEL = 2;
+	const LOG_LEVEL = 3;
 
 	/**
 	 * Keep track of shares to remove after
