@@ -74,7 +74,6 @@ script:
   # output Apache error.log to diagnose PHP errors in requests send by unit-tests
   - echo "travis_fold:start:SCRIPT folding starts"
   - sudo cat /var/log/apache2/error.log
-  # do not run syntax check for hhvm, as it always fails / get terminated after 10m
   - ./doc/php_syntax_check.sh
   - echo "travis_fold:start:SCRIPT folding ends"
 
