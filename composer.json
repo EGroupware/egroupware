@@ -45,7 +45,7 @@
     ],
 	"config": {
 		"platform": {
-			"php": "7.0"
+			"php": "7.2"
 		},
 		"sort-packages": true
 	},
@@ -101,6 +101,7 @@
 		"tinymce/tinymce": "^5.0"
 	},
 	"require-dev": {
+		"phpunit/phpunit": "~8"
 	},
 	"suggests": {
 		"ext-opcache": "Opcode cache to speed up PHP",
