@@ -48,7 +48,8 @@ before_script:
   - php -i
   - php install-cli.php --ignore-platform-reqs
   # update EGroupware apps, compose install get's only latest release
-  - composer update "egroupware/*"
+  - composer clearcache
+  - composer -vvv update "egroupware/*"
   # create data directory
   - sudo mkdir /var/lib/egroupware
   - sudo chown travis /var/lib/egroupware
