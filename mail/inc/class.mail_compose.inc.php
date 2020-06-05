@@ -284,7 +284,7 @@ class mail_compose
 	/**
 	 * Compose dialog
 	 *
-	 * @var arra $_content =null etemplate content array
+	 * @var array $_content =null etemplate content array
 	 * @var string $msg =null a possible message to be passed and displayed to the userinterface
 	 * @var string $_focusElement ='to' subject, to, body supported
 	 * @var boolean $suppressSigOnTop =false
@@ -1269,6 +1269,7 @@ class mail_compose
 		//if (is_array($content['attachments'])) foreach($content['attachments'] as $k => &$file) $file['delete['.$file['tmp_name'].']']=0;
 		$content['no_griddata'] = empty($content['attachments']);
 		$preserv['attachments'] = $content['attachments'];
+		$content['expiration_blur'] = $GLOBALS['egw_info']['user']['apps']['stylite'] ? lang('Select a date') : lang('EPL only');
 
 		//if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachments:'.array2string($content['attachments']));
 		// if no filemanager -> no vfsFileSelector
