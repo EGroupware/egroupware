@@ -1308,12 +1308,13 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 				}
-				// unset old X-* attributes stored in custom-fields
+				// unset old X-* attributes stored in custom-fields with exception of our videoconference and notify-externals
 				foreach ($event_info['stored_event'] as $key => $value)
 				{
 					if ($key[0] == '#' && $key[1] == '#' && !isset($event[$key]))
 					{
-						$event[$key] = '';
+						$event[$key] = in_array($key, ['##videoconference', '##notify_externals']) ?
+							$value : '';
 					}
 				}
 				if ($merge)
