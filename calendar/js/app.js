@@ -2359,24 +2359,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			});
 			// Make sure they're all strings
 			state.state.owner = state.state.owner.map(function(owner) { return ''+owner;});
-			// Keep sort order
-			if(typeof this.state.owner === 'object')
-			{
-				var owner = [];
-				this.state.owner.forEach(function(key) {
-					var found = false;
-					state.state.owner = state.state.owner.filter(function(item) {
-						if(!found && item == key) {
-							owner.push(item);
-							found = true;
-							return false;
-						} else
-							return true;
-					});
-				});
-				// Add in any new owners
-				state.state.owner = owner.concat(state.state.owner);
-			}
+
 			if (state.state.owner.indexOf('0') >= 0)
 			{
 				state.state.owner[state.state.owner.indexOf('0')] = this.egw.user('account_id');
