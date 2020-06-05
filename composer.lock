@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eed53738f1557cac0374df28065f5afd",
+    "content-hash": "8d7f0af8ff5e4acc92d41908a164115c",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -643,7 +643,7 @@
         },
         {
             "name": "egroupware/activesync",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200605",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
@@ -684,7 +684,7 @@
         },
         {
             "name": "egroupware/adodb-php",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200605",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
@@ -713,8 +713,8 @@
             "authors": [
                 {
                     "name": "John Lim",
-                    "role": "Author",
-                    "email": "jlim@natsoft.com"
+                    "email": "jlim@natsoft.com",
+                    "role": "Author"
                 },
                 {
                     "name": "Damien Regad",
@@ -738,7 +738,7 @@
         },
         {
             "name": "egroupware/bookmarks",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200605",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
@@ -770,7 +770,7 @@
         },
         {
             "name": "egroupware/collabora",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200605",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
@@ -806,7 +806,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-06-04T07:45:40+00:00"
+            "time": "2020-06-04T21:38:52+00:00"
         },
         {
             "name": "egroupware/icalendar",
@@ -908,7 +908,7 @@
         },
         {
             "name": "egroupware/news_admin",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200605",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
@@ -940,7 +940,7 @@
         },
         {
             "name": "egroupware/openid",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200605",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
@@ -989,7 +989,7 @@
         },
         {
             "name": "egroupware/projectmanager",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200605",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
@@ -1030,7 +1030,7 @@
         },
         {
             "name": "egroupware/registration",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200605",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
@@ -1079,7 +1079,7 @@
         },
         {
             "name": "egroupware/rocketchat",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200605",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
@@ -1119,7 +1119,7 @@
         },
         {
             "name": "egroupware/status",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200605",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
@@ -1159,7 +1159,7 @@
         },
         {
             "name": "egroupware/tracker",
-            "version": "19.1.x-dev",
+            "version": "19.1.20200605",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
@@ -5494,19 +5494,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "egroupware/activesync": 20,
-        "egroupware/adodb-php": 20,
-        "egroupware/bookmarks": 20,
-        "egroupware/collabora": 20,
-        "egroupware/news_admin": 20,
-        "egroupware/openid": 20,
-        "egroupware/projectmanager": 20,
-        "egroupware/registration": 20,
-        "egroupware/rocketchat": 20,
-        "egroupware/status": 20,
-        "egroupware/tracker": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
