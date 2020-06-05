@@ -1,4 +1,20 @@
-egroupware-docker (19.1.20200430) hardy; urgency=low
+egroupware-docker (19.1.20200605) hardy; urgency=low
+
+  * Calendar/CalDAV: videoconference was lost, if meeting was accepted of updated via CalDAV
+  * Preferences: fix delete personal category required admin permission
+  * Calendar: do not show Infolog list (Open ToDo's) if user has no access to Infolog, or no Infolog types selected for display
+  * Api: can now select no color with color widget
+  * ActiveDirectory: consider security local groups as groups too
+  * API: new data-minimizing account display options "Firstname Inital" and "Firstname [ID]"
+  * Registration: allow to choose email as user-name and let user choose a primary group from a selection
+  * Status app: add group preference as shown users and some performance improvements
+  * Tracker: skip loading the default mail account during mail handling, avoids mailhandling failure in some cases
+  * Mail: fixed forward as attachment from viewing mail in popup
+  * Docker: EGW_MEMORY_LIMIT environment variable to set a higher memory_limit in php.ini (default is 128M)
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 05 Jun 2020 12:14:37 +0200
+
+egroupware-docker (20.1.20200525) hardy; urgency=low
 
   * first alpha for upcomming 20.1 release (shows still 19.1)
   * you have to switch JavaScript minifying off BEFORE updating
