@@ -14,13 +14,6 @@ egroupware-docker (19.1.20200605) hardy; urgency=low
 
  -- Ralf Becker <rb@egroupware.org>  Fri, 05 Jun 2020 12:14:37 +0200
 
-egroupware-docker (20.1.20200525) hardy; urgency=low
-
-  * first alpha for upcomming 20.1 release (show still 19.1)
-  * you have to switch JavaScript minifying off BEFORE updating
-
- -- Ralf Becker <rb@egroupware.org>  Mon, 25 May 2020 13:38:55 +0200
-
 egroupware-docker (19.1.20200430) hardy; urgency=low
 
   * Jitsi/Status: many of improvments for easier video conferences and calls
