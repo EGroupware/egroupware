@@ -2127,24 +2127,6 @@ var CalendarApp = /** @class */ (function (_super) {
             });
             // Make sure they're all strings
             state.state.owner = state.state.owner.map(function (owner) { return '' + owner; });
-            // Keep sort order
-            if (typeof this.state.owner === 'object') {
-                var owner = [];
-                this.state.owner.forEach(function (key) {
-                    var found = false;
-                    state.state.owner = state.state.owner.filter(function (item) {
-                        if (!found && item == key) {
-                            owner.push(item);
-                            found = true;
-                            return false;
-                        }
-                        else
-                            return true;
-                    });
-                });
-                // Add in any new owners
-                state.state.owner = owner.concat(state.state.owner);
-            }
             if (state.state.owner.indexOf('0') >= 0) {
                 state.state.owner[state.state.owner.indexOf('0')] = this.egw.user('account_id');
             }
@@ -2218,8 +2200,8 @@ var CalendarApp = /** @class */ (function (_super) {
                         break;
                     default:
                         var end = state.state.last = view.end_date(state.state).toJSON();
-                        for (var owner_1 = 0; owner_1 < grid_count && owner_1 < state.state.owner.length; owner_1++) {
-                            var _owner = grid_count > 1 ? state.state.owner[owner_1] || 0 : state.state.owner;
+                        for (var owner = 0; owner < grid_count && owner < state.state.owner.length; owner++) {
+                            var _owner = grid_count > 1 ? state.state.owner[owner] || 0 : state.state.owner;
                             value.push({
                                 id: CalendarApp._daywise_cache_id(date, _owner),
                                 start_date: date,
