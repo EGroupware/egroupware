@@ -905,6 +905,8 @@ class filemanager_ui
 	 */
 	function get_rows(&$query, &$rows)
 	{
+		$old_session = Api\Cache::getSession('filemanager','index');
+
 		// do NOT store query, if hierarchical data / children are requested
 		if (!$query['csv_export'])
 		{
@@ -933,15 +935,19 @@ class filemanager_ui
 		if (!Vfs::stat($query['path'],true) || !Vfs::is_dir($query['path']) || !Vfs::check_access($query['path'],Vfs::READABLE))
 		{
 			// only redirect, if it would be to some other location, gives redirect-loop otherwise
-			if ($query['path'] != ($path = static::get_home_dir()))
+			foreach([$old_session['path'], static::get_home_dir()] as $new_path)
 			{
-				// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give
-				// an appropriate message
-				Egw::redirect_link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
-					'path' => $path,
-					'msg' => lang('The requested path %1 is not available.',Vfs::decodePath($query['path'])),
-					'ajax' => 'true'
-				));
+				if ($new_path && Vfs::stat($new_path) && $query['path'] != $new_path)
+				{
+					// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give
+					// an appropriate message
+					Egw::redirect_link('/index.php', array('menuaction' => 'filemanager.filemanager_ui.index',
+							'path' => $new_path,
+							'msg' => lang('The requested path %1 is not available.', Vfs::decodePath($query['path'])),
+							'ajax' => 'true'
+					));
+					break;
+				}
 			}
 			$rows = array();
 			return 0;
@@ -970,6 +976,10 @@ class filemanager_ui
 				if(!$dir_is_writable[$path])
 				{
 					$row['class'] .= 'noEdit ';
+				}
+				if(!Vfs::is_executable($path))
+				{
+					$row['class'] .= 'noExecute';
 				}
 			}
 			elseif (!$dir_is_writable[Vfs::dirname($path)])
