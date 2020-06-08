@@ -409,7 +409,7 @@ class Mail
 		if (is_null($_reuseCache)) $_reuseCache = $_restoreSession;
 		if (!empty($_displayCharset)) self::$displayCharset = $_displayCharset;
 		// not nummeric, we assume we only want an empty class object
-		if (!is_numeric($_profileID)) return true;
+		if (!is_numeric($_profileID)) return;
 		if ($_restoreSession)
 		{
 			//error_log(__METHOD__." Session restore ".function_backtrace());
@@ -792,7 +792,8 @@ class Mail
 	function getDefaultIdentity()
 	{
 		// retrieve the signature accociated with the identity
-		$id = $this->getIdentitiesWithAccounts($_accountData=array());
+		$_accountData=array();
+		$id = $this->getIdentitiesWithAccounts($_accountData);
 		foreach(Mail\Account::identities($_accountData[$this->profileID] ?
 			$this->profileID : $_accountData[$id],false,'ident_id') as $accountData)
 		{
@@ -804,7 +805,7 @@ class Mail
 	 * getIdentitiesWithAccounts
 	 *
 	 * @param array reference to pass all identities back
-	 * @return the default Identity (active) or 0
+	 * @return int the default Identity (active) or 0
 	 */
 	function getIdentitiesWithAccounts(&$identities)
 	{
@@ -1197,7 +1198,7 @@ class Mail
 	 * @param ignoreStatusCache bool ignore the cache used for counters
 	 * @param basicInfoOnly bool retrieve only names and stuff returned by getMailboxes
 	 * @param fetchSubscribedInfo bool fetch Subscribed Info on folder
-	 * @return array
+	 * @return array|false
 	 */
 	function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false,$fetchSubscribedInfo=true)
 	{
@@ -1215,13 +1216,7 @@ class Mail
 		}
 		if (isset($folderInfoCache[$_folderName]) && $ignoreStatusCache==false && $basicInfoOnly) return $folderInfoCache[$_folderName];
 		$retValue = array();
-		$retValue['subscribed'] = false;
-/*
-		if(!$icServer = Mail\Account::read($this->profileID)) {
-			if (self::$debug) error_log(__METHOD__." no Server found for Folder:".$_folderName);
-			return false;
-		}
-*/
+
 		//error_log(__METHOD__.' ('.__LINE__.') '.$_folderName.' '.array2string(array_keys($folderInfoCache)));
 		// does the folder exist???
 		if (is_null($folderInfoCache) || !isset($folderInfoCache[$_folderName]))
@@ -1267,14 +1262,7 @@ class Mail
 			}
 			if (!is_array($folderInfo))
 			{
-				// no folder info, but there is a status returned for the folder: something is wrong, try to cope with it
-				$folderInfo = is_array($folderInfo)?$folderInfo:array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
-					'ATTRIBUTES' => '');
-				if (!isset($folderInfo['HIERACHY_DELIMITER']) || empty($folderInfo['HIERACHY_DELIMITER']) || (isset($folderInfo['delimiter']) && empty($folderInfo['delimiter'])))
-				{
-					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($folderInfo));
-					$folderInfo['HIERACHY_DELIMITER'] = $this->getHierarchyDelimiter();
-				}
+				return false;
 			}
 		}
 		#if(!is_array($folderInfo)) {
@@ -1282,6 +1270,7 @@ class Mail
 		#}
 		$retValue['delimiter']		= (isset($folderInfo['HIERACHY_DELIMITER']) && $folderInfo['HIERACHY_DELIMITER']?$folderInfo['HIERACHY_DELIMITER']:$folderInfo['delimiter']);
 		$retValue['attributes']		= (isset($folderInfo['ATTRIBUTES']) && $folderInfo['ATTRIBUTES']?$folderInfo['ATTRIBUTES']:$folderInfo['attributes']);
+		$retValue['subscribed']     = $folderInfo['SUBSCRIBED'] ?? $folderInfo['subscribed'] ?? false;
 		$shortNameParts			= explode($retValue['delimiter'], $_folderName);
 		$retValue['shortName']		= array_pop($shortNameParts);
 		$retValue['displayName']	= $_folderName;
@@ -5074,7 +5063,7 @@ class Mail
 	static function &getdisplayableBody(&$mailClass, $bodyParts, $preserveHTML = false,  $useTidy = true)
 	{
 		$message='';
-		for($i=0; $i<count($bodyParts); $i++)
+		for($i=0, $cnt=count($bodyParts); $i < $cnt; $i++)
 		{
 			if (!isset($bodyParts[$i]['body'])) {
 				$bodyParts[$i]['body'] = self::getdisplayableBody($mailClass, $bodyParts[$i], $preserveHTML, $useTidy);
@@ -5139,7 +5128,8 @@ class Mail
 						if (!$preserveHTML)
 						{
 							// filter only the 'body', as we only want that part, if we throw away the html
-							preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches=array());
+							$matches = array();
+							preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches);
 							if ($matches[2])
 							{
 								$hasOther = true;
@@ -5150,7 +5140,8 @@ class Mail
 					else
 					{
 						// htmLawed filter only the 'body'
-						preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches=array());
+						$matches = array();
+						preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches);
 						if ($matches[2])
 						{
 							$hasOther = true;
@@ -5515,8 +5506,8 @@ class Mail
 	 */
 	static function &getStyles($_bodyParts)
 	{
-		$style = '';
-		if (empty($_bodyParts)) return "";
+		$style = $ret = '';
+		if (empty($_bodyParts)) return $ret;
 		foreach((array)$_bodyParts as $singleBodyPart) {
 			if (!isset($singleBodyPart['body'])) {
 				$singleBodyPart['body'] = self::getStyles($singleBodyPart);
@@ -6565,7 +6556,8 @@ class Mail
 		$mergeobj = new Contacts\Merge();
 
 		if (empty($mimetype)) $mimetype = (strlen(strip_tags($content)) == strlen($content) ?'text/plain':'text/html');
-		$rv = $mergeobj->merge_string($content,$ids,$err='',$mimetype, array(), self::$displayCharset);
+		$err = '';
+		$rv = $mergeobj->merge_string($content,$ids,$err, $mimetype, array(), self::$displayCharset);
 		if (empty($rv) && !empty($content) && !empty($err)) $rv = $content;
 		if (!empty($err) && !empty($content) && !empty($ids)) error_log(__METHOD__.' ('.__LINE__.') '.' Merge failed for Ids:'.array2string($ids).' ContentType:'.$mimetype.' Content:'.$content.' Reason:'.array2string($err));
 		return $rv;

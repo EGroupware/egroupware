@@ -555,6 +555,11 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 	}
 
 	/**
+	 * Attribute returned for Horde_Imap_Client::MBOX_ALL_SUBSCRIBED if mailbox is subscribed
+	 */
+	const SUBSCRIBED_ATTRIBUTE = '\\subscribed';
+
+	/**
 	 * getStatus
 	 *
 	 * @param string $mailbox
@@ -563,7 +568,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 	 */
 	function getStatus($mailbox, $ignoreStatusCache=false)
 	{
-		$mailboxes = $this->listMailboxes($mailbox,Horde_Imap_Client::MBOX_ALL,array(
+		$mailboxes = $this->listMailboxes($mailbox,Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, array(
 				'attributes'=>true,
 				'children'=>true, //child info
 				'delimiter'=>true,
@@ -588,6 +593,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 					}
 					$_status['HIERACHY_DELIMITER'] = $_status['delimiter'] = ($box['delimiter']?$box['delimiter']:$this->getDelimiter('personal'));
 					$_status['ATTRIBUTES'] = $box['attributes'];
+					$_status['SUBSCRIBED'] = in_array(self::SUBSCRIBED_ATTRIBUTE, $box['attributes']);
 					//error_log(__METHOD__.__LINE__.$k.'->'.array2string($_status));
 					return $_status;
 				}
@@ -651,35 +657,18 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 			unset($options['children']);
 			unset($options['special_use']);
 		}
-		$mailboxes = $this->listMailboxes($searchstring,Horde_Imap_Client::MBOX_ALL, $options);
+		$mailboxes = $this->listMailboxes($searchstring,Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $options);
 		//$mboxes = new Horde_Imap_Client_Mailbox_List($mailboxes);
 		//_debug_array($mboxes->count());
-		foreach ((array)$mailboxes as $k =>$box)
+		foreach ((array)$mailboxes as $k => $box)
 		{
 			//error_log(__METHOD__.__LINE__.' Box:'.$k.'->'.array2string($box));
-			$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'],'delimiter'=>($box['delimiter']?$box['delimiter']:$this->getDelimiter('personal')),'SUBSCRIBED'=>true);
-		}
-		// for unknown reasons on ALL, UNSUBSCRIBED are not returned
-		//always fetch unsubscribed, think about only fetching it when $options['attributes'] is set
-		//but then allMailboxes are not all, ....
-		//if (!empty($mailbox) && !isset($ret[$mailbox]))
-		{
-			$unsub_mailboxes = $this->listMailboxes($searchstring,Horde_Imap_Client::MBOX_UNSUBSCRIBED, $options);
-			//$mboxes = new Horde_Imap_Client_Mailbox_List($mailboxes);
-			//_debug_array($mboxes->count());
-			//error_log(__METHOD__.__LINE__.' '.$mailbox.':'.count((array)$mailboxes).'->'.function_backtrace());
-			foreach ((array)$unsub_mailboxes as $k =>$box)
-			{
-				//error_log(__METHOD__.__LINE__.' Box:'.$k.' already In?'.array_key_exists($k,$boxexists).'->'.array2string($box));
-				if(!array_key_exists($k,$ret))
-				{
-					$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'],'delimiter'=>($box['delimiter']?$box['delimiter']:$this->getDelimiter('personal')),'SUBSCRIBED'=>false);
-				}
-				else
-				{
-					$ret[$k]['SUBSCRIBED'] = false;
-				}
-			}
+			$ret[$k] = [
+				'MAILBOX'    => $k,
+				'ATTRIBUTES' => $box['attributes'],
+				'delimiter'  => $box['delimiter'] ? $box['delimiter'] : $this->getDelimiter('personal'),
+				'SUBSCRIBED' => in_array(self::SUBSCRIBED_ATTRIBUTE, $box['attributes']),
+			];
 		}
 		return $ret;
 	}

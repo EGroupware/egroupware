@@ -4093,7 +4093,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$counter++;
 							if (!$p_no_delimiter)
 							{
-								$status = $this->mail_bo->getFolderStatus($new,false, true, true);
+								// we first test below INBOX, because testing just the name wrongly reports it as subscribed
+								// for servers not allowing to create folders parallel to INBOX
+								$status = $this->mail_bo->getFolderStatus('INBOX'.$delimiter.$new,false, true, true) ?:
+									$this->mail_bo->getFolderStatus($new,false, true, true);
 								if (!$status['subscribed'])
 								{
 									try
