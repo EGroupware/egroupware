@@ -255,7 +255,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 				}
 				else
 				{
-					$contact_ids[] = 'c'.$contact;
+					$contact_ids[] = 'c'.$_contact;
 				}
 			}
 			$events = $this->ui->read_calendar($contact_ids, false);
