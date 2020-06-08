@@ -103,15 +103,11 @@
 							<rows>
 								<row>
 									<description value="User"/>
-									<menulist>
-										<menupopup type="select-account" label="@ro_uid_root" id="uid" options="root,accounts"/>
-									</menulist>
+									<select-account label="@ro_uid_root" id="uid" empty_label="root" account_type="accounts"/>
 								</row>
 								<row>
 									<description value="Group"/>
-									<menulist>
-										<menupopup type="select-account" label="@ro_gid_root" id="gid" options="root,groups"/>
-									</menulist>
+									<select-account label="@ro_gid_root" id="gid" empty_label="root" account_type="groups"/>
 								</row>
 							</rows>
 						</grid>
