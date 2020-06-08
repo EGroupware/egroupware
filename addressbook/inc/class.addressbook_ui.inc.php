@@ -608,7 +608,7 @@ class addressbook_ui extends addressbook_bo
 					],
 					'schedule_call' => [
 						'caption' => lang('Schedule a video conference'),
-						'icon' => 'calendar',
+						'icon' => 'calendar/navbar',
 						'allowOnMultiple' => true,
 						'onExecute' => 'javaScript:app.addressbook.add_cal',
 					]
