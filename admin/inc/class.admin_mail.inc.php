@@ -1361,6 +1361,9 @@ class admin_mail
 			$content['ident_email'] = Mail::fixInvalidAliasAddress (Api\Accounts::id2name($content['acc_imap_account_id'], 'account_email'), $content['ident_email']);
 		}
 
+		// If no EPL available, show that in spamtitan blur
+		$content['spamtitan_blur'] = $GLOBALS['egw_info']['user']['apps']['stylite'] ? '' : lang('SpamTitian integration requires EPL version');
+
 		$tpl->exec(static::APP_CLASS.'edit', $content, $sel_options, $readonlys, $content, 2);
 	}
 
