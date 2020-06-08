@@ -1075,6 +1075,17 @@ class calendar_uiforms extends calendar_ui
 			{
 				$content['new_alarm']['date'] = $next_occurrence['start'] - $offset;
 			}
+			// Avoid duplicates
+			foreach($content['alarm'] as $key => $alarm)
+			{
+				if($alarm['offset'] == $offset && (
+						($alarm['all'] && $content['new_alarm']['owner'] == 0) ||
+						(!$alarm['all'] && $alarm['owner'] == $content['new_alarm']['owner'])
+				))
+				{
+					break 2;
+				}
+			}
 			if ($this->bo->check_perms(Acl::EDIT,!$content['new_alarm']['owner'] ? $event : 0,$content['new_alarm']['owner']))
 			{
 				$alarm = array(
