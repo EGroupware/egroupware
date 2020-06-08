@@ -12,6 +12,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Link;
+use EGroupware\Api\Mail as mail_bo;
 
 /**
  * Class cotains methods and functions
