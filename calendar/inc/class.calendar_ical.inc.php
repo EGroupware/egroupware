@@ -2428,7 +2428,7 @@ class calendar_ical extends calendar_boupdate
 
 		if ($this->log)
 		{
-			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'() '.get_class($component)." found\n",3,$this->logfile);
+			error_log(__FILE__ . '[' . __LINE__ . '] ' . __METHOD__ . '() ' . get_class($component) . " found\n", 3, $this->logfile);
 		}
 
 		// eg. Mozilla holiday calendars contain only a X-WR-TIMEZONE on vCalendar component
@@ -2438,8 +2438,8 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		if (!is_a($component, 'Horde_Icalendar_Vevent') ||
-			!($event = $this->vevent2egw($component, $container ? $container->getAttributeDefault('VERSION', '2.0') : '2.0',
-				$this->supportedFields, $principalURL, null, $container)))
+				!($event = $this->vevent2egw($component, $container ? $container->getAttributeDefault('VERSION', '2.0') : '2.0',
+						$this->supportedFields, $principalURL, null, $container)))
 		{
 			return false;
 		}
@@ -2458,6 +2458,13 @@ class calendar_ical extends calendar_boupdate
 		{
 			// 'All day' event that ends at midnight the next day, avoid that
 			$event['end']--;
+		}
+
+		// Remove videoconference link appended to description in calendar_groupdav->iCal()
+		if (class_exists('EGroupware\Status\Videoconference\Call'))
+		{
+			$regex = "/^(\r?\n)?(Videoconference|" . lang('Videoconference') . "):\r?\n" . str_replace('/','\/',EGroupware\Status\Videoconference\Call::getMeetingRegex()) ."(\r?\n)*/im";
+			$event['description'] = preg_replace($regex, '', $event['description']);
 		}
 
 		// handle the alarms

@@ -677,6 +677,20 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			//error_log(__METHOD__.'('.array2string($event).", $user) clearing alarms");
 			$event['alarm'] = array();
 		}
+		else if ($event['##videoconference'])
+		{
+			// Add video conference link to description for user's own calendar
+			$avatar = new Api\Contacts\Photo("account:$user",
+					// disable sharing links currently, as sharing links from a different EGroupware user destroy the session
+					true);
+			$link = EGroupware\Status\Videoconference\Call::genMeetingUrl($event['##videoconference'], [
+					'name' => Api\Accounts::username($user),
+					'email' => Api\Accounts::id2name($user, 'account_email'),
+					'avatar' => (string)$avatar,
+					'account_id' => $user
+			], [], $event['start_date'], $event['end_date']);
+			$event['description'] = lang('Videoconference').":\n$link\n\n".$event['description'];
+		}
 
 		$events = array($event);
 
