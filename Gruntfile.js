@@ -271,6 +271,9 @@ module.exports = function (grunt) {
 			projectmanager: {
 				files: {
 					"projectmanager/js/app.min.js": [
+						"vendor/npm-asset/dhtmlx-gantt/codebase/dhtmlxgantt.js",
+						"vendor/npm-asset/dhtmlx-gantt/codebase/ext/dhtmlxgantt_marker.js",
+						"projectmanager/js/et2_widget_gantt.js",
 						"projectmanager/js/app.js"
 					]
 				}
