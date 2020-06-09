@@ -341,11 +341,12 @@ var et2_historylog = /** @class */ (function (_super) {
         // Parse / set legacy options
         if (options) {
             var mgr = this.getArrayMgr("content");
-            for (var i_3 = 0; i_3 < options.length && i_3 < widget.legacyOptions.length; i_3++) {
+            var legacy = widget.constructor.legacyOptions || [];
+            for (var i_3 = 0; i_3 < options.length && i_3 < legacy.length; i_3++) {
                 // Not set
                 if (options[i_3] === "")
                     continue;
-                var attr = widget.attributes[widget.legacyOptions[i_3]];
+                var attr = widget.attributes[legacy[i_3]];
                 var attrValue = options[i_3];
                 // If the attribute is marked as boolean, parse the
                 // expression as bool expression.
@@ -355,12 +356,12 @@ var et2_historylog = /** @class */ (function (_super) {
                 else {
                     attrValue = mgr.expandName(attrValue);
                 }
-                attrs[widget.legacyOptions[i_3]] = attrValue;
-                if (typeof widget['set_' + widget.legacyOptions[i_3]] === 'function') {
-                    widget['set_' + widget.legacyOptions[i_3]].call(widget, attrValue);
+                attrs[legacy[i_3]] = attrValue;
+                if (typeof widget['set_' + legacy[i_3]] === 'function') {
+                    widget['set_' + legacy[i_3]].call(widget, attrValue);
                 }
                 else {
-                    widget.options[widget.legacyOptions[i_3]] = attrValue;
+                    widget.options[legacy[i_3]] = attrValue;
                 }
             }
         }

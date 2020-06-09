@@ -471,12 +471,13 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		if(options)
 		{
 			const mgr = this.getArrayMgr("content");
-			for(let i = 0; i < options.length && i < widget.legacyOptions.length; i++)
+			let legacy = widget.constructor.legacyOptions || [];
+			for(let i = 0; i < options.length && i < legacy.length; i++)
 			{
 				// Not set
 				if(options[i] === "") continue;
 
-				const attr = widget.attributes[widget.legacyOptions[i]];
+				const attr = widget.attributes[legacy[i]];
 				let attrValue = options[i];
 
 				// If the attribute is marked as boolean, parse the
@@ -489,14 +490,14 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				{
 					attrValue = mgr.expandName(attrValue);
 				}
-				attrs[widget.legacyOptions[i]] = attrValue;
-				if(typeof widget['set_'+widget.legacyOptions[i]] === 'function')
+				attrs[legacy[i]] = attrValue;
+				if(typeof widget['set_'+legacy[i]] === 'function')
 				{
-					widget['set_'+widget.legacyOptions[i]].call(widget, attrValue);
+					widget['set_'+legacy[i]].call(widget, attrValue);
 				}
 				else
 				{
-					widget.options[widget.legacyOptions[i]] = attrValue;
+					widget.options[legacy[i]] = attrValue;
 				}
 			}
 		}
