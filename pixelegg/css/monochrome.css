@@ -114,13 +114,13 @@
     margin-left: -10px;
   }
   a.et2_url.email {
-    background-image: url(../images/email.png);
+    background-image: url(../images/email.svg);
   }
   a.et2_url.phone {
     background-image: url(../images/phone.svg);
   }
   a.et2_url.url {
-    background-image: url(../images/url.png);
+    background-image: url(../images/url.svg);
   }
   /**
  * Button widget - text only, and icon
@@ -339,7 +339,7 @@
     left: 0px;
   }
   .et2_link_to .et2_link_entry .ui-icon-triangle-1-s {
-    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+    background: #ffffff url(../images/arrow_down.svg) no-repeat center right;
   }
   .et2_link_to .et2_file span {
     background-position: center;
@@ -350,7 +350,7 @@
     border-radius: 3px;
   }
   .et2_link_entry .ui-icon-triangle-1-s {
-    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+    background: #ffffff url(../images/arrow_down.svg) no-repeat center right;
     background-size: contain;
   }
   .et2_link {
@@ -800,26 +800,11 @@
     margin-right: 10px;
     margin-top: -3px;
   }
-  .sidebox-favorites ul.favorites li.ui-menu-item [data-id="blank"] div.ui-icon-heart {
-    background-image: url(../images/delete.svg);
-    background-size: 12px 12px;
-    background-position: 0 0;
-  }
   .sidebox-favorites ul.favorites li.ui-menu-item.ui-state-highlight {
     color: #000000;
     background: rgba(102, 153, 204, 0.7);
     padding: 3px 0;
     border: none;
-  }
-  .sidebox-favorites ul.favorites li:first-child a div.ui-icon-heart {
-    background-image: url(../images/delete.svg);
-    background-size: 12px 12px;
-    background-position: 0 0;
-  }
-  .sidebox-favorites ul.favorites li:first-child a div.sideboxstar {
-    background-image: url(../images/delete.svg);
-    background-size: 12px 12px;
-    background-position: 0 0;
   }
   .favorites img {
     width: 12px;
@@ -835,13 +820,13 @@
   }
   .nextmatch_sortheader.asc {
     font-weight: bold;
-    background-image: url(../images/selectarrowup.png);
-    background-size: 16px 16px;
+    background-image: url(../images/arrow_up.svg);
+    background-size: 8px 8px;
   }
   .nextmatch_sortheader.desc {
     font-weight: bold;
-    background-image: url(../images/selectarrowdown.png);
-    background-size: 16px 16px;
+    background-image: url(../images/arrow_down.svg);
+    background-size: 8px 8px;
   }
   /**
  * Grid / nextmatch Hierarchy
@@ -1140,6 +1125,19 @@ option:checked {
   color: #999999;
   text-decoration: none;
 }
+.ui-state-default .ui-icon.ui-icon-triangle-1-s {
+  background: url("../images/arrow_down.svg");
+  background-size: 8px auto;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.ui-widget-header .ui-icon.ui-icon-check {
+  background-image: url("../images/check.svg");
+  background-size: 12px auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(2.5);
+}
 .ui-state-focus,
 .ui-widget-header .ui-state-focus,
 .ui-widget-content .ui-state-focus {
@@ -1349,6 +1347,7 @@ span.ui-icon-search {
   background: #CDCDCD;
 }
 .ui-dialog {
+  z-index: 1000;
   box-shadow: -2px 1px 9px 3px #B4B4B4;
 }
 .ui-dialog .ui-dialog-buttonpane {
@@ -1798,7 +1797,6 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background: white;
   opacity: 0.94;
   margin-left: 20px;
-  border-radius: 5px;
   margin-right: 20px;
   padding: 20px;
   margin-top: 20px;
@@ -1877,7 +1875,6 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   width: 280px;
 }
 #loginMainDiv div#centerBox form {
-  border-radius: 5px;
   opacity: 0.94;
   background-color: white;
   padding: 1em;
@@ -2571,6 +2568,18 @@ button[id="add"] {
 }
 /* @end */
 /* @group Single Chosen */
+.chzn-container-single .chzn-single div b {
+  background: url("../images/arrow_down.svg");
+  background-size: 8px auto;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.chzn-container-single.chzn-with-drop .chzn-single div b {
+  background: url("../images/arrow_up.svg");
+  background-size: 8px auto;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 /* @end */
 /* @group Results */
 .chzn-container .chzn-results {
@@ -2791,8 +2800,14 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
   margin: 0;
-  background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
-  background-size: 16px auto;
+  background: #ffffff url(../images/arrow_down.svg) no-repeat center right;
+  background-size: 8px auto;
+  background-position-x: calc(100% - 8px);
+}
+select:active {
+  background: #ffffff url(../images/arrow_up.svg) no-repeat center right;
+  background-size: 8px auto;
+  background-position-x: calc(100% - 8px);
 }
 /*IE has no appearance but we can remove arrows by ms-expand*/
 select::-ms-expand {
@@ -3736,7 +3751,7 @@ td.lettersearch {
 }
 /*popup Messsage*/
 div#egwpopup_message {
-  background-color: .color_gray_0;
+  background-color: #FFFFFF;
   padding: 1em;
   overflow-y: auto;
 }
@@ -4126,7 +4141,7 @@ td.message span.message {
   padding: 5px 0px 5px 0px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items .timezone select {
-  width: calc(80%);
+  width: calc(100% - 20px);
   margin-left: 10px;
 }
 /* ###################################################
@@ -4488,9 +4503,10 @@ td.message span.message {
   padding: 0px 0px 0px 24px;
   line-height: 1em;
   font-size: 12px;
-  background-image: url(../images/arrow_right.png);
+  background-image: url(../images/arrow_right.svg);
   background-repeat: no-repeat;
   background-position: left center;
+  background-size: 12px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category div.egw_fw_ui_category:nth-last-of-type(-n+3) img.egw_fw_ui_sidemenu_listitem_icon {
   display: block;
@@ -4505,9 +4521,10 @@ td.message span.message {
   color: #f2f2f2;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 {
-  background-image: url(../images/arrow_down_white.png);
+  background-image: url(../images/arrow_down.svg);
   line-height: 1em;
   font-size: 12px;
+  background-size: 12px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 a {
   color: #FFF;
@@ -5751,6 +5768,8 @@ table.egwGridView_grid tr.drop-hover {
 table.egwGridView_grid span.arrow {
   -moz-user-select: none;
   background-repeat: no-repeat;
+  background-size: 12px;
+  background-position: center;
   display: inline-block;
   height: 8px;
   margin-right: 2px;
@@ -5758,13 +5777,11 @@ table.egwGridView_grid span.arrow {
   width: 8px;
 }
 table.egwGridView_grid span.arrow.opened {
-  background-image: url("../images/egw_action/arrows.png");
-  background-position: -8px 0;
+  background-image: url("../images/arrow_down.svg");
   cursor: pointer;
 }
 table.egwGridView_grid span.arrow.closed {
-  background-image: url("../images/egw_action/arrows.png");
-  background-position: 0 0;
+  background-image: url("../images/arrow_right.svg");
   cursor: pointer;
 }
 table.egwGridView_grid span.arrow.loading {
