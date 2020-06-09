@@ -892,6 +892,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             if (_colData[x].disabled && _colData[x].disabled !== '' &&
                 this.getArrayMgr("content").parseBoolExpression(_colData[x].disabled)) {
                 visibility = et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_DISABLED;
+                this.columns[x].visible = false;
             }
             columnData[x] = {
                 "id": "col_" + x,

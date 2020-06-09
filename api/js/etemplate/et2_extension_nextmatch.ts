@@ -1245,6 +1245,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				this.getArrayMgr("content").parseBoolExpression(_colData[x].disabled))
 			{
 				visibility = et2_dataview_column.ET2_COL_VISIBILITY_DISABLED;
+				this.columns[x].visible = false;
 			}
 			columnData[x] = {
 				"id": "col_" + x,
