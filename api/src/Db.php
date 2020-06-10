@@ -585,7 +585,7 @@ class Db
 		{
 			foreach(get_included_files() as $file)
 			{
-				if (strpos($file,'adodb') !== false && !in_array($file,(array)$_SESSION['egw_required_files']))
+				if (strpos($file,'adodb') !== false && !in_array($file,(array)$_SESSION['egw_required_files']) && isset($_SESSION))
 				{
 					$_SESSION['egw_required_files'][] = $file;
 					//error_log(__METHOD__."() egw_required_files[] = $file");

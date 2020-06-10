@@ -81,6 +81,23 @@ class Login
 				$tmpl->set_var('2fa_class', 'et2_required');
 			}
 		}
+
+		// check if we need some discovery (select login options eg. a SAML IdP), hide it if not
+		$discovery = '';
+		foreach(Api\Hooks::process('login_discovery', [], true) as $app => $data)
+		{
+			if (!empty($data)) $discovery .= $data;
+		}
+		if (!empty($discovery))
+		{
+			$tmpl->set_var('discovery', $discovery);
+		}
+		else
+		{
+			$tmpl->set_block('login_form','discovery_block');
+			$tmpl->set_var('discovery_block', '');
+		}
+
 		// hide change-password fields, if not requested
 		if (!$change_passwd)
 		{

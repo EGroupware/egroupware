@@ -75,6 +75,13 @@
 					</td>
                 </tr>
                 <!-- END domain_selection -->
+	            <!-- BEGIN discovery_block -->
+	            <tr>
+		            <td>
+                        {discovery}
+		            </td>
+	            </tr>
+	            <!-- END discovery_block -->
                <!-- BEGIN change_password -->
                 <tr>
                     <td>

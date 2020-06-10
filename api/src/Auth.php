@@ -53,20 +53,38 @@ class Auth
 	/**
 	 * Constructor
 	 *
+	 * @param Backend $type =null default is type from session / auth or login, or if not set config
 	 * @throws Exception\AssertionFailed if backend is not an Auth\Backend
 	 */
-	function __construct()
+	function __construct($type=null)
 	{
-		$this->backend = self::backend();
+		$this->backend = self::backend($type);
+	}
+
+	/**
+	 * Get current backend
+	 *
+	 * @return string
+	 */
+	public function backendType()
+	{
+		return Cache::getSession(__CLASS__, 'backend');
 	}
 
 	/**
 	 * Instanciate a backend
 	 *
-	 * @param Backend $type =null
+	 * Type will be stored in session, to automatic use the same type eg. for conditional use of SAML.
+	 *
+	 * @param Backend $type =null default is type from session / auth or login, or if not set config
+	 * @return Auth\Backend|Auth\BackendSSO
 	 */
 	static function backend($type=null)
 	{
+		if (is_null($type))
+		{
+			$type = Cache::getSession(__CLASS__, 'backend') ?: null;
+		}
 		// do we have a hostname specific auth type set
 		if (is_null($type) && !empty($GLOBALS['egw_info']['server']['auth_type_host']) &&
 			Header\Http::host() === $GLOBALS['egw_info']['server']['auth_type_hostname'])
@@ -88,18 +106,49 @@ class Auth
 		{
 			throw new Exception\AssertionFailed("Auth backend class $backend_class is NO EGroupware\\Api\Auth\\Backend!");
 		}
+		Cache::setSession(__CLASS__, 'backend', $type);
+
 		return $backend;
 	}
 
 	/**
 	 * Attempt a SSO login
 	 *
+	 * A different then the default backend can be selected by setting request parameter auth to the backend or
+	 * setting "auth=$backend" to an arbitrary value eg. with a submit button named like that.
+	 * To secure this behavior the server config "${auth}_discovery" has to be set (to a non-empty value)!
+	 *
 	 * @return string sessionid on successful login or null
 	 * @throws Exception\AssertionFailed
 	 */
 	static function login()
 	{
-		$backend = self::backend();
+		if (!empty($_REQUEST['auth']))
+		{
+			$type = $_REQUEST['auth'];
+		}
+		elseif (($auth = array_filter($_REQUEST, function($key)
+			{
+				return substr($key, 0, 5) === 'auth=';
+			}, ARRAY_FILTER_USE_KEY)))
+		{
+			$type = substr(key($auth), 5);
+		}
+		// to not allow enabling all sort of auth plugins by simply calling login.php?auth=xyz we require the
+		// plugin to be enabled via "${auth}_discovery" server config
+		if (!empty($type) && empty($GLOBALS['egw_info']['server'][$type.'_discovery']))
+		{
+			$type = null;
+		}
+
+		// now we need a (not yet authenticated) session so SAML / auth source selected "survives" eg. the SAML redirects
+		if (!empty($type) && !Session::get_sessionid())
+		{
+			session_start();
+			Session::egw_setcookie(Session::EGW_SESSION_NAME, session_id());
+		}
+
+		$backend = self::backend($type ?? null);
 
 		return $backend instanceof  Auth\BackendSSO ? $backend->login() : null;
 	}
@@ -110,11 +159,9 @@ class Auth
 	 * @return null
 	 * @throws Exception\AssertionFailed
 	 */
-	static function logout()
+	function logout()
 	{
-		$backend = self::backend();
-
-		return $backend instanceof Auth\BackendSSO ? $backend->logout() : null;
+		return $this->backend instanceof Auth\BackendSSO ? $this->backend->logout() : null;
 	}
 
 	/**
@@ -125,11 +172,9 @@ class Auth
 	 *
 	 * @return array of needed keys in session
 	 */
-	static function needSession()
+	function needSession()
 	{
-		$backend = self::backend();
-
-		return method_exists($backend, 'needSession') ? $backend->needSession() : [];
+		return method_exists($this->backend, 'needSession') ? $this->backend->needSession() : [];
 	}
 
 	/**

@@ -478,9 +478,14 @@
     <td colspan="2"><b>{lang_If_using_SAML_2.0 / Shibboleth / SimpleSAMLphp}:</b></td>
    </tr>
 
+   <tr class="row_off">
+    <td>{lang_Label_to_display_as_option_on_login_page}:<br/>{lang_or_leave_empty_and_select_SAML_as_authentication_type_above_for_single_sign_on}</td>
+    <td><input name="newsettings[saml_discovery]" placeholder="{lang_University_Login}" value="{value_saml_discovery}" size="20" /></td>
+   </tr>
+
    <tr class="row_on">
-    <td>{lang_Identity_Provider}:</td>
-    <td><input name="newsettings[saml_idp]" placeholder="https://idp.rhrk.uni-kl.de/idp/shibboleth" value="{value_saml_idp}" size="64" /></td>
+    <td>{lang_Identity_Provider}:<br/>{lang_You_can_specify_multiple_IdP_on_separate_lines.}</td>
+    <td><textarea name="newsettings[saml_idp]" placeholder="https://idp.rhrk.uni-kl.de/idp/shibboleth" rows="3" cols="64">{value_saml_idp}</textarea></td>
    </tr>
 
    <tr class="row_off">
@@ -490,7 +495,6 @@
      <select name="newsettings[saml_metadata_refresh]">
       <option value="daily"{selected_saml_metadata_refresh_daily}>{lang_daily}</option>
       <option value="weekly"{selected_saml_metadata_refresh_weekly}>{lang_weekly}</option>
-      <option value="hourly"{selected_saml_metadata_refresh_hourly}>{lang_hourly}</option>
       <option value="no"{selected_saml_metadata_refresh_no}>{lang_not_automatic}</option>
       <option value="now"{selected_saml_metadata_refresh_now}>{lang_just_now}</option>
      </select>
@@ -536,7 +540,11 @@
    </tr>
 
    <tr class="row_off">
-    <td colspan="2">{lang_The_used_SimpleSAMLphp_allows_a_lot_more_configuration_/_different_authentication_types_via_its_config_files in} {value_files_dir}/saml</td>
+    <td colspan="2">
+      {lang_The_used_SimpleSAMLphp_allows_a_lot_more_configuration_/_different_authentication_types_via_its_config_files in} {value_files_dir}/saml<br/>
+      {lang_More_information}: <a target="_blank" href="https://github.com/EGroupware/egroupware/blob/master/api/src/Auth/Saml.php#L19">
+        https://github.com/EGroupware/egroupware/blob/master/api/src/Auth/Saml.php</a>
+    </td>
    </tr>
 
    <tr class="row_off">

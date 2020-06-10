@@ -57,6 +57,14 @@ egw_LAB.wait(function()
 			{ "svg": egw_webserverUrl+"/api/templates/default/images/login_discourse.svg", "url": "https://help.egroupware.org" },
 			{ "svg": egw_webserverUrl+"/api/templates/default/images/login_github.svg", "url": "https://github.com/EGroupware/egroupware" }
 		]);
+
+		// automatic submit of SAML IdP selection
+		jQuery('select.onChangeSubmit').on('change', function() {
+			if (this.value) {
+				this.form.method = 'GET';
+				this.form.submit();
+			}
+		});
 	});
 });
 

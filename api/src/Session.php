@@ -1444,9 +1444,11 @@ class Session
 		if (!$GLOBALS['egw_info']['user']['sessionid'] || $sessionid == $GLOBALS['egw_info']['user']['sessionid'])
 		{
 			// eg. SAML logout will fail, if there is no more session --> remove everything else
-			if (($needed = Auth::needSession()) && array_intersect($needed, array_keys($_SESSION)))
+			$auth = new Auth();
+			if (($needed = $auth->needSession()) && array_intersect($needed, array_keys($_SESSION)))
 			{
-				$_SESSION = array_intersect_key($_SESSION['SimpleSAMLphp_SESSION'], array_flip($needed));
+				$_SESSION = array_intersect_key($_SESSION, array_flip($needed));
+				Auth::backend($auth->backendType());	// backend is stored in session
 				return true;
 			}
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__." ********* about to call session_destroy!");

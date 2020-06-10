@@ -28,6 +28,13 @@
                         <input type="hidden" name="account_type" value="u" />
                     </td>
                 </tr>
+	            <!-- BEGIN discovery_block -->
+	            <tr>
+		            <td>
+                        {discovery}
+		            </td>
+	            </tr>
+	            <!-- END discovery_block -->
                 <tr>
                     <td>
 						<span class="field_icons username"></span>

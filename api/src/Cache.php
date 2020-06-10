@@ -402,7 +402,7 @@ class Cache
 	 */
 	static public function &getSession($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
-		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
+		if (!isset($_SESSION) || isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
 		{
 			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
 			return null;	// can no longer store something in the session, eg. because commit_session() was called

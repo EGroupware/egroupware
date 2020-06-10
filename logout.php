@@ -39,6 +39,8 @@ elseif(strpos($redirectTarget, '[?&]cd=') !== false)
 
 if ($verified)
 {
+	$auth = new Api\Auth();
+
 	// remove remember me cookie on explicit logout, unless it is a second factor
 	if ($GLOBALS['egw']->session->removeRememberMeTokenOnLogout())
 	{
@@ -53,7 +55,7 @@ Api\Session::egw_setcookie('kp3');
 Api\Session::egw_setcookie('domain');
 
 // SSO Logout (does not return for SSO systems)
-Api\Auth::logout();
+if (isset($auth)) $auth->logout();
 
 // $GLOBALS['egw']->redirect($redirectTarget);
 ?>

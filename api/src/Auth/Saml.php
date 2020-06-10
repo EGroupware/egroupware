@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware API - Authentication via SAML or everything supported by SimpleSAMLphp
+ * EGroupware API - Authentication via SAML, Shibboleth or everything supported by SimpleSAMLphp
  *
  * @link https://www.egroupware.org
  * @link https://simplesamlphp.org/docs/stable/
@@ -16,59 +16,46 @@ use SimpleSAML;
 use EGroupware\Api\Exception;
 
 /**
- * Authentication based on SAML or everything supported by SimpleSAMLphp
+ * Authentication based on SAML, Shibboleth or everything supported by SimpleSAMLphp
  *
  * SimpleSAMLphp is installed together with EGroupware and a default configuration is created in EGroupware
- * files subdirectory "saml", once "Saml" is set as authentication method in setup and eg. the login page is loaded.
+ * files subdirectory "saml" eg. when you first store it's configuration in Setup > Configuration > SAML/Shibboleth
  *
- * It will NOT work, before you configure at least one IdP (Identity Provider) for the default-sp (Service Provider) in saml/authsourcres.php:
+ * Storing setup configuration modifies the following files:
+ * a) $files_dir/saml/config.php
+ * b) $files_dir/saml/authsources.php (only "default-sp" is used currently)
+ * c) $files_dir/saml/metadata/*
+ * d) $files_dir/saml/cert/*
+ * Modification is only on certain values, everything else can be edited to suit your needs.
  *
- *	// An authentication source which can authenticate against both SAML 2.0
- *	// and Shibboleth 1.3 IdPs.
- *	'default-sp' => [
- *		'saml:SP',
+ * Initially also a key-pair is generated as $files_dir/saml/cert/saml.{pem,crt}.
+ * If you want or have to use a different certificate, best replace these with your files (they are referenced multiple times!).
+ * They must stay in the files directory and can NOT be symlinks to eg. /etc, as only files dir is mounted into the container!
  *
- *		// The entity ID of this SP.
- *		// Can be NULL/unset, in which case an entity ID is generated based on the metadata URL.
- *		'entityID' => null,
+ * Authentication / configuration can be tested independent of EGroupware by using https://example.org/egroupware/saml/
+ * with the "admin" user and password stored in cleartext in $files_dir/saml/config.php under 'auth.adminpassword'.
  *
- *		// The entity ID of the IdP this SP should contact.
- *		// Can be NULL/unset, in which case the user will be shown a list of available IdPs.
- *		'idp' => 'https://samltest.id/saml/idp',
- *
- * And the IdP's metadata in saml/metadata/saml20-idp-remote.php
- *
- *		$metadata['https://samltest.id/saml/idp'] = [
- *			'SingleSignOnService'  => 'https://samltest.id/idp/profile/SAML2/Redirect/SSO',
- *			'SingleLogoutService'  => 'https://samltest.id/idp/profile/Logout',
- *			'certificate'          => 'samltest.id.pem',
- *		];
- *
- * https://samltest.id/ is just a SAML / Shibboleth test side allowing AFTER uploading your metadata to test with a couple of static test-accounts.
- *
- * The metadata can be downloaded by via https://example.org/egroupware/saml/ under Federation, it also allows to test the authentication.
- * The required (random) Admin password can be found in /var/lib/egrouwpare/default/saml/config.php searching for auth.adminpassword.
- *
- * Alternativly you can also modify the following metadata example by replacing https://example.org/ with your domain:
- *
- * <?xml version="1.0"?>
- * <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://example.org/egroupware/saml/module.php/saml/sp/metadata.php/default-sp">
- * <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol">
- * <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://example.org/egroupware/saml/module.php/saml/sp/saml2-logout.php/default-sp"/>
- * <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://example.org/egroupware/saml/module.php/saml/sp/saml2-acs.php/default-sp" index="0"/>
- * <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:browser-post" Location="https://example.org/egroupware/saml/module.php/saml/sp/saml1-acs.php/default-sp" index="1"/>
- * <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://example.org/egroupware/saml/module.php/saml/sp/saml2-acs.php/default-sp" index="2"/>
- * <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:artifact-01" Location="https://example.org/egroupware/saml/module.php/saml/sp/saml1-acs.php/default-sp/artifact" index="3"/>
- * </md:SPSSODescriptor>
- * <md:ContactPerson contactType="technical">
- * <md:GivenName>Admin</md:GivenName>
- * <md:SurName>Name</md:SurName>
- * <md:EmailAddress>mailto:admin@example.org</md:EmailAddress>
- * </md:ContactPerson>
- * </md:EntityDescriptor>
+ * There are basically three possible scenarios currently supported:
+ * a) a single IdP and SAML configured as authentication method
+ * --> gives full SSO (login page is never displayed, it directly redirects to the IdP)
+ * b) one or multiple IdP, a discovery label and an other authentication type eg. SQL configured
+ * --> uses the login page for local accounts plus a button or selectbox (depending on number of IdPs) to start SAML login
+ * c) multiple IdP and SAML configured as authentication method
+ * --> SimpleSAML discovery/selection page with a checkbox to remember the selection (SSO after first selection)
  */
 class Saml implements BackendSSO
 {
+	/**
+	 * Which entry in authsources.php to use.
+	 * 
+	 * Setup > configuration always modifies "default-sp"
+	 * 
+	 * A different SP can be configured via header.inc.php by adding at the end:
+	 *
+	 * EGroupware\Api\Auth\Saml::$auth_source = "other-sp";
+	 */
+	static public $auth_source = 'default-sp';
+
 	/**
 	 * Constructor
 	 */
@@ -79,7 +66,7 @@ class Saml implements BackendSSO
 	}
 
 	/**
-	 * authentication against SAML
+	 * Authentication against SAML
 	 *
 	 * @param string $username username of account to authenticate
 	 * @param string $passwd corresponding password
@@ -89,7 +76,7 @@ class Saml implements BackendSSO
 	function authenticate($username, $passwd, $passwd_type='text')
 	{
 		// login (redirects to IdP)
-		$as = new SimpleSAML\Auth\Simple('default-sp');
+		$as = new SimpleSAML\Auth\Simple(self::$auth_source);
 		$as->requireAuth();
 
 		return true;
@@ -125,12 +112,13 @@ class Saml implements BackendSSO
 	function login()
 	{
 		// login (redirects to IdP)
-		$as = new SimpleSAML\Auth\Simple('default-sp');
-		$as->requireAuth();
+		$as = new SimpleSAML\Auth\Simple(self::$auth_source);
+		$as->requireAuth(preg_match('|^https://|', $_REQUEST['auth=saml']) ?
+			['saml:idp' => $_REQUEST['auth=saml']] : []);
 
-		// cleanup session for EGroupware
+		/* cleanup session for EGroupware: currently NOT used as we share the session with SimpleSAMLphp
 		$session = SimpleSAML\Session::getSessionFromRequest();
-		$session->cleanup();
+		$session->cleanup();*/
 
 		// get attributes for (automatic) account creation
 		$attrs = $as->getAttributes();
@@ -159,8 +147,8 @@ class Saml implements BackendSSO
 	 */
 	function logout()
 	{
-		$as = new SimpleSAML\Auth\Simple('default-sp');
-		$as->logout();
+		$as = new SimpleSAML\Auth\Simple(self::$auth_source);
+		if ($as->isAuthenticated()) $as->logout();
 	}
 
 	/**
@@ -173,7 +161,48 @@ class Saml implements BackendSSO
 	 */
 	function needSession()
 	{
-		return ['SimpleSAMLphp_SESSION'];
+		return ['SimpleSAMLphp_SESSION', Api\Session::EGW_APPSESSION_VAR];	// Auth stores backend via Cache::setSession()
+	}
+
+	const IDP_DISPLAY_NAME = 'OrganizationDisplayName';
+
+	/**
+	 * Display a IdP selection / discovery
+	 *
+	 * Will be displayed if IdP(s) are added in setup and a discovery label is specified.
+	 *
+	 * @return string|null html to display in login page or null to disable the selection
+	 */
+	static public function discovery()
+	{
+		if (empty($GLOBALS['egw_info']['server']['saml_discovery']) ||
+			!($metadata = self::metadata()))
+		{
+			return null;
+		}
+		//error_log(__METHOD__."() metadata=".json_encode($metadata));
+		$lang = Api\Translation::$userlang;
+		$select = ['' => $GLOBALS['egw_info']['server']['saml_discovery']];
+		foreach($metadata as $idp => $data)
+		{
+			$select[$idp] = $data[self::IDP_DISPLAY_NAME][$lang] ?: $data[self::IDP_DISPLAY_NAME]['en'];
+		}
+		return count($metadata) > 1 ?
+			Api\Html::select('auth=saml', '', $select, true, 'class="onChangeSubmit"') :
+			Api\Html::input('auth=saml', $GLOBALS['egw_info']['server']['saml_discovery'], 'submit', 'formmethod="get"');
+	}
+
+	/**
+	 * @return array IdP => metadata pairs
+	 */
+	static public function metadata($files_dir=null)
+	{
+		$metadata = [];
+		if (file_exists($file = ($files_dir ?: $GLOBALS['egw_info']['server']['files_dir']).'/saml/metadata/saml20-idp-remote.php'))
+		{
+			include $file;
+		}
+		return $metadata;
 	}
 
 	const ASYNC_JOB_ID = 'saml_metadata_refresh';
@@ -190,11 +219,7 @@ class Saml implements BackendSSO
 	{
 		$config =& $location['newsettings'];
 
-		/*error_log(__METHOD__."() ".json_encode(array_filter($config, function($value, $key) {
-			return substr($key, 0, 5) === 'saml_' || $key === 'auth_type';
-		}, ARRAY_FILTER_USE_BOTH), JSON_UNESCAPED_SLASHES));*/
-
-		if (empty($config['saml_idp'])) return;	// nothing to do, if not idp defined
+		if (empty($config['saml_idp'])) return;	// nothing to do, if no idp defined
 
 		if (file_exists($config['files_dir'].'/saml/config.php'))
 		{
@@ -204,7 +229,6 @@ class Saml implements BackendSSO
 
 		// install or remove async job to refresh metadata
 		static $freq2times = [
-			'hourly' => ['min' => 4],	// hourly at minute 4
 			'daily'  => ['min' => 4, 'hour' => 4],	// daily at 4:04am
 			'weekly' => ['min' => 4, 'hour' => 4, 'dow' => 5],	// Saturdays as 4:04am
 		];
@@ -219,10 +243,35 @@ class Saml implements BackendSSO
 			$async->cancel_timer(self::ASYNC_JOB_ID);
 		}
 
+		// only refresh metadata if we have to, or request by user
 		if ($config['saml_metadata_refresh'] !== 'no')
 		{
-			self::refreshMetadata($config);
+			$metadata = self::metadata($config['files_dir']);
+			$idps = self::splitIdP($config['saml_idp']);
+			foreach($idps as $idp)
+			{
+				if (!isset($metadata[$idp]))
+				{
+					$metadata = [];
+					break;
+				}
+			}
+			if (count($metadata) !== count($idps) || $config['saml_metadata_refresh'] === 'now')
+			{
+				self::refreshMetadata($config);
+			}
 		}
+	}
+
+	/**
+	 * Split multiple IdP
+	 *
+	 * @param string $config
+	 * @return string[]
+	 */
+	private static function splitIdP($config)
+	{
+		return preg_split('/[\n\r ]+/', trim($config)) ?: [];
 	}
 
 	/**
@@ -241,7 +290,8 @@ class Saml implements BackendSSO
 
 		$source = [
 			'src' => $config['saml_metadata'],
-			'whitelist' => [$config['saml_idp']],	// only ready our idp, the whole thing can be huge
+			// only read/configure our idp(s), the whole thing can be huge
+			'whitelist' => self::splitIdP($config['saml_idp']),
 		];
 		if (!empty($config['saml_certificate']))
 		{
@@ -271,7 +321,15 @@ class Saml implements BackendSSO
 		$GLOBALS['egw_info']['server']['usecookies'] = true;
 		$config['baseurlpath'] = Api\Framework::getUrl(Api\Egw::link('/saml/'));
 		$config['username_oid'] = [self::usernameOid($config)];
-
+		// if multiple IdP's are configured, do NOT specify one to let user select
+		if (count(self::splitIdP($config['saml_idp'])) > 1)
+		{
+			unset($config['saml_idp']);
+		}
+		else
+		{
+			$config['saml_idp'] = trim($config['saml_idp']);
+		}
 		// update config.php and default-sp in authsources.php
 		foreach([
 			'authsources.php' => [
@@ -445,12 +503,18 @@ class Saml implements BackendSSO
 
 					case 'authsources.php':
 						$replacements = [
-							"'idp' => null," => "'idp' => ".self::quote($config['saml_idp']).',',
+							"'idp' => null," => "'idp' => ".self::quote(
+								count(self::splitIdP($config['saml_idp'])) <= 1 ? trim($config['saml_idp']) : null).',',
 							"'discoURL' => null," => "'discoURL' => null,\n\n".
 								// add our private and public keys
 								"\t'privatekey' => 'saml.pem',\n\n".
 								"\t// to include certificate in metadata\n".
 								"\t'certificate' => 'saml.crt',\n\n".
+								"\t// new certificates for rotation: add new, wait for IdP sync, swap old and new, wait, comment again\n".
+								"\t//'new_privatekey' => 'new-saml.pem',\n".
+								"\t//'new_certificate' => 'new-saml.crt',\n\n".
+								"\t// logout is NOT signed by default, but signature is required from the uni-kl.de IdP for logout\n".
+								"\t'sign.logout' => true,\n\n".
 								"\t'name' => [\n".
 								"\t\t'en' => ".self::quote($config['saml_sp'] ?: 'EGroupware').",\n".
 								"\t],\n\n".
