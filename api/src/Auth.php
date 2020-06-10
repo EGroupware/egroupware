@@ -130,7 +130,7 @@ class Auth
 		elseif (($auth = array_filter($_REQUEST, function($key)
 			{
 				return substr($key, 0, 5) === 'auth=';
-			}, ARRAY_FILTER_USE_KEY)))
+			}, ARRAY_FILTER_USE_KEY)) && !empty(current($auth)))
 		{
 			$type = substr(key($auth), 5);
 		}
