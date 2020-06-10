@@ -934,10 +934,6 @@ class et2_vfsUpload extends et2_file
 
 	public static readonly legacyOptions : string[] = ["mime"];
 
-	asyncOptions : {target : any} = {
-		target: egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_upload")
-	};
-
 	list : JQuery = null;
 
 	/**
@@ -967,10 +963,20 @@ class et2_vfsUpload extends et2_file
 	}
 
 	/**
+	 * Get any specific async upload options
+	 */
+	getAsyncOptions(self)
+	{
+		return jQuery.extend({},super.getAsyncOptions(self),{
+			target: egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_upload")
+		});
+	}
+
+	/**
 	 * If there is a file / files in the specified location, display them
 	 * Value is the information for the file[s] in the specified location.
 	 *
-	 * @param {Object[]} _value
+	 * @param {Object{}} _value
 	 */
 	set_value(_value) {
 		// Remove previous
@@ -984,9 +990,9 @@ class et2_vfsUpload extends et2_file
 		this.list.empty();
 
 		// Set new
-		if(typeof _value == 'object' && _value && _value.length)
+		if(typeof _value == 'object' && _value && Object.keys(_value).length)
 		{
-			for(var i = 0; i < _value.length; i++)
+			for(let i in _value)
 			{
 				this._addFile(_value[i]);
 			}

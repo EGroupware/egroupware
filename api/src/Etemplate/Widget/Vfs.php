@@ -346,7 +346,7 @@ class Vfs extends File
 				{
 					if(Api\Vfs::file_exists(self::get_vfs_path($id) . $relpath)) {}
 				}*/
-				parent::validate($cname, $content, $validated);
+				parent::validate($cname, $expand, $content, $validated);
 				break;
 		}
 		if (true) $valid = $value;

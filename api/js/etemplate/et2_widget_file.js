@@ -57,8 +57,8 @@ var et2_file = /** @class */ (function (_super) {
         _this.span = null;
         // Contains all submit buttons need to be disabled during upload process
         _this.disabled_buttons = jQuery("input[type='submit'], button");
-        if (!_this.options.value)
-            _this.options.value = {};
+        // Make sure it's an object, not an array, or values get lost when sent to server
+        _this.options.value = jQuery.extend({}, _this.options.value);
         if (!_this.options.id) {
             console.warn("File widget needs an ID.  Used 'file_widget'.");
             _this.options.id = "file_widget";
@@ -75,26 +75,7 @@ var et2_file = /** @class */ (function (_super) {
         // Set up the URL to have the request ID & the widget ID
         var instance = _this.getInstanceManager();
         var self = _this;
-        _this.asyncOptions = jQuery.extend({
-            // Callbacks
-            onStart: function (event, file_count) {
-                return self.onStart(event, file_count);
-            },
-            onFinish: function (event, file_count) {
-                self.onFinish.apply(self, [event, file_count]);
-            },
-            onStartOne: function (event, file_name, index, file_count) {
-            },
-            onFinishOne: function (event, response, name, number, total) { return self.finishUpload(event, response, name, number, total); },
-            onProgress: function (event, progress, name, number, total) { return self.onProgress(event, progress, name, number, total); },
-            onError: function (event, name, error) { return self.onError(event, name, error); },
-            beforeSend: function (form) { return self.beforeSend(form); },
-            chunkSize: _this.options.chunk_size || 1024 * 1024,
-            target: egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\File::ajax_upload"),
-            query: function (file) { return self.beforeSend(file); },
-            // Disable checking for already uploaded chunks
-            testChunks: false
-        }, _this.asyncOptions);
+        _this.asyncOptions = jQuery.extend({}, _this.getAsyncOptions(_this));
         _this.asyncOptions.fieldName = _this.options.id;
         _this.createInputWidget();
         _this.set_readonly(_this.options.readonly);
@@ -165,6 +146,31 @@ var et2_file = /** @class */ (function (_super) {
             this.input.attr("multiple", "multiple");
         }
         this.setDOMNode(this.node[0]);
+    };
+    /**
+     * Get any specific async upload options
+     */
+    et2_file.prototype.getAsyncOptions = function (self) {
+        return {
+            // Callbacks
+            onStart: function (event, file_count) {
+                return self.onStart(event, file_count);
+            },
+            onFinish: function (event, file_count) {
+                self.onFinish.apply(self, [event, file_count]);
+            },
+            onStartOne: function (event, file_name, index, file_count) {
+            },
+            onFinishOne: function (event, response, name, number, total) { return self.finishUpload(event, response, name, number, total); },
+            onProgress: function (event, progress, name, number, total) { return self.onProgress(event, progress, name, number, total); },
+            onError: function (event, name, error) { return self.onError(event, name, error); },
+            beforeSend: function (form) { return self.beforeSend(form); },
+            chunkSize: this.options.chunk_size || 1024 * 1024,
+            target: egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\File::ajax_upload"),
+            query: function (file) { return self.beforeSend(file); },
+            // Disable checking for already uploaded chunks
+            testChunks: false
+        };
     };
     /**
      * Set a widget or DOM node as a HTML5 file drop target

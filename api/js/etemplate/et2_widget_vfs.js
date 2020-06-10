@@ -828,9 +828,6 @@ var et2_vfsUpload = /** @class */ (function (_super) {
         var _this = 
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_vfsUpload._attributes, _child || {})) || this;
-        _this.asyncOptions = {
-            target: egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_upload")
-        };
         _this.list = null;
         jQuery(_this.node).addClass("et2_vfs");
         if (!_this.options.path) {
@@ -844,10 +841,18 @@ var et2_vfsUpload = /** @class */ (function (_super) {
         return _this;
     }
     /**
+     * Get any specific async upload options
+     */
+    et2_vfsUpload.prototype.getAsyncOptions = function (self) {
+        return jQuery.extend({}, _super.prototype.getAsyncOptions.call(this, self), {
+            target: egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_upload")
+        });
+    };
+    /**
      * If there is a file / files in the specified location, display them
      * Value is the information for the file[s] in the specified location.
      *
-     * @param {Object[]} _value
+     * @param {Object{}} _value
      */
     et2_vfsUpload.prototype.set_value = function (_value) {
         // Remove previous
@@ -859,8 +864,8 @@ var et2_vfsUpload = /** @class */ (function (_super) {
         this.progress.empty();
         this.list.empty();
         // Set new
-        if (typeof _value == 'object' && _value && _value.length) {
-            for (var i = 0; i < _value.length; i++) {
+        if (typeof _value == 'object' && _value && Object.keys(_value).length) {
+            for (var i in _value) {
                 this._addFile(_value[i]);
             }
         }
