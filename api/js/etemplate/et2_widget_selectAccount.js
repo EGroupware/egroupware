@@ -624,14 +624,17 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
      * Constructor
      */
     function et2_selectAccount_ro(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_selectAccount_ro._attributes, _child || {})) || this;
+        var _this = this;
         /**
-        Resolve some circular dependency problems here
-        selectAccount extends link, link is in a file that needs select,
-        select has menulist wrapper, which needs to know about selectAccount before it allows it
-        */
+       Resolve some circular dependency problems here
+       selectAccount extends link, link is in a file that needs select,
+       select has menulist wrapper, which needs to know about selectAccount before it allows it
+       */
         if (_parent.supportedWidgetClasses.indexOf(et2_selectAccount_ro) < 0) {
             _parent.supportedWidgetClasses.push(et2_selectAccount_ro);
+        }
+        _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_selectAccount_ro._attributes, _child || {})) || this;
+        if (_parent.supportedWidgetClasses.indexOf(et2_selectAccount_ro) > 0) {
             _parent.addChild(_this);
         }
         // Legacy options could have row count or empty label in first slot

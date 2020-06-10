@@ -773,9 +773,7 @@ export class et2_selectAccount_ro extends et2_link_string
 	 */
 	 constructor(_parent : et2_widget, _attrs? : WidgetConfig, _child? : object)
 	 {
-		 super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_selectAccount_ro._attributes, _child || {}));
-
-		/**
+		 /**
 		Resolve some circular dependency problems here
 		selectAccount extends link, link is in a file that needs select,
 		select has menulist wrapper, which needs to know about selectAccount before it allows it
@@ -783,6 +781,13 @@ export class et2_selectAccount_ro extends et2_link_string
 		if(_parent.supportedWidgetClasses.indexOf(et2_selectAccount_ro) < 0)
 		{
 			_parent.supportedWidgetClasses.push(et2_selectAccount_ro);
+		}
+
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_selectAccount_ro._attributes, _child || {}));
+
+
+		if(_parent.supportedWidgetClasses.indexOf(et2_selectAccount_ro) > 0)
+		{
 			_parent.addChild(this);
 		}
 
