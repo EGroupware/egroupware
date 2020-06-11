@@ -654,7 +654,7 @@ class Accounts
 				}
 
 				// Include previous contact information to avoid blank history rows
-				$contact = array_merge((array)$GLOBALS['egw']->contacts->read($data['person_id']), array(
+				$contact = array_merge((array)$GLOBALS['egw']->contacts->read($data['person_id'], true), array(
 						'n_given' => $data['account_firstname'],
 						'n_family' => $data['account_lastname'],
 						'email' => $data['account_email'],

@@ -76,10 +76,11 @@ class Auth
 	 *
 	 * Type will be stored in session, to automatic use the same type eg. for conditional use of SAML.
 	 *
-	 * @param Backend $type =null default is type from session / auth or login, or if not set config
+	 * @param string $type =null default is type from session / auth or login, or if not set config
+	 * @param bool $save_in_session default true, false: do not store backend
 	 * @return Auth\Backend|Auth\BackendSSO
 	 */
-	static function backend($type=null)
+	static function backend($type=null, $save_in_session=true)
 	{
 		if (is_null($type))
 		{
@@ -106,7 +107,7 @@ class Auth
 		{
 			throw new Exception\AssertionFailed("Auth backend class $backend_class is NO EGroupware\\Api\Auth\\Backend!");
 		}
-		Cache::setSession(__CLASS__, 'backend', $type);
+		if ($save_in_session) Cache::setSession(__CLASS__, 'backend', $type);
 
 		return $backend;
 	}

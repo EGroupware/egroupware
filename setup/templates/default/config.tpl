@@ -521,6 +521,26 @@
     </td>
    </tr>
 
+   <tr class="row_on">
+    <td>{lang_Allow_SAML_logins_to_join_existing_accounts}:<br/>({lang_Requires_SAML_optional_on_login_page_and_user_to_specify_username_and_password})</td>
+    <td>
+     <select name="newsettings[saml_join]">
+      <option value="">{lang_No}</option>
+      <option value="usernameemail"{selected_saml_join_usernameemail}>{lang_Replace_username_and_email}</option>
+      <option value="username"{selected_saml_join_username}>{lang_Replace_username_and_keep_email}</option>
+      <option value="description"{selected_saml_join_description}>{lang_Use_account_description_to_store_SAML_username}</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_Match_SAML_usernames_to_existing_ones_(use_strings_or_regular_expression)}:</td>
+    <td>
+      <input name="newsettings[saml_replace]" placeholder="{lang_replace}: '@uni-kl.de' {lang_or} '/@(uni-kl\.de)$/'" value="{value_saml_replace}" size="40"/>
+      <input name="newsettings[saml_replace_with]" placeholder="{lang_with}: '@rhrk.uni-kl.de' {lang_or} '@rhrk.$1'" value="{value_saml_replace_with}" size="35"/>
+   </td>
+   </tr>
+
    <tr class="row_on" height="25">
     <td>{lang_Some_information_for_the_own_Service_Provider_metadata}:</td>
     <td><a href="{value_webserver_url}/saml/module.php/saml/sp/metadata.php/default-sp">{lang_Metadata_URL}</a></td>

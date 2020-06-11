@@ -127,19 +127,151 @@ class Saml implements BackendSSO
 		// check if user already exists
 		if (!$GLOBALS['egw']->accounts->name2id($username, 'account_lid', 'u'))
 		{
-			// fail if auto-creation of authenticated users is NOT configured
-			if (empty($GLOBALS['egw_info']['server']['auto_create_acct']))
+			if (($existing = $this->checkJoin($_GET['login'], $_GET['passwd'], $username)) ||
+				($existing = $this->checkReplaceUsername($username)))
 			{
-				return null;
+				$username = $this->updateJoinedAccount($existing, $attrs);
 			}
-			$GLOBALS['auto_create_acct'] = [
-				'firstname' => $attrs[self::firstName][0],
-				'lastname' => $attrs[self::lastName][0],
-				'email' => $attrs[self::emailAddress][0],
-			];
+			else
+			{
+				// fail if auto-creation of authenticated users is NOT configured
+				if (empty($GLOBALS['egw_info']['server']['auto_create_acct']))
+				{
+					return null;
+				}
+				$GLOBALS['auto_create_acct'] = [
+					'firstname' => $attrs[self::firstName][0],
+					'lastname' => $attrs[self::lastName][0],
+					'email' => $attrs[self::emailAddress][0],
+				];
+			}
 		}
 		// return user session
 		return $GLOBALS['egw']->session->create($username, null, null, false, false);
+	}
+
+	/**
+	 * Check if joining a SAML account with an existing accounts is enabled and user specified correct credentials
+	 *
+	 * @param string $login login-name entered by user
+	 * @param string $password password entered by user
+	 * @param string $username SAML username
+	 * @return string|null|false existing user-name to join or
+	 *  null if no joining configured or missing credentials or user does not exist or
+	 * 	false if authentication with given credentials failed
+	 */
+	private function checkJoin($login, $password, $username)
+	{
+		// check SAML username is stored in account_description and we have a matching account
+		if ($GLOBALS['egw_info']['server']['saml_join'] === 'description' &&
+			($account_id = $GLOBALS['egw']->accounts->name2id($username, 'account_description', 'u')))
+		{
+			return Api\Accounts::id2name($account_id);
+		}
+
+		// check join configuration and if user specified credentials
+		if (empty($GLOBALS['egw_info']['server']['saml_join']) || empty($login) || empty($password))
+		{
+			return null;
+		}
+
+		$backend = Api\Auth::backend($GLOBALS['egw_info']['server']['auth_type'] ?: 'sql', false);
+		if (!$backend->authenticate($login, $password))
+		{
+			return false;
+		}
+		return $login;
+	}
+
+	/**
+	 * Update joined account, if configured
+	 *
+	 * @param $account_lid existing account_lid
+	 * @param array $attrs saml attributes incl. SAML username
+	 * @return string username to use
+	 */
+	private function updateJoinedAccount($account_lid, array $attrs)
+	{
+		if (empty($GLOBALS['egw_info']['server']['saml_join']))
+		{
+			return $account_lid;
+		}
+		$account = $update = $GLOBALS['egw']->accounts->read($account_lid);
+
+		switch($GLOBALS['egw_info']['server']['saml_join'])
+		{
+			case 'usernameemail':
+				if (!empty($attrs[self::emailAddress]))
+				{
+					unset($update['account_email']);	// force email update
+				}
+			// fall through
+			case 'username':
+				$update['account_lid'] = $attrs[self::usernameOid()][0];
+				break;
+
+			case 'description':
+				$update['account_description'] = $attrs[self::usernameOid()][0];
+				break;
+		}
+		// update other attributes
+		foreach([
+			'account_email' => self::emailAddress,
+			'account_firstname' => self::firstName,
+			'account_lastname' => self::lastName,
+		] as $name => $oid)
+		{
+			if (!empty($attrs[$oid]) && ($name !== 'account_email' || empty($update['account_email'])))
+			{
+				$update[$name] = $attrs[$oid][0];
+			}
+		}
+		// update account if necessary
+		if ($account != $update)
+		{
+			// notify user about successful update of existing account and evtl. updated account-name
+			if ($GLOBALS['egw']->accounts->save($update))
+			{
+				$msg = lang('Your account has been updated with new data from your identity provider.');
+				if ($account['account_lid'] !== $update['account_lid'])
+				{
+					$msg .= "\n".lang("Please remember to use '%1' as username for local login's from now on!", $update['account_lid']);
+					// rename home directory
+					Api\Vfs::$is_root = true;
+					Api\Vfs::rename('/home/'.$account['account_lid'], '/home/'.$update['account_lid']);
+					Api\Vfs::$is_root = false;
+				}
+				Api\Framework::message($msg, 'notice');
+			}
+			else
+			{
+				Api\Framework::message(lang('Updating your account with new data from your identity provider failed!'), 'error');
+			}
+		}
+		return $update['account_lid'];
+	}
+
+	/**
+	 * Check if some replacement is configured to match SAML usernames to existing ones
+	 *
+	 * @param string $username SAML username
+	 * @return string|null existing username or null if not found
+	 */
+	private function checkReplaceUsername($username)
+	{
+		if (empty($GLOBALS['egw_info']['server']['saml_replace']))
+		{
+			return null;
+		}
+		$replace = $GLOBALS['egw_info']['server']['saml_replace'];
+		$with = $GLOBALS['egw_info']['server']['saml_replace_with'] ?? '';
+		$replaced = $replace[0] === '/' ? preg_replace($replaced, $with, $username) : str_replace($replace, $with, $username);
+
+		if (empty($replaced) || !$GLOBALS['egw']->accounts->name2id($replaced, 'account_lid', 'u'))
+		{
+			return null;
+		}
+		return $replaced;
 	}
 
 	/**

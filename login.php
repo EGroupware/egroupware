@@ -51,6 +51,22 @@ if(isset($GLOBALS['sitemgr_info']) && $GLOBALS['egw_info']['user']['userid'] == 
 	}
 }
 
+$forward = isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward'];
+if (!$forward)
+{
+	$extra_vars['cd'] = 'yes';
+	$forward = '/index.php';
+}
+else
+{
+	list($forward,$extra_vars) = explode('?',$forward,2);
+	// only append cd=yes, if there is not already a cd value!
+	if (strpos($extra_vars, 'cd=') === false)
+	{
+		$extra_vars .= ($extra_vars ? '&' : '').'cd=yes';
+	}
+}
+
 // SSO login: CAS, SAML, ...
 if (($GLOBALS['sessionid'] = Api\Auth::login()))
 {
@@ -240,22 +256,6 @@ else
 
 			// check if new translations are available
 			Api\Translation::check_invalidate_cache();
-
-			$forward = isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward'];
-			if (!$forward)
-			{
-				$extra_vars['cd'] = 'yes';
-				$forward = '/index.php';
-			}
-			else
-			{
-				list($forward,$extra_vars) = explode('?',$forward,2);
-				// only append cd=yes, if there is not already a cd value!
-				if (strpos($extra_vars, 'cd=') === false)
-				{
-					$extra_vars .= ($extra_vars ? '&' : '').'cd=yes';
-				}
-			}
 
 			if(strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']) === false) {
 				// login requuest does not come from login.php
