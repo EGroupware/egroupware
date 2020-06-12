@@ -6,13 +6,16 @@
 24 hour	preferences	fr	24 heures
 a template defines the layout of egroupware and it contains icons for each application.	preferences	fr	Un modèle définit la disposition d'EGroupware et contient les icônes pour chaque application.
 a theme defines the colors and fonts used by the template.	preferences	fr	Un thème définit les couleurs et polices utilisées par le modèle.
+access token revoked.	preferences	fr	Jeton d'accès révoqué.
 acl grants have been updated	preferences	fr	Les droits ACL ont été mis à jour
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	Une liste dans EGroupware affichera ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite empêche une vue d'ensemble.
+applications list scroll area	preferences	fr	Zone de scroll pour la liste des applications
 are you sure you want to delete this category ?	preferences	fr	Etes-vous sûr de vouloir effacer cette catégorie ?
 audio effect	preferences	fr	Effet audio
 audio effect enables|disables sound effects used in the theme	preferences	fr	Effets Audio : active|désactive les effets sonores utilisés dans le thème
 automatically start with this font	preferences	fr	Démarrer automatiquement avec cette police
 automatically start with this font size	preferences	fr	Démarrer automatiquement avec cette taille de police
+automatically start with this format block. custom paragraph adds less line space between new lines.	preferences	fr	Démarrer automatiquement avec ce format de bloc.<br/><b>Paragraphe personnalisé</b> ajoute moins d'espace entre les nouvelles lignes.
 br	preferences	fr	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fr	Change un mot de passe en fournissant l'ancien et le nouveau mot de passe. Retourne TRUE en cas de réussite, FALSE en cas d'échec.
 change password	preferences	fr	Changer votre mot de passe
@@ -21,11 +24,14 @@ change your profile	preferences	fr	Changer votre profil
 change your settings	preferences	fr	Changer vos paramètres
 charset for the csv export	addressbook	fr	Jeu de caractères pour l'exportation CSV
 charset for the csv export/import	preferences	fr	Jeu de caractères
+click to install	preferences	fr	cliquer pour installer
 click to select a color	preferences	fr	Cliquez pour sélectionner une couleur
+code is invalid	preferences	fr	Code invalide
 color	preferences	fr	Couleur
 country	preferences	fr	Pays
-currency	preferences	fr	Devise
+current password	preferences	fr	Mot de passe actuel
 custom login box color, defaults to above color darkened	preferences	fr	Couleur de la boîte de connexion personnalisée, par défaut, plus sombre
+custom paragraph	preferences	fr	Paragraphe personnalisé
 custom sidebar menu active color, defaults to above color darkened	preferences	fr	Couleur de la sélection active sur le menu latéral, par défaut, plus sombre
 dark moono theme	preferences	fr	Thème Dark Moono
 data exchange settings	preferences	fr	Paramètres d'échange de données
@@ -34,35 +40,48 @@ default	preferences	fr	Défaut
 default application	preferences	fr	Application par défaut
 default font	preferences	fr	Police par défaut
 default font size	preferences	fr	Taille de police par défaut
+default format block	preferences	fr	Format de block par défaut
 default preferences	preferences	fr	Préférences par défaut
 delete categories	preferences	fr	Supprimer les catégories
 deny following groups access to acl (grant access)	admin	fr	Refuser aux groupes suivants l'accès aux ACL (autoriser l'accès)
 deny following groups access to edit categories	admin	fr	Refuser aux groupes suivants de modifier les catégories
 deny following groups access to preferences	admin	fr	Refuser aux groupes suivants l'accès aux préférences
+deny following groups access to security popup	admin	fr	Refuser aux groupes suivants l'accès à la fenêtre de sécurité
 description can not exceed 255 characters in length !	preferences	fr	La description ne peut pas faire plus de 255 caractères !
 disable	preferences	fr	Désactiver
+disable two factor auth	preferences	fr	Désactiver l'authentification à double facteur
+disabling allows to again log in without a second factor.	preferences	fr	Désactiver permet de se connecter à nouveau sans le second facteur.
 display thumbnails for linked images	preferences	fr	Afficher des miniatures pour les images liées
 div	preferences	fr	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	fr	Préférez-vous un format d'heure sur 24h, ou un format sur 12h avec indication am/pm.
 edit custom fields	preferences	fr	Modifier les champs personnalisés
 enable	preferences	fr	Activer
 enable drag and drop functionality (experimental)	preferences	fr	Drag & drop
+enable menubar	preferences	fr	Activer la barre de menu
 enable selectbox dropdown resizing for ie (experimental)	preferences	fr	Sélectionner l'ajustement du menu déroulant
+enable/disable menubar from top of the editor.	preferences	fr	Activer/désactiver la barre d'outils du haut dans l'éditeur.
+enabled features in toolbar	preferences	fr	Fonctionnalités activées dans la barre d'outils
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	fr	Active ou désactive les fonctions drag & drop dans toutes les applications. Si le navigateur ne supporte pas le drag & drop, cela sera désactivé automatiquement.
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	fr	Active ou désactive l'ajustement des menus déroulants pour Internet Explorer dans toutes les applications.  Si le navigateur n'est pas IE, cette option ne s'applique pas.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	fr	Active ou désactive l'ajustement automatique des boîtes de sélection pour IE dans toutes les applications.  Si le navigateur n'est pas IE, cette option ne s'applique pas.  Cette fonctionnalité est expérimentale.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	fr	Active ou désactive l'ajustement automatique des boîtes de sélection pour IE dans toutes les applications.  Si le navigateur n'est pas IE, cette option ne s'applique pas.  Cette fonctionnalité est expérimentale.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	fr	Une connexion LDAP encryptée est nécessaire pour changer les mots de passe, mais n'est pas configurée pour votre installation.
+enter code to verify correct setup	preferences	fr	Entrer le code pour vérifier le paramétrage
 enter your new password	preferences	fr	Entrez votre nouveau mot de passe
 enter your old password	preferences	fr	Entrez votre ancien mot de passe
 error	preferences	fr	Erreur
 failed to change password.	preferences	fr	Erreur lors du changement de mot de passe.
+failed to delete secret!	preferences	fr	Echec à la suppression de la clé secrète !
+failed to store secret!	preferences	fr	Echec à l'enregistrement de la clé secrète !
 features of the editor	preferences	fr	Fonctionnalités de l'éditeur
-firstname	preferences	fr	Prénom
 font size unit	preferences	fr	Unité de taille de police
 forced preferences	preferences	fr	Préférences forcées
 formatting & general settings	preferences	fr	Formats et paramètres principaux
 general settings	preferences	fr	Paramètres principaux
+generate new qrcode to disable existing one, after enabling the new one!	preferences	fr	Générer un nouveau QRCode pour désactiver le code existant, seulement après avoir activé le nouveau !
+google authenticator for android	preferences	fr	Google Authenticator pour Android
+google authenticator for ios	preferences	fr	Google Authenticator pour iOS
+heading %1	preferences	fr	Entête %1
 help off	preferences	fr	Aide désactivée
 holding ctrl/cmd key and click on the line	preferences	fr	garder la touche ctrl/cmd enfoncée et cliquer sur la ligne
 hours	preferences	fr	Heures
@@ -82,40 +101,48 @@ interface/template selection	preferences	fr	Sélection de l'interface/modèle
 just clicking on the line, like a checkbox	preferences	fr	cliquer juste sur la ligne, comme sur un case à cocher
 kama theme	preferences	fr	Thème Kama
 language	preferences	fr	Langue
-lastname	preferences	fr	Nom
 look & feel	preferences	fr	Ergonomie
 lowercase letters	preferences	fr	lettres minuscules
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	fr	Rendre la liste d'applications scrollable avec les boutons haut/bas (utile pour les utilisateurs avec une souris sans molette)
 max matches per page	preferences	fr	Nombre max d'occurences par page
 max number of icons in navbar	preferences	fr	Nombre maximal d'icônes de la barre de navigation
 moono color theme	preferences	fr	Couleur de thème Moono
 moono theme (default)	preferences	fr	Thème Moono (défaut)
-no	preferences	fr	Non
+new secret generated, you need to save it to disable the old one!	preferences	fr	Nouvelle clé secrète générée, vous devez sauvegarder pour désactiver l'ancienne !
 no default	preferences	fr	Pas de défaut
 no user-selection at all	common	fr	L'utilisateur n'a rien sélectionné.
 note: this feature does *not* change your email password. this will	preferences	fr	note: cette fonctionnalité ne change *pas* votre mot de passe de compte EMail. Ceci devra
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	fr	Note: cette fonctionnalité ne change PAS votre mot de passe de compte EMail. Ceci devra être fait manuellement.
-nothing to save.	preferences	fr	Rien à sauvegarder.
 notification settings	preferences	fr	Paramètres de notification
 number format	preferences	fr	Format de nombre
 numbers	preferences	fr	nombres
 old password and new password are the same. this is invalid. you must enter a new password	preferences	fr	L'ancien mot de masse est identique au nouveau. Vous devez entrer un nouveau mot de passe !
+or other compatible apps	preferences	fr	Ou autre application compatible
 p: paragraph	preferences	fr	p: Paragraphe
+paragraph	preferences	fr	Paragraphe
 password changed	preferences	fr	Mot de passe changé
 password contains only %1 of required %2 character classes: no %3	preferences	fr	le mot de passe contient seulement %1 sur %2 classes de caractères nécessaires : pas de %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	fr	le mot de passe contient "%1" ce qui est une partie de votre nom d'utilisateur ou non complet (3 caractères ou plus)
+password is invalid	preferences	fr	Mot de passe invalide
 password must have at least %1 characters	preferences	fr	Le mot de passe doit avoir au moins %1 caractères
 permanent time zone selection	preferences	fr	Fuseau horaire permanent
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	fr	Sélectionner les fuseaux horaires
 please select your timezone.	preferences	fr	Chosir votre fuseau horaire
 please, select a new theme	preferences	fr	SVP, choisissez un nouveau thème
 popup with search	preferences	fr	Ouvre une fenêtre Popup avec la recherche
-preferences	preferences	fr	Préférences
 preferences saved.	preferences	fr	Préférences enregistrées.
+preformatted	preferences	fr	Préformaté
 pt: points (1/72 inch)	preferences	fr	pt: points (1/72 pouces)
 px: display pixels	preferences	fr	px: affiche des pixels
 re-enter your password	preferences	fr	Ré-entrez votre mot de passe
 read prefs for the specified application.	preferences	fr	Lire les préférences pour l'apllication spécifiée.
+reset qrcode	preferences	fr	Réinitialiser le QRCode
+revoke	preferences	fr	Révoquer
+revoke acccess tokens	preferences	fr	Révoquer les jetons d'accès
+revoke this token	preferences	fr	Révoquer ce jeton
 rich text editor theme	preferences	fr	Thème de l'éditeur de texte
+scan qrcode with a time-based one-time password (totp) app:	preferences	fr	Scanner le QRCode avec un mot de passe à durée limitée (TOTP) :
+secret deleted, two factor authentication disabled.	preferences	fr	Clé secrète supprimée, authentification à double facteur désactivée.
 select additional lines in lists by	preferences	fr	Sélectionner des lignes supplémentaires dans les listes en
 select different theme	preferences	fr	Choisissez un thème différent
 select one	preferences	fr	Choisissez un(e)
@@ -127,15 +154,18 @@ selectbox with groupmembers	common	fr	Boîte de sélection avec membres du group
 selectbox with primary group and search	preferences	fr	Boîte de sélection avec groupe primaire et recherche
 server is unwilling to perform.	preferences	fr	Le serveur ne veut pas effectuer cette action...
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	fr	Réglez ceci à votre convenance. Pour des raisons de sécurité, vous pourriez ne pas montrer votre nom d'utilisateur en public.
+settings	preferences	fr	Paramètres
+setup two factor authentication	preferences	fr	Configurer l'authentification à double facteur
 should the number of active sessions be displayed for you all the time.	preferences	fr	Le nombre de sessions actives doit-il vous être affiché en permanence?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	fr	Ces messages d'aide doivent-ils toujours être affichés quand vous entrez dans les préférences, ou seulement à la demande?
 show helpmessages by default	preferences	fr	Afficher les messages d'aide par défaut.
 show links between egroupware aps as	common	fr	Icônes et liens d'application
 show navigation bar as	preferences	fr	Afficher la barre de navigation comme
-show number of current users	preferences	fr	Afficher le nombre d'utilisateurs courants
+show number of current users	preferences	fr	Utilisateurs connectés
+show qrcode	preferences	fr	Afficher le QRCode
+show qrcode to enable on an additional device.	preferences	fr	Afficher le QRCode pour ajouter un périphérique
 show text on navigation icons	preferences	fr	Montrer le texte sur les icônes de navigation
 show_more_apps	common	fr	Montrer plus d'Applications
-site configuration	preferences	fr	Configuration du site
 special characters	preferences	fr	caractères spéciaux
 spellchecker language	addressbook	fr	Language de correcteur orthographique
 text editor settings	preferences	fr	Paramètre de l'éditeur de texte
@@ -151,21 +181,23 @@ theme (colors/fonts) selection	preferences	fr	Sélection de thème (couleurs/pol
 this server is located in the %1 timezone	preferences	fr	Ce serveur est situé dans le fuseau horaire %1
 thousands separator is only used for displaying and not for editing numbers.	preferences	fr	Le séparateur des milliers est utilisé seulement pour afficher et non pour modifier les nombres.
 time format	preferences	fr	Format d'heure
-time zone	preferences	fr	Fuseau horaire
+two factor auth	preferences	fr	Authentification à double facteur
+two factor auth enabled.	preferences	fr	Authentification à double facteur activée.
+two factor auth is already setup.	preferences	fr	Authentification à double facteur déjà configurée.
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	fr	Unité des tailles de polices affichées : soit "px" comme pour les des pages web, soit "pt" comme pour les traitements de texte
 uppercase letters	preferences	fr	lettres majuscules
 use default	preferences	fr	Utiliser le défaut
-username	preferences	fr	Nom d'utilisateur
 users choice	preferences	fr	Choix des utilisateurs
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fr	Si vous dites Oui, les boutons Accueil et Déconnexion sont présentés comme des applications dans la barre de navigation.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans EGroupware.
 write prefs for the specified application.	preferences	fr	Ecrire les préférences pour l'apllication spécifiée.
-yes	preferences	fr	Oui
 you can show the applications as icons only, icons with app-name or both.	preferences	fr	Vous pouvez montrer les applications comme des icônes seulement, des icônes avec le nom de l'application ou les deux.
 you can show the linked entries with icons only, icons with app-name or both.	common	fr	Monter les applications avec des icônes seulement, icônes avec des noms d'application ou les deux.
 you do not have permission to set acl's in this mode!	preferences	fr	Vous n'avez pas les droits pour régler les ACLs dans ce mode!
+you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	fr	Vous devez sélectionner des fonctionnalité à activer dans la barre d'outils
 you must enter a password	preferences	fr	Vous devez entrer un mot de passe
+you need to enter your password to make any security changes!	preferences	fr	Vous devez entrer votre mot de passe pour effectuer des changements sur la sécurité !
 your current theme is: %1	preferences	fr	Votre thème actuel est: %1
 your password does not have required strength:	preferences	fr	Votre mot de passe n'a pas la complexité requise :
 your password might not match the password policy.	preferences	fr	Votre mot de passe pourrait ne pas répondre à la politique de complexité des mots de passe.

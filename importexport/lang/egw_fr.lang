@@ -22,6 +22,8 @@ all users	importexport	fr	Tous les utilisateurs
 allowed users	importexport	fr	Utilisateurs autorisés
 automatically created by importexport	importexport	fr	Automatiquement créé par l' Import | Export
 basic csv import	importexport	fr	Import CSV simple
+change allowed users	importexport	fr	Changer les utilisateurs autorisés
+change owner when updating	importexport	fr	Changer le propriétaire lors de la mise à jour
 changed	importexport	fr	Modifié
 changed allowed_users	importexport	fr	Utilisateurs autorisés modifiés
 changed owner	importexport	fr	Propriétaires modifiés
@@ -60,6 +62,7 @@ export data as	importexport	fr	Exporter les données comme
 export definition to use for nextmatch export	preferences	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 export spreadsheet	importexport	fr	Exporter vers une feuille de calcul
 exported	importexport	fr	Exporté.
+extra %1	importexport	fr	Extra %1
 extra charsets for import / export	importexport	fr	Jeux de caractères supplémentaire pour import / export
 extra encodings	importexport	fr	Encodages supplémentaires
 false	importexport	fr	Faux
@@ -69,10 +72,12 @@ fieldseperator	importexport	fr	Séparateur de champs
 filters	importexport	fr	Filtres
 finish	importexport	fr	Terminer
 from definition	importexport	fr	Depuis la définition
+from file	importexport	fr	Depuis le fichier
 general	preferences	fr	Général
 general fields:	preferences	fr	Champs généraux :
 header lines to skip	importexport	fr	Ignorer les lignes de titre
 how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	fr	Comment fusionner avec les données existantes ? Pour chaque enregistrement, toutes les conditions sont analysées du haut vers le bas, ou bien marquées par un stop. Pour une insertion sans condition, veuillez laisser vide.
+human friendly values	importexport	fr	Valeurs conviviales
 if you specify an export definition, it will be used when you export	preferences	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 import	importexport	fr	Importation
 import aborted	importexport	fr	Import annulé
@@ -101,6 +106,7 @@ old fixed definition	preferences	fr	L'ancienne définition fixe
 please select file to import	importexport	fr	Veuillez sélectionner un fichier à importer
 plugin	importexport	fr	Plugin
 preview	importexport	fr	Aperçu
+preview not supported by %1	importexport	fr	Prévisualisation non supporté par %1
 previous	importexport	fr	précédent
 problems during import:	importexport	fr	Problèmes pendant l'import :
 save as definition	importexport	fr	Sauvegarder comme une définition
@@ -110,8 +116,11 @@ schedule import | export	importexport	fr	Planifier import | export
 schedule not found	importexport	fr	Planification non trouvée.
 schedule times are server time!  currently %s.	importexport	fr	La planification se base sur le temps du serveur ! Actuellement il est  %s.
 select definition	importexport	fr	Sélectionner une définition
+select groups	importexport	fr	Sélectionner les groupes
+select owner	importexport	fr	Sélectionner le propriétaire
 select plugin	importexport	fr	Sélectionner un plugin
 select...	importexport	fr	Sélectionner...
+set import values	importexport	fr	Définir les valeurs d'import
 skipped	importexport	fr	Ignoré
 some nice text	importexport	fr	Un peu de texte sympathique...
 some records may not have been imported	importexport	fr	Quelques enregistrements n'ont peut-être pas été importés.
@@ -128,7 +137,9 @@ unable to delete	importexport	fr	incapable de supprimer
 unable to link to %1 "%2"	importexport	fr	Incapable de lier %1 "%2"
 unable to schedule	importexport	fr	Incapable d'établir la planification
 update categories	importexport	fr	Mettre à jour les catégories
+update default-definitions	importexport	fr	Mettre à jour les définitions par défaut
 use default	importexport	fr	Utiliser le défaut
+use definition filter	importexport	fr	Utiliser les filtres de définition
 use field from csv if possible	importexport	fr	Utiliser le champ du CSV si possible
 use search results	common	fr	Utiliser les résultats de la recherche
 user preference	importexport	fr	Préférences de l'utilisateur
@@ -136,6 +147,7 @@ user template folder	importexport	fr	Dossier de modèles utilisateurs
 users allowed to create their own definitions	importexport	fr	Autoriser les utilisateurs à créer leurs propres définitions
 users allowed to share their own definitions	importexport	fr	Utilisateurs autorisés à partager leurs propres définitions
 warnings	importexport	fr	Avertissements
+what should be done with unknown values?	importexport	fr	Que faire avec les valeurs inconnues ?
 which useres are allowed for this definition	importexport	fr	Quels utilisateurs sont-ils autorisés pour cette définition
 which users are allowed to use this definition	importexport	fr	Quels utilisateurs sont-ils autorisés pour cette définition
 you may want to <a href="%1" target="_new">backup</a> first.	importexport	fr	Vous souhaitez peut-être d'abord <a href="%1" target="_new">sauvegarder</a>.

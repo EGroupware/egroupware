@@ -16,7 +16,6 @@ cookies are required to login to this site.	notifications	fr	Les cookies sont n�
 delete all messages	notifications	fr	supprimer tous les messages
 delete notifications	notifications	fr	supprimer toutes les notifications
 delete this message	notifications	fr	supprimer ce message
-disabled	notifications	fr	Désactivé
 disabled chains	notifications	fr	Chaînes désactivées
 do not notify me at all	notifications	fr	Ne pas me notifier du tout.
 domain not found, please check serveraddress.	notifications	fr	Domaine non trouvé, veuillez vérifier l'adresse du serveur
@@ -44,7 +43,6 @@ error ssl	notifications	fr	Erreur SSL
 exit	notifications	fr	Sortir
 folder	notifications	fr	Dossier
 from	notifications	fr	Depuis
-high	notifications	fr	haute
 host:	notifications	fr	Hôte :
 if set, embedded links get rendered special for external clients	notifications	fr	Si coché, les liens sont spécialement adaptés aux clients externes
 java desktop notification app	preferences	fr	Application java de notification
@@ -52,17 +50,13 @@ last month	notifications	fr	Dernier mois
 linked entries:	common	fr	Entrées liées :
 login aborted, application exit?	notifications	fr	Login échoué, sortir de l'application ?
 login in egroupware:	notifications	fr	login EGroupware
-low	notifications	fr	bas
 mail backend	admin	fr	Backend email
 mark all as read	notifications	fr	tout marquer comme lu
 mark as read	notifications	fr	marquer comme lu
-medium	notifications	fr	moyen
 message from	notifications	fr	Message de
 minutes	notifications	fr	Minutes
 more info	notifications	fr	Plus d'info
-next	notifications	fr	suivant
 notification	common	fr	Notification
-notifications	notifications	fr	Notifications
 notifier	notifications	fr	Notificateur
 notify me by	notifications	fr	Notifier avec mon compte
 open notified entry	notifications	fr	Ouvrir l'entrée notifiée
@@ -75,8 +69,8 @@ please contact your egroupware admin.	notifications	fr	Veuillez contacter votre 
 please enter the url of your egroupware.	notifications	fr	Veuillez entrer l'URL de votre EGroupware
 please enter your egroupware username.	notifications	fr	Veuillez entrer votre nom d'utilisateur EGroupware
 please enter your password	notifications	fr	Veuillez entrer votre mot de passe
+poll interval	notifications	fr	Intervalle de sondage
 preferences for notification	notifications	fr	Préférences de notification
-previous	notifications	fr	précédent
 received	notifications	fr	Reçu
 repeat login?	notifications	fr	Répeter la connexion ?
 run application	notifications	fr	exécuter l'application
@@ -86,7 +80,6 @@ setting aborted, application exit	notifications	fr	Paramètre annulé, l'applica
 settings	notifications	fr	Paramètres
 signature	admin	fr	Signature
 signature added to every change notification	admin	fr	Signature ajoutée à chaque notification de changement
-site configuration	admin	fr	Configuration du site
 sorry, your login has expired	notifications	fr	Désolé, votre login a expiré
 step	notifications	fr	Etape
 subject dn:	notifications	fr	Sujet DN :
@@ -94,7 +87,6 @@ the server certificate is not a valid trust center certificate!	notifications	fr
 this egroupware notification has been sent to you by mail because your	notifications	fr	Cette notification EGroupware vous a été envoyée par email parce que votre
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	fr	Cette notification EGroupware vous êtes envoyée par email parce que la chaîne de notification choisie a été désactivé par l'administrateur.  Veuillez sélectionner une autre chaîne de notification dans vos préférences !
 this month	notifications	fr	Ce mois-ci
-today	notifications	fr	Aujourd'hui
 user:	notifications	fr	Utilisateur :
 warning	notifications	fr	Attention
 windows-popup and e-mail	notifications	fr	Popup et email Windows
@@ -103,6 +95,7 @@ windows-popup first, if that fails notify me by e-mail	notifications	fr	Popup wi
 windows-popup only	notifications	fr	Popup windows seulement
 yesterday	notifications	fr	hier
 you can also use	admin	fr	Vous pouvez aussi utiliser
+you can also use addressbook placeholders with user/ prefix	notifications	fr	Vous pouvez aussi utiliser les balises du carnet d'adresses avec l'utilisateur/préfixe
 you have %1 unread notifications	notifications	fr	Vous avez %1 notification(s) non lue(s)
 you have been successfully logged out	notifications	fr	Vous avez été déconnecté avec succès
 you've got new mail	notifications	fr	Vous avez un nouveau message

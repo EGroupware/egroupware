@@ -2,6 +2,8 @@
 %1 accessories restored	resources	fr	%1 accessoire(s) restauré(s)
 %1 resource(s) %2	resources	fr	%1 ressource(s) %2
 %1 resource(s) %2, %3 failed	resources	fr	%1 ressource(s) %2, %3 en échec
+%1 resource(s) booked	resources	fr	%1 ressource(s) réservée(s)
+%1 resource(s) view calendar	resources	fr	%1 ressource(s) Voir le calendrier
 accessories	resources	fr	Accessoires
 accessories of	resources	fr	Accessoires de
 accessories:	resources	fr	Accessoires:
@@ -20,15 +22,17 @@ book selected resources	resources	fr	Réserver les ressources selectionnées
 book this resource	resources	fr	Réserver cette ressource
 bookable	resources	fr	Réservable
 booked	resources	fr	réservé(s)
+booking requests	resources	fr	Requêtes de réservation
 buy this article	resources	fr	Acheter cet article
 buy this resource	resources	fr	Acheter cette ressource
 buyable	resources	fr	Achetable
-categories admin	resources	fr	Administrateur de la catégorie
+category admin	resources	fr	Administrateur de catégorie
+category saved.	resources	fr	Catégorie enregistrée.
 category:	resources	fr	Catégorie :
 check all	resources	fr	Tout cocher
-choose categories admin	resources	fr	Choisissez les administrateurs de la catégorie
 clear selection	resources	fr	Vider la sélection
 configure access permissions	admin	fr	Configurer les droits d'accès
+confirmation email text	resources	fr	Texte de l'email de confirmation
 confirmed addressbook.	resources	fr	Carnet d'adresses des contacts confirmés
 conflict	resources	fr	Conflit
 create new accessory for this resource	resources	fr	Créer de nouveaux accessoires pour cette ressource
@@ -60,6 +64,7 @@ how many of the resources are useable?	resources	fr	Combien de ces ressources so
 how many of them are useable?	resources	fr	Combien parmi elle sont utilisables?
 how many of this resource are usable	resources	fr	Combien sont utilisables
 how many of this resource exists	resources	fr	Combien en existe-t-il
+icon	resources	fr	Icône
 if you specify an export definition, it will be used when you export	resources	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 implies booking permission	resources	fr	implique la permission de lire le calendrier
 implies read permission	resources	fr	implique la permission de lecture
@@ -109,6 +114,7 @@ reserve	resources	fr	Reserve
 resource	resources	fr	Ressource
 resource %1 deleted!	resources	fr	Ressource %1 supprimée !
 resource %1 saved!	resources	fr	Ressource %1 enregistrée !
+resource / accessories	resources	fr	Ressources / accessoires
 resource id	resources	fr	ID de ressource
 resources	common	fr	Ressources
 resources and accessories	resources	fr	Ressources & Accessoires
@@ -137,12 +143,13 @@ this module displays the resources app	resources	fr	Ce module montre l'applicati
 too many matches	resources	fr	trop de résultats
 unable to link to %1 "%2"	resources	fr	Incapable de lier %1 "%2"
 unable to process confirmation.	resources	fr	Incapable de procéder à la confirmation
+usable	resources	fr	Utilisable
 use general resources icon	resources	fr	Utilisez  l'icône de la ressource générale
 use own picture	resources	fr	Utilisez  votre propre propre image
 use the category's icon	resources	fr	Utilisez l'icône de la catégorie
 useable	resources	fr	utilisable
 useable:	resources	fr	Utilisable:
-view accessories for this resource	resources	fr	Voir les accessoires pour cette ressource
+view accessories	resources	fr	Voir les accessoires
 view calendar	resources	fr	Voir le calendrier
 view this entry	resources	fr	Voir cette entrée
 web-page of resource	resources	fr	Page web de la ressource
@@ -150,6 +157,9 @@ web-site for this resource	resources	fr	Site web de cette ressource
 where to find this resource?	resources	fr	Ou trouver cette ressource ?
 which category does this resource belong to?	resources	fr	À quelle catégorie cette ressource appartient-elle?
 write permissions	resources	fr	Permissions d'écriture
+yes - delete accessories too	resources	fr	Oui, supprimer aussi les accessoires
+yes - un-delete accessories too	resources	fr	Oui, dé-supprimer aussi les accessoires
+yes, all users can ignore conflicts	resources	fr	Oui, tous les utilisateurs peuvent utiliser les conflits
 yes, only admins can purge deleted items	admin	fr	Oui, les administrateurs seuls peuvent purger les éléménts supprimés
 yes, users can purge their deleted items	admin	fr	Oui, les utilisateurs  peuvent purger leurs éléments supprimés
 you are not permitted to delete this resource!	resources	fr	Vous n'êtes pas autorisé à supprimer cette ressource !
