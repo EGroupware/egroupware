@@ -11,12 +11,15 @@ apply the action on the whole query, not only the shown timesheets!!!	timesheet	
 both: allow to use projectmanager and free project-names	admin	fr	Les deux: permettre l'utilisation du Gestionnaire de projets et l'utilisation de noms de projets libres
 by	timesheet	fr	par
 change category	timesheet	fr	Changer la catégorie
+change owner when updating	timesheet	fr	Changer le propriétaire lors de la mise à jour
 changed category to %1	timesheet	fr	Changer la catégorie en %1
 changed status	timesheet	fr	Statut modifié.
 check all	timesheet	fr	Vérifier tout
 choose 'creator' of imported data	timesheet	fr	Choisir le "créateur" des données importées.
 comment by %1 at %2:	timesheet	fr	Commentaire par %1 à %2:
+copy of:	timesheet	fr	Copie de :
 create new links	timesheet	fr	Créer de nouveaux liens
+created	timesheet	fr	Créé
 creates a new field	timesheet	fr	Créer un nouveau champ
 creating new entry	timesheet	fr	nouvelle entrée en création
 custom fields	timesheet	fr	Champs personnalisés
@@ -27,7 +30,7 @@ deletes this field	timesheet	fr	Supprimer ce champ
 determines the order the fields are displayed	timesheet	fr	Détermine l'ordre d'afficahge des champs
 directory with documents to insert entries	timesheet	fr	Répertoire avec les documents pour insérer les entrées
 each value is a line like <id>[=<label>]	timesheet	fr	Chaque valeur est une ligne comme <id>[=<label>]
-edit status	timesheet	fr	Modifier Statut
+edit status	common	fr	Modifier Statut
 edit this entry	timesheet	fr	Modifier cette entrée
 empty if identical to duration	timesheet	fr	vide si identique à la durée
 end	timesheet	fr	Fin
@@ -41,6 +44,7 @@ export definition to use for nextmatch export	timesheet	fr	Définition de l'expo
 export to openoffice spreadsheet	timesheet	fr	Export vers un classeur OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV. CSV tient pour "Comma Separated Values". Dans l'onglet Options, vous pouvez aussi choisir d'autres séparateurs.
+favorites	timesheet	fr	Favoris
 field must not be empty !!!	timesheet	fr	Le champ ne doit pas être vide !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
 full: use only projectmanager	admin	fr	Complet: utiliser seulement le Gestionnaire de projets
@@ -69,7 +73,9 @@ links	timesheet	fr	Liens
 links and attached files	timesheet	fr	Liens et fichiers attachés
 links to specified application.  example: {{links/infolog}}	timesheet	fr	Liens vers les applications spécifiés. Exemple :  {{links/infolog}}
 list of files linked to the current record	timesheet	fr	Listes des fichiers liés à l'enregistrement courant
+manage mapping	timesheet	fr	Gérer le mappage
 max length of the input [, length of the inputfield (optional)]	timesheet	fr	Longueur maximum de l'entrée [, longueur du champ de saisi (optionnel)]
+mode	timesheet	fr	Mode
 modified	timesheet	fr	Modifié
 modify status	timesheet	fr	Modifier le statut
 name of current user, all other contact fields are valid too	timesheet	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
@@ -81,6 +87,7 @@ no status	timesheet	fr	Pas de statut
 none: use only free project-names	admin	fr	Aucun: utiliser seulement des noms de projets libres
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	fr	Nombre de lignes pour un champ multiligne ou pour une boîte de sélection multiple.
 only admin	timesheet	fr	Seulement les administrateurs
+only admin can change this status	timesheet	fr	Seul un administrateur peut changer ce statut
 only admin can edit this status	timesheet	fr	Seulement les administrateurs peuvent modifier les feuilles de temps avec ce statut
 or endtime	timesheet	fr	ou Date de fin
 order	timesheet	fr	Ordre
@@ -94,7 +101,9 @@ projectmanager integration	admin	fr	Intégration au Gestionnaire de projets
 quantity	timesheet	fr	Quantité
 recovered	timesheet	fr	Récupéré
 replacements for inserting entries into documents	timesheet	fr	Remplacements pour insertion d'entrées dans des documents
+restore this entry	timesheet	fr	Restaurer cette entrée
 save & new	timesheet	fr	Enregistrer & Nouveau
+save &amp; new	timesheet	fr	Enregistrer & Nouveau
 saves the changes made	timesheet	fr	Enregistrer les modifications
 saves the changes made and leaves	timesheet	fr	Enregistrer les modifications et quitter
 saves this entry and add a new one	timesheet	fr	Enregistrer cette entrée et en ajouter une nouvelle
@@ -128,6 +137,7 @@ timesheet csv export	timesheet	fr	Export CSV de feuilles de temps
 timesheet csv import	timesheet	fr	Imports CSV de feuilles de temps
 timesheet fields:	timesheet	fr	Champs de feuilles de temps
 timesheet id	timesheet	fr	ID de feuille de temps
+timesheet list	timesheet	fr	Liste de feuilles de temps
 timesheet modified by %1 at %2	timesheet	fr	Feuille de temps modifié par by %1 à %2
 timesheet openoffice export	timesheet	fr	Export OpenOffice de feuille de temps
 timesheet status-%1 '%2' added.	timesheet	fr	Statut de feuille de temps - %1 '%2' ajouté.
@@ -135,11 +145,14 @@ timesheet-%1 '%2' updated.	timesheet	fr	Feuille de temps - %1 '%2' mis à jour.
 timesheet-%1 deleted.	timesheet	fr	Feuille de temps - %1 supprimé.
 titles of any entries linked to the current record, excluding attached files	timesheet	fr	Titres de toutes les entrées liées à l'enregistrement courant, à l'exception des fichiers
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	fr	Incapable de convertir "%1" vers un compte ID. Utilisation du paramètre de plugin (%2) pour %3.
+undelete	timesheet	fr	Restaurer
 unitprice	timesheet	fr	Prix à l'unité
+use field from csv if possible	timesheet	fr	Utiliser le champs du CSV si possible
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
 values for selectbox	timesheet	fr	Valeurs des boîtes de sélection
 view this entry	timesheet	fr	Voir cette entrée
 week	timesheet	fr	Semaine
+what should be done with unknown values?	timesheet	fr	Que faire avec les valeurs inconnues ?
 yes, only admins can purge deleted items	admin	fr	Oui, les administrateurs seuls peuvent purger les éléménts supprimés
 yes, users can purge their deleted items	admin	fr	Oui, les utilisateurs  peuvent purger leurs éléments supprimés
 yesterday	timesheet	fr	Hier

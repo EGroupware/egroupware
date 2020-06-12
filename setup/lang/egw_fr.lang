@@ -1,14 +1,18 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	fr	%1 '%2' n'existe PAS, n'est pas lisible par le serveur web ou ne contient pas d'installation EGroupware !
+%1 accounts to copy found.	setup	fr	%1 comptes à copier trouvés.
 %1 already exists in %2.	setup	fr	%1 existe déjà dans %2.
 %1 created in %2.	setup	fr	%1 créé dans %2.
 %1 database %2 on %3 already contains the following tables:	setup	fr	%1 base de données %2 sur %3 déjà contenant déjà les tables suivantes :
 %1 does not exist !!!	setup	fr	%1 n'existe pas !
+%1 does not exist in %2.	setup	fr	%1 n'existe pas dans %2
 %1 entries modified.	setup	fr	%1 entrées modifiées.
 %1 entries would have been modified.	setup	fr	%1 entrées seraient modifiées.
 %1 is %2%3 !!!	setup	fr	%1 est %2%3 !
 %1 is needed by: %2.	setup	fr	%1 est requis par : %2.
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	fr	%1 est défini à %2, vous ne pourrez PAS uploader ou attacher des fichiers plus volumineux !
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	fr	%1 est défini à %2. Ceci n'est pas recommandé pour un système en production, car les messages d'erreur affichés peuvent contenir des mots de passe ou d'autres informations sensibles !
+%1 password set in %2.	setup	fr	%1 mot de passe défini dans %2.
+%1 passwords updated, %3 errors	setup	fr	%1 mots de passe mis à jour, %3 erreur(s)
 %1 users and %2 groups created, %3 errors	setup	fr	%1 utilisateurs et %2 groupes créés, %3 erreurs.
 %1, %2 or %3 the configuration file.	setup	fr	%1, %2 ou le fichier de configuration %3.
 '%1' is no valid domain name!	setup	fr	'%1'  n'est pas un nom de domaine valide !
@@ -81,6 +85,7 @@ at your request, this script is going to attempt to upgrade your old tables to t
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	fr	Sur votre demande, ce script va (sans hésiter !) supprimer vos tables existantes et les recréer dans le nouveau format
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	fr	Sur votre demande, ce script va (sans hésiter !) désinstaller toutes vos applications, ce qui supprime vos tables existantes et vos données de configuration
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	fr	Tentative d'utiliser le type MIME correct pour FTP au lieu de celui par défaut 'application/octet-stream'
+attributes for new users	setup	fr	Attribut des nouveaux utilisateurs
 authentication / accounts	setup	fr	Authentification / Comptes
 authentication type for application	setup	fr	Type d'authentification pour l'application
 authentification mode:	setup	fr	Mode d'authentification :
@@ -120,6 +125,7 @@ but we <u>highly recommend backing up</u> your tables in case the script causes 
 by redirecting to https	setup	fr	En redirigeant vers https
 by rewriting links to https (allows eg. sitemgr to run on http)	setup	fr	En réécrivant les liens en HTTPS (permet le SiteMgr de fonctionner en http)
 ca certificate	setup	fr	Certificat CA
+cached cleared	setup	fr	Cache vidé
 can not connect to %1 database %2 on host %3 using user %4!	setup	fr	Ne peut pas se connecter à la %1 base de données %2 sur le serveur %3 en utilisant le compte %4 !
 can not connect to ldap server on host %1 using dn %2!	setup	fr	Ne peut pas se connecter au serveur LDAP sur l'hôte %1 en utilisant DN %2 !
 can not create %1 database %2 on %3 for user %4!	setup	fr	Ne peut pas créer la %1 base de données %2 sur le serveur %3 pour le compte %4 !
@@ -147,7 +153,6 @@ checking for jpgraph in %1	setup	fr	Vérification de la présence de JPGraph dan
 checking for tnef application	setup	fr	Vérification de la présence de l'application tnef
 checking function %1 exists	setup	fr	Vérification si les fonctions %1 existent
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	fr	Vérification si le serveur web a les droits d'écriture sur le répertoire du paramètre session.save_path='%1' de php.ini
-checking pear%1 is installed	setup	fr	Vérification si PEAR%1 est installé
 checking php.ini	setup	fr	Vérification de php.ini
 checking required php version %1 (recommended %2)	setup	fr	Vérification de la version PHP %1 requise (%2 recommandée)
 checking the egroupware installation	setup	fr	Vérification de l'installation EGroupware
@@ -157,6 +162,8 @@ click <a href="index.php">here</a> to return to setup.	setup	fr	Cliquez <a href=
 click here	setup	fr	Cliquez ici
 click here to re-run the installation tests	setup	fr	Cliquez ici pour rédemarrer la procédure de vérification
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	fr	Liste des adresses IP ou noms d'hôtes séparées par des virgules  Par défaut, l'accès au setup est permis depuis partout
+commercial support	setup	fr	Support commercial
+community forum	setup	fr	Forum Community
 complete path to aspell program	setup	fr	Chemin complet du programme aspell
 completed	setup	fr	Complété
 config password	setup	fr	Mot de passe
@@ -231,9 +238,9 @@ deregistered	setup	fr	désenregistré
 details for admin account	setup	fr	Détails du compte admin
 developers' table schema toy	setup	fr	Jouet pour les schémas de table pour développeurs
 did not find any valid db support!	setup	fr	Aucun support de base de données valide!
-disabled	setup	fr	Désactivé
 do you want persistent connections (higher performance, but consumes more resources)	setup	fr	Voulez-vous des connexions persistantes (meilleure performance, mais consomme plus de ressources)
 do you want to manage homedirectory and loginshell attributes?	setup	fr	Voulez-vous gérer les attributs des répertoire d'accueil et du shell de connexion?
+documentation	setup	fr	Documentation
 does not exist	setup	fr	n'existe pas
 domain	setup	fr	Domaine
 domain '%1' does not exist !!!	setup	fr	Le domaine '%1' n'existe PAS !!!
@@ -284,7 +291,6 @@ enter your http proxy server	setup	fr	Entrez votre serveur proxy HTTP
 enter your http proxy server password	setup	fr	Entrez le mot de passe pour le proxy HTTP
 enter your http proxy server port	setup	fr	Entrez le port de votre serveur proxy HTTP
 enter your http proxy server username	setup	fr	Entrez le nom d'utilisateur pour le proxy HTTP
-entry has been deleted sucessfully	setup	fr	entrée supprimée avec succès
 error deleting "dn=%1"!	setup	fr	Erreur à la suppression de "dn=%1" !
 error dropping user!	setup	fr	Erreur à la suppression de l'utilisateur !
 error in admin-creation !!!	setup	fr	Erreur lors de la création de l'admin !
@@ -442,6 +448,7 @@ not	setup	fr	n'a pas
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	fr	Pas tous les algorithmes et modes fonctionnent avec EGroupware. Si vous rencontrez des problèmes, essayez de le désactiver.
 not complete	setup	fr	incomplet
 not completed	setup	fr	Pas Terminé
+not installed	setup	fr	non installé
 not ready for this stage yet	setup	fr	Pas encore prêt pour cette partie
 not set	setup	fr	pas défini
 note: you will be able to customize this later	setup	fr	Note: vous aurez la possibilité de personnaliser ceci plus tard
@@ -471,9 +478,6 @@ path information	setup	fr	Information de chemin
 path of egroupware install directory (default auto-detected)	setup	fr	chemin vers le répertoire d'installation EGroupware (par défaut auto-détection)
 path to user and group files has to be outside of the webservers document-root!!!	setup	fr	Le chemin vers les fichiers utilisateur et groupe DOIT ETRE EN DEHORS du répertoire racine des serveurs web!!!
 path to various directories: have to exist and be writeable by the webserver	setup	fr	le chemin vers divers répertoires: doivent exister et le serveur web doit pouvoir y écrire
-pear (%1) is a php repository and is usually in a package called %2.	setup	fr	PEAR (%1) est un dépôt PHP et est généralement fourni par un paquetge appelé %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	fr	Les extensions PEAR sont nécessaires pour beaucoup d'applications EGroupware, PEAR est lui-même requis pour chaque extension !
-pear%1 is needed by: %2.	setup	fr	PEAR%1 est requis par: %2.
 pem certificate	setup	fr	Certificat PEM
 persistent connections	setup	fr	Connexions persistantes
 php client	setup	fr	php Client
@@ -671,8 +675,10 @@ use pure html compliant code (not fully working yet)	setup	fr	Utiliser du code H
 use space to separate multiple	setup	fr	utiliser des espace pour séparer des multiples
 use tls or ssl encryption	setup	fr	Utiliser l'encryption TLS ou SSL
 user	setup	fr	utilisateur
+user "%1" not found!	setup	fr	Utilisateur "%1" non trouvé !
 user account prefix	setup	fr	Préfixe des comptes utilisateurs
 user for smtp-authentication (leave it empty if no auth required)	setup	fr	Utilisateur pour l'authentification SMTP (laisser vide si aucune authentification n'est requise)
+username (standard)	setup	fr	code utilisateur (standard)
 usernames (comma-separated) which can get vfs root access (beside setup user)	setup	fr	Liste séparée par des virgules des utilisateurs pouvant accéder au VFS en root (en plus de l'utilisateur du setup)
 usernames are casesensitive	setup	fr	Les identifiants sont sensibles à la casse
 users choice	setup	fr	Choix des utilisateurs
