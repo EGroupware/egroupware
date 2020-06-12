@@ -354,6 +354,12 @@ var et2_customfields_list = /** @class */ (function (_super) {
         }
         return true;
     };
+    et2_customfields_list.prototype._setup_passwd = function (field_name, field, attrs) {
+        // No label on the widget itself
+        delete (attrs.label);
+        attrs['viewable'] = true;
+        return true;
+    };
     et2_customfields_list.prototype._setup_ajax_select = function (field_name, field, attrs) {
         var attributes = ['get_rows', 'get_title', 'id_field', 'template'];
         if (field.values) {

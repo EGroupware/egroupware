@@ -32,6 +32,7 @@ class Customfields extends Transformer
 	 */
 	protected static $cf_types = array(
 		'text'     => 'Text',
+		'passwd' => 'Password',
 		'int'      => 'Integer',
 		'float'    => 'Float',
 		'label'    => 'Label',
@@ -321,6 +322,9 @@ class Customfields extends Transformer
 				break;
 
 			case 'text':
+				break;
+			case 'passwd':
+				$widget->attrs['viewable'] = true;
 				break;
 
 			default:

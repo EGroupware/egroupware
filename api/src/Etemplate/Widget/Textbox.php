@@ -23,7 +23,6 @@ use XMLReader;
  * - float
  * - hidden
  * - colorpicker
- * - passwd (passwords are never send back to client, instead a number of asterisks is send and replaced again!)
  * sub-types are either passed to constructor or set via 'type' attribute!
  */
 class Textbox extends Etemplate\Widget
@@ -82,18 +81,7 @@ class Textbox extends Etemplate\Widget
 	 */
 	public function beforeSendToClient($cname, array $expand=null)
 	{
-		// to NOT transmit passwords back to client, we need to store (non-empty) value in preserv
-		if ($this->attrs['type'] == 'passwd' || $this->type == 'passwd')
-		{
-			$form_name = self::form_name($cname, $this->id, $expand);
-			$value =& self::get_array(self::$request->content, $form_name);
-			if (!empty($value))
-			{
-				$preserv =& self::get_array(self::$request->preserv, $form_name, true);
-				if (true) $preserv = (string)$value;
-				$value = str_repeat('*', strlen($preserv));
-			}
-		}
+
 	}
 
 	/**
@@ -136,17 +124,6 @@ class Textbox extends Etemplate\Widget
 			}
 
 			$value = $value_in = self::get_array($content, $form_name);
-
-			// passwords are not transmitted back to client (just asterisks)
-			// therefore we need to replace it again with preserved value
-			if (($this->attrs['type'] == 'passwd' || $this->type == 'passwd'))
-			{
-				$preserv = self::get_array(self::$request->preserv, $form_name);
-				if ($value == str_repeat('*', strlen($preserv)))
-				{
-					$value = $preserv;
-				}
-			}
 
 			if ((string)$value === '' && $this->attrs['needed'])
 			{
@@ -199,4 +176,4 @@ class Textbox extends Etemplate\Widget
 		}
 	}
 }
-Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Textbox', array('textbox','text','int','integer','float','passwd','hidden','colorpicker','hidden'));
+Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Textbox', array('textbox','text','int','integer','float','hidden','colorpicker','hidden'));

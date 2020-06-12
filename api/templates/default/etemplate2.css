@@ -98,6 +98,30 @@ div.et2_hbox > div {
 }
 
 /**
+ * Password widget
+ */
+.et2_password {
+	display: inline-block;
+	border: 1px solid #e6e6e6;
+	padding-right: 14px;
+	white-space: nowrap;
+}
+.et2_password > input {
+	border: none;
+	margin-right: -23px;
+	padding-right: 10px;
+}
+.et2_password .show_hide {
+	margin-left: -5px;
+}
+.et2_password > * {
+	vertical-align: middle;
+}
+.et2_password > img {
+	margin: 3px;
+}
+
+/**
  * Placeholder widget - used for un-implemented widgets
  */
 .et2_placeholder {

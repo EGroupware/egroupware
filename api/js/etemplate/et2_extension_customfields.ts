@@ -480,6 +480,14 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		}
 		return true;
 	}
+	_setup_passwd( field_name, field, attrs)
+	{
+		// No label on the widget itself
+		delete (attrs.label);
+		attrs['viewable'] = true;
+		return true;
+	}
+
 	_setup_ajax_select( field_name, field, attrs)
 	{
 		const attributes = ['get_rows', 'get_title', 'id_field', 'template'];

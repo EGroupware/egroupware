@@ -24,6 +24,7 @@
 	et2_widget_entry;
 	et2_widget_textbox;
 	et2_widget_number;
+    et2_widget_password;
 	et2_widget_url;
 	et2_widget_selectbox;
 	et2_widget_checkbox;

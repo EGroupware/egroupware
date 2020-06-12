@@ -82,7 +82,8 @@ class admin_customfields
 		'search'	=> 'set get_rows, get_title and id_field, or use @path to read options from a file in EGroupware directory',
 		'select'	=> 'each value is a line like id[=label], or use @path to read options from a file in EGroupware directory',
 		'radio'		=> 'each value is a line like id[=label], or use @path to read options from a file in EGroupware directory',
-		'button'	=> 'each value is a line like label=[javascript]'
+		'button'	=> 'each value is a line like label=[javascript]',
+		'password'=> 'set length=# for minimum password length, strength=# for password strength'
 	);
 
 	/**
@@ -92,6 +93,7 @@ class admin_customfields
 	public static $type_attribute_flags = array(
 		'text'		=> array('cf_len' => true, 'cf_rows' => true),
 		'float'		=> array('cf_len' => true),
+		'passwd'=> array('cf_len' => true, 'cf_rows' => false, 'cf_values' => true),
 		'label'		=> array('cf_values' => true),
 		'select'	=> array('cf_len' => false, 'cf_rows' => true, 'cf_values' => true),
 		'date'		=> array('cf_len' => true, 'cf_rows' => false, 'cf_values' => true),

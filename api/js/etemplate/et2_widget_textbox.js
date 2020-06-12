@@ -64,16 +64,6 @@ var et2_textbox = /** @class */ (function (_super) {
         else {
             this.input = jQuery(document.createElement("input"));
             switch (this.options.type) {
-                case "passwd":
-                    this.input.attr("type", "password");
-                    // Make autocomplete default value off for password field
-                    // seems browsers not respecting 'off' anymore and started to
-                    // impelement a new key called "new-password" considered as switching
-                    // autocomplete off.
-                    // https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
-                    if (this.options.autocomplete === "" || this.options.autocomplete == "off")
-                        this.options.autocomplete = "new-password";
-                    break;
                 case "hidden":
                     this.input.attr("type", "hidden");
                     break;
@@ -101,21 +91,6 @@ var et2_textbox = /** @class */ (function (_super) {
                 return self.options.onkeypress.call(this, _ev, self);
             });
         }
-    };
-    /**
-     * Override the parent set_id method to manuipulate the input DOM node
-     *
-     * @param {type} _value
-     * @returns {undefined}
-     */
-    et2_textbox.prototype.set_id = function (_value) {
-        _super.prototype.set_id.call(this, _value);
-        // Remove the name attribute inorder to affect autocomplete="off"
-        // for no password save. ATM seems all browsers ignore autocomplete for
-        // input field inside the form
-        if (this.options.type === "passwd"
-            && this.options.autocomplete === "off")
-            this.input.removeAttr('name');
     };
     et2_textbox.prototype.destroy = function () {
         var node = this.getInputNode();
@@ -268,12 +243,6 @@ var et2_textbox = /** @class */ (function (_super) {
             "default": et2_no_init,
             "description": "Perl regular expression eg. '/^[0-9][a-f]{4}$/i'"
         },
-        "autocomplete": {
-            "name": "Autocomplete",
-            "type": "string",
-            "default": "",
-            "description": "Weither or not browser should autocomplete that field: 'on', 'off', 'default' (use attribute from form). Default value for type password is set to off."
-        },
         onkeypress: {
             name: "onKeypress",
             type: "js",
@@ -285,7 +254,7 @@ var et2_textbox = /** @class */ (function (_super) {
     return et2_textbox;
 }(et2_core_inputWidget_1.et2_inputWidget));
 exports.et2_textbox = et2_textbox;
-et2_core_widget_1.et2_register_widget(et2_textbox, ["textbox", "passwd", "hidden"]);
+et2_core_widget_1.et2_register_widget(et2_textbox, ["textbox", "hidden"]);
 /**
  * et2_textbox_ro is the dummy readonly implementation of the textbox.
  *

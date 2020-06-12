@@ -393,7 +393,7 @@ class Credentials
 	 * @param int& $pw_enc on return encryption used
 	 * @return string encrypted password
 	 */
-	protected static function encrypt($password, $account_id, &$pw_enc)
+	public static function encrypt($password, $account_id, &$pw_enc)
 	{
 		try {
 			return self::encrypt_openssl_aes($password, $account_id, $pw_enc);
@@ -524,7 +524,7 @@ class Credentials
 	 * @throws Api\Exception\WrongParameter
 	 * @throws Api\Exception\AssertionFailed if neither OpenSSL nor MCrypt extension available
 	 */
-	protected static function decrypt(array $row, $key=null)
+	public static function decrypt(array $row, $key=null)
 	{
 		// empty/unset passwords only give warnings ...
 		if (empty($row['cred_password'])) return '';
