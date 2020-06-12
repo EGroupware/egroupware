@@ -1,14 +1,20 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	de	%1 '%2' existiert NICHT, ist nicht vom Webserver lesbar oder enthält keine EGroupware Installation!
+%1 accounts to copy found.	setup	de	%1 Benutzerkonten zum kopieren gefunden.
 %1 already exists in %2.	setup	de	%1 existiert bereits in %2.
 %1 created in %2.	setup	de	%1 in %2 angelegt.
 %1 database %2 on %3 already contains the following tables:	setup	de	%1 Datenbank %2 auf %3 enthält bereits die folgenden Tabellen:
 %1 does not exist !!!	setup	de	%1 existiert nicht!!!
+%1 does not exist in %2.	setup	de	%1 existiert NICHT in %2.
+%1 does not have a password (userpassword attribute) or we are not allowed to read it!	setup	de	%1 hat KEIN Passwort (userPassword Attribute) oder es fehlt die Berechtigung es zu lesen!
 %1 entries modified.	setup	de	%1 Einträge geändert.
 %1 entries would have been modified.	setup	de	%1 Einträge wären geändert worden.
 %1 is %2%3 !!!	setup	de	%1 ist %2%3!!!
 %1 is needed by: %2.	setup	de	%1 wird von benötigt von: %2.
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	de	%1 ist auf %2 gesetzt, Sie werden KEINE Dateien größer als das hoch laden oder anhängen können!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	de	%1 ist auf %2 gesetzt. Das ist für Produktionssysteme NICHT empfohlen, das Fehlermeldungen Passworte oder andere sensible Daten enthalten können!
+%1 not allowed to create in univention.	setup	de	Es ist nicht erlaubt unter Univention %1 anzulegen.
+%1 password set in %2.	setup	de	%1 Passwort gesetzt in %2.
+%1 passwords updated, %3 errors	setup	de	%1 Passwörter aktualisiert, %3 Fehler
 %1 users and %2 groups created, %3 errors	setup	de	%1 Benutzer und %2 Gruppen angelegt, %3 Fehler
 %1, %2 or %3 the configuration file.	setup	de	%1, %2 oder %3 der Konfigurationsdatei.
 '%1' is no valid domain name!	setup	de	'%1' ist kein gültiger Domainname!
@@ -45,6 +51,7 @@ admin user	setup	de	Administrator Konto
 admin user for header manager	setup	de	Admin Benutzer für Headerverwaltung
 admin username	setup	de	Admin Benutzername
 admins	setup	de	Administratoren
+ads dn "%1" not found!	setup	de	ADS DN "%1" NICHT gefunden!
 after backing up your tables first.	setup	de	Nach einer Datensicherung Ihrer Tabellen.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	de	Datei nach dem Herunterladen als header.inc.php speichern. Danach auf "Weiter" klicken.
 all applications	setup	de	Alle Anwendungen
@@ -55,6 +62,7 @@ all languages (incl. not listed ones)	setup	de	alle Sprachen (einschl. nicht auf
 all users	setup	de	Alle Benutzer
 allow authentication via cookie	setup	de	Erlaube Benutzerauthentifizierung über ein Cookie
 allow password migration	setup	de	Erlaube Password Migration
+allow saml logins to join existing accounts	setup	de	Erlaube SAML Logins sich mit bestehenden Benutzerkonten zu verbinden
 allow usernames identical to system users?	setup	de	Erlaube Benutzernamen identisch zu denen von Systembenutzern?
 allowed migration types (comma-separated)	setup	de	Erlaubte Migrationstypen (Komma separiert)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	de	Auf Domains kann alternative auch durch Anmelden als <i>benutzer@domain</i> zugegriffen werden.
@@ -121,6 +129,7 @@ but we <u>highly recommend backing up</u> your tables in case the script causes 
 by redirecting to https	setup	de	Durch weiterleiten auf https
 by rewriting links to https (allows eg. sitemgr to run on http)	setup	de	Durch umschreiben der Links auf https (erlaubt zB. SiteMgr unter http zu verwenden)
 ca certificate	setup	de	CA Zertifikat
+cached cleared	setup	de	Cache gelöscht
 can not connect to %1 database %2 on host %3 using user %4!	setup	de	Kann nicht zur %1 Datenbank %2 auf Rechner %3 als Benutzer %4 verbinden!
 can not connect to ldap server on host %1 using dn %2!	setup	de	Kann nicht zu LDAP Server auf Rechner %1 als DN %2 verbinden!
 can not create %1 database %2 on %3 for user %4!	setup	de	Kann keine %1 Datenbank %2 auf Rechner %3 für Benutzer %4 anlegen!
@@ -133,6 +142,7 @@ cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	de	CAS Server 
 cas server port:<br />example: 443	setup	de	CAS Server Port (zB. 443):
 cas server uri:	setup	de	CAS Server URI:
 certificate (pem or ca):	setup	de	Zertifikat (PEM oder CA):
+certificate metadata is signed with	setup	de	Zertifikat mit dem die Metadaten signiert sind
 change system-charset	setup	de	Systemzeichensatz wechseln
 charset	setup	de	utf-8
 charset to convert to	setup	de	Zeichensatz in den konvertiert werden soll
@@ -202,8 +212,10 @@ current system-charset is %1.	setup	de	Aktueller Systemzeichensatz ist %1.
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br />
 custom handler: %1	setup	de	Eigener Sitzunghandler: %1
+custom oid	setup	de	Benutzerdefinierte OID
 custom set via %1	setup	de	Benutzerdefiniert über "%1" gesetzt
 cyrus imap: admin user,password	setup	de	Cyrus IMAP: Adminbenutzer,Passwort
+daily	setup	de	täglich
 database	setup	de	Datenbank
 database instance (egw domain)	setup	de	Datenbankinstanz (EGw Domain)
 database is version %1 and up to date.	setup	de	Datenbank ist Version %1 und aktuell.
@@ -224,6 +236,7 @@ db user	setup	de	Datenbank-Benutzer
 default	setup	de	empfohlene Vorgabe
 default file system space per user/group ?	setup	de	Vorgabewert Festplattenplatz pro Benutzer / Gruppe ?
 delete	setup	de	Löschen
+delete all existing accounts from sql database	setup	de	Lösche alle bestehenden Konten von der SQL Datenbank
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	de	Alle existierende SQL-Benutzer, Gruppen, ACLs und Einstellungen löschen (normalerweise nicht nötig)?
 delete all my tables and data	setup	de	Alle meine Tabellen und Daten löschen
 delete all old languages and install new ones	setup	de	Alle installierten Sprachen löschen und neu installieren
@@ -268,6 +281,7 @@ egroupware is already installed!	setup	de	EGroupware ist bereits installiert!
 egroupware requires several dependencies installed via: %1	setup	de	EGroupware hängt von diversen Paketen ab, die installiert werden müssen mit: %1
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	de	EGroupware Quellen in '%1' sind nicht komplett, Datei '%2' fehlt !!!
 email (standard maildomain should be set)	setup	de	email (Standard Maildomaine muss gesetzt sein)
+email-address	setup	de	EMail Adresse
 emailadmin profile updated:	setup	de	EMailAdmin Profil aktualisiert:
 enable for extra debug-messages	setup	de	ankreuzen für zusätzliche Diagnosemeldungen
 enable mcrypt	setup	de	MCrypt einschalten
@@ -295,8 +309,10 @@ error in admin-creation !!!	setup	de	Fehler beim Anlegen des Admin-Kontos !!!
 error in group-creation !!!	setup	de	Fehler beim Anlegen der Gruppen !!!
 error listing "dn=%1"!	setup	de	Fehler beim Auflisten von "dn=%1"!
 error modifying dn=%1: %2='%3'!	setup	de	Fehler beim Ändern von dn=%1: %2='%3'!
+error searching "dn=%1" for "%2"!	setup	de	Fehler beim Suchen von "dn=%1" nach "%2"!
 export has been completed!	setup	de	Export ist abgeschlossen!
 failed to mount backup directory!	setup	de	Konnte Datensicherungsverzeichnis nicht mounten!
+failed updating user "%1" dn="%2"!	setup	de	Konnte Benutzer "%1" dn="%2" nicht aktualisieren!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	de	Fehler beim Schreiben der Konfigurationsdatei header.inc.php, bitte überprüfen Sie die Zugriffsrechte !!!
 false	setup	de	Falsch
 file	setup	de	DATEI
@@ -305,6 +321,7 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	de	Dateiname
 filesystem	setup	de	Dateisystem
 filesystem (default)	setup	de	Dateisystem (Vorgabe)
+find and register all application hooks	setup	de	Suche und registiere alle Hooks der Anwendungen
 force selectbox	setup	de	Auswahl erzwingen
 found, but unknown version	setup	de	Gefunden, aber unbekannte Version
 give admin access to all installed apps	setup	de	Admin Zugang zu allen installierten Anwendungen geben
@@ -337,6 +354,7 @@ however the tables are still in the database	setup	de	Wie auch immer, die Tabell
 however, the application is otherwise installed	setup	de	Wie auch immer, die Anwendung ist ansonsten installiert
 however, the application may still work	setup	de	Wie auch immer, die Anwendung mag dennoch funktionieren
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	de	HTTP Authetifizierungs Typen (Komma-getrennt) die ohne Login Seite benutzt werden sollen, zB. "NTLM"
+identity provider	setup	de	Identitätsprovider
 if no acl records for user or any group the user is a member of	setup	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört gibt
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	de	Wenn safe_mode eingeschaltet ist, kann EGw verschiedene Einstellungen nicht mehr zur Laufzeit ändern, noch können wir nicht geladene Erweiterungen (php extensions) laden.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	de	Wenn die Anwendung keine definierten Tabellen hat, wählen Sie überarbeiten. Das Problem sollte damit behoben werden.
@@ -345,6 +363,7 @@ if using cas (central authentication service):	setup	de	Wenn Sie CAS (Central Au
 if using ldap	setup	de	Wenn Sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Kommandointerpreter verwalten ?
 if using mail authentication	setup	de	Wenn Sie Mail Authentifizierung verwenden
+if using saml 2.0 / shibboleth / simplesamlphp	setup	de	Wenn Sie SAML 2.0 / Shibboleth / SimpleSAMLphp benutzen
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	de	Wenn Sie nur die Documentroot erreichen können, wählen Sie bei Inhalt von Dateien speichern <b>Datenbank</b> UND benutzen Sie hier den Pfad für temporäre Dateien.
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Anwendungen
 if you did not receive any errors, your tables have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
@@ -373,6 +392,8 @@ is disabled	setup	de	ist nicht aktiv
 is in the webservers docroot	setup	de	ist im Dokumentenverzeichnis (Documentroot) des Webservers
 is not writeable by the webserver	setup	de	ist nicht vom Webserver schreibbar
 it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	de	Benötigt eine Aktualisierung auf Version %1! Benutzen Sie --update-header Passwort[,Benutzer] dafür (--usage gibt weitere Optionen)
+just now	setup	de	nur jetzt
+label to display as option on login page	setup	de	Beschriftung zur Anzeige als Option auf der Login Seite
 languages updated.	setup	de	Sprachen aktualisiert.
 ldap accounts configuration	setup	de	LDAP-Benutzerkonten Konfiguration
 ldap accounts context	setup	de	LDAP-Kontext für Benutzerkonten
@@ -398,6 +419,7 @@ login to mysql -	setup	de	mysql aufrufen -
 loginname needed for domain configuration	setup	de	Benutzername für die Konfiguration der Domain
 logout	setup	de	Abmelden
 mail account of %1 migraged	setup	de	Mail Konto von %1 Migriert
+mail account of %1 migrated	setup	de	Mail Konto von %1 migriert
 mail domain (for virtual mail manager)	setup	de	Mail Domain (für Virtual Mail Manager)
 mail server login type	setup	de	Mail Server Login Typ
 mail server protocol	setup	de	Mail Server Protokoll
@@ -405,6 +427,7 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	de	Anwendungen verwalten
 manage languages	setup	de	Sprachen verwalten
 manual / help	setup	de	Handbuch / Hilfe
+match saml usernames to existing ones (use strings or regular expression)	setup	de	Verbinde SAML Benutzernamen mit bestehenden (benutze Strings oder Reguläre Ausdrücke)
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	de	max_execution_time (maximale Ausführungszeit eines Skripts) ist auf weniger als 30 (Sekunden) gesetzt: EGroupware benötigt teilweise längere Ausführungszeiten. Sie müssen mit gelegentlichen Fehlern rechnen.
 maximum account id (e.g. 65535 or 1000000)	setup	de	Maximum für Benutzer-ID (z.B. 65535 oder 1000000)
 may be broken	setup	de	kann kaput sein
@@ -413,6 +436,8 @@ mcrypt initialization vector	setup	de	MCrypt-Initialisierungsvektor
 mcrypt mode (default cbc)	setup	de	MCrypt-Modus (Vorgabe CBC)
 mcrypt settings (requires mcrypt php extension)	setup	de	MCrypt-Einstellungen (benötigt die mcrypt Erweiterung von PHP)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	de	memory_limit (maximale Speicher für ein Skript) ist auf weniger als %1 gesetzt: einige EGroupware Anwendungen benötigen mehr als die empfohlenen 8M. Sie müssen mit gelegentlichen Fehlern rechnen.
+metadata	setup	de	Metadaten
+metadata url	setup	de	Metadaten URL
 migration between egroupware account repositories	setup	de	Migration zwischen versch. Orten zur Speicherung von EGroupware Benutzern
 migration of group will fail, as sql does not allow identical ids.	setup	de	Migration dieser Gruppe wird scheitern, da SQL keine identischen IDs unterstützt.
 min backup count	setup	de	Min. Anzahl gehaltener Backups (null: alle / kein Limit)
@@ -423,8 +448,10 @@ modifications have been completed!	setup	de	Änderung ist abgeschlossen!
 modified	setup	de	geändert
 modify	setup	de	Ändern
 month	setup	de	Monat
+more information	setup	de	Mehr Informationen
 mount backup directory to %1	setup	de	Datensicherungsverzeichnis unter %1 mounten
 multi-language support setup	setup	de	Mehr-Sprachen Unterstützung einrichten
+name for service provider	setup	de	Name des Service Provider / Dienstes
 name of database	setup	de	Name der Datenbank
 name of db user egroupware uses to connect	setup	de	Name des Datenbank-Benutzers den EGroupware verwendet
 needs extra configuration on dc and webserver!	setup	de	Benötigt extra Konfiguration auf Domain Controller und Webserver!
@@ -444,6 +471,7 @@ no valid timezone set! ("%1" is not sufficient, you have to use a timezone ident
 no xml support found. disabling	setup	de	Keine Unterstützung für XML gefunden. Abgeschaltet
 not	setup	de	nicht
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	de	Nicht alle MCrypt-Algorithmen und -Modi funktionieren mit EGroupware. Wenn Sie Probleme feststellen, versuchen Sie es abzuschalten.
+not automatic	setup	de	nicht automatisch
 not complete	setup	de	nicht komplett
 not completed	setup	de	Nicht komplett
 not installed	setup	de	nicht installiert
@@ -463,12 +491,14 @@ optional, if only authentication and anonymous search is enabled	setup	de	option
 or	setup	de	oder
 or %1continue to the header admin%2	setup	de	oder %1mit der Headerverwaltung weiter machen%2
 or http://webdav.domain.com (webdav)	setup	de	oder http://webdav.domain.com (für WebDAV)
+or leave empty and select saml as authentication type above for single sign on	setup	de	oder leer lassen und für SingleSignOn oberhalb SAML als Art der Authentifizierung auswählen
 or we can attempt to create the database for you:	setup	de	Oder wir können versuchen die Datenbank für Sie anzulegen:
 or you can install a previous backup.	setup	de	Oder Sie können eine vorherige Datensicherung installieren.
 password	setup	de	Passwort
 password for smtp-authentication	setup	de	Passwort für SMTP Authentifizierung
 password needed for domain configuration.	setup	de	Passwort für die Konfiguration der Domain.
 password of db user	setup	de	Passwort des Datenbank Benutzers
+passwords --> sql	setup	de	Passwörter --> SQL
 passwords did not match, please re-enter	setup	de	Passworte stimmten nicht überein, bitte noch einmal eingeben
 path (not url!) to your egroupware installation.	setup	de	Pfad (nicht Internetadresse/URL!) Ihrer EGroupware Installation.
 path information	setup	de	Pfadinformationen
@@ -492,6 +522,7 @@ please login to egroupware and run the admin application for additional site con
 please make the following change in your php.ini	setup	de	Bitte nehmen Sie die folgenden Änderungen an Ihrer php.ini Datei vor
 please wait...	setup	de	Bitte warten ...
 pop/imap mail server hostname or ip address	setup	de	POP/IMAP Mail Server Hostname oder IP Adresse
+port	setup	de	Port
 possible reasons	setup	de	Mögliche Gründe
 possible solutions	setup	de	Mögliche Lösungen
 post-install dependency failure	setup	de	Abhängigkeitsfehler nach der Installation
@@ -514,9 +545,12 @@ rejected lines	setup	de	Zurückgewiesene Zeilen
 remove	setup	de	Entfernen
 remove all	setup	de	Alle Entfernen
 rename	setup	de	Umbenennen
+replace username and email	setup	de	Benutzernamen und EMail ersetzen
+replace username and keep email	setup	de	Benutzernamen ersetzen und EMail beibehalten
 required to change passwords	setup	de	erforderlich um Passwörter zu ändern
 requires "reset password" privilege, to change passwords!	setup	de	Benötigt "Passwort zurücksetzen" Recht, um Passwörter zu ändern!
 requires reinstall or manual repair	setup	de	Erfordert Neuinstallation oder manuelle Reparatur
+requires saml optional on login page and user to specify username and password	setup	de	Benötigt SAML als Option auf der Login Seite und der Benutzer muss Benutzername und Passwort angeben
 requires upgrade	setup	de	Erfordert Aktualisierung
 resolve	setup	de	Lösen
 restore	setup	de	Wiederherstellen
@@ -524,6 +558,7 @@ restore failed	setup	de	Wiederherstellen fehlgeschlagen
 restore finished	setup	de	Wiederherstellen beendet
 restore started, this might take a few minutes ...	setup	de	Wiederherstellung gestartet, das kann einige Minuten dauern ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	de	Das Wiederherstellen einer Datensicherung löscht / ersetzt den Inhalt Ihrer Datenbank. Sind Sie sicher?
+result data to use as username	setup	de	Ergebnisattribute das als Benutzername verwendet wird
 return to setup	setup	de	Zurück zum Setup
 root dn	setup	de	Root DN
 root dn password	setup	de	Root DN Passwort
@@ -555,6 +590,7 @@ select which user(s) will have admin privileges	setup	de	Wählen Sie den/die Ben
 select your old version	setup	de	Wählen Sie Ihre alte Version
 selectbox	setup	de	Auswahlfeld
 server root	setup	de	Server-Root
+session expired	setup	de	Sitzung abgelaufen
 session handler class used.	setup	de	Benutze Sitzunghandler Klasse.
 sessions handler	setup	de	Sitzunghandler
 set	setup	de	gesetzt
@@ -572,6 +608,7 @@ skip the installation tests (not recommended)	setup	de	Installationstests übers
 smtp server hostname or ip address	setup	de	SMTP Server Hostname oder IP Adresse
 smtp server port	setup	de	SMTP Server Port
 smtp-authentication required	setup	de	SMTP Authentifizierung benötigt
+some information for the own service provider metadata	setup	de	Einige Information für die Metadaten des eigenen Service Provider / Dienst
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 sources deleted/missing	setup	de	Quellen gelöscht/fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort
@@ -602,6 +639,7 @@ tables installed, unless there are errors printed above	setup	de	Tabellen wurden
 tables upgraded	setup	de	Tabellen wurden aktualisiert
 target version	setup	de	Ziel Version
 tcp port number of database server	setup	de	TCP-Port des Datenbank-Servers
+technical contact	setup	de	Technischer Kontakt
 text entry	setup	de	Texteingabe
 the %1 extension is needed from: %2.	setup	de	Die %1 Erweiterung (php-extension) wird benötigt von: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	de	Die %1 Erweiterung (php extension) wird benötigt, wenn Sie die %2 Datenbank einsetzen wollen.
@@ -625,8 +663,10 @@ the session extension is required!	setup	de	Die SESSION Erweiterung wird unbedin
 the table definition was correct, and the tables were installed	setup	de	Die Tabellen Definition war korrekt und die Tabellen wurden installiert
 the tables	setup	de	die Tabellen
 the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	de	Die tidy PHP Erweiterung wird im Sammeldruck benötigt um HTML zu reinigen bevor es in Office Dokumente eingefügt wird.
+the used simplesamlphp allows a lot more configuration / different authentication types via its config files in	setup	de	Das benutzte SimpleSAMLphp erlaubt deutlich mehr Konfiguration / verschiedenen Arten der Authentifizierung über seine Konfigurationdateien in
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	Die Benutzernamen/Passworte sind: demo/guest, demo2/guest und demo3/guest
 the xmlreader extension is required by egroupware in several applications.	setup	de	Die xmlreader PHP Erweiterung wird in EGroupware von vielen Anwendungen benötigt.
+the xsl extension is need in merge-print for processing html and office documents.	setup	de	Die XSL Erweiterung wird benötigt im Sammeldruck für das Bearbeiten von HTML und Office Dokumenten.
 the zip extension is required for merge-print with office documents.	setup	de	Die PHP Erweiterung zip ist für den Sammeldruck von Office Dateien zwingend erforderlich.
 there was a problem trying to connect to your ldap server. <br />	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />Bitte überprüfen Sie die Konfiguration Ihres LDAP-Servers.
@@ -652,8 +692,11 @@ two weeks	setup	de	zwei Wochen
 uninstall	setup	de	deinstalliert
 uninstall all applications	setup	de	Alle Anwendungen deinstallieren
 uninstalled	setup	de	nicht installiert
+university login	setup	de	Universitäts Login
 unknown option '%1' !!!	setup	de	Unbekannte Option '%1' !!!
 update finished.	setup	de	Aktualisierung beendet.
+update necessary.	setup	de	Update notwendig.
+update of %1 in %2 failed !!!	setup	de	Update von %1 auf %2 fehlgeschlagen!
 upgrade	setup	de	Aktualisieren
 upgrade all	setup	de	Alle Aktualisieren
 upgraded	setup	de	Aktualisiert
@@ -672,6 +715,8 @@ use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML 
 use space to separate multiple	setup	de	Leerzeichen benutzen um mehrere anzugeben
 use tls or ssl encryption	setup	de	Benutze TLS oder SSL Verschlüsselung
 user	setup	de	Benutzer
+user "%1" dn="%2" successful updated.	setup	de	Benutzer "%1" dn="%2" erfolgreich aktualisiert.
+user "%1" not found!	setup	de	Benutzer "%1" nicht gefunden!
 user account prefix	setup	de	Präfix für Benutzernamen
 user for smtp-authentication (leave it empty if no auth required)	setup	de	Benutzer für SMTP-Authentifizierung (leer lassen wenn keine notwendig ist)
 usernames (comma-separated) which can get vfs root access (beside setup user)	setup	de	Benutzernamen (mit Komma getrennt) die VFS root Zugriff bekommen können (neben dem Setup Benutzer)
@@ -690,9 +735,12 @@ we can proceed	setup	de	Wir können fortfahren
 we could not determine the version of %1, please make sure it is at least %2	setup	de	Wir konnten die Version von %1 nicht ermitteln, bitte stellen Sie sicher das sie mindestens %2 ist.
 we will automatically update your tables/records to %1	setup	de	Wir werden Ihre Tabellen/Einträge automatisch zu %1 aktualisieren
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	de	Wir werden jetzt eine Serie von Tests durchführen. Das kann ein paar Minuten dauern. Klicken sie auf den folgenden Link um Fortzufahren.
+weekly	setup	de	wöchentlich
 welcome to the egroupware installation	setup	de	Herzlich willkommen zur EGroupware Installation
 where should egroupware store file content	setup	de	Wo soll EGroupware den Inhalt von Dateien speichern
 which database type do you want to use with egroupware?	setup	de	Welchen Datenbanktyp wollen Sie mit EGroupware verwenden?
+will be downloaded once, unless changed.	setup	de	Wird einmalig heruntergeladen, außer bei Änderung.
+with	setup	de	mit
 world readable	setup	de	lesbar von jedem (world readable)
 world writable	setup	de	schreibbar von jedem (world writeable)
 would you like egroupware to cache the phpgw info array ?	setup	de	Soll EGroupware das phpgw info Array cachen ?
@@ -712,6 +760,7 @@ you appear to have xml support enabled	setup	de	Sie scheinen XML Unterstützung 
 you are ready for this stage, but this stage is not yet written.<br />	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	de	Sie benutzen die PHP Version %1. EGroupware benötigt mindestens die Version %2, empfohlen ist PHP %3.
 you can install it by running:	setup	de	Installation durch ausführen von:
+you can specify multiple idp on separate lines.	setup	de	Sie können mehrere IdP in separaten Zeilen angeben.
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	de	Sie können den Benutzer und das Passwort der Headerverwaltung auch für jede Domain verwenden. Wenn das Passwort nicht in der Kommandozeile angegeben wurde, wird es aus der Umgebungsvariable EGW_CLI_PASSWORD gelesen oder vom Benutzer abgefragt.
 you didn't enter a config password for domain %1	setup	de	Sie haben kein Passwort für die Domain %1 angegeben
 you didn't enter a config username for domain %1	setup	de	Sie haben keinen Benutzernamen für die Domain %1 angegeben

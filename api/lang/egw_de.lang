@@ -44,7 +44,9 @@
 1 week	common	de	1 Woche
 13 (ntp)	admin	de	13 (ntp)
 15 minutes	common	de	15 Minuten
+2-factor authentication code required	common	de	2-Faktor-Authentifizierungs Code benötigt
 2-factor-authentication	common	de	2-Faktor-Authentifizierung
+2-factor-authentication required	common	de	2-Faktor-Authentifizierung verpflichtend
 3 minutes	common	de	3 Minuten
 30 minutes	common	de	30 Minuten
 30 seconds	common	de	30 Sekunden
@@ -119,6 +121,7 @@ all in one	groupdav	de	Gemeinsam in einem
 all languages	common	de	Alle Sprachen
 all operations save the template!	common	de	alle Operation speichern das Template!
 all users	common	de	Alle Benutzer
+allow editing the %1	common	de	Erlaube das Bearbeiten von %1
 allowed file type: %1	common	de	Erlaubter Dateityp: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	de	Erlaubt verantwortliche Benutzer durch setzen einer E-Mail Adresse als Kategorie zu ändern, von Geräten die keine verantwortlichen Benutzer unterstützen.
 alt	common	de	Alt
@@ -554,6 +557,7 @@ file %1 has no content in physical filesystem %2 --> failed to remove file!	admi
 file %1 has no content in physical filesystem %2 --> file removed!	admin	de	Datei %1 ist im Dateisystem nicht verfügbar %2 -> Dateieintrag gelöscht
 file %1 has no content in physical filesystem %2!	admin	de	Datei %1 ist im Dateisystem nicht vorhanden
 file '%1' not found!	common	de	Datei '%1' nicht gefunden!
+file a file	common	de	Datei ablegen
 file contains more than one etemplate, last one is shown !!!	common	de	Datei enthält mehr als ein eTemplate, das letzte wird angezeigt !!!
 file information	common	de	Datei Information
 file is of wrong type (%1 != %2)!	common	de	Datei hat ungültigen Typ (%1 != %2)!
@@ -686,6 +690,7 @@ import an etemplate from a xml-file	common	de	Importiert ein eTemplate aus einer
 import table-definitions from existing db-table	common	de	Importiert die Tabellen-Definition aus einer bestehenden Datenbank-Tabelle
 import xml	common	de	XML Import
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	de	Um in die Zwischenablage zu kopieren, müssen Sie Flash Player durch klicken auf die graue Box erlauben.\nSie können Flash Player für EGroupware in den Einstellungen Ihres Browsers auch permanent erlauben.
+include access to any linked files (links tab)	common	de	Beinhaltet Zugriff auf jegliche verküpfte Dateien (Reiter Verküpfungen)
 increment version to not overwrite the existing template	common	de	Version erhöhen um das existierende Template nicht zu überschreiben
 indent	common	de	Einzug vergrößern
 index/name of returned content (name of the template, link / method for image)	common	de	Index / Name des zurückgelieferten Inhalts (Name des eTemplates oder Link/Methode für Grafik)
@@ -694,6 +699,7 @@ indexoptions	common	de	Indexoptionen
 india	common	de	INDIEN
 indonesia	common	de	INDONESIEN
 infolog types to sync	common	de	InfoLog-Typen zum synchronisieren
+initial	common	de	Anfangsbuchstabe
 input required	common	de	Eingabe erforderlich
 insert a column before	common	de	eine Spalte davor einfügen
 insert a column behind	common	de	eine Spalte dahinter einfügen
@@ -718,9 +724,11 @@ install	common	de	Installieren
 integer	common	de	Ganzzahl
 international	common	de	International
 introduction	common	de	Einführung
+invalid 2-factor authentication code	common	de	Ungültiger 2-Faktor Authentifizierungscode
 invalid email	common	de	Ungültige E-Mail-Adresse
 invalid filename	common	de	Ungültiger Dateiname
 invalid ip address	common	de	Ungültige IP-Adresse
+invalid or expired 'remember me' token	common	de	Ungültiges oder abgelaufenes "An mich erinnern" Token
 invalid password	common	de	Ungültiges Passwort
 iran, islamic republic of	common	de	IRAN, ISLAMISCHE REPUBLIC
 iraq	common	de	IRAK
@@ -1033,6 +1041,7 @@ please %1 by hand	common	de	Bitte %1 per Hand
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
 please reload the egroupware desktop (f5 / cmd+r).	common	de	Bitte laden Sie die EGroupware Oberfläche neu (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	de	Bitte daran denken ab sofort '%1' als Benutzernamen für lokale Anmeldungen zu benutzen!
 please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu aktualisieren
 please select	common	de	Bitte wählen
 please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
@@ -1250,7 +1259,9 @@ seychelles	common	de	SEYCHELLEN
 share	common	de	Teilen
 share filemanager directory	common	de	Dateimanager Verzeichnis
 share files	common	de	Dateien teilen
+share just the associated filemanager directory, not the %1	common	de	Teile nur das verbundene Dateimanager Verzeichnis, nicht das %1
 share link	common	de	Link teilen
+share this %1 via url	common	de	Teile diesen %1 über den Link
 shift	common	de	Shift
 shift ⇧	common	de	Umschalten ⇧
 should the form be submitted or any custom javascript be executed	common	de	Soll das Formular abgeschickt werden oder beliebiges JavaScript ausgeführt werden
@@ -1422,6 +1433,7 @@ update	common	de	Aktualisieren
 update a single entry by passing the fields.	common	de	Aktualisiert einen einzelnen Eintrag über seine Felder.
 update from version '%s' to	common	de	Update von Version '%s' auf
 update the clock per minute or per second	common	de	Uhr pro Minute oder pro Sekunde aktualisieren
+updating your account with new data from your identity provider failed!	common	de	Aktualisieren Ihres Kontos mit neuen Daten von Ihrem Identitätsprovider fehlgeschlagen!
 upload	common	de	Hochladen
 upload directory does not exist, or is not writeable by webserver	common	de	Das Verzeichnis zum Hochladen existiert nicht oder der Webserver hat dort keine Schreibrechte.
 upload file(s) from filemanager...	common	de	Dateien aus dem Dateimanager hochladen..
@@ -1529,6 +1541,7 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	de	Sie m
 you tried to automatically size a flex column, which always takes the rest of the space	common	de	Sie versuchen die Breite einer Flexiblen Spalte zu ändern, diese nimmt immer den Rest des verfügbaren Platzes ein.
 you will not be able to send or receive encrypted mails before completing that step!	common	de	Sie werden KEINE verschlüsselten Mail sender oder empfangen können, bevor Sie nicht diesen Schritt beendet haben!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
+your account has been updated with new data from your identity provider.	common	de	Ihr Konto wurde mit neuen Daten Ihres Identitätsproviders aktualisiert.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	de	Ihr Browser ist nicht auf dem neuesten Stand (JavaScript ES6 kompatibel), einige der Funktionen werden nicht funktionieren.
 your code is incorrect !!!	common	de	Ihr Code ist nicht richtig!!!
 your key has been restored successfully.	common	de	Ihr Schlüssel wurde erfolgreich wiederhergestellt.
@@ -1546,5 +1559,3 @@ your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
 zambia	common	de	ZAMBIA
 zimbabwe	common	de	ZIMBABWE
 zoom	common	de	Zoomen
-initial	common	de	Anfangsbuchstabe
-id	common	de	ID

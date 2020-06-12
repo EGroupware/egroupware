@@ -62,6 +62,7 @@ all languages (incl. not listed ones)	setup	en	All languages (incl. not listed o
 all users	setup	en	All users
 allow authentication via cookie	setup	en	Allow authentication via cookie
 allow password migration	setup	en	Allow password migration
+allow saml logins to join existing accounts	setup	en	Allow SAML logins to join existing accounts
 allow usernames identical to system users?	setup	en	Allow usernames identical to system users?
 allowed migration types (comma-separated)	setup	en	Allowed migration types (comma-separated)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	en	Alternatively domains can be accessed by logging in with <i>username@domain</i>.
@@ -91,6 +92,7 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 attributes for new users	setup	en	Attributes for new users
 authentication / accounts	setup	en	Authentication / Accounts
 authentication type for application	setup	en	Authentication type for application
+authentication type for http host	setup	en	Authentication type for HTTP Host
 authentification mode:	setup	en	Authentification mode:
 auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
 auto login anonymous user	setup	en	Auto login anonymous user
@@ -141,6 +143,7 @@ cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	en	cas server 
 cas server port:<br />example: 443	setup	en	cas server port:<br />Example: 443
 cas server uri:	setup	en	cas server uri:
 certificate (pem or ca):	setup	en	Certificate (PEM or CA):
+certificate metadata is signed with	setup	en	Certificate Metadata is signed with
 change system-charset	setup	en	Change system-charset
 charset	setup	en	utf-8
 charset to convert to	setup	en	Charset to convert to
@@ -210,8 +213,10 @@ current system-charset is %1.	setup	en	Current system charset is %1.
 current version	setup	en	Current version
 currently installed languages: %1 <br />	setup	en	Currently installed languages: %1 <br />
 custom handler: %1	setup	en	Custom handler: %1
+custom oid	setup	en	custom OID
 custom set via %1	setup	en	Custom set via %1
 cyrus imap: admin user,password	setup	en	Cyrus IMAP: admin user, password
+daily	setup	en	daily
 database	setup	en	Database
 database instance (egw domain)	setup	en	Database instance (EGw domain)
 database is version %1 and up to date.	setup	en	Database is version %1 and up to date.
@@ -352,6 +357,7 @@ however the tables are still in the database	setup	en	The tables are still in th
 however, the application is otherwise installed	setup	en	The application is otherwise installed.
 however, the application may still work	setup	en	The application may still work
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	en	HTTP auth types, comma-separated to use without login page, eg. "NTLM"
+identity provider	setup	en	Identity Provider
 if no acl records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	en	If safe_mode is turned on, EGw is not able to change certain settings on runtime, nor can we load any not yet loaded module.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
@@ -360,6 +366,7 @@ if using cas (central authentication service):	setup	en	if using cas (Central Au
 if using ldap	setup	en	If using LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage home directory and login shell attributes?
 if using mail authentication	setup	en	If using Mail authentication
+if using saml 2.0 / shibboleth / simplesamlphp	setup	en	If using SAML 2.0 / Shibboleth / SimpleSAMLphp
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	en	If you can only access the docroot choose <b>Database</b> for where to store the file content AND use same path as for temporary files.
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
 if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
@@ -389,6 +396,8 @@ is disabled	setup	en	is disabled
 is in the webservers docroot	setup	en	is in the web servers docroot
 is not writeable by the webserver	setup	en	is not writeable by the web server
 it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	en	It needs upgrading to version %1! Use --update-header <password>[,<user>] to do so (--usage gives more options).
+just now	setup	en	just now
+label to display as option on login page	setup	en	Label to display as option on login page
 languages updated.	setup	en	Languages updated.
 ldap accounts configuration	setup	en	LDAP accounts configuration
 ldap accounts context	setup	en	LDAP accounts context
@@ -422,6 +431,7 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	en	Manage applications
 manage languages	setup	en	Manage languages
 manual / help	setup	en	Manual | Help
+match saml usernames to existing ones (use strings or regular expression)	setup	en	Match SAML usernames to existing ones (use strings or regular expression)
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	en	max_execution_time is set to less than 30 (seconds): EGroupware sometimes needs a higher execution_time, expect occasional failures
 maximum account id (e.g. 65535 or 1000000)	setup	en	Maximum account id (e.g. 65535 or 1000000)
 may be broken	setup	en	May be broken
@@ -430,6 +440,8 @@ mcrypt initialization vector	setup	en	MCrypt initialization vector
 mcrypt mode (default cbc)	setup	en	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	en	Mcrypt Settings (requires mcrypt PHP extension)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	en	memory_limit is set to less than %1: some applications of EGroupware need more than the recommend 8M, expect occasional failures
+metadata	setup	en	Metadata
+metadata url	setup	en	Metadata URL
 migration between egroupware account repositories	setup	en	Migration between EGroupware account repositories
 migration of group will fail, as sql does not allow identical ids.	setup	en	Migration of group will fail, as SQL does NOT allow identical IDs.
 min backup count	setup	en	Number of backups to keep at least (zero: all / no limit)
@@ -440,8 +452,10 @@ modifications have been completed!	setup	en	Modifications have been completed!
 modified	setup	en	Modified
 modify	setup	en	Modify
 month	setup	en	Month
+more information	setup	en	More information
 mount backup directory to %1	setup	en	Mount backup directory to %1
 multi-language support setup	setup	en	Multi language support setup
+name for service provider	setup	en	Name for Service Provider
 name of database	setup	en	Name of database
 name of db user egroupware uses to connect	setup	en	Name of db user EGroupware uses to connect
 needs extra configuration on dc and webserver!	setup	en	Needs extra configuration on DC and webserver!
@@ -461,6 +475,7 @@ no valid timezone set! ("%1" is not sufficient, you have to use a timezone ident
 no xml support found. disabling	setup	en	No XML support found. Disabling
 not	setup	en	Not
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	en	Not all mcrypt algorithms and modes work with EGroupware. If you experience problems try switching it off.
+not automatic	setup	en	not automatic
 not complete	setup	en	Not complete
 not completed	setup	en	Not completed
 not installed	setup	en	not installed
@@ -480,6 +495,7 @@ optional, if only authentication and anonymous search is enabled	setup	en	option
 or	setup	en	or
 or %1continue to the header admin%2	setup	en	or %1Continue to the Header Admin%2
 or http://webdav.domain.com (webdav)	setup	en	or http://webdav.domain.com (WebDAV)
+or leave empty and select saml as authentication type above for single sign on	setup	en	or leave empty and select SAML as authentication type above for single sign on
 or we can attempt to create the database for you:	setup	en	Or attempt to create the database:
 or you can install a previous backup.	setup	en	Or install a previous backup.
 password	setup	en	Password
@@ -533,9 +549,12 @@ rejected lines	setup	en	Rejected lines
 remove	setup	en	Remove
 remove all	setup	en	Remove all
 rename	setup	en	Rename
+replace username and email	setup	en	Replace username and email
+replace username and keep email	setup	en	Replace username and keep email
 required to change passwords	setup	en	required to change passwords
 requires "reset password" privilege, to change passwords!	setup	en	Requires "Reset Password" privilege, to change passwords!
 requires reinstall or manual repair	setup	en	Requires reinstall or manual repair
+requires saml optional on login page and user to specify username and password	setup	en	Requires SAML optional on login page and user to specify username and password
 requires upgrade	setup	en	Requires upgrade
 resolve	setup	en	Resolve
 restore	setup	en	Restore
@@ -543,6 +562,7 @@ restore failed	setup	en	Restore failed!
 restore finished	setup	en	Restore finished!
 restore started, this might take a few minutes ...	setup	en	Restore started, this might take a few minutes ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	en	Restoring a backup will delete/replace all content in your database. Are you sure?
+result data to use as username	setup	en	Result data to use as username
 return to setup	setup	en	Return to setup
 root dn	setup	en	Root DN
 root dn password	setup	en	Root DN password
@@ -592,6 +612,7 @@ skip the installation tests (not recommended)	setup	en	Skip the installation tes
 smtp server hostname or ip address	setup	en	SMTP server hostname or IP address
 smtp server port	setup	en	SMTP server port
 smtp-authentication required	setup	en	SMTP-authentication required
+some information for the own service provider metadata	setup	en	Some information for the own Service Provider metadata
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
 sources deleted/missing	setup	en	Sources deleted/missing
 sql encryption type	setup	en	SQL encryption type for passwords
@@ -622,6 +643,7 @@ tables installed, unless there are errors printed above	setup	en	Tables installe
 tables upgraded	setup	en	Tables upgraded.
 target version	setup	en	Target version
 tcp port number of database server	setup	en	TCP port number of database server
+technical contact	setup	en	Technical contact
 text entry	setup	en	Text entry
 the %1 extension is needed from: %2.	setup	en	The %1 extension is needed from: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	en	The %1 extension is needed, if you plan to use a %2 database.
@@ -645,6 +667,7 @@ the session extension is required!	setup	en	The session extension is required!
 the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
 the tables	setup	en	the tables
 the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	en	The tidy extension is need in merge-print to clean up html before inserting it in office documents.
+the used simplesamlphp allows a lot more configuration / different authentication types via its config files in	setup	en	The used SimpleSAMLphp allows a lot more configuration / different authentication types via its config files in
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	The username/passwords are: demo/guest, demo2/guest and demo3/guest.
 the xmlreader extension is required by egroupware in several applications.	setup	en	The xmlreader extension is required by EGroupware in several applications.
 the xsl extension is need in merge-print for processing html and office documents.	setup	en	The xsl extension is need in merge-print for processing html and office documents.
@@ -673,6 +696,7 @@ two weeks	setup	en	Two weeks
 uninstall	setup	en	Uninstall
 uninstall all applications	setup	en	Uninstall all applications
 uninstalled	setup	en	Uninstalled
+university login	setup	en	University Login
 unknown option '%1' !!!	setup	en	Unknown option '%1' !!!
 update finished.	setup	en	Update finished.
 update necessary.	setup	en	Update necessary.
@@ -689,6 +713,7 @@ use %u for username, leave empty to no set	setup	en	use %u for username, leave e
 use --create-header to create the configuration file (--usage gives more options).	setup	en	Use --create-header to create the configuration file (--usage gives more options).
 use --install to install egroupware.	setup	en	Use --install to install EGroupware
 use --update to do so.	setup	en	Use --update to do so
+use account description to store saml username	setup	en	Use account description to store SAML username
 use cookies to pass sessionid	setup	en	Use cookies to pass session ID
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	en	Use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
 use persistent db connections: {on(default) | off}	setup	en	Use persistent db connections: {on(default) | off}
@@ -716,9 +741,12 @@ we can proceed	setup	en	We can proceed
 we could not determine the version of %1, please make sure it is at least %2	setup	en	We could not determine the version of %1, please make sure it is at least %2
 we will automatically update your tables/records to %1	setup	en	We will automatically update your tables/records to %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	en	We will now run a series of tests, which may take a few minutes. Click the link below to proceed.
+weekly	setup	en	weekly
 welcome to the egroupware installation	setup	en	Welcome to the EGroupware installation
 where should egroupware store file content	setup	en	Where should EGroupware store file content
 which database type do you want to use with egroupware?	setup	en	Which database type do you want to use with EGroupware?
+will be downloaded once, unless changed.	setup	en	Will be downloaded once, unless changed.
+with	setup	en	with
 world readable	setup	en	World readable
 world writable	setup	en	World writable
 would you like egroupware to cache the phpgw info array ?	setup	en	Would you like EGroupware to cache the phpgw info array?
@@ -738,6 +766,7 @@ you appear to have xml support enabled	setup	en	You appear to have XML support e
 you are ready for this stage, but this stage is not yet written.<br />	setup	en	You are ready for this stage, but this stage is not yet written.<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	en	You are using PHP version %1. EGroupware now requires %2 or later, recommended is PHP %3.
 you can install it by running:	setup	en	You can install it by running:
+you can specify multiple idp on separate lines.	setup	en	You can specify multiple IdP on separate lines.
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	en	You can use the header user and password for every domain too. If the password is not set via the command line, it is read from the environment variable EGW_CLI_PASSWORD or queried from the user.
 you didn't enter a config password for domain %1	setup	en	You didn't enter a config password for domain %1
 you didn't enter a config username for domain %1	setup	en	You didn't enter a config username for domain %1

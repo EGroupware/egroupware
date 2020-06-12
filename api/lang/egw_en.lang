@@ -44,7 +44,9 @@
 1 week	common	en	1 week
 13 (ntp)	admin	en	13 (ntp)
 15 minutes	common	en	15 minutes
+2-factor authentication code required	common	en	2-Factor Authentication code required
 2-factor-authentication	common	en	2-Factor-Authentication
+2-factor-authentication required	common	en	2-Factor-Authentication required
 3 minutes	common	en	3 minutes
 30 minutes	common	en	30 minutes
 30 seconds	common	en	30 seconds
@@ -697,6 +699,7 @@ indexoptions	common	en	Index options
 india	common	en	INDIA
 indonesia	common	en	INDONESIA
 infolog types to sync	common	en	InfoLog types to sync
+initial	common	en	Initial
 input required	common	en	Input required
 insert a column before	common	en	Insert a column before
 insert a column behind	common	en	Insert a column after
@@ -721,9 +724,11 @@ install	common	en	Install
 integer	common	en	Integer
 international	common	en	International
 introduction	common	en	Introduction
+invalid 2-factor authentication code	common	en	Invalid 2-Factor Authentication code
 invalid email	common	en	Invalid email
 invalid filename	common	en	Invalid file name.
 invalid ip address	common	en	Invalid IP address.
+invalid or expired 'remember me' token	common	en	Invalid or expired 'remember me' token
 invalid password	common	en	Invalid password.
 iran, islamic republic of	common	en	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	en	IRAQ
@@ -1036,6 +1041,7 @@ please %1 by hand	common	en	Please %1 by hand
 please enter a name	common	en	Enter a name!
 please enter table-name first !!!	common	en	Enter table name first!
 please reload the egroupware desktop (f5 / cmd+r).	common	en	Please reload the EGroupware desktop (F5 / Cmd+r).
+please remember to use '%1' as username for local login's from now on!	common	en	Please remember to use '%1' as username for local login's from now on!
 please run setup to become current	common	en	Run setup to become current
 please select	common	en	Please select
 please set your global preferences	common	en	Set your global preferences!
@@ -1427,6 +1433,7 @@ update	common	en	Update
 update a single entry by passing the fields.	common	en	Update a single entry by passing the fields
 update from version '%s' to	common	en	Update from version '%s' to
 update the clock per minute or per second	common	en	Update the clock per minute or per second
+updating your account with new data from your identity provider failed!	common	en	Updating your account with new data from your identity provider failed!
 upload	common	en	Upload
 upload directory does not exist, or is not writeable by webserver	common	en	Upload directory does not exist, or is not writable by web server.
 upload file(s) from filemanager...	common	en	Upload file(s) from Filemanager...
@@ -1534,6 +1541,7 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	en	You n
 you tried to automatically size a flex column, which always takes the rest of the space	common	en	You tried to automatically size a flex column, which always takes the rest of the space.
 you will not be able to send or receive encrypted mails before completing that step!	common	en	You will NOT be able to send or receive encrypted mails before completing that step!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You have no permission to access application  %1 !
+your account has been updated with new data from your identity provider.	common	en	Your account has been updated with new data from your identity provider.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	en	Your browser is not up-to-date (JavaScript ES6 compatible), you may experience some of the features not working.
 your code is incorrect !!!	common	en	Code is incorrect!
 your key has been restored successfully.	common	en	Your key has been restored successfully.
@@ -1551,5 +1559,3 @@ your settings have been updated	common	en	Your settings have been updated.
 zambia	common	en	ZAMBIA
 zimbabwe	common	en	ZIMBABWE
 zoom	common	en	Zoom
-initial	common	en	Initial
-id	common	en	ID
