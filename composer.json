@@ -78,6 +78,7 @@
 		"egroupware/registration": "dev-master",
 		"egroupware/rocketchat": "dev-master",
 		"egroupware/status": "dev-master",
+		"egroupware/swoolepush": "dev-master",
 		"egroupware/tracker": "dev-master",
 		"egroupware/z-push-dev": "^2.5",
 		"fxp/composer-asset-plugin": "^1.2.2",

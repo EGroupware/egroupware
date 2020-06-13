@@ -20,6 +20,14 @@ volumes:
   #    device: /usr/share/egroupware
   #    #device: $PWD/extra
   # collabora-config
+  # sources for push server, swoolpush subdirectory of egroupware
+  sources-push:
+    driver_opts:
+      type: none
+      o: bind
+      device: $PWD/sources/egroupware/swoolepush
+  # volume to store config.inc.php file / token shared between egroupware and push container
+  push-config:
   collabora-config:
     driver_opts:
       type: none

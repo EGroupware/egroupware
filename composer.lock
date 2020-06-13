@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51527b473853c68621a168301d09196f",
+    "content-hash": "15e89b698860ff65a8d60addd789b06c",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -642,6 +642,90 @@
             "time": "2018-07-24T23:27:56+00:00"
         },
         {
+            "name": "easyswoole/memcache",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/easy-swoole/memcache.git",
+                "reference": "f3827a7d55e2ab043f5dc1429a4c26578754bd19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/easy-swoole/memcache/zipball/f3827a7d55e2ab043f5dc1429a4c26578754bd19",
+                "reference": "f3827a7d55e2ab043f5dc1429a4c26578754bd19",
+                "shasum": ""
+            },
+            "require": {
+                "easyswoole/spl": "^1.1"
+            },
+            "require-dev": {
+                "easyswoole/phpunit": ">=1.0.0",
+                "easyswoole/swoole-ide-helper": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EasySwoole\\Memcache\\": "src/",
+                    "EasySwoole\\Memcache\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Coroutine version of Memcache client",
+            "time": "2020-06-06T11:45:08+00:00"
+        },
+        {
+            "name": "easyswoole/spl",
+            "version": "1.3.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/easy-swoole/spl.git",
+                "reference": "b9d74dfbeb59086c51616ba09d7728cea7351d05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/easy-swoole/spl/zipball/b9d74dfbeb59086c51616ba09d7728cea7351d05",
+                "reference": "b9d74dfbeb59086c51616ba09d7728cea7351d05",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "easyswoole/phpunit": "^1.0",
+                "easyswoole/swoole-ide-helper": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EasySwoole\\Spl\\": "src/",
+                    "EasySwoole\\Spl\\Test\\": "test/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "YF",
+                    "email": "291323003@qq.com"
+                }
+            ],
+            "description": "php stander lib",
+            "homepage": "https://www.easyswoole.com/",
+            "keywords": [
+                "async",
+                "easyswoole",
+                "framework",
+                "swoole"
+            ],
+            "time": "2020-04-05T15:50:30+00:00"
+        },
+        {
             "name": "egroupware/activesync",
             "version": "dev-master",
             "source": {
@@ -1156,6 +1240,46 @@
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
             "time": "2020-02-28T18:36:19+00:00"
+        },
+        {
+            "name": "egroupware/swoolepush",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/swoolepush.git",
+                "reference": "b8c6df911d3385d6b41d73ccff5d4ea6b172d0da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/b8c6df911d3385d6b41d73ccff5d4ea6b172d0da",
+                "reference": "b8c6df911d3385d6b41d73ccff5d4ea6b172d0da",
+                "shasum": ""
+            },
+            "require": {
+                "easyswoole/memcache": "^1.0"
+            },
+            "require-dev": {
+                "eaglewu/swoole-ide-helper": "dev-english"
+            },
+            "type": "egroupware-app",
+            "autoload": {
+                "psr-4": {
+                    "EGroupware\\SwoolePush\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                }
+            ],
+            "description": "EGroupware push server using Swoole",
+            "homepage": "https://www.egroupware.org/",
+            "time": "2020-06-13T13:05:42+00:00"
         },
         {
             "name": "egroupware/tracker",
@@ -8920,6 +9044,7 @@
         "egroupware/registration": 20,
         "egroupware/rocketchat": 20,
         "egroupware/status": 20,
+        "egroupware/swoolepush": 20,
         "egroupware/tracker": 20
     },
     "prefer-stable": true,
