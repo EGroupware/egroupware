@@ -1,5 +1,22 @@
 egroupware-docker (19.1.20200605) hardy; urgency=low
 
+  * first beta (feature-complete) for upcomming 20.1 release
+  * Push: added push server
+  * API: JavaScript minifying works now thanks to Terser (though .map files are still WIP)
+  * SAML/Shibboleth/SimpleSAMLphp authentication configurable through setup
+  * SAML: support joining a SAML account to an existing one, if configured in setup
+  * Filemanager: When user tries to access a directory with no permission, redirect to previous directory instead of home
+  * Mail: fix creating a folder on level of inbox gave an error (if imap server supports it)
+  * Calendar/CalDAV: videoconference was lost, if meeting was accepted of updated via CalDAV
+  * Preferences: Fix delete personal category required admin permission
+  * Status app: Add group preference as shown users and some performance improvements
+  * Tracker: No longer flagging closed tickets as overdue
+  * Etemplate: Password widget improvements - suggest password button, added as custom field type (stored encrypted)
+
+ -- Ralf Becker <rb@egroupware.org>  Sat, 13 Jun 2020 15:26:36 +0200
+
+egroupware-docker (19.1.20200605) hardy; urgency=low
+
   * Calendar/CalDAV: videoconference was lost, if meeting was accepted of updated via CalDAV
   * Preferences: fix delete personal category required admin permission
   * Calendar: do not show Infolog list (Open ToDo's) if user has no access to Infolog, or no Infolog types selected for display
