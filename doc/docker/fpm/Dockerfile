@@ -60,7 +60,7 @@ rm composer-setup.php; \
 exit $RESULT' \
 	# build EGroupware
 	&& cd /usr/share \
-	&& composer.phar create-project --prefer-dist --no-scripts egroupware/egroupware:$VERSION \
+	&& composer.phar create-project --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
 	&& cd egroupware \
 	&& npm install \
 	&& grunt \
