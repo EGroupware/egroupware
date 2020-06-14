@@ -1,4 +1,4 @@
-egroupware-docker (19.1.20200605) hardy; urgency=low
+egroupware-docker (20.1.20200613) hardy; urgency=low
 
   * first beta (feature-complete) for upcomming 20.1 release
   * Push: added push server
