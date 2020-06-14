@@ -1,23 +1,26 @@
 #!/bin/bash
 set -e
 
+VERSION=${VERSION:-dev-master}
+PHP_VERSION=${PHP_VERSION:-7.3}
+
 # if EGW_APC_SHM_SIZE is set in environment, propagate value to apcu.ini
 test -n "$EGW_APC_SHM_SIZE" && {
-  grep "apc.shm_size" /etc/php/7.3/fpm/conf.d/20-apcu.ini >/dev/null && \
+  grep "apc.shm_size" /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini >/dev/null && \
     sed -e "s/^;\?apc.shm_size.*/apc.shm_size=$EGW_APC_SHM_SIZE/g" \
-      -i /etc/php/7.3/fpm/conf.d/20-apcu.ini || \
-    echo "apc.shm_size=$EGW_APC_SHM_SIZE" >> /etc/php/7.3/fpm/conf.d/20-apcu.ini
+      -i /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini || \
+    echo "apc.shm_size=$EGW_APC_SHM_SIZE" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini
 }
 
 # if EGW_SESSION_TIMEOUT is set in environment, propagate value to php.ini
 test -n "$EGW_SESSION_TIMEOUT" && test "$EGW_SESSION_TIMEOUT" -ge 1440 && \
 	sed -e "s/^;\?session.gc_maxlifetime.*/session.gc_maxlifetime=$EGW_SESSION_TIMEOUT/g" \
-		-i /etc/php/7.3/fpm/php.ini
+		-i /etc/php/$PHP_VERSION/fpm/php.ini
 
 # if EGW_MEMORY_LIMIT is set in environment, propagate value to php.ini
 test -n "$EGW_MEMORY_LIMIT" && \
 	sed -e "s/^;\?memory_limit.*/memory_limit=$EGW_MEMORY_LIMIT/g" \
-		-i /etc/php/7.3/fpm/php.ini
+		-i /etc/php/$PHP_VERSION/fpm/php.ini
 
 # ToDo check version before copy
 rsync -a --delete /usr/share/egroupware-sources/ /usr/share/egroupware/

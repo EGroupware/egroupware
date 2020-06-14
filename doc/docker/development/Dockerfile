@@ -80,6 +80,7 @@ RUN apt-get install -y php$PHP_VERSION-cli php-xdebug inetutils-ping iproute2 gi
 VOLUME /var/www
 VOLUME /var/lib/egroupware
 VOLUME /var/lib/php/sessions
+VOLUME /var/lib/egroupware-push
 
 EXPOSE 9000
 

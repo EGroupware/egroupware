@@ -28,6 +28,7 @@ volumes:
       device: $PWD/sources/egroupware/swoolepush
   # volume to store config.inc.php file / token shared between egroupware and push container
   push-config:
+  sessions:
   collabora-config:
     driver_opts:
       type: none
@@ -52,8 +53,8 @@ volumes:
       device: $PWD/data/default/rocketchat/uploads
 services:
   egroupware:
-    image: egroupware/egroupware:latest
-    # EPL image: download.egroupware.org/egroupware/epl:latest
+    image: egroupware/egroupware:20.1
+    # EPL image: download.egroupware.org/egroupware/epl:20.1
     # setting a default language for a new installation
     #environment:
     #- LANG=de
@@ -62,6 +63,8 @@ services:
     # extra-sources rsync from entry-point into sources
     #- extra:/usr/share/egroupware-extra
     - data:/var/lib/egroupware
+    - sessions:/var/lib/php/sessions
+    - push-config:/var/lib/egroupware-push
     # if you want to use the host database:
     # 1. comment out the whole db service below AND
     # 2. set EGW_DB_HOST=localhost AND
@@ -98,6 +101,19 @@ services:
     # can access Rocket.Chat or Collabora without the need to go over your firewall
     #extra_hosts:
     #- "my.host.name:ip-address"
+
+  # push server using phpswoole
+  push:
+    image: phpswoole/swoole:latest
+    volumes:
+      - sources-push:/var/www
+      - sessions:/var/lib/php/sessions
+      - push-config:/var/lib/egroupware-push
+    container_name: egroupware-push
+    restart: always
+    # as we get our sources from there
+    depends_on:
+      - egroupware
 
   nginx:
     image: nginx:stable-alpine
