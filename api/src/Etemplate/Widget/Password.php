@@ -48,12 +48,14 @@ class Password extends Etemplate\Widget\Textbox
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name);
+		$plaintext = 'true' == self::expand_name($this->attrs['plaintext'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+
 		if (!empty($value))
 		{
 			$preserv =& self::get_array(self::$request->preserv, $form_name, true);
 			$preserv = (string)$value;
 
-			if (!empty($value) && array_key_exists('viewable', $this->attrs) && $this->attrs['viewable'] == 'false')
+			if (!empty($value) && ((array_key_exists('viewable', $this->attrs) && $this->attrs['viewable'] === 'false') || $plaintext))
 			{
 				$value = str_repeat('*', strlen($preserv));
 			}
@@ -76,7 +78,7 @@ class Password extends Etemplate\Widget\Textbox
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
-
+		$plaintext = 'true' == self::expand_name($this->attrs['plaintext'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value = $value_in = self::get_array($content, $form_name);
@@ -88,12 +90,12 @@ class Password extends Etemplate\Widget\Textbox
 			{
 				$value = $preserv;
 			}
-			else if ($value_in == Credentials::decrypt(array('cred_password' => $preserv,'cred_pw_enc' => Credentials::SYSTEM_AES)))
+			else if (!$plaintext && $preserv && $value_in == Credentials::decrypt(array('cred_password' => $preserv,'cred_pw_enc' => Credentials::SYSTEM_AES)))
 			{
 				// Don't change if they submitted the decrypted version
 				$value = $preserv;
 			}
-			else if ($value_in !== $preserv)
+			else if (!$plaintext && $value_in !== $preserv)
 			{
 				// Store encrypted
 				$encryption = null;

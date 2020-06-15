@@ -49,6 +49,9 @@ var et2_password = /** @class */ (function (_super) {
         // The password is stored encrypted server side, and passed encrypted.
         // This flag is for if we've decrypted the password to show it already
         _this.encrypted = true;
+        if (_this.options.plaintext) {
+            _this.encrypted = false;
+        }
         return _this;
     }
     et2_password.prototype.createInputWidget = function () {
@@ -217,6 +220,7 @@ var et2_password = /** @class */ (function (_super) {
         var request = egw.json("EGroupware\\Api\\Etemplate\\Widget\\Password::ajax_suggest", [this.options.suggest], function (suggestion) {
             this.encrypted = false;
             this.input.val(suggestion);
+            this.input.trigger('change');
         }, this, true, this).sendRequest();
     };
     et2_password.prototype.destroy = function () {
@@ -237,6 +241,12 @@ var et2_password = /** @class */ (function (_super) {
             "type": "boolean",
             "default": false,
             "description": "Allow password to be shown"
+        },
+        "plaintext": {
+            name: "Plaintext",
+            type: "boolean",
+            default: false,
+            description: "Password is plaintext"
         },
         "suggest": {
             name: "Suggest password",

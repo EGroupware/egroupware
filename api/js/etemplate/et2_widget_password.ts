@@ -43,6 +43,12 @@ export class et2_password extends et2_textbox
 			"default": false,
 			"description": "Allow password to be shown"
 		},
+		"plaintext": {
+			name: "Plaintext",
+			type: "boolean",
+			default: false,
+			description: "Password is plaintext"
+		},
 		"suggest": {
 			name: "Suggest password",
 			type: "integer",
@@ -68,6 +74,10 @@ export class et2_password extends et2_textbox
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_password._attributes, _child || {}));
 
+		if(this.options.plaintext)
+		{
+			this.encrypted = false;
+		}
 	}
 
 	createInputWidget()
@@ -289,6 +299,7 @@ export class et2_password extends et2_textbox
 			function(suggestion) {
 				this.encrypted = false;
 				this.input.val(suggestion);
+				this.input.trigger('change');
 			},
 			this,true,this
 		).sendRequest();

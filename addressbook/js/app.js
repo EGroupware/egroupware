@@ -905,10 +905,20 @@ var AddressbookApp = /** @class */ (function (_super) {
      */
     AddressbookApp.prototype.account_change = function (_ev, _widget) {
         switch (_widget.id) {
+            case 'account_passwd':
+                debugger;
+                // If they clicked suggest, copy it to password 2
+                if (_widget && _widget.options.viewable) {
+                    var p2 = _widget.getParent().getWidgetById('account_passwd_2');
+                    p2.set_viewable(true); // Allow viewing password
+                    p2.toggle_visibility(true); // Actually show it
+                    p2.set_value(_widget.getValue());
+                    _widget.options.viewable = false;
+                }
+            // Fall through
             case 'account_lid':
             case 'n_family':
             case 'n_given':
-            case 'account_passwd':
             case 'account_passwd_2':
                 var values = this.et2._inst.getValues(this.et2);
                 var data = {
