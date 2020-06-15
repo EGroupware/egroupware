@@ -281,7 +281,7 @@ class InfologApp extends EgwApp
 				nm.dataview.getColumnMgr().columns[i].set_width(colData[i].width);
 				nm.dataview.getColumnMgr().columns[i].set_visibility(colData[i].visible);
 			}
-			nm.dataview.getColumnMgr().updated = true;
+			nm.dataview.getColumnMgr().updated();
 
 			// Update page - set update_in_progress to true to avoid triggering
 			// the change handler and looping if the user has a custom field
