@@ -333,8 +333,8 @@ var et2_dataview = /** @class */ (function () {
                         var relative = self.columnMgr.totalWidth - self.columnMgr.totalFixed + _w;
                         this.set_width(_w / relative);
                         for (var i = 0; i < self.columnMgr.columnCount(); i++) {
-                            var col = self.columnMgr.getColumnById(i);
-                            if (col == this || col.fixedWidth)
+                            var col = self.columnMgr.getColumnById('col_' + i);
+                            if (!col || col == this || col.fixedWidth)
                                 continue;
                             col.set_width(self.columnMgr.getColumnWidth(i) / relative);
                         }
