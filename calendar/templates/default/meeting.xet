@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
 <overlay>
 	<template id="calendar.meeting" template="" lang="" group="0" version="1.9.002">
 		<grid border="0" width="100%">
@@ -31,8 +30,11 @@
 				</row>
 				<row disabled="!@ics_method=cancel">
 					<description value="This mail cancels a meeting" class="meetingRequestMessage"/>
-					<button label="Apply" id="button[cancel]" class="leftPad5"/>
-					<description/>
+					<button label="Apply" statustext="Removes the event from my calendar" id="button[cancel]" class="leftPad5"/>
+					<button label="Delete" statustext="Delete this meeting for all participants" id="button[delete]" class="leftPad5"
+						onclick="et2_dialog.confirm(widget,'Delete this meeting for all participants','Delete')"/>
+					<buttononly statustext="Edit event in calendar" label="Edit" id="button[edit]"
+						onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
 					<description/>
 					<description/>
 					<description id="error" class="meetingRequestError" align="right"/>

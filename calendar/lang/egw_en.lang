@@ -159,6 +159,7 @@ delete series	calendar	en	Delete series
 delete this alarm	calendar	en	Delete this alarm
 delete this event	calendar	en	Delete this event
 delete this exception	calendar	en	Delete this exception
+delete this meeting for all participants	calendar	en	Delete this meeting for all participants
 delete this recurrence	calendar	en	Delete this recurrence
 delete this series of recurring events	calendar	en	Delete this series of recurring events
 deleted	calendar	en	Deleted.
@@ -461,6 +462,7 @@ recurring event	calendar	en	Recurring event
 regular edit	calendar	en	Regular edit
 reject	calendar	en	Reject
 rejected	calendar	en	Rejected
+removes the event from my calendar	calendar	en	Removes the event from my calendar
 repeat days	calendar	en	Repeat days
 repeat the event until which date (empty means unlimited)	calendar	en	Repeat the event until which date. Empty for unlimited.
 repeat type	calendar	en	Repeat type

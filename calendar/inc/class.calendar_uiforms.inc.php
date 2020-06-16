@@ -2170,6 +2170,15 @@ class calendar_uiforms extends calendar_ui
 							}
 						}
 						break;
+					case 'cancel':
+						// first participant is the (external) organizer (our iCal parser adds owner first!)
+						$parts = $event['participants'];
+						unset($parts[$existing_event['owner']]);
+						$event['ical_sender_uid'] = key($parts);
+						if (empty($existing_event['id']) || !$this->bo->check_perms(Acl::DELETE, $existing_event['id']))
+						{
+							$readonlys['button[delete]'] = true;
+						}
 				}
 				$event['id'] = $existing_event['id'];
 			}
@@ -2325,9 +2334,18 @@ class calendar_uiforms extends calendar_ui
 					break;
 
 				case 'cancel':
-					if ($event['id'] && $this->bo->set_status($event['id'], $user, 'R', $event['recurrence']))
+					if ($event['id'] && $this->bo->set_status($event['id'], $user, 'R', $event['recurrence'],
+						false, true, true))	// no reply to organizer
 					{
 						$msg = lang('Status changed');
+					}
+					break;
+
+				case 'delete':
+					if ($event['id'] &&	$this->bo->delete($event['id'], $event['recurrence'],
+						false, [$event['ical_sender_uid']]))	// no reply to organizer
+					{
+						$msg = lang('Event deleted.');
 					}
 					break;
 			}

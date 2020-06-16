@@ -1778,7 +1778,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param int $cal_id id of the event to delete
 	 * @param int $recur_date =0 if a single event from a series should be deleted, its date
 	 * @param boolean $ignore_acl =false true for no ACL check, default do ACL check
-	 * @param boolean $skip_notification =false
+	 * @param boolean|array $skip_notification =false or array with uid to skip eg. [5,'eemail@example.org']
 	 * @param boolean $delete_exceptions =true true: delete, false: keep exceptions (with new UID)
 	 * @param int &$exceptions_kept=null on return number of kept exceptions
 	 * @return boolean true on success, false on error (usually permission denied)
@@ -1794,9 +1794,11 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// Don't send notification if the event has already been deleted
-		if(!$event['deleted'] && !$skip_notification)
+		if (!$event['deleted'] && (!$skip_notification || is_array($skip_notification)))
 		{
-			$this->send_update(MSG_DELETED,$event['participants'],$event);
+			$to_notify = !is_array($skip_notification) ? $event['participants'] :
+				array_diff_key($event['participants'], array_flip($skip_notification));
+			$this->send_update(MSG_DELETED, $to_notify, $event);
 		}
 
 		if (!$recur_date || $event['recur_type'] == MCAL_RECUR_NONE)
