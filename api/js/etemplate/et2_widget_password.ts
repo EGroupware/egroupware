@@ -20,7 +20,7 @@ import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_wi
 import {et2_valueWidget} from './et2_core_valueWidget'
 import {et2_inputWidget} from './et2_core_inputWidget'
 import {et2_button} from './et2_widget_button'
-import {et2_textbox} from "./et2_widget_textbox";
+import {et2_textbox, et2_textbox_ro} from "./et2_widget_textbox";
 import {et2_dialog} from "./et2_widget_dialog";
 
 /**
@@ -316,3 +316,13 @@ export class et2_password extends et2_textbox
 	}
 }
 et2_register_widget(et2_password, [ "passwd"]);
+
+
+export class et2_password_ro extends et2_textbox_ro
+{
+	set_value(value)
+	{
+		this.value_span.text(value ? "********" : "");
+	}
+}
+et2_register_widget(et2_password_ro, [ "passwd_ro"]);

@@ -260,4 +260,16 @@ var et2_password = /** @class */ (function (_super) {
 }(et2_widget_textbox_1.et2_textbox));
 exports.et2_password = et2_password;
 et2_core_widget_1.et2_register_widget(et2_password, ["passwd"]);
+var et2_password_ro = /** @class */ (function (_super) {
+    __extends(et2_password_ro, _super);
+    function et2_password_ro() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    et2_password_ro.prototype.set_value = function (value) {
+        this.value_span.text(value ? "********" : "");
+    };
+    return et2_password_ro;
+}(et2_widget_textbox_1.et2_textbox_ro));
+exports.et2_password_ro = et2_password_ro;
+et2_core_widget_1.et2_register_widget(et2_password_ro, ["passwd_ro"]);
 //# sourceMappingURL=et2_widget_password.js.map

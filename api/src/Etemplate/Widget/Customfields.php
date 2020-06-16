@@ -325,6 +325,7 @@ class Customfields extends Transformer
 				break;
 			case 'passwd':
 				$widget->attrs['viewable'] = true;
+				$widget->attrs['plaintext'] = false;
 				break;
 
 			default:

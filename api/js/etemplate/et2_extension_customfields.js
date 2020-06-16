@@ -358,6 +358,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
         // No label on the widget itself
         delete (attrs.label);
         attrs['viewable'] = true;
+        attrs['plaintext'] = false;
         return true;
     };
     et2_customfields_list.prototype._setup_ajax_select = function (field_name, field, attrs) {
