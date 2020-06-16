@@ -592,7 +592,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				value = _data['share_email'];
 			}
 			// Get widget from list, unless it needs a diff widget
-			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined' && (
+			if((typeof widget == 'undefined' || widget == null) && typeof self.fields[_data.status] != 'undefined' && (
 					i < et2_historylog.NEW_VALUE ||
 					i >= et2_historylog.NEW_VALUE && (
 						self.fields[_data.status].nodes || !self._needsDiffWidget(_data['status'], _data[et2_historylog.columns[et2_historylog.OLD_VALUE].id])
