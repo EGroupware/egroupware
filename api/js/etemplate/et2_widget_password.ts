@@ -46,7 +46,7 @@ export class et2_password extends et2_textbox
 		"plaintext": {
 			name: "Plaintext",
 			type: "boolean",
-			default: false,
+			default: true,
 			description: "Password is plaintext"
 		},
 		"suggest": {

@@ -245,7 +245,7 @@ var et2_password = /** @class */ (function (_super) {
         "plaintext": {
             name: "Plaintext",
             type: "boolean",
-            default: false,
+            default: true,
             description: "Password is plaintext"
         },
         "suggest": {

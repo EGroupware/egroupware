@@ -48,7 +48,8 @@ class Password extends Etemplate\Widget\Textbox
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name);
-		$plaintext = 'true' == self::expand_name($this->attrs['plaintext'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+		$plaintext = !in_array(self::expand_name($this->attrs['plaintext'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']),
+			['false', '0']);
 
 		if (!empty($value))
 		{
@@ -78,7 +79,9 @@ class Password extends Etemplate\Widget\Textbox
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
-		$plaintext = 'true' == self::expand_name($this->attrs['plaintext'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+		$plaintext = !in_array(self::expand_name($this->attrs['plaintext'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']),
+			['false', '0']);
+
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value = $value_in = self::get_array($content, $form_name);
