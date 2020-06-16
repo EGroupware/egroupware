@@ -159,6 +159,7 @@ delete series	calendar	de	Serie löschen
 delete this alarm	calendar	de	Diesen Alarm löschen
 delete this event	calendar	de	Diesen Termin löschen
 delete this exception	calendar	de	Diese Ausnahme löschen
+delete this meeting for all participants	calendar	de	Löscht diesen Termin für alle Teilnehmer
 delete this recurrence	calendar	de	Diese Wiederholung löschen
 delete this series of recurring events	calendar	de	Diese Serie von wiederholenden Terminen löschen
 deleted	calendar	de	Gelöscht
@@ -461,6 +462,7 @@ recurring event	calendar	de	Wiederholender Termin
 regular edit	calendar	de	reguläres Bearbeiten
 reject	calendar	de	Absagen
 rejected	calendar	de	Abgesagt
+removes the event from my calendar	calendar	de	Entfernt diesen Termin aus meinem Kalender
 repeat days	calendar	de	Wiederholungstage
 repeat the event until which date (empty means unlimited)	calendar	de	Bis zu welchen Datum soll der Termin wiederholt werden (leer bedeutet unbegrenzt)
 repeat type	calendar	de	Wiederholungstyp
