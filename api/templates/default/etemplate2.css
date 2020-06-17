@@ -2513,6 +2513,7 @@ div.ui-toolbar-menulist{
 div.et2_toolbar_more .ui-accordion-header-active {
 	font-weight: normal;
 	color:black;
+	outline: none;
 }
 div.et2_toolbar_more h.ui-accordion-header {
 	padding: 4px 30px 3px 25px !important;

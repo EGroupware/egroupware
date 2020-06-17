@@ -1995,13 +1995,17 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   margin-top: 7px;
   width: auto;
 }
-#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
+#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"],
+#loginMainDiv div#centerBox form table.divLoginbox select.onChangeSubmit {
   background-color: #0a5ca5;
   color: #ffffff;
   font-size: 20px;
   padding-left: 0;
   width: 250px;
   margin-top: 25px;
+}
+#loginMainDiv div#centerBox form table.divLoginbox select.onChangeSubmit {
+  padding-left: 25px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox .registration {
   font-size: 11px;
@@ -4525,6 +4529,7 @@ td.message span.message {
   line-height: 1em;
   font-size: 12px;
   background-size: 12px;
+  filter: brightness(3);
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 a {
   color: #FFF;
