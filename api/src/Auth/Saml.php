@@ -550,7 +550,7 @@ class Saml implements BackendSSO
 		// check if all necessary directories exist, if not create them
 		foreach(['cert', 'log', 'data', 'metadata', 'tmp'] as $dir)
 		{
-			if (!file_exists($config_dir.'/'.$dir) && !mkdir($config_dir.'/'.$dir, 700, true))
+			if (!file_exists($config_dir.'/'.$dir) && !mkdir($config_dir.'/'.$dir, 0700, true))
 			{
 				throw new Exception("Can't create $dir-directory '$config_dir/$dir'!");
 			}
