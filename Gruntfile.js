@@ -132,6 +132,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_widget_entry.js",
 						"api/js/etemplate/et2_widget_textbox.js",
 						"api/js/etemplate/et2_widget_number.js",
+						"api/js/etemplate/et2_widget_password.js",
 						"api/js/jquery/jquery.base64.js",
 						"api/js/etemplate/et2_widget_url.js",
 						"api/js/etemplate/et2_widget_selectbox.js",
