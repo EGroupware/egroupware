@@ -386,9 +386,7 @@ var CalendarApp = /** @class */ (function (_super) {
                     //send Syncronus ajax request to the server to unlock the on close entry
                     //set onbeforeunload with json request to send request when the window gets close by X button
                     if (content.data.lock_token) {
-                        window.onbeforeunload = function () {
-                            this.egw.json('calendar.calendar_uiforms.ajax_unlock', [content.data.id, content.data.lock_token], null, true, "keepalive", null).sendRequest();
-                        };
+                        window.addEventListener("beforeunload", this._unlock.bind(this));
                     }
                 }
                 this.alarm_custom_date();
@@ -787,6 +785,15 @@ var CalendarApp = /** @class */ (function (_super) {
         else {
             sortable.sortable('disable');
         }
+    };
+    /**
+     * Unlock the event before closing the popup
+     *
+     * @private
+     */
+    CalendarApp.prototype._unlock = function () {
+        var content = this.et2.getArrayMgr('content');
+        this.egw.json('calendar.calendar_uiforms.ajax_unlock', [content.data.id, content.data.lock_token], null, this, "keepalive", null).sendRequest();
     };
     /**
      * Bind scroll event

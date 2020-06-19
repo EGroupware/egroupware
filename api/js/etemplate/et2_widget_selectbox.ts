@@ -484,9 +484,9 @@ export class et2_selectbox extends et2_inputWidget
 
 	doLoadingFinished()
 	{
-		super.doLoadingFinished();
-
 		this.set_tags(this.options.tags, this.options.width);
+
+		super.doLoadingFinished();
 
 		return true;
 	}
@@ -1677,6 +1677,14 @@ export class et2_selectbox_ro extends et2_selectbox implements et2_IDetachedDOM
 	getValue()
 	{
 		return null;
+	}
+
+	/**
+	 * Readonly selectbox can't be dirty
+	 */
+	isDirty()
+	{
+		return false;
 	}
 
 	/**

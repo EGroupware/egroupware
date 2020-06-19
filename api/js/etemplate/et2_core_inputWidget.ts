@@ -97,6 +97,18 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 	}
 
 	/**
+	 * Make sure dirty flag is properly set
+	 */
+	doLoadingFinished() : boolean | JQueryPromise<unknown>
+	{
+		let result = super.doLoadingFinished();
+
+		this.resetDirty();
+
+		return result;
+	}
+
+	/**
 	 * Load the validation errors from the server
 	 *
 	 * @param {object} _attrs
@@ -300,7 +312,27 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 
 	isDirty()
 	{
-		return this._oldValue != this.getValue();
+		let value = this.getValue();
+		if(typeof value !== typeof this._oldValue)
+		{
+			return true;
+		}
+		if(this._oldValue === value)
+		{
+			return false;
+		}
+		switch(typeof this._oldValue)
+		{
+			case "object":
+				if(this._oldValue.length !== value.length) return true;
+				for(let key in this._oldValue)
+				{
+					if(this._oldValue[key] !== value[key]) return true;
+				}
+				return false;
+			default:
+				return this._oldValue != value;
+		}
 	}
 
 	resetDirty()

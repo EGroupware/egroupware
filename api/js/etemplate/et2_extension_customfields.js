@@ -316,10 +316,10 @@ var et2_customfields_list = /** @class */ (function (_super) {
         return value;
     };
     et2_customfields_list.prototype.isDirty = function () {
-        var dirty = true;
+        var dirty = false;
         for (var field_name in this.widgets) {
             if (this.widgets[field_name].isDirty) {
-                dirty = dirty && this.widgets[field_name].isDirty();
+                dirty = dirty || this.widgets[field_name].isDirty();
             }
         }
         return dirty;

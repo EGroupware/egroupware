@@ -218,6 +218,7 @@ var et2_tabbox = /** @class */ (function (_super) {
             }
             jQuery.when.apply(jQuery, promises).then(function () {
                 tab_deferred.resolve();
+                tabs.resetDirty();
             });
         }, 0);
         return tab_deferred.promise();

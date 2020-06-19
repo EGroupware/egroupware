@@ -430,12 +430,12 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 	isDirty( )
 	{
-		let dirty = true;
+		let dirty = false;
 		for(let field_name in this.widgets)
 		{
 			if(this.widgets[field_name].isDirty)
 			{
-				dirty = dirty && this.widgets[field_name].isDirty();
+				dirty = dirty || this.widgets[field_name].isDirty();
 			}
 		}
 		return dirty;

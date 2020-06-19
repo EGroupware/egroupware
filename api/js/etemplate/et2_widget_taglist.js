@@ -279,6 +279,7 @@ var et2_taglist = /** @class */ (function (_super) {
         this.div.on('blur', 'input', function () {
             jQuery('.ms-ctn-focus', widget.div).removeClass('ms-ctn-focus');
         });
+        this.resetDirty();
         return true;
     };
     /**

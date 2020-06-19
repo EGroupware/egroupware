@@ -107,6 +107,7 @@ export class etemplate2
 
 	private resize_timeout: number | boolean;
 	private destroy_session: any;
+	private close_prompt: any;
 	private app_obj: EgwApp;
 	app: string;
 
@@ -344,6 +345,12 @@ export class etemplate2
 	 */
 	bind_unload()
 	{
+		// Prompt user to save for dirty popups
+		if(window !== egw_topWindow() && !this.close_prompt)
+		{
+			this.close_prompt = this._close_changed_prompt.bind(this);
+			window.addEventListener("beforeunload", this.close_prompt);
+		}
 		if (this._etemplate_exec_id)
 		{
 			this.destroy_session = jQuery.proxy(function (ev)
@@ -353,11 +360,22 @@ export class etemplate2
 				         [this._etemplate_exec_id], null, null, "keepalive").sendRequest();
 			}, this);
 
-			if (!window.onbeforeunload)
-			{
-				window.onbeforeunload = this.destroy_session;
-			}
+			window.addEventListener("beforeunload", this.destroy_session);
 		}
+	}
+
+	private _close_changed_prompt(e : BeforeUnloadEvent)
+	{
+		if(!this.isDirty())
+		{
+			return;
+		}
+
+		// Cancel the event
+        e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+
+		// Chrome requires returnValue to be set
+		e.returnValue = '';
 	}
 
 	/**
@@ -365,6 +383,8 @@ export class etemplate2
 	 */
 	unbind_unload()
 	{
+		window.removeEventListener("beforeunload", this.destroy_session);
+		window.removeEventListener("beforeunload", this.close_prompt);
 		if (window.onbeforeunload === this.destroy_session)
 		{
 			window.onbeforeunload = null;

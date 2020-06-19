@@ -274,6 +274,7 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 			}
 			jQuery.when.apply(jQuery,promises).then(function() {
 				tab_deferred.resolve();
+				tabs.resetDirty();
 			});
 		},0);
 

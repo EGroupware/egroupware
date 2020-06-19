@@ -274,20 +274,34 @@ var etemplate2 = /** @class */ (function () {
      * calls, eg. via et2_dialog.
      */
     etemplate2.prototype.bind_unload = function () {
+        // Prompt user to save for dirty popups
+        if (window !== egw_topWindow() && !this.close_prompt) {
+            this.close_prompt = this._close_changed_prompt.bind(this);
+            window.addEventListener("beforeunload", this.close_prompt);
+        }
         if (this._etemplate_exec_id) {
             this.destroy_session = jQuery.proxy(function (ev) {
                 // need to use async === "keepalive" to run via beforeunload
                 egw.json("EGroupware\\Api\\Etemplate::ajax_destroy_session", [this._etemplate_exec_id], null, null, "keepalive").sendRequest();
             }, this);
-            if (!window.onbeforeunload) {
-                window.onbeforeunload = this.destroy_session;
-            }
+            window.addEventListener("beforeunload", this.destroy_session);
         }
+    };
+    etemplate2.prototype._close_changed_prompt = function (e) {
+        if (!this.isDirty()) {
+            return;
+        }
+        // Cancel the event
+        e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+        // Chrome requires returnValue to be set
+        e.returnValue = '';
     };
     /**
      * Unbind our unload handler
      */
     etemplate2.prototype.unbind_unload = function () {
+        window.removeEventListener("beforeunload", this.destroy_session);
+        window.removeEventListener("beforeunload", this.close_prompt);
         if (window.onbeforeunload === this.destroy_session) {
             window.onbeforeunload = null;
         }

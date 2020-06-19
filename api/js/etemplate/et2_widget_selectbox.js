@@ -344,8 +344,8 @@ var et2_selectbox = /** @class */ (function (_super) {
         this.setDOMNode(node[0]);
     };
     et2_selectbox.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.call(this);
         this.set_tags(this.options.tags, this.options.width);
+        _super.prototype.doLoadingFinished.call(this);
         return true;
     };
     et2_selectbox.prototype.loadFromXML = function (_node) {
@@ -1365,6 +1365,12 @@ var et2_selectbox_ro = /** @class */ (function (_super) {
      */
     et2_selectbox_ro.prototype.getValue = function () {
         return null;
+    };
+    /**
+     * Readonly selectbox can't be dirty
+     */
+    et2_selectbox_ro.prototype.isDirty = function () {
+        return false;
     };
     /**
      * Functions for et2_IDetachedDOM

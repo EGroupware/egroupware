@@ -430,6 +430,8 @@ export class et2_taglist extends et2_selectbox implements et2_IResizeable
 		this.div.on('blur', 'input', function() {
 			jQuery('.ms-ctn-focus', widget.div).removeClass('ms-ctn-focus');
 		});
+
+		this.resetDirty();
 		return true;
 	}
 

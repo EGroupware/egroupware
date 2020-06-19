@@ -59,6 +59,14 @@ var et2_inputWidget = /** @class */ (function (_super) {
         this._labelContainer = null;
     };
     /**
+     * Make sure dirty flag is properly set
+     */
+    et2_inputWidget.prototype.doLoadingFinished = function () {
+        var result = _super.prototype.doLoadingFinished.call(this);
+        this.resetDirty();
+        return result;
+    };
+    /**
      * Load the validation errors from the server
      *
      * @param {object} _attrs
@@ -212,7 +220,25 @@ var et2_inputWidget = /** @class */ (function (_super) {
         return this._oldValue;
     };
     et2_inputWidget.prototype.isDirty = function () {
-        return this._oldValue != this.getValue();
+        var value = this.getValue();
+        if (typeof value !== typeof this._oldValue) {
+            return true;
+        }
+        if (this._oldValue === value) {
+            return false;
+        }
+        switch (typeof this._oldValue) {
+            case "object":
+                if (this._oldValue.length !== value.length)
+                    return true;
+                for (var key in this._oldValue) {
+                    if (this._oldValue[key] !== value[key])
+                        return true;
+                }
+                return false;
+            default:
+                return this._oldValue != value;
+        }
     };
     et2_inputWidget.prototype.resetDirty = function () {
         this._oldValue = this.getValue();
