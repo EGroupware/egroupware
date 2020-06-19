@@ -485,7 +485,7 @@
 
    <tr class="row_on">
     <td>{lang_Identity_Provider}:<br/>{lang_You_can_specify_multiple_IdP_on_separate_lines.}</td>
-    <td><textarea name="newsettings[saml_idp]" placeholder="https://idp.rhrk.uni-kl.de/idp/shibboleth" rows="3" cols="64">{value_saml_idp}</textarea></td>
+    <td><textarea name="newsettings[saml_idp]" placeholder="https://idp.uni-kl.de/idp/shibboleth" rows="3" cols="64">{value_saml_idp}</textarea></td>
    </tr>
 
    <tr class="row_off">
