@@ -265,7 +265,7 @@ class Saml implements BackendSSO
 		}
 		$replace = $GLOBALS['egw_info']['server']['saml_replace'];
 		$with = $GLOBALS['egw_info']['server']['saml_replace_with'] ?? '';
-		$replaced = $replace[0] === '/' ? preg_replace($replaced, $with, $username) : str_replace($replace, $with, $username);
+		$replaced = $replace[0] === '/' ? preg_replace($replace, $with, $username) : str_replace($replace, $with, $username);
 
 		if (empty($replaced) || !$GLOBALS['egw']->accounts->name2id($replaced, 'account_lid', 'u'))
 		{
@@ -358,6 +358,8 @@ class Saml implements BackendSSO
 			self::updateConfig($config);
 		}
 		self::checkDefaultConfig($config);
+		// config files are PHP files and EGroupware contaier does not check timestamps
+		if (function_exists('opcache_reset')) opcache_reset();
 
 		// install or remove async job to refresh metadata
 		static $freq2times = [
@@ -439,6 +441,9 @@ class Saml implements BackendSSO
 		$metaloader = new SimpleSAML\Module\metarefresh\MetaLoader();
 		$metaloader->loadSource($source);
 		$metaloader->writeMetadataFiles($saml_config.'/metadata');
+
+		// metadata files are PHP files and EGroupware contaier does not check timestamps
+		if (function_exists('opcache_reset')) opcache_reset();
 	}
 
 	/**
@@ -605,6 +610,16 @@ class Saml implements BackendSSO
 					case 'config.php':
 						$cookie_domain = Api\Session::getCookieDomain($cookie_path, $cookie_secure);
 						$replacements = [
+							'$config = [' => <<<EOF
+// SimpleSAMLphp does NOT honor X-Forwarded-* headers
+// and solution mentioned in docs to just set baseurlpath to correct https-URL does NOT work in all cases
+if (isset(\$_SERVER['HTTP_X_FORWARDED_PROTO']) && \$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+    \$_SERVER['HTTPS'] = 'on';
+    \$_SERVER['SERVER_PORT'] = '443';
+}
+
+\$config = [
+EOF,
 							"'baseurlpath' => 'simplesaml/'," => "'baseurlpath' => '".Api\Framework::getUrl(Api\Egw::link('/saml/'))."',",
 							"'timezone' => null," => "'timezone' => 'Europe/Berlin',",	// ToDo: use default prefs
 							"'secretsalt' => 'defaultsecretsalt'," => "'secretsalt' => '".Api\Auth::randomstring(32)."',",
