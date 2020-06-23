@@ -619,7 +619,8 @@ if (isset(\$_SERVER['HTTP_X_FORWARDED_PROTO']) && \$_SERVER['HTTP_X_FORWARDED_PR
 }
 
 \$config = [
-EOF,
+EOF
+							,
 							"'baseurlpath' => 'simplesaml/'," => "'baseurlpath' => '".Api\Framework::getUrl(Api\Egw::link('/saml/'))."',",
 							"'timezone' => null," => "'timezone' => 'Europe/Berlin',",	// ToDo: use default prefs
 							"'secretsalt' => 'defaultsecretsalt'," => "'secretsalt' => '".Api\Auth::randomstring(32)."',",
