@@ -406,7 +406,8 @@ var et2_tabbox = /** @class */ (function (_super) {
      * was loaded.
      */
     et2_tabbox.prototype.isDirty = function () {
-        return this.selected_index != this.value;
+        // We consider tab changes are not real changes
+        return false;
     };
     /**
      * Causes the dirty flag to be reseted.

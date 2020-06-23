@@ -516,7 +516,8 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 	 */
 	isDirty()
 	{
-		return this.selected_index != this.value;
+		// We consider tab changes are not real changes
+		return false;
 	}
 
 	/**
