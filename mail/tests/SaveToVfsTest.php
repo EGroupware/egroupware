@@ -100,7 +100,7 @@ class SaveToVfsTest extends \PHPUnit\Framework\TestCase
 }
 
 
-class VfsTestMail extends Api\Mail
+class VfsTestMail extends \EGroupware\Api\Mail
 {
 	// Expose for testing
 	public static function clean_subject_for_filename($filename)
