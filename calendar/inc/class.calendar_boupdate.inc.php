@@ -1380,7 +1380,7 @@ class calendar_boupdate extends calendar_bo
 		foreach($timestamps as $ts)
 		{
 			// we convert here from user-time to timestamps in server-time!
-			if (isset($event[$ts])) $save_event[$ts] = $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;
+			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;
 		}
 		// convert tzid name to integer tz_id, of set user default
 		if (empty($event['tzid']) || !($event['tz_id'] = calendar_timezones::tz2id($event['tzid'])))
@@ -1494,6 +1494,13 @@ class calendar_boupdate extends calendar_bo
 		// Update history
 		$tracking = new calendar_tracking($this);
 		if (empty($event['id']) && !empty($cal_id)) $event['id']=$cal_id;
+		// we run all dates through date2ts, to adjust to server-time and the possible date-formats
+		// This is done here to avoid damaging the actual event when saving, but the old event is in server-time
+		foreach($timestamps as $ts)
+		{
+			// we convert here from user-time to timestamps in server-time!
+			if (isset($save_event[$ts])) $save_event[$ts] = $save_event[$ts] ? $this->date2ts($save_event[$ts],true) : 0;
+		}
 		$tracking->track($save_event, $old_event);
 
 		return $cal_id;
