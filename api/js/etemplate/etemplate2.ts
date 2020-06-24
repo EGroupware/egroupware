@@ -108,6 +108,7 @@ export class etemplate2
 	private resize_timeout: number | boolean;
 	private destroy_session: any;
 	private close_prompt: any;
+	private _skip_close_prompt: boolean;
 	private app_obj: EgwApp;
 	app: string;
 
@@ -366,7 +367,7 @@ export class etemplate2
 
 	private _close_changed_prompt(e : BeforeUnloadEvent)
 	{
-		if(!this.isDirty())
+		if(this._skip_close_prompt || !this.isDirty())
 		{
 			return;
 		}
@@ -376,6 +377,11 @@ export class etemplate2
 
 		// Chrome requires returnValue to be set
 		e.returnValue = '';
+	}
+
+	public skip_close_prompt(skip = true)
+	{
+		this._skip_close_prompt = skip;
 	}
 
 	/**

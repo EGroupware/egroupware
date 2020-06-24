@@ -288,13 +288,17 @@ var etemplate2 = /** @class */ (function () {
         }
     };
     etemplate2.prototype._close_changed_prompt = function (e) {
-        if (!this.isDirty()) {
+        if (this._skip_close_prompt || !this.isDirty()) {
             return;
         }
         // Cancel the event
         e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
         // Chrome requires returnValue to be set
         e.returnValue = '';
+    };
+    etemplate2.prototype.skip_close_prompt = function (skip) {
+        if (skip === void 0) { skip = true; }
+        this._skip_close_prompt = skip;
     };
     /**
      * Unbind our unload handler

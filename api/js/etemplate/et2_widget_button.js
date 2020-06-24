@@ -199,6 +199,10 @@ var et2_button = /** @class */ (function (_super) {
         if (this.options.readonly)
             return false;
         this.clicked = true;
+        // Cancel buttons don't trigger the close confirmation prompt
+        if (this.btn.hasClass("et2_button_cancel")) {
+            this.getInstanceManager().skip_close_prompt();
+        }
         if (!_super.prototype.click.apply(this, arguments)) {
             this.clicked = false;
             return false;
@@ -208,6 +212,7 @@ var et2_button = /** @class */ (function (_super) {
             this.getInstanceManager().submit(this, false, this.options.novalidate); //TODO: this only needs to be passed if it's in a datagrid
         }
         this.clicked = false;
+        this.getInstanceManager().skip_close_prompt(false);
         return true;
     };
     et2_button.prototype.set_label = function (_value) {
