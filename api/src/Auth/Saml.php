@@ -113,8 +113,8 @@ class Saml implements BackendSSO
 	{
 		// login (redirects to IdP)
 		$as = new SimpleSAML\Auth\Simple(self::$auth_source);
-		$as->requireAuth(preg_match('|^https://|', $_REQUEST['auth=saml']) ?
-			['saml:idp' => $_REQUEST['auth=saml']] : []);
+		$as->requireAuth(preg_match('|^https://|', $_REQUEST['idp']) ?
+			['saml:idp' => $_REQUEST['idp']] : []);
 
 		/* cleanup session for EGroupware: currently NOT used as we share the session with SimpleSAMLphp
 		$session = SimpleSAML\Session::getSessionFromRequest();

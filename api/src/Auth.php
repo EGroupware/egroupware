@@ -128,13 +128,6 @@ class Auth
 		{
 			$type = $_REQUEST['auth'];
 		}
-		elseif (($auth = array_filter($_REQUEST, function($key)
-			{
-				return substr($key, 0, 5) === 'auth=';
-			}, ARRAY_FILTER_USE_KEY)) && !empty(current($auth)))
-		{
-			$type = substr(key($auth), 5);
-		}
 		// to not allow enabling all sort of auth plugins by simply calling login.php?auth=xyz we require the
 		// plugin to be enabled via "${auth}_discovery" server config
 		if (!empty($type) && empty($GLOBALS['egw_info']['server'][$type.'_discovery']))

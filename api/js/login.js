@@ -59,11 +59,18 @@ egw_LAB.wait(function()
 		]);
 
 		// automatic submit of SAML IdP selection
-		jQuery('select.onChangeSubmit').on('change', function() {
+		jQuery('select[name="auth=saml"]').on('change', function() {
 			if (this.value) {
-				this.form.method = 'GET';
+				this.form.method = 'get';
+				jQuery(this.form).append('<input type="hidden" name="auth" value="saml"/>');
+				jQuery(this.form).append('<input type="hidden" name="idp" value="'+this.value+'"/>');
 				this.form.submit();
 			}
+		});
+		// or optional SAML login with a button for a single IdP
+		jQuery('input[type="submit"][name="auth=saml"]').on('click', function(){
+			this.form.method = 'get';
+			jQuery(this.form).append('<input type="hidden" name="auth" value="saml"/>');
 		});
 	});
 });
