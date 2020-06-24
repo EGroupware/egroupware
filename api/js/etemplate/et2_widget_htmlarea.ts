@@ -268,6 +268,7 @@ class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		// inside an inactive tabs
 		this.tinymce.then(function() {
 			self.set_value(self.htmlNode.val());
+			self.resetDirty();
 			if (self.editor && self.editor.editorContainer)
 			{
 				self.editor.formatter.toggle(<string><unknown>egw.preference('rte_formatblock', 'common'));

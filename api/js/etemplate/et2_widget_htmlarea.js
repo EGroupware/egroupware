@@ -147,6 +147,7 @@ var et2_htmlarea = /** @class */ (function (_super) {
         // inside an inactive tabs
         this.tinymce.then(function () {
             self.set_value(self.htmlNode.val());
+            self.resetDirty();
             if (self.editor && self.editor.editorContainer) {
                 self.editor.formatter.toggle(egw.preference('rte_formatblock', 'common'));
                 jQuery(self.editor.editorContainer).height(self.options.height);
