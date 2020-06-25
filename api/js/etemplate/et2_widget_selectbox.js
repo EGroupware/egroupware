@@ -346,6 +346,9 @@ var et2_selectbox = /** @class */ (function (_super) {
     et2_selectbox.prototype.doLoadingFinished = function () {
         _super.prototype.doLoadingFinished.call(this);
         this.set_tags(this.options.tags, this.options.width);
+        // Reset dirty again here.  super.doLoadingFinished() does it too, but set_tags() & others
+        // change things.  Moving set_tags() before super.doLoadingFinished() breaks tag widgets
+        this.resetDirty();
         return true;
     };
     et2_selectbox.prototype.loadFromXML = function (_node) {

@@ -488,6 +488,10 @@ export class et2_selectbox extends et2_inputWidget
 
 		this.set_tags(this.options.tags, this.options.width);
 
+		// Reset dirty again here.  super.doLoadingFinished() does it too, but set_tags() & others
+		// change things.  Moving set_tags() before super.doLoadingFinished() breaks tag widgets
+		this.resetDirty();
+
 		return true;
 	}
 
