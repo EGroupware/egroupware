@@ -529,19 +529,20 @@ class admin_customfields
 	 */
 	protected function get_actions()
 	{
+		$edit = $this->appname . '.' . get_class($this) . '.edit';
 		$actions = array(
 			'open' => array(	// does edit if allowed, otherwise view
 				'caption' => 'Open',
 				'default' => true,
 				'allowOnMultiple' => false,
-				'url' => 'menuaction=admin.admin_customfields.edit&cf_id=$id&use_private='.$this->use_private,
+				'url' => 'menuaction='.$edit.'&cf_id=$id&use_private='.$this->use_private,
 				'popup' => '500x380',
 				'group' => $group=1,
 				'disableClass' => 'th',
 			),
 			'add' => array(
 				'caption' => 'Add',
-				'url' => 'menuaction=admin.admin_customfields.edit&appname='.$this->appname.'&use_private='.$this->use_private,
+				'url' => 'menuaction='.$edit.'&appname='.$this->appname.'&use_private='.$this->use_private,
 				'popup' => '500x380',
 				'group' => $group,
 			),
