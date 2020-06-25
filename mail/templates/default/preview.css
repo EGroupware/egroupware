@@ -75,7 +75,12 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
     border-top: 1px solid rgb(143, 139, 139);
     box-shadow: rgb(143, 139, 139) 0px 1px 13px 2px;
 }
-
+.mail_externalImagesMsg.red {
+	background:  rgba(204, 0, 51, 0.8) !important;
+}
+.mail_externalImagesMsg.red * {
+	color: white !important;
+}
 .mail_externalImagesMsg button {
 	float: right;
     margin: 7px;

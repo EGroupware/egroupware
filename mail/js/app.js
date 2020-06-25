@@ -1152,12 +1152,22 @@ app.classes.mail = AppJS.extend(
 				var u = _rawUrl.split('[blocked external image:');
 				u = u[1].replace(']','');
 				var url = u;
-				if (u.substr(0,7) == 'http://') u = u.replace ('http://','');
-				if (u.substr(0,8) == 'https://') u = u.replace ('https://','');
+				var protocol = '';
+				if (u.substr(0,7) == 'http://')
+				{
+					u = u.replace ('http://','');
+					protocol = 'http';
+				}
+				if (u.substr(0,8) == 'https://')
+				{
+					u = u.replace ('https://','');
+					protocol = 'https';
+				}
 				var url_parts = u.split('/');
 				return {
 					url: url,
-					domain: url_parts[0]
+					domain: url_parts[0],
+					protocol: protocol
 				};
 			};
 
@@ -1193,9 +1203,20 @@ app.classes.mail = AppJS.extend(
 				showImages (external_images);
 				return;
 			}
-
+			let message = 'In order to protect your privacy all external sources within this email are blocked.';
+			for(let i in external_images)
+			{
+				if (!external_images[i].alt) continue;
+				let r = getUrlParts(external_images[i].alt);
+				if (r && r.protocol == 'http')
+				{
+					message = 'There are Mixed Content within this message which are served under HTTP insecure protocol. Be aware Showing / Allowing them would compromise your security!!!';
+					container.addClass('red');
+					break;
+				}
+			}
 			jQuery(document.createElement('p'))
-					.text(this.egw.lang('In order to protect your privacy all external sources within this email are blocked.'))
+					.text(this.egw.lang(message))
 					.appendTo(container);
 			jQuery(document.createElement('button'))
 					.addClass ('closeBtn')
