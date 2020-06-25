@@ -344,8 +344,8 @@ var et2_selectbox = /** @class */ (function (_super) {
         this.setDOMNode(node[0]);
     };
     et2_selectbox.prototype.doLoadingFinished = function () {
-        this.set_tags(this.options.tags, this.options.width);
         _super.prototype.doLoadingFinished.call(this);
+        this.set_tags(this.options.tags, this.options.width);
         return true;
     };
     et2_selectbox.prototype.loadFromXML = function (_node) {

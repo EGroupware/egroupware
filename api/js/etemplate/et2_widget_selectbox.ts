@@ -170,7 +170,7 @@ export class et2_selectbox extends et2_inputWidget
 		}
 	}
 
-	destroy() 
+	destroy()
 	{
 		if(this.input != null)
 		{
@@ -188,7 +188,7 @@ export class et2_selectbox extends et2_inputWidget
 		this.input = null;
 	}
 
-	transformAttributes(_attrs) 
+	transformAttributes(_attrs)
 	{
 		super.transformAttributes(_attrs);
 
@@ -261,7 +261,7 @@ export class et2_selectbox extends et2_inputWidget
 		}
 	}
 
-	change(_node, _widget, _value) 
+	change(_node, _widget, _value)
 	{
 		var valid = super.change.apply(this, arguments);
 		if (!this.input) return valid;
@@ -297,7 +297,7 @@ export class et2_selectbox extends et2_inputWidget
 	 * @param {node} dom_element parent of new option
 	 * @param {string} _class specify classes of option
 	 */
-	_appendOptionElement(_value, _label, _title?, dom_element?, _class?) 
+	_appendOptionElement(_value, _label, _title?, dom_element?, _class?)
 	{
 		if(_value == "" && (_label == null || _label == "")) {
 			return;	// empty_label is added in set_select_options anyway, ignoring it here to not add it twice
@@ -484,9 +484,9 @@ export class et2_selectbox extends et2_inputWidget
 
 	doLoadingFinished()
 	{
-		this.set_tags(this.options.tags, this.options.width);
-
 		super.doLoadingFinished();
+
+		this.set_tags(this.options.tags, this.options.width);
 
 		return true;
 	}
@@ -1017,7 +1017,7 @@ export class et2_selectbox extends et2_inputWidget
 		}
 	}
 
-	getValue() 
+	getValue()
 	{
 		if(this.input == null)
 		{
@@ -1034,7 +1034,7 @@ export class et2_selectbox extends et2_inputWidget
 		return this.value;
 	}
 
-	isDirty() 
+	isDirty()
 	{
 		if(this.input == null)
 		{
@@ -1073,7 +1073,7 @@ export class et2_selectbox extends et2_inputWidget
 			}
 		}
 	}
-	
+
 	static type_cache: any = {};
 
 	/**
@@ -1263,7 +1263,7 @@ export class et2_selectbox extends et2_inputWidget
 	 *
 	 * @param {type} widget
 	 */
-	static priority_options(widget) 
+	static priority_options(widget)
 	{
 		return [
 			{value: 1, label: 'low'},
@@ -1272,14 +1272,14 @@ export class et2_selectbox extends et2_inputWidget
 			{value: 0, label: 'undefined'}
 		];
 	}
-	static bool_options(widget) 
+	static bool_options(widget)
 	{
 		return [
 			{value: 0, label: 'no'},
 			{value: 1, label: 'yes'}
 		];
 	}
-	static month_options(widget) 
+	static month_options(widget)
 	{
 		return [
 			{value: 1, label:'January'},
@@ -1296,7 +1296,7 @@ export class et2_selectbox extends et2_inputWidget
 			{value: 12, label:'December'}
 		];
 	}
-	static number_options(widget, attrs) 
+	static number_options(widget, attrs)
 	{
 		if(typeof attrs.other != 'object')
 		{
@@ -1375,12 +1375,12 @@ export class et2_selectbox extends et2_inputWidget
 		}
 		return options;
 	}
-	static app_options(widget,attrs) 
+	static app_options(widget,attrs)
 	{
 		var options = ','+(attrs.other||[]).join(',');
 		return this.cached_server_side_options(widget, options, attrs);
 	}
-	static cat_options(widget, attrs) 
+	static cat_options(widget, attrs)
 	{
 		// Add in application, if not there
 		if(typeof attrs.other == 'undefined')
@@ -1394,27 +1394,27 @@ export class et2_selectbox extends et2_inputWidget
 		var options =(attrs.other||[]).join(',');
 		return this.cached_server_side_options(widget, options, attrs);
 	}
-	static country_options(widget, attrs) 
+	static country_options(widget, attrs)
 	{
 		var options = ',';
 		return this.cached_server_side_options(widget, options, attrs);
 	}
-	static state_options(widget, attrs) 
+	static state_options(widget, attrs)
 	{
 		var options = attrs.country_code ? attrs.country_code : 'de';
 		return this.cached_server_side_options(widget, options, attrs);
 	}
-	static dow_options(widget,attrs) 
+	static dow_options(widget,attrs)
 	{
 		var options = ','+(attrs.other||[]).join(',');
 		return this.cached_server_side_options(widget, options, attrs);
 	}
-	static lang_options(widget,attrs) 
+	static lang_options(widget,attrs)
 	{
 		var options = ','+(attrs.other||[]).join(',');
 		return this.cached_server_side_options(widget, options, attrs);
 	}
-	static timezone_options(widget,attrs) 
+	static timezone_options(widget,attrs)
 	{
 		var options = ','+(attrs.other||[]).join(',');
 		return this.cached_server_side_options(widget, options, attrs);
