@@ -3021,7 +3021,9 @@ class calendar_boupdate extends calendar_bo
 	 */
 	protected function check_reset_statuses(&$event, $old_event)
 	{
-		if(!$old_event || !is_array($old_event) || $event['start'] == $old_event['start'])
+		// Event passed is still in user time at this point, convert to servertime for
+		// comparison, but don't modify it in event
+		if(!$old_event || !is_array($old_event) || $this->date2ts($event['start'],true) == $old_event['start'])
 		{
 			return false;
 		}
