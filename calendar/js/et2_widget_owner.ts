@@ -120,17 +120,30 @@ export class et2_calendar_owner extends et2_taglist_email
 
 		// If parent didn't find a label, label will be the same as ID so we
 		// can find them that way
+		let missing_labels = [];
 		for(var i = 0; i < this.options.value.length; i++)
 		{
 			var value = this.options.value[i];
 			if(value.id == value.label)
 			{
-				// Proper label was not found by parent - ask directly
-				egw.json('calendar_owner_etemplate_widget::ajax_owner',value.id,function(data) {
-					this.widget.options.value[this.i].label = data;
-					this.widget.set_value(this.widget.options.value);
-				}, this,true,{widget: this, i: i}).sendRequest();
+				missing_labels.push(value.id);
 			}
+		}
+		if(Object.keys(missing_labels).length > 0)
+		{
+			// Proper label was not found by parent - ask directly
+			egw.json('calendar_owner_etemplate_widget::ajax_owner',[missing_labels],function(data) {
+				for(let owner in data)
+				{
+					if(!owner || typeof owner == "undefined") continue;
+					let idx = this.options.value.find(element => element.id == owner);
+					if(idx)
+					{
+						idx.label = data[owner];
+					}
+				}
+				this.set_value(this.options.value);
+			}, this,true,this).sendRequest();
 		}
 
 		if(this.taglist)

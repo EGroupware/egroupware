@@ -140,11 +140,21 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 	public static function ajax_owner($id = null)
 	{
 		// Handle a request for a single ID
-		if($id)
+		if($id && !is_array($id))
 		{
 			$label = self::get_owner_label($id);
 			Api\Json\Response::get()->data($label);
 			return $label;
+		}
+		else if($id && is_array($id))
+		{
+			$labels = Array();
+			foreach($id as $index => $_id)
+			{
+				$labels[$_id] = self::get_owner_label($_id);
+			}
+			Api\Json\Response::get()->data($labels);
+			return $labels;
 		}
 
 		$bo = new calendar_bo();

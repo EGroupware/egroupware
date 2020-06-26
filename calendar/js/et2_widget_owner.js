@@ -100,15 +100,30 @@ var et2_calendar_owner = /** @class */ (function (_super) {
         _super.prototype.set_value.call(this, _value);
         // If parent didn't find a label, label will be the same as ID so we
         // can find them that way
+        var missing_labels = [];
         for (var i = 0; i < this.options.value.length; i++) {
             var value = this.options.value[i];
             if (value.id == value.label) {
-                // Proper label was not found by parent - ask directly
-                egw.json('calendar_owner_etemplate_widget::ajax_owner', value.id, function (data) {
-                    this.widget.options.value[this.i].label = data;
-                    this.widget.set_value(this.widget.options.value);
-                }, this, true, { widget: this, i: i }).sendRequest();
+                missing_labels.push(value.id);
             }
+        }
+        if (Object.keys(missing_labels).length > 0) {
+            // Proper label was not found by parent - ask directly
+            egw.json('calendar_owner_etemplate_widget::ajax_owner', [missing_labels], function (data) {
+                var _loop_1 = function (owner) {
+                    if (!owner || typeof owner == "undefined")
+                        return "continue";
+                    var idx = this_1.options.value.find(function (element) { return element.id == owner; });
+                    if (idx) {
+                        idx.label = data[owner];
+                    }
+                };
+                var this_1 = this;
+                for (var owner in data) {
+                    _loop_1(owner);
+                }
+                this.set_value(this.options.value);
+            }, this, true, this).sendRequest();
         }
         if (this.taglist) {
             this.taglist.clear(true);
