@@ -41,8 +41,12 @@
         {
             "type": "pear",
             "url": "https://pear.horde.org"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/IMSGlobal/lti-1-3-php-library"
 		}
-    ],
+	],
 	"config": {
 		"platform": {
 			"php": "7.2"
@@ -77,6 +81,7 @@
 		"egroupware/projectmanager": "dev-master",
 		"egroupware/registration": "dev-master",
 		"egroupware/rocketchat": "dev-master",
+		"egroupware/smallpart": "dev-master",
 		"egroupware/status": "dev-master",
 		"egroupware/swoolepush": "dev-master",
 		"egroupware/tracker": "dev-master",
