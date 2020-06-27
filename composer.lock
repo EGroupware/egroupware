@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aac43f58ae0bba65ee0d8bf010103a6a",
+    "content-hash": "063f682bae79730de74c4dbe206f2854",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -767,16 +767,16 @@
         },
         {
             "name": "egroupware/activesync",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
-                "reference": "bb8aa14fd33e59e95ca85c47e39de43e232ff6eb"
+                "reference": "594dfd34a5a5964dca3c241c4da1416dafcf9b80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/bb8aa14fd33e59e95ca85c47e39de43e232ff6eb",
-                "reference": "bb8aa14fd33e59e95ca85c47e39de43e232ff6eb",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/594dfd34a5a5964dca3c241c4da1416dafcf9b80",
+                "reference": "594dfd34a5a5964dca3c241c4da1416dafcf9b80",
                 "shasum": ""
             },
             "require": {
@@ -804,11 +804,11 @@
             ],
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-08-03T06:55:13+00:00"
+            "time": "2020-06-12T10:33:55+00:00"
         },
         {
             "name": "egroupware/adodb-php",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
@@ -862,16 +862,16 @@
         },
         {
             "name": "egroupware/bookmarks",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
-                "reference": "22ef4ee85272b65c65ca348ddf69339ccc1553b8"
+                "reference": "9f0622f998d3302aff82542c83fdde7dc8819da7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/22ef4ee85272b65c65ca348ddf69339ccc1553b8",
-                "reference": "22ef4ee85272b65c65ca348ddf69339ccc1553b8",
+                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/9f0622f998d3302aff82542c83fdde7dc8819da7",
+                "reference": "9f0622f998d3302aff82542c83fdde7dc8819da7",
                 "shasum": ""
             },
             "require": {
@@ -890,20 +890,20 @@
             ],
             "description": "EGroupware app to manage bookmarks",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-02-09T09:53:28+00:00"
+            "time": "2020-06-09T11:29:45+00:00"
         },
         {
             "name": "egroupware/collabora",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "0a5de2c97d1a4f71864b2f8e952bd64629e43592"
+                "reference": "dfcd6812e9cf1f041d2b490955397e7dfa8be910"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/0a5de2c97d1a4f71864b2f8e952bd64629e43592",
-                "reference": "0a5de2c97d1a4f71864b2f8e952bd64629e43592",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/dfcd6812e9cf1f041d2b490955397e7dfa8be910",
+                "reference": "dfcd6812e9cf1f041d2b490955397e7dfa8be910",
                 "shasum": ""
             },
             "require": {
@@ -930,7 +930,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-04-08T16:59:28+00:00"
+            "time": "2020-06-27T14:34:45+00:00"
         },
         {
             "name": "egroupware/icalendar",
@@ -976,12 +976,12 @@
                 {
                     "name": "Chuck Hagenbuch",
                     "email": "chuck@horde.org",
-                    "role": "lead"
+                    "role": "Lead"
                 },
                 {
                     "name": "Jan Schneider",
                     "email": "jan@horde.org",
-                    "role": "lead"
+                    "role": "Lead"
                 },
                 {
                     "name": "Michael J Rubinsky",
@@ -1028,20 +1028,20 @@
             ],
             "description": "Compiled version of magicsuggest customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/magicsuggest",
-            "time": "2018-06-21T10:14:03+00:00"
+            "time": "2018-06-21T13:36:37+00:00"
         },
         {
             "name": "egroupware/news_admin",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
-                "reference": "9568c6ebd7746b8a10be3e3c04d92f68423ae03e"
+                "reference": "96f58e999bba9555a6213057dbe5402b90dc32d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/9568c6ebd7746b8a10be3e3c04d92f68423ae03e",
-                "reference": "9568c6ebd7746b8a10be3e3c04d92f68423ae03e",
+                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/96f58e999bba9555a6213057dbe5402b90dc32d0",
+                "reference": "96f58e999bba9555a6213057dbe5402b90dc32d0",
                 "shasum": ""
             },
             "require": {
@@ -1060,20 +1060,20 @@
             ],
             "description": "EGroupware app to supply and aggregate RSS/Atom feeds",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-12-04T21:55:05+00:00"
+            "time": "2020-04-30T09:17:16+00:00"
         },
         {
             "name": "egroupware/openid",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "66b328fe2f84bfa7fe1c88ad90cf30a3df967eef"
+                "reference": "15a324f54a667e6c5df0c927cc00092c9ede242c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/66b328fe2f84bfa7fe1c88ad90cf30a3df967eef",
-                "reference": "66b328fe2f84bfa7fe1c88ad90cf30a3df967eef",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/15a324f54a667e6c5df0c927cc00092c9ede242c",
+                "reference": "15a324f54a667e6c5df0c927cc00092c9ede242c",
                 "shasum": ""
             },
             "require": {
@@ -1109,20 +1109,20 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-02-09T17:57:08+00:00"
+            "time": "2020-05-22T09:50:42+00:00"
         },
         {
             "name": "egroupware/projectmanager",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "4e366850d265b93b9b0a7b0df013aeecf33b446e"
+                "reference": "c6dde54648d0d8f3befb64ea0e0e090aa920e986"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/4e366850d265b93b9b0a7b0df013aeecf33b446e",
-                "reference": "4e366850d265b93b9b0a7b0df013aeecf33b446e",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/c6dde54648d0d8f3befb64ea0e0e090aa920e986",
+                "reference": "c6dde54648d0d8f3befb64ea0e0e090aa920e986",
                 "shasum": ""
             },
             "require": {
@@ -1150,20 +1150,20 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-03-10T20:39:40+00:00"
+            "time": "2020-06-09T21:06:38+00:00"
         },
         {
             "name": "egroupware/registration",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
-                "reference": "f79de7c3ce88cdb86ae2019a55995b9a4daecec0"
+                "reference": "b9b076b0e96cfcd2e2fb4ae17a10344fd75e4a9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/registration/zipball/f79de7c3ce88cdb86ae2019a55995b9a4daecec0",
-                "reference": "f79de7c3ce88cdb86ae2019a55995b9a4daecec0",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/b9b076b0e96cfcd2e2fb4ae17a10344fd75e4a9f",
+                "reference": "b9b076b0e96cfcd2e2fb4ae17a10344fd75e4a9f",
                 "shasum": ""
             },
             "require": {
@@ -1199,20 +1199,20 @@
             ],
             "description": "EGroupware app to allow self-registration of users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2019-11-15T12:59:37+00:00"
+            "time": "2020-06-12T10:34:18+00:00"
         },
         {
             "name": "egroupware/rocketchat",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "7920b76943bda974f3f073061bc26a02893c9f25"
+                "reference": "b9adc162f9af19d56378b521e3450177a1338bda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/7920b76943bda974f3f073061bc26a02893c9f25",
-                "reference": "7920b76943bda974f3f073061bc26a02893c9f25",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/b9adc162f9af19d56378b521e3450177a1338bda",
+                "reference": "b9adc162f9af19d56378b521e3450177a1338bda",
                 "shasum": ""
             },
             "require": {
@@ -1239,11 +1239,11 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-02-27T12:02:09+00:00"
+            "time": "2020-06-12T10:34:23+00:00"
         },
         {
             "name": "egroupware/smallpart",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
@@ -1289,16 +1289,16 @@
         },
         {
             "name": "egroupware/status",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "42763c4b6da901825e4cf489173e8f6b00d84012"
+                "reference": "8b99c42c0907f2a6c816103333edd0ff61c95a6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/42763c4b6da901825e4cf489173e8f6b00d84012",
-                "reference": "42763c4b6da901825e4cf489173e8f6b00d84012",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/8b99c42c0907f2a6c816103333edd0ff61c95a6c",
+                "reference": "8b99c42c0907f2a6c816103333edd0ff61c95a6c",
                 "shasum": ""
             },
             "require": {
@@ -1325,24 +1325,25 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-02-28T18:36:19+00:00"
+            "time": "2020-06-25T07:59:28+00:00"
         },
         {
             "name": "egroupware/swoolepush",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/swoolepush.git",
-                "reference": "b8c6df911d3385d6b41d73ccff5d4ea6b172d0da"
+                "reference": "69fbd00f7c88a1b07b4661e92e317c9db7edd6bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/b8c6df911d3385d6b41d73ccff5d4ea6b172d0da",
-                "reference": "b8c6df911d3385d6b41d73ccff5d4ea6b172d0da",
+                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/69fbd00f7c88a1b07b4661e92e317c9db7edd6bf",
+                "reference": "69fbd00f7c88a1b07b4661e92e317c9db7edd6bf",
                 "shasum": ""
             },
             "require": {
-                "easyswoole/memcache": "^1.0"
+                "easyswoole/memcache": "^1.0",
+                "egroupware/egroupware": "self.version"
             },
             "require-dev": {
                 "eaglewu/swoole-ide-helper": "dev-english"
@@ -1365,20 +1366,20 @@
             ],
             "description": "EGroupware push server using Swoole",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-06-13T13:05:42+00:00"
+            "time": "2020-06-13T14:21:25+00:00"
         },
         {
             "name": "egroupware/tracker",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "52c9f50ed3f5eea8ec3a86a992c3bd3368c3181b"
+                "reference": "4845702889b0c4f3f46ded67c7091bee2a090069"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/52c9f50ed3f5eea8ec3a86a992c3bd3368c3181b",
-                "reference": "52c9f50ed3f5eea8ec3a86a992c3bd3368c3181b",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/4845702889b0c4f3f46ded67c7091bee2a090069",
+                "reference": "4845702889b0c4f3f46ded67c7091bee2a090069",
                 "shasum": ""
             },
             "require": {
@@ -1405,7 +1406,7 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-03-04T17:40:21+00:00"
+            "time": "2020-06-26T16:35:31+00:00"
         },
         {
             "name": "egroupware/z-push-dev",
@@ -2343,7 +2344,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "An API for various compression techniques."
+            "description": "A library to wrap various compression techniques."
         },
         {
             "name": "pear-pear.horde.org/Horde_Crypt",
@@ -2409,7 +2410,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides blowfish encryption/decryption for PHP string data."
+            "description": "A library that provides blowfish encryption/decryption for PHP string data."
         },
         {
             "name": "pear-pear.horde.org/Horde_Date",
@@ -2525,7 +2526,7 @@
             "license": [
                 "BSD-2-Clause"
             ],
-            "description": "Normalized access to various backends providing IDNA (Internationalized Domain Names in Applications) support."
+            "description": "A library that wraps various backends providing IDNA (Internationalized Domain Names in Applications) support."
         },
         {
             "name": "pear-pear.horde.org/Horde_Imap_Client",
@@ -2563,7 +2564,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Interface to access IMAP4rev1 (RFC 3501) mail servers. Also supports connections to POP3 (STD 53/RFC 1939)."
+            "description": "A library to access IMAP4rev1 (RFC 3501) mail servers. Also supports connections to POP3 (STD 53/RFC 1939)."
         },
         {
             "name": "pear-pear.horde.org/Horde_ListHeaders",
@@ -2843,7 +2844,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides abstract class for use in creating PHP network socket clients."
+            "description": "A library that provides an abstract PHP network socket client."
         },
         {
             "name": "pear-pear.horde.org/Horde_Stream",
@@ -2984,7 +2985,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "A text-based diff engine and renderers for multiple diff output formats."
+            "description": "A library that provides a text-based diff engine and renderers for multiple diff output formats."
         },
         {
             "name": "pear-pear.horde.org/Horde_Text_Flowed",
@@ -3012,7 +3013,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "The Horde_Text_Flowed:: class provides common methods for manipulating text using the encoding described in RFC 3676 ('flowed' text)."
+            "description": "A library that provides common methods for manipulating text using the encoding described in RFC 3676 ('flowed' text)."
         },
         {
             "name": "pear-pear.horde.org/Horde_Translation",
@@ -3095,7 +3096,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "These classes provide functionality useful for all kind of applications."
+            "description": "A library that provides functionality useful for all kind of applications."
         },
         {
             "name": "pear/archive_tar",
