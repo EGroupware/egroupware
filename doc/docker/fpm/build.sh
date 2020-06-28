@@ -7,7 +7,6 @@ BRANCH=$(echo $VERSION|sed 's/\.[0-9]\{8\}$//')
 [ $VERSION = $BRANCH ] && VERSION="$BRANCH.x-dev"
 
 [ $VERSION = "$DEFAULT.x-dev" ] && {
-	cd $(dirname $0)
 	grep self.version composer.json | while read pack version; do composer update $(echo $pack|cut -d'"' -f2); done
 	git status composer.lock|grep composer.lock && {
 		git stash; git pull --rebase; git stash pop
