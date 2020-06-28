@@ -675,7 +675,7 @@ class resources_bo
 		{
 			return false;
 		}
-		return $this->acl->is_permitted($data['cat_id'],resources_acl_bo::DIRECT_BOOKING) ? A : U;
+		return $this->acl->is_permitted($data['cat_id'],resources_acl_bo::DIRECT_BOOKING) ? 'A' : 'U';
 	}
 
 	/**
