@@ -277,12 +277,13 @@ EGroupware can be integrated easily into existing authentication solutions such 
 	}
 
 	static public $knownLicenses = array(
-		'GPL'	=> array('http://opensource.org/licenses/gpl-license.php','GNU General Public License version 2.0 or (at your option) any later version'),
-		'GPL2'	=> array('http://opensource.org/licenses/gpl-2.0.php','GNU General Public License version 2.0'),
-		'GPL3'	=> array('http://opensource.org/licenses/gpl-3.0.php','GNU General Public License version 3.0'),
-		'LGPL'	=> array('http://opensource.org/licenses/lgpl-2.1.php','GNU Lesser General Public License, version 2.1'),
-		'LGPL3'	=> array('http://opensource.org/licenses/lgpl-3.0.php','GNU Lesser General Public License, version 3.0'),
-		'PHP'   => array('http://opensource.org/licenses/php.php','PHP License'),
+		'GPL'	=> array('https://opensource.org/licenses/gpl-license.php','GNU General Public License version 2.0 or (at your option) any later version'),
+		'GPL2'	=> array('https://opensource.org/licenses/gpl-2.0.php','GNU General Public License version 2.0'),
+		'GPL3'	=> array('https://opensource.org/licenses/gpl-3.0.php','GNU General Public License version 3.0'),
+		'LGPL'	=> array('https://opensource.org/licenses/lgpl-2.1.php','GNU Lesser General Public License, version 2.1'),
+		'LGPL3'	=> array('https://opensource.org/licenses/lgpl-3.0.php','GNU Lesser General Public License, version 3.0'),
+		'PHP'   => array('https://opensource.org/licenses/php.php','PHP License'),
+		'AGPL3' => array('https://opensource.org/licenses/AGPL-3.0','GNU Affero General Public License'),
 	);
 
 	/**
