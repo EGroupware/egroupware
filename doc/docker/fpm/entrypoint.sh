@@ -14,10 +14,10 @@ test -n "$EGW_SESSION_TIMEOUT" && test "$EGW_SESSION_TIMEOUT" -ge 1440 && \
 	sed -e "s/^;\?session.gc_maxlifetime.*/session.gc_maxlifetime=$EGW_SESSION_TIMEOUT/g" \
 		-i /etc/php/7.3/fpm/php.ini
 
-# if EGW_MEMORY_LIMIT is set in environment, propagate value to php.ini
+# if EGW_MEMORY_LIMIT is set in environment, propagate value to pool.d/www.conf, which has higher precedence then php.ini
 test -n "$EGW_MEMORY_LIMIT" && \
-	sed -e "s/^;\?memory_limit.*/memory_limit=$EGW_MEMORY_LIMIT/g" \
-		-i /etc/php/7.3/fpm/php.ini
+	sed -e "s/^;\?php_admin_value\[memory_limit\].*/php_admin_value[memory_limit]=$EGW_MEMORY_LIMIT/g" \
+		-i /etc/php/7.3/fpm/pool.d/www.conf
 
 # ToDo check version before copy
 rsync -a --delete /usr/share/egroupware-sources/ /usr/share/egroupware/
