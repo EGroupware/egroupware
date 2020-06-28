@@ -2801,3 +2801,13 @@ function calendar_upgrade17_1_003()
 {
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '19.1';
 }
+
+/**
+ * Bump version to 20.1
+ *
+ * @return string
+ */
+function calendar_upgrade19_1()
+{
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '20.1';
+}

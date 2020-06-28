@@ -718,3 +718,13 @@ function api_upgrade19_1_003()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '19.1.004';
 }
+
+/**
+ * Bump version to 20.1
+ *
+ * @return string
+ */
+function api_upgrade19_1_004()
+{
+	return $GLOBALS['setup_info']['api']['currentver'] = '20.1';
+}

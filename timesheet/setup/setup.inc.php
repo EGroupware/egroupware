@@ -16,7 +16,7 @@ if (!defined('TIMESHEET_APP'))
 }
 
 $setup_info[TIMESHEET_APP]['name']      = TIMESHEET_APP;
-$setup_info[TIMESHEET_APP]['version']   = '19.1';
+$setup_info[TIMESHEET_APP]['version']   = '20.1';
 $setup_info[TIMESHEET_APP]['app_order'] = 5;
 $setup_info[TIMESHEET_APP]['tables']    = array('egw_timesheet','egw_timesheet_extra');
 $setup_info[TIMESHEET_APP]['enable']    = 1;
@@ -49,5 +49,5 @@ $setup_info[TIMESHEET_APP]['hooks']['acl_rights'] = 'timesheet_hooks::acl_rights
 /* Dependencies for this app to work */
 $setup_info[TIMESHEET_APP]['depends'][] = array(
 	 'appname' => 'api',
-	 'versions' => Array('19.1')
+	 'versions' => Array('20.1')
 );
