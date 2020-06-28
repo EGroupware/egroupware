@@ -1,3 +1,16 @@
+egroupware-docker (20.1.20200628) hardy; urgency=low
+
+  * first 20.1 release candidate
+  * all apps: warn when closing popup windows with unsafed changes
+  * all apps: password widget allow now to genrate passwords and custom field type password
+  * smallPART: new e-learning app: selfdirected media assisted learning lectures & Process Analysis Reflection Tool
+  * Calendar: Optimize fetching participant names to reduce requests
+  * Calendar: Fix user / server timezone mismatch could put incorrect changes in event history
+  * Calendar/Email: show additional [Delete] and [Edit] buttons for a meeting canceled message
+  * Tracker: Open tickets in separate windows
+
+ -- Ralf Becker <rb@egroupware.org>  Sun, 28 Jun 2020 15:47:32 +0200
+
 egroupware-docker (20.1.20200613) hardy; urgency=low
 
   * first beta (feature-complete) for upcomming 20.1 release
