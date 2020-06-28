@@ -180,3 +180,13 @@ function timesheet_upgrade17_1_001()
 {
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '19.1';
 }
+
+/**
+ * Bump version to 20.1
+ *
+ * @return string
+ */
+function timesheet_upgrade19_1()
+{
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '20.1';
+}

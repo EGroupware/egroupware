@@ -11,7 +11,7 @@
  */
 
 $setup_info['infolog']['name']      = 'infolog';
-$setup_info['infolog']['version']   = '19.1.001';
+$setup_info['infolog']['version']   = '20.1';
 $setup_info['infolog']['app_order'] = 5;
 $setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra','egw_infolog_users');
 $setup_info['infolog']['enable']    = 1;
@@ -62,6 +62,6 @@ $setup_info['infolog']['hooks']['change_account_ids'] = 'infolog_customfields::c
 // Dependencies for this app to work
 $setup_info['infolog']['depends'][] = array(
 	'appname' => 'api',
-	'versions' => Array('19.1')
+	'versions' => Array('20.1')
 );
 

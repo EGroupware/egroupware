@@ -1121,3 +1121,13 @@ function infolog_upgrade19_1()
 
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '19.1.001';
 }
+
+/**
+ * Bump version to 20.1
+ *
+ * @return string
+ */
+function infolog_upgrade19_1_001()
+{
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '20.1';
+}
