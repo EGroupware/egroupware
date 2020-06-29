@@ -788,10 +788,16 @@ export class et2_dialog extends et2_widget {
                     // Early exit
                     return;
                 default:
-                    if (response) {
+                    if (response && typeof response === "string") {
                         totals.success++;
                         jQuery("<div class='message'></div>")
                             .text(response)
+                            .appendTo(log);
+                    }
+                    else
+                    {
+                    	jQuery("<div class='message error'></div>")
+                            .text(JSON.stringify(response))
                             .appendTo(log);
                     }
             }
