@@ -311,7 +311,7 @@ export class et2_button extends et2_baseWidget implements et2_IInput, et2_IDetac
 		this.clicked = true;
 
 		// Cancel buttons don't trigger the close confirmation prompt
-		if(this.btn.hasClass("et2_button_cancel"))
+		if(this.btn?.hasClass("et2_button_cancel"))
 		{
 			this.getInstanceManager().skip_close_prompt();
 		}
@@ -328,7 +328,7 @@ export class et2_button extends et2_baseWidget implements et2_IInput, et2_IDetac
 			this.getInstanceManager().submit(this, false, this.options.novalidate); //TODO: this only needs to be passed if it's in a datagrid
 		}
 		this.clicked = false;
-		this.getInstanceManager().skip_close_prompt(false);
+		this.getInstanceManager()?.skip_close_prompt(false);
 		return true;
 	}
 
