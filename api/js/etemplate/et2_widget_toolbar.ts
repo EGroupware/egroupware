@@ -691,20 +691,13 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 
 	/**
 	 * Is dirty returns true if the value of the widget has changed since it
-	 * was loaded.
+	 * was loaded.  We don't consider toolbars as dirtyable
 	 */
 	isDirty()
 	{
-		return this.value != null;
+		return false;
 	}
 
-	/**
-	 * Causes the dirty flag to be reseted.
-	 */
-	resetDirty()
-	{
-		this.value = null;
-	}
 
 	/**
 	 * Checks the data to see if it is valid, as far as the client side can tell.

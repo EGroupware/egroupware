@@ -562,16 +562,10 @@ var et2_toolbar = /** @class */ (function (_super) {
     };
     /**
      * Is dirty returns true if the value of the widget has changed since it
-     * was loaded.
+     * was loaded.  We don't consider toolbars as dirtyable
      */
     et2_toolbar.prototype.isDirty = function () {
-        return this.value != null;
-    };
-    /**
-     * Causes the dirty flag to be reseted.
-     */
-    et2_toolbar.prototype.resetDirty = function () {
-        this.value = null;
+        return false;
     };
     /**
      * Checks the data to see if it is valid, as far as the client side can tell.
