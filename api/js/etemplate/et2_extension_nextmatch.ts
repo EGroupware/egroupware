@@ -2332,7 +2332,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	}
 	resetDirty( )
 	{}
-	isDirty() { return typeof this.value !== 'undefined';}
+	isDirty() { return false; }
 	isValid( )	{ return true;}
 	set_value(_value)
 	{

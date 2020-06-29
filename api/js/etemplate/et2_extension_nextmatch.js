@@ -1728,7 +1728,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         return value;
     };
     et2_nextmatch.prototype.resetDirty = function () { };
-    et2_nextmatch.prototype.isDirty = function () { return typeof this.value !== 'undefined'; };
+    et2_nextmatch.prototype.isDirty = function () { return false; };
     et2_nextmatch.prototype.isValid = function () { return true; };
     et2_nextmatch.prototype.set_value = function (_value) {
         this.value = _value;
