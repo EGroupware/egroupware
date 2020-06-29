@@ -1,3 +1,16 @@
+egroupware-docker (19.1.20200629) hardy; urgency=low
+
+  * Videoconference: replacing jitsi.egroupware.org with public meet.jit.si as sponsoring ended
+  * Videoconference: fix 127.0.0.1:8080 instead of host in room name when proxying
+  * Calendar: Optimize fetching participant names to reduce requests
+  * Calendar: Fix user / server timezone mismatch could put incorrect changes in event history
+  * Calendar/Email: show additional [Delete] and [Edit] buttons for a meeting canceled message
+  * Filemanager: When user tries to access a directory with no permission, redirect to previous directory instead of home
+  * Tracker: Open tickets in separate windows
+  * Tracker: No longer flagging closed tickets as overdue
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 29 Jun 2020 19:19:52 +0200
+
 egroupware-docker (19.1.20200605) hardy; urgency=low
 
   * Calendar/CalDAV: videoconference was lost, if meeting was accepted of updated via CalDAV
