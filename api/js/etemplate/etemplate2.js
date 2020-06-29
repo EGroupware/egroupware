@@ -572,6 +572,7 @@ var etemplate2 = /** @class */ (function () {
         var dirty = false;
         this._widgetContainer.iterateOver(function (_widget) {
             if (_widget.isDirty && _widget.isDirty()) {
+                console.info(_widget.id + " is dirty", _widget);
                 dirty = true;
             }
         }, this);

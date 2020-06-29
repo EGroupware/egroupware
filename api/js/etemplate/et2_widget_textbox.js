@@ -510,7 +510,7 @@ var et2_searchbox = /** @class */ (function (_super) {
             this._show_hide(!this.options.overlay);
             this._searchToggleState();
         }
-        return false;
+        return true;
     };
     /**
      * Overrride attachToDOM in order to unbind change handler

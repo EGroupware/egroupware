@@ -734,6 +734,7 @@ export class etemplate2
 		{
 			if (_widget.isDirty && _widget.isDirty())
 			{
+				console.info(_widget.id + " is dirty", _widget);
 				dirty = true;
 			}
 		}, this);
