@@ -1134,7 +1134,7 @@ app.classes.mail = AppJS.extend(
 		//Do not run resolve images if it's forced already to show them all
 		// or forced to not show them all.
 		var pref_img = egw.preference('allowExternalIMGs', 'mail');
-		if (pref_img == 1 || pref_img == 0) return;
+		if (pref_img == 0) return;
 
 		var external_images = jQuery(_node).find('img[alt*="[blocked external image:"]');
 		if (external_images.length > 0 && jQuery(_node).find('.mail_externalImagesMsg').length == 0)
@@ -1150,9 +1150,10 @@ app.classes.mail = AppJS.extend(
 				if (u.substr(0,7) == 'http://')
 				{
 					u = u.replace ('http://','');
+					url = url.replace('http://', 'https://');
 					protocol = 'http';
 				}
-				if (u.substr(0,8) == 'https://')
+				else if (u.substr(0,8) == 'https://')
 				{
 					u = u.replace ('https://','');
 					protocol = 'https';
