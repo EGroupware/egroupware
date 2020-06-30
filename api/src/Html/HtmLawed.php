@@ -404,7 +404,7 @@ function hl_email_tag_transform($element, $attribute_array=0)
 						$GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains'] :
 						array();
 				if ($GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs'] != 1
-						&& !in_array($url[0], $domains))
+						&& !in_array($url[0], $domains) || substr($attribute_array['src'],0, 5) == 'http:')
 				{
 					//the own webserver url is not external, so it should be allowed
 					if (empty($GLOBALS['egw_info']['server']['webserver_url'])||!preg_match("$^".$GLOBALS['egw_info']['server']['webserver_url'].".*$",$attribute_array['src']))
