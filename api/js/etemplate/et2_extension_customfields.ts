@@ -61,6 +61,13 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			"type": "string",
 			"default": et2_no_init,
 			"description": "JS code which is executed when the value changes."
+		},
+		// Allow changing the field prefix.  Normally it's the constant but importexport filter changes it.
+		"prefix": {
+			name: "prefix",
+			type: "string",
+			default: et2_no_init,
+			description: "Custom prefix for custom fields.  Default #"
 		}
 	};
 
@@ -200,12 +207,12 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 			const field = this.options.customfields[field_name];
 
-			let id = et2_customfields_list.PREFIX + field_name;
+			let id = this.options.prefix + field_name;
 
 			// Need curlies around ID for nm row expansion
 			if(this.id == '$row')
 			{
-				id = "{" + this.id + "}" + "["+et2_customfields_list.PREFIX + field_name+"]";
+				id = "{" + this.id + "}" + "["+this.options.prefix + field_name+"]";
 			}
 			else if (this.id != et2_customfields_list.DEFAULT_ID)
 			{
@@ -230,7 +237,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					'statustext': field.help,
 					'needed': field.needed,
 					'readonly': this.getArrayMgr("readonlys").isReadOnly(id, null, this.options.readonly),
-					'value': this.options.value[et2_customfields_list.PREFIX + field_name]
+					'value': this.options.value[this.options.prefix + field_name]
 				});
 				// Can't have a required readonly, it will warn & be removed later, so avoid the warning
 				if(attrs.readonly === true) delete attrs.needed;
@@ -335,9 +342,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			if (contentMgr != null) {
 				const val = contentMgr.getEntry(this.id);
 				_attrs["value"] = {};
+				let prefix = _attrs["prefix"] || et2_customfields_list.PREFIX;
 				if (val !== null)
 				{
-					if(this.id.indexOf(et2_customfields_list.PREFIX) === 0 && typeof data.fields != 'undefined' && data.fields[this.id.replace(et2_customfields_list.PREFIX,'')] === true)
+					if(this.id.indexOf(prefix) === 0 && typeof data.fields != 'undefined' && data.fields[this.id.replace(prefix,'')] === true)
 					{
 						_attrs['value'][this.id] = val;
 					}
@@ -346,7 +354,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 						// Only set the values that match desired custom fields
 						for(let key in val)
 						{
-							if(key.indexOf(et2_customfields_list.PREFIX) == 0) {
+							if(key.indexOf(prefix) === 0) {
 								_attrs["value"][key] = val[key];
 							}
 						}
@@ -358,7 +366,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					// Check for custom fields directly in record
 					for(var key in _attrs.customfields)
 					{
-						_attrs["value"][et2_customfields_list.PREFIX + key] = contentMgr.getEntry(et2_customfields_list.PREFIX + key);
+						_attrs["value"][prefix + key] = contentMgr.getEntry(prefix + key);
 					}
 				}
 			}
@@ -383,12 +391,12 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 			// Make sure widget is created, and has the needed function
 			if(!this.widgets[field_name] || !this.widgets[field_name].set_value) continue;
-			let value = _value[et2_customfields_list.PREFIX + field_name] ? _value[et2_customfields_list.PREFIX + field_name] : null;
+			let value = _value[this.options.prefix + field_name] ? _value[et2_customfields_list.PREFIX + field_name] : null;
 
 			// Check if ID was missing
-			if(value == null && this.id == et2_customfields_list.DEFAULT_ID && this.getArrayMgr("content").getEntry(et2_customfields_list.PREFIX + field_name))
+			if(value == null && this.id == et2_customfields_list.DEFAULT_ID && this.getArrayMgr("content").getEntry(this.options.prefix + field_name))
 			{
-				value = this.getArrayMgr("content").getEntry(et2_customfields_list.PREFIX + field_name);
+				value = this.getArrayMgr("content").getEntry(this.options.prefix + field_name);
 			}
 
 			switch(this.options.customfields[field_name].type)
@@ -422,7 +430,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		{
 			if(this.widgets[field_name].getValue && !this.widgets[field_name].options.readonly)
 			{
-				value[et2_customfields_list.PREFIX + field_name] = this.widgets[field_name].getValue();
+				value[this.options.prefix + field_name] = this.widgets[field_name].getValue();
 			}
 		}
 		return value;
@@ -559,7 +567,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 		// We have to push the config modifications into the modifications array, or they'll
 		// be overwritten by the site config from the server
-		const data = this.getArrayMgr("modifications").getEntry(et2_customfields_list.PREFIX + field_name);
+		const data = this.getArrayMgr("modifications").getEntry(this.options.prefix + field_name);
 		if(data) jQuery.extend(data.config, attrs.config);
 
 		return true;
@@ -724,15 +732,15 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	{
 		for(let name in _fields)
 		{
-			if(this.rows[et2_customfields_list.PREFIX + name])
+			if(this.rows[this.options.prefix + name])
 			{
 				if(_fields[name])
 				{
-					jQuery(this.rows[et2_customfields_list.PREFIX+name]).show();
+					jQuery(this.rows[this.options.prefix+name]).show();
 				}
 				else
 				{
-					jQuery(this.rows[et2_customfields_list.PREFIX+name]).hide();
+					jQuery(this.rows[this.options.prefix+name]).hide();
 				}
 			}
 			this.options.fields[name] = _fields[name];
@@ -761,7 +769,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		{
 			// toggle() needs a boolean to do what we want
 			const key = _nodes[i].getAttribute('data-field');
-			jQuery(_nodes[i]).toggle(_values.fields[key] && _values.value[et2_customfields_list.PREFIX + key]?true:false);
+			jQuery(_nodes[i]).toggle(_values.fields[key] && _values.value[this.options.prefix + key]?true:false);
 		}
 	}
 }
