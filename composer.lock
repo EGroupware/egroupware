@@ -1083,12 +1083,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "b561fe102aeb1b1e495e8913736fd19681a46e0b"
+                "reference": "9ef6dc2996e71fd65a25f26e9ff5ccb04580e69d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/b561fe102aeb1b1e495e8913736fd19681a46e0b",
-                "reference": "b561fe102aeb1b1e495e8913736fd19681a46e0b",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/9ef6dc2996e71fd65a25f26e9ff5ccb04580e69d",
+                "reference": "9ef6dc2996e71fd65a25f26e9ff5ccb04580e69d",
                 "shasum": ""
             },
             "require": {
