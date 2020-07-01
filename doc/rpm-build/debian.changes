@@ -1,3 +1,11 @@
+egroupware-docker (19.1.20200701) hardy; urgency=low
+
+  * Jitsi: support not sending JWT as eg. required for meet.jit.si
+  * Mail: warn user about mixed content caused by http images in email
+  * Calendar: Add videoconference link to ical/groupdav event description
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 01 Jul 2020 08:53:05 +0200
+
 egroupware-docker (19.1.20200629) hardy; urgency=low
 
   * Videoconference: replacing jitsi.egroupware.org with public meet.jit.si as sponsoring ended
