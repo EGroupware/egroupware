@@ -698,6 +698,13 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		return false;
 	}
 
+	/**
+	 * Causes the dirty flag to be reseted.
+	 */
+	resetDirty()
+	{
+		this.value = null;
+	}
 
 	/**
 	 * Checks the data to see if it is valid, as far as the client side can tell.
