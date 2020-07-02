@@ -612,7 +612,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
         "prefix": {
             name: "prefix",
             type: "string",
-            default: et2_no_init,
+            default: "#",
             description: "Custom prefix for custom fields.  Default #"
         }
     };

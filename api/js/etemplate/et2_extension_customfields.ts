@@ -66,7 +66,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		"prefix": {
 			name: "prefix",
 			type: "string",
-			default: et2_no_init,
+			default: "#",
 			description: "Custom prefix for custom fields.  Default #"
 		}
 	};
