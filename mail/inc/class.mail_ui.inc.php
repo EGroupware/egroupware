@@ -689,6 +689,12 @@ class mail_ui
 				'group'		=> $group,
 				'hideOnMobile' => true
 			),
+			'predefined-addresses' => array(
+				'caption' => 'Set predefined addresses for compose...',
+				'onExecute' => 'javaScript:app.mail.set_predefined_addresses',
+				'icon' => 'edit',
+				'group'	=> $group,
+			),
 			'sieve' => array(
 				'caption' => 'Mail filter',
 				'onExecute' => 'javaScript:app.mail.edit_sieve',

@@ -240,6 +240,11 @@ app.classes.mail = AppJS.extend(
 				var plainText = this.et2.getWidgetById('mail_plaintext');
 				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 				this.mail_isMainWindow = false;
+				var pca = egw.preference(this.et2.getWidgetById('mailaccount').getValue().split(":")[0]+'_predefined_compose_addresses', 'mail');
+				for (var p in pca)
+				{
+					this.et2.getWidgetById(p).set_value(pca[p]);
+				}
 				this.compose_fieldExpander_init();
 				this.check_sharing_filemode();
 
@@ -6231,5 +6236,41 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
+	},
+
+	/**
+	 * Set predefined addresses for compose dialog
+	 *
+	 * @param {type} action
+	 * @param {type} _senders
+	 * @returns {undefined}
+	 */
+	set_predefined_addresses: function(action,_senders)
+	{
+		var buttons = [
+			{text: this.egw.lang("Save"), id: "save", "class": "ui-priority-primary", "default": true},
+			{text: this.egw.lang("Cancel"), id:"cancel"}
+		];
+		var pref_id = _senders[0].id.split('::')[0]+'_predefined_compose_addresses';
+		var prefs = egw.preference(pref_id, 'mail');
+
+		et2_createWidget("dialog",
+		{
+			callback: function(_button_id, _value) {
+				switch (_button_id)
+				{
+					case "save":
+						egw.set_preference('mail', pref_id, _value);
+						return;
+					case "cancel":
+				}
+			},
+			title: this.egw.lang("Predefined addresses for compose"),
+			buttons: buttons,
+			value:{content:prefs},
+			minWidth: 410,
+			template: egw.webserverUrl+'/mail/templates/default/predefinedAddressesDialog.xet?',
+			resizable: false,
+		}, et2_dialog._create_parent('mail'));
 	}
 });

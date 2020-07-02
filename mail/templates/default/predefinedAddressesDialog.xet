@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.predefinedAddressesDialog" template="" lang="" group="0" version="17.1">
+		<hbox class="et2_prompt">
+			<grid width="390">
+				<columns>
+					<column width="60"/>
+					<column width="260"/>
+				</columns>
+				<rows>
+					<row>
+						<description value="Configured email addresses will be set automatically on compose dialog for respected field when composing a new email."/>
+					</row>
+					<row>
+						<description label= "%s:" value="Cc"/>
+						<taglist-email id="cc" allowFreeEntries="true" include_lists="true"/>
+					</row>
+					<row>
+						<description label= "%s:" value="Bcc"/>
+						<taglist-email id="bcc" allowFreeEntries="true" include_lists="true"/>
+					</row>
+				</rows>
+			</grid>
+		</hbox>
+	</template>
+</overlay>
