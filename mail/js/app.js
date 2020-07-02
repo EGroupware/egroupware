@@ -6267,7 +6267,7 @@ app.classes.mail = AppJS.extend(
 			},
 			title: this.egw.lang("Predefined addresses for compose"),
 			buttons: buttons,
-			value:{content:prefs},
+			value:{content:prefs || {}},
 			minWidth: 410,
 			template: egw.webserverUrl+'/mail/templates/default/predefinedAddressesDialog.xet?',
 			resizable: false,
