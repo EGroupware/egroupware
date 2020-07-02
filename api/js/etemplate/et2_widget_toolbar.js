@@ -568,6 +568,12 @@ var et2_toolbar = /** @class */ (function (_super) {
         return false;
     };
     /**
+     * Causes the dirty flag to be reseted.
+     */
+    et2_toolbar.prototype.resetDirty = function () {
+        this.value = null;
+    };
+    /**
      * Checks the data to see if it is valid, as far as the client side can tell.
      * Return true if it's not possible to tell on the client side, because the server
      * will have the chance to validate also.
