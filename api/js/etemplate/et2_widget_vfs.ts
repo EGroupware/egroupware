@@ -1068,6 +1068,11 @@ class et2_vfsUpload extends et2_file
 				}
 			}
 		}
+		// Set up for expose
+		if(file_data && typeof file_data.download_url === "undefined")
+		{
+			file_data.download_url = "/webdav.php" + file_data.path;
+		}
 		let row = jQuery(document.createElement("tr"))
 			.attr("data-path", file_data.path.replace(/'/g, '&quot'))
 			.attr("draggable", "true")
@@ -1080,7 +1085,25 @@ class et2_vfsUpload extends et2_file
 			.addClass('title')
 			.appendTo(row);
 		let mime = <et2_vfsMime> et2_createWidget('vfs-mime',{value: file_data}, this);
-		let vfs = <et2_vfs> et2_createWidget('vfs', {value: file_data}, this);
+
+		// Trigger expose on click, if supported
+		let vfs_attrs = {value: file_data, onclick: undefined};
+		if (file_data && (typeof file_data.download_url != 'undefined'))
+		{
+			var fe_mime = egw_get_file_editor_prefered_mimes(file_data.mime);
+			// Check if the link entry is mime with media type, in order to open it in expose view
+			if (typeof file_data.mime != 'undefined' &&
+				(file_data.mime.match(mime.mime_regexp,'ig') || (fe_mime && fe_mime.mime[file_data.mime])))
+			{
+				vfs_attrs.onclick = function(ev) {
+					ev.stopPropagation();
+					// Pass it off to the associated vfsMime widget
+					jQuery('img',this.parentNode.parentNode).trigger("click");
+					return false;
+				};
+			}
+		}
+		let vfs = <et2_vfs> et2_createWidget('vfs', vfs_attrs, this);
 
 		// If already attached, need to do this explicitly
 		if(this.isAttached())
