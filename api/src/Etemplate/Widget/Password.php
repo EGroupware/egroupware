@@ -93,12 +93,12 @@ class Password extends Etemplate\Widget\Textbox
 			{
 				$value = $preserv;
 			}
-			else if (!$plaintext && $preserv && $value_in == Credentials::decrypt(array('cred_password' => $preserv,'cred_pw_enc' => Credentials::SYSTEM_AES)))
+			else if ($value_in && !$plaintext && $preserv && $value_in == Credentials::decrypt(array('cred_password' => $preserv,'cred_pw_enc' => Credentials::SYSTEM_AES)))
 			{
 				// Don't change if they submitted the decrypted version
 				$value = $preserv;
 			}
-			else if (!$plaintext && $value_in !== $preserv)
+			else if ($value_in && !$plaintext && $value_in !== $preserv)
 			{
 				// Store encrypted
 				$encryption = null;
