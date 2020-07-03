@@ -81,6 +81,7 @@ class Vfs extends File
 					$file['path'] = $path;
 					$file['name'] = Api\Vfs::basename($file['path']);
 					$file['mime'] = Api\Vfs::mime_content_type($file['path']);
+					$file['download_url'] = Api\Vfs::download_url($file['path']);
 					$value = array($file);
 				}
 				// Single file, missing extension in path
@@ -97,6 +98,7 @@ class Vfs extends File
 						$file_info['path'] = $file;
 						$file_info['name'] = Api\Vfs::basename($file_info['path']);
 						$file_info['mime'] = Api\Vfs::mime_content_type($file_info['path']);
+						$file_info['download_url'] = Api\Vfs::download_url($file_info['path']);
 						$value[] = $file_info;
 					}
 				}
@@ -109,6 +111,7 @@ class Vfs extends File
 						$file_info['path'] = "$path$file";
 						$file_info['name'] = Api\Vfs::basename($file_info['path']);
 						$file_info['mime'] = Api\Vfs::mime_content_type($file_info['path']);
+						$file_info['download_url'] = Api\Vfs::download_url($file_info['path']);
 						$value[] = $file_info;
 					}
 				}

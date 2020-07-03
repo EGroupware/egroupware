@@ -938,7 +938,22 @@ var et2_vfsUpload = /** @class */ (function (_super) {
             .addClass('title')
             .appendTo(row);
         var mime = et2_core_widget_1.et2_createWidget('vfs-mime', { value: file_data }, this);
-        var vfs = et2_core_widget_1.et2_createWidget('vfs', { value: file_data }, this);
+        // Trigger expose on click, if supported
+        var vfs_attrs = { value: file_data, onclick: undefined };
+        if (file_data && (typeof file_data.download_url != 'undefined')) {
+            var fe_mime = egw_get_file_editor_prefered_mimes(file_data.mime);
+            // Check if the link entry is mime with media type, in order to open it in expose view
+            if (typeof file_data.mime != 'undefined' &&
+                (file_data.mime.match(mime.mime_regexp, 'ig') || (fe_mime && fe_mime.mime[file_data.mime]))) {
+                vfs_attrs.onclick = function (ev) {
+                    ev.stopPropagation();
+                    // Pass it off to the associated vfsMime widget
+                    jQuery('img', this.parentNode.parentNode).trigger("click");
+                    return false;
+                };
+            }
+        }
+        var vfs = et2_core_widget_1.et2_createWidget('vfs', vfs_attrs, this);
         // If already attached, need to do this explicitly
         if (this.isAttached()) {
             mime.set_value(file_data);
