@@ -690,7 +690,7 @@ class mail_ui
 				'hideOnMobile' => true
 			),
 			'predefined-addresses' => array(
-				'caption' => 'Set predefined addresses for compose...',
+				'caption' => 'Set predefined values for compose...',
 				'onExecute' => 'javaScript:app.mail.set_predefined_addresses',
 				'icon' => 'edit',
 				'group'	=> $group,

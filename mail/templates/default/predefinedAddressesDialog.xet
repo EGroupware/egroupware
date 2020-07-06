@@ -11,7 +11,15 @@
 				</columns>
 				<rows>
 					<row>
-						<description value="Configured email addresses will be set automatically on compose dialog for respected field when composing a new email."/>
+						<description value="Configured values will be set automatically on compose dialog for respected field when composing a new email."/>
+					</row>
+					<row>
+						<description value="Reply to"/>
+						<taglist-email id="replyto" width="100%"/>
+					</row>
+					<row>
+						<description value="Folder"/>
+						<taglist id="folder" autocomplete_url="mail.mail_compose.ajax_searchFolder" autocomplete_params="" allowFreeEntries="false"/>
 					</row>
 					<row>
 						<description label= "%s:" value="Cc"/>
