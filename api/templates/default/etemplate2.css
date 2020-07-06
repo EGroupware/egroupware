@@ -101,18 +101,19 @@ div.et2_hbox > div {
  * Password widget
  */
 .et2_password {
-	display: inline-block;
+	display: flex;
+	flex-direction: row;
 	border: 1px solid #e6e6e6;
-	padding-right: 14px;
 	white-space: nowrap;
+	min-width: fit-content;
 }
 .et2_password > input {
 	border: none;
-	margin-right: -23px;
-	padding-right: 10px;
+	flex-grow: 2;
+	min-width: 20ex;
 }
-.et2_password .show_hide {
-	margin-left: -5px;
+.et2_password > input:focus {
+	outline: none;
 }
 .et2_password > * {
 	vertical-align: middle;
