@@ -689,12 +689,6 @@ class mail_ui
 				'group'		=> $group,
 				'hideOnMobile' => true
 			),
-			'predefined-addresses' => array(
-				'caption' => 'Set predefined values for compose...',
-				'onExecute' => 'javaScript:app.mail.set_predefined_addresses',
-				'icon' => 'edit',
-				'group'	=> $group,
-			),
 			'sieve' => array(
 				'caption' => 'Mail filter',
 				'onExecute' => 'javaScript:app.mail.edit_sieve',
@@ -720,6 +714,11 @@ class mail_ui
 				'enabled'	=> 'javaScript:app.mail.acl_enabled',
 				'onExecute' => 'javaScript:app.mail.edit_acl',
 			),
+			'predefined-addresses' => array(
+				'caption' => 'Set predefined values for compose...',
+				'onExecute' => 'javaScript:app.mail.set_predefined_addresses',
+				'icon' => 'edit',
+			)
 		);
 		// the preference prefaskformove controls actually if there is a popup on target or not
 		// if there are multiple options there is a popup on target, 0 for prefaskformove means
@@ -780,7 +779,8 @@ class mail_ui
 			);
 		}
 		$tree_actions['sieve']['group']	= $tree_actions['vacation']['group'] = ++$group;	// new group for filter
-		$tree_actions['edit_account']['group'] = $tree_actions['edit_acl']['group']	= ++$group;
+		$tree_actions['edit_account']['group'] = $tree_actions['edit_acl']['group']	=
+				$tree_actions['predefined-addresses']['group'] = ++$group;
 
 
 		// enforce global (group-specific) ACL
