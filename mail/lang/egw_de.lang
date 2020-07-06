@@ -96,7 +96,7 @@ compose	mail	de	verfassen
 compose as new	mail	de	Als neu bearbeiten
 compress folder	mail	de	Ordner komprimieren
 condition	mail	de	Bedingung
-configured email addresses will be set automatically on compose dialog for respected field when composing a new email.	mail	de	Die konfigurierten E-Mail-Adressen werden beim Verfassen einer neuen E-Mail automatisch im Verfassen-Dialog für das entsprechende Feld gesetzt.
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	de	Die festgelegten Werte werden beim Verfassen einer neuen E-Mail für die entsprechenden Felder automatisch eingestellt.
 configuration settings	mail	de	Einstellungen der Konfiguration
 confirm	mail	de	Bestätigen
 confirm attach message	mail	de	Bestätigung beim Anhängen von E-Mails
@@ -528,7 +528,7 @@ serverside vacationnotice (via sieve) are not activated	mail	de	Serverseitige Ab
 set / remove flags	mail	de	Markierung
 set / remove labels	mail	de	Schlagworte setzen / entfernen
 set it as default:	mail	de	als Vorgabe speichern
-set predefined addresses for compose...	mail	de	vordefinierte Adressen zum Verfassen setzen ...
+set predefined values for compose...	mail	de	Vordefinierte Werte für das Verfassen ...
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden?
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	de	Soll die Signatur nach (Standard) oder vor dem zitierten Text eingefügt werden und diese bearbeitbar sein?
 show	mail	de	anzeigen
