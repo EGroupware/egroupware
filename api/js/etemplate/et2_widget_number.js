@@ -44,6 +44,7 @@ var et2_number = /** @class */ (function (_super) {
         var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_number._attributes, _child || {})) || this;
         _this.min = null;
         _this.max = null;
+        _this.step = null;
         return _this;
     }
     et2_number.prototype.transformAttributes = function (_attrs) {
@@ -115,6 +116,15 @@ var et2_number = /** @class */ (function (_super) {
             this.input.attr("max", this.max);
         }
     };
+    et2_number.prototype.set_step = function (_value) {
+        this.step = _value;
+        if (this.step == null) {
+            this.input.removeAttr("step");
+        }
+        else {
+            this.input.attr("step", this.step);
+        }
+    };
     et2_number._attributes = {
         "value": {
             "type": "float"
@@ -134,6 +144,12 @@ var et2_number = /** @class */ (function (_super) {
             "type": "integer",
             "default": et2_no_init,
             "description": "Maximum allowed value"
+        },
+        "step": {
+            "name": "step value",
+            "type": "integer",
+            "default": et2_no_init,
+            "description": "Step attribute specifies the interval between legal numbers"
         },
         "precision": {
             // TODO: Implement this in some nice way other than HTML5's step attribute

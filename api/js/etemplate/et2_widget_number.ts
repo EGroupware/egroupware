@@ -43,6 +43,12 @@ class et2_number extends et2_textbox
 			"default": et2_no_init,
 			"description": "Maximum allowed value"
 		},
+		"step": {
+			"name": "step value",
+			"type": "integer",
+			"default": et2_no_init,
+			"description": "Step attribute specifies the interval between legal numbers"
+		},
 		"precision": {
 			// TODO: Implement this in some nice way other than HTML5's step attribute
 			"name": "Precision",
@@ -55,6 +61,7 @@ class et2_number extends et2_textbox
 
 	min : number = null;
 	max : number = null;
+	step : number = null;
 	/**
 	 * Constructor
 	 *
@@ -140,6 +147,7 @@ class et2_number extends et2_textbox
 			this.input.attr("min",this.min);
 		}
 	}
+
 	set_max(_value)
 	{
 		this.max = _value;
@@ -147,6 +155,16 @@ class et2_number extends et2_textbox
 			this.input.removeAttr("max");
 		} else {
 			this.input.attr("max",this.max);
+		}
+	}
+
+	set_step(_value : number)
+	{
+		this.step = _value;
+		if(this.step == null) {
+			this.input.removeAttr("step");
+		} else {
+			this.input.attr("step",this.step);
 		}
 	}
 }
