@@ -86,6 +86,11 @@ class ContentSecurityPolicy
 			{
 				$attr = "'$attr'";	// automatic add quotes
 			}
+			// only add scheme and host, not path
+			elseif ($source !== 'report-uri' && ($parsed=parse_url($attr)) && !empty($parsed['scheme']) && !empty($parsed['path']))
+			{
+				$attr = $parsed['scheme'].'://'.$parsed['host'].(!empty($parsed['port']) ? ':'.$parsed['port'] : '');
+			}
 			if (!in_array($attr, self::$sources[$source]))
 			{
 				self::$sources[$source][] = $attr;
