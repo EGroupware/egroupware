@@ -1333,12 +1333,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/swoolepush.git",
-                "reference": "cde652de65e42c9e5b79e72b3aebd04bc5955574"
+                "reference": "58e3279af01ba3d161f54e3251f6a4be43e2891e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/cde652de65e42c9e5b79e72b3aebd04bc5955574",
-                "reference": "cde652de65e42c9e5b79e72b3aebd04bc5955574",
+                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/58e3279af01ba3d161f54e3251f6a4be43e2891e",
+                "reference": "58e3279af01ba3d161f54e3251f6a4be43e2891e",
                 "shasum": ""
             },
             "require": {
@@ -1366,7 +1366,7 @@
             ],
             "description": "EGroupware push server using Swoole",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-06-28T13:30:32+00:00"
+            "time": "2020-07-08T13:31:21+00:00"
         },
         {
             "name": "egroupware/tracker",
