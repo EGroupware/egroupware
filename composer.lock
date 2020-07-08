@@ -1247,12 +1247,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "2fed3f6277601c1c9d13fc29c344d78ba09071a0"
+                "reference": "df9c6c283f6ea798ed4181951fec34a270f8c3f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/2fed3f6277601c1c9d13fc29c344d78ba09071a0",
-                "reference": "2fed3f6277601c1c9d13fc29c344d78ba09071a0",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/df9c6c283f6ea798ed4181951fec34a270f8c3f3",
+                "reference": "df9c6c283f6ea798ed4181951fec34a270f8c3f3",
                 "shasum": ""
             },
             "require": {
@@ -1285,7 +1285,7 @@
             ],
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
-            "time": "2020-06-27T15:15:37+00:00"
+            "time": "2020-07-08T12:03:17+00:00"
         },
         {
             "name": "egroupware/status",
