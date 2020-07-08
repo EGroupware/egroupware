@@ -19,6 +19,7 @@ import {et2_widget} from "./et2_core_widget";
 import {et2_button} from "./et2_widget_button";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
+import {etemplate2} from "./etemplate2";
 
 /**
  * A common dialog widget that makes it easy to imform users or prompt for information.
@@ -464,6 +465,20 @@ export class et2_dialog extends et2_widget {
                 // true: do NOT call et2_ready, as it would overwrite this.et2 in app.js
                 undefined, undefined, true);
         }
+
+        // Don't let dialog closing destroy the parent session
+	    if(this.template.etemplate_exec_id && this.template.app)
+	    {
+	        for(let et of etemplate2.getByApplication(this.template.app))
+	        {
+	        	if(et !== this.template && et.etemplate_exec_id === this.template.etemplate_exec_id)
+		        {
+		        	// Found another template using that exec_id, don't destroy when dialog closes.
+			        this.template.unbind_unload();
+			        break;
+		        }
+	        }
+	    }
         // set template-name as id, to allow to style dialogs
         this.div.children().attr('id', template.replace(/^(.*\/)?([^/]+)(\.xet)?$/, '$2').replace(/\./g, '-'));
     }

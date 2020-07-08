@@ -31,6 +31,7 @@ var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_widget_2 = require("./et2_core_widget");
 var et2_widget_button_1 = require("./et2_widget_button");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
+var etemplate2_1 = require("./etemplate2");
 /**
  * A common dialog widget that makes it easy to imform users or prompt for information.
  *
@@ -319,7 +320,7 @@ var et2_dialog = /** @class */ (function (_super) {
         if (this.template && this.options.template != template) {
             this.template.clear();
         }
-        this.template = new etemplate2(this.div[0], false);
+        this.template = new etemplate2_1.etemplate2(this.div[0], false);
         if (template.indexOf('.xet') > 0) {
             // File name provided, fetch from server
             this.template.load("", template, this.options.value || { content: {} }, jQuery.proxy(function () {
@@ -332,6 +333,17 @@ var et2_dialog = /** @class */ (function (_super) {
             this.template.load(template, '', this.options.value || {}, 
             // true: do NOT call et2_ready, as it would overwrite this.et2 in app.js
             undefined, undefined, true);
+        }
+        // Don't let dialog closing destroy the parent session
+        if (this.template.etemplate_exec_id && this.template.app) {
+            for (var _i = 0, _a = etemplate2_1.etemplate2.getByApplication(this.template.app); _i < _a.length; _i++) {
+                var et = _a[_i];
+                if (et !== this.template && et.etemplate_exec_id === this.template.etemplate_exec_id) {
+                    // Found another template using that exec_id, don't destroy when dialog closes.
+                    this.template.unbind_unload();
+                    break;
+                }
+            }
         }
         // set template-name as id, to allow to style dialogs
         this.div.children().attr('id', template.replace(/^(.*\/)?([^/]+)(\.xet)?$/, '$2').replace(/\./g, '-'));
