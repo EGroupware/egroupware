@@ -421,7 +421,7 @@ class et2_searchbox extends et2_textbox
 			name:"Fix searchbox",
 			type:"boolean",
 			default:true,
-			description:"Define wheter the searchbox should be a fix input field or flexible search button. Default is true (fix)."
+			description:"Define whether the searchbox should be a fix input field or flexible search button. Default is true (fix)."
 		}
 	}
 	value: string = "";
@@ -439,24 +439,20 @@ class et2_searchbox extends et2_textbox
 	{
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_searchbox._attributes, _child || {}));
-
-		this.value = "";
-		this.div = jQuery(document.createElement('div'))
-				.addClass('et2_searchbox');
-		this.flex = jQuery(document.createElement('div'))
-				.addClass('flex')
-				.appendTo(this.div);
-
-		//this._super.apply(this, arguments);
-
-		this.setDOMNode(this.div[0]);
-		this._createWidget();
 	}
 
-	_createWidget()
+	createInputWidget()
 	{
 		var self = this;
+
+		this.div = jQuery(document.createElement('div'))
+			.addClass('et2_searchbox');
+		this.flex = jQuery(document.createElement('div'))
+			.addClass('flex')
+			.appendTo(this.div);
+		this.setDOMNode(this.div[0]);
 		if (this.options.overlay) this.flex.addClass('overlay');
+
 		// search button indicator
 		// no need to create search button if it's a fix search field
 		if (!this.options.fix)
@@ -511,7 +507,6 @@ class et2_searchbox extends et2_textbox
 				if (event.target.tagName == 'span') event.stopImmediatePropagation();
 			}
 		});
-		this.flex.append(this.search.getDOMNode());
 
 		// clear button implementation
 		this.clear = jQuery(document.createElement('span'))
@@ -542,11 +537,11 @@ class et2_searchbox extends et2_textbox
 	 */
 	_show_hide(_stat)
 	{
-			// Not applied for fix option
-			if (this.options.fix) return;
+		// Not applied for fix option
+		if (this.options.fix) return;
 
-			jQuery(this.flex).toggleClass('hide',!_stat);
-			jQuery(this.getDOMNode()).toggleClass('expanded', _stat);
+		jQuery(this.flex).toggleClass('hide',!_stat);
+		jQuery(this.getDOMNode(this)).toggleClass('expanded', _stat);
 	}
 
 	/**
@@ -590,6 +585,14 @@ class et2_searchbox extends et2_textbox
 		if (this.search) this.search.input.val(_value);
 	}
 
+	set_readonly(_readonly)
+	{
+		this.search.set_readonly(_readonly);
+	}
+	set_blur(_value)
+	{
+		this.search.set_blur(_value);
+	}
 	/**
 	 * override doLoadingFinished in order to set initial state
 	 */
@@ -597,16 +600,26 @@ class et2_searchbox extends et2_textbox
 	{
 		super.doLoadingFinished();
 
-		if (!this.get_value()) {
+		if (!this.get_value())
+		{
 			this._show_hide(false);
 		}
-		else {
+		else
+		{
 			this._show_hide(!this.options.overlay);
 			this._searchToggleState();
 		}
 		return true;
 	}
 
+	getDOMNode(asker)
+	{
+		if(asker.getParent() == this)
+		{
+			return this.flex[0];
+		}
+		return super.getDOMNode(asker);
+	}
 	/**
 	 * Overrride attachToDOM in order to unbind change handler
 	 */
