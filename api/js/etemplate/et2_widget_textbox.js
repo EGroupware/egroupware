@@ -367,19 +367,16 @@ var et2_searchbox = /** @class */ (function (_super) {
         // Call the inherited constructor
         _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_searchbox._attributes, _child || {})) || this;
         _this.value = "";
-        _this.value = "";
-        _this.div = jQuery(document.createElement('div'))
-            .addClass('et2_searchbox');
-        _this.flex = jQuery(document.createElement('div'))
-            .addClass('flex')
-            .appendTo(_this.div);
-        //this._super.apply(this, arguments);
-        _this.setDOMNode(_this.div[0]);
-        _this._createWidget();
         return _this;
     }
-    et2_searchbox.prototype._createWidget = function () {
+    et2_searchbox.prototype.createInputWidget = function () {
         var self = this;
+        this.div = jQuery(document.createElement('div'))
+            .addClass('et2_searchbox');
+        this.flex = jQuery(document.createElement('div'))
+            .addClass('flex')
+            .appendTo(this.div);
+        this.setDOMNode(this.div[0]);
         if (this.options.overlay)
             this.flex.addClass('overlay');
         // search button indicator
@@ -433,7 +430,6 @@ var et2_searchbox = /** @class */ (function (_super) {
                     event.stopImmediatePropagation();
             }
         });
-        this.flex.append(this.search.getDOMNode());
         // clear button implementation
         this.clear = jQuery(document.createElement('span'))
             .addClass('ui-icon clear')
@@ -466,7 +462,7 @@ var et2_searchbox = /** @class */ (function (_super) {
         if (this.options.fix)
             return;
         jQuery(this.flex).toggleClass('hide', !_stat);
-        jQuery(this.getDOMNode()).toggleClass('expanded', _stat);
+        jQuery(this.getDOMNode(this)).toggleClass('expanded', _stat);
     };
     /**
      * toggle search button status based on value
@@ -498,6 +494,12 @@ var et2_searchbox = /** @class */ (function (_super) {
         if (this.search)
             this.search.input.val(_value);
     };
+    et2_searchbox.prototype.set_readonly = function (_readonly) {
+        this.search.set_readonly(_readonly);
+    };
+    et2_searchbox.prototype.set_blur = function (_value) {
+        this.search.set_blur(_value);
+    };
     /**
      * override doLoadingFinished in order to set initial state
      */
@@ -511,6 +513,12 @@ var et2_searchbox = /** @class */ (function (_super) {
             this._searchToggleState();
         }
         return true;
+    };
+    et2_searchbox.prototype.getDOMNode = function (asker) {
+        if (asker.getParent() == this) {
+            return this.flex[0];
+        }
+        return _super.prototype.getDOMNode.call(this, asker);
     };
     /**
      * Overrride attachToDOM in order to unbind change handler
@@ -537,7 +545,7 @@ var et2_searchbox = /** @class */ (function (_super) {
             name: "Fix searchbox",
             type: "boolean",
             default: true,
-            description: "Define wheter the searchbox should be a fix input field or flexible search button. Default is true (fix)."
+            description: "Define whether the searchbox should be a fix input field or flexible search button. Default is true (fix)."
         }
     };
     return et2_searchbox;
