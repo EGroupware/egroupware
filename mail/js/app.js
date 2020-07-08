@@ -1161,7 +1161,7 @@ app.classes.mail = AppJS.extend(
 				if (u.substr(0,7) == 'http://')
 				{
 					u = u.replace ('http://','');
-					url = url.replace('http://', 'https://');
+					url = url.replace('http://', 'https://proxy.egroupware.org/7d510d4f7966f97ab56580425ddb4811e707c018/');
 					protocol = 'http';
 				}
 				else if (u.substr(0,8) == 'https://')
