@@ -410,6 +410,26 @@ class mail_ui
 		$stmpl->exec('mail.mail_ui.subscription', $content,$sel_options,$readonlys,$preserv,2);
 	}
 
+	const DEFAULT_IMAGE_PROXY = 'https://';
+	const EGROUPWARE_IMAGE_PROXY = 'https://proxy.egroupware.org/7d510d4f7966f97ab56580425ddb4811e707c018/';
+	const IMAGE_PROXY_CONFIG = 'http_image_proxy';
+
+	/**
+	 * Get image proxy / http:// replacement for image urls
+	 *
+	 * @return string
+	 */
+	protected static function image_proxy()
+	{
+		$configs = Api\Config::read('mail');
+		$image_proxy = $configs[self::IMAGE_PROXY_CONFIG] ?: self::DEFAULT_IMAGE_PROXY;
+		if (strpos(self::EGROUPWARE_IMAGE_PROXY, parse_url($image_proxy, PHP_URL_HOST)))
+		{
+			$image_proxy = self::EGROUPWARE_IMAGE_PROXY;
+		}
+		return $image_proxy;
+	}
+
 	/**
 	 * Main mail page
 	 *
@@ -590,6 +610,9 @@ class mail_ui
 			default:
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
 		}
+		// send configured image proxy to client-side
+		$content['image_proxy'] = self::image_proxy();
+
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
 
@@ -2260,6 +2283,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from->'.$rememberServerID);
 			$this->changeProfile($rememberServerID);
 		}
+		// send configured image proxy to client-side
+		$content['image_proxy'] = self::image_proxy();
 
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
 	}
