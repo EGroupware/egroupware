@@ -77,6 +77,11 @@ app.classes.mail = AppJS.extend(
 	W_TIMEOUTS: [],
 
 	/**
+	 * Replace http:// in external image urls with
+	 */
+	image_proxy: 'https://',
+
+	/**
 	 * Initialize javascript for this application
 	 *
 	 * @memberOf mail
@@ -356,6 +361,9 @@ app.classes.mail = AppJS.extend(
 				this.mail_currentlyFocussed = this.et2.mail_currentlyFocussed;
 
 		}
+		// set image_proxy for resolveExternalImages
+		this.image_proxy = this.et2.getArrayMgr('content').getEntry('image_proxy') || 'https://';
+
 		this.preSetToggledOnActions ();
 	},
 
@@ -1142,6 +1150,7 @@ app.classes.mail = AppJS.extend(
 
 	resolveExternalImages: function (_node)
 	{
+		let image_proxy = this.image_proxy;
 		//Do not run resolve images if it's forced already to show them all
 		// or forced to not show them all.
 		var pref_img = egw.preference('allowExternalIMGs', 'mail');
@@ -1161,7 +1170,7 @@ app.classes.mail = AppJS.extend(
 				if (u.substr(0,7) == 'http://')
 				{
 					u = u.replace ('http://','');
-					url = url.replace('http://', 'https://proxy.egroupware.org/7d510d4f7966f97ab56580425ddb4811e707c018/');
+					url = url.replace('http://', image_proxy);
 					protocol = 'http';
 				}
 				else if (u.substr(0,8) == 'https://')
@@ -1209,20 +1218,20 @@ app.classes.mail = AppJS.extend(
 				showImages (external_images);
 				return;
 			}
-			let message = 'In order to protect your privacy all external sources within this email are blocked.';
+			let message = this.egw.lang('In order to protect your privacy all external sources within this email are blocked.');
 			for(let i in external_images)
 			{
 				if (!external_images[i].alt) continue;
 				let r = getUrlParts(external_images[i].alt);
 				if (r && r.protocol == 'http')
 				{
-					message = 'There are Mixed Content within this message which are served under HTTP insecure protocol. Be aware Showing / Allowing them would compromise your security!!!';
+					message = this.egw.lang('This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!');
 					container.addClass('red');
 					break;
 				}
 			}
 			jQuery(document.createElement('p'))
-					.text(this.egw.lang(message))
+					.text(message)
 					.appendTo(container);
 			jQuery(document.createElement('button'))
 					.addClass ('closeBtn')

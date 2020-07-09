@@ -59,6 +59,16 @@
 					<textbox id="newsettings[default_vacation_text]" cols="50" rows="8"/>
 				</row>
 				<row>
+					<description value="Handling of external http images / mixed content in mails" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="By default 'http://' is just replaced with 'https://'. Feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http." span="all"/>
+				</row>
+				<row>
+					<description value="Replace 'http://' in image urls with (trailing / required!)"/>
+					<textbox id="newsettings[http_image_proxy]" blur="https://" class="et2_fullWidth" validator="/^(https:[\/]{2}(.+\/)?)?$/"/>
+				</row>
+				<row>
 					<description value="Miscellaneous" span="all" class="subHeader"/>
 				</row>
 				<row>
