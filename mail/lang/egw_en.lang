@@ -6,7 +6,6 @@
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
 %1 mails selected	mail	en	%1 Mails selected
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	en	(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail Servers the limit is 4 by default, please contact your mail server administrator for further info.
-sieve_edit_instructions	mail	en	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 (leave empty for no quota)	mail	en	(Leave empty for no quota)
 (no subject)	mail	en	(no subject)
 (not connected)	mail	en	(not connected)
@@ -78,6 +77,7 @@ before reply, visible during compose	mail	en	Before reply, visible during compos
 blacklisted mails are marked as spam	mail	en	Blacklisted mails are marked as spam
 but check shared folders	mail	en	but check shared folders
 by date	mail	en	By date
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	en	By default 'http://' is just replaced with 'https://'. Feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.
 can not open imap connection	mail	en	Can not open IMAP connection
 can not resolve the winmail.dat attachment!	mail	en	Can not resolve the winmail.dat attachment!
 canceled deletion due to user interaction	mail	en	canceled deletion due to user interaction
@@ -259,6 +259,7 @@ general settings	mail	en	General settings
 get acl rights failed from imap server!	mail	en	Get ACL rights failed from IMAP server!
 greater than	mail	en	greater than
 ham folder	mail	en	Ham folder
+handling of external http images / mixed content in mails	mail	en	Handling of external http images / mixed content in mails
 header	mail	en	Header
 header lines	mail	en	Header lines
 high	mail	en	high
@@ -343,8 +344,8 @@ message preview area	mail	en	Message preview area
 message saved successfully.	mail	en	Message saved successfully.
 message send failed: %1	mail	en	Message send failed: %1
 message send successfully.	mail	en	Message send successfully.
-message verified successfully.	mail	en	Message verified successfully.
 message verified successfully but the signer’s certificate could not be verified.	mail	en	Message verified successfully but the signer’s certificate could not be verified.
+message verified successfully.	mail	en	Message verified successfully.
 miscellaneous	mail	en	Miscellaneous
 modify subject	mail	en	Modify subject
 modify subject of this message	mail	en	Modify subject of this message
@@ -455,6 +456,7 @@ rename folder	mail	en	Rename Folder
 rename folder %1 ?	mail	en	Rename Folder %1 ?
 rename folder %1 to:	mail	en	Rename Folder %1 to:
 renamed folder %1 to %2	mail	en	Renamed Folder %1 to %2
+replace 'http://' in image urls with (trailing / required!)	mail	en	Replace 'http://' in image urls with (trailing / required!)
 replied	mail	en	replied
 reply	mail	en	Reply
 reply all	mail	en	Reply All
@@ -547,6 +549,7 @@ sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
 sieve script name	mail	en	sieve script name
 sieve server	mail	en	Sieve server
+sieve_edit_instructions	mail	en	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 sign your message with smime certificate	mail	en	Sign your message with S/MIME certificate
 signature	mail	en	Signature
 signature at top	mail	en	signature at top
@@ -595,6 +598,7 @@ the message sender has requested a response to indicate that you have read this 
 the mimeparser can not parse this message.	mail	en	The mimeparser can not parse this message.
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
 then	mail	en	THEN
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	en	This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!
 there is no imap server configured.	mail	en	There is no IMAP Server configured.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.
 this message is smime encrypted and password protected.	mail	en	This message is S/MIME encrypted and password protected.

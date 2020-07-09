@@ -77,6 +77,7 @@ before reply, visible during compose	mail	de	Vor dem zitierten Text, sichtbar w�
 blacklisted mails are marked as spam	mail	de	E-Mail-Adressen, die in die Blacklist eingetragen werden, werden als Spam markiert
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	mail	de	nach Datum
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	de	Als Vorgabe wird 'http://' nur durch 'https://' ersetzt. Sie können gerne 'https://proxy.egroupware.org/' eintragen, um Bilder anzuzeigen die ausschließlich per http geladen werden können.
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
 can not resolve the winmail.dat attachment!	mail	de	Der winmail.dat Anhang kann nicht geöffnet weden!
 canceled deletion due to user interaction	mail	de	Löschen durch Benutzer abgebrochen
@@ -97,6 +98,7 @@ compose as new	mail	de	Als neu bearbeiten
 compress folder	mail	de	Ordner komprimieren
 condition	mail	de	Bedingung
 configuration settings	mail	de	Einstellungen der Konfiguration
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	de	Die festgelegten Werte werden beim Verfassen einer neuen E-Mail für die entsprechenden Felder automatisch eingestellt.
 confirm	mail	de	Bestätigen
 confirm attach message	mail	de	Bestätigung beim Anhängen von E-Mails
 confirm move to folder	mail	de	Bestätigung vor dem Verschieben
@@ -258,6 +260,7 @@ general settings	mail	de	Allgemeine Einstellungen
 get acl rights failed from imap server!	mail	de	Die Zugriffskontrollrechte konnten auf dem IMAP Server nicht gelesen werden!
 greater than	mail	de	größer als
 ham folder	mail	de	Ordner für nicht Spam-Nachrichten
+handling of external http images / mixed content in mails	mail	de	Behandlung von externen Bilder per http / gemischter Inhalt in Mails
 header	mail	de	Kopfzeilen
 header lines	mail	de	Kopfzeilen anzeigen
 high	mail	de	hoch
@@ -342,8 +345,8 @@ message preview area	mail	de	Vorschaubereich
 message saved successfully.	mail	de	Nachricht wurde erfolgreich gespeichert.
 message send failed: %1	mail	de	Nachricht konnte nicht versendet werden: %1
 message send successfully.	mail	de	Nachricht wurde erfolgreich versendet.
-message verified successfully.	mail	de	Nachricht erfolgreich verifiziert.
 message verified successfully but the signer’s certificate could not be verified.	mail	de	Nachricht erfolgreich verifiziert, aber das Zertifikat des Unterzeichners konnte nicht verifiziert werden.
+message verified successfully.	mail	de	Nachricht erfolgreich verifiziert.
 miscellaneous	mail	de	Verschiedenes
 modify subject	mail	de	Betreff ändern
 modify subject of this message	mail	de	Betreff dieser Nachricht ändern
@@ -454,6 +457,7 @@ rename folder	mail	de	Umbenennen
 rename folder %1 ?	mail	de	Ordner %1 umbenennen?
 rename folder %1 to:	mail	de	Ordner %1 umbenennen in:
 renamed folder %1 to %2	mail	de	Ordner %1 umbenannt in %2
+replace 'http://' in image urls with (trailing / required!)	mail	de	Ersetze 'http://' in Bild Adressen (URLs) mit (muss in einem / enden!)
 replied	mail	de	beantwortet
 reply	mail	de	antworten
 reply all	mail	de	Allen Antworten
@@ -595,6 +599,7 @@ the message sender has requested a response to indicate that you have read this 
 the mimeparser can not parse this message.	mail	de	Der MIME Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
 then	mail	de	dann
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	de	Diese Mail enthält externe Bilder die über das unsichere HTTP protocol ausgeliefert werden. Bitte seinen Sie sich bewußt, dass Anzeigen oder Erlauben Ihre Sicherheit beeinträchtigen kann!
 there is no imap server configured.	mail	de	Es ist kein IMAP-Server Konfiguriert
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	de	Es ist kein Platz mehr vorhanden, um das Sieve Skript zu speichern, bitte Sie Ihren Administrator die Option sieve_maxscriptsize in der Konfiguration Ihres Mailservers zu prüfen.
 this message is smime encrypted and password protected.	mail	de	Diese Nachricht ist S/MIME-Verschlüsselt und mit Passwort geschützt.
