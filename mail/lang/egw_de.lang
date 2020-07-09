@@ -507,6 +507,7 @@ saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht
 saving the rule failed:	mail	de	Speichern der Regel ist fehlgeschlagen:
 security	mail	de	Sicherheit
 see attachments for content of the orignial mail	mail	de	Die Original Nachricht wurde als Anhang an diese E-Mail angehängt
+select a date	mail	de	Wählen Sie ein Datum
 select all	mail	de	Alle Auswählen
 select an existing entry in order to append mail content to it	mail	de	Bestehendes Ticket auswählen, zu dem die Mail als Kommentar hinzugefügt werden soll.
 select an item to read	mail	de	Wählen Sie ein zu lesendes Element aus

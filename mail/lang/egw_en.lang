@@ -507,6 +507,7 @@ saving of message %1 succeeded. check folder %2.	mail	en	Saving of message %1 su
 saving the rule failed:	mail	en	Saving the rule failed:
 security	mail	en	Security
 see attachments for content of the orignial mail	mail	en	See Attachments for Content of the Orignial Mail
+select a date	mail	en	Select a date
 select all	mail	en	Select all
 select an existing entry in order to append mail content to it	mail	en	Select an existing entry in order to append mail content to it
 select an item to read	mail	en	Select an item to read
