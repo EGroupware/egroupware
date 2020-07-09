@@ -606,6 +606,7 @@ the message sender has requested a response to indicate that you have read this 
 the mimeparser can not parse this message.	mail	en	The mimeparser can not parse this message.
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
 then	mail	en	THEN
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	en	This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!
 there is no imap server configured.	mail	en	There is no IMAP Server configured.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	en	This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!

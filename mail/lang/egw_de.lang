@@ -606,6 +606,7 @@ the message sender has requested a response to indicate that you have read this 
 the mimeparser can not parse this message.	mail	de	Der MIME Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
 then	mail	de	dann
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	de	Diese Mail enthält externe Bilder die über das unsichere HTTP protocol ausgeliefert werden. Bitte seinen Sie sich bewußt, dass Anzeigen oder Erlauben Ihre Sicherheit beeinträchtigen kann!
 there is no imap server configured.	mail	de	Es ist kein IMAP-Server Konfiguriert
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	de	Es ist kein Platz mehr vorhanden, um das Sieve Skript zu speichern, bitte Sie Ihren Administrator die Option sieve_maxscriptsize in der Konfiguration Ihres Mailservers zu prüfen.
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	de	Diese Mail enthält externe Bilder die über das unsichere HTTP protocol ausgeliefert werden. Bitte seinen Sie sich bewußt, dass Anzeigen oder Erlauben Ihre Sicherheit beeinträchtigen kann!
