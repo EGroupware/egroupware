@@ -363,7 +363,7 @@ class importexport_export_ui {
 				{
 					$link_query['filename'] = $plugin_filename;
 				}
-				$response->redirect( $GLOBALS['egw']->link('/index.php',$link_query),true);
+				$response->apply('app.importexport.download', [$GLOBALS['egw']->link('/index.php',$link_query)]);
 				Framework::window_close();
 				return;
 			}
