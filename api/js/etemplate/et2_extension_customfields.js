@@ -619,7 +619,7 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 		delete(attrs.label);
 
 		attrs.type = "link-entry";
-		attrs.only_app = field.type;
+		attrs.only_app = typeof field.only_app == "undefined" ? field.type : field.only_app;
 		return true;
 	},
 
