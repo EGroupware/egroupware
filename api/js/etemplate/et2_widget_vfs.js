@@ -927,6 +927,10 @@ var et2_vfsUpload = /** @class */ (function (_super) {
                 }
             }
         }
+        // Set up for expose
+        if (file_data && typeof file_data.download_url === "undefined") {
+            file_data.download_url = "/webdav.php" + file_data.path;
+        }
         var row = jQuery(document.createElement("tr"))
             .attr("data-path", file_data.path.replace(/'/g, '&quot'))
             .attr("draggable", "true")
