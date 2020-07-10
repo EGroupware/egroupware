@@ -225,7 +225,10 @@ export class et2_arrayMgr
 
 		// Check whether "$" occurs in the given identifier
 		const pos_var = _ident.indexOf('$');
-		if (pos_var >= 0 && (this.perspectiveData.row != null || !_ident.match(/\$\{?row\}?/))) {
+		if (pos_var >= 0 && (this.perspectiveData.row != null || !_ident.match(/\$\{?row\}?/))
+			// Avoid messing with regex in validators
+			&& pos_var !== _ident.indexOf("$/")
+		) {
 			// Get the content array for the current row
 			const row = typeof this.perspectiveData.row == 'number' ? this.perspectiveData.row : '';
 			const row_cont = this.data[row] || {};

@@ -207,7 +207,9 @@ var et2_arrayMgr = /** @class */ (function () {
         var is_index_in_content = _ident.charAt(0) == '@';
         // Check whether "$" occurs in the given identifier
         var pos_var = _ident.indexOf('$');
-        if (pos_var >= 0 && (this.perspectiveData.row != null || !_ident.match(/\$\{?row\}?/))) {
+        if (pos_var >= 0 && (this.perspectiveData.row != null || !_ident.match(/\$\{?row\}?/))
+            // Avoid messing with regex in validators
+            && pos_var !== _ident.indexOf("$/")) {
             // Get the content array for the current row
             var row = typeof this.perspectiveData.row == 'number' ? this.perspectiveData.row : '';
             var row_cont = this.data[row] || {};
