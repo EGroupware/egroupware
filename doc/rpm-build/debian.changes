@@ -1,3 +1,20 @@
+egroupware-docker (20.1.20200710) hardy; urgency=low
+
+  * second release candidate for upcomming 20.1 release
+  * openSUSE/SLE/CentOS/RHEL: support for Nginx for current version
+  * Mail: allow to configure a proxy to display external http images (eg. proxy.egroupware.org)
+  * Mail: open notification email of own domain as popup
+  * Mail: Add replyTo, CC, BCC and folder fields into predefined compose values
+  * Login page: use HTTP status code 401 for a failed login, so tools like fail2ban can recognice that
+  * Collabora: Implement file rename operation
+  * Status: fix CSP error for meet.jit.si, if site config was saved with no server or jitsi.egroupware.net
+  * Etemplate: Get vfsUpload values to use expose so they work like links
+  * Rocket.Chat: Fix constant autologin loop when RC uses a different domain then EGroupware
+  * smallPART: fixed UI problems when embeded via LTI
+  * smallPART: fixed empty email and name for new uses created via LTI
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 10 Jul 2020 12:13:20 +0200
+
 egroupware-docker (20.1.20200628) hardy; urgency=low
 
   * first 20.1 release candidate
