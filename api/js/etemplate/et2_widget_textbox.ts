@@ -614,7 +614,7 @@ class et2_searchbox extends et2_textbox
 
 	getDOMNode(asker)
 	{
-		if(asker.getParent() == this)
+		if(asker && asker.getParent() == this)
 		{
 			return this.flex[0];
 		}
