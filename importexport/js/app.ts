@@ -86,7 +86,7 @@ class ImportExportApp extends EgwApp
 	download(data:string)
 	{
 		// Try to get the file to download in the parent window
-		let app_templates = this.egw.top.etemplate2.getByApplication(framework.activeApp);
+		let app_templates = this.egw.top.etemplate2.getByApplication(framework.activeApp.appName);
 		if(app_templates.length > 0)
 		{
 			app_templates[0].download(data);

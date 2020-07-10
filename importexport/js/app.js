@@ -84,7 +84,7 @@ var ImportExportApp = /** @class */ (function (_super) {
      */
     ImportExportApp.prototype.download = function (data) {
         // Try to get the file to download in the parent window
-        var app_templates = this.egw.top.etemplate2.getByApplication(framework.activeApp);
+        var app_templates = this.egw.top.etemplate2.getByApplication(framework.activeApp.appName);
         if (app_templates.length > 0) {
             app_templates[0].download(data);
         }
