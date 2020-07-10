@@ -1092,7 +1092,7 @@ class et2_vfsUpload extends et2_file
 		{
 			var fe_mime = egw_get_file_editor_prefered_mimes(file_data.mime);
 			// Check if the link entry is mime with media type, in order to open it in expose view
-			if (typeof file_data.mime != 'undefined' &&
+			if (typeof file_data.mime === 'string' &&
 				(file_data.mime.match(mime.mime_regexp,'ig') || (fe_mime && fe_mime.mime[file_data.mime])))
 			{
 				vfs_attrs.onclick = function(ev) {
