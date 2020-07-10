@@ -609,6 +609,9 @@ class importexport_helper_functions {
 	 */
 	public static function get_filter_fields($app_name, $plugin_name, $wizard_plugin = null, $record_classname = null)
 	{
+		// We only filter on these field types.  Others could be added, but they need the UI figured out
+		static $allowed_types = array('select','select-cat','select-account','date','date-time');
+
 		$fields = array();
 		try {
 			$plugin = is_object($plugin_name) ? $plugin_name : new $plugin_name();
@@ -640,7 +643,7 @@ class importexport_helper_functions {
 		foreach($record_classname::$types as $type => $type_fields)
 		{
 			// Only these for now, until filter methods for others are figured out
-			if(!in_array($type, array('select','select-cat','select-account','date','date-time'))) continue;
+			if(!in_array($type, $allowed_types)) continue;
 			foreach($type_fields as $field_name)
 			{
 				$fields[$field_name] = array(
@@ -654,6 +657,7 @@ class importexport_helper_functions {
 		$custom = Api\Storage\Customfields::get($app_name);
 		foreach($custom as $field_name => $settings)
 		{
+			if(!in_array($settings['type'], $allowed_types)) continue;
 			$settings['name'] = '#'.$field_name;
 			$fields['#'.$field_name] = $settings;
 		}
