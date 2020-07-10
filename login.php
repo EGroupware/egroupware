@@ -54,7 +54,7 @@ if(isset($GLOBALS['sitemgr_info']) && $GLOBALS['egw_info']['user']['userid'] == 
 $forward = isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward'];
 if (!$forward)
 {
-	$extra_vars['cd'] = 'yes';
+	$extra_vars = 'cd=yes';
 	$forward = '/index.php';
 }
 else
@@ -341,11 +341,6 @@ else
 		{
 			$extra_vars .= '&' . $name . '=' . urlencode($value);
 		}
-	}
-
-	if($extra_vars)
-	{
-		$extra_vars = '?' . substr($extra_vars,1);
 	}
 
 	$GLOBALS['egw']->framework->login_screen($extra_vars, $force_password_change);

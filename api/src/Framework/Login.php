@@ -200,7 +200,8 @@ class Login
 			}
 		}
 
-		$tmpl->set_var('login_url', $GLOBALS['egw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
+		$tmpl->set_var('login_url', $GLOBALS['egw_info']['server']['webserver_url'] . '/login.php?' .
+			substr($extra_vars,$extra_vars[0] === '&' || [0] === '?' ? 1 : 0));
 		$tmpl->set_var('version', $GLOBALS['egw_info']['server']['versions']['phpgwapi']);
 		$tmpl->set_var('login', htmlspecialchars($last_loginid));
 
