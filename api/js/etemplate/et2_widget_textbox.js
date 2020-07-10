@@ -515,7 +515,7 @@ var et2_searchbox = /** @class */ (function (_super) {
         return true;
     };
     et2_searchbox.prototype.getDOMNode = function (asker) {
-        if (asker.getParent() == this) {
+        if (asker && asker.getParent() == this) {
             return this.flex[0];
         }
         return _super.prototype.getDOMNode.call(this, asker);
