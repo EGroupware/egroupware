@@ -294,6 +294,14 @@ class infolog_export_csv implements importexport_iface_export_plugin
 			// Infolog can't handle ranges in custom fields due to the way searching is done.
 			if(strpos($field_name, '#') === 0 && strpos($settings['type'],'date') === 0) unset($filters[$field_name]);
 		}
+
+		// Add in filtering by contact
+		$filters['info_contact'] = array(
+			'name' => 'info_contact',
+			'label' => 'Contact',
+			'type' => 'link-entry',
+			'only_app' => ''
+		);
 	}
 
 	/**
