@@ -775,7 +775,8 @@
   .sidebox-favorites ul.favorites li.ui-menu-item:hover a .ui-icon-trash {
     background-image: url(../images/delete.svg);
     background-size: 12px 12px;
-    background-position: center 4px;
+    background-position: center 2px;
+    margin-top: 0px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item:first-of-type a {
     color: #000000;
@@ -785,12 +786,12 @@
   }
   .sidebox-favorites ul.favorites li.ui-menu-item a {
     line-height: inherit;
-    padding: 2px 3px;
+    padding: 2px 1px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item a div.ui-icon-heart {
     background-image: url(../images/favorites.svg);
     background-size: 12px 12px;
-    background-position: 0 0;
+    background-position: 1px 0;
     margin-right: 9px;
     margin-left: 2px;
   }
