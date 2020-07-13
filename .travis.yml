@@ -47,6 +47,8 @@ before_script:
   - php -m
   - php -i
   - php install-cli.php --ignore-platform-reqs
+  # run install-cli again, to update composer installed apps
+  - php install-cli.php --ignore-platform-reqs
   # create data directory
   - sudo mkdir /var/lib/egroupware
   - sudo chown travis /var/lib/egroupware
