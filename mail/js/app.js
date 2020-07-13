@@ -6209,7 +6209,8 @@ app.classes.mail = AppJS.extend(
 			buttons: buttons,
 			value:{content:{value:subject}},
 			template: egw.webserverUrl+'/mail/templates/default/modifyMessageSubjectDialog.xet?1',
-			resizable: false
+			resizable: false,
+			width: 500
 		}, et2_dialog._create_parent('mail'));
 	},
 
