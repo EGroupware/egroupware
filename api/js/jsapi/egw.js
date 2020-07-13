@@ -217,6 +217,13 @@
 			egw.open_link.apply(egw, egw_popup);
 		}
 
+		// set grants if given for push
+		let egw_grants = egw_script.getAttribute('data-grants');
+		if (egw_grants)
+		{
+			egw.set_grants(JSON.parse(egw_grants));
+		}
+
 		if(typeof console != "undefined" && console.timeEnd) console.timeEnd("egw");
 		var end_time = (new Date).getTime();
 		var gen_time_div = jQuery('#divGenTime_'+window.egw_appName);
