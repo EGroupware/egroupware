@@ -484,7 +484,7 @@ ul.et2_selectbox {
 }
 /* padding between selectbox/textbox and it's label */
 input, select {
-	padding-left: 5px;
+	text-indent: 5px;
 	max-width: 99% !important;
 }
 .et2_selectbox li {
