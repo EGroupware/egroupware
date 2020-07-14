@@ -11,6 +11,7 @@ docker-compose up -d
 ## More information
 The provided docker-compose.yml will run the following container:
 * **egroupware** running latest PHP 7.3 as FPM (see fpm subdirectory for more information)
+* **egroupware-push** runing latest PHP Swoole for websocket connections
 * **egroupware-nginx** running Nginx as webserver (by default http only on port 8080)
 * **egroupware-db** latest MariaDB 10.4
 * **egroupware-watchtower** updating all above container automatically daily at 4am
@@ -41,6 +42,15 @@ volumes:
   #    device: /usr/share/egroupware
   #    #device: $PWD/extra
   # collabora-config
+  # sources for push server, swoolpush subdirectory of egroupware
+  sources-push:
+    driver_opts:
+      type: none
+      o: bind
+      device: $PWD/sources/egroupware/swoolepush
+  # volume to store config.inc.php file / token shared between egroupware and push container
+  push-config:
+  sessions:
   collabora-config:
     driver_opts:
       type: none
@@ -65,8 +75,8 @@ volumes:
       device: $PWD/data/default/rocketchat/uploads
 services:
   egroupware:
-    image: egroupware/egroupware:latest
-    # EPL image: download.egroupware.org/egroupware/epl:latest
+    image: egroupware/egroupware:20.1
+    # EPL image: download.egroupware.org/egroupware/epl:20.1
     # setting a default language for a new installation
     #environment:
     #- LANG=de
@@ -75,6 +85,8 @@ services:
     # extra-sources rsync from entry-point into sources
     #- extra:/usr/share/egroupware-extra
     - data:/var/lib/egroupware
+    - sessions:/var/lib/php/sessions
+    - push-config:/var/lib/egroupware-push
     # if you want to use the host database:
     # 1. comment out the whole db service below AND
     # 2. set EGW_DB_HOST=localhost AND
@@ -112,6 +124,19 @@ services:
     #extra_hosts:
     #- "my.host.name:ip-address"
 
+  # push server using phpswoole
+  push:
+    image: phpswoole/swoole:latest
+    volumes:
+      - sources-push:/var/www
+      - sessions:/var/lib/php/sessions
+      - push-config:/var/lib/egroupware-push
+    container_name: egroupware-push
+    restart: always
+    # as we get our sources from there
+    depends_on:
+      - egroupware
+
   nginx:
     image: nginx:stable-alpine
     volumes:
@@ -130,6 +155,8 @@ services:
     - "4443:443"
     depends_on:
     - egroupware
+    - collabora-key
+    - rocketchat
     container_name: egroupware-nginx
 
   # run an own MariaDB:10.4 (you can use EGroupware's database backup and restore to add your existing database)
@@ -157,11 +184,11 @@ services:
     #- WATCHTOWER_NOTIFICATIONS=email
     #- WATCHTOWER_NOTIFICATIONS_LEVEL=info # possible values: panic, fatal, error, warn, info or debug
     #- WATCHTOWER_NOTIFICATION_EMAIL_FROM=watchtower@my-domain.com
-    #- WATCHTOWER_NOTIFICATION_EMAIL_TO=me@my-domain.com
-    #- WATCHTOWER_NOTIFICATION_EMAIL_SERVER="mail.my-domain.com" # if you give your MX here, you need no user/password
+    #- WATCHTOWER_NOTIFICATION_EMAIL_TO=me@my-domain.com"
+    #- WATCHTOWER_NOTIFICATION_EMAIL_SERVER=mail.my-domain.com # if you give your MX here, you need no user/password
     #- WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT=25
     #- WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER=watchtower@my-domain.com
-    #- WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD=secret
+    #- WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD="secret"
     command: --schedule "0 0 4 * * *"
     container_name: egroupware-watchtower
     restart: always
@@ -229,15 +256,15 @@ services:
       - mongo
 
   # Portainer: Docker GUI (needs to be enabled in nginx.conf too!)
-  #portainer:
-  #  image: portainer/portainer
-  #  command: -H unix:///var/run/docker.sock
-  #  restart: always
-  #  ports:
-  #    - 9000:9000
-  #    - 8000:8000
-  #  volumes:
-  #    - /var/run/docker.sock:/var/run/docker.sock
-  #    - portainer_data:/data
-  #  container_name: portainer
+#   portainer:
+#    image: portainer/portainer
+#    command: -H unix:///var/run/docker.sock
+#    restart: always
+#    ports:
+#      - 9000:9000
+#      - 8000:8000
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - portainer_data:/data
+#    container_name: portainer
 ```
