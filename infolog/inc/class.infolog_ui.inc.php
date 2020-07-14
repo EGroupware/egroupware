@@ -358,40 +358,13 @@ class infolog_ui
 			$link_filters['action'] = array('app'=>$query['action'], 'id' => $query['action_id']);
 			$links['action'] = array();
 		}
-		foreach($link_filters as $key => $link)
-		{
-			if(!is_array($link))
-			{
-				// Legacy string style
-				list($app,$id) = explode(':',$link);
-			}
-			else
-			{
-				// Full info
-				$app = $link['app'];
-				$id = $link['id'];
-			}
-			if(!is_array($id)) $id = explode(',',$id);
-			if (!($linked = Link::get_links_multiple($app,$id,true,'infolog','',$query['col_filter']['info_status'] == 'deleted')))
-			{
-				$rows = array();	// no infologs linked to selected link --> no rows to return
-				return 0;
-			}
 
-
-			foreach($linked as $infos)
-			{
-				$links[$key] = array_merge($links[$key],$infos);
-			}
-			$links[$key] = array_unique($links[$key]);
-			if($key == 'linked')
-			{
-				$linked = array('app' => $app, 'id' => $id, 'title' => (count($id) == 1 ? Link::title($app, $id) : lang('multiple')));
-			}
-		}
-		if(count($links))
+		// Process links
+		$linked = $this->link_filters($links, $link_filters, $query, $rows);
+		if($linked === 0)
 		{
-			$query['col_filter']['info_id'] = count($links) > 1 ? call_user_func_array('array_intersect', $links) : $links[$key];
+			// Link filter but no results, early exit
+			return 0;
 		}
 
 		// check if we have a custom, type-specific template
@@ -574,6 +547,56 @@ class infolog_ui
 		if (isset($linked)) $query['col_filter']['linked'] = $linked;  // add linked back to the colfilter
 
 		return $query['total'];
+	}
+
+	/**
+	 * Deal with link filters and translate them into something we can filter on, ids.
+	 *
+	 * @param $links
+	 * @param $link_filters
+	 * @param $query
+	 * @param $rows
+	 * @return int
+	 */
+	public function link_filters(&$links, $link_filters, &$query, &$rows)
+	{
+		foreach($link_filters as $key => $link)
+		{
+			if(!is_array($link))
+			{
+				// Legacy string style
+				list($app,$id) = explode(':',$link);
+			}
+			else
+			{
+				// Full info
+				$app = $link['app'];
+				$id = $link['id'];
+			}
+			if(!is_array($id)) $id = explode(',',$id);
+			if (!($linked = Link::get_links_multiple($app,$id,true,'infolog','',$query['col_filter']['info_status'] == 'deleted')))
+			{
+				$rows = array();	// no infologs linked to selected link --> no rows to return
+				return 0;
+			}
+
+
+			foreach($linked as $infos)
+			{
+				$links[$key] = array_merge($links[$key],$infos);
+			}
+			$links[$key] = array_unique($links[$key]);
+			if($key == 'linked')
+			{
+				$linked = array('app' => $app, 'id' => $id, 'title' => (count($id) == 1 ? Link::title($app, $id) : lang('multiple')));
+			}
+		}
+
+		if(count($links))
+		{
+			$query['col_filter']['info_id'] = count($links) > 1 ? call_user_func_array('array_intersect', $links) : $links[$key];
+		}
+		return $linked;
 	}
 
 	/**

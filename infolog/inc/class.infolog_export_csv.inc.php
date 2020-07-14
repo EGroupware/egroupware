@@ -90,6 +90,15 @@ class infolog_export_csv implements importexport_iface_export_plugin
 				}
 				$query['num_rows'] = 500;
 				$query['start'] = 0;
+				if ($query['col_filter']['info_contact'])
+				{
+					$ui = new infolog_ui();
+					$link_filters['linked'] = $query['col_filter']['info_contact'];
+					$links['linked'] = array();
+					unset($query['col_filter']['info_contact']);
+					$rows = array();
+					$linked = $ui->link_filters($links, $link_filters, $query, $rows);
+				}
 				do
 				{
 					$selection = $this->bo->search($query);
