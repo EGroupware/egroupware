@@ -11,7 +11,7 @@ docker-compose up -d
 ## More information
 The provided docker-compose.yml will run the following container:
 * **egroupware** running latest PHP 7.3 as FPM (see fpm subdirectory for more information)
-* **egroupware-push*** runing latest PHP Swoole for websocket connections
+* **egroupware-push** runing latest PHP Swoole for websocket connections
 * **egroupware-nginx** running Nginx as webserver (by default http only on port 8080)
 * **egroupware-db** latest MariaDB 10.4
 * **egroupware-watchtower** updating all above container automatically daily at 4am
