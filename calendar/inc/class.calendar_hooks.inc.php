@@ -68,6 +68,7 @@ class calendar_hooks
 			'merge' => true,
 			'entry' => 'Event',
 			'entries' => 'Events',
+			'push_data'  => ['id','owner','participants','start','end']
 		);
 	}
 
