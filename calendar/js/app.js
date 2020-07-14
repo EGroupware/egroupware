@@ -580,6 +580,8 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         // Ask for the real data
         egw.json("calendar.calendar_ui.ajax_get", [[pushData.id]], function (data) {
+            if (data && data.data && data.data.data)
+                return;
             var unknown = (typeof egw.dataGetUIDdata(data.uid) === "undefined");
             // Store it, which will call all registered listeners
             egw.dataStoreUID(data.uid, data.data);
