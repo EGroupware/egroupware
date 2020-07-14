@@ -1257,6 +1257,7 @@ setup	common	de	Setup
 setup main menu	common	de	Setup Hauptmenü
 seychelles	common	de	SEYCHELLEN
 share	common	de	Teilen
+share as readonly, but allow uploads.  Uploads are hidden, and only accessable by those with an account	common	de	Freigabe als schreibgeschützt, aber Uploads erlauben. Uploads sind verborgen und nur für Personen mit einem Konto zugänglich.
 share filemanager directory	common	de	Dateimanager Verzeichnis
 share files	common	de	Dateien teilen
 share just the associated filemanager directory, not the %1	common	de	Teile nur das verbundene Dateimanager Verzeichnis, nicht das %1
@@ -1331,6 +1332,7 @@ submitbutton	common	de	Schaltfläche
 substitutions and their meanings:	common	de	Ersetzungen und ihre Bedeutung
 successful created new directory %1 for unconnected nods.	admin	de	Verzeichnis %1 wurde erfolgreich erstellt für nicht verbundene Knoten (nods).
 sudan	common	de	SUDAN
+suggest password	common	de	Passwort vorschlagen
 sunday	common	de	Sonntag
 sure	common	de	Sicher
 suriname	common	de	SURINAME
