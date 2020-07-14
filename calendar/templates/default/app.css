@@ -1570,3 +1570,7 @@ img.calendar_print_button, img.calendar_print_appicon {
 #calendar-category_report_grid {display:block;max-height: 550px;overflow-y: auto;}
 
 #toolbar-weekend {background-image: none !important}
+
+#calendar-list_nm {
+	.nextmatch_header .header_count {margin-right:-4px;}
+}
