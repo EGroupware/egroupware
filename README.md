@@ -5,12 +5,12 @@
 
 ### Default and prefered installation method for EGroupware is via your package manager:
 
-  https://software.opensuse.org/download.html?project=server%3AeGroupWare&package=egroupware-epl
+  https://software.opensuse.org/download.html?project=server%3AeGroupWare&package=egroupware-docker
 
 ### Installing EGroupware 19.1 via Docker:
 EGroupware 19.1 can be installed via Docker, in fact the DEB/RPM packages also does that. Instructions on how to run EGroupware in Docker are in [doc/docker](https://github.com/EGroupware/egroupware/tree/19.1/doc/docker) subdirectory.
 
-### Installing EGroupware development version:
+### Installing EGroupware 19.1 via Composer:
 * install composer.phar from https://getcomposer.org/download/
 * optional: for minified JavaScript and CSS install nodejs and grunt
 ```
@@ -38,8 +38,8 @@ cd /path/to/your/egroupware
 setup/setup-cli.php # will tell you if a schema-update is necessary
 ```
 install-cli.php supports the following "channels":
-- release: taged maintenance releases only eg. 17.1.20190222
-- bugfix:  release-branch incl. latest bugfixes eg. 17.1, if you are currently on 17.1.20190222
+- release: taged maintenance releases only eg. 19.1.20200701
+- bugfix:  release-branch incl. latest bugfixes eg. 19.1, if you are currently on 19.1.20200701
 - \<branch\>: switch to given branch 
 - master:  latest development for next release
 
