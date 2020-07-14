@@ -651,7 +651,7 @@ egwAction.prototype._check_confirm_mass_selections = function(_senders, _target)
 			check.set_checked(_button === et2_dialog.NO_BUTTON);
 			if(_button !== et2_dialog.CANCEL_BUTTON)
 			{
-				self._check_confirm(self, _senders, _target);
+				self._check_confirm(_senders, _target);
 			}
 		};
 		et2_dialog.show_dialog(callback, msg, self.data.hint, {}, et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.QUESTION_MESSAGE);
