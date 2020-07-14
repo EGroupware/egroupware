@@ -427,7 +427,7 @@ class et2_searchbox extends et2_textbox
 	value: string = "";
 	div: JQuery;
 	flex: JQuery;
-	button: et2_button;
+	button: JQuery;
 	search: et2_textbox;
 	oldValue: any;
 	clear: JQuery;
@@ -457,12 +457,14 @@ class et2_searchbox extends et2_textbox
 		// no need to create search button if it's a fix search field
 		if (!this.options.fix)
 		{
-			this.button = <et2_button><unknown>et2_createWidget('button',{image:"search","background_image":"1"},this);
-			this.button.onclick= function(){
-				self._show_hide(jQuery(self.flex).hasClass('hide'));
-				self.search.input.focus();
-			};
-			this.div.prepend(this.button.getDOMNode());
+			this.button = jQuery(document.createElement('button'))
+				.css({"background-image": egw.image('search')})
+				.click(function(){
+					self._show_hide(jQuery(self.flex).hasClass('hide'));
+					self.search.input.focus();
+				})
+				.addClass('et2_button');
+			this.div.prepend(this.button);
 		}
 		// input field
 		this.search = <et2_textbox><unknown>et2_createWidget('textbox',{"blur":egw.lang("search"),
