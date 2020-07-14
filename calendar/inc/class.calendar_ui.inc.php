@@ -618,6 +618,22 @@ class calendar_ui
 	}
 
 	/**
+	 * Get the data for the given event IDs in a format suitable for the client.
+	 *
+	 * Used to get new data when Push tells us.  Push doesn't have the full event data,
+	 * just the minimum, so the client needs to ask for it.
+	 *
+	 * @param string[] $event_ids
+	 */
+	public function ajax_get($event_ids)
+	{
+		foreach($event_ids as $id)
+		{
+			$this->update_client($id);
+		}
+	}
+
+	/**
 	 * Send updated event information to the client via ajax
 	 *
 	 * This allows to pass only changed information for a single (recurring) event

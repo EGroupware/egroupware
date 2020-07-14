@@ -80,7 +80,8 @@ class CalendarApp extends EgwApp
 			egw.preference('defaultcalendar','calendar') || 'day',
 		owner: egw.user('account_id'),
 		keywords: '',
-		last: undefined
+		last: undefined,
+		first: undefined
 	};
 
 	/**
@@ -126,6 +127,8 @@ class CalendarApp extends EgwApp
 	// Data for quick add dialog
 	private quick_add: any;
 
+	//
+	private _grants : any;
 	/**
 	 * Constructor
 	 *
@@ -437,6 +440,98 @@ class CalendarApp extends EgwApp
 			default:
 				return undefined;
 		}
+	}
+	/**
+	 * Handle a push notification about entry changes from the websocket
+	 *
+	 * @param  pushData
+	 * @param {string} pushData.app application name
+	 * @param {(string|number)} pushData.id id of entry to refresh or null
+	 * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: ask server for data, add in intelligently
+	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
+	 * @param {number} pushData.account_id User that caused the notification
+	 */
+	push(pushData)
+	{
+		// Calendar cares about calendar & infolog
+		if(pushData.app !== this.appname && pushData.app !== 'infolog') return;
+
+		// pushData does not contain everything, just the minimum.  See calendar_hooks::search_link().
+		let event = pushData.acl || {};
+
+		if(pushData.type === 'delete')
+		{
+			return super.push(pushData);
+		}
+
+		switch (pushData.app)
+		{
+			case "calendar":
+				return this.push_calendar(pushData);
+			case "infolog":
+				return this.push_infolog(pushData);
+		}
+	}
+
+	/**
+	 * Handle a push about infolog
+	 *
+	 * @param pushData
+	 */
+	private push_infolog(pushData)
+	{
+		// This isn't the most intelligent, but it refreshes
+		this.observer("", pushData.app, pushData.id, pushData.type,"",null);
+	}
+
+	/**
+	 * Handle a push from calendar
+	 *
+	 * @param pushData
+	 */
+	private push_calendar(pushData)
+	{
+		// check visibility - grants is ID => permission of people we're allowed to see
+		let owners = [];
+		if(typeof this._grants === 'undefined')
+		{
+			this._grants = egw.grants(this.appname);
+		}
+		// Filter what's allowed down to those we care about
+		let filtered = Object.keys(this._grants).filter(account => app.calendar.state.owner.indexOf(account) >= 0);
+
+		// Check if we're interested in displaying by owner / participant
+		let owner_check = et2_calendar_event.owner_check(event, {options: {owner: filtered}});
+		if(!owner_check)
+		{
+			// The owner is not in the list of what we're allowed / care about
+			return;
+		}
+
+		// Check if we're interested by date?
+		if(event.end <= new Date(this.state.first).valueOf() /1000 || event.start > new Date(this.state.last).valueOf()/1000)
+		{
+			// The event is outside our current view
+			return;
+		}
+
+		// Ask for the real data
+		egw.json("calendar.calendar_ui.ajax_get", [[pushData.id]], function(data) {
+			let unknown = (typeof egw.dataGetUIDdata(data.uid) === "undefined");
+			// Store it, which will call all registered listeners
+			egw.dataStoreUID(data.uid, data.data);
+
+			// Any existing events were updated.  Run this to catch new events or events moved into view
+			if(unknown)
+			{
+				this._update_events(this.state, [data.uid]);
+			}
+		}.bind(this)).sendRequest(true);
 	}
 
 	/**

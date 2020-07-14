@@ -118,6 +118,7 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true,&$messages=null, $skip_notification=false)
 	{
+		$update_type = 'edit';
 		unset($updateTS);	// ignored, as updating timestamps is required for sync!
 		//error_log(__METHOD__."(".array2string($event).",$ignore_conflicts,$touch_modified,$ignore_acl)");
 		if (!is_array($messages)) $messages = $messages ? (array)$messages : array();
@@ -150,6 +151,7 @@ class calendar_boupdate extends calendar_bo
 				$status = calendar_so::combine_status($event['owner'] == $this->user ? 'A' : 'U', 1, 'CHAIR');
 				$event['participants'] = array($event['owner'] => $status);
 			}
+			$update_type = 'add';
 		}
 
 		// check if user has the permission to update / create the event
@@ -273,6 +275,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			// Restored, bring back links
 			Link::restore('calendar', $cal_id);
+			$update_type = 'add';
 		}
 		if ($this->log_file)
 		{
@@ -291,8 +294,8 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 
-		// notify the link-class about the update, as other apps may be subscribt to it
-		Link::notify_update('calendar',$cal_id,$event);
+		// notify the link-class about the update, as other apps may be subscribed to it
+		Link::notify_update('calendar',$cal_id,$event,$update_type);
 
 		return $cal_id;
 	}
@@ -1777,7 +1780,10 @@ class calendar_boupdate extends calendar_bo
 		{
 			$this->set_status($old_event, $userid, $status, $recur_date, true, false,$skip_notification);
 		}
-    }
+
+		// notify the link-class about the update, as other apps may be subscribed to it
+		Link::notify_update('calendar',$new_event['id'],$new_event,"update");
+  }
 
 	/**
 	 * deletes an event
