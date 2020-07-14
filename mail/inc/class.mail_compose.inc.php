@@ -630,7 +630,7 @@ class mail_compose
 				'get' => $_GET,
 				'replyID' => $replyID,
 				'content' => $content,
-				'sel_options' => $sel_options,
+				'sel_options' => array(),
 				'preserv' => $preserv,
 				'mail_bo' => $this->mail_bo,
 			));
