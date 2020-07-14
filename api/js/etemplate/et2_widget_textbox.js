@@ -382,12 +382,14 @@ var et2_searchbox = /** @class */ (function (_super) {
         // search button indicator
         // no need to create search button if it's a fix search field
         if (!this.options.fix) {
-            this.button = et2_core_widget_1.et2_createWidget('button', { image: "search", "background_image": "1" }, this);
-            this.button.onclick = function () {
+            this.button = jQuery(document.createElement('button'))
+                .css({ "background-image": egw.image('search') })
+                .click(function () {
                 self._show_hide(jQuery(self.flex).hasClass('hide'));
                 self.search.input.focus();
-            };
-            this.div.prepend(this.button.getDOMNode());
+            })
+                .addClass('et2_button');
+            this.div.prepend(this.button);
         }
         // input field
         this.search = et2_core_widget_1.et2_createWidget('textbox', { "blur": egw.lang("search"),
