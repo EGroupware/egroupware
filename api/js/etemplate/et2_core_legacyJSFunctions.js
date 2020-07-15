@@ -140,7 +140,7 @@
 				}
 			}
 			if (typeof parent[existing_func] === "function") {
-				parent[existing_func];
+				return parent[existing_func];
 			}
 		}
 
