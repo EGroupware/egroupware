@@ -2111,8 +2111,11 @@ class CalendarApp extends EgwApp
 	 */
 	cal_delete(_action, _senders)
 	{
-		var backup = _action.data;
-		var matches = false;
+		let all = _action.parent.data.nextmatch.getSelection().all;
+		let no_notifications = _action.parent.getActionById("no_notifications").checked;
+		let matches = false;
+		let ids = [];
+		let cal_event = this.egw.dataGetUIDdata(_senders[0].id);
 
 		// Loop so we ask if any of the selected entries is part of a series
 		for(var i = 0; i < _senders.length; i++)
@@ -2122,19 +2125,31 @@ class CalendarApp extends EgwApp
 			{
 				matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
 			}
+			ids.push(id.split("::").pop());
 		}
 		if (matches)
 		{
-			var popup = jQuery('#calendar-list_delete_popup').get(0);
-			if (typeof popup != 'undefined')
-			{
-				// nm action - show popup
-				nm_open_popup(_action,_senders);
-			}
-			return;
+			// At least one event is a series, use its data to trigger the prompt
+			let cal_event = this.egw.dataGetUIDdata( matches[0]);
 		}
+		et2_calendar_event.recur_prompt(cal_event.data,function(button_id,event_data) {
+			switch(button_id)
+			{
+				case 'single':
+				case 'exception':
+					// Just this one, handle in the normal way but over AJAX
+					egw.json("calendar.calendar_uilist.ajax_action",[_action.id, ids, all, no_notifications]).sendRequest(true);
+					break;
+				case 'series':
+					// No recurrences, handle in the normal way but over AJAX
+					egw.json("calendar.calendar_uilist.ajax_action",["delete_series", ids, all, no_notifications]).sendRequest(true);
+					break;
+				case 'cancel':
+				default:
+					break;
+			}
+		}.bind(this) );
 
-		nm_action(_action, _senders);
 	}
 
 	/**

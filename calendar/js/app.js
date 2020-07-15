@@ -1891,24 +1891,39 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param _senders
      */
     CalendarApp.prototype.cal_delete = function (_action, _senders) {
-        var backup = _action.data;
+        var all = _action.parent.data.nextmatch.getSelection().all;
+        var no_notifications = _action.parent.getActionById("no_notifications").checked;
         var matches = false;
+        var ids = [];
+        var cal_event = this.egw.dataGetUIDdata(_senders[0].id);
         // Loop so we ask if any of the selected entries is part of a series
         for (var i = 0; i < _senders.length; i++) {
             var id = _senders[i].id;
             if (!matches) {
                 matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
             }
+            ids.push(id.split("::").pop());
         }
         if (matches) {
-            var popup = jQuery('#calendar-list_delete_popup').get(0);
-            if (typeof popup != 'undefined') {
-                // nm action - show popup
-                nm_open_popup(_action, _senders);
-            }
-            return;
+            // At least one event is a series, use its data to trigger the prompt
+            var cal_event_1 = this.egw.dataGetUIDdata(matches[0]);
         }
-        nm_action(_action, _senders);
+        et2_widget_event_1.et2_calendar_event.recur_prompt(cal_event.data, function (button_id, event_data) {
+            switch (button_id) {
+                case 'single':
+                case 'exception':
+                    // Just this one, handle in the normal way but over AJAX
+                    egw.json("calendar.calendar_uilist.ajax_action", [_action.id, ids, all, no_notifications]).sendRequest(true);
+                    break;
+                case 'series':
+                    // No recurrences, handle in the normal way but over AJAX
+                    egw.json("calendar.calendar_uilist.ajax_action", ["delete_series", ids, all, no_notifications]).sendRequest(true);
+                    break;
+                case 'cancel':
+                default:
+                    break;
+            }
+        }.bind(this));
     };
     /**
      * Confirmation dialog for moving a series entry
