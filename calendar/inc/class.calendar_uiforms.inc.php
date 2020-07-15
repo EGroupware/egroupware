@@ -3199,9 +3199,6 @@ class calendar_uiforms extends calendar_ui
 				}
 			}
 		}
-
-		// notify the link-class about the update, as other apps may be subscribed to it
-		Link::notify_update('calendar',$event['id'],$event,"update");
 	}
 
 	/**
