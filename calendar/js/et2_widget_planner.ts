@@ -556,6 +556,9 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				{
 					row.set_class('current_user')
 				}
+				// Set account_id so event.owner_check can use it
+				row.options.owner = sort_key;
+
 				// Since the daywise cache is by user, we can tap in here
 				var t = new Date(this.options.start_date);
 				var end = new Date(this.options.end_date);
