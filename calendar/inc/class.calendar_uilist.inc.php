@@ -558,6 +558,32 @@ class calendar_uilist extends calendar_ui
 	}
 
 	/**
+	 * Apply an action to multiple events, but called via AJAX instead of submit
+	 *
+	 * @param string $action
+	 * @param string[] $selected
+	 * @param bool $all_selected All events are selected, not just what's in $selected
+	 * @param bool $skip_notification
+	 */
+	public function ajax_action($action, $selected, $all_selected, $skip_notification = false)
+	{
+		$success = 0;
+		$failed = 0;
+		$action_msg = '';
+		$session_name = 'calendar_list';
+
+		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, $session_name, $msg, $skip_notification))
+		{
+			$msg = lang('%1 event(s) %2',$success,$action_msg);
+		}
+		elseif(is_null($msg))
+		{
+			$msg .= lang('%1 event(s) %2, %3 failed because of insufficient rights !!!',$success,$action_msg,$failed);
+		}
+		Api\Json\Response::get()->message($msg);
+	}
+
+	/**
 	 * apply an action to multiple events
 	 *
 	 * @param string/int $action 'delete', 'ical', 'print', 'email'
@@ -699,9 +725,9 @@ class calendar_uilist extends calendar_ui
 							}
 						}
 
-						if(Api\Json\Response::isJSONResponse())
+						if(Api\Json\Request::isJSONRequest())
 						{
-							Api\Json\Response::get()->call('egw.refresh','','calendar',$id,'delete');
+							Api\Json\Response::get()->call('egw.refresh','','calendar',$recur_date ? "$id:$recur_date" : $id,'delete');
 						}
 					}
 					else
@@ -724,7 +750,7 @@ class calendar_uilist extends calendar_ui
 						{
 							$success++;
 
-							if(Api\Json\Response::isJSONResponse())
+							if(Api\Json\Response::isJSONRequest())
 							{
 								Api\Json\Response::get()->call('egw.dataStoreUID','calendar::'.$id,$this->to_client($this->bo->read($id,$recur_date)));
 								Api\Json\Response::get()->call('egw.refresh','','calendar',$id,'edit');
@@ -748,7 +774,7 @@ class calendar_uilist extends calendar_ui
 							if ($this->bo->set_status($event,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date,
 								false,true,$skip_notification))
 							{
-								if(Api\Json\Response::isJSONResponse())
+								if(Api\Json\Response::isJSONRequest())
 								{
 									Api\Json\Response::get()->call('egw.dataStoreUID','calendar::'.$id,$this->to_client($this->bo->read($id,$recur_date)));
 								}
