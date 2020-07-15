@@ -139,6 +139,8 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				this._init_sidebox(sidebox);
 			}
 		}
+		// register with new TS app object to receive push and observer message
+		EgwApp._register_instance(this);
 	},
 
 	/**
@@ -151,6 +153,12 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			this.sidebox.off();
 		delete this.sidebox;
 		if (!_app) delete app[this.appname];
+		// deregister with new TS app object
+		let index = -1;
+		if((index = EgwApp._instances.indexOf(this)) >= 0)
+		{
+			EgwApp._instances.splice(index,1);
+		}
 	},
 
 	/**
