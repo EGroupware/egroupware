@@ -3,7 +3,7 @@
 # To update univention-appcenter-control run:
 # curl https://provider-portal.software-univention.de/appcenter-selfservice/univention-appcenter-control > ~/bin/univention-appcenter-control
 
-version=19.1
+version=20.1
 packaging=`date +%Y%m%d`
 # default is now Docker!
 postfix=''
@@ -67,5 +67,6 @@ univention-appcenter-control get 4.4/egroupware=$version.$packaging$postfix --js
 sed -i "" \
 	-e "s|image:.*docker.software-univention.de/egroupware-egroupware.*|image:download.egroupware.org/egroupware/epl:$version.$packaging|" \
 	-e "s|image:.*docker.software-univention.de/egroupware-nginx.*|image:nginx:stable-alpine|" \
+	-e "s|image:.*docker.software-univention.de/egroupware-push.*|image:phpswoole/swoole:latest|" \
 	/tmp/compose
 $debug univention-appcenter-control upload $ucs/egroupware=$version.$packaging$postfix /tmp/compose
