@@ -2111,8 +2111,8 @@ class CalendarApp extends EgwApp
 	 */
 	cal_delete(_action, _senders)
 	{
-		let all = _action.parent.data.nextmatch.getSelection().all;
-		let no_notifications = _action.parent.getActionById("no_notifications").checked;
+		let all = _action.parent.data.nextmatch?.getSelection().all;
+		let no_notifications = _action.parent.getActionById("no_notifications")?.checked;
 		let matches = false;
 		let ids = [];
 		let cal_event = this.egw.dataGetUIDdata(_senders[0].id);
