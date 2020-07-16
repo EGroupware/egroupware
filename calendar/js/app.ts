@@ -461,9 +461,6 @@ class CalendarApp extends EgwApp
 		// Calendar cares about calendar & infolog
 		if(pushData.app !== this.appname && pushData.app !== 'infolog') return;
 
-		// pushData does not contain everything, just the minimum.  See calendar_hooks::search_link().
-		let event = pushData.acl || {};
-
 		if(pushData.type === 'delete')
 		{
 			return super.push(pushData);
@@ -496,6 +493,9 @@ class CalendarApp extends EgwApp
 	 */
 	private push_calendar(pushData)
 	{
+		// pushData does not contain everything, just the minimum.  See calendar_hooks::search_link().
+		let cal_event = pushData.acl || {};
+
 		// check visibility - grants is ID => permission of people we're allowed to see
 		let owners = [];
 		if(typeof this._grants === 'undefined')
@@ -506,7 +506,7 @@ class CalendarApp extends EgwApp
 		let filtered = Object.keys(this._grants).filter(account => app.calendar.state.owner.indexOf(account) >= 0);
 
 		// Check if we're interested in displaying by owner / participant
-		let owner_check = et2_calendar_event.owner_check(event, {options: {owner: filtered}});
+		let owner_check = et2_calendar_event.owner_check(cal_event, {options: {owner: filtered}});
 		if(!owner_check)
 		{
 			// The owner is not in the list of what we're allowed / care about
@@ -514,7 +514,7 @@ class CalendarApp extends EgwApp
 		}
 
 		// Check if we're interested by date?
-		if(event.end <= new Date(this.state.first).valueOf() /1000 || event.start > new Date(this.state.last).valueOf()/1000)
+		if(cal_event.end <= new Date(this.state.first).valueOf() /1000 || cal_event.start > new Date(this.state.last).valueOf()/1000)
 		{
 			// The event is outside our current view
 			return;
