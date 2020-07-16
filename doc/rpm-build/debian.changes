@@ -1,3 +1,11 @@
+egroupware-docker (20.1.20200716) hardy; urgency=low
+
+  * 3rd 20.1 release candidate
+  * Calendar: updates via push-server
+  * bugfixes in some apps
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 16 Jul 2020 15:18:14 +0200
+
 egroupware-docker (20.1.20200710) hardy; urgency=low
 
   * second release candidate for upcomming 20.1 release
