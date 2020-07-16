@@ -594,6 +594,7 @@ class Egw extends Egw\Base
 			if (function_exists('fastcgi_finish_request') && substr($_SERVER['PHP_SELF'], -18) != '/asyncservices.php')
 			{
 				fastcgi_finish_request();
+				ini_set('error_log', dirname($GLOBALS['egw_info']['server']['files_dir']) . '/on-shutdown.log');
 			}
 
 			// run all on_shutdown, do NOT stop on exceptions
