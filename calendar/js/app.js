@@ -1891,8 +1891,9 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param _senders
      */
     CalendarApp.prototype.cal_delete = function (_action, _senders) {
-        var all = _action.parent.data.nextmatch.getSelection().all;
-        var no_notifications = _action.parent.getActionById("no_notifications").checked;
+        var _a, _b;
+        var all = (_a = _action.parent.data.nextmatch) === null || _a === void 0 ? void 0 : _a.getSelection().all;
+        var no_notifications = (_b = _action.parent.getActionById("no_notifications")) === null || _b === void 0 ? void 0 : _b.checked;
         var matches = false;
         var ids = [];
         var cal_event = this.egw.dataGetUIDdata(_senders[0].id);
