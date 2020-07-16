@@ -750,7 +750,7 @@ class calendar_uilist extends calendar_ui
 						{
 							$success++;
 
-							if(Api\Json\Response::isJSONRequest())
+							if(Api\Json\Request::isJSONRequest())
 							{
 								Api\Json\Response::get()->call('egw.dataStoreUID','calendar::'.$id,$this->to_client($this->bo->read($id,$recur_date)));
 								Api\Json\Response::get()->call('egw.refresh','','calendar',$id,'edit');
@@ -774,7 +774,7 @@ class calendar_uilist extends calendar_ui
 							if ($this->bo->set_status($event,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date,
 								false,true,$skip_notification))
 							{
-								if(Api\Json\Response::isJSONRequest())
+								if(Api\Json\Request::isJSONRequest())
 								{
 									Api\Json\Response::get()->call('egw.dataStoreUID','calendar::'.$id,$this->to_client($this->bo->read($id,$recur_date)));
 								}
