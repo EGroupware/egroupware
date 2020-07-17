@@ -1496,18 +1496,15 @@ class calendar_boupdate extends calendar_bo
 
 		// Update history
 		$tracking = new calendar_tracking($this);
-		Api\Egw::on_shutdown(function() use ($tracking, $event, $cal_id, $timestamps, $save_event, $old_event)
+		if (empty($event['id']) && !empty($cal_id)) $event['id'] = $cal_id;
+		// we run all dates through date2ts, to adjust to server-time and the possible date-formats
+		// This is done here to avoid damaging the actual event when saving, but the old event is in server-time
+		foreach ($timestamps as $ts)
 		{
-			if (empty($event['id']) && !empty($cal_id)) $event['id'] = $cal_id;
-			// we run all dates through date2ts, to adjust to server-time and the possible date-formats
-			// This is done here to avoid damaging the actual event when saving, but the old event is in server-time
-			foreach ($timestamps as $ts)
-			{
-				// we convert here from user-time to timestamps in server-time!
-				if (isset($save_event[$ts])) $save_event[$ts] = $save_event[$ts] ? calendar_bo::date2ts($save_event[$ts], true) : 0;
-			}
-			$tracking->track($save_event, $old_event);
-		});
+			// we convert here from user-time to timestamps in server-time!
+			if (isset($save_event[$ts])) $save_event[$ts] = $save_event[$ts] ? calendar_bo::date2ts($save_event[$ts], true) : 0;
+		}
+		$tracking->track($save_event, $old_event);
 
 		return $cal_id;
 	}
