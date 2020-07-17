@@ -3320,38 +3320,71 @@ div.admin-config form > table td b {
   white-space: pre-wrap;
 }
 .warning_message {
-  border-top: 6px solid rgba(255, 204, 0, 0.9) !important;
+  border-left: 24px solid rgba(255, 204, 0, 0.5) !important;
+  background-image: url(../images/dialog_warning.png);
 }
 .error_message {
-  border-top: 6px solid rgba(204, 0, 51, 0.8) !important;
+  border-left: 24px solid rgba(204, 0, 51, 0.5) !important;
   background-image: url(../images/dialog_error.png);
-  background-position: 4px 13px;
-  background-size: 12px;
-  background-repeat: no-repeat;
+}
+.info_message {
+  background-image: url(../images/dialog_info.png);
 }
 .info_message .discard {
   float: right;
   margin-top: 4px;
 }
+.success_message {
+  background-image: url(../images/check.png);
+}
 /**
  * Message in popup
  */
-body > div#egw_message {
-  background-color: #E6E6E6;
+body .egw_message_wrapper {
+  background-color: #d9d9d9;
   right: 33%;
   box-shadow: 2px 3px 13px #666666;
   -moz-box-shadow: 2px 3px 13px #666666;
   -webkit-box-shadow: 2px 3px 13px #666666;
   -khtml-box-shadow: 2px 3px 13px #666666;
   top: 0px;
+  z-index: 100000;
+}
+body .egw_message_wrapper > div:last-child {
+  margin-bottom: 0px !important;
+}
+body .egw_message_wrapper div#egw_message {
+  background-color: #fafafa;
+  position: relative;
   padding: 13px;
   padding-left: 20px;
+  padding-right: 40px;
   min-width: 130px;
-  z-index: 100000;
-  margin: 0px auto;
-  max-width: 90%;
+  margin: 0px auto 2px 0px;
   white-space: pre-wrap;
-  border-top: 6px solid #33CC66;
+  border-left: 24px solid rgba(51, 204, 102, 0.5);
+  display: block;
+  background-position: -19px;
+  background-size: 16px;
+  background-repeat: no-repeat;
+}
+body .egw_message_wrapper div#egw_message span.close {
+  float: right;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  background: #d0cdcdb5;
+  right: 10px;
+  top: 10px;
+  background-image: url(../images/close.svg);
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+body .egw_message_wrapper div#egw_message span.close:hover {
+  filter: invert(1);
 }
 /**
  * Less-file for egroupware

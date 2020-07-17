@@ -25,7 +25,6 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	"use strict";
 
 	_app;	// not used, but required by function signature
-	var message_timer;
 	var error_reg_exp;
 	var a_href_reg = /<a href="([^"]+)">([^<]+)<\/a>/img;
 	var new_line_reg = /<\/?(p|br)\s*\/?>\n?/ig;
@@ -66,7 +65,8 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		message: function(_msg, _type, _discardID)
 		{
 			var jQuery = _wnd.jQuery;
-
+			var wrapper = jQuery('.egw_message_wrapper').length > 0 ? jQuery('.egw_message_wrapper')
+				: jQuery(_wnd.document.createElement('div')).addClass('egw_message_wrapper').css('position', 'absolute');
 			if (_msg && !_type)
 			{
 				if (typeof error_reg_exp == 'undefined') error_reg_exp = new RegExp('(error|'+egw.lang('error')+')', 'i');
@@ -80,19 +80,13 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				egw(egw.top).message(_msg, _type);
 				return;
 			}
-			// handle message display for non-framework templates, eg. idots or jerryr
-			if (message_timer)
-			{
-				_wnd.clearTimeout(message_timer);
-				message_timer = null;
-			}
+
 			var parent = jQuery('div#divAppboxHeader');
 			// popup has no app-header (idots) or it is hidden by onlyPrint class (jdots) --> use body
 			if (!parent.length || parent.hasClass('onlyPrint'))
 			{
 				parent = jQuery('body');
 			}
-			jQuery('div#egw_message').remove();
 
 			if (_msg)	// empty _msg just removes pervious message
 			{
@@ -103,6 +97,8 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					.attr('id','egw_message')
 					.text(_msg)
 					.addClass(_type+'_message')
+					.prependTo(wrapper);
+				var msg_close = jQuery(_wnd.document.createElement('span'))
 					.click(function() {
 						//check if the messeage should be discarded forever
 						if (_type == 'info' && _discardID
@@ -123,10 +119,10 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 								egw.setLocalStorageItem(discardAppName,'discardedMsgs',JSON.stringify(discarded));
 							}
 						}
-						jQuery(this).remove();
+						jQuery(msg_div).remove();
 					})
-					.css('position', 'absolute');
-
+					.addClass('close')
+					.appendTo(msg_div);
 				// discard checkbox implementation
 				if (_discardID && _type === 'info')
 				{
@@ -173,7 +169,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					msg_div.append(msg_discard);
 				}
 
-				parent.prepend(msg_div);
+				parent.prepend(wrapper);
 
 				// replace simple a href (NO other attribute, to gard agains XSS!)
 				var matches = a_href_reg.exec(_msg);
@@ -188,12 +184,12 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					msg_div.append(jQuery(_wnd.document.createElement('span')).text(parts[1]));
 				}
 				// center the message
-				msg_div.css('right', ((jQuery(_wnd).innerWidth()-msg_div.width())/2)+'px');
+				wrapper.css('right', ((jQuery(_wnd).innerWidth()-msg_div.width())/2)+'px');
 
 				if (_type == 'success')	// clear message again after some time, if no error
 				{
-					message_timer = _wnd.setTimeout(function() {
-						jQuery('div#egw_message').remove();
+					_wnd.setTimeout(function() {
+						msg_div.remove();
 					}, 5000);
 				}
 			}

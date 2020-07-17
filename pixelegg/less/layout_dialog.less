@@ -430,33 +430,64 @@ div.admin-config form > table {
 	white-space: pre-wrap;
 }
 .warning_message {
-	border-top: 6px solid @egw_color_msg_warning !important;
+	border-left: 24px solid @egw_color_msg_warning !important;
+	background-image: url(../images/dialog_warning.png);
 }
 .error_message {
-	border-top: 6px solid @egw_color_msg_error !important;
+	border-left: 24px solid @egw_color_msg_error !important;
 	background-image: url(../images/dialog_error.png);
-	background-position: 4px 13px;
-	background-size: 12px;
-	background-repeat: no-repeat;
 }
-.info_message .discard  {
-	float:right;
-	margin-top: 4px;
+.info_message {
+	background-image: url(../images/dialog_info.png);
+	.discard  {
+		float:right;
+		margin-top: 4px;
+	}
+}
+.success_message {
+	background-image: url(../images/check.png);
 }
 /**
  * Message in popup
  */
-body > div#egw_message {
-	background-color: @gray_10;
+body .egw_message_wrapper {
+	.background_color_15_gray;
 	right: 33%;
 	.box_shadow;
 	top: 0px;
-	padding: 13px;
-	padding-left: 20px;
-	min-width: 130px;
 	z-index: 100000;
-	margin:  0px auto;
-	max-width: 90%;
-	white-space: pre-wrap;
-	border-top: 6px solid @egw_color_msg_info;
+	& > div:last-child {
+		margin-bottom: 0px !important;
+	}
+	div#egw_message {
+		.background_color_5_gray;
+		position: relative;
+		padding: 13px;
+		padding-left: 20px;
+		padding-right: 40px;
+		min-width: 130px;
+		margin:  0px auto 2px 0px;
+		white-space: pre-wrap;
+		border-left: 24px solid @egw_color_msg_info;
+		display: block;
+		background-position: -19px;
+		background-size: 16px;
+		background-repeat: no-repeat;
+		span.close {
+			float: right;
+			height: 20px;
+			width: 20px;
+			position: absolute;
+			background: #d0cdcdb5;
+			right: 10px;
+			top: 10px;
+			background-image: url(../images/close.svg);
+			background-size: 12px;
+			background-repeat: no-repeat;
+			background-position: center;
+			border-radius: 50%;
+			cursor: pointer;
+			&:hover {filter: invert(1);}
+		}
+	}
 }
