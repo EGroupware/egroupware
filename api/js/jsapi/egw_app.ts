@@ -284,6 +284,8 @@ export abstract class EgwApp
 		switch (pushData.type)
 		{
 			case 'add':
+				nm.refresh(this.uid(pushData), 'add');
+				break;
 			case 'unknown':
 				nm.applyFilters();
 				break;

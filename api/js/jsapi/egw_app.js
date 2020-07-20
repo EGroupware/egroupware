@@ -183,6 +183,8 @@ var EgwApp = /** @class */ (function () {
     EgwApp.prototype.updateList = function (nm, pushData) {
         switch (pushData.type) {
             case 'add':
+                nm.refresh(this.uid(pushData), 'add');
+                break;
             case 'unknown':
                 nm.applyFilters();
                 break;

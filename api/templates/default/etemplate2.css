@@ -2094,6 +2094,25 @@ table.egwGridView_outer thead tr th.noResize:hover {
 .et2_nextmatch .subentry.level_3 div.et2_vbox {
   margin-left: 7.5em;
 }
+
+/**
+ * New entry (via push)
+ */
+.et2_nextmatch .new_entry {
+	animation: new_entry_pulse 5s;
+	animation-fill-mode: forwards;
+}
+@keyframes new_entry_pulse {
+	0% {
+		background-color: rgba(255,255,185,0);
+	}
+	15% {
+		background-color: rgba(255,255,185, 1);
+	}
+	100% {
+		background-color: rgba(255,255,185,0.3);
+	}
+}
 /**
  * itempicker widget
  */

@@ -179,6 +179,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			"default": et2_no_init,
 			"description": "JS code that gets executed when a _file_ is dropped on a row.  Other drop interactions are handled by the action system.  Return false to prevent the default link action."
 		},
+		"onadd": {
+			"name": "onAdd",
+			"type": "js",
+			"default": et2_no_init,
+			"description": "JS code that gets executed when a new entry is added via refresh().  Allows apps to override the default handling.  Return false to cancel the add."
+		},
 		"settings": {
 			"name": "Settings",
 			"type": "any",
@@ -769,8 +775,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				case "delete":
 					// Handled above, more code to execute after loop
 					break;
-				case "edit":
 				case "add":
+					this.refresh_add(uid);
+					break;
+				case "edit":
 				default:
 					// Trigger refresh
 					this.applyFilters();
@@ -779,6 +787,33 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 		// Trigger an event so app code can act on it
 		jQuery(this).triggerHandler("refresh",[this,_row_ids,_type]);
+	}
+
+	/**
+	 * An entry has been added.  Put it in the list.
+	 *
+	 * @param uid
+	 */
+	protected refresh_add(uid:string)
+	{
+		var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
+		// Insert at the top of the list
+		entry.idx = 0;
+		this.controller._insertDataRow(entry,true);
+
+		if(this.onadd && !this.onadd(entry))
+		{
+			this.controller._grid.deleteRow(entry.idx);
+			return;
+		}
+		
+		// Set "new entry" class - but it has to stay so register and re-add it after the data is there
+		entry.row.tr.addClass("new_entry");
+		let callback = function(data) {
+			data.class += "new_entry";
+			this.egw().dataUnregisterUID(uid, callback, this);
+		};
+		this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
 	}
 
 	/**
