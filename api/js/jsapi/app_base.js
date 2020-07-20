@@ -210,25 +210,67 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	},
 
 	/**
-	 * Push method receives push notification about updates to entries from the application
+	 * Handle a push notification about entry changes from the websocket
 	 *
-	 * It can use the extra _data parameter to determine if the client has read access to
-	 * the entry - if an update of the list is necessary.
+	 * Get's called for data of all apps, but should only handle data of apps it displays,
+	 * which is by default only it's own, but can be for multiple apps eg. for calendar.
 	 *
-	 * @param {string} _type either 'update', 'edit', 'delete', 'add' or null
+	 * @param  pushData
+	 * @param {string} pushData.app application name
+	 * @param {(string|number)} pushData.id id of entry to refresh or null
+	 * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
 	 * - update: request just modified data from given rows.  Sorting is not considered,
 	 *		so if the sort field is changed, the row will not be moved.
 	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
 	 * - delete: just delete the given rows clientside (no server interaction neccessary)
 	 * - add: requires full reload for proper sorting
-	 * @param {string} _app application name
-	 * @param {(string|number)} _id id of entry to refresh or null
-	 * @param {mixed} _data eg. owner or responsible to decide if update is necessary
-	 * @returns {undefined}
+	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
+	 * @param {number} pushData.account_id User that caused the notification
 	 */
-	push: function(_type, _app, _id, _data)
+	push: function(pushData)
 	{
+		// don't care about other apps data, reimplement if your app does care eg. calendar
+		if (pushData.app !== this.appname) return;
 
+		// only handle delete by default, for simple case of uid === "$app::$id"
+		if (pushData.type === 'delete')
+		{
+			egw.dataStoreUID(this.uid(pushData), null);
+		}
+	},
+
+	/**
+	 * Get (possible) app-specific uid
+	 *
+	 * @param {object} pushData see push method for individual attributes
+	 */
+	uid(pushData)
+	{
+		return pushData.app + '::' + pushData.id;
+	},
+
+	/**
+	 * Method called after apps push implementation checked visibility
+	 *
+	 * @param {et2_nextmatch} nm
+	 * @param pushData see push method for individual attributes
+	 * @todo implement better way to update nextmatch widget without disturbing the user / state
+	 * @todo show indicator that an update has happend
+	 * @todo rate-limit update frequency
+	 */
+	updateList: function(nm, pushData)
+	{
+		switch (pushData.type)
+		{
+			case 'add':
+			case 'unknown':
+				nm.applyFilters();
+				break;
+
+			default:
+				egw.dataRefreshUID(this.uid(pushData));
+				break;
+		}
 	},
 
 	/**
@@ -243,7 +285,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	open: function(_action, _senders) {
 		var id_app = _senders[0].id.split('::');
 		egw.open(id_app[1], this.appname);
-	 },
+	},
 
 	/**
 	 * A generic method to action to server asynchronously

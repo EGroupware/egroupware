@@ -248,7 +248,16 @@ class mail_ui
 
 		// save session varchar
 		$oldicServerID =& Api\Cache::getSession('mail','activeProfileID');
-		if ($oldicServerID <> self::$icServerID) $this->mail_bo->openConnection(self::$icServerID);
+		if ($oldicServerID != self::$icServerID)
+		{
+			$this->mail_bo->openConnection(self::$icServerID);
+			// enable push notifications, if supported (and konfigured) by the server
+			if ($this->mail_bo->icServer instanceof Api\Mail\Imap\PushIface &&
+				$this->mail_bo->icServer->pushAvailable())
+			{
+				$this->mail_bo->icServer->enablePush();
+			}
+		}
 		if (true) $oldicServerID = self::$icServerID;
 		if (!Mail::storeActiveProfileIDToPref($this->mail_bo->icServer, self::$icServerID, true ))
 		{

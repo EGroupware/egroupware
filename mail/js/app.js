@@ -5,10 +5,9 @@
  *
  * @link http://www.egroupware.org
  * @author EGroupware GmbH [info@egroupware.org]
- * @copyright (c) 2013-2014 by EGroupware GmbH <info-AT-egroupware.org>
+ * @copyright (c) 2013-2020 by EGroupware GmbH <info-AT-egroupware.org>
  * @package mail
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 /*egw:uses
@@ -365,6 +364,54 @@ app.classes.mail = AppJS.extend(
 		this.image_proxy = this.et2.getArrayMgr('content').getEntry('image_proxy') || 'https://';
 
 		this.preSetToggledOnActions ();
+	},
+
+	/**
+	 * Handle a push notification about entry changes from the websocket
+	 *
+	 * Get's called for data of all apps, but should only handle data of apps it displays,
+	 * which is by default only it's own, but can be for multiple apps eg. for calendar.
+	 *
+	 * @param  pushData
+	 * @param {string} pushData.app application name
+	 * @param {(string|number)} pushData.id id of entry to refresh or null
+	 * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
+	 * @param {number} pushData.account_id User that caused the notification
+	 */
+	push: function(pushData)
+	{
+		// don't care about other apps data, reimplement if your app does care eg. calendar
+		if (pushData.app !== this.appname) return;
+
+		// only handle delete by default, for simple case of uid === "$app::$id"
+		if (pushData.type === 'delete')
+		{
+			return this._super.call(this, pushData);
+		}
+
+		// notify user a new mail arrived
+		if (pushData.type === 'add')
+		{
+			this.egw.message(this.egw.lang('New mail from %1', pushData.acl.from)+'\n'+pushData.acl.subject+'\n'+pushData.acl.snippet, 'success');
+		}
+		// check if we might not see it because we are on a different mail account or folder
+		let nm = this.et2 ? this.et2.getWidgetById('nm') : null;
+		let nm_value = nm ? nm.getValue() : null;
+		if (nm_value && nm_value.col_filter)
+		{
+			this.updateList(nm, pushData);
+		}
+		// update unseen counter in folder-tree
+		if (pushData.type === 'add' && pushData.acl.folder && pushData.acl.unseen)
+		{
+			// todo: pushData.id contains acc_id
+		}
 	},
 
 	/**

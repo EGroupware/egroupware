@@ -5,10 +5,9 @@
  * @link http://www.stylite.de
  * @package api
  * @subpackage mail
- * @author Ralf Becker <rb@stylite.de>
- * @author Stylite AG <info@stylite.de>
+ * @author Ralf Becker <rb@egroupware.org>
+ * @author EGroupware GmbH <info@egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 namespace EGroupware\Api\Mail\Imap;
