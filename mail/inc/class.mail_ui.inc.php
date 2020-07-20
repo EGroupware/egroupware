@@ -1478,16 +1478,6 @@ class mail_ui
 				//'onExecute' => 'javaScript:app.mail.mail_dragStart',
 			)
 		);
-		//hook, mail extra actions
-		$extra_actions = Api\Hooks::process(array(
-			'location' => 'mail_extra_actions',
-			'group' => $group,
-		));
-		if ( is_array( $extra_actions ) ) {
-			foreach ( $extra_actions as $app => $extra)
-				if ( is_array( $extra ) )
-					$actions += $extra;
-		}
 		//error_log(__METHOD__.__LINE__.array2string(array_keys($actions)));
 		// save as tracker, save as infolog, as this are actions that are either available for all, or not, we do that for all and not via css-class disabling
 		if (!isset($GLOBALS['egw_info']['user']['apps']['infolog']))
