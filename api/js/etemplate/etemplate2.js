@@ -417,8 +417,6 @@ var etemplate2 = /** @class */ (function () {
             this._widgetContainer.setApiInstance(egw(currentapp, egw.elemWindow(this._DOMContainer)));
             this._widgetContainer.setInstanceManager(this);
             this._widgetContainer.setParentDOMNode(this._DOMContainer);
-            // set id of DOMContainer, in case it changed because server-side send a different template
-            this._DOMContainer.id = this.uniqueId = _name.replace(/\./g, '-');
             // store the id to submit it back to server
             if (_data) {
                 this._etemplate_exec_id = _data.etemplate_exec_id;
