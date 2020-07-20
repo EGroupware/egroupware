@@ -18,6 +18,7 @@ import '../jsapi/egw_global';
 import '../etemplate/et2_types';
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
+import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 
 /**
  * UI for timesheet
@@ -232,15 +233,13 @@ class TimesheetApp extends EgwApp
 		if (typeof this._grants[pushData.acl] === 'undefined') return;
 
 		// check if we might not see it because of an owner filter
-		let nm = this.et2?.getWidgetById('nm');
+		let nm = <et2_nextmatch>this.et2?.getWidgetById('nm');
 		let nm_value = nm?.getValue();
-		if (nm && nm_value && typeof nm_value.col_filter?.ts_owner !== 'undefined')
+		if (nm && nm_value && nm_value.col_filter?.ts_owner && nm_value.col_filter.ts_owner != pushData.acl)
 		{
-			if (!nm_value.col_filter.ts_owner || nm_value.col_filter.ts_owner == pushData.acl)
-			{
-				this.updateList(nm, pushData);
-			}
+			return;
 		}
+		this.updateList(nm, pushData);
 	}
 }
 

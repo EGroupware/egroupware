@@ -203,11 +203,10 @@ var TimesheetApp = /** @class */ (function (_super) {
         // check if we might not see it because of an owner filter
         var nm = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getWidgetById('nm');
         var nm_value = (_b = nm) === null || _b === void 0 ? void 0 : _b.getValue();
-        if (nm && nm_value && typeof ((_c = nm_value.col_filter) === null || _c === void 0 ? void 0 : _c.ts_owner) !== 'undefined') {
-            if (!nm_value.col_filter.ts_owner || nm_value.col_filter.ts_owner == pushData.acl) {
-                this.updateList(nm, pushData);
-            }
+        if (nm && nm_value && ((_c = nm_value.col_filter) === null || _c === void 0 ? void 0 : _c.ts_owner) && nm_value.col_filter.ts_owner != pushData.acl) {
+            return;
         }
+        this.updateList(nm, pushData);
     };
     return TimesheetApp;
 }(egw_app_1.EgwApp));
