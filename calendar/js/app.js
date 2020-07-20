@@ -318,7 +318,7 @@ var CalendarApp = /** @class */ (function (_super) {
             var date = this.sidebox_et2.getWidgetById('date');
             jQuery(window).off('resize.calendar' + date.dom_id);
         }
-        this.sidebox_hooked_templates = null;
+        this.sidebox_hooked_templates = [];
         egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false);
         egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false);
         // Stop autorefresh
