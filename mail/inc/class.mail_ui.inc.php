@@ -3156,7 +3156,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 		// Add subject to path, so it gets used as the file name, replacing ':'
 		// as it seems to cause an error
-		$path = $temp_path . '/' . ($header['SUBJECT'] ? Vfs::encodePathComponent(mail_bo::clean_subject_for_filename(str_replace(':','-', $header['SUBJECT']))) : lang('mail')) .'/';
+		$path = $temp_path . '/' . ($header['SUBJECT'] ? Vfs::encodePathComponent(Api\Mail::clean_subject_for_filename(str_replace(':','-', $header['SUBJECT']))) : lang('mail')) .'/';
 		if(!Vfs::mkdir($path, 0700, true))
 		{
 			echo "Unable to open temp directory $path";
