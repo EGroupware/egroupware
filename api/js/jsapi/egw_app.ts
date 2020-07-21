@@ -15,6 +15,9 @@ import 'jqueryui';
 import '../jsapi/egw_global';
 import {etemplate2} from "../etemplate/etemplate2";
 import {et2_container} from "../etemplate/et2_core_baseWidget";
+import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
+import {et2_dialog} from "../etemplate/et2_widget_dialog";
+import {et2_createWidget} from "../etemplate/et2_core_widget";
 
 /**
  * Type for push-message
@@ -62,9 +65,14 @@ export interface PushData
 export abstract class EgwApp
 {
 	/**
-	 * Internal application name - override this
+	 * Internal application name - pass this in constructor
 	 */
 	readonly appname: string;
+
+	/**
+	 * Name of the modification timestamp in entry data
+	 */
+	readonly modification_field_name : string;
 
 	/**
 	 * Internal reference to the most recently loaded etemplate2 widget tree
@@ -91,7 +99,7 @@ export abstract class EgwApp
 	 *
 	 * @example <caption>Access via etemplate2 object</caption>
 	 * // Instead of this.et2, using it's unique ID
-	 * var et2 = etemplate2.getById('myapp-index)
+	 * var et2 = etemplate2.getById("myapp-index")
 	 * if(et2)
 	 * {
 	 *		et2.widgetContainer. ...
@@ -132,9 +140,10 @@ export abstract class EgwApp
 	 * Initialization and setup goes here, but the etemplate2 object
 	 * is not yet ready.
 	 */
-	constructor(appname: string)
+	constructor(appname: string, modified_field:string = "")
 	{
 		this.appname = appname;
+		this.modification_field_name = modified_field;
 		this.egw = egw(this.appname, window);
 
 		// Initialize sidebox for non-popups.
@@ -271,29 +280,34 @@ export abstract class EgwApp
 	}
 
 	/**
-	 * Method called after apps push implementation checked visibility
+	 * Callback from nextmatch so application can have some control over
+	 * where new rows (added via push) are added.  This is only called when
+	 * the type is "add".
 	 *
-	 * @param {et2_nextmatch} nm
-	 * @param pushData see push method for individual attributes
-	 * @todo implement better way to update nextmatch widget without disturbing the user / state
-	 * @todo show indicator that an update has happend
-	 * @todo rate-limit update frequency
+	 * @param nm Nextmatch the entry is going to be added to
+	 * @param uid
+	 * @param current_order
 	 */
-	updateList(nm, pushData : PushData)
+	nm_refresh_add(nm: et2_nextmatch, uid: string, current_order: string[]) : number|boolean
 	{
-		switch (pushData.type)
+		// Do we have a modified field so we can check nm sort order?
+		if(this.modification_field_name)
 		{
-			case 'add':
-				nm.refresh(this.uid(pushData), 'add');
-				break;
-			case 'unknown':
-				nm.applyFilters();
-				break;
+			let value = nm.getValue();
+			let sort = value?.sort || {};
 
-			default:
-				egw.dataRefreshUID(this.uid(pushData));
-				break;
+			if(sort && sort.id == this.modification_field_name && sort.asc == false)
+			{
+				// Sorting by modification time, DESC.  Put it at the top.
+				return 0;
+			}
+
+			// Don't actually add it in.
+			return false;
 		}
+
+		// Just put it in at the top
+		return 0;
 	}
 
 	/**

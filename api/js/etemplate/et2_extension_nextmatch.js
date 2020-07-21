@@ -453,7 +453,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
             jQuery(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch', 
             // Important to use anonymous function instead of just 'this.refresh' because
             // of the parameters passed
-            jQuery.proxy(function () { this.refresh(); }, this));
+            function () { this.nm.refresh(this.ids, this.type); }
+                .bind({ nm: this, ids: _row_ids, type: _type }));
             return;
         }
         if (typeof _type == 'undefined')
@@ -528,14 +529,20 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * @param uid
      */
     et2_nextmatch.prototype.refresh_add = function (uid) {
-        var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
-        // Insert at the top of the list
-        entry.idx = 0;
-        this.controller._insertDataRow(entry, true);
-        if (this.onadd && !this.onadd(entry)) {
-            this.controller._grid.deleteRow(entry.idx);
+        var index = 0;
+        var appname = this._get_appname();
+        if (appname && this.egw().window.app[appname] && typeof this.egw().window.app[appname].nm_refresh_add == "function") {
+            var sort = Object.values(this.controller._indexMap).map(function (e) { return ({ index: e.idx, uid: e.uid }); });
+            index = this.egw().window.app[appname].nm_refresh_add(this, uid, sort);
+        }
+        // App cancelled the add
+        if (index === false) {
             return;
         }
+        // Insert at the top of the list, or where app said
+        var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
+        entry.idx = typeof index == "number" ? index : 0;
+        this.controller._insertDataRow(entry, true);
         // Set "new entry" class - but it has to stay so register and re-add it after the data is there
         entry.row.tr.addClass("new_entry");
         var callback = function (data) {
@@ -543,6 +550,18 @@ var et2_nextmatch = /** @class */ (function (_super) {
             this.egw().dataUnregisterUID(uid, callback, this);
         };
         this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
+    };
+    et2_nextmatch.prototype._get_appname = function () {
+        var app = '';
+        var list = [];
+        list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
+        if (this.options.settings.columnselection_pref.indexOf('nextmatch') == 0) {
+            app = list[0].substring('nextmatch'.length + 1);
+        }
+        else {
+            app = list[0];
+        }
+        return app;
     };
     /**
      * Gets the selection
@@ -1385,9 +1404,9 @@ var et2_nextmatch = /** @class */ (function (_super) {
     et2_nextmatch.prototype._set_autorefresh = function (time) {
         // Store preference
         var refresh_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-autorefresh";
-        var app = this.options.template.split(".");
+        var app = this._get_appname();
         if (this._get_autorefresh() != time) {
-            this.egw().set_preference(app[0], refresh_preference, time);
+            this.egw().set_preference(app, refresh_preference, time);
         }
         // Start / update timer
         if (this._autorefresh_timer) {
@@ -1427,8 +1446,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
      */
     et2_nextmatch.prototype._get_autorefresh = function () {
         var refresh_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-autorefresh";
-        var app = this.options.template.split(".");
-        return this.egw().preference(refresh_preference, app[0]);
+        return this.egw().preference(refresh_preference, this._get_appname());
     };
     /**
      * When the template attribute is set, the nextmatch widget tries to load

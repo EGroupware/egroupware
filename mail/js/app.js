@@ -14,6 +14,8 @@
 	/api/js/jquery/jquery.base64.js;
 */
 
+import {etemplate2} from "../../api/js/etemplate/etemplate2";
+
 /**
  * UI for mail
  *
@@ -406,7 +408,8 @@ app.classes.mail = AppJS.extend(
 		let profile_id = pushData.id.split('::')[1];
 		if (nm_value && nm_value.col_filter && nm_value.selectedFolder.split("::")[0] == profile_id)
 		{
-			this.updateList(nm, pushData);
+			// Just update the nm
+			nm.refresh(pushData.id, pushData.type);
 		}
 		// update unseen counter in folder-tree
 		if (pushData.type === 'add' && pushData.acl.folder && pushData.acl.unseen)

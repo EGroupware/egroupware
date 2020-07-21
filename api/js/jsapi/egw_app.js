@@ -15,6 +15,9 @@ require("jquery");
 require("jqueryui");
 require("../jsapi/egw_global");
 var etemplate2_1 = require("../etemplate/etemplate2");
+var et2_extension_nextmatch_1 = require("../etemplate/et2_extension_nextmatch");
+var et2_widget_dialog_1 = require("../etemplate/et2_widget_dialog");
+var et2_core_widget_1 = require("../etemplate/et2_core_widget");
 /**
  * Common base class for application javascript
  * Each app should extend as needed.
@@ -50,12 +53,14 @@ var EgwApp = /** @class */ (function () {
      * Initialization and setup goes here, but the etemplate2 object
      * is not yet ready.
      */
-    function EgwApp(appname) {
+    function EgwApp(appname, modified_field) {
+        if (modified_field === void 0) { modified_field = ""; }
         /**
          * Mailvelope "egroupware" Keyring
          */
         this.mailvelope_keyring = undefined;
         this.appname = appname;
+        this.modification_field_name = modified_field;
         this.egw = egw(this.appname, window);
         // Initialize sidebox for non-popups.
         // ID set server side
@@ -172,26 +177,29 @@ var EgwApp = /** @class */ (function () {
         return pushData.app + '::' + pushData.id;
     };
     /**
-     * Method called after apps push implementation checked visibility
+     * Callback from nextmatch so application can have some control over
+     * where new rows (added via push) are added.  This is only called when
+     * the type is "add".
      *
-     * @param {et2_nextmatch} nm
-     * @param pushData see push method for individual attributes
-     * @todo implement better way to update nextmatch widget without disturbing the user / state
-     * @todo show indicator that an update has happend
-     * @todo rate-limit update frequency
+     * @param nm Nextmatch the entry is going to be added to
+     * @param uid
+     * @param current_order
      */
-    EgwApp.prototype.updateList = function (nm, pushData) {
-        switch (pushData.type) {
-            case 'add':
-                nm.refresh(this.uid(pushData), 'add');
-                break;
-            case 'unknown':
-                nm.applyFilters();
-                break;
-            default:
-                egw.dataRefreshUID(this.uid(pushData));
-                break;
+    EgwApp.prototype.nm_refresh_add = function (nm, uid, current_order) {
+        var _a;
+        // Do we have a modified field so we can check nm sort order?
+        if (this.modification_field_name) {
+            var value = nm.getValue();
+            var sort = ((_a = value) === null || _a === void 0 ? void 0 : _a.sort) || {};
+            if (sort && sort.id == this.modification_field_name && sort.asc == false) {
+                // Sorting by modification time, DESC.  Put it at the top.
+                return 0;
+            }
+            // Don't actually add it in.
+            return false;
         }
+        // Just put it in at the top
+        return 0;
     };
     /**
      * Open an entry.
@@ -228,11 +236,11 @@ var EgwApp = /** @class */ (function () {
         if (typeof confirm_msg != 'undefined') {
             var that = this;
             var action_id = _action.id;
-            et2_dialog.show_dialog(function (button_id, value) {
-                if (button_id != et2_dialog.NO_BUTTON) {
+            et2_widget_dialog_1.et2_dialog.show_dialog(function (button_id, value) {
+                if (button_id != et2_widget_dialog_1.et2_dialog.NO_BUTTON) {
                     that._do_action(action_id, _elems);
                 }
-            }, confirm_msg, egw.lang('Confirmation required'), et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+            }, confirm_msg, egw.lang('Confirmation required'), et2_widget_dialog_1.et2_dialog.BUTTONS_YES_NO, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE);
         }
         else if (typeof this._do_action == 'function') {
             this._do_action(_action.id, _elems);
@@ -305,7 +313,7 @@ var EgwApp = /** @class */ (function () {
                 }
                 _widget.applyFilters(state.state || state.filter || {});
                 nextmatched = true;
-            }, this, et2_nextmatch);
+            }, this, et2_extension_nextmatch_1.et2_nextmatch);
             if (nextmatched)
                 return false;
         }
@@ -342,7 +350,7 @@ var EgwApp = /** @class */ (function () {
         for (var i = 0; i < et2.length; i++) {
             et2[i].widgetContainer.iterateOver(function (_widget) {
                 state = _widget.getValue();
-            }, this, et2_nextmatch);
+            }, this, et2_extension_nextmatch_1.et2_nextmatch);
         }
         return state;
     };
@@ -646,7 +654,7 @@ var EgwApp = /** @class */ (function () {
         var apps = egw().user('apps');
         var is_admin = (typeof apps['admin'] != "undefined");
         if (is_admin) {
-            this.favorite_popup.group = et2_createWidget("select-account", {
+            this.favorite_popup.group = et2_core_widget_1.et2_createWidget("select-account", {
                 id: "favorite[group]",
                 account_type: "groups",
                 empty_label: "Groups",
@@ -762,7 +770,7 @@ var EgwApp = /** @class */ (function () {
         line.addClass('loading');
         // Make sure first
         var do_delete = function (button_id) {
-            if (button_id != et2_dialog.YES_BUTTON) {
+            if (button_id != et2_widget_dialog_1.et2_dialog.YES_BUTTON) {
                 line.removeClass('loading');
                 return;
             }
@@ -785,7 +793,7 @@ var EgwApp = /** @class */ (function () {
             }, jQuery(trash).parentsUntil("li").parent(), true, jQuery(trash).parentsUntil("li").parent());
             request.sendRequest(true);
         };
-        et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " + name + "?"), egw.lang("Delete"), et2_dialog.YES_NO, et2_dialog.QUESTION_MESSAGE);
+        et2_widget_dialog_1.et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " + name + "?"), egw.lang("Delete"), et2_widget_dialog_1.et2_dialog.YES_NO, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE);
         return false;
     };
     /**
@@ -1271,15 +1279,15 @@ var EgwApp = /** @class */ (function () {
      */
     EgwApp.prototype.mailvelopeDeleteBackup = function () {
         var self = this;
-        et2_dialog.show_dialog(function (_button_id) {
-            if (_button_id == et2_dialog.YES_BUTTON) {
+        et2_widget_dialog_1.et2_dialog.show_dialog(function (_button_id) {
+            if (_button_id == et2_widget_dialog_1.et2_dialog.YES_BUTTON) {
                 self._mailvelopeBackupFileOperator(undefined, 'DELETE', function () {
                     self.egw.message(self.egw.lang('The backup key has been deleted.'));
                 }, function (_err) {
                     self.egw.message(self.egw.lang('Was not able to delete the backup key because %1', _err));
                 });
             }
-        }, self.egw.lang('Are you sure, you would like to delete the backup key?'), self.egw.lang('Delete backup key'), {}, et2_dialog.BUTTONS_YES_CANCEL, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
+        }, self.egw.lang('Are you sure, you would like to delete the backup key?'), self.egw.lang('Delete backup key'), {}, et2_widget_dialog_1.et2_dialog.BUTTONS_YES_CANCEL, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
     };
     /**
      * Create mailvelope restore dialog
@@ -1335,7 +1343,7 @@ var EgwApp = /** @class */ (function () {
             { label: "Backup Key", image: "save", onclick: "app." + appname + ".mailvelopeCreateBackupDialog('#_mvelo', false)" }
         ];
         var dialog = function (_content, _callback) {
-            return et2_createWidget("dialog", {
+            return et2_core_widget_1.et2_createWidget("dialog", {
                 callback: function (_button_id, _value) {
                     if (typeof _callback == "function") {
                         _callback.call(this, _button_id, _value.value);
@@ -1381,7 +1389,7 @@ var EgwApp = /** @class */ (function () {
             { "text": egw.lang('Close'), id: 'close', image: 'cancelled' }
         ];
         var dialog = function (_content, _callback) {
-            return et2_createWidget("dialog", {
+            return et2_core_widget_1.et2_createWidget("dialog", {
                 callback: function (_button_id, _value) {
                     if (typeof _callback == "function") {
                         _callback.call(this, _button_id, _value.value);
@@ -1416,11 +1424,11 @@ var EgwApp = /** @class */ (function () {
                 else if (typeof InstallTrigger != 'undefined' && InstallTrigger.enabled()) {
                     InstallTrigger.install({ mailvelope: "https://download.mailvelope.com/releases/latest/mailvelope.firefox.xpi" }, function (_url, _status) {
                         if (_status == 0) {
-                            et2_dialog.alert(egw.lang('Mailvelope addon installation succeded. Now you may configure the options.'));
+                            et2_widget_dialog_1.et2_dialog.alert(egw.lang('Mailvelope addon installation succeded. Now you may configure the options.'));
                             return;
                         }
                         else {
-                            et2_dialog.alert(egw.lang('Mailvelope addon installation failed! Please try again.'));
+                            et2_widget_dialog_1.et2_dialog.alert(egw.lang('Mailvelope addon installation failed! Please try again.'));
                         }
                     });
                 }
@@ -1483,16 +1491,16 @@ var EgwApp = /** @class */ (function () {
                                     });
                                     delete buttons[1].default;
                                 }
-                                et2_dialog.show_dialog(function (_button_id) {
-                                    if (_button_id != et2_dialog.NO_BUTTON) {
+                                et2_widget_dialog_1.et2_dialog.show_dialog(function (_button_id) {
+                                    if (_button_id != et2_widget_dialog_1.et2_dialog.NO_BUTTON) {
                                         var keys = {};
                                         keys[self.egw.user('account_id')] = _pubKey;
-                                        self.egw.json('addressbook.addressbook_bo.ajax_set_pgp_keys', [keys, _button_id != et2_dialog.YES_BUTTON ? true : undefined]).sendRequest()
+                                        self.egw.json('addressbook.addressbook_bo.ajax_set_pgp_keys', [keys, _button_id != et2_widget_dialog_1.et2_dialog.YES_BUTTON ? true : undefined]).sendRequest()
                                             .then(function (_data) {
                                             self.egw.message(_data.response['0'].data);
                                         });
                                     }
-                                }, self.egw.lang('It is recommended to store your public key in addressbook, so other users can write you encrypted mails.'), self.egw.lang('Store your public key in Addressbook?'), {}, buttons, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
+                                }, self.egw.lang('It is recommended to store your public key in addressbook, so other users can write you encrypted mails.'), self.egw.lang('Store your public key in Addressbook?'), {}, buttons, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
                             }, function (_err) {
                                 self.egw.message(_err.message + "\n\n" +
                                     self.egw.lang("You will NOT be able to send or receive encrypted mails before completing that step!"), 'error');
@@ -1665,7 +1673,7 @@ var EgwApp = /** @class */ (function () {
             egw.message('Failed to copy the link!');
         };
         jQuery("body").on("click", "[name=share_link]", copy_link_to_clipboard);
-        et2_createWidget("dialog", {
+        et2_core_widget_1.et2_createWidget("dialog", {
             callback: function (button_id, value) {
                 jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
                 return true;

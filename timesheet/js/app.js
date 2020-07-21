@@ -30,6 +30,7 @@ require("jqueryui");
 require("../jsapi/egw_global");
 require("../etemplate/et2_types");
 var egw_app_1 = require("../../api/js/jsapi/egw_app");
+var etemplate2_1 = require("../../api/js/etemplate/etemplate2");
 /**
  * UI for timesheet
  *
@@ -38,7 +39,7 @@ var egw_app_1 = require("../../api/js/jsapi/egw_app");
 var TimesheetApp = /** @class */ (function (_super) {
     __extends(TimesheetApp, _super);
     function TimesheetApp() {
-        return _super.call(this, 'timesheet') || this;
+        return _super.call(this, 'timesheet', "ts_start") || this;
     }
     /**
      * This function is called when the etemplate2 object is loaded
@@ -206,7 +207,7 @@ var TimesheetApp = /** @class */ (function (_super) {
         if (nm && nm_value && ((_c = nm_value.col_filter) === null || _c === void 0 ? void 0 : _c.ts_owner) && nm_value.col_filter.ts_owner != pushData.acl) {
             return;
         }
-        this.updateList(nm, pushData);
+        etemplate2_1.etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
     };
     return TimesheetApp;
 }(egw_app_1.EgwApp));

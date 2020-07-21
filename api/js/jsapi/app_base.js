@@ -240,37 +240,40 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	},
 
 	/**
+	 * Callback from nextmatch so application can have some control over
+	 * where new rows (added via push) are added.  This is only called when
+	 * the type is "add".
+	 *
+	 * @param nm Nextmatch the entry is going to be added to
+	 * @param uid
+	 * @param current_order
+	 */
+	nm_refresh_add: function(nm, uid, current_order)
+	{
+		// Do we have a modified field so we can check nm sort order?
+		if(this.modification_field_name)
+		{
+			let value = nm.getValue();
+			let sort = value.sort || {};
+
+			if(sort && sort.id == this.modification_field_name && sort.asc == false)
+			{
+				// Sorting by modification time, DESC.  Put it at the top.
+				return 0;
+			}
+		}
+		// Don't actually add it in.
+		return false;
+	},
+
+	/**
 	 * Get (possible) app-specific uid
 	 *
 	 * @param {object} pushData see push method for individual attributes
 	 */
-	uid(pushData)
+	uid: function(pushData)
 	{
-		return pushData.app + '::' + pushData.id;
-	},
-
-	/**
-	 * Method called after apps push implementation checked visibility
-	 *
-	 * @param {et2_nextmatch} nm
-	 * @param pushData see push method for individual attributes
-	 * @todo implement better way to update nextmatch widget without disturbing the user / state
-	 * @todo show indicator that an update has happend
-	 * @todo rate-limit update frequency
-	 */
-	updateList: function(nm, pushData)
-	{
-		switch (pushData.type)
-		{
-			case 'add':
-			case 'unknown':
-				nm.applyFilters();
-				break;
-
-			default:
-				egw.dataRefreshUID(this.uid(pushData));
-				break;
-		}
+		return pushData.app + "::" + pushData.id;
 	},
 
 	/**

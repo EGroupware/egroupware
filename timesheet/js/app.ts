@@ -19,6 +19,7 @@ import '../etemplate/et2_types';
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import {etemplate2} from "../../api/js/etemplate/etemplate2";
 
 /**
  * UI for timesheet
@@ -30,7 +31,7 @@ class TimesheetApp extends EgwApp
 
 	constructor()
 	{
-		super('timesheet');
+		super('timesheet',"ts_start");
 	}
 
 	/**
@@ -239,7 +240,7 @@ class TimesheetApp extends EgwApp
 		{
 			return;
 		}
-		this.updateList(nm, pushData);
+		etemplate2.app_refresh("",pushData.app, pushData.id, pushData.type);
 	}
 }
 
