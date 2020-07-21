@@ -658,6 +658,7 @@
 
 		var hasUnseen = [];
 		notifymessages = {};
+		var browser_notify = _browser_notify || this.check_browser_notify();
 		for (var i=0; i < _rawData.length; i++)
 		{
 			var data = this.getData(_rawData[i]['message'], _rawData[i]['extra_data']);
@@ -690,7 +691,7 @@
 			};
 			if (_rawData[i]['actions'] && _rawData[i]['actions'].length > 0) notifymessages[_rawData[i]['id']]['data']['actions'] = _rawData[i]['actions'];
 			// Notification API
-			if(_browser_notify && !_rawData[i]['status'])
+			if(browser_notify && !_rawData[i]['status'])
 			{
 				egw.notification(data.title, {
 					tag: data.app+":"+_rawData[i]['id'],

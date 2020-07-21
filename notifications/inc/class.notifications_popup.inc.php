@@ -128,6 +128,48 @@ class notifications_popup implements notifications_iface {
 			'notify_data' => is_array($_data) ? json_encode($_data) : NULL
 			), false,__LINE__,__FILE__,self::_appname);
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
+		$push = new Api\Json\Push($this->recipient->account_id);
+		$push->call('app.notifications.append', $this->read());
+	}
+
+
+	/**
+	 * read all notification messages for current recipient
+	 * @return type
+	 */
+	private function read()
+	{
+		$rs = $this->db->select(self::_notification_table, '*', array(
+				'account_id' => $this->recipient->account_id,
+				'notify_type' => self::_type
+			),
+			__LINE__,__FILE__,0 ,'ORDER BY notify_id DESC',self::_appname, 100);
+		$result = array();
+		if ($rs->NumRows() > 0)	{
+			foreach ($rs as $notification) {
+				$actions = null;
+				$data = json_decode($notification['notify_data'], true);
+				if ($data['appname'] && $data['data'])
+				{
+					$_actions = Api\Hooks::process (array(
+						'location' => 'notifications_actions',
+						'data' => $data['data']
+						), $data['appname'], true);
+					$actions = $_actions[$data['appname']];
+				}
+				$result[] = array(
+					'id'		=> $notification['notify_id'],
+					'message'	=> $notification['notify_message'],
+					'status'	=> $notification['notify_status'],
+					'created'	=> Api\DateTime::to($notification['notify_created']),
+					'current'		=> new DateTime(),
+					'actions'	=> is_array($actions)?$actions:NULL,
+					'extra_data'		=> ($data['data'] ? $data['data'] : array())
+				);
+
+			}
+			return $result;
+		}
 	}
 
 	/**
