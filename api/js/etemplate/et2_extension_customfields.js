@@ -358,8 +358,15 @@ var et2_customfields_list = /** @class */ (function (_super) {
     et2_customfields_list.prototype._setup_passwd = function (field_name, field, attrs) {
         // No label on the widget itself
         delete (attrs.label);
-        attrs['viewable'] = true;
-        attrs['plaintext'] = false;
+        var defaults = {
+            viewable: true,
+            plaintext: false,
+            suggest: 16
+        };
+        for (var _i = 0, _a = Object.keys(defaults); _i < _a.length; _i++) {
+            var key = _a[_i];
+            attrs[key] = (field.values && typeof field.values[key] !== "undefined") ? field.values[key] : defaults[key];
+        }
         return true;
     };
     et2_customfields_list.prototype._setup_ajax_select = function (field_name, field, attrs) {

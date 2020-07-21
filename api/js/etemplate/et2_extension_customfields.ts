@@ -492,8 +492,16 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	{
 		// No label on the widget itself
 		delete (attrs.label);
-		attrs['viewable'] = true;
-		attrs['plaintext'] = false;
+		let defaults = {
+			viewable:true,
+			plaintext: false,
+			suggest: 16
+		};
+		for(let key of Object.keys(defaults))
+		{
+			attrs[key] = (field.values && typeof field.values[key] !== "undefined") ? field.values[key] : defaults[key];
+		}
+
 		return true;
 	}
 

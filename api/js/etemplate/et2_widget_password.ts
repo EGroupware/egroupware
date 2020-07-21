@@ -52,7 +52,7 @@ export class et2_password extends et2_textbox
 		"suggest": {
 			name: "Suggest password",
 			type: "integer",
-			default: 16,
+			default: 0,
 			description: "Suggest password length (0 for off)"
 		}
 	};

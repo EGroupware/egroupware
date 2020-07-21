@@ -32,7 +32,7 @@ class Customfields extends Transformer
 	 */
 	protected static $cf_types = array(
 		'text'     => 'Text',
-		'passwd' => 'Password',
+		'passwd'   => 'Password',
 		'int'      => 'Integer',
 		'float'    => 'Float',
 		'label'    => 'Label',
@@ -324,8 +324,16 @@ class Customfields extends Transformer
 			case 'text':
 				break;
 			case 'passwd':
-				$widget->attrs['viewable'] = true;
-				$widget->attrs['plaintext'] = false;
+				// Defaults for a customfield are different than a regular password field
+				$defaults = Array(
+					'viewable' => true,
+					'plaintext' => false,
+					'suggest' => 16
+				);
+				foreach($defaults as $f => $d_value)
+				{
+					$widget->attrs[$f] = array_key_exists($f, $field['values']) ? $field['values'][$f] : $d_value;
+				}
 				break;
 
 			default:

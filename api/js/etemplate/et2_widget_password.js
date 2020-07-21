@@ -251,7 +251,7 @@ var et2_password = /** @class */ (function (_super) {
         "suggest": {
             name: "Suggest password",
             type: "integer",
-            default: 16,
+            default: 0,
             description: "Suggest password length (0 for off)"
         }
     };
