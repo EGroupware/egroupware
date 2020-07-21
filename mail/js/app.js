@@ -403,14 +403,17 @@ app.classes.mail = AppJS.extend(
 		// check if we might not see it because we are on a different mail account or folder
 		let nm = this.et2 ? this.et2.getWidgetById('nm') : null;
 		let nm_value = nm ? nm.getValue() : null;
-		if (nm_value && nm_value.col_filter)
+		let profile_id = pushData.id.split('::')[1];
+		if (nm_value && nm_value.col_filter && nm_value.selectedFolder.split("::")[0] == profile_id)
 		{
 			this.updateList(nm, pushData);
 		}
 		// update unseen counter in folder-tree
 		if (pushData.type === 'add' && pushData.acl.folder && pushData.acl.unseen)
 		{
-			// todo: pushData.id contains acc_id
+			let folder_id = {};
+			folder_id[profile_id+"::"+pushData.acl.folder] = pushData.acl.folder+" ("+pushData.acl.unseen+")";
+			this.mail_setFolderStatus(folder_id);
 		}
 	},
 
