@@ -1284,6 +1284,8 @@ export class etemplate2
 			if (this && typeof this.load == 'function')
 			{
 				// Called from etemplate
+				// set id in case serverside returned a different template
+				this._DOMContainer.id = this.uniqueId = data.DOMNodeID;
 				// @ts-ignore
 				this.load(data.name, data.url, data.data);
 				return true;

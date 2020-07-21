@@ -996,6 +996,8 @@ var etemplate2 = /** @class */ (function () {
             // @ts-ignore
             if (this && typeof this.load == 'function') {
                 // Called from etemplate
+                // set id in case serverside returned a different template
+                this._DOMContainer.id = this.uniqueId = data.DOMNodeID;
                 // @ts-ignore
                 this.load(data.name, data.url, data.data);
                 return true;
