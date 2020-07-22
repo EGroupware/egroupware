@@ -407,8 +407,11 @@ app.classes.mail = AppJS.extend(
 		// check if we might not see it because we are on a different mail account or folder
 		let nm = this.et2 ? this.et2.getWidgetById('nm') : null;
 		let nm_value = nm ? nm.getValue() : null;
-		let profile_id = pushData.id.split('::')[1];
-		if (nm_value && nm_value.col_filter && nm_value.selectedFolder.split("::")[0] == profile_id)
+		let folder = pushData.id.split('::')[1]+'::'+atob(pushData.id.split('::')[2]);
+		// nm_value.selectedFolder is not always set, read it from foldertree, if not
+		let foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
+		let displayed_folder = (nm_value ? nm_value.selectedFolder : null) || (foldertree ? foldertree.getValue() : '');
+		if (folder === displayed_folder)
 		{
 			// Just update the nm
 			nm.refresh(pushData.id, pushData.type);
@@ -417,7 +420,7 @@ app.classes.mail = AppJS.extend(
 		if (pushData.type === 'add' && pushData.acl.folder && pushData.acl.unseen)
 		{
 			let folder_id = {};
-			folder_id[profile_id+"::"+pushData.acl.folder] = pushData.acl.folder+" ("+pushData.acl.unseen+")";
+			folder_id[folder] = pushData.acl.folder+" ("+pushData.acl.unseen+")";
 			this.mail_setFolderStatus(folder_id);
 		}
 	},
