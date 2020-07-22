@@ -545,7 +545,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             // App did not want the row, or doesn't know where it goes but we've already removed it...
             // Put it back before anyone notices.  New data coming from server anyway.
             var callback_1 = function (data) {
-                data.class += "new_entry";
+                data.class += " new_entry";
                 this.egw().dataUnregisterUID(uid, callback_1, this);
             };
             this.egw().dataRegisterUID(uid, callback_1, this, this.getInstanceManager().etemplate_exec_id, this.id);
@@ -578,7 +578,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // Set "new entry" class - but it has to stay so register and re-add it after the data is there
         entry.row.tr.addClass("new_entry");
         var callback = function (data) {
-            data.class += "new_entry";
+            data.class += " new_entry";
             this.egw().dataUnregisterUID(uid, callback, this);
         };
         this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);

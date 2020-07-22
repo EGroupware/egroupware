@@ -817,7 +817,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// App did not want the row, or doesn't know where it goes but we've already removed it...
 			// Put it back before anyone notices.  New data coming from server anyway.
 			let callback = function(data) {
-				data.class += "new_entry";
+				data.class += " new_entry";
 				this.egw().dataUnregisterUID(uid, callback, this);
 			};
 			this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
@@ -857,7 +857,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Set "new entry" class - but it has to stay so register and re-add it after the data is there
 		entry.row.tr.addClass("new_entry");
 		let callback = function(data) {
-			data.class += "new_entry";
+			data.class += " new_entry";
 			this.egw().dataUnregisterUID(uid, callback, this);
 		};
 		this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
