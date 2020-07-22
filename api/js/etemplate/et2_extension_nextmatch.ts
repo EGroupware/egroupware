@@ -766,10 +766,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			switch(_type)
 			{
 				case "update":
-					if(!this.egw().dataRefreshUID(uid))
+					if(!this.refresh_update(uid))
 					{
-						// Could not update just that row
-						this.applyFilters();
+						// Could not update just the row, full refresh has been requested
 						break id_loop;
 					}
 					break;
@@ -791,19 +790,57 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	}
 
 	/**
+	 * An entry has been updated.  Request new data, and ask app about where the row
+	 * goes now.
+	 *
+	 * @param uid
+	 */
+	protected refresh_update(uid: string)
+	{
+		if(!this.egw().dataRefreshUID(uid))
+		{
+			// Could not update just that row
+			this.applyFilters();
+			return false;
+		}
+
+		// Row data update has been sent, let's move it where app wants it
+		let entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
+
+		// Need to delete first as there's a good chance indexes will change in an unknown way
+		// and we can't always find it by UID after due to duplication
+		this.controller._grid.deleteRow(entry.idx);
+
+		// Pretend it's a new row, let app tell us where it goes and we'll mark it as new
+		if(!this.refresh_add(uid, "update"))
+		{
+			// App did not want the row, or doesn't know where it goes but we've already removed it...
+			// Put it back before anyone notices.  New data coming from server anyway.
+			let callback = function(data) {
+				data.class += "new_entry";
+				this.egw().dataUnregisterUID(uid, callback, this);
+			};
+			this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
+			this.controller._insertDataRow(entry,true);
+		}
+
+		return true;
+	}
+
+	/**
 	 * An entry has been added.  Put it in the list.
 	 *
 	 * @param uid
 	 * @return boolean false: not added, true: added
 	 */
-	protected refresh_add(uid:string)
+	protected refresh_add(uid:string, type = "add")
 	{
 		let index = 0;
 		let appname = this._get_appname();
-		if(appname && this.egw().window.app[appname] && typeof this.egw().window.app[appname].nm_refresh_add == "function")
+		if(appname && this.egw().window.app[appname] && typeof this.egw().window.app[appname].nm_refresh_index == "function")
 		{
 			let sort = Object.values(this.controller._indexMap).map(e => ({index:e.idx, uid:e.uid}));
-			index = this.egw().window.app[appname].nm_refresh_add(this, uid, sort)
+			index = this.egw().window.app[appname].nm_refresh_index(this, uid, sort, type)
 		}
 
 		// App cancelled the add

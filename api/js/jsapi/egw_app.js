@@ -178,15 +178,22 @@ var EgwApp = /** @class */ (function () {
     };
     /**
      * Callback from nextmatch so application can have some control over
-     * where new rows (added via push) are added.  This is only called when
-     * the type is "add".
+     * where new rows (added via push) are added.  This is called when
+     * the type is "add" or "update".
+     *
+     * Returning false for a new row will cause nm to do a full reload of all data.
+     * For an update the row will be updated in place.
      *
      * @param nm Nextmatch the entry is going to be added to
      * @param uid
-     * @param current_order
+     * @param current_order List of ids in order
+     * @param update_type add or update
+     *
+     * @return number | boolean Row index (0 at the top) or false to not insert the row
      */
-    EgwApp.prototype.nm_refresh_add = function (nm, uid, current_order) {
+    EgwApp.prototype.nm_refresh_index = function (nm, uid, current_order, update_type) {
         var _a;
+        return false;
         // Do we have a modified field so we can check nm sort order?
         if (this.modification_field_name) {
             var value = nm.getValue();

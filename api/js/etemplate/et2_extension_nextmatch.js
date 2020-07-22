@@ -501,9 +501,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
             var uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
             switch (_type) {
                 case "update":
-                    if (!this.egw().dataRefreshUID(uid)) {
-                        // Could not update just that row
-                        this.applyFilters();
+                    if (!this.refresh_update(uid)) {
+                        // Could not update just the row, full refresh has been requested
                         break id_loop;
                     }
                     break;
@@ -525,17 +524,48 @@ var et2_nextmatch = /** @class */ (function (_super) {
         jQuery(this).triggerHandler("refresh", [this, _row_ids, _type]);
     };
     /**
+     * An entry has been updated.  Request new data, and ask app about where the row
+     * goes now.
+     *
+     * @param uid
+     */
+    et2_nextmatch.prototype.refresh_update = function (uid) {
+        if (!this.egw().dataRefreshUID(uid)) {
+            // Could not update just that row
+            this.applyFilters();
+            return false;
+        }
+        // Row data update has been sent, let's move it where app wants it
+        var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
+        // Need to delete first as there's a good chance indexes will change in an unknown way
+        // and we can't always find it by UID after due to duplication
+        this.controller._grid.deleteRow(entry.idx);
+        // Pretend it's a new row, let app tell us where it goes and we'll mark it as new
+        if (!this.refresh_add(uid, "update")) {
+            // App did not want the row, or doesn't know where it goes but we've already removed it...
+            // Put it back before anyone notices.  New data coming from server anyway.
+            var callback_1 = function (data) {
+                data.class += "new_entry";
+                this.egw().dataUnregisterUID(uid, callback_1, this);
+            };
+            this.egw().dataRegisterUID(uid, callback_1, this, this.getInstanceManager().etemplate_exec_id, this.id);
+            this.controller._insertDataRow(entry, true);
+        }
+        return true;
+    };
+    /**
      * An entry has been added.  Put it in the list.
      *
      * @param uid
      * @return boolean false: not added, true: added
      */
-    et2_nextmatch.prototype.refresh_add = function (uid) {
+    et2_nextmatch.prototype.refresh_add = function (uid, type) {
+        if (type === void 0) { type = "add"; }
         var index = 0;
         var appname = this._get_appname();
-        if (appname && this.egw().window.app[appname] && typeof this.egw().window.app[appname].nm_refresh_add == "function") {
+        if (appname && this.egw().window.app[appname] && typeof this.egw().window.app[appname].nm_refresh_index == "function") {
             var sort = Object.values(this.controller._indexMap).map(function (e) { return ({ index: e.idx, uid: e.uid }); });
-            index = this.egw().window.app[appname].nm_refresh_add(this, uid, sort);
+            index = this.egw().window.app[appname].nm_refresh_index(this, uid, sort, type);
         }
         // App cancelled the add
         if (index === false) {
