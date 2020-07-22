@@ -506,6 +506,13 @@ class mail_compose
 				try
 				{
 					$success = $this->send($_content);
+
+					//hook mail_compose_after_save
+					Api\Hooks::process( array(
+							'location' => 'mail_compose_after_save',
+							'content' => $_content,
+					));
+
 					if ($success==false)
 					{
 						$sendOK=false;
