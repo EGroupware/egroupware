@@ -511,8 +511,9 @@ var et2_nextmatch = /** @class */ (function (_super) {
                     // Handled above, more code to execute after loop
                     break;
                 case "add":
-                    this.refresh_add(uid);
-                    break;
+                    if (this.refresh_add(uid))
+                        break;
+                // fall-through / full refresh, if refresh_add returns false
                 case "edit":
                 default:
                     // Trigger refresh
@@ -527,6 +528,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * An entry has been added.  Put it in the list.
      *
      * @param uid
+     * @return boolean false: not added, true: added
      */
     et2_nextmatch.prototype.refresh_add = function (uid) {
         var index = 0;
@@ -537,7 +539,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         }
         // App cancelled the add
         if (index === false) {
-            return;
+            return false;
         }
         // Insert at the top of the list, or where app said
         var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
@@ -550,6 +552,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             this.egw().dataUnregisterUID(uid, callback, this);
         };
         this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
+        return true;
     };
     et2_nextmatch.prototype._get_appname = function () {
         var app = '';

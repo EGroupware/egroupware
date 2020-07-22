@@ -777,8 +777,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					// Handled above, more code to execute after loop
 					break;
 				case "add":
-					this.refresh_add(uid);
-					break;
+					if (this.refresh_add(uid)) break;
+					// fall-through / full refresh, if refresh_add returns false
 				case "edit":
 				default:
 					// Trigger refresh
@@ -794,6 +794,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 * An entry has been added.  Put it in the list.
 	 *
 	 * @param uid
+	 * @return boolean false: not added, true: added
 	 */
 	protected refresh_add(uid:string)
 	{
@@ -808,7 +809,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// App cancelled the add
 		if(index === false)
 		{
-			return;
+			return false;
 		}
 
 		// Insert at the top of the list, or where app said
@@ -823,6 +824,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this.egw().dataUnregisterUID(uid, callback, this);
 		};
 		this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
+		return true;
 	}
 
 	private _get_appname()
