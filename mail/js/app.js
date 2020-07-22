@@ -411,7 +411,7 @@ app.classes.mail = AppJS.extend(
 		// nm_value.selectedFolder is not always set, read it from foldertree, if not
 		let foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
 		let displayed_folder = (nm_value ? nm_value.selectedFolder : null) || (foldertree ? foldertree.getValue() : '');
-		if (!displayed_foler.match(/::/)) displayed_folder += '::INBOX';
+		if (!displayed_folder.match(/::/)) displayed_folder += '::INBOX';
 		if (folder === displayed_folder)
 		{
 			// Just update the nm
