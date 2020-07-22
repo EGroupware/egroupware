@@ -14,8 +14,6 @@
 	/api/js/jquery/jquery.base64.js;
 */
 
-import {etemplate2} from "../../api/js/etemplate/etemplate2";
-
 /**
  * UI for mail
  *
