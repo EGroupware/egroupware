@@ -22,6 +22,10 @@
 app.classes.mail = AppJS.extend(
 {
 	appname: 'mail',
+	/**
+	 * modified attribute in mail app to test new entries get added on top of list
+	 */
+	modification_field_name: 'date',
 
 	/**
 	 * et2 widget container

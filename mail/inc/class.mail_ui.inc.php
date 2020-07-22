@@ -251,12 +251,6 @@ class mail_ui
 		if ($oldicServerID != self::$icServerID)
 		{
 			$this->mail_bo->openConnection(self::$icServerID);
-			// enable push notifications, if supported (and konfigured) by the server
-			if ($this->mail_bo->icServer instanceof Api\Mail\Imap\PushIface &&
-				$this->mail_bo->icServer->pushAvailable())
-			{
-				$this->mail_bo->icServer->enablePush();
-			}
 		}
 		if (true) $oldicServerID = self::$icServerID;
 		if (!Mail::storeActiveProfileIDToPref($this->mail_bo->icServer, self::$icServerID, true ))
@@ -1555,6 +1549,12 @@ class mail_ui
 				return 0;
 			}
 			if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->profileID.self::$delimiter.'INBOX';
+		}
+		// enable push notifications, if supported (and konfigured) by the server
+		if ($mail_ui->mail_bo->icServer instanceof Api\Mail\Imap\PushIface &&
+			$mail_ui->mail_bo->icServer->pushAvailable())
+		{
+			$mail_ui->mail_bo->icServer->enablePush();
 		}
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
 		//Mail::$debugTimes=true;

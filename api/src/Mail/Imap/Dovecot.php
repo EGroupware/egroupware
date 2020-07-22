@@ -289,6 +289,25 @@ class Dovecot extends Mail\Imap implements Mail\Imap\PushIface
 	const METADATA_NAME = '/private/vendor/vendor.dovecot/http-notify';
 	const METADATA_MAILBOX = '';
 	const METADATA_PREFIX = 'user=';
+	const METADATA_SEPARATOR = ';;';
+
+	/**
+	 * Generate token / user-information for push to be stored by Dovecot
+	 *
+	 * The user informations has the form "$account_id::$acc_id;$token@$host"
+	 *
+	 * @param null $account_id
+	 * @param string $token =null default push token of instance ($account_id=='0') or user
+	 * @return string
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	protected function pushToken($account_id=null, $token=null)
+	{
+		if (!isset($token)) $token = ((string)$account_id === '0' ? Tokens::instance() : Tokens::user($account_id));
+
+		return self::METADATA_PREFIX.$GLOBALS['egw_info']['user']['account_id'].'::'.$this->acc_id.';'.
+			$token . '@' . 'office.egroupware.org';	//Api\Header\Http::host();
+	}
 
 	/**
 	 * Enable push notifictions for current connection and given account_id
@@ -303,11 +322,25 @@ class Dovecot extends Mail\Imap implements Mail\Imap\PushIface
 			return false;
 		}
 		try {
+			$metadata = explode(self::METADATA_SEPARATOR, $this->getMetadata(self::METADATA_MAILBOX, [self::METADATA_NAME])) ?: [];
+			$my_token = $this->pushToken($account_id);
+			$my_token_preg = '/^'.$this->pushToken($account_id, '[^@]+').'$/';
+			foreach($metadata as $key => $token)
+			{
+				// token already registered --> we're done
+				if ($token === $my_token) return true;
+
+				// check old/expired token registered --> remove it
+				if (preg_match($my_token_preg, $token))
+				{
+					unset($metadata[$key]);
+					break;
+				}
+			}
+			// add my token and send it to Dovecot
+			$metadata[] = $my_token;
 			$this->setMetadata(self::METADATA_MAILBOX, [
-				self::METADATA_NAME => self::METADATA_PREFIX.$GLOBALS['egw_info']['user']['account_id'].'::'.$this->acc_id.';'.
-					$this->getMailBoxUserName($GLOBALS['egw_info']['user']['account_lid']) . ';' .
-					((string)$account_id === '0' ? Tokens::instance() : Tokens::user($account_id)) . '@' .
-					Api\Header\Http::host(),
+				self::METADATA_NAME => implode(self::METADATA_SEPARATOR, $metadata),
 			]);
 		}
 		catch (Horde_Imap_Client_Exception $e) {
@@ -318,8 +351,9 @@ class Dovecot extends Mail\Imap implements Mail\Imap\PushIface
 	}
 
 	/**
-	 * Check if push is available / konfigured for given server
+	 * Check if push is available / configured for given server
 	 *
+	 * @todo add a switch to enable push in the profile or
 	 * @return bool
 	 */
 	function pushAvailable()
