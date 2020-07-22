@@ -197,12 +197,15 @@ export class etemplate2
 					// For templates which have sub templates and they are bigger than screenHeight
 					if (screen.availHeight < jQuery(self._DOMContainer).height()) excess_height = 0;
 
-					// Call the "resize" event of all functions which implement the
+					// If we're visible, call the "resize" event of all functions which implement the
 					// "IResizeable" interface
-					self._widgetContainer.iterateOver(function (_widget)
+					if(jQuery(self.DOMContainer).is(":visible"))
 					{
-						_widget.resize(excess_height);
-					}, self, et2_IResizeable);
+						self._widgetContainer.iterateOver(function (_widget)
+						{
+							_widget.resize(excess_height);
+						}, self, et2_IResizeable);
+					}
 				}
 			}, 100);
 		}
