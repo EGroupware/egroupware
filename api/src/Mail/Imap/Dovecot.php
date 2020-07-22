@@ -306,7 +306,7 @@ class Dovecot extends Mail\Imap implements Mail\Imap\PushIface
 		if (!isset($token)) $token = ((string)$account_id === '0' ? Tokens::instance() : Tokens::user($account_id));
 
 		return self::METADATA_PREFIX.$GLOBALS['egw_info']['user']['account_id'].'::'.$this->acc_id.';'.
-			$token . '@' . 'office.egroupware.org';	//Api\Header\Http::host();
+			$token . '@' . Api\Header\Http::host();
 	}
 
 	/**
