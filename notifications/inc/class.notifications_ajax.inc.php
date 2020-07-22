@@ -88,6 +88,12 @@ class notifications_ajax {
 	private $response;
 
 	/**
+	 *
+	 * @var type
+	 */
+	private $isPushServer;
+
+	/**
 	 * constructor
 	 *
 	 */
@@ -101,6 +107,13 @@ class notifications_ajax {
 		$this->preferences = $prefs->read();
 
 		$this->db = $GLOBALS['egw']->db;
+
+		if (empty(($isPushServer = Api\Cache::getCache(Api\Cache::INSTANCE, 'notifications', 'isPushServer'))))
+		{
+			$isPushServer = (!((New Api\Json\Push ()) instanceof notifications_push));
+			Api\Cache::setCache(Api\Cache::INSTANCE, 'notifications','isPushServer', $isPushServer, 86400);
+		}
+		$this->isPushServer = $isPushServer;
 	}
 
 	/**
@@ -126,7 +139,7 @@ class notifications_ajax {
 		{
 			$this->response->jquery('#currentusers', 'text', array((string)$GLOBALS['egw']->session->session_count()));
 		}
-
+		if  ($this->isPushServer) $this->response->data(['isPushServer' => true]);
 		$this->get_egwpopup($browserNotify);
 	}
 

@@ -95,8 +95,9 @@
 	notifications.prototype.run_notifications = function ()
 	{
 		var self = this;
-		this.get_notifications().then(function(){
+		this.get_notifications().then(function(_data){
 			window.clearTimeout(TIMEOUT);
+			if (_data && _data.isPushServer) return;
 			self.check_browser_notify();
 			TIMEOUT = self.setTimeout(POLL_INTERVAL);
 		},
@@ -116,8 +117,8 @@
 		return new Promise (function(_resolve, _reject){
 			egw.json(
 				"notifications.notifications_ajax.get_notifications",[],
-				function(){
-					_resolve();
+				function(_data){
+					_resolve(_data);
 					self.check_browser_notify()
 				}).sendRequest(true,'POST', function(_err){
 					if (_err && _err.statusText) egw.message(_err.statusText);
