@@ -98,8 +98,8 @@
 #calendar-sidebox_header_go,
 #calendar-sidebox_header_today {
 	position: absolute !important;
-	width: 12.0px;
-	height: 12.0px;
+	width: 12px;
+	height: 12px;
 	top: 28px;
 	z-index: 1;
 	overflow: hidden;
