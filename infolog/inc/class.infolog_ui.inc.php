@@ -1826,7 +1826,7 @@ class infolog_ui
 						$GLOBALS['egw']->preferences->add('infolog','preferred_type',$content['info_type']);
 						$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 						$content['msg'] = lang('InfoLog entry saved');
-						Framework::refresh_opener($content['msg'],'infolog',$info_id,$operation);
+						Framework::message($content['msg']);
 					}
 					$content['tabs'] = $active_tab;
 
@@ -1881,12 +1881,12 @@ class infolog_ui
 					);
 					if (!($content['msg'] = $this->delete($info_id,$referer,'edit'))) return;	// checks ACL first
 
-					Framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
+					Framework::message($content['msg']);
 				}
 				// called again after delete confirmation dialog
 				elseif ($button == 'deleted'  && $content['msg'])
 				{
-					Framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
+					Framework::message($content['msg']);
 				}
 				if ($button == 'save' || $button == 'cancel' || $button == 'delete' || $button == 'deleted')
 				{

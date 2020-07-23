@@ -716,6 +716,8 @@ class infolog_bo
 		}
 		if ($info['info_status'] != 'deleted')	// dont notify of final purge of already deleted items
 		{
+			Link::notify_update('infolog',$info_id,$info, 'delete');
+
 			// send email notifications and do the history logging
 			if(!$skip_notification)
 			{
@@ -749,9 +751,10 @@ class infolog_bo
 		$skip_notification=false, $throw_exception=false, $purge_cfs=null, $ignore_acl=false)
 	{
 		$values = $values_in;
+		$change_type = 'update';
 		//echo "boinfolog::write()values="; _debug_array($values);
-		if (!$ignore_acl && (!$values['info_id'] && !$this->check_access(0,Acl::EDIT,$values['info_owner']) &&
-			!$this->check_access(0,Acl::ADD,$values['info_owner'])))
+		if (!$ignore_acl && (!$values['info_id'] && !$this->check_access(0, Acl::EDIT, $values['info_owner']) &&
+						!$this->check_access(0, Acl::ADD, $values['info_owner'])))
 		{
 			return false;
 		}
@@ -759,6 +762,10 @@ class infolog_bo
 		if ($values['info_id'])
 		{
 			$old = $this->read($values['info_id'], false, 'server', $ignore_acl);
+		}
+		else
+		{
+			$change_type = 'add';
 		}
 
 		if (($status_only = !$ignore_acl && $values['info_id'] && !$this->check_access($values,Acl::EDIT)))
@@ -830,6 +837,7 @@ class infolog_bo
 				if ($forcestatus && !in_array($values['info_status'],array('done','billed','cancelled'))) $values['info_status'] = $status;
 			}
 			$check_defaults = false;
+			$change_type = 'update';
 		}
 		if ($check_defaults)
 		{
@@ -1012,7 +1020,7 @@ class infolog_bo
 			}
 
 			// notify the link-class about the update, as other apps may be subscribt to it
-			Link::notify_update('infolog',$info_id,$values);
+			Link::notify_update('infolog',$info_id,$values, $change_type);
 
 			// pre-cache the new values
 			self::set_link_cache($values);

@@ -193,7 +193,6 @@ var EgwApp = /** @class */ (function () {
      */
     EgwApp.prototype.nm_refresh_index = function (nm, uid, current_order, update_type) {
         var _a;
-        return false;
         // Do we have a modified field so we can check nm sort order?
         if (this.modification_field_name) {
             var value = nm.getValue();

@@ -296,7 +296,6 @@ export abstract class EgwApp
 	 */
 	nm_refresh_index(nm: et2_nextmatch, uid: string, current_order: string[], update_type: string) : number|boolean
 	{
-		return false;
 		// Do we have a modified field so we can check nm sort order?
 		if(this.modification_field_name)
 		{

@@ -73,6 +73,7 @@ class infolog_hooks
 			'edit_id'    => 'info_id',
 			'edit_popup'  => '760x570',
 			'merge' => true,
+			'push_data'  => ['info_type', 'info_owner','info_responsible', 'info_modified']
 		);
 	}
 

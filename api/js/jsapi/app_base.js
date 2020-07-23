@@ -248,7 +248,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 * @param uid
 	 * @param current_order
 	 */
-	nm_refresh_add: function(nm, uid, current_order)
+	nm_refresh_index: function(nm, uid, current_order)
 	{
 		// Do we have a modified field so we can check nm sort order?
 		if(this.modification_field_name)

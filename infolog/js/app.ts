@@ -18,6 +18,9 @@ import '../jsapi/egw_global';
 import '../etemplate/et2_types';
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
+import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
+import {etemplate2} from "../../api/js/etemplate/etemplate2";
+import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 
 /**
  * UI for Infolog
@@ -27,6 +30,9 @@ import {EgwApp} from '../../api/js/jsapi/egw_app';
 class InfologApp extends EgwApp
 {
 
+	// Hold on to ACL grants
+	private _grants : any;
+
 	/**
 	 * Constructor
 	 *
@@ -35,7 +41,7 @@ class InfologApp extends EgwApp
 	constructor()
 	{
 		// call parent
-		super('infolog');
+		super('infolog', 'info_datemodified');
 	}
 
 	/**
@@ -149,6 +155,84 @@ class InfologApp extends EgwApp
 		{
 			this.et2._inst.refresh(_msg, _app, _id, _type);
 		}
+	}
+	/**
+	 * Handle a push notification about entry changes from the websocket
+	 *
+	 * @param  pushData
+	 * @param {string} pushData.app application name
+	 * @param {(string|number)} pushData.id id of entry to refresh or null
+	 * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: ask server for data, add in intelligently
+	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
+	 * @param {number} pushData.account_id User that caused the notification
+	 */
+	push(pushData)
+	{
+		if(pushData.app !== this.appname) return;
+
+		// pushData does not contain everything, just the minimum.
+		let event = pushData.acl || {};
+
+		if(pushData.type === 'delete')
+		{
+			return super.push(pushData);
+		}
+
+		// check visibility - grants is ID => permission of people we're allowed to see
+		if(typeof this._grants === 'undefined')
+		{
+			this._grants = egw.grants(this.appname);
+		}
+		if(this._grants && typeof this._grants[pushData.acl.info_owner] == "undefined")
+		{
+			// No ACL access
+			return;
+		}
+
+		// If we know about it & it's a update, just update.
+		if(pushData.type == "update" && this.egw.dataHasUID(pushData.id) || pushData.type == "edit")
+		{
+			return etemplate2.app_refresh("",pushData.app, pushData.id, pushData.type);
+		}
+
+		// Filter what's allowed down to those we care about
+		let filters = {
+			owner: {col: "info_owner", filter_values: []},
+			responsible: {col: "info_responsible", filter_values: []}
+		};
+		for(let et of etemplate2.getByApplication(this.appname))
+		{
+			et.widgetContainer.iterateOver( function(nm) {
+				let value = nm.getValue();
+				if(!value || !value.col_filter) return;
+
+				for(let field_filter of Object.values(filters))
+				{
+					if(value.col_filter[field_filter.col])
+					{
+						field_filter.filter_values.push(value.col_filter[field_filter.col]);
+					}
+				}
+			},this, et2_nextmatch);
+		}
+		for(let field_filter of Object.values(filters))
+		{
+			if(field_filter.filter_values.length == 0) continue;
+			if(pushData.acl && typeof pushData.acl[field_filter.col] == "string" &&
+				field_filter.filter_values.indexOf(pushData.acl[field_filter.col]) <=0)
+			{
+				return;
+			}
+			if(field_filter.filter_values.filter(account => pushData.acl[field_filter.col].indexOf(account) >=0).length == 0) return;
+		}
+
+		// Pass actual refresh on to etemplate to take care of
+		etemplate2.app_refresh("",pushData.app, pushData.id, pushData.type);
 	}
 
 	/**

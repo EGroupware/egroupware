@@ -30,6 +30,9 @@ require("jqueryui");
 require("../jsapi/egw_global");
 require("../etemplate/et2_types");
 var egw_app_1 = require("../../api/js/jsapi/egw_app");
+var et2_widget_dialog_1 = require("../../api/js/etemplate/et2_widget_dialog");
+var etemplate2_1 = require("../../api/js/etemplate/etemplate2");
+var et2_extension_nextmatch_1 = require("../../api/js/etemplate/et2_extension_nextmatch");
 /**
  * UI for Infolog
  *
@@ -44,7 +47,7 @@ var InfologApp = /** @class */ (function (_super) {
      */
     function InfologApp() {
         // call parent
-        return _super.call(this, 'infolog') || this;
+        return _super.call(this, 'infolog', 'info_datemodified') || this;
     }
     /**
      * Destructor
@@ -144,6 +147,79 @@ var InfologApp = /** @class */ (function (_super) {
         }
     };
     /**
+     * Handle a push notification about entry changes from the websocket
+     *
+     * @param  pushData
+     * @param {string} pushData.app application name
+     * @param {(string|number)} pushData.id id of entry to refresh or null
+     * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
+     * - update: request just modified data from given rows.  Sorting is not considered,
+     *		so if the sort field is changed, the row will not be moved.
+     * - edit: rows changed, but sorting may be affected.  Requires full reload.
+     * - delete: just delete the given rows clientside (no server interaction neccessary)
+     * - add: ask server for data, add in intelligently
+     * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
+     * @param {number} pushData.account_id User that caused the notification
+     */
+    InfologApp.prototype.push = function (pushData) {
+        if (pushData.app !== this.appname)
+            return;
+        // pushData does not contain everything, just the minimum.
+        var event = pushData.acl || {};
+        if (pushData.type === 'delete') {
+            return _super.prototype.push.call(this, pushData);
+        }
+        // check visibility - grants is ID => permission of people we're allowed to see
+        if (typeof this._grants === 'undefined') {
+            this._grants = egw.grants(this.appname);
+        }
+        if (this._grants && typeof this._grants[pushData.acl.info_owner] == "undefined") {
+            // No ACL access
+            return;
+        }
+        // If we know about it & it's a update, just update.
+        if (pushData.type == "update" && this.egw.dataHasUID(pushData.id) || pushData.type == "edit") {
+            return etemplate2_1.etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
+        }
+        // Filter what's allowed down to those we care about
+        var filters = {
+            owner: { col: "info_owner", filter_values: [] },
+            responsible: { col: "info_responsible", filter_values: [] }
+        };
+        for (var _i = 0, _a = etemplate2_1.etemplate2.getByApplication(this.appname); _i < _a.length; _i++) {
+            var et = _a[_i];
+            et.widgetContainer.iterateOver(function (nm) {
+                var value = nm.getValue();
+                if (!value || !value.col_filter)
+                    return;
+                for (var _i = 0, _a = Object.values(filters); _i < _a.length; _i++) {
+                    var field_filter = _a[_i];
+                    if (value.col_filter[field_filter.col]) {
+                        field_filter.filter_values.push(value.col_filter[field_filter.col]);
+                    }
+                }
+            }, this, et2_extension_nextmatch_1.et2_nextmatch);
+        }
+        var _loop_1 = function (field_filter) {
+            if (field_filter.filter_values.length == 0)
+                return "continue";
+            if (pushData.acl && typeof pushData.acl[field_filter.col] == "string" &&
+                field_filter.filter_values.indexOf(pushData.acl[field_filter.col]) <= 0) {
+                return { value: void 0 };
+            }
+            if (field_filter.filter_values.filter(function (account) { return pushData.acl[field_filter.col].indexOf(account) >= 0; }).length == 0)
+                return { value: void 0 };
+        };
+        for (var _b = 0, _c = Object.values(filters); _b < _c.length; _b++) {
+            var field_filter = _c[_b];
+            var state_1 = _loop_1(field_filter);
+            if (typeof state_1 === "object")
+                return state_1.value;
+        }
+        // Pass actual refresh on to etemplate to take care of
+        etemplate2_1.etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
+    };
+    /**
      * Retrieve the current state of the application for future restoration
      *
      * Reimplemented to add action/action_id from content set by server
@@ -156,7 +232,7 @@ var InfologApp = /** @class */ (function (_super) {
         var state = _super.prototype.getState.call(this);
         var nm = {};
         // Get index etemplate
-        var et2 = etemplate2.getById('infolog-index');
+        var et2 = etemplate2_1.etemplate2.getById('infolog-index');
         if (et2) {
             var content = et2.widgetContainer.getArrayMgr('content');
             nm = content && content.data && content.data.nm ? content.data.nm : {};
@@ -289,10 +365,10 @@ var InfologApp = /** @class */ (function (_super) {
             child_button.style.display = children ? 'block' : 'none';
         }
         var callbackDeleteDialog = function (button_id) {
-            if (button_id == et2_dialog.YES_BUTTON) {
+            if (button_id == et2_widget_dialog_1.et2_dialog.YES_BUTTON) {
             }
         };
-        et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"), this.egw.lang("Delete"), {}, et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
+        et2_widget_dialog_1.et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"), this.egw.lang("Delete"), {}, et2_widget_dialog_1.et2_dialog.BUTTONS_YES_NO_CANCEL, et2_widget_dialog_1.et2_dialog.WARNING_MESSAGE);
     };
     /**
      * Confirm delete
