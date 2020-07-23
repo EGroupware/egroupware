@@ -51,6 +51,17 @@
 					</vbox>
 					<select-account id="newsettings[deny_aclmanagement]" account_type="groups" multiple="true" tags="true" width="100%"/>
 				</row>
+				<row height="25px" valign="bottom">
+					<description value="Push notifications" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<url label="The IMAP server need to meet certain requirements AND be configured for it:" span="all"
+						 value="https://github.com/EGroupware/egroupware/wiki/IMAP-Push-Notifications" readonly="true"/>
+				</row>
+				<row>
+					<description value="Name of IMAP servers (space separated host or host:port)" for="newsettings[imap_hosts_with_push]"/>
+					<textbox id="newsettings[imap_hosts_with_push]" class="et2_fullWidth"/>
+				</row>
 				<row>
 					<description value="Sieve" span="all" class="subHeader"/>
 				</row>

@@ -14,7 +14,6 @@ namespace EGroupware\Api\Mail\Imap;
 
 use EGroupware\Api;
 use EGroupware\Api\Mail;
-use EGroupware\SwoolePush\Tokens;
 
 /**
  * Manages connection to Dovecot IMAP server
@@ -25,7 +24,7 @@ use EGroupware\SwoolePush\Tokens;
  *   --> require by webserver writable user_home to be configured, otherwise deleting get ignored like with defaultimap
  * - quota can be read, but not set
  */
-class Dovecot extends Mail\Imap implements Mail\Imap\PushIface
+class Dovecot extends Mail\Imap
 {
 	/**
 	 * Label shown in EMailAdmin
@@ -283,82 +282,4 @@ class Dovecot extends Mail\Imap implements Mail\Imap\PushIface
 		return true;
 	}
 
-	/**
-	 * Metadata name to enable push notifications
-	 */
-	const METADATA_NAME = '/private/vendor/vendor.dovecot/http-notify';
-	const METADATA_MAILBOX = '';
-	const METADATA_PREFIX = 'user=';
-	const METADATA_SEPARATOR = ';;';
-
-	/**
-	 * Generate token / user-information for push to be stored by Dovecot
-	 *
-	 * The user informations has the form "$account_id::$acc_id;$token@$host"
-	 *
-	 * @param null $account_id
-	 * @param string $token =null default push token of instance ($account_id=='0') or user
-	 * @return string
-	 * @throws Api\Exception\AssertionFailed
-	 */
-	protected function pushToken($account_id=null, $token=null)
-	{
-		if (!isset($token)) $token = ((string)$account_id === '0' ? Tokens::instance() : Tokens::user($account_id));
-
-		return self::METADATA_PREFIX.$GLOBALS['egw_info']['user']['account_id'].'::'.$this->acc_id.';'.
-			$token . '@' . Api\Header\Http::host();
-	}
-
-	/**
-	 * Enable push notifictions for current connection and given account_id
-	 *
-	 * @param int $account_id =null 0=everyone on the instance
-	 * @return bool true on success, false on failure
-	 */
-	function enablePush($account_id=null)
-	{
-		if (!class_exists(Tokens::class))
-		{
-			return false;
-		}
-		try {
-			$metadata = explode(self::METADATA_SEPARATOR, $this->getMetadata(self::METADATA_MAILBOX, [self::METADATA_NAME])) ?: [];
-			$my_token = $this->pushToken($account_id);
-			$my_token_preg = '/^'.$this->pushToken($account_id, '[^@]+').'$/';
-			foreach($metadata as $key => $token)
-			{
-				// token already registered --> we're done
-				if ($token === $my_token) return true;
-
-				// check old/expired token registered --> remove it
-				if (preg_match($my_token_preg, $token))
-				{
-					unset($metadata[$key]);
-					break;
-				}
-			}
-			// add my token and send it to Dovecot
-			$metadata[] = $my_token;
-			$this->setMetadata(self::METADATA_MAILBOX, [
-				self::METADATA_NAME => implode(self::METADATA_SEPARATOR, $metadata),
-			]);
-		}
-		catch (Horde_Imap_Client_Exception $e) {
-			_egw_log_exception($e);
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Check if push is available / configured for given server
-	 *
-	 * @todo add a switch to enable push in the profile or
-	 * @return bool
-	 */
-	function pushAvailable()
-	{
-		return in_array($this->acc_imap_host, ['imap.egroupware.org', 'mail.egroupware.org']) ||
-			$this->acc_imap_host === 'mail' && $this->acc_imap_port == 10143;
-	}
 }

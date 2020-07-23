@@ -360,8 +360,10 @@ move to trash	mail	en	move to trash
 moved %1 message(s) from %2 to %3	mail	en	moved %1 message(s) from %2 to %3
 moving folders from one mailaccount to another is not supported	mail	en	Moving Folders from one mail account to another is not supported
 name of account	mail	en	Name of account
+name of imap servers (space separated host or host:port)	mail	en	Name of IMAP servers (space separated host or host:port)
 never display html emails	mail	en	never display HTML emails
 never show	mail	en	never show
+new mail from %1	mail	en	New mail from %1
 new mail notification	mail	en	New mail notification
 new message type	mail	en	New message type
 new subject	mail	en	New subject
@@ -424,6 +426,7 @@ printing	mail	en	printing
 printview	mail	en	printview
 processing of file %1 failed. failed to meet basic restrictions.	mail	en	Processing of file %1 failed. Failed to meet basic restrictions.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	en	provide a default vacation text, (used on new vacation messages when there was no message set up previously)
+push notifications	mail	en	Push notifications
 quicksearch	mail	en	quicksearch
 quicksearch (with cc)	mail	en	quicksearch (incl.CC)
 quota limit warning in megabyte (recommended value is 30 mb).	mail	en	Quota limit warning in MegaByte (recommended value is 30 MB).
@@ -598,13 +601,14 @@ the %1 's acl, including its subfolders, removed from the %2	mail	en	The %1 's a
 the entered passphrase is not correct! please try again.	mail	en	The entered passphrase is not correct! Please try again.
 the folder %1 's acls saved	mail	en	The Folder %1 's ACLs saved
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	en	The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.
+the imap server need to meet certain requirements and be configured for it:	mail	en	The IMAP server need to meet certain requirements AND be configured for it:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
 the mimeparser can not parse this message.	mail	en	The mimeparser can not parse this message.
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
 then	mail	en	THEN
-this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	en	This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!
 there is no imap server configured.	mail	en	There is no IMAP Server configured.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	en	This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!
 this message is smime encrypted and password protected.	mail	en	This message is S/MIME encrypted and password protected.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
 to do	mail	en	to do

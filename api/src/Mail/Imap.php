@@ -15,6 +15,7 @@ namespace EGroupware\Api\Mail;
 
 use EGroupware\Api;
 
+use EGroupware\SwoolePush\Tokens;
 use Horde_Imap_Client;
 use Horde_Imap_Client_Socket;
 use Horde_Imap_Client_Cache_Backend_Cache;
@@ -56,7 +57,7 @@ use Horde_Imap_Client_Mailbox_List;
  * @property-read array $params parameters passed to constructor (all above as array)
  * @property-read boolean|int|string $isAdminConnection admin connection if true or account_id or imap username
  */
-class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
+class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 {
 	/**
 	 * Default parameters for Horde_Imap_Client constructor
@@ -1394,11 +1395,103 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 	}
 
 	/**
+	 * @var array IMAP servers supporting push
+	 */
+	protected static $hosts_with_push = [];
+
+	/**
 	 * Init static variables
 	 */
 	public static function init_static()
 	{
 		self::$supports_keywords =& Api\Cache::getSession (__CLASS__, 'supports_keywords');
+
+		// hosts from header.inc.php
+		self::$hosts_with_push = $GLOBALS['egw_info']['server']['imap_hosts_with_push'] ?? [];
+		// plus hosts from mail site config
+		$config = Api\Config::read('mail');
+		foreach(!empty($config['imap_hosts_with_push']) ? preg_split('/[, ]+/', $config['imap_hosts_with_push']) : [] as $host)
+		{
+			self::$hosts_with_push[] = $host;
+		}
+	}
+
+	/**
+	 * Metadata name to enable push notifications in Dovecot
+	 */
+	const METADATA_NAME = '/private/vendor/vendor.dovecot/http-notify';
+	const METADATA_MAILBOX = '';
+	const METADATA_PREFIX = 'user=';
+	const METADATA_SEPARATOR = ';;';
+
+	/**
+	 * Generate token / user-information for push to be stored by Dovecot
+	 *
+	 * The user informations has the form "$account_id::$acc_id;$token@$host"
+	 *
+	 * @param null $account_id
+	 * @param string $token =null default push token of instance ($account_id=='0') or user
+	 * @return string
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	protected function pushToken($account_id=null, $token=null)
+	{
+		if (!isset($token)) $token = ((string)$account_id === '0' ? Tokens::instance() : Tokens::user($account_id));
+
+		return self::METADATA_PREFIX.$GLOBALS['egw_info']['user']['account_id'].'::'.$this->acc_id.';'.
+			$token . '@' . Api\Header\Http::host();
+	}
+
+	/**
+	 * Enable push notifictions for current connection and given account_id
+	 *
+	 * @param int $account_id =null 0=everyone on the instance
+	 * @return bool true on success, false on failure
+	 */
+	function enablePush($account_id=null)
+	{
+		if (!class_exists(Tokens::class))
+		{
+			return false;
+		}
+		try {
+			$metadata = explode(self::METADATA_SEPARATOR, $this->getMetadata(self::METADATA_MAILBOX, [self::METADATA_NAME])) ?: [];
+			$my_token = $this->pushToken($account_id);
+			$my_token_preg = '/^'.$this->pushToken($account_id, '[^@]+').'$/';
+			foreach($metadata as $key => $token)
+			{
+				// token already registered --> we're done
+				if ($token === $my_token) return true;
+
+				// check old/expired token registered --> remove it
+				if (preg_match($my_token_preg, $token))
+				{
+					unset($metadata[$key]);
+					break;
+				}
+			}
+			// add my token and send it to Dovecot
+			$metadata[] = $my_token;
+			$this->setMetadata(self::METADATA_MAILBOX, [
+				self::METADATA_NAME => implode(self::METADATA_SEPARATOR, $metadata),
+			]);
+		}
+		catch (Horde_Imap_Client_Exception $e) {
+			_egw_log_exception($e);
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Check if push is available / configured for given server
+	 *
+	 * @return bool
+	 */
+	function pushAvailable()
+	{
+		return self::$hosts_with_push && (in_array($this->acc_imap_host, self::$hosts_with_push) ||
+			in_array($this->acc_imap_host.':'.$this->acc_imap_port, self::$hosts_with_push));
 	}
 }
 Imap::init_static();

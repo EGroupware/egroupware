@@ -360,8 +360,10 @@ move to trash	mail	de	in den Papierkorb verschieben
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben
 moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt
 name of account	mail	de	Konten-Bezeichnung
+name of imap servers (space separated host or host:port)	mail	de	Name der IMAP Server (Leerzeichen getrennt Host oder Host:Port)
 never display html emails	mail	de	niemals anzeigen
 never show	mail	de	Nie anzeigen
+new mail from %1	mail	de	Neue Mail von %1
 new mail notification	mail	de	Benachrichtigung über neue E-Mails in:
 new message type	mail	de	Neue E-Mails verfassen als
 new subject	mail	de	Neuer Betreff
@@ -424,6 +426,7 @@ printing	mail	de	Drucke
 printview	mail	de	Druckansicht
 processing of file %1 failed. failed to meet basic restrictions.	mail	de	Das Verarbeiten der Datei %1 ist fehlgeschlagen. Grundlegende Voraussetzungen wurden nicht erfüllt.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	de	Vorschlagstext für eine Abwesenheitsnotiz (wenn noch kein eigener Benachrichtigungstext vorhanden ist)
+push notifications	mail	de	Push Benachrichtigungen
 quicksearch	mail	de	Schnellsuche
 quicksearch (with cc)	mail	de	Schnellsuche (+ Kopie)
 quota limit warning in megabyte (recommended value is 30 mb).	mail	de	Quota-Limit-Warnung in MegaByte (empfohlener Wert ist 30 MB).
@@ -598,13 +601,14 @@ the %1 's acl, including its subfolders, removed from the %2	mail	de	Die Zugriff
 the entered passphrase is not correct! please try again.	mail	de	Das eingegebene Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.
 the folder %1 's acls saved	mail	de	Die Zugriffskontrollrechte des Ordners %1 wurden gespeichert
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	de	Der Ordner <b>%1</b> wird verwendet, wenn hier nichts gesetzt ist und kein gültiger Vorgabewert eingetragen ist.
+the imap server need to meet certain requirements and be configured for it:	mail	de	Der IMAP Server muss verschiedene Vorraussetzungen erfüllen UND dafür konfiguriert sein:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicherzustellen, dass Sie diese E-Mail gelesen haben. Möchten Sie eine Empfangsbestätigung senden?
 the mimeparser can not parse this message.	mail	de	Der MIME Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
 then	mail	de	dann
-this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	de	Diese Mail enthält externe Bilder die über das unsichere HTTP protocol ausgeliefert werden. Bitte seinen Sie sich bewußt, dass Anzeigen oder Erlauben Ihre Sicherheit beeinträchtigen kann!
 there is no imap server configured.	mail	de	Es ist kein IMAP-Server Konfiguriert
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	de	Es ist kein Platz mehr vorhanden, um das Sieve Skript zu speichern, bitte Sie Ihren Administrator die Option sieve_maxscriptsize in der Konfiguration Ihres Mailservers zu prüfen.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	de	Diese Mail enthält externe Bilder die über das unsichere HTTP protocol ausgeliefert werden. Bitte seinen Sie sich bewußt, dass Anzeigen oder Erlauben Ihre Sicherheit beeinträchtigen kann!
 this message is smime encrypted and password protected.	mail	de	Diese Nachricht ist S/MIME-Verschlüsselt und mit Passwort geschützt.
 timeout on connections to your imap server	mail	de	Stellen Sie hier das Verbindungstimeout für IMAP Verbindungen ein.
 to do	mail	de	zu erledigen
