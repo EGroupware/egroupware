@@ -518,7 +518,11 @@
 		notifyAppTab: function(_appname, _clear)
 		{
 			var tab = this.tabsUi.getTab(_appname);
-			if (tab) this.tabsUi.getTab(_appname).setNotification(_clear);
+			// do not set tab's notification if it's the active tab
+			if (tab && (this.activeApp.appName != _appname || _clear))
+			{
+				this.tabsUi.getTab(_appname).setNotification(_clear);
+			}
 		}
 	});
 })(window);
