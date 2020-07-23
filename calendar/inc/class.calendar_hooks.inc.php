@@ -68,8 +68,28 @@ class calendar_hooks
 			'merge' => true,
 			'entry' => 'Event',
 			'entries' => 'Events',
-			'push_data'  => ['id','owner','participants','start','end']
+			'push_data'  => self::class.'::prepareEventPush',
 		);
+	}
+
+
+	/**
+	 * Prepare event to be pushed via Link::notify_update()
+	 *
+	 * Remove privacy sensitive data:
+	 * - participants of type email
+	 *
+	 * @param $event
+	 * @return array
+	 */
+	static public function prepareEventPush($event)
+	{
+		$event = array_intersect_key($event, array_flip(['id','owner','participants','start','end']));
+		foreach($event['participants'] as $uid => $status)
+		{
+			if ($uid[0] === 'e') unset($event['participants'][$uid]);
+		}
+		return $event;
 	}
 
 	/**
