@@ -270,7 +270,7 @@
 		setActiveApp: function(_app)
 		{
 			var result = this._super.apply(this, arguments);
-
+			this.notifyAppTab(_app.appName , true);
 			if (_app == _app.parentFw.activeApp)
 			{
 				//Set the sidebox width if a application specific sidebox width is set
@@ -507,6 +507,18 @@
 					app[apps[i]].onLogout.call(e);
 				}
 			}
+		},
+
+		/**
+		 * Notify tab
+		 *
+		 * @param {string} _appname
+		 * @param {boolean} _clear reset notification if set to true
+		 */
+		notifyAppTab: function(_appname, _clear)
+		{
+			var tab = this.tabsUi.getTab(_appname);
+			if (tab) this.tabsUi.getTab(_appname).setNotification(_clear);
 		}
 	});
 })(window);

@@ -812,9 +812,24 @@
 	{
 		var $topmenu_info_notifications = jQuery('#topmenu_info_notifications');
 		var counter = 0;
+
+		for(var j in notifymessages)
+		{
+			//reset all tab notifications
+			framework.notifyAppTab(notifymessages[j]['extra_data']['app'], true);
+		}
+		
 		for (var id in notifymessages)
 		{
-			if (notifymessages[id]['status'] != 'SEEN') counter++;
+			if (notifymessages[id]['status'] != 'SEEN')
+			{
+				counter++;
+				// do not set tab's notification if it's the active tab
+				if (framework.activeApp.appName != notifymessages[id]['extra_data']['app'])
+				{
+					framework.notifyAppTab(notifymessages[id]['extra_data']['app']);
+				}
+			}
 		}
 		if (counter > 0)
 		{

@@ -307,6 +307,7 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 	this.closeCallback = _closeCallback;
 	this.position = _pos;
 	this.status = _status;
+	this.notification = 0;
 
 	//Create the header div and set its "click" function and "hover" event
 	this.headerDiv = document.createElement("span");
@@ -403,6 +404,18 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 
 	jQuery(this.contDiv).append(this.contentDiv);
 }
+
+/**
+ * set notification
+ *
+ * @param {boolean} _off if set to true the notification gets reset
+ */
+egw_fw_ui_tab.prototype.setNotification = function(_off)
+{
+	this.notification = _off ? 0 : this.notification+1;
+	this.setTitle(this.notification > 0 ?
+			this.tag.displayName+ " (" + this.notification + ")" : this.tag.displayName);
+};
 
 /**
  * setTitle sets the title of this tab. An existing title will be removed.
@@ -736,6 +749,24 @@ egw_fw_ui_tabs.prototype._isNotTheLastTab = function()
 		if (this.tabs[i]['status'] != '5') n++;
 	}
 	return n > 1 ? true : false;
+};
+
+/**
+ * get tab object for given appname
+ *
+ * @param {string} _appname
+ * @returns {object|boolean} returns tab object, returns false if no tab found
+ */
+egw_fw_ui_tabs.prototype.getTab = function(_appname)
+{
+	for (var i = 0; i < this.tabs.length; i++)
+	{
+		if (this.tabs[i] && this.tabs[i]['tag']['appName'] == _appname)
+		{
+			return this.tabs[i];
+		}
+	}
+	return false;
 };
 
 /**
