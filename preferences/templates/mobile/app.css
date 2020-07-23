@@ -49,7 +49,7 @@ tr.prefRow > td {
   display: none;
   width: 255px;
   max-height: 99%;
-  height: calc(-51%);
+  height: calc(99% - 150px);
   background-color: #f0f0ff;
   padding: 5px;
   top: 80px;
@@ -73,6 +73,9 @@ tr.prefRow:hover .prefHelp {
 .prefDefault {
   float: right;
   width: 48%;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
 }
 .prefValue textarea,
 textarea.prefValue {
@@ -89,7 +92,7 @@ textarea.prefValue {
   width: 49%;
 }
 .prefApp {
-  width: 49.50%;
+  width: 49.5%;
 }
 #preferences-password .dialogHeader td {
   text-align: center;
