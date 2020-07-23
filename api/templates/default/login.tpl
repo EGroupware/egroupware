@@ -24,24 +24,13 @@
 						<img src="api/templates/default/images/password.png" />
 					</td>
 				</tr>
-<!-- BEGIN language_select -->
+				<!-- BEGIN discovery_block -->
 				<tr>
-					<td align="right">{lang_language}:&nbsp;</td>
-					<td>{select_language}</td>
+					<td>
+                        {discovery}
+					</td>
 				</tr>
-<!-- END language_select -->
-<!-- BEGIN domain_selection -->
-				<tr>
-					<td align="right">{lang_domain}:&nbsp;</td>
-					<td>{select_domain}</td>
-				</tr>
-<!-- END domain_selection -->
-<!-- BEGIN remember_me_selection -->
-				<tr>
-					<td align="right">{lang_remember_me}:&nbsp;</td>
-					<td>{select_remember_me}</td>
-				</tr>
-<!-- END remember_me_selection -->
+				<!-- END discovery_block -->
 				<tr>
 					<td align="right">{lang_username}:&nbsp;</td>
 					<td><input name="login" tabindex="4" value="{login}" size="30" autofocus /></td>
@@ -50,12 +39,30 @@
 					<td align="right">{lang_password}:&nbsp;</td>
 					<td><input name="passwd" tabindex="5" value="{passwd}" type="password" size="30" /></td>
 				</tr>
-<!-- BEGIN 2fa_section -->
+				<!-- BEGIN 2fa_section -->
 				<tr class="{2fa_class}">
 					<td align="right">{lang_2fa}:&nbsp;</td>
 					<td><input name="2fa_code" tabindex="6" size="30" title="{lang_2fa_help}"/></td>
 				</tr>
-<!-- END 2fa_section -->
+				<!-- END 2fa_section -->
+				<!-- BEGIN remember_me_selection -->
+				<tr>
+					<td align="right">{lang_remember_me}:&nbsp;</td>
+					<td>{select_remember_me}</td>
+				</tr>
+				<!-- END remember_me_selection -->
+				<!-- BEGIN language_select -->
+				<tr>
+					<td align="right">{lang_language}:&nbsp;</td>
+					<td>{select_language}</td>
+				</tr>
+				<!-- END language_select -->
+				<!-- BEGIN domain_selection -->
+				<tr>
+					<td align="right">{lang_domain}:&nbsp;</td>
+					<td>{select_domain}</td>
+				</tr>
+				<!-- END domain_selection -->
                <!-- BEGIN change_password -->
                  <tr>
                     <td align="right">{lang_new_password}:&nbsp;</td>
