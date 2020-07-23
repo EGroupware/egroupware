@@ -300,6 +300,15 @@ export class et2_password extends et2_textbox
 				this.encrypted = false;
 				this.input.val(suggestion);
 				this.input.trigger('change');
+
+				// Check for second password, update it too
+				let two = this.getParent().getWidgetById(this.id+'_2');
+				if(two && two.getType() == this.getType())
+				{
+					two.options.viewable = true;
+					two.toggle_visibility(true);
+					two.set_value(suggestion);
+				}
 			},
 			this,true,this
 		).sendRequest();

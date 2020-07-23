@@ -221,6 +221,13 @@ var et2_password = /** @class */ (function (_super) {
             this.encrypted = false;
             this.input.val(suggestion);
             this.input.trigger('change');
+            // Check for second password, update it too
+            var two = this.getParent().getWidgetById(this.id + '_2');
+            if (two && two.getType() == this.getType()) {
+                two.options.viewable = true;
+                two.toggle_visibility(true);
+                two.set_value(suggestion);
+            }
         }, this, true, this).sendRequest();
     };
     et2_password.prototype.destroy = function () {

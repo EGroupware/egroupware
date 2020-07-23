@@ -1102,17 +1102,6 @@ class AddressbookApp extends EgwApp
 		switch(_widget.id)
 		{
 			case 'account_passwd':
-				debugger;
-				// If they clicked suggest, copy it to password 2
-				if(_widget && _widget.options.viewable)
-				{
-					let p2 = _widget.getParent().getWidgetById('account_passwd_2');
-					p2.set_viewable(true);              // Allow viewing password
-					p2.toggle_visibility(true);     // Actually show it
-					p2.set_value(_widget.getValue());
-					_widget.options.viewable = false;
-				}
-				// Fall through
 			case 'account_lid':
 			case 'n_family':
 			case 'n_given':
