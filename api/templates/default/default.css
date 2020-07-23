@@ -478,6 +478,13 @@ body {
     position: relative;
 	float:right;
 }
+#socialMedia a {
+	margin-left: 10px;
+}
+#socialMedia a img{
+	width: 24px;
+	filter: invert(0.2);
+}
 #loginScreenMessage {
 	text-align: center;
 	padding: 10px;
