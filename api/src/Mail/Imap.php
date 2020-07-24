@@ -1438,7 +1438,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	{
 		if (!isset($token)) $token = ((string)$account_id === '0' ? Tokens::instance() : Tokens::user($account_id));
 
-		return self::METADATA_PREFIX.$GLOBALS['egw_info']['user']['account_id'].'::'.$this->acc_id.';'.
+		return $GLOBALS['egw_info']['user']['account_id'].'::'.$this->acc_id.';'.
 			$token . '@' . Api\Header\Http::host();
 	}
 
@@ -1455,8 +1455,8 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			return false;
 		}
 		try {
-			$metadata = explode(self::METADATA_SEPARATOR,
-				$this->getMetadata(self::METADATA_MAILBOX, [self::METADATA_NAME])[self::METADATA_MAILBOX][self::METADATA_NAME]) ?: [];
+			$metadata = ($m = $this->getMetadata(self::METADATA_MAILBOX, [self::METADATA_NAME])[self::METADATA_MAILBOX][self::METADATA_NAME]) ?
+				explode(self::METADATA_SEPARATOR, substr($m, strlen(self::METADATA_PREFIX))) : [];
 			$my_token = $this->pushToken($account_id);
 			$my_token_preg = '/^'.$this->pushToken($account_id, '[^@]+').'$/';
 			foreach($metadata as $key => $token)
@@ -1474,7 +1474,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			// add my token and send it to Dovecot
 			$metadata[] = $my_token;
 			$this->setMetadata(self::METADATA_MAILBOX, [
-				self::METADATA_NAME => implode(self::METADATA_SEPARATOR, $metadata),
+				self::METADATA_NAME => self::METADATA_PREFIX.implode(self::METADATA_SEPARATOR, $metadata),
 			]);
 		}
 		catch (Horde_Imap_Client_Exception $e) {
