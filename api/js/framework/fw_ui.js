@@ -357,7 +357,10 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 			return true;
 		});
 
-
+	this.notificationDiv = document.createElement("div");
+	jQuery(this.notificationDiv).addClass('notifyTabDiv')
+			.hide()
+			.appendTo(this.headerDiv);
 	jQuery(this.headerDiv).append(this.closeButton);
 
 	//Create the icon and append it to the header div
@@ -413,8 +416,7 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 egw_fw_ui_tab.prototype.setNotification = function(_off)
 {
 	this.notification = _off ? 0 : this.notification+1;
-	this.setTitle(this.notification > 0 ?
-			this.tag.displayName+ " (" + this.notification + ")" : this.tag.displayName);
+	jQuery(this.notificationDiv).text(this.notification).toggle(this.notification > 0);
 };
 
 /**

@@ -4307,6 +4307,22 @@ td.message span.message {
   background-repeat: repeat-x;
   height: 100%;
 }
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header .notifyTabDiv {
+  position: absolute;
+  background-color: #c14343;
+  bottom: 5px;
+  height: 17px;
+  left: 0%;
+  color: #fff9fb;
+  border: 2px solid #ffffff;
+  text-align: center;
+  border-bottom: 0;
+  border-radius: 50%;
+  white-space: nowrap;
+  line-height: 16px;
+  width: 17px;
+  font-weight: bold;
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
   background-color: rgba(153, 204, 255, 0.4);
   padding-bottom: 0px;
