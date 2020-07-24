@@ -1060,7 +1060,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		}
 
 		// app running top-level (no full refresh / window reload!)
-		if (win == window)
+		if (win == window && _app !== 'msg-only-push-refresh')
 		{
 			var refresh_done = false;
 			// et2 nextmatch available, let it refresh

@@ -61,8 +61,7 @@ abstract class Extra
 			!empty($type) && !empty($id) &&	// $type === null --> full reload
 			Link::get_registry($app, 'push_data') !== null)
 		{
-			self::$extra['message'] = [$msg, $msg_type];
-			return;
+			$app = 'msg-only-push-refresh';
 		}
 		//error_log(__METHOD__.'('.array2string(func_get_args()).')');
 		self::$extra['refresh-opener'] = func_get_args();
