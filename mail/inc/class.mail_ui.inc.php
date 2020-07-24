@@ -3809,7 +3809,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 		}
 		if (!is_array($content)) $content = array();
-		if (empty($content['FOLDER'])) $content['FOLDER']=(array)$this->mail_bo->getDraftFolder();
+		if (empty($content['FOLDER']))
+		{
+			$draft = $this->mail_bo->getDraftFolder();
+			$content['FOLDER']=(array)(preg_match($draft, "/::/") ? $draft : $this->mail_bo->profileID.'::'.$draft);
+		}
 		if (!empty($content['FOLDER']))
 		{
 			$compose = new mail_compose();
