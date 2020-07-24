@@ -1455,8 +1455,8 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			return false;
 		}
 		try {
-			$metadata = explode(self::METADATA_SEPARATOR,
-				$this->getMetadata(self::METADATA_MAILBOX, [self::METADATA_NAME])[self::METADATA_MAILBOX][self::METADATA_NAME]) ?: [];
+			$metadata = ($m = $this->getMetadata(self::METADATA_MAILBOX, [self::METADATA_NAME])[self::METADATA_MAILBOX][self::METADATA_NAME]) ?
+				explode(self::METADATA_SEPARATOR, $m) : [];
 			$my_token = $this->pushToken($account_id);
 			$my_token_preg = '/^'.$this->pushToken($account_id, '[^@]+').'$/';
 			foreach($metadata as $key => $token)
