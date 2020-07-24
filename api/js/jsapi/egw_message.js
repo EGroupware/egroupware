@@ -28,7 +28,8 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	var error_reg_exp;
 	var a_href_reg = /<a href="([^"]+)">([^<]+)<\/a>/img;
 	var new_line_reg = /<\/?(p|br)\s*\/?>\n?/ig;
-
+	// keeps alive messages stored
+	var alive_messages = [];
 	// Register an 'error' plugin, displaying using the message system
 	this.registerJSONPlugin(function(type, res, req) {
 		if (typeof res.data == 'string')
@@ -88,11 +89,21 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				parent = jQuery('body');
 			}
 
+			for (var m in alive_messages)
+			{
+				// Do not add a same message twice if it's still not dismissed
+				if (alive_messages[m] == _msg) return;
+			}
+
 			if (_msg)	// empty _msg just removes pervious message
 			{
+				// keeps alive messages
+				alive_messages.push(_msg);
+				// message index in stack
+				var msg_index = alive_messages.length-1;
+
 				// replace p and br-tags with newlines
 				_msg = _msg.replace(new_line_reg, "\n");
-
 				var msg_div = jQuery(_wnd.document.createElement('div'))
 					.attr('id','egw_message')
 					.text(_msg)
@@ -119,6 +130,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 								egw.setLocalStorageItem(discardAppName,'discardedMsgs',JSON.stringify(discarded));
 							}
 						}
+						delete(alive_messages[msg_index]);
 						jQuery(msg_div).remove();
 					})
 					.addClass('close')
@@ -190,6 +202,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				{
 					_wnd.setTimeout(function() {
 						msg_div.remove();
+						delete(alive_messages[msg_index]);
 					}, 5000);
 				}
 			}
