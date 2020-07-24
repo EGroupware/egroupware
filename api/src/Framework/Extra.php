@@ -56,6 +56,14 @@ abstract class Extra
 	 */
 	public static function refresh_opener($msg, $app, $id=null, $type=null, $targetapp=null, $replace=null, $with=null, $msg_type=null)
 	{
+		// if we have real push available and a regular single-entry refresh of a push supporting app, no need to refresh
+		if (!Json\Push::onlyFallback() &&
+			!empty($type) && !empty($id) &&	// $type === null --> full reload
+			Link::get_registry($app, 'push_data') !== null)
+		{
+			self::$extra['message'] = [$msg, $msg_type];
+			return;
+		}
 		//error_log(__METHOD__.'('.array2string(func_get_args()).')');
 		self::$extra['refresh-opener'] = func_get_args();
 

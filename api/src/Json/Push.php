@@ -109,7 +109,7 @@ class Push extends Msg
 	 *
 	 * @throws Exception\NotOnline
 	 */
-	protected function checkSetBackend()
+	protected static function checkSetBackend()
 	{
 		if (!isset(self::$backend))
 		{
@@ -141,5 +141,21 @@ class Push extends Msg
 				throw new Exception\NotOnline('No valid push-backend found!');
 			}
 		}
+	}
+
+	/**
+	 * Check if only fallback / no real push available
+	 *
+	 * @return bool true: fallback, false: real push
+	 */
+	public static function onlyFallback()
+	{
+		try {
+			self::checkSetBackend();
+		}
+		catch (\Exception $e) {
+			return true;
+		}
+		return self::$backend instanceof \notifications_push;
 	}
 }

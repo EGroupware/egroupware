@@ -88,8 +88,9 @@ class notifications_ajax {
 	private $response;
 
 	/**
+	 * Do we have a real push server, or only a fallback
 	 *
-	 * @var type
+	 * @var bool
 	 */
 	private $isPushServer;
 
@@ -108,12 +109,10 @@ class notifications_ajax {
 
 		$this->db = $GLOBALS['egw']->db;
 
-		if (empty(($isPushServer = Api\Cache::getCache(Api\Cache::INSTANCE, 'notifications', 'isPushServer'))))
+		$this->isPushServer = Api\Cache::getInstance('notifications', 'isPushServer', function ()
 		{
-			$isPushServer = (!((New Api\Json\Push ()) instanceof notifications_push));
-			Api\Cache::setCache(Api\Cache::INSTANCE, 'notifications','isPushServer', $isPushServer, 86400);
-		}
-		$this->isPushServer = $isPushServer;
+			return !Api\Json\Push::onlyFallback();
+		}, [], 900);
 	}
 
 	/**
