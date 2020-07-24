@@ -1058,6 +1058,7 @@ class timesheet_ui extends timesheet_bo
 				'children' => $this->get_status_labels(),
 				'prefix' => 'to_status_',
 				'enabled' => (boolean)$this->get_status_labels(),
+				'onExecute' => 'javaScript:app.timesheet.ajax_action',
 			),
 		);
 
@@ -1087,6 +1088,7 @@ class timesheet_ui extends timesheet_bo
 				'confirm_multiple' => 'Delete these entries',
 				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
+				'onExecute' => 'javaScript:app.timesheet.ajax_action',
 			),
 		);
 		if ($query['col_filter']['ts_status'] == self::DELETED_STATUS)
@@ -1098,6 +1100,7 @@ class timesheet_ui extends timesheet_bo
 				'icon' => 'revert',
 				'group' => $group,
 				'disableClass' => 'rowNoUndelete',
+				'onExecute' => 'javaScript:app.timesheet.ajax_action',
 			);
 		}
 		// enable additonal edit check for following actions, if they are generally available
@@ -1110,6 +1113,33 @@ class timesheet_ui extends timesheet_bo
 		}
 		//_debug_array($actions);
 		return $actions;
+	}
+
+	/**
+	 * Apply an action to multiple events, but called via AJAX instead of submit
+	 *
+	 * @param string $action
+	 * @param string[] $selected
+	 * @param bool $all_selected All events are selected, not just what's in $selected
+	 */
+	public function ajax_action($action, $selected, $all_selected)
+	{
+		$success = 0;
+		$failed = 0;
+		$action_msg = '';
+		$session_name = 'index';
+
+		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, $session_name, $msg))
+		{
+			$msg .= lang('%1 timesheets(s) %2',$success,$action_msg);
+		}
+		elseif(empty($msg))
+		{
+			$msg = lang('%1 timesheets(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+		}
+		$app = Api\Json\Push::onlyFallback() || $all_selected ? 'timesheet' : 'msg-only-push-refresh';
+		Api\Json\Response::get()->call('egw.refresh', $msg, $app, $selected[0], $all_selected || count($selected) > 1 ? null :
+			$action === 'delete' ? 'delete' : 'edit', $app, null, null, $failed ? 'error' : 'success');
 	}
 
 	/**

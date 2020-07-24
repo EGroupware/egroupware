@@ -30,7 +30,6 @@ require("jqueryui");
 require("../jsapi/egw_global");
 require("../etemplate/et2_types");
 var egw_app_1 = require("../../api/js/jsapi/egw_app");
-var et2_widget_dialog_1 = require("../../api/js/etemplate/et2_widget_dialog");
 var etemplate2_1 = require("../../api/js/etemplate/etemplate2");
 var et2_extension_nextmatch_1 = require("../../api/js/etemplate/et2_extension_nextmatch");
 /**
@@ -46,8 +45,12 @@ var InfologApp = /** @class */ (function (_super) {
      * @memberOf app.infolog
      */
     function InfologApp() {
+        var _this = 
         // call parent
-        return _super.call(this, 'infolog', 'info_datemodified') || this;
+        _super.call(this, 'infolog', 'info_datemodified') || this;
+        _this._action_ids = [];
+        _this._action_all = false;
+        return _this;
     }
     /**
      * Destructor
@@ -352,24 +355,6 @@ var InfologApp = /** @class */ (function (_super) {
             (show) ? $select.each(function (i, e) { jQuery(e).hide(); }) : $select.each(function (i, e) { jQuery(e).show(); });
         }
     };
-    InfologApp.prototype.confirm_delete_2 = function (_action, _senders) {
-        var children = false;
-        var child_button = jQuery('#delete_sub').get(0) || jQuery('[id*="delete_sub"]').get(0);
-        if (child_button) {
-            for (var i = 0; i < _senders.length; i++) {
-                if (jQuery(_senders[i].iface.node).hasClass('infolog_rowHasSubs')) {
-                    children = true;
-                    break;
-                }
-            }
-            child_button.style.display = children ? 'block' : 'none';
-        }
-        var callbackDeleteDialog = function (button_id) {
-            if (button_id == et2_widget_dialog_1.et2_dialog.YES_BUTTON) {
-            }
-        };
-        et2_widget_dialog_1.et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"), this.egw.lang("Delete"), {}, et2_widget_dialog_1.et2_dialog.BUTTONS_YES_NO_CANCEL, et2_widget_dialog_1.et2_dialog.WARNING_MESSAGE);
-    };
     /**
      * Confirm delete
      * If entry has children, asks if you want to delete children too
@@ -378,10 +363,14 @@ var InfologApp = /** @class */ (function (_super) {
      *@param _senders
      */
     InfologApp.prototype.confirm_delete = function (_action, _senders) {
+        var _a;
         var children = false;
         var child_button = jQuery('#delete_sub').get(0) || jQuery('[id*="delete_sub"]').get(0);
+        this._action_all = (_a = _action.parent.data.nextmatch) === null || _a === void 0 ? void 0 : _a.getSelection().all;
+        this._action_ids = [];
         if (child_button) {
             for (var i = 0; i < _senders.length; i++) {
+                this._action_ids.push(_senders[i].id.split("::").pop());
                 if (jQuery(_senders[i].iface.getDOMNode()).hasClass('infolog_rowHasSubs')) {
                     children = true;
                     break;
@@ -390,6 +379,14 @@ var InfologApp = /** @class */ (function (_super) {
             child_button.style.display = children ? 'block' : 'none';
         }
         nm_open_popup(_action, _senders);
+    };
+    /**
+     * Callback for action using ids set(!) in this._action_ids and this._action_all
+     *
+     * @param _action
+     */
+    InfologApp.prototype.actionCallback = function (_action) {
+        egw.json("infolog.infolog_ui.ajax_action", [_action, this._action_ids, this._action_all]).sendRequest(true);
     };
     /**
      * Add email from addressbook

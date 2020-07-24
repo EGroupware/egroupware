@@ -209,6 +209,21 @@ var TimesheetApp = /** @class */ (function (_super) {
         }
         etemplate2_1.etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
     };
+    /**
+     * Run action via ajax
+     *
+     * @param _action
+     * @param _senders
+     */
+    TimesheetApp.prototype.ajax_action = function (_action, _senders) {
+        var _a;
+        var all = (_a = _action.parent.data.nextmatch) === null || _a === void 0 ? void 0 : _a.getSelection().all;
+        var ids = [];
+        for (var i = 0; i < _senders.length; i++) {
+            ids.push(_senders[i].id.split("::").pop());
+        }
+        egw.json("timesheet.timesheet_ui.ajax_action", [_action.id, ids, all]).sendRequest(true);
+    };
     return TimesheetApp;
 }(egw_app_1.EgwApp));
 app.classes.timesheet = TimesheetApp;

@@ -397,32 +397,6 @@ class InfologApp extends EgwApp
 		}
 	}
 
-	confirm_delete_2(_action, _senders)
-	{
-		var children = false;
-		var child_button = jQuery('#delete_sub').get(0) || jQuery('[id*="delete_sub"]').get(0);
-		if(child_button)
-		{
-			for(var i = 0; i < _senders.length; i++)
-			{
-				if (jQuery(_senders[i].iface.node).hasClass('infolog_rowHasSubs'))
-				{
-					children = true;
-					break;
-				}
-			}
-			child_button.style.display = children ? 'block' : 'none';
-		}
-		var callbackDeleteDialog = function (button_id)
-		{
-			if (button_id == et2_dialog.YES_BUTTON )
-			{
-
-			}
-		};
-		et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
-	}
-
 	/**
 	 * Confirm delete
 	 * If entry has children, asks if you want to delete children too
@@ -432,12 +406,16 @@ class InfologApp extends EgwApp
 	 */
 	confirm_delete(_action, _senders)
 	{
-		var children = false;
-		var child_button = jQuery('#delete_sub').get(0) || jQuery('[id*="delete_sub"]').get(0);
+		let children = false;
+		let child_button = jQuery('#delete_sub').get(0) || jQuery('[id*="delete_sub"]').get(0);
+		this._action_all = _action.parent.data.nextmatch?.getSelection().all;
+		this._action_ids = [];
 		if(child_button)
 		{
-			for(var i = 0; i < _senders.length; i++)
+			for(let i = 0; i < _senders.length; i++)
 			{
+				this._action_ids.push(_senders[i].id.split("::").pop());
+
 				if (jQuery(_senders[i].iface.getDOMNode()).hasClass('infolog_rowHasSubs'))
 				{
 					children = true;
@@ -447,6 +425,19 @@ class InfologApp extends EgwApp
 			child_button.style.display = children ? 'block' : 'none';
 		}
 		nm_open_popup(_action, _senders);
+	}
+
+	private _action_ids = [];
+	private _action_all = false;
+
+	/**
+	 * Callback for action using ids set(!) in this._action_ids and this._action_all
+	 *
+	 * @param _action
+	 */
+	actionCallback(_action)
+	{
+		egw.json("infolog.infolog_ui.ajax_action",[_action, this._action_ids, this._action_all]).sendRequest(true);
 	}
 
 	/**

@@ -1029,7 +1029,6 @@ class infolog_ui
 			if (!isset($this->bo->grants[$group])) unset($sel_options['info_type'][$type]);
 		}
 
-
 		return $this->tmpl->exec('infolog.infolog_ui.index',$values,$sel_options,$readonlys,$persist,$return_html ? -1 : 0);
 	}
 
@@ -1331,6 +1330,33 @@ class infolog_ui
 		);
 		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
 		return $actions;
+	}
+
+	/**
+	 * Apply an action to multiple events, but called via AJAX instead of submit
+	 *
+	 * @param string $action
+	 * @param string[] $selected
+	 * @param bool $all_selected All events are selected, not just what's in $selected
+	 */
+	public function ajax_action($action, $selected, $all_selected)
+	{
+		$success = 0;
+		$failed = 0;
+		$action_msg = '';
+		$session_name = 'calendar_list';
+
+		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, [], $msg))
+		{
+			$msg = lang('%1 entries %2',$success,$action_msg);
+		}
+		elseif(is_null($msg))
+		{
+			$msg = lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+		}
+		$app = Api\Json\Push::onlyFallback() || $all_selected ? 'infolog' : 'msg-only-push-refresh';
+		Api\Json\Response::get()->call('egw.refresh', $msg, $app, $selected[0], $all_selected || count($selected) > 1 ? null :
+			$action === 'delete' ? 'delete' : 'edit', $app, null, null, $failed ? 'error' : 'success');
 	}
 
 	/**

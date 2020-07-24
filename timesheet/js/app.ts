@@ -242,6 +242,23 @@ class TimesheetApp extends EgwApp
 		}
 		etemplate2.app_refresh("",pushData.app, pushData.id, pushData.type);
 	}
+
+	/**
+	 * Run action via ajax
+	 *
+	 * @param _action
+	 * @param _senders
+	 */
+	ajax_action(_action, _senders)
+	{
+		let all = _action.parent.data.nextmatch?.getSelection().all;
+		let ids = [];
+		for(let i = 0; i < _senders.length; i++)
+		{
+			ids.push(_senders[i].id.split("::").pop());
+		}
+		egw.json("timesheet.timesheet_ui.ajax_action",[_action.id, ids, all]).sendRequest(true);
+	}
 }
 
 app.classes.timesheet = TimesheetApp;

@@ -177,8 +177,8 @@
 								<description value="Delete" class="promptheader"/>
 								<description value="Delete selected entries?" id="delete_prompt"/>
 								<hbox>
-									<button label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;" image="check" background_image="true"/>
-									<button label="Yes - Delete including sub-entries" id="delete_sub" onclick="nm_popup_action.id = 'delete_sub'; nm_submit_popup(this); return false;" image="check" background_image="true"/>
+									<button label="Yes - Delete" id="delete" onclick="app.infolog.actionCallback('delete'); return false;" image="check" background_image="true"/>
+									<button label="Yes - Delete including sub-entries" id="delete_sub" onclick="app.infolog.actionCallback('delete_sub'); return false;" image="check" background_image="true"/>
 									<button label="No - Cancel" id="delete_cancel" onclick="nm_hide_popup(this,'delete_popup');" image="cancelled" background_image="true"/>
 								</hbox>
 							</vbox>
