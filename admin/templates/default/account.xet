@@ -26,7 +26,7 @@
 				</row>
 				<row>
 					<description value="Password" for="account_passwd"/>
-					<passwd id="account_passwd" class="et2_fullWidth" onchange="app.addressbook.account_change" autocomplete="new-password"/>
+					<passwd id="account_passwd" class="et2_fullWidth" onchange="app.addressbook.account_change" autocomplete="new-password" suggest="16"/>
 					<description/>
 					<description value="Re-enter password" for="account_passwd_2"/>
 					<passwd id="account_passwd_2" class="et2_fullWidth" onchange="app.addressbook.account_change" suggest="0"/>
