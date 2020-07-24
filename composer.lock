@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bc3a7b62de6792d67aaf9f127480abea",
+    "content-hash": "063f682bae79730de74c4dbe206f2854",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -767,7 +767,7 @@
         },
         {
             "name": "egroupware/activesync",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
@@ -808,7 +808,7 @@
         },
         {
             "name": "egroupware/adodb-php",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
@@ -862,7 +862,7 @@
         },
         {
             "name": "egroupware/bookmarks",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
@@ -894,7 +894,7 @@
         },
         {
             "name": "egroupware/collabora",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
@@ -976,12 +976,12 @@
                 {
                     "name": "Chuck Hagenbuch",
                     "email": "chuck@horde.org",
-                    "role": "lead"
+                    "role": "Lead"
                 },
                 {
                     "name": "Jan Schneider",
                     "email": "jan@horde.org",
-                    "role": "lead"
+                    "role": "Lead"
                 },
                 {
                     "name": "Michael J Rubinsky",
@@ -1028,11 +1028,11 @@
             ],
             "description": "Compiled version of magicsuggest customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/magicsuggest",
-            "time": "2018-06-21T10:14:03+00:00"
+            "time": "2018-06-21T13:36:37+00:00"
         },
         {
             "name": "egroupware/news_admin",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
@@ -1064,7 +1064,7 @@
         },
         {
             "name": "egroupware/openid",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
@@ -1113,7 +1113,7 @@
         },
         {
             "name": "egroupware/projectmanager",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
@@ -1154,7 +1154,7 @@
         },
         {
             "name": "egroupware/registration",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
@@ -1203,7 +1203,7 @@
         },
         {
             "name": "egroupware/rocketchat",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
@@ -1243,7 +1243,7 @@
         },
         {
             "name": "egroupware/smallpart",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
@@ -1289,7 +1289,7 @@
         },
         {
             "name": "egroupware/status",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
@@ -1329,7 +1329,7 @@
         },
         {
             "name": "egroupware/swoolepush",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/swoolepush.git",
@@ -1370,7 +1370,7 @@
         },
         {
             "name": "egroupware/tracker",
-            "version": "dev-master",
+            "version": "20.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
@@ -2344,7 +2344,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "An API for various compression techniques."
+            "description": "A library to wrap various compression techniques."
         },
         {
             "name": "pear-pear.horde.org/Horde_Crypt",
@@ -2410,7 +2410,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides blowfish encryption/decryption for PHP string data."
+            "description": "A library that provides blowfish encryption/decryption for PHP string data."
         },
         {
             "name": "pear-pear.horde.org/Horde_Date",
@@ -2526,7 +2526,7 @@
             "license": [
                 "BSD-2-Clause"
             ],
-            "description": "Normalized access to various backends providing IDNA (Internationalized Domain Names in Applications) support."
+            "description": "A library that wraps various backends providing IDNA (Internationalized Domain Names in Applications) support."
         },
         {
             "name": "pear-pear.horde.org/Horde_Imap_Client",
@@ -2564,7 +2564,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Interface to access IMAP4rev1 (RFC 3501) mail servers. Also supports connections to POP3 (STD 53/RFC 1939)."
+            "description": "A library to access IMAP4rev1 (RFC 3501) mail servers. Also supports connections to POP3 (STD 53/RFC 1939)."
         },
         {
             "name": "pear-pear.horde.org/Horde_ListHeaders",
@@ -2844,7 +2844,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides abstract class for use in creating PHP network socket clients."
+            "description": "A library that provides an abstract PHP network socket client."
         },
         {
             "name": "pear-pear.horde.org/Horde_Stream",
@@ -2985,7 +2985,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "A text-based diff engine and renderers for multiple diff output formats."
+            "description": "A library that provides a text-based diff engine and renderers for multiple diff output formats."
         },
         {
             "name": "pear-pear.horde.org/Horde_Text_Flowed",
@@ -3013,7 +3013,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "The Horde_Text_Flowed:: class provides common methods for manipulating text using the encoding described in RFC 3676 ('flowed' text)."
+            "description": "A library that provides common methods for manipulating text using the encoding described in RFC 3676 ('flowed' text)."
         },
         {
             "name": "pear-pear.horde.org/Horde_Translation",
@@ -3096,7 +3096,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "These classes provide functionality useful for all kind of applications."
+            "description": "A library that provides functionality useful for all kind of applications."
         },
         {
             "name": "pear/archive_tar",
