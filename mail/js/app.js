@@ -403,6 +403,9 @@ app.classes.mail = AppJS.extend(
 		if (pushData.type === 'add')
 		{
 			this.egw.message(this.egw.lang('New mail from %1', pushData.acl.from)+'\n'+pushData.acl.subject+'\n'+pushData.acl.snippet, 'success');
+			// increment notification counter on (closed) mail tab
+			let framework = egw_getFramework();
+			if (framework) framework.notifyAppTab('mail');
 		}
 		// check if we might not see it because we are on a different mail account or folder
 		let nm = this.et2 ? this.et2.getWidgetById('nm') : null;
