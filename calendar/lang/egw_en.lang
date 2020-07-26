@@ -91,6 +91,7 @@ calendar menu	calendar	en	Calendar menu
 calendar preferences	calendar	en	Calendar preferences
 calendar settings	admin	en	Calendar settings
 calendar-fieldname	calendar	en	Calendar field name
+can not send any notifications because notifications app is not installed!	calendar	en	Can not send any notifications because notifications app is not installed!
 can't add alarms in the past !!!	calendar	en	Can't add alarms in the past !!!
 can't aquire lock!	calendar	en	Can't aquire lock!
 canceled	calendar	en	Canceled
@@ -205,6 +206,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	en	End date /
 enddate of the export	calendar	en	End date of the export
 ends	calendar	en	Ends
 error adding the alarm	calendar	en	Error adding the alarm
+error notifying %1	calendar	en	Error notifying %1
 error saving the event!	calendar	en	Error saving the event!
 error: can't delete original series!	calendar	en	Error: Can't delete original series!
 error: duration of event longer then recurrence interval!	calendar	en	Error: Duration of event longer than recurrence interval!
@@ -373,7 +375,7 @@ name of current user, all other contact fields are valid too	calendar	en	Name of
 name of the day of the week (ex: monday)	calendar	en	Name of the day of the week (ex: Monday)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Name of the week, eg: Monday, available for the first entry inside each day of week or daily table inside the selected range.
 needs action	calendar	en	Needs action
-never notify externals (non-users) about events I create	calendar	en	Never notify externals (non-users) about events I create
+never notify externals (non-users) about events i create	calendar	en	Never notify externals (non-users) about events I create
 new	calendar	en	New
 new event category	calendar	en	New event category
 new event participants	calendar	en	New event participants
