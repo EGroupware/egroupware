@@ -820,6 +820,22 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, array $alarm=null)
 	{
+		Api\Egw::on_shutdown([$this, '_send_update'], func_get_args());
+	}
+
+	/**
+	 * sends update-messages to certain participants of an event
+	 *
+	 * @param int $msg_type type of the notification: MSG_ADDED, MSG_MODIFIED, MSG_ACCEPTED, ...
+	 * @param array $to_notify numerical user-ids as keys (!) (value is not used)
+	 * @param array $old_event Event before the change
+	 * @param array $new_event =null Event after the change
+	 * @param int|string $user =0 User/participant who started the notify, default current user
+	 * @param array $alarm =null values for "offset", "start", etc.
+	 * @return bool true/false
+	 */
+	function _send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, array $alarm=null)
+	{
 		//error_log(__METHOD__."($msg_type,".array2string($to_notify).",...) ".array2string($new_event));
 		if (!is_array($to_notify))
 		{
