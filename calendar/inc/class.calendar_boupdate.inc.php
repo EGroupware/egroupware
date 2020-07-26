@@ -1191,19 +1191,25 @@ class calendar_boupdate extends calendar_bo
 
 						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
 						$notification->send();
-						foreach(notifications::errors(true) as $error)
-						{
-							error_log(__METHOD__."() Error notifying $userid from $senderid: $subject: $error");
-						}
+						$errors = notifications::errors(true);
 					}
 					catch (Exception $exception) {
-						error_log(__METHOD__.' error while notifying user '.$userid.':'.$exception->getMessage());
+						$errors = [$exception->getMessage()];
 						continue;
 					}
 				}
 				else
 				{
-					error_log(__METHOD__.' cannot send any notifications because notifications is not installed');
+					$errors = [lang('Can not send any notifications because notifications app is not installed!')];
+				}
+				foreach($errors as $error)
+				{
+					error_log(__METHOD__."() Error notifying $userid from $senderid: $subject: $error");
+					// send notification errors via push to current user (not session, as alarms send via async job have none!)
+					(new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']))->message(
+						lang('Error notifying %1', !is_numeric($userid) ? $userid :
+							Api\Accounts::id2name($userid, 'account_fullname').' <'.Api\Accounts::id2name($userid, 'account_email').'>').
+						"\n".$subject."\n".$error, 'error');
 				}
 			}
 		}
@@ -1272,7 +1278,7 @@ class calendar_boupdate extends calendar_bo
 		Api\Translation::add_app('calendar');
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
 
-		$ret = $this->send_update(MSG_ALARM, $to_notify, $event, False, $alarm['owner'], $alarm);
+		$ret = $this->_send_update(MSG_ALARM, $to_notify, $event, False, $alarm['owner'], $alarm);
 
 		// create a new alarm for recuring events for the next event, if one exists
 		if ($event['recur_type'] != MCAL_RECUR_NONE && ($event = $this->read($alarm['cal_id'],$event_time_user+1)))

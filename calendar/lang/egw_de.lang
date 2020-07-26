@@ -91,6 +91,7 @@ calendar menu	calendar	de	Kalender Menü
 calendar preferences	calendar	de	Kalender Einstellungen
 calendar settings	admin	de	Kalender Einstellungen
 calendar-fieldname	calendar	de	Kalender Feldname
+can not send any notifications because notifications app is not installed!	calendar	de	Konnte keine Benachrichtigungen versenden da die Benachrichtigungen Anwendung nicht installiert ist!
 can't add alarms in the past !!!	calendar	de	Kann keine Alarme in der Vergangenheit setzen !!!
 can't aquire lock!	calendar	de	Kann Termin nicht sperren!
 canceled	calendar	de	Abgesagt
@@ -205,6 +206,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	de	Enddatum u
 enddate of the export	calendar	de	Enddatum des Exports
 ends	calendar	de	endet
 error adding the alarm	calendar	de	Fehler beim Zufügen des Alarms
+error notifying %1	calendar	de	Fehler beim Benachrichtigen von %1
 error saving the event!	calendar	de	Fehler beim Speichern des Termins!
 error: can't delete original series!	calendar	de	Fehler beim Löschen der bestehenden Serie
 error: duration of event longer then recurrence interval!	calendar	de	Fehler: Termindauer ist länger als das Intervall der Wiederholung!
@@ -373,7 +375,7 @@ name of current user, all other contact fields are valid too	calendar	de	Name de
 name of the day of the week (ex: monday)	calendar	de	Name des Wochentags (z.B. Montag)
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	de	Name der Woche (ab Montag), verfügbar für den ersten Eintrag für jeden Tag der Woche oder für die tägliche Tabelle innerhalb des ausgewählten Zeitraums.
 needs action	calendar	de	Zu erledigen
-never notify externals (non-users) about events I create	calendar	de	Benachrichtige niemals Externe (Nicht-Benutzer) über Termin, die ich erstelle
+never notify externals (non-users) about events i create	calendar	de	Benachrichtige niemals Externe (Nicht-Benutzer) über Termin, die ich erstelle
 new	calendar	de	Neu
 new event category	calendar	de	Neue Termin-Kategorie
 new event participants	calendar	de	Teilnehmerauswahl für neue Termine
