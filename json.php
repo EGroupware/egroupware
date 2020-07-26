@@ -129,7 +129,7 @@ try {
 		$json->parseRequest($_GET['menuaction'], $_REQUEST['json_data']);
 	}
 	Json\Response::get();
-	exit();
+	$GLOBALS['egw']->__destruct();
 }
 // missing menuaction GET parameter or request:parameters object or unparsable JSON
 catch (\InvalidArgumentException $e) {
