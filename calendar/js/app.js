@@ -578,17 +578,22 @@ var CalendarApp = /** @class */ (function (_super) {
             // The event is outside our current view
             return;
         }
-        // Ask for the real data
+        // Do we already have "fresh" data?  Most user actions give fresh data in response
+        var existing = egw.dataGetUIDdata('calendar::' + pushData.id);
+        if (existing && Math.abs(existing.timestamp - new Date().valueOf()) < 1000) {
+            // Update directly
+            this._update_events(this.state, ['calendar::' + pushData.id]);
+            return;
+        }
+        ;
+        // Ask for the real data, we don't have it
         egw.json("calendar.calendar_ui.ajax_get", [[pushData.id]], function (data) {
             if (data && data.data && data.data.data)
                 return;
-            var unknown = (typeof egw.dataGetUIDdata(data.uid) === "undefined");
             // Store it, which will call all registered listeners
             egw.dataStoreUID(data.uid, data.data);
             // Any existing events were updated.  Run this to catch new events or events moved into view
-            if (unknown) {
-                this._update_events(this.state, [data.uid]);
-            }
+            this._update_events(this.state, [data.uid]);
         }.bind(this)).sendRequest(true);
     };
     /**

@@ -995,7 +995,7 @@ class calendar_uiforms extends calendar_ui
 				}
 
 				$response = Api\Json\Response::get();
-				if($response && $update_type != 'delete')
+				if($response && $update_type != 'delete' && !$client_updated)
 				{
 					$client_updated = $this->update_client($event['id']);
 				}
@@ -1110,7 +1110,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		// New event, send data before updating so it's there
 		$response = Api\Json\Response::get();
-		if($response && !$content['id'] && $event['id'])
+		if($response && !$content['id'] && $event['id'] && !$client_updated)
 		{
 			$client_updated = $this->update_client($event['id']);
 		}
