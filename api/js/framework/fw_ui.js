@@ -358,8 +358,15 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 		});
 
 	this.notificationDiv = document.createElement("div");
+	var self = this;
 	jQuery(this.notificationDiv).addClass('notifyTabDiv')
 			.hide()
+			.click(function(e){
+				if (app.notifications.tabToggle(self.tag.appName))
+				{
+					e.stopImmediatePropagation();
+				}
+			})
 			.appendTo(this.headerDiv);
 	jQuery(this.headerDiv).append(this.closeButton);
 
