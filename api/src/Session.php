@@ -1668,11 +1668,29 @@ class Session
 
 		if(!headers_sent())	// gives only a warning, but can not send the cookie anyway
 		{
-			setcookie($cookiename, $cookievalue,
-				!$cookietime && $is_iOS ? time()+self::IOS_SESSION_COOKIE_LIFETIME : $cookietime,
-				is_null($cookiepath) ? self::$cookie_path : $cookiepath,self::$cookie_domain,
-				// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
-				empty($GLOBALS['egw_info']['server']['insecure_cookies']) && Header\Http::schema() === 'https', true);
+			$options = [
+				'expires' => !$cookietime && $is_iOS ? time()+self::IOS_SESSION_COOKIE_LIFETIME : $cookietime,
+				'path'    => is_null($cookiepath) ? self::$cookie_path : $cookiepath,
+				'domain'  => self::$cookie_domain,
+				// if called via HTTPS, only send cookie for https
+				'secure'  => empty($GLOBALS['egw_info']['server']['insecure_cookies']) && Header\Http::schema() === 'https',
+				'httponly' => true, // only allow cookie access via HTTP, not client-side via JavaScript
+			];
+			// admin specified to send SameSite cookie attribute AND we use PHP 7.3+
+			if (!empty($GLOBALS['egw_info']['server']['cookie_samesite_attribute']) &&
+				in_array($GLOBALS['egw_info']['server']['cookie_samesite_attribute'], ['Lax', 'Strict', 'None']))
+			{
+				$options['samesite'] = $GLOBALS['egw_info']['server']['cookie_samesite_attribute'];
+			}
+			if ((float)PHP_VERSION >= 7.3)
+			{
+				setcookie($cookiename, $cookievalue, $options);
+			}
+			else
+			{
+				setcookie($cookiename, $cookievalue,
+					$options['expires'], $options['path'], $options['domain'], $options['secure'], $options['httponly']);
+			}
 		}
 	}
 

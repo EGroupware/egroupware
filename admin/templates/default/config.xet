@@ -240,6 +240,15 @@
 					</select>
 				</row>
 				<row>
+					<description value="SameSite cookie attribute (send cookie if browser addressbar show a different domain)"/>
+					<select id="newsettings[cookie_samesite_attribute]">
+						<option value="">{Do not set attribute} - {current default}</option>
+						<option value="Lax">"Lax" - {allowed for get requests, default in modern browsers, if attribute is not set}</option>
+						<option value="Strict">"Strict" - {do not send cookie} - {more secure}</option>
+						<option value="None">"None" - {required to embed EGroupware via iframe eg. for LTI}</option>
+					</select>
+				</row>
+				<row>
 					<description value="Cookie path (allows multiple eGW sessions with different directories, has problemes with SiteMgr!)" label="%s:"/>
 					<select id="newsettings[cookiepath]">
 						<option value="">Document root (default)</option>
