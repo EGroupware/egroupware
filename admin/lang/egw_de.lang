@@ -117,6 +117,7 @@ allow remote administration from following install id's (comma separated)	admin	
 allow user to set 'remember me' token	admin	de	Erlaube Benutzer ein "An mich erinnern" Token zu setzen
 allow users to change forwards	admin	de	Anwender dürfen Weiterleitung bearbeiten
 allow users to create identities for aliases	admin	de	Anwender dürfen Identitäten für Aliase anlegen
+allowed for get requests, default in modern browsers, if attribute is not set	admin	de	erlaubt für GET Requests, Vorgabe in modernen Browsern, wenn das Attribute nicht gesetzt ist
 allowed just as second factor	admin	de	ausschließlich als zweiter Faktor
 alternate email address	admin	de	zusätzliche E-Mail-Adressen
 and logged in	admin	de	und eingeloggt
@@ -245,6 +246,7 @@ creates / updates user groups from csv file	admin	de	Erstellt / aktualisiert Ben
 creates a new field	admin	de	erstellt ein neues Feld
 crontab only (recomended)	admin	de	nur Crontab (empfohlen)
 current certificate	admin	de	Aktuelles Zertifikat
+current default	admin	de	Aktuelle Vorgabe
 current hash	admin	de	Aktueller Schlüssel:
 currently:	admin	de	Aktuell:
 custom fields	admin	de	Benutzerdefinierte Felder
@@ -321,6 +323,7 @@ disable all	admin	de	Alle Video-Anleitungen deaktivieren
 disable minifying of javascript and css files	admin	de	Komprimierung von Javascript und CSS Dateien deaktivieren
 disable pgp encryption (mailvelope)	admin	de	PGP-Verschlüsselung deaktivieren (Mailvelope)
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
+disabled	admin	de	Ausgeschaltet
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
 disabled, do not show on login page	admin	de	ausgeschaltet, wird auf der Anmelde-Seite nicht angezeigt
 display	admin	de	anzeigen
@@ -330,6 +333,8 @@ displaying plain messages is disabled	admin	de	Das Anzeigen von Text Nachrichten
 do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
 do not generate email addresses	admin	de	Keine E-Mail-Adressen erzeugen
 do not offer introduction video	admin	de	Einführungsvideo nicht anbieten
+do not send cookie	admin	de	Cookie nicht senden
+do not set attribute	admin	de	Attribute nicht setzen
 do not validate certificate	admin	de	Zertifikat nicht überprüfen
 do you also want to delete all global subcategories ?	admin	de	Wollen Sie auch alle globalen Unterkategorien löschen?
 do you really want to delete this profile	admin	de	Wollen Sie dieses Profil wirklich löschen
@@ -376,6 +381,7 @@ enable sieve	admin	de	Sieve aktivieren
 enable spellcheck in rich text editor	admin	de	Aktiviere die Rechtschreibprüfung im RichText Editor
 enable the soap service	admin	de	soap Service einschalten
 enable the xmlrpc service	admin	de	xmlrpc Service einschalten
+enabled	admin	de	Einschalten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
 enabled - popup window	admin	de	Verfügbar, Popup-Fenster
 encrypted connection	admin	de	verschlüsselte Verbindung
@@ -652,6 +658,7 @@ no profile defined for user %1	admin	de	Es besteht kein Profil für den Benutzer
 no sieve support detected, either fix configuration manually or leave it switched off.	admin	de	Keine Sieve-Unterstützung gefunden. Konfiguration entweder manuell anpassen oder Sieve ausgeschalten lassen.
 no supported imap authentication method could be found.	admin	de	Keine unterstützte IMAP-Authentifizierungsmethode gefunden.
 non profit: clubs, associations, ...	admin	de	Gemeinnützig: Vereine, Verbände, ...
+not enabled	admin	de	Nicht einschalten
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung gebaut wurde
 notification mail	admin	de	Benachrichtigungs-E-Mail
 notify user by email	admin	de	Benutzer per E-Mail benachrichtigen
@@ -746,6 +753,7 @@ removing access for groups may cause problems for data in this category.  are yo
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	de	Das Umbenennen des Benutzers 'anonymous' verhindert die Dateifreigabe und Collabora Online Office!
 requested	admin	de	angefordert
 required pear class mail/mimedecode.php not found.	admin	de	Die benötigte PEAR-Klasse Mail/mimeDecode.php wurde nicht gefunden.
+required to embed egroupware via iframe eg. for lti	admin	de	Notwendig um EGroupware per iFrame einzubetten z.B. für LTI
 requires 'openid / oauth2 server' app.	admin	de	Benötigt die 'Open ID / OAuth2 Server' Anwendung.
 reset filter	admin	de	Filter zurücksetzen
 rights	admin	de	Rechte
@@ -754,6 +762,7 @@ rows	admin	de	Zeilen
 rpm or debian package	admin	de	RPM oder Debian Pakete
 run	admin	de	Ausführen
 run asynchronous services	admin	de	Asynchrone Dienste ausführen
+samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	de	SameSite Cooke Attribute (Cookie übertragen, wenn die Adressleiste des Browsers eine andere Domain anzeigt)
 save as default	admin	de	Als Vorgabe speichern
 save changes	admin	de	Änderungen speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	de	Das Speichern der Nachricht %1 ist fehlgeschlagen. Die Nachricht konnte nicht in das Verzeichniss %2 bzw.: %3

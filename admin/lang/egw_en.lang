@@ -117,6 +117,7 @@ allow remote administration from following install id's (comma separated)	admin	
 allow user to set 'remember me' token	admin	en	Allow user to set 'Remember me' token
 allow users to change forwards	admin	en	Allow users to change forwards
 allow users to create identities for aliases	admin	en	Allow users to create identities for aliases
+allowed for get requests, default in modern browsers, if attribute is not set	admin	en	allowed for get requests, default in modern browsers, if attribute is not set
 allowed just as second factor	admin	en	allowed just as second factor
 alternate email address	admin	en	Alternate email address
 and logged in	admin	en	and logged in
@@ -245,6 +246,7 @@ creates / updates user groups from csv file	admin	en	Creates / updates user grou
 creates a new field	admin	en	Creates a new field
 crontab only (recomended)	admin	en	Crontab only (recommended)
 current certificate	admin	en	Current certificate
+current default	admin	en	current default
 current hash	admin	en	Current hash:
 currently:	admin	en	Currently:
 custom 1	admin	en	Custom 1
@@ -334,6 +336,8 @@ displaying plain messages is disabled	admin	en	displaying plain messages is disa
 do not delete the category and return back to the list	admin	en	Do NOT delete the category and return back to the list
 do not generate email addresses	admin	en	Do not generate EMail addresses
 do not offer introduction video	admin	en	Do not offer introduction video
+do not send cookie	admin	en	do not send cookie
+do not set attribute	admin	en	Do not set attribute
 do not validate certificate	admin	en	Do not validate certificate
 do you also want to delete all global subcategories ?	admin	en	Do you also want to delete all global sub categories?
 do you really want to delete this profile	admin	en	Do you really want to delete this profile?
@@ -742,7 +746,7 @@ register application hooks	admin	en	Register application hooks
 reject passwords containing part of username or full name (3 or more characters long)	admin	en	Reject passwords containing part of username or full name (3 or more characters long)
 relay access checked	admin	en	Relay access checked
 remote administration instances	admin	en	Remote administration instances
-remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin &gt; Site configuration!
+remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
 remote instance saved	admin	en	Remote instance saved.
 remove	admin	en	Remove
@@ -752,6 +756,7 @@ removing access for groups may cause problems for data in this category.  are yo
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	en	Renaming user 'anonymous' will break file sharing and Collabora Online Office!
 requested	admin	en	Requested
 required pear class mail/mimedecode.php not found.	admin	en	Required PEAR class Mail/mimeDecode.php not found.
+required to embed egroupware via iframe eg. for lti	admin	en	required to embed EGroupware via iframe eg. for LTI
 requires 'openid / oauth2 server' app.	admin	en	Requires 'OpenID / OAuth2 Server' app.
 reset filter	admin	en	Reset filter
 rights	admin	en	Rights
@@ -760,6 +765,7 @@ rows	admin	en	Rows
 rpm or debian package	admin	en	RPM or Debian package
 run	admin	en	run
 run asynchronous services	admin	en	Run Asynchronous services
+samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	en	SameSite cookie attribute (send cookie if browser addressbar show a different domain)
 save as default	admin	en	save as default
 save changes	admin	en	Save changes
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
@@ -870,12 +876,12 @@ the api requires an upgrade	admin	en	The API requires an upgrade
 the cumulated and anonymised data will be publically available:	admin	en	The accumulated and anonymous data will be publicly available:
 the groups must include the primary group	admin	en	The groups must include the primary group.
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	en	The IMAP server does not appear to support the authentication method selected. Contact your system administrator.
-the install id of an instance can be found under admin &gt; site configuration	admin	en	The install ID of an instance can be found under Admin &gt; Site configuration
+the install id of an instance can be found under admin &gt; site configuration	admin	en	The install ID of an instance can be found under Admin > Site configuration
 the install id of an instance can be found under admin > site configuration	admin	en	The install ID of an instance can be found under Admin > Site configuration
 the login and password can not be the same	admin	en	The login and password can not be the same.
 the loginid can not be more then 8 characters	admin	en	The login ID can not be more than 8 characters.
 the mimeparser can not parse this message.	admin	en	The mimeparser can not parse this message.
-the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	en	the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible
+the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	en	the name used internaly (<= 20 chars), changeing it makes existing data unavailible
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	en	The name used internally, <= 20 chars, changing it makes existing data unavailable.
 the testjob sends you a mail everytime it is called.	admin	en	The TestJob sends you a mail every time it is called.
 the text displayed to the user	admin	en	The text displayed to the user
