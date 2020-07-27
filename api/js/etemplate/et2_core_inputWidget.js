@@ -220,7 +220,6 @@ var et2_inputWidget = /** @class */ (function (_super) {
         return this._oldValue;
     };
     et2_inputWidget.prototype.isDirty = function () {
-        var _a;
         var value = this.getValue();
         if (typeof value !== typeof this._oldValue) {
             return true;
@@ -230,7 +229,7 @@ var et2_inputWidget = /** @class */ (function (_super) {
         }
         switch (typeof this._oldValue) {
             case "object":
-                if (((_a = this._oldValue) === null || _a === void 0 ? void 0 : _a.length) && typeof this._oldValue.length !== "undefined" &&
+                if (typeof this._oldValue.length !== "undefined" &&
                     this._oldValue.length !== value.length) {
                     return true;
                 }

@@ -324,7 +324,7 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 		switch(typeof this._oldValue)
 		{
 			case "object":
-				if(this._oldValue?.length && typeof this._oldValue.length !== "undefined" &&
+				if(typeof this._oldValue.length !== "undefined" &&
 					this._oldValue.length !== value.length
 				)
 				{
