@@ -3079,7 +3079,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachment = $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
 			}
 
-			$file = $dir. '/' . ($filename ? $filename : mail_bo::clean_subject_for_filename($attachment['filename']));
+			$file = $dir. '/' . ($filename ? $filename : Mail::clean_subject_for_filename($attachment['filename']));
 
 			if ($savemode != 'overwrite')
 			{

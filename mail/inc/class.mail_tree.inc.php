@@ -353,7 +353,7 @@ class mail_tree
 			{
 				// throwing an exeption here seems to be unrecoverable,
 				// even if the cause is a something that can be handeled by the mailserver
-				if (mail_bo::$debug) error_log(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' of '$component' not found!");
+				if (Mail::$debug) error_log(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' of '$component' not found!");
 				// should we hit the break? if in personal: sure, something is wrong with the folderstructure
 				// if in shared or others we may proceed as access to folders may very well be limited to
 				// a single folder within the tree
@@ -364,7 +364,7 @@ class mail_tree
 					// we want to create the node in question as we meet the above considerations
 					if ($nsp['type']!='personal' && $nsp['prefix_present'] && stripos($parent,$data['path'][0].self::DELIMITER.$nsp['prefix'])===0)
 					{
-						if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' about to create:'.$parent.' in '.$data['path'][0].self::DELIMITER.$nsp['prefix']);
+						if (Mail::$debug) error_log(__METHOD__.__LINE__.' about to create:'.$parent.' in '.$data['path'][0].self::DELIMITER.$nsp['prefix']);
 						$break=false;
 					}
 				}

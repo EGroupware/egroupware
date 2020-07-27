@@ -12,7 +12,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Link;
-use EGroupware\Api\Mail as mail_bo;
+use EGroupware\Api\Mail;
 
 /**
  * Class cotains methods and functions
@@ -153,7 +153,7 @@ class mail_integration {
 			{
 				// initialize mail open connection requirements
 				if (!isset($_icServerID)) $_icServerID =& Api\Cache::getSession($sessionLocation,'activeProfileID');
-				$mo = mail_bo::getInstance(true,$_icServerID);
+				$mo = Mail::getInstance(true,$_icServerID);
 				$mo->openConnection();
 				$messagePartId = $messageFolder = null;
 				foreach ($_attachments as $attachment)
@@ -167,7 +167,7 @@ class mail_integration {
 						// instead of fetching only the attachments attached files (as we did previously)
 						$message = $mo->getMessageRawBody($attachment['uid'],$attachment['partID'],($attachment['folder']?$attachment['folder']:$mailbox));
 						$headers = $mo->getMessageHeader($attachment['uid'],$attachment['partID'],true,false,($attachment['folder']?$attachment['folder']:$mailbox));
-						$subject = mail_bo::clean_subject_for_filename($headers['SUBJECT']);
+						$subject = Mail::clean_subject_for_filename($headers['SUBJECT']);
 						$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 						$tmpfile = fopen($attachment_file,'w');
 						fwrite($tmpfile,$message);
@@ -239,7 +239,7 @@ class mail_integration {
 			if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw' &&
 				$_rawMail && file_exists($_rawMail))
 			{
-				$subject = mail_bo::clean_subject_for_filename($_subject);
+				$subject = Mail::clean_subject_for_filename($_subject);
 				$attachments[] = array(
 						'name' => trim($subject).'.eml',
 						'mimeType' => 'message/rfc822',
@@ -260,12 +260,12 @@ class mail_integration {
 			}
 			$body_striped = strip_tags($_body); //we need to fix broken tags (or just stuff like "<800 USD/p" )
 			$body_decoded = htmlspecialchars_decode($body_striped,ENT_QUOTES);
-			$body = mail_bo::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
+			$body = Mail::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
 				'TO'=>(!empty($_to_emailAddress['to'])?implode(',',$_to_emailAddress['to']):null),
 				'CC'=>(!empty($_to_emailAddress['cc'])?implode(',',$_to_emailAddress['cc']):null),
 				'BCC'=>(!empty($_to_emailAddress['bcc'])?implode(',',$_to_emailAddress['bcc']):null),
 				'SUBJECT'=>$_subject,
-				'DATE'=>mail_bo::_strtotime($_date))).$body_decoded;
+				'DATE'=>Mail::_strtotime($_date))).$body_decoded;
 
 			$mailcontent = array(
 				'mailaddress' => implode(',',$toaddr),
@@ -291,11 +291,11 @@ class mail_integration {
 			if ($uid && $mailbox)
 			{
 				if (!isset($icServerID)) $icServerID =& Api\Cache::getSession($sessionLocation,'activeProfileID');
-				$mo	= mail_bo::getInstance(true,$icServerID);
+				$mo	= Mail::getInstance(true,$icServerID);
 				$mo->openConnection();
 				$mo->reopen($mailbox);
 				try {
-					$mailcontent = mail_bo::get_mailcontent($mo,$uid,'',$mailbox,null,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
+					$mailcontent = Mail::get_mailcontent($mo,$uid,'',$mailbox,null,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
 					// this one adds the mail itself (as message/rfc822 (.eml) file) to the app as additional attachment
 					// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
 					if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
@@ -308,7 +308,7 @@ class mail_integration {
 						fclose($tmpfile);
 						$size = filesize($attachment_file);
 						$mailcontent['attachments'][] = array(
-								'name' => mail_bo::clean_subject_for_filename($headers['SUBJECT']).'.eml',
+								'name' => Mail::clean_subject_for_filename($headers['SUBJECT']).'.eml',
 								'mimeType' => 'message/rfc822',
 								'type' => 'message/rfc822',
 								'tmp_name' => $attachment_file,
