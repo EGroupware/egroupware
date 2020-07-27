@@ -4345,6 +4345,9 @@ td.message span.message {
   width: 17px;
   font-weight: bold;
 }
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header .notifyTabDiv:hover {
+  background-color: #1E1E1E;
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
   background-color: rgba(153, 204, 255, 0.4);
   padding-bottom: 0px;

@@ -90,6 +90,8 @@
 		// query notifictions now
 		this.run_notifications();
 
+		this.filter = '';
+
 	};
 
 	notifications.prototype.run_notifications = function ()
@@ -216,6 +218,7 @@
 		for(var index in indexes)
 		{
 			var id = indexes[index];
+			if (this.filter && notifymessages[id]['data']['app'] != this.filter) continue;
 			var $message, $mark, $delete, $inner_container, $nav_prev, $nav_next,
 				$more_info, $top_toolbar, $open_entry, $date, $collapse;
 			var message_id = 'egwpopup_message_'+id;
@@ -772,6 +775,21 @@
 		return typeof data == 'object'? data: {};
 	};
 
+
+	notifications.prototype.tabToggle = function (_appname)
+	{
+		for (var i in notifymessages)
+		{
+			if (notifymessages[i]['extra_data']['app'] == _appname)
+			{
+				this.filter = _appname;
+				this.toggle();
+				return true;
+			}
+		}
+		return false;
+	};
+
 	/**
 	 * toggle notifications container
 	 * @param boolean _stat true keeps the popup on
@@ -781,7 +799,8 @@
 		var $egwpopup = jQuery('#egwpopup');
 		var $body = jQuery('body');
 		var $counter = jQuery('#topmenu_info_notifications');
-
+		this.display();
+		var self = this;
 		if (!$egwpopup.is(":visible"))
 		{
 			$body.on('click', function(e){
@@ -789,6 +808,7 @@
 						!$egwpopup.is(e.target) && $egwpopup.has(e.target).length == 0)
 				{
 					jQuery(this).off(e);
+					self.filter = '';
 					$egwpopup.toggle('slide');
 					egw.loading_prompt('popup_notifications', false);
 				}
@@ -797,6 +817,7 @@
 		}
 		else
 		{
+			this.filter = '';
 			egw.loading_prompt('popup_notifications', false);
 			if (_stat) return;
 			$body.off('click');
