@@ -681,14 +681,18 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 * Change type parameters allows for quicker refresh then complete server side reload:
 	 * - update: request just modified data from given rows.  Sorting is not considered,
 	 *		so if the sort field is changed, the row will not be moved.
-	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - edit: rows changed, but sorting may be affected.  May require full reload.
 	 * - delete: just delete the given rows clientside (no server interaction neccessary)
-	 * - add: requires full reload
+	 * - add: put the new row in at the top, unless app says otherwise
+	 *
+	 * Nextmatch checks the application callback nm_refresh_index, which has a default implementation
+	 * in egw_app.nm_refresh_index().
 	 *
 	 * @param {string[]|string} _row_ids rows to refresh
 	 * @param {?string} _type "update", "edit", "delete" or "add"
 	 *
 	 * @see jsapi.egw_refresh()
+	 * @see egw_app.nm_refresh_index()
 	 * @fires refresh from the widget itself
 	 */
 	refresh( _row_ids, _type)
@@ -765,6 +769,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			var uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
 			switch(_type)
 			{
+				case "edit":
 				case "update":
 					if(!this.refresh_update(uid))
 					{
@@ -778,7 +783,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				case "add":
 					if (this.refresh_add(uid)) break;
 					// fall-through / full refresh, if refresh_add returns false
-				case "edit":
 				default:
 					// Trigger refresh
 					this.applyFilters();
