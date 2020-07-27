@@ -129,6 +129,7 @@ abstract class Extra
 		{
 			$GLOBALS['egw']->framework->render('', false, false);
 		}
+		$GLOBALS['egw']->__destruct();
 		exit;
 	}
 
