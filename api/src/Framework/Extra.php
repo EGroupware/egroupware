@@ -59,7 +59,6 @@ abstract class Extra
 		// if we have real push available and a regular single-entry refresh of a push supporting app, no need to refresh
 		if (!Json\Push::onlyFallback() &&
 			!empty($type) && !empty($id) &&	// $type === null --> full reload
-			$app !== 'calendar' &&	// calendar non-list views need refresh calls, even using push
 			Link::get_registry($app, 'push_data') !== null)
 		{
 			$app = 'msg-only-push-refresh';
