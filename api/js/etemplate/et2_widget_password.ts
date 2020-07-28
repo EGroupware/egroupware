@@ -34,7 +34,7 @@ export class et2_password extends et2_textbox
 		"autocomplete": {
 			"name": "Autocomplete",
 			"type": "string",
-			"default": "Off",
+			"default": "off",
 			"description": "Whether or not browser should autocomplete that field: 'on', 'off', 'default' (use attribute from form). Default value is set to off."
 		},
 		"viewable": {

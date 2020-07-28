@@ -240,7 +240,7 @@ var et2_password = /** @class */ (function (_super) {
         "autocomplete": {
             "name": "Autocomplete",
             "type": "string",
-            "default": "Off",
+            "default": "off",
             "description": "Whether or not browser should autocomplete that field: 'on', 'off', 'default' (use attribute from form). Default value is set to off."
         },
         "viewable": {
