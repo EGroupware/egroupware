@@ -1,3 +1,23 @@
+egroupware-docker (20.1.20200728) hardy; urgency=low
+
+  * 4th and probably last 20.1 release candidate
+  * Login: updated background image with 20.1 highlights
+  * Calendar: send notifications/meeting requests after responding to user
+  * InfoLog: implemented push updates and incremental list updates
+  * Mail/SwoolePush: push notifications for new mails from Dovecot (needs configuration!)
+  * Mail: fix download attachments as zip
+  * Mail: open notification email of own domain as popup
+  * Notifications: show app-specific number of notifications on tab-header
+  * All apps: success or error messages no longer overwrite each other and new styling
+  * smallPART: add missing frame-ancestors ContentSecurityPolicy for LTI 1.3
+  * Security: allow to configure SameSite cookie attribute (eg. for LTI embeding)
+  * jDots: fix login page
+  * InfoLog: add filter by contact to export filters
+  * Home: fixed loading widgets and stalling calendar
+  * Mobile: fix missing search in mobile view
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 28 Jul 2020 11:50:08 +0200
+
 egroupware-docker (20.1.20200716) hardy; urgency=low
 
   * 3rd 20.1 release candidate
