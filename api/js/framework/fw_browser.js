@@ -194,6 +194,7 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 		if(app[this.app.appName] && app[this.app.appName].destroy)
 		{
 			app[this.app.appName].destroy();
+			delete app[this.app.appName];	// really delete it, so new object get constructed and registered for push
 		}
 
 		// Unload etemplate2, if there
