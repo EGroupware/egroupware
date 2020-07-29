@@ -418,11 +418,12 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 /**
  * set notification
  *
- * @param {boolean} _off if set to true the notification gets reset
+ * @param {int} _value if set to 0 the notification gets reset if nothing set
+ * it will increase the notification value by one
  */
-egw_fw_ui_tab.prototype.setNotification = function(_off)
+egw_fw_ui_tab.prototype.setNotification = function(_value)
 {
-	this.notification = _off ? 0 : this.notification+1;
+	this.notification = typeof _value != 'undefined' ? _value : this.notification+1;
 	jQuery(this.notificationDiv).text(this.notification).toggle(this.notification > 0);
 };
 

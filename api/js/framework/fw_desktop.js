@@ -270,7 +270,7 @@
 		setActiveApp: function(_app)
 		{
 			var result = this._super.apply(this, arguments);
-			this.notifyAppTab(_app.appName , true);
+			this.notifyAppTab(_app.appName , 0);
 			if (_app == _app.parentFw.activeApp)
 			{
 				//Set the sidebox width if a application specific sidebox width is set
@@ -513,15 +513,15 @@
 		 * Notify tab
 		 *
 		 * @param {string} _appname
-		 * @param {boolean} _clear reset notification if set to true
+		 * @param {int} _value to set as notification, 0 will reset notification
 		 */
-		notifyAppTab: function(_appname, _clear)
+		notifyAppTab: function(_appname, _value)
 		{
 			var tab = this.tabsUi.getTab(_appname);
 			// do not set tab's notification if it's the active tab
-			if (tab && (this.activeApp.appName != _appname || _clear))
+			if (tab && (this.activeApp.appName != _appname || _value == 0))
 			{
-				this.tabsUi.getTab(_appname).setNotification(_clear);
+				this.tabsUi.getTab(_appname).setNotification(_value);
 			}
 		}
 	});
