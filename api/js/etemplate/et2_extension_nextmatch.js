@@ -433,6 +433,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * Change type parameters allows for quicker refresh then complete server side reload:
      * - update: request just modified data from given rows.  Sorting is not considered,
      *		so if the sort field is changed, the row will not be moved.
+     * - update-in-place: update row, but do NOT move it, or refresh if uid does not exist
      * - edit: rows changed, but sorting may be affected.  May require full reload.
      * - delete: just delete the given rows clientside (no server interaction neccessary)
      * - add: put the new row in at the top, unless app says otherwise
@@ -504,6 +505,9 @@ var et2_nextmatch = /** @class */ (function (_super) {
         id_loop: for (var i = 0; i < _row_ids.length; i++) {
             var uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
             switch (_type) {
+                case "update-in-place":
+                    this.egw().dataRefreshUID(uid);
+                    break;
                 case "edit":
                 case "update":
                     if (!this.refresh_update(uid)) {

@@ -319,6 +319,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {string} _type either 'update', 'edit', 'delete', 'add' or null
 		 * - update: request just modified data from given rows.  Sorting is not considered,
 		 *		so if the sort field is changed, the row will not be moved.
+		 * - update-in-place: update row, but do NOT move it, or refresh if uid does not exist
 		 * - edit: rows changed, but sorting may be affected.  Requires full reload.
 		 * - delete: just delete the given rows clientside (no server interaction neccessary)
 		 * - add: requires full reload for proper sorting
