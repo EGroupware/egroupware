@@ -458,6 +458,18 @@ export class et2_dataview_controller
 			this._grid.insertRow(_entry.idx, _entry.row);
 		}
 
+		// Update index map
+		if(this._indexMap[_entry.idx].uid !== _entry.uid)
+		{
+			let max = parseInt(Object.keys(this._indexMap).reduce((a, b) => this._indexMap[a] > this._indexMap[b] ? a : b));
+			for(let idx = max; idx >= _entry.idx; idx--)
+			{
+				this._indexMap[idx].idx = idx+1;
+				this._indexMap[this._indexMap[idx].idx] = this._indexMap[idx];
+			}
+			this._indexMap[_entry.idx] = _entry
+		}
+
 		return this.hasData;
 	}
 
