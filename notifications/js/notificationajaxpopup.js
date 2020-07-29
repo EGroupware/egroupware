@@ -218,16 +218,16 @@
 		for(var index in indexes)
 		{
 			var id = indexes[index];
-			if (this.filter && notifymessages[id]['data']['app'] != this.filter) continue;
 			var $message, $mark, $delete, $inner_container, $nav_prev, $nav_next,
 				$more_info, $top_toolbar, $open_entry, $date, $collapse;
 			var message_id = 'egwpopup_message_'+id;
 			var time_label = this.getTimeLabel(notifymessages[id]['created'], notifymessages[id]['current']);
 			if (jQuery('#'+message_id,$egwpopup_list).length > 0)
 			{
-				this.update_message_status(id, notifymessages[id]['status']);
+				this.update_message_status(id, notifymessages[id]['status'], true);
 				continue;
 			}
+			if (this.filter && notifymessages[id]['data']['app'] != this.filter) continue;
 			// set the time labels on
 			switch (time_label)
 			{
@@ -352,7 +352,7 @@
 			$egwpopup_list.append($message);
 			// bind click handler after the message container is attached
 			$message.click(jQuery.proxy(this.clickOnMessage, this,[$message]));
-			this.update_message_status(id, notifymessages[id]['status']);
+			this.update_message_status(id, notifymessages[id]['status'], true);
 			if (notifymessages[id]['extra_data']
 					&& !notifymessages[id]['status']
 					&& notifymessages[id]['extra_data']['egw_pr_notify'])
@@ -543,7 +543,7 @@
 		}
 	};
 
-	notifications.prototype.update_message_status = function (_id, _status)
+	notifications.prototype.update_message_status = function (_id, _status, _noCounterUpdate)
 	{
 		var $egwpopup_message = jQuery('#egwpopup_message_'+_id);
 		notifymessages[_id]['status'] = _status;
@@ -560,7 +560,7 @@
 					break;
 			}
 		}
-		this.counterUpdate();
+		if (!_noCounterUpdate) this.counterUpdate();
 	};
 
 	notifications.prototype.delete_all = function () {
@@ -784,6 +784,7 @@
 			{
 				this.filter = _appname;
 				this.toggle();
+				this.display();
 				return true;
 			}
 		}
@@ -799,7 +800,7 @@
 		var $egwpopup = jQuery('#egwpopup');
 		var $body = jQuery('body');
 		var $counter = jQuery('#topmenu_info_notifications');
-		this.display();
+		if (!_stat) this.display();
 		var self = this;
 		if (!$egwpopup.is(":visible"))
 		{
@@ -833,23 +834,30 @@
 	{
 		var $topmenu_info_notifications = jQuery('#topmenu_info_notifications');
 		var counter = 0;
-
-		for(var j in notifymessages)
-		{
-			//reset all tab notifications
-			framework.notifyAppTab(notifymessages[j]['extra_data']['app'], true);
-		}
+		var apps = {};
 
 		for (var id in notifymessages)
 		{
+			if (typeof apps[notifymessages[id]['extra_data']['app']] == 'undefined')
+			{
+				apps[notifymessages[id]['extra_data']['app']] = 0;
+			}
 			if (notifymessages[id]['status'] != 'SEEN')
 			{
 				counter++;
-				framework.notifyAppTab(notifymessages[id]['extra_data']['app']);
+				if (typeof apps[notifymessages[id]['extra_data']['app']] != 'undefined')
+				{
+					apps[notifymessages[id]['extra_data']['app']] +=1;
+				}
 			}
 		}
 		if (counter > 0)
 		{
+			for (var app in apps)
+			{
+				framework.notifyAppTab(app, apps[app]);
+			}
+
 			$topmenu_info_notifications.addClass('egwpopup_notify');
 			framework.topmenu_info_notify('notifications', true, counter,egw.lang('You have %1 unread notifications', counter));
 		}
