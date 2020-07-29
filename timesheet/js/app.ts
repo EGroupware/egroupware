@@ -231,7 +231,7 @@ class TimesheetApp extends EgwApp
 		{
 			this._grants = egw.grants(this.appname);
 		}
-		if (typeof this._grants[pushData.acl] === 'undefined') return;
+		if (typeof this._grants[pushData.acl.ts_owner] === 'undefined') return;
 
 		// check if we might not see it because of an owner filter
 		let nm = <et2_nextmatch>this.et2?.getWidgetById('nm');
