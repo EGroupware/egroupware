@@ -570,6 +570,7 @@ class mail_compose
 				{
 					$rhA = mail_ui::splitRowID($_content['processedmail_id']);
 					$idsForRefresh[] = mail_ui::generateRowID($rhA['profileID'], $rhA['folder'], $rhA['msgUID'], $_prependApp=false);
+					$workingFolder = $rhA['folder'];	// need folder to refresh eg. drafts folder
 				}
 				$response = Api\Json\Response::get();
 				if ($activeProfile != $composeProfile)
@@ -577,17 +578,19 @@ class mail_compose
 					// we need a message only, when account ids (composeProfile vs. activeProfile) differ
 					$response->call('opener.egw_message',lang('Message send successfully.'));
 				}
-				elseif ($activeProfile == $composeProfile && ($workingFolder==$activeFolder['mailbox'] && $mode != 'compose') || ($this->mail_bo->isSentFolder($workingFolder)||$this->mail_bo->isDraftFolder($workingFolder)))
+				elseif ($activeProfile == $composeProfile && ($workingFolder==$activeFolder['mailbox'] && $mode != 'compose') ||
+					($this->mail_bo->isSentFolder($workingFolder) || $this->mail_bo->isDraftFolder($workingFolder)))
 				{
 					if ($this->mail_bo->isSentFolder($workingFolder)||$this->mail_bo->isDraftFolder($workingFolder))
 					{
 						// we may need a refresh when on sent folder or in drafts, as drafted messages will/should be deleted after succeeded send action
 						$response->call('opener.egw_refresh',lang('Message send successfully.'),'mail');
 					}
+					// we only need to update the icon of the replied or forwarded mails --> 'update-in-place'
 					else
 					{
 						//error_log(__METHOD__.__LINE__.array2string($idsForRefresh));
-						$response->call('opener.egw_refresh',lang('Message send successfully.'),'mail',$idsForRefresh,'update');
+						$response->call('opener.egw_refresh',lang('Message send successfully.'),'mail',$idsForRefresh,'update-in-place');
 					}
 				}
 				else
