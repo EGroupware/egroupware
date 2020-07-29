@@ -199,7 +199,7 @@ var TimesheetApp = /** @class */ (function (_super) {
         if (typeof this._grants === 'undefined') {
             this._grants = egw.grants(this.appname);
         }
-        if (typeof this._grants[pushData.acl] === 'undefined')
+        if (typeof this._grants[pushData.acl.ts_owner] === 'undefined')
             return;
         // check if we might not see it because of an owner filter
         var nm = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getWidgetById('nm');
