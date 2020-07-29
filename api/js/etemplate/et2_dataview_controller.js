@@ -295,6 +295,7 @@ var et2_dataview_controller = /** @class */ (function () {
      * otherwise.
      */
     et2_dataview_controller.prototype._insertDataRow = function (_entry, _update) {
+        var _this = this;
         // Abort if the entry already has a row but the _insert flag is not set
         if (_entry.row && !_update) {
             return true;
@@ -329,6 +330,15 @@ var et2_dataview_controller = /** @class */ (function () {
         // code only if it is a newly created row.
         if (createdRow && _entry.row) {
             this._grid.insertRow(_entry.idx, _entry.row);
+        }
+        // Update index map
+        if (this._indexMap[_entry.idx].uid !== _entry.uid) {
+            var max = parseInt(Object.keys(this._indexMap).reduce(function (a, b) { return _this._indexMap[a] > _this._indexMap[b] ? a : b; }));
+            for (var idx = max; idx >= _entry.idx; idx--) {
+                this._indexMap[idx].idx = idx + 1;
+                this._indexMap[this._indexMap[idx].idx] = this._indexMap[idx];
+            }
+            this._indexMap[_entry.idx] = _entry;
         }
         return this.hasData;
     };
