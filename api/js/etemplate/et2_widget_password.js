@@ -152,6 +152,10 @@ var et2_password = /** @class */ (function (_super) {
                 statustext: this.egw().lang("Suggest password")
             };
             this.suggest_button = et2_core_widget_1.et2_createWidget("button", attrs, this);
+            if (this.parentNode) {
+                // Turned on after initial load, need to run loadingFinished()
+                this.suggest_button.loadingFinished();
+            }
         }
         if (length) {
             jQuery('.generate_password', this.wrapper).show();

@@ -199,6 +199,11 @@ export class et2_password extends et2_textbox
 				statustext: this.egw().lang("Suggest password")
 			};
 			this.suggest_button = <et2_button> et2_createWidget("button", attrs, this);
+			if(this.parentNode)
+			{
+				// Turned on after initial load, need to run loadingFinished()
+				this.suggest_button.loadingFinished();
+			}
 		}
 		if(length)
 		{
