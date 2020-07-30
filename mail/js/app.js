@@ -5118,6 +5118,7 @@ app.classes.mail = AppJS.extend(
 		var extended_settings = _widget.get_value() != 'attach' && this.egw.app('stylite');
 		this.et2.getWidgetById('expiration').set_readonly(!extended_settings);
 		this.et2.getWidgetById('password').set_readonly(!extended_settings);
+		this.et2.getWidgetById('password').set_suggest(!extended_settings ? 0 : 8);
 
 		if (_widget.get_value() == 'share_rw' && !this.egw.app('stylite'))
 		{
