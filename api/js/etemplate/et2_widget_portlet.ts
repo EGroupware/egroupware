@@ -208,7 +208,7 @@ class et2_portlet extends et2_valueWidget
 
 		// Add in defaults, but let provided actions override them
 		this.options.actions = jQuery.extend(true,{},defaults,actions);
-		super.set_actions([this.options.actions]);
+		super.set_actions(this.options.actions);
 	}
 
 	/**

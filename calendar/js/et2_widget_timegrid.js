@@ -814,11 +814,12 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      */
     et2_calendar_timegrid.prototype.set_header_classes = function () {
         var day;
+        var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
         for (var i = 0; i < this.day_widgets.length; i++) {
             day = this.day_widgets[i];
             // Classes
-            if (app.calendar && app.calendar.state &&
-                this.day_list[i] && parseInt(this.day_list[i].substr(4, 2)) !== new Date(app.calendar.state.date).getUTCMonth() + 1) {
+            if (app_calendar && app_calendar.state &&
+                this.day_list[i] && parseInt(this.day_list[i].substr(4, 2)) !== new Date(app_calendar.state.date).getUTCMonth() + 1) {
                 day.set_class('calendar_differentMonth');
             }
             else {

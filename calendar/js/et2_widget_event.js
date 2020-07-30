@@ -179,7 +179,8 @@ var et2_calendar_event = /** @class */ (function (_super) {
             this._values_check(value);
         }
         // Check for changing days in the grid view
-        if (!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent_owner)) {
+        var state = this.getInstanceManager().app_obj.calendar.getState() || app.calendar.getState();
+        if (!this._sameday_check(value) || !this._status_check(value, state.status_filter, parent_owner)) {
             // May need to update parent to remove out-of-view events
             parent.removeChild(this);
             if (event === null && parent && parent.instanceOf(et2_widget_daycol_1.et2_calendar_daycol)) {
@@ -927,9 +928,11 @@ var et2_calendar_event = /** @class */ (function (_super) {
      * @return {boolean} Should the event be displayed
      */
     et2_calendar_event.owner_check = function (event, parent, owner_too) {
+        var _a, _b;
         var owner_match = true;
-        if (typeof owner_too === 'undefined' && app.calendar.state.status_filter) {
-            owner_too = app.calendar.state.status_filter === 'owner';
+        var state = ((_a = parent.getInstanceManager()) === null || _a === void 0 ? void 0 : _a.app_obj.calendar.state) || ((_b = app.calendar) === null || _b === void 0 ? void 0 : _b.state) || {};
+        if (typeof owner_too === 'undefined' && state.status_filter) {
+            owner_too = state.status_filter === 'owner';
         }
         var options = null;
         if (app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner')) {

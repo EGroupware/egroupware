@@ -491,7 +491,8 @@ var et2_calendar_view = /** @class */ (function (_super) {
             jQuery.extend(options, this.drag_create.start, end);
             delete (options.date);
             // Make sure parent is set, if needed
-            if (this.drag_create.parent && this.drag_create.parent.options.owner !== app.calendar.state.owner && !options.owner) {
+            var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+            if (this.drag_create.parent && this.drag_create.parent.options.owner !== app_calendar.state.owner && !options.owner) {
                 options.owner = this.drag_create.parent.options.owner;
             }
             // Remove empties
