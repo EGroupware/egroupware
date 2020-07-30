@@ -1335,11 +1335,14 @@ class AdminApp extends EgwApp
 	 */
 	clear_cache()
 	{
-		this.egw.message(this.egw.lang('Clear cache and register hooks')+"\n"+this.egw.lang('Please wait...'),'info');
-
-		this.egw.json('admin.admin_hooks.ajax_clear_cache').sendRequest(true, undefined, jQuery.proxy(function(_xmlhttp, _err)
+		let wait = this.egw.message(this.egw.lang('Clear cache and register hooks')+"\n"+this.egw.lang('Please wait...'),'info');
+		let success = function (){
+			wait.close();
+			egw.message('Done');
+		};
+		this.egw.json('admin.admin_hooks.ajax_clear_cache', null, success).sendRequest(true, undefined, jQuery.proxy(function(_xmlhttp, _err)
 		{
-			this.egw.json('admin.admin_hooks.ajax_clear_cache&errored=1').sendRequest(true);
+			this.egw.json('admin.admin_hooks.ajax_clear_cache&errored=1', null, success).sendRequest(true);
 		}, this));
 	}
 

@@ -173,8 +173,6 @@ class admin_hooks
 		}
 		// allow apps to hook into "Admin >> Clear cache and register hooks"
 		Api\Hooks::process('clear_cache', array(), true);
-
-		Api\Json\Response::get()->apply('egw.message', array(lang('Done'), 'success'));
 	}
 
 	/**
