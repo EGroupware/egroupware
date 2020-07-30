@@ -402,10 +402,11 @@ app.classes.mail = AppJS.extend(
 		// notify user a new mail arrived
 		if (pushData.type === 'add')
 		{
-			this.egw.message(this.egw.lang('New mail from %1', pushData.acl.from)+'\n'+pushData.acl.subject+'\n'+pushData.acl.snippet, 'success');
 			// increment notification counter on (closed) mail tab
 			let framework = egw_getFramework();
 			if (framework) framework.notifyAppTab('mail');
+			// check if user wants a new mail notification
+			this.notifyNew(pushData);
 		}
 		// check if we might not see it because we are on a different mail account or folder
 		let nm = this.et2 ? this.et2.getWidgetById('nm') : null;
@@ -426,6 +427,22 @@ app.classes.mail = AppJS.extend(
 			let folder_id = {};
 			folder_id[folder] = pushData.acl.folder+" ("+pushData.acl.unseen+")";
 			this.mail_setFolderStatus(folder_id);
+		}
+	},
+
+	/**
+	 * Check if user want's new mail notification
+	 *
+	 * @param pushData
+	 */
+	notifyNew: function(pushData)
+	{
+		let framework = egw_getFramework();
+		let notify = this.egw.preference('new_mail_notification', 'mail');
+		if (typeof notify === 'undefined' || notify === 'always' ||
+			notify === 'not-mail' && framework && framework.activeApp.appName !== 'mail')
+		{
+			this.egw.message(egw.lang('New mail from %1', pushData.acl.from)+'\n'+pushData.acl.subject+'\n'+pushData.acl.snippet, 'success');
 		}
 	},
 

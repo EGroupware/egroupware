@@ -50,6 +50,7 @@ allways a new window	mail	en	allways a new window
 always	mail	en	Always
 always allow external sources from %1	mail	en	Always allow external sources from %1
 always show html emails	mail	en	always show HTML emails
+always show notifiction	mail	en	Always show notifiction
 an error happend while trying to remove acl rights from the account %1!	mail	en	An error happend while trying to remove ACL rights from the account %1!
 and the rule with priority %1, now got the priority %2	mail	en	And the rule with priority %1, now got the priority %2
 any of	mail	en	any of
@@ -363,6 +364,7 @@ name of account	mail	en	Name of account
 name of imap servers (space separated host or host:port)	mail	en	Name of IMAP servers (space separated host or host:port)
 never display html emails	mail	en	never display HTML emails
 never show	mail	en	never show
+never show notification	mail	en	Never show notification
 new mail from %1	mail	en	New mail from %1
 new mail notification	mail	en	New mail notification
 new message type	mail	en	New message type
@@ -393,6 +395,7 @@ notify when new mails arrive in these folders	mail	en	notify when new mails arri
 on	mail	en	on
 on behalf of	mail	en	On behalf of
 one address is not valid	mail	en	One address is not valid
+only if currently in an other app	mail	en	Only if currently in an other app
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	en	Only makes sense, if you transport password through a different channel / outside of this mail to recipients!
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	en	only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level
 only one window	mail	en	only one window
@@ -546,11 +549,13 @@ show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	
 show horizontal	mail	en	show horizontal
 show horizontal, hide if none selected	mail	en	show horizontal, hide if none selected
 show new messages on home page	mail	en	show new messages on home page
+show notification for new arriving mails	mail	en	Show notification for new arriving mails
 show test connection section and control the level of info displayed?	mail	en	Show Test Connection section and control the level of info displayed?
 show test connection section and control the level of info displayed??	mail	en	Show Test Connection section and control the level of info displayed??
 show them this time only	mail	en	Show them this time only
 show vertical	mail	en	show vertical
 show/hide preview pane in mail list view	mail	en	Show/Hide preview pane in mail list view
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	en	Shows a temporary visible notification including from address, subject and a snippet of the mail
 sieve	mail	en	Sieve
 sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
