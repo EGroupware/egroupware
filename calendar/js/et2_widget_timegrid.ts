@@ -714,7 +714,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			{
 				day = this.day_widgets[i-1];
 				this.now_div.appendTo(day.getDOMNode()).show();
-				let pos = day._time_to_position(now.getHours() * 60 + now.getMinutes());
+				let pos = day._time_to_position(now.getUTCHours() * 60 + now.getUTCMinutes());
 				//this.now_div.position({my: 'left', at: 'left', of: day.getDOMNode()});
 				this.now_div.css('top', pos + '%');
 				break;
