@@ -354,15 +354,16 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                         getInstanceManager: function () { return im; }
                     }, { application: 'calendar' });
                     var labels = [];
-                    if (!app.calendar.state.cat_id ||
-                        app.calendar.state.cat_id.toString() === '' ||
-                        app.calendar.state.cat_id.toString() == '0') {
-                        app.calendar.state.cat_id = '';
+                    var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+                    if (!app_calendar.state.cat_id ||
+                        app_calendar.state.cat_id.toString() === '' ||
+                        app_calendar.state.cat_id.toString() == '0') {
+                        app_calendar.state.cat_id = '';
                         labels.push({ id: '', value: '', label: egw.lang('none'), main: '', data: {} });
                         labels = labels.concat(categories);
                     }
                     else {
-                        var cat_id = app.calendar.state.cat_id;
+                        var cat_id = app_calendar.state.cat_id;
                         if (typeof cat_id == 'string') {
                             cat_id = cat_id.split(',');
                         }
@@ -395,6 +396,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                 },
                 group: function (labels, rows, event) {
                     var cats = event.category;
+                    var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
                     if (typeof event.category === 'string') {
                         cats = cats.split(',');
                     }
@@ -406,7 +408,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                         for (var i = 0; i < labels.length; i++) {
                             if (labels[i].id == category) {
                                 // If there's no cat filter, only show the top level
-                                if (!app.calendar.state.cat_id) {
+                                if (!app_calendar.state.cat_id) {
                                     for (var j = 0; j < labels.length; j++) {
                                         if (labels[j].id == labels[i].main) {
                                             label_index = j;
@@ -753,12 +755,13 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         // Set height for rows
         this.rows.height(this.div.height() - this.headers.outerHeight());
         // Draw the rows
+        var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
         for (var key in labels) {
             if (!labels.hasOwnProperty(key))
                 continue;
             // Skip sub-categories (events are merged into top level)
             if (this.options.group_by == 'category' &&
-                (!app.calendar.state.cat_id || app.calendar.state.cat_id == '') &&
+                (!app_calendar.state.cat_id || app_calendar.state.cat_id == '') &&
                 labels[key].id != labels[key].main) {
                 continue;
             }
@@ -901,7 +904,8 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         // we're not using UTC so date() formatting function works
         var t = new Date(start.valueOf());
         // Make sure we're lining up on the week
-        var week_end = app.calendar.date.end_of_week(start);
+        var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+        var week_end = app_calendar.date.end_of_week(start);
         var days_in_week = Math.floor(((week_end - start) / (24 * 3600 * 1000)) + 1);
         var week_width = 100 / days * (days <= 7 ? days : days_in_week);
         for (var left = 0, i = 0; i < days; t.setUTCDate(t.getUTCDate() + 7), left += week_width) {
@@ -915,12 +919,12 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                 usertime.setUTCMinutes(usertime.getUTCMinutes() - start.getTimezoneOffset());
             }
             week_width = 100 / days * Math.min(days, days_in_week);
-            var title = this.egw().lang('Week') + ' ' + app.calendar.date.week_number(usertime);
+            var title = this.egw().lang('Week') + ' ' + app_calendar.date.week_number(usertime);
             if (start.getTimezoneOffset() > 0) {
                 // Gets the right week start west of GMT
                 usertime.setUTCMinutes(usertime.getUTCMinutes() + start.getTimezoneOffset());
             }
-            state = app.calendar.date.start_of_week(usertime);
+            state = app_calendar.date.start_of_week(usertime);
             state.setUTCHours(0);
             state.setUTCMinutes(0);
             state = state.toJSON();

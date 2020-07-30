@@ -223,7 +223,8 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		}
 
 		// Check for changing days in the grid view
-		if(!this._sameday_check(value) || !this._status_check(value, app.calendar.getState().status_filter, parent_owner))
+		let state = this.getInstanceManager().app_obj.calendar.getState() || app.calendar.getState();
+		if(!this._sameday_check(value) || !this._status_check(value, state.status_filter, parent_owner))
 		{
 			// May need to update parent to remove out-of-view events
 			parent.removeChild(this);
@@ -1187,9 +1188,10 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 	static owner_check(event, parent, owner_too?)
 	{
 		let owner_match = true;
-		if(typeof owner_too === 'undefined' && app.calendar.state.status_filter)
+		let state = parent.getInstanceManager()?.app_obj.calendar.state || app.calendar?.state || {}
+		if(typeof owner_too === 'undefined' && state.status_filter)
 		{
-			owner_too = app.calendar.state.status_filter === 'owner';
+			owner_too = state.status_filter === 'owner';
 		}
 		let options : any = null;
 		if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))

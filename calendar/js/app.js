@@ -287,7 +287,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 return d;
             },
             end_of_week: function (date) {
-                var d = app.calendar.date.start_of_week(date);
+                var d = this.start_of_week(date);
                 d.setUTCDate(d.getUTCDate() + 6);
                 return d;
             }
@@ -558,6 +558,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param pushData
      */
     CalendarApp.prototype.push_calendar = function (pushData) {
+        var _this = this;
         // pushData does not contain everything, just the minimum.  See calendar_hooks::search_link().
         var cal_event = pushData.acl || {};
         // check visibility - grants is ID => permission of people we're allowed to see
@@ -566,9 +567,9 @@ var CalendarApp = /** @class */ (function (_super) {
             this._grants = egw.grants(this.appname);
         }
         // Filter what's allowed down to those we care about
-        var filtered = Object.keys(this._grants).filter(function (account) { return app.calendar.state.owner.indexOf(account) >= 0; });
+        var filtered = Object.keys(this._grants).filter(function (account) { return _this.state.owner.indexOf(account) >= 0; });
         // Check if we're interested in displaying by owner / participant
-        var owner_check = et2_widget_event_1.et2_calendar_event.owner_check(cal_event, { options: { owner: filtered } });
+        var owner_check = et2_widget_event_1.et2_calendar_event.owner_check(cal_event, jQuery.extend({}, { options: { owner: filtered } }, this.et2));
         if (!owner_check) {
             // The owner is not in the list of what we're allowed / care about
             return;
@@ -708,11 +709,11 @@ var CalendarApp = /** @class */ (function (_super) {
             case 'next':
             case 'previous':
                 var delta = action.id == 'previous' ? -1 : 1;
-                var view = CalendarApp.views[app.calendar.state.view] || false;
-                var start = new Date(app.calendar.state.date);
+                var view = CalendarApp.views[this.state.view] || false;
+                var start = new Date(this.state.date);
                 if (view) {
                     start = view.scroll(delta);
-                    app.calendar.update_state({ date: app.calendar.date.toString(start) });
+                    app.calendar.update_state({ date: this.date.toString(start) });
                 }
                 break;
         }

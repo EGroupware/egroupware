@@ -150,7 +150,7 @@ var et2_portlet = /** @class */ (function (_super) {
         }
         // Add in defaults, but let provided actions override them
         this.options.actions = jQuery.extend(true, {}, defaults, actions);
-        _super.prototype.set_actions.call(this, [this.options.actions]);
+        _super.prototype.set_actions.call(this, this.options.actions);
     };
     /**
      * Override _link_actions to remove edit action, if there is no settings

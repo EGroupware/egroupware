@@ -619,7 +619,8 @@ export class et2_calendar_view extends et2_valueWidget
 			delete(options.date);
 
 			// Make sure parent is set, if needed
-			if (this.drag_create.parent && this.drag_create.parent.options.owner !== app.calendar.state.owner && !options.owner)
+			let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+			if (this.drag_create.parent && this.drag_create.parent.options.owner !== app_calendar.state.owner && !options.owner)
 			{
 				options.owner = this.drag_create.parent.options.owner;
 			}

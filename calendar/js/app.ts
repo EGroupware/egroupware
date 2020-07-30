@@ -503,10 +503,13 @@ class CalendarApp extends EgwApp
 			this._grants = egw.grants(this.appname);
 		}
 		// Filter what's allowed down to those we care about
-		let filtered = Object.keys(this._grants).filter(account => app.calendar.state.owner.indexOf(account) >= 0);
+		let filtered = Object.keys(this._grants).filter(account => this.state.owner.indexOf(account) >= 0);
 
 		// Check if we're interested in displaying by owner / participant
-		let owner_check = et2_calendar_event.owner_check(cal_event, {options: {owner: filtered}});
+		let owner_check = et2_calendar_event.owner_check(cal_event, jQuery.extend({},
+            {options: {owner: filtered}},
+			this.et2
+		));
 		if(!owner_check)
 		{
 			// The owner is not in the list of what we're allowed / care about
@@ -670,12 +673,12 @@ class CalendarApp extends EgwApp
 			case 'next':
 			case 'previous':
 				var delta = action.id == 'previous' ? -1 : 1;
-				var view = CalendarApp.views[app.calendar.state.view] || false;
-				var start = new Date(app.calendar.state.date);
+				var view = CalendarApp.views[this.state.view] || false;
+				var start = new Date(this.state.date);
 				if (view)
 				{
 					start = view.scroll(delta);
-					app.calendar.update_state({date:app.calendar.date.toString(start)});
+					app.calendar.update_state({date:this.date.toString(start)});
 				}
 				break;
 		}
@@ -3803,7 +3806,7 @@ class CalendarApp extends EgwApp
 		},
 		end_of_week: function(date)
 		{
-			var d = app.calendar.date.start_of_week(date);
+			var d = this.start_of_week(date);
 			d.setUTCDate(d.getUTCDate() + 6);
 			return d;
 		}

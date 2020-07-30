@@ -144,14 +144,15 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 		}
 		else if (et2.uniqueId)
 		{
+			let portlet_container = this.portlet_container || window.app.home?.portlet_container;
 			// Handle bad timing - a sub-template was finished first
-			if(!this.portlet_container)
+			if(!portlet_container)
 			{
 				window.setTimeout(jQuery.proxy(function() {this.et2_ready(et2, name);},this),200);
 				return;
 			}
 
-			var portlet = this.portlet_container.getWidgetById(et2.uniqueId);
+			var portlet = portlet_container.getWidgetById(et2.uniqueId);
 			// Check for existing etemplate, this one loaded over it
 			// NOTE: Moving them around like this can cause problems with event handlers
 			var existing = etemplate2.getById(et2.uniqueId);
