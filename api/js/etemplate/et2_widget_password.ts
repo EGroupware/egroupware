@@ -202,11 +202,11 @@ export class et2_password extends et2_textbox
 		}
 		if(length)
 		{
-			jQuery('.suggest', this.wrapper).show();
+			jQuery('.generate_password', this.wrapper).show();
 		}
 		else
 		{
-			jQuery('.suggest', this.wrapper).hide();
+			jQuery('.generate_password', this.wrapper).hide();
 		}
 	}
 

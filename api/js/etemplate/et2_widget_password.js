@@ -154,10 +154,10 @@ var et2_password = /** @class */ (function (_super) {
             this.suggest_button = et2_core_widget_1.et2_createWidget("button", attrs, this);
         }
         if (length) {
-            jQuery('.suggest', this.wrapper).show();
+            jQuery('.generate_password', this.wrapper).show();
         }
         else {
-            jQuery('.suggest', this.wrapper).hide();
+            jQuery('.generate_password', this.wrapper).hide();
         }
     };
     /**
