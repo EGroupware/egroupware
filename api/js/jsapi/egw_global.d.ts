@@ -547,7 +547,7 @@ declare interface IegwGlobal
 	 * @param {function} _callback
 	 * @param {object} _context
 	 */
-	accountData(_account_ids : number|number[], _field : string, _resolve_groups : boolean, 
+	accountData(_account_ids : number|number[], _field : string, _resolve_groups : boolean,
 				_callback : Function, _context : object) : void;
 	/**
 	 * Set account data.  This one can be called from the server to pre-fill the cache.
@@ -827,8 +827,10 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param {string} _discardID unique string id (appname:id) in order to register
 	 * the message as discardable. If no appname given, the id will be prefixed with
 	 * current app. The discardID will be stored in local storage.
+	 *
+	 * @returns {object} returns an object containing data and methods related to the message
 	 */
-	message(_msg : string, _type? : "help"|"info"|"error"|"warning"|"success", _discardID? : string) : void;
+	message(_msg: string, _type?: "help" | "info" | "error" | "warning" | "success", _discardID?: string): {node: JQuery, message: string, index: number, close: Function};
 	/**
 	 * Are we running in a popup
 	 *
@@ -886,7 +888,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param {object|null} _links app => array of ids of linked entries
 	 * or null, if not triggered on server-side, which adds that info
 	 */
-	refresh(_msg : string, _app : string, _id? : string|number, _type? : "update"|"edit"|"delete"|"add"|null, 
+	refresh(_msg : string, _app : string, _id? : string|number, _type? : "update"|"edit"|"delete"|"add"|null,
 			_targetapp? : string, _replace? : string|RegExp, _with? : string, _msg_type? : "error"|"warning"|"success", _links? : object) : void;
 	/**
 	 * Handle a push notification about entry changes from the websocket
@@ -925,7 +927,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 *		}
 	 *	@return {boolean} false if Notification is not supported by browser
 	 */
-	notification(_title : string, _options : {dir?: "ltr"|"rtl"|"auto", lang: string, body?: string, icon?: string, 
+	notification(_title : string, _options : {dir?: "ltr"|"rtl"|"auto", lang: string, body?: string, icon?: string,
 		tag?: string, onclick: Function, onshow?: Function, onclose?: Function, onerror?: Function}) : false|void;
 	/**
 	 * Check Notification availability by browser
@@ -974,7 +976,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * - This option only makes sense to be enabled when the open_link requested without user interaction
 	 * @param {string} _mime_type if given, we check if any app has registered a mime-handler for that type and use it
 	 */
-	open_link(_link : string, _target? : string, _popup? : string, _target_app? : string, 
+	open_link(_link : string, _target? : string, _popup? : string, _target_app? : string,
 			  _check_popup_blocker? : boolean, _mime_type? : string) : Window|void;
 	/**
 	 * Open a (centered) popup window with given size and url
@@ -989,7 +991,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param {boolean} _skip_framework
 	 * @returns {Window|void}
 	 */
-	openPopup(_url : string, _width : number, _height : number|"availHeight", _windowName? : string, _app? : string|boolean, 
+	openPopup(_url : string, _width : number, _height : number|"availHeight", _windowName? : string, _app? : string|boolean,
 			  _returnID? : boolean, _status? : "yes"|"no", _skip_framework? : boolean) : Window|void;
 	/**
 	 * Get available height of screen

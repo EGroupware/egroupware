@@ -62,6 +62,8 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {string} _discardID unique string id (appname:id) in order to register
 		 * the message as discardable. If no appname given, the id will be prefixed with
 		 * current app. The discardID will be stored in local storage.
+		 *
+		 * @return {object} returns an object containing data and methods related to the message
 		 */
 		message: function(_msg, _type, _discardID)
 		{
@@ -206,6 +208,12 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					}, 5000);
 				}
 			}
+			return {
+				node: msg_div,
+				message: _msg,
+				index: msg_index,
+				close: function(){msg_close.click();}
+			};
 		},
 
 		/**
