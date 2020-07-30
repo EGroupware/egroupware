@@ -325,6 +325,20 @@ class mail_hooks
 				'values' => $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains'],
 				'no_sel_options' => true
 			),
+			'new_mail_notification' => [
+				'type' => 'select',
+				'label' => 'Show notification for new arriving mails',
+				'help' => 'Shows a temporary visible notification including from address, subject and a snippet of the mail',
+				'name' => 'new_mail_notification',
+				'values' => [
+					'always' => lang('Always show notifiction'),
+					'not-mail' => lang('Only if currently in an other app'),
+					'never' => lang('Never show notification'),
+				],
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> 'always',
+			],
 			array(
 				'type'  => 'section',
 				'title' => lang('Configuration settings'),
@@ -439,6 +453,13 @@ class mail_hooks
 			)
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
+
+		// if no push configured, do NOT show new-mail-notification preference
+		$config = Api\Config::read('mail');
+		if (empty($GLOBALS['egw_info']['server']['imap_hosts_with_push']) && empty($config['imap_hosts_with_push']))
+		{
+			unset($settingsArray['new_mail_notification']);
+		}
 		return $settingsArray;
 	}
 

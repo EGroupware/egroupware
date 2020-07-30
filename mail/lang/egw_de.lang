@@ -50,6 +50,7 @@ allways a new window	mail	de	immer in einem neuen Fenster
 always	mail	de	Immer
 always allow external sources from %1	mail	de	Erlaube externe Bildquellen von %1
 always show html emails	mail	de	HTML-E-Mails immer anzeigen
+always show notifiction	mail	de	Benachrichtigungen immer anzeigen
 an error happend while trying to remove acl rights from the account %1!	mail	de	Ein Fehler trat auf beim Versuch die Zugriffskontrollrechte vom Konto %1 zu entfernen!
 and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Priorität %1 hat jetzt die Priorität %2
 any of	mail	de	mit einem
@@ -363,6 +364,7 @@ name of account	mail	de	Konten-Bezeichnung
 name of imap servers (space separated host or host:port)	mail	de	Name der IMAP Server (Leerzeichen getrennt Host oder Host:Port)
 never display html emails	mail	de	niemals anzeigen
 never show	mail	de	Nie anzeigen
+never show notification	mail	de	Benachrichtigungen nie anzeigen
 new mail from %1	mail	de	Neue Mail von %1
 new mail notification	mail	de	Benachrichtigung über neue E-Mails in:
 new message type	mail	de	Neue E-Mails verfassen als
@@ -393,6 +395,7 @@ notify when new mails arrive in these folders	mail	de	Benachrichtigung, sobald n
 on	mail	de	am
 on behalf of	mail	de	Im Namen von
 one address is not valid	mail	de	Eine Adresse ist ungültig
+only if currently in an other app	mail	de	Nur anzeigen wenn aktuell in einer anderen Anwendung
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	de	Macht nur dann Sinn, wenn das Passwort auf einem anderen Weg, außerhalb dieser Mail, den Empfängern mitgeteilt wird!
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	de	wird nur für bestimmte Server gebraucht, die NICHT alle Ordner für Root-Knoten-Abfragen zurückgeben (damit wird in diesem Fall explizit auf Ordner in den Prefixes der Namespaces geprüft)
 only one window	mail	de	nur ein einziges Fenster
@@ -546,11 +549,13 @@ show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	
 show horizontal	mail	de	Horizontal anzeigen
 show horizontal, hide if none selected	mail	de	Horizontal anzeigen, ausblenden wenn nichts ausgewählt
 show new messages on home page	mail	de	Anzeigen von neuen E-Mails auf der Startseite
+show notification for new arriving mails	mail	de	Zeige Benachrichtigungen für neu eintreffende Mails
 show test connection section and control the level of info displayed?	mail	de	Zeige Verbindungstest Link an und spezifiziere das Ausmaß der angezeigten Information?
 show test connection section and control the level of info displayed??	mail	de	Soll der Verbindungstest und die dazugehörigen Informationen angezeigt werden?
 show them this time only	mail	de	Einmalig externe Inhalte anzeigen
 show vertical	mail	de	Vertikal anzeigen (3-Spalten-Ansicht)
 show/hide preview pane in mail list view	mail	de	Mailvorschau anzeigen oder ausblenden
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	de	Zeigt eine kurze Zeit sichtbare Benachrichtigung einschließlich Absender, Betreff und Auszug der Mail
 sieve	mail	de	Sieve
 sieve connection status	mail	de	Sieve Verbindungsstatus
 sieve not activated	mail	de	Sieve nicht aktiviert
