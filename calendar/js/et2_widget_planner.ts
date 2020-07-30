@@ -1071,8 +1071,6 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			return false;
 		}
 
-		// Planner uses the dates, not just the times so need things right
-		now = new Date(now.valueOf() - now.getTimezoneOffset()*60000);
 		let row = null;
 		for(let i = 0; i < this._children.length && row == null; i++)
 		{

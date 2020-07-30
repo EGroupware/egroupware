@@ -832,8 +832,6 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             this.now_div.hide();
             return false;
         }
-        // Planner uses the dates, not just the times so need things right
-        now = new Date(now.valueOf() - now.getTimezoneOffset() * 60000);
         var row = null;
         for (var i = 0; i < this._children.length && row == null; i++) {
             if (this._children[i].instanceOf(et2_widget_planner_row_1.et2_calendar_planner_row)) {

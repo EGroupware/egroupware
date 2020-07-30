@@ -365,9 +365,11 @@ export class et2_calendar_view extends et2_valueWidget
 	 */
 	public _updateNow()
 	{
-		let now = new Date();
+		var tempDate = new Date();
+		var now = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),tempDate.getHours(),tempDate.getMinutes()-tempDate.getTimezoneOffset(),0);
+
 		// Use date widget's existing functions to deal
-		this._date_helper.set_value(now);
+		this._date_helper.set_value(now.toJSON());
 
 		now = new Date(this._date_helper.getValue());
 		if(this.get_start_date() <= now && this.get_end_date() >= now)

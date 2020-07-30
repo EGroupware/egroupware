@@ -521,7 +521,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             if (day.getDate() >= now) {
                 day = this.day_widgets[i - 1];
                 this.now_div.appendTo(day.getDOMNode()).show();
-                var pos = day._time_to_position(now.getHours() * 60 + now.getMinutes());
+                var pos = day._time_to_position(now.getUTCHours() * 60 + now.getUTCMinutes());
                 //this.now_div.position({my: 'left', at: 'left', of: day.getDOMNode()});
                 this.now_div.css('top', pos + '%');
                 break;
