@@ -66,7 +66,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * Get data about current user
 		 *
 		 * @param {string} _field
-		 * - 'account_id','account_lid','person_id','account_status',
+		 * - 'account_id','account_lid','person_id','account_status','memberships'
 		 * - 'account_firstname','account_lastname','account_email','account_fullname','account_phone'
 		 * - 'apps': object with app => data pairs the user has run-rights for
 		 * @return {string|array|null}
