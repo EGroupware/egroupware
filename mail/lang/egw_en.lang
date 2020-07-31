@@ -224,6 +224,7 @@ file into	mail	en	file into
 file into:	mail	en	File into:
 file rejected, no %2. is:%1	mail	en	File rejected, no %2. Is:%1
 filemanager	mail	en	Filemanager
+filemode has been switched to %1	mail	en	Filemode has been switched to: %1
 files	mail	en	Files
 flag / unflag	mail	en	Flag / Unflag
 flag or unflag a mail	mail	en	Flag or Unflag a mail
