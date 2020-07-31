@@ -1,3 +1,15 @@
+egroupware-docker (20.1.20200731) hardy; urgency=low
+
+  * 5th and last 20.1 release candidate
+  * Calendar: fix not working refresh via push, if Home app is used
+  * Mail: replying to a mail should only update icon, not move it to top of list
+  * Mail: new preference to disable notifications for new arriving mails (requires push for mail)
+  * Login: fixed not able to login due to notifications
+  * Login: fix not working forced password reset
+  * Preferences: use push to ask every affected client to reload preferences, if affected
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 31 Jul 2020 10:50:07 +0200
+
 egroupware-docker (20.1.20200728) hardy; urgency=low
 
   * 4th and probably last 20.1 release candidate
