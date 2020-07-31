@@ -946,7 +946,20 @@ class Base
 			if (is_array($colums) && ($key = array_search('*', $colums)) !== false)
 			{
 				unset($colums[$key]);
-				$colums = array_merge($colums, array_keys($this->db_cols));
+				// don't add colums already existing incl. aliased colums (AS $name)
+				$as_columns = array_map(function($col)
+				{
+					$as = null;
+					list(, $as) = preg_split('/ +AS +/i', $col);
+					return empty($as) ? $col : $as;
+				}, $colums);
+				foreach(array_keys($this->db_cols) as $col)
+				{
+					if (!in_array($col, $colums) && !in_array($col, $as_columns))
+					{
+						$colums[] = $col;
+					}
+				}
 			}
 			if (is_array($colums) && ($key = array_search($this->autoinc_id, $colums)) !== false)
 			{
