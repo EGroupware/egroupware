@@ -3,7 +3,7 @@
 ## EGroupware FPM container using Ubuntu 18.04 and PHP 7.3 from ondrej/php PPA
 ##
 ################################################################################
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
@@ -74,7 +74,7 @@ exit $RESULT' \
 	&& composer.phar clear-cache \
 	&& rm -f /usr/local/bin/composer.phar \
 	&& npm uninstall -g grunt-cli \
-	&& npm cache clear \
+	&& npm cache clear --force \
 	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false npm zip \
 	&& apt-get clean \
 	# create data directory

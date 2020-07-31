@@ -17,7 +17,7 @@ BRANCH=$(echo $VERSION|sed 's/\.[0-9]\{8\}$//')
 
 cd $(dirname $0)
 
-docker pull ubuntu:18.04
+docker pull ubuntu:20.04
 docker build --no-cache --build-arg "VERSION=$VERSION" -t egroupware/egroupware:$TAG . && {
 	docker push egroupware/egroupware:$TAG
 	# tag only stable releases as latest
