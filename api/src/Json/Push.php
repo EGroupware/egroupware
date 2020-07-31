@@ -105,6 +105,16 @@ class Push extends Msg
 	}
 
 	/**
+	 * Get given user is online / connected to push-server
+	 *
+	 * @return boolean
+	 */
+	public function isOnline($account_id)
+	{
+		return in_array($account_id, $this->online());
+	}
+
+	/**
 	 * Check and if neccessary set push backend
 	 *
 	 * @throws Exception\NotOnline
