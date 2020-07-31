@@ -122,9 +122,13 @@ class preferences_settings
 									Framework::refresh_opener($msg, null, null, null, null, null, null, $msg_type);
 								}
 							}
+							// update client-side Api\Preferences in response (only current user/session)
+							Framework::ajax_get_preference($appname);
+
+							// ask every affected client to reload preferences, if affected ($appname prefs loaded and member of group for group prefs)
+							$push = new Api\Json\Push($account_id > 0 ? (int)$account_id : Api\Json\Push::ALL);
+							$push->call('egw.reload_preferences', $appname, $account_id ? (int)$account_id : 0);
 						}
-						// update client-side Api\Preferences in response
-						Framework::ajax_get_preference($appname);
 				}
 				if (in_array($button, array('save','cancel')))
 				{

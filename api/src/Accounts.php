@@ -411,7 +411,7 @@ class Accounts
 
 	/**
 	 * Get an account as json, returns only whitelisted fields:
-	 * - 'account_id','account_lid','person_id','account_status',
+	 * - 'account_id','account_lid','person_id','account_status','memberships'
 	 * - 'account_firstname','account_lastname','account_email','account_fullname','account_phone'
 	 *
 	 * @param int|string $id
@@ -420,11 +420,12 @@ class Accounts
 	function json($id)
 	{
 		static $keys = array(
-			'account_id','account_lid','person_id','account_status',
+			'account_id','account_lid','person_id','account_status','memberships',
 			'account_firstname','account_lastname','account_email','account_fullname','account_phone',
 		);
 		if (($account = $this->read($id)))
 		{
+			if (isset($account['memberships'])) $account['memberships'] = array_keys($account['memberships']);
 			$account = array_intersect_key($account, array_flip($keys));
 		}
 		// for current user, add the apps available to him

@@ -122,6 +122,24 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		},
 
 		/**
+		 * Endpoint for push to request reload of preference, if loaded and affected
+		 *
+		 * @param _app app-name of prefs to reload
+		 * @param _account_id _account_id 0: allways reload (default or forced prefs), <0: reload if member of group
+		 */
+		reload_preferences: function(_app, _account_id)
+		{
+			if (typeof _account_id !== 'number') _account_id = parseInt(_account_id);
+			if (typeof prefs[_app] === 'undefined' ||	// prefs not loaded
+				_account_id < 0 && this.user('memberships').indexOf(_account_id) < 0)	// no member of this group
+			{
+				return;
+			}
+			var request = this.json('EGroupware\\Api\\Framework::ajax_get_preference', [_app]);
+			request.sendRequest();
+		},
+
+		/**
 		 * Call context / open app specific preferences function
 		 *
 		 * @param {string} name type 'acl', 'prefs', or 'cats'
