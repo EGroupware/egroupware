@@ -489,6 +489,7 @@ class notifications {
 		Api\Translation::add_app('notifications');
 
 		$available_chains = $this->get_available_chains('routing');
+		$push = new Api\Json\Push();
 
 		foreach ($this->receivers as $receiver) {
 			$user_notified = false;
@@ -574,7 +575,7 @@ class notifications {
 						// This is to make popup_or_email option sensfull since
 						// we save popup notifications in database anyway, email
 						// notifications should be based on user availability.
-						if ($backend == 'popup' && $action== 'fail' && !Api\Session::notifications_active($receiver->account_id))
+						if ($backend === 'popup' && $action === 'fail' && !$push->isOnline($receiver->account_id))
 						{
 							throw new Exception();
 						}
