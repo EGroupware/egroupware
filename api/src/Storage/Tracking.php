@@ -846,10 +846,25 @@ abstract class Tracking
 				{
 					$notification->set_attachments($attachments);
 				}
-				$notification->send();
+				// run immediatly during async service, as sending mail with Horde fails, if PHP is already in shutdown
+				// (json requests take care of that by calling Egw::__desctruct() explicit before it's regular triggered)
+				$run = isset($GLOBALS['egw_info']['flags']['async-service']) ? 'call_user_func_array' : Api\Egw::class.'::on_shutdown';
+				$run(static function($notification, $sender, $receiver, $subject)
+				{
+					$notification->send();
 
-				// Notification can (partially) succeed and still generate errors
-				$this->errors += $notification->errors();
+					// Notification can (partially) succeed and still generate errors
+					foreach($notification->errors(true) as $error)
+					{
+						error_log(__METHOD__."() Error notifying $receiver from $sender: $subject: $error");
+						// send notification errors via push to current user (not session, as alarms send via async job have none!)
+						(new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']))->message(
+							lang('Error notifying %1', !is_numeric($receiver) ? $receiver :
+								Api\Accounts::id2name($receiver, 'account_fullname').' <'.Api\Accounts::id2name($receiver, 'account_email').'>').
+							"\n".$subject."\n".$error, 'error');
+
+					}
+				}, [$notification, $sender, $receiver, $subject]);
 			}
 			catch (Exception $exception)
 			{
