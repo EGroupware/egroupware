@@ -115,8 +115,10 @@ var et2_calendar_owner = /** @class */ (function (_super) {
                         return "continue";
                     var idx = this_1.options.value.find(function (element) { return element.id == owner; });
                     if (idx) {
-                        idx.label = data[owner];
+                        idx = jQuery.extend(idx, data[owner]);
                     }
+                    // Put it in the list of options for next time
+                    this_1.options.select_options.push(data[owner]);
                 };
                 var this_1 = this;
                 for (var owner in data) {

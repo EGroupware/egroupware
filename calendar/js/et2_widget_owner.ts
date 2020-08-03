@@ -139,8 +139,10 @@ export class et2_calendar_owner extends et2_taglist_email
 					let idx = this.options.value.find(element => element.id == owner);
 					if(idx)
 					{
-						idx.label = data[owner];
+						idx = jQuery.extend(idx, data[owner]);
 					}
+					// Put it in the list of options for next time
+					this.options.select_options.push(data[owner]);
 				}
 				this.set_value(this.options.value);
 			}, this,true,this).sendRequest();

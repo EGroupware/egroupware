@@ -151,7 +151,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			$labels = Array();
 			foreach($id as $index => $_id)
 			{
-				$labels[$_id] = self::get_owner_label($_id);
+				$labels[$_id] = self::format_owner($_id, self::get_owner_label($_id));
 			}
 			Api\Json\Response::get()->data($labels);
 			return $labels;
@@ -232,38 +232,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				if($id && $title)
 				{
-					// Magicsuggest uses id, not value.
-					$value = array(
-						'id' => $type.$id,
-						'value'=> $type.$id,
-						'label' => $title,
-						'app'	=> lang($data['app'])
-					);
-					if(is_array($value['label']))
-					{
-						$value = array_merge($value, $value['label']);
-					}
-					switch($type)
-					{
-						case 'r':
-							// TODO: fetch resources photo
-							break;
-						case 'c':
-						case '':
-							$contact = $contacts_obj->read($type === '' ? 'account:'.$id : $id, true);
-							if (is_array($contact)) $value['icon'] = Api\Framework::link('/api/avatar.php', array(
-								'contact_id' => $contact['id'],
-								'etag' => $contact['etag'] ? $contact['etag'] : 1
-							));
-							if($id < 0)
-							{
-								$value['resources'] = array_map('strval',$GLOBALS['egw']->accounts->members($id, true));
-							}
-							break;
-						default :
-							// do nothing
-					}
-					$mapped[] = $value;
+					$mapped[] = static::format_owner($id, $title, $data);
 				}
 			}
 			if(count($mapped))
@@ -278,6 +247,68 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);
 		exit();
+	}
+
+	/**
+	 * Given an ID & title, format the result into data the client side wants
+	 *
+	 * @param $id
+	 * @param $title
+	 * @param $type
+	 */
+	protected static function format_owner($id, $title, $data = array())
+	{
+		static $contacts_obj = null;
+		if(is_null($contacts_obj))
+		{
+			$contacts_obj = new Api\Contacts();
+		}
+		if(!$data)
+		{
+			$bo = new calendar_bo();
+			if(!is_numeric($id))
+			{
+				$data = $bo->resources[substr($id, 0, 1)];
+			}
+			else
+			{
+				$data = $bo->resources[''];
+			}
+		}
+		$type = $data['type'];
+
+		// Magicsuggest uses id, not value.
+		$value = array(
+			'id' => $type.$id,
+			'value'=> $type.$id,
+			'label' => $title,
+			'app'	=> lang($data['app'])
+		);
+		if(is_array($value['label']))
+		{
+			$value = array_merge($value, $value['label']);
+		}
+		switch($type)
+		{
+			case 'r':
+				// TODO: fetch resources photo
+				break;
+			case 'c':
+			case '':
+				$contact = $contacts_obj->read($type === '' ? 'account:'.$id : $id, true);
+				if (is_array($contact)) $value['icon'] = Api\Framework::link('/api/avatar.php', array(
+					'contact_id' => $contact['id'],
+					'etag' => $contact['etag'] ? $contact['etag'] : 1
+				));
+				if($id < 0)
+				{
+					$value['resources'] = array_map('strval',$GLOBALS['egw']->accounts->members($id, true));
+				}
+				break;
+			default :
+				// do nothing
+		}
+		return $value;
 	}
 
 	/**
