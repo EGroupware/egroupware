@@ -855,7 +855,7 @@
 		{
 			for (var app in apps)
 			{
-				framework.notifyAppTab(app, apps[app]);
+				if (framework.notifyAppTab) framework.notifyAppTab(app, apps[app]);
 			}
 
 			$topmenu_info_notifications.addClass('egwpopup_notify');
