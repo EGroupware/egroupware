@@ -588,8 +588,16 @@
 			// otherwise the first app in the list
 			if (activeApp =="" || !activeApp)
 			{
+				for(var i in this.applications)
+				{
+					if (restore[i]['status'] != 5)
+					{
+						activeApp = this.applications[i];
+						break;
+					}
+				}
 				this.setActiveApp(typeof this.applications.home !='undefined'?
-					this.applications.home:this.applications[Object.keys(this.applications)[0]]);
+					this.applications.home:activeApp);
 			}
 
 			//Set the current state of the tabs and activate TabChangeNotification.
