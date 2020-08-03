@@ -118,7 +118,13 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                                     }
                                 }
                             }
-                            else if (already_added.indexOf('' + user) < 0) {
+                            else if (user < 0) {
+                                // Group, but no users found.  Need those.
+                                egw.accountData(parseInt(user), 'account_fullname', true, function (result) {
+                                    this.invalidate();
+                                }, this);
+                            }
+                            else if (already_added.indexOf('' + user) < 0 && parseInt(user) >= 0) {
                                 labels.push({
                                     id: user,
                                     label: this._get_owner_name(user),
@@ -1630,6 +1636,63 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         this.grouper = this.groupers[isNaN(this.options.group_by) ? this.options.group_by : 'category'];
         if (old !== this.options.group_by && this.isAttached()) {
             this.invalidate(true);
+        }
+    };
+    /**
+     * Set which users to display
+     *
+     * Changing the owner will invalidate the display, and it will be redrawn
+     * after a timeout.  Overwriting here to check for groups without members.
+     *
+     * @param {number|number[]|string|string[]} _owner - Owner ID, which can
+     *	be an account ID, a resource ID (as defined in calendar_bo, not
+     *	necessarily an entry from the resource app), or a list containing a
+     *	combination of both.
+     *
+     * @memberOf et2_calendar_view
+     */
+    et2_calendar_planner.prototype.set_owner = function (_owner) {
+        _super.prototype.set_owner.call(this, _owner);
+        // If we're grouping by user, we need group members
+        if (this.update_timer !== null && this.options.group_by == 'user') {
+            var options_1 = [];
+            var resource = {};
+            var missing_resources_1 = [];
+            if (app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner')) {
+                options_1 = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+            }
+            else {
+                options_1 = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+            }
+            for (var i = 0; i < this.options.owner.length; i++) {
+                var user = this.options.owner[i];
+                if (isNaN(user) || user >= 0 || !options_1)
+                    continue;
+                // Owner is a group, see if we have its members
+                if (options_1.find &&
+                    ((resource = options_1.find(function (element) {
+                        return element.id == user;
+                    })))) {
+                    // Members found
+                    continue;
+                }
+                // Group, but no users found.  Need those.
+                missing_resources_1.push(user);
+                // Maybe api already has them?
+                egw.accountData(parseInt(user), 'account_fullname', true, function (result) {
+                    missing_resources_1.splice(missing_resources_1.indexOf(this), 1);
+                }.bind(user), user);
+            }
+            if (missing_resources_1.length > 0) {
+                // Ask server, and WAIT or we have to redraw
+                egw.json('calendar_owner_etemplate_widget::ajax_owner', [missing_resources_1], function (data) {
+                    for (var owner in data) {
+                        if (!owner || typeof owner == "undefined")
+                            continue;
+                        options_1.push(data[owner]);
+                    }
+                }, this, false, this).sendRequest(false);
+            }
         }
     };
     /**

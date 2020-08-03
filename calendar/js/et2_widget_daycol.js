@@ -96,9 +96,9 @@ var et2_calendar_daycol = /** @class */ (function (_super) {
         if (this.title.text() === '' && this.options.date &&
             this.getParent() && this.getParent().instanceOf(et2_widget_timegrid_1.et2_calendar_timegrid)) {
             // Forces an update
-            var date_1 = this.options.date;
+            var date = this.options.date;
             this.options.date = '';
-            this.set_date(date_1);
+            this.set_date(date);
         }
         return result;
     };
