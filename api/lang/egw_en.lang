@@ -166,6 +166,7 @@ attention: action will be applied to all rows, not only visible ones!	api	en	Att
 august	common	en	August
 australia	common	en	AUSTRALIA
 austria	common	en	AUSTRIA
+authenticate	common	en	Authenticate
 author	common	en	Author
 autohide sidebox menu's	common	en	Autohide side menu
 autohide sidebox menus	common	en	Autohide side menu
@@ -495,6 +496,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	en	Enter new version number, > old_version, empty for no update file
 enter the new version number here (has to be > old_version)	common	en	Enter new version number, has to be > old_version
 enter your file name	common	en	Enter your file name
+enter your password	common	en	Enter your password
 entry has been deleted sucessfully	common	en	Entry has been deleted successfully.
 entry not found!	common	en	Entry not found!
 entry saved	common	en	Entry saved
@@ -1283,6 +1285,7 @@ show now	common	en	Show now
 show page generation time	common	en	Show page generation time
 show page generation time on the bottom of the page?	common	en	Show page generation time on the bottom of the page.
 show page generation time?	common	en	Show page generation time
+show password	common	en	Show password
 show the logo's of egroupware and x-desktop on the desktop.	common	en	Show the logo of EGroupware and x-desktop on the desktop.
 show values	common	en	Show values
 show_more_apps	common	en	show_more_apps

@@ -166,6 +166,7 @@ attention: action will be applied to all rows, not only visible ones!	api	de	Ach
 august	common	de	August
 australia	common	de	AUSTRALIEN
 austria	common	de	ÖSTERREICH
+authenticate	common	de	Authentifizieren
 author	common	de	Autor
 autohide sidebox menu's	common	de	Linkes Navigationsmenü ausblenden
 autohide sidebox menus	common	de	Linkes Navigationsmenü ausblenden
@@ -495,6 +496,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	common	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
 enter your file name	common	de	Dateiname
+enter your password	common	de	Geben Sie Ihr Passwort ein
 entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gelöscht
 entry not found!	common	de	Eintrag nicht gefunden!
 entry saved	common	de	Eintrag gespeichert
@@ -1283,6 +1285,7 @@ show now	common	de	Jetzt anzeigen
 show page generation time	common	de	Zeit zum Erstellen der Seite anzeigen
 show page generation time on the bottom of the page?	common	de	Zeit zum Erstellen der Seite in der Fußzeile anzeigen
 show page generation time?	common	de	Erstellungszeit der Seite anzeigen?
+show password	common	de	Zeige Passwort
 show the logo's of egroupware and x-desktop on the desktop.	common	de	Zeige Logos von EGroupware und x-desktop auf dem Desktop.
 show values	common	de	Werte anzeigen
 show_more_apps	common	de	Mehr Applikationen anzeigen
