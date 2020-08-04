@@ -2749,6 +2749,10 @@ class CalendarApp extends EgwApp
 				row_index = 0;
 				grid.iterateOver(function(widget) {
 					if(row_index >= value.length) return;
+
+					// Clear height to make sure there's correct calculations
+					widget.div.css("height","");
+
 					if(widget.set_show_weekend)
 					{
 						widget.set_show_weekend(view.show_weekend(state.state));
