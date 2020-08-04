@@ -411,21 +411,22 @@ app.classes.mail = AppJS.extend(
 		// check if we might not see it because we are on a different mail account or folder
 		let nm = this.et2 ? this.et2.getWidgetById('nm') : null;
 		let nm_value = nm ? nm.getValue() : null;
-		let folder = pushData.id.split('::')[1]+'::'+atob(pushData.id.split('::')[2]);
+		let id0 = typeof pushData.id === 'string' ? pushData.id : pushData.id[0];
+		let folder = id0.split('::')[1]+'::'+atob(id0.split('::')[2]);
 		// nm_value.selectedFolder is not always set, read it from foldertree, if not
 		let foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
 		let displayed_folder = (nm_value ? nm_value.selectedFolder : null) || (foldertree ? foldertree.getValue() : '');
 		if (!displayed_folder.match(/::/)) displayed_folder += '::INBOX';
 		if (folder === displayed_folder)
 		{
-			// Just update the nm
-			nm.refresh(pushData.id, pushData.type);
+			// Just update the nm (todo: pushData.message = total number of messages in folder)
+			nm.refresh(pushData.id, pushData.type === 'update' ? 'update-in-place' : pushData.type, pushData.messages);
 		}
 		// update unseen counter in folder-tree
-		if (pushData.type === 'add' && pushData.acl.folder && pushData.acl.unseen)
+		if (pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
 		{
 			let folder_id = {};
-			folder_id[folder] = pushData.acl.folder+" ("+pushData.acl.unseen+")";
+			folder_id[folder] = pushData.acl.folder+(pushData.acl.unseen ? " ("+pushData.acl.unseen+")" : '');
 			this.mail_setFolderStatus(folder_id);
 		}
 	},
@@ -439,6 +440,8 @@ app.classes.mail = AppJS.extend(
 	{
 		let framework = egw_getFramework();
 		let notify = this.egw.preference('new_mail_notification', 'mail');
+		// never notify for Trash, Junk or Drafts folder
+		if (pushData.acl.folder.match(/^(INBOX.)?(Trash|Spam|Junk|Drafts)$/)) return;
 		if (typeof notify === 'undefined' || notify === 'always' ||
 			notify === 'not-mail' && framework && framework.activeApp.appName !== 'mail')
 		{
