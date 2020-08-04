@@ -159,9 +159,7 @@
 					</groupbox>
 				</row>
 				<row valign="bottom" disabled="!@is_owner">
-						<menulist class="filemanager-file_filemanager-file-eaclowner eaclAccount">
-							<menupopup type="select-account" class="eaclAccount" label="Owner" id="eacl_owner" options="select one,both"/>
-						</menulist>
+						<select-account class="filemanager-file_filemanager-file-eaclowner eaclAccount" label="Owner" id="eacl_owner" empty_label="select one" account_type="both"/>
 						<menulist>
 							<menupopup class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"/>
 						</menulist>
