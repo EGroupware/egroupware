@@ -1703,6 +1703,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			else
 			{
 				$sortResult = array();
+				$uids = array_map(function($row_id)
+				{
+					return self::splitRowID($row_id)['msgUID'];
+				}, (array)$query['col_filter']['row_id']) ?: null;
 				// fetch headers
 				$sortResultwH = $mail_ui->mail_bo->getHeaders(
 					$_folderName,
@@ -1711,7 +1715,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					$sort,
 					$reverse,
 					$filter,
-					null, // this uids only
+					$uids, // this uids only
 					true, // cacheResult
 					($query['filter2']?true:false) // fetchPreview
 				);
