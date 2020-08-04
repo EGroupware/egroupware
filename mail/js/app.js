@@ -426,7 +426,7 @@ app.classes.mail = AppJS.extend(
 		if (pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
 		{
 			let folder_id = {};
-			folder_id[folder] = pushData.acl.folder+(pushData.acl.unseen ? " ("+pushData.acl.unseen+")" : '');
+			folder_id[folder] = foldertree.getLabel(folder).replace(this._unseen_regexp, '')+(pushData.acl.unseen ? " ("+pushData.acl.unseen+")" : '');
 			this.mail_setFolderStatus(folder_id);
 		}
 	},
@@ -441,7 +441,7 @@ app.classes.mail = AppJS.extend(
 		let framework = egw_getFramework();
 		let notify = this.egw.preference('new_mail_notification', 'mail');
 		// never notify for Trash, Junk or Drafts folder
-		if (pushData.acl.folder.match(/^(INBOX.)?(Trash|Spam|Junk|Drafts)$/)) return;
+		if (pushData.acl.folder.match(/^(INBOX.)?(Trash|Spam|Junk|Drafts|Sent)$/)) return;
 		if (typeof notify === 'undefined' || notify === 'always' ||
 			notify === 'not-mail' && framework && framework.activeApp.appName !== 'mail')
 		{
