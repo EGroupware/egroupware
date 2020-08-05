@@ -68,19 +68,19 @@ tr.unseen a {
   color: #003075;
   font-weight: bold;
 }
-tr.mail.labelone td:first-child {
+tr.mail.label1 td:first-child {
   border-left: 6px solid #ff0080 !important;
 }
-tr.mail.labeltwo td:first-child {
-  border-left: 6px solid #ff8000 !important;
+tr.mail.label2 td:first-child {
+  border-left: 6px solid  #ff8000 !important;
 }
-tr.mail.labelthree td:first-child {
-  border-left: 6px solid #008000 !important;
+tr.mail.label3 td:first-child {
+  border-left: 6px solid  #008000 !important;
 }
-tr.mail.labelfour td:first-child {
+tr.mail.label4 td:first-child {
   border-left: 6px solid #0000ff !important;
 }
-tr.mail.labelfive td:first-child {
+tr.mail.label5 td:first-child {
   border-left: 6px solid #8000ff !important;
 }
 tr.mail.flagged td:first-child {
@@ -472,7 +472,7 @@ div#mail-index_mailPreview > div {
   border: none;
 }
 #mail-compose_composeToolbar > button {
-  padding: 0.2em 0.4em;
+  padding: .2em .4em;
 }
 #mail-compose_composeToolbar > img {
   width: 16px;
@@ -485,7 +485,7 @@ div#mail-index_mailPreview > div {
   height: 16px !important;
 }
 #mail-compose_composeToolbar > button {
-  padding: 0.2em 0.4em;
+  padding: .2em .4em;
 }
 #mail-compose_to div.ms-sel-ctn,
 #mail-compose_cc .ms-sel-ctn,
@@ -493,7 +493,7 @@ div#mail-index_mailPreview > div {
   max-height: 75px;
 }
 #mail-display_toolbar > button > span {
-  padding: 0.2em 0.4em;
+  padding: .2em .4em;
 }
 #mail-display_toolbar > button > span > img {
   width: 16px;
@@ -516,7 +516,7 @@ div#mail-index_mailPreview > div {
   height: 35px;
 }
 #mail-index_toolbar > button > span {
-  padding: 0.2em 0.4em;
+  padding: .2em .4em;
 }
 #mail-index_toolbar > button > span > img {
   width: 16px;
@@ -1625,19 +1625,19 @@ tr.unseen a {
   color: #003075;
   font-weight: bold;
 }
-tr.mail.labelone td:first-child {
+tr.mail.label1 td:first-child {
   border-left: 6px solid #ff0080 !important;
 }
-tr.mail.labeltwo td:first-child {
+tr.mail.label2 td:first-child {
   border-left: 6px solid #ff8000 !important;
 }
-tr.mail.labelthree td:first-child {
+tr.mail.label3 td:first-child {
   border-left: 6px solid #008000 !important;
 }
-tr.mail.labelfour td:first-child {
+tr.mail.label4 td:first-child {
   border-left: 6px solid #0000ff !important;
 }
-tr.mail.labelfive td:first-child {
+tr.mail.label5 td:first-child {
   border-left: 6px solid #8000ff !important;
 }
 tr.mail.flagged td:first-child {
@@ -1893,7 +1893,7 @@ input[type=button] {
   padding: 0px;
 }
 #mail-display_toolbar > button > span {
-  padding: 0.2em 0.4em;
+  padding: .2em .4em;
 }
 #mail-display_toolbar > button > span > img {
   width: 16px;
@@ -2308,19 +2308,19 @@ table#mail-index_previewAttachmentArea::-webkit-scrollbar-thumb:hover {
   #mail-index table.egwGridView_outer tbody tr span.mail.mobile_cat_col {
     background: #F5F5F5;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.labelone.mobile_cat_col {
+  #mail-index table.egwGridView_outer tbody tr span.mail.label1.mobile_cat_col {
     background: #ff0080;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.labeltwo.mobile_cat_col {
+  #mail-index table.egwGridView_outer tbody tr span.mail.label2.mobile_cat_col {
     background: #ff8000;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.labelthree.mobile_cat_col {
+  #mail-index table.egwGridView_outer tbody tr span.mail.label3.mobile_cat_col {
     background: #008000;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.labelfour.mobile_cat_col {
+  #mail-index table.egwGridView_outer tbody tr span.mail.label4.mobile_cat_col {
     background: #0000ff;
   }
-  #mail-index table.egwGridView_outer tbody tr span.mail.labelfive.mobile_cat_col {
+  #mail-index table.egwGridView_outer tbody tr span.mail.label5.mobile_cat_col {
     background: #8000ff;
   }
   #mail-index table.egwGridView_outer tbody tr span.mail.flagged.mobile_cat_col {
