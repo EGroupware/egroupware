@@ -238,6 +238,7 @@ class mail_sieve
 
 				$rules = $this->rulesByID;
 				$content= $rules;
+				$content['no_forward'] = $this->account->acc_smtp_type !== Api\Mail\Smtp::class && !$this->account->acc_user_forward;
 				$content ['ruleID'] = $_GET['ruleID'];
 				switch ($rules['action'])
 				{
