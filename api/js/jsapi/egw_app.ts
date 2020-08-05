@@ -263,7 +263,7 @@ export abstract class EgwApp
 		if (pushData.app !== this.appname) return;
 
 		// only handle delete by default, for simple case of uid === "$app::$id"
-		if (pushData.type === 'delete')
+		if (pushData.type === 'delete' && egw.dataHasUID(this.uid(pushData)))
 		{
 			egw.refresh('', pushData.app, pushData.id, 'delete');
 		}
