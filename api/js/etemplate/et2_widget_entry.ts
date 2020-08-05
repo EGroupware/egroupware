@@ -78,7 +78,7 @@ class et2_entry extends et2_valueWidget
 
 	public static readonly legacyOptions : string[] = ["field","compare","alternate_fields"];
 
-	static readonly prefix: '~';
+	public static readonly prefix = '~';
 	protected widget = null;
 
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
