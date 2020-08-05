@@ -235,7 +235,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		// only handle delete by default, for simple case of uid === "$app::$id"
 		if (pushData.type === 'delete')
 		{
-			egw.dataStoreUID(this.uid(pushData), null);
+			egw.refresh('', pushData.app, pushData.id, 'delete');
 		}
 	},
 
