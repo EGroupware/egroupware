@@ -500,6 +500,7 @@ app.classes.mail = AppJS.extend(
 				case 'label3':
 				case 'label4':
 				case 'label5':
+				case 'flagged':
 					if (unset)
 					{
 						this.mail_removeRowClass(msg, flag);
@@ -3473,7 +3474,11 @@ app.classes.mail = AppJS.extend(
 				classes = classes.split(' ');
 				if(classes.indexOf(_class) >= 0)
 				{
-					classes.splice(classes.indexOf(_class),1);
+					for(var c in classes)
+					{
+						classes.splice(classes.indexOf(_class),1);
+						if (classes.indexOf(_class) < 0) break;
+					}
 					dataElem.data['class'] = classes.join(' ');
 
 					// need to update flags too
