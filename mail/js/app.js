@@ -192,7 +192,12 @@ app.classes.mail = AppJS.extend(
 				if(nm != null && (typeof jQuery._data(nm).events=='undefined'||typeof jQuery._data(nm).events.refresh == 'undefined'))
 				{
 					var self = this;
-					jQuery(nm).on('refresh',function() {self.mail_refreshFolderStatus.call(self,undefined,undefined,false);});
+					jQuery(nm).on('refresh',function(_event, _widget, _row_id, _type) {
+						if (_type !== 'update-in-place')
+						{
+							self.mail_refreshFolderStatus.call(self,undefined,undefined,false);
+						}
+					});
 				}
 				var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 				if (tree_wdg)
