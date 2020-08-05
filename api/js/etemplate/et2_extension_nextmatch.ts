@@ -44,7 +44,7 @@
 import './et2_core_common';
 import './et2_core_interfaces';
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
@@ -54,6 +54,17 @@ import {et2_nextmatch_controller} from "./et2_extension_nextmatch_controller";
 import {et2_dataview} from "./et2_dataview";
 import {et2_dataview_column} from "./et2_dataview_model_columns";
 import {et2_customfields_list} from "./et2_extension_customfields";
+import {et2_link_entry, et2_link_to} from "./et2_widget_link";
+import {et2_dialog} from "./et2_widget_dialog";
+import {et2_grid} from "./et2_widget_grid";
+import {et2_dataview_grid} from "./et2_dataview_view_grid";
+import {et2_taglist} from "./et2_widget_taglist";
+import {et2_selectAccount} from "./et2_widget_selectAccount";
+import {et2_dynheight} from "./et2_widget_dynheight";
+import {et2_arrayMgr} from "./et2_core_arrayMgr";
+import {et2_button} from "./et2_widget_button";
+import {et2_searchbox} from "./et2_widget_textbox";
+import {et2_template} from "./et2_widget_template";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 
@@ -160,6 +171,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			"type": "boolean",
 			"description": "Hide the second filter",
 			"default": et2_no_init
+		},
+		"disable_autorefresh": {
+			"name": "Disable autorefresh",
+			"type": "boolean",
+			"description": "Disable the ability to autorefresh the nextmatch on a regular interval.  ",
+			"default": false
 		},
 		"view": {
 			"name": "View",
@@ -289,7 +306,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			.addClass("et2_nextmatch");
 
 
-		this.header = et2_createWidget("nextmatch_header_bar", {}, this);
+		this.header = <et2_nextmatch_header_bar> et2_createWidget("nextmatch_header_bar", {}, this);
 		this.innerDiv = jQuery(document.createElement("div"))
 			.appendTo(this.div);
 
@@ -844,7 +861,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	protected refresh_add(uid:string, type = "add")
 	{
-		let index = 0;
+		let index : boolean | number = 0;
 		let appname = this._get_appname();
 		if(appname && this.egw().window.app[appname] && typeof this.egw().window.app[appname].nm_refresh_index == "function")
 		{
@@ -1668,7 +1685,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Build the popup
 		if(!this.selectPopup)
 		{
-			const select = et2_createWidget("select", {
+			const select = <et2_selectbox> et2_createWidget("select", {
 				multiple: true,
 				rows: 8,
 				empty_label: this.egw().lang("select columns"),
@@ -1678,23 +1695,27 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			select.set_select_options(columns);
 			select.set_value(columns_selected);
 
-			const autoRefresh = et2_createWidget("select", {
-				"empty_label": "Refresh"
-			}, this);
-			autoRefresh.set_id("nm_autorefresh");
-			autoRefresh.set_select_options({
-				                               // Cause [unknown] problems with mail
-				                               //30: "30 seconds",
-				                               //60: "1 Minute",
-				                               180: "3 Minutes",
-				                               300: "5 Minutes",
-				                               900: "15 Minutes",
-				                               1800: "30 Minutes"
-			                               });
-			autoRefresh.set_value(this._get_autorefresh());
-			autoRefresh.set_statustext(egw.lang("Automatically refresh list"));
+			let autoRefresh;
+			if(!this.options.disable_autorefresh)
+			{
+				autoRefresh = <et2_selectbox> et2_createWidget("select", {
+					"empty_label": "Refresh"
+				}, this);
+				autoRefresh.set_id("nm_autorefresh");
+				autoRefresh.set_select_options({
+					                               // Cause [unknown] problems with mail
+					                               //30: "30 seconds",
+					                               //60: "1 Minute",
+					                               180: "3 Minutes",
+					                               300: "5 Minutes",
+					                               900: "15 Minutes",
+					                               1800: "30 Minutes"
+				                               });
+				autoRefresh.set_value(this._get_autorefresh());
+				autoRefresh.set_statustext(egw.lang("Automatically refresh list"));
+			}
 
-			const defaultCheck = et2_createWidget("select", {"empty_label": "Preference"}, this);
+			const defaultCheck = <et2_selectbox> et2_createWidget("select", {"empty_label": "Preference"}, this);
 			defaultCheck.set_id('nm_col_preference');
 			defaultCheck.set_select_options({
 				'default': {label: 'Default',title:'Set these columns as the default'},
@@ -1703,7 +1724,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			});
 			defaultCheck.set_value(this.options.settings.columns_forced ? 'force': '');
 
-			const okButton = et2_createWidget("buttononly", {"background_image": true, image: "check"}, this);
+			const okButton = <et2_button> et2_createWidget("buttononly", {"background_image": true, image: "check"}, this);
 			okButton.set_label(this.egw().lang("ok"));
 			okButton.onclick = function() {
 				// Update visibility
@@ -1800,7 +1821,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				self.dataview.updateColumns();
 
 				// Auto refresh
-				self._set_autorefresh(autoRefresh.get_value());
+				self._set_autorefresh(autoRefresh ? autoRefresh.get_value() : 0);
 
 				// Set default or clear forced
 				if(show_letters)
@@ -1812,7 +1833,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				self.selectPopup = null;
 			};
 
-			const cancelButton = et2_createWidget("buttononly", {"background_image": true, image: "cancel"}, this);
+			const cancelButton = <et2_button> et2_createWidget("buttononly", {"background_image": true, image: "cancel"}, this);
 			cancelButton.set_label(this.egw().lang("cancel"));
 			cancelButton.onclick = function() {
 				self.selectPopup.toggle();
@@ -1859,7 +1880,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				.appendTo(this.innerDiv);
 
 			// Add autorefresh
-			$footerWrap.append(autoRefresh.getSurroundings().getDOMNode(autoRefresh.getDOMNode()));
+			if(autoRefresh)
+			{
+				$footerWrap.append(autoRefresh.getSurroundings().getDOMNode(autoRefresh.getDOMNode()));
+			}
 
 			// Add default checkbox for admins
 			const apps = this.egw().user('apps');
@@ -2007,7 +2031,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					jQuery(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch',
 						// Important to use anonymous function instead of just 'this.refresh' because
 						// of the parameters passed
-						jQuery.proxy(function() {this.refresh();},this)
+						jQuery.proxy(function() {this.refresh(null, 'edit');},this)
 					);
 				},this), time*1000);
 			},this));
@@ -2026,6 +2050,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	_get_autorefresh( )
 	{
+		if(this.options.disable_autorefresh)
+		{
+			return 0;
+		}
 		const refresh_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-autorefresh";
 		return this.egw().preference(refresh_preference,this._get_appname());
 	}
@@ -2349,7 +2377,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			to_id: split.join('::')
 		};
 		// Create widget and mangle to our needs
-		const link = et2_createWidget("link-to", {value: link_value}, this);
+		const link = <et2_link_to> et2_createWidget("link-to", {value: link_value}, this);
 		link.loadingFinished();
 		link.file_upload.set_drop_target(false);
 
@@ -2919,7 +2947,7 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 			fix: !egwIsMobile()
 		};
 		// searchbox widget
-		this.et2_searchbox = et2_createWidget('searchbox', searchbox_options,this);
+		this.et2_searchbox = <et2_searchbox> et2_createWidget('searchbox', searchbox_options,this);
 
 		// Set activeFilters to current value
 		this.nextmatch.activeFilters.search = settings.search;
@@ -3023,7 +3051,7 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 			{
 				definition = egw.preference('nextmatch-export-definition', this.nextmatch.egw().app_name());
 			}
-			let button = et2_createWidget("buttononly", {id: "export", "statustext": "Export", image: "download", "background_image": true}, this);
+			let button = <et2_button> et2_createWidget("buttononly", {id: "export", "statustext": "Export", image: "download", "background_image": true}, this);
 			jQuery(button.getDOMNode())
 				.click(this.nextmatch, function(event) {
 					// @ts-ignore
@@ -3108,7 +3136,7 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 
 		// Load the template
 		const self = this;
-		const header = et2_createWidget("template", {"id": template_name}, this);
+		const header = <et2_template> et2_createWidget("template", {"id": template_name}, this);
 		this.headers[id] = header;
 		const deferred = [];
 		header.loadingFinished(deferred);
@@ -3903,7 +3931,7 @@ export class et2_nextmatch_accountfilterheader extends et2_selectAccount impleme
 		{
 			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
 		}
-		super.createInputWidget(this, arguments);
+		super.createInputWidget();
 
 		this.input.change(this, function(event) {
 			if(typeof event.data.nextmatch == 'undefined')
