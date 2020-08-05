@@ -68,6 +68,14 @@ var et2_extension_nextmatch_controller_1 = require("./et2_extension_nextmatch_co
 var et2_dataview_1 = require("./et2_dataview");
 var et2_dataview_model_columns_1 = require("./et2_dataview_model_columns");
 var et2_extension_customfields_1 = require("./et2_extension_customfields");
+var et2_widget_link_1 = require("./et2_widget_link");
+var et2_widget_dialog_1 = require("./et2_widget_dialog");
+var et2_widget_grid_1 = require("./et2_widget_grid");
+var et2_dataview_view_grid_1 = require("./et2_dataview_view_grid");
+var et2_widget_taglist_1 = require("./et2_widget_taglist");
+var et2_widget_selectAccount_1 = require("./et2_widget_selectAccount");
+var et2_widget_dynheight_1 = require("./et2_widget_dynheight");
+var et2_core_arrayMgr_1 = require("./et2_core_arrayMgr");
 var et2_INextmatchHeader = "et2_INextmatchHeader";
 function implements_et2_INextmatchHeader(obj) {
     return implements_methods(obj, ["setNextmatch"]);
@@ -134,7 +142,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         }
         _this.div = jQuery(document.createElement("div"))
             .addClass("et2_nextmatch");
-        _this.header = et2_createWidget("nextmatch_header_bar", {}, _this);
+        _this.header = et2_core_widget_1.et2_createWidget("nextmatch_header_bar", {}, _this);
         _this.innerDiv = jQuery(document.createElement("div"))
             .appendTo(_this.div);
         // Create the dynheight component which dynamically scales the inner
@@ -650,10 +658,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // Find the parent container, either a tab or the main container
         var tab = this.get_tab_info();
         if (!tab) {
-            return new et2_dynheight(this.getInstanceManager().DOMContainer, this.innerDiv, 100);
+            return new et2_widget_dynheight_1.et2_dynheight(this.getInstanceManager().DOMContainer, this.innerDiv, 100);
         }
         else if (tab && tab.contentDiv) {
-            return new et2_dynheight(tab.contentDiv, this.innerDiv, 100);
+            return new et2_widget_dynheight_1.et2_dynheight(tab.contentDiv, this.innerDiv, 100);
         }
         return false;
     };
@@ -955,7 +963,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // Make sure there's a widget - cols disabled in template can be missing them, and the header really likes to have a widget
         for (var x = 0; x < _row.length; x++) {
             if (!_row[x].widget) {
-                _row[x].widget = et2_createWidget("label", {});
+                _row[x].widget = et2_core_widget_1.et2_createWidget("label", {});
             }
         }
         // Get column display preference
@@ -1120,7 +1128,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         var rowId = _data.content[this.options.settings.row_id];
         // Create a new grid with the row as parent and the dataview grid as
         // parent grid
-        var grid = new et2_dataview_grid(_row, this.dataview.grid);
+        var grid = new et2_dataview_view_grid_1.et2_dataview_grid(_row, this.dataview.grid);
         // Create a new controller for the grid
         var controller = new et2_extension_nextmatch_controller_1.et2_nextmatch_controller(_controller, this.egw(), this.getInstanceManager().etemplate_exec_id, this, rowId, grid, this.rowProvider, this.options.settings.action_links, _controller.getObjectManager());
         controller.update();
@@ -1191,7 +1199,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         }
         // Build the popup
         if (!this.selectPopup) {
-            var select_1 = et2_createWidget("select", {
+            var select_1 = et2_core_widget_1.et2_createWidget("select", {
                 multiple: true,
                 rows: 8,
                 empty_label: this.egw().lang("select columns"),
@@ -1200,22 +1208,25 @@ var et2_nextmatch = /** @class */ (function (_super) {
             }, this);
             select_1.set_select_options(columns);
             select_1.set_value(columns_selected);
-            var autoRefresh_1 = et2_createWidget("select", {
-                "empty_label": "Refresh"
-            }, this);
-            autoRefresh_1.set_id("nm_autorefresh");
-            autoRefresh_1.set_select_options({
-                // Cause [unknown] problems with mail
-                //30: "30 seconds",
-                //60: "1 Minute",
-                180: "3 Minutes",
-                300: "5 Minutes",
-                900: "15 Minutes",
-                1800: "30 Minutes"
-            });
-            autoRefresh_1.set_value(this._get_autorefresh());
-            autoRefresh_1.set_statustext(egw.lang("Automatically refresh list"));
-            var defaultCheck = et2_createWidget("select", { "empty_label": "Preference" }, this);
+            var autoRefresh_1;
+            if (!this.options.disable_autorefresh) {
+                autoRefresh_1 = et2_core_widget_1.et2_createWidget("select", {
+                    "empty_label": "Refresh"
+                }, this);
+                autoRefresh_1.set_id("nm_autorefresh");
+                autoRefresh_1.set_select_options({
+                    // Cause [unknown] problems with mail
+                    //30: "30 seconds",
+                    //60: "1 Minute",
+                    180: "3 Minutes",
+                    300: "5 Minutes",
+                    900: "15 Minutes",
+                    1800: "30 Minutes"
+                });
+                autoRefresh_1.set_value(this._get_autorefresh());
+                autoRefresh_1.set_statustext(egw.lang("Automatically refresh list"));
+            }
+            var defaultCheck = et2_core_widget_1.et2_createWidget("select", { "empty_label": "Preference" }, this);
             defaultCheck.set_id('nm_col_preference');
             defaultCheck.set_select_options({
                 'default': { label: 'Default', title: 'Set these columns as the default' },
@@ -1223,7 +1234,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 'force': { label: 'Force', title: 'Force column preference so users cannot change it' }
             });
             defaultCheck.set_value(this.options.settings.columns_forced ? 'force' : '');
-            var okButton = et2_createWidget("buttononly", { "background_image": true, image: "check" }, this);
+            var okButton = et2_core_widget_1.et2_createWidget("buttononly", { "background_image": true, image: "check" }, this);
             okButton.set_label(this.egw().lang("ok"));
             okButton.onclick = function () {
                 // Update visibility
@@ -1299,7 +1310,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 self.selectPopup.toggle();
                 self.dataview.updateColumns();
                 // Auto refresh
-                self._set_autorefresh(autoRefresh_1.get_value());
+                self._set_autorefresh(autoRefresh_1 ? autoRefresh_1.get_value() : 0);
                 // Set default or clear forced
                 if (show_letters) {
                     self.activeFilters.selectcols.push('lettersearch');
@@ -1307,7 +1318,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 self.getInstanceManager().submit();
                 self.selectPopup = null;
             };
-            var cancelButton = et2_createWidget("buttononly", { "background_image": true, image: "cancel" }, this);
+            var cancelButton = et2_core_widget_1.et2_createWidget("buttononly", { "background_image": true, image: "cancel" }, this);
             cancelButton.set_label(this.egw().lang("cancel"));
             cancelButton.onclick = function () {
                 self.selectPopup.toggle();
@@ -1352,7 +1363,9 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 .append($footerWrap)
                 .appendTo(this.innerDiv);
             // Add autorefresh
-            $footerWrap.append(autoRefresh_1.getSurroundings().getDOMNode(autoRefresh_1.getDOMNode()));
+            if (autoRefresh_1) {
+                $footerWrap.append(autoRefresh_1.getSurroundings().getDOMNode(autoRefresh_1.getDOMNode()));
+            }
             // Add default checkbox for admins
             var apps = this.egw().user('apps');
             if (apps['admin']) {
@@ -1383,7 +1396,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // Initialize to false
         for (var i = 0; i < columnMgr.columns.length; i++) {
             var col = columnMgr.columns[i];
-            if (col.caption && col.visibility != et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT) {
+            if (col.caption && col.visibility != et2_dataview_view_grid_1.et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT) {
                 visibility[col.id] = { visible: false };
             }
         }
@@ -1470,7 +1483,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                     jQuery(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch', 
                     // Important to use anonymous function instead of just 'this.refresh' because
                     // of the parameters passed
-                    jQuery.proxy(function () { this.refresh(); }, this));
+                    jQuery.proxy(function () { this.refresh(null, 'edit'); }, this));
                 }, this), time * 1000);
             }, this));
             jQuery(this.getInstanceManager().DOMContainer.parentNode).on('show.et2_nextmatch', jQuery.proxy(function (e) {
@@ -1486,6 +1499,9 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * @return int Refresh period, in secods
      */
     et2_nextmatch.prototype._get_autorefresh = function () {
+        if (this.options.disable_autorefresh) {
+            return 0;
+        }
         var refresh_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-autorefresh";
         return this.egw().preference(refresh_preference, this._get_appname());
     };
@@ -1496,7 +1512,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * @param {string} template_name Full template name in the form app.template[.template]
      */
     et2_nextmatch.prototype.set_template = function (template_name) {
-        var template = et2_createWidget("template", { "id": template_name }, this);
+        var template = et2_core_widget_1.et2_createWidget("template", { "id": template_name }, this);
         if (this.template) {
             // Stop early to prevent unneeded processing, and prevent infinite
             // loops if the server changes the template in get_rows
@@ -1538,7 +1554,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             this.template = template_name;
             // Fetch the grid element and parse it
             var definitionGrid = template.getChildren()[0];
-            if (definitionGrid && definitionGrid instanceof et2_grid) {
+            if (definitionGrid && definitionGrid instanceof et2_widget_grid_1.et2_grid) {
                 this._parseGrid(definitionGrid);
             }
             else {
@@ -1742,7 +1758,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             to_id: split.join('::')
         };
         // Create widget and mangle to our needs
-        var link = et2_createWidget("link-to", { value: link_value }, this);
+        var link = et2_core_widget_1.et2_createWidget("link-to", { value: link_value }, this);
         link.loadingFinished();
         link.file_upload.set_drop_target(false);
         if (row.row.tr) {
@@ -1852,17 +1868,17 @@ var et2_nextmatch = /** @class */ (function (_super) {
             var col = columnMgr.columns[i];
             var widget = this.columns[i].widget;
             var colName = this._getColumnName(widget);
-            if (col.caption && col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-                col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_DISABLED) {
+            if (col.caption && col.visibility !== et2_dataview_view_grid_1.et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
+                col.visibility !== et2_dataview_view_grid_1.et2_dataview_grid.ET2_COL_VISIBILITY_DISABLED) {
                 columns[colName] = col.caption;
-                if (col.visibility === et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE)
+                if (col.visibility === et2_dataview_view_grid_1.et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE)
                     columns_selected.push(colName);
             }
             // Custom fields get listed separately
             if (widget.instanceOf(et2_nextmatch_customfields)) {
                 delete (columns[colName]);
                 colName = widget.id;
-                if (col.visibility === et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE && !jQuery.isEmptyObject(widget.customfields)) {
+                if (col.visibility === et2_dataview_view_grid_1.et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE && !jQuery.isEmptyObject(widget.customfields)) {
                     columns[colName] = col.caption;
                     for (var field_name in widget.customfields) {
                         columns[et2_nextmatch_customfields.PREFIX + field_name] = " - " + widget.customfields[field_name].label;
@@ -1878,7 +1894,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             this.set_columns(jQuery.extend([], this.egw().preference(pref, app)));
         }
         var callback = jQuery.proxy(function (button, value) {
-            if (button === et2_dialog.CANCEL_BUTTON) {
+            if (button === et2_widget_dialog_1.et2_dialog.CANCEL_BUTTON) {
                 // Give dialog a chance to close, or it will be in the print
                 window.setTimeout(function () {
                     defer.reject();
@@ -1912,7 +1928,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 rows = total;
             }
             // If they want the whole thing, style it as all
-            if (button === et2_dialog.OK_BUTTON && rows == this.controller._grid.getTotalCount()) {
+            if (button === et2_widget_dialog_1.et2_dialog.OK_BUTTON && rows == this.controller._grid.getTotalCount()) {
                 // Add the class, gives more reliable sizing
                 this.div.addClass('print');
                 // Show it all
@@ -1924,7 +1940,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 var fetchedCount_1 = 0;
                 var cancel_1 = false;
                 var nm_1 = this;
-                var dialog_1 = et2_dialog.show_dialog(
+                var dialog_1 = et2_widget_dialog_1.et2_dialog.show_dialog(
                 // Abort the long task if they canceled the data load
                 function () {
                     count_1 = total;
@@ -1933,7 +1949,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                         defer.reject();
                     }, 0);
                 }, egw.lang('Loading'), egw.lang('please wait...'), {}, [
-                    { "button_id": et2_dialog.CANCEL_BUTTON, "text": 'cancel', id: 'dialog[cancel]', image: 'cancel' }
+                    { "button_id": et2_widget_dialog_1.et2_dialog.CANCEL_BUTTON, "text": 'cancel', id: 'dialog[cancel]', image: 'cancel' }
                 ]);
                 // dataFetch() is asynchronous, so all these requests just get fired off...
                 // 200 rows chosen arbitrarily to reduce requests.
@@ -1973,7 +1989,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                                 dialog_1.destroy();
                                 // Should be OK to print now
                                 defer.resolve();
-                            }, nm_1), et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
+                            }, nm_1), et2_dataview_view_grid_1.et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
                         }
                     }, ctx);
                     count_1 += 200;
@@ -2030,10 +2046,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
         var tab = this.get_tab_info();
         // Get title for print dialog from settings or tab, if available
         var title = this.options.settings.label ? this.options.settings.label : (tab ? tab.label : '');
-        var dialog = et2_createWidget("dialog", {
+        var dialog = et2_core_widget_1.et2_createWidget("dialog", {
             // If you use a template, the second parameter will be the value of the template, as if it were submitted.
             callback: callback,
-            buttons: et2_dialog.BUTTONS_OK_CANCEL,
+            buttons: et2_widget_dialog_1.et2_dialog.BUTTONS_OK_CANCEL,
             title: this.egw().lang('Print') + ' ' + this.egw().lang(title),
             template: this.egw().link(base_url + '/api/templates/default/nm_print_dialog.xet'),
             value: value
@@ -2118,6 +2134,12 @@ var et2_nextmatch = /** @class */ (function (_super) {
             "type": "boolean",
             "description": "Hide the second filter",
             "default": et2_no_init
+        },
+        "disable_autorefresh": {
+            "name": "Disable autorefresh",
+            "type": "boolean",
+            "description": "Disable the ability to autorefresh the nextmatch on a regular interval.  ",
+            "default": false
         },
         "view": {
             "name": "View",
@@ -2237,7 +2259,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             fix: !egwIsMobile()
         };
         // searchbox widget
-        this.et2_searchbox = et2_createWidget('searchbox', searchbox_options, this);
+        this.et2_searchbox = et2_core_widget_1.et2_createWidget('searchbox', searchbox_options, this);
         // Set activeFilters to current value
         this.nextmatch.activeFilters.search = settings.search;
         this.et2_searchbox.set_value(settings.search);
@@ -2326,7 +2348,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             if (settings.csv_fields === true) {
                 definition_1 = egw.preference('nextmatch-export-definition', this.nextmatch.egw().app_name());
             }
-            var button_1 = et2_createWidget("buttononly", { id: "export", "statustext": "Export", image: "download", "background_image": true }, this);
+            var button_1 = et2_core_widget_1.et2_createWidget("buttononly", { id: "export", "statustext": "Export", image: "download", "background_image": true }, this);
             jQuery(button_1.getDOMNode())
                 .click(this.nextmatch, function (event) {
                 // @ts-ignore
@@ -2404,7 +2426,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             return;
         // Load the template
         var self = this;
-        var header = et2_createWidget("template", { "id": template_name }, this);
+        var header = et2_core_widget_1.et2_createWidget("template", { "id": template_name }, this);
         this.headers[id] = header;
         var deferred = [];
         header.loadingFinished(deferred);
@@ -2481,7 +2503,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             widget_options.empty_label = this.egw().lang('All categories');
         }
         // Create widget
-        var select = et2_createWidget(type, widget_options, this);
+        var select = et2_core_widget_1.et2_createWidget(type, widget_options, this);
         if (options)
             select.set_select_options(options);
         // Set value
@@ -2531,7 +2553,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             filters: filters,
             sidebox_target: 'favorite_sidebox_' + this.getInstanceManager().app
         };
-        this.favorites = et2_createWidget('favorites', widget_options, this);
+        this.favorites = et2_core_widget_1.et2_createWidget('favorites', widget_options, this);
         // Add into header
         jQuery(this.favorites.getDOMNode(this.favorites)).prependTo(egwIsMobile() ? this.search_box.find('.nm_favorites_div').show() : this.right_div);
     };
@@ -2549,7 +2571,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             return;
         this.update_in_progress = true;
         // Use an array mgr to hande non-simple IDs
-        var mgr = new et2_arrayMgr(filters);
+        var mgr = new et2_core_arrayMgr_1.et2_arrayMgr(filters);
         this.iterateOver(function (child) {
             // Skip favorites, don't want them in the filter
             if (typeof child.id != "undefined" && child.id.indexOf("favorite") == 0)
@@ -2686,7 +2708,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             // Use an array mgr to hande non-simple IDs
             var value = {};
             value[_widget.id] = _widget._oldValue = _widget.getValue();
-            var mgr = new et2_arrayMgr(value);
+            var mgr = new et2_core_arrayMgr_1.et2_arrayMgr(value);
             jQuery.extend(true, this.nextmatch.activeFilters, mgr.data);
         };
         if (sub_header.instanceOf(et2_core_inputWidget_1.et2_inputWidget)) {
@@ -2858,21 +2880,21 @@ var et2_nextmatch_customfields = /** @class */ (function (_super) {
                 if (field.values && typeof field.values[''] !== 'undefined') {
                     delete (field.values['']);
                 }
-                widget = et2_createWidget(field.type == 'select-account' ? 'nextmatch-accountfilter' : "nextmatch-filterheader", {
+                widget = et2_core_widget_1.et2_createWidget(field.type == 'select-account' ? 'nextmatch-accountfilter' : "nextmatch-filterheader", {
                     id: cf_id,
                     empty_label: field.label,
                     select_options: field.values
                 }, this);
             }
             else if (apps[field.type]) {
-                widget = et2_createWidget("nextmatch-entryheader", {
+                widget = et2_core_widget_1.et2_createWidget("nextmatch-entryheader", {
                     id: cf_id,
                     only_app: field.type,
                     blur: field.label
                 }, this);
             }
             else {
-                widget = et2_createWidget("nextmatch-sortheader", {
+                widget = et2_core_widget_1.et2_createWidget("nextmatch-sortheader", {
                     id: cf_id,
                     label: field.label
                 }, this);
@@ -3095,7 +3117,7 @@ var et2_nextmatch_accountfilterheader = /** @class */ (function (_super) {
         if (!this.options.empty_label && !this.options.select_options[""]) {
             this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
         }
-        _super.prototype.createInputWidget.call(this, this, arguments);
+        _super.prototype.createInputWidget.call(this);
         this.input.change(this, function (event) {
             if (typeof event.data.nextmatch == 'undefined') {
                 // Not fully set up yet
@@ -3129,7 +3151,7 @@ var et2_nextmatch_accountfilterheader = /** @class */ (function (_super) {
         this.input.css("max-width", max + "px");
     };
     return et2_nextmatch_accountfilterheader;
-}(et2_selectAccount));
+}(et2_widget_selectAccount_1.et2_selectAccount));
 exports.et2_nextmatch_accountfilterheader = et2_nextmatch_accountfilterheader;
 et2_core_widget_1.et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter']);
 /**
@@ -3207,7 +3229,7 @@ var et2_nextmatch_taglistheader = /** @class */ (function (_super) {
         class: { default: 'nm_filterheader_taglist' }
     };
     return et2_nextmatch_taglistheader;
-}(et2_taglist));
+}(et2_widget_taglist_1.et2_taglist));
 et2_core_widget_1.et2_register_widget(et2_nextmatch_taglistheader, ['nextmatch-taglistheader']);
 /**
  * Nextmatch filter that can filter for a selected entry
@@ -3272,7 +3294,7 @@ var et2_nextmatch_entryheader = /** @class */ (function (_super) {
         // Fire on lost focus, clear filter if user emptied box
     };
     return et2_nextmatch_entryheader;
-}(et2_link_entry));
+}(et2_widget_link_1.et2_link_entry));
 et2_core_widget_1.et2_register_widget(et2_nextmatch_entryheader, ['nextmatch-entryheader']);
 /**
  * @augments et2_nextmatch_filterheader
@@ -3304,7 +3326,7 @@ var et2_nextmatch_customfilter = /** @class */ (function (_super) {
         jQuery.extend(_attrs.widget_options, { id: _this.id });
         _attrs.id = '';
         _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_nextmatch_customfilter._attributes, _child || {})) || this;
-        _this.real_node = et2_createWidget(_attrs.type, _attrs.widget_options, _this.getParent());
+        _this.real_node = et2_core_widget_1.et2_createWidget(_attrs.type, _attrs.widget_options, _this.getParent());
         var select_options = [];
         var correct_type = _attrs.type;
         _this.real_node['type'] = _attrs.widget_type;
