@@ -84,7 +84,7 @@
 						<taglist id="action_folder_text"  class="et2_fullWidth" autocomplete_url="mail.mail_sieve.ajax_getFolders" autocomplete_params="" allowFreeEntries="false" maxSelection="1" onfocus="app.mail.sieve_focus_radioBtn" />
 					</hbox>
 				</row>
-				<row>
+				<row disabled="@no_forward">
 					<radio label="Forward to address (*):" id="action" options="address"/>
 					<hbox>
 						<taglist-email allowFreeEntries="true" id="action_address_text" class="et2_fullWidth" onfocus="app.mail.sieve_focus_radioBtn" />
