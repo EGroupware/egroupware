@@ -1955,19 +1955,19 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$css_styles[] = 'forwarded';
 			}
 			if ($header['label1']) {
-				$css_styles[] = 'labelone';
+				$css_styles[] = 'label1';
 			}
 			if ($header['label2']) {
-				$css_styles[] = 'labeltwo';
+				$css_styles[] = 'label2';
 			}
 			if ($header['label3']) {
-				$css_styles[] = 'labelthree';
+				$css_styles[] = 'label3';
 			}
 			if ($header['label4']) {
-				$css_styles[] = 'labelfour';
+				$css_styles[] = 'label4';
 			}
 			if ($header['label5']) {
-				$css_styles[] = 'labelfive';
+				$css_styles[] = 'label5';
 			}
 
 			//error_log(__METHOD__.array2string($css_styles));
@@ -2087,11 +2087,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			foreach ($css_styles as &$flag) {
 				if ($flag!='mail')
 				{
-					if ($flag=='labelone') {$data["flags"]['label1'] = 'label1';}
-					elseif ($flag=='labeltwo') {$data["flags"]['label2'] = 'label2';}
-					elseif ($flag=='labelthree') {$data["flags"]['label3'] = 'label3';}
-					elseif ($flag=='labelfour') {$data["flags"]['label4'] = 'label4';}
-					elseif ($flag=='labelfive') {$data["flags"]['label5'] = 'label5';}
+					if ($flag=='label1') {$data["flags"]['label1'] = 'label1';}
+					elseif ($flag=='label2') {$data["flags"]['label2'] = 'label2';}
+					elseif ($flag=='label3') {$data["flags"]['label3'] = 'label3';}
+					elseif ($flag=='label4') {$data["flags"]['label4'] = 'label4';}
+					elseif ($flag=='label5') {$data["flags"]['label5'] = 'label5';}
 					elseif ($flag=='unseen') {unset($data["flags"]['read']);}
 					else $data["flags"][$flag] = $flag;
 				}

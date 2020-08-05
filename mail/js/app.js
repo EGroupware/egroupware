@@ -85,6 +85,11 @@ app.classes.mail = AppJS.extend(
 	image_proxy: 'https://',
 
 	/**
+	 * stores push activated acc ids
+	 */
+	push_active: {},
+
+	/**
 	 * Initialize javascript for this application
 	 *
 	 * @memberOf mail
@@ -165,7 +170,7 @@ app.classes.mail = AppJS.extend(
 		// call parent; somehow this function is called more often. (twice on a display and compose) why?
 		this._super.apply(this, arguments);
 		this.et2_obj = et2;
-
+		this.push_active = {};
 		switch (_name)
 		{
 			case 'mail.sieve.vacation':
@@ -193,7 +198,7 @@ app.classes.mail = AppJS.extend(
 				{
 					var self = this;
 					jQuery(nm).on('refresh',function(_event, _widget, _row_id, _type) {
-						if (_type !== 'update-in-place')
+						if (!self.push_active[_widget.settings.foldertree.split("::")[0]])
 						{
 							self.mail_refreshFolderStatus.call(self,undefined,undefined,false);
 						}
@@ -398,6 +403,11 @@ app.classes.mail = AppJS.extend(
 		// don't care about other apps data, reimplement if your app does care eg. calendar
 		if (pushData.app !== this.appname) return;
 
+		let id0 = typeof pushData.id === 'string' ? pushData.id : pushData.id[0];
+		let acc_id = id0.split('::')[1];
+		let folder = acc_id+'::'+atob(id0.split('::')[2]);
+		this.push_active[acc_id] = true;
+
 		// only handle delete by default, for simple case of uid === "$app::$id"
 		if (pushData.type === 'delete')
 		{
@@ -416,16 +426,25 @@ app.classes.mail = AppJS.extend(
 		// check if we might not see it because we are on a different mail account or folder
 		let nm = this.et2 ? this.et2.getWidgetById('nm') : null;
 		let nm_value = nm ? nm.getValue() : null;
-		let id0 = typeof pushData.id === 'string' ? pushData.id : pushData.id[0];
-		let folder = id0.split('::')[1]+'::'+atob(id0.split('::')[2]);
+
 		// nm_value.selectedFolder is not always set, read it from foldertree, if not
 		let foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
 		let displayed_folder = (nm_value ? nm_value.selectedFolder : null) || (foldertree ? foldertree.getValue() : '');
 		if (!displayed_folder.match(/::/)) displayed_folder += '::INBOX';
 		if (folder === displayed_folder)
 		{
-			// Just update the nm (todo: pushData.message = total number of messages in folder)
-			nm.refresh(pushData.id, pushData.type === 'update' ? 'update-in-place' : pushData.type, pushData.messages);
+			switch(pushData.acl.event)
+			{
+				case 'FlagsSet':
+					this.pushUpdateFlags(pushData);
+					break;
+				case 'FlagsClear':
+					this.pushUpdateFlags(pushData);
+					break;
+				default:
+					// Just update the nm (todo: pushData.message = total number of messages in folder)
+					nm.refresh(pushData.id, pushData.type === 'update' ? 'update-in-place' : pushData.type, pushData.messages);
+			}
 		}
 		// update unseen counter in folder-tree
 		if (pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
@@ -451,6 +470,47 @@ app.classes.mail = AppJS.extend(
 			notify === 'not-mail' && framework && framework.activeApp.appName !== 'mail')
 		{
 			this.egw.message(egw.lang('New mail from %1', pushData.acl.from)+'\n'+pushData.acl.subject+'\n'+pushData.acl.snippet, 'success');
+		}
+	},
+
+	/**
+	 * Updates flags on respective rows
+	 *
+	 * @param {type} pushData
+	  */
+	pushUpdateFlags: function(pushData)
+	{
+		let flag = pushData.acl.flags[0] || pushData.acl.keywords[0];
+		let unset = (pushData.acl.flags_old && pushData.acl.flags_old.indexOf(pushData.acl.flags[0]) > -1)
+				|| (pushData.acl.keywords_old && pushData.acl.keywords_old.indexOf(pushData.acl.keywords[0]) > -1) ? true : false;
+		let rowClass = '';
+		if (flag[0] == '\\' || flag[0] == '$') flag = flag.slice(1).toLowerCase();
+		let ids = typeof pushData.id == "string" ? [pushData.id] : pushData.id;
+		for (let i in ids)
+		{
+			let msg = {msg:['mail::'+ids[i]]};
+			switch(flag)
+			{
+				case 'seen':
+						this.mail_removeRowClass(msg, (unset) ? 'seen' : 'unseen');
+						rowClass = (unset) ? 'unseen' : 'seen';
+					break;
+				case 'label1':
+				case 'label2':
+				case 'label3':
+				case 'label4':
+				case 'label5':
+					if (unset)
+					{
+						this.mail_removeRowClass(msg, flag);
+					}
+					else
+					{
+						rowClass = flag;
+					}
+					break;
+			}
+			this.mail_setRowClass(msg, rowClass);
 		}
 	},
 
@@ -2566,19 +2626,19 @@ app.classes.mail = AppJS.extend(
 				rowClass = 'seen';
 				break;
 			case 'label1':
-				rowClass = 'labelone';
+				rowClass = 'label1';
 				break;
 			case 'label2':
-				rowClass = 'labeltwo';
+				rowClass = 'label2';
 				break;
 			case 'label3':
-				rowClass = 'labelthree';
+				rowClass = 'label3';
 				break;
 			case 'label4':
-				rowClass = 'labelfour';
+				rowClass = 'label4';
 				break;
 			case 'label5':
-				rowClass = 'labelfive';
+				rowClass = 'label5';
 				break;
 			default:
 				break;
@@ -2590,7 +2650,7 @@ app.classes.mail = AppJS.extend(
 			//old style, only available for undelete and unlabel (no toggle)
 			if ( _action.id=='unlabel') // this means all labels should be removed
 			{
-				var labels = ['labelone','labeltwo','labelthree','labelfour','labelfive'];
+				var labels = ['label1','label2','label3','label4','label5'];
 				for (var i=0; i<labels.length; i++)	this.mail_removeRowClass(_elems,labels[i]);
 				this.mail_flagMessages(_action.id,data);
 			}
