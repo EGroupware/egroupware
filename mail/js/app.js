@@ -436,6 +436,12 @@ app.classes.mail = AppJS.extend(
 			switch(pushData.acl.event)
 			{
 				case 'FlagsSet':
+					// TB (probably other MUA too) mark mail as deleted, our UI removes/expunges it immediatly
+					if (pushData.acl.flags.includes('\\Deleted'))
+					{
+						pushData.type = 'delete';
+						return this._super.call(this, pushData);
+					}
 					this.pushUpdateFlags(pushData);
 					break;
 				case 'FlagsClear':
