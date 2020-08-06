@@ -453,7 +453,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 								this.invalidate();
 							},this);
 						}
-						else if(already_added.indexOf(''+user) < 0 && parseInt(user) >= 0)
+						else if(already_added.indexOf(''+user) < 0 && (isNaN(user) || parseInt(user) >= 0))
 						{
 							labels.push({
 								id: user,
