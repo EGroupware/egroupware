@@ -406,7 +406,16 @@ app.classes.mail = AppJS.extend(
 		let id0 = typeof pushData.id === 'string' ? pushData.id : pushData.id[0];
 		let acc_id = id0.split('::')[1];
 		let folder = acc_id+'::'+atob(id0.split('::')[2]);
+		let foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
 		this.push_active[acc_id] = true;
+
+		// update unseen counter in folder-tree (also for delete)
+		if (pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
+		{
+			let folder_id = {};
+			folder_id[folder] = foldertree.getLabel(folder).replace(this._unseen_regexp, '')+(pushData.acl.unseen ? " ("+pushData.acl.unseen+")" : '');
+			this.mail_setFolderStatus(folder_id);
+		}
 
 		// only handle delete by default, for simple case of uid === "$app::$id"
 		if (pushData.type === 'delete')
@@ -428,7 +437,6 @@ app.classes.mail = AppJS.extend(
 		let nm_value = nm ? nm.getValue() : null;
 
 		// nm_value.selectedFolder is not always set, read it from foldertree, if not
-		let foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
 		let displayed_folder = (nm_value ? nm_value.selectedFolder : null) || (foldertree ? foldertree.getValue() : '');
 		if (!displayed_folder.match(/::/)) displayed_folder += '::INBOX';
 		if (folder === displayed_folder)
@@ -451,13 +459,6 @@ app.classes.mail = AppJS.extend(
 					// Just update the nm (todo: pushData.message = total number of messages in folder)
 					nm.refresh(pushData.id, pushData.type === 'update' ? 'update-in-place' : pushData.type, pushData.messages);
 			}
-		}
-		// update unseen counter in folder-tree
-		if (pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
-		{
-			let folder_id = {};
-			folder_id[folder] = foldertree.getLabel(folder).replace(this._unseen_regexp, '')+(pushData.acl.unseen ? " ("+pushData.acl.unseen+")" : '');
-			this.mail_setFolderStatus(folder_id);
 		}
 	},
 
