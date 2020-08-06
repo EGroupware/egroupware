@@ -427,6 +427,8 @@ app.classes.mail = AppJS.extend(
 		// notify user a new mail arrived
 		if (pushData.type === 'add')
 		{
+			// never notify for Trash, Junk, Drafts or Sent folder
+			if (pushData.acl.folder.match(/^(INBOX.)?(Trash|Spam|Junk|Drafts|Sent)$/)) return;
 			// increment notification counter on (closed) mail tab
 			let framework = egw_getFramework();
 			if (framework) framework.notifyAppTab('mail');
@@ -472,8 +474,6 @@ app.classes.mail = AppJS.extend(
 	{
 		let framework = egw_getFramework();
 		let notify = this.egw.preference('new_mail_notification', 'mail');
-		// never notify for Trash, Junk or Drafts folder
-		if (pushData.acl.folder.match(/^(INBOX.)?(Trash|Spam|Junk|Drafts|Sent)$/)) return;
 		if (typeof notify === 'undefined' || notify === 'always' ||
 			notify === 'not-mail' && framework && framework.activeApp.appName !== 'mail')
 		{
