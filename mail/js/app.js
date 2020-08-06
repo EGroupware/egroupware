@@ -425,9 +425,9 @@ app.classes.mail = AppJS.extend(
 		}
 
 		// notify user a new mail arrived
-		if (pushData.type === 'add')
+		if (pushData.type === 'add' && pushData.acl.event === 'MessageNew')
 		{
-			// never notify for Trash, Junk, Drafts or Sent folder
+			// never notify for Trash, Junk, Drafts or Sent folder (user might use Sieve to move mails there!)
 			if (pushData.acl.folder.match(/^(INBOX.)?(Trash|Spam|Junk|Drafts|Sent)$/)) return;
 			// increment notification counter on (closed) mail tab
 			let framework = egw_getFramework();
