@@ -124,7 +124,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                                     this.invalidate();
                                 }, this);
                             }
-                            else if (already_added.indexOf('' + user) < 0 && parseInt(user) >= 0) {
+                            else if (already_added.indexOf('' + user) < 0 && (isNaN(user) || parseInt(user) >= 0)) {
                                 labels.push({
                                     id: user,
                                     label: this._get_owner_name(user),
