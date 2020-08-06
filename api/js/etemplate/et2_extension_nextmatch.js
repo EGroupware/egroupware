@@ -505,11 +505,12 @@ var et2_nextmatch = /** @class */ (function (_super) {
         id_loop: for (var i = 0; i < _row_ids.length; i++) {
             var uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
             switch (_type) {
+                // update-in-place = update, but "update" is too ambiguous
                 case "update-in-place":
+                case "update":
                     this.egw().dataRefreshUID(uid);
                     break;
                 case "edit":
-                case "update":
                     if (!this.refresh_update(uid)) {
                         // Could not update just the row, full refresh has been requested
                         break id_loop;
