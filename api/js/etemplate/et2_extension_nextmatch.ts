@@ -863,10 +863,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	{
 		let index : boolean | number = 0;
 		let appname = this._get_appname();
-		if(appname && this.egw().window.app[appname] && typeof this.egw().window.app[appname].nm_refresh_index == "function")
+		let app_obj = this.getInstanceManager().app_obj[appname] || this.egw().window.app[appname];
+		if(appname && app_obj && typeof app_obj.nm_refresh_index == "function")
 		{
 			let sort = Object.values(this.controller._indexMap).map(e => ({index:e.idx, uid:e.uid}));
-			index = this.egw().window.app[appname].nm_refresh_index(this, uid, sort, type)
+			index = this.getInstanceManager().app_obj[appname].nm_refresh_index(this, uid, sort, type)
 		}
 
 		// App cancelled the add

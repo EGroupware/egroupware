@@ -353,6 +353,14 @@ class infolog_ui
 			$links['linked'] = array();
 			unset($query['col_filter']['linked']);
 		}
+
+		// Querying for a particular ID.  If linked is a list of IDs, reset the linked or we won't find the ID we want.
+		if($query['col_filter']['info_id'] && $link_filters['linked'] && !$link_filters['linked']['app'])
+		{
+			unset($links['linked']);
+			unset($link_filters['linked']);
+		}
+
 		if($query['action'] && in_array($query['action'], array_keys($GLOBALS['egw_info']['apps'])) && $query['action_id'])
 		{
 			$link_filters['action'] = array('app'=>$query['action'], 'id' => $query['action_id']);
@@ -558,7 +566,7 @@ class infolog_ui
 	 * @param $rows
 	 * @return int
 	 */
-	public function link_filters(&$links, $link_filters, &$query, &$rows)
+	public function   link_filters(&$links, $link_filters, &$query, &$rows)
 	{
 		foreach($link_filters as $key => $link)
 		{
@@ -592,6 +600,10 @@ class infolog_ui
 			}
 		}
 
+		if($query['col_filter']['info_id'])
+		{
+			$links['info_id'] = $query['col_filter']['info_id'];
+		}
 		if(count($links))
 		{
 			$query['col_filter']['info_id'] = count($links) > 1 ? call_user_func_array('array_intersect', $links) : $links[$key];
