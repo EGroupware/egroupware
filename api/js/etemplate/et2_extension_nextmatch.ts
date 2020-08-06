@@ -1997,19 +1997,19 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	_set_autorefresh( time)
 	{
+		// Start / update timer
+		if (this._autorefresh_timer)
+		{
+			window.clearInterval(this._autorefresh_timer);
+			delete this._autorefresh_timer;
+		}
+
 		// Store preference
 		const refresh_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-autorefresh";
 		const app = this._get_appname();
 		if(this._get_autorefresh() != time)
 		{
 			this.egw().set_preference(app,refresh_preference,time);
-		}
-
-		// Start / update timer
-		if (this._autorefresh_timer)
-		{
-			window.clearInterval(this._autorefresh_timer);
-			delete this._autorefresh_timer;
 		}
 		if(time > 0)
 		{
@@ -2055,6 +2055,22 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 		const refresh_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-autorefresh";
 		return this.egw().preference(refresh_preference,this._get_appname());
+	}
+
+	/**
+	 * Enable or disable autorefresh
+	 *
+	 * If false, autorefresh will be shown in column selection.  If the user already has an autorefresh preference
+	 * for this nextmatch, the timer will be started.
+	 *
+	 * If true, the timer will be stopped and autorefresh will not be shown in column selection
+	 *
+	 * @param disabled
+	 */
+	set_disable_autorefresh( disabled : boolean)
+	{
+		this.options.disable_autorefresh = disabled;
+		this._set_autorefresh(this._get_autorefresh());
 	}
 
 	/**
