@@ -163,6 +163,7 @@ var et2_entry = /** @class */ (function (_super) {
         }
     };
     et2_entry.legacyOptions = ["field", "compare", "alternate_fields"];
+    et2_entry.prefix = '~';
     return et2_entry;
 }(et2_core_valueWidget_1.et2_valueWidget));
 et2_core_widget_1.et2_register_widget(et2_entry, ["entry", 'contact-value', 'contact-account', 'contact-template', 'infolog-value', 'tracker-value', 'records-value']);
