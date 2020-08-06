@@ -787,11 +787,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			var uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
 			switch(_type)
 			{
+				// update-in-place = update, but "update" is too ambiguous
 				case "update-in-place":
+				case "update":
 					this.egw().dataRefreshUID(uid);
 					break;
 				case "edit":
-				case "update":
 					if(!this.refresh_update(uid))
 					{
 						// Could not update just the row, full refresh has been requested
