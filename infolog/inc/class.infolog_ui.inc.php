@@ -929,6 +929,7 @@ class infolog_ui
 		$readonlys['cancel'] = $action != 'sp';
 
 		$this->tmpl->read('infolog.index');
+		$values['nm']['disable_autorefresh'] = true;	// we have push
 		$values['nm']['options-filter'] = $this->filters;
 		$values['nm']['get_rows'] = 'infolog.infolog_ui.get_rows';
 		$values['nm']['options-filter2'] = (in_array($this->prefs['show_links'],array('all','no_describtion')) ? array() : array(
