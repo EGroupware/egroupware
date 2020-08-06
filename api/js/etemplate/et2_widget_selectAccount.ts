@@ -45,7 +45,7 @@ export class et2_selectAccount extends et2_selectbox
 		}
 	};
 
-	public readonly legacyOptions = ['empty_label','account_type'];
+	public static readonly legacyOptions = ['empty_label','account_type'];
 
 	public static readonly account_types = ['accounts','groups','both','owngroups'];
 	private search: JQuery;

@@ -588,7 +588,7 @@ export class et2_link_entry extends et2_inputWidget
 		}
 	};
 
-	protected static readonly legacyOptions = ["only_app", "application_list"];
+	public static readonly legacyOptions = ["only_app", "application_list"];
 	protected static readonly search_timeout = 500; //ms after change to send query
 	protected static readonly minimum_characters = 4; // Don't send query unless there's at least this many chars
 

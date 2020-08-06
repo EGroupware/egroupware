@@ -54,7 +54,6 @@ var et2_selectAccount = /** @class */ (function (_super) {
      */
     function et2_selectAccount(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_selectAccount._attributes, _child || {})) || this;
-        _this.legacyOptions = ['empty_label', 'account_type'];
         // Type in rows or somewhere else?
         if (jQuery.inArray(_attrs['empty_label'], et2_selectAccount.account_types) > 0 && (jQuery.inArray(_attrs['account_type'], et2_selectAccount.account_types) < 0 ||
             _attrs['account_type'] == et2_selectAccount._attributes.account_type['default'])) {
@@ -606,6 +605,7 @@ var et2_selectAccount = /** @class */ (function (_super) {
             'description': 'Limit type of accounts.  One of {accounts,groups,both,owngroups}.'
         }
     };
+    et2_selectAccount.legacyOptions = ['empty_label', 'account_type'];
     et2_selectAccount.account_types = ['accounts', 'groups', 'both', 'owngroups'];
     return et2_selectAccount;
 }(et2_widget_selectbox_1.et2_selectbox));
