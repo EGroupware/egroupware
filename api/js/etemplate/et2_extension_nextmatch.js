@@ -1457,16 +1457,16 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * @param time int Refresh period, in seconds
      */
     et2_nextmatch.prototype._set_autorefresh = function (time) {
+        // Start / update timer
+        if (this._autorefresh_timer) {
+            window.clearInterval(this._autorefresh_timer);
+            delete this._autorefresh_timer;
+        }
         // Store preference
         var refresh_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-autorefresh";
         var app = this._get_appname();
         if (this._get_autorefresh() != time) {
             this.egw().set_preference(app, refresh_preference, time);
-        }
-        // Start / update timer
-        if (this._autorefresh_timer) {
-            window.clearInterval(this._autorefresh_timer);
-            delete this._autorefresh_timer;
         }
         if (time > 0) {
             this._autorefresh_timer = setInterval(jQuery.proxy(this.controller.update, this.controller), time * 1000);
@@ -1505,6 +1505,20 @@ var et2_nextmatch = /** @class */ (function (_super) {
         }
         var refresh_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-autorefresh";
         return this.egw().preference(refresh_preference, this._get_appname());
+    };
+    /**
+     * Enable or disable autorefresh
+     *
+     * If false, autorefresh will be shown in column selection.  If the user already has an autorefresh preference
+     * for this nextmatch, the timer will be started.
+     *
+     * If true, the timer will be stopped and autorefresh will not be shown in column selection
+     *
+     * @param disabled
+     */
+    et2_nextmatch.prototype.set_disable_autorefresh = function (disabled) {
+        this.options.disable_autorefresh = disabled;
+        this._set_autorefresh(this._get_autorefresh());
     };
     /**
      * When the template attribute is set, the nextmatch widget tries to load
