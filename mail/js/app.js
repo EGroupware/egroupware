@@ -410,10 +410,11 @@ app.classes.mail = AppJS.extend(
 		this.push_active[acc_id] = true;
 
 		// update unseen counter in folder-tree (also for delete)
-		if (pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
+		if (foldertree && pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
 		{
 			let folder_id = {};
-			folder_id[folder] = foldertree.getLabel(folder).replace(this._unseen_regexp, '')+(pushData.acl.unseen ? " ("+pushData.acl.unseen+")" : '');
+			folder_id[folder] = foldertree.getLabel(folder).replace(this._unseen_regexp, '')+
+				(pushData.acl.unseen ? " ("+pushData.acl.unseen+")" : '');
 			this.mail_setFolderStatus(folder_id);
 		}
 
