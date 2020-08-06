@@ -605,6 +605,10 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
         this.egw.dataFetch(this._widget.getInstanceManager().etemplate_exec_id || this._execId, _queriedRange, obj._filters, this._widgetId, _callback, _context);
     };
     et2_nextmatch_controller.prototype.dataRegisterUID = function (_uid, _callback, _context) {
+        // Make sure we use correct prefix when data comes back
+        if (this._widget && this._widget._get_appname() != this.egw.getAppName()) {
+            _context.prefix = _uid.split('::')[0];
+        }
         this.egw.dataRegisterUID(_uid, _callback, _context, this._widget.getInstanceManager().etemplate_exec_id || this._execId, this._widgetId);
     };
     et2_nextmatch_controller.prototype.dataUnregisterUID = function () {

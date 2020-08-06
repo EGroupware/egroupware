@@ -580,9 +580,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
         if (type === void 0) { type = "add"; }
         var index = 0;
         var appname = this._get_appname();
-        if (appname && this.egw().window.app[appname] && typeof this.egw().window.app[appname].nm_refresh_index == "function") {
+        var app_obj = this.getInstanceManager().app_obj[appname] || this.egw().window.app[appname];
+        if (appname && app_obj && typeof app_obj.nm_refresh_index == "function") {
             var sort = Object.values(this.controller._indexMap).map(function (e) { return ({ index: e.idx, uid: e.uid }); });
-            index = this.egw().window.app[appname].nm_refresh_index(this, uid, sort, type);
+            index = this.getInstanceManager().app_obj[appname].nm_refresh_index(this, uid, sort, type);
         }
         // App cancelled the add
         if (index === false) {
