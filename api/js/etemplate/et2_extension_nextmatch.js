@@ -571,7 +571,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
         // Need to delete first as there's a good chance indexes will change in an unknown way
         // and we can't always find it by UID after due to duplication
-        this.controller._grid.deleteRow(entry.idx);
+        this.controller.deleteRow(uid);
         // Pretend it's a new row, let app tell us where it goes and we'll mark it as new
         if (!this.refresh_add(uid, et2_nextmatch.UPDATE)) {
             // App did not want the row, or doesn't know where it goes but we've already removed it...
