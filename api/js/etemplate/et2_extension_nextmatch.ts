@@ -2134,6 +2134,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this.dataview.destroy();
 			this.rowProvider.destroy();
 			this.controller.destroy();
+			this.controller = null;
 
 			// Free any children from previous template
 			// They may get left behind because of how detached nodes are processed
@@ -2228,6 +2229,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				this.resize();
 			}, this)
 		);
+		return promise;
 	}
 
 	// Some accessors to match conventions

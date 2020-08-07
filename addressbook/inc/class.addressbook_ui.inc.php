@@ -933,7 +933,7 @@ class addressbook_ui extends addressbook_bo
 			$query['actions'] = $this->get_actions($query['col_filter']['tid']);
 		}
 
-		$query['template'] = $query['grouped_view'] == 'duplicates' ? 'addressbook.index.duplicate_rows' : 'addressbook.index.org_rows';
+		$template = $query['grouped_view'] == 'duplicates' ? 'addressbook.index.duplicate_rows' : 'addressbook.index.org_rows';
 
 		if ($query['advanced_search'])
 		{
@@ -945,7 +945,7 @@ class addressbook_ui extends addressbook_bo
 			$query['search'] = $query['advanced_search'];
 		}
 
-		switch ($query['template'])
+		switch ($template)
 		{
 			case 'addressbook.index.org_rows':
 				if ($query['order'] != 'org_name')
@@ -1684,19 +1684,9 @@ class addressbook_ui extends addressbook_bo
 		}
 		else	// contacts view
 		{
-			if ($query['sitemgr_display'])
-			{
-				$query['template'] = $query['sitemgr_display'].'.rows';
-			}
-			else
-			{
-				$query['template'] = 'addressbook.index.rows';
-			}
 			if($query['col_filter']['parent_id'])
 			{
 				$query['grouped_view'] = $query['col_filter']['parent_id'];
-				$query['template'] = strpos($query['grouped_view'], 'duplicate') === 0 ?
-						'addressbook.index.duplicate_rows' : 'addressbook.index.org_rows';
 			}
 			// Query doesn't like parent_id
 			unset($query['col_filter']['parent_id']);
