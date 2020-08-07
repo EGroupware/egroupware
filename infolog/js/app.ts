@@ -41,7 +41,7 @@ class InfologApp extends EgwApp
 	constructor()
 	{
 		// call parent
-		super('infolog', 'info_datemodified');
+		super('infolog');
 	}
 
 	/**

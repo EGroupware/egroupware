@@ -31,7 +31,7 @@ class TimesheetApp extends EgwApp
 
 	constructor()
 	{
-		super('timesheet',"ts_start");
+		super('timesheet');
 	}
 
 	/**

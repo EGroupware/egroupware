@@ -70,11 +70,6 @@ export abstract class EgwApp
 	readonly appname: string;
 
 	/**
-	 * Name of the modification timestamp in entry data
-	 */
-	readonly modification_field_name : string;
-
-	/**
 	 * Internal reference to the most recently loaded etemplate2 widget tree
 	 *
 	 * NOTE: This variable can change which etemplate it points to as the user
@@ -140,10 +135,9 @@ export abstract class EgwApp
 	 * Initialization and setup goes here, but the etemplate2 object
 	 * is not yet ready.
 	 */
-	constructor(appname: string, modified_field:string = "")
+	constructor(appname: string)
 	{
 		this.appname = appname;
-		this.modification_field_name = modified_field;
 		this.egw = egw(this.appname, window);
 
 		// Initialize sidebox for non-popups.
@@ -277,43 +271,6 @@ export abstract class EgwApp
 	uid(pushData)
 	{
 		return pushData.app + '::' + pushData.id;
-	}
-
-	/**
-	 * Callback from nextmatch so application can have some control over
-	 * where new rows (added via push) are added.  This is called when
-	 * the type is "add" or "update".
-	 *
-	 * Returning false for a new row will cause nm to do a full reload of all data.
-	 * For an update the row will be updated in place.
-	 *
-	 * @param nm Nextmatch the entry is going to be added to
-	 * @param uid
-	 * @param current_order List of ids in order
-	 * @param update_type add or update
-	 *
-	 * @return number | boolean Row index (0 at the top) or false to not insert the row
-	 */
-	nm_refresh_index(nm: et2_nextmatch, uid: string, current_order: string[], update_type: string) : number|boolean
-	{
-		// Do we have a modified field so we can check nm sort order?
-		if(this.modification_field_name)
-		{
-			let value = nm.getValue();
-			let sort = value?.sort || {};
-
-			if(sort && sort.id == this.modification_field_name && sort.asc == false)
-			{
-				// Sorting by modification time, DESC.  Put it at the top.
-				return 0;
-			}
-
-			// Don't actually add it in.
-			return false;
-		}
-
-		// Just put it in at the top
-		return 0;
 	}
 
 	/**

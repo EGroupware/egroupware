@@ -47,7 +47,7 @@ var InfologApp = /** @class */ (function (_super) {
     function InfologApp() {
         var _this = 
         // call parent
-        _super.call(this, 'infolog', 'info_datemodified') || this;
+        _super.call(this, 'infolog') || this;
         _this._action_ids = [];
         _this._action_all = false;
         return _this;

@@ -944,6 +944,7 @@ class infolog_ui
 		$values['nm']['disable_autorefresh'] = true;	// we have push
 		$values['nm']['options-filter'] = $this->filters;
 		$values['nm']['get_rows'] = 'infolog.infolog_ui.get_rows';
+		$values['nm']['add_on_top_sort_field'] = 'info_datemodified';
 		$values['nm']['options-filter2'] = (in_array($this->prefs['show_links'],array('all','no_describtion')) ? array() : array(
 			''               => 'default',
 		)) + array(
