@@ -1564,6 +1564,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             this.dataview.destroy();
             this.rowProvider.destroy();
             this.controller.destroy();
+            this.controller = null;
             // Free any children from previous template
             // They may get left behind because of how detached nodes are processed
             // We don't use iterateOver because it checks sub-children
@@ -1639,6 +1640,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             this.dynheight.initialized = false;
             this.resize();
         }, this));
+        return promise;
     };
     // Some accessors to match conventions
     et2_nextmatch.prototype.set_hide_header = function (hide) {

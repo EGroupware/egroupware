@@ -30,6 +30,7 @@ require("jqueryui");
 require("../jsapi/egw_global");
 require("../etemplate/et2_types");
 var egw_app_1 = require("../../api/js/jsapi/egw_app");
+var etemplate2_1 = require("../../api/js/etemplate/etemplate2");
 /**
  * UI for Addressbook
  *
@@ -123,7 +124,7 @@ var AddressbookApp = /** @class */ (function (_super) {
         if (_app === 'addressbook' && state && state.type && state.type === 'view' && state.id === _id) {
             var content = egw.dataGetUIDdata('addressbook::' + _id);
             if (content.data) {
-                var view = etemplate2.getById('addressbook-view');
+                var view = etemplate2_1.etemplate2.getById('addressbook-view');
                 if (view) {
                     view.widgetContainer._children[0].set_value({ content: content.data });
                 }
@@ -144,7 +145,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             else if (!content) {
                 // No data on the event, we'll have to reload if calendar column is visible
                 // to get the updated information
-                var nm = etemplate2.getById('addressbook-index').widgetContainer.getWidgetById('nm');
+                var nm = etemplate2_1.etemplate2.getById('addressbook-index').widgetContainer.getWidgetById('nm');
                 var pref = nm ? nm._getPreferences() : false;
                 if (pref && pref.visible.indexOf('calendar_calendar') > -1) {
                     nm.refresh(null, 'update');
@@ -152,6 +153,38 @@ var AddressbookApp = /** @class */ (function (_super) {
             }
         }
         return true;
+    };
+    /**
+     * Change handler for contact / org selectbox
+     *
+     * @param node
+     * @param widget
+     */
+    AddressbookApp.prototype.change_grouped_view = function (node, widget) {
+        var nm = etemplate2_1.etemplate2.getById('addressbook-index').widgetContainer.getDOMWidgetById('nm');
+        var template = "addressbook.index.rows";
+        var value = {};
+        if (nm.activeFilters.sitemgr_display) {
+            template = nm.activeFilters.sitemgr_display + '.rows';
+        }
+        else if (widget.getValue().indexOf("org_name") == 0) {
+            template = "addressbook.index.org_rows";
+        }
+        else if (widget.getValue().indexOf('duplicate') === 0) {
+            template = 'addressbook.index.duplicate_rows';
+        }
+        if (nm.activeFilters.col_filter.parent_id) {
+            template = widget.getValue().indexOf('duplicate') === 0 ?
+                'addressbook.index.duplicate_rows' : 'addressbook.index.org_rows';
+        }
+        var promise = nm.set_template(template);
+        value[widget.id] = widget.getValue();
+        if (promise) {
+            jQuery.when.apply(null, promise).done(function () {
+                nm.applyFilters(value);
+            });
+        }
+        return !promise;
     };
     /**
      * Open CRM view
@@ -178,7 +211,7 @@ var AddressbookApp = /** @class */ (function (_super) {
      */
     AddressbookApp.prototype.view_set_list = function (filter) {
         // Find the infolog list
-        var list = etemplate2.getById(jQuery(this.et2.getInstanceManager().DOMContainer).nextAll('.et2_container').attr('id'));
+        var list = etemplate2_1.etemplate2.getById(jQuery(this.et2.getInstanceManager().DOMContainer).nextAll('.et2_container').attr('id'));
         var nm = list ? list.widgetContainer.getWidgetById('nm') : null;
         if (nm) {
             nm.applyFilters(filter);
@@ -810,7 +843,7 @@ var AddressbookApp = /** @class */ (function (_super) {
         var state = _super.prototype.getState.call(this);
         if (jQuery.isEmptyObject(state)) {
             // Not in a list view.  Try to find contact ID
-            var etemplates = etemplate2.getByApplication('addressbook');
+            var etemplates = etemplate2_1.etemplate2.getByApplication('addressbook');
             for (var i = 0; i < etemplates.length; i++) {
                 var content = etemplates[i].widgetContainer.getArrayMgr("content");
                 if (content && content.getEntry('id')) {
@@ -854,7 +887,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             // Clear advanced search, which is in session and etemplate
             egw.json('addressbook.addressbook_ui.ajax_clear_advanced_search', [], function () {
                 framework.setWebsiteTitle('addressbook', '');
-                var index = etemplate2.getById('addressbook-index');
+                var index = etemplate2_1.etemplate2.getById('addressbook-index');
                 if (index && index.widgetContainer) {
                     var nm = index.widgetContainer.getWidgetById('nm');
                     if (nm) {
@@ -869,7 +902,7 @@ var AddressbookApp = /** @class */ (function (_super) {
         else if (state.state.grouped_view) {
             // Deal with grouped views that are not valid (not in list of options)
             // by faking viewing that organisation
-            var index = etemplate2.getById('addressbook-index');
+            var index = etemplate2_1.etemplate2.getById('addressbook-index');
             if (index && index.widgetContainer) {
                 var grouped = index.widgetContainer.getWidgetById('grouped_view');
                 var options;
