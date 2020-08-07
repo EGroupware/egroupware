@@ -1437,13 +1437,14 @@ div .et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 div .et2_taglist_single:not(.et2_taglist_small) div.ms-sel-ctn div.ms-sel-item {
 	width: calc(100% - 30px);
 }
-.et2_taglist_single div.ms-sel-item > span:first-child {
+.et2_taglist_single div.ms-sel-item > span:not(.ms-close-btn):not(.ms-edit-btn) {
 	max-width: 100%;
 	width: 100%;
 	display: inline-block;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.et2_taglist_single .ms-edit-btn {display: none;}
 .et2_taglist_toggle.et2_taglist_small.et2_taglist_single::before {
 	display: none;
 }
