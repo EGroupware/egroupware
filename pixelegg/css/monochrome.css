@@ -1983,7 +1983,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background-image: none;
   z-index: 0;
   width: 230px;
-  padding-left: 27px;
+  padding-left: 31px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.domain {
   background-image: url(../images/internet.png);
