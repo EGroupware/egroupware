@@ -53,14 +53,12 @@ var EgwApp = /** @class */ (function () {
      * Initialization and setup goes here, but the etemplate2 object
      * is not yet ready.
      */
-    function EgwApp(appname, modified_field) {
-        if (modified_field === void 0) { modified_field = ""; }
+    function EgwApp(appname) {
         /**
          * Mailvelope "egroupware" Keyring
          */
         this.mailvelope_keyring = undefined;
         this.appname = appname;
-        this.modification_field_name = modified_field;
         this.egw = egw(this.appname, window);
         // Initialize sidebox for non-popups.
         // ID set server side
@@ -175,37 +173,6 @@ var EgwApp = /** @class */ (function () {
      */
     EgwApp.prototype.uid = function (pushData) {
         return pushData.app + '::' + pushData.id;
-    };
-    /**
-     * Callback from nextmatch so application can have some control over
-     * where new rows (added via push) are added.  This is called when
-     * the type is "add" or "update".
-     *
-     * Returning false for a new row will cause nm to do a full reload of all data.
-     * For an update the row will be updated in place.
-     *
-     * @param nm Nextmatch the entry is going to be added to
-     * @param uid
-     * @param current_order List of ids in order
-     * @param update_type add or update
-     *
-     * @return number | boolean Row index (0 at the top) or false to not insert the row
-     */
-    EgwApp.prototype.nm_refresh_index = function (nm, uid, current_order, update_type) {
-        var _a;
-        // Do we have a modified field so we can check nm sort order?
-        if (this.modification_field_name) {
-            var value = nm.getValue();
-            var sort = ((_a = value) === null || _a === void 0 ? void 0 : _a.sort) || {};
-            if (sort && sort.id == this.modification_field_name && sort.asc == false) {
-                // Sorting by modification time, DESC.  Put it at the top.
-                return 0;
-            }
-            // Don't actually add it in.
-            return false;
-        }
-        // Just put it in at the top
-        return 0;
     };
     /**
      * Open an entry.

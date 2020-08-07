@@ -39,7 +39,7 @@ var etemplate2_1 = require("../../api/js/etemplate/etemplate2");
 var TimesheetApp = /** @class */ (function (_super) {
     __extends(TimesheetApp, _super);
     function TimesheetApp() {
-        return _super.call(this, 'timesheet', "ts_start") || this;
+        return _super.call(this, 'timesheet') || this;
     }
     /**
      * This function is called when the etemplate2 object is loaded

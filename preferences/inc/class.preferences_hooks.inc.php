@@ -164,6 +164,14 @@ class preferences_hooks
 				'admin'  => False,
 				'forced' => 20,	// hidden as not used in eTemplate2
 			),
+			'lazy-update' => array(
+				'type'   => 'select',
+				'label'  => 'Fast updates',
+				'name'   => 'lazy-update',
+				'values' => array('lazy' => lang('Fast'), 'exact' => lang('Full refresh')),
+				'help'   => 'Choose between fast updates with changes sometimes on top, or full refresh',
+				'default'=> 'lazy'
+			),
 			'template_set' => array(
 				'type'   => 'select',
 				'label'  => 'Interface/Template Selection',

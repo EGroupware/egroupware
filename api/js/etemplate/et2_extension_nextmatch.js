@@ -439,18 +439,27 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * Refresh given rows for specified change
      *
      * Change type parameters allows for quicker refresh then complete server side reload:
-     * - update: request just modified data from given rows.  Sorting is not considered,
-     *		so if the sort field is changed, the row will not be moved.
+     * - update: request modified data from given rows.  May be moved.
      * - update-in-place: update row, but do NOT move it, or refresh if uid does not exist
-     * - edit: rows changed, but sorting may be affected.  May require full reload.
+     * - edit: rows changed, but sorting may be affected.  Full reload.
      * - delete: just delete the given rows clientside (no server interaction neccessary)
      * - add: put the new row in at the top, unless app says otherwise
+     *
+     * What actually happens also depends on a general preference "lazy-update":
+     *	default/lazy:
+     *  - add always on top
+     *	- updates on top, if sorted by last modified, otherwise update-in-place
+     *	- update-in-place is always in place!
+     *
+     *	exact:
+     *	- add and update on top if sorted by last modified, otherwise full refresh
+     *	- update-in-place is always in place!
      *
      * Nextmatch checks the application callback nm_refresh_index, which has a default implementation
      * in egw_app.nm_refresh_index().
      *
      * @param {string[]|string} _row_ids rows to refresh
-     * @param {?string} _type "update", "edit", "delete" or "add"
+     * @param {?string} _type "update-in-place", "update", "edit", "delete" or "add"
      *
      * @see jsapi.egw_refresh()
      * @see egw_app.nm_refresh_index()
@@ -470,8 +479,16 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 .bind({ nm: this, ids: _row_ids, type: _type }));
             return;
         }
+        // Make some changes in what we're doing based on preference
+        var update_pref = egw.preference("lazy-update");
+        if (_type == et2_nextmatch.UPDATE && !this.is_sorted_by_modified()) {
+            _type = update_pref == "lazy" ? et2_nextmatch.UPDATE_IN_PLACE : et2_nextmatch.EDIT;
+        }
+        else if (update_pref == "exact" && _type == et2_nextmatch.ADD && !this.is_sorted_by_modified()) {
+            _type = et2_nextmatch.EDIT;
+        }
         if (typeof _type == 'undefined')
-            _type = 'edit';
+            _type = et2_nextmatch.EDIT;
         if (typeof _row_ids == 'string' || typeof _row_ids == 'number')
             _row_ids = [_row_ids];
         if (typeof _row_ids == "undefined" || _row_ids === null) {
@@ -480,7 +497,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             jQuery(this).triggerHandler("refresh", [this]);
             return;
         }
-        if (_type == "delete") {
+        if (_type == et2_nextmatch.DELETE) {
             // Record current & next index
             var uid = _row_ids[0].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[0] : this.controller.dataStorePrefix + "::" + _row_ids[0];
             var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
@@ -513,24 +530,27 @@ var et2_nextmatch = /** @class */ (function (_super) {
         id_loop: for (var i = 0; i < _row_ids.length; i++) {
             var uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
             switch (_type) {
-                // update-in-place = update, but "update" is too ambiguous
-                case "update-in-place":
-                case "update":
+                // update-in-place = update, but always only in place
+                case et2_nextmatch.UPDATE_IN_PLACE:
                     this.egw().dataRefreshUID(uid);
                     break;
-                case "edit":
+                // update [existing] row, maybe we'll put it on top
+                case et2_nextmatch.UPDATE:
                     if (!this.refresh_update(uid)) {
                         // Could not update just the row, full refresh has been requested
                         break id_loop;
                     }
                     break;
-                case "delete":
-                    // Handled above, more code to execute after loop
+                case et2_nextmatch.DELETE:
+                    // Handled above, more code to execute after loop so don't exit early
                     break;
-                case "add":
-                    if (this.refresh_add(uid))
-                        break;
+                case et2_nextmatch.ADD:
+                    if (update_pref == "lazy" || update_pref == "exact" && this.is_sorted_by_modified()) {
+                        if (this.refresh_add(uid))
+                            break;
+                    }
                 // fall-through / full refresh, if refresh_add returns false
+                case et2_nextmatch.EDIT:
                 default:
                     // Trigger refresh
                     this.applyFilters();
@@ -558,7 +578,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // and we can't always find it by UID after due to duplication
         this.controller._grid.deleteRow(entry.idx);
         // Pretend it's a new row, let app tell us where it goes and we'll mark it as new
-        if (!this.refresh_add(uid, "update")) {
+        if (!this.refresh_add(uid, et2_nextmatch.UPDATE)) {
             // App did not want the row, or doesn't know where it goes but we've already removed it...
             // Put it back before anyone notices.  New data coming from server anyway.
             var callback_1 = function (data) {
@@ -577,15 +597,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * @return boolean false: not added, true: added
      */
     et2_nextmatch.prototype.refresh_add = function (uid, type) {
-        if (type === void 0) { type = "add"; }
-        var index = 0;
-        var appname = this._get_appname();
-        var app_obj = this.getInstanceManager().app_obj[appname] || this.egw().window.app[appname];
-        if (appname && app_obj && typeof app_obj.nm_refresh_index == "function") {
-            var sort = Object.values(this.controller._indexMap).map(function (e) { return ({ index: e.idx, uid: e.uid }); });
-            index = this.getInstanceManager().app_obj[appname].nm_refresh_index(this, uid, sort, type);
-        }
-        // App cancelled the add
+        if (type === void 0) { type = et2_nextmatch.ADD; }
+        var index = egw.preference("lazy-update") == "lazy" ? 0 :
+            (this.is_sorted_by_modified() ? 0 : false);
+        // No add, do a full refresh
         if (index === false) {
             return false;
         }
@@ -601,6 +616,16 @@ var et2_nextmatch = /** @class */ (function (_super) {
         };
         this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
         return true;
+    };
+    /**
+     * Is this nextmatch currently sorted by "modified" date
+     *
+     * This is decided by the row_modified options passed from the server and the current sort order
+     */
+    et2_nextmatch.prototype.is_sorted_by_modified = function () {
+        var _a;
+        var sort = ((_a = this.getValue()) === null || _a === void 0 ? void 0 : _a.sort) || {};
+        return sort && sort.id && sort.id == this.settings.add_on_top_sort_field && sort.asc == false;
     };
     et2_nextmatch.prototype._get_appname = function () {
         var app = '';
@@ -2188,6 +2213,15 @@ var et2_nextmatch = /** @class */ (function (_super) {
             "default": {}
         }
     };
+    /**
+     * Update types
+     * @see et2_nextmatch.refresh() for more information
+     */
+    et2_nextmatch.ADD = 'add';
+    et2_nextmatch.UPDATE_IN_PLACE = 'update-in-place';
+    et2_nextmatch.UPDATE = 'update';
+    et2_nextmatch.EDIT = 'edit';
+    et2_nextmatch.DELETE = 'delete';
     et2_nextmatch.legacyOptions = ["template", "hide_header", "header_left", "header_right"];
     return et2_nextmatch;
 }(et2_core_DOMWidget_1.et2_DOMWidget));
