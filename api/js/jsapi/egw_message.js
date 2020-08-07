@@ -110,6 +110,13 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					.attr('id','egw_message')
 					.text(_msg)
 					.addClass(_type+'_message')
+					.click(function(){
+						if (_type == 'success')
+						{
+							delete(alive_messages[msg_index]);
+							jQuery(msg_div).remove();
+						}
+					})
 					.prependTo(wrapper);
 				var msg_close = jQuery(_wnd.document.createElement('span'))
 					.click(function() {
@@ -137,6 +144,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					})
 					.addClass('close')
 					.appendTo(msg_div);
+				if (_type == 'success')	msg_close.hide();
 				// discard checkbox implementation
 				if (_discardID && _type === 'info')
 				{
