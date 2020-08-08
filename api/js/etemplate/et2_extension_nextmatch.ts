@@ -858,13 +858,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	protected refresh_update(uid: string)
 	{
-		if(!this.egw().dataRefreshUID(uid))
-		{
-			// Could not update just that row
-			this.applyFilters();
-			return false;
-		}
-
 		// Row data update has been sent, let's move it where app wants it
 		let entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
 
