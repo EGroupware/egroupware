@@ -133,6 +133,11 @@ var et2_dataview_selectionManager = /** @class */ (function () {
         if (typeof this._registeredRows[_uid] !== "undefined"
             && this._registeredRows[_uid].tr === _tr) {
             this._inUpdate = true;
+            // Don't leave focusedEntry
+            // @ts-ignore
+            if (this._focusedEntry !== null && this._focusedEntry.uid == _uid) {
+                this.setFocused(_uid, false);
+            }
             this._registeredRows[_uid].tr = null;
             this._registeredRows[_uid].aoi = null;
             // Remove the action object from its container

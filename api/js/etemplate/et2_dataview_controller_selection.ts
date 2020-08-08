@@ -194,6 +194,12 @@ export class et2_dataview_selectionManager
 		{
 			this._inUpdate = true;
 
+			// Don't leave focusedEntry
+			// @ts-ignore
+			if(this._focusedEntry !== null && this._focusedEntry.uid == _uid)
+			{
+				this.setFocused(_uid, false);
+			}
 			this._registeredRows[_uid].tr = null;
 			this._registeredRows[_uid].aoi = null;
 

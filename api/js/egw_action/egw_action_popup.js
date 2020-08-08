@@ -340,7 +340,8 @@ function egwPopupActionImplementation()
 
 	ai.doUnregisterAction = function(_aoi)
 	{
-		//
+		var node = _aoi.getDOMNode();
+		jQuery(node).off();
 	};
 
 	/**

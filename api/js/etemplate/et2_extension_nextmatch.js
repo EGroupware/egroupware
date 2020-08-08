@@ -567,11 +567,6 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * @param uid
      */
     et2_nextmatch.prototype.refresh_update = function (uid) {
-        if (!this.egw().dataRefreshUID(uid)) {
-            // Could not update just that row
-            this.applyFilters();
-            return false;
-        }
         // Row data update has been sent, let's move it where app wants it
         var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
         // Need to delete first as there's a good chance indexes will change in an unknown way
