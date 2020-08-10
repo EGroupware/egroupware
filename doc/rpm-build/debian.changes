@@ -1,3 +1,20 @@
+egroupware-docker (20.1.20200810) hardy; urgency=low
+
+  * Preferences: new pref how to update lists: fast or exact
+  * Tracker/Notifications: send mail after response to user and push errors
+  * Calendar: Fix multiple all-day event rendering bug
+  * Etemplate: Fix entry widget had wrong ID, so was missing value
+  * Mail/Admin: do NOT allow to set forwards via Sieve rules, if user forwards are disabled (not standard SMTP!)
+  * Infolog: Fix exporting search results failed if a contact filter was used
+  * Notifications: taking push server into account for checking user is online for popup or email notifications
+  * Rocket.Chat: do NOT require a refresh token / user conset as we regard rocketchat as internal app
+  * Rocket.Chat: fix Rocket.Chat message dialog shows error "Unknown Path"
+  * Status: Fix unread message indicators no longer working
+  * Container: use Ubuntu 20.04 as base of EGroupware container instead of 18.04
+  * All apps: fixed scrolling in lists for iPad in desktop mode
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 10 Aug 2020 13:45:13 +0200
+
 egroupware-docker (20.1.20200731) hardy; urgency=low
 
   * 5th and last 20.1 release candidate
