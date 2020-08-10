@@ -39,8 +39,8 @@ date format	preferences	de	Datumsformat
 default	preferences	de	Vorgabe
 default application	preferences	de	Standard-Anwendung
 default font	preferences	de	Standard-Schrift
-default format block	preferences	de	Standard Formatierung
 default font size	preferences	de	Standard-Schriftgröße
+default format block	preferences	de	Standard Formatierung
 default preferences	preferences	de	Voreinstellungen
 delete categories	preferences	de	Kategorie löschen
 deny following groups access to acl (grant access)	admin	de	Verweigere folgenden Gruppen den Zugriff in den ACL's
@@ -73,6 +73,8 @@ error	preferences	de	Fehler
 failed to change password.	preferences	de	Passwortänderung fehlgeschlagen!
 failed to delete secret!	preferences	de	Löschen des Schlüssels fehlgeschlagen!
 failed to store secret!	preferences	de	Speichern des Schlüssels fehlgeschlagen!
+fast	preferences	de	Schnell
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	de	Schnelles aktualisieren fügt neue Einträge immer oben in der Liste hinzu und aktualisiert bestehende in ihrer aktuellen Position, außer die Liste ist nach letzter Änderung sortiert. Exaktes Aktualisieren lädt die Liste komplett neu, außer sie ist nach letzter Änderung sortiert.
 features of the editor	preferences	de	Funktionsauswahl des Editors
 font size unit	preferences	de	Einheit der Schriftgröße
 forced preferences	preferences	de	Erzwungene Einstellungen
@@ -91,6 +93,7 @@ how many hours are you in front or after the timezone of the server.<br>if you a
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	de	Wie viele Icons sollen in der Navigationsleiste am Kopf der Seite angezeigt werden. Zusätzliche Icons erscheinen in einem Pulldown-Menü, das über ein Icon ganz rechts in der Navigation aufgerufen wird.
 how many toolbar buttons are available	preferences	de	Wie viele Buttons sind in der Symbolleiste verfügbar
 how should egroupware display dates for you.	preferences	de	Wie soll EGroupware das Datum für Sie anzeigen?
+how to update lists	preferences	de	Wie sollen Listen aktualisiert werden
 icon	preferences	de	Symbol
 icons and text	preferences	de	Symbole und Text
 icons only	preferences	de	nur Symbole
@@ -125,13 +128,13 @@ password contains only %1 of required %2 character classes: no %3	preferences	de
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	de	Passwort enthält mit "%1" einen Teil Ihres Benutzernamens oder vollständigen Namen (3 oder mehr Zeichen lang)
 password is invalid	preferences	de	Das Passwort ist ungültig
 password must have at least %1 characters	preferences	de	Passwort muss mindestens %1 Zeichen lang sein
-preformatted	preferences	de	Vorformatiert
 permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	de	Zeitzonen auswählen, zwischen den schnell umgeschaltet werden soll. Der Umschalter wird NICHT angezeigt, wenn weniger als zwei ausgewählt werden.
 please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
 popup with search	preferences	de	Pop-up mit Suche
 preferences saved.	preferences	de	Einstellungen gespeichert
+preformatted	preferences	de	Vorformatiert
 pt: points (1/72 inch)	preferences	de	pt: Punkt (1/72 Inch)
 px: display pixels	preferences	de	px: Bildschirmpixel
 re-enter your password	preferences	de	Neues Passwort wiederholen
