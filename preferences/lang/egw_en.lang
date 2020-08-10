@@ -36,11 +36,11 @@ custom sidebar menu active color, defaults to above color darkened	preferences	e
 dark moono theme	preferences	en	Dark Moono Theme
 data exchange settings	preferences	en	Data exchange settings
 date format	preferences	en	Date format
-default format block	preferences	en	Default format block
 default	preferences	en	Default
 default application	preferences	en	Default application
 default font	preferences	en	Default font
 default font size	preferences	en	Default font size
+default format block	preferences	en	Default format block
 default preferences	preferences	en	Default preferences
 delete categories	preferences	en	Delete categories
 deny following groups access to acl (grant access)	admin	en	Deny following groups access to ACL (grant access)
@@ -73,6 +73,8 @@ error	preferences	en	Error
 failed to change password.	preferences	en	Failed to change password.
 failed to delete secret!	preferences	en	Failed to delete secret!
 failed to store secret!	preferences	en	Failed to store secret!
+fast	preferences	en	Fast
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	en	Fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. Exact updates do a full refresh, if the list is not sorted by last modified.
 features of the editor	preferences	en	Features of the editor
 font size unit	preferences	en	Font size unit
 forced preferences	preferences	en	Forced preferences
@@ -91,6 +93,7 @@ how many hours are you in front or after the timezone of the server.<br>if you a
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	en	How many icons should be shown in the navigation bar at the top of the page. Additional icons go into a pull down menu, callable by the icon on the far right side of the navigation bar.
 how many toolbar buttons are available	preferences	en	How many toolbar buttons are available
 how should egroupware display dates for you.	preferences	en	Select displayed date format
+how to update lists	preferences	en	How to update lists
 icon	preferences	en	Icon
 icons and text	preferences	en	Icons and text
 icons only	preferences	en	Icons only

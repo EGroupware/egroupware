@@ -166,10 +166,13 @@ class preferences_hooks
 			),
 			'lazy-update' => array(
 				'type'   => 'select',
-				'label'  => 'Fast updates',
+				'label'  => 'How to update lists',
 				'name'   => 'lazy-update',
-				'values' => array('lazy' => lang('Fast'), 'exact' => lang('Full refresh')),
-				'help'   => 'Choose between fast updates with changes sometimes on top, or full refresh',
+				'values' => [
+					'lazy' => lang('Fast'),
+					'exact' => lang('Exact'),
+				],
+				'help'   => 'Fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. Exact updates do a full refresh, if the list is not sorted by last modified.',
 				'default'=> 'lazy'
 			),
 			'template_set' => array(
