@@ -640,7 +640,10 @@ var AdminApp = /** @class */ (function (_super) {
             buttons: et2_dialog.BUTTONS_OK_CANCEL,
             value: {
                 content: content,
-                sel_options: sel_options,
+                // @todo: we need to investigate more on et2_widget_selectbox type of apps
+                // where the sel options are not ready while setting its content. Therefore,
+                // the explicit apps should be removed after fixing it on the widget side.
+                sel_options: jQuery.extend(sel_options, { apps: sel_options.filter2 }),
                 modifications: modifications,
                 readonlys: readonlys
             },
