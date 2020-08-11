@@ -1555,6 +1555,11 @@ class mail_ui
 			$mail_ui->mail_bo->icServer->pushAvailable())
 		{
 			$mail_ui->mail_bo->icServer->enablePush();
+			Api\Json\Response::get()->call('app.mail.disable_autorefresh', true);
+		}
+		else
+		{
+			Api\Json\Response::get()->call('app.mail.disable_autorefresh', false);
 		}
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
 		//Mail::$debugTimes=true;

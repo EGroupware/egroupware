@@ -138,6 +138,19 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Dynamic disable NM autorefresh on get_rows response depending on push support of imap-server
+	 *
+	 * @param {bool} _disable
+	 */
+	disable_autorefresh: function(_disable)
+	{
+		if (this.checkET2())
+		{
+			this.et2.getWidgetById('nm').set_disable_autorefresh(_disable);
+		}
+	},
+
+	/**
 	 * check and try to reinitialize et2 of module
 	 */
 	checkET2: function()
