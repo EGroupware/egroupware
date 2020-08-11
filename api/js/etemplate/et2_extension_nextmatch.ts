@@ -902,7 +902,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
 		entry.idx = typeof index == "number" ? index : 0;
 		this.controller._insertDataRow(entry,true);
-		
+
 		// Set "new entry" class - but it has to stay so register and re-add it after the data is there
 		entry.row.tr.addClass("new_entry");
 		let callback = function(data) {
@@ -3484,7 +3484,7 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 
 			let change = function (_node) {
 				// Call previously set change function
-				const result = widget_change.call(_widget, _node);
+				const result = widget_change.call(_widget, _node, header.nextmatch);
 
 				// Update filters, if we're not already doing so
 				if ((result || typeof result === 'undefined') && _widget.isDirty() && !header.update_in_progress) {

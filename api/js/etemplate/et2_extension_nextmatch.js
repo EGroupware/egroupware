@@ -2722,7 +2722,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             var widget_change = _widget.change;
             var change = function (_node) {
                 // Call previously set change function
-                var result = widget_change.call(_widget, _node);
+                var result = widget_change.call(_widget, _node, header.nextmatch);
                 // Update filters, if we're not already doing so
                 if ((result || typeof result === 'undefined') && _widget.isDirty() && !header.update_in_progress) {
                     // Update dirty
