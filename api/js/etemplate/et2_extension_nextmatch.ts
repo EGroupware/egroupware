@@ -1738,7 +1738,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				autoRefresh.set_id("nm_autorefresh");
 				autoRefresh.set_select_options({
 					                               // Cause [unknown] problems with mail
-					                               //30: "30 seconds",
+					                               3: "30 seconds",
 					                               //60: "1 Minute",
 					                               180: "3 Minutes",
 					                               300: "5 Minutes",
@@ -2105,6 +2105,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	set_disable_autorefresh( disabled : boolean)
 	{
 		this.options.disable_autorefresh = disabled;
+		//@todo remove it after finding a right fix
+		this.controller.set_disable_autorefresh(disabled);
 		this._set_autorefresh(this._get_autorefresh());
 	}
 

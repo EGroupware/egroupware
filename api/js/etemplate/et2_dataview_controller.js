@@ -89,6 +89,18 @@ var et2_dataview_controller = /** @class */ (function () {
         }
     };
     /**
+     * Enable or disable autorefresh
+     *
+     * disable_autorefresh is used to detect that we have active push in order to enable a fix for push
+     * on  _insertDataRow function reindexing the _indexMap which is wrong for the full refresh.
+     *
+     * @param disabled
+     * @todo remove it after finding a right fix
+     */
+    et2_dataview_controller.prototype.set_disable_autorefresh = function (disabled) {
+        this._disable_autorefresh = disabled;
+    };
+    /**
      * @param value is an object implementing the et2_IDataProvider
      * interface
      */
@@ -331,8 +343,9 @@ var et2_dataview_controller = /** @class */ (function () {
         if (createdRow && _entry.row) {
             this._grid.insertRow(_entry.idx, _entry.row);
         }
-        // Update index map
-        if (this._indexMap[_entry.idx].uid !== _entry.uid) {
+        //@todo remove it after finding a right fix
+        // Update index map only for push (autorefresh disabled)
+        if (this._disable_autorefresh && this._indexMap[_entry.idx].uid !== _entry.uid) {
             var max = parseInt(Object.keys(this._indexMap).reduce(function (a, b) { return _this._indexMap[a] > _this._indexMap[b] ? a : b; }));
             for (var idx = max; idx >= _entry.idx; idx--) {
                 this._indexMap[idx].idx = idx + 1;
