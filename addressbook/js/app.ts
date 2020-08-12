@@ -172,11 +172,11 @@ class AddressbookApp extends EgwApp
 	 * Change handler for contact / org selectbox
 	 *
 	 * @param node
-	 * @param widget
+	 * @param {et2_extension_nextmatch} nm
+	 * @param {et2_selectbox} widget
 	 */
-	change_grouped_view(node, widget)
+	change_grouped_view(node, nm, widget)
 	{
-		let nm = etemplate2.getById('addressbook-index').widgetContainer.getDOMWidgetById('nm');
 		let template = "addressbook.index.rows";
 		let value = {};
 

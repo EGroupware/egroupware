@@ -158,10 +158,10 @@ var AddressbookApp = /** @class */ (function (_super) {
      * Change handler for contact / org selectbox
      *
      * @param node
-     * @param widget
+     * @param {et2_extension_nextmatch} nm
+     * @param {et2_selectbox} widget
      */
-    AddressbookApp.prototype.change_grouped_view = function (node, widget) {
-        var nm = etemplate2_1.etemplate2.getById('addressbook-index').widgetContainer.getDOMWidgetById('nm');
+    AddressbookApp.prototype.change_grouped_view = function (node, nm, widget) {
         var template = "addressbook.index.rows";
         var value = {};
         if (nm.activeFilters.sitemgr_display) {
