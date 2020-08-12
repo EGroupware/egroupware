@@ -1,3 +1,12 @@
+egroupware-docker (20.1.20200812) hardy; urgency=low
+
+  * final 20.1 release
+  * Admin: ACL dialog showed no rights when first opened and deleted them on saving
+  * InfoLog/Timesheet/Mail: disable automatic list refresh, as they support push now
+  * Mail: fix refresh problems with automatic refresh and no push enabled imap server
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 12 Aug 2020 12:38:07 +0200
+
 egroupware-docker (20.1.20200810) hardy; urgency=low
 
   * Preferences: new pref how to update lists: fast or exact
