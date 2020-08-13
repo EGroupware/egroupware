@@ -356,7 +356,7 @@
             // bind all properties except for callback
             var entry = item;
             if('function' === typeof item.webkitGetAsEntry){
-              entry = item.webkitGetAsEntry();
+              entry = item.webkitGetAsEntry() || item;
             }
             return processItem.bind(null, entry, "", files);
           }),
