@@ -2106,7 +2106,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	{
 		this.options.disable_autorefresh = disabled;
 		//@todo remove it after finding a right fix
-		this.controller.set_disable_autorefresh(disabled);
+		if (this.controller) this.controller.set_disable_autorefresh(disabled);
 		this._set_autorefresh(this._get_autorefresh());
 	}
 

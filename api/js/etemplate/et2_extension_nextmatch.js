@@ -1540,7 +1540,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
     et2_nextmatch.prototype.set_disable_autorefresh = function (disabled) {
         this.options.disable_autorefresh = disabled;
         //@todo remove it after finding a right fix
-        this.controller.set_disable_autorefresh(disabled);
+        if (this.controller)
+            this.controller.set_disable_autorefresh(disabled);
         this._set_autorefresh(this._get_autorefresh());
     };
     /**
