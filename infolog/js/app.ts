@@ -183,21 +183,32 @@ class InfologApp extends EgwApp
 			return super.push(pushData);
 		}
 
+		// If we know about it and it's an update, just update.
+		// This must be before all ACL checks, as responsible might have changed and entry need to be removed
+		// (server responds then with null / no entry causing the entry to disapear)
+		if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData)))
+		{
+			return etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
+		}
+
 		// check visibility - grants is ID => permission of people we're allowed to see
-		if(typeof this._grants === 'undefined')
+		if (typeof this._grants === 'undefined')
 		{
 			this._grants = egw.grants(this.appname);
 		}
-		if(this._grants && typeof this._grants[pushData.acl.info_owner] == "undefined")
+		// check user has a grant from owner or a responsible
+		if (this._grants && typeof this._grants[pushData.acl.info_owner] === 'undefined' &&
+			// responsible gets implicit access, so we need to check them too
+			!pushData.acl.info_responsible.filter(res => typeof this._grants[res] !== 'undefined').length)
 		{
 			// No ACL access
 			return;
 		}
 
-		// If we know about it & it's a update, just update.
-		if(pushData.type == "update" && this.egw.dataHasUID(pushData.id) || pushData.type == "edit")
+		// no responsible means, owner is responsible
+		if (!pushData.acl.info_responsible || !pushData.acl.info_responsible.length)
 		{
-			return etemplate2.app_refresh("",pushData.app, pushData.id, pushData.type);
+			pushData.acl.info_responsible = [pushData.acl.info_owner];
 		}
 
 		// Filter what's allowed down to those we care about
@@ -220,19 +231,31 @@ class InfologApp extends EgwApp
 				}
 			},this, et2_nextmatch);
 		}
+
+		// check filters against ACL data
 		for(let field_filter of Object.values(filters))
 		{
-			if(field_filter.filter_values.length == 0) continue;
-			if(pushData.acl && typeof pushData.acl[field_filter.col] == "string" &&
-				field_filter.filter_values.indexOf(pushData.acl[field_filter.col]) <=0)
+			// no filter set
+			if (field_filter.filter_values.length == 0) continue;
+
+			// acl value is a scalar (not array) --> check contained in filter
+			if (pushData.acl && typeof pushData.acl[field_filter.col] !== 'object')
+			{
+				if (field_filter.filter_values.indexOf(pushData.acl[field_filter.col]) < 0)
+				{
+					return;
+				}
+				continue;
+			}
+			// acl value is an array (eg. info_responsible) --> check intersection with filter
+			if(!field_filter.filter_values.filter(account => pushData.acl[field_filter.col].indexOf(account) >= 0).length)
 			{
 				return;
 			}
-			if(field_filter.filter_values.filter(account => pushData.acl[field_filter.col].indexOf(account) >=0).length == 0) return;
 		}
 
 		// Pass actual refresh on to etemplate to take care of
-		etemplate2.app_refresh("",pushData.app, pushData.id, pushData.type);
+		etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
 	}
 
 	/**
