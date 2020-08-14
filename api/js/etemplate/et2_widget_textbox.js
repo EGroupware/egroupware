@@ -493,8 +493,10 @@ var et2_searchbox = /** @class */ (function (_super) {
     };
     et2_searchbox.prototype.set_value = function (_value) {
         _super.prototype.set_value.call(this, _value);
-        if (this.search)
+        if (this.search) {
             this.search.input.val(_value);
+            this.clear.toggle(_value != '');
+        }
     };
     et2_searchbox.prototype.set_readonly = function (_readonly) {
         this.search.set_readonly(_readonly);
