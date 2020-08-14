@@ -627,7 +627,7 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 		function get_rows(&$query, &$rows)
 		{
 			// Check for navigating outside share, redirect back to share
-			if (!Vfs::stat($query['path'],false) || !Vfs::is_dir($query['path']) || !Vfs::check_access($query['path'],Vfs::READABLE))
+			if (!empty($query['path']) && (!Vfs::stat($query['path'],false) || !Vfs::is_dir($query['path']) || !Vfs::check_access($query['path'],Vfs::READABLE)))
 			{
 				// only redirect, if it would be to some other location, gives redirect-loop otherwise
 				if ($query['path'] != ($path = static::get_home_dir()))
