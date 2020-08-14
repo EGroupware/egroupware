@@ -165,6 +165,7 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {number} pushData.account_id User that caused the notification
      */
     InfologApp.prototype.push = function (pushData) {
+        var _this = this;
         if (pushData.app !== this.appname)
             return;
         // pushData does not contain everything, just the minimum.
@@ -172,17 +173,26 @@ var InfologApp = /** @class */ (function (_super) {
         if (pushData.type === 'delete') {
             return _super.prototype.push.call(this, pushData);
         }
+        // If we know about it and it's an update, just update.
+        // This must be before all ACL checks, as responsible might have changed and entry need to be removed
+        // (server responds then with null / no entry causing the entry to disapear)
+        if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData))) {
+            return etemplate2_1.etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
+        }
         // check visibility - grants is ID => permission of people we're allowed to see
         if (typeof this._grants === 'undefined') {
             this._grants = egw.grants(this.appname);
         }
-        if (this._grants && typeof this._grants[pushData.acl.info_owner] == "undefined") {
+        // check user has a grant from owner or a responsible
+        if (this._grants && typeof this._grants[pushData.acl.info_owner] === 'undefined' &&
+            // responsible gets implicit access, so we need to check them too
+            !pushData.acl.info_responsible.filter(function (res) { return typeof _this._grants[res] !== 'undefined'; }).length) {
             // No ACL access
             return;
         }
-        // If we know about it & it's a update, just update.
-        if (pushData.type == "update" && this.egw.dataHasUID(pushData.id) || pushData.type == "edit") {
-            return etemplate2_1.etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
+        // no responsible means, owner is responsible
+        if (!pushData.acl.info_responsible || !pushData.acl.info_responsible.length) {
+            pushData.acl.info_responsible = [pushData.acl.info_owner];
         }
         // Filter what's allowed down to those we care about
         var filters = {
@@ -204,15 +214,22 @@ var InfologApp = /** @class */ (function (_super) {
             }, this, et2_extension_nextmatch_1.et2_nextmatch);
         }
         var _loop_1 = function (field_filter) {
+            // no filter set
             if (field_filter.filter_values.length == 0)
                 return "continue";
-            if (pushData.acl && typeof pushData.acl[field_filter.col] == "string" &&
-                field_filter.filter_values.indexOf(pushData.acl[field_filter.col]) <= 0) {
+            // acl value is a scalar (not array) --> check contained in filter
+            if (pushData.acl && typeof pushData.acl[field_filter.col] !== 'object') {
+                if (field_filter.filter_values.indexOf(pushData.acl[field_filter.col]) < 0) {
+                    return { value: void 0 };
+                }
+                return "continue";
+            }
+            // acl value is an array (eg. info_responsible) --> check intersection with filter
+            if (!field_filter.filter_values.filter(function (account) { return pushData.acl[field_filter.col].indexOf(account) >= 0; }).length) {
                 return { value: void 0 };
             }
-            if (field_filter.filter_values.filter(function (account) { return pushData.acl[field_filter.col].indexOf(account) >= 0; }).length == 0)
-                return { value: void 0 };
         };
+        // check filters against ACL data
         for (var _b = 0, _c = Object.values(filters); _b < _c.length; _b++) {
             var field_filter = _c[_b];
             var state_1 = _loop_1(field_filter);
