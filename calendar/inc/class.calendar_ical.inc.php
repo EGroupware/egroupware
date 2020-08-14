@@ -2797,6 +2797,13 @@ class calendar_ical extends calendar_boupdate
 					{
 						$email = $attributes['value'];
 					}
+					// check if we need to replace email domain with something else in participants (mail address migration)
+					if (!empty($email) && !empty($GLOBALS['egw_info']['server']['calendar_domain_replace']) &&
+						!empty($GLOBALS['egw_info']['server']['calendar_domain_replace_with']))
+					{
+						$email = preg_replace('/@'.preg_quote($GLOBALS['egw_info']['server']['calendar_domain_replace'], '/').'(>|$)/i',
+							'@'.$GLOBALS['egw_info']['server']['calendar_domain_replace_with'].'$1', $e=$email);
+					}
 					// try X-EGROUPWARE-UID, but only if it resolves to same email (otherwise we are in trouble if different EGw installs talk to each other)
 					if (!$uid && !empty($attributes['params']['X-EGROUPWARE-UID']) &&
 						($res_info = $this->resource_info($attributes['params']['X-EGROUPWARE-UID'])) &&
