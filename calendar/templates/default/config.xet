@@ -5,7 +5,7 @@
 	<template id="calendar.config" template="" lang="" group="0" version="16.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
 			<columns>
-				<column width="60%"/>
+				<column width="50%"/>
 				<column/>
 			</columns>
 			<rows>
@@ -119,6 +119,16 @@
 				<row>
 					<description value="Limit search for conflicts in recurrences to given number of recurrences"/>
 					<float id="newsettings[conflict_max_checked]"/>
+				</row>
+				<row>
+					<description value="Email address migration" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Change domain of participants in CalDAV requests"/>
+					<hbox>
+						<textbox id="newsettings[calendar_domain_replace]" blur="replace" size="48"/>
+						<textbox id="newsettings[calendar_domain_replace_with]" blur="with" size="48"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>

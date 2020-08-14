@@ -1033,6 +1033,13 @@ class Principals extends Handler
 				break;
 
 			case 'mailto':
+				// check if we need to replace email domain with something else in participants (mail address migration)
+				if (!empty($rest) && !empty($GLOBALS['egw_info']['server']['calendar_domain_replace']) &&
+					!empty($GLOBALS['egw_info']['server']['calendar_domain_replace_with']))
+				{
+					$rest = preg_replace('/@' . preg_quote($GLOBALS['egw_info']['server']['calendar_domain_replace'], '/') . '(>|$)/i',
+						'@' . $GLOBALS['egw_info']['server']['calendar_domain_replace_with'] . '$1', $e = $rest);
+				}
 				if (($uid = $GLOBALS['egw']->accounts->name2id($rest, 'account_email')))
 				{
 					$type = $uid > 0 ? 'users' : 'groups';
