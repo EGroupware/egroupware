@@ -584,7 +584,11 @@ class et2_searchbox extends et2_textbox
 	set_value(_value)
 	{
 		super.set_value(_value);
-		if (this.search) this.search.input.val(_value);
+		if (this.search)
+		{
+			this.search.input.val(_value);
+			this.clear.toggle(_value != '');
+		}
 	}
 
 	set_readonly(_readonly)
