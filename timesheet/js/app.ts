@@ -225,6 +225,13 @@ class TimesheetApp extends EgwApp
 			return super.push(pushData);
 		}
 
+		// This must be before all ACL checks, as owner might have changed and entry need to be removed
+		// (server responds then with null / no entry causing the entry to disapear)
+		if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData)))
+		{
+			return etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
+		}
+
 		// all other cases (add, edit, update) are handled identical
 		// check visibility
 		if (typeof this._grants === 'undefined')
@@ -236,7 +243,7 @@ class TimesheetApp extends EgwApp
 		// check if we might not see it because of an owner filter
 		let nm = <et2_nextmatch>this.et2?.getWidgetById('nm');
 		let nm_value = nm?.getValue();
-		if (nm && nm_value && nm_value.col_filter?.ts_owner && nm_value.col_filter.ts_owner != pushData.acl)
+		if (nm && nm_value && nm_value.col_filter?.ts_owner && nm_value.col_filter.ts_owner != pushData.acl.ts_owner)
 		{
 			return;
 		}

@@ -194,6 +194,11 @@ var TimesheetApp = /** @class */ (function (_super) {
         if (pushData.type === 'delete') {
             return _super.prototype.push.call(this, pushData);
         }
+        // This must be before all ACL checks, as owner might have changed and entry need to be removed
+        // (server responds then with null / no entry causing the entry to disapear)
+        if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData))) {
+            return etemplate2_1.etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
+        }
         // all other cases (add, edit, update) are handled identical
         // check visibility
         if (typeof this._grants === 'undefined') {
@@ -204,7 +209,7 @@ var TimesheetApp = /** @class */ (function (_super) {
         // check if we might not see it because of an owner filter
         var nm = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getWidgetById('nm');
         var nm_value = (_b = nm) === null || _b === void 0 ? void 0 : _b.getValue();
-        if (nm && nm_value && ((_c = nm_value.col_filter) === null || _c === void 0 ? void 0 : _c.ts_owner) && nm_value.col_filter.ts_owner != pushData.acl) {
+        if (nm && nm_value && ((_c = nm_value.col_filter) === null || _c === void 0 ? void 0 : _c.ts_owner) && nm_value.col_filter.ts_owner != pushData.acl.ts_owner) {
             return;
         }
         etemplate2_1.etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
