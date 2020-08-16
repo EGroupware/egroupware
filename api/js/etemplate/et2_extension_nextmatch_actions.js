@@ -464,6 +464,7 @@ function nm_open_popup(_action, _selected)
 			var dialog_parent = dialog.parent();
 			var d_buttons = [];
 			var action = _action;
+			let selected = _selected;
 			popup.show();
 			var close_function = function()
 			{
@@ -483,6 +484,7 @@ function nm_open_popup(_action, _selected)
 					click: button && button.onclick ? function(e) {
 						jQuery(this).dialog("close");
 						nm_popup_action = action;
+						nm_popup_ids = selected;
 						button.onclick.apply(button, e.currentTarget);
 						close_function();
 					} : function(e) {
@@ -513,7 +515,7 @@ function nm_open_popup(_action, _selected)
 
 		// Reset global variables
 		nm_popup_action = null;
-		nm_popup_senders = null;
+		nm_popup_ids = null;
 	}
 }
 
@@ -567,7 +569,7 @@ function nm_hide_popup(element, div_id)
 		popup.style.display = 'none';
 	}
 	nm_popup_action = null;
-	nm_popup_senders = null;
+	nm_popup_ids = null;
 
 	return false;
 }
