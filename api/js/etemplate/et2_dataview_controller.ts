@@ -23,6 +23,7 @@
 import {et2_IDataProvider} from "./et2_dataview_interfaces";
 import {et2_dataview_selectionManager} from "./et2_dataview_controller_selection";
 import {et2_dataview_row} from "./et2_dataview_view_row";
+import {et2_dataview_grid} from "./et2_dataview_view_grid";
 
 /**
  * The fetch timeout specifies the time during which the controller tries to
@@ -43,7 +44,7 @@ export class et2_dataview_controller
 	public static readonly CONCURRENT_REQUESTS = 5;
 
 	private _parentController: any;
-	private _grid: any;
+	private _grid: et2_dataview_grid;
 	private dataStorePrefix: any;
 	private _dataProvider: any;
 	private _rowCallback: any;
@@ -388,6 +389,14 @@ export class et2_dataview_controller
 			row.controller = this;
 		}
 		return row;
+	}
+
+	/**
+	 * Returns the current "total" count.
+	 */
+	getTotalCount() : number
+	{
+		return this._grid.getTotalCount();
 	}
 
 	/* -- PRIVATE FUNCTIONS -- */

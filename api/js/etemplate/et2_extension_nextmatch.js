@@ -595,6 +595,11 @@ var et2_nextmatch = /** @class */ (function (_super) {
         if (type === void 0) { type = et2_nextmatch.ADD; }
         var index = egw.preference("lazy-update") == "lazy" ? 0 :
             (this.is_sorted_by_modified() ? 0 : false);
+        // workaround for datagrid deleting the last row, see ticket #48204
+        // if we only have a couple of rows, do a full refresh instead
+        if (this.controller.getTotalCount() < 15) {
+            return false;
+        }
         // No add, do a full refresh
         if (index === false) {
             return false;
