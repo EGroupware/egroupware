@@ -70,6 +70,14 @@ done 2>&1 | tee -a $LOG
 # as we can NOT exit from until (runs a subshell), we need to check and do it here
 [ "$(tail -1 $LOG)" = "Installing of EGroupware failed!" ] && exit 1
 
+# fix cron entries in case docker uses "overlay" storage driver (eg. Univention 4.4)
+# cron does NOT executing scripts with "NUMBER OF HARD LINKS > 1"
+for f in /etc/crontab /etc/cron.*/*; do
+  [ $(ls -l $f | cut -d' ' -f2) -gt 1 ] && {
+    mv $f /tmp
+    cat /tmp/$(basename $f) > $f
+  }
+done
 # to run async jobs
 service cron start
 
