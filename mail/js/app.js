@@ -426,7 +426,8 @@ app.classes.mail = AppJS.extend(
 		if (foldertree && pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
 		{
 			let folder_id = {};
-			folder_id[folder] = foldertree.getLabel(folder).replace(this._unseen_regexp, '')+
+			folder_id[folder] = (foldertree.getLabel(folder) || pushData.acl.folder)
+				.replace(this._unseen_regexp, '')+
 				(pushData.acl.unseen ? " ("+pushData.acl.unseen+")" : '');
 			this.mail_setFolderStatus(folder_id);
 		}
