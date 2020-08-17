@@ -277,6 +277,12 @@ var et2_dataview_controller = /** @class */ (function () {
         }
         return row;
     };
+    /**
+     * Returns the current "total" count.
+     */
+    et2_dataview_controller.prototype.getTotalCount = function () {
+        return this._grid.getTotalCount();
+    };
     /* -- PRIVATE FUNCTIONS -- */
     et2_dataview_controller.prototype._getIndexEntry = function (_idx) {
         // Create an entry in the index map if it does not exist yet

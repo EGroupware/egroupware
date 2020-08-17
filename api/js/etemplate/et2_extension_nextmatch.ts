@@ -892,6 +892,13 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		let index : boolean | number = egw.preference("lazy-update") == "lazy" ? 0 :
 			(this.is_sorted_by_modified() ? 0 : false);
 
+		// workaround for datagrid deleting the last row, see ticket #48204
+		// if we only have a couple of rows, do a full refresh instead
+		if (this.controller.getTotalCount() < 15)
+		{
+			return false;
+		}
+
 		// No add, do a full refresh
 		if(index === false)
 		{
