@@ -124,7 +124,7 @@ export class et2_radiobox extends et2_inputWidget
 		{
 			if (radio.id == this.id)
 			{
-				radio.input.prop('checked', _value == radio.options.set_value).change();
+				radio.input.prop('checked', _value == radio.options.set_value);
 			}
 		}, this, et2_radiobox);
 	}

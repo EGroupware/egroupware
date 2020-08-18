@@ -100,7 +100,7 @@ var et2_radiobox = /** @class */ (function (_super) {
     et2_radiobox.prototype.set_value = function (_value) {
         this.getRoot().iterateOver(function (radio) {
             if (radio.id == this.id) {
-                radio.input.prop('checked', _value == radio.options.set_value).change();
+                radio.input.prop('checked', _value == radio.options.set_value);
             }
         }, this, et2_radiobox);
     };
