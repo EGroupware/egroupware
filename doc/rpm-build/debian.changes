@@ -1,3 +1,19 @@
+egroupware-docker (20.1.20200818) hardy; urgency=low
+
+  * All apps: fix last rows was removed when adding new entry to list with only a couple of rows
+  * Mail: fix not working push with Dovecot 2.2 caused by different case in event-type compared to 2.3
+  * Mail: fix not shown folder tree for some Cyrus servers
+  * InfoLog: fix list not allways refreshed via push, caused by insufficient ACL implementation on client-side
+  * Calendar/Resources: do NOT try to notify a not set resource responsible
+  * Calendar/CalDAV: config to replace email-domain eg. for a migration
+  * Timesheet: fix list not always refreshed via push, caused by owner filter
+  * File Sharing: fix broken file sharing dialog
+  * Filemanager: Fix broken drop-down button of create new file type
+  * News admin: fix issue language filter in list is always empty
+  * Univention: fix not running async jobs because of old overlay storage driver
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 18 Aug 2020 14:58:09 +0200
+
 egroupware-docker (20.1.20200812) hardy; urgency=low
 
   * final 20.1 release
