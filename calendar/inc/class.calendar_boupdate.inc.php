@@ -959,7 +959,7 @@ class calendar_boupdate extends calendar_bo
 				}
 				$userid = $res_info['responsible'];
 
-				if (!isset($userid))
+				if (empty($userid))	// no resource responsible: $userid===0
 				{
 					if (empty($res_info['email'])) continue;	// no way to notify
 					// check if event-owner wants non-EGroupware users notified
