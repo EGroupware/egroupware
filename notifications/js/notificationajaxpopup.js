@@ -16,6 +16,7 @@
 {
 	var notifymessages = {};
 
+	var _currentRawData = [];
 	/**
 	 * time range label today
 	 * @type Number
@@ -262,6 +263,7 @@
 			{
 				for (var c in notifymessages[id]['children'])
 				{
+					if (Object.keys(notifymessages[id]['children']).indexOf(c) < Object.keys(notifymessages[id]['children']).length-2) continue;
 					$inner_container[0].innerHTML += notifymessages[id]['children'][c]['message'];
 				}
 			}
@@ -661,6 +663,11 @@
 	notifications.prototype.append = function(_rawData, _browser_notify) {
 
 		var hasUnseen = [];
+		// Dont process the data if they're the same as it could get very expensive to
+		// proccess html their content.
+		if (_currentRawData.length>0 && _currentRawData.length == _rawData.length) return;
+		_currentRawData = _rawData;
+		let old_notifymessages = notifymessages;
 		notifymessages = {};
 		var browser_notify = _browser_notify || this.check_browser_notify();
 		for (var i=0; i < _rawData.length; i++)
@@ -737,6 +744,7 @@
 			}
 
 		}
+		let egwpopup = document.getElementById('egwpopup');
 		switch(egw.preference('egwpopup_verbosity', 'notifications'))
 		{
 			case 'low':
@@ -748,10 +756,17 @@
 					alert(egw.lang('EGroupware has notifications for you'));
 					egw.json("notifications.notifications_ajax.update_status", [hasUnseen, 'DISPLAYED']).sendRequest();
 				}
-				this.display();
+				if (egwpopup.style.display != 'none') this.display();
 				break;
 			case 'medium':
-				this.display();
+				if (egwpopup.style.display != 'none' && Object.keys(old_notifymessages).length != Object.keys(notifymessages).length)
+				{
+					this.display();
+				}
+				else
+				{
+					this.counterUpdate();
+				}
 
 		}
 	};
@@ -763,7 +778,9 @@
 	 * @returns {notificationajaxpopup_L15.notifications.prototype.getData.data}
 	 */
 	notifications.prototype.getData = function (_message, _extra_data) {
-		var dom = jQuery(document.createElement('div')).html(_message);
+		var parser = new DOMParser();
+		var dom = jQuery(parser.parseFromString(_message, 'text/html'));
+
 		var extra_data = _extra_data || {};
 		var link = dom.find('div[data-id],div[data-url]');
 		var data = {
