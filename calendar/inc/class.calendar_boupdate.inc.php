@@ -1922,6 +1922,12 @@ class calendar_boupdate extends calendar_bo
 			//if (isset($alarmbuffer)) $event['alarm'] = $alarmbuffer;
 			$event['recur_exception'][] = $recur_date;
 			$this->save($event);// updates the content-history
+
+			// for "real" push, need to push delete of recurence
+			if (!Api\Json\Push::onlyFallback())
+			{
+				Api\Link::notify_update('calendar', $cal_id.':'.$recur_date, $event, 'delete');
+			}
 		}
 		if ($event['reference'])
 		{
