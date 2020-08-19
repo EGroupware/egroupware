@@ -574,6 +574,10 @@ app.classes.mail = AppJS.extend(
 					}
 					return false;	// mail nextmatch needs NOT to be refreshed
 				}
+				// stop refresh, in case push has already deleted it
+				// (done here as it's hard to know if imap server supports push on delete
+				// and if both happen sometimes we "loose" a row as nextmatch removes it anyway)
+				if (_type === 'delete' && !this.egw.dataHasUID('mail::'+_id)) return false;
 				break;
 
 			case 'emailadmin':	// update tree with given mail account _id and _type
