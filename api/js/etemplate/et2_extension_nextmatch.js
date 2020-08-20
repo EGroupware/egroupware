@@ -1914,17 +1914,17 @@ var et2_nextmatch = /** @class */ (function (_super) {
             var col = columnMgr.columns[i];
             var widget = this.columns[i].widget;
             var colName = this._getColumnName(widget);
-            if (col.caption && col.visibility !== et2_dataview_view_grid_1.et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-                col.visibility !== et2_dataview_view_grid_1.et2_dataview_grid.ET2_COL_VISIBILITY_DISABLED) {
+            if (col.caption && col.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
+                col.visibility !== et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_DISABLED) {
                 columns[colName] = col.caption;
-                if (col.visibility === et2_dataview_view_grid_1.et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE)
+                if (col.visibility === et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE)
                     columns_selected.push(colName);
             }
             // Custom fields get listed separately
             if (widget.instanceOf(et2_nextmatch_customfields)) {
                 delete (columns[colName]);
                 colName = widget.id;
-                if (col.visibility === et2_dataview_view_grid_1.et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE && !jQuery.isEmptyObject(widget.customfields)) {
+                if (col.visibility === et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE && !jQuery.isEmptyObject(widget.customfields)) {
                     columns[colName] = col.caption;
                     for (var field_name in widget.customfields) {
                         columns[et2_nextmatch_customfields.PREFIX + field_name] = " - " + widget.customfields[field_name].label;
