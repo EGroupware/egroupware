@@ -597,7 +597,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             (this.is_sorted_by_modified() ? 0 : false);
         // workaround for datagrid deleting the last row, see ticket #48204
         // if we only have a couple of rows, do a full refresh instead
-        if (this.controller.getTotalCount() < 15) {
+        if (this.controller.getTotalCount() < 15 && type != et2_nextmatch.UPDATE) {
             return false;
         }
         // No add, do a full refresh

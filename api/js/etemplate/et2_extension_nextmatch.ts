@@ -894,7 +894,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		// workaround for datagrid deleting the last row, see ticket #48204
 		// if we only have a couple of rows, do a full refresh instead
-		if (this.controller.getTotalCount() < 15)
+		if (this.controller.getTotalCount() < 15 && type != et2_nextmatch.UPDATE)
 		{
 			return false;
 		}
