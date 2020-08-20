@@ -2583,18 +2583,18 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			const widget = this.columns[i].widget;
 			let colName = this._getColumnName(widget);
 
-			if(col.caption && col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-				col.visibility !== et2_dataview_grid.ET2_COL_VISIBILITY_DISABLED)
+			if (col.caption && col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
+				col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED)
 			{
 				columns[colName] = col.caption;
-				if(col.visibility === et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(colName);
+				if (col.visibility === et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(colName);
 			}
 			// Custom fields get listed separately
 			if(widget.instanceOf(et2_nextmatch_customfields))
 			{
 				delete(columns[colName]);
 				colName = widget.id;
-				if(col.visibility === et2_dataview_grid.ET2_COL_VISIBILITY_VISIBLE && !
+				if (col.visibility === et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE && !
 					jQuery.isEmptyObject((<et2_nextmatch_customfields><unknown>widget).customfields)
 				)
 				{
