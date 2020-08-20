@@ -1961,7 +1961,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		for (var i = 0; i < columnMgr.columns.length; i++)
 		{
 			const col = columnMgr.columns[i];
-			if(col.caption && col.visibility != et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT )
+			if (col.caption && col.visibility != et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT )
 			{
 				visibility[col.id] = {visible: false};
 			}

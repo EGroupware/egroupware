@@ -1423,7 +1423,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // Initialize to false
         for (var i = 0; i < columnMgr.columns.length; i++) {
             var col = columnMgr.columns[i];
-            if (col.caption && col.visibility != et2_dataview_view_grid_1.et2_dataview_grid.ET2_COL_VISIBILITY_ALWAYS_NOSELECT) {
+            if (col.caption && col.visibility != et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT) {
                 visibility[col.id] = { visible: false };
             }
         }
