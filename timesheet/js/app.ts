@@ -61,10 +61,11 @@ class TimesheetApp extends EgwApp
 	{
 		var filter = this.et2.getWidgetById('filter');
 		var dates = this.et2.getWidgetById('timesheet.index.dates');
-
+		let nm = this.et2.getDOMWidgetById('nm');
 		if (filter && dates)
 		{
 			dates.set_disabled(filter.get_value() !== "custom");
+			if (filter.get_value() == 0) nm.activeFilters.startdate = null;
 			if (filter.value == "custom")
 			{
 				jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
