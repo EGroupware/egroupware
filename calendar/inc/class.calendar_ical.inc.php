@@ -203,7 +203,7 @@ class calendar_ical extends calendar_boupdate
 	 * @param int|string $current_user =0 uid of current user to only export that one as participant for method=REPLY
 	 * @return string|boolean string with iCal or false on error (e.g. no permission to read the event)
 	 */
-	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0, $principalURL='', $charset='UTF-8', $current_user=0)
+	function exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0, $principalURL='', $charset='UTF-8', $current_user=0)
 	{
 		if ($this->log)
 		{
@@ -1191,7 +1191,7 @@ class calendar_ical extends calendar_boupdate
 
 		date_default_timezone_set($tzid);
 
-		$msg = null;
+		$msg = $master = null;
 		foreach ($events as $event)
 		{
 			if (!is_array($event)) continue; // the iterator may return false
@@ -1515,7 +1515,7 @@ class calendar_ical extends calendar_boupdate
 			}
 
 			// update alarms depending on the given event type
-			if (count($event['alarm']) > 0 || isset($this->supportedFields['alarm']))
+			if (count($event['alarm']) > 0 || isset($this->supportedFields['alarm']) && isset($event['alarm']))
 			{
 				switch ($event_info['type'])
 				{
@@ -1523,14 +1523,14 @@ class calendar_ical extends calendar_boupdate
 					case 'SERIES-MASTER':
 					case 'SERIES-EXCEPTION':
 					case 'SERIES-EXCEPTION-PROPAGATE':
-						if (isset($event['alarm']))
-						{
-							$this->sync_alarms($event, (array)$event_info['stored_event']['alarm'], $this->user);
-						}
+						$this->sync_alarms($event, (array)$event_info['stored_event']['alarm'], $this->user);
+						if ($event_info['type'] === 'SERIES-MASTER') $master = $event;
 						break;
 
 					case 'SERIES-PSEUDO-EXCEPTION':
-						// nothing to do here
+						// only sync alarms for pseudo exceptions, if we have a master
+						if (!isset($master) && isset($event_info['master_event'])) $master = $event_info['master_event'];
+						if ($master) $this->sync_alarms($event, (array)$event_info['stored_event']['alarm'], $this->user, $master);
 						break;
 				}
 			}
@@ -1854,14 +1854,18 @@ class calendar_ical extends calendar_boupdate
 	/**
 	 * Sync alarms of current user: add alarms added on client and remove the ones removed
 	 *
+	 * Currently alarms of pseudo exceptions will always be added to series master (and searched for there too)!
+	 * Alarms are search by uid first, but if no uid match found, we also consider same offset as a match.
+	 *
 	 * @param array& $event
 	 * @param array $old_alarms
 	 * @param int $user account_id of user to create alarm for
+	 * @param array $master =null master for pseudo exceptions
 	 * @return int number of modified alarms
 	 */
-	public function sync_alarms(array &$event, array $old_alarms, $user)
+	public function sync_alarms(array &$event, array $old_alarms, $user, array &$master=null)
 	{
-		if ($this->debug) error_log(__METHOD__."(".array2string($event).', old_alarms='.array2string($old_alarms).", $user,)");
+		if ($this->debug) error_log(__METHOD__."(".array2string($event).', old_alarms='.array2string($old_alarms).", $user, master=".")");
 		$modified = 0;
 		foreach($event['alarm'] as &$alarm)
 		{
@@ -1875,13 +1879,25 @@ class calendar_ical extends calendar_boupdate
 					unset($old_alarm[$id]);
 					continue;
 				}
-				// alarm found --> stop
-				if (empty($alarm['uid']) && $alarm['offset'] == $old_alarm['offset'] || $alarm['uid'] && $alarm['uid'] == $old_alarm['uid'])
+				// alarm with matching uid found --> stop
+				if (!empty($alarm['uid']) && $alarm['uid'] == $old_alarm['uid'])
 				{
 					$found = true;
 					unset($old_alarms[$id]);
 					break;
 				}
+				// alarm only matching offset, remember first matching one, in case no uid match
+				if ($alarm['offset'] == $old_alarm['offset'] && $found === false)
+				{
+					$found = $id;
+				}
+			}
+			// no uid, but offset match found --> use it like an uid match
+			if (!is_bool($found))
+			{
+				$found = true;
+				$old_alarm = $old_alarms[$id];
+				unset($old_alarms[$id]);
 			}
 			if ($this->debug) error_log(__METHOD__."($event[title] (#$event[id]), ..., $user) processing ".($found?'existing':'new')." alarm ".array2string($alarm));
 			if (!empty($alarm['attrs']['X-LIC-ERROR']))
@@ -1889,14 +1905,29 @@ class calendar_ical extends calendar_boupdate
 				if ($this->debug) error_log(__METHOD__."($event[title] (#$event[id]), ..., $user) ignored X-LIC-ERROR=".array2string($alarm['X-LIC-ERROR']));
 				unset($alarm['attrs']['X-LIC-ERROR']);
 			}
-			// alarm not found --> add it
+			// search not found alarm in master
+			if ($master && !$found)
+			{
+				foreach($master['alarm'] ?? [] as $m_alarm)
+				{
+					if ($alarm['offset'] == $m_alarm['offset'] &&
+						($m_alarm['all'] || $m_alarm['owner'] == $user))
+					{
+						if ($this->debug) error_log(__METHOD__."() alarm of pseudo exception already in master --> ignored alarm=".json_encode($alarm).", master=".json_encode($m_alarm));
+						continue 2;
+					}
+				}
+			}
+			// alarm not found --> add it (to master as $event['id'] is the one from the master)
 			if (!$found)
 			{
 				$alarm['owner'] = $user;
 				if (!isset($alarm['time'])) $alarm['time'] = $event['start'] - $alarm['offset'];
 				if ($alarm['time'] < time()) calendar_so::shift_alarm($event, $alarm);
 				if ($this->debug) error_log(__METHOD__."() adding new alarm from client ".array2string($alarm));
-				if ($event['id']) $alarm['id'] = $this->save_alarm($event['id'], $alarm);
+				if ($event['id'] || $master) $alarm['id'] = $this->save_alarm($event['id'] ?? $master['id'], $alarm);
+				// adding alarm to master to be found for further pseudo exceptions (it will be added to DB below)
+				if ($master) $master['alarm'][] = $alarm;
 				++$modified;
 			}
 			// existing alarm --> update it
