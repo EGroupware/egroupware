@@ -362,7 +362,8 @@
 				switch (notifymessages[id]['extra_data']['egw_pr_notify'])
 				{
 					case EGW_PR_NOTIFY_HEIGH:
-						if (notifymessages[id]['extra_data']['videoconference'] && notifymessages[id]['extra_data']['alarm-offset'] <= 300)
+						if (notifymessages[id]['extra_data']['videoconference'] && notifymessages[id]['extra_data']['alarm-offset'] <= 300 &&
+								app.status && typeof app.status.scheduled_receivedCall == 'function')
 						{
 							app.status.scheduled_receivedCall({
 								url: notifymessages[id]['extra_data']['videoconference'],
