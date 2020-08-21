@@ -963,6 +963,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				if (($events = $handler->icaltoegw($vCalendar)))
 				{
 					$modified = 0;
+					$master = null;
 					foreach($events as $n => $event)
 					{
 						// for recurrances of event series, we need to read correct recurrence (or if series master is no first event)
@@ -1012,8 +1013,16 @@ class calendar_groupdav extends Api\CalDAV\Handler
 						if ((array)$event['alarm'] !== (array)$oldEvent['alarm'])
 						{
 							$event['id'] = $oldEvent['id'];
-							$modified += $handler->sync_alarms($event, (array)$oldEvent['alarm'], $user);
+							if (isset($master) && $event['id'] == $master['id'])	// only for pseudo exceptions
+							{
+								$modified += $handler->sync_alarms($event, (array)$oldEvent['alarm'], $user, $master);
+							}
+							else
+							{
+								$modified += $handler->sync_alarms($event, (array)$oldEvent['alarm'], $user);
+							}
 						}
+						if (!isset($master) && !$event['recurrence']) $master = $event;
 					}
 					if (!$modified)	// NO modififictions, or none we understood --> log it and return Ok: "204 No Content"
 					{
