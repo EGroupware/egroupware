@@ -2189,11 +2189,7 @@ app.classes.mail = AppJS.extend(
 	mail_deleteMessagesShowResult: function(_msg)
 	{
 		// Update list
-		var ids = [];
-		for (var i = 0; i < _msg['msg'].length; i++)
-		{
-			ids.push(_msg['msg'][i].replace(/mail::/,''));
-		}
+
 		//this.egw.message(_msg['egw_message']);
 		if (_msg['all'])
 		{
@@ -2201,7 +2197,10 @@ app.classes.mail = AppJS.extend(
 		}
 		else
 		{
-			this.egw.refresh(_msg['egw_message'],'mail',ids,'delete');
+			for (var i = 0; i < _msg['msg'].length; i++)
+			{
+				this.egw.refresh(_msg['egw_message'], 'mail', _msg['msg'][i].replace(/mail::/,''), 'delete');
+			}
 
 			// Nextmatch automatically selects the next row and calls preview.
 			// Unselect it and thanks to the timeout selectionMgr uses, preview

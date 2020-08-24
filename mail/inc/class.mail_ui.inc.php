@@ -5538,7 +5538,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				{
 					$msg = lang('moved %1 message(s) from %2 to %3',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($messageList)),lang($folder),lang($targetFolder));
 					if ($_return) return $msg;
-					$response->call('egw.refresh',$msg,'mail',$messageListForRefresh,'delete');
+					foreach($messageListForRefresh as $mail_id)
+					{
+						$response->call('egw.refresh','','mail',$mail_id, 'delete');
+					}
+					$response->message($msg,'success');
 				}
 			}
 			if ($changeFolderActions == true)
