@@ -491,8 +491,13 @@ export class et2_dataview_controller
 			let max = parseInt(Object.keys(this._indexMap).reduce((a, b) => this._indexMap[a] > this._indexMap[b] ? a : b));
 			for(let idx = max; idx >= _entry.idx; idx--)
 			{
+				let entry = this._indexMap[idx];
 				this._indexMap[idx].idx = idx+1;
 				this._indexMap[this._indexMap[idx].idx] = this._indexMap[idx];
+				if(this._selectionMgr && this._selectionMgr._registeredRows[entry.uid])
+				{
+					this._selectionMgr._registeredRows[entry.uid].idx = entry.idx;
+				}
 			}
 			this._indexMap[_entry.idx] = _entry
 		}

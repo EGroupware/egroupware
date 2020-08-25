@@ -192,14 +192,12 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 
 		if(entry && entry.idx !== null)
 		{
+			this._selectionMgr.unregisterRow(uid, entry.tr);
 			// This will remove the row, but add an empty to the end.
 			// That's OK, because it will be removed when we update the row count
 			this._grid.deleteRow(entry.idx);
 
-			// Trigger controller to remove from internals
-			this.egw.dataStoreUID(uid,null);
-			// Stop caring about this ID
-			this.egw.dataDeleteUID(uid);
+
 			// Remove from internal map
 			delete this._indexMap[entry.idx];
 
@@ -216,6 +214,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 					var reg = this._selectionMgr._getRegisteredRowsEntry(entry.uid);
 					reg.idx = entry.idx;
 					if(reg.ao && reg.ao._index) reg.ao._index = entry.idx;
+					this._selectionMgr._registeredRows[entry.uid].idx = reg.idx;
 				}
 			}
 			// Remove last one, it was moved to mapIndex-1 before increment
@@ -223,6 +222,11 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 
 			// Not needed, they share by reference
 			// this._selectionMgr.setIndexMap(this._indexMap);
+		}
+
+		for(let child of this._children)
+		{
+			child.deleteRow(uid);
 		}
 	}
 

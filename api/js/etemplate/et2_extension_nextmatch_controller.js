@@ -163,13 +163,10 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
         // Unselect
         this._selectionMgr.setSelected(uid, false);
         if (entry && entry.idx !== null) {
+            this._selectionMgr.unregisterRow(uid, entry.tr);
             // This will remove the row, but add an empty to the end.
             // That's OK, because it will be removed when we update the row count
             this._grid.deleteRow(entry.idx);
-            // Trigger controller to remove from internals
-            this.egw.dataStoreUID(uid, null);
-            // Stop caring about this ID
-            this.egw.dataDeleteUID(uid);
             // Remove from internal map
             delete this._indexMap[entry.idx];
             // Update the indices of all elements after the current one
@@ -183,12 +180,17 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
                     reg.idx = entry.idx;
                     if (reg.ao && reg.ao._index)
                         reg.ao._index = entry.idx;
+                    this._selectionMgr._registeredRows[entry.uid].idx = reg.idx;
                 }
             }
             // Remove last one, it was moved to mapIndex-1 before increment
             delete this._indexMap[mapIndex - 1];
             // Not needed, they share by reference
             // this._selectionMgr.setIndexMap(this._indexMap);
+        }
+        for (var _i = 0, _a = this._children; _i < _a.length; _i++) {
+            var child = _a[_i];
+            child.deleteRow(uid);
         }
     };
     /** -- PRIVATE FUNCTIONS -- **/
