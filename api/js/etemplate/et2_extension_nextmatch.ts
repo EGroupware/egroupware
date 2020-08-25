@@ -865,6 +865,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// and we can't always find it by UID after due to duplication
 		this.controller.deleteRow(uid);
 
+		// Trigger controller to remove from internals so we can ask for new data
+		this.egw().dataStoreUID(uid,null);
+
+		// Stop caring about this ID
+		this.egw().dataDeleteUID(uid);
+
 		// Pretend it's a new row, let app tell us where it goes and we'll mark it as new
 		if(!this.refresh_add(uid, et2_nextmatch.UPDATE))
 		{
@@ -896,7 +902,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// if we only have a couple of rows, do a full refresh instead
 		if (this.controller.getTotalCount() < 15 && type != et2_nextmatch.UPDATE)
 		{
-			return false;
+		//	return false;
 		}
 
 		// No add, do a full refresh

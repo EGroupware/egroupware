@@ -572,6 +572,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // Need to delete first as there's a good chance indexes will change in an unknown way
         // and we can't always find it by UID after due to duplication
         this.controller.deleteRow(uid);
+        // Trigger controller to remove from internals so we can ask for new data
+        this.egw().dataStoreUID(uid, null);
+        // Stop caring about this ID
+        this.egw().dataDeleteUID(uid);
         // Pretend it's a new row, let app tell us where it goes and we'll mark it as new
         if (!this.refresh_add(uid, et2_nextmatch.UPDATE)) {
             // App did not want the row, or doesn't know where it goes but we've already removed it...
@@ -598,7 +602,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // workaround for datagrid deleting the last row, see ticket #48204
         // if we only have a couple of rows, do a full refresh instead
         if (this.controller.getTotalCount() < 15 && type != et2_nextmatch.UPDATE) {
-            return false;
+            //	return false;
         }
         // No add, do a full refresh
         if (index === false) {
@@ -650,6 +654,32 @@ var et2_nextmatch = /** @class */ (function (_super) {
             return selected;
         }
         return { ids: [], all: false };
+    };
+    /**
+     * Log some debug information about internal values
+     */
+    et2_nextmatch.prototype.spillYourGuts = function () {
+        var guts = function (controller) {
+            console.log("Controller:", controller);
+            console.log("Controller indexMap:", controller._indexMap);
+            console.log("Grid:", controller._grid);
+            console.log("Selection Manager:", controller._selectionMgr);
+            console.log("Selection registered rows:", controller._selectionMgr._registeredRows);
+            if (controller && controller._children.length > 0) {
+                console.groupCollapsed("Sub-grids");
+                var child_index = 0;
+                for (var _i = 0, _a = controller._children; _i < _a.length; _i++) {
+                    var child = _a[_i];
+                    console.groupCollapsed("Child " + (++child_index));
+                    guts(child);
+                    console.groupEnd();
+                }
+                console.groupEnd();
+            }
+        };
+        console.group("Nextmatch internals");
+        guts(this.controller);
+        console.groupEnd();
     };
     /**
      * Event handler for when the selection changes
