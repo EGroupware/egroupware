@@ -964,6 +964,36 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	}
 
 	/**
+	 * Log some debug information about internal values
+	 */
+	spillYourGuts()
+	{
+		let guts = function(controller)
+		{
+			console.log("Controller:",controller);
+			console.log("Controller indexMap:", controller._indexMap);
+			console.log("Grid:", controller._grid);
+			console.log("Selection Manager:", controller._selectionMgr);
+			console.log("Selection registered rows:", controller._selectionMgr._registeredRows);
+			if(controller && controller._children.length > 0)
+			{
+				console.groupCollapsed("Sub-grids");
+				let child_index = 0;
+				for(let child of controller._children)
+				{
+					console.groupCollapsed("Child " + (++child_index));
+					guts(child);
+					console.groupEnd();
+				}
+				console.groupEnd()
+			}
+		}
+		console.group("Nextmatch internals");
+		guts(this.controller);
+		console.groupEnd();
+	}
+
+	/**
 	 * Event handler for when the selection changes
 	 *
 	 * If the onselect attribute was set to a string with javascript code, it will
