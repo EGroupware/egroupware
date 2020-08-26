@@ -1272,7 +1272,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 autoRefresh_1.set_id("nm_autorefresh");
                 autoRefresh_1.set_select_options({
                     // Cause [unknown] problems with mail
-                    3: "30 seconds",
+                    30: "30 seconds",
                     //60: "1 Minute",
                     180: "3 Minutes",
                     300: "5 Minutes",
@@ -1573,9 +1573,6 @@ var et2_nextmatch = /** @class */ (function (_super) {
      */
     et2_nextmatch.prototype.set_disable_autorefresh = function (disabled) {
         this.options.disable_autorefresh = disabled;
-        //@todo remove it after finding a right fix
-        if (this.controller)
-            this.controller.set_disable_autorefresh(disabled);
         this._set_autorefresh(this._get_autorefresh());
     };
     /**

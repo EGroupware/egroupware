@@ -62,9 +62,6 @@ export class et2_dataview_controller
 
 	private _objectManager: any;
 
-	// @todo remove it after finding a right fix
-	private _disable_autorefresh: boolean;
-
 	/**
 	 * Constructor of the et2_dataview_controller, connects to the grid
 	 * callback.
@@ -134,20 +131,6 @@ export class et2_dataview_controller
 				this._parentController = null;
 			}
 		}
-	}
-
-	/**
-	 * Enable or disable autorefresh
-	 *
-	 * disable_autorefresh is used to detect that we have active push in order to enable a fix for push
-	 * on  _insertDataRow function reindexing the _indexMap which is wrong for the full refresh.
-	 *
-	 * @param disabled
-	 * @todo remove it after finding a right fix
-	 */
-	set_disable_autorefresh( disabled : boolean)
-	{
-		this._disable_autorefresh = disabled;
 	}
 
 	/**
@@ -484,9 +467,8 @@ export class et2_dataview_controller
 			this._grid.insertRow(_entry.idx, _entry.row);
 		}
 
-		//@todo remove it after finding a right fix
 		// Update index map only for push (autorefresh disabled)
-		if(this._disable_autorefresh && this._indexMap[_entry.idx].uid !== _entry.uid)
+		if(this._indexMap[_entry.idx].uid !== _entry.uid)
 		{
 			let max = parseInt(Object.keys(this._indexMap).reduce((a, b) => this._indexMap[a] > this._indexMap[b] ? a : b));
 			for(let idx = max; idx >= _entry.idx; idx--)
