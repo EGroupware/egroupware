@@ -778,38 +778,41 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// Record current & next index
 			var uid = _row_ids[0].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[0] : this.controller.dataStorePrefix + "::" + _row_ids[0];
 			const entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
-			let next = (entry.ao ? entry.ao.getNext(_row_ids.length) : null);
-			if(next == null || !next.id || next.id == uid)
+			if(entry && entry.idx !== null)
 			{
-				// No next, select previous
-				next = (entry.ao?entry.ao.getPrevious(1):null);
+				let next = (entry.ao ? entry.ao.getNext(_row_ids.length) : null);
+				if(next == null || !next.id || next.id == uid)
+				{
+					// No next, select previous
+					next = (entry.ao ? entry.ao.getPrevious(1) : null);
+				}
+
+				// Stop automatic updating
+				this.dataview.grid.doInvalidate = false;
+				for (var i = 0; i < _row_ids.length; i++)
+				{
+					uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
+
+					// Delete from internal references
+					this.controller.deleteRow(uid);
+				}
+
+				// Select & focus next row
+				if(next && next.id)
+				{
+					this.controller._selectionMgr.setSelected(next.id, true);
+					this.controller._selectionMgr.setFocused(next.id, true);
+				}
+
+				// Update the count
+				const total = this.dataview.grid._total - _row_ids.length;
+				// This will remove the last row!
+				// That's OK, because grid adds one in this.controller.deleteRow()
+				this.dataview.grid.setTotalCount(total);
+				// Re-enable automatic updating
+				this.dataview.grid.doInvalidate = true;
+				this.dataview.grid.invalidate();
 			}
-
-			// Stop automatic updating
-			this.dataview.grid.doInvalidate = false;
-			for(var i = 0; i < _row_ids.length; i++)
-			{
-				uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
-
-				// Delete from internal references
-				this.controller.deleteRow(uid);
-			}
-
-			// Select & focus next row
-			if(next && next.id)
-			{
-				this.controller._selectionMgr.setSelected(next.id,true);
-				this.controller._selectionMgr.setFocused(next.id,true);
-			}
-
-			// Update the count
-			const total = this.dataview.grid._total - _row_ids.length;
-			// This will remove the last row!
-			// That's OK, because grid adds one in this.controller.deleteRow()
-			this.dataview.grid.setTotalCount(total);
-			// Re-enable automatic updating
-			this.dataview.grid.doInvalidate = true;
-			this.dataview.grid.invalidate();
 		}
 
 		id_loop:
