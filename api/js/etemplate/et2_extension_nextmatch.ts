@@ -911,6 +911,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			return false;
 		}
 
+		// Increase displayed row count
+		this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()+1);
+
 		// Insert at the top of the list, or where app said
 		var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
 		entry.idx = typeof index == "number" ? index : 0;

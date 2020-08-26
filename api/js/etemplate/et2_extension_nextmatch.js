@@ -608,6 +608,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
         if (index === false) {
             return false;
         }
+        // Increase displayed row count
+        this.controller._grid.setTotalCount(this.controller._grid.getTotalCount() + 1);
         // Insert at the top of the list, or where app said
         var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
         entry.idx = typeof index == "number" ? index : 0;
