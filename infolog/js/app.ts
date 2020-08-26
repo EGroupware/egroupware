@@ -216,9 +216,9 @@ class InfologApp extends EgwApp
 			owner: {col: "info_owner", filter_values: []},
 			responsible: {col: "info_responsible", filter_values: []}
 		};
-		for(let et of etemplate2.getByApplication(this.appname))
+		if(this.et2)
 		{
-			et.widgetContainer.iterateOver( function(nm) {
+			this.et2.iterateOver( function(nm) {
 				let value = nm.getValue();
 				if(!value || !value.col_filter) return;
 
@@ -254,8 +254,8 @@ class InfologApp extends EgwApp
 			}
 		}
 
-		// Pass actual refresh on to etemplate to take care of
-		etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
+		// Pass actual refresh on to just nextmatch
+		(<et2_nextmatch>this.et2.getDOMWidgetById('nm'))?.refresh(pushData.id, pushData.type);
 	}
 
 	/**

@@ -166,6 +166,7 @@ var InfologApp = /** @class */ (function (_super) {
      */
     InfologApp.prototype.push = function (pushData) {
         var _this = this;
+        var _a;
         if (pushData.app !== this.appname)
             return;
         // pushData does not contain everything, just the minimum.
@@ -199,9 +200,8 @@ var InfologApp = /** @class */ (function (_super) {
             owner: { col: "info_owner", filter_values: [] },
             responsible: { col: "info_responsible", filter_values: [] }
         };
-        for (var _i = 0, _a = etemplate2_1.etemplate2.getByApplication(this.appname); _i < _a.length; _i++) {
-            var et = _a[_i];
-            et.widgetContainer.iterateOver(function (nm) {
+        if (this.et2) {
+            this.et2.iterateOver(function (nm) {
                 var value = nm.getValue();
                 if (!value || !value.col_filter)
                     return;
@@ -230,14 +230,14 @@ var InfologApp = /** @class */ (function (_super) {
             }
         };
         // check filters against ACL data
-        for (var _b = 0, _c = Object.values(filters); _b < _c.length; _b++) {
-            var field_filter = _c[_b];
+        for (var _i = 0, _b = Object.values(filters); _i < _b.length; _i++) {
+            var field_filter = _b[_i];
             var state_1 = _loop_1(field_filter);
             if (typeof state_1 === "object")
                 return state_1.value;
         }
-        // Pass actual refresh on to etemplate to take care of
-        etemplate2_1.etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
+        // Pass actual refresh on to just nextmatch
+        (_a = this.et2.getDOMWidgetById('nm')) === null || _a === void 0 ? void 0 : _a.refresh(pushData.id, pushData.type);
     };
     /**
      * Retrieve the current state of the application for future restoration
