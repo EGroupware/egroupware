@@ -161,8 +161,8 @@ class notifications_popup implements notifications_iface {
 					'id'		=> $notification['notify_id'],
 					'message'	=> $notification['notify_message'],
 					'status'	=> $notification['notify_status'],
-					'created'	=> Api\DateTime::to($notification['notify_created']),
-					'current'		=> new DateTime(),
+					'created'	=> Api\DateTime::server2user($notification['notify_created']),
+					'current'		=> new Api\DateTime('now'),
 					'actions'	=> is_array($actions)?$actions:NULL,
 					'extra_data'		=> ($data['data'] ? $data['data'] : array())
 				);
