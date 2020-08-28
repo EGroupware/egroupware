@@ -695,6 +695,7 @@ var et2_date_duration = /** @class */ (function (_super) {
     et2_date_duration.prototype.set_display_format = function (format) {
         if (format.length <= 1) {
             this.node.remove('select.et2_date_duration');
+            this.format.remove();
             this.format = null;
         }
         this.options.display_format = format;

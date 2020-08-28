@@ -861,6 +861,7 @@ export class et2_date_duration extends et2_date
         if (format.length <= 1)
         {
             this.node.remove('select.et2_date_duration');
+            this.format.remove();
             this.format = null;
         }
         this.options.display_format = format;
