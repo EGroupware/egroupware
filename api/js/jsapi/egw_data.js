@@ -176,7 +176,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 			// Load all data entries that have been sent or delete them
 			for (var key in _result.data)
 			{
-				var uid = UID(key, (typeof _context == "object" && _context != null) ?_context.prefix : "");
+				let uid = UID(key, (typeof _context == "object" && _context != null) ?_context.prefix : "");
 				if (_result.data[key] === null &&
 				(
 					typeof _context.refresh == "undefined" || _context.refresh && !jQuery.inArray(key,_context.refresh)
@@ -190,13 +190,17 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 				}
 			}
 
-			// Tried to refresh a specific row and got nothing, so set it to null
+			// Check if we tried to refresh a specific row and didn't get it, so set it to null
 			// (triggers update for listeners), then remove it
-			if(_result.order.length == 0 && typeof _context == "object" && _context.refresh)
+			if(typeof _context == "object" && _context.refresh)
 			{
-				for(var i = 0; i < _context.refresh.length; i++)
+				for(let i = 0; i < _context.refresh.length; i++)
 				{
-					var uid = UID(_context.refresh[i], _context.prefix);
+					let uid = UID(_context.refresh[i], _context.prefix);
+					if(_result.order.indexOf(uid) >= 0)
+					{
+						continue;
+					}
 					egw.dataStoreUID(uid, null);
 					egw.dataDeleteUID(uid);
 				}
@@ -657,10 +661,15 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				if (typeof queue[hash] === "undefined")
 				{
 					var self = this;
-					queue[hash] = { "uids": [], "timer": null };
+					queue[hash] = {"uids": [], "timer": null};
 					queue[hash].timer = window.setTimeout(function () {
 						// Fetch the data
-						self.dataFetch(_execId, {"start": 0, "num_rows": 0, "only_data": true, "refresh": queue[hash].uids},
+						self.dataFetch(_execId, {
+								"start": 0,
+								"num_rows": 0,
+								"only_data": true,
+								"refresh": queue[hash].uids
+							},
 							[], _widgetId, null, _context, null);
 
 						// Delete the queue entry
@@ -671,7 +680,10 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				// Push the uid onto the queue, removing the prefix
 				var parts = _uid.split("::");
 				parts.shift();
-				queue[hash].uids.push(parts.join('::'));
+				if (queue[hash].uids.indexOf(parts.join("::")) === -1)
+				{
+					queue[hash].uids.push(parts.join('::'));
+				}
 			}
 			else
 			{
