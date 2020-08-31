@@ -3149,7 +3149,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			$response->call('egw.message',  implode('<br />', $message));
 		}
-		if($event['id'] != $eventId ) $this->update_client($_eventId);
+		if($event['id'] != $eventId && !$date) $this->update_client($_eventId);
 	}
 
 	/**
