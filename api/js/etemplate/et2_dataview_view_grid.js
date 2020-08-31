@@ -643,6 +643,10 @@ var et2_dataview_grid = /** @class */ (function (_super_1) {
     et2_dataview_grid.prototype._doInvalidate = function (_super) {
         if (!this.doInvalidate)
             return;
+        // Not visible?
+        if (jQuery(":visible", this.outerCell).length == 0) {
+            return;
+        }
         // Update the pixel positions
         this._recalculateElementPosition();
         // Call the callback
