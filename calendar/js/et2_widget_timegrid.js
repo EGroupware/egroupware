@@ -1600,7 +1600,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         }
         this.div.off('mousemove.dragcreate');
         this.gridHover.css('cursor', '');
-        return this._drag_create_end(end);
+        return this._drag_create_end(this.drag_create.event ? end : undefined);
     };
     /**
      * Get time from position for drag and drop
