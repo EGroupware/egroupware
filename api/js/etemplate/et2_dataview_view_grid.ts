@@ -893,6 +893,11 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 	{
 		if(!this.doInvalidate) return;
 
+		// Not visible?
+		if(jQuery(":visible",this.outerCell).length == 0)
+		{
+			return;
+		}
 		// Update the pixel positions
 		this._recalculateElementPosition();
 
