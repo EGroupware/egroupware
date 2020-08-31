@@ -2101,7 +2101,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		this.div.off('mousemove.dragcreate');
 		this.gridHover.css('cursor', '');
 
-		return this._drag_create_end(end);
+		return this._drag_create_end( this.drag_create.event ? end : undefined);
 	}
 
 	/**
