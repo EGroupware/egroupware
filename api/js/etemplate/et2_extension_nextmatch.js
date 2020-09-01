@@ -612,10 +612,12 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // Set "new entry" class - but it has to stay so register and re-add it after the data is there
         entry.row.tr.addClass("new_entry");
         var callback = function (data) {
-            if (data && data.class) {
-                data.class += " new_entry";
+            if (data) {
                 // Increase displayed row count
                 this.controller._grid.setTotalCount(this.controller._grid.getTotalCount() + 1);
+                if (data.class) {
+                    data.class += " new_entry";
+                }
             }
             this.egw().dataUnregisterUID(uid, callback, this);
         };
