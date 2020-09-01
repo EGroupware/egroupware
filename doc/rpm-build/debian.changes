@@ -1,3 +1,21 @@
+egroupware-docker (20.1.20200901) hardy; urgency=low
+
+  * Infolog: fix diverse refresh problems in lists
+  * CalDAV/Calendar: fixed doublication of alarms when participant setting the alarm has no edit rights on the event
+  * Calendar: deleting a recurrence of an event series did not refresh displayed events
+  * Calendar: fix event click and event drag were not properly separated
+  * Calendar: fix clicking on an event to edit opened a new one and draged clicked one around
+  * Mail: fix deleting or moving multiple mail to another folder did not update the list
+  * Mail: fix opening mailto: link in html mail causes connection error
+  * Mail: fix moving a mail removes more then the moved mail, if push is active
+  * All Apps: fix print list column selection does not contain customfields
+  * Timesheet: fix list gets always set to summary filter after being refreshed/filtered
+  * Notifications: Some performance optimizations
+  * All apps: fix drag and drop a file from FireFox download list not working
+  * PostgreSQL: fix SQL error opening ProjectManager
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 01 Sep 2020 20:49:32 +0200
+
 egroupware-docker (20.1.20200818) hardy; urgency=low
 
   * All apps: fix last rows was removed when adding new entry to list with only a couple of rows
