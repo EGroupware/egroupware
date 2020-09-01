@@ -907,8 +907,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			return false;
 		}
 
-		// Increase displayed row count
-		this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()+1);
 
 		// Insert at the top of the list, or where app said
 		var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
@@ -918,7 +916,13 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Set "new entry" class - but it has to stay so register and re-add it after the data is there
 		entry.row.tr.addClass("new_entry");
 		let callback = function(data) {
-			data.class += " new_entry";
+			if(data && data.class)
+			{
+				data.class += " new_entry";
+
+				// Increase displayed row count
+				this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()+1);
+			}
 			this.egw().dataUnregisterUID(uid, callback, this);
 		};
 		this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);

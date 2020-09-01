@@ -605,8 +605,6 @@ var et2_nextmatch = /** @class */ (function (_super) {
         if (index === false) {
             return false;
         }
-        // Increase displayed row count
-        this.controller._grid.setTotalCount(this.controller._grid.getTotalCount() + 1);
         // Insert at the top of the list, or where app said
         var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
         entry.idx = typeof index == "number" ? index : 0;
@@ -614,7 +612,11 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // Set "new entry" class - but it has to stay so register and re-add it after the data is there
         entry.row.tr.addClass("new_entry");
         var callback = function (data) {
-            data.class += " new_entry";
+            if (data && data.class) {
+                data.class += " new_entry";
+                // Increase displayed row count
+                this.controller._grid.setTotalCount(this.controller._grid.getTotalCount() + 1);
+            }
             this.egw().dataUnregisterUID(uid, callback, this);
         };
         this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
