@@ -916,12 +916,14 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Set "new entry" class - but it has to stay so register and re-add it after the data is there
 		entry.row.tr.addClass("new_entry");
 		let callback = function(data) {
-			if(data && data.class)
+			if(data)
 			{
-				data.class += " new_entry";
-
 				// Increase displayed row count
 				this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()+1);
+				if(data.class)
+				{
+					data.class += " new_entry";
+				}
 			}
 			this.egw().dataUnregisterUID(uid, callback, this);
 		};
