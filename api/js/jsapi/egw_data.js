@@ -806,7 +806,10 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 						);
 					} catch (e) {
 						// Remove this callback from the list
-						registeredCallbacks[_uid].splice(i, 1);
+						if(typeof registeredCallbacks[_uid] != "undefined")
+						{
+							registeredCallbacks[_uid].splice(i, 1);
+						}
 					}
 				}
 			}
