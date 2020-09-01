@@ -886,6 +886,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
 			this.controller._insertDataRow(entry,true);
 		}
+		// Update does not need to increase row count, but refresh_add() adds it in
+		this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()-1);
 
 		return true;
 	}
@@ -907,6 +909,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			return false;
 		}
 
+		// Increase displayed row count or we lose the last row when we add
+		this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()+1);
 
 		// Insert at the top of the list, or where app said
 		var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
@@ -918,12 +922,17 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		let callback = function(data) {
 			if(data)
 			{
-				// Increase displayed row count
-				this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()+1);
 				if(data.class)
 				{
 					data.class += " new_entry";
 				}
+			}
+			else
+			{
+				// Server didn't give us our row data
+				// Delete from internal references
+				this.controller.deleteRow(uid);
+				this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()-1);
 			}
 			this.egw().dataUnregisterUID(uid, callback, this);
 		};
