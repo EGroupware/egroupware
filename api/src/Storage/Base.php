@@ -831,7 +831,7 @@ class Base
 	 *	"LEFT JOIN table2 ON (x=y AND z=o)", Note: there's no quoting done on $join, you are responsible for it!!!
 	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
 	 * @todo return an interator instead of an array
-	 * @return array|NULL array of matching rows (the row is an array of the cols) or NULL
+	 * @return array|NULL|true array of matching rows (the row is an array of the cols), NULL (nothing matched) or true (multiple union queries)
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
@@ -921,29 +921,21 @@ class Base
 		}
 		elseif (!$only_keys)
 		{
-			$colums = '*';
+			$colums = ['*'];
 		}
 		else
 		{
-			$colums = $only_keys;
+			$colums = explode(',', $only_keys);
 		}
 		if ($extra_cols)
 		{
-			if (!is_array($colums))
-			{
-				$colums .= ','.(is_array($extra_cols) ? implode(',', $extra_cols) : $extra_cols);
-			}
-			else
-			{
-				$colums = array_merge($colums, is_array($extra_cols) ? $extra_cols : explode(',', $extra_cols));
-			}
+			$colums = array_merge($colums, is_array($extra_cols) ? $extra_cols : explode(',', $extra_cols));
 		}
 
 		// add table-name to otherwise ambiguous id over which we join (incl. "AS id" to return it with the right name)
 		if ($join && $this->autoinc_id)
 		{
-			if (!is_array($colums) && strpos($colums, '*') !== false) $colums = explode(',', $colums);
-			if (is_array($colums) && ($key = array_search('*', $colums)) !== false)
+			if (($key = array_search('*', $colums)) !== false)
 			{
 				unset($colums[$key]);
 				// don't add colums already existing incl. aliased colums (AS $name)
@@ -961,13 +953,9 @@ class Base
 					}
 				}
 			}
-			if (is_array($colums) && ($key = array_search($this->autoinc_id, $colums)) !== false)
+			if (($key = array_search($this->autoinc_id, $colums)) !== false)
 			{
 				$colums[$key] = $this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id;
-			}
-			elseif (!is_array($colums) && strpos($colums,$this->autoinc_id) !== false)
-			{
-				$colums = preg_replace('/(?<! AS)([ ,]+)'.preg_quote($this->autoinc_id, '/').'([ ,]+)/','\\1'.$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id.'\\2',$colums);
 			}
 		}
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
@@ -1003,7 +991,7 @@ class Base
 				{
 					$union_cols = $this->_get_columns($only_keys,$extra_cols);
 				}
-				return true;	// waiting for further calls, before running the union-query
+				$ret = true; return $ret;	// waiting for further calls, before running the union-query
 			}
 			// running the union query now
 			if ($start !== false)	// need to get the total too, saved in $this->total
@@ -1068,7 +1056,8 @@ class Base
 			$arr[] = $this->db2data($data);
 			$n++;
 		}
-		return $n ? $arr : null;
+		if (!$n) $arr = null;
+		return $arr;
 	}
 
 	/**
