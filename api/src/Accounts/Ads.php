@@ -1018,6 +1018,41 @@ class Ads
 	}
 
 	/**
+	 * Get LDAP filter for user, groups or both
+	 *
+	 * @param string|null $account_type u = user, g = group, default null = try both
+	 * @return string string with LDAP filter
+	 */
+	public function type_filter($account_type=null)
+	{
+		switch ($account_type)
+		{
+			default:    // user or groups
+			case 'u':
+				$type_filter = '(samaccounttype=' . adLDAP::ADLDAP_NORMAL_ACCOUNT . ')';
+				if (!empty($this->frontend->config['ads_user_filter']))
+				{
+					$type_filter = '(&' . $type_filter . $this->frontend->config['ads_user_filter'] . ')';
+				}
+				if ($account_type === 'u') break;
+				$user_filter = $type_filter;
+			// fall through
+			case 'g':
+				$type_filter = '(|(samaccounttype=' . adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP .
+					')(samaccounttype=' . adLDAP::ADLDAP_SECURITY_LOCAL_GROUP . '))';
+				if (!empty($this->frontend->config['ads_group_filter']))
+				{
+					$type_filter = '(&' . $type_filter . $this->frontend->config['ads_group_filter'] . ')';
+				}
+				if ($account_type === 'g') break;
+				// user or groups
+				$type_filter = '(|' . $user_filter . $type_filter . ')';
+				break;
+		}
+		return $type_filter;
+	}
+
+	/**
 	 * Query ADS by (optional) filter and (optional) account-type filter
 	 *
 	 * All reading ADS queries are done throught this methods.
@@ -1030,24 +1065,9 @@ class Ads
 	 */
 	protected function filter($attr_filter, $account_type=null, array $attrs=null, array $accounts=array())
 	{
-		switch($account_type)
-		{
-			case 'u':
-				$type_filter = '(samaccounttype='.adLDAP::ADLDAP_NORMAL_ACCOUNT.')';
-				break;
-			case 'g':
-				$type_filter = '(|(samaccounttype='.adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP.
-					')(samaccounttype='.adLDAP::ADLDAP_SECURITY_LOCAL_GROUP.'))';
-				break;
-			default:
-				$type_filter = '(|(samaccounttype='.adLDAP::ADLDAP_NORMAL_ACCOUNT.
-					')(samaccounttype='.adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP.
-					')(samaccounttype='.adLDAP::ADLDAP_SECURITY_LOCAL_GROUP.'))';
-				break;
-		}
 		if (!$attr_filter)
 		{
-			$filter = $type_filter;
+			$filter = $this->type_filter($account_type);
 		}
 		else
 		{
@@ -1063,7 +1083,7 @@ class Ads
 					$filter .= '('.$attr.'='.$this->adldap->utilities()->ldapSlashes($value).')';
 				}
 			}
-			$filter .= $type_filter.')';
+			$filter .= $this->type_filter($account_type).')';
 		}
 		$sri = ldap_search($ds=$this->ldap_connection(), $context=$this->ads_context(), $filter,
 			$attrs ? $attrs : self::$default_attributes);
