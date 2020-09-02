@@ -431,6 +431,13 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 			),
+			'participant_names'        => array(
+				'type'    => 'check',
+				'label'   => 'Show participant names on event',
+				'name'    => 'participant_names',
+				'help'    => 'Controls whether names of participants are shown alongside the title of an appointment.',
+				'default' => false
+			),
 			'2.5.section' => array(
 				'type'  => 'section',
 				'title' => lang('Configuration settings'),

@@ -787,6 +787,9 @@ class calendar_ui
 		$participants = $this->bo->participants($event,false);
 		$event['parts'] = implode("\n",$participants);
 		$event['participant_types'] = array();
+		// semicolon-separated string of participants that may (optionally) be shown alongside title
+		$participantNames = "";
+
 		foreach($participants as $uid => $text)
 		{
 			$user_type = $user_id = null;
@@ -802,7 +805,14 @@ class calendar_ui
 					'account_id'
 				));
 			}
+			$participantNames .= ($this->bo->participant_name($user_id) . "; ");
 		}
+		// add the names of all participants as semicolon-separated string
+		if($GLOBALS['egw_info']['user']['preferences']['calendar']['participant_names'])
+		{
+			$event['participant_names'] = substr($participantNames, 0, -2);
+		}
+
 		$event['date'] = $this->bo->date2string($event['start']);
 
 		// Change dates

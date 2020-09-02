@@ -109,6 +109,7 @@ close the window	calendar	en	Close the window
 compose a mail to all participants after the event is saved	calendar	en	Compose a mail to all participants after the event is saved.
 configuration settings	calendar	en	Configuration settings
 conflict	calendar	en	Conflict
+controls whether names of participants are shown alongside the title of an appointment.	calendar	en	Controls whether names of participants are shown alongside the title of an appointment.
 copy of:	calendar	en	Copy of:
 copy this event	calendar	en	Copy this event
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	en	Copy your changes to the clipboard, %1reload the entry%2 and merge them.
@@ -534,6 +535,7 @@ show only invitations, not yet accepted or rejected	calendar	en	Show only invita
 show only rejected events	calendar	en	Show only rejected events
 show only tentative accepted events	calendar	en	Show only tentative accepted events
 show only the date, not the year	admin	en	Show only the date, not the year
+show participant names on event	calendar	en	Show participant names on event
 show this month	calendar	en	Show this month
 show this week	calendar	en	Show this week
 show year and age	calendar	en	Show year and age

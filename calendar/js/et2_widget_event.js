@@ -331,8 +331,8 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		var title = !event.is_private ? egw.htmlspecialchars(event['title']) : egw.lang('private');
 
 		this.title
-			.html('<span class="calendar_calTimespan">'+this._get_timespan(event) + '<br /></span>')
-			.append('<span class="calendar_calEventTitle">'+title+'</span>')
+			.html('<span class="calendar_calTimespan">' + this._get_timespan(event) + '<br /></span>')
+			.append('<span class="calendar_calEventTitle">' + this._getTitle(event) + '</span>')
 
 		// Colors - don't make them transparent if there is no color
 		if(jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div,'background-color').toRgbaString())
@@ -347,7 +347,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		// Body
 		if(event.whole_day_on_top)
 		{
-			this.body.html(title);
+			this.body.html(this._getTitle(event));
 		}
 		else
 		{
@@ -363,8 +363,8 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			).trim();
 
 			this.body
-				.html('<span class="calendar_calEventTitle">'+title+'</span>')
-				.append('<span class="calendar_calTimespan">'+start_time + '</span>');
+				.html('<span class="calendar_calEventTitle">' + this._getTitle(event) + '</span>')
+				.append('<span class="calendar_calTimespan">' + start_time + '</span>');
 			if(this.options.value.description.trim())
 			{
 				this.body
@@ -753,6 +753,54 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}
 		return timespan;
 	},
+
+	/**
+	 * Creates the title-string for an event
+	 * @param {Object} event the current event.
+	 * @return {string} the resulting title.
+	 */
+	_getTitle: function(event) {
+		let title = "";
+		if(!event.is_private)
+		{
+			title = egw.htmlspecialchars(event['title']);
+			title += this._getParticipants(event);
+		}
+		else
+		{
+			title = egw.lang('private');
+		}
+		return title;
+	},
+
+	/**
+	 * Retrieves participant names from an event
+	 * @param {Object} event the current event
+	 * @return {string} the participants as span-objects
+	 */
+	_getParticipants: function(event) {
+		let participants = "";
+		if(this._hasParticipantNames(event))
+		{
+			return '<span style="font-weight: normal"> // ' + event["participant_names"] + "</span>"
+		}
+		return participants;
+	},
+
+	/**
+	 * Tries to detect provided names of participants for an event.
+	 * Names will only be shown when provided with the event.
+	 *
+	 * @param {Object} event the current event
+	 * @return boolean whether the event contains participant-names or not
+	 */
+	_hasParticipantNames: function(event)
+	{
+		return event["participant_names"] !== undefined
+			&& event["participant_names"] !== null;
+	},
+
+
 
 	/**
 	 * Make sure event data has all proper values, and format them as expected
