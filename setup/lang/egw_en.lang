@@ -39,8 +39,10 @@ add auto-created users to this group ('default' will be attempted if this is emp
 add new database instance (egw domain)	setup	en	Add new database instance (EGw domain)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	en	add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
 adding, editing or deleting an egroupware domain / database instance:	setup	en	Adding, editing or deleting an EGroupware domain / database instance:
+additional group filter (optional)	setup	en	Additional group filter (optional)
 additional options and there defaults (in brackets)	setup	en	Additional options and there defaults (in brackets)
 additional settings	setup	en	Additional settings
+additional user filter (optional)	setup	en	Additional user filter (optional)
 admin account successful created.	setup	en	Admin account successful created.
 admin email address	setup	en	Admin email address
 admin first name	setup	en	Admin first name
