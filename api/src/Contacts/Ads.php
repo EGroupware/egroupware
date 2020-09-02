@@ -102,6 +102,9 @@ class Ads extends Ldap
 		//$this->sharedContactsDN		= 'ou=shared,ou=contacts,'. $this->ldap_config['ldap_contact_context'];
 		$this->allContactsDN = $this->accountContactsDN = $this->accounts_ads->ads_context();
 
+		// get filter for accounts (incl. additional filter from setup)
+		$this->accountsFilter = $this->accounts_ads->type_filter('u');
+
 		if ($ds)
 		{
 			$this->ds = $ds;

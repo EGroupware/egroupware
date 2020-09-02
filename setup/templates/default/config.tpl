@@ -412,6 +412,14 @@
      <td><input name="newsettings[ads_context]" value="{value_ads_context}" size="80" /></td>
    </tr>
    <tr class="row_off">
+     <td>{lang_Additional_user_filter_(optional)}:</td>
+     <td><input name="newsettings[ads_user_filter]" value="{value_ads_user_filter}" size="80" /></td>
+   </tr>
+   <tr class="row_on">
+     <td>{lang_Additional_group_filter_(optional)}:</td>
+     <td><input name="newsettings[ads_group_filter]" value="{value_ads_group_filter}" size="80" /></td>
+   </tr>
+   <tr class="row_off">
      <td><b>{lang_Attributes_for_new_users}</b><br/></td>
      <td>{lang_use_%u_for_username,_leave_empty_to_no_set}</td>
    </tr>
