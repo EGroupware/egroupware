@@ -115,11 +115,8 @@ class Ads extends Ldap
 
 		// AD seems to use user, instead of inetOrgPerson
 		unset($this->schema2egw['posixaccount']);
-		$this->schema2egw['user'] = array_merge($this->schema2egw['inetorgperson'], array(
+		$this->schema2egw['user'] = array_merge($this->schema2egw['organizantionalperson'], array(
 			'account_id'	=> 'objectsid',
-			'id'            => 'objectguid',
-			'uid'			=> 'objectguid',
-			'n_fn'          => 'displayname',	// leave CN used in DN untouched
 			'accountexpires', 'useraccountcontrol',	// needed to exclude deactivated or expired accounts
 		));
 		unset($this->schema2egw['user']['n_fileas']);
@@ -157,7 +154,7 @@ class Ads extends Ldap
 	{
 		// check that GUID eg. from URL contains only valid hex characters and dash
 		// we cant use ldap::quote() for win2008r2 hex GUID, as it contains backslashes
-		if (!preg_match('/^[0-9A-Fa-f-]+/', $contact_id))
+		if (strlen($contact_id) !== 36 || !preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/i', $contact_id))
 		{
 			throw new Api\Exception\AssertionFailed("'$contact_id' is NOT a valid GUID!");
 		}
