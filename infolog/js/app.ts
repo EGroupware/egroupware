@@ -21,6 +21,7 @@ import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import {CRMView} from "../../addressbook/js/CRM";
 
 /**
  * UI for Infolog
@@ -65,6 +66,12 @@ class InfologApp extends EgwApp
 	{
 		// call parent
 		super.et2_ready(_et2, _name);
+
+		// CRM View
+		if(typeof CRMView !== "undefined")
+		{
+			CRMView.view_ready(_et2, this);
+		}
 
 		switch(_name)
 		{
@@ -188,7 +195,7 @@ class InfologApp extends EgwApp
 		// (server responds then with null / no entry causing the entry to disapear)
 		if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData)))
 		{
-			return etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
+			return this.et2.getInstanceManager().refresh("", pushData.app, pushData.id, pushData.type);
 		}
 
 		// check visibility - grants is ID => permission of people we're allowed to see

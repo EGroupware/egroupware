@@ -73,10 +73,29 @@ class infolog_hooks
 			'edit_id'    => 'info_id',
 			'edit_popup'  => '760x570',
 			'merge' => true,
-			'push_data'  => ['info_type', 'info_owner','info_responsible', 'info_modified']
+			'push_data'  => self::class.'::prepareEventPush'
 		);
 	}
 
+	/**
+	 * Prepare entry to be pushed via Link::notify_update()
+	 *
+	 * Get linked contact ID for CRM view
+	 *
+	 * @param $entry
+	 * @return array
+	 */
+	static public function prepareEventPush($entry)
+	{
+		$info = array_intersect_key($entry, array_flip(['info_type', 'info_owner','info_responsible', 'info_modified']));
+
+		// Add in contact ID for CRM view
+		if($entry['info_contact'] && $entry['info_contact']['app'] == 'addressbook')
+		{
+			$info['contact_id'] = $entry['info_contact']['id'];
+		}
+		return $info;
+	}
 	/**
 	 * hooks to build sidebox-menu plus the admin and preferences sections
 	 *
