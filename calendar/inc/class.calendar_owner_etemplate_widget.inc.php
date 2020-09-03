@@ -207,12 +207,13 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			switch ($type)
 			{
 				case 'l':
-					// Include mailing lists
+					// Include mailing lists, but not account groups
 					$lists = array_filter(
 						$contacts_obj->get_lists(Api\Acl::READ),
-						function($element) use($query) {
-							return (stripos($element, $query) !== false);
-						}
+						function($element, $index) use($query) {
+							return $index > 0 && (stripos($element, $query) !== false);
+						},
+				ARRAY_FILTER_USE_BOTH
 					);
 					foreach($lists as $list_id => $list)
 					{
