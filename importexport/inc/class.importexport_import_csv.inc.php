@@ -274,7 +274,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 			Api\Translation::add_app($appname);
 
 			if(!self::$cf_parse_cache[$appname]) {
-				$c_fields = importexport_export_csv::convert_parse_custom_fields($appname, $selects, $links, $methods);
+				$c_fields = importexport_export_csv::convert_parse_custom_fields($record, $appname, $selects, $links, $methods);
 				self::$cf_parse_cache[$appname] = array($c_fields, $selects, $links, $methods);
 			}
 			list($c_fields, $c_selects, $links, $methods) = self::$cf_parse_cache[$appname];
@@ -426,7 +426,15 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					if(is_array(self::$cf_parse_cache[$appname][0]['date-time']) &&
 							in_array($name, self::$cf_parse_cache[$appname][0]['date-time'])) {
 						// Custom fields stored in a particular format (from customfields_widget)
-						$record[$name] = date('Y-m-d H:i:s', $record[$name]);
+						$date_format = 'Y-m-d H:i:s';
+
+						// Check for custom format
+						$cfs = Api\Storage\Customfields::get($appname);
+						if($cfs && $cfs[substr($name,1)] && $cfs[substr($name,1)]['values']['format'])
+						{
+							$date_format = $cfs[substr($name,1)]['values']['format'];
+						}
+						$record[$name] = date($date_format, $record[$name]);
 					}
 				}
 				if(array_key_exists($name, $record) && strlen(trim($record[$name])) == 0)
@@ -450,7 +458,14 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					if(is_array(self::$cf_parse_cache[$appname][0]['date']) &&
 							in_array($name, self::$cf_parse_cache[$appname][0]['date'])) {
 						// Custom fields stored in a particular format (from customfields_widget)
-						$record[$name] = date('Y-m-d', $record[$name]);
+						$date_format = 'Y-m-d';
+						// Check for custom format
+						$cfs = Api\Storage\Customfields::get($appname);
+						if($cfs && $cfs[substr($name,1)] && $cfs[substr($name,1)]['values']['format'])
+						{
+							$date_format = $cfs[substr($name,1)]['values']['format'];
+						}
+						$record[$name] = date($date_format, $record[$name]);
 					}
 				}
 				if(array_key_exists($name, $record) && strlen(trim($record[$name])) == 0)

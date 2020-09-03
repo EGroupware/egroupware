@@ -229,14 +229,14 @@ class importexport_export_csv implements importexport_iface_export_record
 	/**
 	 * Parse custom fields for an app, so a more human friendly value can be exported
 	 *
+	 * @param importexport_iface_egw_record|Array $record
 	 * @param appname Name of the app to fetch the custom fields for
-	 * @param selects Lookup values for select boxes
-	 * @param links Appnames for links to fetch the title
-	 * @param methods Method will be called with the record's value
-	 *
+	 * @param array $selects
+	 * @param array $links
+	 * @param array $methods
 	 * @return Array of fields to be added to list of fields needing conversion
 	 */
-	public static function convert_parse_custom_fields($appname, &$selects = array(), &$links = array(), &$methods = array()) {
+	public static function convert_parse_custom_fields(&$record, $appname, &$selects = array(), &$links = array(), &$methods = array()) {
 		if(!$appname) return;
 
 		$fields = array();
@@ -246,6 +246,24 @@ class importexport_export_csv implements importexport_iface_export_record
 			switch($c_field['type']) {
 				case 'date':
 					$fields['date'][] = $name;
+					if ($c_field['values']['format'] && (is_array($record) ? $record[$name] : $record->$name))
+					{
+						// Date has custom format.  Convert so it's standard.
+						$val = is_array($record) ? $record[$name] : $record->$name;
+						$date = Api\DateTime::createFromFormat($c_field['values']['format'], $val, Api\DateTime::$user_timezone);
+						if($date)
+						{
+							$val = $date->format(APi\DateTime::DATABASE);
+							if (is_array($record))
+							{
+								$record[$name] = $val;
+							}
+							else
+							{
+								$record->$name = $val;
+							}
+						}
+					}
 					break;
 				case 'date-time':
 					$fields['date-time'][] = $name;
@@ -288,10 +306,13 @@ class importexport_export_csv implements importexport_iface_export_record
 	 * @parem fields List of field types => field names to be converted
 	 * @param appname Current appname if you want to do custom fields too
 	 */
-	public static function convert(importexport_iface_egw_record &$record, Array $fields = array(), $appname = null, $selects = array()) {
-		if($appname) {
-			if(!self::$cf_parse_cache[$appname]) {
-				$c_fields = self::convert_parse_custom_fields($appname, $selects, $links, $methods);
+	public static function convert(importexport_iface_egw_record &$record, Array $fields = array(), $appname = null, $selects = array())
+	{
+		if($appname)
+		{
+			if(!self::$cf_parse_cache[$appname])
+			{
+				$c_fields = self::convert_parse_custom_fields($record, $appname, $selects, $links, $methods);
 				self::$cf_parse_cache[$appname] = array($c_fields, $selects, $links, $methods);
 			}
 			list($c_fields, $c_selects, $links, $methods) = self::$cf_parse_cache[$appname];
@@ -307,8 +328,10 @@ class importexport_export_csv implements importexport_iface_export_record
 			}
 
 			// Not quite a recursive merge, since only one level
-			foreach($fields as $type => &$list) {
-				if($c_fields[$type]) {
+			foreach($fields as $type => &$list)
+			{
+				if($c_fields[$type])
+				{
 					$list = array_merge($c_fields[$type], $list);
 					unset($c_fields[$type]);
 				}
@@ -316,17 +339,23 @@ class importexport_export_csv implements importexport_iface_export_record
 			$fields += $c_fields;
 			$selects += $c_selects;
 		}
-		foreach((array)$fields['select'] as $name) {
-			if($record->$name != null && is_array($selects) && $selects[$name]) {
+		foreach((array)$fields['select'] as $name)
+		{
+			if($record->$name != null && is_array($selects) && $selects[$name])
+			{
 				$record->$name = is_string($record->$name) ? explode(',', $record->$name) : $record->$name;
-				if(is_array($record->$name)) {
+				if(is_array($record->$name))
+				{
 					$names = array();
-					foreach($record->$name as $_name) {
+					foreach($record->$name as $_name)
+					{
 						$option = $selects[$name][$_name];
 						$names[] = lang(is_array($option) && $option['label'] ? $option['label'] : $option);
 					}
 					$record->$name = implode(', ', $names);
-				} else {
+				}
+				else
+				{
 					$record->$name = lang($selects[$name][$record->$name]);
 				}
 			}
