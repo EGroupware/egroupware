@@ -350,6 +350,12 @@ class calendar_bo
 		{
 			$list = $contacts_obj->read_list((int)$id);
 
+			if(!$list && $id < 0)
+			{
+				$list = array(
+						'list_name' => Link::title('api-accounts',$id) ?: Api\Accounts::username($id)
+				);
+			}
 			$data[] = array(
 				'res_id' => $id,
 				'rights' => self::ACL_READ_FOR_PARTICIPANTS,
