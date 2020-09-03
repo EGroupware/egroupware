@@ -32,6 +32,7 @@ require("../etemplate/et2_types");
 var egw_app_1 = require("../../api/js/jsapi/egw_app");
 var etemplate2_1 = require("../../api/js/etemplate/etemplate2");
 var et2_extension_nextmatch_1 = require("../../api/js/etemplate/et2_extension_nextmatch");
+var CRM_1 = require("../../addressbook/js/CRM");
 /**
  * UI for Infolog
  *
@@ -70,6 +71,10 @@ var InfologApp = /** @class */ (function (_super) {
     InfologApp.prototype.et2_ready = function (_et2, _name) {
         // call parent
         _super.prototype.et2_ready.call(this, _et2, _name);
+        // CRM View
+        if (typeof CRM_1.CRMView !== "undefined") {
+            CRM_1.CRMView.view_ready(_et2, this);
+        }
         switch (_name) {
             case 'infolog.index':
                 this.filter_change();
@@ -178,7 +183,7 @@ var InfologApp = /** @class */ (function (_super) {
         // This must be before all ACL checks, as responsible might have changed and entry need to be removed
         // (server responds then with null / no entry causing the entry to disapear)
         if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData))) {
-            return etemplate2_1.etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
+            return this.et2.getInstanceManager().refresh("", pushData.app, pushData.id, pushData.type);
         }
         // check visibility - grants is ID => permission of people we're allowed to see
         if (typeof this._grants === 'undefined') {

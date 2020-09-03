@@ -529,34 +529,48 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 this.dataview.grid.invalidate();
             }
         }
-        id_loop: for (var i = 0; i < _row_ids.length; i++) {
-            var uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
+        var _loop_1 = function () {
+            var uid_1 = _row_ids[i].toString().indexOf(this_1.controller.dataStorePrefix) == 0 ? _row_ids[i] : this_1.controller.dataStorePrefix + "::" + _row_ids[i];
+            // Check for update on a row we don't have
+            var known = Object.values(this_1.controller._indexMap).filter(function (row) { return row.uid == uid_1; });
+            if ((_type == et2_nextmatch.UPDATE || _type == et2_nextmatch.UPDATE_IN_PLACE) && (!known || known.length == 0)) {
+                _type = et2_nextmatch.ADD;
+                if (update_pref == "exact" && !this_1.is_sorted_by_modified()) {
+                    _type = et2_nextmatch.EDIT;
+                }
+            }
             switch (_type) {
                 // update-in-place = update, but always only in place
                 case et2_nextmatch.UPDATE_IN_PLACE:
-                    this.egw().dataRefreshUID(uid);
+                    this_1.egw().dataRefreshUID(uid_1);
                     break;
                 // update [existing] row, maybe we'll put it on top
                 case et2_nextmatch.UPDATE:
-                    if (!this.refresh_update(uid)) {
-                        // Could not update just the row, full refresh has been requested
-                        break id_loop;
+                    if (!this_1.refresh_update(uid_1)) {
+                        return "break-id_loop";
                     }
                     break;
                 case et2_nextmatch.DELETE:
                     // Handled above, more code to execute after loop so don't exit early
                     break;
                 case et2_nextmatch.ADD:
-                    if (update_pref == "lazy" || update_pref == "exact" && this.is_sorted_by_modified()) {
-                        if (this.refresh_add(uid))
+                    if (update_pref == "lazy" || update_pref == "exact" && this_1.is_sorted_by_modified()) {
+                        if (this_1.refresh_add(uid_1))
                             break;
                     }
                 // fall-through / full refresh, if refresh_add returns false
                 case et2_nextmatch.EDIT:
                 default:
                     // Trigger refresh
-                    this.applyFilters();
-                    break id_loop;
+                    this_1.applyFilters();
+                    return "break-id_loop";
+            }
+        };
+        var this_1 = this;
+        id_loop: for (var i = 0; i < _row_ids.length; i++) {
+            var state_1 = _loop_1();
+            switch (state_1) {
+                case "break-id_loop": break id_loop;
             }
         }
         // Trigger an event so app code can act on it
@@ -571,13 +585,11 @@ var et2_nextmatch = /** @class */ (function (_super) {
     et2_nextmatch.prototype.refresh_update = function (uid) {
         // Row data update has been sent, let's move it where app wants it
         var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
+        // Ask for new data
+        this.egw().dataRefreshUID(uid);
         // Need to delete first as there's a good chance indexes will change in an unknown way
         // and we can't always find it by UID after due to duplication
         this.controller.deleteRow(uid);
-        // Trigger controller to remove from internals so we can ask for new data
-        this.egw().dataStoreUID(uid, null);
-        // Stop caring about this ID
-        this.egw().dataDeleteUID(uid);
         // Pretend it's a new row, let app tell us where it goes and we'll mark it as new
         if (!this.refresh_add(uid, et2_nextmatch.UPDATE)) {
             // App did not want the row, or doesn't know where it goes but we've already removed it...
@@ -601,6 +613,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
      */
     et2_nextmatch.prototype.refresh_add = function (uid, type) {
         if (type === void 0) { type = et2_nextmatch.ADD; }
+        var _a, _b;
         var index = egw.preference("lazy-update") == "lazy" ? 0 :
             (this.is_sorted_by_modified() ? 0 : false);
         // No add, do a full refresh
@@ -614,7 +627,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         entry.idx = typeof index == "number" ? index : 0;
         this.controller._insertDataRow(entry, true);
         // Set "new entry" class - but it has to stay so register and re-add it after the data is there
-        entry.row.tr.addClass("new_entry");
+        (_b = (_a = entry.row) === null || _a === void 0 ? void 0 : _a.tr) === null || _b === void 0 ? void 0 : _b.addClass("new_entry");
         var callback = function (data) {
             if (data) {
                 if (data.class) {

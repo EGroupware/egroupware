@@ -2956,7 +2956,10 @@ class addressbook_ui extends addressbook_bo
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 
 		// need to load list's app.js now, as exec calls header before other app can include it
-		Framework::includeJS('/'.$crm_list.'/js/app.js');
+	//	Framework::includeJS('/'.$crm_list.'/js/app.js');
+
+		// Load CRM code
+		Framework::includeJS('.','CRM','addressbook');
 
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array(
 			'id' => $content['id'],

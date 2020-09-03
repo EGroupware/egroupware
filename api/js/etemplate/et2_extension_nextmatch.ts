@@ -818,7 +818,18 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		id_loop:
 		for(var i = 0; i < _row_ids.length; i++)
 		{
-			var uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
+			let uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
+
+			// Check for update on a row we don't have
+			let known = Object.values(this.controller._indexMap).filter(function(row) {return row.uid ==uid;});
+			if((_type == et2_nextmatch.UPDATE || _type == et2_nextmatch.UPDATE_IN_PLACE) && (!known || known.length == 0 ))
+			{
+				_type = et2_nextmatch.ADD;
+				if (update_pref == "exact" && !this.is_sorted_by_modified())
+				{
+					_type = et2_nextmatch.EDIT;
+				}
+			}
 			switch(_type)
 			{
 				// update-in-place = update, but always only in place
@@ -864,15 +875,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Row data update has been sent, let's move it where app wants it
 		let entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
 
+		// Ask for new data
+		this.egw().dataRefreshUID(uid);
+
 		// Need to delete first as there's a good chance indexes will change in an unknown way
 		// and we can't always find it by UID after due to duplication
 		this.controller.deleteRow(uid);
-
-		// Trigger controller to remove from internals so we can ask for new data
-		this.egw().dataStoreUID(uid,null);
-
-		// Stop caring about this ID
-		this.egw().dataDeleteUID(uid);
 
 		// Pretend it's a new row, let app tell us where it goes and we'll mark it as new
 		if(!this.refresh_add(uid, et2_nextmatch.UPDATE))
@@ -918,7 +926,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		this.controller._insertDataRow(entry,true);
 
 		// Set "new entry" class - but it has to stay so register and re-add it after the data is there
-		entry.row.tr.addClass("new_entry");
+		entry.row?.tr?.addClass("new_entry");
+
 		let callback = function(data) {
 			if(data)
 			{
