@@ -30,6 +30,7 @@ require("jqueryui");
 require("../jsapi/egw_global");
 require("../etemplate/et2_types");
 var egw_app_1 = require("../../api/js/jsapi/egw_app");
+var et2_extension_nextmatch_1 = require("../../api/js/etemplate/et2_extension_nextmatch");
 /**
  * UI for Addressbook CRM view
  *
@@ -51,7 +52,7 @@ var CRMView = /** @class */ (function (_super) {
         _this.contact_ids = [];
         // Private js for the list
         _this.app_obj = null;
-        // Push data key(s) to check for our contact ID
+        // Push data key(s) to check for our contact ID in the entry's ACL data
         _this.push_contact_ids = ["contact_id"];
         return _this;
     }
@@ -144,25 +145,46 @@ var CRMView = /** @class */ (function (_super) {
      * @param {number} pushData.account_id User that caused the notification
      */
     CRMView.prototype.push = function (pushData) {
-        var _this = this;
         if (pushData.app !== this.app_obj.appname || !this.nm)
             return;
         // If we know about it and it's an update, just update.
         // This must be before all ACL checks, as contact might have changed and entry needs to be removed
-        // (server responds then with null / no entry causing the entry to disapear)
+        // (server responds then with null / no entry causing the entry to disappear)
         if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData))) {
-            return this.nm.refresh(pushData.id, pushData.type);
+            // Check to see if it's in OUR nextmatch
+            var uid_1 = this.uid(pushData);
+            var known = Object.values(this.nm.controller._indexMap).filter(function (row) { return row.uid == uid_1; });
+            var type = pushData.type;
+            if (known && known.length > 0) {
+                if (!this.id_check(pushData.acl)) {
+                    // Was ours, not anymore, and we know this now - no server needed.  Just remove from nm.
+                    type = et2_extension_nextmatch_1.et2_nextmatch.DELETE;
+                }
+                return this.nm.refresh(pushData.id, type);
+            }
         }
+        if (this.id_check(pushData.acl)) {
+            return this._app_obj_push(pushData);
+        }
+    };
+    /**
+     * Check to see if the given entry is "ours"
+     *
+     * @param entry
+     */
+    CRMView.prototype.id_check = function (entry) {
+        var _this = this;
         // Check if it's for one of our contacts
         for (var _i = 0, _a = this.push_contact_ids; _i < _a.length; _i++) {
             var field = _a[_i];
-            if (pushData.acl && pushData.acl[field]) {
-                var val = typeof pushData.acl[field] == "string" ? [pushData.acl[field]] : pushData.acl[field];
+            if (entry && entry[field]) {
+                var val = typeof entry[field] == "string" ? [entry[field]] : entry[field];
                 if (val.filter(function (v) { return _this.contact_ids.indexOf(v) >= 0; }).length > 0) {
-                    return this._app_obj_push(pushData);
+                    return true;
                 }
             }
         }
+        return false;
     };
     /**
      * Override the list's push handler to do nothing, we'll call it if we want it.

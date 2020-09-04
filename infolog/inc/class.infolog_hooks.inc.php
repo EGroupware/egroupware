@@ -89,10 +89,23 @@ class infolog_hooks
 	{
 		$info = array_intersect_key($entry, array_flip(['info_type', 'info_owner','info_responsible', 'info_modified']));
 
-		// Add in contact ID for CRM view
+		// Add in contact IDs for CRM view
 		if($entry['info_contact'] && $entry['info_contact']['app'] == 'addressbook')
 		{
-			$info['contact_id'] = $entry['info_contact']['id'];
+			$info['contact_id'] = [$entry['info_contact']['id']];
+		}
+		foreach(Api\Link::get_links('infolog',$entry['info_id'],'addressbook') as $link)
+		{
+			if(!is_array($info['contact_id']))
+			{
+				$info['contact_id'] = [];
+			}
+			// Skip if already there
+			if(in_array($link,$info['contact_id']))
+			{
+				continue;
+			}
+			$info['contact_id'][] = $link;
 		}
 		return $info;
 	}
