@@ -39,7 +39,7 @@ export class CRMView extends EgwApp
 	// Hold on to the original push handler
 	private _app_obj_push: (pushData: PushData) => void;
 
-	// Push data key(s) to check for our contact ID
+	// Push data key(s) to check for our contact ID in the entry's ACL data
 	private push_contact_ids = ["contact_id"];
 
 	/**
@@ -172,24 +172,51 @@ export class CRMView extends EgwApp
 
 		// If we know about it and it's an update, just update.
 		// This must be before all ACL checks, as contact might have changed and entry needs to be removed
-		// (server responds then with null / no entry causing the entry to disapear)
+		// (server responds then with null / no entry causing the entry to disappear)
 		if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData)))
 		{
-			return this.nm.refresh(pushData.id, pushData.type);
+			// Check to see if it's in OUR nextmatch
+			let uid = this.uid(pushData);
+			let known = Object.values(this.nm.controller._indexMap).filter(function(row) {return row.uid ==uid;});
+			let type = pushData.type;
+			if(known && known.length > 0)
+			{
+				if(!this.id_check(pushData.acl))
+				{
+					// Was ours, not anymore, and we know this now - no server needed.  Just remove from nm.
+					type = et2_nextmatch.DELETE;
+				}
+				return this.nm.refresh(pushData.id, type);
+			}
 		}
 
+		if(this.id_check(pushData.acl))
+		{
+			return this._app_obj_push(pushData);
+		}
+
+	}
+
+	/**
+	 * Check to see if the given entry is "ours"
+	 *
+	 * @param entry
+	 */
+	id_check(entry) : boolean
+	{
 		// Check if it's for one of our contacts
 		for(let field of this.push_contact_ids)
 		{
-			if(pushData.acl && pushData.acl[field])
+			if(entry && entry[field])
 			{
-				let val = typeof pushData.acl[field] == "string" ? [pushData.acl[field]] : pushData.acl[field];
+				let val = typeof entry[field] == "string" ? [entry[field]] : entry[field];
 				if(val.filter(v => this.contact_ids.indexOf(v) >= 0).length > 0)
 				{
-					return this._app_obj_push(pushData);
+					return true;
 				}
 			}
 		}
+		return false;
 	}
 
 	/**
