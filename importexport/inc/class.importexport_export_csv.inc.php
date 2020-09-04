@@ -245,7 +245,8 @@ class importexport_export_csv implements importexport_iface_export_record
 			$name = '#' . $name;
 			switch($c_field['type']) {
 				case 'date':
-					$fields['date'][] = $name;
+				case 'date-time':
+					$fields[$c_field['type']][] = $name;
 					if ($c_field['values']['format'] && (is_array($record) ? $record[$name] : $record->$name))
 					{
 						// Date has custom format.  Convert so it's standard.
@@ -264,9 +265,6 @@ class importexport_export_csv implements importexport_iface_export_record
 							}
 						}
 					}
-					break;
-				case 'date-time':
-					$fields['date-time'][] = $name;
 					break;
 				case 'select-account':
 					$fields['select-account'][] = $name;
