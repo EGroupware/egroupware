@@ -64,7 +64,7 @@ class Ads extends Ldap
 	/**
 	 * Accounts ADS object
 	 *
-	 * @var Api\Accounts\Acs
+	 * @var Api\Accounts\Ads
 	 */
 	protected $accounts_ads;
 
@@ -103,7 +103,7 @@ class Ads extends Ldap
 		$this->allContactsDN = $this->accountContactsDN = $this->accounts_ads->ads_context();
 
 		// get filter for accounts (incl. additional filter from setup)
-		$this->accountsFilter = $this->accounts_ads->type_filter('u');
+		$this->accountsFilter = $this->accounts_ads->type_filter('u', true);
 
 		if ($ds)
 		{
@@ -204,12 +204,6 @@ class Ads extends Ldap
 	{
 		$contact['account_id'] = $this->accounts_ads->objectsid2account_id($data['objectsid']);
 		$contact['id'] = $contact['uid'] = $this->accounts_ads->objectguid2str($data['objectguid']);
-
-		// ignore system accounts
-		if ($contact['account_id'] < Api\Accounts\Ads::MIN_ACCOUNT_ID) return false;
-
-		// ignore deactivated or expired accounts
-		if (!$this->accounts_ads->user_active($data)) return false;
 
 		$this->_inetorgperson2egw($contact, $data, 'displayname');
 	}

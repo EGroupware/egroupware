@@ -1048,7 +1048,8 @@ class Accounts
 		}
 		return False;
 	}
-/**
+
+	/**
 	 * Get a list of how many entries of each app the account has
 	 *
 	 * @param int $account_id
@@ -1102,6 +1103,7 @@ class Accounts
 
 		return $counts;
 	}
+
 	protected function get_owner_columns()
 	{
 		$owner_columns = array();

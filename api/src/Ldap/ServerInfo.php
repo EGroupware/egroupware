@@ -61,6 +61,11 @@ class ServerInfo
 	var $supportedOIDs = array();
 
 	/**
+	 * @var array OIDs of supported controls LDAP_CONTROL_*
+	 */
+	var $suportedControl = [];
+
+	/**
 	 * Name of host
 	 *
 	 * @var string
@@ -129,6 +134,28 @@ class ServerInfo
 	}
 
 	/**
+	 * sets the supported objectclasses
+	 *
+	 * @param array $_supportedControl LDAP_CONTROL_* values
+	 */
+	function setSupportedControl(array $_supportedControl)
+	{
+		unset($_supportedControl['count']);
+		$this->suportedControl = $_supportedControl;
+	}
+
+	/**
+	 * Check if given (multiple) LDAP_CONTROL_* args are (all) supported
+	 *
+	 * @param int $control LDAP_CONTROL_* value(s)
+	 * @return boolean
+	 */
+	function supportedControl($control)
+	{
+		return count(array_intersect(func_get_args(), $this->suportedControl)) === func_num_args();
+	}
+
+	/**
 	* sets the version
 	*
 	* @param integer $_version the supported ldap version
@@ -163,7 +190,7 @@ class ServerInfo
 	public static function get($ds, $host, $version=3)
 	{
 		$filter='(objectclass=*)';
-		$justthese = array('structuralObjectClass','namingContexts','supportedLDAPVersion','subschemaSubentry','vendorname');
+		$justthese = array('structuralObjectClass','namingContexts','supportedLDAPVersion','subschemaSubentry','vendorname','supportedControl');
 		if(($sr = @ldap_read($ds, '', $filter, $justthese)))
 		{
 			if(($info = ldap_get_entries($ds, $sr)))
@@ -205,6 +232,11 @@ class ServerInfo
 				{
 					$subschemasubentry = $info[0]['subschemasubentry'][0];
 					$ldapServerInfo->setSubSchemaEntry($subschemasubentry);
+				}
+
+				if (!empty($info[0]['supportedcontrol']) && is_array($info[0]['supportedcontrol']))
+				{
+					$ldapServerInfo->setSupportedControl($info[0]['supportedcontrol']);
 				}
 
 				// create list of supported objetclasses

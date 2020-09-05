@@ -15,6 +15,7 @@
 namespace EGroupware\Api\Contacts;
 
 use EGroupware\Api;
+use EGroupware\Api\Ldap\ServerInfo;
 
 /**
  * LDAP Backend for contacts, compatible with vars and parameters of eTemplate's so_sql.
@@ -46,7 +47,7 @@ class Ldap
 	var $accountName;
 
 	/**
-	* @var object $ldapServerInfo holds the information about the current used ldap server
+	* @var ServerInfo $ldapServerInfo holds the information about the current used ldap server
 	*/
 	var $ldapServerInfo;
 
@@ -267,6 +268,15 @@ class Ldap
 	);
 
 	/**
+	 * Timestamps ldap => egw used in several places
+	 * @var string[]
+	 */
+	public $timestamps2egw = [
+		'createtimestamp' => 'created',
+		'modifytimestamp' => 'modified',
+	];
+
+	/**
 	 * additional schema required by one of the above schema
 	 *
 	 * @var array
@@ -287,7 +297,7 @@ class Ldap
 	 *
 	 * @var array values for keys "ldap_contact_context", "ldap_host", "ldap_context"
 	 */
-	private $ldap_config;
+	protected $ldap_config;
 
 	/**
 	 * LDAP connection
@@ -771,14 +781,11 @@ class Ldap
 		}
 		// search filter for modified date (eg. for CardDAV sync-report)
 		$datefilter = '';
-		static $egw2ldap = array(
-			'created' => 'createtimestamp',
-			'modified' => 'modifytimestamp',
-		);
 		foreach($filter as $key => $value)
 		{
 			$matches = null;
-			if (is_int($key) && preg_match('/^(contact_)?(modified|created)([<=>]+)([0-9]+)$/', $value, $matches))
+			if (is_int($key) && preg_match('/^(contact_)?(modified|created)([<=>]+)([0-9]+)$/', $value, $matches) &&
+				($attr = array_search($matches[2], $this->timestamps2egw)))
 			{
 				$append = '';
 				if ($matches[3] == '>')
@@ -787,7 +794,7 @@ class Ldap
 					$datefilter .= '(!';
 					$append = ')';
 				}
-				$datefilter .= '('.$egw2ldap[$matches[2]].$matches[3].self::_ts2ldap($matches[4]).')'.$append;
+				$datefilter .= '('.$attr.$matches[3].self::_ts2ldap($matches[4]).')'.$append;
 			}
 		}
 
@@ -881,7 +888,7 @@ class Ldap
 		$colFilter = $this->_colFilter($filter);
 		$ldapFilter = "(&$objectFilter$searchFilter$colFilter$datefilter)";
 		//error_log(__METHOD__."(".array2string($criteria).", ".array2string($only_keys).", '$order_by', ".array2string($extra_cols).", '$wildcard', '$empty', '$op', ".array2string($start).", ".array2string($filter).") --> ldapFilter='$ldapFilter'");
-		if (!($rows = $this->_searchLDAP($searchDN, $ldapFilter, $this->all_attributes, $addressbookType)))
+		if (!($rows = $this->_searchLDAP($searchDN, $ldapFilter, $this->all_attributes, $addressbookType, [], $order_by, $start)))
 		{
 			return $rows;
 		}
@@ -1087,19 +1094,62 @@ class Ldap
 	}
 
 	/**
+	 * Get value(s) for LDAP_CONTROL_SORTREQUEST
+	 *
+	 * @param ?string $order_by sql order string eg. "contact_email ASC"
+	 * @return array of arrays with values for keys 'attr', 'oid' (caseIgnoreMatch='2.5.13.3') and 'reverse'
+	 * @todo sorting by multiple criteria is supported in LDAP RFC 2891, but - at least with Univention - gives wired results
+	 */
+	protected function sort_values($order_by)
+	{
+		$values = [];
+		while (!empty($order_by) && preg_match("/^(contact_)?([^ ]+)( ASC| DESC)?,?/i", $order_by, $matches))
+		{
+			if (($attr = array_search($matches[2], $this->timestamps2egw)))
+			{
+				$values[] = [
+					'attr' => $attr,
+					// use default match 'oid' => '',
+					'reverse' => strtoupper($matches[3]) === ' DESC',
+				];
+			}
+			else
+			{
+				foreach ($this->schema2egw as $mapping)
+				{
+					if (isset($mapping[$matches[2]]))
+					{
+						$values[] = [
+							'attr' => $mapping[$matches[2]],
+							'oid' => '2.5.13.3',    // caseIgnoreMatch
+							'reverse' => strtoupper($matches[3]) === ' DESC',
+						];
+						break;
+					}
+				}
+			}
+			$order_by = substr($order_by, strlen($matches[0]));
+			if ($values) break;	// sorting by multiple criteria gives wired results
+		}
+		//error_log(__METHOD__."('$order_by') returning ".json_encode($values));
+		return $values;
+	}
+
+	/**
 	 * Perform the actual ldap-search, retrieve and convert all entries
 	 *
 	 * Used be read and search
 	 *
-	 * @internal
 	 * @param string $_ldapContext
 	 * @param string $_filter
 	 * @param array $_attributes
 	 * @param int $_addressbooktype
 	 * @param array $_skipPlugins =null schema-plugins to skip
+	 * @param string $order_by sql order string eg. "contact_email ASC"
+	 * @param null|int|array $start [$start,$offset], on return null, if result sorted and limited by server
 	 * @return array/boolean with eGW contacts or false on error
 	 */
-	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, array $_skipPlugins=null)
+	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, array $_skipPlugins=null, $order_by=null, &$start=null)
 	{
 		$this->total = 0;
 
@@ -1112,24 +1162,58 @@ class Ldap
 
 		//error_log(__METHOD__."('$_ldapContext', '$_filter', ".array2string($_attributes).", $_addressbooktype)");
 
+		// check if we require sorting and server supports it
+		$control = [];
+		if (PHP_VERSION >= 7.3 && !empty($order_by) && is_array($start) && $this->ldapServerInfo->supportedControl(LDAP_CONTROL_SORTREQUEST, LDAP_CONTROL_VLVREQUEST) &&
+			($sort_values = $this->sort_values($order_by)))
+		{
+			[$offset, $num_rows] = $start;
+
+			$control = [
+				[
+					'oid' => LDAP_CONTROL_SORTREQUEST,
+					//'iscritical' => TRUE,
+					'value' => $sort_values,
+				],
+				[
+					'oid' => LDAP_CONTROL_VLVREQUEST,
+					//'iscritical' => TRUE,
+					'value' => [
+						'before'	=> 0, // Return 0 entry before target
+						'after'		=> $num_rows-1, // total-1
+						'offset'	=> $offset+1, // first = 1, NOT 0!
+						'count'		=> 0, // We have no idea how many entries there are
+					]
+				]
+			];
+		}
+
 		if($_addressbooktype == self::ALL || $_ldapContext == $this->allContactsDN)
 		{
-			$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit);
+			$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit, null, null, $control);
 		}
 		else
 		{
-			$result = @ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit);
+			$result = @ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit, null, null, $control);
 		}
 		if(!$result || !$entries = ldap_get_entries($this->ds, $result)) return array();
+		$this->total = $entries['count'];
 		//error_log(__METHOD__."('$_ldapContext', '$_filter', ".array2string($_attributes).", $_addressbooktype) result of $entries[count]");
 
-		$this->total = $entries['count'];
+		// check if given controls succeeded
+		if ($control && ldap_parse_result($this->ds, $result, $errcode, $matcheddn, $errmsg, $referrals, $serverctrls) &&
+			(isset($serverctrls[LDAP_CONTROL_VLVRESPONSE]['value']['count'])))
+		{
+			$this->total = $serverctrls[LDAP_CONTROL_VLVRESPONSE]['value']['count'];
+			$start = null;	// so caller does NOT run it's own limit
+		}
+
 		foreach($entries as $i => $entry)
 		{
 			if (!is_int($i)) continue;	// eg. count
 
 			$contact = array(
-				'id'  => $entry['uid'][0] ? $entry['uid'][0] : $entry['entryuuid'][0],
+				'id'  => $entry['uid'][0] ?? $entry['entryuuid'][0],
 				'tid' => 'n',	// the type id for the addressbook
 			);
 			foreach($entry['objectclass'] as $ii => $objectclass)
@@ -1149,11 +1233,7 @@ class Ldap
 				$objectclass2egw = '_'.$objectclass.'2egw';
 				if (!in_array($objectclass2egw, (array)$_skipPlugins) &&method_exists($this,$objectclass2egw))
 				{
-					if (($ret=$this->$objectclass2egw($contact,$entry)) === false)
-					{
-						--$this->total;
-						continue 2;
-					}
+					$this->$objectclass2egw($contact,$entry);
 				}
 			}
 			// read binary jpegphoto only for one result == call by read
@@ -1181,10 +1261,7 @@ class Ldap
 				$contact['owner'] = 0;
 				$contact['private'] = 0;
 			}
-			foreach(array(
-				'createtimestamp' => 'created',
-				'modifytimestamp' => 'modified',
-			) as $ldapFieldName => $egwFieldName)
+			foreach($this->timestamps2egw as $ldapFieldName => $egwFieldName)
 			{
 				if(!empty($entry[$ldapFieldName][0]))
 				{
