@@ -435,7 +435,11 @@ app.classes.mail = AppJS.extend(
 		// only handle delete by default, for simple case of uid === "$app::$id"
 		if (pushData.type === 'delete')
 		{
-			return this._super.call(this, pushData);
+			[].concat(pushData.id).forEach(uid => {
+				pushData.id = uid;
+				this._super.call(this, pushData);
+			});
+			return;
 		}
 
 		// notify user a new mail arrived
