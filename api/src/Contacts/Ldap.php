@@ -1096,9 +1096,11 @@ class Ldap
 	/**
 	 * Get value(s) for LDAP_CONTROL_SORTREQUEST
 	 *
+	 * Sorting by multiple criteria is supported in LDAP RFC 2891, but - at least with Univention Samba - gives wired results,
+	 * Windows AD does NOT support it and gives an error if the oid is specified!
+	 *
 	 * @param ?string $order_by sql order string eg. "contact_email ASC"
 	 * @return array of arrays with values for keys 'attr', 'oid' (caseIgnoreMatch='2.5.13.3') and 'reverse'
-	 * @todo sorting by multiple criteria is supported in LDAP RFC 2891, but - at least with Univention - gives wired results
 	 */
 	protected function sort_values($order_by)
 	{
@@ -1119,17 +1121,20 @@ class Ldap
 				{
 					if (isset($mapping[$matches[2]]))
 					{
-						$values[] = [
+						$value = [
 							'attr' => $mapping[$matches[2]],
 							'oid' => '2.5.13.3',    // caseIgnoreMatch
 							'reverse' => strtoupper($matches[3]) === ' DESC',
 						];
+						// Windows AD does NOT support caseIgnoreMatch sorting, only it's default sorting
+						if ($this->ldapServerInfo->activeDirectory(true)) unset($value['oid']);
+						$values[] = $value;
 						break;
 					}
 				}
 			}
 			$order_by = substr($order_by, strlen($matches[0]));
-			if ($values) break;	// sorting by multiple criteria gives wired results
+			if ($values) break;	// sorting by multiple criteria gives no result for Windows AD and wired result for Samba4
 		}
 		//error_log(__METHOD__."('$order_by') returning ".json_encode($values));
 		return $values;

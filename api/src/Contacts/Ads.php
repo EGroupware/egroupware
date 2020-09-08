@@ -233,7 +233,7 @@ class Ads extends Ldap
 		$filter = '';
 		if ($gid < 0 && ($dn = $GLOBALS['egw']->accounts->id2name($gid, 'account_dn')))
 		{
-			$filter .= '(memberOf='.$dn.')';
+			$filter .= '(|(memberOf='.$dn.')(primaryGroupID='.abs($gid).'))';
 		}
 		return $filter;
 	}

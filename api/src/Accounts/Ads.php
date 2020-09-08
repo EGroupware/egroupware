@@ -109,7 +109,14 @@ class Ads
 	 */
 	const MIN_ACCOUNT_ID = 1000;
 
-
+	/**
+	 * Ignore group-membership of following groups, when compiling group-members
+	 *
+	 * We ignore "Domain Users" group with RID 513, as it contains all users!
+	 *
+	 * @var int[]
+	 */
+	public $ignore_membership = [ -513 ];
 	/**
 	 * Timestamps ldap => egw used in several places
 	 *
@@ -1081,6 +1088,20 @@ class Ads
 				{
 					$type_filter .= $this->frontend->config['ads_user_filter'];
 				}
+				// for non-admins and account_selection "groupmembers" we have to filter by memberOf attribute
+				if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] === 'groupmembers' &&
+					(!isset($GLOBALS['egw_info']['user']['apps']['admin'])))
+				{
+					$type_filter .= '(|';
+					foreach($GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true) as $group_id)
+					{
+						if (!in_array($group_id, $this->ignore_membership) && ($dn = Api\Accounts::id2name($group_id, 'account_dn')))
+						{
+							$type_filter .= '(memberOf='.$dn.')(primaryGroupID='.abs($group_id).')';
+						}
+					}
+					$type_filter .= ')';
+				}
 				$type_filter .= ')';
 				if ($account_type === 'u') break;
 				$user_filter = $type_filter;
@@ -1103,9 +1124,11 @@ class Ads
 	/**
 	 * Get value(s) for LDAP_CONTROL_SORTREQUEST
 	 *
+	 * Sorting by multiple criteria is supported in LDAP RFC 2891, but - at least with Univention Samba - gives wired results,
+	 * Windows AD does NOT support it and gives an error if the oid is specified!
+	 *
 	 * @param ?string $order_by sql order string eg. "contact_email ASC"
 	 * @return array of arrays with values for keys 'attr', 'oid' (caseIgnoreMatch='2.5.13.3') and 'reverse'
-	 * @todo sorting by multiple criteria is supported in LDAP RFC 2891, but - at least with Univention - gives wired results
 	 */
 	protected function sort_values($order_by)
 	{
@@ -1122,14 +1145,17 @@ class Ads
 			}
 			elseif (($attr = array_search('account_'.$matches[2], $this->attributes2egw)))
 			{
-				$values[] = [
-					'attr' => $attr,
-					'oid' => '2.5.13.3',	// caseIgnoreMatch
+				$value = [
+					'attr' => $mapping[$matches[2]],
+					'oid' => '2.5.13.3',    // caseIgnoreMatch
 					'reverse' => strtoupper($matches[3]) === ' DESC',
 				];
+				// Windows AD does NOT support caseIgnoreMatch sorting, only it's default sorting
+				if ($this->serverinfo->activeDirectory(true)) unset($value['oid']);
+				$values[] = $value;
 			}
 			$order_by = substr($order_by, strlen($matches[0]));
-			if ($values) break;	// sorting by multiple criteria gives wired results
+			if ($values) break;	// sorting by multiple criteria gives no result for Windows AD and wired result for Samba4
 		}
 		return $values;
 	}

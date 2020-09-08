@@ -246,6 +246,7 @@ class Accounts
 				$members = array();
 				foreach((array)$this->memberships($GLOBALS['egw_info']['user']['account_id'],true) as $grp)
 				{
+					if (isset($this->backend->ignore_membership) && in_array($grp, $this->backend->ignore_membership)) continue;
 					$members = array_unique(array_merge($members, (array)$this->members($grp,true,$param['active'])));
 					if ($param['type'] == 'groupmembers+memberships') $members[] = $grp;
 				}
@@ -313,6 +314,7 @@ class Accounts
 	 * @param array $options
 	 *  $options['filter']['group'] only return members of that group
 	 *  $options['account_type'] "accounts", "groups", "both" or "groupmembers"
+	 *  $options['tag_list'] true: return array of values for keys "value", "label" and "icon"
 	 * @return array with id - title pairs of the matching entries
 	 */
 	public static function link_query($pattern, array &$options = array())
@@ -367,8 +369,24 @@ class Accounts
 			'order' => $order,
 		)) as $account)
 		{
-			$accounts[$account['account_id']] = self::format_username($account['account_lid'],
+			$displayName = self::format_username($account['account_lid'],
 				$account['account_firstname'],$account['account_lastname'],$account['account_id']);
+
+			if (!empty($options['tag_list']))
+			{
+				$accounts[] = [
+					'value' => $account['account_id'],
+					'label' => $displayName,
+					'icon' => Framework::link('/api/avatar.php', [
+						'account_id' => $account['account_id'],
+						'modified' => $account['account_modified'],
+					]),
+				];
+			}
+			else
+			{
+				$accounts[$account['account_id']] = $displayName;
+			}
 		}
 		return $accounts;
 	}

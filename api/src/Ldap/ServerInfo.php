@@ -26,9 +26,13 @@ class ServerInfo
 	 */
 	const OPENLDAP = 1;
 	/**
-	 * Samba4 LDAP server
+	 * Samba4 Active Directory server
 	 */
 	const SAMBA4 = 2;
+	/**
+	 * Windows Active Directory server
+	 */
+	const WINDOWS_AD = 4;
 
 	/**
 	* @var array $namingContext holds the supported namingcontexts
@@ -113,6 +117,16 @@ class ServerInfo
 	}
 
 	/**
+	 * @param ?bool $windows_ad true: check for windows AD, false: check for Samba4, null: check of any AD
+	 * @return bool
+	 */
+	function activeDirectory($windows_ad=null)
+	{
+		return !isset($windows_ad) ? in_array($this->serverType, [self::WINDOWS_AD, self::SAMBA4], true) :
+			$this->serverType === ($windows_ad ? self::WINDOWS_AD : self::SAMBA4);
+	}
+
+	/**
 	* sets the DN for the subschema entry
 	*
 	* @param string $_subSchemaEntry the subschema entry DN
@@ -190,7 +204,7 @@ class ServerInfo
 	public static function get($ds, $host, $version=3)
 	{
 		$filter='(objectclass=*)';
-		$justthese = array('structuralObjectClass','namingContexts','supportedLDAPVersion','subschemaSubentry','vendorname','supportedControl');
+		$justthese = array('structuralObjectClass','namingContexts','supportedLDAPVersion','subschemaSubentry','vendorname','supportedControl','forestFunctionality');
 		if(($sr = @ldap_read($ds, '', $filter, $justthese)))
 		{
 			if(($info = ldap_get_entries($ds, $sr)))
@@ -222,9 +236,11 @@ class ServerInfo
 					}
 					$ldapServerInfo->setServerType($ldapServerType);
 				}
-				if ($info[0]['vendorname'] && stripos($info[0]['vendorname'][0], 'samba') !== false)
+				// Check for ActiveDirectory by forestFunctionality and set Samba4 if vendorName includes samba
+				if(!empty($info[0]['forestfunctionality'][0]))
 				{
-					$ldapServerInfo->setServerType(self::SAMBA4);
+					$ldapServerInfo->setServerType(!empty($info[0]['vendorname']) && stripos($info[0]['vendorname'][0], 'samba') !== false ?
+						self::SAMBA4 : self::WINDOWS_AD);
 				}
 
 				// check for subschema entry dn
