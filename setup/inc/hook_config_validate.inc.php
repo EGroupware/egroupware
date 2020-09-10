@@ -23,6 +23,7 @@ $GLOBALS['egw_info']['server']['found_validation_hook'] = array(
 	'mcrypt_algo',
 	'ldap_search_filter',
 	'auth_type',
+	'auth_multiple',
 );
 
 /**
@@ -47,6 +48,24 @@ function auth_type($settings)
 				$GLOBALS['config_error'] = $ex->getMessage();
 			}
 			break;
+	}
+}
+
+/**
+ * Validate auth_multiple config
+ *
+ * @param array $settings
+ */
+function auth_multiple(array $settings)
+{
+	try {
+		if ($settings['auth_multiple'] !== '')
+		{
+			Api\Auth\Multiple::parseConfig($settings['auth_multiple'], true);
+		}
+	}
+	catch (Exception $ex) {
+		$GLOBALS['config_error'] = $ex->getMessage();
 	}
 }
 
