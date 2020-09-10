@@ -30,6 +30,18 @@ class Ads implements Backend
 {
 	var $previous_login = -1;
 
+	protected $config;
+
+	/**
+	 * Ads auth constructor
+	 *
+	 * @param array|null $config
+	 */
+	function __construct(array $config=null)
+	{
+		$this->config = $config;
+	}
+
 	/**
 	 * password authentication
 	 *
@@ -48,7 +60,7 @@ class Ads implements Backend
 		// harden ldap auth, by removing \000 bytes, causing passwords to be not empty by php, but empty to c libaries
 		$passwd = str_replace("\000", '', $_passwd);
 
-		$adldap = Api\Accounts\Ads::get_adldap();
+		$adldap = Api\Accounts\Ads::get_adldap($this->config);
 		// bind with username@ads_domain, only if a non-empty password given, in case anonymous search is enabled
 		if(empty($passwd) || !$adldap->authenticate($username, $passwd))
 		{
@@ -131,10 +143,10 @@ class Ads implements Backend
 	 * @return mixed false on error, 0 if user must change on next login,
 	 *	or NULL if user never changed his password or timestamp of last change
 	 */
-	static function getLastPwdChange($username)
+	function getLastPwdChange($username)
 	{
 		$ret = false;
-		if (($adldap = Api\Accounts\Ads::get_adldap()) &&
+		if (($adldap = Api\Accounts\Ads::get_adldap($this->config)) &&
 			($data = $adldap->user()->info($username, array('pwdlastset'))))
 		{
 			$ret = !$data[0]['pwdlastset'][0] ? $data[0]['pwdlastset'][0] :
@@ -155,10 +167,10 @@ class Ads implements Backend
 	 * @param boolean $return_mod =false true return ldap modification instead of executing it
 	 * @return boolean|array true if account_lastpwd_change successful changed, false otherwise or array if $return_mod
 	 */
-	static function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL, $return_mod=false)
+	function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL, $return_mod=false)
 	{
 		unset($passwd);	// not used but required by function signature
-		if (!($adldap = Api\Accounts\Ads::get_adldap())) return false;
+		if (!($adldap = Api\Accounts\Ads::get_adldap($this->config))) return false;
 
 		if ($lastpwdchange)
 		{
@@ -202,7 +214,7 @@ class Ads implements Backend
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0)
 	{
-		if (!($adldap = Api\Accounts\Ads::get_adldap()))
+		if (!($adldap = Api\Accounts\Ads::get_adldap($this->config)))
 		{
 			error_log(__METHOD__."(\$old_passwd, \$new_passwd, $account_id) Api\Accounts\Ads::get_adldap() returned false");
 			return false;

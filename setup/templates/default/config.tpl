@@ -623,8 +623,17 @@
     <td><input name="newsettings[cas_cert]" value="{value_cas_cert}" size="40" /></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td colspan="2">&nbsp;</td>
+   </tr>
+
+   <tr class="th">
+    <td colspan="2"><b>{lang_If_using_Multiple_authentication_providers:}</b></td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Comma-separated_provider_names_or_JSON}: <a href="https://github.com/EGroupware/egroupware/blob/master/api/src/Auth/Multiple.php" target="_blank">Auth/Multiple.php</a></td>
+    <td><textarea name="newsettings[auth_multiple]" cols="64" rows="1" onfocus="this.style='height: '+this.scrollHeight+'px'" onblur="this.style='height: auto'">{value_auth_multiple}</textarea></td>
    </tr>
 
    <tr class="row_off">
