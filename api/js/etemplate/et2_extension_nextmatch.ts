@@ -927,6 +927,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		// Set "new entry" class - but it has to stay so register and re-add it after the data is there
 		entry.row?.tr?.addClass("new_entry");
+		let time = new Date().valueOf();
 
 		let callback = function(data) {
 			if(data)
@@ -935,6 +936,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				{
 					data.class += " new_entry";
 				}
+				// Don't remove if new data has not arrived
+				let stored = egw.dataGetUIDdata(uid);
+				if(stored?.timestamp >= time) return;
 			}
 			else
 			{

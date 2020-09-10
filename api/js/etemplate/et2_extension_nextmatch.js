@@ -628,11 +628,17 @@ var et2_nextmatch = /** @class */ (function (_super) {
         this.controller._insertDataRow(entry, true);
         // Set "new entry" class - but it has to stay so register and re-add it after the data is there
         (_b = (_a = entry.row) === null || _a === void 0 ? void 0 : _a.tr) === null || _b === void 0 ? void 0 : _b.addClass("new_entry");
+        var time = new Date().valueOf();
         var callback = function (data) {
+            var _a;
             if (data) {
                 if (data.class) {
                     data.class += " new_entry";
                 }
+                // Don't remove if new data has not arrived
+                var stored = egw.dataGetUIDdata(uid);
+                if (((_a = stored) === null || _a === void 0 ? void 0 : _a.timestamp) >= time)
+                    return;
             }
             else {
                 // Server didn't give us our row data

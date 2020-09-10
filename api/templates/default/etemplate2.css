@@ -2100,7 +2100,9 @@ table.egwGridView_outer thead tr th.noResize:hover {
  * New entry (via push)
  */
 .et2_nextmatch .new_entry {
-	animation: new_entry_pulse 5s;
+	animation-name: new_entry_pulse, new_entry_clear;
+	animation-duration: 5s;
+	animation-delay: 0s, 180s;
 	animation-fill-mode: forwards;
 }
 @keyframes new_entry_pulse {
@@ -2114,6 +2116,12 @@ table.egwGridView_outer thead tr th.noResize:hover {
 		background-color: rgba(255,255,185,0.3);
 	}
 }
+@keyframes new_entry_clear {
+	100% {
+		background-color: inherit;
+	}
+}
+
 /**
  * itempicker widget
  */
