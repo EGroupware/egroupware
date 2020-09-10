@@ -29,6 +29,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
     /vendor/bower-asset/jquery-ui/jquery-ui.js;
     et2_core_inputWidget;
     et2_core_valueWidget;
+    et2_widget_selectbox;
+    expose;
 
     // Include menu system for list context menu
     egw_action.egw_menu_dhtmlx;

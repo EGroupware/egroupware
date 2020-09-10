@@ -14,6 +14,8 @@
 	/vendor/bower-asset/jquery-ui/jquery-ui.js;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
+	et2_widget_selectbox;
+	expose;
 
 	// Include menu system for list context menu
 	egw_action.egw_menu_dhtmlx;
@@ -25,7 +27,6 @@ import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_selectbox} from "./et2_widget_selectbox";
 import {et2_button} from "./et2_widget_button";
-import {et2_vfs_select} from "./et2_widget_vfs";
 
 /**
  * UI widgets for Egroupware linking system
