@@ -1591,17 +1591,8 @@ abstract class Framework extends Framework\Extra
 		$contact_obj = new Contacts();
 		foreach($list as $type => &$accounts)
 		{
-			$options = array('account_type' => $type) + $accounts;
-			$key_pair = Accounts::link_query('',$options);
-			$accounts = array();
-			foreach($key_pair as $account_id => $name)
-			{
-				$contact = $contact_obj->read('account:'.$account_id, true);
-				$accounts[] = array('value' => $account_id, 'label' => $name, 'icon' => self::link('/api/avatar.php', array(
-						'contact_id' => $contact['id'],
-						'etag' => $contact['etag']
-					)));
-			}
+			$options = array('account_type' => $type, 'tag_list' => true) + $accounts;
+			$accounts = Accounts::link_query('',$options);
 		}
 
 		Json\Response::get()->data($list);
