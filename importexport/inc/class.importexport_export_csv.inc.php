@@ -246,24 +246,23 @@ class importexport_export_csv implements importexport_iface_export_record
 			switch($c_field['type']) {
 				case 'date':
 				case 'date-time':
-					$fields[$c_field['type']][] = $name;
 					if ($c_field['values']['format'] && (is_array($record) ? $record[$name] : $record->$name))
 					{
-						// Date has custom format.  Convert so it's standard.
-						$val = is_array($record) ? $record[$name] : $record->$name;
-						$date = Api\DateTime::createFromFormat($c_field['values']['format'], $val, Api\DateTime::$user_timezone);
-						if($date)
+						// Date has custom format.  Convert so it's standard, don't do normal processing
+						$format = $c_field['values']['format'];
+						$methods[$name] = function($val) use ($format)
 						{
-							$val = $date->format(APi\DateTime::DATABASE);
-							if (is_array($record))
+							$date = Api\DateTime::createFromFormat($format, $val, Api\DateTime::$user_timezone);
+							if($date)
 							{
-								$record[$name] = $val;
+								return $date->format(APi\DateTime::DATABASE);
 							}
-							else
-							{
-								$record->$name = $val;
-							}
-						}
+						};
+					}
+					else
+					{
+						// Process as normal
+						$fields[$c_field['type']][] = $name;
 					}
 					break;
 				case 'select-account':
@@ -442,7 +441,17 @@ class importexport_export_csv implements importexport_iface_export_record
 
 		// Some custom methods for conversion
 		foreach((array)$methods as $name => $method) {
-			if($record->$name) $record->$name = ExecMethod($method, $record->$name);
+			if ($record->$name)
+			{
+				if(is_string($method))
+				{
+					$record->$name = ExecMethod($method, $record->$name);
+				}
+				else if (is_callable($method))
+				{
+					$record->$name = $method($record->$name);
+				}
+			}
 		}
 
 		static $cat_object;
