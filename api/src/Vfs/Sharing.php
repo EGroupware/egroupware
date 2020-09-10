@@ -139,7 +139,12 @@ class Sharing extends \EGroupware\Api\Sharing
 
 		// mounting share
 		Vfs::$is_root = true;
-		$clear_fstab = !$GLOBALS['egw_info']['user']['account_lid'] || $GLOBALS['egw_info']['user']['account_lid'] == 'anonymous';
+		$clear_fstab = !$keep_session && (!$GLOBALS['egw_info']['user']['account_lid'] || $GLOBALS['egw_info']['user']['account_lid'] == 'anonymous');
+		// if current user is not the share owner, we cant just mount share into existing VFS
+		if ($GLOBALS['egw_info']['user']['account_id'] != $share['share_owner'])
+		{
+			$clear_fstab = true;
+		}
 		if (!Vfs::mount($share['resolve_url'], $share['share_root'], false, false, $clear_fstab))
 		{
 			sleep(1);

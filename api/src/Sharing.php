@@ -192,7 +192,7 @@ class Sharing
 		if (empty($token) || !($share = self::$db->select(self::TABLE, '*', array(
 			'share_token' => $token,
 			'(share_expires IS NULL OR share_expires > '.self::$db->quote(time(), 'date').')',
-		), __LINE__, __FILE__)->fetch()) ||
+		), __LINE__, __FILE__,false,'',Db::API_APPNAME)->fetch()) ||
 			!$GLOBALS['egw']->accounts->exists($share['share_owner']))
 		{
 			sleep(1);
@@ -485,7 +485,7 @@ class Sharing
 	}
 
 	/**
-	 * Server a request on a share specified in REQUEST_URI
+	 * Serve a request on a share specified in REQUEST_URI
 	 */
 	public function ServeRequest()
 	{
@@ -587,7 +587,7 @@ class Sharing
 
 		if (empty($name)) $name = $path;
 
-		$table_def = static::$db->get_table_definitions(false,static::TABLE);
+		$table_def = static::$db->get_table_definitions(Db::API_APPNAME,static::TABLE);
 		$extra = array_intersect_key($extra, $table_def['fd']);
 
 		// Check if path is mounted somewhere that needs a password
@@ -600,7 +600,7 @@ class Sharing
 				'share_expires' => null,
 				'share_passwd'  => null,
 				'share_writable'=> false,
-			), __LINE__, __FILE__)->fetch()))
+			), __LINE__, __FILE__, Db::API_APPNAME)->fetch()))
 		{
 			// if yes, just add additional recipients
 			$share['share_with'] = $share['share_with'] ? explode(',', $share['share_with']) : array();
@@ -620,7 +620,7 @@ class Sharing
 					'share_with' => $share['share_with'],
 				), array(
 					'share_id' => $share['share_id'],
-				), __LINE__, __FILE__);
+				), __LINE__, __FILE__, Db::API_APPNAME);
 			}
 		}
 		else
@@ -635,7 +635,7 @@ class Sharing
 						'share_owner' => Vfs::$user,
 						'share_with' => implode(',', (array)$recipients),
 						'share_created' => time(),
-					)+$extra, false, __LINE__, __FILE__);
+					)+$extra, false, __LINE__, __FILE__, Db::API_APPNAME);
 
 					$share['share_id'] = static::$db->get_last_insert_id(static::TABLE, 'share_id');
 					break;
@@ -744,7 +744,7 @@ class Sharing
 		if (is_scalar($keys)) $keys = array('share_id' => $keys);
 
 		// delete specified shares
-		self::$db->delete(self::TABLE, $keys, __LINE__, __FILE__);
+		self::$db->delete(self::TABLE, $keys, __LINE__, __FILE__, Db::API_APPNAME);
 		$deleted = self::$db->affected_rows();
 
 		return $deleted;

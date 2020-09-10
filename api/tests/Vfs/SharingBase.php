@@ -610,6 +610,53 @@ class SharingBase extends LoggedInTest
 		$this->assertStringContainsString($mimetype, $indexed_headers['Content-Type'], 'Wrong file type');
 	}
 
+	/**
+	 * Ask the server for the given share link.  Returns the response.
+	 *
+	 * @param $link
+	 * @param $data Data passed to the etemplate
+	 * @param $keep_session = true Keep the current session, or access with new session as anonymous
+	 */
+	public function getShare($link, &$data, $keep_session = true)
+	{
+		// Set up curl
+		$curl = curl_init($link);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		if($keep_session)
+		{
+			curl_setopt($curl, CURLOPT_COOKIE, "XDEBUG_SESSION=PHPSTORM;".Api\Session::EGW_SESSION_NAME."={$GLOBALS['egw']->session->sessionid};kp3={$GLOBALS['egw']->session->kp3}");
+		}
+		$html = curl_exec($curl);
+		curl_close($curl);
+
+		if(!$html)
+		{
+			// No response - could mean something is terribly wrong, or it could
+			// mean we're running on Travis with no webserver to answer the
+			// request
+			return;
+		}
+
+		// Parse & check for nextmatch
+		$dom = new \DOMDocument();
+		@$dom->loadHTML($html);
+		$xpath = new \DOMXPath($dom);
+		$form = $xpath->query ('//form')->item(0);
+		if(!$form && static::LOG_LEVEL)
+		{
+			echo "Didn't find editor\n";
+			if(static::LOG_LEVEL > 1)
+			{
+				echo "Got this instead:\n".($form?$form:$html)."\n\n";
+			}
+		}
+		$this->assertNotNull($form, "Didn't find template in response");
+		$data = json_decode($form->getAttribute('data-etemplate'));
+
+		return $form;
+	}
+
 	protected function setup_info()
 	{
 		// Copied from share.php
