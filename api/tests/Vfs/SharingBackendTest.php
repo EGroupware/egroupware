@@ -23,7 +23,7 @@ use EGroupware\Api\LoggedInTest as LoggedInTest;
 use EGroupware\Api\Vfs;
 
 
-class SharingTest extends SharingBase
+class SharingBackendTest extends SharingBase
 {
 	/**
 	 * Test to make sure a readonly link to home gives just readonly access,
@@ -282,42 +282,5 @@ class SharingTest extends SharingBase
 		$this->shares[] = $created_share = Sharing::create('', $file, Sharing::READONLY, '', '');
 
 		$this->assertEquals(Vfs::PREFIX . $target_file, $created_share['share_path']);
-	}
-
-	/**
-	 * Test that a share of a single file gives the file (uses WebDAV)
-	 */
-	public function testSingleFile()
-	{
-		$dir = Vfs::get_home_dir().'/';
-
-		// Plain text file
-		$file = $dir.'test_file.txt';
-		$content = 'Testing that sharing a single (non-editable) file gives us the file.';
-		$this->assertTrue(
-			file_put_contents(Vfs::PREFIX.$file, $content) !== FALSE,
-			'Unable to write test file "' . Vfs::PREFIX . $file .'" - check file permissions for CLI user'
-		);
-		$this->files[] = $file;
-
-		$mimetype = Vfs::mime_content_type($file);
-
-		// Create and use link
-		$extra = array();
-		$this->getShareExtra($file, Sharing::READONLY, $extra);
-
-		$share = $this->createShare($file, Sharing::READONLY, $extra);
-		$link = Vfs\Sharing::share2link($share);
-
-		// Re-init, since they look at user, fstab, etc.
-		// Also, further tests that access the filesystem fail if we don't
-		Vfs::clearstatcache();
-		Vfs::init_static();
-		Vfs\StreamWrapper::init_static();
-
-		// Log out & clear cache
-		LoggedInTest::tearDownAfterClass();
-
-		$this->checkSharedFile($link, $mimetype);
 	}
 }
