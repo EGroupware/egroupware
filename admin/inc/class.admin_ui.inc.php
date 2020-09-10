@@ -333,19 +333,26 @@ class admin_ui
 			'order' => $query['order'],
 			'sort' => $query['sort'],
 			'active' => !empty($query['active']) ? $query['active'] : false,
-			'status' => $query['filter2']
 		);
 		// Make sure active filter give status what it needs
 		switch($query['filter2'])
 		{
-			case '':
 			case 'disabled':
 			case 'expired':
 			case 'not_enabled':
+			case 'expires':
+				// this filters are not implemented by backend --> need to do unlimited query, then apply status filter and finally limit the query
+				$need_status_filter = $query['filter2'];
+				$params['start'] = false;
+				unset($params['offset']);
+				$params['active'] = $query['filter2'] === 'expires';
+				break;
+
+			case '':	// all
 				$params['active'] = false;
 				break;
+
 			case 'enabled':
-			default:
 				$params['active'] = true;
 				break;
 		}
@@ -363,14 +370,15 @@ class admin_ui
 
 		$rows = array_values(self::$accounts->search($params));
 		//error_log(__METHOD__."() accounts->search(".array2string($params).") total=".self::$accounts->total);
+		$total = self::$accounts->total;
 
 		foreach($rows as $key => &$row)
 		{
 			// Filter by status
-			if($params['status'] && !static::filter_status($params['status'], $row))
+			if ($need_status_filter && !static::filter_status($need_status_filter, $row))
 			{
 				unset($rows[$key]);
-				self::$accounts->total--;
+				$total--;
 				continue;
 			}
 			$row['status'] = self::$accounts->is_expired($row) ?
@@ -381,8 +389,12 @@ class admin_ui
 
 			if (!self::$accounts->is_active($row)) $row['status_class'] = 'adminAccountInactive';
 		}
-
-		return self::$accounts->total;
+		// finally limit query, if status filter was used
+		if ($need_status_filter)
+		{
+			$rows = array_values(array_slice($rows, (int)$query['start'], $query['num_rows'] ?: count($rows)));
+		}
+		return $total;
 	}
 
 
