@@ -623,10 +623,14 @@ class SharingBase extends LoggedInTest
 		$curl = curl_init($link);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+
+		// Setting this lets us debug the request too
+		$cookie = 'XDEBUG_SESSION=PHPSTORM';
 		if($keep_session)
 		{
-			curl_setopt($curl, CURLOPT_COOKIE, "XDEBUG_SESSION=PHPSTORM;".Api\Session::EGW_SESSION_NAME."={$GLOBALS['egw']->session->sessionid};kp3={$GLOBALS['egw']->session->kp3}");
+			 $cookie .= ';'.Api\Session::EGW_SESSION_NAME."={$GLOBALS['egw']->session->sessionid};kp3={$GLOBALS['egw']->session->kp3}";
 		}
+		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
 		$html = curl_exec($curl);
 		curl_close($curl);
 
@@ -652,7 +656,7 @@ class SharingBase extends LoggedInTest
 			}
 		}
 		$this->assertNotNull($form, "Didn't find template in response");
-		$data = json_decode($form->getAttribute('data-etemplate'));
+		$data = json_decode($form->getAttribute('data-etemplate'), true);
 
 		return $form;
 	}
@@ -709,4 +713,31 @@ class TestSharing extends Api\Vfs\Sharing {
 		return __CLASS__;
 	}
 }
+}
+
+/**
+ * Use this class for sharing so we can make sure we get a session ID, even
+ * though we're on the command line
+ */
+if(!class_exists('TestHiddenSharing'))
+{
+	class TestHiddenSharing extends Api\Vfs\HiddenUploadSharing {
+
+		public static function create_new_session()
+		{
+			if (!($sessionid = $GLOBALS['egw']->session->create('anonymous@'.$GLOBALS['egw_info']['user']['domain'],
+					'', 'text', false, false)))
+			{
+				// Allow for testing
+				$sessionid = 'CLI_TEST ' . time();
+				$GLOBALS['egw']->session->sessionid = $sessionid;
+			}
+			return $sessionid;
+		}
+
+		public static function get_share_class($share)
+		{
+			return __CLASS__;
+		}
+	}
 }
