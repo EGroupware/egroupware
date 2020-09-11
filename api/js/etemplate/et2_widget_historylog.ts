@@ -252,13 +252,12 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		}
 
 		// Register a resize callback
-		const self = this;
 		jQuery(window).on('resize.' +this.options.value.app + this.options.value.id, function()
 		{
-			if (self && typeof self.dynheight != 'undefined') self.dynheight.update(function(_w, _h) {
-				self.dataview.resize(_w, _h);
-			});
-		});
+			if (this && typeof this.dynheight != 'undefined') this.dynheight.update(function(_w, _h) {
+				this.dataview.resize(_w, _h);
+			}.bind(this));
+		}.bind(this));
 	}
 
 	/**
@@ -540,11 +539,6 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			this.id,
 			function(_response) {
 				_callback.call(this,_response);
-				// This seems to prevent unwanted scrollbars
-				historylog.div.hide();
-				window.setTimeout(function() {
-					historylog.div.show();
-				}.bind(historylog),100);
 			},
 			_context,
 			[]
