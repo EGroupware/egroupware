@@ -62,7 +62,7 @@ class SharingACLTest extends SharingBase
 		}
 	}
 
-	public function setupShare(&$dir)
+	public function setupShare(&$dir, $extra = array(), $create = 'createShare')
 	{
 		// First, create the files to be shared
 		$this->files[] = $dir = Vfs::get_home_dir() . '/share/';
@@ -77,10 +77,9 @@ class SharingACLTest extends SharingBase
 		);
 
 		// Create and use link
-		$extra = array();
 		$this->getShareExtra($dir, Sharing::READONLY, $extra);
 
-		$share = $this->createShare($dir, Sharing::READONLY, $extra);
+		$share = call_user_func([$this,$create],$dir, Sharing::READONLY, $extra);
 		$link = Vfs\Sharing::share2link($share);
 
 		// Now log out and log in as someone else
@@ -90,6 +89,32 @@ class SharingACLTest extends SharingBase
 		LoggedInTest::tearDownAfterClass();
 
 		return $link;
+	}
+
+	/**
+	 * Create a hidden upload share
+	 *
+	 * @param $path
+	 * @param $mode
+	 * @param array $extra
+	 * @return array
+	 * @throws \EGroupware\Api\Exception\AssertionFailed
+	 */
+	protected function createHiddenUploadShare($path, $mode, $extra = array())
+	{
+		// Make sure the path is there
+		if(!Vfs::is_readable($path))
+		{
+			$this->assertTrue(
+					Vfs::is_dir($path) ? Vfs::mkdir($path,0750,true) : Vfs::touch($path),
+					"Share path $path does not exist"
+			);
+		}
+
+		// Create share
+		$this->shares[] = $share = TestHiddenSharing::create('', $path, $mode, $name, $recipients, $extra);
+
+		return $share;
 	}
 
 	/**
@@ -125,7 +150,7 @@ class SharingACLTest extends SharingBase
 		$data = array();
 		$form = $this->getShare($link, $data, true);
 		$this->assertNotNull($form, "Could not read the share link");
-		$rows = $data->data->content->nm->rows;
+		$rows = array_values($data['data']['content']['nm']['rows']);
 
 		$post_mount_vfs = Vfs::mount();
 		//$post_files = Vfs::find('/', $vfs_options);
@@ -140,7 +165,7 @@ class SharingACLTest extends SharingBase
 
 		// Check we can't find the non-shared file in results
 		$result = array_filter($rows, function($v) {
-			return $v->name == $this->no_access;
+			return $v['name'] == $this->no_access;
 		});
 		$this->assertEmpty($result, "Found the file we shouldn't have access to ({$this->no_access})");
 
@@ -171,7 +196,7 @@ class SharingACLTest extends SharingBase
 		$data = array();
 		$form = $this->getShare($link, $data, false);
 		$this->assertNotNull($form, "Could not read the share link");
-		$rows = $data->data->content->nm->rows;
+		$rows = $data['data']['content']['nm']['rows'];
 
 		Vfs::clearstatcache();
 		Vfs::init_static();
@@ -179,9 +204,54 @@ class SharingACLTest extends SharingBase
 
 		// Check we can't find the non-shared file
 		$result = array_filter($rows, function($v) {
-			return $v->name == $this->no_access;
+			return $v['name'] == $this->no_access;
 		});
 		$this->assertEmpty($result, "Found the file we shouldn't have access to ({$this->no_access})");
+
+		// Check that we can find the shared file(s) in the form / nm list
+		// Don't test the no-access one (done above), and no good way to get the sub-dir file either,
+		// since nm only has top-level files and we can't switch the filter
+		$this->checkNextmatch($dir, array_diff($this->files, [$this->no_access, $dir."sub_dir/subdir_test_file.txt"]), $rows);
+	}
+
+
+	/**
+	 * Test that a share of a directory with hidden upload subdirectory only gives access to that directory,
+	 * and the upload directory as well as any other directories that the sharer has are unavailable
+	 *
+	 * This checks from one logged in user to anonymous with a new session
+	 */
+	public function testShareHiddenUploadNewSession()
+	{
+		$dir = '';
+		$link = $this->setupShare($dir, [], 'createHiddenUploadShare');
+
+		// Now follow the link - this _should_ be enough to get it added
+		//$mimetype = Vfs::mime_content_type($dir);
+		//$this->checkSharedFile($link, $mimetype);
+
+		// Read the etemplate
+		$data = array();
+		$form = $this->getShare($link, $data, false);
+		$this->assertNotNull($form, "Could not read the share link");
+		$rows = array_values($data['data']['content']['nm']['rows']);
+
+		Vfs::clearstatcache();
+		Vfs::init_static();
+		Vfs\StreamWrapper::init_static();
+
+		// Check we can't find the non-shared file
+		$result = array_filter($rows, function($v) {
+			return $v['name'] == $this->no_access;
+		});
+		$this->assertEmpty($result, "Found the file we shouldn't have access to ({$this->no_access})");
+
+		// Test that we can't see the hidden upload directory
+		$result = array_filter($rows, function($v) {
+			return $v['name'] == 'Upload';
+		});
+		$this->assertEmpty($result, "Hidden upload directory is visible");
+
 
 		// Check that we can find the shared file(s) in the form / nm list
 		// Don't test the no-access one (done above), and no good way to get the sub-dir file either,
@@ -207,7 +277,7 @@ class SharingACLTest extends SharingBase
 				$relative_file = substr($relative_file, 0, -1);
 			}
 			$result = array_filter($rows, function($v) use ($relative_file) {
-				return $v->name == $relative_file;
+				return $v['name'] == $relative_file;
 			});
 			$this->assertNotEmpty($result, "Couldn't find shared file '$file'");
 		}
