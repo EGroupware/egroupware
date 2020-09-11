@@ -451,6 +451,10 @@ class addressbook_vcal extends addressbook_bo
 							|| ($size >= 0 && !$noTruncate))
 						{
 							$value = Api\Translation::convert(trim($value), $sysCharSet, $_charset);
+
+							// do NOT add empty room number as further organizational unit, eg. OutlookSynchronizer add's the semicolon to the org-unit
+							if (empty($value) && in_array($databaseField, ['room'])) continue 2;
+
 							$values[] = $value;
 							if ($this->version == '2.1' && preg_match('/[^\x20-\x7F]/', $value))
 							{
