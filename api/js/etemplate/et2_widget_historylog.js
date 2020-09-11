@@ -167,13 +167,12 @@ var et2_historylog = /** @class */ (function (_super) {
             jQuery(this.dataview.getHeaderContainerNode(i)).text(et2_historylog.columns[i].caption);
         }
         // Register a resize callback
-        var self = this;
         jQuery(window).on('resize.' + this.options.value.app + this.options.value.id, function () {
-            if (self && typeof self.dynheight != 'undefined')
-                self.dynheight.update(function (_w, _h) {
-                    self.dataview.resize(_w, _h);
-                });
-        });
+            if (this && typeof this.dynheight != 'undefined')
+                this.dynheight.update(function (_w, _h) {
+                    this.dataview.resize(_w, _h);
+                }.bind(this));
+        }.bind(this));
     };
     /**
      * Destroys all
@@ -389,11 +388,6 @@ var et2_historylog = /** @class */ (function (_super) {
         // Pass the fetch call to the API
         this.egw().dataFetch(this.getInstanceManager().etemplate_exec_id, _queriedRange, this._filters, this.id, function (_response) {
             _callback.call(this, _response);
-            // This seems to prevent unwanted scrollbars
-            historylog.div.hide();
-            window.setTimeout(function () {
-                historylog.div.show();
-            }.bind(historylog), 100);
         }, _context, []);
     };
     // Needed by interface
