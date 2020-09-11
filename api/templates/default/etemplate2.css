@@ -524,6 +524,9 @@ span.et2_date span {
 span.et2_date_duration input.et2_date_duration{
 	width: 25%;
 }
+span.et2_date_duration span {
+    vertical-align: -webkit-baseline-middle;
+}
 .et2_date.required, .et2_date[required] {
 	background-color: inherit;
 }

@@ -844,7 +844,7 @@ export class et2_date_duration extends et2_date
 		}
 
 		// Set unit as figured for display
-		if(display.unit != this.options.display_format)
+		if(display.unit && display.unit != this.options.display_format)
 		{
 			if(this.format && this.format.children().length > 1) {
 				jQuery("option[value='"+display.unit+"']",this.format).attr('selected','selected');
@@ -858,7 +858,7 @@ export class et2_date_duration extends et2_date
 
 	set_display_format(format)
     {
-        if (format.length <= 1)
+        if (format.length < 1)
         {
             this.node.remove('select.et2_date_duration');
             this.format.remove();

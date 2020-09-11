@@ -683,7 +683,7 @@ var et2_date_duration = /** @class */ (function (_super) {
             this.duration.text(display.value + " ");
         }
         // Set unit as figured for display
-        if (display.unit != this.options.display_format) {
+        if (display.unit && display.unit != this.options.display_format) {
             if (this.format && this.format.children().length > 1) {
                 jQuery("option[value='" + display.unit + "']", this.format).attr('selected', 'selected');
             }
@@ -693,7 +693,7 @@ var et2_date_duration = /** @class */ (function (_super) {
         }
     };
     et2_date_duration.prototype.set_display_format = function (format) {
-        if (format.length <= 1) {
+        if (format.length < 1) {
             this.node.remove('select.et2_date_duration');
             this.format.remove();
             this.format = null;
