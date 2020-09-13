@@ -826,15 +826,19 @@ function do_lntree($from,$to)
 
 	if (!file_exists($from))
 	{
-		usage("Directory '$from' does NOT exist!");
+		usage("Source directory '$from' does NOT exist!");
 	}
-	elseif ($to[0] != '/' || file_exists($to))
+	elseif ($to[0] != '/')
 	{
-		usage("Directory '$to' does not exist!");
+		usage("Destination directory '$to' must be an absolute path on host filesystem and accessible inside the container!");
+	}
+	elseif (file_exists($to))
+	{
+		usage("Destination directory '$to' MUST NOT exist!");
 	}
 	elseif (!is_writable(dirname($to)))
 	{
-		usage("Directory '$to' is not writable!");
+		usage("Destination directory '$to' can not be created! Check it's mounted into the container (most easy use a directory inside /var/lib/egroupware).");
 	}
 	Vfs::find($from, array(
 		'url' => true,
