@@ -1,3 +1,18 @@
+egroupware-docker (20.1.20200914) hardy; urgency=low
+
+  * Addressbook: fix CRM view was not properly refreshed
+  * Etemplate: Fix historylog did not render until you resize the window
+  * Mail: handle push of delete or move of all messages in folder
+  * Swoolpush/Mail: fixed push failing for further accounts subscribed to same mailbox
+  * ImportExport: Date custom fields with custom formatting now correctly handled
+  * CardDAV/Addressbook: do NOT add empty room number as further organizational unit
+  * Filemanager: Fix unwanted, automatic comment "ask" when uploading to filemanager
+  * Admin: fix some status filter gave empty rows for more then 50 accounts
+  * SmallParT: fix not working iframe embedding by LTI host
+  * ActiveDirectory: users not found when search starting with A-F and fixed attribute-names: company, department, ...
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 14 Sep 2020 11:33:15 +0200
+
 egroupware-docker (20.1.20200901) hardy; urgency=low
 
   * Infolog: fix diverse refresh problems in lists
