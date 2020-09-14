@@ -301,7 +301,7 @@ export class et2_arrayMgr
 
 		// Expand the first value
 		let val = this.expandName(parts[0]);
-		val = typeof val == "undefined" ? ''  : '' + val;
+		val = (typeof val == "undefined" || val === null) ? ''  : '' + val;
 
 		// If a second expression existed, test that one
 		if (typeof parts[1] != "undefined") {
