@@ -216,7 +216,7 @@ class Smime extends Horde_Crypt_Smime
      *
      * @return Horde_Mime_Part returns content of signed message as mime part object
      */
-    public function extractSignedContents($data)
+    public function extractSignedContents($data, $sslpath = null)
     {
         return Horde_Mime_Part::parseMessage(parent::extractSignedContents($data), array('forcemime' => true));
     }
