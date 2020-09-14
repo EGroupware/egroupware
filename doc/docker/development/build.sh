@@ -18,11 +18,7 @@ VERSION=${2:-$DEFAULT}
 BRANCH=$(echo $VERSION|sed 's/\.[0-9]\{8\}$//')
 [ $VERSION = $BRANCH ] && VERSION="$BRANCH.x-dev"
 
-[ $BRANCH != "master" ] && {
-	TAG=$BRANCH-$TAG
-}
 [ $BRANCH = "master" ] && {
-	TAG=master
 	VERSION=dev-master
 }
 echo -e "\nbuilding $REPO/$IMAGE:$TAG\n"
