@@ -1691,7 +1691,7 @@ class Mail
 							// check if client set a wrong charset and content is utf-8 --> use utf-8
 							if (strtolower($charSet) !='utf-8' && preg_match('//u', $headerObject['BODYPREVIEW']))
 							{
-								$charSet['charSet'] = 'UTF-8';
+								$charSet = 'UTF-8';
 							}
 							// add line breaks to $bodyParts
 							//error_log(__METHOD__.' ('.__LINE__.') '.' Charset:'.$bodyParts[$i]['charSet'].'->'.$bodyParts[$i]['body']);
