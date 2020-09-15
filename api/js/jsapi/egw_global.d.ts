@@ -1164,13 +1164,13 @@ declare interface IegwAppLocal extends IegwWndLocal
 	 * 	unique.
 	 * @param _context is the context in which the callback function will get
 	 * 	called.
-	 * @param _knownUids is an array of uids already known to the client.
+	 * @param _knownUids? is an array of uids already known to the client.
 	 *  This parameter may be null in order to indicate that the client
 	 *  currently has no data for the given filter settings.
 	 */
-	dataFetch(_execId : string, _queriedRange : {start:number,num_rows:number},
-			  _filters : object, _widgetId : string, _callback : Function, _context : object,
-			  _knownUids? : string[]);
+	dataFetch(_execId: string, _queriedRange: { start?: number, num_rows?: number, refresh?: string[] },
+	          _filters: object, _widgetId: string, _callback: Function, _context: object,
+	          _knownUids?: string[]);
 	/**
 	 * Turn on long-term client side cache of a particular request
 	 * (cache the nextmatch query results) for fast, immediate response
