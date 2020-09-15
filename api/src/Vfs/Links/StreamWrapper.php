@@ -1,14 +1,13 @@
 <?php
 /**
- * eGroupWare API: VFS - stream wrapper for linked files
+ * EGroupware API: VFS - stream wrapper for linked files
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id: class.sqlfs_stream_wrapper.inc.php 24997 2008-03-02 21:44:15Z ralfbecker $
+ * @copyright (c) 2008-20 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api\Vfs\Links;
@@ -76,7 +75,7 @@ class StreamWrapper extends LinksParent
 	 * @param int $check mode to check: one or more or'ed together of: 4 = read, 2 = write, 1 = executable
 	 * @return boolean
 	 */
-	static function check_extended_acl($url,$check)
+	function check_extended_acl($url,$check)
 	{
 		if (Vfs::$is_root)
 		{
@@ -159,7 +158,9 @@ class StreamWrapper extends LinksParent
 	 */
 	function url_stat ( $url, $flags )
 	{
-		$eacl_check=self::check_extended_acl($url,Vfs::READABLE);
+		$this->check_set_context($url);
+
+		$eacl_check=$this->check_extended_acl($url,Vfs::READABLE);
 
 		// return vCard as /.entry
 		if ( $eacl_check && substr($url,-7) == '/.entry' &&
@@ -264,7 +265,7 @@ class StreamWrapper extends LinksParent
 		list(,$apps,$app,$id) = explode('/',$path);
 
 		$ret = false;
-		if ($apps == 'apps' && $app && !$id || self::check_extended_acl($path,Vfs::WRITABLE))	// app directory itself is allways ok
+		if ($apps == 'apps' && $app && !$id || $this->check_extended_acl($path,Vfs::WRITABLE))	// app directory itself is allways ok
 		{
 			$current_is_root = Vfs::$is_root; Vfs::$is_root = true;
 			$current_user = Vfs::$user; Vfs::$user = 0;
@@ -335,7 +336,7 @@ class StreamWrapper extends LinksParent
 			{
 				$charset = 'utf-8';
 			}
-			if (!($vcard =& $ab_vcard->getVCard($id, $charset)))
+			if (!($vcard = $ab_vcard->getVCard($id, $charset)))
 			{
 				error_log(__METHOD__."('$url', '$mode', $options) addressbook_vcal::getVCard($id) returned false!");
 				return false;
@@ -348,7 +349,7 @@ class StreamWrapper extends LinksParent
 		}
 		// create not existing entry directories on the fly
 		if ($mode[0] != 'r' && ($dir = Vfs::dirname($url)) &&
-			!parent::url_stat($dir, 0) && self::check_extended_acl($dir, Vfs::WRITABLE))
+			!parent::url_stat($dir, 0) && $this->check_extended_acl($dir, Vfs::WRITABLE))
 		{
 			$this->mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
@@ -431,14 +432,14 @@ class StreamWrapper extends LinksParent
 	 * @param string $link
 	 * @return boolean true on success false on error
 	 */
-	static function symlink($target,$link)
+	function symlink($target,$link)
 	{
-		$parent = new \EGroupware\Api\Vfs\Links\LinksParent();
-		if (!$parent->url_stat($dir = Vfs::dirname($link),0) && self::check_extended_acl($dir,Vfs::WRITABLE))
+		$parent = new \EGroupware\Api\Vfs\Links\LinksParent($target);
+		if (!$parent->url_stat($dir = Vfs::dirname($link),0) && $this->check_extended_acl($dir,Vfs::WRITABLE))
 		{
 			$parent->mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
-		return parent::symlink($target,$link);
+		return $parent->symlink($target,$link);
 	}
 
 	/**
@@ -446,7 +447,7 @@ class StreamWrapper extends LinksParent
 	 */
 	public static function register()
 	{
-		stream_register_wrapper(self::SCHEME, __CLASS__);
+		stream_wrapper_register(self::SCHEME, __CLASS__);
 	}
 }
 

@@ -7,8 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id$
+ * @copyright (c) 2008-20 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api\Vfs\Sqlfs;
@@ -36,6 +35,8 @@ use EGroupware\Api;
  */
 class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 {
+	use Vfs\UserContext;
+
 	/**
 	 * Mime type of directories, the old vfs uses 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
 	 */
@@ -101,13 +102,6 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @var int
 	 */
 	protected $operation = self::DEFAULT_OPERATION;
-
-	/**
-	 * optional context param when opening the stream, null if no context passed
-	 *
-	 * @var mixed
-	 */
-	var $context;
 
 	/**
 	 * Path off the file opened by stream_open
@@ -199,6 +193,8 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$this->operation = self::url2operation($url);
 		$dir = Vfs::dirname($url);
 
+		error_log(__METHOD__."('$url', $mode, $options) path=$path, context=".json_encode(stream_context_get_options($this->context)));
+
 		$this->opened_path = $opened_path = $path;
 		$this->opened_mode = $mode = str_replace('b','',$mode);	// we are always binary, like every Linux system
 		$this->opened_stream = null;
@@ -210,7 +206,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			if (!$dir || $mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
 				$mode[0] == 'x' && $stat ||	// or file should not exist, but does
 				!($dir_stat=$this->url_stat($dir,STREAM_URL_STAT_QUIET)) ||	// or parent dir does not exist																																			create it
-				!Vfs::check_access($dir,Vfs::WRITABLE,$dir_stat))	// or we are not allowed to 																																			create it
+				!Vfs::check_access($dir,Vfs::WRITABLE, $dir_stat, $this->user))	// or we are not allowed to 																																			create it
 			{
 				self::_remove_password($url);
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file does not exist or can not be created!");
@@ -233,12 +229,12 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 				// we use the mode of the dir, so files in group dirs stay accessible by all members
 				'fs_mode' => $dir_stat['mode'] & 0666,
 				// for the uid we use the uid of the dir if not 0=root or the current user otherwise
-				'fs_uid'  => $dir_stat['uid'] ? $dir_stat['uid'] : Vfs::$user,
+				'fs_uid'  => $dir_stat['uid'] ? $dir_stat['uid'] : $this->user,
 				// we allways use the group of the dir
 				'fs_gid'  => $dir_stat['gid'],
 				'fs_created'  => self::_pdo_timestamp(time()),
 				'fs_modified' => self::_pdo_timestamp(time()),
-				'fs_creator'  => Vfs::$user,
+				'fs_creator'  => Vfs::$user,	// real user, not effective one / $this->user
 				'fs_mime'     => 'application/octet-stream',	// required NOT NULL!
 				'fs_size'     => 0,
 				'fs_active'   => self::_pdo_boolean(true),
@@ -276,8 +272,8 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		}
 		else
 		{
-			if ($mode == 'r' && !Vfs::check_access($url,Vfs::READABLE ,$stat) ||// we are not allowed to read
-				$mode != 'r' && !Vfs::check_access($url,Vfs::WRITABLE,$stat))	// or edit it
+			if ($mode == 'r' && !Vfs::check_access($url,Vfs::READABLE ,$stat, $this->user) ||// we are not allowed to read
+				$mode != 'r' && !Vfs::check_access($url,Vfs::WRITABLE, $stat, $this->user))	// or edit it
 			{
 				self::_remove_password($url);
 				$op = $mode == 'r' ? 'read' : 'edited';
@@ -355,7 +351,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 				// todo: analyse the file for the mime-type
 				'fs_mime' => Api\MimeMagic::filename2mime($this->opened_path),
 				'fs_id'   => $this->opened_fs_id,
-				'fs_modifier' => Vfs::$user,
+				'fs_modifier' => $this->user,
 				'fs_modified' => self::_pdo_timestamp(time()),
 			);
 
@@ -534,6 +530,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	function stream_stat ( )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($this->opened_path)");
+		error_log(__METHOD__."() opened_path=$this->opened_path, context=".json_encode(stream_context_get_options($this->context)));
 
 		return $this->url_stat($this->opened_path,0);
 	}
@@ -558,7 +555,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			$this->url_stat($dir, STREAM_URL_STAT_LINK);
 
 		if (!$parent_stat || !($stat = $this->url_stat($path,STREAM_URL_STAT_LINK)) ||
-			!$dir || !Vfs::check_access($dir, Vfs::WRITABLE, $parent_stat))
+			!$dir || !Vfs::check_access($dir, Vfs::WRITABLE, $parent_stat, $this->user))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
@@ -610,14 +607,14 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$to_dir = Vfs::dirname($path_to);
 
 		if (!($from_stat = $this->url_stat($path_from, 0)) || !$from_dir ||
-			!Vfs::check_access($from_dir, Vfs::WRITABLE, $from_dir_stat = $this->url_stat($from_dir, 0)))
+			!Vfs::check_access($from_dir, Vfs::WRITABLE, $from_dir_stat = $this->url_stat($from_dir, 0), $this->user))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_from permission denied!");
 			return false;	// no permission or file does not exist
 		}
-		if (!$to_dir || !Vfs::check_access($to_dir, Vfs::WRITABLE, $to_dir_stat = $this->url_stat($to_dir, 0)))
+		if (!$to_dir || !Vfs::check_access($to_dir, Vfs::WRITABLE, $to_dir_stat = $this->url_stat($to_dir, 0), $this->user))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
@@ -699,7 +696,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__." called from:".function_backtrace());
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
-		if ($this->url_stat($path,STREAM_URL_STAT_QUIET))
+		if ($this->url_stat($url,STREAM_URL_STAT_QUIET))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) already exist!");
@@ -733,7 +730,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			}
 			$parent = $this->url_stat($parent_path,0);
 		}
-		if (!$parent || !Vfs::check_access($parent_path,Vfs::WRITABLE,$parent))
+		if (!$parent || !Vfs::check_access($parent_path,Vfs::WRITABLE, $parent, $this->user))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) permission denied!");
@@ -756,7 +753,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			'fs_mime' => self::DIR_MIME_TYPE,
 			'fs_created'  => self::_pdo_timestamp(time()),
 			'fs_modified' => self::_pdo_timestamp(time()),
-			'fs_creator'  => Vfs::$user,
+			'fs_creator'  => $this->user,
 		))))
 		{
 			// check if some other process created the directory parallel to us (sqlfs would gives SQL errors later!)
@@ -796,7 +793,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		if (!($parent = Vfs::dirname($path)) ||
 			!($stat = $this->url_stat($path, 0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
-			!Vfs::check_access($parent, Vfs::WRITABLE, $this->url_stat($parent,0)))
+			!Vfs::check_access($parent, Vfs::WRITABLE, $this->url_stat($parent,0), $this->user))
 		{
 			self::_remove_password($url);
 			$err_msg = __METHOD__."($url,$options) ".(!$stat ? 'not found!' :
@@ -911,7 +908,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		return $stmt->execute(array(
 			'fs_modified' => self::_pdo_timestamp($time ? $time : time()),
-			'fs_modifier' => Vfs::$user,
+			'fs_modifier' => $this->user,
 			'fs_id' => $stat['ino'],
 		));
 	}
@@ -1082,7 +1079,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		if (!($stat = $this->url_stat($url,0)) || 		// dir not found
 			!($stat['mode'] & self::MODE_DIR) && $stat['mime'] != self::DIR_MIME_TYPE ||		// no dir
-			!Vfs::check_access($url,Vfs::EXECUTABLE|Vfs::READABLE,$stat))	// no access
+			!Vfs::check_access($url,Vfs::EXECUTABLE|Vfs::READABLE, $stat, $this->user))	// no access
 		{
 			self::_remove_password($url);
 			$msg = !($stat['mode'] & self::MODE_DIR) && $stat['mime'] != self::DIR_MIME_TYPE ?
@@ -1152,6 +1149,12 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
+		if (!$this->context)
+		{
+			$this->check_set_context($url);
+		}
+		error_log(__METHOD__."('$url', $flags) path=$path, context=".json_encode(stream_context_get_options($this->context)));
+
 		// webdav adds a trailing slash to dirs, which causes url_stat to NOT find the file otherwise
 		if ($path != '/' && substr($path,-1) == '/')
 		{
@@ -1177,7 +1180,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$parts = explode('/',$path);
 
 		// if we have extended acl access to the url, we dont need and can NOT include the sql for the readable check
-		$eacl_access = static::check_extended_acl($path,Vfs::READABLE);
+		$eacl_access = $this->check_extended_acl($path,Vfs::READABLE);
 
 		try {
 			foreach($parts as $n => $name)
@@ -1208,13 +1211,13 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 					// if we are not root AND have no extended acl access, we need to make sure the user has the right to tranverse all parent directories (read-rights)
 					if (!Vfs::$is_root && !$eacl_access)
 					{
-						if (!Vfs::$user)
+						if (!$this->user)
 						{
 							self::_remove_password($url);
 							if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags) permission denied, no user-id and not root!");
 							return false;
 						}
-						$query .= ' AND '.self::_sql_readable();
+						$query .= ' AND '.$this->_sql_readable();
 					}
 				}
 				else
@@ -1248,6 +1251,10 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			if (method_exists($GLOBALS['egw'],'invalidate_session_cache')) $GLOBALS['egw']->invalidate_session_cache();
 			return $this->url_stat($url, $flags);
 		}
+		if (!isset($info['effectiv-uid']) && $this->context)
+		{
+			$info['effectiv-uid'] = stream_context_get_options($this->context)[Vfs::SCHEME]['user'];
+		}
 		self::$stat_cache[$path] = $info;
 
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$flags)=".array2string($info));
@@ -1259,23 +1266,23 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 *
 	 * @return string
 	 */
-	protected static function _sql_readable()
+	protected function _sql_readable()
 	{
-		static $sql_read_acl=null;
+		static $sql_read_acl=[];
 
-		if (is_null($sql_read_acl))
+		if (!isset($sql_read_acl[$user = $this->user]))
 		{
-			foreach($GLOBALS['egw']->accounts->memberships(Vfs::$user,true) as $gid)
+			foreach($GLOBALS['egw']->accounts->memberships($user, true) as $gid)
 			{
 				$memberships[] = abs($gid);	// sqlfs stores the gid's positiv
 			}
 			// using octal numbers with mysql leads to funny results (select 384 & 0400 --> 384 not 256=0400)
 			// 256 = 0400, 32 = 040
-			$sql_read_acl = '((fs_mode & 4)=4 OR (fs_mode & 256)=256 AND fs_uid='.(int)Vfs::$user.
+			$sql_read_acl[$user] = '((fs_mode & 4)=4 OR (fs_mode & 256)=256 AND fs_uid='.$user.
 				($memberships ? ' OR (fs_mode & 32)=32 AND fs_gid IN('.implode(',',$memberships).')' : '').')';
-			//error_log(__METHOD__."() Vfs::\$user=".array2string(Vfs::$user).' --> memberships='.array2string($memberships).' --> '.$sql_read_acl.($memberships?'':': '.function_backtrace()));
+			error_log(__METHOD__."() user=".array2string($user).' --> memberships='.array2string($memberships).' --> '.$sql_read_acl.($memberships?'':': '.function_backtrace()));
 		}
-		return $sql_read_acl;
+		return $sql_read_acl[$user];
 	}
 
 	/**
@@ -1341,10 +1348,9 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param string $path
 	 * @return string|boolean content of the symlink or false if $url is no symlink (or not found)
 	 */
-	static function readlink($path)
+	function readlink($path)
 	{
-		$vfs = new self();
-		$link = !($lstat = $vfs->url_stat($path,STREAM_URL_STAT_LINK)) || is_null($lstat['readlink']) ? false : $lstat['readlink'];
+		$link = !($lstat = $this->url_stat($path,STREAM_URL_STAT_LINK)) || is_null($lstat['readlink']) ? false : $lstat['readlink'];
 
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = $link");
 
@@ -1358,18 +1364,17 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param string $link
 	 * @return boolean true on success false on error
 	 */
-	static function symlink($target,$link)
+	function symlink($target, $link)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$target','$link')");
 
-		$inst = new static();
-		if ($inst->url_stat($link,0))
+		if ($this->url_stat($link,0))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') $link exists, returning false!");
 			return false;	// $link already exists
 		}
 		if (!($dir = Vfs::dirname($link)) ||
-			!Vfs::check_access($dir,Vfs::WRITABLE,$dir_stat=$inst->url_stat($dir,0)))
+			!Vfs::check_access($dir,Vfs::WRITABLE, $dir_stat=$this->url_stat($dir,0), $this->user))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') returning false! (!is_writable('$dir'), dir_stat=".array2string($dir_stat).")");
 			return false;	// parent dir does not exist or is not writable
@@ -1384,7 +1389,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			'fs_name' => self::limit_filename(Vfs::basename($link)),
 			'fs_dir'  => $dir_stat['ino'],
 			'fs_mode' => ($dir_stat['mode'] & 0666),
-			'fs_uid'  => $dir_stat['uid'] ? $dir_stat['uid'] : Vfs::$user,
+			'fs_uid'  => $dir_stat['uid'] ? $dir_stat['uid'] : $this->user,
 			'fs_gid'  => $dir_stat['gid'],
 			'fs_created'  => self::_pdo_timestamp(time()),
 			'fs_modified' => self::_pdo_timestamp(time()),
@@ -1407,13 +1412,13 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param int $check mode to check: one or more or'ed together of: 4 = read, 2 = write, 1 = executable
 	 * @return boolean
 	 */
-	static function check_extended_acl($url,$check)
+	function check_extended_acl($url,$check)
 	{
 		$url_path = Vfs::parse_url($url,PHP_URL_PATH);
 
 		if (is_null(self::$extended_acl))
 		{
-			self::_read_extended_acl();
+			$this->_read_extended_acl();
 		}
 		$access = false;
 		foreach(self::$extended_acl as $path => $rights)
@@ -1432,14 +1437,14 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * Read the extended acl via acl::get_grants('sqlfs')
 	 *
 	 */
-	static protected function _read_extended_acl()
+	protected function _read_extended_acl()
 	{
 		if ((self::$extended_acl = Api\Cache::getSession(self::EACL_APPNAME, 'extended_acl')))
 		{
 			return;		// ext. ACL read from session.
 		}
 		self::$extended_acl = array();
-		if (($rights = $GLOBALS['egw']->acl->get_all_location_rights(Vfs::$user,self::EACL_APPNAME)))
+		if (($rights = $GLOBALS['egw']->acl->get_all_location_rights($this->user, self::EACL_APPNAME)))
 		{
 			$pathes = self::id2path(array_keys($rights));
 		}
@@ -1732,6 +1737,7 @@ GROUP BY A.fs_id';
 			// eGW addition to return some extra values
 			'mime'  => $info['fs_mime'],
 			'readlink' => $info['fs_link'],
+			'effectiv-uid' => $info['effectiv-uid'],
 		);
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($info[name]) = ".array2string($stat));
 		return $stat;
@@ -1843,14 +1849,12 @@ GROUP BY A.fs_id';
 	 * @param array $props array of array with values for keys 'name', 'ns', 'val' (null to delete the prop)
 	 * @return boolean true if props are updated, false otherwise (eg. ressource not found)
 	 */
-	static function proppatch($path,array $props)
+	function proppatch($path,array $props)
 	{
-		static $inst = null;
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."(".array2string($path).','.array2string($props));
 		if (!is_numeric($path))
 		{
-			if (!isset($inst)) $inst = new self();
-			if (!($stat = $inst->url_stat($path,0)))
+			if (!($stat = $this->url_stat($path,0)))
 			{
 				return false;
 			}
@@ -1910,17 +1914,14 @@ GROUP BY A.fs_id';
 	 * @return array|boolean false on error ($path_ids does not exist), array with props (values for keys 'name', 'ns', 'value'), or
 	 * 	fs_id/path => array of props for $depth==1 or is_array($path_ids)
 	 */
-	static function propfind($path_ids,$ns=Vfs::DEFAULT_PROP_NAMESPACE)
+	function propfind($path_ids,$ns=Vfs::DEFAULT_PROP_NAMESPACE)
 	{
-		static $inst = null;
-
 		$ids = is_array($path_ids) ? $path_ids : array($path_ids);
 		foreach($ids as &$id)
 		{
 			if (!is_numeric($id))
 			{
-				if (!isset($inst)) $inst = new self();
-				if (!($stat = $inst->url_stat($id,0)))
+				if (!($stat = $this->url_stat($id,0)))
 				{
 					if (self::LOG_LEVEL) error_log(__METHOD__."(".array2string($path_ids).",$ns) path '$id' not found!");
 					return false;
@@ -1974,7 +1975,7 @@ GROUP BY A.fs_id';
 	 */
 	public static function register()
 	{
-		stream_register_wrapper(self::SCHEME, __CLASS__);
+		stream_wrapper_register(self::SCHEME, __CLASS__);
 	}
 }
 

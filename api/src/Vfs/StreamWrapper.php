@@ -7,8 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id$
+ * @copyright (c) 2008-20 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api\Vfs;
@@ -26,6 +25,8 @@ use EGroupware\Api;
  */
 class StreamWrapper implements StreamWrapperIface
 {
+	use UserContext;
+
 	/**
 	 * Scheme / protocol used for this stream-wrapper
 	 */
@@ -39,12 +40,6 @@ class StreamWrapper implements StreamWrapperIface
 	 */
 	const HIDE_UNREADABLES = true;
 
-	/**
-	 * optional context param when opening the stream, null if no context passed
-	 *
-	 * @var mixed
-	 */
-	var $context;
 	/**
 	 * mode-bits, which have to be set for links
 	 */
@@ -174,7 +169,12 @@ class StreamWrapper implements StreamWrapperIface
 		// if the url resolves to a symlink to the vfs, resolve this vfs:// url direct
 		if ($url && Vfs::parse_url($url,PHP_URL_SCHEME) == self::SCHEME)
 		{
+			$user = Vfs::parse_url($url,PHP_URL_USER);
 			$url = self::resolve_url(Vfs::parse_url($url,PHP_URL_PATH));
+			if (!empty($user) && empty(parse_url($url, PHP_URL_USER)))
+			{
+				$url = str_replace('://', '://'.$user.'@', $url);
+			}
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,file_exists=$file_exists,resolve_last_symlink=$resolve_last_symlink) = '$url'$log");
 		return $url;
@@ -304,6 +304,8 @@ class StreamWrapper implements StreamWrapperIface
 		unset($options,$opened_path);	// not used but required by function signature
 		$this->opened_stream = null;
 
+		error_log(__METHOD__."('$path', $mode, $options) context=".json_encode(stream_context_get_options($this->context)));
+
 		$stat = null;
 		if (!($url = $this->resolve_url_symlinks($path,$mode[0]=='r',true,$stat)))
 		{
@@ -313,8 +315,10 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			return false;
 		}
-		if (!($this->opened_stream = $this->context ?
-			fopen($url, $mode, false, $this->context) : fopen($url, $mode, false)))
+		$this->check_set_context($url, true);
+
+		if (!($this->opened_stream = $context ?
+			fopen($url, $mode, false, $context) : fopen($url, $mode, false)))
 		{
 			return false;
 		}
@@ -325,7 +329,7 @@ class StreamWrapper implements StreamWrapperIface
 
 		// are we requested to treat the opened file as new file (only for files opened NOT for reading)
 		if ($mode[0] != 'r' && !$this->opened_stream_is_new && $this->context &&
-			($opts = stream_context_get_params($this->context)) &&
+			($opts = stream_context_get_options($this->context)) &&
 			$opts['options'][self::SCHEME]['treat_as_new'])
 		{
 			$this->opened_stream_is_new = true;
@@ -538,10 +542,12 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			return false;
 		}
+		// set user-context
+		$this->check_set_context($url, true);
 		$stat = $this->url_stat($path, STREAM_URL_STAT_LINK);
 
 		self::symlinkCache_remove($path);
-		$ok = unlink($url);
+		$ok = unlink($url, $this->context);
 
 		// call "vfs_unlink" hook only after successful unlink, with data from (not longer possible) stat call
 		if ($ok && !class_exists('setup_process', false))
@@ -585,13 +591,16 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			return false;
 		}
+		// set user-context
+		$this->check_set_context($url_from);
+
 		// if file is moved from one filesystem / wrapper to an other --> copy it (rename fails cross wrappers)
 		if (Vfs::parse_url($url_from,PHP_URL_SCHEME) == Vfs::parse_url($url_to,PHP_URL_SCHEME))
 		{
 			self::symlinkCache_remove($path_from);
-			$ret = rename($url_from,$url_to);
+			$ret = rename($url_from, $url_to, $this->context);
 		}
-		elseif (($from = fopen($url_from,'r')) && ($to = fopen($url_to,'w')))
+		elseif (($from = fopen($url_from,'r', false, $this->context)) && ($to = fopen($url_to,'w')))
 		{
 			$ret = stream_copy_to_stream($from,$to) !== false;
 			fclose($from);
@@ -642,6 +651,11 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			return false;
 		}
+		// set user context
+		if (Vfs::parse_url($url, PHP_URL_USER))
+		{
+			$this->check_set_context($url, true);
+		}
 		// check if recursive option is set and needed
 		if (($options & STREAM_MKDIR_RECURSIVE) &&
 			($parent_url = Vfs::dirname($url)) &&
@@ -660,7 +674,7 @@ class StreamWrapper implements StreamWrapperIface
 			$options &= ~STREAM_MKDIR_RECURSIVE;
 		}
 
-		$ret = mkdir($url,$mode,$options);
+		$ret = mkdir($url, $mode, $options, $this->context);
 
 		// call "vfs_mkdir" hook
 		if ($ret && !class_exists('setup_process', false))
@@ -702,8 +716,13 @@ class StreamWrapper implements StreamWrapperIface
 		}
 		$stat = $this->url_stat($path, STREAM_URL_STAT_LINK);
 
+		// set user context
+		if (Vfs::parse_url($url, PHP_URL_USER))
+		{
+			$this->check_set_context($url, true);
+		}
 		self::symlinkCache_remove($path);
-		$ok = rmdir($url);
+		$ok = rmdir($url, $this->context);
 
 		// call "vfs_rmdir" hook, only after successful rmdir
 		if ($ok && !class_exists('setup_process', false))
@@ -735,6 +754,9 @@ class StreamWrapper implements StreamWrapperIface
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) resolve_url_symlinks() failed!");
 			return false;
 		}
+		// need to set user-context from resolved url
+		$this->check_set_context($this->opened_dir_url, true);
+
 		if (!($this->opened_dir = $this->context ?
 			opendir($this->opened_dir_url, $this->context) : opendir($this->opened_dir_url)))
 		{
@@ -790,13 +812,22 @@ class StreamWrapper implements StreamWrapperIface
 	 */
 	function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true, $check_symlink_depth=self::MAX_SYMLINK_DEPTH, $try_reconnect=true )
 	{
+		// we have no context, but $path is a URL with a valid user --> set it
+		$this->check_set_context($path);
+
 		if (!($url = self::resolve_url($path,!($flags & STREAM_URL_STAT_LINK), $check_symlink_components)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) can NOT resolve path!");
 			return false;
 		}
 
+		if (empty(parse_url($url, PHP_URL_USER)))
+		{
+			$url = str_replace('://', '://'.Api\Accounts::id2name($this->context ? stream_context_get_options($this->context)[self::SCHEME]['user'] : Vfs::$user).'@', $url);
+		}
+
 		try {
+clearstatcache();	// testwise, NOT good for performance
 			if ($flags & STREAM_URL_STAT_LINK)
 			{
 				$stat = @lstat($url);	// suppressed the stat failed warnings
@@ -853,6 +884,7 @@ class StreamWrapper implements StreamWrapperIface
 			// if numer of tries is exceeded, re-throw exception
 			throw $e;
 		}
+clearstatcache();	// testwise, NOT good for performance
 		// check if a failed url_stat was for a home dir, in that case silently create it
 		if (!$stat && $try_create_home && Vfs::dirname(Vfs::parse_url($path,PHP_URL_PATH)) == '/home' &&
 			($id = $GLOBALS['egw']->accounts->name2id(Vfs::basename($path))) &&
@@ -899,6 +931,38 @@ class StreamWrapper implements StreamWrapperIface
 			return false;
 		}
 		return $stat;*/
+	}
+
+	/**
+	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
+	 * which is wrong in case of our vfs, as we use the current users id and memberships
+	 *
+	 * @param string $path path
+	 * @param int $check mode to check: one or more or'ed together of: 4 = self::READABLE,
+	 * 	2 = self::WRITABLE, 1 = self::EXECUTABLE
+	 * @return boolean
+	 */
+	function check_access($path, $check)
+	{
+		if (!($stat = $this->url_stat($path, 0)))
+		{
+			$ret = false;
+		}
+		else
+		{
+			if (($account_lid = Vfs::parse_url($stat['url'], PHP_URL_USER)) &&
+				($account_id = Api\Accounts::getInstance()->name2id($account_lid)))
+			{
+				$user = $account_id;
+			}
+			else
+			{
+				$user = $this->user ?: Vfs::$user;
+			}
+			$ret = Vfs::check_access($path, $check, $stat, $user);
+		}
+		error_log(__METHOD__."('$path', $check) user=".Api\Accounts::id2name($user).", effective user=$user=".Api\Accounts::id2name($user).", mode=".decoct($stat['mode'] & 0777).", uid=".($stat['uid']?Api\Accounts::id2name($stat['uid']):0).", uid=".($stat['gid']?Api\Accounts::id2name(-$stat['gid']):0)." returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**
@@ -1156,6 +1220,10 @@ class StreamWrapper implements StreamWrapperIface
 	 */
 	static function scheme2class($scheme)
 	{
+		if ($scheme === self::SCHEME)
+		{
+			return __CLASS__;
+		}
 		list($app, $app_scheme) = explode('.', $scheme);
 		foreach(array(
 			empty($app_scheme) ? 'EGroupware\\Api\\Vfs\\'.ucfirst($scheme).'\\StreamWrapper' :	// streamwrapper in Api\Vfs
@@ -1329,11 +1397,18 @@ class StreamWrapper implements StreamWrapperIface
 		if (in_array(self::SCHEME, stream_get_wrappers())) {
 			stream_wrapper_unregister(self::SCHEME);
 		}
-		stream_register_wrapper(self::SCHEME,__CLASS__);
+		stream_wrapper_register(self::SCHEME,__CLASS__);
 
 		if (($fstab = $GLOBALS['egw_info']['server']['vfs_fstab']) && is_array($fstab) && count($fstab))
 		{
 			self::$fstab = $fstab;
+		}
+
+		// set default context for our schema ('vfs') with current user
+		if (!($context = stream_context_get_options(stream_context_get_default())) || empty($context[self::SCHEME]['user']))
+		{
+			$context[self::SCHEME]['user'] = (int)$GLOBALS['egw_info']['user']['account_id'];
+			stream_context_set_default($context);
 		}
 	}
 }

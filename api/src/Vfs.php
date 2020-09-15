@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-20 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api;
@@ -865,11 +865,12 @@ class Vfs
 		{
 			throw new Exception\WrongParameter('path has to be string, use check_access($path,$check,$stat=null)!');
 		}
-		// query stat array, if not given
+		// if we have no $stat, delegate whole check to vfs stream-wrapper to correctly deal with shares / effective user-ids
 		if (is_null($stat))
 		{
 			if (!isset($vfs)) $vfs = new Vfs\StreamWrapper();
-			$stat = $vfs->url_stat($path,0);
+			//$stat = $vfs->url_stat($path,0);
+			return $vfs->check_access($path, $check);
 		}
 		//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check)");
 
@@ -898,8 +899,9 @@ class Vfs
 			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via other rights!");
 			return true;
 		}
+		if (!isset($user)) $user = self::$user;
 		// check if there's owner access and we are the owner
-		if (($stat['mode'] & ($check << 6)) == ($check << 6) && $stat['uid'] && $stat['uid'] == self::$user)
+		if (($stat['mode'] & ($check << 6)) == ($check << 6) && $stat['uid'] && $stat['uid'] == $user)
 		{
 			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via owner rights!");
 			return true;
@@ -907,7 +909,7 @@ class Vfs
 		// check if there's a group access and we have the right membership
 		if (($stat['mode'] & ($check << 3)) == ($check << 3) && $stat['gid'])
 		{
-			if (($memberships = $GLOBALS['egw']->accounts->memberships(self::$user, true)) && in_array(-abs($stat['gid']), $memberships))
+			if (($memberships = $GLOBALS['egw']->accounts->memberships($user, true)) && in_array(-abs($stat['gid']), $memberships))
 			{
 				//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via group rights!");
 				return true;
@@ -1038,7 +1040,7 @@ class Vfs
 	 */
 	static function proppatch($path,array $props)
 	{
-		return self::_call_on_backend('proppatch',array($path,$props));
+		return self::_call_on_backend('proppatch', [$path,$props], false, 0, true);
 	}
 
 	/**
@@ -1057,7 +1059,7 @@ class Vfs
 	 */
 	static function propfind($path,$ns=self::DEFAULT_PROP_NAMESPACE)
 	{
-		return self::_call_on_backend('propfind',array($path,$ns),true);	// true = fail silent (no PHP Warning)
+		return self::_call_on_backend('propfind', [$path, $ns],true, 0, true);	// true = fail silent (no PHP Warning)
 	}
 
 	/**
@@ -2286,9 +2288,10 @@ class Vfs
 	 * @param boolean $fail_silent =false should only false be returned if function is not supported by the backend,
 	 * 	or should an E_USER_WARNING error be triggered (default)
 	 * @param int $path_param_key =0 key in params containing the path, default 0
+	 * @param boolean $instanciate =false true: instanciate the class to call method $name, false: static call
 	 * @return mixed return value of backend or false if function does not exist on backend
 	 */
-	static protected function _call_on_backend($name,$params,$fail_silent=false,$path_param_key=0)
+	protected static function _call_on_backend($name, array $params, $fail_silent=false, $path_param_key=0, $instanciate=false)
 	{
 		$pathes = $params[$path_param_key];
 
@@ -2313,14 +2316,15 @@ class Vfs
 					if (!$fail_silent) trigger_error("Can't $name for scheme $scheme!\n",E_USER_WARNING);
 					return false;
 				}
+				$callback = [$instanciate ? new $class($url) : $class, $name];
 				if (!is_array($pathes))
 				{
 					$params[$path_param_key] = $url;
 
-					return call_user_func_array(array($class,$name),$params);
+					return call_user_func_array($callback, $params);
 				}
 				$params[$path_param_key] = $urls;
-				if (!is_array($r = call_user_func_array(array($class,$name),$params)))
+				if (!is_array($r = call_user_func_array($callback, $params)))
 				{
 					return $r;
 				}
@@ -2412,7 +2416,7 @@ class Vfs
 	 */
 	static function readlink($path)
 	{
-		$ret = self::_call_on_backend('readlink',array($path),true);	// true = fail silent, if backend does not support readlink
+		$ret = self::_call_on_backend('readlink', [$path],true, 0, true);	// true = fail silent, if backend does not support readlink
 		//error_log(__METHOD__."('$path') returning ".array2string($ret).' '.function_backtrace());
 		return $ret;
 	}
@@ -2428,7 +2432,7 @@ class Vfs
 	 */
 	static function symlink($target,$link)
 	{
-		if (($ret = self::_call_on_backend('symlink',array($target,$link),false,1)))	// 1=path is in $link!
+		if (($ret = self::_call_on_backend('symlink', [$target, $link],false,1, true)))	// 1=path is in $link!
 		{
 			Vfs\StreamWrapper::symlinkCache_remove($link);
 		}
