@@ -1870,7 +1870,7 @@ class CalendarApp extends EgwApp
 					this.dialog.destroy();
 					delete app.calendar.quick_add;
 				}
-				else if (template)
+				else if (template || (template = etemplate2.getById("calendar-conflicts")))
 				{
 					// Open conflicts
 					var data = jQuery.extend(

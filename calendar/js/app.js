@@ -1714,7 +1714,7 @@ var CalendarApp = /** @class */ (function (_super) {
                         this.dialog.destroy();
                         delete app.calendar.quick_add;
                     }
-                    else if (template) {
+                    else if (template || (template = etemplate2_1.etemplate2.getById("calendar-conflicts"))) {
                         // Open conflicts
                         var data = jQuery.extend({ menuaction: 'calendar.calendar_uiforms.ajax_conflicts' }, template.widgetContainer.getArrayMgr('content').data, app.calendar.quick_add);
                         egw.openPopup(egw.link('/index.php', data), 850, 300, 'conflicts', 'calendar');
