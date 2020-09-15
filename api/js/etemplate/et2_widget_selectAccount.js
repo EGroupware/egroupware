@@ -326,10 +326,10 @@ var et2_selectAccount = /** @class */ (function (_super) {
                 // Add to list
                 ids.push(id);
                 // Make sure option is there
-                if (!widget.options.multiple && jQuery('input[id$="_opt_' + id + '"]', widget.multiOptions).length == 0) {
+                if (widget.options.multiple && jQuery('input[id$="_opt_' + id + '"]', widget.multiOptions).length == 0) {
                     widget._appendMultiOption(id, jQuery('label', this).text());
                 }
-                else if (widget.options.multiple && jQuery('option[value="' + id + '"]', widget.node).length == 0) {
+                else if (!widget.options.multiple && jQuery('option[value="' + id + '"]', widget.node).length == 0) {
                     widget._appendOptionElement(id, jQuery('label', this).text());
                 }
             });
@@ -395,7 +395,7 @@ var et2_selectAccount = /** @class */ (function (_super) {
                     self._appendOptionElement(selected.item.value, selected.item.label);
                 }
                 self.set_value(selected.item.value);
-                if (self.dialog) {
+                if (self.dialog && self.dialog.div) {
                     self.dialog.div.dialog("close");
                 }
                 // Fire change event

@@ -405,11 +405,11 @@ export class et2_selectAccount extends et2_selectbox
 				ids.push(id);
 
 				// Make sure option is there
-				if(!widget.options.multiple && jQuery('input[id$="_opt_'+id+'"]',widget.multiOptions).length == 0)
+				if(widget.options.multiple && jQuery('input[id$="_opt_'+id+'"]',widget.multiOptions).length == 0)
 				{
 					widget._appendMultiOption(id,jQuery('label',this).text());
 				}
-				else if (widget.options.multiple && jQuery('option[value="'+id+'"]',widget.node).length == 0)
+				else if (!widget.options.multiple && jQuery('option[value="'+id+'"]',widget.node).length == 0)
 				{
 					widget._appendOptionElement(id,jQuery('label',this).text());
 				}
@@ -480,7 +480,7 @@ export class et2_selectAccount extends et2_selectbox
 					return true;
 				},
 				'select'( e, selected)
-	{
+				{
 					// Make sure option is there
 					var already_there = false;
 					var last_key = null;
@@ -495,7 +495,7 @@ export class et2_selectAccount extends et2_selectbox
 						self._appendOptionElement(selected.item.value, selected.item.label);
 					}
 					self.set_value(selected.item.value);
-					if(self.dialog)
+					if(self.dialog && self.dialog.div)
 					{
 						self.dialog.div.dialog("close");
 					}
