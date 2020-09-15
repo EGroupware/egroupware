@@ -487,6 +487,9 @@ var et2_nextmatch = /** @class */ (function (_super) {
         else if (update_pref == "exact" && _type == et2_nextmatch.ADD && !this.is_sorted_by_modified()) {
             _type = et2_nextmatch.EDIT;
         }
+        if (_type == et2_nextmatch.ADD && !(update_pref == "lazy" || update_pref == "exact" && this.is_sorted_by_modified())) {
+            _type = et2_nextmatch.EDIT;
+        }
         if (typeof _type == 'undefined')
             _type = et2_nextmatch.EDIT;
         if (typeof _row_ids == 'string' || typeof _row_ids == 'number')
@@ -539,26 +542,32 @@ var et2_nextmatch = /** @class */ (function (_super) {
                     _type = et2_nextmatch.EDIT;
                 }
             }
+            if ([et2_nextmatch.ADD, et2_nextmatch.UPDATE].indexOf(_type) !== -1) {
+                // Pre-ask for the row data, and only proceed if we actually get it
+                // need to send nextmatch filters too, as server-side will merge old version from request otherwise
+                this_1.egw().dataFetch(this_1.getInstanceManager().etemplate_exec_id, { refresh: _row_ids }, this_1.controller._filters, this_1.id, function (data) {
+                    if (data.total >= 1) {
+                        this.type == et2_nextmatch.ADD ? this.nm.refresh_add(this.uid, this.type)
+                            : this.nm.refresh_update(this.uid);
+                    }
+                }, { type: _type, nm: this_1, uid: uid_1 }, [_row_ids]);
+                return { value: void 0 };
+            }
             switch (_type) {
                 // update-in-place = update, but always only in place
                 case et2_nextmatch.UPDATE_IN_PLACE:
                     this_1.egw().dataRefreshUID(uid_1);
                     break;
-                // update [existing] row, maybe we'll put it on top
+                // These ones handled above in dataFetch() callback
                 case et2_nextmatch.UPDATE:
-                    if (!this_1.refresh_update(uid_1)) {
-                        return "break-id_loop";
-                    }
+                    // update [existing] row, maybe we'll put it on top
                     break;
                 case et2_nextmatch.DELETE:
                     // Handled above, more code to execute after loop so don't exit early
                     break;
                 case et2_nextmatch.ADD:
-                    if (update_pref == "lazy" || update_pref == "exact" && this_1.is_sorted_by_modified()) {
-                        if (this_1.refresh_add(uid_1))
-                            break;
-                    }
-                // fall-through / full refresh, if refresh_add returns false
+                    break;
+                // No more smart things we can do, refresh the whole thing
                 case et2_nextmatch.EDIT:
                 default:
                     // Trigger refresh
@@ -569,6 +578,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
         var this_1 = this;
         id_loop: for (var i = 0; i < _row_ids.length; i++) {
             var state_1 = _loop_1();
+            if (typeof state_1 === "object")
+                return state_1.value;
             switch (state_1) {
                 case "break-id_loop": break id_loop;
             }
@@ -585,8 +596,6 @@ var et2_nextmatch = /** @class */ (function (_super) {
     et2_nextmatch.prototype.refresh_update = function (uid) {
         // Row data update has been sent, let's move it where app wants it
         var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
-        // Ask for new data
-        this.egw().dataRefreshUID(uid);
         // Need to delete first as there's a good chance indexes will change in an unknown way
         // and we can't always find it by UID after due to duplication
         this.controller.deleteRow(uid);
