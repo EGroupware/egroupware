@@ -803,7 +803,10 @@ export class et2_link_entry extends et2_inputWidget
 			{
 				event.data = self;
 				// Correct changed value from server
-				item.item.value = item.item.value.trim();
+				if(item.item.value)
+				{
+					item.item.value = (""+item.item.value).trim();
+				}
 				self.select(event,item);
 				return false;
 			},

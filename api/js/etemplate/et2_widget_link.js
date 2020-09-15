@@ -617,7 +617,9 @@ var et2_link_entry = /** @class */ (function (_super) {
             select: function (event, item) {
                 event.data = self;
                 // Correct changed value from server
-                item.item.value = item.item.value.trim();
+                if (item.item.value) {
+                    item.item.value = ("" + item.item.value).trim();
+                }
                 self.select(event, item);
                 return false;
             },
