@@ -33,6 +33,11 @@ class StreamWrapperBase extends LoggedInTest
 	const LOG_LEVEL = 0;
 
 	/**
+	 * @var string If we're just doing a simple test with one file, use this file
+	 */
+	protected $test_file = '';
+
+	/**
 	 * Keep track of files to remove after
 	 * @var Array
 	 */
@@ -115,7 +120,83 @@ class StreamWrapperBase extends LoggedInTest
 		if(is_null($path)) $path = Vfs::get_home_dir().'/';
 		if(substr($path,-1,1) !== '/') $path = $path . '/';
 
-		return $path . get_class(this) . '_' . $this->getName() . '.txt';
+		$reflect = new \ReflectionClass($this);
+		return $path . $reflect->getShortName() . '_' . $this->getName() . '.txt';
+	}
+
+	/**
+	 * Simple test that we can write something and it's there
+	 * By putting it in the base class, this test gets run for every backend
+	 */
+	public function testSimpleReadWrite() : void
+	{
+		if(!$this->test_file)
+		{
+			$this->markTestSkipped("No test file set - set it in setUp() or overriding test");
+		}
+		$contents = $this->getName() . "\nJust a test ;)\n";
+		$this->assertNotFalse(
+				file_put_contents(Vfs::PREFIX . $this->test_file, $contents),
+				"Could not write file $this->test_file"
+		);
+
+		// Check contents are unchanged
+		$this->assertEquals(
+				$contents, file_get_contents(Vfs::PREFIX . $this->test_file),
+				"Read file contents do not match what was written"
+		);
+	}
+	/**
+	 * Simple delete of a file
+	 * By putting it in the base class, this test gets run for every backend
+	 *
+	 */
+	public function testDelete() : void
+	{
+		if(!$this->test_file)
+		{
+			$this->markTestSkipped("No test file set - set it in setUp() or overriding test");
+		}
+
+		// Write
+		$contents = $this->getName() . "\nJust a test ;)\n";
+		$this->assertNotFalse(
+				file_put_contents(Vfs::PREFIX . $this->test_file, $contents),
+				"Could not write file $this->test_file"
+		);
+
+		$start = Vfs::stat($this->test_file);
+		$this->assertNotNull(
+				$start,
+				"File '$this->test_file' was not what we expected to find after writing"
+		);
+
+		Vfs::unlink($this->test_file);
+
+		$post = Vfs::stat($this->test_file);
+		$this->assertEquals(null,$post,
+				"File '$this->test_file' was there after deleting"
+		);
+	}
+
+	/**
+	 * Mount the app entries into the filesystem
+	 *
+	 * @param string $path
+	 */
+	protected function mountLinks($path)
+	{
+		Vfs::$is_root = true;
+		$url = Links\StreamWrapper::PREFIX . '/apps';
+		$this->assertTrue(
+			Vfs::mount($url, $path, false, false),
+			"Unabe to mount $url => $path"
+		);
+		Vfs::$is_root = false;
+
+		$this->mounts[] = $path;
+		Vfs::clearstatcache();
+		Vfs::init_static();
 	}
 
 	/**
@@ -187,7 +268,7 @@ class StreamWrapperBase extends LoggedInTest
 		Vfs::$is_root = true;
 
 		// I guess merge needs the dir in SQLFS first
-		if(!Vfs::is_dir($dir)) Vfs::mkdir($path);
+		if(!Vfs::is_dir($path)) Vfs::mkdir($path);
 		Vfs::chmod($path, 0750);
 		Vfs::chown($path, $GLOBALS['egw_info']['user']['account_id']);
 
@@ -264,21 +345,5 @@ class StreamWrapperBase extends LoggedInTest
 		);
 */
 		return $files;
-	}
-
-	/**
-	 * Make an infolog entry
-	 */
-	protected function make_infolog()
-	{
-		$bo = new \infolog_bo();
-		$element = array(
-				'info_subject' => "Test infolog for #{$this->getName()}",
-				'info_des' => 'Test element for ' . $this->getName() . "\n" . Api\DateTime::to(),
-				'info_status' => 'open'
-		);
-
-		$element_id = $bo->write($element, true, true, true, true);
-		return $element_id;
 	}
 }
