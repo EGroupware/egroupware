@@ -20,6 +20,10 @@ use EGroupware\Api\Vfs;
 class Base
 {
 	/**
+	 * Scheme / protocol used for this stream-wrapper
+	 */
+	const SCHEME = 'vfs';
+	/**
 	 * Mime type of directories, the old vfs used 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
 	 */
 	const DIR_MIME_TYPE = 'httpd/unix-directory';
@@ -39,6 +43,453 @@ class Base
 	 * mode-bits, which have to be set for links
 	 */
 	const MODE_LINK = 0120000;
+
+	/**
+	 * How much should be logged to the apache error-log
+	 *
+	 * 0 = Nothing
+	 * 1 = only errors
+	 * 2 = all function calls and errors (contains passwords too!)
+	 */
+	const LOG_LEVEL = 1;
+
+	/**
+	 * Our fstab in the form mount-point => url
+	 *
+	 * The entry for root has to be the first, or more general if you mount into subdirs the parent has to be before!
+	 *
+	 * @var array
+	 */
+	protected static $fstab = array(
+		'/' => 'sqlfs://$host/',
+		'/apps' => 'links://$host/apps',
+	);
+
+	/**
+	 * Mounts $url under $path in the vfs, called without parameter it returns the fstab
+	 *
+	 * The fstab is stored in the eGW configuration and used for all eGW users.
+	 *
+	 * @param string $url =null url of the filesystem to mount, eg. oldvfs://default/
+	 * @param string $path =null path to mount the filesystem in the vfs, eg. /
+	 * @param boolean $check_url =null check if url is an existing directory, before mounting it
+	 * 	default null only checks if url does not contain a $ as used in $user or $pass
+	 * @param boolean $persitent_mount =true create a persitent mount, or only a temprary for current request
+	 * @param boolean $clear_fstab =false true clear current fstab, false (default) only add given mount
+	 * @return array|boolean array with fstab, if called without parameter or true on successful mount
+	 */
+	static function mount($url=null,$path=null,$check_url=null,$persitent_mount=true,$clear_fstab=false)
+	{
+		if (is_null($check_url)) $check_url = strpos($url,'$') === false;
+
+		if (!isset($GLOBALS['egw_info']['server']['vfs_fstab']))	// happens eg. in setup
+		{
+			$api_config = Api\Config::read('phpgwapi');
+			if (isset($api_config['vfs_fstab']) && is_array($api_config['vfs_fstab']))
+			{
+				self::$fstab = $api_config['vfs_fstab'];
+			}
+			else
+			{
+				self::$fstab = array(
+					'/' => 'sqlfs://$host/',
+					'/apps' => 'links://$host/apps',
+				);
+			}
+			unset($api_config);
+		}
+		if (is_null($url) || is_null($path))
+		{
+			if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns '.array2string(self::$fstab));
+			return self::$fstab;
+		}
+		if (!Vfs::$is_root)
+		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') permission denied, you are NOT root!');
+			return false;	// only root can mount
+		}
+		if ($clear_fstab)
+		{
+			self::$fstab = array();
+		}
+		if (isset(self::$fstab[$path]) && self::$fstab[$path] === $url)
+		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') already mounted.');
+			return true;	// already mounted
+		}
+		self::load_wrapper(Vfs::parse_url($url,PHP_URL_SCHEME));
+
+		if ($check_url && (!file_exists($url) || opendir($url) === false))
+		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') url does NOT exist!');
+			return false;	// url does not exist
+		}
+		self::$fstab[$path] = $url;
+
+		uksort(self::$fstab, function($a, $b)
+		{
+			return strlen($a) - strlen($b);
+		});
+
+		if ($persitent_mount)
+		{
+			Api\Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
+			$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
+			// invalidate session cache
+			if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+			{
+				$GLOBALS['egw']->invalidate_session_cache();
+			}
+		}
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns true (successful new mount).');
+		return true;
+	}
+
+	/**
+	 * Unmounts a filesystem part of the vfs
+	 *
+	 * @param string $path url or path of the filesystem to unmount
+	 */
+	static function umount($path)
+	{
+		if (!Vfs::$is_root)
+		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($path).','.array2string($path).') permission denied, you are NOT root!');
+			return false;	// only root can mount
+		}
+		if (!isset(self::$fstab[$path]) && ($path = array_search($path,self::$fstab)) === false)
+		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($path).') NOT mounted!');
+			return false;	// $path not mounted
+		}
+		unset(self::$fstab[$path]);
+
+		Api\Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
+		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
+		// invalidate session cache
+		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+		{
+			$GLOBALS['egw']->invalidate_session_cache();
+		}
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($path).') returns true (successful unmount).');
+		return true;
+	}
+
+	/**
+	 * Returns mount url of a full url returned by resolve_url
+	 *
+	 * @param string $fullurl full url returned by resolve_url
+	 * @return string|NULL mount url or null if not found
+	 */
+	static function mount_url($fullurl)
+	{
+		foreach(array_reverse(self::$fstab) as $url)
+		{
+			list($url_no_query) = explode('?',$url);
+			if (substr($fullurl,0,1+strlen($url_no_query)) === $url_no_query.'/')
+			{
+				return $url;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Cache of already resolved urls
+	 *
+	 * @var array with path => target
+	 */
+	private static $resolve_url_cache = array();
+
+	private static $wrappers;
+
+	/**
+	 * Resolve the given path according to our fstab
+	 *
+	 * @param string $_path
+	 * @param boolean $do_symlink =true is a direct match allowed, default yes (must be false for a lstat or readlink!)
+	 * @param boolean $use_symlinkcache =true
+	 * @param boolean $replace_user_pass_host =true replace $user,$pass,$host in url, default true, if false result is not cached
+	 * @param boolean $fix_url_query =false true append relativ path to url query parameter, default not
+	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
+	 */
+	static function resolve_url($_path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true,$fix_url_query=false)
+	{
+		$path = self::get_path($_path);
+
+		// we do some caching here
+		if (isset(self::$resolve_url_cache[$path]) && $replace_user_pass_host)
+		{
+			if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '".self::$resolve_url_cache[$path]."' (from cache)");
+			return self::$resolve_url_cache[$path];
+		}
+		// check if we can already resolve path (or a part of it) with a known symlinks
+		if ($use_symlinkcache)
+		{
+			$path = self::symlinkCache_resolve($path,$do_symlink);
+		}
+		// setting default user, passwd and domain, if it's not contained int the url
+		$defaults = array(
+			'user' => $GLOBALS['egw_info']['user']['account_lid'],
+			'pass' => urlencode($GLOBALS['egw_info']['user']['passwd']),
+			'host' => $GLOBALS['egw_info']['user']['domain'],
+			'home' => str_replace(array('\\\\','\\'),array('','/'),$GLOBALS['egw_info']['user']['homedirectory']),
+		);
+		$parts = array_merge(Vfs::parse_url($path),$defaults);
+		if (!$parts['host']) $parts['host'] = 'default';	// otherwise we get an invalid url (scheme:///path/to/something)!
+
+		if (!empty($parts['scheme']) && $parts['scheme'] != self::SCHEME)
+		{
+			if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '$path' (path is already an url)");
+			return $path;	// path is already a non-vfs url --> nothing to do
+		}
+		if (empty($parts['path'])) $parts['path'] = '/';
+
+		foreach(array_reverse(self::$fstab) as $mounted => $url)
+		{
+			if ($mounted == '/' || $mounted == $parts['path'] || $mounted.'/' == substr($parts['path'],0,strlen($mounted)+1))
+			{
+				$scheme = Vfs::parse_url($url,PHP_URL_SCHEME);
+				if (is_null(self::$wrappers) || !in_array($scheme,self::$wrappers))
+				{
+					self::load_wrapper($scheme);
+				}
+				if (($relative = substr($parts['path'],strlen($mounted))))
+				{
+					$url = Vfs::concat($url,$relative);
+				}
+				// if url contains url parameter, eg. from filesystem streamwrapper, we need to append relative path here too
+				$matches = null;
+				if ($fix_url_query && preg_match('|([?&]url=)([^&]+)|', $url, $matches))
+				{
+					$url = str_replace($matches[0], $matches[1].Vfs::concat($matches[2], substr($parts['path'],strlen($mounted))), $url);
+				}
+
+				if ($replace_user_pass_host)
+				{
+					$url = str_replace(array('$user','$pass','$host','$home'),array($parts['user'],$parts['pass'],$parts['host'],$parts['home']),$url);
+				}
+				if ($parts['query']) $url .= '?'.$parts['query'];
+				if ($parts['fragment']) $url .= '#'.$parts['fragment'];
+
+				if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '$url'");
+
+				if ($replace_user_pass_host) self::$resolve_url_cache[$path] = $url;
+
+				return $url;
+			}
+		}
+		if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path') can't resolve path!\n");
+		trigger_error(__METHOD__."($path) can't resolve path!\n",E_USER_WARNING);
+		return false;
+	}
+
+	/**
+	 * Cache of already resolved symlinks
+	 *
+	 * @var array with path => target
+	 */
+	private static $symlink_cache = array();
+
+	/**
+	 * Add a resolved symlink to cache
+	 *
+	 * @param string $_path vfs path
+	 * @param string $target target path
+	 */
+	static protected function symlinkCache_add($_path,$target)
+	{
+		$path = self::get_path($_path);
+
+		if (isset(self::$symlink_cache[$path])) return;	// nothing to do
+
+		if ($target[0] != '/') $target = Vfs::parse_url($target,PHP_URL_PATH);
+
+		self::$symlink_cache[$path] = $target;
+
+		// sort longest path first
+		uksort(self::$symlink_cache, function($b, $a)
+		{
+			return strlen($a) - strlen($b);
+		});
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$target) cache now ".array2string(self::$symlink_cache));
+	}
+
+	/**
+	 * Remove a resolved symlink from cache
+	 *
+	 * @param string $_path vfs path
+	 */
+	static public function symlinkCache_remove($_path)
+	{
+		$path = self::get_path($_path);
+
+		unset(self::$symlink_cache[$path]);
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path) cache now ".array2string(self::$symlink_cache));
+	}
+
+	/**
+	 * Resolve a path from our symlink cache
+	 *
+	 * The cache is sorted from longer to shorter pathes.
+	 *
+	 * @param string $_path
+	 * @param boolean $do_symlink =true is a direct match allowed, default yes (must be false for a lstat or readlink!)
+	 * @return string target or path, if path not found
+	 */
+	public static function symlinkCache_resolve($_path, $do_symlink=true)
+	{
+		// remove vfs scheme, but no other schemes (eg. filesystem!)
+		$path = self::get_path($_path);
+
+		$strlen_path = strlen($path);
+
+		foreach(self::$symlink_cache as $p => $t)
+		{
+			if (($strlen_p = strlen($p)) > $strlen_path) continue;	// $path can NOT start with $p
+
+			if ($path == $p)
+			{
+				if ($do_symlink) $target = $t;
+				break;
+			}
+			elseif (substr($path,0,$strlen_p+1) == $p.'/')
+			{
+				$target = $t . substr($path,$strlen_p);
+				break;
+			}
+		}
+		if (self::LOG_LEVEL > 1 && isset($target)) error_log(__METHOD__."($path) = $target");
+		return isset($target) ? $target : $path;
+	}
+
+	/**
+	 * Clears our internal stat and symlink cache
+	 *
+	 * Normaly not necessary, as it is automatically cleared/updated, UNLESS Vfs::$user changes!
+	 */
+	static function clearstatcache()
+	{
+		self::$symlink_cache = self::$resolve_url_cache = array();
+	}
+
+	/**
+	 * Load stream wrapper for a given schema
+	 *
+	 * @param string $scheme
+	 * @return boolean
+	 */
+	static function load_wrapper($scheme)
+	{
+		if (!in_array($scheme,self::get_wrappers()))
+		{
+			switch($scheme)
+			{
+				case 'webdav':
+				case 'webdavs':
+					require_once('HTTP/WebDAV/Client.php');
+					self::$wrappers[] = $scheme;
+					break;
+				case '':
+					break;	// default file, always loaded
+				default:
+					// check if scheme is buildin in php or one of our own stream wrappers
+					if (in_array($scheme,stream_get_wrappers()) || class_exists(self::scheme2class($scheme)))
+					{
+						self::$wrappers[] = $scheme;
+					}
+					else
+					{
+						trigger_error("Can't load stream-wrapper for scheme '$scheme'!",E_USER_WARNING);
+						return false;
+					}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Return already loaded stream wrappers
+	 *
+	 * @return array
+	 */
+	static function get_wrappers()
+	{
+		if (is_null(self::$wrappers))
+		{
+			self::$wrappers = stream_get_wrappers();
+		}
+		return self::$wrappers;
+	}
+
+	/**
+	 * Get the class-name for a scheme
+	 *
+	 * A scheme is not allowed to contain an underscore, but allows a dot and a class names only allow or need underscores, but no dots
+	 * --> we replace dots in scheme with underscored to get the class-name
+	 *
+	 * @param string $scheme eg. vfs
+	 * @return string
+	 */
+	static function scheme2class($scheme)
+	{
+		if ($scheme === self::SCHEME)
+		{
+			return __CLASS__;
+		}
+		list($app, $app_scheme) = explode('.', $scheme);
+		foreach(array(
+					empty($app_scheme) ? 'EGroupware\\Api\\Vfs\\'.ucfirst($scheme).'\\StreamWrapper' :	// streamwrapper in Api\Vfs
+						'EGroupware\\'.ucfirst($app).'\\Vfs\\'.ucfirst($app_scheme).'\\StreamWrapper', // streamwrapper in $app\Vfs
+					str_replace('.','_',$scheme).'_stream_wrapper',	// old (flat) name
+				) as $class)
+		{
+			//error_log(__METHOD__."('$scheme') class_exists('$class')=".array2string(class_exists($class)));
+			if (class_exists($class))  return $class;
+		}
+	}
+
+	/**
+	 * Getting the path from an url (or path) AND removing trailing slashes
+	 *
+	 * @param string $path url or path (might contain trailing slash from WebDAV!)
+	 * @param string $only_remove_scheme =self::SCHEME if given only that scheme get's removed
+	 * @return string path without training slash
+	 */
+	static protected function get_path($path,$only_remove_scheme=self::SCHEME)
+	{
+		if ($path[0] != '/' && (!$only_remove_scheme || Vfs::parse_url($path, PHP_URL_SCHEME) == $only_remove_scheme))
+		{
+			$path = Vfs::parse_url($path, PHP_URL_PATH);
+		}
+		// remove trailing slashes eg. added by WebDAV, but do NOT remove / from "sqlfs://default/"!
+		if ($path != '/')
+		{
+			while (mb_substr($path, -1) == '/' && $path != '/' && ($path[0] == '/' || Vfs::parse_url($path, PHP_URL_PATH) != '/'))
+			{
+				$path = mb_substr($path,0,-1);
+			}
+		}
+		return $path;
+	}
+
+	/**
+	 * Check if url contains ro=1 parameter to mark mount readonly
+	 *
+	 * @param string $url
+	 * @return boolean
+	 */
+	static function url_is_readonly($url)
+	{
+		static $cache = array();
+		$ret =& $cache[$url];
+		if (!isset($ret))
+		{
+			$matches = null;
+			$ret = preg_match('/\?(.*&)?ro=([^&]+)/', $url, $matches) && $matches[2];
+		}
+		return $ret;
+	}
 
 	/**
 	 * Allow to call methods of the underlying stream wrapper: touch, chmod, chgrp, chown, ...

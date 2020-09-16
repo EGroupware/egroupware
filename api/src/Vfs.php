@@ -69,23 +69,12 @@ use HTTP_WebDAV_Server;
 class Vfs extends Vfs\Base
 {
 	const PREFIX = Vfs\StreamWrapper::PREFIX;
-	/**
-	 * Scheme / protocol used for this stream-wrapper
-	 */
-	const SCHEME = Vfs\StreamWrapper::SCHEME;
 
 	/**
 	 * Name of the lock table
 	 */
 	const LOCK_TABLE = 'egw_locks';
-	/**
-	 * How much should be logged to the apache error-log
-	 *
-	 * 0 = Nothing
-	 * 1 = only errors
-	 * 2 = all function calls and errors (contains passwords too!)
-	 */
-	const LOG_LEVEL = 1;
+
 	/**
 	 * Current user has root rights, no access checks performed!
 	 *
@@ -304,45 +293,6 @@ class Vfs extends Vfs\Base
 	static function file_exists($path)
 	{
 		return $path[0] == '/' && file_exists(self::PREFIX.$path);
-	}
-
-	/**
-	 * Mounts $url under $path in the vfs, called without parameter it returns the fstab
-	 *
-	 * The fstab is stored in the eGW configuration and used for all eGW users.
-	 *
-	 * @param string $url =null url of the filesystem to mount, eg. oldvfs://default/
-	 * @param string $path =null path to mount the filesystem in the vfs, eg. /
-	 * @param boolean $check_url =null check if url is an existing directory, before mounting it
-	 * 	default null only checks if url does not contain a $ as used in $user or $pass
-	 * @param boolean $persitent_mount =true create a persitent mount, or only a temprary for current request
-	 * @param boolean $clear_fstab =false true clear current fstab, false (default) only add given mount
-	 * @return array|boolean array with fstab, if called without parameter or true on successful mount
-	 */
-	static function mount($url=null,$path=null,$check_url=null,$persitent_mount=true,$clear_fstab=false)
-	{
-		return Vfs\StreamWrapper::mount($url, $path, $check_url, $persitent_mount, $clear_fstab);
-	}
-
-	/**
-	 * Unmounts a filesystem part of the vfs
-	 *
-	 * @param string $path url or path of the filesystem to unmount
-	 */
-	static function umount($path)
-	{
-		return Vfs\StreamWrapper::umount($path);
-	}
-
-	/**
-	 * Returns mount url of a full url returned by resolve_url
-	 *
-	 * @param string $fullurl full url returned by resolve_url
-	 * @return string|NULL mount url or null if not found
-	 */
-	static function mount_url($fullurl)
-	{
-		return Vfs\StreamWrapper::mount_url($fullurl);
 	}
 
 	/**
@@ -1295,21 +1245,12 @@ class Vfs extends Vfs\Base
 	 * We define all eGW admins the owner of the group directories!
 	 *
 	 * @param string $path
-	 * @param array $stat =null stat for path, default queried by this function
+	 * @param ?array $stat =null stat for path, default queried by this function
 	 * @return boolean
 	 */
 	static function has_owner_rights($path,array $stat=null)
 	{
-		if (!$stat)
-		{
-			$vfs = new Vfs\StreamWrapper();
-			$stat = $vfs->url_stat($path,0);
-		}
-		return $stat['uid'] == self::$user &&	// (current) user is the owner
-				// in sharing current user != self::$user and should NOT have owner rights
-				$GLOBALS['egw_info']['user']['account_id'] == self::$user ||
-			self::$is_root ||					// class runs with root rights
-			!$stat['uid'] && $stat['gid'] && self::$is_admin;	// group directory and user is an eGW admin
+		return (new Vfs\StreamWrapper())->has_owner_rights($path, $stat);
 	}
 
 	/**
@@ -2132,21 +2073,6 @@ class Vfs extends Vfs\Base
 	}
 
 	/**
-	 * Resolve the given path according to our fstab
-	 *
-	 * @param string $_path
-	 * @param boolean $do_symlink =true is a direct match allowed, default yes (must be false for a lstat or readlink!)
-	 * @param boolean $use_symlinkcache =true
-	 * @param boolean $replace_user_pass_host =true replace $user,$pass,$host in url, default true, if false result is not cached
-	 * @param boolean $fix_url_query =false true append relativ path to url query parameter, default not
-	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
-	 */
-	static function resolve_url($_path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true,$fix_url_query=false)
-	{
-		return Vfs\StreamWrapper::resolve_url($_path, $do_symlink, $use_symlinkcache, $replace_user_pass_host, $fix_url_query);
-	}
-
-	/**
 	 * This method is called in response to mkdir() calls on URL paths associated with the wrapper.
 	 *
 	 * It should attempt to create the directory specified by path.
@@ -2432,9 +2358,9 @@ class Vfs extends Vfs\Base
 	static function clearstatcache($path='/')
 	{
 		//error_log(__METHOD__."('$path')");
-		Vfs\StreamWrapper::clearstatcache($path);
+		parent::clearstatcache($path);
 		self::_call_on_backend('clearstatcache', array($path), true, 0);
-		Vfs\StreamWrapper::clearstatcache($path);
+		parent::clearstatcache($path);
 	}
 
 	/**

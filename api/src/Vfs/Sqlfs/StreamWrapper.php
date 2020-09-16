@@ -193,8 +193,6 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$this->operation = self::url2operation($url);
 		$dir = Vfs::dirname($url);
 
-		error_log(__METHOD__."('$url', $mode, $options) path=$path, context=".json_encode(stream_context_get_options($this->context)));
-
 		$this->opened_path = $opened_path = $path;
 		$this->opened_mode = $mode = str_replace('b','',$mode);	// we are always binary, like every Linux system
 		$this->opened_stream = null;
@@ -1250,10 +1248,6 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			if (method_exists($GLOBALS['egw'],'invalidate_session_cache')) $GLOBALS['egw']->invalidate_session_cache();
 			return $this->url_stat($url, $flags);
 		}
-		if (!isset($info['effectiv-uid']) && $this->context)
-		{
-			$info['effectiv-uid'] = stream_context_get_options($this->context)[Vfs::SCHEME]['user'];
-		}
 		self::$stat_cache[$path] = $info;
 
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$flags)=".array2string($info));
@@ -1279,7 +1273,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			// 256 = 0400, 32 = 040
 			$sql_read_acl[$user] = '((fs_mode & 4)=4 OR (fs_mode & 256)=256 AND fs_uid='.$user.
 				($memberships ? ' OR (fs_mode & 32)=32 AND fs_gid IN('.implode(',',$memberships).')' : '').')';
-			error_log(__METHOD__."() user=".array2string($user).' --> memberships='.array2string($memberships).' --> '.$sql_read_acl.($memberships?'':': '.function_backtrace()));
+			//error_log(__METHOD__."() user=".array2string($user).' --> memberships='.array2string($memberships).' --> '.$sql_read_acl.($memberships?'':': '.function_backtrace()));
 		}
 		return $sql_read_acl[$user];
 	}
@@ -1736,7 +1730,6 @@ GROUP BY A.fs_id';
 			// eGW addition to return some extra values
 			'mime'  => $info['fs_mime'],
 			'readlink' => $info['fs_link'],
-			'effectiv-uid' => $info['effectiv-uid'],
 		);
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($info[name]) = ".array2string($stat));
 		return $stat;
