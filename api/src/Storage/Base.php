@@ -949,6 +949,11 @@ class Base
 				{
 					if (!in_array($col, $colums) && !in_array($col, $as_columns))
 					{
+						// make sure column-name is not ambigous
+						if ($join && strpos($join, $this->table_name.'.'.$col))
+						{
+							$col = $this->table_name.'.'.$col.' AS '.$col;
+						}
 						$colums[] = $col;
 					}
 				}
