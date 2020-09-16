@@ -1863,6 +1863,10 @@ GROUP BY A.fs_id';
 		$ins_stmt = $del_stmt = null;
 		foreach($props as &$prop)
 		{
+			if(!array_key_exists('name', $prop))
+			{
+				return false; // Name is missing
+			}
 			if (!isset($prop['ns'])) $prop['ns'] = Vfs::DEFAULT_PROP_NAMESPACE;
 
 			if (!isset($prop['val']) || self::$pdo_type != 'mysql')	// for non mysql, we have to delete the prop anyway, as there's no REPLACE!
