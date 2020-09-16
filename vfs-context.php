@@ -39,12 +39,12 @@ var_dump("Vfs::propfind('/home/ralf/birgit/test.txt')", Vfs::propfind('/home/ral
 var_dump("Vfs::proppatch('/home/ralf/birgit/test.txt', [['ns' => Vfs::DEFAULT_PROP_NAMESPACE, 'name' => 'test', 'val' => 'something else']])=".array2string(Vfs::proppatch('/home/ralf/birgit/test.txt', [['ns' => Vfs::DEFAULT_PROP_NAMESPACE, 'name' => 'test', 'val' => 'something else']])),
 	"Vfs::propfind('/home/ralf/birgit/test.txt')=".json_encode(Vfs::propfind('/home/ralf/birgit/test.txt'), JSON_UNESCAPED_SLASHES));
 
-var_dump("Vfs::url_stat('/home/ralf/birgit/test.txt')=".json_encode(Vfs::stat('/home/ralf/birgit/test-dir')));
+var_dump("Vfs::url_stat('/home/ralf/birgit/test-dir')=".json_encode(Vfs::stat('/home/ralf/birgit/test-dir')));
 var_dump("Vfs::mkdir('/home/ralf/birgit/test-dir')=".json_encode(Vfs::mkdir('/home/ralf/birgit/test-dir')));
-var_dump("Vfs::url_stat('/home/ralf/birgit/test.txt')=".json_encode(Vfs::stat('/home/ralf/birgit/test-dir'), JSON_UNESCAPED_SLASHES));
+var_dump("Vfs::url_stat('/home/ralf/birgit/test-dir')=".json_encode(Vfs::stat('/home/ralf/birgit/test-dir'), JSON_UNESCAPED_SLASHES));
 var_dump("Vfs::rmdir('/home/ralf/birgit/test-dir')=".json_encode(Vfs::rmdir('/home/ralf/birgit/test-dir')));
-var_dump("Vfs::url_stat('/home/ralf/birgit/test.txt')=".json_encode(Vfs::stat('/home/ralf/birgit/test-dir')));
+var_dump("Vfs::url_stat('/home/ralf/birgit/test-dir')=".json_encode(Vfs::stat('/home/ralf/birgit/test-dir')));
 
 var_dump("Vfs::scandir('/home/ralf/birgit')=".json_encode(Vfs::scandir('/home/ralf/birgit'), JSON_UNESCAPED_SLASHES));
-var_dump("Vfs::remove('/home/ralf/birgit/test.txt')=".json_encode(Vfs::remove('/home/ralf/birgit/test.txt')));
+var_dump("Vfs::remove('/home/ralf/birgit/test.txt')=".json_encode(Vfs::remove('/home/ralf/birgit/test.txt'), JSON_UNESCAPED_SLASHES));
 var_dump("Vfs::scandir('/home/ralf/birgit')=".json_encode(Vfs::scandir('/home/ralf/birgit'), JSON_UNESCAPED_SLASHES));

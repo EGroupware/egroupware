@@ -23,27 +23,14 @@ use EGroupware\Api;
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
-class StreamWrapper implements StreamWrapperIface
+class StreamWrapper extends Base implements StreamWrapperIface
 {
-	use UserContext;
+	use UserContextTrait;
 
-	/**
-	 * Scheme / protocol used for this stream-wrapper
-	 */
-	const SCHEME = 'vfs';
-	/**
-	 * Mime type of directories, the old vfs used 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
-	 */
-	const DIR_MIME_TYPE = 'httpd/unix-directory';
 	/**
 	 * Should unreadable entries in a not writable directory be hidden, default yes
 	 */
 	const HIDE_UNREADABLES = true;
-
-	/**
-	 * mode-bits, which have to be set for links
-	 */
-	const MODE_LINK = 0120000;
 
 	/**
 	 * How much should be logged to the apache error-log
@@ -317,8 +304,8 @@ class StreamWrapper implements StreamWrapperIface
 		}
 		$this->check_set_context($url, true);
 
-		if (!($this->opened_stream = $context ?
-			fopen($url, $mode, false, $context) : fopen($url, $mode, false)))
+		if (!($this->opened_stream = $this->context ?
+			fopen($url, $mode, false, $this->context) : fopen($url, $mode, false)))
 		{
 			return false;
 		}
@@ -763,7 +750,7 @@ class StreamWrapper implements StreamWrapperIface
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) opendir($this->opened_dir_url) failed!");
 			return false;
 		}
-		$this->opened_dir_writable = Vfs::check_access($this->opened_dir_url,Vfs::WRITABLE);
+		$this->opened_dir_writable = $this->check_access($this->opened_dir_url,Vfs::WRITABLE);
 		// check our fstab if we need to add some of the mountpoints
 		$basepath = Vfs::parse_url($path,PHP_URL_PATH);
 		foreach(array_keys(self::$fstab) as $mounted)
@@ -771,7 +758,7 @@ class StreamWrapper implements StreamWrapperIface
 			if (((Vfs::dirname($mounted) == $basepath || Vfs::dirname($mounted).'/' == $basepath) && $mounted != '/') &&
 				// only return children readable by the user, if dir is not writable
 				(!self::HIDE_UNREADABLES || $this->opened_dir_writable ||
-					Vfs::check_access($mounted,Vfs::READABLE)))
+					$this->check_access($mounted,Vfs::READABLE)))
 			{
 				$this->extra_dirs[] = Vfs::basename($mounted);
 			}
@@ -934,35 +921,24 @@ clearstatcache();	// testwise, NOT good for performance
 	}
 
 	/**
-	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
-	 * which is wrong in case of our vfs, as we use the current users id and memberships
+	 * Check if extendes ACL (stored in eGW's ACL table) grants access
 	 *
-	 * @param string $path path
-	 * @param int $check mode to check: one or more or'ed together of: 4 = self::READABLE,
-	 * 	2 = self::WRITABLE, 1 = self::EXECUTABLE
+	 * The extended ACL is inherited, so it's valid for all subdirs and the included files!
+	 * The used algorithm break on the first match. It could be used, to disallow further access.
+	 *
+	 * @param string $path path to check
+	 * @param int $check mode to check: one or more or'ed together of: 4 = read, 2 = write, 1 = executable
 	 * @return boolean
 	 */
-	function check_access($path, $check)
+	function check_extended_acl($path, $check)
 	{
-		if (!($stat = $this->url_stat($path, 0)))
+		if (!($url = self::resolve_url($path)))
 		{
-			$ret = false;
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path', $check) can NOT resolve path: ".function_backtrace(1));
+			return false;
 		}
-		else
-		{
-			if (($account_lid = Vfs::parse_url($stat['url'], PHP_URL_USER)) &&
-				($account_id = Api\Accounts::getInstance()->name2id($account_lid)))
-			{
-				$user = $account_id;
-			}
-			else
-			{
-				$user = $this->user ?: Vfs::$user;
-			}
-			$ret = Vfs::check_access($path, $check, $stat, $user);
-		}
-		error_log(__METHOD__."('$path', $check) user=".Api\Accounts::id2name($user).", effective user=$user=".Api\Accounts::id2name($user).", mode=".decoct($stat['mode'] & 0777).", uid=".($stat['uid']?Api\Accounts::id2name($stat['uid']):0).", uid=".($stat['gid']?Api\Accounts::id2name(-$stat['gid']):0)." returning ".array2string($ret));
-		return $ret;
+		// check backend for extended acls (only if path given)
+		return self::_call_on_backend('check_extended_acl', [$url, $check], true, 0, true);	// true = fail silent if backend does not support
 	}
 
 	/**
@@ -1123,7 +1099,7 @@ clearstatcache();	// testwise, NOT good for performance
 			while($file !== false &&
 				(is_array($this->extra_dirs) && in_array($file,$this->extra_dirs) || // do NOT return extra_dirs twice
 				self::HIDE_UNREADABLES && !$this->opened_dir_writable &&
-				!Vfs::check_access(Vfs::concat($this->opened_dir_url,$file),Vfs::READABLE)));
+				!$this->check_access(Vfs::concat($this->opened_dir_url,$file),Vfs::READABLE)));
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( $this->opened_dir ) = '$file'");
 		return $file;

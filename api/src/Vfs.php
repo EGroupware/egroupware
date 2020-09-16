@@ -66,33 +66,8 @@ use HTTP_WebDAV_Server;
  * Vfs::parse_url($url, $component=-1), Vfs::dirname($url) and Vfs::basename($url) work
  * on urls containing utf-8 characters, which get NOT urlencoded in our VFS!
  */
-class Vfs
+class Vfs extends Vfs\Base
 {
-	const PREFIX = 'vfs://default';
-	/**
-	 * Scheme / protocol used for this stream-wrapper
-	 */
-	const SCHEME = Vfs\StreamWrapper::SCHEME;
-	/**
-	 * Mime type of directories, the old vfs used 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
-	 */
-	const DIR_MIME_TYPE = Vfs\StreamWrapper::DIR_MIME_TYPE;
-	/**
-	 * Readable bit, for dirs traversable
-	 */
-	const READABLE = 4;
-	/**
-	 * Writable bit, for dirs delete or create files in that dir
-	 */
-	const WRITABLE = 2;
-	/**
-	 * Excecutable bit, here only use to check if user is allowed to search dirs
-	 */
-	const EXECUTABLE = 1;
-	/**
-	 * mode-bits, which have to be set for links
-	 */
-	const MODE_LINK = Vfs\StreamWrapper::MODE_LINK;
 	/**
 	 * Name of the lock table
 	 */
@@ -809,6 +784,7 @@ class Vfs
 	 * @param array|boolean $stat =null stat array or false, to not query it again
 	 * @param int $user =null user used for check, if not current user (self::$user)
 	 * @return boolean
+	 * @todo deprecated or even remove $user parameter and code
 	 */
 	static function check_access($path, $check, $stat=null, $user=null)
 	{
@@ -855,77 +831,8 @@ class Vfs
 			return $ret;
 		}
 
-		if (self::$is_root)
-		{
-			return true;
-		}
-
-		// throw exception if stat array is used insead of path, can be removed soon
-		if (is_array($path))
-		{
-			throw new Exception\WrongParameter('path has to be string, use check_access($path,$check,$stat=null)!');
-		}
-		// if we have no $stat, delegate whole check to vfs stream-wrapper to correctly deal with shares / effective user-ids
-		if (is_null($stat))
-		{
-			if (!isset($vfs)) $vfs = new Vfs\StreamWrapper();
-			//$stat = $vfs->url_stat($path,0);
-			return $vfs->check_access($path, $check);
-		}
-		//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check)");
-
-		if (!$stat)
-		{
-			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) no stat array!");
-			return false;	// file not found
-		}
-		// check if we use an EGroupwre stream wrapper, or a stock php one
-		// if it's not an EGroupware one, we can NOT use uid, gid and mode!
-		if (($scheme = self::parse_url($stat['url'],PHP_URL_SCHEME)) && !(class_exists(self::scheme2class($scheme))))
-		{
-			switch($check)
-			{
-				case self::READABLE:
-					return is_readable($stat['url']);
-				case self::WRITABLE:
-					return is_writable($stat['url']);
-				case self::EXECUTABLE:
-					return is_executable($stat['url']);
-			}
-		}
-		// check if other rights grant access
-		if (($stat['mode'] & $check) == $check)
-		{
-			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via other rights!");
-			return true;
-		}
-		if (!isset($user)) $user = self::$user;
-		// check if there's owner access and we are the owner
-		if (($stat['mode'] & ($check << 6)) == ($check << 6) && $stat['uid'] && $stat['uid'] == $user)
-		{
-			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via owner rights!");
-			return true;
-		}
-		// check if there's a group access and we have the right membership
-		if (($stat['mode'] & ($check << 3)) == ($check << 3) && $stat['gid'])
-		{
-			if (($memberships = $GLOBALS['egw']->accounts->memberships($user, true)) && in_array(-abs($stat['gid']), $memberships))
-			{
-				//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via group rights!");
-				return true;
-			}
-		}
-		// if we check writable and have a readonly mount --> return false, as backends dont know about r/o url parameter
-		if ($check == self::WRITABLE && Vfs\StreamWrapper::url_is_readonly($stat['url']))
-		{
-			//error_log(__METHOD__."(path=$path, check=writable, ...) failed because mount is readonly");
-			return false;
-		}
-		// check backend for extended acls (only if path given)
-		$ret = $path && self::_call_on_backend('check_extended_acl',array(isset($stat['url'])?$stat['url']:$path,$check),true);	// true = fail silent if backend does not support
-
-		//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) ".($ret ? 'backend extended acl granted access.' : 'no access!!!'));
-		return $ret;
+		if (!isset($vfs)) $vfs = new Vfs\StreamWrapper();
+		return $vfs->check_access($path, $check, $stat);
 	}
 
 	/**

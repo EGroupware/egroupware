@@ -35,7 +35,7 @@ use EGroupware\Api;
  */
 class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 {
-	use Vfs\UserContext;
+	use Vfs\UserContextTrait;
 
 	/**
 	 * Mime type of directories, the old vfs uses 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
@@ -206,7 +206,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			if (!$dir || $mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
 				$mode[0] == 'x' && $stat ||	// or file should not exist, but does
 				!($dir_stat=$this->url_stat($dir,STREAM_URL_STAT_QUIET)) ||	// or parent dir does not exist																																			create it
-				!Vfs::check_access($dir,Vfs::WRITABLE, $dir_stat, $this->user))	// or we are not allowed to 																																			create it
+				!$this->check_access($dir,Vfs::WRITABLE, $dir_stat))	// or we are not allowed to 																																			create it
 			{
 				self::_remove_password($url);
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file does not exist or can not be created!");
@@ -272,8 +272,8 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		}
 		else
 		{
-			if ($mode == 'r' && !Vfs::check_access($url,Vfs::READABLE ,$stat, $this->user) ||// we are not allowed to read
-				$mode != 'r' && !Vfs::check_access($url,Vfs::WRITABLE, $stat, $this->user))	// or edit it
+			if ($mode == 'r' && !$this->check_access($url,Vfs::READABLE , $stat) ||// we are not allowed to read
+				$mode != 'r' && !$this->check_access($url,Vfs::WRITABLE, $stat))	// or edit it
 			{
 				self::_remove_password($url);
 				$op = $mode == 'r' ? 'read' : 'edited';
@@ -555,7 +555,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			$this->url_stat($dir, STREAM_URL_STAT_LINK);
 
 		if (!$parent_stat || !($stat = $this->url_stat($path,STREAM_URL_STAT_LINK)) ||
-			!$dir || !Vfs::check_access($dir, Vfs::WRITABLE, $parent_stat, $this->user))
+			!$dir || !$this->check_access($dir, Vfs::WRITABLE, $parent_stat))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
@@ -607,14 +607,14 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$to_dir = Vfs::dirname($path_to);
 
 		if (!($from_stat = $this->url_stat($path_from, 0)) || !$from_dir ||
-			!Vfs::check_access($from_dir, Vfs::WRITABLE, $from_dir_stat = $this->url_stat($from_dir, 0), $this->user))
+			!$this->check_access($from_dir, Vfs::WRITABLE, $from_dir_stat = $this->url_stat($from_dir, 0)))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_from permission denied!");
 			return false;	// no permission or file does not exist
 		}
-		if (!$to_dir || !Vfs::check_access($to_dir, Vfs::WRITABLE, $to_dir_stat = $this->url_stat($to_dir, 0), $this->user))
+		if (!$to_dir || !$this->check_access($to_dir, Vfs::WRITABLE, $to_dir_stat = $this->url_stat($to_dir, 0)))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
@@ -730,7 +730,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			}
 			$parent = $this->url_stat($parent_path,0);
 		}
-		if (!$parent || !Vfs::check_access($parent_path,Vfs::WRITABLE, $parent, $this->user))
+		if (!$parent || !$this->check_access($parent_path,Vfs::WRITABLE, $parent))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) permission denied!");
@@ -753,7 +753,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			'fs_mime' => self::DIR_MIME_TYPE,
 			'fs_created'  => self::_pdo_timestamp(time()),
 			'fs_modified' => self::_pdo_timestamp(time()),
-			'fs_creator'  => $this->user,
+			'fs_creator'  => Vfs::$user,
 		))))
 		{
 			// check if some other process created the directory parallel to us (sqlfs would gives SQL errors later!)
@@ -793,7 +793,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		if (!($parent = Vfs::dirname($path)) ||
 			!($stat = $this->url_stat($path, 0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
-			!Vfs::check_access($parent, Vfs::WRITABLE, $this->url_stat($parent,0), $this->user))
+			!$this->check_access($parent, Vfs::WRITABLE))
 		{
 			self::_remove_password($url);
 			$err_msg = __METHOD__."($url,$options) ".(!$stat ? 'not found!' :
@@ -1079,7 +1079,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		if (!($stat = $this->url_stat($url,0)) || 		// dir not found
 			!($stat['mode'] & self::MODE_DIR) && $stat['mime'] != self::DIR_MIME_TYPE ||		// no dir
-			!Vfs::check_access($url,Vfs::EXECUTABLE|Vfs::READABLE, $stat, $this->user))	// no access
+			!$this->check_access($url,Vfs::EXECUTABLE|Vfs::READABLE, $stat))	// no access
 		{
 			self::_remove_password($url);
 			$msg = !($stat['mode'] & self::MODE_DIR) && $stat['mime'] != self::DIR_MIME_TYPE ?
@@ -1374,7 +1374,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			return false;	// $link already exists
 		}
 		if (!($dir = Vfs::dirname($link)) ||
-			!Vfs::check_access($dir,Vfs::WRITABLE, $dir_stat=$this->url_stat($dir,0), $this->user))
+			!$this->check_access($dir,Vfs::WRITABLE, $dir_stat=$this->url_stat($dir,0)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') returning false! (!is_writable('$dir'), dir_stat=".array2string($dir_stat).")");
 			return false;	// parent dir does not exist or is not writable
@@ -1864,7 +1864,7 @@ GROUP BY A.fs_id';
 		{
 			return false;
 		}
-		if (!Vfs::check_access($path,Api\Acl::EDIT, $stat, $this->user))
+		if (!$this->check_access($path,Api\Acl::EDIT, $stat))
 		{
 			return false;	// permission denied
 		}
