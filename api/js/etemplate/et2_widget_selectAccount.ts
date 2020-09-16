@@ -62,13 +62,13 @@ export class et2_selectAccount extends et2_selectbox
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_selectAccount._attributes, _child || {}));
 
 		// Type in rows or somewhere else?
-		if(jQuery.inArray(_attrs['empty_label'], et2_selectAccount.account_types) > 0 && (
-			jQuery.inArray(_attrs['account_type'], et2_selectAccount.account_types) < 0 ||
-			_attrs['account_type'] == et2_selectAccount._attributes.account_type['default'])
+		if(et2_selectAccount.account_types.indexOf(this.options.empty_label) >= 0 && (
+			et2_selectAccount.account_types.indexOf(this.options.account_type) < 0 ||
+			this.options.account_type == et2_selectAccount._attributes.account_type.default)
 		)
 		{
-			_attrs['account_type'] = _attrs['empty_label'];
-			_attrs['empty_label'] = '';
+			this.options.account_type = _attrs['empty_label'];
+			this.options.empty_label = '';
 		}
 		if(jQuery.inArray(_attrs['account_type'], et2_selectAccount.account_types) < 0)
 		{
@@ -84,9 +84,9 @@ export class et2_selectAccount extends et2_selectbox
 		// Reference to widget within dialog
 		this.widgets = null;
 
-		if(!_attrs.empty_label && !_attrs.readonly && _attrs.multiple)
+		if(!this.options.empty_label && !this.options.readonly && this.options.multiple)
 		{
-			_attrs.empty_label = this.egw().lang('Select user or group');
+			this.options.empty_label = this.egw().lang('Select user or group');
 		}
 
 		// Allow certain widgets inside this one
