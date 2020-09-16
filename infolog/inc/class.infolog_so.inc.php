@@ -647,7 +647,7 @@ class infolog_so
 			{
 				$this->db->insert($this->extra_table,array(
 						// store multivalued CalDAV properties as serialized array, everything else get comma-separated
-						'info_extra_value'	=> is_array($val) ? ($key[1] == '#' ? serialize($val) : implode(',',$val)) : $val,
+						'info_extra_value'	=> is_array($val) ? ($key[1] == '#' ? json_encode($val) : implode(',',$val)) : $val,
 					),array(
 						'info_id'			=> $info_id,
 						'info_extra_name'	=> substr($key,1),
