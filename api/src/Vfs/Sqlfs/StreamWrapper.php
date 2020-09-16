@@ -1153,7 +1153,6 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		{
 			$this->check_set_context($url);
 		}
-		error_log(__METHOD__."('$url', $flags) path=$path, context=".json_encode(stream_context_get_options($this->context)));
 
 		// webdav adds a trailing slash to dirs, which causes url_stat to NOT find the file otherwise
 		if ($path != '/' && substr($path,-1) == '/')
