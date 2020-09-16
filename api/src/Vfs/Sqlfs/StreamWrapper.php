@@ -1864,7 +1864,7 @@ GROUP BY A.fs_id';
 		{
 			return false;
 		}
-		if (!Vfs::check_access($path,Api\Acl::EDIT,$stat))
+		if (!Vfs::check_access($path,Api\Acl::EDIT, $stat, $this->user))
 		{
 			return false;	// permission denied
 		}
