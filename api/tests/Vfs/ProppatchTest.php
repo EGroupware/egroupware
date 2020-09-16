@@ -1,0 +1,116 @@
+<?php
+
+/**
+ * Test file properties (proppatch)
+ *
+ * @link http://www.egroupware.org
+ * @author Nathan Gray
+ * @copyright (c) 2020  Nathan Gray
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ */
+
+namespace EGroupware\Api\Vfs;
+
+require_once __DIR__ . '/StreamWrapperBase.php';
+
+use EGroupware\Api;
+use EGroupware\Api\LoggedInTest as LoggedInTest;
+use EGroupware\Api\Vfs;
+use EGroupware\Stylite\Vfs\Versioning;
+
+
+class ProppatchTest extends StreamWrapperBase
+{
+	protected function setUp() : void
+	{
+		parent::setUp();
+
+	}
+
+	protected function tearDown() : void
+	{
+		// Do local stuff first, parent will remove stuff
+
+		parent::tearDown();
+	}
+
+	/**
+	 * Check read / write / delete proppatch
+	 */
+	public function testProppatch()
+	{
+		$this->files[] = $test_file = $this->getFilename();
+		$contents = $this->getName() . "\nJust a test ;)\n";
+		$this->assertNotFalse(
+				file_put_contents(Vfs::PREFIX . $test_file, $contents),
+			"Could not write test file $test_file"
+		);
+
+		$proppatch = [['ns' => Vfs::DEFAULT_PROP_NAMESPACE, 'name' => 'test', 'val' => 'something']];
+		$this->assertTrue(
+			Vfs::proppatch($test_file, $proppatch),
+			"Could not set properties"
+		);
+		$read = Vfs::propfind($test_file);
+
+		$this->assertEquals($proppatch, $read,
+		"Read proppatch does not match what was written"
+		);
+
+		// Try to delete, while we're here
+		$proppatch[0]['val'] = null;
+		$this->assertTrue(
+				Vfs::proppatch($test_file, $proppatch),
+				"Could not delete properties by setting val = null"
+		);
+		$read_deleted = Vfs::propfind($test_file);
+		$this->assertNotFalse($read_deleted, "Problem reading properties after deleting");
+		$this->assertEquals([], $read_deleted, "Found properties after deleting");
+	}
+
+	/**
+	 * Test that an invalid proppatch is not accepted
+	 */
+	public function testInvalidProppatch()
+	{
+		$this->files[] = $test_file = $this->getFilename();
+		$contents = $this->getName() . "\nJust a test ;)\n";
+		$this->assertNotFalse(
+				file_put_contents(Vfs::PREFIX . $test_file, $contents),
+			"Could not write test file $test_file"
+		);
+
+		$proppatch = [['No worky']];
+		$this->assertFalse(
+			Vfs::proppatch($test_file, $proppatch),
+			"Managed to set invalid properties"
+		);
+	}
+
+	public function testWriteWithNoPermissionsFails()
+	{
+		$this->files[] = $test_file = $this->getFilename();
+		Vfs::remove($test_file);
+		$contents = $this->getName() . "\nJust a test ;)\n";
+		$this->assertNotFalse(
+				file_put_contents(Vfs::PREFIX . $test_file, $contents),
+			"Could not write test file $test_file"
+		);
+
+		// Change owner so we lose permission
+		Vfs::$is_root = true;
+		$this->assertTrue(
+			Vfs::chown($test_file, 'anonymous'),
+			"Could not chown test file '$test_file'"
+		);
+		Vfs::$is_root = false;
+
+		// Try to set property
+		$proppatch = [['ns' => Vfs::DEFAULT_PROP_NAMESPACE, 'name' => 'test', 'val' => 'something']];
+		$this->assertFalse(
+			Vfs::proppatch($test_file, $proppatch),
+			"Managed to set properties with no permission"
+		);
+
+	}
+}
