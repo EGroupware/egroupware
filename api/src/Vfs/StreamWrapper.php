@@ -27,6 +27,12 @@ class StreamWrapper extends Base implements StreamWrapperIface
 {
 	use UserContextTrait;
 
+	const PREFIX = 'vfs://default';
+	/**
+	 * Scheme / protocol used for this stream-wrapper
+	 */
+	const SCHEME = 'vfs';
+
 	/**
 	 * Should unreadable entries in a not writable directory be hidden, default yes
 	 */

@@ -19,11 +19,6 @@ use EGroupware\Api\Vfs;
  */
 class Base
 {
-	const PREFIX = 'vfs://default';
-	/**
-	 * Scheme / protocol used for this stream-wrapper
-	 */
-	const SCHEME = 'vfs';
 	/**
 	 * Mime type of directories, the old vfs used 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
 	 */

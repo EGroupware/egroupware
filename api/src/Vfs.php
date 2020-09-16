@@ -68,6 +68,12 @@ use HTTP_WebDAV_Server;
  */
 class Vfs extends Vfs\Base
 {
+	const PREFIX = Vfs\StreamWrapper::PREFIX;
+	/**
+	 * Scheme / protocol used for this stream-wrapper
+	 */
+	const SCHEME = Vfs\StreamWrapper::SCHEME;
+
 	/**
 	 * Name of the lock table
 	 */
