@@ -55,10 +55,10 @@ var et2_selectAccount = /** @class */ (function (_super) {
     function et2_selectAccount(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_selectAccount._attributes, _child || {})) || this;
         // Type in rows or somewhere else?
-        if (jQuery.inArray(_attrs['empty_label'], et2_selectAccount.account_types) > 0 && (jQuery.inArray(_attrs['account_type'], et2_selectAccount.account_types) < 0 ||
-            _attrs['account_type'] == et2_selectAccount._attributes.account_type['default'])) {
-            _attrs['account_type'] = _attrs['empty_label'];
-            _attrs['empty_label'] = '';
+        if (et2_selectAccount.account_types.indexOf(_this.options.empty_label) >= 0 && (et2_selectAccount.account_types.indexOf(_this.options.account_type) < 0 ||
+            _this.options.account_type == et2_selectAccount._attributes.account_type.default)) {
+            _this.options.account_type = _attrs['empty_label'];
+            _this.options.empty_label = '';
         }
         if (jQuery.inArray(_attrs['account_type'], et2_selectAccount.account_types) < 0) {
             _this.egw().debug("warn", "Invalid account_type: %s Valid options:", _attrs['account_type'], et2_selectAccount.account_types);
@@ -69,8 +69,8 @@ var et2_selectAccount = /** @class */ (function (_super) {
         _this.dialog = null;
         // Reference to widget within dialog
         _this.widgets = null;
-        if (!_attrs.empty_label && !_attrs.readonly && _attrs.multiple) {
-            _attrs.empty_label = _this.egw().lang('Select user or group');
+        if (!_this.options.empty_label && !_this.options.readonly && _this.options.multiple) {
+            _this.options.empty_label = _this.egw().lang('Select user or group');
         }
         // Allow certain widgets inside this one
         _this.supportedWidgetClasses = [et2_widget_link_1.et2_link_entry];
