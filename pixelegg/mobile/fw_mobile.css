@@ -1778,8 +1778,11 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   border-radius: 0 !important;
 }
 #socialBox {
-  float: left;
-  margin-top: 20px;
+  position: absolute;
+  bottom: 10px;
+  display: inline-block;
+  left: 0;
+  width: 27%;
 }
 #socialMedia a {
   margin-left: 10px;
@@ -1878,8 +1881,8 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   position: absolute;
   bottom: 0;
   display: inline-block;
-  left: 0;
-  width: 100%;
+  right: 0;
+  width: 22%;
 }
 #loginMainDiv div#login_footer a.logo_footer {
   float: right;
