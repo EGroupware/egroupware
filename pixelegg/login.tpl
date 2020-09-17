@@ -109,10 +109,11 @@
             </table>
         </form>
     </div>
+	<div id="socialBox"></div>
 	<div id="login_footer">
-		<div id="socialBox"></div>
 		<a href="https://www.egroupware.org" class="logo_footer" target="_blank">
 			<img src="api/templates/default/images/login_logo.png">
 		</a>
 	</div>
+
 </div>
