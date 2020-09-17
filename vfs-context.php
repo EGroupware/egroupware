@@ -21,12 +21,16 @@ Vfs::$is_root = true;
 Vfs::mount("$schema://default/home", '/home', false, false);
 Vfs::$is_root = false;
 var_dump(Vfs::mount());
+var_dump(Vfs::scandir('/home'));
+var_dump(Vfs::find('/home', ['maxdepth' => 1]));
+//var_dump(Vfs::scandir("/home/$sysop"));
 
 var_dump(file_put_contents("vfs://default/home/$sysop/test.txt", "Just a test ;)\n"));
 var_dump("Vfs::proppatch('/home/$sysop/test.txt', [['ns' => Vfs::DEFAULT_PROP_NAMESPACE, 'name' => 'test', 'val' => 'something']])=".array2string(Vfs::proppatch("/home/$sysop/test.txt", [['ns' => Vfs::DEFAULT_PROP_NAMESPACE, 'name' => 'test', 'val' => 'something']])),
 	"Vfs::propfind('/home/$sysop/test.txt')=".json_encode(Vfs::propfind("/home/$sysop/test.txt"), JSON_UNESCAPED_SLASHES));
 
 var_dump($f=fopen("vfs://default/home/$sysop/test.txt", 'r'), fread($f, 100), fclose($f));
+//var_dump(Vfs::find("/home/$sysop", ['maxdepth' => 1]));
 
 Vfs::$is_root = true;
 var_dump(file_put_contents("vfs://default/home/$other/test.txt", "Just a test ;)\n"));

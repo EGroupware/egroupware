@@ -42,9 +42,14 @@ trait UserContextTrait
 		{
 			$this->context = $url_or_context;
 		}
-		elseif(is_string($url_or_context))
+		else
 		{
-			$this->check_set_context($url_or_context, true);
+			$this->context = stream_context_get_default();
+
+			if(is_string($url_or_context))
+			{
+				$this->check_set_context($url_or_context, true);
+			}
 		}
 	}
 

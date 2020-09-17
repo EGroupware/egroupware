@@ -315,6 +315,7 @@ class Vfs extends Vfs\Base
 	 *
 	 * @param string|array $base base of the search
 	 * @param array $options =null the following keys are allowed:
+	 * <code>
 	 * - type => {d|f|F|!l} d=dirs, f=files (incl. symlinks), F=files (incl. symlinks to files), !l=no symlinks, default all
 	 * - depth => {true|false(default)} put the contents of a dir before the dir itself
 	 * - dirsontop => {true(default)|false} allways return dirs before the files (two distinct blocks)
@@ -334,6 +335,7 @@ class Vfs extends Vfs\Base
 	 * - follow => {true|false(default)} follow symlinks
 	 * - hidden => {true|false(default)} include hidden files (name starts with a '.' or is Thumbs.db)
 	 * - show-deleted => {true|false(default)} get also set by hidden, if not explicitly set otherwise (requires versioning!)
+	 * </code>
 	 * @param string|array/true $exec =null function to call with each found file/dir as first param and stat array as last param or
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params =null further params for exec as array, path is always the first param and stat the last!
@@ -352,11 +354,11 @@ class Vfs extends Vfs\Base
 		// process some of the options (need to be done only once)
 		if (isset($options['name']) && !isset($options['name_preg']))	// change from simple *,? wildcards to preg regular expression once
 		{
-			$options['name_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['name'])).'$/i';
+			$options['name_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['name'], '/')).'$/i';
 		}
 		if (isset($options['path']) && !isset($options['preg_path']))	// change from simple *,? wildcards to preg regular expression once
 		{
-			$options['path_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['path'])).'$/i';
+			$options['path_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['path'], '/')).'$/i';
 		}
 		if (!isset($options['uid']))
 		{
@@ -391,7 +393,11 @@ class Vfs extends Vfs\Base
 		}
 
 		// make all find options available as stream context option "find", to allow plugins to use them
-		$context = stream_context_create(array(self::SCHEME => array('find' => $options)));
+		$context = stream_context_create(array_merge_recursive(stream_context_get_options(stream_context_get_default()), [
+			self::SCHEME => [
+				'find' => $options,
+			],
+		]));
 
 		$url = $options['url'];
 
