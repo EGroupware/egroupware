@@ -668,7 +668,7 @@
 		// proccess html their content.
 		if (_currentRawData.length>0 && _currentRawData.length == _rawData.length) return;
 		_currentRawData = _rawData;
-		let old_notifymessages = notifymessages;
+		var old_notifymessages = notifymessages;
 		notifymessages = {};
 		var browser_notify = _browser_notify || this.check_browser_notify();
 		for (var i=0; i < _rawData.length; i++)
@@ -745,7 +745,7 @@
 			}
 
 		}
-		let egwpopup = document.getElementById('egwpopup');
+		var egwpopup = document.getElementById('egwpopup');
 		switch(egw.preference('egwpopup_verbosity', 'notifications'))
 		{
 			case 'low':

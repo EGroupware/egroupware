@@ -218,7 +218,7 @@
 		}
 
 		// set grants if given for push
-		let egw_grants = egw_script.getAttribute('data-grants');
+		var egw_grants = egw_script.getAttribute('data-grants');
 		if (egw_grants)
 		{
 			egw.set_grants(JSON.parse(egw_grants));
