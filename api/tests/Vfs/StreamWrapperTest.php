@@ -24,14 +24,6 @@ class StreamWrapperTest extends StreamWrapperBase
 	protected function setUp() : void
 	{
 		parent::setUp();
-
-		$this->files[] = $this->test_file = $this->getFilename();
-
-		// Check that the file is not there
-		$pre_start = Vfs::stat($this->test_file);
-		$this->assertEquals(null,$pre_start,
-				"File '$this->test_file' was there before we started, check clean up"
-		);
 	}
 
 	protected function tearDown() : void
@@ -39,6 +31,21 @@ class StreamWrapperTest extends StreamWrapperBase
 		// Do local stuff first, parent will remove stuff
 
 		parent::tearDown();
+	}
+
+	public function testSimpleReadWrite(): string
+	{
+		$this->files[] = $this->test_file = $this->getFilename();
+
+		return parent::testSimpleReadWrite();
+	}
+
+
+	public function testNoReadAccess(): void
+	{
+		$this->files[] = $this->test_file = $this->getFilename();
+
+		parent::testNoReadAccess();
 	}
 
 }

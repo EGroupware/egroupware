@@ -26,16 +26,6 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 		parent::setUp();
 
 		$this->mountLinks('/apps');
-
-		$info_id = $this->make_infolog();
-		$this->files[] = $this->test_file = $this->getFilename(null, $info_id);
-
-		// Check that the file is not there
-		$pre_start = Vfs::stat($this->test_file);
-		$this->assertEquals(null,$pre_start,
-				"File '$this->test_file' was there before we started, check clean up"
-		);
-
 	}
 
 	protected function tearDown() : void
@@ -49,6 +39,22 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 		}
 
 		parent::tearDown();
+	}
+
+	public function testSimpleReadWrite(): string
+	{
+		$info_id = $this->make_infolog();
+		$this->files[] = $this->test_file = $this->getFilename(null, $info_id);
+
+		return parent::testSimpleReadWrite();
+	}
+
+	public function testNoReadAccess(): void
+	{
+		$info_id = $this->make_infolog();
+		$this->files[] = $this->test_file = $this->getFilename(null, $info_id);
+
+		parent::testNoReadAccess();
 	}
 
 	/**
@@ -67,8 +73,13 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 		$this->entries[] = $element_id;
 		return $element_id;
 	}
+
 	/**
 	 * Make a filename that reflects the current test
+	 * @param $path
+	 * @param $info_id
+	 * @return string
+	 * @throws \ReflectionException
 	 */
 	protected function getFilename($path, $info_id)
 	{

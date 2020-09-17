@@ -55,6 +55,24 @@ class StreamWrapperBase extends LoggedInTest
 		'maxdepth' => 5
 	);
 
+	// User for testing - we share with this user & log in as them for checking
+	protected $account_id;
+
+	// File that should not be available due to permissions
+	protected $no_access;
+
+	// Use a completely new user, so we know it's there and "clean"
+	protected $account = array(
+		'account_lid' => 'user_test',
+		'account_firstname' => 'Access',
+		'account_lastname' => 'Test',
+		'account_passwd' => 'passw0rd',
+		'account_passwd_2' => 'passw0rd',
+		// Don't let them in Default, any set ACLs will interfere with tests
+		'account_primary_group' => 'Testers',
+		'account_groups' => ['Testers']
+	);
+
 	protected function setUp() : void
 	{
 		// Check we have basic access
@@ -77,7 +95,6 @@ class StreamWrapperBase extends LoggedInTest
 		// Also, further tests that access the filesystem fail if we don't
 		Vfs::clearstatcache();
 		Vfs::init_static();
-		Vfs\StreamWrapper::init_static();
 
 		// Need to ask about mounts, or other tests fail
 		Vfs::mount();
@@ -87,10 +104,17 @@ class StreamWrapperBase extends LoggedInTest
 
 		if(static::LOG_LEVEL > 1)
 		{
+			if($this->account_id) error_log($this->getName() . ' user to be removed: ' . $this->account_id);
 			error_log($this->getName() . ' files for removal:');
 			error_log(implode("\n",$this->files));
 			error_log($this->getName() . ' mounts for removal:');
 			error_log(implode("\n",$this->mounts));
+		}
+
+		// Remove our other test user
+		if($this->account_id)
+		{
+			$GLOBALS['egw']->accounts->delete($this->account_id);
 		}
 
 		// Remove any added files (as root to limit versioning issues)
@@ -112,28 +136,30 @@ class StreamWrapperBase extends LoggedInTest
 		Vfs::$is_root = $backup;
 	}
 
-	/**
-	 * Make a filename that reflects the current test
-	 */
-	protected function getFilename($path = null)
-	{
-		if(is_null($path)) $path = Vfs::get_home_dir().'/';
-		if(substr($path,-1,1) !== '/') $path = $path . '/';
-
-		$reflect = new \ReflectionClass($this);
-		return $path . $reflect->getShortName() . '_' . $this->getName() . '.txt';
-	}
+	/////
+	/// These tests will be run by every extending class, with
+	/// the extending class's setUp().  They can be overridden, but
+	/// we get free tests this way with no copy/paste
+	/////
 
 	/**
 	 * Simple test that we can write something and it's there
 	 * By putting it in the base class, this test gets run for every backend
 	 */
-	public function testSimpleReadWrite() : void
+	public function testSimpleReadWrite() : string
 	{
 		if(!$this->test_file)
 		{
 			$this->markTestSkipped("No test file set - set it in setUp() or overriding test");
 		}
+
+		// Check that the file is not there
+		$pre_start = Vfs::stat($this->test_file);
+		$this->assertEquals(null,$pre_start,
+				"File '$this->test_file' was there before we started, check clean up"
+		);
+
+		// Write
 		$contents = $this->getName() . "\nJust a test ;)\n";
 		$this->assertNotFalse(
 				file_put_contents(Vfs::PREFIX . $this->test_file, $contents),
@@ -145,31 +171,42 @@ class StreamWrapperBase extends LoggedInTest
 				$contents, file_get_contents(Vfs::PREFIX . $this->test_file),
 				"Read file contents do not match what was written"
 		);
+
+		return $this->test_file;
 	}
+
 	/**
 	 * Simple delete of a file
 	 * By putting it in the base class, this test gets run for every backend
 	 *
+	 * @depends testSimpleReadWrite
 	 */
-	public function testDelete() : void
+	public function testDelete($file) : void
 	{
-		if(!$this->test_file)
+		if(!$this->test_file && !$file)
 		{
 			$this->markTestSkipped("No test file set - set it in setUp() or overriding test");
 		}
 
 		// Write
-		$contents = $this->getName() . "\nJust a test ;)\n";
-		$this->assertNotFalse(
-				file_put_contents(Vfs::PREFIX . $this->test_file, $contents),
-				"Could not write file $this->test_file"
-		);
+		if(!$file)
+		{
+			$contents = $this->getName() . "\nJust a test ;)\n";
+			$this->assertNotFalse(
+					file_put_contents(Vfs::PREFIX . $this->test_file, $contents),
+					"Could not write file $this->test_file"
+			);
 
-		$start = Vfs::stat($this->test_file);
-		$this->assertNotNull(
-				$start,
-				"File '$this->test_file' was not what we expected to find after writing"
-		);
+			$start = Vfs::stat($this->test_file);
+			$this->assertNotNull(
+					$start,
+					"File '$this->test_file' was not what we expected to find after writing"
+			);
+		}
+		else
+		{
+			$this->test_file = $file;
+		}
 
 		Vfs::unlink($this->test_file);
 
@@ -177,6 +214,115 @@ class StreamWrapperBase extends LoggedInTest
 		$this->assertEquals(null,$post,
 				"File '$this->test_file' was there after deleting"
 		);
+	}
+
+	/**
+	 * Check that a user with no permission to a file cannot access the file
+	 *
+	 * @depends testSimpleReadWrite
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	public function testNoReadAccess() : void
+	{
+		if(!$this->test_file)
+		{
+			$this->markTestSkipped("No test file set - set it in setUp() or overriding test");
+		}
+
+		// Check that the file is not there
+		$pre_start = Vfs::stat($this->test_file);
+		$this->assertEquals(null,$pre_start,
+				"File '$this->test_file' was there before we started, check clean up"
+		);
+
+		// Write
+		$file = $this->test_file;
+		$contents = $this->getName() . "\nJust a test ;)\n";
+		$this->assertNotFalse(
+				file_put_contents(Vfs::PREFIX . $file, $contents),
+				"Could not write file $file"
+		);
+
+		// Create another user who has no access to our file
+		$user_b = $this->makeUser();
+
+		// Log in as them
+		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		// Check the file
+		$post = Vfs::stat($file);
+		$this->assertEquals(null,$post,
+				"File '$file' was accessible by another user who had no permission"
+		);
+		$this->assertFalse(
+				file_get_contents(Vfs::PREFIX . $file),
+				"Problem reading someone else's file with no permission"
+		);
+
+	}
+
+	////// Handy functions ///////
+
+	/**
+	 * Create a test user, returns the account ID
+	 *
+	 * @return int
+	 */
+	protected function makeUser(Array $account = []) : int
+	{
+		if(count($account) == 0)
+		{
+			$account = $this->account;
+		}
+		if(($account_id = $GLOBALS['egw']->accounts->name2id($account['account_lid'])))
+		{
+			// Delete if there in case something went wrong
+			$GLOBALS['egw']->accounts->delete($account_id);
+		}
+
+		// It needs its own group too, Default will mess with any ACL tests
+		if(!$GLOBALS['egw']->accounts->exists($account['account_primary_group']))
+		{
+			$group = $this->makeTestGroup();
+		}
+
+		// Execute
+		$command = new \admin_cmd_edit_user(false, $account);
+		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->run();
+		$this->account_id = $command->account;
+
+		if($group)
+		{
+			// Had to create the group, but we don't want current user in it
+			$remove_group = new \admin_cmd_edit_group('Testers',['account_lid' => 'Testers', 'account_members' => [$this->account_id]]);
+			$remove_group->run();
+		}
+		return $this->account_id;
+	}
+
+	/**
+	 * Make a test group we can put our users in to avoid any ACLs on Default group
+	 */
+	protected function makeTestGroup()
+	{
+		// Execute
+		$command = new \admin_cmd_edit_group(false, ['account_lid' => 'Testers', 'account_members' => $GLOBALS['egw_info']['user']['account_id']]);
+		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->run();
+		return $command->account;
+	}
+
+	/**
+	 * Make a filename that reflects the current test
+	 */
+	protected function getFilename($path = null)
+	{
+		if(is_null($path)) $path = Vfs::get_home_dir().'/';
+		if(substr($path,-1,1) !== '/') $path = $path . '/';
+
+		$reflect = new \ReflectionClass($this);
+		return $path . $reflect->getShortName() . '_' . $this->getName() . '.txt';
 	}
 
 	/**

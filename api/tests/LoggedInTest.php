@@ -74,6 +74,11 @@ abstract class LoggedInTest extends TestCase
 	 */
 	public static function tearDownAfterClass() : void
 	{
+		// Clean up VFS
+		Vfs::clearstatcache();
+		// Reset stream context, or current user will always be there
+		stream_context_set_option(stream_context_get_default(),['vfs'=>['user' => null]]);
+
 		if($GLOBALS['egw'])
 		{
 			if($GLOBALS['egw']->session)
@@ -181,6 +186,9 @@ abstract class LoggedInTest extends TestCase
 		// Disable asyc while we test
 		$GLOBALS['egw_info']['server']['asyncservice'] = 'off';
 
+		// Set up Vfs
+		Vfs::init_static();
+		Vfs\StreamWrapper::init_static();
 		while(ob_get_level() > $ob_level)
 		{
 			ob_end_flush();
@@ -227,5 +235,20 @@ abstract class LoggedInTest extends TestCase
 		}
 
 		return true;
+	}
+
+	/**
+	 * Log out the current user, log in as the given user
+	 *
+	 * @param $account_lid
+	 * @param $password
+	 */
+	protected function switchUser($account_lid, $password)
+	{
+		// Log out
+		self::tearDownAfterClass();
+
+		// Log in
+		static::load_egw($account_lid,$password);
 	}
 }
