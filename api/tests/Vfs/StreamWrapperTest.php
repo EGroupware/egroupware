@@ -48,4 +48,22 @@ class StreamWrapperTest extends StreamWrapperBase
 		parent::testNoReadAccess();
 	}
 
+	public function testWithAccess() : void
+	{
+		// Put it in the group directory this time so we can give access
+		$this->files[] = $this->test_file = $this->getFilename('/home/Default');
+
+		parent::testWithAccess();
+	}
+
+	protected function allowAccess(string $test_name, string $test_file, int $test_user, string $needed)
+	{
+		// We'll allow access by putting test user in Default group
+		$command = new \admin_cmd_edit_user($test_user, ['account_groups' => array_merge($this->account['account_groups'],['Default'])]);
+		$command->run();
+
+		// Add explicit permission on group
+		Vfs::chmod($test_file, Vfs::mode2int('g+'.$needed));
+
+	}
 }
