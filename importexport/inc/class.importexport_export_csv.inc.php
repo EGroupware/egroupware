@@ -246,16 +246,17 @@ class importexport_export_csv implements importexport_iface_export_record
 			switch($c_field['type']) {
 				case 'date':
 				case 'date-time':
-					if ($c_field['values']['format'] && (is_array($record) ? $record[$name] : $record->$name))
+					if ($c_field['values']['format'])
 					{
 						// Date has custom format.  Convert so it's standard, don't do normal processing
+						$type = $c_field['type'];
 						$format = $c_field['values']['format'];
-						$methods[$name] = function($val) use ($format)
+						$methods[$name] = function($val) use ($type, $format)
 						{
 							$date = Api\DateTime::createFromFormat($format, $val, Api\DateTime::$user_timezone);
 							if($date)
 							{
-								return $date->format(APi\DateTime::DATABASE);
+								return Api\DateTime::to($date, $type == 'date' ? true : '');
 							}
 						};
 					}
