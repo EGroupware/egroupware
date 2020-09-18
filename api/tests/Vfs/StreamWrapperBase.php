@@ -21,7 +21,7 @@ use EGroupware\Api\Vfs;
 use EGroupware\Stylite\Vfs\Versioning;
 
 
-class StreamWrapperBase extends LoggedInTest
+abstract class StreamWrapperBase extends LoggedInTest
 {
 	/**
 	 * How much should be logged to the console (stdout)
@@ -84,6 +84,7 @@ class StreamWrapperBase extends LoggedInTest
 		{
 			$this->markTestSkipped('No write access to files dir "' .$GLOBALS['egw_info']['server']['files_dir'].'"' );
 		}
+		$this->mount();
 	}
 
 	protected function tearDown() : void
@@ -249,9 +250,11 @@ class StreamWrapperBase extends LoggedInTest
 		// Log in as them
 		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
 
+		$this->mount();
+
 		// Check the file
-		$post = Vfs::stat($file);
-		$this->assertEquals(null,$post,
+		$this->assertFalse(
+				Vfs::is_readable($file),
 				"File '$file' was accessible by another user who had no permission"
 		);
 		$this->assertFalse(
@@ -304,6 +307,8 @@ class StreamWrapperBase extends LoggedInTest
 
 		// Log in as them
 		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		$this->mount();
 
 		// Check the file
 		$post = Vfs::stat($file);
@@ -385,6 +390,26 @@ class StreamWrapperBase extends LoggedInTest
 		$reflect = new \ReflectionClass($this);
 		return $path . $reflect->getShortName() . '_' . $this->getName() . '.txt';
 	}
+
+	/**
+	 * Mount the needed filesystem
+	 *
+	 * This may be called multiple times for each test as we change users, logout, etc.
+	 */
+	abstract protected function mount() : void;
+
+	/**
+	 * Allow access to the given file for the given user ID
+	 *
+	 * Using whatever way works best for the mount/streamwrapper being tested, allow the user access
+	 *
+	 * @param string $test_name
+	 * @param string $test_file
+	 * @param int $test_user
+	 * @param string $needed r, w, rw
+	 * @return mixed
+	 */
+	abstract protected function allowAccess(string $test_name, string $test_file, int $test_user, string $needed) : void;
 
 	/**
 	 * Mount the app entries into the filesystem

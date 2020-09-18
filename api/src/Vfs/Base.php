@@ -12,6 +12,7 @@
 
 namespace EGroupware\Api\Vfs;
 
+use EGroupware\Api\Config;
 use EGroupware\Api\Vfs;
 
 /**
@@ -133,7 +134,7 @@ class Base
 
 		if ($persitent_mount)
 		{
-			Api\Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
+			Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 			$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
 			// invalidate session cache
 			if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
@@ -164,7 +165,7 @@ class Base
 		}
 		unset(self::$fstab[$path]);
 
-		\EGroupware\Api\Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
+		Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
 		// invalidate session cache
 		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited

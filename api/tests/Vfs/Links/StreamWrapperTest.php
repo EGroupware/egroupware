@@ -25,7 +25,6 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 	{
 		parent::setUp();
 
-		$this->mountLinks('/apps');
 	}
 
 	protected function tearDown() : void
@@ -65,13 +64,18 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 		parent::testWithAccess();
 	}
 
-	protected function allowAccess(string $test_name, string $test_file, int $test_user, string $needed)
+	protected function allowAccess(string $test_name, string $test_file, int $test_user, string $needed) : void
 	{
 		// We'll allow access by putting test user in responsible
 		$so = new \infolog_so();
-		$element = $so->read($this->entries[0]);
+		$element = $so->read(Array('info_id' => $this->entries[0]));
 		$element['info_responsible'] = [$test_user];
-		$so->write($so);
+		$so->write($element);
+	}
+
+	protected function mount() : void
+	{
+		$this->mountLinks('/apps');
 	}
 
 	/**

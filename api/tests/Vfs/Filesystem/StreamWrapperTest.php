@@ -9,42 +9,33 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-namespace EGroupware\Api\Vfs;
+namespace EGroupware\Api\Vfs\Filesystem;
 
-require_once __DIR__ . '/StreamWrapperBase.php';
+require_once __DIR__ . '/../StreamWrapperBase.php';
 
 use EGroupware\Api;
-use EGroupware\Api\LoggedInTest as LoggedInTest;
 use EGroupware\Api\Vfs;
-use EGroupware\Stylite\Vfs\Versioning;
 
 
-class StreamWrapperTest extends StreamWrapperBase
+class StreamWrapperTest extends Vfs\StreamWrapperBase
 {
+	public static $mountpoint = '/test/filesystem';
+
 	protected function setUp() : void
 	{
 		parent::setUp();
+
 		$this->files[] = $this->test_file = $this->getFilename();
 	}
 
 	protected function tearDown() : void
 	{
-		// Do local stuff first, parent will remove stuff
-
 		parent::tearDown();
 	}
 
-	public function testWithAccess() : void
+	protected function  mount(): void
 	{
-		// Put it in the group directory this time so we can give access
-		$this->files[] = $this->test_file = $this->getFilename('/home/Default');
-
-		parent::testWithAccess();
-	}
-
-	protected function mount(): void
-	{
-		// Nothing here
+		$this->mountFilesystem(static::$mountpoint);
 	}
 
 	protected function allowAccess(string $test_name, string $test_file, int $test_user, string $needed) : void
@@ -55,6 +46,13 @@ class StreamWrapperTest extends StreamWrapperBase
 
 		// Add explicit permission on group
 		Vfs::chmod($test_file, Vfs::mode2int('g+'.$needed));
+	}
 
+	/**
+	 * Make a filename that reflects the current test
+	 */
+	protected function getFilename($path = null)
+	{
+		return parent::getFilename(static::$mountpoint);
 	}
 }

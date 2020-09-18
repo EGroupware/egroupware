@@ -79,6 +79,9 @@ abstract class LoggedInTest extends TestCase
 		// Reset stream context, or current user will always be there
 		stream_context_set_option(stream_context_get_default(),['vfs'=>['user' => null]]);
 
+		// Clear some link caching
+		Link::init_static(true);
+
 		if($GLOBALS['egw'])
 		{
 			if($GLOBALS['egw']->session)
