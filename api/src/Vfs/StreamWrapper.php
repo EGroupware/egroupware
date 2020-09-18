@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware API: VFS - stream wrapper interface
+ * EGroupware API: VFS - stream wrapper
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -16,7 +16,7 @@ use EGroupware\Api\Vfs;
 use EGroupware\Api;
 
 /**
- * eGroupWare API: VFS - stream wrapper interface
+ * VFS - stream wrapper
  *
  * The new vfs stream wrapper uses a kind of fstab to mount different filesystems / stream wrapper types
  * together for eGW's virtual file system.
@@ -25,7 +25,9 @@ use EGroupware\Api;
  */
 class StreamWrapper extends Base implements StreamWrapperIface
 {
-	use UserContextTrait;
+	use UserContextTrait {
+		check_access as parent_check_access;
+	}
 
 	const PREFIX = 'vfs://default';
 
@@ -108,6 +110,26 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	 * @var int
 	 */
 	private $extra_dir_ptr;
+
+	/**
+	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
+	 * which is wrong in case of our vfs, as we use the current users id and memberships
+	 *
+	 * @param string $path path
+	 * @param int $check mode to check: one or more or'ed together of: 4 = Vfs::READABLE,
+	 * 	2 = Vfs::WRITABLE, 1 = Vfs::EXECUTABLE
+	 * @param array|boolean $stat =null stat array or false, to not query it again
+	 * @return boolean
+	 */
+	function check_access($path, $check, $stat=null)
+	{
+		$ret = self::_call_on_backend('check_access', [$path, $check, $stat], "null", 0, true);
+		if (!isset($ret))
+		{
+			$ret = $this->parent_check_access($path, $check, $stat);
+		}
+		return $ret;
+	}
 
 	/**
 	 * Resolve the given path according to our fstab AND symlinks
@@ -672,7 +694,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		// we have no context, but $path is a URL with a valid user --> set it
 		$this->check_set_context($path);
 
-		if (!($url = self::resolve_url($path,!($flags & STREAM_URL_STAT_LINK), $check_symlink_components)))
+		if (!($url = static::resolve_url($path,!($flags & STREAM_URL_STAT_LINK), $check_symlink_components)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) can NOT resolve path!");
 			return false;
@@ -692,7 +714,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 			{
 				$stat = @stat($url);	// suppressed the stat failed warnings
 
-					if ($stat && ($stat['mode'] & self::MODE_LINK))
+				if ($stat && ($stat['mode'] & self::MODE_LINK))
 				{
 					if (!$check_symlink_depth)
 					{

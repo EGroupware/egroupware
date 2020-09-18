@@ -44,7 +44,10 @@ trait UserContextTrait
 		}
 		else
 		{
-			$this->context = stream_context_get_default();
+			if (!isset($this->context))	// PHP set's it before constructor is called!
+			{
+				$this->context = stream_context_get_default();
+			}
 
 			if(is_string($url_or_context))
 			{

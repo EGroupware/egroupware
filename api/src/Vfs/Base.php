@@ -498,8 +498,8 @@ class Base
 	 *
 	 * @param string $name
 	 * @param array $params first param has to be the path, otherwise we can not determine the correct wrapper
-	 * @param boolean $fail_silent =false should only false be returned if function is not supported by the backend,
-	 * 	or should an E_USER_WARNING error be triggered (default)
+	 * @param boolean|"null" $fail_silent =false should only false be returned if function is not supported by the backend,
+	 * 	or should an E_USER_WARNING error be triggered (default), or "null": return NULL
 	 * @param int $path_param_key =0 key in params containing the path, default 0
 	 * @param boolean $instanciate =false true: instanciate the class to call method $name, false: static call
 	 * @return mixed return value of backend or false if function does not exist on backend
@@ -527,7 +527,7 @@ class Base
 				if (!class_exists($class = Vfs\StreamWrapper::scheme2class($scheme)) || !method_exists($class,$name))
 				{
 					if (!$fail_silent) trigger_error("Can't $name for scheme $scheme!\n",E_USER_WARNING);
-					return false;
+					return $fail_silent === 'null' ? null : false;
 				}
 				$callback = [$instanciate ? new $class($url) : $class, $name];
 				if (!is_array($pathes))
