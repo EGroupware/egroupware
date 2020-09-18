@@ -529,8 +529,10 @@ div.ui-toolbar-menulist {
 .et2_toolbar_actionlist {
 	// zusammengesetzte Buttons
 	.et2_toolbar-dropdown {
-		margin: -4px 5px 2px 1px;
 		.rounded(3px);
+		padding: 3px !important;
+		background: #fafafa !important;
+		background-color: #fafafa !important;
 		.et2_dropdown {
 			.box_shadow_none;
 			border: none !important;
@@ -540,12 +542,13 @@ div.ui-toolbar-menulist {
 				margin: 0px;
 				padding-top: -3px !important;
 				.box_shadow_none;
-				background: @gray_10 !important;
-				background-color: @gray_10 !important;
+				background: #fafafa !important;
+				background-color: #fafafa !important;
 				img {
 					.dimension_width_height_s;
-					top: 3px;
+					vertical-align: text-bottom;
 				}
+				min-height: auto;
 			}
 		}
 		.et2_button_icon
