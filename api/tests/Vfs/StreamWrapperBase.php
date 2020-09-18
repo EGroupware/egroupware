@@ -261,6 +261,67 @@ class StreamWrapperBase extends LoggedInTest
 
 	}
 
+
+	/**
+	 * Check that a user with permission to a file can access the file
+	 *
+	 * @depends testSimpleReadWrite
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	public function testWithAccess() : void
+	{
+		if(!$this->test_file)
+		{
+			$this->markTestSkipped("No test file set - set it in setUp() or overriding test");
+		}
+
+		// Check that the file is not there
+		$pre_start = Vfs::stat($this->test_file);
+		$this->assertEquals(null,$pre_start,
+				"File '$this->test_file' was there before we started, check clean up"
+		);
+
+		// Write
+		$file = $this->test_file;
+		$contents = $this->getName() . "\nJust a test ;)\n";
+		$this->assertNotFalse(
+				file_put_contents(Vfs::PREFIX . $file, $contents),
+				"Could not write file $file"
+		);
+		$pre = Vfs::stat($this->test_file);
+
+
+		// Create another user who has no access to our file
+		$user_b = $this->makeUser();
+
+		// Allow access
+		$this->allowAccess(
+				$this->getName(false),
+				$file,
+				$user_b,
+				'r'
+		);
+
+		// Log in as them
+		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		// Check the file
+		$post = Vfs::stat($file);
+		$this->assertNotNull($post,
+				"File '$file' was not accessible by another user who had permission"
+		);
+		$this->assertEquals(
+				$contents,
+				file_get_contents(Vfs::PREFIX . $file),
+				"Problem reading someone else's file with permission"
+		);
+		$this->assertTrue(
+				Vfs::is_readable($file),
+				"Vfs says $file is not readable.  It should be."
+		);
+
+	}
+
 	////// Handy functions ///////
 
 	/**

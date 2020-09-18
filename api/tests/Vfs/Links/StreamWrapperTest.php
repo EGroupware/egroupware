@@ -57,6 +57,23 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 		parent::testNoReadAccess();
 	}
 
+	public function testWithAccess(): void
+	{
+		$info_id = $this->make_infolog();
+		$this->files[] = $this->test_file = $this->getFilename(null, $info_id);
+
+		parent::testWithAccess();
+	}
+
+	protected function allowAccess(string $test_name, string $test_file, int $test_user, string $needed)
+	{
+		// We'll allow access by putting test user in responsible
+		$so = new \infolog_so();
+		$element = $so->read($this->entries[0]);
+		$element['info_responsible'] = [$test_user];
+		$so->write($so);
+	}
+
 	/**
 	 * Make an infolog entry
 	 */

@@ -19,7 +19,7 @@ use EGroupware\Api\Vfs;
 use EGroupware\Stylite\Vfs\Versioning;
 
 
-class ProppatchTest extends StreamWrapperBase
+class ProppatchTest extends LoggedInTest
 {
 	protected function setUp() : void
 	{
@@ -113,4 +113,17 @@ class ProppatchTest extends StreamWrapperBase
 		);
 
 	}
+
+	/**
+	 * Make a filename that reflects the current test
+	 */
+	protected function getFilename($path = null)
+	{
+		if(is_null($path)) $path = Vfs::get_home_dir().'/';
+		if(substr($path,-1,1) !== '/') $path = $path . '/';
+
+		$reflect = new \ReflectionClass($this);
+		return $path . $reflect->getShortName() . '_' . $this->getName(false) . '.txt';
+	}
+
 }
