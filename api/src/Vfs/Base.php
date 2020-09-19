@@ -85,7 +85,7 @@ class Base
 
 		if (!isset($GLOBALS['egw_info']['server']['vfs_fstab']))	// happens eg. in setup
 		{
-			$api_config = Api\Config::read('phpgwapi');
+			$api_config = Config::read('phpgwapi');
 			if (isset($api_config['vfs_fstab']) && is_array($api_config['vfs_fstab']))
 			{
 				self::$fstab = $api_config['vfs_fstab'];
