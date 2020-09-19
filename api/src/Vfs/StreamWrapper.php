@@ -602,6 +602,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		}
 		self::symlinkCache_remove($path);
 		$ok = rmdir($url, $this->context);
+		clearstatcache();	// otherwise next stat call still returns it
 
 		// call "vfs_rmdir" hook, only after successful rmdir
 		if ($ok && !class_exists('setup_process', false))

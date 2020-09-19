@@ -27,16 +27,12 @@ class StreamWrapper extends Vfs\StreamWrapper
 	const PREFIX = 'sharing://default';
 
 	/**
-	 * Resolve the given path according to our fstab
+	 * Method to replace sharing url with sharee and shared path, and to shortcut Vfs\StreamWrapper::resolve_url()
 	 *
-	 * @param string $url
-	 * @param boolean $do_symlink =true is a direct match allowed, default yes (must be false for a lstat or readlink!)
-	 * @param boolean $use_symlinkcache =true
-	 * @param boolean $replace_user_pass_host =true replace $user,$pass,$host in url, default true, if false result is not cached
-	 * @param boolean $fix_url_query =false true append relativ path to url query parameter, default not
-	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
+	 * @param $url
+	 * @return bool|string
 	 */
-	static function resolve_url($url, $do_symlink = true, $use_symlinkcache = true, $replace_user_pass_host = true, $fix_url_query = false)
+	static function replace($url)
 	{
 		$parts = Vfs::parse_url($url);
 
@@ -63,19 +59,24 @@ class StreamWrapper extends Vfs\StreamWrapper
 	}
 
 	/**
+	 * Resolve the given path according to our fstab
+	 *
+	 * @param string $url
+	 * @param boolean $do_symlink =true is a direct match allowed, default yes (must be false for a lstat or readlink!)
+	 * @param boolean $use_symlinkcache =true
+	 * @param boolean $replace_user_pass_host =true replace $user,$pass,$host in url, default true, if false result is not cached
+	 * @param boolean $fix_url_query =false true append relativ path to url query parameter, default not
+	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
+	 */
+	static function resolve_url($url, $do_symlink = true, $use_symlinkcache = true, $replace_user_pass_host = true, $fix_url_query = false)
+	{
+		return self::replace($url);
+	}
+
+	/**
 	 * This method is called in response to stat() calls on the URL paths associated with the wrapper.
 	 *
-	 * It should return as many elements in common with the system function as possible.
-	 * Unknown or unavailable values should be set to a rational value (usually 0).
-	 *
-	 * If you plan to use your wrapper in a require_once you need to define stream_stat().
-	 * If you plan to allow any other tests like is_file()/is_dir(), you have to define url_stat().
-	 * stream_stat() must define the size of the file, or it will never be included.
-	 * url_stat() must define mode, or is_file()/is_dir()/is_executable(), and any of those functions affected by clearstatcache() simply won't work.
-	 * It's not documented, but directories must be a mode like 040777 (octal), and files a mode like 0100666.
-	 * If you wish the file to be executable, use 7s instead of 6s.
-	 * The last 3 digits are exactly the same thing as what you pass to chmod.
-	 * 040000 defines a directory, and 0100000 defines a file.
+	 * Overwritten to set sharee as user in context for ACL checks.
 	 *
 	 * @param string $path
 	 * @param int $flags holds additional flags set by the streams API. It can hold one or more of the following values OR'd together:
@@ -98,57 +99,6 @@ class StreamWrapper extends Vfs\StreamWrapper
 		}
 		return $stat;
 	}
-
-	/**
-	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
-	 * which is wrong in case of our vfs, as we use the current users id and memberships
-	 *
-	 * @param string $path path
-	 * @param int $check mode to check: one or more or'ed together of: 4 = Vfs::READABLE,
-	 * 	2 = Vfs::WRITABLE, 1 = Vfs::EXECUTABLE
-	 * @param array|boolean $stat =null stat array or false, to not query it again
-	 * @return boolean
-	 */
-	function check_access($path, $check, $stat=null)
-	{
-		if (!isset($stat)) $stat = $this->url_stat($path, 0);
-
-		return $this->parent_check_access($path, $check, $stat);
-	}
-
-	/**
-	 * Store properties for a single ressource (file or dir)
-	 *
-	 * @param string $path string with path
-	 * @param array $props array of array with values for keys 'name', 'ns', 'val' (null to delete the prop)
-	 * @return boolean true if props are updated, false otherwise (eg. ressource not found)
-	 */
-	function proppatch($path,array $props)
-	{
-		if (!($url = self::resolve_url($path)))
-		{
-			return false;
-		}
-		return Vfs::proppatch($url, $props);
-	}
-
-	/**
-	 * Read properties for a ressource (file, dir or all files of a dir)
-	 *
-	 * @param array|string $path (array of) string with path
-	 * @param string $ns ='http://egroupware.org/' namespace if propfind should be limited to a single one, otherwise use null
-	 * @return array|boolean array with props (values for keys 'name', 'ns', 'val'), or path => array of props for is_array($path)
-	 * 	false if $path does not exist
-	 */
-	function propfind($path,$ns=self::DEFAULT_PROP_NAMESPACE)
-	{
-		if (!($url = self::resolve_url($path)))
-		{
-			return false;
-		}
-		return Vfs::propfind($url, $ns);
-	}
-
 
 	/**
 	 * Register __CLASS__ for self::SCHEMA

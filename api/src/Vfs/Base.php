@@ -275,6 +275,14 @@ class Base
 
 				if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '$url'");
 
+				if (($class = self::scheme2class($scheme)) && is_callable([$class, 'replace']))
+				{
+					if (!($replace = call_user_func([$class, 'replace'], $url)))
+					{
+						return false;
+					}
+					$url = $replace;
+				}
 				if ($replace_user_pass_host) self::$resolve_url_cache[$path] = $url;
 
 				return $url;
