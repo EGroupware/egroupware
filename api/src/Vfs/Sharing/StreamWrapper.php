@@ -50,7 +50,7 @@ class StreamWrapper extends Vfs\StreamWrapper
 				throw new Api\Exception\NotFound('Share owner not found', 404);
 			}
 			return Vfs::concat('vfs://'.$account_lid.'@default'.Vfs::parse_url($share['share_path'], PHP_URL_PATH), $rel_path).
-				($share['share_writable'] ? '' : '?ro=1');
+				($share['share_writable'] & 1 ? '' : '?ro=1');
 		}
 		catch (Api\Exception $e) {
 			_egw_log_exception($e);
