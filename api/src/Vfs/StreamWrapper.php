@@ -693,7 +693,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true, $check_symlink_depth=self::MAX_SYMLINK_DEPTH, $try_reconnect=true )
 	{
 		// we have no context, but $path is a URL with a valid user --> set it
-		$this->check_set_context($path);
+		$this->check_set_context($path, true);
 
 		if (!($url = static::resolve_url($path,!($flags & STREAM_URL_STAT_LINK), $check_symlink_components)))
 		{
