@@ -95,16 +95,16 @@ class Sharing
 	 */
 	public static function get_token()
 	{
-    // WebDAV has no concept of a query string and clients (including cadaver)
-    // seem to pass '?' unencoded, so we need to extract the path info out
-    // of the request URI ourselves
-    // if request URI contains a full url, remove schema and domain
+		// WebDAV has no concept of a query string and clients (including cadaver)
+		// seem to pass '?' unencoded, so we need to extract the path info out
+		// of the request URI ourselves
+		// if request URI contains a full url, remove schema and domain
 		$matches = null;
-    if (preg_match('|^https?://[^/]+(/.*)$|', $path_info=$_SERVER['REQUEST_URI'], $matches))
-    {
-      $path_info = $matches[1];
-    }
-    $path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
+		if (preg_match('|^https?://[^/]+(/.*)$|', $path_info=$_SERVER['REQUEST_URI'], $matches))
+		{
+			$path_info = $matches[1];
+		}
+		$path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
 		list(, $token/*, $path*/) = preg_split('|[/?]|', $path_info, 3);
 
 		list($token) = explode(':', $token);
@@ -168,11 +168,22 @@ class Sharing
 		return '';
 	}
 
-	protected static function check_token($keep_session, &$share)
+	/**
+	 * Check sharing token
+	 *
+	 * @param boolean $keep_session false: does NOT check/fidle with session, true: return if session belongs to token
+	 * @param array& $share on return information about the share
+	 * @param ?string $token default call self::get_token() to get it from the URL
+	 * @param ?string $password default $_SERVER['PHP_AUTH_PW']
+	 * @throws Exception
+	 * @throws Exception\NoPermission
+	 * @throws Exception\NotFound
+	 */
+	public static function check_token($keep_session, &$share, $token=null, $password=null)
 	{
 		self::$db = $GLOBALS['egw']->db;
 
-		$token = static::get_token();
+		if (!isset($token)) $token = static::get_token();
 
 		// are we called from header include, because session did not verify
 		// --> check if it verifys for our token
@@ -203,7 +214,7 @@ class Sharing
 			);
 		}
 		// check password, if required
-		if(!static::check_password($share))
+		if(!static::check_password($share, $password))
 		{
 			$realm = 'EGroupware share '.$share['share_token'];
 			header('WWW-Authenticate: Basic realm="'.$realm.'"');
@@ -220,14 +231,17 @@ class Sharing
 	 * provided matches.
 	 *
 	 * @param Array $share
+	 * @param ?string $password default $_SERVER['PHP_AUTH_PW']
 	 * @return boolean Password OK (or not needed)
 	 */
-	protected static function check_password(Array $share)
+	protected static function check_password(Array $share, $password=null)
 	{
-		if ($share['share_passwd'] && (empty($_SERVER['PHP_AUTH_PW']) ||
-			!(Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt') ||
-				Header\Authenticate::decode_password($_SERVER['PHP_AUTH_PW']) &&
-					Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt'))))
+		if (!isset($password)) $password = $_SERVER['PHP_AUTH_PW'];
+
+		if ($share['share_passwd'] && (empty($password) ||
+			!(Auth::compare_password($password, $share['share_passwd'], 'crypt') ||
+				Header\Authenticate::decode_password($password) &&
+					Auth::compare_password($password, $share['share_passwd'], 'crypt'))))
 		{
 			return false;
 		}
@@ -369,7 +383,7 @@ class Sharing
 		$class = strpos($status, '404') === 0 ? 'EGroupware\Api\Exception\NotFound' :
 				strpos($status, '401') === 0 ? 'EGroupware\Api\Exception\NoPermission' :
 				'EGroupware\Api\Exception';
-		throw new $class($message);
+		throw new $class($message, $status);
 	}
 
 	/**
