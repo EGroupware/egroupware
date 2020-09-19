@@ -45,17 +45,29 @@ class StreamWrapper extends Vfs\StreamWrapper
 
 			Api\Sharing::check_token(false, $share, $hash, $parts['pass'] ?? '');
 
-			if (empty($share['share_owner']) || !($account_lid = Api\Accounts::id2name($share['share_owner'])))
-			{
-				throw new Api\Exception\NotFound('Share owner not found', 404);
-			}
-			return Vfs::concat('vfs://'.$account_lid.'@default'.Vfs::parse_url($share['share_path'], PHP_URL_PATH), $rel_path).
-				($share['share_writable'] & 1 ? '' : '?ro=1');
+			return self::share2url($share);
 		}
 		catch (Api\Exception $e) {
 			_egw_log_exception($e);
 			return false;
 		}
+	}
+
+	/**
+	 * Generate sharing URL from share
+	 *
+	 * @param array $share as returned eg. by Api\Sharing::check_token()
+	 * @return string
+	 * @throws Api\Exception\NotFound if sharee was not found
+	 */
+	static function share2url(array $share)
+	{
+		if (empty($share['share_owner']) || !($account_lid = Api\Accounts::id2name($share['share_owner'])))
+		{
+			throw new Api\Exception\NotFound('Share owner not found', 404);
+		}
+		return Vfs::concat('vfs://'.$account_lid.'@default'.Vfs::parse_url($share['share_path'], PHP_URL_PATH), $rel_path).
+			($share['share_writable'] & 1 ? '' : '?ro=1');
 	}
 
 	/**

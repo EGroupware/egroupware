@@ -98,6 +98,7 @@ class Sharing extends \EGroupware\Api\Sharing
 			$GLOBALS['egw_info']['server']['vfs_fstab'] = Vfs::mount();
 			Vfs::clearstatcache();
 		}
+		/*
 		$share['resolve_url'] = Vfs::resolve_url($share['share_path'], true, true, true, true);	// true = fix evtl. contained url parameter
 		// if share not writable append ro=1 to mount url to make it readonly
 		if (!($share['share_writable'] & 1))
@@ -105,8 +106,9 @@ class Sharing extends \EGroupware\Api\Sharing
 			$share['resolve_url'] .= (strpos($share['resolve_url'], '?') ? '&' : '?').'ro=1';
 		}
 		//_debug_array($share);
-
+*/
 		$share['share_root'] = '/'.Vfs::basename($share['share_path']);
+/*
 		if ($keep_session)	// add share to existing session
 		{
 			// if current user is not the share owner, we cant just mount share
@@ -115,6 +117,7 @@ class Sharing extends \EGroupware\Api\Sharing
 				$keep_session = false;
 			}
 		}
+*/
 		if (!$keep_session)	// do NOT change to else, as we might have set $keep_session=false!
 		{
 			// only allow filemanager app & collabora
@@ -125,7 +128,7 @@ class Sharing extends \EGroupware\Api\Sharing
 					'filemanager' => $GLOBALS['egw_info']['apps']['filemanager'] || true,
 					'collabora' => $GLOBALS['egw_info']['apps']['collabora'] || $apps['collabora']
 			);
-
+/*
 			Vfs::$user = $share['share_owner'];
 
 			// Need to re-init stream wrapper, as some of them look at
@@ -134,18 +137,20 @@ class Sharing extends \EGroupware\Api\Sharing
 			if($scheme && method_exists($scheme, 'init_static'))
 			{
 				$scheme::init_static();
-			}
+			}*/
 		}
 
 		// mounting share
 		Vfs::$is_root = true;
 		$clear_fstab = !$keep_session && (!$GLOBALS['egw_info']['user']['account_lid'] || $GLOBALS['egw_info']['user']['account_lid'] == 'anonymous');
+/*
 		// if current user is not the share owner, we cant just mount share into existing VFS
 		if ($GLOBALS['egw_info']['user']['account_id'] != $share['share_owner'])
 		{
 			$clear_fstab = true;
 		}
-		if (!Vfs::mount($share['resolve_url'], $share['share_root'], false, false, $clear_fstab))
+*/
+		if (!Vfs::mount(Vfs\Sharing\StreamWrapper::share2url($share), $share['share_root'], false, false, $clear_fstab))
 		{
 			sleep(1);
 			return static::share_fail(
@@ -167,9 +172,11 @@ class Sharing extends \EGroupware\Api\Sharing
 
 
 		Vfs::$is_root = false;
+/*
 		Vfs::clearstatcache();
 		// clear link-cache and load link registry without permission check to access /apps
 		Api\Link::init_static(true);
+*/
 	}
 
 	/**
