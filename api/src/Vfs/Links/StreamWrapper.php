@@ -160,48 +160,50 @@ class StreamWrapper extends LinksParent
 	{
 		$this->check_set_context($url);
 
-		$eacl_check=$this->check_extended_acl($url,Vfs::READABLE);
-
-		// return vCard as /.entry
-		if ( $eacl_check && substr($url,-7) == '/.entry' &&
-			(list($app) = array_slice(explode('/',$url),-3,1)) && $app === 'addressbook')
+		$ret = false;
+		if (($eacl_check = $this->check_extended_acl($url,Vfs::READABLE)))
 		{
-			$ret = array(
-				'ino'   => '#'.md5($url),
-				'name'  => '.entry',
-				'mode'  => self::MODE_FILE|Vfs::READABLE,	// required by the stream wrapper
-				'size'  => 1024,	// fmail does NOT attach files with size 0!
-				'uid'   => 0,
-				'gid'   => 0,
-				'mtime' => time(),
-				'ctime' => time(),
-				'nlink' => 1,
-				// eGW addition to return some extra values
-				'mime'  => $app == 'addressbook' ? 'text/vcard' : 'text/calendar',
-			);
-		}
-		// if entry directory does not exist --> return fake directory
-		elseif (!($ret = parent::url_stat($url,$flags)) && $eacl_check)
-		{
-			list(,/*$apps*/,/*$app*/,$id,$rel_path) = array_pad(explode('/', Vfs::parse_url($url, PHP_URL_PATH), 5),5,null);
-			if ($id && !isset($rel_path))
+			// return vCard as /.entry
+			if (substr($url, -7) == '/.entry' &&
+				(list($app) = array_slice(explode('/', $url), -3, 1)) && $app === 'addressbook')
 			{
 				$ret = array(
-					'ino'   => '#'.md5($url),
-					'name'  => $id,
-					'mode'  => self::MODE_DIR,	// required by the stream wrapper
-					'size'  => 0,
-					'uid'   => 0,
-					'gid'   => 0,
+					'ino' => '#' . md5($url),
+					'name' => '.entry',
+					'mode' => self::MODE_FILE | Vfs::READABLE,    // required by the stream wrapper
+					'size' => 1024,    // email does NOT attach files with size 0!
+					'uid' => 0,
+					'gid' => 0,
 					'mtime' => time(),
 					'ctime' => time(),
-					'nlink' => 2,
+					'nlink' => 1,
 					// eGW addition to return some extra values
-					'mime'  => Vfs::DIR_MIME_TYPE,
+					'mime' => $app == 'addressbook' ? 'text/vcard' : 'text/calendar',
 				);
 			}
+			// if entry directory does not exist --> return fake directory
+			elseif (!($ret = parent::url_stat($url, $flags)))
+			{
+				list(,/*$apps*/,/*$app*/, $id, $rel_path) = array_pad(explode('/', Vfs::parse_url($url, PHP_URL_PATH), 5), 5, null);
+				if ($id && !isset($rel_path))
+				{
+					$ret = array(
+						'ino' => '#' . md5($url),
+						'name' => $id,
+						'mode' => self::MODE_DIR,    // required by the stream wrapper
+						'size' => 0,
+						'uid' => 0,
+						'gid' => 0,
+						'mtime' => time(),
+						'ctime' => time(),
+						'nlink' => 2,
+						// eGW addition to return some extra values
+						'mime' => Vfs::DIR_MIME_TYPE,
+					);
+				}
+			}
 		}
-		if (self::DEBUG) error_log(__METHOD__."('$url', $flags) calling parent::url_stat(,,".array2string($eacl_check).') returning '.array2string($ret));
+		if (self::DEBUG) error_log(__METHOD__."('$url', $flags) eacl_check=".array2string($eacl_check).' returning '.array2string($ret));
 		return $ret;
 	}
 
