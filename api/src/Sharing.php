@@ -140,16 +140,20 @@ class Sharing
 	/**
 	 * Create sharing session
 	 *
-	 * Certain cases:
-	 * a) there is not session $keep_session === null
-	 *    --> create new anon session with just filemanager rights and share as fstab
-	 * b) there is a session $keep_session === true
-	 *  b1) current user is share owner (eg. checking the link)
-	 *      --> mount share under token additionally
-	 *  b2) current user not share owner
-	 *  b2a) need/use filemanager UI (eg. directory)
-	 *       --> destroy current session and continue with a)
-	 *  b2b) single file or WebDAV
+	 * There are two cases:
+	 *
+	 * 1) there is no session $keep_session === null
+	 *    --> create new anon session with just filemanager rights and resolved share incl. sharee as only fstab entry
+	 *
+	 * 2) there is a (non-anonymous) session $keep_session === true
+	 *    --> mount share with sharing stream-wrapper into users "shares" subdirectory of home directory
+	 *        and ask user if he wants the share permanently mounted there
+	 *
+	 * Even with sharing stream-wrapper a) and b) need to be different, as sharing SW needs an intact fstab!
+	 *
+	 * Not yet sure if this still needs extra handling:
+	 *
+	 * 2a) single file or WebDAV
 	 *       --> modify EGroupware enviroment for that request only, no change in session
 	 *
 	 * @param boolean $keep_session =null null: create a new session, true: try mounting it into existing (already verified) session
