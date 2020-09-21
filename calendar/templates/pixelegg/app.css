@@ -2004,6 +2004,9 @@ div.calendar {
   width: 10em;
   padding: 3px 0 5px 10px;
 }
+#calendar-edit #calendar-edit_recur_enddate input.et2_date {
+  margin: 0px -1px;
+}
 /******************************************************************
  * CSS settings for the day, week and month view (timeGridWidget) *
  ******************************************************************/
