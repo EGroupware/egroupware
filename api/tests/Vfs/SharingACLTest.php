@@ -55,6 +55,7 @@ class SharingACLTest extends SharingBase
 
 	protected function tearDown() : void
 	{
+		LoggedInTest::setUpBeforeClass();
 		parent::tearDown();
 		if($this->account_id)
 		{
@@ -198,9 +199,6 @@ class SharingACLTest extends SharingBase
 		$this->assertNotNull($form, "Could not read the share link");
 		$rows = $data['data']['content']['nm']['rows'];
 
-		Vfs::clearstatcache();
-		Vfs::init_static();
-		Vfs\StreamWrapper::init_static();
 
 		// Check we can't find the non-shared file
 		$result = array_filter($rows, function($v) {
@@ -235,10 +233,6 @@ class SharingACLTest extends SharingBase
 		$form = $this->getShare($link, $data, false);
 		$this->assertNotNull($form, "Could not read the share link");
 		$rows = array_values($data['data']['content']['nm']['rows']);
-
-		Vfs::clearstatcache();
-		Vfs::init_static();
-		Vfs\StreamWrapper::init_static();
 
 		// Check we can't find the non-shared file
 		$result = array_filter($rows, function($v) {

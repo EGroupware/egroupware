@@ -38,7 +38,7 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 		$this->mountFilesystem(static::$mountpoint);
 	}
 
-	protected function allowAccess(string $test_name, string $test_file, int $test_user, string $needed) : void
+	protected function allowAccess(string $test_name, string &$test_file, int $test_user, string $needed) : void
 	{
 		// We'll allow access by putting test user in Default group
 		$command = new \admin_cmd_edit_user($test_user, ['account_groups' => array_merge($this->account['account_groups'],['Default'])]);

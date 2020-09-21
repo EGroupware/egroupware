@@ -31,7 +31,7 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testHomeReadonly()
 	{
-		$dir = Vfs::get_home_dir().'/';
+		$dir = Vfs::get_home_dir().'/'.$this->getName(false).'/';
 
 		$this->checkDirectory($dir, Sharing::READONLY);
 	}
@@ -42,7 +42,7 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testHomeWritable()
 	{
-		$dir = Vfs::get_home_dir().'/';
+		$dir = Vfs::get_home_dir().'/'.$this->getName(false).'/';
 
 		$this->checkDirectory($dir, Sharing::WRITABLE);
 	}
@@ -124,6 +124,9 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testLinksReadonly()
 	{
+		// Need to mount apps
+		$this->mountLinks("/apps");
+
 		// Create an infolog entry for testing purposes
 		$info_id = $this->make_infolog();
 		$bo = new \infolog_bo();
@@ -142,6 +145,9 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testLinksWritable()
 	{
+		// Need to mount apps
+		$this->mountLinks("/apps");
+
 		// Create an infolog entry for testing purposes
 		$bo = new \infolog_bo();
 		$info_id = $this->make_infolog();

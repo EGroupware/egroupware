@@ -74,13 +74,13 @@ abstract class LoggedInTest extends TestCase
 	 */
 	public static function tearDownAfterClass() : void
 	{
-		// Clean up VFS
-		Vfs::clearstatcache();
-		// Reset stream context, or current user will always be there
-		stream_context_set_option(stream_context_get_default(),['vfs'=>['user' => null]]);
+			// Clean up VFS
+			Vfs::clearstatcache();
+			// Reset stream context, or current user will always be there
+			stream_context_set_option(stream_context_get_default(),['vfs'=>['user' => null]]);
 
-		// Clear some link caching
-		Link::init_static(true);
+			// Clear some link caching
+			Link::init_static(true);
 
 		if($GLOBALS['egw'])
 		{

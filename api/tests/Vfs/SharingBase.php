@@ -153,6 +153,10 @@ class SharingBase extends LoggedInTest
 		{
 			$dir .= '/';
 		}
+		if(!Vfs::is_readable($dir))
+		{
+			Vfs::mkdir($dir);
+		}
 		$this->files += $this->addFiles($dir);
 
 		$logged_in_files = array_map(
@@ -230,7 +234,7 @@ class SharingBase extends LoggedInTest
 		switch($mode)
 		{
 			case Sharing::READONLY:
-				$this->assertFalse(Vfs::is_writable($file));
+				$this->assertFalse(Vfs::is_writable($file), "Readonly share file '$file' is writable");
 				if(!Vfs::is_dir($file))
 				{
 					// We expect this to fail
@@ -249,6 +253,26 @@ class SharingBase extends LoggedInTest
 				break;
 		}
 
+	}
+
+	/**
+	 * Mount the app entries into the filesystem
+	 *
+	 * @param string $path
+	 */
+	protected function mountLinks($path)
+	{
+		Vfs::$is_root = true;
+		$url = Links\StreamWrapper::PREFIX . '/apps';
+		$this->assertTrue(
+				Vfs::mount($url, $path, false, false),
+				"Unable to mount $url => $path"
+		);
+		Vfs::$is_root = false;
+
+		$this->mounts[] = $path;
+		Vfs::clearstatcache();
+		Vfs::init_static();
 	}
 
 	/**
@@ -565,7 +589,7 @@ class SharingBase extends LoggedInTest
 
 		// Make sure we start at root, not somewhere else like the token mounted
 		// as a sub-directory
-		$this->assertEquals('/', $data->data->content->nm->path);
+		$this->assertEquals('/', $data->data->content->nm->path, "Share was not mounted at /");
 
 		unset($data->data->content->nm->actions);
 		//var_dump($data->data->content->nm);

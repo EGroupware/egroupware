@@ -409,7 +409,7 @@ abstract class StreamWrapperBase extends LoggedInTest
 	 * @param string $needed r, w, rw
 	 * @return mixed
 	 */
-	abstract protected function allowAccess(string $test_name, string $test_file, int $test_user, string $needed) : void;
+	abstract protected function allowAccess(string $test_name, string &$test_file, int $test_user, string $needed) : void;
 
 	/**
 	 * Mount the app entries into the filesystem
