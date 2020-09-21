@@ -19,7 +19,7 @@ use EGroupware\Api\Vfs;
 
 class StreamWrapperTest extends Vfs\StreamWrapperBase
 {
-	public static $mountpoint = '/test/filesystem';
+	public static $mountpoint = '/home/demo/filesystem';
 
 	protected function setUp() : void
 	{
@@ -33,7 +33,7 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 		parent::tearDown();
 	}
 
-	protected function  mount(): void
+	protected function mount(): void
 	{
 		$this->mountFilesystem(static::$mountpoint);
 	}
