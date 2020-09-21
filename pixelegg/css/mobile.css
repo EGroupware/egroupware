@@ -940,7 +940,6 @@
   .et2_toolbar_more {
     float: right;
     direction: rtl;
-    margin-top: 2px;
   }
   .et2_toolbar_actionlist {
     float: left;

@@ -1893,9 +1893,6 @@ input[type=button] {
   height: 35px;
   /* Elemente */
 }
-#mail-index_toolbar #toolbar-actionlist {
-  margin-top: 3px;
-}
 #mail-index_toolbar button {
   height: 24px !important;
 }
