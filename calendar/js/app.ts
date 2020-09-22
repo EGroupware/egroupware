@@ -20,7 +20,7 @@
 	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
 */
 
-import {EgwApp} from "../../api/js/jsapi/egw_app";
+import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
 import {et2_date} from "../../api/js/etemplate/et2_widget_date";
@@ -30,6 +30,13 @@ import {et2_calendar_timegrid} from "./et2_widget_timegrid";
 import {et2_calendar_daycol} from "./et2_widget_daycol";
 import {et2_calendar_planner_row} from "./et2_widget_planner_row";
 import {et2_calendar_event} from "./et2_widget_event";
+import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
+import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
+import {et2_button} from "../../api/js/etemplate/et2_widget_button";
+import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
+import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import {et2_inputWidget} from "../../api/js/etemplate/et2_core_inputWidget";
 
 /**
  * UI for calendar
@@ -461,14 +468,13 @@ class CalendarApp extends EgwApp
 		// Calendar cares about calendar & infolog
 		if(pushData.app !== this.appname && pushData.app !== 'infolog') return;
 
-		if(pushData.type === 'delete')
-		{
-			return super.push(pushData);
-		}
-
 		switch (pushData.app)
 		{
 			case "calendar":
+				if(pushData.type === 'delete')
+				{
+					return super.push(pushData);
+				}
 				return this.push_calendar(pushData);
 			case "infolog":
 				return this.push_infolog(pushData);
@@ -480,10 +486,89 @@ class CalendarApp extends EgwApp
 	 *
 	 * @param pushData
 	 */
-	private push_infolog(pushData)
+	private push_infolog(pushData : PushData)
 	{
-		// This isn't the most intelligent, but it refreshes
-		this.observer("", pushData.app, pushData.id, pushData.type,"",null);
+		// check visibility - grants is ID => permission of people we're allowed to see
+		let owners = [];
+		let infolog_grants = egw.grants(pushData.app);
+
+		// Filter what's allowed down to those we care about
+		let filtered = Object.keys(infolog_grants).filter(account => this.state.owner.indexOf(account) >= 0);
+
+		// Check if we're interested in displaying by owner / responsible
+		let owner_check = filtered.filter(function(value) {
+			return pushData.acl.info_owner == value || pushData.acl.info_responsible.indexOf(value) >= 0;
+		})
+		if(!owner_check || owner_check.length == 0)
+		{
+			// The owner is not in the list of what we're allowed / care about
+			return;
+		}
+
+		// Only need to update the list if we're on that view
+		let update_list = this.state.view == "day";
+
+		// Delete, just pull it out of the list
+		if(update_list && pushData.type == "delete")
+		{
+			jQuery('.calendar_calDayTodos')
+				.find('a')
+				.each(function (i, a: HTMLAnchorElement)
+			      {
+				      var match = a.href.split(/&info_id=/);
+				      if(match && typeof match[1] != "undefined" && match[1] == pushData.id)
+				      {
+	                    jQuery(a).parentsUntil("tbody").remove();
+				      }
+			      }
+				);
+		}
+
+		// Refresh todos if we're there - add, update or edit doesn't matter
+		if(update_list)
+		{
+			this.egw.jsonq('calendar_uiviews::ajax_get_todos', [this.state.date, this.state.owner[0]], function (data)
+			{
+				this.getWidgetById('label').set_value(data.label || '');
+				this.getWidgetById('todos').set_value({content: data.todos || ''});
+			}, (<etemplate2>CalendarApp.views.day.etemplates[1]).widgetContainer);
+		}
+		else
+		{
+			// Only care about certain infolog types, or already loaded (type may have changed)
+			let types = (<string>egw.preference('calendar_integration', 'infolog')).split(",") || [];
+			let info_uid = this.appname + "::" + pushData.app + pushData.id;
+			if(types.indexOf(pushData.acl.info_type) >= 0 || this.egw.dataHasUID(info_uid))
+			{
+				if(pushData.type === 'delete')
+				{
+					return this.egw.dataStoreUID(info_uid, null);
+				}
+				// We could try to be a little smarter, but this will work
+				// Discard cache
+				this._clear_cache();
+
+				// Calendar is the current application, refresh now
+				if(framework.activeApp.appName === this.appname)
+				{
+					this.setState({state: this.state});
+				}
+				// Bind once to trigger a refresh when tab is activated again
+				else if(framework.applications.calendar && framework.applications.calendar.tab &&
+					framework.applications.calendar.tab.contentDiv)
+				{
+					jQuery(framework.applications.calendar.tab.contentDiv)
+						.off('show.calendar')
+						.one('show.calendar',
+						    function ()
+							{
+							  this.setState({state: this.state});
+							}.bind(this)
+						);
+				}
+			}
+		}
+
 	}
 
 	/**

@@ -41,6 +41,10 @@ var et2_widget_timegrid_1 = require("./et2_widget_timegrid");
 var et2_widget_daycol_1 = require("./et2_widget_daycol");
 var et2_widget_planner_row_1 = require("./et2_widget_planner_row");
 var et2_widget_event_1 = require("./et2_widget_event");
+var et2_widget_dialog_1 = require("../../api/js/etemplate/et2_widget_dialog");
+var et2_core_valueWidget_1 = require("../../api/js/etemplate/et2_core_valueWidget");
+var et2_core_widget_1 = require("../../api/js/etemplate/et2_core_widget");
+var et2_core_inputWidget_1 = require("../../api/js/etemplate/et2_core_inputWidget");
 /**
  * UI for calendar
  *
@@ -533,11 +537,11 @@ var CalendarApp = /** @class */ (function (_super) {
         // Calendar cares about calendar & infolog
         if (pushData.app !== this.appname && pushData.app !== 'infolog')
             return;
-        if (pushData.type === 'delete') {
-            return _super.prototype.push.call(this, pushData);
-        }
         switch (pushData.app) {
             case "calendar":
+                if (pushData.type === 'delete') {
+                    return _super.prototype.push.call(this, pushData);
+                }
                 return this.push_calendar(pushData);
             case "infolog":
                 return this.push_infolog(pushData);
@@ -549,8 +553,66 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param pushData
      */
     CalendarApp.prototype.push_infolog = function (pushData) {
-        // This isn't the most intelligent, but it refreshes
-        this.observer("", pushData.app, pushData.id, pushData.type, "", null);
+        var _this = this;
+        // check visibility - grants is ID => permission of people we're allowed to see
+        var owners = [];
+        var infolog_grants = egw.grants(pushData.app);
+        // Filter what's allowed down to those we care about
+        var filtered = Object.keys(infolog_grants).filter(function (account) { return _this.state.owner.indexOf(account) >= 0; });
+        // Check if we're interested in displaying by owner / responsible
+        var owner_check = filtered.filter(function (value) {
+            return pushData.acl.info_owner == value || pushData.acl.info_responsible.indexOf(value) >= 0;
+        });
+        if (!owner_check || owner_check.length == 0) {
+            // The owner is not in the list of what we're allowed / care about
+            return;
+        }
+        // Only need to update the list if we're on that view
+        var update_list = this.state.view == "day";
+        // Delete, just pull it out of the list
+        if (update_list && pushData.type == "delete") {
+            jQuery('.calendar_calDayTodos')
+                .find('a')
+                .each(function (i, a) {
+                var match = a.href.split(/&info_id=/);
+                if (match && typeof match[1] != "undefined" && match[1] == pushData.id) {
+                    jQuery(a).parentsUntil("tbody").remove();
+                }
+            });
+        }
+        // Refresh todos if we're there - add, update or edit doesn't matter
+        if (update_list) {
+            this.egw.jsonq('calendar_uiviews::ajax_get_todos', [this.state.date, this.state.owner[0]], function (data) {
+                this.getWidgetById('label').set_value(data.label || '');
+                this.getWidgetById('todos').set_value({ content: data.todos || '' });
+            }, CalendarApp.views.day.etemplates[1].widgetContainer);
+        }
+        else {
+            // Only care about certain infolog types, or already loaded (type may have changed)
+            var types = egw.preference('calendar_integration', 'infolog').split(",") || [];
+            var info_uid = this.appname + "::" + pushData.app + pushData.id;
+            if (types.indexOf(pushData.acl.info_type) >= 0 || this.egw.dataHasUID(info_uid)) {
+                if (pushData.type === 'delete') {
+                    return this.egw.dataStoreUID(info_uid, null);
+                }
+                // We could try to be a little smarter, but this will work
+                // Discard cache
+                this._clear_cache();
+                // Calendar is the current application, refresh now
+                if (framework.activeApp.appName === this.appname) {
+                    this.setState({ state: this.state });
+                }
+                // Bind once to trigger a refresh when tab is activated again
+                else if (framework.applications.calendar && framework.applications.calendar.tab &&
+                    framework.applications.calendar.tab.contentDiv) {
+                    jQuery(framework.applications.calendar.tab.contentDiv)
+                        .off('show.calendar')
+                        .one('show.calendar', function () {
+                        this.setState({ state: this.state });
+                    }.bind(this));
+                }
+            }
+        }
     };
     /**
      * Handle a push from calendar
@@ -911,7 +973,7 @@ var CalendarApp = /** @class */ (function (_super) {
             template.widgetContainer.iterateOver(function (w) {
                 if (w.getDOMNode() == this)
                     widget = w;
-            }, this, et2_widget);
+            }, this, et2_core_widget_1.et2_widget);
             if (widget == null) {
                 template.widgetContainer.iterateOver(function (w) {
                     widget = w;
@@ -1167,7 +1229,7 @@ var CalendarApp = /** @class */ (function (_super) {
             };
             if (dialog_button == 'series' && widget.options.value.recur_type) {
                 widget.series_split_prompt(function (_button_id) {
-                    if (_button_id == et2_dialog.OK_BUTTON) {
+                    if (_button_id == et2_widget_dialog_1.et2_dialog.OK_BUTTON) {
                         _send();
                     }
                 });
@@ -1349,7 +1411,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 }
             ];
             var self = this;
-            et2_dialog.show_dialog(function (_button_id) {
+            et2_widget_dialog_1.et2_dialog.show_dialog(function (_button_id) {
                 if (_button_id != 'dialog[cancel]') {
                     widget.getRoot().getWidgetById('delete_exceptions').set_value(_button_id == 'button[delete_exceptions]');
                     widget.getInstanceManager().submit('button[delete]');
@@ -1358,13 +1420,13 @@ var CalendarApp = /** @class */ (function (_super) {
                 else {
                     return false;
                 }
-            }, this.egw.lang("Do you want to keep the series exceptions in your calendar?"), this.egw.lang("This event is part of a series"), {}, buttons, et2_dialog.WARNING_MESSAGE);
+            }, this.egw.lang("Do you want to keep the series exceptions in your calendar?"), this.egw.lang("This event is part of a series"), {}, buttons, et2_widget_dialog_1.et2_dialog.WARNING_MESSAGE);
         }
         else if (content['recur_type'] !== 0) {
-            et2_dialog.confirm(widget, 'Delete this series of recurring events', 'Delete Series');
+            et2_widget_dialog_1.et2_dialog.confirm(widget, 'Delete this series of recurring events', 'Delete Series');
         }
         else {
-            et2_dialog.confirm(widget, 'Delete this event', 'Delete');
+            et2_widget_dialog_1.et2_dialog.confirm(widget, 'Delete this event', 'Delete');
         }
     };
     /**
@@ -1549,7 +1611,7 @@ var CalendarApp = /** @class */ (function (_super) {
                     }
                     jQuery.extend(context, widget.getDOMNode().dataset);
                 }
-                else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_valueWidget)) {
+                else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_core_valueWidget_1.et2_valueWidget)) {
                     // Able to extract something from the widget
                     context = _events[0].iface.getWidget().getValue ?
                         _events[0].iface.getWidget().getValue() :
@@ -1673,7 +1735,7 @@ var CalendarApp = /** @class */ (function (_super) {
         // Hold on to options, may have to pass them into edit (rather than all, just send what the programmer wanted)
         this.quick_add = options;
         // Open dialog to use as target
-        var add_dialog = et2_dialog.show_dialog(null, '', ' ', null, [], et2_dialog.PLAIN_MESSAGE, this.egw);
+        var add_dialog = et2_widget_dialog_1.et2_dialog.show_dialog(null, '', ' ', null, [], et2_widget_dialog_1.et2_dialog.PLAIN_MESSAGE, this.egw);
         // Call the server, get it into the dialog
         options = jQuery.extend({ menuaction: 'calendar.calendar_uiforms.ajax_add', template: 'calendar.add' }, options);
         this.egw.json(this.egw.link('/json.php', options), 
@@ -1961,7 +2023,7 @@ var CalendarApp = /** @class */ (function (_super) {
                     // End date might ignore seconds, and be 59 seconds off for all day events
                     !duration && Math.abs(new Date(end_date) - new Date(content.end)) > 60000)) {
                 et2_widget_event_1.et2_calendar_event.series_split_prompt(content, instance_date, function (_button_id) {
-                    if (_button_id == et2_dialog.OK_BUTTON) {
+                    if (_button_id == et2_widget_dialog_1.et2_dialog.OK_BUTTON) {
                         that.et2.getInstanceManager().submit(button);
                     }
                 });
@@ -2575,11 +2637,11 @@ var CalendarApp = /** @class */ (function (_super) {
                                 widget.set_value('');
                             }
                         }
-                        else if (widget.instanceOf(et2_inputWidget) && typeof state.state[widget.id] == 'undefined') {
+                        else if (widget.instanceOf(et2_core_inputWidget_1.et2_inputWidget) && typeof state.state[widget.id] == 'undefined') {
                             // No value, clear it
                             widget.set_value('');
                         }
-                    }, this, et2_valueWidget);
+                    }, this, et2_core_valueWidget_1.et2_valueWidget);
                 }
             }
             // If current state matches a favorite, hightlight it
