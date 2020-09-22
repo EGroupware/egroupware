@@ -864,6 +864,8 @@ class Contacts extends Contacts\Storage
 	*/
 	function save(&$contact, $ignore_acl=false, $touch_modified=true)
 	{
+		$update_type = "update";
+
 		// Make sure photo remains unchanged unless its purposely set to be false
 		// which means photo has changed.
 		if (!array_key_exists('photo_unchanged',$contact)) $contact['photo_unchanged'] = true;
@@ -887,6 +889,7 @@ class Contacts extends Contacts\Storage
 				else	// entry not found --> create a new one
 				{
 					$isUpdate = $contact['id'] = null;
+					$update_type = "add";
 				}
 			}
 		}
@@ -905,6 +908,7 @@ class Contacts extends Contacts\Storage
 			if (!$contact['created'] || !$ignore_acl && !$this->is_admin($contact)) $contact['created'] = $this->now_su;
 
 			if (!$contact['tid']) $contact['tid'] = 'n';
+			$update_type = "add";
 		}
 		// ensure accounts and group addressbooks are never private!
 		if ($contact['owner'] <= 0)
@@ -1032,8 +1036,6 @@ class Contacts extends Contacts\Storage
 				$to_write['location'] = 'editaccountcontact';
 				Hooks::process($to_write,False,True);	// called for every app now, not only enabled ones));
 			}
-			// Notify linked apps about changes in the contact data
-			Link::notify_update('addressbook',  $contact['id'], $contact);
 
 			// Check for restore of deleted contact, restore held links
 			if($old && $old['tid'] == self::DELETED_TYPE && $contact['tid'] != self::DELETED_TYPE)
@@ -1042,12 +1044,15 @@ class Contacts extends Contacts\Storage
 			}
 
 			// Record change history for sql - doesn't work for LDAP accounts
+			$deleted = ($old['tid'] == self::DELETED_TYPE || $contact['tid'] == self::DELETED_TYPE);
 			if(!$contact['account_id'] || $contact['account_id'] && $this->account_repository == 'sql')
 			{
-				$deleted = ($old['tid'] == self::DELETED_TYPE || $contact['tid'] == self::DELETED_TYPE);
 				if (!isset($this->tracking)) $this->tracking = new Contacts\Tracking($this);
 				$this->tracking->track($to_write, $old ? $old : null, null, $deleted);
 			}
+
+			// Notify linked apps about changes in the contact data
+			Link::notify_update('addressbook',  $contact['id'], $contact, $deleted ? 'delete' : $update_type);
 
 			// Expire birthday cache for this year and next if birthday changed
 			if($isUpdate && $old['bday'] !== $to_write['bday'] || !$isUpdate && $to_write['bday'])
