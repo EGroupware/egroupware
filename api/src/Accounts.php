@@ -653,6 +653,7 @@ class Accounts
 				}
 			}
 		}
+		$update_type = "update";
 		// add default description for Admins and Default group
 		if ($data['account_type'] === 'g' && empty($data['account_description']))
 		{
@@ -696,6 +697,9 @@ class Accounts
 		$invalidate[] = $data['account_id'];
 		self::cache_invalidate($invalidate);
 
+		// Notify linked apps about changes in the account data
+		Link::notify_update('admin',  $id, $data, $update_type);
+
 		return $id;
 	}
 
@@ -732,6 +736,9 @@ class Accounts
 
 		// delete all categories belonging to that user or group
 		Categories::delete_account($id);
+
+		// Notify linked apps about changes in the account data
+		Link::notify_update('admin',  $id, null, 'delete');
 
 		return true;
 	}
