@@ -695,10 +695,20 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		// we have no context, but $path is a URL with a valid user --> set it
 		$this->check_set_context($path, true);
 
-		if (!($url = static::resolve_url($path,!($flags & STREAM_URL_STAT_LINK), $check_symlink_components)))
+		if (!($url = static::resolve_url($path, !($flags & STREAM_URL_STAT_LINK), $check_symlink_components, true, false, $mount_point)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) can NOT resolve path!");
 			return false;
+		}
+
+		// we need to make sure the mount-point is readable eg. if something is mounted into an other users home-directory
+		if (!isset($mount_point)) Vfs::mount_url($url, $mount_point);	// resolve_url only returns mount-point for pathes or vfs urls
+		if (!in_array($mount_point, ['/', '/apps', '/home']) &&	// they all are public readable
+			($class = self::scheme2class(Vfs::parse_url($url, PHP_URL_SCHEME))) &&
+			!is_a($class, Vfs\Sqlfs\StreamWrapper::class) &&	// decendents of SqlFS stream-wrapper always check traversal right to /
+			!$this->check_access(Vfs::dirname($mount_point), Vfs::READABLE))
+		{
+			return false;	// mount-point is not reachable
 		}
 
 		if (empty(parse_url($url, PHP_URL_USER)))

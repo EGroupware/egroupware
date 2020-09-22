@@ -25,6 +25,11 @@ var_dump(Vfs::scandir('/home'));
 var_dump(Vfs::find('/home', ['maxdepth' => 1]));
 //var_dump(Vfs::scandir("/home/$sysop"));
 
+Vfs::$is_root = true;
+Vfs::mount('filesystem://default/var/lib/egroupware', "/home/$other/something", false, false);
+Vfs::$is_root = false;
+var_dump(Vfs::stat("/home/$other/something"));
+
 var_dump(file_put_contents("vfs://default/home/$sysop/test.txt", "Just a test ;)\n"));
 var_dump("Vfs::proppatch('/home/$sysop/test.txt', [['ns' => Vfs::DEFAULT_PROP_NAMESPACE, 'name' => 'test', 'val' => 'something']])=".array2string(Vfs::proppatch("/home/$sysop/test.txt", [['ns' => Vfs::DEFAULT_PROP_NAMESPACE, 'name' => 'test', 'val' => 'something']])),
 	"Vfs::propfind('/home/$sysop/test.txt')=".json_encode(Vfs::propfind("/home/$sysop/test.txt"), JSON_UNESCAPED_SLASHES));

@@ -182,9 +182,9 @@ class Base
 	 * @param string $fullurl full url returned by resolve_url
 	 * @return string|NULL mount url or null if not found
 	 */
-	static function mount_url($fullurl)
+	static function mount_url($fullurl, &$mounted=null)
 	{
-		foreach(array_reverse(self::$fstab) as $url)
+		foreach(array_reverse(self::$fstab) as $mounted => $url)
 		{
 			list($url_no_query) = explode('?',$url);
 			if (substr($fullurl,0,1+strlen($url_no_query)) === $url_no_query.'/')
@@ -212,9 +212,10 @@ class Base
 	 * @param boolean $use_symlinkcache =true
 	 * @param boolean $replace_user_pass_host =true replace $user,$pass,$host in url, default true, if false result is not cached
 	 * @param boolean $fix_url_query =false true append relativ path to url query parameter, default not
+	 * @param ?string &$mounted =null on return mount-point of resolved url, IF $_path is a path or vfs-url, other urls return NULL!
 	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
 	 */
-	static function resolve_url($_path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true,$fix_url_query=false)
+	static function resolve_url($_path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true,$fix_url_query=false, &$mounted=null)
 	{
 		$path = self::get_path($_path);
 
@@ -222,7 +223,8 @@ class Base
 		if (isset(self::$resolve_url_cache[$path]) && $replace_user_pass_host)
 		{
 			if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '".self::$resolve_url_cache[$path]."' (from cache)");
-			return self::$resolve_url_cache[$path];
+			$mounted = self::$resolve_url_cache[$path]['mounted'];
+			return self::$resolve_url_cache[$path]['url'];
 		}
 		// check if we can already resolve path (or a part of it) with a known symlinks
 		if ($use_symlinkcache)
@@ -283,7 +285,7 @@ class Base
 					}
 					$url = $replace;
 				}
-				if ($replace_user_pass_host) self::$resolve_url_cache[$path] = $url;
+				if ($replace_user_pass_host) self::$resolve_url_cache[$path] = ['url' => $url, 'mounted' => $mounted];
 
 				return $url;
 			}
