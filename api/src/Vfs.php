@@ -393,11 +393,11 @@ class Vfs extends Vfs\Base
 		}
 
 		// make all find options available as stream context option "find", to allow plugins to use them
-		$context = stream_context_create(array_merge_recursive(stream_context_get_options(stream_context_get_default()), [
+		$context = stream_context_create([
 			self::SCHEME => [
 				'find' => $options,
 			],
-		]));
+		]);
 
 		$url = $options['url'];
 

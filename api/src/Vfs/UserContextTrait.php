@@ -48,8 +48,13 @@ trait UserContextTrait
 			{
 				$this->context = stream_context_get_default();
 			}
+			// if context set by PHP contains no user, set user from our default context (Vfs::$user)
+			elseif (empty(stream_context_get_options($this->context)[Vfs::SCHEME]['user']))
+			{
+				stream_context_set_option($this->context, stream_context_get_options(stream_context_get_default()));
+			}
 
-			if(is_string($url_or_context))
+			if (is_string($url_or_context))
 			{
 				$this->check_set_context($url_or_context, true);
 			}
@@ -167,7 +172,7 @@ trait UserContextTrait
 		switch($name)
 		{
 			case 'user':
-				return $this->context ? stream_context_get_options($this->context)[Vfs::SCHEME]['user'] : null;
+				return $this->context ? stream_context_get_options($this->context)[Vfs::SCHEME]['user'] : Vfs::$user;
 		}
 		return null;
 	}
