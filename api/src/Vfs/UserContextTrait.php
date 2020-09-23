@@ -210,6 +210,28 @@ trait UserContextTrait
 	}
 
 	/**
+	 * Get user context for given url, eg. to use with regular stream functions
+	 *
+	 * @param string $url
+	 * @param array $extra =[] addtional context options
+	 * @return resource context with user, plus optional extra options
+	 */
+	public static function userContext($url, array $extra=[])
+	{
+		if (($user = Vfs::parse_url($url, PHP_URL_USER)) &&
+			($account_id = Api\Accounts::getInstance()->name2id($user)) &&
+			($account_id != Vfs::$user) || $extra)	// never set extra options on default context!
+		{
+			$context = stream_context_create(array_merge_recursive([Vfs::SCHEME => ['user' => (int)$account_id ?: Vfs::$user]], $extra));
+		}
+		else
+		{
+			$context = stream_context_get_default();
+		}
+		return $context;
+	}
+
+	/**
 	 * @param string $name
 	 * @return bool
 	 */

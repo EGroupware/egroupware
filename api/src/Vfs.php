@@ -336,7 +336,7 @@ class Vfs extends Vfs\Base
 	 * - hidden => {true|false(default)} include hidden files (name starts with a '.' or is Thumbs.db)
 	 * - show-deleted => {true|false(default)} get also set by hidden, if not explicitly set otherwise (requires versioning!)
 	 * </code>
-	 * @param string|array/true $exec =null function to call with each found file/dir as first param and stat array as last param or
+	 * @param string|array|true $exec =null function to call with each found file/dir as first param and stat array as last param or
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params =null further params for exec as array, path is always the first param and stat the last!
 	 * @return array of pathes if no $exec, otherwise path => stat pairs
@@ -793,7 +793,7 @@ class Vfs extends Vfs\Base
 			return $ret;
 		}
 
-		if (!isset($vfs)) $vfs = new Vfs\StreamWrapper();
+		if (!isset($vfs)) $vfs = new Vfs\StreamWrapper($path);
 		return $vfs->check_access($path, $check, $stat);
 	}
 
@@ -2074,7 +2074,7 @@ class Vfs extends Vfs\Base
 	 */
 	static function resolve_url_symlinks($_path,$file_exists=true,$resolve_last_symlink=true,&$stat=null)
 	{
-		$vfs = new Vfs\StreamWrapper();
+		$vfs = new Vfs\StreamWrapper($_path);
 		return $vfs->resolve_url_symlinks($_path, $file_exists, $resolve_last_symlink, $stat);
 	}
 
