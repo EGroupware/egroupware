@@ -398,8 +398,9 @@ class Base
 			{
 				case 'webdav':
 				case 'webdavs':
-					require_once('HTTP/WebDAV/Client.php');
-					self::$wrappers[] = $scheme;
+					\Grale\WebDav\StreamWrapper::register();
+					self::$wrappers[] = 'webdav';
+					self::$wrappers[] = 'webdavs';
 					break;
 				case '':
 					break;	// default file, always loaded

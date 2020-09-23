@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bc3a7b62de6792d67aaf9f127480abea",
+    "content-hash": "6a700a309b5c1bc30c563ccb2526e7e2",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -933,6 +933,62 @@
             "time": "2020-08-19T13:40:53+00:00"
         },
         {
+            "name": "egroupware/guzzlestream",
+            "version": "dev-master",
+            "target-dir": "Guzzle/Stream",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/stream.git",
+                "reference": "d29fc35ebf3bd752308520aa5f17a3e5500f6af3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/stream/zipball/d29fc35ebf3bd752308520aa5f17a3e5500f6af3",
+                "reference": "d29fc35ebf3bd752308520aa5f17a3e5500f6af3",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/common": "^3.9.2",
+                "php": ">=5.3.2"
+            },
+            "replace": {
+                "guzzle/stream": "*"
+            },
+            "suggest": {
+                "guzzle/http": "To convert Guzzle request objects to PHP streams"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Stream": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle stream wrapper component",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "component",
+                "stream"
+            ],
+            "time": "2020-09-23T16:33:47+00:00"
+        },
+        {
             "name": "egroupware/icalendar",
             "version": "2.1.9",
             "source": {
@@ -976,12 +1032,12 @@
                 {
                     "name": "Chuck Hagenbuch",
                     "email": "chuck@horde.org",
-                    "role": "Lead"
+                    "role": "lead"
                 },
                 {
                     "name": "Jan Schneider",
                     "email": "jan@horde.org",
-                    "role": "Lead"
+                    "role": "lead"
                 },
                 {
                     "name": "Michael J Rubinsky",
@@ -1028,7 +1084,7 @@
             ],
             "description": "Compiled version of magicsuggest customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/magicsuggest",
-            "time": "2018-06-21T13:36:37+00:00"
+            "time": "2018-06-21T10:14:03+00:00"
         },
         {
             "name": "egroupware/news_admin",
@@ -1410,6 +1466,58 @@
             "time": "2020-08-28T17:39:07+00:00"
         },
         {
+            "name": "egroupware/webdav",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/WebDAV.git",
+                "reference": "889da78b6489965df8a379ccdc25853fe74da199"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/WebDAV/zipball/889da78b6489965df8a379ccdc25853fe74da199",
+                "reference": "889da78b6489965df8a379ccdc25853fe74da199",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/http": "~3.0",
+                "php": ">=5.3.0",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7.0"
+            },
+            "suggest": {
+                "monolog/monolog": "Adds support for logging HTTP requests and responses",
+                "symfony/finder": "Allows you to more easily filter the files that the stream wrapper returns"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Grale\\WebDav": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Geoffroy Letournel",
+                    "email": "geoffroy.letournel@gmail.com"
+                }
+            ],
+            "description": "A simple PHP WebDAV client and stream wrapper",
+            "homepage": "https://github.com/gletournel/WebDAV",
+            "keywords": [
+                "WebDAV",
+                "php",
+                "stream",
+                "wrapper"
+            ],
+            "time": "2020-09-23T16:16:07+00:00"
+        },
+        {
             "name": "egroupware/z-push-dev",
             "version": "2.5.0",
             "source": {
@@ -1667,6 +1775,154 @@
                 "unicode"
             ],
             "time": "2019-11-13T10:30:21+00:00"
+        },
+        {
+            "name": "guzzle/common",
+            "version": "v3.9.2",
+            "target-dir": "Guzzle/Common",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Guzzle3/common.git",
+                "reference": "2e36af7cf2ce3ea1f2d7c2831843b883a8e7b7dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Guzzle3/common/zipball/2e36af7cf2ce3ea1f2d7c2831843b883a8e7b7dc",
+                "reference": "2e36af7cf2ce3ea1f2d7c2831843b883a8e7b7dc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/event-dispatcher": ">=2.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Common": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Common libraries used by Guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "collection",
+                "common",
+                "event",
+                "exception"
+            ],
+            "abandoned": "guzzle/guzzle",
+            "time": "2014-08-11T04:32:36+00:00"
+        },
+        {
+            "name": "guzzle/http",
+            "version": "v3.9.2",
+            "target-dir": "Guzzle/Http",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Guzzle3/http.git",
+                "reference": "1e8dd1e2ba9dc42332396f39fbfab950b2301dc5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Guzzle3/http/zipball/1e8dd1e2ba9dc42332396f39fbfab950b2301dc5",
+                "reference": "1e8dd1e2ba9dc42332396f39fbfab950b2301dc5",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/common": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/stream": "self.version",
+                "php": ">=5.3.2"
+            },
+            "suggest": {
+                "ext-curl": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Http": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "HTTP libraries used by Guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "client",
+                "curl",
+                "http",
+                "http client"
+            ],
+            "abandoned": "guzzle/guzzle",
+            "time": "2014-08-11T04:32:36+00:00"
+        },
+        {
+            "name": "guzzle/parser",
+            "version": "v3.9.2",
+            "target-dir": "Guzzle/Parser",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Guzzle3/parser.git",
+                "reference": "6874d171318a8e93eb6d224cf85e4678490b625c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Guzzle3/parser/zipball/6874d171318a8e93eb6d224cf85e4678490b625c",
+                "reference": "6874d171318a8e93eb6d224cf85e4678490b625c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Parser": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Interchangeable parsers used by Guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "URI Template",
+                "cookie",
+                "http",
+                "message",
+                "url"
+            ],
+            "abandoned": "guzzle/guzzle",
+            "time": "2014-02-05T18:29:46+00:00"
         },
         {
             "name": "imsglobal/lti-1p3-tool",
@@ -2345,7 +2601,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "A library to wrap various compression techniques."
+            "description": "An API for various compression techniques."
         },
         {
             "name": "pear-pear.horde.org/Horde_Crypt",
@@ -2411,7 +2667,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "A library that provides blowfish encryption/decryption for PHP string data."
+            "description": "Provides blowfish encryption/decryption for PHP string data."
         },
         {
             "name": "pear-pear.horde.org/Horde_Date",
@@ -2527,7 +2783,7 @@
             "license": [
                 "BSD-2-Clause"
             ],
-            "description": "A library that wraps various backends providing IDNA (Internationalized Domain Names in Applications) support."
+            "description": "Normalized access to various backends providing IDNA (Internationalized Domain Names in Applications) support."
         },
         {
             "name": "pear-pear.horde.org/Horde_Imap_Client",
@@ -2565,7 +2821,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "A library to access IMAP4rev1 (RFC 3501) mail servers. Also supports connections to POP3 (STD 53/RFC 1939)."
+            "description": "Interface to access IMAP4rev1 (RFC 3501) mail servers. Also supports connections to POP3 (STD 53/RFC 1939)."
         },
         {
             "name": "pear-pear.horde.org/Horde_ListHeaders",
@@ -2845,7 +3101,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "A library that provides an abstract PHP network socket client."
+            "description": "Provides abstract class for use in creating PHP network socket clients."
         },
         {
             "name": "pear-pear.horde.org/Horde_Stream",
@@ -2986,7 +3242,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "A library that provides a text-based diff engine and renderers for multiple diff output formats."
+            "description": "A text-based diff engine and renderers for multiple diff output formats."
         },
         {
             "name": "pear-pear.horde.org/Horde_Text_Flowed",
@@ -3014,7 +3270,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "A library that provides common methods for manipulating text using the encoding described in RFC 3676 ('flowed' text)."
+            "description": "The Horde_Text_Flowed:: class provides common methods for manipulating text using the encoding described in RFC 3676 ('flowed' text)."
         },
         {
             "name": "pear-pear.horde.org/Horde_Translation",
@@ -3097,7 +3353,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "A library that provides functionality useful for all kind of applications."
+            "description": "These classes provide functionality useful for all kind of applications."
         },
         {
             "name": "pear/archive_tar",
@@ -3784,12 +4040,6 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "funding": [
-                {
-                    "url": "https://github.com/synchro",
-                    "type": "github"
-                }
-            ],
             "time": "2020-05-27T12:24:03+00:00"
         },
         {
@@ -3881,20 +4131,6 @@
                 "twofish",
                 "x.509",
                 "x509"
-            ],
-            "funding": [
-                {
-                    "url": "https://github.com/terrafrost",
-                    "type": "github"
-                },
-                {
-                    "url": "https://www.patreon.com/phpseclib",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/phpseclib/phpseclib",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-04-04T23:17:33+00:00"
         },
@@ -6110,20 +6346,6 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -6181,20 +6403,6 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-08-10T07:47:39+00:00"
         },
         {
@@ -6268,20 +6476,6 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-30T10:09:30+00:00"
         },
         {
@@ -6339,20 +6533,6 @@
             ],
             "description": "Symfony ErrorHandler Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-08-17T09:56:45+00:00"
         },
         {
@@ -6423,20 +6603,6 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-08-13T14:18:44+00:00"
         },
         {
@@ -6499,20 +6665,6 @@
                 "interoperability",
                 "standards"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-07-06T13:19:58+00:00"
         },
         {
@@ -6563,20 +6715,6 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -6632,20 +6770,6 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-08-17T07:39:58+00:00"
         },
         {
@@ -6737,20 +6861,6 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-09-02T08:09:29+00:00"
         },
         {
@@ -6813,20 +6923,6 @@
                 "mime",
                 "mime-type"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-08-17T09:56:45+00:00"
         },
         {
@@ -6888,20 +6984,6 @@
                 "ctype",
                 "polyfill",
                 "portable"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -6974,20 +7056,6 @@
                 "portable",
                 "shim"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-08-04T06:02:08+00:00"
         },
         {
@@ -7055,20 +7123,6 @@
                 "portable",
                 "shim"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-07-14T12:35:20+00:00"
         },
         {
@@ -7131,20 +7185,6 @@
                 "polyfill",
                 "portable",
                 "shim"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -7265,20 +7305,6 @@
                 "portable",
                 "shim"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-07-14T12:35:20+00:00"
         },
         {
@@ -7337,20 +7363,6 @@
                 "polyfill",
                 "portable",
                 "shim"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -7413,20 +7425,6 @@
                 "polyfill",
                 "portable",
                 "shim"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -7493,20 +7491,6 @@
                 "polyfill",
                 "portable",
                 "shim"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -7635,20 +7619,6 @@
                 "routing",
                 "uri",
                 "url"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-03-30T11:41:10+00:00"
         },
@@ -7785,20 +7755,6 @@
                 "debug",
                 "dump"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-08-17T07:31:35+00:00"
         },
         {
@@ -7858,20 +7814,6 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-30T11:41:10+00:00"
         },
         {
@@ -8256,6 +8198,58 @@
                 "instantiate"
             ],
             "time": "2019-10-21T16:45:58+00:00"
+        },
+        {
+            "name": "grale/webdav",
+            "version": "v0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gletournel/WebDAV.git",
+                "reference": "c4d592e90f68806e491544d780fb44c78e3961cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gletournel/WebDAV/zipball/c4d592e90f68806e491544d780fb44c78e3961cb",
+                "reference": "c4d592e90f68806e491544d780fb44c78e3961cb",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/http": "~3.0",
+                "php": ">=5.3.0",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7.0"
+            },
+            "suggest": {
+                "monolog/monolog": "Adds support for logging HTTP requests and responses",
+                "symfony/finder": "Allows you to more easily filter the files that the stream wrapper returns"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Grale\\WebDav": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Geoffroy Letournel",
+                    "email": "geoffroy.letournel@gmail.com"
+                }
+            ],
+            "description": "A simple PHP WebDAV client and stream wrapper",
+            "homepage": "https://github.com/gletournel/WebDAV",
+            "keywords": [
+                "WebDAV",
+                "php",
+                "stream",
+                "wrapper"
+            ],
+            "time": "2017-09-26T13:31:13+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -9857,12 +9851,14 @@
         "egroupware/smallpart": 20,
         "egroupware/status": 20,
         "egroupware/swoolepush": 20,
-        "egroupware/tracker": 20
+        "egroupware/tracker": 20,
+        "egroupware/guzzlestream": 20,
+        "egroupware/webdav": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.2,<=8.0.0alpha1",
+        "php": ">=7.3,<=8.0.0alpha1",
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mysqli": "*",
@@ -9874,7 +9870,6 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.2"
-    },
-    "plugin-api-version": "1.1.0"
+        "php": "7.3"
+    }
 }
