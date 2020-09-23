@@ -89,14 +89,9 @@ abstract class StreamWrapperBase extends LoggedInTest
 
 	protected function tearDown() : void
 	{
-		LoggedInTest::tearDownAfterClass();
-		LoggedInTest::setupBeforeClass();
-
-		// Re-init, since they look at user, fstab, etc.
-		// Also, further tests that access the filesystem fail if we don't
-		Vfs::clearstatcache();
-		Vfs::init_static();
-
+		// Make sure we're on the original user.  Failures could cause us to be logged in as someone else
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		$this->mount();
 		// Need to ask about mounts, or other tests fail
 		Vfs::mount();
 
@@ -259,7 +254,7 @@ abstract class StreamWrapperBase extends LoggedInTest
 		);
 		$this->assertFalse(
 				file_get_contents(Vfs::PREFIX . $file),
-				"Problem reading someone else's file with no permission"
+				"Read someone else's file with no permission. " . Vfs::PREFIX . $file
 		);
 
 	}
@@ -318,7 +313,7 @@ abstract class StreamWrapperBase extends LoggedInTest
 		$this->assertEquals(
 				$contents,
 				file_get_contents(Vfs::PREFIX . $file),
-				"Problem reading someone else's file with permission"
+				"Problem reading contents of someone else's file (".Vfs::PREFIX . "$file) with permission"
 		);
 		$this->assertTrue(
 				Vfs::is_readable($file),

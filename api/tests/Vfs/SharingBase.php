@@ -77,14 +77,15 @@ class SharingBase extends LoggedInTest
 
 	protected function tearDown() : void
 	{
-		LoggedInTest::tearDownAfterClass();
+		try
+		{
+			// Some tests may leave us logged out, which will cause failures in parent cleanup
+			LoggedInTest::tearDownAfterClass();
+		}
+		catch(\Throwable $e) {}
+
 		LoggedInTest::setupBeforeClass();
 
-		// Re-init, since they look at user, fstab, etc.
-		// Also, further tests that access the filesystem fail if we don't
-		Vfs::clearstatcache();
-		Vfs::init_static();
-		Vfs\StreamWrapper::init_static();
 
 		// Need to ask about mounts, or other tests fail
 		Vfs::mount();
@@ -271,8 +272,6 @@ class SharingBase extends LoggedInTest
 		Vfs::$is_root = false;
 
 		$this->mounts[] = $path;
-		Vfs::clearstatcache();
-		Vfs::init_static();
 	}
 
 	/**
