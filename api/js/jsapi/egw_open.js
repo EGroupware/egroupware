@@ -315,7 +315,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 
 				return popup_window;
 			}
-			else if ((typeof _target == 'undefined' || _target == '_self' || typeof this.link_app_list()[_target] != "undefined"))
+			else if ((typeof _target == 'undefined' || _target == '_tab' || _target == '_self' || typeof this.link_app_list()[_target] != "undefined"))
 			{
 				if(_target == '_self')
 				{

@@ -228,7 +228,7 @@ class AddressbookApp extends EgwApp
 			extras.crm_list = _action.id.replace('view-','');
 		}
 
-		this.egw.open(id, 'addressbook', 'view', extras, '_self', 'addressbook');
+		this.egw.open(id, 'addressbook', 'view', extras, '_tab', 'addressbook');
 	}
 
 	/**

@@ -202,7 +202,7 @@ var AddressbookApp = /** @class */ (function (_super) {
         if (_action.id != 'view') {
             extras.crm_list = _action.id.replace('view-', '');
         }
-        this.egw.open(id, 'addressbook', 'view', extras, '_self', 'addressbook');
+        this.egw.open(id, 'addressbook', 'view', extras, '_tab', 'addressbook');
     };
     /**
      * Set link filter for the already open & rendered  list
