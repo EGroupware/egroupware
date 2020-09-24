@@ -194,7 +194,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		{
 			return false;
 		}
-		$this->check_set_context($url, true);
+		$this->check_set_context($url);
 
 		if (!($this->opened_stream = $this->context ?
 			fopen($url, $mode, false, $this->context) : fopen($url, $mode, false)))
@@ -422,7 +422,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 			return false;
 		}
 		// set user-context
-		$this->check_set_context($url, true);
+		$this->check_set_context($url);
 		$stat = $this->url_stat($path, STREAM_URL_STAT_LINK);
 
 		self::symlinkCache_remove($path);
@@ -533,7 +533,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		// set user context
 		if (Vfs::parse_url($url, PHP_URL_USER))
 		{
-			$this->check_set_context($url, true);
+			$this->check_set_context($url);
 		}
 		// check if recursive option is set and needed
 		if (($options & STREAM_MKDIR_RECURSIVE) &&
@@ -598,7 +598,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		// set user context
 		if (Vfs::parse_url($url, PHP_URL_USER))
 		{
-			$this->check_set_context($url, true);
+			$this->check_set_context($url);
 		}
 		self::symlinkCache_remove($path);
 		$ok = rmdir($url, $this->context);
@@ -635,7 +635,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 			return false;
 		}
 		// need to set user-context from resolved url
-		$this->check_set_context($this->opened_dir_url, true);
+		$this->check_set_context($this->opened_dir_url);
 
 		if (!($this->opened_dir = $this->context ?
 			opendir($this->opened_dir_url, $this->context) : opendir($this->opened_dir_url)))
@@ -693,7 +693,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true, $check_symlink_depth=self::MAX_SYMLINK_DEPTH, $try_reconnect=true )
 	{
 		// we have no context, but $path is a URL with a valid user --> set it
-		$this->check_set_context($path, true);
+		$this->check_set_context($path);
 
 		if (!($url = static::resolve_url($path, !($flags & STREAM_URL_STAT_LINK), $check_symlink_components, true, false, $mount_point)))
 		{

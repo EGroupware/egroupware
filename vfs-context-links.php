@@ -9,7 +9,7 @@ $GLOBALS['egw_info'] = [
 	],
 ];
 require_once __DIR__.'/header-default.inc.php';
-
+$_SESSION = [];	// reset session, specially cache for links
 $egw->session->create($sysop='ralf', '', '', true, false);
 
 $so = new infolog_so();

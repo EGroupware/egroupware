@@ -107,7 +107,7 @@ class StreamWrapper extends Vfs\StreamWrapper
 	{
 		if (($stat = parent::url_stat($path, $flags, $try_create_home, $check_symlink_components, $check_symlink_depth, $try_reconnect)))
 		{
-			$this->check_set_context($stat['url'], true);
+			$this->check_set_context($stat['url']);
 		}
 		return $stat;
 	}

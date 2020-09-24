@@ -56,21 +56,19 @@ trait UserContextTrait
 
 			if (is_string($url_or_context))
 			{
-				$this->check_set_context($url_or_context, true);
+				$this->check_set_context($url_or_context);
 			}
 		}
 	}
 
 	/**
-	 * Check if we have no user-context, but an url with a user --> set it as context
+	 * Check if we have an url with a user --> set it as context
 	 *
 	 * @param $url
-	 * @param bool $always_set false (default): only set if we have not context or user in context, true: always set
 	 */
-	protected function check_set_context($url, $always_set=false)
+	protected function check_set_context($url)
 	{
-		if (($always_set || !$this->context || empty(stream_context_get_options($this->context)[Vfs::SCHEME]['user'])) &&
-			$url[0] !== '/' && ($account_lid = Vfs::parse_url($url, PHP_URL_USER)))
+		if ($url[0] !== '/' && ($account_lid = Vfs::parse_url($url, PHP_URL_USER)))
 		{
 			$this->user = $account_lid;
 		}
@@ -112,6 +110,19 @@ trait UserContextTrait
 			return false;	// file not found
 		}
 
+		// only vfs stream-wrapper sets $stat['url'], use given url instead
+		if (!isset($stat['url']) && $path[0] !== '/')
+		{
+			$stat['url'] = $path;
+		}
+
+		// if we check writable and have a readonly mount --> return false, as backends dont know about r/o url parameter
+		if ($check == Vfs::WRITABLE && Vfs\StreamWrapper::url_is_readonly($stat['url']))
+		{
+			//error_log(__METHOD__."(path=$path, check=writable, ...) failed because mount is readonly");
+			return false;
+		}
+
 		// check if we use an EGroupwre stream wrapper, or a stock php one
 		// if it's not an EGroupware one, we can NOT use uid, gid and mode!
 		if (($scheme = Vfs::parse_url($stat['url'], PHP_URL_SCHEME)) && !(class_exists(Vfs::scheme2class($scheme))))
@@ -148,12 +159,6 @@ trait UserContextTrait
 				//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via group rights!");
 				return true;
 			}
-		}
-		// if we check writable and have a readonly mount --> return false, as backends dont know about r/o url parameter
-		if ($check == Vfs::WRITABLE && Vfs\StreamWrapper::url_is_readonly($stat['url']))
-		{
-			//error_log(__METHOD__."(path=$path, check=writable, ...) failed because mount is readonly");
-			return false;
 		}
 
 		// check extended acls (only if path given)
