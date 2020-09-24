@@ -414,17 +414,19 @@ export class etemplate2
 	/**
 	 * Download a URL not triggering our unload handler and therefore destroying our et2 request
 	 *
+	 * We use a new anchor element to avoid not destroying other etemplates as well, which
+	 * is what happens if we use window.location
+	 *
 	 * @param {string} _url
 	 */
 	download(_url)
 	{
-		// need to unbind unload handler to NOT destroy et2 session
-		this.unbind_unload();
+		const a = document.createElement('a');
+		a.href = _url;
+		a.download = 'download';
 
-		document.location = _url;
-
-		// bind unload handler again (can NOT do it direct, as this would be quick enough to be still triggered!)
-		window.setTimeout(jQuery.proxy(this.bind_unload, this), 100);
+		// Programmatically trigger a click on the anchor element
+		a.click();
 	}
 
 	/**
