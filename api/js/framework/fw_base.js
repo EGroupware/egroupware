@@ -702,7 +702,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				// add target flag
 				_link += '&target=_tab';
 				var appname = app.appName+":"+btoa(_link);
-				this.applications[appname] = app;
+				this.applications[appname] = jQuery.extend(true, {},app);
 				this.applications[appname]['appName'] = appname;
 				this.applications[appname]['indexUrl'] = _link;
 				this.applications[appname]['tab'] = null;
