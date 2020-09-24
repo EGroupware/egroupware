@@ -153,7 +153,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	 *
 	 * @param {egw_fw_class_application} _app
 	 * @param {string} _url optional url, default index page of app
-	 * @param {bool} _hidden specifies, whether the application should be set active
+	 * @param {boolean} _hidden specifies, whether the application should be set active
 	 *   after opening the tab
 	 * @param {int} _pos
 	 * @param {status} _status
@@ -668,6 +668,32 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				menuaction: 'manual.uimanual.view',
 				referer: referer
 			}), 'manual', true);
+		}
+	},
+
+	tabLinkHandler: function(_link, _extra)
+	{
+		var app = this.parseAppFromUrl(_link);
+		if (app)
+		{
+			// add target flag
+			_link += '&target=_tab';
+			var appname = app.appName+":"+(_extra.id ? _extra.id : btoa(_link));
+			// create an actual clone of existing app object
+			this.applications[appname] = jQuery.extend(true, {}, app);
+			// merge extra framework app data into the new one
+			this.applications[appname] = jQuery.extend(true, this.applications[appname], _extra);
+			this.applications[appname]['appName'] = appname; // better to control it here
+			this.applications[appname]['indexUrl'] = _link;
+			this.applications[appname]['tab'] = null; // must be rest to create a new tab
+			this.applications[appname]['browser'] = null; // must be rest to create a new browser content
+
+			this.applicationTabNavigate(this.applications[appname], _link, false, -1, null);
+		}
+		else
+		{
+			egw_alertHandler("No appropriate target application has been found.",
+				"Target link: " + _link);
 		}
 	},
 

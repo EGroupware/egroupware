@@ -994,6 +994,17 @@ declare interface IegwWndLocal extends IegwGlobal
 	openPopup(_url : string, _width : number, _height : number|"availHeight", _windowName? : string, _app? : string|boolean,
 			  _returnID? : boolean, _status? : "yes"|"no", _skip_framework? : boolean) : Window|void;
 	/**
+	 * View an EGroupware entry: opens a framework tab for the given app entry
+	 *
+	 * @param {string}|int|object _id either just the id or if app=="" "app:id" or object with all data
+	 * @param {string} _app app-name or empty (app is part of id)
+	 * @param {string} _type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
+	 * @param {object|string} _extra extra url parameters to append as object or string
+	 * @param {object} _framework_app framework app attributes e.g. title or displayName
+	 */
+	openTab(_id, _app, _type, _extra, _framework_app) : void;
+
+	/**
 	 * Get available height of screen
 	 */
 	availHeight() : number;

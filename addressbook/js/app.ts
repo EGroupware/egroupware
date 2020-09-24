@@ -221,14 +221,18 @@ class AddressbookApp extends EgwApp
 		var extras : any = {
 			index: index
 		};
-
+		var data = egw.dataGetUIDdata(_senders[0].id)['data'];
 		// CRM list
 		if(_action.id != 'view')
 		{
 			extras.crm_list = _action.id.replace('view-','');
 		}
 
-		this.egw.open(id, 'addressbook', 'view', extras, '_tab', 'addressbook');
+		this.egw.openTab(id, 'addressbook', 'view', extras, {
+			displayName: data.n_fn,
+			icon: data.photo,
+			id: id
+		});
 	}
 
 	/**

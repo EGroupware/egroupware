@@ -96,6 +96,8 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * @param {boolean} _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
 		 * - This option only makes sense to be enabled when the open_link requested without user interaction
 		 * @memberOf egw
+		 *
+		 * @return {object|void} returns object for given specific target like '_tab'
 		 */
 		open: function(id_data, app, type, extra, target, target_app, _check_popup_blocker)
 		{
@@ -221,7 +223,31 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			{
 				url = this.link(url, params);
 			}
+			if (target == '_tab') return {url: url};
 			return this.open_link(url, target, popup, target_app, _check_popup_blocker);
+		},
+
+		/**
+		 * View an EGroupware entry: opens a framework tab for the given app entry
+		 *
+		 * @param {string}|int|object _id either just the id or if app=="" "app:id" or object with all data
+		 * @param {string} _app app-name or empty (app is part of id)
+		 * @param {string} _type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
+		 * @param {object|string} _extra extra url parameters to append as object or string
+		 * @param {object} _framework_app framework app attributes e.g. title or displayName
+		  */
+		openTab: function(_id, _app, _type, _extra, _framework_app)
+		{
+			if (_wnd.framework && _wnd.framework.tabLinkHandler)
+			{
+				var data = this.open(_id, _app, _type, _extra, "_tab", false);
+				// Use framework's link handler
+				_wnd.framework.tabLinkHandler(data.url, _framework_app);
+			}
+			else
+			{
+				this.open(_id, _app, _type, _extra);
+			}
 		},
 
 		/**
@@ -315,7 +341,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 
 				return popup_window;
 			}
-			else if ((typeof _target == 'undefined' || _target == '_tab' || _target == '_self' || typeof this.link_app_list()[_target] != "undefined"))
+			else if ((typeof _target == 'undefined' || _target == '_self' || typeof this.link_app_list()[_target] != "undefined"))
 			{
 				if(_target == '_self')
 				{
