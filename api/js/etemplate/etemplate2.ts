@@ -438,8 +438,9 @@ export class etemplate2
 	 * @param {function} _callback called after template is loaded
 	 * @param {object} _app local app object
 	 * @param {boolean} _no_et2_ready true: do not send et2_ready, used by et2_dialog to not overwrite app.js et2 object
+	 * @param {string} _open_target flag of string to distinguishe between tab target and normal app object
 	 */
-	load(_name, _url, _data, _callback?, _app?, _no_et2_ready?)
+	load(_name, _url, _data, _callback?, _app?, _no_et2_ready?, _open_target?)
 	{
 		let app = _app || window.app;
 		this.name = _name;	// store top-level template name to have it available in widgets
@@ -461,7 +462,7 @@ export class etemplate2
 		const appname = _name.split('.')[0];
 		// if no app object provided and template app is not currentapp (eg. infolog CRM view)
 		// create private app object / closure with just classes / prototypes
-		if (!_app && appname && appname != currentapp)
+		if (!_app && appname && appname != currentapp || _open_target == "_tab")
 		{
 			app = {classes: window.app.classes};
 		}
@@ -1309,7 +1310,7 @@ export class etemplate2
 						if (old) old.clear();
 					}
 					const et2 = new etemplate2(node, data.menuaction);
-					et2.load(data.name, data.url, data.data);
+					et2.load(data.name, data.url, data.data, null, null, null, data['open-target']);
 					return true;
 				}
 				else
