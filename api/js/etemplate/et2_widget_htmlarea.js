@@ -268,8 +268,11 @@ var et2_htmlarea = /** @class */ (function (_super) {
         var rte_menubar = egw.preference('rte_menubar', 'common');
         var rte_toolbar = egw.preference('rte_toolbar', 'common');
         // we need to have rte_toolbar values as an array
-        if (rte_toolbar && typeof rte_toolbar == "object") {
+        if (rte_toolbar && typeof rte_toolbar == "object" && this.toolbar == '') {
             rte_toolbar = Object.keys(rte_toolbar).map(function (key) { return rte_toolbar[key]; });
+        }
+        else if (this.toolbar != '') {
+            rte_toolbar = this.toolbar.split(',');
         }
         var settings = {
             fontsize_formats: et2_htmlarea.FONT_SIZE_FORMATS[egw.preference('rte_font_unit', 'common')],
@@ -417,6 +420,12 @@ var et2_htmlarea = /** @class */ (function (_super) {
             description: "Enables to control what child tag is allowed or not allowed of the present tag. For instance: +body[style], makes style tag allowed inside body",
             type: "string",
             default: "+body[style]"
+        },
+        toolbar: {
+            'name': 'Toolbar',
+            'description': 'Comma separated string of toolbar actions. It will only be considered if no Mode is restricted.',
+            'default': '',
+            'type': 'string'
         }
     };
     /**
@@ -426,7 +435,7 @@ var et2_htmlarea = /** @class */ (function (_super) {
     et2_htmlarea.TOOLBAR_LIST = ['undo', 'redo', 'formatselect', 'fontselect', 'fontsizeselect',
         'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor', 'link',
         'alignleft', 'aligncenter', 'alignright', 'alignjustify', 'numlist',
-        'bullist', 'outdent', 'indent', 'ltr', 'rtl', 'removeformat', 'code', 'image', 'searchreplace'
+        'bullist', 'outdent', 'indent', 'ltr', 'rtl', 'removeformat', 'code', 'image', 'searchreplace', 'fullscreen'
     ];
     /**
      * arranged toolbars as simple mode
@@ -447,8 +456,8 @@ var et2_htmlarea = /** @class */ (function (_super) {
      * @constant
      */
     et2_htmlarea.TOOLBAR_ADVANCED = "undo redo| formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | " +
-        "link | alignleft aligncenter alignright alignjustify | numlist " +
-        "bullist outdent indent ltr rtl | removeformat code| image | searchreplace | fullscreen";
+        "alignleft aligncenter alignright alignjustify | numlist " +
+        "bullist outdent indent ltr rtl | removeformat code| link image pastetext | searchreplace | fullscreen";
     /**
      * font size formats
      * @constant
