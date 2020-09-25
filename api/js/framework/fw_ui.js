@@ -308,6 +308,7 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 	this.position = _pos;
 	this.status = _status;
 	this.notification = 0;
+	this.hint = '';
 
 	//Create the header div and set its "click" function and "hover" event
 	this.headerDiv = document.createElement("span");
@@ -437,6 +438,17 @@ egw_fw_ui_tab.prototype.setTitle = function(_title)
 	this.title = _title;
 	jQuery(this.headerH1).empty();
 	jQuery(this.headerH1).text(_title);
+};
+
+/**
+ * setHint sets tooltip of this tab. An existing tooltip will be removed.
+ *
+ * @param {string} _hint Text which should be displayed.
+ */
+egw_fw_ui_tab.prototype.setHint = function(_hint)
+{
+	this.hint = _hint;
+	egw().tooltipBind(jQuery(this.headerDiv), _hint);
 };
 
 /**

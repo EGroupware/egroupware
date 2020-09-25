@@ -492,7 +492,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			_app.tab = this.tabsUi.addTab(_app.icon, this.tabClickCallback, this.tabCloseClickCallback,
 				_app, _pos, _status);
 			_app.tab.setTitle(_app.displayName);
-
+			_app.tab.setHint(_app.hint ? _app.hint : '');
 			//Set the tab closeable if there's more than one tab
 			this.tabsUi.setCloseable(this.tabsUi._isNotTheLastTab());
 			// Do not show tab header if the app is with status 5, means run in background
