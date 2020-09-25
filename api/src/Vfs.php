@@ -726,7 +726,7 @@ class Vfs extends Vfs\Base
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param string $path
+	 * @param string $path or url
 	 * @param int $check mode to check: one or more or'ed together of: 4 = self::READABLE,
 	 * 	2 = self::WRITABLE, 1 = self::EXECUTABLE
 	 * @return boolean
@@ -740,7 +740,7 @@ class Vfs extends Vfs\Base
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param string $path path
+	 * @param string $path path or url
 	 * @param int $check mode to check: one or more or'ed together of: 4 = self::READABLE,
 	 * 	2 = self::WRITABLE, 1 = self::EXECUTABLE
 	 * @param array|boolean $stat =null stat array or false, to not query it again
@@ -801,7 +801,7 @@ class Vfs extends Vfs\Base
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param string $path
+	 * @param string $path or url
 	 * @return boolean
 	 */
 	static function is_writable($path)
@@ -813,7 +813,7 @@ class Vfs extends Vfs\Base
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param string $path
+	 * @param string $path or url
 	 * @return boolean
 	 */
 	static function is_executable($path)
@@ -824,7 +824,7 @@ class Vfs extends Vfs\Base
 	/**
 	 * Check if path is a script and write access would be denied by backend
 	 *
-	 * @param string $path
+	 * @param string $path or url
 	 * @return boolean true if $path is a script AND exec mount-option is NOT set, false otherwise
 	 */
 	static function deny_script($path)
@@ -1527,24 +1527,25 @@ class Vfs extends Vfs\Base
 	/**
 	 * lock a ressource/path
 	 *
-	 * @param string $path path or url
+	 * @param string $url url or path, lock is granted for the path only, but url is used for access checks
 	 * @param string &$token
 	 * @param int &$timeout
-	 * @param string &$owner
+	 * @param int|string &$owner account_id, account_lid or mailto-url
 	 * @param string &$scope
 	 * @param string &$type
 	 * @param boolean $update =false
 	 * @param boolean $check_writable =true should we check if the ressource is writable, before granting locks, default yes
 	 * @return boolean true on success
 	 */
-	static function lock($path,&$token,&$timeout,&$owner,&$scope,&$type,$update=false,$check_writable=true)
+	static function lock($url, &$token, &$timeout, &$owner, &$scope, &$type, $update=false, $check_writable=true)
 	{
 		// we require write rights to lock/unlock a resource
-		if (!$path || $update && !$token || $check_writable &&
-			!(self::is_writable($path) || !self::file_exists($path) && ($dir=self::dirname($path)) && self::is_writable($dir)))
+		if (!$url || $update && !$token || $check_writable &&
+			!(self::is_writable($url) || !self::file_exists($url) && ($dir=self::dirname($url)) && self::is_writable($dir)))
 		{
 			return false;
 		}
+		$path = self::parse_url($url, PHP_URL_PATH);
     	// remove the lock info evtl. set in the cache
     	unset(self::$lock_cache[$path]);
 
@@ -1574,16 +1575,20 @@ class Vfs extends Vfs\Base
 			}
 		}
 		// HTTP_WebDAV_Server does this check before calling LOCK, but we want to be complete and usable outside WebDAV
-		elseif(($lock = self::checkLock($path)) && ($lock['scope'] == 'exclusive' || $scope == 'exclusive'))
+		elseif(($lock = self::checkLock($url)) && ($lock['scope'] == 'exclusive' || $scope == 'exclusive'))
 		{
 			$ret = false;	// there's alread a lock
 		}
 		else
 		{
 			// HTTP_WebDAV_Server sets owner and token, but we want to be complete and usable outside WebDAV
-			if (!$owner || $owner == 'unknown')
+			if (!$owner || $owner === 'unknown')
 			{
 				$owner = 'mailto:'.$GLOBALS['egw_info']['user']['account_email'];
+			}
+			elseif (($email = Accounts::id2name($owner, 'account_email')))
+			{
+				$owner = 'mailto:'.$email;
 			}
 			if (!$token)
 			{
@@ -1608,48 +1613,50 @@ class Vfs extends Vfs\Base
 				$ret = false;	// there's already a lock
 			}
 		}
-		if (self::LOCK_DEBUG) error_log(__METHOD__."($path,$token,$timeout,$owner,$scope,$type,update=$update,check_writable=$check_writable) returns ".($ret ? 'true' : 'false'));
+		if (self::LOCK_DEBUG) error_log(__METHOD__."($url,$token,$timeout,$owner,$scope,$type,update=$update,check_writable=$check_writable) returns ".($ret ? 'true' : 'false'));
 		return $ret;
 	}
 
     /**
      * unlock a ressource/path
      *
-     * @param string $path path to unlock
+	 * @param string $url url or path, lock is granted for the path only, but url is used for access checks
      * @param string $token locktoken
 	 * @param boolean $check_writable =true should we check if the ressource is writable, before granting locks, default yes
      * @return boolean true on success
      */
-    static function unlock($path,$token,$check_writable=true)
+    static function unlock($url,$token,$check_writable=true)
     {
 		// we require write rights to lock/unlock a resource
-		if ($check_writable && !self::is_writable($path))
+		if ($check_writable && !self::is_writable($url))
 		{
 			return false;
 		}
-        if (($ret = self::$db->delete(self::LOCK_TABLE,array(
-        	'lock_path' => $path,
-        	'lock_token' => $token,
-        ),__LINE__,__FILE__) && self::$db->affected_rows()))
-        {
-        	// remove the lock from the cache too
-        	unset(self::$lock_cache[$path]);
-        }
-		if (self::LOCK_DEBUG) error_log(__METHOD__."($path,$token,$check_writable) returns ".($ret ? 'true' : 'false'));
+		$path = self::parse_url($url, PHP_URL_PATH);
+		if (($ret = self::$db->delete(self::LOCK_TABLE,array(
+			'lock_path' => $path,
+			'lock_token' => $token,
+		),__LINE__,__FILE__) && self::$db->affected_rows()))
+		{
+			// remove the lock from the cache too
+			unset(self::$lock_cache[$path]);
+		}
+		if (self::LOCK_DEBUG) error_log(__METHOD__."($url,$token,$check_writable) returns ".($ret ? 'true' : 'false'));
 		return $ret;
     }
 
 	/**
 	 * checkLock() helper
 	 *
-	 * @param  string resource path to check for locks
+	 * @param string $url url or path, lock is granted for the path only, but url is used for access checks
 	 * @return array|boolean false if there's no lock, else array with lock info
 	 */
-	static function checkLock($path)
+	static function checkLock($url)
 	{
+		$path = self::parse_url($url, PHP_URL_PATH);
 		if (isset(self::$lock_cache[$path]))
 		{
-			if (self::LOCK_DEBUG) error_log(__METHOD__."($path) returns from CACHE ".str_replace(array("\n",'    '),'',print_r(self::$lock_cache[$path],true)));
+			if (self::LOCK_DEBUG) error_log(__METHOD__."($url) returns from CACHE ".str_replace(array("\n",'    '),'',print_r(self::$lock_cache[$url],true)));
 			return self::$lock_cache[$path];
 		}
 		$where = 'lock_path='.self::$db->quote($path);
@@ -1670,10 +1677,10 @@ class Vfs extends Vfs\Base
 	        	'lock_token' => $result['token'],
 	        ),__LINE__,__FILE__);
 
-			if (self::LOCK_DEBUG) error_log(__METHOD__."($path) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
+			if (self::LOCK_DEBUG) error_log(__METHOD__."($url) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
 	        $result = false;
 		}
-		if (self::LOCK_DEBUG) error_log(__METHOD__."($path) returns ".($result?array2string($result):'false'));
+		if (self::LOCK_DEBUG) error_log(__METHOD__."($url) returns ".($result?array2string($result):'false'));
 		return self::$lock_cache[$path] = $result;
 	}
 
@@ -1776,9 +1783,7 @@ class Vfs extends Vfs\Base
 	 */
 	static function init_static()
 	{
-		// if special user/vfs_user given (eg. from sharing) use it instead default user/account_id
-		self::$user = (int)(isset($GLOBALS['egw_info']['user']['vfs_user']) ?
-			$GLOBALS['egw_info']['user']['vfs_user'] : $GLOBALS['egw_info']['user']['account_id']);
+		self::$user = (int)$GLOBALS['egw_info']['user']['account_id'];
 		self::$is_admin = isset($GLOBALS['egw_info']['user']['apps']['admin']);
 		self::$db = isset($GLOBALS['egw_setup']->db) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
 		self::$lock_cache = array();

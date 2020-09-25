@@ -293,8 +293,7 @@ class Sharing
 		{
 			$GLOBALS['egw']->session->commit_session();
 		}
-		// need to store new fstab and vfs_user in session to allow GET requests / downloads via WebDAV
-		$GLOBALS['egw_info']['user']['vfs_user'] = Vfs::$user;
+		// need to store new fstab in session to allow GET requests / downloads via WebDAV
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = Vfs::mount();
 
 		// update modified egw and egw_info again in session, if neccessary
@@ -517,14 +516,14 @@ class Sharing
 			return $GLOBALS['egw']->sharing->ServeRequest();
 		}
 
-		// No extended ACL for readonly shares, disable eacl by setting session cache
+		/* No extended ACL for readonly shares, disable eacl by setting session cache
 		if(!($this->share['share_writable'] & 1))
 		{
 			Cache::setSession(Vfs\Sqlfs\StreamWrapper::EACL_APPNAME, 'extended_acl', array(
 				'/' => 1,
 				$this->share['share_path'] => 1
 			));
-		}
+		}*/
 		if($this->use_collabora())
 		{
 			$ui = new \EGroupware\Collabora\Ui();
