@@ -57,7 +57,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		}
 
 		// Add external owners that a select account widget will not find
-		foreach($value as &$owner)
+		foreach((array)$value as $owner)
 		{
 			$label = self::get_owner_label($owner);
 			$info = array();
