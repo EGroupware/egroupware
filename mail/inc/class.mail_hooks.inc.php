@@ -732,4 +732,20 @@ class mail_hooks
 			]
 		];
 	}
+
+	/**
+	 * Called before displaying site configuration
+	 *
+	 * @param array $config
+	 * @return array with additional config to merge and "sel_options" values
+	 */
+	public static function config(array $config)
+	{
+		return [
+			'html_toolbar' => empty($config['html_toolbar']) ? join(',', Api\Etemplate\Widget\HtmlArea::$toolbar_default_list) : $config['html_toolbar'],
+			'sel_options' => [
+				'html_toolbar' => Api\Etemplate\Widget\HtmlArea::get_toolbar_as_selOptions()
+			]
+		];
+	}
 }

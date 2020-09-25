@@ -26,15 +26,24 @@ class HtmlArea extends Etemplate\Widget
 	 * @var type array
 	 */
 	public static $font_options = array(
+		'andale mono,times' => 'Andale Mono',
 		'arial, helvetica, sans-serif' => 'Arial',
+		'arial black,avant garde' => 'Arial Black',
+		'book antiqua,palatino' => 'Book Antiqua',
 		'Comic Sans MS, cursive' => 'Comic Sans MS',
 		'Courier New, Courier, monospace' => 'Courier New',
 		'Georgia, serif' => 'Georgia',
+		'helvetica' => 'Helvetica',
+		'impact,chicago' => 'Impact',
 		'Lucida Sans Unicode, Lucida Grande, sans-serif' => 'Lucida Sans Unicode',
+		'symbol' => 'Symbol',
 		'Tahoma, Geneva, sans-serif' => 'Tahoma',
+		'terminal, "monaco' => 'Terminal',
 		'times new roman, times, serif' => 'Times New Roman',
 		'Trebuchet MS, Helvetica, sans-serif' => 'Trebuchet MS',
-		'Verdana, Geneva, sans-serif' => 'Verdana'
+		'Verdana, Geneva, sans-serif' => 'Verdana',
+		'webdings' => 'Webdings',
+		'wingdings,zapf dingbats' => 'Wingdings'
 	);
 
 	/**
@@ -68,6 +77,56 @@ class HtmlArea extends Etemplate\Widget
 		'pt' => 'pt: points (1/72 inch)',
 		'px' => 'px: display pixels',
 	);
+
+	/**
+	 * List of exisitng toolbar actions
+	 * @var type array
+	 */
+	public static $toolbar_list = [
+		'undo', 'redo', 'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor',
+		'link', 'alignleft', 'aligncenter', 'alignright', 'alignjustify',
+		'numlist', 'bullist', 'outdent', 'indent', 'ltr', 'rtl','pastetext',
+		'removeformat', 'code', 'image', 'searchreplace','formatselect', 'fontselect', 'fontsizeselect', 'fullscreen'
+	];
+
+	/**
+	 * Default list of toolbar actions
+	 * @var type array
+	 */
+	public static $toolbar_default_list = [
+		'undo', 'redo','formatselect', 'fontselect', 'fontsizeselect',
+		'bold' ,'italic', 'removeformat', 'forecolor', 'backcolor', 'alignleft',
+		'aligncenter', 'alignright', 'alignjustify', 'numlist', 'bullist', 'outdent',
+		'indent', 'link', 'image', 'pastetext'
+	];
+
+	/**
+	 * Create an array of toolbar as sel options
+	 *
+	 * @return array
+	 * 		[
+	 * 			id => {string}
+	 * 			label => {string}
+	 * 			title => {string}
+	 * 			icon => {string}
+	 * 			app => {string}
+	 * 		]
+	 */
+	public static function get_toolbar_as_selOptions ()
+	{
+		$toolbar_selOptions = array();
+		foreach (self::$toolbar_list as $toolbar)
+		{
+			$toolbar_selOptions[$toolbar] = array (
+				'id' => $toolbar,
+				'label' => lang($toolbar),
+				'title' => lang($toolbar),
+				'icon' => Api\Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url']).'/api/templates/default/images/htmlarea/'.$toolbar.'.svg',
+				'app' => 'api'
+			);
+		}
+		return $toolbar_selOptions;
+	}
 
 	/**
 	 * Validate input

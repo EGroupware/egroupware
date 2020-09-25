@@ -37,6 +37,7 @@ $setup_info['mail']['hooks']['clear_cache'] = 'EGroupware\\Api\\Mail::unsetCache
 $setup_info['mail']['hooks']['check_notify'] = 'mail_hooks::notification_check_mailbox';
 $setup_info['mail']['hooks']['emailadmin_edit'] = 'mail_hooks::emailadmin_edit';
 $setup_info['mail']['hooks']['status-get_actions'] = 'mail_hooks::get_status_actions';
+$setup_info['mail']['hooks']['config'] = 'mail_hooks::config';
 
 /* Dependencies for this app to work */
 $setup_info['mail']['depends'][] = array(

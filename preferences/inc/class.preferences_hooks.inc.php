@@ -113,23 +113,6 @@ class preferences_hooks
 				$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'],
 				$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit']);
 		}
-		$rte_toolbar_list = array (
-			'undo', 'redo', 'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor',
-			'link', 'alignleft', 'aligncenter', 'alignright', 'alignjustify',
-			'numlist', 'bullist', 'outdent', 'indent', 'ltr', 'rtl',
-			'removeformat', 'code', 'image', 'searchreplace','formatselect', 'fontselect', 'fontsizeselect', 'fullscreen'
-		);
-		$rte_toolbar_selOptions = array();
-		foreach ($rte_toolbar_list as $toolbar)
-		{
-			$rte_toolbar_selOptions[$toolbar] = array (
-				'id' => $toolbar,
-				'label' => lang($toolbar),
-				'title' => lang($toolbar),
-				'icon' => Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url']).'/api/templates/default/images/htmlarea/'.$toolbar.'.svg',
-				'app' => 'api'
-			);
-		}
 
 		if (!$GLOBALS['egw_info']['user']['preferences']['common']['rte_toolbar'])
 		{
@@ -475,7 +458,7 @@ class preferences_hooks
 					//'multiple' => 'toggle',
 					'editModeEnabled' => false,
 					'autocomplete_url' => ' ',
-					'select_options' => $rte_toolbar_selOptions
+					'select_options' => Api\Etemplate\Widget\HtmlArea::get_toolbar_as_selOptions()
 				)
 			)
 		);

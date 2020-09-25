@@ -83,6 +83,10 @@
 					<description value="Miscellaneous" span="all" class="subHeader"/>
 				</row>
 				<row>
+                    <description value="Default toolbar actions shown in mail's HTML editor"/>
+                    <taglist id="newsettings[html_toolbar]" allowFreeEntries="false"  autocomplete_url=' '  editModeEnabled="false"/>
+                </row>
+				<row>
 					<vbox>
 						<description value="examine namespace to retrieve folders in others and shared"/>
 						<description value="only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level"/>

@@ -1394,6 +1394,8 @@ class mail_compose
 		}
 
 		$content['to'] = self::resolveEmailAddressList($content['to']);
+		$content['html_toolbar'] = empty(Mail::$mailConfig['html_toolbar']) ?
+			join(',', Etemplate\Widget\HtmlArea::$toolbar_default_list) : join(',', Mail::$mailConfig['html_toolbar']);
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
 	}
