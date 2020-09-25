@@ -2019,10 +2019,11 @@ class Session
 	/**
 	 * Initialise the used session handler
 	 *
+	 * @param string? $sessionid =null default use self::get_sessionid()
 	 * @return boolean true if we have a session, false otherwise
 	 * @throws \ErrorException if there is no PHP session support
 	 */
-	public static function init_handler()
+	public static function init_handler($sessionid=null)
 	{
 		switch(session_status())
 		{
@@ -2032,7 +2033,7 @@ class Session
 				if (headers_sent()) return false;	// only gives warnings
 				ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
 				session_name(self::EGW_SESSION_NAME);
-				if (($sessionid = self::get_sessionid()))
+				if (isset($sessionid) || ($sessionid = self::get_sessionid()))
 				{
 					session_id($sessionid);
 					self::cache_control();
