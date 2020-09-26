@@ -264,7 +264,7 @@ class Sharing
 	 * Sub-class specific things needed to be done to the share (or session)
 	 * after we login but before we start actually doing anything
 	 */
-	protected function after_login() {}
+	protected static function after_login() {}
 
 
 	protected static function login($keep_session, &$share)
@@ -285,7 +285,7 @@ class Sharing
 		{
 			$sessionid = static::create_new_session();
 
-			$GLOBALS['egw']->sharing->after_login();
+			static::after_login($share);
 		}
 		// we have a session we want to keep, but share owner is different from current user and we dont need filemanager UI
 		// --> we dont need session and close it, to not modifiy it
@@ -507,7 +507,7 @@ class Sharing
 	public function ServeRequest()
 	{
 		// sharing is for a different share, change to current share
-		if ($this->share['share_token'] !== self::get_token())
+		if (empty($this->share['skip_validate_token']) && $this->share['share_token'] !== self::get_token())
 		{
 			// to keep the session we require the regular user flag "N" AND a user-name not equal to "anonymous"
 			self::create_session($GLOBALS['egw']->session->session_flags === 'N' &&

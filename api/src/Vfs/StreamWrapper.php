@@ -703,7 +703,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 
 		// we need to make sure the mount-point is readable eg. if something is mounted into an other users home-directory
 		if (!isset($mount_point)) Vfs::mount_url($url, $mount_point);	// resolve_url only returns mount-point for pathes or vfs urls
-		if (!in_array($mount_point, ['/', '/apps', '/home']) &&	// they all are public readable
+		if (!($mount_point === '/' || Vfs::dirname($mount_point) === '/') &&	// they all are public readable
 			($class = self::scheme2class(Vfs::parse_url($url, PHP_URL_SCHEME))) &&
 			!is_a($class, Vfs\Sqlfs\StreamWrapper::class) &&	// decendents of SqlFS stream-wrapper always check traversal right to /
 			!$this->check_access(Vfs::dirname($mount_point), Vfs::READABLE))
