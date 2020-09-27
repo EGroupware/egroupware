@@ -174,7 +174,7 @@ class Ldap
 			'adr_one_region'		=> 'st',
 			'adr_one_postalcode'	=> 'postalcode',
 			'adr_one_countryname'	=> 'co',
-			'adr_one_countrycode'	=> 'countrycode',
+			'adr_one_countrycode'	=> 'c',
 			'tel_work'		=> 'telephonenumber',
 			'tel_home'		=> 'homephone',
 			'tel_fax'		=> 'facsimiletelephonenumber',
@@ -658,7 +658,7 @@ class Ldap
 				}
 				if(!@ldap_add($this->ds, $newDN, $newContact))
 				{
-					error_log(__METHOD__.'() '.__LINE__.' re-create contact as '. $newDN .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .') newContact='.array2string($newContact));
+					error_log(__METHOD__.'() '.__LINE__.' re-create contact as '. $newDN .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .') newContact='.json_encode($newContact));
 					// if adding with new objectclass or dn fails, re-add deleted contact
 					@ldap_add($this->ds, $dn, $oldContact);
 					return $this->_error(__LINE__);
@@ -687,7 +687,7 @@ class Ldap
 
 			if (!@ldap_modify($this->ds, $dn, $ldapContact))
 			{
-				error_log(__METHOD__.'() '.__LINE__.' update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .') ldapContact='.array2string($ldapContact));
+				error_log(__METHOD__.'() '.__LINE__.' update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .') ldapContact='.json_encode($ldapContact));
 				return $this->_error(__LINE__);
 			}
 		}
@@ -698,7 +698,7 @@ class Ldap
 
 			if (!@ldap_add($this->ds, $dn, $ldapContact))
 			{
-				error_log(__METHOD__.'() '.__LINE__.' add of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .') ldapContact='.array2string($ldapContact));
+				error_log(__METHOD__.'() '.__LINE__.' add of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .') ldapContact='.json_encode($ldapContact));
 				return $this->_error(__LINE__);
 			}
 		}
