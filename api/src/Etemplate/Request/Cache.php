@@ -98,7 +98,7 @@ class Cache extends Etemplate\Request
 	 * @param string $id =null
 	 * @return Request|boolean the object or false if $id is not found
 	 */
-	static function read($id=null)
+	static function read($id=null, $handle_not_found=true )
 	{
 		$request = new Cache($id);
 
