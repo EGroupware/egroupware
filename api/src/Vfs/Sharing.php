@@ -338,7 +338,7 @@ class Sharing extends \EGroupware\Api\Sharing
 		{
 			if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
 			{
-				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
+				$path = Vfs::PREFIX.Vfs::parse_url($path, PHP_URL_PATH);
 			}
 
 			// We don't allow sharing paths that contain links, resolve to target instead
@@ -355,7 +355,7 @@ class Sharing extends \EGroupware\Api\Sharing
 					$path = str_replace($check, $delinked, $path);
 					if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
 					{
-						$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
+						$path = Vfs::PREFIX.Vfs::parse_url($path, PHP_URL_PATH);
 					}
 					$check = $path;
 				}
