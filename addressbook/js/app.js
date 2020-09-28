@@ -368,6 +368,28 @@ var AddressbookApp = /** @class */ (function (_super) {
         nm_action(_action, _senders);
     };
     /**
+    * Actions via ajax
+    *
+    * @param {egwAction} _action
+    * @param {egwActionObject[]} _selected
+    */
+    AddressbookApp.prototype.action = function (_action, _selected) {
+        var _a, _b;
+        var all = (_a = _action.parent.data.nextmatch) === null || _a === void 0 ? void 0 : _a.getSelection().all;
+        var no_notifications = ((_b = _action.parent.getActionById("no_notifications")) === null || _b === void 0 ? void 0 : _b.checked) || false;
+        var ids = [];
+        // Loop so we get just the app's ID
+        for (var i = 0; i < _selected.length; i++) {
+            var id = _selected[i].id;
+            ids.push(id.split("::").pop());
+        }
+        switch (_action.id) {
+            case 'delete':
+                egw.json("addressbook.addressbook_ui.ajax_action", [_action.id, ids, all, no_notifications]).sendRequest(true);
+                break;
+        }
+    };
+    /**
      * [More...] in phones clicked: copy allways shown phone numbers to phone popup
      *
      * @param {jQuery.event} _event
