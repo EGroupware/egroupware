@@ -804,6 +804,7 @@ class addressbook_ui extends addressbook_bo
 				'confirm_multiple' => 'Delete these entries',
 				'group' => $group,
 				'disableClass' => 'rowNoDelete',
+				'onExecute' => 'javaScript:app.addressbook.action',
 			);
 		}
 		if ($this->grants[0] & Acl::DELETE)
@@ -1129,6 +1130,32 @@ class addressbook_ui extends addressbook_bo
 		unset($query['advanced_search']);
 		Api\Cache::setSession('addressbook','index',$query);
 		Api\Cache::setSession('addressbook', 'advanced_search', false);
+	}
+
+	/**
+	 * Apply an action to multiple events, but called via AJAX instead of submit
+	 *
+	 * @param string $action
+	 * @param string[] $selected
+	 * @param bool $all_selected All entries are selected, not just what's in $selected
+	 * @param bool $skip_notification
+	 */
+	public function ajax_action($action, $selected, $all_selected, $skip_notification = false)
+	{
+		$success = 0;
+		$failed = 0;
+		$action_msg = '';
+		$session_name = 'index';
+
+		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, $session_name, $msg, $skip_notification))
+		{
+			$msg = lang('%1 event(s) %2',$success,$action_msg);
+		}
+		elseif(is_null($msg))
+		{
+			$msg .= lang('%1 event(s) %2, %3 failed because of insufficient rights !!!',$success,$action_msg,$failed);
+		}
+		Api\Json\Response::get()->message($msg);
 	}
 
 	/**
