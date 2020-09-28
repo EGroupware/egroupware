@@ -2960,7 +2960,7 @@ class addressbook_ui extends addressbook_bo
 
 		// Load CRM code
 		Framework::includeJS('.','CRM','addressbook');
-
+		$content['view_sidebox'] = 'addressbook_'.$contact_id.'_view_sidebox';
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array(
 			'id' => $content['id'],
 			'index' => $content['index'],

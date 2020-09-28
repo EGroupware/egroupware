@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="addressbook.view" template="" lang="" group="0" version="1.9.001">
-		<grid class="addressbook_view" parent_node="addressbook_view_sidebox" width="100%">
+		<grid class="addressbook_view" parent_node="@view_sidebox" width="100%">
 			<columns>
 				<column width="70"/>
 				<column/>
