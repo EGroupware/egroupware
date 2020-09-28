@@ -31,6 +31,11 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	{
 		$this->ui= new addressbook_ui();
 		$this->get_selects();
+
+		// Override types so we can specify owner 0 = 'Accounts'
+		$this->types = addressbook_egw_record::$types;
+		$this->types['select-account'] = array_diff($this->types['select-account'], ['owner']);
+		$this->types['select'][] = 'owner';
 	}
 
 	/**
@@ -287,7 +292,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			// Some conversion
 			$this->convert($contact, $options);
 			if($options['convert']) {
-				importexport_export_csv::convert($contact, addressbook_egw_record::$types, 'addressbook',$this->selects);
+				importexport_export_csv::convert($contact, $this->types, 'addressbook',$this->selects);
 			} else {
 				// Implode arrays, so they don't say 'Array'
 				foreach($contact->get_record_array() as $key => $value) {
@@ -425,7 +430,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	protected function get_selects()
 	{
 		$this->selects = array(
-			'tid' => array('n' => 'Contact')
+			'tid' => array('n' => 'Contact'),
+			'owner' => $this->ui->get_addressbooks(Api\Acl::READ)
 		);
 		foreach($this->ui->content_types as $tid => $data)
 		{
