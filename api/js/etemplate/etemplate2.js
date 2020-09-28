@@ -365,7 +365,7 @@ var etemplate2 = /** @class */ (function () {
         var appname = _name.split('.')[0];
         // if no app object provided and template app is not currentapp (eg. infolog CRM view)
         // create private app object / closure with just classes / prototypes
-        if (!_app && appname && appname != currentapp || _open_target == "_tab") {
+        if (!_app && appname && appname != currentapp || _open_target) {
             app = { classes: window.app.classes };
         }
         // remember used app object, to eg. use: onchange="widget.getInstanceMgr().app_object[app].callback()"
@@ -995,6 +995,8 @@ var etemplate2 = /** @class */ (function () {
         }
         // handle framework.setSidebox calls
         if (window.framework && jQuery.isArray(data.setSidebox)) {
+            if (data['open-target'])
+                data.setSidebox[0] = data['open-target'];
             window.framework.setSidebox.apply(window.framework, data.setSidebox);
         }
         // regular et2 re-load

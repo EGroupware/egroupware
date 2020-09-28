@@ -563,6 +563,10 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 		//As a new tab might remove a row from the tab header, we have to resize all tab content browsers
 		 this.tag.parentFw.resizeHandler();
+		if (app.appName.match(/:/))
+		{
+			app.destroy();
+		}
 	 },
 
 	/**
@@ -676,9 +680,9 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		var app = this.parseAppFromUrl(_link);
 		if (app)
 		{
-			// add target flag
-			_link += '&target=_tab';
 			var appname = app.appName+":"+(_extra.id ? _extra.id : btoa(_link));
+			// add target flag
+			_link += '&target='+appname;
 			// create an actual clone of existing app object
 			this.applications[appname] = jQuery.extend(true, {}, app);
 			// merge extra framework app data into the new one
@@ -687,6 +691,10 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			this.applications[appname]['indexUrl'] = _link;
 			this.applications[appname]['tab'] = null; // must be rest to create a new tab
 			this.applications[appname]['browser'] = null; // must be rest to create a new browser content
+			this.applications[appname]['sidemenuEntry'] = this.sidemenuUi.addEntry(
+				this.applications[appname].displayName, this.applications[appname].icon,
+				this.applicationClickCallback, this.applications[appname], appname);
+
 
 			this.applicationTabNavigate(this.applications[appname], _link, false, -1, null);
 		}

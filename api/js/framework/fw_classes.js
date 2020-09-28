@@ -52,6 +52,18 @@ function egw_fw_class_application(_parentFw, _appName, _displayName, _icon,
 }
 
 /**
+ * destroy application object and its relative parts
+ */
+egw_fw_class_application.prototype.destroy = function()
+{
+	delete this.tab;
+	if (this.sidemenuEntry) this.sidemenuEntry.remove();
+	delete this.sidemenuEntry;
+	delete this.browser;
+	delete (framework.applications[this.appName]);
+};
+
+/**
  * Returns an menuaction inside the jdots_framework for this application.
  * without a "this" context (by directly calling egw_fw_class_application.prototype.getAjaxUrl)
  * or passing null to a "call" call "home" will be used as application name and
