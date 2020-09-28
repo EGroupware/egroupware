@@ -480,7 +480,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             return;
         }
         // Make some changes in what we're doing based on preference
-        var update_pref = egw.preference("lazy-update");
+        var update_pref = egw.preference("lazy-update") || 'lazy';
         if (_type == et2_nextmatch.UPDATE && !this.is_sorted_by_modified()) {
             _type = update_pref == "lazy" ? et2_nextmatch.UPDATE_IN_PLACE : et2_nextmatch.EDIT;
         }
@@ -623,7 +623,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
     et2_nextmatch.prototype.refresh_add = function (uid, type) {
         if (type === void 0) { type = et2_nextmatch.ADD; }
         var _a, _b;
-        var index = egw.preference("lazy-update") == "lazy" ? 0 :
+        var index = egw.preference("lazy-update") !== "exact" ? 0 :
             (this.is_sorted_by_modified() ? 0 : false);
         // No add, do a full refresh
         if (index === false) {

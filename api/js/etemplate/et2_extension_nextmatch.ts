@@ -751,7 +751,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 		// Make some changes in what we're doing based on preference
-		let update_pref = egw.preference("lazy-update");
+		let update_pref = egw.preference("lazy-update") || 'lazy';
 		if(_type == et2_nextmatch.UPDATE && !this.is_sorted_by_modified())
 		{
 			_type = update_pref == "lazy" ? et2_nextmatch.UPDATE_IN_PLACE : et2_nextmatch.EDIT;
@@ -923,7 +923,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	protected refresh_add(uid:string, type = et2_nextmatch.ADD)
 	{
-		let index : boolean | number = egw.preference("lazy-update") == "lazy" ? 0 :
+		let index : boolean | number = egw.preference("lazy-update") !== "exact" ? 0 :
 			(this.is_sorted_by_modified() ? 0 : false);
 
 		// No add, do a full refresh
