@@ -595,11 +595,11 @@ export class et2_link_entry extends et2_inputWidget
 
 	private cache: any = {};
 
-	private div: JQuery;
-	private app_select: JQuery;
-	private search: JQuery;
-	private clear: JQuery;
-	private link_button: JQuery;
+	protected div: JQuery;
+	protected app_select: JQuery;
+	protected search: JQuery;
+	protected clear: JQuery;
+	protected link_button: JQuery;
 	private response: any;
 	private request: any;
 	private last_search: string;
