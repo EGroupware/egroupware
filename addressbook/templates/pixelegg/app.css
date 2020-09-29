@@ -193,29 +193,29 @@ select#addressbook-index_col_filter\[tid\] {
   /*#            #                               #*/
   /*#            #                               #*/
   /*##############################################*/
-  div#addressbook_view_sidebox img.photo {
+  div.addressbook_view_sidebox img.photo {
     width: 68px;
     padding-right: 3px;
     height: auto;
     vertical-align: top;
     margin-right: 5px;
   }
-  div#addressbook_view_sidebox #addressbook-view_n_fn {
+  div.addressbook_view_sidebox #addressbook-view_n_fn {
     font-size: 14px;
     font-weight: bold;
     padding: 2px 0 2px 0;
     width: 85%;
   }
-  div#addressbook_view_sidebox #addressbook-view_org_name {
+  div.addressbook_view_sidebox #addressbook-view_org_name {
     font-size: 14px;
     padding: 2px 0 2px 0;
     width: 85%;
   }
-  div#addressbook_view_sidebox #addressbook-view_org_unit {
+  div.addressbook_view_sidebox #addressbook-view_org_unit {
     font-size: 11px;
     padding: 2px 0 2px 0;
   }
-  div#addressbook_view_sidebox #addressbook-view_adr_one_locality {
+  div.addressbook_view_sidebox #addressbook-view_adr_one_locality {
     font-size: 11px;
     padding: 2px 0 2px 0;
   }
