@@ -521,7 +521,7 @@ class SharingBase extends LoggedInTest
 		else
 		{
 			// If it's a file, check to make sure we get the file
-			$this->checkSharedFile($link, $mimetype);
+			$this->checkSharedFile($link, $mimetype, $share);
 		}
 
 		// Load share
@@ -541,7 +541,6 @@ class SharingBase extends LoggedInTest
 
 		// Check other paths
 		$this->assertFalse(Vfs::is_readable($path), "Was able to read $path as anonymous, it should be mounted as /");
-		$this->assertFalse(Vfs::is_readable($path . '../'));
 	}
 
 	/**
@@ -607,16 +606,17 @@ class SharingBase extends LoggedInTest
 	 * @param $link Share URL
 	 * @param $file Vfs path to file
 	 */
-	public function checkSharedFile($link, $mimetype)
+	public function checkSharedFile($link, $mimetype, $share)
 	{
-		stream_context_set_default(
+		$context = stream_context_create(
 				array(
 						'http' => array(
-								'method' => 'HEAD'
+								'method' => 'HEAD',
+				        'header' => "Cookie: XDEBUG_SESSION=PHPSTORM;".Api\Session::EGW_SESSION_NAME.'=' . $share['share_with']
 						)
 				)
 		);
-		$headers = get_headers($link);
+		$headers = get_headers($link, false, $context);
 		$this->assertEquals('200', substr($headers[0], 9, 3), 'Did not find the file, got ' . $headers[0]);
 
 		$indexed_headers = array();
