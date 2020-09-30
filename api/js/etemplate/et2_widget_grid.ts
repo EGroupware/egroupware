@@ -942,9 +942,10 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	 */
 	set_sortable(sortable: boolean | Function)
 	{
+		const $node = jQuery(this.getDOMNode());
 		if(!sortable)
 		{
-			this.tbody.sortable("destroy");
+			$node.sortable("destroy");
 			return;
 		}
 
@@ -962,7 +963,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		const self = this;
 
 		// Set up sortable
-		this.tbody.sortable({
+		$node.sortable({
 			// Header does not participate in sorting
 			items: "tr:not(.th)",
 			distance: 15,
@@ -971,7 +972,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			containment: this.options.sortable_containment,
 			connectWith: this.options.sortable_connectWith,
 			update: function(event, ui) {
-				self.egw().json(sortable,[self.tbody.sortable("toArray"), self.id],
+				self.egw().json(sortable,[$node.sortable("toArray"), self.id],
 					null,
 					self,
 					true

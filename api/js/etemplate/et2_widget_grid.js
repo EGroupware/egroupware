@@ -688,8 +688,9 @@ var et2_grid = /** @class */ (function (_super) {
      * @param {boolean|function} sortable Callback or false to disable
      */
     et2_grid.prototype.set_sortable = function (sortable) {
+        var $node = jQuery(this.getDOMNode());
         if (!sortable) {
-            this.tbody.sortable("destroy");
+            $node.sortable("destroy");
             return;
         }
         // Make sure rows have IDs, so sortable has something to return
@@ -704,7 +705,7 @@ var et2_grid = /** @class */ (function (_super) {
         });
         var self = this;
         // Set up sortable
-        this.tbody.sortable({
+        $node.sortable({
             // Header does not participate in sorting
             items: "tr:not(.th)",
             distance: 15,
@@ -713,7 +714,7 @@ var et2_grid = /** @class */ (function (_super) {
             containment: this.options.sortable_containment,
             connectWith: this.options.sortable_connectWith,
             update: function (event, ui) {
-                self.egw().json(sortable, [self.tbody.sortable("toArray"), self.id], null, self, true).sendRequest();
+                self.egw().json(sortable, [$node.sortable("toArray"), self.id], null, self, true).sendRequest();
             },
             receive: function (event, ui) {
                 if (typeof self.options.sortable_recieveCallback == 'function') {
