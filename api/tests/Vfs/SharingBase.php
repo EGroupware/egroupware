@@ -540,7 +540,7 @@ class SharingBase extends LoggedInTest
 		$this->assertTrue(Vfs::is_readable('/'), 'Could not read root (/) from link');
 
 		// Check other paths
-		$this->assertFalse(Vfs::is_readable($path), "Was able to read $path as anoymous, it should be mounted as /");
+		$this->assertFalse(Vfs::is_readable($path), "Was able to read $path as anonymous, it should be mounted as /");
 		$this->assertFalse(Vfs::is_readable($path . '../'));
 	}
 
@@ -557,6 +557,13 @@ class SharingBase extends LoggedInTest
 		$curl = curl_init($link);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		$cookie = '';
+		if($GLOBALS['egw']->session->sessionid || $share['share_with'])
+		{
+			$session_id = $GLOBALS['egw']->session->sessionid ?: $share['share_with'];
+			$cookie .= ';'.Api\Session::EGW_SESSION_NAME."={$session_id}";
+		}
+		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
 		$html = curl_exec($curl);
 		curl_close($curl);
 
