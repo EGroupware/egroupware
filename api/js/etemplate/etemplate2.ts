@@ -112,7 +112,7 @@ export class etemplate2
 	private app_obj: EgwApp;
 	app: string;
 
-	constructor(_container : HTMLElement, _menuaction? : string)
+	constructor(_container : HTMLElement, _menuaction? : string, _uniqueId?: string)
 	{
 		if (typeof _menuaction == "undefined")
 		{
@@ -124,7 +124,7 @@ export class etemplate2
 		this.menuaction = _menuaction;
 
 		// Unique ID to prevent DOM collisions across multiple templates
-		this.uniqueId = _container.getAttribute("id") ? _container.getAttribute("id").replace('.', '-') : '';
+		this.uniqueId = _uniqueId ? _uniqueId : (_container.getAttribute("id") ? _container.getAttribute("id").replace('.', '-') : '');
 
 		/**
 		 * Preset the object variable
@@ -1302,6 +1302,7 @@ export class etemplate2
 			{
 				// Not etemplate
 				const node = document.getElementById(data.DOMNodeID);
+				let uniqueId = '';
 				if (node)
 				{
 					if (node.children.length)
@@ -1311,7 +1312,11 @@ export class etemplate2
 						const old = etemplate2.getById(node.id);
 						if (old) old.clear();
 					}
-					const et2 = new etemplate2(node, data.menuaction);
+					if (data['open_target'])
+					{
+						uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
+					}
+					const et2 = new etemplate2(node, data.menuaction, uniqueId);
 					et2.load(data.name, data.url, data.data, null, null, null, data['open-target']);
 					return true;
 				}

@@ -1007,7 +1007,7 @@ abstract class Ajax extends Api\Framework
 		$GLOBALS['egw']->framework->response->call('egw.set_preferences',
 			(array)$GLOBALS['egw_info']['user']['preferences'][$app], $app);
 		// flag to indicate target of output e.g. _tab
-		if ($_GET['target']) $GLOBALS['egw']->framework->set_extra('open','target',$_GET['target']);
+		if ($_GET['fw_target']) $GLOBALS['egw']->framework->set_extra('open','target',$_GET['fw_target']);
 		// call application menuaction
 		ob_start();
 		$obj->$method();

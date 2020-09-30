@@ -84,7 +84,7 @@ var egw_app_1 = require("../jsapi/egw_app");
  * @param _menuaction is the URL to which the form data should be submitted.
  */
 var etemplate2 = /** @class */ (function () {
-    function etemplate2(_container, _menuaction) {
+    function etemplate2(_container, _menuaction, _uniqueId) {
         if (typeof _menuaction == "undefined") {
             _menuaction = "EGroupware\\Api\\Etemplate::ajax_process_content";
         }
@@ -92,7 +92,7 @@ var etemplate2 = /** @class */ (function () {
         this._DOMContainer = _container;
         this.menuaction = _menuaction;
         // Unique ID to prevent DOM collisions across multiple templates
-        this.uniqueId = _container.getAttribute("id") ? _container.getAttribute("id").replace('.', '-') : '';
+        this.uniqueId = _uniqueId ? _uniqueId : (_container.getAttribute("id") ? _container.getAttribute("id").replace('.', '-') : '');
         /**
          * Preset the object variable
          * @type {et2_container}
@@ -1013,6 +1013,7 @@ var etemplate2 = /** @class */ (function () {
             else {
                 // Not etemplate
                 var node = document.getElementById(data.DOMNodeID);
+                var uniqueId = '';
                 if (node) {
                     if (node.children.length) {
                         // Node has children already?  Check for loading over an
@@ -1021,7 +1022,10 @@ var etemplate2 = /** @class */ (function () {
                         if (old)
                             old.clear();
                     }
-                    var et2 = new etemplate2(node, data.menuaction);
+                    if (data['open_target']) {
+                        uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
+                    }
+                    var et2 = new etemplate2(node, data.menuaction, uniqueId);
                     et2.load(data.name, data.url, data.data, null, null, null, data['open-target']);
                     return true;
                 }

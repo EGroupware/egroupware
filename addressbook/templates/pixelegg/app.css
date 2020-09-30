@@ -27,7 +27,7 @@ td.addressbook_sidebox_header {
   height: 20px;
   vertical-align: bottom;
 }
-#addressbook-view.et2_container {
+form[id^=addressbook-view].et2_container {
   height: 0 !important;
 }
 td.addressbook_sidebox_toolbar {
@@ -200,22 +200,22 @@ select#addressbook-index_col_filter\[tid\] {
     vertical-align: top;
     margin-right: 5px;
   }
-  div.addressbook_view_sidebox #addressbook-view_n_fn {
+  div.addressbook_view_sidebox .addressbook_sidebox_name {
     font-size: 14px;
     font-weight: bold;
     padding: 2px 0 2px 0;
     width: 85%;
   }
-  div.addressbook_view_sidebox #addressbook-view_org_name {
+  div.addressbook_view_sidebox .addressbook_sidebox_org {
     font-size: 14px;
     padding: 2px 0 2px 0;
     width: 85%;
   }
-  div.addressbook_view_sidebox #addressbook-view_org_unit {
+  div.addressbook_view_sidebox span[id^=addressbook-view-addressbook][id$=_org_unit] {
     font-size: 11px;
     padding: 2px 0 2px 0;
   }
-  div.addressbook_view_sidebox #addressbook-view_adr_one_locality {
+  div.addressbook_view_sidebox span[id^=addressbook-view-addressbook][id$=_adr_one_locality] {
     font-size: 11px;
     padding: 2px 0 2px 0;
   }

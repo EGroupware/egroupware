@@ -51,7 +51,11 @@
 					<url id="url" readonly="true"/>
 				</row>
 				<row>
-					<toolbar class="addressbook_sidebox_toolbar" id="toolbar" span="2" view_range="1" default_execute="app.addressbook.view_actions"/>
+					<hbox>
+						<button id="button[edit]" label="open" background_image="1" image="edit" onclick="app.addressbook.view_actions"/>
+						<button id="button[copy]" label="copy" background_image="1" image="copy" onclick="app.addressbook.view_actions"/>
+						<buttononly id="button[delete]" label="delete" image="delete" onclick="app.addressbook.view_actions"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>

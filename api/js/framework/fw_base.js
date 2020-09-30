@@ -680,9 +680,10 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		var app = this.parseAppFromUrl(_link);
 		if (app)
 		{
-			var appname = app.appName+":"+(_extra.id ? _extra.id : btoa(_link));
+			var appname = app.appName+"-"+(_extra.id ? _extra.id : btoa(_link));
+			var self = this;
 			// add target flag
-			_link += '&target='+appname;
+			_link += '&fw_target='+appname;
 			// create an actual clone of existing app object
 			this.applications[appname] = jQuery.extend(true, {}, app);
 			// merge extra framework app data into the new one
@@ -693,7 +694,9 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			this.applications[appname]['browser'] = null; // must be rest to create a new browser content
 			this.applications[appname]['sidemenuEntry'] = this.sidemenuUi.addEntry(
 				this.applications[appname].displayName, this.applications[appname].icon,
-				this.applicationClickCallback, this.applications[appname], appname);
+				function(){
+					self.applicationTabNavigate(self.applications[appname], _link, false, -1, null);
+				}, this.applications[appname], appname);
 
 
 			this.applicationTabNavigate(this.applications[appname], _link, false, -1, null);

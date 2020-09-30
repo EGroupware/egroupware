@@ -258,23 +258,26 @@ class AddressbookApp extends EgwApp
 	 *
 	 * @param {object} _action
 	 */
-	view_actions(_action)
+	view_actions(_action, _widget)
 	{
-		var id = this.et2.getArrayMgr('content').data.id;
 
-		switch(_action.id)
+		var app_id = _widget.dom_id.split('_');
+		var et2 = etemplate2.getById(app_id[0]);
+		var id = et2.widgetContainer.getArrayMgr('content').data.id;
+
+		switch(_widget.id)
 		{
-			case 'open':
+			case 'button[edit]':
 				this.egw.open(id, 'addressbook', 'edit');
 				break;
-			case 'copy':
+			case 'button[copy]':
 				this.egw.open(id, 'addressbook', 'edit', { makecp: 1});
 				break;
-			case 'cancel':
-				this.egw.open(null, 'addressbook', 'list', null, '_self', 'addressbook');
+			case 'button[delete]':
+				et2_dialog.confirm(_widget, egw.lang('Delete this contact?'), egw.lang('Delete'));
 				break;
 			default:	// submit all other buttons back to server
-				this.et2._inst.submit();
+				et2.widgetContainer._inst.submit();
 				break;
 		}
 	}

@@ -527,7 +527,8 @@ class Etemplate extends Etemplate\Widget\Template
 			$this->version=$version, $this->laod_via = $load_via);
 		//error_log(__METHOD__."('$name', '$template_set', '$lang', $group, '$version', '$load_via') rel_path=".array2string($this->rel_path));
 
-		$this->dom_id = $name;
+		$this->dom_id = isset($_GET['fw_target']) && preg_match('/^[a-z0-9-]+$/i', $_GET['fw_target']) ?
+			$name.'-'.$_GET['fw_target'] : $name;
 
 		return (boolean)$this->rel_path;
 	}
