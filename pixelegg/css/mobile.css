@@ -2587,13 +2587,13 @@ button[id="add"] {
 /* @end */
 /* @group Single Chosen */
 .chzn-container-single .chzn-single div b {
-  background: url("../images/arrow_down.svg");
-  background-size: 8px auto;
+  background-image: url("../images/arrow_down.svg") !important;
+  background-size: 8px auto !important;
   background-position: center;
   background-repeat: no-repeat;
 }
 .chzn-container-single.chzn-with-drop .chzn-single div b {
-  background: url("../images/arrow_up.svg");
+  background-image: url("../images/arrow_up.svg") !important;
   background-size: 8px auto;
   background-position: center;
   background-repeat: no-repeat;
