@@ -312,6 +312,6 @@ class SharingACLTest extends SharingBase
 		// Log out & clear cache
 		LoggedInTest::tearDownAfterClass();
 
-		$this->checkSharedFile($link, $mimetype);
+		$this->checkSharedFile($link, $mimetype, $share);
 	}
 }
