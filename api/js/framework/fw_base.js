@@ -563,7 +563,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 		//As a new tab might remove a row from the tab header, we have to resize all tab content browsers
 		 this.tag.parentFw.resizeHandler();
-		if (app.appName.match(/:/))
+		if (app.isFrameworkTab)
 		{
 			app.destroy();
 		}
@@ -686,6 +686,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			_link += '&fw_target='+appname;
 			// create an actual clone of existing app object
 			this.applications[appname] = jQuery.extend(true, {}, app);
+			this.applications[appname]['isFrameworkTab'] = true;
 			// merge extra framework app data into the new one
 			this.applications[appname] = jQuery.extend(true, this.applications[appname], _extra);
 			this.applications[appname]['appName'] = appname; // better to control it here
