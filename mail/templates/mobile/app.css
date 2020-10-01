@@ -57,10 +57,14 @@ tr.mail a {
   cursor: pointer;
   white-space: nowrap;
 }
+/**
+	No styling on recent, sometimes recent & unseen are cleared seperately causing confusion when the row doesn't change
+
 tr.recent div,
 tr.recent span,
 tr.recent time,
 tr.recent a,
+ */
 tr.unseen div,
 tr.unseen span,
 tr.unseen time,
