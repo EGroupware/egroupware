@@ -1767,6 +1767,7 @@ div.message.floating {
 	border-radius: 3px;
 	float: right;
 	position: relative;
+	min-width: 40px;
 }
 .nextmatch_header .header_count span {
 	position: relative;
