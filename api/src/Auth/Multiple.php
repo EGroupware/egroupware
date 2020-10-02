@@ -2,6 +2,20 @@
 /**
  * EGroupware API - Authentication against multiple backends
  *
+ * @link https://www.egroupware.org
+ * @author Ralf Becker <rb@egroupware.org>
+ * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
+ * @package api
+ * @subpackage auth
+ */
+
+namespace EGroupware\Api\Auth;
+
+use EGroupware\Api;
+
+/**
+ * Authentication agains multiple backends
+ *
  * The first backend against which authentication succeeds is used, so you either need *somehow* to make sure usernames are unique,
  * or the backends in the *right* order. The name of the succeeding backend is stored in the instance cache.
  *
@@ -19,22 +33,6 @@
  * 		},
  * 		optional further backend objects
  * }
- *
- * @link https://www.egroupware.org
- * @author Ralf Becker <rb@egroupware.org>
- * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
- * @package api
- * @subpackage auth
- */
-
-namespace EGroupware\Api\Auth;
-
-use EGroupware\Api;
-
-/**
- * Authentication agains a LDAP Server with fallback to SQL
- *
- * For other fallback types, simply change auth backends in constructor call
  */
 class Multiple implements Backend
 {
@@ -63,7 +61,7 @@ class Multiple implements Backend
 	/**
 	 * Parse configuration
 	 *
-	 * @param string $config
+	 * @param string|array $config auth_multiple configuration
 	 * @param boolean $checks true: run some extra checks, used in setup to check config is sane
 	 * @return array
 	 * @throws \Exception on invalid configuration
@@ -72,8 +70,11 @@ class Multiple implements Backend
 	{
 		try
 		{
-			$config = $config[0] === '{' ? json_decode($config, true, 512, JSON_THROW_ON_ERROR) :
-				array_combine($csv = preg_split('/,\s*/', $config), array_fill(0, count($csv), null));
+			if (!is_array($config))
+			{
+				$config = $config[0] === '{' ? json_decode($config, true, 512, JSON_THROW_ON_ERROR) :
+					array_combine($csv = preg_split('/,\s*/', $config), array_fill(0, count($csv), null));
+			}
 		}
 		catch(\JsonException $e) {
 			throw new \Exception('Invalid JSON: '.$e->getMessage());
