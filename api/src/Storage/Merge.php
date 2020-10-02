@@ -439,7 +439,17 @@ abstract class Merge
 						// Prepend site
 						if ($link[0] == '/') $link = Api\Framework::getUrl($link);
 
-						$array['$$'.($prefix?$prefix.'/':'').$placeholder.'$$'] = Api\Html::a_href(Api\Html::htmlspecialchars($title), $link);
+						// Formatting
+						if($matches[2][$i] == 'title')
+						{
+							$link = $title;
+						}
+						else if($matches[2][$i] == 'href')
+						{
+							$link = Api\Html::a_href(Api\Html::htmlspecialchars($title), $link);
+						}
+
+						$array['$$'.($prefix?$prefix.'/':'').$placeholder.'$$'] = $link;
 						break;
 					case 'links':
 						$link_app = $matches[3][$i] ? $matches[3][$i] :  '!'.Api\Link::VFS_APPNAME;
