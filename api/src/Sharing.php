@@ -264,7 +264,7 @@ class Sharing
 	 * Sub-class specific things needed to be done to the share (or session)
 	 * after we login but before we start actually doing anything
 	 */
-	protected static function after_login() {}
+	protected static function after_login(array $share) {}
 
 
 	protected static function login($keep_session, &$share)
