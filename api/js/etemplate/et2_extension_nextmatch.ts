@@ -849,6 +849,14 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 							this.type == et2_nextmatch.ADD ? this.nm.refresh_add(this.uid, this.type)
 								: this.nm.refresh_update(this.uid);
 						}
+						else if (this.type == et2_nextmatch.UPDATE)
+						{
+							// Remove row from controller
+							this.nm.controller.deleteRow(this.uid);
+
+							// Adjust total rows, clean grid
+							this.nm.controller._grid.setTotalCount(this.nm.controller._grid._total- _row_ids.length);
+						}
 					}, {type: _type, nm: this, uid: uid}, [_row_ids]
 				);
 				return;
@@ -932,16 +940,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			return false;
 		}
 
-		// Increase displayed row count or we lose the last row when we add
-		this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()+1);
-
-		// Insert at the top of the list, or where app said
-		var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
-		entry.idx = typeof index == "number" ? index : 0;
-		this.controller._insertDataRow(entry,true);
-
-		// Set "new entry" class - but it has to stay so register and re-add it after the data is there
-		entry.row?.tr?.addClass("new_entry");
 		let time = new Date().valueOf();
 
 		let callback = function(data) {
@@ -953,10 +951,19 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				}
 				// Don't remove if new data has not arrived
 				let stored = egw.dataGetUIDdata(uid);
-				if(stored?.timestamp >= time) return;
+				//if(stored?.timestamp >= time) return;
+
+				// Increase displayed row count or we lose the last row when we add and the total is wrong
+				this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()+1);
+
+				// Insert at the top of the list, or where app said
+				var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
+				entry.idx = typeof index == "number" ? index : 0;
+				this.controller._insertDataRow(entry,true);
 			}
 			else
 			{
+				debugger;
 				// Server didn't give us our row data
 				// Delete from internal references
 				this.controller.deleteRow(uid);

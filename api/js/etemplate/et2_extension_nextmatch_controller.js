@@ -159,7 +159,7 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
      * @param {string} uid
      */
     et2_nextmatch_controller.prototype.deleteRow = function (uid) {
-        var entry = this._selectionMgr._getRegisteredRowsEntry(uid);
+        var entry = Object.values(this._indexMap).find(function (entry) { return entry.uid == uid; });
         // Unselect
         this._selectionMgr.setSelected(uid, false);
         if (entry && entry.idx !== null) {
