@@ -56,6 +56,10 @@ var_dump("Vfs::proppatch('$share_dir/test.txt', [['ns' => Vfs::DEFAULT_PROP_NAME
 var_dump("Vfs::url_stat('$share_dir/test-dir')=" . json_encode(Vfs::stat("$share_dir/test-dir")));
 var_dump("Vfs::mkdir('$share_dir/test-dir')=" . json_encode(Vfs::mkdir("$share_dir/test-dir")));
 var_dump("Vfs::url_stat('$share_dir/test-dir')=" . json_encode(Vfs::stat("$share_dir/test-dir"), JSON_UNESCAPED_SLASHES));
+var_dump(file_put_contents("vfs://default$share_dir/test-dir/test.txt", "Just a test ;)\n"));
+var_dump("Vfs::url_stat('$share_dir/test-dir/test.txt')=" . json_encode(Vfs::stat("$share_dir/test-dir"), JSON_UNESCAPED_SLASHES));
+var_dump(file_get_contents("vfs://default$share_dir/test-dir/test.txt"));
+var_dump("Vfs::unlink('$share_dir/test-dir/test.txt')=" . json_encode(Vfs::unlink("$share_dir/test-dir/test.txt")));
 var_dump("Vfs::rmdir('$share_dir/test-dir')=" . json_encode(Vfs::rmdir("$share_dir/test-dir")));
 var_dump("Vfs::url_stat('$share_dir/test-dir')=" . json_encode(Vfs::stat("$share_dir/test-dir")));
 
