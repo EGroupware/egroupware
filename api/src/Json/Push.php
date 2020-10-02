@@ -117,11 +117,12 @@ class Push extends Msg
 	/**
 	 * Check and if neccessary set push backend
 	 *
+	 * @param boolean $ignore_cache =false
 	 * @throws Exception\NotOnline
 	 */
-	protected static function checkSetBackend()
+	protected static function checkSetBackend($ignore_cache=false)
 	{
-		if (!isset(self::$backend))
+		if ($ignore_cache || !isset(self::$backend))
 		{
 			// we prepend so the default backend stays last
 			foreach(Api\Hooks::process('push-backends', [], true) as $class)
@@ -156,12 +157,13 @@ class Push extends Msg
 	/**
 	 * Check if only fallback / no real push available
 	 *
+	 * @param boolean $ignore_cache =false
 	 * @return bool true: fallback, false: real push
 	 */
-	public static function onlyFallback()
+	public static function onlyFallback($ignore_cache=false)
 	{
 		try {
-			self::checkSetBackend();
+			self::checkSetBackend($ignore_cache);
 		}
 		catch (\Exception $e) {
 			return true;

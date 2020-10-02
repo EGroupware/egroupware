@@ -132,6 +132,10 @@ class admin_hooks
 			{
 				$file['phpInfo']         = "javascript:egw.openPopup('" . Egw::link('/admin/phpinfo.php','',false) . "',960,600,'phpinfoWindow')";
 			}
+			if (file_exists(EGW_SERVER_ROOT.'/swoolepush/test.php'))
+			{
+				$file['Test Push']       = Egw::link('/swoolepush/test.php');
+			}
 			$file['Admin queue and history'] = Egw::link('/index.php','menuaction=admin.admin_cmds.index&ajax=true');
 			$file['Remote administration instances'] = Egw::link('/index.php','menuaction=admin.admin_cmds.remotes&ajax=true');
 			$file['Custom translation'] = Egw::link('/index.php','menuaction=admin.admin_customtranslation.index');

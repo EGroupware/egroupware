@@ -112,7 +112,6 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		this.websocket = new WebSocket(url);
 		this.websocket.onopen = jQuery.proxy(function(e)
 		{
-			reconnect_time = min_reconnect_time;
 			this.websocket.send(JSON.stringify({
 				subscribe: tokens,
 				account_id: parseInt(account_id)
@@ -121,6 +120,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 		this.websocket.onmessage = jQuery.proxy(function(event)
 		{
+			reconnect_time = min_reconnect_time;
 			console.log(event);
 			let data = JSON.parse(event.data);
 			if (data && data.type)
@@ -131,6 +131,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 		this.websocket.onerror = jQuery.proxy(function(error)
 		{
+			reconnect_time *= 2;
+			if (reconnect_time > max_reconnect_time) reconnect_time = max_reconnect_time;
+
 			console.log(error);
 			(error||this.handleError({}, error));
 		}, this);
@@ -139,6 +142,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		{
 			if (event.wasClean)
 			{
+				reconnect_time = min_reconnect_time;
 				console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
 			}
 			else
