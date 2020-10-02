@@ -185,7 +185,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 	 */
 	deleteRow( uid)
 	{
-		var entry = this._selectionMgr._getRegisteredRowsEntry(uid);
+		var entry = Object.values(this._indexMap).find(entry => entry.uid == uid);
 
 		// Unselect
 		this._selectionMgr.setSelected(uid,false);
