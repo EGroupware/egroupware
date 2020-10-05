@@ -198,7 +198,24 @@ class et2_url extends et2_textbox
 						.replace("%u",this.egw().user('account_lid'))
 						.replace("%t",this.egw().user('account_phone'));
 					var popup = this.egw().config("call_popup");
-					value = function() { egw.open_link(link, '_phonecall', popup); };
+					value = function(ev : Event) {
+						if (popup && popup !== '_self')
+						{
+							egw.open_link(link, '_phonecall', popup);
+						}
+						else
+						{
+							// No popup, use AJAX.  We don't care about the response.
+						   (egw.window?egw.window.jQuery:jQuery).ajax({
+								url: link,
+								async: true,
+								dataType: 'json',
+								type: "GET"
+							});
+							ev.preventDefault();
+							return false;
+						}
+					};
 				}
 				else {
 					// Can't make a good handler
