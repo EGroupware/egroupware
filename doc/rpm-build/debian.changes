@@ -1,3 +1,21 @@
+egroupware-docker (20.1.20201005) hardy; urgency=low
+
+  * WatchTowner/Nginx: modified Nginx config to resolve changed IP addresses of updated containers, fix 502 Bad Gateway errors
+  * Admin/Push: push server test to diagnose problems and improved recovery from failed requests / network problems
+  * ActiveDirectory: fix unwilling to perform error when saving an account
+  * Calendar: Improve handling of infolog push messages
+  * Calendar: Fix quick add did not open conflict dialog
+  * InfoLog/eTemplate: fixed multiple update problems eg. when responsible no longer matches filter
+  * SmallPART: allow to record watched videos: start-, end-time, position, duration and how ovent paused
+  * Tracker: Fix adding a favorite could sometimes pick up escalation columns
+  * Tracker: Fix Site Configuration User selection could not select new groups
+  * Mail: Add custom html toolbar settings in mail site-configuration in order to be able to add/remove certain actions only for mail-compose dialog.
+  * Login Page: Fix login button on login page not being clickable on small screens
+  * eSyncPro: fix SQL error in device list
+  * Authentication: allow using multiple backends, even same backend multiple times with different configuration
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 05 Oct 2020 11:20:41 +0200
+
 egroupware-docker (20.1.20200914) hardy; urgency=low
 
   * Addressbook: fix CRM view was not properly refreshed
