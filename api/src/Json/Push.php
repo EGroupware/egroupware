@@ -29,7 +29,7 @@ class Push extends Msg
 	/**
 	 * Backend to use
 	 *
-	 * @var egw_json_push_backend
+	 * @var PushBackend
 	 */
 	protected static $backend;
 
