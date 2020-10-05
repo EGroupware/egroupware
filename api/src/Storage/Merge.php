@@ -446,6 +446,8 @@ abstract class Merge
 						}
 						else if($matches[2][$i] == 'href')
 						{
+							// Turn on HTML style parsing or the link will be escaped
+							$this->parse_html_styles = true;
 							$link = Api\Html::a_href(Api\Html::htmlspecialchars($title), $link);
 						}
 
