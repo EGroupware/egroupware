@@ -106,9 +106,16 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 			if(jQuery.isEmptyObject(accountStore))
 			{
 				// Synchronous
-				egw.json('EGroupware\\Api\\Framework::ajax_user_list',[],
+				egw.json("EGroupware\\Api\\Framework::ajax_user_list",[],
 					function(data) {
-						accountStore = jQuery.extend(true, {}, data||{});
+						let types = ["accounts", "groups", "owngroups"];
+						for(let t of types)
+						{
+							if(typeof data[t] === "object")
+							{
+								accountStore[t] = jQuery.extend(true, [], data[t]||[]);
+							}
+						}
 					}, this, false
 				).sendRequest(false);
 			}
