@@ -1347,9 +1347,20 @@ class CalendarApp extends EgwApp
 			{
 				recur_end.set_min(widget.getValue());
 			}
+
+			// Update end date, min duration is 1 minute
+			let end = <et2_date> widget.getRoot().getDOMWidgetById('end');
+			let start_time = new Date(widget.getValue());
+			let end_time = new Date(end.getValue());
+			if(end_time <= start_time)
+			{
+				start_time.setMinutes(start_time.getMinutes() + 1);
+				end.set_value(start_time);
+			}
 		}
 		// Update currently selected alarm time
 		this.alarm_custom_date();
+
 	}
 
 	/**

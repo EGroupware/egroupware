@@ -359,6 +359,11 @@ class calendar_uiforms extends calendar_ui
 				unset($content['alarm'][$id]);
 			}
 		}
+		if($content['end'] && $content['start'] >= $content['end'])
+		{
+			unset($content['end']);
+			$content['duration'] = $this->bo->cal_prefs['defaultlength']*60;
+		}
 		if ($content['duration'])
 		{
 			$content['end'] = $content['start'] + $content['duration'];
