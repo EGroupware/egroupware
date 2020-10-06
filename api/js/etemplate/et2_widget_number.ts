@@ -21,7 +21,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
  *
  * @augments et2_textbox
  */
-class et2_number extends et2_textbox
+export class et2_number extends et2_textbox
 {
 	static readonly	_attributes : any = {
 		"value": {

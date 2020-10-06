@@ -162,6 +162,7 @@ var et2_number = /** @class */ (function (_super) {
     };
     return et2_number;
 }(et2_widget_textbox_1.et2_textbox));
+exports.et2_number = et2_number;
 et2_core_widget_1.et2_register_widget(et2_number, ["int", "integer", "float"]);
 /**
  * Extend read-only to tell it to ignore special attributes, which
