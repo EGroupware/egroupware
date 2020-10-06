@@ -90,7 +90,7 @@ class Push extends Msg
 	 *
 	 * @return array of integer account_id currently available for push
 	 */
-	public function online()
+	public static function online()
 	{
 		if (!isset(self::$online))
 		{
@@ -109,9 +109,9 @@ class Push extends Msg
 	 *
 	 * @return boolean
 	 */
-	public function isOnline($account_id)
+	public static function isOnline($account_id)
 	{
-		return in_array($account_id, $this->online());
+		return in_array($account_id, self::online());
 	}
 
 	/**

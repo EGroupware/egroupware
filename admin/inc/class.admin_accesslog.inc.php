@@ -70,14 +70,25 @@ class admin_accesslog
 		{
 			$query['col_filter']['lo'] = null;	// not logged out
 			$query['col_filter'][0] = 'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']);
+			// for push via fallback (no native push) we use the heartbeat (constant polling of notification app)
+			if (Api\Json\Push::onlyFallback())
+			{
+				$active_query = "notification_heartbeat > $heartbeat_limit";
+			}
+			else
+			{
+				// for native push we ask the push-server who is active
+				$online = (array)Api\Json\Push::online();
+				$active_query = $GLOBALS['egw']->db->expression(self::TABLE, ['account_id' => $online]);
+			}
 			switch((string)$query['session_list'])
 			{
 				case 'active':	// remove status != 'active', eg. CalDAV/eSync
-					$query['col_filter'][1] = "notification_heartbeat > $heartbeat_limit";
+					$query['col_filter'][1] = $active_query;
 					$query['col_filter'][3] = "session_php NOT LIKE '% %'";	// remove blocked, bad login, etc
 					break;
 				default:
-					$query['col_filter'][1] = "(notification_heartbeat IS NULL OR notification_heartbeat > $heartbeat_limit)";
+					$query['col_filter'][1] = "(notification_heartbeat IS NULL OR $active_query)";
 					break;
 			}
 			$query['col_filter'][2] = 'account_id>0';
@@ -89,7 +100,10 @@ class admin_accesslog
 		foreach($rows as &$row)
 		{
 			$row['sessionstatus'] = 'success';
-			if ($row['notification_heartbeat'] > $heartbeat_limit_user)
+			if (isset($online) ?
+				// we still need to check notification_heartbeat to distinguish from non-interactive session like *DAV
+				isset($row['notification_heartbeat']) && in_array($row['account_id'], $online) :
+				$row['notification_heartbeat'] > $heartbeat_limit_user)
 			{
 				$row['sessionstatus'] = 'active';
 			}
