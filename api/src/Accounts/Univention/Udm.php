@@ -19,6 +19,9 @@ use EGroupware\Api;
 /**
  * Univention UDM REST Api
  *
+ * Environment variable UDM_REST_INSECURE=<not-empty> can be set to (temporary) disable certificate validation for UDM REST calls.
+ * Used by EGroupware UCS appliance, which does not yet have a final certificate during EGroupware installation.
+ *
  * @todo Use just UDM instead of still calling ldap/parent
  */
 class Udm
@@ -109,7 +112,8 @@ class Udm
 		$curlOpts = [
 			CURLOPT_URL => 'https://'.$this->host.($_path[0] !== '/' ? self::PREFIX : '').$_path,
 			CURLOPT_USERPWD => $this->user.':'.$this->config['ldap_root_pw'],
-			//CURLOPT_SSL_VERIFYHOST => 2,	// 0: to disable certificate check
+			CURLOPT_SSL_VERIFYHOST => empty($_SERVER['UDM_REST_INSECURE']) ? 2 : 0,	// 0: to disable certificate check
+			CURLOPT_SSL_VERIFYPEER => empty($_SERVER['UDM_REST_INSECURE']),
 			CURLOPT_HTTPHEADER => [
 				'Accept: application/json',
 			],
