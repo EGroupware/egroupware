@@ -171,11 +171,19 @@ class Accounts
 	/**
 	 * Searches / lists accounts: users and/or groups
 	 *
+	 * @ToDo improve and limit caching:
+	 * - only cache user-specific stuff in session (owngroups, accounts with account_selection="groupmembers")
+	 * - cache everything else for whole instance (groups, accounts unless account_selection="groupmembers")
+	 * - only cache unlimited queries independent of sorting (limiting and sorting can be done quickly on unlimited queries)
+	 * - stop caching in backends (with exception of backends which cant/dont do sorted limited queries like currently LDAP, where it makes sense to cache the unlimited query result)
+	 * - apply reasonable short time-limit for instance-wide caching, as we have no invalidation for non-SQL systems eg. 2 hours
+	 *
 	 * @param array with the following keys:
 	 * @param $param['type'] string|int 'accounts', 'groups', 'owngroups' (groups the user is a member of), 'both',
 	 * 	'groupmembers' (members of groups the user is a member of), 'groupmembers+memberships' (incl. memberships too)
 	 *	or integer group-id for a list of members of that group
 	 * @param $param['start'] int first account to return (returns offset or max_matches entries) or all if not set
+	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
 	 * @param $param['order'] string column to sort after, default account_lid if unset
 	 * @param $param['sort'] string 'ASC' or 'DESC', default 'ASC' if not set
 	 * @param $param['query'] string to search for, no search if unset or empty
@@ -185,7 +193,6 @@ class Accounts
 	 *	'exact' - query all fields for exact $param[query]
 	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
 	 * @param $param['app'] string with an app-name, to limit result on accounts with run-right for that app
-	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
 	 * @param $param['active']=true boolean - true: return only acctive accounts, false: return expired or deactivated too
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
