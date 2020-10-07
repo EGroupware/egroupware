@@ -112,6 +112,9 @@ class SharingBase extends LoggedInTest
 		// Remove any mounts
 		foreach($this->mounts as $mount)
 		{
+			// Do not remove /apps
+			if($mount == '/apps') continue;
+
 			Vfs::umount($mount);
 		}
 
