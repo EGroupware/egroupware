@@ -156,7 +156,8 @@ var et2_url = /** @class */ (function (_super_1) {
                         .replace("%t", this.egw().user('account_phone'));
                     var popup = this.egw().config("call_popup");
                     value = function (ev) {
-                        if (popup && popup !== '_self') {
+                        if (popup && popup !== '_self' || !link.match(/^https?:/)) // execute non-http(s) links eg. tel: like before
+                         {
                             egw.open_link(link, '_phonecall', popup);
                         }
                         else {
