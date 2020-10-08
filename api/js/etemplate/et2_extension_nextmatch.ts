@@ -844,6 +844,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					this.controller._filters,
 					this.id, function(data)
 					{
+						// In the event that the etemplate got removed before the data came back (Usually an action caused
+						// a full submit) just stop here.
+						if(!this.nm.getParent()) return;
+
 						if(data.total >= 1)
 						{
 							this.type == et2_nextmatch.ADD ? this.nm.refresh_add(this.uid, this.type)
@@ -857,7 +861,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 							// Adjust total rows, clean grid
 							this.nm.controller._grid.setTotalCount(this.nm.controller._grid._total- _row_ids.length);
 						}
-					}, {type: _type, nm: this, uid: uid}, [_row_ids]
+					}, {type: _type, nm: this, uid: uid, prefix: this.controller.dataStorePrefix}, [_row_ids]
 				);
 				return;
 			}
@@ -942,37 +946,43 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		let time = new Date().valueOf();
 
-		let callback = function(data) {
-			if(data)
-			{
-				if(data.class)
-				{
-					data.class += " new_entry";
-				}
-				// Don't remove if new data has not arrived
-				let stored = egw.dataGetUIDdata(uid);
-				//if(stored?.timestamp >= time) return;
-
-				// Increase displayed row count or we lose the last row when we add and the total is wrong
-				this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()+1);
-
-				// Insert at the top of the list, or where app said
-				var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
-				entry.idx = typeof index == "number" ? index : 0;
-				this.controller._insertDataRow(entry,true);
-			}
-			else
-			{
-				debugger;
-				// Server didn't give us our row data
-				// Delete from internal references
-				this.controller.deleteRow(uid);
-				this.controller._grid.setTotalCount(this.controller._grid.getTotalCount()-1);
-			}
-			this.egw().dataUnregisterUID(uid, callback, this);
-		};
-		this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
+		this.egw().dataRegisterUID(uid, this._push_add_callback, {nm: this, uid: uid, index: index}, this.getInstanceManager().etemplate_exec_id, this.id);
 		return true;
+	}
+
+	/**
+	 * Callback for adding a new row via push
+	 *
+	 * Expected context: {nm: this, uid: string, index: number}
+	 */
+	protected _push_add_callback(this: {nm: et2_nextmatch, uid: string, index: number}, data:any)
+	{
+		if(data && this.nm && this.nm.getParent())
+		{
+			if(data.class)
+			{
+				data.class += " new_entry";
+			}
+			// Don't remove if new data has not arrived
+			let stored = egw.dataGetUIDdata(this.uid);
+			//if(stored?.timestamp >= time) return;
+
+			// Increase displayed row count or we lose the last row when we add and the total is wrong
+			this.nm.controller._grid.setTotalCount(this.nm.controller._grid.getTotalCount()+1);
+
+			// Insert at the top of the list, or where app said
+			var entry = this.nm.controller._selectionMgr._getRegisteredRowsEntry(this.uid);
+			entry.idx = typeof this.index == "number" ? this.index : 0;
+			this.nm.controller._insertDataRow(entry,true);
+		}
+		else if (this.nm && this.nm.getParent())
+		{
+			// Server didn't give us our row data
+			// Delete from internal references
+			this.nm.controller.deleteRow(this.uid);
+			this.nm.controller._grid.setTotalCount(this.nm.controller._grid.getTotalCount()-1);
+		}
+		this.nm.egw().dataUnregisterUID(this.uid, this.nm._push_add_callback, this);
 	}
 
 	/**

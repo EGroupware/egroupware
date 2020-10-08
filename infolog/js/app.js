@@ -171,7 +171,6 @@ var InfologApp = /** @class */ (function (_super) {
      */
     InfologApp.prototype.push = function (pushData) {
         var _this = this;
-        var _a;
         if (pushData.app !== this.appname)
             return;
         // pushData does not contain everything, just the minimum.
@@ -235,14 +234,15 @@ var InfologApp = /** @class */ (function (_super) {
             }
         };
         // check filters against ACL data
-        for (var _i = 0, _b = Object.values(filters); _i < _b.length; _i++) {
-            var field_filter = _b[_i];
+        for (var _i = 0, _a = Object.values(filters); _i < _a.length; _i++) {
+            var field_filter = _a[_i];
             var state_1 = _loop_1(field_filter);
             if (typeof state_1 === "object")
                 return state_1.value;
         }
         // Pass actual refresh on to just nextmatch
-        (_a = this.et2.getDOMWidgetById('nm')) === null || _a === void 0 ? void 0 : _a.refresh(pushData.id, pushData.type);
+        var nm = this.et2.getDOMWidgetById('nm');
+        nm.refresh(pushData.id, pushData.type);
     };
     /**
      * Retrieve the current state of the application for future restoration

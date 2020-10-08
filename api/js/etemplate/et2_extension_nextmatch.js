@@ -546,6 +546,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 // Pre-ask for the row data, and only proceed if we actually get it
                 // need to send nextmatch filters too, as server-side will merge old version from request otherwise
                 this_1.egw().dataFetch(this_1.getInstanceManager().etemplate_exec_id, { refresh: _row_ids }, this_1.controller._filters, this_1.id, function (data) {
+                    // In the event that the etemplate got removed before the data came back (Usually an action caused
+                    // a full submit) just stop here.
+                    if (!this.nm.getParent())
+                        return;
                     if (data.total >= 1) {
                         this.type == et2_nextmatch.ADD ? this.nm.refresh_add(this.uid, this.type)
                             : this.nm.refresh_update(this.uid);
@@ -556,7 +560,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                         // Adjust total rows, clean grid
                         this.nm.controller._grid.setTotalCount(this.nm.controller._grid._total - _row_ids.length);
                     }
-                }, { type: _type, nm: this_1, uid: uid_1 }, [_row_ids]);
+                }, { type: _type, nm: this_1, uid: uid_1, prefix: this_1.controller.dataStorePrefix }, [_row_ids]);
                 return { value: void 0 };
             }
             switch (_type) {
@@ -635,32 +639,36 @@ var et2_nextmatch = /** @class */ (function (_super) {
             return false;
         }
         var time = new Date().valueOf();
-        var callback = function (data) {
-            if (data) {
-                if (data.class) {
-                    data.class += " new_entry";
-                }
-                // Don't remove if new data has not arrived
-                var stored = egw.dataGetUIDdata(uid);
-                //if(stored?.timestamp >= time) return;
-                // Increase displayed row count or we lose the last row when we add and the total is wrong
-                this.controller._grid.setTotalCount(this.controller._grid.getTotalCount() + 1);
-                // Insert at the top of the list, or where app said
-                var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
-                entry.idx = typeof index == "number" ? index : 0;
-                this.controller._insertDataRow(entry, true);
-            }
-            else {
-                debugger;
-                // Server didn't give us our row data
-                // Delete from internal references
-                this.controller.deleteRow(uid);
-                this.controller._grid.setTotalCount(this.controller._grid.getTotalCount() - 1);
-            }
-            this.egw().dataUnregisterUID(uid, callback, this);
-        };
-        this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
+        this.egw().dataRegisterUID(uid, this._push_add_callback, { nm: this, uid: uid, index: index }, this.getInstanceManager().etemplate_exec_id, this.id);
         return true;
+    };
+    /**
+     * Callback for adding a new row via push
+     *
+     * Expected context: {nm: this, uid: string, index: number}
+     */
+    et2_nextmatch.prototype._push_add_callback = function (data) {
+        if (data && this.nm && this.nm.getParent()) {
+            if (data.class) {
+                data.class += " new_entry";
+            }
+            // Don't remove if new data has not arrived
+            var stored = egw.dataGetUIDdata(this.uid);
+            //if(stored?.timestamp >= time) return;
+            // Increase displayed row count or we lose the last row when we add and the total is wrong
+            this.nm.controller._grid.setTotalCount(this.nm.controller._grid.getTotalCount() + 1);
+            // Insert at the top of the list, or where app said
+            var entry = this.nm.controller._selectionMgr._getRegisteredRowsEntry(this.uid);
+            entry.idx = typeof this.index == "number" ? this.index : 0;
+            this.nm.controller._insertDataRow(entry, true);
+        }
+        else if (this.nm && this.nm.getParent()) {
+            // Server didn't give us our row data
+            // Delete from internal references
+            this.nm.controller.deleteRow(this.uid);
+            this.nm.controller._grid.setTotalCount(this.nm.controller._grid.getTotalCount() - 1);
+        }
+        this.nm.egw().dataUnregisterUID(this.uid, this.nm._push_add_callback, this);
     };
     /**
      * Is this nextmatch currently sorted by "modified" date

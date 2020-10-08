@@ -27,6 +27,9 @@ import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
  */
 export class CRMView extends EgwApp
 {
+	// List ID
+	list_id: string = "";
+
 	// Reference to the list
 	nm: et2_nextmatch = null;
 
@@ -80,21 +83,23 @@ export class CRMView extends EgwApp
 		// Check to see if the template is for a CRM view
 		if(et2.app == app_obj.appname)
 		{
-			return false;
+			return CRMView.reconnect(app_obj);
 		}
 
 		// Make sure object is there, etemplate2 will pick it up and call our et2_ready
+		let crm : CRMView = undefined;
+		// @ts-ignore
 		if(typeof et2.app_obj.crm == "undefined" && app.classes.crm)
 		{
-			et2.app_obj.crm = new app.classes.crm();
+			// @ts-ignore
+			crm = et2.app_obj.crm = new app.classes.crm();
 		}
-		if(typeof et2.app_obj.crm == "undefined")
+		if(typeof crm == "undefined")
 		{
 			egw.debug("error", "CRMView object is missing");
 			return false;
 		}
 
-		let crm = et2.app_obj.crm;
 
 		// We can set this now
 		crm.set_view_obj(app_obj);
@@ -116,6 +121,37 @@ export class CRMView extends EgwApp
 	}
 
 	/**
+	 * Our CRM has become disconnected from its list, probably because something submitted.
+	 * Find it, and get things working again.
+	 *
+	 * @param app_obj
+	 */
+	static reconnect(app_obj : EgwApp)
+	{
+		// Check
+		let contact_ids = app_obj.et2.getArrayMgr("content").getEntry("action_id") || "";
+		debugger;
+		if(!contact_ids) return;
+
+		for (let existing_app of EgwApp._instances)
+		{
+			if(existing_app instanceof CRMView && existing_app.list_id == app_obj.et2.getInstanceManager().uniqueId)
+			{
+				// List was reloaded.  Rebind.
+				existing_app.app_obj.destroy(existing_app.app_obj.appname);
+				if(!existing_app.nm?.getParent())
+				{
+					try
+					{
+						// This will probably not die cleanly, we had a reference when it was destroyed
+						existing_app.nm.destroy();
+					} catch (e) {}
+				}
+				return existing_app.set_view_obj(app_obj);
+			}
+		}
+	}
+	/**
 	 * Set the associated private app JS
 	 * We try and pull the needed info here
 	 */
@@ -123,7 +159,17 @@ export class CRMView extends EgwApp
 	{
 		this.app_obj = app_obj;
 
+		// Make sure object is there, etemplate2 will pick it up and call our et2_ready
+		app_obj.et2.getInstanceManager().app_obj.crm = this
+
+		// Make _sure_ we get notified if the list is removed (actions, refresh) - this is not always a full
+		// destruction
+		jQuery(app_obj.et2.getDOMNode()).on('clear', function() {
+			this.nm = null;
+		}.bind(this));
+
 		// For easy reference later
+		this.list_id = app_obj.et2.getInstanceManager().uniqueId;
 		this.nm = <et2_nextmatch>app_obj.et2.getDOMWidgetById('nm');
 
 		let contact_ids = app_obj.et2.getArrayMgr("content").getEntry("action_id") || "";

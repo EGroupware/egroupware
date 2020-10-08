@@ -262,7 +262,8 @@ class InfologApp extends EgwApp
 		}
 
 		// Pass actual refresh on to just nextmatch
-		(<et2_nextmatch>this.et2.getDOMWidgetById('nm'))?.refresh(pushData.id, pushData.type);
+		let nm = <et2_nextmatch>this.et2.getDOMWidgetById('nm');
+		nm.refresh(pushData.id, pushData.type);
 	}
 
 	/**
