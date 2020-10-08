@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-20 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api;
@@ -66,45 +66,15 @@ use HTTP_WebDAV_Server;
  * Vfs::parse_url($url, $component=-1), Vfs::dirname($url) and Vfs::basename($url) work
  * on urls containing utf-8 characters, which get NOT urlencoded in our VFS!
  */
-class Vfs
+class Vfs extends Vfs\Base
 {
-	const PREFIX = 'vfs://default';
-	/**
-	 * Scheme / protocol used for this stream-wrapper
-	 */
-	const SCHEME = Vfs\StreamWrapper::SCHEME;
-	/**
-	 * Mime type of directories, the old vfs used 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
-	 */
-	const DIR_MIME_TYPE = Vfs\StreamWrapper::DIR_MIME_TYPE;
-	/**
-	 * Readable bit, for dirs traversable
-	 */
-	const READABLE = 4;
-	/**
-	 * Writable bit, for dirs delete or create files in that dir
-	 */
-	const WRITABLE = 2;
-	/**
-	 * Excecutable bit, here only use to check if user is allowed to search dirs
-	 */
-	const EXECUTABLE = 1;
-	/**
-	 * mode-bits, which have to be set for links
-	 */
-	const MODE_LINK = Vfs\StreamWrapper::MODE_LINK;
+	const PREFIX = Vfs\StreamWrapper::PREFIX;
+
 	/**
 	 * Name of the lock table
 	 */
 	const LOCK_TABLE = 'egw_locks';
-	/**
-	 * How much should be logged to the apache error-log
-	 *
-	 * 0 = Nothing
-	 * 1 = only errors
-	 * 2 = all function calls and errors (contains passwords too!)
-	 */
-	const LOG_LEVEL = 1;
+
 	/**
 	 * Current user has root rights, no access checks performed!
 	 *
@@ -326,45 +296,6 @@ class Vfs
 	}
 
 	/**
-	 * Mounts $url under $path in the vfs, called without parameter it returns the fstab
-	 *
-	 * The fstab is stored in the eGW configuration and used for all eGW users.
-	 *
-	 * @param string $url =null url of the filesystem to mount, eg. oldvfs://default/
-	 * @param string $path =null path to mount the filesystem in the vfs, eg. /
-	 * @param boolean $check_url =null check if url is an existing directory, before mounting it
-	 * 	default null only checks if url does not contain a $ as used in $user or $pass
-	 * @param boolean $persitent_mount =true create a persitent mount, or only a temprary for current request
-	 * @param boolean $clear_fstab =false true clear current fstab, false (default) only add given mount
-	 * @return array|boolean array with fstab, if called without parameter or true on successful mount
-	 */
-	static function mount($url=null,$path=null,$check_url=null,$persitent_mount=true,$clear_fstab=false)
-	{
-		return Vfs\StreamWrapper::mount($url, $path, $check_url, $persitent_mount, $clear_fstab);
-	}
-
-	/**
-	 * Unmounts a filesystem part of the vfs
-	 *
-	 * @param string $path url or path of the filesystem to unmount
-	 */
-	static function umount($path)
-	{
-		return Vfs\StreamWrapper::umount($path);
-	}
-
-	/**
-	 * Returns mount url of a full url returned by resolve_url
-	 *
-	 * @param string $fullurl full url returned by resolve_url
-	 * @return string|NULL mount url or null if not found
-	 */
-	static function mount_url($fullurl)
-	{
-		return Vfs\StreamWrapper::mount_url($fullurl);
-	}
-
-	/**
 	 * Check if file is hidden: name starts with a '.' or is Thumbs.db or _gsdata_
 	 *
 	 * @param string $path
@@ -384,6 +315,7 @@ class Vfs
 	 *
 	 * @param string|array $base base of the search
 	 * @param array $options =null the following keys are allowed:
+	 * <code>
 	 * - type => {d|f|F|!l} d=dirs, f=files (incl. symlinks), F=files (incl. symlinks to files), !l=no symlinks, default all
 	 * - depth => {true|false(default)} put the contents of a dir before the dir itself
 	 * - dirsontop => {true(default)|false} allways return dirs before the files (two distinct blocks)
@@ -403,7 +335,8 @@ class Vfs
 	 * - follow => {true|false(default)} follow symlinks
 	 * - hidden => {true|false(default)} include hidden files (name starts with a '.' or is Thumbs.db)
 	 * - show-deleted => {true|false(default)} get also set by hidden, if not explicitly set otherwise (requires versioning!)
-	 * @param string|array/true $exec =null function to call with each found file/dir as first param and stat array as last param or
+	 * </code>
+	 * @param string|array|true $exec =null function to call with each found file/dir as first param and stat array as last param or
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params =null further params for exec as array, path is always the first param and stat the last!
 	 * @return array of pathes if no $exec, otherwise path => stat pairs
@@ -421,11 +354,11 @@ class Vfs
 		// process some of the options (need to be done only once)
 		if (isset($options['name']) && !isset($options['name_preg']))	// change from simple *,? wildcards to preg regular expression once
 		{
-			$options['name_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['name'])).'$/i';
+			$options['name_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['name'], '/')).'$/i';
 		}
 		if (isset($options['path']) && !isset($options['preg_path']))	// change from simple *,? wildcards to preg regular expression once
 		{
-			$options['path_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['path'])).'$/i';
+			$options['path_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['path'], '/')).'$/i';
 		}
 		if (!isset($options['uid']))
 		{
@@ -460,7 +393,11 @@ class Vfs
 		}
 
 		// make all find options available as stream context option "find", to allow plugins to use them
-		$context = stream_context_create(array(self::SCHEME => array('find' => $options)));
+		$context = stream_context_create([
+			self::SCHEME => [
+				'find' => $options,
+			],
+		]);
 
 		$url = $options['url'];
 
@@ -789,7 +726,7 @@ class Vfs
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param string $path
+	 * @param string $path or url
 	 * @param int $check mode to check: one or more or'ed together of: 4 = self::READABLE,
 	 * 	2 = self::WRITABLE, 1 = self::EXECUTABLE
 	 * @return boolean
@@ -803,12 +740,13 @@ class Vfs
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param string $path path
+	 * @param string $path path or url
 	 * @param int $check mode to check: one or more or'ed together of: 4 = self::READABLE,
 	 * 	2 = self::WRITABLE, 1 = self::EXECUTABLE
 	 * @param array|boolean $stat =null stat array or false, to not query it again
 	 * @param int $user =null user used for check, if not current user (self::$user)
 	 * @return boolean
+	 * @todo deprecated or even remove $user parameter and code
 	 */
 	static function check_access($path, $check, $stat=null, $user=null)
 	{
@@ -855,82 +793,15 @@ class Vfs
 			return $ret;
 		}
 
-		if (self::$is_root)
-		{
-			return true;
-		}
-
-		// throw exception if stat array is used insead of path, can be removed soon
-		if (is_array($path))
-		{
-			throw new Exception\WrongParameter('path has to be string, use check_access($path,$check,$stat=null)!');
-		}
-		// query stat array, if not given
-		if (is_null($stat))
-		{
-			if (!isset($vfs)) $vfs = new Vfs\StreamWrapper();
-			$stat = $vfs->url_stat($path,0);
-		}
-		//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check)");
-
-		if (!$stat)
-		{
-			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) no stat array!");
-			return false;	// file not found
-		}
-		// check if we use an EGroupwre stream wrapper, or a stock php one
-		// if it's not an EGroupware one, we can NOT use uid, gid and mode!
-		if (($scheme = self::parse_url($stat['url'],PHP_URL_SCHEME)) && !(class_exists(self::scheme2class($scheme))))
-		{
-			switch($check)
-			{
-				case self::READABLE:
-					return is_readable($stat['url']);
-				case self::WRITABLE:
-					return is_writable($stat['url']);
-				case self::EXECUTABLE:
-					return is_executable($stat['url']);
-			}
-		}
-		// check if other rights grant access
-		if (($stat['mode'] & $check) == $check)
-		{
-			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via other rights!");
-			return true;
-		}
-		// check if there's owner access and we are the owner
-		if (($stat['mode'] & ($check << 6)) == ($check << 6) && $stat['uid'] && $stat['uid'] == self::$user)
-		{
-			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via owner rights!");
-			return true;
-		}
-		// check if there's a group access and we have the right membership
-		if (($stat['mode'] & ($check << 3)) == ($check << 3) && $stat['gid'])
-		{
-			if (($memberships = $GLOBALS['egw']->accounts->memberships(self::$user, true)) && in_array(-abs($stat['gid']), $memberships))
-			{
-				//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) access via group rights!");
-				return true;
-			}
-		}
-		// if we check writable and have a readonly mount --> return false, as backends dont know about r/o url parameter
-		if ($check == self::WRITABLE && Vfs\StreamWrapper::url_is_readonly($stat['url']))
-		{
-			//error_log(__METHOD__."(path=$path, check=writable, ...) failed because mount is readonly");
-			return false;
-		}
-		// check backend for extended acls (only if path given)
-		$ret = $path && self::_call_on_backend('check_extended_acl',array(isset($stat['url'])?$stat['url']:$path,$check),true);	// true = fail silent if backend does not support
-
-		//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) ".($ret ? 'backend extended acl granted access.' : 'no access!!!'));
-		return $ret;
+		if (!isset($vfs)) $vfs = new Vfs\StreamWrapper($path);
+		return $vfs->check_access($path, $check, $stat);
 	}
 
 	/**
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param string $path
+	 * @param string $path or url
 	 * @return boolean
 	 */
 	static function is_writable($path)
@@ -942,7 +813,7 @@ class Vfs
 	 * The stream_wrapper interface checks is_{readable|writable|executable} against the webservers uid,
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
-	 * @param string $path
+	 * @param string $path or url
 	 * @return boolean
 	 */
 	static function is_executable($path)
@@ -953,7 +824,7 @@ class Vfs
 	/**
 	 * Check if path is a script and write access would be denied by backend
 	 *
-	 * @param string $path
+	 * @param string $path or url
 	 * @return boolean true if $path is a script AND exec mount-option is NOT set, false otherwise
 	 */
 	static function deny_script($path)
@@ -1038,7 +909,7 @@ class Vfs
 	 */
 	static function proppatch($path,array $props)
 	{
-		return self::_call_on_backend('proppatch',array($path,$props));
+		return self::_call_on_backend('proppatch', [$path,$props], false, 0, true);
 	}
 
 	/**
@@ -1057,7 +928,7 @@ class Vfs
 	 */
 	static function propfind($path,$ns=self::DEFAULT_PROP_NAMESPACE)
 	{
-		return self::_call_on_backend('propfind',array($path,$ns),true);	// true = fail silent (no PHP Warning)
+		return self::_call_on_backend('propfind', [$path, $ns],true, 0, true);	// true = fail silent (no PHP Warning)
 	}
 
 	/**
@@ -1380,21 +1251,12 @@ class Vfs
 	 * We define all eGW admins the owner of the group directories!
 	 *
 	 * @param string $path
-	 * @param array $stat =null stat for path, default queried by this function
+	 * @param ?array $stat =null stat for path, default queried by this function
 	 * @return boolean
 	 */
 	static function has_owner_rights($path,array $stat=null)
 	{
-		if (!$stat)
-		{
-			$vfs = new Vfs\StreamWrapper();
-			$stat = $vfs->url_stat($path,0);
-		}
-		return $stat['uid'] == self::$user &&	// (current) user is the owner
-				// in sharing current user != self::$user and should NOT have owner rights
-				$GLOBALS['egw_info']['user']['account_id'] == self::$user ||
-			self::$is_root ||					// class runs with root rights
-			!$stat['uid'] && $stat['gid'] && self::$is_admin;	// group directory and user is an eGW admin
+		return (new Vfs\StreamWrapper())->has_owner_rights($path, $stat);
 	}
 
 	/**
@@ -1665,24 +1527,25 @@ class Vfs
 	/**
 	 * lock a ressource/path
 	 *
-	 * @param string $path path or url
+	 * @param string $url url or path, lock is granted for the path only, but url is used for access checks
 	 * @param string &$token
 	 * @param int &$timeout
-	 * @param string &$owner
+	 * @param int|string &$owner account_id, account_lid or mailto-url
 	 * @param string &$scope
 	 * @param string &$type
 	 * @param boolean $update =false
 	 * @param boolean $check_writable =true should we check if the ressource is writable, before granting locks, default yes
 	 * @return boolean true on success
 	 */
-	static function lock($path,&$token,&$timeout,&$owner,&$scope,&$type,$update=false,$check_writable=true)
+	static function lock($url, &$token, &$timeout, &$owner, &$scope, &$type, $update=false, $check_writable=true)
 	{
 		// we require write rights to lock/unlock a resource
-		if (!$path || $update && !$token || $check_writable &&
-			!(self::is_writable($path) || !self::file_exists($path) && ($dir=self::dirname($path)) && self::is_writable($dir)))
+		if (!$url || $update && !$token || $check_writable &&
+			!(self::is_writable($url) || !self::file_exists($url) && ($dir=self::dirname($url)) && self::is_writable($dir)))
 		{
 			return false;
 		}
+		$path = self::parse_url($url, PHP_URL_PATH);
     	// remove the lock info evtl. set in the cache
     	unset(self::$lock_cache[$path]);
 
@@ -1712,16 +1575,20 @@ class Vfs
 			}
 		}
 		// HTTP_WebDAV_Server does this check before calling LOCK, but we want to be complete and usable outside WebDAV
-		elseif(($lock = self::checkLock($path)) && ($lock['scope'] == 'exclusive' || $scope == 'exclusive'))
+		elseif(($lock = self::checkLock($url)) && ($lock['scope'] == 'exclusive' || $scope == 'exclusive'))
 		{
 			$ret = false;	// there's alread a lock
 		}
 		else
 		{
 			// HTTP_WebDAV_Server sets owner and token, but we want to be complete and usable outside WebDAV
-			if (!$owner || $owner == 'unknown')
+			if (!$owner || $owner === 'unknown')
 			{
 				$owner = 'mailto:'.$GLOBALS['egw_info']['user']['account_email'];
+			}
+			elseif (($email = Accounts::id2name($owner, 'account_email')))
+			{
+				$owner = 'mailto:'.$email;
 			}
 			if (!$token)
 			{
@@ -1746,48 +1613,50 @@ class Vfs
 				$ret = false;	// there's already a lock
 			}
 		}
-		if (self::LOCK_DEBUG) error_log(__METHOD__."($path,$token,$timeout,$owner,$scope,$type,update=$update,check_writable=$check_writable) returns ".($ret ? 'true' : 'false'));
+		if (self::LOCK_DEBUG) error_log(__METHOD__."($url,$token,$timeout,$owner,$scope,$type,update=$update,check_writable=$check_writable) returns ".($ret ? 'true' : 'false'));
 		return $ret;
 	}
 
     /**
      * unlock a ressource/path
      *
-     * @param string $path path to unlock
+	 * @param string $url url or path, lock is granted for the path only, but url is used for access checks
      * @param string $token locktoken
 	 * @param boolean $check_writable =true should we check if the ressource is writable, before granting locks, default yes
      * @return boolean true on success
      */
-    static function unlock($path,$token,$check_writable=true)
+    static function unlock($url,$token,$check_writable=true)
     {
 		// we require write rights to lock/unlock a resource
-		if ($check_writable && !self::is_writable($path))
+		if ($check_writable && !self::is_writable($url))
 		{
 			return false;
 		}
-        if (($ret = self::$db->delete(self::LOCK_TABLE,array(
-        	'lock_path' => $path,
-        	'lock_token' => $token,
-        ),__LINE__,__FILE__) && self::$db->affected_rows()))
-        {
-        	// remove the lock from the cache too
-        	unset(self::$lock_cache[$path]);
-        }
-		if (self::LOCK_DEBUG) error_log(__METHOD__."($path,$token,$check_writable) returns ".($ret ? 'true' : 'false'));
+		$path = self::parse_url($url, PHP_URL_PATH);
+		if (($ret = self::$db->delete(self::LOCK_TABLE,array(
+			'lock_path' => $path,
+			'lock_token' => $token,
+		),__LINE__,__FILE__) && self::$db->affected_rows()))
+		{
+			// remove the lock from the cache too
+			unset(self::$lock_cache[$path]);
+		}
+		if (self::LOCK_DEBUG) error_log(__METHOD__."($url,$token,$check_writable) returns ".($ret ? 'true' : 'false'));
 		return $ret;
     }
 
 	/**
 	 * checkLock() helper
 	 *
-	 * @param  string resource path to check for locks
+	 * @param string $url url or path, lock is granted for the path only, but url is used for access checks
 	 * @return array|boolean false if there's no lock, else array with lock info
 	 */
-	static function checkLock($path)
+	static function checkLock($url)
 	{
+		$path = self::parse_url($url, PHP_URL_PATH);
 		if (isset(self::$lock_cache[$path]))
 		{
-			if (self::LOCK_DEBUG) error_log(__METHOD__."($path) returns from CACHE ".str_replace(array("\n",'    '),'',print_r(self::$lock_cache[$path],true)));
+			if (self::LOCK_DEBUG) error_log(__METHOD__."($url) returns from CACHE ".str_replace(array("\n",'    '),'',print_r(self::$lock_cache[$url],true)));
 			return self::$lock_cache[$path];
 		}
 		$where = 'lock_path='.self::$db->quote($path);
@@ -1808,10 +1677,10 @@ class Vfs
 	        	'lock_token' => $result['token'],
 	        ),__LINE__,__FILE__);
 
-			if (self::LOCK_DEBUG) error_log(__METHOD__."($path) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
+			if (self::LOCK_DEBUG) error_log(__METHOD__."($url) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
 	        $result = false;
 		}
-		if (self::LOCK_DEBUG) error_log(__METHOD__."($path) returns ".($result?array2string($result):'false'));
+		if (self::LOCK_DEBUG) error_log(__METHOD__."($url) returns ".($result?array2string($result):'false'));
 		return self::$lock_cache[$path] = $result;
 	}
 
@@ -1914,9 +1783,7 @@ class Vfs
 	 */
 	static function init_static()
 	{
-		// if special user/vfs_user given (eg. from sharing) use it instead default user/account_id
-		self::$user = (int)(isset($GLOBALS['egw_info']['user']['vfs_user']) ?
-			$GLOBALS['egw_info']['user']['vfs_user'] : $GLOBALS['egw_info']['user']['account_id']);
+		self::$user = (int)$GLOBALS['egw_info']['user']['account_id'];
 		self::$is_admin = isset($GLOBALS['egw_info']['user']['apps']['admin']);
 		self::$db = isset($GLOBALS['egw_setup']->db) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
 		self::$lock_cache = array();
@@ -2212,23 +2079,8 @@ class Vfs
 	 */
 	static function resolve_url_symlinks($_path,$file_exists=true,$resolve_last_symlink=true,&$stat=null)
 	{
-		$vfs = new Vfs\StreamWrapper();
+		$vfs = new Vfs\StreamWrapper($_path);
 		return $vfs->resolve_url_symlinks($_path, $file_exists, $resolve_last_symlink, $stat);
-	}
-
-	/**
-	 * Resolve the given path according to our fstab
-	 *
-	 * @param string $_path
-	 * @param boolean $do_symlink =true is a direct match allowed, default yes (must be false for a lstat or readlink!)
-	 * @param boolean $use_symlinkcache =true
-	 * @param boolean $replace_user_pass_host =true replace $user,$pass,$host in url, default true, if false result is not cached
-	 * @param boolean $fix_url_query =false true append relativ path to url query parameter, default not
-	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
-	 */
-	static function resolve_url($_path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true,$fix_url_query=false)
-	{
-		return Vfs\StreamWrapper::resolve_url($_path, $do_symlink, $use_symlinkcache, $replace_user_pass_host, $fix_url_query);
 	}
 
 	/**
@@ -2274,77 +2126,6 @@ class Vfs
 	static function unlink ( $path )
 	{
 		return $path[0] == '/' && unlink(self::PREFIX.$path);
-	}
-
-	/**
-	 * Allow to call methods of the underlying stream wrapper: touch, chmod, chgrp, chown, ...
-	 *
-	 * We cant use a magic __call() method, as it does not work for static methods!
-	 *
-	 * @param string $name
-	 * @param array $params first param has to be the path, otherwise we can not determine the correct wrapper
-	 * @param boolean $fail_silent =false should only false be returned if function is not supported by the backend,
-	 * 	or should an E_USER_WARNING error be triggered (default)
-	 * @param int $path_param_key =0 key in params containing the path, default 0
-	 * @return mixed return value of backend or false if function does not exist on backend
-	 */
-	static protected function _call_on_backend($name,$params,$fail_silent=false,$path_param_key=0)
-	{
-		$pathes = $params[$path_param_key];
-
-		$scheme2urls = array();
-		foreach(is_array($pathes) ? $pathes : array($pathes) as $path)
-		{
-			if (!($url = self::resolve_url_symlinks($path,false,false)))
-			{
-				return false;
-			}
-			$k=(string)self::parse_url($url,PHP_URL_SCHEME);
-			if (!(is_array($scheme2urls[$k]))) $scheme2urls[$k] = array();
-			$scheme2urls[$k][$path] = $url;
-		}
-		$ret = array();
-		foreach($scheme2urls as $scheme => $urls)
-		{
-			if ($scheme)
-			{
-				if (!class_exists($class = self::scheme2class($scheme)) || !method_exists($class,$name))
-				{
-					if (!$fail_silent) trigger_error("Can't $name for scheme $scheme!\n",E_USER_WARNING);
-					return false;
-				}
-				if (!is_array($pathes))
-				{
-					$params[$path_param_key] = $url;
-
-					return call_user_func_array(array($class,$name),$params);
-				}
-				$params[$path_param_key] = $urls;
-				if (!is_array($r = call_user_func_array(array($class,$name),$params)))
-				{
-					return $r;
-				}
-				// we need to re-translate the urls to pathes, as they can eg. contain symlinks
-				foreach($urls as $path => $url)
-				{
-					if (isset($r[$url]) || isset($r[$url=self::parse_url($url,PHP_URL_PATH)]))
-					{
-						$ret[$path] = $r[$url];
-					}
-				}
-			}
-			// call the filesystem specific function (dont allow to use arrays!)
-			elseif(!function_exists($name) || is_array($pathes))
-			{
-				return false;
-			}
-			else
-			{
-				$time = null;
-				return $name($url,$time);
-			}
-		}
-		return $ret;
 	}
 
 	/**
@@ -2412,7 +2193,7 @@ class Vfs
 	 */
 	static function readlink($path)
 	{
-		$ret = self::_call_on_backend('readlink',array($path),true);	// true = fail silent, if backend does not support readlink
+		$ret = self::_call_on_backend('readlink', [$path],true, 0, true);	// true = fail silent, if backend does not support readlink
 		//error_log(__METHOD__."('$path') returning ".array2string($ret).' '.function_backtrace());
 		return $ret;
 	}
@@ -2428,7 +2209,7 @@ class Vfs
 	 */
 	static function symlink($target,$link)
 	{
-		if (($ret = self::_call_on_backend('symlink',array($target,$link),false,1)))	// 1=path is in $link!
+		if (($ret = self::_call_on_backend('symlink', [$target, $link],false,1, true)))	// 1=path is in $link!
 		{
 			Vfs\StreamWrapper::symlinkCache_remove($link);
 		}
@@ -2515,9 +2296,9 @@ class Vfs
 	static function clearstatcache($path='/')
 	{
 		//error_log(__METHOD__."('$path')");
-		Vfs\StreamWrapper::clearstatcache($path);
+		parent::clearstatcache($path);
 		self::_call_on_backend('clearstatcache', array($path), true, 0);
-		Vfs\StreamWrapper::clearstatcache($path);
+		parent::clearstatcache($path);
 	}
 
 	/**

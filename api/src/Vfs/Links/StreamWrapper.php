@@ -1,14 +1,13 @@
 <?php
 /**
- * eGroupWare API: VFS - stream wrapper for linked files
+ * EGroupware API: VFS - stream wrapper for linked files
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id: class.sqlfs_stream_wrapper.inc.php 24997 2008-03-02 21:44:15Z ralfbecker $
+ * @copyright (c) 2008-20 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api\Vfs\Links;
@@ -76,7 +75,7 @@ class StreamWrapper extends LinksParent
 	 * @param int $check mode to check: one or more or'ed together of: 4 = read, 2 = write, 1 = executable
 	 * @return boolean
 	 */
-	static function check_extended_acl($url,$check)
+	function check_extended_acl($url,$check)
 	{
 		if (Vfs::$is_root)
 		{
@@ -96,7 +95,7 @@ class StreamWrapper extends LinksParent
 			$access = !($check & Vfs::WRITABLE);	// always grant read access to /apps
 			$what = '!$app';
 		}
-		elseif (!self::check_app_rights($app))
+		elseif (!$this->check_app_rights($app))
 		{
 			$access = false;							// user has no access to the $app application
 			$what = 'no app-rights';
@@ -113,8 +112,8 @@ class StreamWrapper extends LinksParent
 		{
 			// vfs & stream-wrapper use posix rights, Api\Link::file_access uses Api\Acl::{EDIT|READ}!
 			$required = $check & Vfs::WRITABLE ? Api\Acl::EDIT : Api\Acl::READ;
-			$access = Api\Link::file_access($app,$id,$required,$rel_path,Vfs::$user);
-			$what = "from Api\Link::file_access('$app',$id,$required,'$rel_path,".Vfs::$user.")";
+			$access = Api\Link::file_access($app, $id, $required, $rel_path, $this->user);
+			$what = "from Api\Link::file_access('$app', $id, $required, '$rel_path,".$this->user.")";
 		}
 		if (self::DEBUG) error_log(__METHOD__."($url,$check) user=".Vfs::$user." ($what) ".($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
 		return $access;
@@ -126,18 +125,18 @@ class StreamWrapper extends LinksParent
 	 * @param string $app
 	 * @return boolean
 	 */
-	public static function check_app_rights($app)
+	public function check_app_rights($app)
 	{
-		if ($GLOBALS['egw_info']['user']['account_id'] == Vfs::$user)
+		if ($GLOBALS['egw_info']['user']['account_id'] == $this->user && isset($GLOBALS['egw_info']['user']['apps']))
 		{
 			return isset($GLOBALS['egw_info']['user']['apps'][$app]);
 		}
 		static $user_apps = array();
-		if (!isset($user_apps[Vfs::$user]))
+		if (!isset($user_apps[$this->user]))
 		{
-			$user_apps[Vfs::$user] = $GLOBALS['egw']->acl->get_user_applications(Vfs::$user);
+			$user_apps[$this->user] = $GLOBALS['egw']->acl->get_user_applications($this->user);
 		}
-		return !empty($user_apps[Vfs::$user][$app]);
+		return !empty($user_apps[$this->user][$app]);
 	}
 
 	/**
@@ -159,48 +158,52 @@ class StreamWrapper extends LinksParent
 	 */
 	function url_stat ( $url, $flags )
 	{
-		$eacl_check=self::check_extended_acl($url,Vfs::READABLE);
+		$this->check_set_context($url);
 
-		// return vCard as /.entry
-		if ( $eacl_check && substr($url,-7) == '/.entry' &&
-			(list($app) = array_slice(explode('/',$url),-3,1)) && $app === 'addressbook')
+		$ret = false;
+		if (($eacl_check = $this->check_extended_acl($url,Vfs::READABLE)))
 		{
-			$ret = array(
-				'ino'   => '#'.md5($url),
-				'name'  => '.entry',
-				'mode'  => self::MODE_FILE|Vfs::READABLE,	// required by the stream wrapper
-				'size'  => 1024,	// fmail does NOT attach files with size 0!
-				'uid'   => 0,
-				'gid'   => 0,
-				'mtime' => time(),
-				'ctime' => time(),
-				'nlink' => 1,
-				// eGW addition to return some extra values
-				'mime'  => $app == 'addressbook' ? 'text/vcard' : 'text/calendar',
-			);
-		}
-		// if entry directory does not exist --> return fake directory
-		elseif (!($ret = parent::url_stat($url,$flags)) && $eacl_check)
-		{
-			list(,/*$apps*/,/*$app*/,$id,$rel_path) = array_pad(explode('/', Vfs::parse_url($url, PHP_URL_PATH), 5),5,null);
-			if ($id && !isset($rel_path))
+			// return vCard as /.entry
+			if (substr($url, -7) == '/.entry' &&
+				(list($app) = array_slice(explode('/', $url), -3, 1)) && $app === 'addressbook')
 			{
 				$ret = array(
-					'ino'   => '#'.md5($url),
-					'name'  => $id,
-					'mode'  => self::MODE_DIR,	// required by the stream wrapper
-					'size'  => 0,
-					'uid'   => 0,
-					'gid'   => 0,
+					'ino' => '#' . md5($url),
+					'name' => '.entry',
+					'mode' => self::MODE_FILE | Vfs::READABLE,    // required by the stream wrapper
+					'size' => 1024,    // email does NOT attach files with size 0!
+					'uid' => 0,
+					'gid' => 0,
 					'mtime' => time(),
 					'ctime' => time(),
-					'nlink' => 2,
+					'nlink' => 1,
 					// eGW addition to return some extra values
-					'mime'  => Vfs::DIR_MIME_TYPE,
+					'mime' => $app == 'addressbook' ? 'text/vcard' : 'text/calendar',
 				);
 			}
+			// if entry directory does not exist --> return fake directory
+			elseif (!($ret = parent::url_stat($url, $flags)))
+			{
+				list(,/*$apps*/,/*$app*/, $id, $rel_path) = array_pad(explode('/', Vfs::parse_url($url, PHP_URL_PATH), 5), 5, null);
+				if ($id && !isset($rel_path))
+				{
+					$ret = array(
+						'ino' => '#' . md5($url),
+						'name' => $id,
+						'mode' => self::MODE_DIR,    // required by the stream wrapper
+						'size' => 0,
+						'uid' => 0,
+						'gid' => 0,
+						'mtime' => time(),
+						'ctime' => time(),
+						'nlink' => 2,
+						// eGW addition to return some extra values
+						'mime' => Vfs::DIR_MIME_TYPE,
+					);
+				}
+			}
 		}
-		if (self::DEBUG) error_log(__METHOD__."('$url', $flags) calling parent::url_stat(,,".array2string($eacl_check).') returning '.array2string($ret));
+		if (self::DEBUG) error_log(__METHOD__."('$url', $flags) eacl_check=".array2string($eacl_check).' returning '.array2string($ret));
 		return $ret;
 	}
 
@@ -264,7 +267,7 @@ class StreamWrapper extends LinksParent
 		list(,$apps,$app,$id) = explode('/',$path);
 
 		$ret = false;
-		if ($apps == 'apps' && $app && !$id || self::check_extended_acl($path,Vfs::WRITABLE))	// app directory itself is allways ok
+		if ($apps == 'apps' && $app && !$id || $this->check_extended_acl($path,Vfs::WRITABLE))	// app directory itself is allways ok
 		{
 			$current_is_root = Vfs::$is_root; Vfs::$is_root = true;
 			$current_user = Vfs::$user; Vfs::$user = 0;
@@ -335,7 +338,7 @@ class StreamWrapper extends LinksParent
 			{
 				$charset = 'utf-8';
 			}
-			if (!($vcard =& $ab_vcard->getVCard($id, $charset)))
+			if (!($vcard = $ab_vcard->getVCard($id, $charset)))
 			{
 				error_log(__METHOD__."('$url', '$mode', $options) addressbook_vcal::getVCard($id) returned false!");
 				return false;
@@ -348,7 +351,7 @@ class StreamWrapper extends LinksParent
 		}
 		// create not existing entry directories on the fly
 		if ($mode[0] != 'r' && ($dir = Vfs::dirname($url)) &&
-			!parent::url_stat($dir, 0) && self::check_extended_acl($dir, Vfs::WRITABLE))
+			!parent::url_stat($dir, 0) && $this->check_extended_acl($dir, Vfs::WRITABLE))
 		{
 			$this->mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
@@ -431,14 +434,14 @@ class StreamWrapper extends LinksParent
 	 * @param string $link
 	 * @return boolean true on success false on error
 	 */
-	static function symlink($target,$link)
+	function symlink($target,$link)
 	{
-		$parent = new \EGroupware\Api\Vfs\Links\LinksParent();
-		if (!$parent->url_stat($dir = Vfs::dirname($link),0) && self::check_extended_acl($dir,Vfs::WRITABLE))
+		$parent = new \EGroupware\Api\Vfs\Links\LinksParent($target);
+		if (!$parent->url_stat($dir = Vfs::dirname($link),0) && $this->check_extended_acl($dir,Vfs::WRITABLE))
 		{
 			$parent->mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
-		return parent::symlink($target,$link);
+		return $parent->symlink($target,$link);
 	}
 
 	/**
@@ -446,7 +449,7 @@ class StreamWrapper extends LinksParent
 	 */
 	public static function register()
 	{
-		stream_register_wrapper(self::SCHEME, __CLASS__);
+		stream_wrapper_register(self::SCHEME, __CLASS__);
 	}
 }
 

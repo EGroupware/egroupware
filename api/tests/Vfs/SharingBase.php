@@ -77,14 +77,15 @@ class SharingBase extends LoggedInTest
 
 	protected function tearDown() : void
 	{
-		LoggedInTest::tearDownAfterClass();
+		try
+		{
+			// Some tests may leave us logged out, which will cause failures in parent cleanup
+			LoggedInTest::tearDownAfterClass();
+		}
+		catch(\Throwable $e) {}
+
 		LoggedInTest::setupBeforeClass();
 
-		// Re-init, since they look at user, fstab, etc.
-		// Also, further tests that access the filesystem fail if we don't
-		Vfs::clearstatcache();
-		Vfs::init_static();
-		Vfs\StreamWrapper::init_static();
 
 		// Need to ask about mounts, or other tests fail
 		Vfs::mount();
@@ -155,6 +156,10 @@ class SharingBase extends LoggedInTest
 		if(substr($dir, -1) != '/')
 		{
 			$dir .= '/';
+		}
+		if(!Vfs::is_readable($dir))
+		{
+			Vfs::mkdir($dir);
 		}
 		$this->files += $this->addFiles($dir);
 
@@ -233,7 +238,7 @@ class SharingBase extends LoggedInTest
 		switch($mode)
 		{
 			case Sharing::READONLY:
-				$this->assertFalse(Vfs::is_writable($file));
+				$this->assertFalse(Vfs::is_writable($file), "Readonly share file '$file' is writable");
 				if(!Vfs::is_dir($file))
 				{
 					// We expect this to fail
@@ -252,6 +257,24 @@ class SharingBase extends LoggedInTest
 				break;
 		}
 
+	}
+
+	/**
+	 * Mount the app entries into the filesystem
+	 *
+	 * @param string $path
+	 */
+	protected function mountLinks($path)
+	{
+		Vfs::$is_root = true;
+		$url = Links\StreamWrapper::PREFIX . '/apps';
+		$this->assertTrue(
+				Vfs::mount($url, $path, false, false),
+				"Unable to mount $url => $path"
+		);
+		Vfs::$is_root = false;
+
+		$this->mounts[] = $path;
 	}
 
 	/**
@@ -501,7 +524,7 @@ class SharingBase extends LoggedInTest
 		else
 		{
 			// If it's a file, check to make sure we get the file
-			$this->checkSharedFile($link, $mimetype);
+			$this->checkSharedFile($link, $mimetype, $share);
 		}
 
 		// Load share
@@ -520,8 +543,7 @@ class SharingBase extends LoggedInTest
 		$this->assertTrue(Vfs::is_readable('/'), 'Could not read root (/) from link');
 
 		// Check other paths
-		$this->assertFalse(Vfs::is_readable($path), "Was able to read $path as anoymous, it should be mounted as /");
-		$this->assertFalse(Vfs::is_readable($path . '../'));
+		$this->assertFalse(Vfs::is_readable($path), "Was able to read $path as anonymous, it should be mounted as /");
 	}
 
 	/**
@@ -537,6 +559,13 @@ class SharingBase extends LoggedInTest
 		$curl = curl_init($link);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		$cookie = '';
+		if($GLOBALS['egw']->session->sessionid || $share['share_with'])
+		{
+			$session_id = $GLOBALS['egw']->session->sessionid ?: $share['share_with'];
+			$cookie .= ';'.Api\Session::EGW_SESSION_NAME."={$session_id}";
+		}
+		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
 		$html = curl_exec($curl);
 		curl_close($curl);
 
@@ -568,7 +597,7 @@ class SharingBase extends LoggedInTest
 
 		// Make sure we start at root, not somewhere else like the token mounted
 		// as a sub-directory
-		$this->assertEquals('/', $data->data->content->nm->path);
+		$this->assertEquals('/', $data->data->content->nm->path, "Share was not mounted at /");
 
 		unset($data->data->content->nm->actions);
 		//var_dump($data->data->content->nm);
@@ -580,16 +609,17 @@ class SharingBase extends LoggedInTest
 	 * @param $link Share URL
 	 * @param $file Vfs path to file
 	 */
-	public function checkSharedFile($link, $mimetype)
+	public function checkSharedFile($link, $mimetype, $share)
 	{
-		stream_context_set_default(
+		$context = stream_context_create(
 				array(
 						'http' => array(
-								'method' => 'HEAD'
+								'method' => 'HEAD',
+				        'header' => "Cookie: XDEBUG_SESSION=PHPSTORM;".Api\Session::EGW_SESSION_NAME.'=' . $share['share_with']
 						)
 				)
 		);
-		$headers = get_headers($link);
+		$headers = get_headers($link, false, $context);
 		$this->assertEquals('200', substr($headers[0], 9, 3), 'Did not find the file, got ' . $headers[0]);
 
 		$indexed_headers = array();

@@ -15,6 +15,7 @@ namespace EGroupware\Api\Vfs;
 
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
+use EGroupware\Collabora\Wopi;
 use filemanager_ui;
 
 /**
@@ -72,18 +73,27 @@ class Sharing extends \EGroupware\Api\Sharing
 	);
 
 	/**
+	 * Subdirectory of user's home directory to mount shares into
+	 */
+	const SHARES_DIRECTORY = 'shares';
+
+	/**
 	 * Create sharing session
 	 *
-	 * Certain cases:
-	 * a) there is not session $keep_session === null
-	 *    --> create new anon session with just filemanager rights and share as fstab
-	 * b) there is a session $keep_session === true
-	 *  b1) current user is share owner (eg. checking the link)
-	 *      --> mount share under token additionally
-	 *  b2) current user not share owner
-	 *  b2a) need/use filemanager UI (eg. directory)
-	 *       --> destroy current session and continue with a)
-	 *  b2b) single file or WebDAV
+	 * There are two cases:
+	 *
+	 * 1) there is no session $keep_session === null
+	 *    --> create new anon session with just filemanager rights and resolved share incl. sharee as only fstab entry
+	 *
+	 * 2) there is a (non-anonymous) session $keep_session === true
+	 *    --> mount share with sharing stream-wrapper into users "shares" subdirectory of home directory
+	 *        and ask user if he wants the share permanently mounted there
+	 *
+	 * Even with sharing stream-wrapper a) and b) need to be different, as sharing SW needs an intact fstab!
+	 *
+	 * Not yet sure if this still needs extra handling:
+	 *
+	 * 2a) single file or WebDAV
 	 *       --> modify EGroupware enviroment for that request only, no change in session
 	 *
 	 * @param boolean $keep_session =null null: create a new session, true: try mounting it into existing (already verified) session
@@ -98,54 +108,64 @@ class Sharing extends \EGroupware\Api\Sharing
 			$GLOBALS['egw_info']['server']['vfs_fstab'] = Vfs::mount();
 			Vfs::clearstatcache();
 		}
-		$share['resolve_url'] = Vfs::resolve_url($share['share_path'], true, true, true, true);	// true = fix evtl. contained url parameter
+
+		// for a regular user session, mount the share into "shares" subdirectory of his home-directory
+		if ($keep_session && $GLOBALS['egw_info']['user']['account_lid'] && $GLOBALS['egw_info']['user']['account_lid'] !== 'anonymous')
+		{
+			$shares_dir = '/home/'.Vfs::encodePathComponent($GLOBALS['egw_info']['user']['account_lid']).'/'.self::SHARES_DIRECTORY;
+			if (!Vfs::file_exists($shares_dir)) Vfs::mkdir($shares_dir, 0750, true);
+			$share['share_root'] = Vfs::concat($shares_dir, Vfs::basename($share['share_path']));
+
+			// ToDo: handle there's already something there with that name (incl. maybe the same share!)
+
+			Vfs::$is_root = true;
+			if (!Vfs::mount(Vfs\Sharing\StreamWrapper::share2url($share), $share['share_root'], false, false, $clear_fstab))
+			{
+				sleep(1);
+				return static::share_fail(
+					'404 Not Found',
+					"Requested resource '/".htmlspecialchars($share['share_token'])."' does NOT exist!\n"
+				);
+			}
+			Vfs::$is_root = false;
+
+			Api\Framework::message(lang('Share has been mounted into you shares directory').': '.$share['share_root'], 'success');
+			// ToDo: ask user if he want's the share permanently mounted
+			return;
+		}
+
+		/**
+		 * From here on pure sharing url without regular EGroupware user (session)
+		 */
+		$share['resolve_url'] = Vfs::build_url([
+			'user' => Api\Accounts::id2name($share['share_owner']),
+		]+Vfs::parse_url(Vfs::resolve_url($share['share_path'], true, true, true, true)));	// true = fix evtl. contained url parameter
 		// if share not writable append ro=1 to mount url to make it readonly
 		if (!($share['share_writable'] & 1))
 		{
 			$share['resolve_url'] .= (strpos($share['resolve_url'], '?') ? '&' : '?').'ro=1';
 		}
-		//_debug_array($share);
+		$share['share_root'] = '/';
 
-		$share['share_root'] = '/'.Vfs::basename($share['share_path']);
-		if ($keep_session)	// add share to existing session
+		// only allow filemanager app & collabora
+		// In some cases, $GLOBALS['egw_info']['apps'] is not yet set at all.  Set it to app => true, it will be used
+		// in Session->read_repositories() to make sure we get access to these apps when the session loads the apps.
+		$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
+		$GLOBALS['egw_info']['user']['apps'] = array(
+				'filemanager' => $GLOBALS['egw_info']['apps']['filemanager'] || true,
+				'collabora' => $GLOBALS['egw_info']['apps']['collabora'] || $apps['collabora']
+		);
+
+		// Need to re-init stream wrapper, as some of them look at preferences or permissions
+		$class = Vfs\StreamWrapper::scheme2class(Vfs::parse_url($share['resolve_url'],PHP_URL_SCHEME));
+		if($class && method_exists($class, 'init_static'))
 		{
-			// if current user is not the share owner, we cant just mount share
-			if (Vfs::$user != $share['share_owner'])
-			{
-				$keep_session = false;
-			}
-		}
-		if (!$keep_session)	// do NOT change to else, as we might have set $keep_session=false!
-		{
-			// only allow filemanager app & collabora
-			// In some cases, $GLOBALS['egw_info']['apps'] is not yet set at all.  Set it to app => true, it will be used
-			// in Session->read_repositories() to make sure we get access to these apps when the session loads the apps.
-			$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
-			$GLOBALS['egw_info']['user']['apps'] = array(
-					'filemanager' => $GLOBALS['egw_info']['apps']['filemanager'] || true,
-					'collabora' => $GLOBALS['egw_info']['apps']['collabora'] || $apps['collabora']
-			);
-
-			Vfs::$user = $share['share_owner'];
-
-			// Need to re-init stream wrapper, as some of them look at
-			// preferences or permissions
-			$scheme = Vfs\StreamWrapper::scheme2class(Vfs::parse_url($share['resolve_url'],PHP_URL_SCHEME));
-			if($scheme && method_exists($scheme, 'init_static'))
-			{
-				$scheme::init_static();
-			}
+			$class::init_static();
 		}
 
 		// mounting share
 		Vfs::$is_root = true;
-		$clear_fstab = !$keep_session && (!$GLOBALS['egw_info']['user']['account_lid'] || $GLOBALS['egw_info']['user']['account_lid'] == 'anonymous');
-		// if current user is not the share owner, we cant just mount share into existing VFS
-		if ($GLOBALS['egw_info']['user']['account_id'] != $share['share_owner'])
-		{
-			$clear_fstab = true;
-		}
-		if (!Vfs::mount($share['resolve_url'], $share['share_root'], false, false, $clear_fstab))
+		if (!Vfs::mount($share['resolve_url'], $share['share_root'], false, false, true))
 		{
 			sleep(1);
 			return static::share_fail(
@@ -154,6 +174,7 @@ class Sharing extends \EGroupware\Api\Sharing
 			);
 		}
 
+		/* ToDo: is this still needed and for what reason, as Vfs::mount() already supports session / non-persistent mounts
 		$session_fstab =& Api\Cache::getSession('api', 'fstab');
 		if(!$session_fstab)
 		{
@@ -163,8 +184,7 @@ class Sharing extends \EGroupware\Api\Sharing
 		{
 			Vfs::mount($info['mount'], $mount, false, false);
 		}
-		static::session_mount($share['share_root'], $share['resolve_url']);
-
+		static::session_mount($share['share_root'], $share['resolve_url']);*/
 
 		Vfs::$is_root = false;
 		Vfs::clearstatcache();
@@ -190,18 +210,22 @@ class Sharing extends \EGroupware\Api\Sharing
 		);
 	}
 
-	protected function after_login()
+	protected static function after_login($share)
 	{
 		// only allow filemanager app (gets overwritten by session::create)
 		$GLOBALS['egw_info']['user']['apps'] = array(
 			'filemanager' => $GLOBALS['egw_info']['apps']['filemanager']
 		);
 		// check if sharee has Collabora run rights --> give is to share too
-		$apps = $GLOBALS['egw']->acl->get_user_applications($this->share['share_owner']);
+		$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
 		if (!empty($apps['collabora']))
 		{
 			$GLOBALS['egw_info']['user']['apps']['collabora'] = $GLOBALS['egw_info']['apps']['collabora'];
 		}
+		// session::create also overwrites link-registry
+		Vfs::clearstatcache();
+		// clear link-cache and load link registry without permission check to access /apps
+		Api\Link::init_static(true);
 	}
 
 	/**
@@ -318,7 +342,7 @@ class Sharing extends \EGroupware\Api\Sharing
 		{
 			if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
 			{
-				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
+				$path = Vfs::PREFIX.Vfs::parse_url($path, PHP_URL_PATH);
 			}
 
 			// We don't allow sharing paths that contain links, resolve to target instead
@@ -335,7 +359,7 @@ class Sharing extends \EGroupware\Api\Sharing
 					$path = str_replace($check, $delinked, $path);
 					if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
 					{
-						$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
+						$path = Vfs::PREFIX.Vfs::parse_url($path, PHP_URL_PATH);
 					}
 					$check = $path;
 				}
@@ -350,8 +374,10 @@ class Sharing extends \EGroupware\Api\Sharing
 				// Make sure we get the correct path if sharing from a share
 				if(isset($GLOBALS['egw']->sharing) && $exists)
 				{
+					/* Why not use $stat['url']
 					$resolved_stat = Vfs::parse_url($stat['url']);
-					$path = 'vfs://default'. $resolved_stat['path'];
+					$path = 'vfs://default'. $resolved_stat['path'];*/
+					$path = $stat['url'];
 				}
 			}
 		}

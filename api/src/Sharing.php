@@ -95,16 +95,16 @@ class Sharing
 	 */
 	public static function get_token()
 	{
-    // WebDAV has no concept of a query string and clients (including cadaver)
-    // seem to pass '?' unencoded, so we need to extract the path info out
-    // of the request URI ourselves
-    // if request URI contains a full url, remove schema and domain
+		// WebDAV has no concept of a query string and clients (including cadaver)
+		// seem to pass '?' unencoded, so we need to extract the path info out
+		// of the request URI ourselves
+		// if request URI contains a full url, remove schema and domain
 		$matches = null;
-    if (preg_match('|^https?://[^/]+(/.*)$|', $path_info=$_SERVER['REQUEST_URI'], $matches))
-    {
-      $path_info = $matches[1];
-    }
-    $path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
+		if (preg_match('|^https?://[^/]+(/.*)$|', $path_info=$_SERVER['REQUEST_URI'], $matches))
+		{
+			$path_info = $matches[1];
+		}
+		$path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
 		list(, $token/*, $path*/) = preg_split('|[/?]|', $path_info, 3);
 
 		list($token) = explode(':', $token);
@@ -140,16 +140,20 @@ class Sharing
 	/**
 	 * Create sharing session
 	 *
-	 * Certain cases:
-	 * a) there is not session $keep_session === null
-	 *    --> create new anon session with just filemanager rights and share as fstab
-	 * b) there is a session $keep_session === true
-	 *  b1) current user is share owner (eg. checking the link)
-	 *      --> mount share under token additionally
-	 *  b2) current user not share owner
-	 *  b2a) need/use filemanager UI (eg. directory)
-	 *       --> destroy current session and continue with a)
-	 *  b2b) single file or WebDAV
+	 * There are two cases:
+	 *
+	 * 1) there is no session $keep_session === null
+	 *    --> create new anon session with just filemanager rights and resolved share incl. sharee as only fstab entry
+	 *
+	 * 2) there is a (non-anonymous) session $keep_session === true
+	 *    --> mount share with sharing stream-wrapper into users "shares" subdirectory of home directory
+	 *        and ask user if he wants the share permanently mounted there
+	 *
+	 * Even with sharing stream-wrapper a) and b) need to be different, as sharing SW needs an intact fstab!
+	 *
+	 * Not yet sure if this still needs extra handling:
+	 *
+	 * 2a) single file or WebDAV
 	 *       --> modify EGroupware enviroment for that request only, no change in session
 	 *
 	 * @param boolean $keep_session =null null: create a new session, true: try mounting it into existing (already verified) session
@@ -168,11 +172,22 @@ class Sharing
 		return '';
 	}
 
-	protected static function check_token($keep_session, &$share)
+	/**
+	 * Check sharing token
+	 *
+	 * @param boolean $keep_session false: does NOT check/fidle with session, true: return if session belongs to token
+	 * @param array& $share on return information about the share
+	 * @param ?string $token default call self::get_token() to get it from the URL
+	 * @param ?string $password default $_SERVER['PHP_AUTH_PW']
+	 * @throws Exception
+	 * @throws Exception\NoPermission
+	 * @throws Exception\NotFound
+	 */
+	public static function check_token($keep_session, &$share, $token=null, $password=null)
 	{
 		self::$db = $GLOBALS['egw']->db;
 
-		$token = static::get_token();
+		if (!isset($token)) $token = static::get_token();
 
 		// are we called from header include, because session did not verify
 		// --> check if it verifys for our token
@@ -203,7 +218,7 @@ class Sharing
 			);
 		}
 		// check password, if required
-		if(!static::check_password($share))
+		if(!static::check_password($share, $password))
 		{
 			$realm = 'EGroupware share '.$share['share_token'];
 			header('WWW-Authenticate: Basic realm="'.$realm.'"');
@@ -220,14 +235,17 @@ class Sharing
 	 * provided matches.
 	 *
 	 * @param Array $share
+	 * @param ?string $password default $_SERVER['PHP_AUTH_PW']
 	 * @return boolean Password OK (or not needed)
 	 */
-	protected static function check_password(Array $share)
+	protected static function check_password(Array $share, $password=null)
 	{
-		if ($share['share_passwd'] && (empty($_SERVER['PHP_AUTH_PW']) ||
-			!(Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt') ||
-				Header\Authenticate::decode_password($_SERVER['PHP_AUTH_PW']) &&
-					Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt'))))
+		if (!isset($password)) $password = $_SERVER['PHP_AUTH_PW'];
+
+		if ($share['share_passwd'] && (empty($password) ||
+			!(Auth::compare_password($password, $share['share_passwd'], 'crypt') ||
+				Header\Authenticate::decode_password($password) &&
+					Auth::compare_password($password, $share['share_passwd'], 'crypt'))))
 		{
 			return false;
 		}
@@ -246,7 +264,7 @@ class Sharing
 	 * Sub-class specific things needed to be done to the share (or session)
 	 * after we login but before we start actually doing anything
 	 */
-	protected function after_login() {}
+	protected static function after_login(array $share) {}
 
 
 	protected static function login($keep_session, &$share)
@@ -267,7 +285,7 @@ class Sharing
 		{
 			$sessionid = static::create_new_session();
 
-			$GLOBALS['egw']->sharing->after_login();
+			static::after_login($share);
 		}
 		// we have a session we want to keep, but share owner is different from current user and we dont need filemanager UI
 		// --> we dont need session and close it, to not modifiy it
@@ -275,8 +293,7 @@ class Sharing
 		{
 			$GLOBALS['egw']->session->commit_session();
 		}
-		// need to store new fstab and vfs_user in session to allow GET requests / downloads via WebDAV
-		$GLOBALS['egw_info']['user']['vfs_user'] = Vfs::$user;
+		// need to store new fstab in session to allow GET requests / downloads via WebDAV
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = Vfs::mount();
 
 		// update modified egw and egw_info again in session, if neccessary
@@ -369,7 +386,7 @@ class Sharing
 		$class = strpos($status, '404') === 0 ? 'EGroupware\Api\Exception\NotFound' :
 				strpos($status, '401') === 0 ? 'EGroupware\Api\Exception\NoPermission' :
 				'EGroupware\Api\Exception';
-		throw new $class($message);
+		throw new $class($message, $status);
 	}
 
 	/**
@@ -490,7 +507,7 @@ class Sharing
 	public function ServeRequest()
 	{
 		// sharing is for a different share, change to current share
-		if ($this->share['share_token'] !== self::get_token())
+		if (empty($this->share['skip_validate_token']) && $this->share['share_token'] !== self::get_token())
 		{
 			// to keep the session we require the regular user flag "N" AND a user-name not equal to "anonymous"
 			self::create_session($GLOBALS['egw']->session->session_flags === 'N' &&
@@ -499,14 +516,14 @@ class Sharing
 			return $GLOBALS['egw']->sharing->ServeRequest();
 		}
 
-		// No extended ACL for readonly shares, disable eacl by setting session cache
+		/* No extended ACL for readonly shares, disable eacl by setting session cache
 		if(!($this->share['share_writable'] & 1))
 		{
 			Cache::setSession(Vfs\Sqlfs\StreamWrapper::EACL_APPNAME, 'extended_acl', array(
 				'/' => 1,
 				$this->share['share_path'] => 1
 			));
-		}
+		}*/
 		if($this->use_collabora())
 		{
 			$ui = new \EGroupware\Collabora\Ui();

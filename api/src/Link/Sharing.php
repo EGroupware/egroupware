@@ -57,9 +57,9 @@ class Sharing extends \EGroupware\Api\Sharing
 	 * The anonymous user probably doesn't have the needed permissions to access
 	 * the record, so we should set that up to avoid permission errors
 	 */
-	protected function after_login()
+	protected static function after_login(array $share)
 	{
-		list($app) = explode('::', $this->share['share_path']);
+		list($app) = explode('::', $share['share_path']);
 
 		// allow app (gets overwritten by session::create)
 		$GLOBALS['egw_info']['flags']['currentapp'] = $app;

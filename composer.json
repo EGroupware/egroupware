@@ -49,12 +49,12 @@
 	],
 	"config": {
 		"platform": {
-			"php": "7.2"
+			"php": "7.3"
 		},
 		"sort-packages": true
 	},
 	"require": {
-		"php": ">=7.2,<=8.0.0alpha1",
+		"php": ">=7.3,<=8.0.0alpha1",
 		"ext-gd": "*",
 		"ext-json": "*",
 		"ext-mysqli": "*",
@@ -87,6 +87,8 @@
 		"egroupware/tracker": "self.version",
 		"egroupware/z-push-dev": "^2.5",
 		"fxp/composer-asset-plugin": "^1.2.2",
+		"egroupware/guzzlestream": "dev-master",
+		"egroupware/webdav": "dev-master",
 		"npm-asset/as-jqplot": "1.0.*",
 		"npm-asset/gridster": "0.5.*",
 		"oomphinc/composer-installers-extender": "^1.1",
