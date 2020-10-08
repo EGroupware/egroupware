@@ -527,8 +527,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 */
 	function stream_stat ( )
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($this->opened_path)");
-		error_log(__METHOD__."() opened_path=$this->opened_path, context=".json_encode(stream_context_get_options($this->context)));
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."() opened_path=$this->opened_path, context=".json_encode(stream_context_get_options($this->context)));
 
 		return $this->url_stat($this->opened_path,0);
 	}
