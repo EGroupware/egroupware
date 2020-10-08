@@ -480,5 +480,6 @@ var et2_htmlarea = /** @class */ (function (_super) {
     };
     return et2_htmlarea;
 }(et2_core_editableWidget_1.et2_editableWidget));
+exports.et2_htmlarea = et2_htmlarea;
 et2_core_widget_1.et2_register_widget(et2_htmlarea, ["htmlarea"]);
 //# sourceMappingURL=et2_widget_htmlarea.js.map
