@@ -23,7 +23,7 @@ import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
 /**
  * @augments et2_inputWidget
  */
-class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
+export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 {
 	static readonly _attributes : any = {
 		mode: {
