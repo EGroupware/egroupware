@@ -381,15 +381,24 @@ egwFnct.prototype.setValue = function(_value)
 	}
 
 	// egw application specific function
-	else if (typeof _value == "string" &&
-	         _value.substr(0,15) == "javaScript:app." && app)
+	else if (typeof _value === "string" &&
+	         _value.substr(0,15) === "javaScript:app." && app)
 	{
 		var parts = _value.split(".");
-		if(parts.length == 3 && typeof app[parts[1]] == "object" &&
-			typeof app[parts[1]][parts[2]] == "function")
-		{
-			this.fnct = app[parts[1]][parts[2]];
-			this.context = app[parts[1]];
+		var existing_func = parts.pop();
+		var parent = this.context.getManager().data.context || window.app;
+		for (var i = 1; i < parts.length; ++i) {
+			if (typeof parent[parts[i]] !== "undefined") {
+				parent = parent[parts[i]];
+			}
+			// Nope
+			else {
+				break;
+			}
+		}
+		if (typeof parent[existing_func] === "function") {
+			this.fnct = parent[existing_func];
+			this.context = parent;
 		}
 	}
 
