@@ -236,13 +236,14 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
         if (this._actionManager == null) {
             this._actionManager = gam.addAction("actionManager", uid);
         }
-        this._actionManager.updateActions(_actions, this.egw.appName);
         var data = this._actionManager.data;
         if (data == 'undefined' || !data) {
             data = {};
         }
         data.nextmatch = this._widget;
+        data.context = this._widget.getInstanceManager().app_obj;
         this._actionManager.set_data(data);
+        this._actionManager.updateActions(_actions, this.egw.appName);
         // Set the default execute handler
         var self = this;
         this._actionManager.setDefaultExecute(function (_action, _senders, _target) {
