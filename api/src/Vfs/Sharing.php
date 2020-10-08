@@ -222,6 +222,10 @@ class Sharing extends \EGroupware\Api\Sharing
 		{
 			$GLOBALS['egw_info']['user']['apps']['collabora'] = $GLOBALS['egw_info']['apps']['collabora'];
 		}
+		// session::create also overwrites link-registry
+		Vfs::clearstatcache();
+		// clear link-cache and load link registry without permission check to access /apps
+		Api\Link::init_static(true);
 	}
 
 	/**
