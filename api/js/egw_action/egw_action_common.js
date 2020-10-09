@@ -386,7 +386,8 @@ egwFnct.prototype.setValue = function(_value)
 	{
 		var parts = _value.split(".");
 		var existing_func = parts.pop();
-		var parent = this.context.getManager().data.context || window.app;
+		var manager = this.context && this.context.getManager ? this.context.getManager() : null;
+		var parent = (manager ? manager.data.context : null) || window.app;
 		for (var i = 1; i < parts.length; ++i) {
 			if (typeof parent[parts[i]] !== "undefined") {
 				parent = parent[parts[i]];
