@@ -21,7 +21,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 /**
  * @augments et2_valueWidget
  */
-class et2_html extends et2_valueWidget implements et2_IDetachedDOM
+export class et2_html extends et2_valueWidget implements et2_IDetachedDOM
 {
 	static readonly _attributes : any = {
 		'label': {

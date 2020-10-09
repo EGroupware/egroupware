@@ -112,5 +112,6 @@ var et2_html = /** @class */ (function (_super) {
     };
     return et2_html;
 }(et2_core_valueWidget_1.et2_valueWidget));
+exports.et2_html = et2_html;
 et2_core_widget_1.et2_register_widget(et2_html, ["html", "htmlarea_ro"]);
 //# sourceMappingURL=et2_widget_html.js.map
