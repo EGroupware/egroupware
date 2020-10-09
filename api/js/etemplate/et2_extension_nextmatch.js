@@ -527,6 +527,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 // This will remove the last row!
                 // That's OK, because grid adds one in this.controller.deleteRow()
                 this.dataview.grid.setTotalCount(total);
+                this.controller._selectionMgr.setTotalCount(total);
                 // Re-enable automatic updating
                 this.dataview.grid.doInvalidate = true;
                 this.dataview.grid.invalidate();
@@ -559,6 +560,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                         this.nm.controller.deleteRow(this.uid);
                         // Adjust total rows, clean grid
                         this.nm.controller._grid.setTotalCount(this.nm.controller._grid._total - _row_ids.length);
+                        this.controller._selectionMgr.setTotalCount(this.nm.controller._grid._total);
                     }
                 }, { type: _type, nm: this_1, uid: uid_1, prefix: this_1.controller.dataStorePrefix }, [_row_ids]);
                 return { value: void 0 };
@@ -622,6 +624,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         }
         // Update does not need to increase row count, but refresh_add() adds it in
         this.controller._grid.setTotalCount(this.controller._grid.getTotalCount() - 1);
+        this.controller._selectionMgr.setTotalCount(this.controller._grid.getTotalCount());
         return true;
     };
     /**
@@ -657,6 +660,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             //if(stored?.timestamp >= time) return;
             // Increase displayed row count or we lose the last row when we add and the total is wrong
             this.nm.controller._grid.setTotalCount(this.nm.controller._grid.getTotalCount() + 1);
+            this.nm.controller._selectionMgr.setTotalCount(this.nm.controller._grid.getTotalCount());
             // Insert at the top of the list, or where app said
             var entry = this.nm.controller._selectionMgr._getRegisteredRowsEntry(this.uid);
             entry.idx = typeof this.index == "number" ? this.index : 0;
@@ -667,6 +671,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             // Delete from internal references
             this.nm.controller.deleteRow(this.uid);
             this.nm.controller._grid.setTotalCount(this.nm.controller._grid.getTotalCount() - 1);
+            this.nm.controller._selectionMgr.setTotalCount(this.nm.controller._grid.getTotalCount());
         }
         this.nm.egw().dataUnregisterUID(this.uid, this.nm._push_add_callback, this);
     };

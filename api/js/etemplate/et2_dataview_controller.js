@@ -337,8 +337,13 @@ var et2_dataview_controller = /** @class */ (function () {
         if (createdRow && _entry.row) {
             this._grid.insertRow(_entry.idx, _entry.row);
         }
+        // Remove 'No matches found' row
+        var row = jQuery(".egwGridView_empty", this._grid.innerTbody).remove();
+        if (row.length) {
+            this._selectionMgr.unregisterRow("", 0);
+        }
         // Update index map only for push (autorefresh disabled)
-        if (this._indexMap[_entry.idx].uid !== _entry.uid) {
+        if (this._indexMap[_entry.idx] && this._indexMap[_entry.idx].uid !== _entry.uid) {
             var max = parseInt(Object.keys(this._indexMap).reduce(function (a, b) { return _this._indexMap[a] > _this._indexMap[b] ? a : b; }));
             for (var idx = max; idx >= _entry.idx; idx--) {
                 var entry = this._indexMap[idx];
@@ -348,8 +353,8 @@ var et2_dataview_controller = /** @class */ (function () {
                     this._selectionMgr._registeredRows[entry.uid].idx = entry.idx;
                 }
             }
-            this._indexMap[_entry.idx] = _entry;
         }
+        this._indexMap[_entry.idx] = _entry;
         return this.hasData;
     };
     /**
