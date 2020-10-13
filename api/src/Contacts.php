@@ -1233,6 +1233,19 @@ class Contacts extends Contacts\Storage
 			$access = ($grants[$owner] & $needed) &&
 				(!$contact['private'] || ($grants[$owner] & Acl::PRIVAT) || in_array($owner,$memberships));
 		}
+		// check if we might have access via sharing (not for delete)
+		if ($access === false && !empty($contact['shared']) && $needed != Acl::DELETE)
+		{
+			foreach($contact['shared'] as $shared)
+			{
+				if (isset($grants[$shared['shared_with']]) && ($shared['shared_writable'] || !($needed & Acl::EDIT)))
+				{
+					$access = true;
+					error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user) shared=".json_encode($shared)." returning ".array2string($access));
+					break;
+				}
+			}
+		}
 		//error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user) returning ".array2string($access));
 		return $access;
 	}

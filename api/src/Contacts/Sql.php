@@ -62,6 +62,8 @@ class Sql extends Api\Storage
 	const EXTRA_TABLE = 'egw_addressbook_extra';
 	const EXTRA_VALUE = 'contact_value';
 
+	const SHARED_TABLE = 'egw_addressbook_shared';
+
 	/**
 	 * Constructor
 	 *
@@ -497,6 +499,11 @@ class Sql extends Api\Storage
 			unset($filter['cat_id']);
 		}
 
+		// SQL to get all shared contacts to be OR-ed into ACL filter
+		// ToDo: do we need a sharing filter for $ignore_acl
+		$shared_sql = 'contact_id IN (SELECT contact_id FROM '.self::SHARED_TABLE.' WHERE '.
+			$this->db->expression(self::SHARED_TABLE, ['shared_with' => $filter['owner'] ?? array_keys($this->grants)]).')';
+
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
 		if (isset($this->grants) && !$ignore_acl &&
 			!(isset($filter['owner']) && $filter['owner'] == $GLOBALS['egw_info']['user']['account_id']))
@@ -524,18 +531,21 @@ class Sql extends Api\Storage
 				if (!array_intersect((array)$filter['owner'],array_keys($this->grants)))
 				{
 					if (!isset($groupmember_sql)) return false;
-					$filter[] = substr($groupmember_sql,4);
+					$filter[] = '('.substr($groupmember_sql,4)." OR $shared_sql)";
 					unset($filter['owner']);
 				}
 				// for an owner filter, which does NOT include current user, filter out private entries
 				elseif (!in_array($GLOBALS['egw_info']['user']['account_id'], (array)$filter['owner']))
 				{
-					$filter['private'] = 0;
+					$filter[] = '('.$this->db->expression($this->table_name, $this->table_name.'.', ['contact_owner' => $filter['owner'], 'contact_private' => 0]).
+						" OR $shared_sql)";
+					unset($filter['owner']);
 				}
 				// if multiple addressbooks (incl. current owner) are searched, we need full acl filter
 				elseif(is_array($filter['owner']) && count($filter['owner']) > 1)
 				{
 					$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+						" OR $shared_sql".
 						" OR contact_private=0 AND $this->table_name.contact_owner IN (".
 						implode(',',array_keys($this->grants)).") $groupmember_sql OR $this->table_name.contact_owner IS NULL)";
 				}
@@ -547,6 +557,7 @@ class Sql extends Api\Storage
 					$filter[] = $this->table_name.'.contact_owner != 0';	// in case there have been accounts in sql previously
 				}
 				$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+					" OR $shared_sql".
 					($this->grants ? " OR contact_private=0 AND $this->table_name.contact_owner IN (".
 						implode(',',array_keys($this->grants)).")" : '').
 					$groupmember_sql." OR $this->table_name.contact_owner IS NULL)";
@@ -1009,7 +1020,60 @@ class Sql extends Api\Storage
 				|| strlen($contact['uid']) < $minimum_uid_length)) {
 			parent::update(array('uid' => Api\CalDAV::generate_uid('addressbook',$contact['id'])));
 		}
+		if (is_array($contact))
+		{
+			$contact['shared'] = $this->read_shared($contact['id']);
+		}
 		return $contact;
+	}
+
+	/**
+	 * Read sharing information of a contact
+	 *
+	 * @param int $id contact_id to read
+	 * @return array of array with values for keys "shared_(with|writable|by|at|id)"
+	 */
+	function read_shared($id)
+	{
+		$shared = [];
+		foreach($this->db->select(self::SHARED_TABLE, '*', ['contact_id' => $id],
+			__LINE__, __FILE__, false) as $row)
+		{
+			$row['shared_at'] = Api\DateTime::server2user($row['shared_at'], 'object');
+			$shared[] = $row;
+		}
+		return $shared;
+	}
+
+	/**
+	 * @param int $id
+	 * @param array $shared array of array with values for keys "shared_(with|writable|by|at|id)"
+	 * @return array of array with values for keys "shared_(with|writable|by|at|id)"
+	 */
+	function save_shared($id, array $shared)
+	{
+		$ids = [];
+		foreach($shared as &$data)
+		{
+			if (empty($data['shared_id']))
+			{
+				unset($data['shared_id']);
+				$data['contact_id'] = $id;
+				$data['shared_at'] = Api\DateTime::user2server($data['shared_at'] ?: 'now');
+				$data['shared_by'] = $data['shared_by'] ?: $GLOBALS['egw_info']['user']['account_id'];
+				$this->db->insert(self::SHARED_TABLE, $data, false, __LINE__, __FILE__);
+				$data['shared_id'] = $this->db->get_last_insert_id(self::SHARED_TABLE, 'share_id');
+			}
+			$ids[] = (int)$data['shared_id'];
+		}
+		$delete = ['contact_id' => $id];
+		if ($ids) $delete[] = 'shared_id NOT IN ('.implode(',', $ids).')';
+		$this->db->delete(self::SHARED_TABLE, $delete, __LINE__, __FILE__);
+		foreach($shared as &$data)
+		{
+			$data['shared_at'] = Api\DateTime::server2user($data['shared_at'], 'object');
+		}
+		return $shared;
 	}
 
 	/**
@@ -1094,6 +1158,11 @@ class Sql extends Api\Storage
 		if (!$err && $update)
 		{
 			parent::update($update);
+		}
+		// save sharing information
+		if (!$err)
+		{
+			$this->data['shared'] = $this->save_shared($this->data['id'], (array)$this->data['shared']);
 		}
 		return $err;
 	}

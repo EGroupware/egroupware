@@ -8,6 +8,7 @@
 %1 public keys added.	addressbook	en	%1 public keys added.
 %1 records imported	addressbook	en	%1 records imported.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	en	%1 records read. Not yet imported, you may go %2back%3 and un-check Test import.
+%1 shared this contact on %2 with %3 %4	addressbook	en	%1 shared this contact on %2 with %3 %4
 %1 starts with '%2'	addressbook	en	%1 starts with '%2'
 %s please calculate the result	addressbook	en	%s please calculate the result
 (e.g. 1969)	addressbook	en	(e.g. 1969)
@@ -454,6 +455,7 @@ send succeeded to %1	common	en	Send succeeded to %1
 seperator	addressbook	en	Separator
 set full name and file as field in contacts of all users (either all or only empty values)	admin	en	Set full name and 'fileas' field in contacts of all users. Either all or only empty values.
 set only full name	addressbook	en	Set only full name
+shared with	addressbook	en	Shared with
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	en	Are photo and home address always displayed, even if columns are empty.
 show	addressbook	en	Show
 show active accounts	addressbook	en	Show active accounts
