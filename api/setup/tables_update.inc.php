@@ -728,3 +728,28 @@ function api_upgrade19_1_004()
 {
 	return $GLOBALS['setup_info']['api']['currentver'] = '20.1';
 }
+
+/**
+ * Table for per-contact sharing
+ *
+ * @return string
+ */
+function api_upgrade20_1()
+{
+	$GLOBALS['egw_setup']->oProc->CreateTable('egw_addressbook_shared',array(
+		'fd' => array(
+			'shared_id' => array('type' => 'auto','nullable' => False),
+			'contact_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'shared_with' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False),
+			'shared_by' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False),
+			'shared_at' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
+			'shared_writable' => array('type' => 'bool','nullable' => False,'default' => '0')
+		),
+		'pk' => array('shared_id'),
+		'fk' => array(),
+		'ix' => array('contact_id','shared_with'),
+		'uc' => array()
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '20.1.001';
+}
