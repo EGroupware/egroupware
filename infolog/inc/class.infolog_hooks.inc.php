@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Hooks;
 use EGroupware\Api\Link;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
@@ -72,9 +73,39 @@ class infolog_hooks
 			),
 			'edit_id'    => 'info_id',
 			'edit_popup'  => '760x570',
+			'notify' => self::class.'::link_notify',
 			'merge' => true,
 			'push_data'  => self::class.'::prepareEventPush'
 		);
+	}
+
+	/**
+	 * Get notified about changes to linked entries
+	 *
+	 *  'type'       => $type,
+	 *  'id'         => $notify_id,
+	 *	'target_app' => $target_app,
+	 *	'target_id'  => $target_id,
+	 *	'link_id'    => $link_id,
+	 *	'data'       => $data,
+	 */
+	static public function link_notify($data)
+	{
+		switch($data['target_app'])
+		{
+			case 'timesheet':
+				// Something changed with a timesheet linked to an infolog.  Trigger update in place to update times.
+				$bo = new infolog_bo();
+				$push_data = $bo->read($data['id']);
+				Hooks::process([
+						'location' => 'notify-all',
+						'type'     => 'update-in-place',
+						'app'      => 'infolog',
+						'id'       => $data['id'],
+						'data'     => $push_data,
+				], null, true);
+				break;
+		}
 	}
 
 	/**
