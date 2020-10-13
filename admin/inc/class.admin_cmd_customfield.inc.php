@@ -89,7 +89,7 @@ class admin_cmd_customfield extends admin_cmd
 		unset($old['modified'], $old['modifier'], $old['tab']);
 		foreach($set as $key => $value)
 		{
-			if(array_key_exists($key, $old) && $old[$key] == $value)
+			if(is_array($old) && array_key_exists($key, $old) && $old[$key] == $value)
 			{
 				// Need to keep these 2 in set so we can tell if it was deleted
 				if(!in_array($key, array('id','name')))

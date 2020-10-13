@@ -332,7 +332,7 @@ class Customfields extends Transformer
 				);
 				foreach($defaults as $f => $d_value)
 				{
-					$widget->attrs[$f] = array_key_exists($f, $field['values']) ? $field['values'][$f] : $d_value;
+					$widget->attrs[$f] = is_array($field['values']) && array_key_exists($f, $field['values']) ? $field['values'][$f] : $d_value;
 				}
 				break;
 
