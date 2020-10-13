@@ -608,7 +608,7 @@ class Storage
 			$contact_id = array('account_id' => (int) substr($contact_id,8));
 		}
 		// read main data
-		$backend =& $this->get_backend($contact_id);
+		$backend = $this->get_backend($contact_id);
 		if (!($contact = $backend->read($contact_id)))
 		{
 			return $contact;

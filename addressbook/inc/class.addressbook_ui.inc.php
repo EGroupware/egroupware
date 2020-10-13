@@ -2070,6 +2070,30 @@ class addressbook_ui extends addressbook_bo
 	{
 		if (is_array($content))
 		{
+			// sync $content['shared'] with $content['shared_values']
+			foreach($content['shared'] as $key => $shared)
+			{
+				$shared_value = $shared['shared_id'].':'.$shared['shared_with'].':'.$shared['shared_by'].':'.$shared['shared_writable'];
+				if (($k = array_search($shared_value, $content['shared_values'])) === false)
+				{
+					unset($content['shared'][$key]);
+				}
+				else
+				{
+					unset($content['shared_values'][$k]);
+				}
+			}
+			foreach($content['shared_values'] as $account_id)
+			{
+				$content['shared'][] = [
+					'shared_with' => $account_id,
+					'shared_by' => $this->user,
+					'shared_at' => new Api\DateTime(),
+					'shared_writable' => (int)(bool)$content['shared_writable'],
+				];
+			}
+			unset($content['shared_values']);
+
 			$button = @key($content['button']);
 			unset($content['button']);
 			$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
@@ -2403,6 +2427,20 @@ class addressbook_ui extends addressbook_bo
 				}
 			}
 		}
+		// set $content[shared_options/_values] from $content[shared]
+		$content['shared_options'] = [];
+		foreach((array)$content['shared'] as $shared)
+		{
+			$content['shared_options'][$shared['shared_id'].':'.$shared['shared_with'].':'.$shared['shared_by'].':'.$shared['shared_writable']] = [
+				'label' => Accounts::username($shared['shared_with']),
+				'title' => lang('%1 shared this contact on %2 with %3 %4',
+					Accounts::username($shared['shared_by']), Api\DateTime::to($shared['shared_at']),
+					Accounts::username($shared['shared_with']), $shared['shared_writable'] ? lang('writable') : lang('readonly')),
+				'icon' => $shared['shared_writable'] ? 'edit' : 'view',
+			];
+		}
+		$content['shared_values'] = array_keys($content['shared_options']);
+
 		if ($content['id'])
 		{
 			// last and next calendar date
