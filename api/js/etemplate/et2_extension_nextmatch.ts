@@ -777,6 +777,16 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			return;
 		}
 
+		// Clean IDs in case they're UIDs with app prefixed
+		_row_ids = _row_ids.map( function(id) {
+			if( id.toString().indexOf(this.controller.dataStorePrefix) == -1)
+			{
+				return id;
+			}
+			let parts = id.split("::");
+			parts.shift();
+			return parts.join("::");
+		}.bind(this));
 		if(_type == et2_nextmatch.DELETE)
 		{
 			// Record current & next index
@@ -862,7 +872,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 							// Adjust total rows, clean grid
 							this.nm.controller._grid.setTotalCount(this.nm.controller._grid._total- _row_ids.length);
-							this.controller._selectionMgr.setTotalCount(this.nm.controller._grid._total);
+							this.nm.controller._selectionMgr.setTotalCount(this.nm.controller._grid._total);
 						}
 					}, {type: _type, nm: this, uid: uid, prefix: this.controller.dataStorePrefix}, [_row_ids]
 				);
