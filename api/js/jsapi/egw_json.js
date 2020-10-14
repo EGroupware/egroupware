@@ -107,11 +107,25 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	{
 		const min_reconnect_time = 1000;
 		const max_reconnect_time = 300000;
+		const check_interval = 30000;	// 30 sec
+		const max_ping_response_time = 1000;
 		let reconnect_time = reconnect || min_reconnect_time;
+		let check_timer;
+		let check = function()
+		{
+			this.websocket.send('ping');
+			check_timer = window.setTimeout(function()
+			{
+				console.log("Server did not respond to ping in "+max_ping_response_time+" seconds --> try reconnecting");
+				check_timer = null;
+				this.openWebSocket(url, tokens, account_id, error, reconnect_time);
+			}, max_ping_response_time);
+		}.bind(this);
 
 		this.websocket = new WebSocket(url);
 		this.websocket.onopen = jQuery.proxy(function(e)
 		{
+			check_timer = window.setTimeout(check, check_interval);
 			this.websocket.send(JSON.stringify({
 				subscribe: tokens,
 				account_id: parseInt(account_id)
@@ -122,6 +136,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		{
 			reconnect_time = min_reconnect_time;
 			console.log(event);
+			if (check_timer) window.clearTimeout(check_timer);
+			check_timer = window.setTimeout(check, check_interval);
+			if (event.data === 'pong') return;	// just a keepalive message
 			let data = JSON.parse(event.data);
 			if (data && data.type)
 			{
@@ -153,6 +170,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				// e.g. server process killed or network down
 				// event.code is usually 1006 in this case
 				console.log('[close] Connection died --> reconnect in '+reconnect_time+'ms');
+				if (check_timer) window.clearTimeout(check_timer);
+				check_timer = null;
 				window.setTimeout(jQuery.proxy(this.openWebSocket, this, url, tokens, account_id, error, reconnect_time), reconnect_time);
 			}
 		}, this);
