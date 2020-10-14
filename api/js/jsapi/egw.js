@@ -130,10 +130,11 @@
 			// ignore SecurityError exception if top is different security context / cross-origin
 		}
 		// if framework not found, but requested to check for it, redirect to cd=yes to create it
-		if (typeof window.framework == 'undefined' && egw_script.getAttribute('data-check-framework') &&
+		if (typeof window.framework == 'undefined' &&
 			!window.location.search.match(/[&?]cd=/))
 		{
-			window.location.search += window.location.search ? "&cd=yes" : "?cd=yes";
+			window.location.search += (window.location.search ? "&" : "?")+
+				(egw_script.getAttribute('data-check-framework') ? "cd=yes" : "cd=popup");
 		}
 	}
 	try {
