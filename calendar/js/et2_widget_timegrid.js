@@ -510,20 +510,34 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      * Update the 'now' line
      * @private
      */
+    // @ts-ignore
     et2_calendar_timegrid.prototype._updateNow = function () {
         var now = _super.prototype._updateNow.call(this);
-        if (now === false || this.options.granularity == 0) {
+        if (now === false || this.options.granularity == 0 || !this.div.is(':visible')) {
             this.now_div.hide();
             return false;
         }
+        // Position & show line
+        var set_line = function (line, now, day) {
+            line.appendTo(day.getDOMNode()).show();
+            var pos = day._time_to_position(now.getUTCHours() * 60 + now.getUTCMinutes());
+            //this.now_div.position({my: 'left', at: 'left', of: day.getDOMNode()});
+            line.css('top', pos + '%');
+        };
+        // Showing just 1 day, multiple owners - span all
+        if (this.daily_owner && this.day_list.length == 1) {
+            var day = this.day_widgets[0];
+            set_line(this.now_div, now, day);
+            this.now_div.css('width', (this.day_widgets.length * 100) + '%');
+            return true;
+        }
+        // Find the day of the week
         for (var i = 0; i < this.day_widgets.length; i++) {
             var day = this.day_widgets[i];
             if (day.getDate() >= now) {
                 day = this.day_widgets[i - 1];
-                this.now_div.appendTo(day.getDOMNode()).show();
-                var pos = day._time_to_position(now.getUTCHours() * 60 + now.getUTCMinutes());
-                //this.now_div.position({my: 'left', at: 'left', of: day.getDOMNode()});
-                this.now_div.css('top', pos + '%');
+                set_line(this.now_div, now, day);
+                this.now_div.css('width', '100%');
                 break;
             }
         }

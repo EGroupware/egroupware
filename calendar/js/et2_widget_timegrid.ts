@@ -699,24 +699,43 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	 * Update the 'now' line
 	 * @private
 	 */
+	// @ts-ignore
 	public _updateNow()
 	{
 		let now = super._updateNow();
-		if(now === false || this.options.granularity == 0)
+		if(now === false || this.options.granularity == 0 || !this.div.is(':visible'))
 		{
 			this.now_div.hide();
 			return false;
 		}
+
+		// Position & show line
+		let set_line = function(line, now, day)
+		{
+			line.appendTo(day.getDOMNode()).show();
+			let pos = day._time_to_position(now.getUTCHours() * 60 + now.getUTCMinutes());
+			//this.now_div.position({my: 'left', at: 'left', of: day.getDOMNode()});
+			line.css('top', pos + '%');
+		}
+
+		// Showing just 1 day, multiple owners - span all
+		if(this.daily_owner && this.day_list.length == 1)
+		{
+			let day = this.day_widgets[0];
+			set_line(this.now_div, now, day);
+			this.now_div.css('width', (this.day_widgets.length * 100) + '%');
+			return true;
+		}
+
+		// Find the day of the week
 		for(var i = 0; i < this.day_widgets.length; i++)
 		{
 			let day = this.day_widgets[i];
 			if(day.getDate() >= now)
 			{
 				day = this.day_widgets[i-1];
-				this.now_div.appendTo(day.getDOMNode()).show();
-				let pos = day._time_to_position(now.getUTCHours() * 60 + now.getUTCMinutes());
-				//this.now_div.position({my: 'left', at: 'left', of: day.getDOMNode()});
-				this.now_div.css('top', pos + '%');
+				set_line(this.now_div, now, day);
+				this.now_div.css('width','100%');
 				break;
 			}
 		}
