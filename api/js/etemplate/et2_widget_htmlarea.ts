@@ -105,7 +105,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 	public static readonly TOOLBAR_LIST : string[] = ['undo', 'redo', 'formatselect', 'fontselect', 'fontsizeselect',
 		'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor', 'link',
 		'alignleft', 'aligncenter', 'alignright', 'alignjustify', 'numlist',
-		'bullist', 'outdent', 'indent', 'ltr', 'rtl', 'removeformat', 'code', 'image', 'searchreplace', 'fullscreen'
+		'bullist', 'outdent', 'indent', 'ltr', 'rtl', 'removeformat', 'code', 'image', 'searchreplace', 'fullscreen', 'table'
 	];
 
 	/**

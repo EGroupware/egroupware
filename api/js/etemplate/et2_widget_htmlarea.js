@@ -442,7 +442,7 @@ var et2_htmlarea = /** @class */ (function (_super) {
     et2_htmlarea.TOOLBAR_LIST = ['undo', 'redo', 'formatselect', 'fontselect', 'fontsizeselect',
         'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor', 'link',
         'alignleft', 'aligncenter', 'alignright', 'alignjustify', 'numlist',
-        'bullist', 'outdent', 'indent', 'ltr', 'rtl', 'removeformat', 'code', 'image', 'searchreplace', 'fullscreen'
+        'bullist', 'outdent', 'indent', 'ltr', 'rtl', 'removeformat', 'code', 'image', 'searchreplace', 'fullscreen', 'table'
     ];
     /**
      * arranged toolbars as simple mode
