@@ -1095,6 +1095,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			return false;
 		}
 		this.now_div.appendTo(this.grid)
+		    .show()
 		    .css('left', row._time_to_position(now) + '%');
 	}
 
