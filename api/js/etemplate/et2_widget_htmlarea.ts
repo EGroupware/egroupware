@@ -89,6 +89,12 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			'description': 'Comma separated string of toolbar actions. It will only be considered if no Mode is restricted.',
 			'default': '',
 			'type': 'string'
+		},
+		toolbar_mode: {
+			'name': 'toolbar mode',
+			'type': 'string',
+			'default': 'floating',
+			'description': 'It allows to extend the toolbar to accommodate the overflowing toolbar buttons. {floating, sliding, scrolling, wrap}'
 		}
 	};
 
@@ -213,6 +219,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			body_id: this.dom_id + '_htmlarea',
 			menubar: false,
 			statusbar: this.options.statusbar,
+			toolbar_mode: this.options.toolbar_mode,
 			branding: false,
 			resize: false,
 			height: this.options.height,

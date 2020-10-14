@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a700a309b5c1bc30c563ccb2526e7e2",
+    "content-hash": "91f834dc9df2ff546ce040d72ddf9318",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1084,7 +1084,7 @@
             ],
             "description": "Compiled version of magicsuggest customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/magicsuggest",
-            "time": "2018-06-21T10:14:03+00:00"
+            "time": "2018-06-21T13:36:37+00:00"
         },
         {
             "name": "egroupware/news_admin",
@@ -7818,16 +7818,16 @@
         },
         {
             "name": "tinymce/tinymce",
-            "version": "5.0.7",
+            "version": "5.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "0ae953e05a2d2bfdf4a35a9ad8eaf6df0f875393"
+                "reference": "a436d254bc8d62e50be1fdb3d3e98981ab0e4c40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/0ae953e05a2d2bfdf4a35a9ad8eaf6df0f875393",
-                "reference": "0ae953e05a2d2bfdf4a35a9ad8eaf6df0f875393",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/a436d254bc8d62e50be1fdb3d3e98981ab0e4c40",
+                "reference": "a436d254bc8d62e50be1fdb3d3e98981ab0e4c40",
                 "shasum": ""
             },
             "type": "component",
@@ -7836,13 +7836,15 @@
                     "scripts": [
                         "tinymce.js",
                         "plugins/*/plugin.js",
-                        "themes/*/theme.js"
+                        "themes/*/theme.js",
+                        "themes/*/icons.js"
                     ],
                     "files": [
                         "tinymce.min.js",
                         "plugins/*/plugin.min.js",
                         "themes/*/theme.min.js",
-                        "skins/**"
+                        "skins/**",
+                        "icons/*/icons.min.js"
                     ]
                 }
             },
@@ -7860,7 +7862,7 @@
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2019-06-05T06:30:54+00:00"
+            "time": "2020-10-01T05:31:22+00:00"
         },
         {
             "name": "twig/extensions",
@@ -7915,6 +7917,7 @@
                 "i18n",
                 "text"
             ],
+            "abandoned": true,
             "time": "2018-12-05T18:34:18+00:00"
         },
         {
