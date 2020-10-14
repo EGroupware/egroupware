@@ -1174,7 +1174,7 @@ abstract class Merge
 					// Clean HTML, if it's being kept
 					if($replace_tags && extension_loaded('tidy')) {
 						$tidy = new tidy();
-						$cleaned = $tidy->repairString($value, self::$tidy_config);
+						$cleaned = $tidy->repairString($value, self::$tidy_config, 'utf8');
 						// Found errors. Strip it all so there's some output
 						if($tidy->getStatus() == 2)
 						{
@@ -1205,7 +1205,7 @@ abstract class Merge
 				}
 				// replace all control chars (C0+C1) but CR (\015), LF (\012) and TAB (\011) (eg. vertical tabulators) with space
 				// as they are not allowed in xml
-				$value = preg_replace('/[\000-\010\013\014\016-\037\177-\237]/u',' ',$value);
+				$value = preg_replace('/[\000-\010\013\014\016-\037\177-\237\x{FFF0}-\x{FFFD}]/u',' ',$value);
 				if(is_numeric($value) && $name != '$$user/account_id$$') // account_id causes problems with the preg_replace below
 				{
 					$names[] = preg_quote($name,'/');
