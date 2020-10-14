@@ -2114,8 +2114,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
                             }
                             // Use CSS to hide all but the requested rows
                             // Prevents us from showing more than requested, if actual height was less than average
-                            nm_1.print_row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
-                            egw.css(nm_1.print_row_selector, 'display: none');
+                            nm_1.print.row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
+                            egw.css(nm_1.print.row_selector, 'display: none');
                             // No scrollbar in print view
                             jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', 'hidden');
                             // Show it all
@@ -2138,8 +2138,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
                 jQuery('.egwGridView_scrollarea', this.div).css('height', 'auto');
                 // Use CSS to hide all but the requested rows
                 // Prevents us from showing more than requested, if actual height was less than average
-                this.print_row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
-                egw.css(this.print_row_selector, 'display: none');
+                this.print.row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
+                egw.css(this.print.row_selector, 'display: none');
                 // No scrollbar in print view
                 jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', 'hidden');
                 // Give dialog a chance to close, or it will be in the print
