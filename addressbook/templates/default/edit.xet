@@ -145,7 +145,7 @@
 				</row>
 				<row>
 					<description for="shared" value="Shared with"/>
-					<taglist-account id="shared_values" multiple="true" select_options="@shared_options" span="4"/>
+					<taglist-account account_type="both" id="shared_values" multiple="true" select_options="@shared_options" span="4"/>
 					<checkbox id="shared_writable" label="writable" statustext="Create new shares writable"/>
 				</row>
 			</rows>
