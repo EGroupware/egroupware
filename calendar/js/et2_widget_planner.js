@@ -852,6 +852,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             return false;
         }
         this.now_div.appendTo(this.grid)
+            .show()
             .css('left', row._time_to_position(now) + '%');
     };
     /**
