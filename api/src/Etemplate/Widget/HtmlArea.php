@@ -86,7 +86,7 @@ class HtmlArea extends Etemplate\Widget
 		'undo', 'redo', 'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor',
 		'link', 'alignleft', 'aligncenter', 'alignright', 'alignjustify',
 		'numlist', 'bullist', 'outdent', 'indent', 'ltr', 'rtl','pastetext',
-		'removeformat', 'code', 'image', 'searchreplace','formatselect', 'fontselect', 'fontsizeselect', 'fullscreen'
+		'removeformat', 'code', 'image', 'searchreplace','formatselect', 'fontselect', 'fontsizeselect', 'fullscreen', 'table'
 	];
 
 	/**
@@ -97,7 +97,7 @@ class HtmlArea extends Etemplate\Widget
 		'undo', 'redo','formatselect', 'fontselect', 'fontsizeselect',
 		'bold' ,'italic', 'removeformat', 'forecolor', 'backcolor', 'alignleft',
 		'aligncenter', 'alignright', 'alignjustify', 'numlist', 'bullist', 'outdent',
-		'indent', 'link', 'image', 'pastetext'
+		'indent', 'link', 'image', 'pastetext', 'table'
 	];
 
 	/**
