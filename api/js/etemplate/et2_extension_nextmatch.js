@@ -500,6 +500,15 @@ var et2_nextmatch = /** @class */ (function (_super) {
             jQuery(this).triggerHandler("refresh", [this]);
             return;
         }
+        // Clean IDs in case they're UIDs with app prefixed
+        _row_ids = _row_ids.map(function (id) {
+            if (id.toString().indexOf(this.controller.dataStorePrefix) == -1) {
+                return id;
+            }
+            var parts = id.split("::");
+            parts.shift();
+            return parts.join("::");
+        }.bind(this));
         if (_type == et2_nextmatch.DELETE) {
             // Record current & next index
             var uid = _row_ids[0].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[0] : this.controller.dataStorePrefix + "::" + _row_ids[0];
@@ -560,7 +569,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                         this.nm.controller.deleteRow(this.uid);
                         // Adjust total rows, clean grid
                         this.nm.controller._grid.setTotalCount(this.nm.controller._grid._total - _row_ids.length);
-                        this.controller._selectionMgr.setTotalCount(this.nm.controller._grid._total);
+                        this.nm.controller._selectionMgr.setTotalCount(this.nm.controller._grid._total);
                     }
                 }, { type: _type, nm: this_1, uid: uid_1, prefix: this_1.controller.dataStorePrefix }, [_row_ids]);
                 return { value: void 0 };
