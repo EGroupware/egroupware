@@ -105,7 +105,7 @@
 		"pear/xml_feed_parser": "^1.0.5",
 		"pragmarx/google2fa-qrcode": "^1.0",
 		"simplesamlphp/simplesamlphp": "^1.18",
-		"tinymce/tinymce": "^5.0"
+		"tinymce/tinymce": "^5"
 	},
 	"require-dev": {
 		"guzzlehttp/guzzle": "^6.5",

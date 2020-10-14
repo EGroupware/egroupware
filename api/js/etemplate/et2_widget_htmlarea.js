@@ -88,6 +88,7 @@ var et2_htmlarea = /** @class */ (function (_super) {
             body_id: this.dom_id + '_htmlarea',
             menubar: false,
             statusbar: this.options.statusbar,
+            toolbar_mode: this.options.toolbar_mode,
             branding: false,
             resize: false,
             height: this.options.height,
@@ -426,6 +427,12 @@ var et2_htmlarea = /** @class */ (function (_super) {
             'description': 'Comma separated string of toolbar actions. It will only be considered if no Mode is restricted.',
             'default': '',
             'type': 'string'
+        },
+        toolbar_mode: {
+            'name': 'toolbar mode',
+            'type': 'string',
+            'default': 'floating',
+            'description': 'It allows to extend the toolbar to accommodate the overflowing toolbar buttons. {floating, sliding, scrolling, wrap}'
         }
     };
     /**
