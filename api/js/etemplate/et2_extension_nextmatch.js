@@ -2196,6 +2196,9 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * in beforePrint()
      */
     et2_nextmatch.prototype.afterPrint = function () {
+        if (!this.div.hasClass('print')) {
+            return;
+        }
         this.div.removeClass('print landscape portrait');
         jQuery(this.print.orientation_style).remove();
         delete this.print.orientation_style;

@@ -2920,7 +2920,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	afterPrint( )
 	{
-
+		if(!this.div.hasClass('print'))
+		{
+			return;
+		}
 		this.div.removeClass('print landscape portrait');
 		jQuery(this.print.orientation_style).remove();
 		delete this.print.orientation_style;
