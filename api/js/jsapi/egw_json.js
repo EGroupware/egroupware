@@ -118,6 +118,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			{
 				console.log("Server did not respond to ping in "+max_ping_response_time+" seconds --> try reconnecting");
 				check_timer = null;
+				this.websocket.close();	// closing it now, before reopening it, to not end up with multiple connections
 				this.openWebSocket(url, tokens, account_id, error, reconnect_time);
 			}.bind(this), max_ping_response_time);
 		}.bind(this);
