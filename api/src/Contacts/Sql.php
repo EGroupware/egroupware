@@ -505,8 +505,7 @@ class Sql extends Api\Storage
 			$this->db->expression(self::SHARED_TABLE, ['shared_with' => $filter['owner'] ?? array_keys($this->grants)]).')';
 
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
-		if (isset($this->grants) && !$ignore_acl &&
-			!(isset($filter['owner']) && $filter['owner'] == $GLOBALS['egw_info']['user']['account_id']))
+		if (isset($this->grants) && !$ignore_acl)
 		{
 			// add read ACL for groupmembers (they have no
 			if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
@@ -548,6 +547,12 @@ class Sql extends Api\Storage
 						" OR $shared_sql".
 						" OR contact_private=0 AND $this->table_name.contact_owner IN (".
 						implode(',',array_keys($this->grants)).") $groupmember_sql OR $this->table_name.contact_owner IS NULL)";
+				}
+				else
+				{
+					$filter[] = '('.$this->db->expression($this->table_name, $this->table_name.'.', ['contact_owner' => $filter['owner']]).
+						" OR $shared_sql)";
+					unset($filter['owner']);
 				}
 			}
 			else	// search all addressbooks, incl. accounts
