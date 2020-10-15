@@ -752,7 +752,7 @@ var et2_selectbox = /** @class */ (function (_super) {
             this.input.trigger("liszt:updated");
         }
         // Sometimes value gets set before options
-        if (this.value || this.options.empty_label || this.value === '' && this.input && this.input.children('[value=""]').length === 1) {
+        if (this.value || (this.options.empty_label && !this.options.multiple) || this.value === '' && this.input && this.input.children('[value=""]').length === 1) {
             this.set_value(this.value, true); // true = dont try to set_options, to avoid an infinit recursion
         }
         else if (this.value === null && this.options.value) {
@@ -761,18 +761,17 @@ var et2_selectbox = /** @class */ (function (_super) {
         }
     };
     et2_selectbox.prototype.getValue = function () {
+        var value = [];
         if (this.input == null) {
-            var value = [];
             jQuery("input:checked", this.multiOptions).each(function () { value.push(this.value); });
             // we need to return null for no value instead of empty array, which gets overwritten by preserved value on server-side
-            this.value = value;
         }
         else {
-            this.value = _super.prototype.getValue.call(this);
-            if (this.value === null)
-                this.value = this.options.multiple ? [] : ""; // do NOT return null, as it does not get transmitted to server
+            value = _super.prototype.getValue.call(this);
+            if (value === null)
+                value = this.options.multiple ? [] : ""; // do NOT return null, as it does not get transmitted to server
         }
-        return this.value;
+        return value;
     };
     et2_selectbox.prototype.isDirty = function () {
         if (this.input == null) {
