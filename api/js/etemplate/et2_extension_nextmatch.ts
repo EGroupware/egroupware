@@ -1664,6 +1664,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this.options.actions
 		);
 
+		this.controller.setFilters(this.activeFilters)
+
 		// Need to trigger empty row the first time
 		if(total == 0) this.controller._emptyRow();
 

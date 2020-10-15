@@ -1199,6 +1199,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);
         // Create the grid controller
         this.controller = new et2_extension_nextmatch_controller_1.et2_nextmatch_controller(null, this.egw(), this.getInstanceManager().etemplate_exec_id, this, null, this.dataview.grid, this.rowProvider, this.options.settings.action_links, null, this.options.actions);
+        this.controller.setFilters(this.activeFilters);
         // Need to trigger empty row the first time
         if (total == 0)
             this.controller._emptyRow();
