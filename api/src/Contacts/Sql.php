@@ -1164,10 +1164,10 @@ class Sql extends Api\Storage
 		{
 			parent::update($update);
 		}
-		// save sharing information
-		if (!$err)
+		// save sharing information, if given, eg. not the case for CardDAV
+		if (!$err && isset($this->data['shared']))
 		{
-			$this->data['shared'] = $this->save_shared($this->data['id'], (array)$this->data['shared']);
+			$this->data['shared'] = $this->save_shared($this->data['id'], $this->data['shared']);
 		}
 		return $err;
 	}
