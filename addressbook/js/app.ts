@@ -1462,6 +1462,30 @@ class AddressbookApp extends EgwApp
 		}
 	}
 
+	/**
+	 * Check if new shared_with value is allowed / user has rights to share into that AB
+	 *
+	 * Remove the entry again, if user is not allowed
+	 */
+	public shared_changed()
+	{
+		let shared = this.et2.getInputWidgetById('shared_values');
+		let value = <Array<string>>shared?.get_value();
+
+		if (value)
+		{
+			this.egw.json('addressbook.addressbook_ui.ajax_check_shared', [{
+				shared_values: value,
+				shared_writable: this.et2.getInputWidgetById('shared_writable').get_value()
+			}], _data => {
+				if (Array.isArray(_data) && _data.length)
+				{
+					// remove not allowed entries
+					shared.set_value(value.filter(val => _data.indexOf(val) === -1));
+				}
+			}).sendRequest();
+		}
+	}
 }
 
 app.classes.addressbook = AddressbookApp;

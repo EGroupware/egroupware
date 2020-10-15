@@ -143,9 +143,10 @@
 					</hbox>
 					<description/>
 				</row>
-				<row>
+				<row disabled="@shared_disabled">
 					<description for="shared" value="Shared with"/>
-					<taglist-account account_type="both" id="shared_values" multiple="true" select_options="@shared_options" span="4"/>
+					<taglist-account account_type="both" id="shared_values" multiple="true"
+						onchange="app.addressbook.shared_changed" select_options="@shared_options" span="4"/>
 					<checkbox id="shared_writable" label="writable" statustext="Create new shares writable"/>
 				</row>
 			</rows>
