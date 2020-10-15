@@ -484,6 +484,7 @@ class addressbook_hooks
 			Acl::EDIT    => 'edit',
 			Acl::ADD     => 'add',
 			Acl::DELETE  => 'delete',
+			Acl::CUSTOM1 => 'shared with',	// allows to share into given AB
 		);
 	}
 

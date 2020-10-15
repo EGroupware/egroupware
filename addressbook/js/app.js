@@ -1224,6 +1224,27 @@ var AddressbookApp = /** @class */ (function (_super) {
             app.status.makeCall(data);
         }
     };
+    /**
+     * Check if new shared_with value is allowed / user has rights to share into that AB
+     *
+     * Remove the entry again, if user is not allowed
+     */
+    AddressbookApp.prototype.shared_changed = function () {
+        var _a;
+        var shared = this.et2.getInputWidgetById('shared_values');
+        var value = (_a = shared) === null || _a === void 0 ? void 0 : _a.get_value();
+        if (value) {
+            this.egw.json('addressbook.addressbook_ui.ajax_check_shared', [{
+                    shared_values: value,
+                    shared_writable: this.et2.getInputWidgetById('shared_writable').get_value()
+                }], function (_data) {
+                if (Array.isArray(_data) && _data.length) {
+                    // remove not allowed entries
+                    shared.set_value(value.filter(function (val) { return _data.indexOf(val) === -1; }));
+                }
+            }).sendRequest();
+        }
+    };
     return AddressbookApp;
 }(egw_app_1.EgwApp));
 app.classes.addressbook = AddressbookApp;

@@ -2093,6 +2093,8 @@ class addressbook_ui extends addressbook_bo
 				];
 			}
 			unset($content['shared_values']);
+			// remove invalid shared-with entries (should not happen, as we validate already on client-side)
+			$this->check_shared_with($content['shared']);
 
 			$button = @key($content['button']);
 			unset($content['button']);
@@ -2440,6 +2442,8 @@ class addressbook_ui extends addressbook_bo
 			];
 		}
 		$content['shared_values'] = array_keys($content['shared_options']);
+		// disable shared with UI for non-SQL backends
+		$content['shared_disabled'] = !is_a($this->get_backend($content['id'], $content['owner']), Api\Contacts\Sql::class);
 
 		if ($content['id'])
 		{
@@ -2641,6 +2645,46 @@ class addressbook_ui extends addressbook_bo
 			}
 		}
 		return $this->tmpl->exec('addressbook.addressbook_ui.edit', $content, $sel_options, $readonlys, $preserve, 2);
+	}
+
+	/**
+	 * Check if user has right to share with / into given AB
+	 *
+	 * @param array $_data values for keys "shared_writable" and "shared_values"
+	 * @return array of entries removed from $shared_with because current user is not allowed to share into
+	 */
+	public function ajax_check_shared(array $_data)
+	{
+		$response = Api\Json\Response::get();
+		try {
+			$shared = [];
+			foreach($_data['shared_values'] as $value)
+			{
+				if (is_numeric($value))
+				{
+					$shared[$value] = [
+						'shared_with' => $value,
+						'shared_by' => $this->user,
+						'shared_writable' => (int)$_data['shared_writable'],
+					];
+				}
+				else
+				{
+					$shared[$value] = array_combine(['shared_id', 'shared_with', 'shared_by', 'shared_writable'], explode(':', $value));
+				}
+			}
+			if (($failed = $this->check_shared_with($shared)))
+			{
+				$response->data(array_keys($failed));
+				$response->message(lang('You are not allowed to share into the addressbook of %1',
+					implode(', ', array_map(function ($data) {
+						return Api\Accounts::username($data['shared_with']);
+					}, $failed))), 'error');
+			}
+		}
+		catch (\Exception $e) {
+			$response->message($e->getMessage(), 'error');
+		}
 	}
 
 	/**

@@ -31,6 +31,17 @@ class Contacts extends Contacts\Storage
 	const BIRTHDAY_CACHE_TIME = 864000; /* 10 days*/
 
 	/**
+	 * Custom ACL allowing to share into the AB / setting shared_with
+	 */
+	const ACL_SHARED = Acl::CUSTOM1;
+	/**
+	 * Mask to allow to share into the AB, at least one of the following need to be set:
+	 * - custom ACL_SHARED
+	 * - ACL::EDIT
+	 */
+	const CHECK_ACL_SHARED = Acl::EDIT|self::ACL_SHARED;
+
+	/**
 	 * @var int $now_su actual user (!) time
 	 */
 	var $now_su;
@@ -1248,6 +1259,34 @@ class Contacts extends Contacts\Storage
 		}
 		//error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user) returning ".array2string($access));
 		return $access;
+	}
+
+	/**
+	 * Check if user has right to share with / into given AB
+	 *
+	 * @param array[]& $shared_with array of arrays with values for keys "shared_with", "shared_by", ...
+	 * @return array of entries removed from $shared_with because current user is not allowed to share into (key is preserved)
+	 */
+	function check_shared_with(array &$shared_with)
+	{
+		$removed = [];
+		foreach($shared_with as $key => $shared)
+		{
+			if (!empty($shared['shared_by']) && $shared['shared_by'] != $this->user)
+			{
+				$grants = $this->get_grants($user);
+			}
+			else
+			{
+				$grants = $this->grants;
+			}
+			if (!($grants[$shared['shared_with']] & self::CHECK_ACL_SHARED))
+			{
+				$removed[$key] = $shared;
+				unset($shared_with[$key]);
+			}
+		}
+		return $removed;
 	}
 
 	/**
