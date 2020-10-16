@@ -230,6 +230,31 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		if (array_key_exists('tid', $filter) && !isset($filter['tid']) && !in_array('tid', $cols)) $cols[] = 'tid';
 		if (($contacts =& $this->bo->search(array(),$cols,$order,'','',False,'AND',$start,$filter)))
 		{
+			// filter[tid] === null also returns no longer shared contacts, to remove them from devices, we need to mark them here as deleted
+			// to do so we need to read not deleted sharing info of potential candidates (not deleted and no regular access), as search does NOT
+			$id2key = [];
+			foreach($contacts as $key => &$contact)
+			{
+				if ($contact['tid'] !== Api\Contacts::DELETED_TYPE &&
+					// check for (deleted) shared access
+					(!isset($filter['owner']) || !in_array($contact['owner'], (array)$filter['owner'])) &&
+					!$this->bo->check_perms(Acl::READ, $contact, false, $this->user, 0))
+				{
+					$id2key[$contact['id']] = $key;
+				}
+			}
+			if ($id2key)
+			{
+				foreach($this->bo->read_shared(array_keys($id2key), false) as $id => $shared)
+				{
+					$contacts[$id2key[$id]]['shared'] = $shared;
+					if (!$this->bo->check_perms(Acl::READ, $contact, false, $this->user))
+					{
+						$contacts[$id2key[$id]]['tid'] = Api\Contacts::DELETED_TYPE;
+					}
+				}
+			}
+
 			foreach($contacts as &$contact)
 			{
 				// remove contact from requested multiget ids, to be able to report not found urls

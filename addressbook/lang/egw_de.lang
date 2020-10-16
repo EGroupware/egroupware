@@ -455,6 +455,10 @@ send succeeded to %1	common	de	erfolgreich versandt an
 seperator	addressbook	de	Feldtrenner
 set full name and file as field in contacts of all users (either all or only empty values)	admin	de	Setzt vollen Namen und eigene Sortierung in Kontakten aller Benutzer (entweder alle oder nur leere Werte)
 set only full name	addressbook	de	Nur vollen Namen setzen
+share into addressbook	addressbook	de	Teilen in Adressbuch
+share writable	addressbook	de	Bearbeitbar teilen
+shared by me	addressbook	de	Von mir geteilt
+shared into addressbook %1	addressbook	de	geteilt in Adressbuch %1
 shared with	addressbook	de	Geteilt mit
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	de	Sollen die Spalten Foto und Privatadresse immer angezeigt werden, auch wenn sie leer sind?
 show	addressbook	de	Anzeigen
@@ -552,6 +556,7 @@ yes, for the next week	addressbook	de	Ja, für die nächste Woche
 yes, for today and tomorrow	addressbook	de	Ja, für heute und morgen
 yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren können gelöschte Einträge bereinigen
 yes, users can purge their deleted items	admin	de	Benutzer können Ihre eigenen Datensätze wieder herstellen (z.B. persönliches Adressbuch)
+you are not allowed to share into the addressbook of %1	addressbook	de	Sie dürfen nicht in das Adressbuch von %1 teilen
 you are not permitted to delete contact %1	addressbook	de	Sie haben keine Berechtigungen um den Kontakt %1 zu löschen
 you are not permittet to delete this contact	addressbook	de	Sie haben keine Berechtigung diesen Kontakt zu löschen
 you are not permittet to edit this contact	addressbook	de	Sie haben keine Berechtigung diesen Kontakt zu bearbeiten

@@ -358,11 +358,12 @@ class Contacts extends Contacts\Storage
 	 *
 	 * @param int $required =Acl::READ required rights on the addressbook or multiple rights or'ed together,
 	 * 	to return only addressbooks fullfilling all the given rights
-	 * @param string $extra_label first label if given (already translated)
-	 * @param int $user =null account_id or null for current user
+	 * @param ?string $extra_label first label if given (already translated)
+	 * @param ?int $user =null account_id or null for current user
+	 * @param boolean $check_all =true false: only require any of the given right-bits is set
 	 * @return array with owner => label pairs
 	 */
-	function get_addressbooks($required=Acl::READ,$extra_label=null,$user=null)
+	function get_addressbooks($required=Acl::READ,$extra_label=null,$user=null,$check_all=true)
 	{
 		if (is_null($user))
 		{
@@ -383,7 +384,7 @@ class Contacts extends Contacts\Storage
 		// add all group addressbooks the user has the necessary rights too
 		foreach($grants as $uid => $rights)
 		{
-			if (($rights & $required) == $required && $GLOBALS['egw']->accounts->get_type($uid) == 'g')
+			if (self::is_set($rights, $required, $check_all) && $GLOBALS['egw']->accounts->get_type($uid) == 'g')
 			{
 				$to_sort[$uid] = lang('Group %1',$GLOBALS['egw']->accounts->id2name($uid));
 			}
@@ -405,7 +406,7 @@ class Contacts extends Contacts\Storage
 		$to_sort = array();
 		foreach($grants as $uid => $rights)
 		{
-			if ($uid != $user && ($rights & $required) == $required && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
+			if ($uid != $user && self::is_set($rights, $required, $check_all) && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
 			{
 				$to_sort[$uid] = Accounts::username($uid);
 			}
@@ -420,6 +421,19 @@ class Contacts extends Contacts\Storage
 			$addressbooks[$user.'p'] = lang('Private');
 		}
 		return $addressbooks;
+	}
+
+	/**
+	 * Check rights for one or more required rights
+	 * @param int $rights
+	 * @param int $required
+	 * @param boolean $check_all =true false: only require any of the given right-bits is set
+	 * @return bool
+	 */
+	private static function is_set($rights, $required, $check_all=true)
+	{
+		$result = $rights & $required;
+		return $check_exact ? $result == $required : $result !== 0;
 	}
 
 	/**
@@ -1193,10 +1207,12 @@ class Contacts extends Contacts\Storage
 	 * @param int $needed necessary ACL right: Acl::{READ|EDIT|DELETE}
 	 * @param mixed $contact contact as array or the contact-id
 	 * @param boolean $deny_account_delete =false if true never allow to delete accounts
-	 * @param int $user =null for which user to check, default current user
-	 * @return boolean true permission granted, false for permission denied, null for contact does not exist
+	 * @param ?int $user =null for which user to check, default current user
+	 * @param int $check_shared =3 limits the nesting level of sharing checks, use 0 to NOT check sharing
+	 * @return ?boolean|"shared" true permission granted, false for permission denied, null for contact does not exist
+	 *  "shared" if permission is from sharing
 	 */
-	function check_perms($needed,$contact,$deny_account_delete=false,$user=null)
+	function check_perms($needed,$contact,$deny_account_delete=false,$user=null,$check_shared=3)
 	{
 		if (!$user) $user = $this->user;
 		if ($user == $this->user)
@@ -1245,19 +1261,21 @@ class Contacts extends Contacts\Storage
 				(!$contact['private'] || ($grants[$owner] & Acl::PRIVAT) || in_array($owner,$memberships));
 		}
 		// check if we might have access via sharing (not for delete)
-		if ($access === false && !empty($contact['shared']) && $needed != Acl::DELETE)
+		if ($access === false && !empty($contact['shared']) && $needed != Acl::DELETE && $check_shared > 0)
 		{
 			foreach($contact['shared'] as $shared)
 			{
-				if (isset($grants[$shared['shared_with']]) && ($shared['shared_writable'] || !($needed & Acl::EDIT)))
+				if (isset($grants[$shared['shared_with']]) && (!($needed & Acl::EDIT) ||
+					// if shared writable, we check if the one who shared the contact still has edit rights
+					$shared['shared_writable'] && $this->check_perms($needed, $contact, $deny_account_delete, $shared['shared_by'], $check_shared-1)))
 				{
-					$access = true;
-					error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user) shared=".json_encode($shared)." returning ".array2string($access));
+					$access = "shared";
+					error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user,$check_shared) shared=".json_encode($shared)." returning ".array2string($access));
 					break;
 				}
 			}
 		}
-		//error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user) returning ".array2string($access));
+		//error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user,$check_shared) returning ".array2string($access));
 		return $access;
 	}
 
@@ -1265,7 +1283,7 @@ class Contacts extends Contacts\Storage
 	 * Check if user has right to share with / into given AB
 	 *
 	 * @param array[]& $shared_with array of arrays with values for keys "shared_with", "shared_by", ...
-	 * @return array of entries removed from $shared_with because current user is not allowed to share into (key is preserved)
+	 * @return array entries removed from $shared_with because current user is not allowed to share into (key is preserved)
 	 */
 	function check_shared_with(array &$shared_with=null)
 	{
