@@ -1267,10 +1267,10 @@ class Contacts extends Contacts\Storage
 	 * @param array[]& $shared_with array of arrays with values for keys "shared_with", "shared_by", ...
 	 * @return array of entries removed from $shared_with because current user is not allowed to share into (key is preserved)
 	 */
-	function check_shared_with(array &$shared_with)
+	function check_shared_with(array &$shared_with=null)
 	{
 		$removed = [];
-		foreach($shared_with as $key => $shared)
+		foreach((array)$shared_with as $key => $shared)
 		{
 			if (!empty($shared['shared_by']) && $shared['shared_by'] != $this->user)
 			{
