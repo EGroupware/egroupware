@@ -131,6 +131,7 @@
 		}
 		// if framework not found, but requested to check for it, redirect to cd=yes to create it
 		if (typeof window.framework == 'undefined' &&
+			!window.location.pathname.match(/\/login.php/) && // not for login page
 			!window.location.search.match(/[&?]cd=/))
 		{
 			window.location.search += (window.location.search ? "&" : "?")+
