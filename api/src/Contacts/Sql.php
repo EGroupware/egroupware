@@ -499,10 +499,22 @@ class Sql extends Api\Storage
 			unset($filter['cat_id']);
 		}
 
-		// SQL to get all shared contacts to be OR-ed into ACL filter
-		// ToDo: do we need a sharing filter for $ignore_acl
-		$shared_sql = 'contact_id IN (SELECT contact_id FROM '.self::SHARED_TABLE.' WHERE '.
-			$this->db->expression(self::SHARED_TABLE, ['shared_with' => $filter['owner'] ?? array_keys($this->grants)]).')';
+		if (!empty($filter['shared_by']))
+		{
+			$filter[] = $this->table_name.'.contact_id IN (SELECT DISTINCT contact_id FROM '.self::SHARED_TABLE.' WHERE '.
+				'shared_deleted IS NULL AND shared_by='.(int)$filter['shared_by'].
+				((string)$filter['owner'] !== '' ? ' AND shared_with='.(int)$filter['owner'] : '').')';
+			unset($filter['shared_by']);
+			$shared_sql = '1=1';	// can not be empty and must be true
+		}
+		else
+		{
+			// SQL to get all shared contacts to be OR-ed into ACL filter
+			$shared_sql = 'contact_id IN (SELECT contact_id FROM '.self::SHARED_TABLE.' WHERE '.
+				// $filter[tid] === null is used by sync-collection report, in which case we need to return deleted shares, to remove them from devices
+				(array_key_exists('tid', $filter) && !isset($filter['tid']) ? '' : 'shared_deleted IS NULL AND ').
+				$this->db->expression(self::SHARED_TABLE, ['shared_with' => $filter['owner'] ?? array_keys($this->grants)]).')';
+		}
 
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
 		if (isset($this->grants) && !$ignore_acl)
@@ -1036,13 +1048,15 @@ class Sql extends Api\Storage
 	 * Read sharing information of a contact
 	 *
 	 * @param int $id contact_id to read
-	 * @return array of array with values for keys "shared_(with|writable|by|at|id)"
+	 * @param ?boolean $deleted =false false: ignore deleted, true: only deleted, null: both
+	 * @return array of array with values for keys "shared_(with|writable|by|at|id|deleted)"
 	 */
-	function read_shared($id)
+	function read_shared($id, $deleted=false)
 	{
 		$shared = [];
-		foreach($this->db->select(self::SHARED_TABLE, '*', ['contact_id' => $id],
-			__LINE__, __FILE__, false) as $row)
+		$where = ['contact_id' => $id];
+		if (isset($deleted)) $where[] = $deleted ? 'shared_deleted IS NOT NULL' : 'shared_deleted IS NULL';
+		foreach($this->db->select(self::SHARED_TABLE, '*', $where, __LINE__, __FILE__, false) as $row)
 		{
 			$row['shared_at'] = Api\DateTime::server2user($row['shared_at'], 'object');
 			$shared[] = $row;
@@ -1051,6 +1065,8 @@ class Sql extends Api\Storage
 	}
 
 	/**
+	 * Save sharing information of a contact
+	 *
 	 * @param int $id
 	 * @param array $shared array of array with values for keys "shared_(with|writable|by|at|id)"
 	 * @return array of array with values for keys "shared_(with|writable|by|at|id)"
@@ -1058,7 +1074,7 @@ class Sql extends Api\Storage
 	function save_shared($id, array $shared)
 	{
 		$ids = [];
-		foreach($shared as &$data)
+		foreach($shared as $key => &$data)
 		{
 			if (empty($data['shared_id']))
 			{
@@ -1066,19 +1082,63 @@ class Sql extends Api\Storage
 				$data['contact_id'] = $id;
 				$data['shared_at'] = Api\DateTime::user2server($data['shared_at'] ?: 'now');
 				$data['shared_by'] = $data['shared_by'] ?: $GLOBALS['egw_info']['user']['account_id'];
-				$this->db->insert(self::SHARED_TABLE, $data, false, __LINE__, __FILE__);
+				$data['shared_deleted'] = null;
+				foreach($shared as $ckey => $check)
+				{
+					if (!empty($check['shared_id']) &&
+						$data['shared_with'] == $check['shared_with'] &&
+						$data['shared_by'] == $check['shared_by'])
+					{
+						if ($data['shared_writable'] == $check['shared_writable'])
+						{
+							unset($shared[$key]);
+							continue 2;	// no need to save identical entry
+						}
+						// remove
+						unset($shared[$ckey]);
+						break;
+					}
+				}
+				$this->db->insert(self::SHARED_TABLE, $data,
+					array_intersect_key($data, array_flip(['shared_by','shared_with','contact_id','share_id'])), __LINE__, __FILE__);
 				$data['shared_id'] = $this->db->get_last_insert_id(self::SHARED_TABLE, 'share_id');
 			}
 			$ids[] = (int)$data['shared_id'];
 		}
-		$delete = ['contact_id' => $id];
+		$delete = ['contact_id' => $id, 'shared_deleted IS NULL'];
 		if ($ids) $delete[] = 'shared_id NOT IN ('.implode(',', $ids).')';
-		$this->db->delete(self::SHARED_TABLE, $delete, __LINE__, __FILE__);
+		$this->db->update(self::SHARED_TABLE, ['shared_deleted' => new Api\DateTime('now')], $delete, __LINE__, __FILE__);
 		foreach($shared as &$data)
 		{
 			$data['shared_at'] = Api\DateTime::server2user($data['shared_at'], 'object');
 		}
 		return $shared;
+	}
+
+	/**
+	 * deletes row representing keys in internal data or the supplied $keys if != null
+	 *
+	 * reimplented to also delete sharing info
+	 *
+	 * @param array|int $keys =null if given array with col => value pairs to characterise the rows to delete, or integer autoinc id
+	 * @param boolean $only_return_ids =false return $ids of delete call to db object, but not run it (can be used by extending classes!)
+	 * @return int|array affected rows, should be 1 if ok, 0 if an error or array with id's if $only_return_ids
+	 */
+	function delete($keys=null,$only_return_ids=false)
+	{
+		if (!$only_return_ids)
+		{
+			if (is_scalar($keys))
+			{
+				$query = ['contact_id' => $keys];
+			}
+			elseif (!isset($keys['contact_id']))
+			{
+				$query = parent::delete($keys,true);
+			}
+			$this->db->delete(self::SHARED_TABLE, $query ?? $keys, __LINE__, __FILE__);
+		}
+		return parent::delete($keys, $only_return_ids);
 	}
 
 	/**

@@ -74,6 +74,11 @@ class addressbook_ui extends addressbook_bo
 	protected $tmpl;
 
 	/**
+	 * @var array
+	 */
+	public $grouped_views;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $contact_app
@@ -88,7 +93,8 @@ class addressbook_ui extends addressbook_bo
 			'org_name'                  => lang('Organisations'),
 			'org_name,adr_one_locality' => lang('Organisations by location'),
 			'org_name,org_unit'         => lang('Organisations by departments'),
-			'duplicates'				=> lang('Duplicates')
+			'duplicates'                => lang('Duplicates'),
+			'shared_by_me'              => lang('Shared by me'),
 		);
 
 		// make sure the hook for export_limit is registered
@@ -556,6 +562,36 @@ class addressbook_ui extends addressbook_bo
 				'disableClass' => 'rowNoDelete',
 				'hideOnMobile' => true
 			);
+		}
+		if (($share2addressbooks = $this->get_addressbooks(Acl::EDIT|self::ACL_SHARED, null, null, false)))
+		{
+			unset($share2addressbooks[0]);    // do not offer action to share contact into accounts AB
+			foreach ($share2addressbooks as $owner => $label)
+			{
+				if (substr($owner, -1) === 'p')	// share with private AB makes no sense
+				{
+					unset($share2addressbooks[$owner]);
+					continue;
+				}
+				$icon = $type_label = null;
+				$this->type_icon((int)$owner, substr($owner, -1) == 'p', 'n', $icon, $type_label);
+				$share2addressbooks[$owner] = array(
+					'icon' => $icon,
+					'caption' => $label,
+				);
+			}
+			$actions['shared_with'] = [
+				'caption' => 'Share into addressbook',
+				'children' => [
+					'writable' => [
+						'id' => 'writable',
+						'caption' => 'Share writable',
+						'checkbox' => true,
+					]] + $share2addressbooks,
+				'prefix' => 'shared_with_',
+				'group' => $group,
+				'hideOnMobile' => true
+			];
 		}
 		$actions['change_type'] = $this->change_type_actions($group);
 		$actions['merge'] = array(
@@ -1216,6 +1252,11 @@ class addressbook_ui extends addressbook_bo
 			$cat_id = (int)substr($action, 8);
 			$action = substr($action,0,7);
 		}
+		elseif(substr($action, 0, 12) === 'shared_with_')
+		{
+			$shared_with = substr($action, 12);
+			$action = 'shared_with';
+		}
 		// Security: stop non-admins to export more then the configured number of contacts
 		if (in_array($action,array('csv','vcard')) && $this->config['contact_export_limit'] && !Api\Storage\Merge::is_export_limit_excepted() &&
 			(!is_numeric($this->config['contact_export_limit']) || count($checked) > $this->config['contact_export_limit']))
@@ -1425,6 +1466,30 @@ class addressbook_ui extends addressbook_bo
 						}
 					}
 					break;
+				case 'shared_with':
+					$action_msg = lang('shared into addressbook %1', Accounts::username($shared_with));
+					if (($Ok = !!($contact = $this->read($id))))
+					{
+						$new_shared_with = [[
+							'shared_with' => $shared_with,
+							'shared_by' => $this->user,
+							'shared_at' => new Api\DateTime('now'),
+							// only allow to share writable, if user has edit-rights!
+							'shared_writable' => (int)($checkboxes['writable'] && $this->check_perms(Acl::EDIT, $contact)),
+						]];
+						if ($this->check_shared_with($new_shared_with))	// returns [] if OK
+						{
+							$Ok = false;
+						}
+						else
+						{
+							$contact['shared'][] = $new_shared_with[0];
+							// we might need to ignore acl, as we are allowed to share with just read-rights
+							// setting user and update-time is explicitly desired for sync(-collection)!
+							$Ok = $this->save($contact, true);
+						}
+					}
+					break;
 				default:	// move to an other addressbook
 					if (!(int)$action || !($this->grants[(string) (int) $action] & Acl::EDIT))	// might be ADD in the future
 					{
@@ -1596,6 +1661,13 @@ class addressbook_ui extends addressbook_bo
 			$old_state = Api\Cache::getSession('addressbook', $what);
 		}
 		$GLOBALS['egw']->session->commit_session();
+
+		if ($query['grouped_view'] === 'shared_by_me')
+		{
+			$query['col_filter']['shared_by'] = $this->user;
+			$query['grouped_view'] = '';
+		}
+
 		if (!isset($this->grouped_views[(string) $query['grouped_view']]) || strpos($query['grouped_view'],':') === false)
 		{
 			// we don't have a grouped view, unset the according col_filters
@@ -2011,6 +2083,11 @@ class addressbook_ui extends addressbook_bo
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = implode(': ', $header);
 
+		if ($query['grouped_view'] === '' && $query['col_filter']['shared_by'] == $this->user)
+		{
+			$query['grouped_view'] = 'shared_by_me';
+			unset($query['col_filter']['shared_by']);
+		}
 		return $this->total;
 	}
 

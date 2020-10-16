@@ -456,6 +456,10 @@ send succeeded to %1	common	en	Send succeeded to %1
 seperator	addressbook	en	Separator
 set full name and file as field in contacts of all users (either all or only empty values)	admin	en	Set full name and 'fileas' field in contacts of all users. Either all or only empty values.
 set only full name	addressbook	en	Set only full name
+share into addressbook	addressbook	en	Share into addressbook
+share writable	addressbook	en	Share writable
+shared by me	addressbook	en	Shared by me
+shared into addressbook %1	addressbook	en	shared into addressbook %1
 shared with	addressbook	en	Shared with
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	en	Are photo and home address always displayed, even if columns are empty.
 show	addressbook	en	Show
@@ -553,6 +557,7 @@ yes, for the next week	addressbook	en	Yes, for the next week
 yes, for today and tomorrow	addressbook	en	Yes, for today and tomorrow
 yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
 yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
+you are not allowed to share into the addressbook of %1	addressbook	en	You are not allowed to share into the addressbook of %1
 you are not permitted to delete contact %1	addressbook	en	You are not permitted to delete contact %1
 you are not permittet to delete this contact	addressbook	en	You are not permitted to delete this contact
 you are not permittet to edit this contact	addressbook	en	You are not permitted to edit this contact

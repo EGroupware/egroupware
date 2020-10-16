@@ -619,6 +619,24 @@ class Storage
 	}
 
 	/**
+	 * @param array $ids
+	 * @param ?boolean $deleted false: no deleted, true: only deleted, null: both
+	 * @return array contact_id => array of array with sharing info
+	 */
+	function read_shared(array $ids, $deleted=false)
+	{
+		$contacts = [];
+		if (method_exists($backend = $this->get_backend($ids[0]), 'read_shared'))
+		{
+			foreach($backend->read_shared($ids, $deleted) as $shared)
+			{
+				$contacts[$shared['contact_id']][] = $shared;
+			}
+		}
+		return $contacts;
+	}
+
+	/**
 	 * searches db for rows matching searchcriteria
 	 *
 	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
