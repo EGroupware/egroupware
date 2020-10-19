@@ -274,6 +274,10 @@ app.classes.mail = AppJS.extend(
 				var pca = egw.preference(this.et2.getWidgetById('mailaccount').getValue().split(":")[0]+'_predefined_compose_addresses', 'mail');
 				for (var p in pca)
 				{
+					if (this.et2.getWidgetById(p).getValue() && pca[p])
+					{
+						pca[p] = pca[p].concat(this.et2.getWidgetById(p).getValue());
+					}
 					this.et2.getWidgetById(p).set_value(pca[p]);
 				}
 				this.compose_fieldExpander_init();
