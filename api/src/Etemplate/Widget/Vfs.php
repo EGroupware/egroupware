@@ -14,7 +14,6 @@
 namespace EGroupware\Api\Etemplate\Widget;
 
 use EGroupware\Api\Etemplate;
-use EGroupware\Api\Framework;
 use EGroupware\Api\Json;
 use EGroupware\Api;
 
@@ -188,7 +187,7 @@ class Vfs extends File
 			}
 		}
 		// switch regular JSON response handling off
-		Api\Json\Request::isJSONRequest(false);
+		Json\Request::isJSONRequest(false);
 
 		if ($type == 'htmlarea')
 		{
@@ -455,27 +454,27 @@ class Vfs extends File
 			switch($action)
 			{
 				case 'home':
-					$content['path'] = \EGroupware\Api\Vfs::get_home_dir();
+					$content['path'] = Api\Vfs::get_home_dir();
 					break;
 			}
 		}
 		if (!empty($content['app']) && $content['old_app'] != $content['app'])
 		{
-			$content['path'] = $content['app'] == 'home'? \EGroupware\Api\Vfs::get_home_dir():
+			$content['path'] = $content['app'] == 'home'? Api\Vfs::get_home_dir():
 				'/apps/'.$content['app'];
 		}
 
 		$favorites_flag = substr($content['path'],0,strlen('/apps/favorites')) == '/apps/favorites';
-		if (!$favorites_flag && (!$content['path'] || !\EGroupware\Api\Vfs::is_dir($content['path'])))
+		if (!$favorites_flag && (!$content['path'] || !Api\Vfs::is_dir($content['path'])))
 		{
-			$content['path'] = \EGroupware\Api\Vfs::get_home_dir();
+			$content['path'] = Api\Vfs::get_home_dir();
 		}
 
 		if ($favorites_flag)
 		{
 			// Display favorites as if they were folders
 			$files = array();
-			$favorites = \EGroupware\Api\Framework\Favorites::get_favorites('filemanager');
+			$favorites = Api\Framework\Favorites::get_favorites('filemanager');
 			$n = 0;
 			$content['dir'] = array();
 			//check for recent paths and add them to the top of favorites list
@@ -483,7 +482,7 @@ class Vfs extends File
 			{
 				foreach($params['recentPaths'] as $p)
 				{
-					$mime = \EGroupware\Api\Vfs::mime_content_type($p);
+					$mime = Api\Vfs::mime_content_type($p);
 					$content['dir'][$n] = array(
 						'name' => $p,
 						'path' => $p,
@@ -501,7 +500,7 @@ class Vfs extends File
 				if(!$path) continue;
 				if ($path == $content['path']) continue;	// remove directory itself
 
-				$mime = \EGroupware\Api\Vfs::mime_content_type($path);
+				$mime = Api\Vfs::mime_content_type($path);
 				$content['dir'][$n] = array(
 					'name' => $favorite['name'],
 					'path' => $path,
@@ -515,7 +514,7 @@ class Vfs extends File
 				++$n;
 			}
 		}
-		else if (!($files = \EGroupware\Api\Vfs::find($content['path'],array(
+		else if (!($files = Api\Vfs::find($content['path'],array(
 			'dirsontop' => true,
 			'order' => 'name',
 			'sort' => 'ASC',
@@ -532,9 +531,9 @@ class Vfs extends File
 			{
 				if ($path == $content['path']) continue;	// remove directory itself
 
-				$name = \EGroupware\Api\Vfs::basename($path);
-				$is_dir = \EGroupware\Api\Vfs::is_dir($path);
-				$mime = \EGroupware\Api\Vfs::mime_content_type($path);
+				$name = Api\Vfs::basename($path);
+				$is_dir = Api\Vfs::is_dir($path);
+				$mime = Api\Vfs::mime_content_type($path);
 				if ($content['mime'] && !$is_dir && $mime != $content['mime'])
 				{
 					continue;	// does not match mime-filter --> ignore
@@ -554,8 +553,8 @@ class Vfs extends File
 			if (!$n) $readonlys['selected[]'] = true;	// remove checkbox from empty line
 		}
 		$readonlys = array_merge($readonlys, array(
-			'createdir' => !\EGroupware\Api\Vfs::is_writable($content['path']),
-			'upload_file' => !\EGroupware\Api\Vfs::is_writable($content['path']) ||
+			'createdir' => !Api\Vfs::is_writable($content['path']),
+			'upload_file' => !Api\Vfs::is_writable($content['path']) ||
 			!in_array($content['mode'],array('open', 'open-multiple')),
 			'favorites' => !isset($GLOBALS['egw_info']['apps']['stylite'])
 		));
@@ -566,8 +565,8 @@ class Vfs extends File
 
 		if ($content['method'] === 'download')
 		{
-			$download_baseUrl = \EGroupware\Api\Vfs::download_url($content['path']);
-			if ($download_baseUrl[0] == '/') $download_baseUrl = \EGroupware\Api\Egw::link($download_baseUrl);
+			$download_baseUrl = Api\Vfs::download_url($content['path']);
+			if ($download_baseUrl[0] == '/') $download_baseUrl = Api\Egw::link($download_baseUrl);
 			$content['download_baseUrl'] = $download_baseUrl;
 		}
 
@@ -601,12 +600,15 @@ class Vfs extends File
 		$msg = '';
 		if (!empty($dir) && !empty($path))
 		{
-			$dst = \EGroupware\Api\Vfs::concat($path, $dir);
-			if (\EGroupware\Api\Vfs::mkdir($dst, null, STREAM_MKDIR_RECURSIVE))
+			$dst = Api\Vfs::concat($path, $dir);
+			if (Api\Vfs::mkdir($dst, null, STREAM_MKDIR_RECURSIVE))
 			{
 				$msg = lang("Directory successfully created.");
 			}
-			$msg = lang("Error while creating directory.");
+			else
+			{
+				$msg = lang("Error while creating directory.");
+			}
 		}
 		$response->data($msg);
 	}
@@ -619,7 +621,7 @@ class Vfs extends File
 	 */
 	static function ajax_vfsSelect_storeFile ($files, $dir)
 	{
-		$response = Api\Json\Response::get();
+		$response = Json\Response::get();
 		$result = array (
 			'errs' => 0,
 			'msg' => '',
@@ -628,9 +630,9 @@ class Vfs extends File
 		$script_error = 0;
 		foreach($files as $tmp_name => &$data)
 		{
-			$path = \EGroupware\Api\Vfs::concat($dir, \EGroupware\Api\Vfs::encodePathComponent($data['name']));
+			$path = Api\Vfs::concat($dir, Api\Vfs::encodePathComponent($data['name']));
 
-			if(\EGroupware\Api\Vfs::deny_script($path))
+			if(Api\Vfs::deny_script($path))
 			{
 				if (!isset($script_error))
 				{
@@ -640,11 +642,11 @@ class Vfs extends File
 				++$result['errs'];
 				unset($files[$tmp_name]);
 			}
-			elseif (\EGroupware\Api\Vfs::is_dir($path))
+			elseif (Api\Vfs::is_dir($path))
 			{
 				$data['confirm'] = 'is_dir';
 			}
-			elseif (!$data['confirmed'] && \EGroupware\Api\Vfs::stat($path))
+			elseif (!$data['confirmed'] && Api\Vfs::stat($path))
 			{
 				$data['confirm'] = true;
 			}
@@ -659,7 +661,7 @@ class Vfs extends File
 					$tmp_path = ini_get('upload_tmp_dir').'/'.basename($tmp_name);
 				}
 
-				if (\EGroupware\Api\Vfs::copy_uploaded($tmp_path, $path, null, false))
+				if (Api\Vfs::copy_uploaded($tmp_path, $path, null, false))
 				{
 					++$result['files'];
 					$uploaded[] = $data['name'];
@@ -692,7 +694,7 @@ class Vfs extends File
 	static function get_apps()
 	{
 		$apps = array();
-		$apps += \EGroupware\Api\Link::app_list('query');
+		$apps += Api\Link::app_list('query');
 		// they do NOT support adding files to VFS
 		unset($apps['addressbook-email'], $apps['mydms'], $apps['wiki'],
 				$apps['api-accounts']);
