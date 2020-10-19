@@ -77,7 +77,7 @@ egw_LAB.wait(function()
 
 // register service worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js', {scope:"/egroupware/"})
+  navigator.serviceWorker.register('./service-worker.js', {scope:egw_webserverUrl})
   .then(function(registration) {
     console.log('Registration successful, scope is:', registration.scope);
   })
