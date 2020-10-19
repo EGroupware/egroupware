@@ -3608,11 +3608,19 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 				// Call previously set change function
 				const result = widget_change.call(_widget, _node, header.nextmatch);
 
-				// Update filters, if we're not already doing so
-				if ((result || typeof result === 'undefined') && _widget.isDirty() && !header.update_in_progress) {
-					// Update dirty
-					_widget._oldValue = _widget.getValue();
+				// Find current value in activeFilters
+				let entry = header.nextmatch.activeFilters;
+				const path = _widget.getArrayMgr('content').explodeKey(_widget.id);
+				let i = 0;
+				if (path.length > 0) {
+					for (; i < path.length; i++) {
+						entry = entry[path[i]];
+					}
+				}
 
+				// Update filters, if the value is different and we're not already doing so
+				if ((result || typeof result === 'undefined') && entry != _widget.getValue() && !header.update_in_progress)
+				{
 					// Widget will not have an entry in getValues() because nulls
 					// are not returned, we remove it from activeFilters
 					if (_widget._oldValue == null) {
