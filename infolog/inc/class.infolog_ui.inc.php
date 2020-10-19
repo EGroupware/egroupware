@@ -1805,7 +1805,7 @@ class infolog_ui
 						$button = 'apply';	// need to store infolog first
 					}
 				}
-				//Validate the enddate must be grather than startdate
+				//Validate the enddate must be greater than startdate
 				if (!empty($content['info_enddate']) && !empty($content['info_startdate']))
 				{
 					$duration_date = $content['info_enddate']-$content['info_startdate'];
