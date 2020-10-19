@@ -1068,12 +1068,13 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * Needs to be a directory
      */
     filemanagerAPP.prototype.hidden_upload_enabled = function (_action, _senders) {
+        var _a;
         if (_senders[0].id == 'nm')
             return false;
         var data = egw.dataGetUIDdata(_senders[0].id);
-        var readonly = (data.data.class || '').split(/ +/).indexOf('noEdit') >= 0;
+        var readonly = (((_a = data) === null || _a === void 0 ? void 0 : _a.data.class) || '').split(/ +/).indexOf('noEdit') >= 0;
         // symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
-        return (data.data.is_dir && !readonly);
+        return (!_senders[0].id || data.data.is_dir && !readonly);
     };
     /**
      * View the link from an existing share
