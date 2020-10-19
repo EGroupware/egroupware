@@ -513,6 +513,8 @@ unable to import into %1, using %2	addressbook	de	Import nach %1 ist nicht mögl
 unique id (uid)	addressbook	de	Eindeutige ID (UID)
 unique id<br />(to update existing records)	addressbook	de	Eindeutige ID<br />(um existierende Datensätze zu aktualisieren)
 unknown type %1, imported as %2	addressbook	de	Unbekannter Typ %!, als %2 importiert
+unshare	addressbook	de	Nicht mehr teilen
+unshared	addressbook	de	nicht mehr geteilt
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
 update fields by edited organisations?	admin	de	Welche Felder sollen beim Bearbeiten von Organisationen aktualisiert werden?
 updated	addressbook	de	Aktualisiert

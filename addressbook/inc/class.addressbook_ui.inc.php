@@ -587,7 +587,16 @@ class addressbook_ui extends addressbook_bo
 						'id' => 'writable',
 						'caption' => 'Share writable',
 						'checkbox' => true,
-					]] + $share2addressbooks,
+					]] + $share2addressbooks + [
+					'unshare' => [
+						'icon' => 'delete',
+						'caption' => 'Unshare',
+						'group' => $group,
+						'enableClass' => 'unshare_contact',
+						'hideOnDisabled' => true,
+						'hideOnMobile' => true
+					]
+				],
 				'prefix' => 'shared_with_',
 				'group' => $group,
 				'hideOnMobile' => true
@@ -1210,7 +1219,7 @@ class addressbook_ui extends addressbook_bo
 	{
 		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
-		if ($use_all || in_array($action,array('remove_from_list','delete_list')))
+		if ($use_all || in_array($action,array('remove_from_list','delete_list','unshare')))
 		{
 			// get the whole selection
 			$query = is_array($session_name) ? $session_name : Api\Cache::getSession('addressbook', $session_name);
@@ -1467,6 +1476,30 @@ class addressbook_ui extends addressbook_bo
 					}
 					break;
 				case 'shared_with':
+					// as "unshare" is in "shared_with" submenu/children it uses "shared_with_unshare"
+					if ($shared_with === 'unshare')
+					{
+						$action_msg = lang('unshared');
+						if (($Ok = !!($contact = $this->read($id))))
+						{
+							$need_save = false;
+							foreach($contact['shared'] as $key => $shared)
+							{
+								// only unshare contacts shared by current user
+								if ($shared['shared_by'] == $this->user &&
+									// only unshare from given addressbook, or all
+									(empty($query['filter']) || $shared['shared_with'] == (int)$query['filter']))
+								{
+									$need_save = true;
+									unset($contact['shared'][$key]);
+								}
+							}
+							// we might need to ignore acl, as we are allowed to share with just read-rights
+							// setting user and update-time is explicitly desired for sync(-collection)!
+							$Ok = !$need_save || $this->save($contact, true);
+						}
+						break;
+					}
 					$action_msg = lang('shared into addressbook %1', Accounts::username($shared_with));
 					if (($Ok = !!($contact = $this->read($id))))
 					{
@@ -2024,6 +2057,11 @@ class addressbook_ui extends addressbook_bo
 			if(!empty($row['cat_id']))
 			{
 				$row['cat_id'] = $this->categories->check_list(Acl::READ,$row['cat_id']);
+			}
+
+			if ($query['col_filter']['shared_by'] == $this->user)
+			{
+				$row['class'] .= 'unshare_contact ';
 			}
 		}
 		$rows['no_distribution_list'] = (bool)$query['filter2'];
