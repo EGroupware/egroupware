@@ -42,7 +42,7 @@ class ContentSecurityPolicy
 		'manifest-src'=> ["'self'"],
 		'frame-ancestors' => ["'self'"],	// does not allow to frame (embed in frameset) other then self / clickjacking protection
 		'media-src'   => ["data:"],
-		'img-src'     => ["data:", "https:"],
+		'img-src'     => ["data:", "https:", "blob:"],
 		'default-src' => ["'none'"],	// disallows all not explicit set sources!
 	);
 
