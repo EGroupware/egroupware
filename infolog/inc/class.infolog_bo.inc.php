@@ -807,9 +807,18 @@ class infolog_bo
 			$set_completed = !$values['info_datecompleted'] &&	// set date completed of finished job, only if its not already set
 				in_array($values['info_status'],array('done','billed','cancelled'));
 
+			// Old is in server time, so change it to user time or we might move all the dates if tz are different
+			if($user2server)
+			{
+				$this->time2time($old);
+			}
+
 			$values = $old;
-			// only overwrite explicitly allowed fields
+
+			// This one stays in the timezone it's in or we fail the modified check
 			$values['info_datemodified'] = $values_in['info_datemodified'];
+
+			// only overwrite explicitly allowed fields
 			foreach ($this->responsible_edit as $name)
 			{
 				if (isset($values_in[$name])) $values[$name] = $values_in[$name];
@@ -1051,6 +1060,9 @@ class infolog_bo
 			}
 			$this->tracking->track($to_write,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted',
 				null,$skip_notification);
+
+			// Clear access cache after notifications, it may get modified as notifications switches user
+			unset(static::$access_cache[$info_id]);
 
 			if ($info_from_set) $values['info_from'] = '';
 
