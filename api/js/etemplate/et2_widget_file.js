@@ -146,6 +146,9 @@ var et2_file = /** @class */ (function (_super) {
             this.input.attr("multiple", "multiple");
         }
         this.setDOMNode(this.node[0]);
+        // set drop target to widget dom node if no target option is specified
+        if (!this.options.drop_target)
+            this.resumable.assignDrop([this.getDOMNode()]);
     };
     /**
      * Get any specific async upload options
