@@ -1156,6 +1156,35 @@ class Db
 	}
 
 	/**
+	 * Set session timezone, to get automatic timestamps to be in our configured timezone
+	 *
+	 * @param string $timezone
+	 * @return ?boolean
+	 */
+	public function setTimeZone($timezone)
+	{
+		if (!$this->Link_ID && !$this->connect())
+		{
+			return False;
+		}
+		switch ($this->Type)
+		{
+			case 'pgsql':
+				$sql = 'SET TIME ZONE ' . $this->quote($timezone);
+				break;
+			case 'mysql':
+			case 'mysqli':
+				$sql = 'SET time_zone=' . $this->quote($timezone);
+				break;
+		}
+		if (!empty($timezone) && !empty($sql))
+		{
+			$this->Link_ID->Execute($sql);
+			return true;
+		}
+	}
+
+	/**
 	 * concat a variable number of strings together, to be used in a query
 	 *
 	 * Example: $db->concat($db->quote('Hallo '),'username') would return

@@ -122,7 +122,7 @@ class Egw extends Egw\Base
 		// Set the DB's client charset if a system-charset is set and some other values needed by egw_cache (used in Config::read)
 			foreach($this->db->select(Config::TABLE,'config_name,config_value',array(
 			'config_app'  => 'phpgwapi',
-			'config_name' => array('system_charset','install_id','temp_dir'),
+			'config_name' => array('system_charset','install_id','temp_dir','server_timezone'),
 		),__LINE__,__FILE__) as $row)
 		{
 			$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
@@ -131,6 +131,8 @@ class Egw extends Egw\Base
 		{
 			$this->db->Link_ID->SetCharSet($GLOBALS['egw_info']['server']['system_charset']);
 		}
+		$this->db->SetTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
+
 		// load up the $GLOBALS['egw_info']['server'] array
 		$GLOBALS['egw_info']['server'] += Config::read('phpgwapi');
 
@@ -233,6 +235,7 @@ class Egw extends Egw\Base
 		if (!empty($GLOBALS['egw_info']['server']['server_timezone']))
 		{
 			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+			$this->db->SetTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
 		}
 
 		$this->define_egw_constants();
