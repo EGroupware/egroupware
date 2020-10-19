@@ -512,6 +512,8 @@ unable to import into %1, using %2	addressbook	en	Unable to import into %1, usin
 unique id (uid)	addressbook	en	Unique ID (UID)
 unique id<br />(to update existing records)	addressbook	en	Unique ID<br />to update existing records
 unknown type %1, imported as %2	addressbook	en	Unknown type %1, imported as %2
+unshare	addressbook	en	Unshare
+unshared	addressbook	en	unshared
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
 update fields by edited organisations?	admin	en	Fields to update of edited organizations
 updated	addressbook	en	Updated
