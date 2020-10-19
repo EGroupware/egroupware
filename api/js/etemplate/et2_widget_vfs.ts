@@ -1001,7 +1001,7 @@ class et2_vfsUpload extends et2_file
 	}
 
 	getDOMNode(sender) {
-		if(sender !== this && sender._type.indexOf('vfs') >= 0 )
+		if(sender && sender !== this && sender._type.indexOf('vfs') >= 0 )
 		{
 			var value = sender.getValue && sender.getValue() || sender.options.value || {};
 			var row =  jQuery("[data-path='"+(value.path.replace(/'/g, '&quot'))+"']",this.list);
