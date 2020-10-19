@@ -753,3 +753,19 @@ function api_upgrade20_1()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '20.1.001';
 }
+
+/**
+ * Add deleted timestamp and unique index for contact sharing
+ *
+ * @return string
+ */
+function api_upgrade20_1_001()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook_shared','shared_deleted',array(
+		'type' => 'timestamp',
+		'comment' => 'timestamp, if deleted'
+	));
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook_shared', array('shared_by','shared_with','contact_id'), true);
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '20.1.002';
+}

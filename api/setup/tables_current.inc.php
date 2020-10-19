@@ -518,11 +518,12 @@ $phpgw_baseline = array(
 			'shared_with' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False),
 			'shared_by' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False),
 			'shared_at' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
-			'shared_writable' => array('type' => 'bool','nullable' => False,'default' => '0')
+			'shared_writable' => array('type' => 'bool','nullable' => False,'default' => '0'),
+			'shared_deleted' => array('type' => 'timestamp','comment' => 'timestamp, if deleted')
 		),
 		'pk' => array('shared_id'),
 		'fk' => array(),
 		'ix' => array('contact_id','shared_with'),
-		'uc' => array()
+		'uc' => array(array('shared_by','shared_with','contact_id'))
 	)
 );
