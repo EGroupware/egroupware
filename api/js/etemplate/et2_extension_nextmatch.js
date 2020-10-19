@@ -2826,21 +2826,28 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
             var change = function (_node) {
                 // Call previously set change function
                 var result = widget_change.call(_widget, _node, header.nextmatch);
-                // Update filters, if we're not already doing so
-                if ((result || typeof result === 'undefined') && _widget.isDirty() && !header.update_in_progress) {
-                    // Update dirty
-                    _widget._oldValue = _widget.getValue();
+                // Find current value in activeFilters
+                var entry = header.nextmatch.activeFilters;
+                var path = _widget.getArrayMgr('content').explodeKey(_widget.id);
+                var i = 0;
+                if (path.length > 0) {
+                    for (; i < path.length; i++) {
+                        entry = entry[path[i]];
+                    }
+                }
+                // Update filters, if the value is different and we're not already doing so
+                if ((result || typeof result === 'undefined') && entry != _widget.getValue() && !header.update_in_progress) {
                     // Widget will not have an entry in getValues() because nulls
                     // are not returned, we remove it from activeFilters
                     if (_widget._oldValue == null) {
-                        var path = _widget.getArrayMgr('content').explodeKey(_widget.id);
-                        if (path.length > 0) {
-                            var entry = header.nextmatch.activeFilters;
-                            var i = 0;
-                            for (; i < path.length - 1; i++) {
-                                entry = entry[path[i]];
+                        var path_1 = _widget.getArrayMgr('content').explodeKey(_widget.id);
+                        if (path_1.length > 0) {
+                            var entry_1 = header.nextmatch.activeFilters;
+                            var i_1 = 0;
+                            for (; i_1 < path_1.length - 1; i_1++) {
+                                entry_1 = entry_1[path_1[i_1]];
                             }
-                            delete entry[path[i]];
+                            delete entry_1[path_1[i_1]];
                         }
                         header.nextmatch.applyFilters(header.nextmatch.activeFilters);
                     }
