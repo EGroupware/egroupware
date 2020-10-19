@@ -124,9 +124,10 @@ class notifications_popup implements notifications_iface {
 		$result = $this->db->insert( self::_notification_table, array(
 			'account_id'     => $this->recipient->account_id,
 			'notify_message' => $_message,
-			'notify_type'	 => self::_type,
-			'notify_data' => is_array($_data) ? json_encode($_data) : NULL
-			), false,__LINE__,__FILE__,self::_appname);
+			'notify_type'    => self::_type,
+			'notify_data'    => is_array($_data) ? json_encode($_data) : NULL,
+			'notify_created' => Api\DateTime::user2server('now'),
+		), false,__LINE__,__FILE__,self::_appname);
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
 		$push = new Api\Json\Push($this->recipient->account_id);
 		$push->call('app.notifications.append', $this->read());
@@ -158,13 +159,13 @@ class notifications_popup implements notifications_iface {
 					$actions = $_actions[$data['appname']];
 				}
 				$result[] = array(
-					'id'		=> $notification['notify_id'],
-					'message'	=> $notification['notify_message'],
-					'status'	=> $notification['notify_status'],
-					'created'	=> Api\DateTime::to($notification['notify_created']),
-					'current'		=> new DateTime(),
-					'actions'	=> is_array($actions)?$actions:NULL,
-					'extra_data'		=> ($data['data'] ? $data['data'] : array())
+					'id'      => $notification['notify_id'],
+					'message' => $notification['notify_message'],
+					'status'  => $notification['notify_status'],
+					'created' => Api\DateTime::server2user($notification['notify_created']),
+					'current' => new Api\DateTime('now'),
+					'actions' => is_array($actions)?$actions:NULL,
+					'extra_data' => ($data['data'] ? $data['data'] : array())
 				);
 
 			}
