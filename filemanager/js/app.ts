@@ -1290,10 +1290,10 @@ export class filemanagerAPP extends EgwApp
 	{
 		if (_senders[0].id == 'nm') return false;
 		let data = egw.dataGetUIDdata(_senders[0].id);
-		let readonly = (data.data.class || '').split(/ +/).indexOf('noEdit') >= 0;
+		let readonly = (data?.data.class || '').split(/ +/).indexOf('noEdit') >= 0;
 
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
-		return (data.data.is_dir && !readonly);
+		return (!_senders[0].id || data.data.is_dir && !readonly);
 	}
 
 	/**

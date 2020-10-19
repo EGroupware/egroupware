@@ -2518,7 +2518,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Check to see if we can handle the link
 		// First, find the UID
 		const row = this.controller.getRowByNode(target);
-		const uid = row.uid || null;
+		const uid = row?.uid || null;
 
 		// Get the file information
 		let files = [];

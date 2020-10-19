@@ -1866,10 +1866,11 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * @param {object} target
      */
     et2_nextmatch.prototype.handle_drop = function (event, target) {
+        var _a;
         // Check to see if we can handle the link
         // First, find the UID
         var row = this.controller.getRowByNode(target);
-        var uid = row.uid || null;
+        var uid = ((_a = row) === null || _a === void 0 ? void 0 : _a.uid) || null;
         // Get the file information
         var files = [];
         if (event.originalEvent && event.originalEvent.dataTransfer &&
