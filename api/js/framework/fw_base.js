@@ -681,6 +681,12 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		if (app)
 		{
 			var appname = app.appName+"-"+(_extra.id ? _extra.id : btoa(_link));
+			this.applications[appname] = this.getApplicationByName(appname);
+			if (this.applications[appname])
+			{
+				this.setActiveApp(this.applications[appname]);
+				return;
+			}
 			var self = this;
 			// add target flag
 			_link += '&fw_target='+appname;
