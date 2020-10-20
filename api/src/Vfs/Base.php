@@ -14,6 +14,7 @@ namespace EGroupware\Api\Vfs;
 
 use EGroupware\Api\Config;
 use EGroupware\Api\Vfs;
+use EGroupware\Api;
 
 /**
  * Shared base of Vfs class and Vfs-stream-wrapper
@@ -75,11 +76,12 @@ class Base
 	 * @param string $path =null path to mount the filesystem in the vfs, eg. /
 	 * @param boolean $check_url =null check if url is an existing directory, before mounting it
 	 * 	default null only checks if url does not contain a $ as used in $user or $pass
-	 * @param boolean $persitent_mount =true create a persitent mount, or only a temprary for current request
+	 * @param boolean|int $persistent_mount =true create a persitent mount, or only a temprary for current request,
+	 * 	or integer account_id to mount persistent for a given user or group
 	 * @param boolean $clear_fstab =false true clear current fstab, false (default) only add given mount
 	 * @return array|boolean array with fstab, if called without parameter or true on successful mount
 	 */
-	static function mount($url=null,$path=null,$check_url=null,$persitent_mount=true,$clear_fstab=false)
+	static function mount($url=null, $path=null, $check_url=null, $persistent_mount=true, $clear_fstab=false)
 	{
 		if (is_null($check_url)) $check_url = strpos($url,'$') === false;
 
@@ -132,14 +134,27 @@ class Base
 			return strlen($a) - strlen($b);
 		});
 
-		if ($persitent_mount)
+		if ($persistent_mount)
 		{
-			Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
-			$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
-			// invalidate session cache
-			if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+			if ($persistent_mount === true)
 			{
-				$GLOBALS['egw']->invalidate_session_cache();
+				Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
+				$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
+				// invalidate session cache
+				if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+				{
+					$GLOBALS['egw']->invalidate_session_cache();
+				}
+			}
+			else
+			{
+				$prefs = new Api\Preferences($persistent_mount);
+				$prefs->read_repository();
+				$prefs->user['common']['vfs_fstab'][$path] = $url;
+				$prefs->save_repository();
+				// also save for current session
+				$GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab'][$path] =
+					$_SESSION[Api\Session::EGW_INFO_CACHE]['user']['preferences']['common']['vfs_fstab'][$path] = $url;
 			}
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns true (successful new mount).');

@@ -983,6 +983,11 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		{
 			self::$fstab = $fstab;
 		}
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab']) &&
+			is_array($GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab']))
+		{
+			self::$fstab += $GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab'];
+		}
 
 		// set default context for our schema ('vfs') with current user
 		if (!($context = stream_context_get_options(stream_context_get_default())) || empty($context[self::SCHEME]['user']))
