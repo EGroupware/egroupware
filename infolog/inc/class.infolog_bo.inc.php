@@ -46,6 +46,12 @@ class infolog_bo
 	 * @var boolean
 	 */
 	var $log = false;
+
+	/**
+	 * Access permission cache for current user
+	 */
+	protected static $access_cache = array();
+
 	/**
 	 * Cached timezone data
 	 *
@@ -330,15 +336,13 @@ class infolog_bo
 	 */
 	function check_access($info,$required_rights,$other=0,$user=null)
 	{
-		static $cache = array();
-
 		$info_id = is_array($info) ? $info['info_id'] : $info;
 
 		if (!$user) $user = $this->user;
 		if ($user == $this->user)
 		{
 			$grants = $this->grants;
-			if ($info_id) $access =& $cache[$info_id][$required_rights];	// we only cache the current user!
+			if ($info_id) $access =& static::$access_cache[$info_id][$required_rights];	// we only cache the current user!
 		}
 		else
 		{
@@ -410,6 +414,7 @@ class infolog_bo
 	 */
 	function init()
 	{
+		static::$access_cache = array();
 		$this->so->init();
 	}
 
