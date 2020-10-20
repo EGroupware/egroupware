@@ -15,8 +15,9 @@ namespace EGroupware\Api\Vfs;
 
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
-use EGroupware\Collabora\Wopi;
-use filemanager_ui;
+use EGroupware\Filemanager\Sharing\AnonymousList;
+use EGroupware\Filemanager\Sharing\Ui;
+use EGroupware\Filemanager\Sharing\Ui as ShareUi;
 
 /**
  * VFS sharing
@@ -119,7 +120,7 @@ class Sharing extends \EGroupware\Api\Sharing
 			// ToDo: handle there's already something there with that name (incl. maybe the same share!)
 
 			Vfs::$is_root = true;
-			if (!Vfs::mount(Vfs\Sharing\StreamWrapper::share2url($share), $share['share_root'], false, false, $clear_fstab))
+			if (!Vfs::mount(Vfs\Sharing\StreamWrapper::share2url($share), $share['share_root'], false, false, false))
 			{
 				sleep(1);
 				return static::share_fail(
@@ -129,8 +130,7 @@ class Sharing extends \EGroupware\Api\Sharing
 			}
 			Vfs::$is_root = false;
 
-			Api\Framework::message(lang('Share has been mounted into you shares directory').': '.$share['share_root'], 'success');
-			// ToDo: ask user if he want's the share permanently mounted
+			// get_ui() will ask user if he wants the share permanently mounted
 			return;
 		}
 
@@ -233,6 +233,38 @@ class Sharing extends \EGroupware\Api\Sharing
 	 */
 	public function get_ui()
 	{
+		// Ask about the share, if the user is not anonymous.
+		//  * Link has already been opened in a new tab by this point *
+		if($GLOBALS['egw_info']['user']['account_lid'] !== 'anonymous' && $GLOBALS['egw_info']['user']['account_id'] !== $this->share['owner'])
+		{
+			// Check to see if this is already permanent mounted share
+			$mount_target = Vfs\Sharing\StreamWrapper::share2url($this->share);
+			if(($mounted = array_search($mount_target,$GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab'])))
+			{
+				Api\Json\Response::get()->apply('window.opener.egw.open_link',[
+					Api\Framework::link('/index.php',[
+						'menuaction' => 'filemanager.filemanager_ui.index',
+						'path' => $mounted
+						]),'filemanager',false,'filemanager'
+				]);
+			}
+			else
+			{
+				// New share, ask about it
+				Api\Json\Response::get()->apply('window.opener.egw.open_link',[
+					Api\Framework::link('/index.php',[
+						'menuaction' => 'filemanager.EGroupware\\Filemanager\\Sharing\\Ui.share_received',
+						'token' => $this->share['share_token']
+						]),'filemanager','600x150','filemanager'
+				]);
+			}
+
+			Api\Json\Response::get()->apply('window.close');
+			// Still need to load the list after though, since loading it processes what we just added
+			$ui = new \filemanager_ui();
+			return $ui->index();
+		}
+
 		// run full eTemplate2 UI for directories
 		$_GET['path'] = $this->share['share_root'];
 		$GLOBALS['egw_info']['user']['preferences']['filemanager']['nm_view'] = 'tile';
@@ -240,7 +272,7 @@ class Sharing extends \EGroupware\Api\Sharing
 		$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'filemanager';
 		Api\Framework::includeCSS('filemanager', 'sharing');
-		$ui = new SharingUi();
+		$ui = new AnonymousList();
 		$ui->index();
 	}
 
@@ -544,136 +576,6 @@ class Sharing extends \EGroupware\Api\Sharing
 			{
 				static::delete($share['share_id']);
 			}
-		}
-	}
-}
-
-if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'))
-{
-	require_once __DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php';
-
-	class SharingUi extends filemanager_ui
-	{
-		/**
-		 * Constructor
-		 *
-		 * Reimplemented to load filemanager translations
-		 */
-		function __construct()
-		{
-			parent::__construct();
-
-			Api\Translation::add_app('filemanager');
-		}
-
-		/**
-		 * Get active view - override so it points to this class
-		 *
-		 * @return callable
-		 */
-		public static function get_view()
-		{
-			return array(new SharingUi(), 'listview');
-		}
-
-		/**
-		 * Filemanager listview
-		 *
-		 * @param array $content
-		 * @param string $msg
-		 */
-		function listview(array $content=null,$msg=null)
-		{
-			$this->etemplate = $this->etemplate ? $this->etemplate : new Api\Etemplate(static::LIST_TEMPLATE);
-
-			// Override and take over get_rows so we can customize
-			$content['nm']['get_rows'] = '.' . get_class($this) . '.get_rows';
-
-			return parent::listview($content, $msg);
-		}
-
-		/**
-		 * Get the configured start directory for the current user
-		 *
-		 * @return string
-		 */
-		static function get_home_dir()
-		{
-			return $GLOBALS['egw']->sharing->get_root();
-		}
-
-		/**
-		 * Context menu
-		 *
-		 * @return array
-		 */
-		public static function get_actions()
-		{
-			$actions = parent::get_actions();
-			$group = 1;
-			// do not add edit setting action when we are in sharing
-			unset($actions['edit']);
-			if (Vfs::is_writable($GLOBALS['egw']->sharing->get_root()))
-			{
-				return $actions;
-			}
-			$actions+= array(
-				'egw_copy' => array(
-					'enabled' => false,
-					'group' => $group + 0.5,
-					'hideOnDisabled' => true
-				),
-				'egw_copy_add' => array(
-					'enabled' => false,
-					'group' => $group + 0.5,
-					'hideOnDisabled' => true
-				),
-				'paste' => array(
-					'enabled' => false,
-					'group' => $group + 0.5,
-					'hideOnDisabled' => true
-				),
-			);
-			return $actions;
-		}
-
-		protected function get_vfs_options($query)
-		{
-			$options = parent::get_vfs_options($query);
-
-			// Hide symlinks
-			// TODO: This hides everything, see Vfs::_check_add() line 648
-			//$options['type'] = '!l';
-
-			return $options;
-		}
-
-		/**
-		 * Callback to fetch the rows for the nextmatch widget
-		 *
-		 * @param array $query
-		 * @param array &$rows
-		 * @return int
-		 */
-		function get_rows(&$query, &$rows)
-		{
-			// Check for navigating outside share, redirect back to share
-			if (!empty($query['path']) && (!Vfs::stat($query['path'],false) || !Vfs::is_dir($query['path']) || !Vfs::check_access($query['path'],Vfs::READABLE)))
-			{
-				// only redirect, if it would be to some other location, gives redirect-loop otherwise
-				if ($query['path'] != ($path = static::get_home_dir()))
-				{
-					// we will leave here, since we are not allowed, go back to root
-					// TODO: Give message about it, redirect to home dir
-				}
-				$rows = array();
-				return 0;
-			}
-
-			// Get file list from parent
-			$total = parent::get_rows($query, $rows);
-
-			return $total;
 		}
 	}
 }

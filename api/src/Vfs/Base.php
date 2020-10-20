@@ -180,6 +180,14 @@ class Base
 		}
 		unset(self::$fstab[$path], $GLOBALS['egw_info']['server']['vfs_fstab'][$path]);
 		Config::save_value('vfs_fstab', $GLOBALS['egw_info']['server']['vfs_fstab'],'phpgwapi');
+
+		unset($GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab'][$path]);
+		unset($_SESSION[Api\Session::EGW_INFO_CACHE]['user']['preferences']['common']['vfs_fstab'][$path]);
+		$prefs = new Api\Preferences();
+		$prefs->read_repository();
+		unset($prefs->user['common']['vfs_fstab'][$path]);
+		$prefs->save_repository();
+
 		// invalidate session cache
 		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 		{

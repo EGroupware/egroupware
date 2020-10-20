@@ -842,7 +842,17 @@ class filemanager_ui
 		// feeding the links to dirs to Vfs::find() deletes the content of the dirs, not just the link!
 		foreach($selected as $key => $path)
 		{
-			if (!Vfs::is_dir($path) || Vfs::is_link($path))
+			if (Vfs::is_dir($path) && $GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab'][$path])
+			{
+				// Trying to delete a share.  Unmount.
+				$root = Vfs::$is_root;
+				Vfs::$is_root = true;
+				Vfs::umount($path);
+				Vfs::$is_root = $root;
+				++$dirs;
+				unset($selected[$key]);
+			}
+			else if (!Vfs::is_dir($path) || Vfs::is_link($path))
 			{
 				if (Vfs::unlink($path))
 				{
@@ -1704,5 +1714,25 @@ class filemanager_ui
 			$mode |= 0x201;
 		}
 		return $mode;
+	}
+
+
+	/**
+	 * User just got a new share.  Ask the questions, let them customize
+	 *
+	 * @param array $content
+	 */
+	public function share_received($content = array())
+	{
+		// Deal with returning data & changes
+
+		// Read info for display
+		$content['mount_location'] = $content['share_path'];
+		$sel_options = array();
+		$readonlys = array();
+		$preserve = $content;
+		$template = new Api\Etemplate("api.file_share_received");
+
+		$template->exec(__CLASS__ . '::' . __METHOD__, $content, $sel_options, $readonlys, $preserve, 2);
 	}
 }

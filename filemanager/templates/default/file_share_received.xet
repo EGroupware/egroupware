@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="filemanager.file_share_received" template="" lang="" group="0" version="20.1">
+		<grid width="100%">
+			<columns>
+				<column width="20%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<label value="Location"/>
+					<description id="share_root" />
+				</row>
+				<row>
+					<label value="Name"/>
+					<textbox id="mount_location"/>
+				</row>
+				<row>
+				 	<label value="Mount permanently" for="permanent"/>
+					<checkbox id="permanent"/>
+				</row>
+				<row class="dialogFooterToolbar">
+					<hbox>
+						<button label="Ok" id="ok" image="ok" background_image="1" align="center"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
