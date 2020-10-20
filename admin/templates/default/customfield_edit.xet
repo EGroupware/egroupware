@@ -44,7 +44,7 @@
 						<description value="Length"/>
 						<textbox type="integer" statustext="displayed length of input field (set rows=1 to limit length)" id="cf_len" size="4"/>
 						<description value="Rows"/>
-						<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" max="10" size="4"/>
+						<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" size="4"/>
 						<description value="Order"/>
 						<textbox type="integer" statustext="determines the order the fields are displayed" id="cf_order" min="1" size="4"/>
 					</box>
