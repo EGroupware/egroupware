@@ -1,3 +1,24 @@
+egroupware-docker (20.1.20201020) hardy; urgency=low
+
+  * Swoolepush: fix access to undeclared static propertiy SwoolPush\Backend::$failed_attempts
+  * Swoolepush: periodically pinging server from browser to detect lost websocket connection and reconnect
+  * Api: detect if framework data is missing for popups too and redirect to cd=popup to load it
+  * Api: setting configured server-timezone for the databases connection, to fix cases were they do not match
+  * Admin: fix session list did NOT show interactive sessions, if push is used
+  * OpenIDConnect/Guacamole: fix clients managed as EGroupware apps require Rocket.Chat run rights
+  * Infolog: Responsible user in a different timezone would adjust the due date when saving
+  * Mail: do not override existing compose fields with predefined values
+  * Filemanager: fix drag and drop a file no longer working from outside of browser into the list
+  * HTML Editor: fix bug in editing uploaded image
+  * HTML Editor: add table button into html editor's toolbar
+  * Rocket.Chat: fix not working login with newer desktop clients
+  * Calendar: Current time line now spans all columns in single day view
+  * Calendar/Merge: Fix {{link}} placeholder not working for HTML mails, use {{link/href}} to get a clickable link
+  * Tracker: Fix export database values always gave 0 rows
+  * PostgreSQL/SmallPART: fix installation / update to 20.1 failed
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 20 Oct 2020 09:38:59 +0200
+
 egroupware-docker (20.1.20201005) hardy; urgency=low
 
   * WatchTowner/Nginx: modified Nginx config to resolve changed IP addresses of updated containers, fix 502 Bad Gateway errors
