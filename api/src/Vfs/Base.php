@@ -178,10 +178,8 @@ class Base
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($path).') NOT mounted!');
 			return false;	// $path not mounted
 		}
-		unset(self::$fstab[$path]);
-
-		Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
-		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
+		unset(self::$fstab[$path], $GLOBALS['egw_info']['server']['vfs_fstab'][$path]);
+		Config::save_value('vfs_fstab', $GLOBALS['egw_info']['server']['vfs_fstab'],'phpgwapi');
 		// invalidate session cache
 		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 		{
