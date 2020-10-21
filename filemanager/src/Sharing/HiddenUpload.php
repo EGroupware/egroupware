@@ -3,7 +3,8 @@
 
 namespace EGroupware\Filemanager\Sharing;
 
-
+use EGroupware\Api\Etemplate;
+use EGroupware\Api\Json;
 use EGroupware\Api\Vfs;
 use EGroupware\Api\Vfs\Sharing;
 use EGroupware\Api\Vfs\UploadSharingUi;
@@ -33,7 +34,7 @@ class HiddenUpload extends AnonymousList
 	 */
 	function listview(array $content=null,$msg=null)
 	{
-		$this->etemplate = $this->etemplate ? $this->etemplate : new Api\Etemplate(static::LIST_TEMPLATE);
+		$this->etemplate = $this->etemplate ? $this->etemplate : new Etemplate(static::LIST_TEMPLATE);
 
 		if (isset($GLOBALS['egw']->sharing) && $GLOBALS['egw']->sharing->has_hidden_upload())
 		{
@@ -120,7 +121,7 @@ class HiddenUpload extends AnonymousList
 		}
 
 		// tell client-side that this directory is writeable - allows upload + button
-		$response = Api\Json\Response::get();
+		$response = Json\Response::get();
 		$response->call('app.filemanager.set_readonly', $query['path'], false);
 
 		// Hide the hidden upload directory, mark everything else as readonly

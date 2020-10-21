@@ -131,11 +131,11 @@ class HiddenUploadSharing extends Sharing
 	{
 		$upload_dir = Vfs::concat($path, self::HIDDEN_UPLOAD_DIR);
 
-		if (($stat = Vfs::stat($upload_dir)) && !Vfs::check_access($upload_dir, Vfs::WRITABLE, $stat))
+		if (($stat = stat($upload_dir)) && !Vfs::check_access($upload_dir, Vfs::WRITABLE, $stat))
 		{
 			throw new Api\Exception\NoPermission("Upload directory exists, but you have no write permission");
 		}
-		if (!($stat = Vfs::stat($upload_dir)))
+		if (!($stat = stat($upload_dir)))
 		{
 			// Directory is not there, create it
 			if (!mkdir($upload_dir))
