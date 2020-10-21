@@ -990,8 +990,14 @@ abstract class Ajax extends Api\Framework
 		$GLOBALS['egw_info']['flags']['currentapp'] = $app;
 
 		$GLOBALS['egw']->framework->response = Api\Json\Response::get();
-
-		$GLOBALS[$class] = $obj = CreateObject($app.'.'.$class);
+		if (class_exists($class))
+		{
+			$GLOBALS[$class] = $obj = new $class;
+		}
+		else
+		{
+			$GLOBALS[$class] = $obj = CreateObject($app . '.' . $class);
+		}
 
 		if(!is_array($obj->public_functions) || !$obj->public_functions[$method])
 		{
