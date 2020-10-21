@@ -372,7 +372,7 @@
 					this.loading_prompt('connectionLost', true, '', null);
 				}, egw(window));
 				window.Offline.on('up', function(){
-					jQuery('#egw_message').click();
+					jQuery('.close', '#egw_message').click();
 					this.loading_prompt('connectionLost', false);
 				}, egw(window));
 			}
