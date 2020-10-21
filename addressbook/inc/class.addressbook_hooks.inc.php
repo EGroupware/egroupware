@@ -38,7 +38,7 @@ class addressbook_hooks
 			{
 				display_sidebox($appname, lang('Contact data'), array(
 					array(
-						'text'    => '<div id="addressbook_'.$_GET['contact_id'].'_view_sidebox" class="addressbook_view_sidebox"/>',
+						'text'    => '<div id="'.self::getViewDOMID($_GET['contact_id'], $_GET['crm_list']).'" class="addressbook_view_sidebox"/>',
 						'no_lang' => true,
 						'link'    => false,
 						'icon'    => false,
@@ -100,6 +100,17 @@ class addressbook_hooks
 				display_sidebox($appname,lang('Admin'),$file);
 			}
 		}
+	}
+
+	/**
+	 * Generate unique Id for addressbook view sidebox
+	 * @param $contact_id
+	 * @param $view
+	 * @return string
+	 */
+	static function getViewDOMID($contact_id, $view)
+	{
+		return 'addressbook_'.$contact_id.'_'.$view.'_view_sidebox';
 	}
 
 	/**

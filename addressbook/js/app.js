@@ -90,10 +90,12 @@ var AddressbookApp = /** @class */ (function (_super) {
                 break;
         }
         jQuery('select[id*="adr_one_countrycode"]').each(function () {
-            app.addressbook.show_custom_country(this);
+            if (app.addressbook)
+                app.addressbook.show_custom_country(this);
         });
         jQuery('select[id*="adr_two_countrycode"]').each(function () {
-            app.addressbook.show_custom_country(this);
+            if (app.addressbook)
+                app.addressbook.show_custom_country(this);
         });
     };
     /**
@@ -206,7 +208,7 @@ var AddressbookApp = /** @class */ (function (_super) {
         this.egw.openTab(id, 'addressbook', 'view', extras, {
             displayName: data.n_fn,
             icon: data.photo,
-            id: id
+            id: id + '_' + extras.crm_list
         });
     };
     /**
