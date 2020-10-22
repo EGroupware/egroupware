@@ -77,6 +77,12 @@ class Ldap
 	var $accountsFilter = '(objectclass=posixaccount)';
 
 	/**
+	 * Filter used for all addressbooks
+	 * @var string
+	 */
+	var $contactsFilter = '(objectclass=inetorgperson)';
+
+	/**
 	* @var string $allContactsDN holds the base DN of all addressbook
 	*/
 	var $allContactsDN;
@@ -825,7 +831,7 @@ class Ldap
 				$objectFilter = $this->accountsFilter;
 				break;
 			default:
-				$objectFilter = '(objectclass=inetorgperson)';
+				$objectFilter = $this->contactsFilter;
 				break;
 		}
 		// exclude expired accounts

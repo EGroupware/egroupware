@@ -104,6 +104,7 @@ class Ads extends Ldap
 
 		// get filter for accounts (incl. additional filter from setup)
 		$this->accountsFilter = $this->accounts_ads->type_filter('u');
+		$this->contactsFilter = "(|(objectclass=contact)$this->accountsFilter)";
 
 		if ($ds)
 		{
