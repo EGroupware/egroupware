@@ -276,7 +276,7 @@
 				//Set the sidebox width if a application specific sidebox width is set
 				// do not trigger resize if the sidebar is already in toggle on mode and
 				// the next set state is the same
-				if (_app.sideboxWidth !== false &&  egw.preference('toggleSidebar',_app.appName) == 'off')
+				if (_app.sideboxWidth !== false &&  egw.preference('toggleSidebar',_app.internalName) == 'off')
 				{
 					this.sideboxSizeCallback(_app.sideboxWidth);
 					this.splitterUi.constraints[0].size = _app.sideboxWidth;
@@ -330,7 +330,7 @@
 
 				if (_toggleMode !== "toggle")
 				{
-					egw.set_preference(this.tag.activeApp.internalName, 'jdotssideboxwidth', _width);
+					if (!framework.isAnInternalApp(this.tag.activeApp)) egw.set_preference(this.tag.activeApp.internalName, 'jdotssideboxwidth', _width);
 
 					//If there are no global application width values, set the sidebox width of
 					//the application every time the splitter is resized
@@ -441,7 +441,7 @@
 		 */
 		categoryOpenCloseCallback: function(_opened)
 		{
-			egw.set_preference(this.tag.appName, 'jdots_sidebox_'+this.catName, _opened);
+			if (!framework.isAnInternalApp(this.tag)) egw.set_preference(this.tag.internalName, 'jdots_sidebox_'+this.catName, _opened);
 		},
 
 		categoryAnimationCallback: function()
@@ -455,16 +455,16 @@
 		 */
 		_toggleSidebarCallback: function (_state)
 		{
-			var splitterWidth = egw.preference('jdotssideboxwidth',this.activeApp.appName) || this.activeApp.sideboxWidth;
+			var splitterWidth = egw.preference('jdotssideboxwidth',this.activeApp.internalName) || this.activeApp.sideboxWidth;
 			if (_state === "on")
 			{
 				this.splitterUi.resizeCallback(70,'toggle');
-				egw.set_preference(this.activeApp.appName, 'toggleSidebar', 'on');
+				if (!framework.isAnInternalApp(this.activeApp)) egw.set_preference(this.activeApp.internalName, 'toggleSidebar', 'on');
 			}
 			else
 			{
 				this.splitterUi.resizeCallback(splitterWidth);
-				egw.set_preference(this.activeApp.appName, 'toggleSidebar', 'off');
+				if (!framework.isAnInternalApp(this.activeApp)) egw.set_preference(this.activeApp.internalName, 'toggleSidebar', 'off');
 			}
 		},
 
@@ -473,7 +473,7 @@
 		 */
 		getToggleSidebarState: function()
 		{
-			var toggleSidebar = egw.preference('toggleSidebar',this.activeApp.appName);
+			var toggleSidebar = egw.preference('toggleSidebar',this.activeApp.internalName);
 			this.toggleSidebarUi.set_toggle(toggleSidebar?toggleSidebar:"off", this._toggleSidebarCallback, this);
 		},
 

@@ -308,7 +308,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 						//Lookup whether this entry was opened before. If no data is
 						//stored about this, use the information we got from the server
-						var opened = egw.preference('jdots_sidebox_'+_data[i].menu_name, _app.appName);
+						var opened = egw.preference('jdots_sidebox_'+_data[i].menu_name, _app.internalName);
 						if (typeof opened == 'undefined')
 						{
 							opened = _data[i].opened;
@@ -446,7 +446,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	 */
 	categoryOpenCloseCallback: function(_opened)
 	{
-		egw.set_preference(this.tag.appName, 'jdots_sidebox_'+this.catName, _opened);
+		if (!framework.isAnInternalApp(this.tag)) egw.set_preference(this.tag.internalName, 'jdots_sidebox_'+this.catName, _opened);
 	},
 
 	categoryAnimationCallback: function()
@@ -680,7 +680,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		var app = this.parseAppFromUrl(_link);
 		if (app)
 		{
-			var appname = app.appName+"-"+(_extra.id ? _extra.id : btoa(_link));
+			var appname = app.appName+"-"+btoa(_extra.id ? _extra.id : _link);
 			this.applications[appname] = this.getApplicationByName(appname);
 			if (this.applications[appname])
 			{
@@ -1090,7 +1090,12 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	refresh: function(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
 	{
 		//alert("egw_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
-
+		let app_object = this.getApplicationByName(_app);
+		if (this.isAnInternalApp(app_object) && typeof app_object.refreshCallback == 'function')
+		{
+			app_object.refreshCallback();
+			return;
+		}
 		if (!_app)	// force reload of entire framework, eg. when template-set changes
 		{
 			window.location.href = window.egw_webserverUrl+'/index.php?cd=yes'+(_msg ? '&msg='+encodeURIComponent(_msg) : '');
@@ -1255,5 +1260,15 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				}
 			}
 		});
+	},
+
+	/**
+	 * Check if the app is an internal app object like multitab views
+	 * @param _app app object
+	 * @return {boolean}
+	 */
+	isAnInternalApp: function(_app)
+	{
+		return _app.appName != _app.internalName;
 	}
 });}).call(this);

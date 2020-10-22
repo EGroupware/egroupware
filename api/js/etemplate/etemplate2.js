@@ -865,9 +865,18 @@ var etemplate2 = /** @class */ (function () {
      */
     etemplate2.app_refresh = function (_msg, _app, _id, _type) {
         var refresh_done = false;
-        var et2 = etemplate2.getByApplication(_app);
+        var app = _app.split('-');
+        var et2 = etemplate2.getByApplication(app[0]);
         for (var i = 0; i < et2.length; i++) {
-            refresh_done = et2[i].refresh(_msg, _app, _id, _type) || refresh_done;
+            if (app[1]) {
+                if (et2[i]['uniqueId'].match(_app)) {
+                    refresh_done = et2[i].refresh(_msg, app[0], _id, _type) || refresh_done;
+                    break;
+                }
+            }
+            else {
+                refresh_done = et2[i].refresh(_msg, app[0], _id, _type) || refresh_done;
+            }
         }
         return refresh_done;
     };
@@ -995,8 +1004,8 @@ var etemplate2 = /** @class */ (function () {
         }
         // handle framework.setSidebox calls
         if (window.framework && jQuery.isArray(data.setSidebox)) {
-            if (data['open-target'])
-                data.setSidebox[0] = data['open-target'];
+            if (data['fw-target'])
+                data.setSidebox[0] = data['fw-target'];
             window.framework.setSidebox.apply(window.framework, data.setSidebox);
         }
         // regular et2 re-load
@@ -1013,7 +1022,7 @@ var etemplate2 = /** @class */ (function () {
             else {
                 // Not etemplate
                 var node = document.getElementById(data.DOMNodeID);
-                var uniqueId = '';
+                var uniqueId = data.DOMNodeID;
                 if (node) {
                     if (node.children.length) {
                         // Node has children already?  Check for loading over an
@@ -1022,11 +1031,11 @@ var etemplate2 = /** @class */ (function () {
                         if (old)
                             old.clear();
                     }
-                    if (data['open_target']) {
+                    if (data['open_target'] && !uniqueId.match(data['open_target'])) {
                         uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
                     }
                     var et2 = new etemplate2(node, data.menuaction, uniqueId);
-                    et2.load(data.name, data.url, data.data, null, null, null, data['open-target']);
+                    et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
                     return true;
                 }
                 else {

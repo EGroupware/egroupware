@@ -231,8 +231,21 @@ class AddressbookApp extends EgwApp
 		this.egw.openTab(id, 'addressbook', 'view', extras, {
 			displayName: data.n_fn,
 			icon: data.photo,
-			id: id+'_'+extras.crm_list
+			refreshCallback: this.view_refresh,
+			id: id+'-'+extras.crm_list,
 		});
+	}
+
+	/**
+	 * callback for refreshing relative crm view list
+	 */
+	view_refresh()
+	{
+		let et2 = etemplate2.getById("addressbook-view-"+this.appName);
+		if (et2)
+		{
+			et2.app_obj.addressbook.view_set_list();
+		}
 	}
 
 	/**

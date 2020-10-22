@@ -208,8 +208,18 @@ var AddressbookApp = /** @class */ (function (_super) {
         this.egw.openTab(id, 'addressbook', 'view', extras, {
             displayName: data.n_fn,
             icon: data.photo,
-            id: id + '_' + extras.crm_list
+            refreshCallback: this.view_refresh,
+            id: id + '-' + extras.crm_list,
         });
+    };
+    /**
+     * callback for refreshing relative crm view list
+     */
+    AddressbookApp.prototype.view_refresh = function () {
+        var et2 = etemplate2_1.etemplate2.getById("addressbook-view-" + this.appName);
+        if (et2) {
+            et2.app_obj.addressbook.view_set_list();
+        }
     };
     /**
      * Set link filter for the already open & rendered  list
