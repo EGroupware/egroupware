@@ -105,6 +105,8 @@
 	}
 	else if (debug) console.log('found injected egw object');
 
+	var include = JSON.parse(egw_script.getAttribute('data-include')) || [];
+
 	// check for a framework object
 	if (typeof window.framework == 'undefined')
 	{
@@ -130,12 +132,14 @@
 			// ignore SecurityError exception if top is different security context / cross-origin
 		}
 		// if framework not found, but requested to check for it, redirect to cd=yes to create it
+		var check_framework = egw_script.getAttribute('data-check-framework');
 		if (typeof window.framework == 'undefined' &&
-			!window.location.pathname.match(/\/login.php/) && // not for login page
-			!window.location.search.match(/[&?]cd=/))
+			!window.location.pathname.match(/\/(smallpart\/|login.php)/) && // not for login page
+			!window.location.search.match(/[&?]cd=/) &&
+			// for popups check if required files are not about to be loaded (saved additional redirect and fixes LTI launches)
+			(check_framework || include.filter(function(_uri){return _uri.match(/api\/(config|user)\.php/);}).length < 2))
 		{
-			window.location.search += (window.location.search ? "&" : "?")+
-				(egw_script.getAttribute('data-check-framework') ? "cd=yes" : "cd=popup");
+			window.location.search += (window.location.search ? "&" : "?")+(check_framework ? "cd=yes" : "cd=popup");
 		}
 	}
 	try {
@@ -162,7 +166,6 @@
 	}
 
 	window.egw_LAB = $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:window.egw_webserverUrl+'/'});
-	var include = JSON.parse(egw_script.getAttribute('data-include'));
 	window.egw_LAB.script(include).wait(function()
 	{
 		// We need to override the globalEval to mitigate potential execution of
