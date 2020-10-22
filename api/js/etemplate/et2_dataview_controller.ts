@@ -1007,7 +1007,7 @@ export class et2_dataview_controller
 					entry.idx = newIdx;
 					newMap[newIdx] = entry;
 				}
-				else
+				else if(newMap[newIdx]!==this._indexMap[key])
 				{
 					// Make sure the old entry gets invalidated
 					entry.idx = null;
