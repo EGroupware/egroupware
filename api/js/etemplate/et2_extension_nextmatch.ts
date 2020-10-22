@@ -269,6 +269,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	// Window timer for automatically refreshing
 	private _autorefresh_timer: number;
 
+	// Nextmatch can't render while hidden, we store refresh requests for later
+	private _queued_refreshes : null|{type : string, ids: string[]}[] = [];
+
 	// When printing, we change the layout around.  Keep some values so it can be restored after
 	private print: PrintSettings = {
 		old_height: 0,
@@ -739,15 +742,13 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		{
 			return;
 		}
+
+		// Make sure we're dealing with arrays
+		if (typeof _row_ids == 'string' || typeof _row_ids == 'number') _row_ids = [_row_ids];
+
 		if (!this.div.is(':visible'))	// run refresh, once we become visible again
 		{
-			jQuery(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch',
-				// Important to use anonymous function instead of just 'this.refresh' because
-				// of the parameters passed
-				function() {this.nm.refresh(this.ids, this.type);}
-				.bind({nm: this, ids: _row_ids, type: _type})
-			);
-			return;
+			return this._queue_refresh(_row_ids, _type);
 		}
 
 		// Make some changes in what we're doing based on preference
@@ -766,7 +767,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 		if (typeof _type == 'undefined') _type = et2_nextmatch.EDIT;
-		if (typeof _row_ids == 'string' || typeof _row_ids == 'number') _row_ids = [_row_ids];
 		if (typeof _row_ids == "undefined" || _row_ids === null)
 		{
 			this.applyFilters();
@@ -999,6 +999,77 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this.nm.controller._selectionMgr.setTotalCount(this.nm.controller._grid.getTotalCount());
 		}
 		this.nm.egw().dataUnregisterUID(this.uid, this.nm._push_add_callback, this);
+	}
+
+	/**
+	 * Queue a refresh request until later, when nextmatch is visible
+	 *
+	 * Nextmatch can't re-draw anything while it's hidden (it messes up the sizing when it renders) so we can't actually
+	 * do a refresh right now.  Queue it up and when visible again we'll update then.  If we get too many changes
+	 * queued, we'll throw them all away and do a full refresh.
+	 *
+	 * @param _row_ids
+	 * @param _type
+	 * @private
+	 */
+	protected _queue_refresh(_row_ids : string[], _type : string)
+	{
+		// Maximum number of requests to queue.  50 chosen arbitrarily just to limit things
+		const max_queued = 50;
+
+		if(this._queued_refreshes === null)
+		{
+			// Already too many, we'll refresh later
+			return;
+		}
+
+		// Cancel any existing listener
+		let tab = jQuery(this.getInstanceManager().DOMContainer.parentNode)
+			.off('show.et2_nextmatch')
+			.one('show.et2_nextmatch', this._queue_refresh_callback.bind(this));
+
+
+		// Too many?  Forget it, we'll refresh everything.
+		if(this._queued_refreshes.length >= max_queued)
+		{
+			this._queued_refreshes = null;
+			return;
+		}
+
+		// Skip if already in array
+		if(this._queued_refreshes.some( queue => queue.ids.length === _row_ids.length && queue.ids.every((value, index) => value === _row_ids[index])))
+		{
+			return;
+		}
+		this._queued_refreshes.push({ids: _row_ids, type: _type});
+	}
+
+	protected _queue_refresh_callback()
+	{
+		if(this._queued_refreshes === null)
+		{
+			// Still bound, but length is 0 - full refresh time
+			this._queued_refreshes = [];
+			return this.applyFilters();
+		}
+		let types = {};
+		types[et2_nextmatch.ADD] = [];
+		types[et2_nextmatch.UPDATE] = [];
+		types[et2_nextmatch.UPDATE_IN_PLACE] = [];
+		types[et2_nextmatch.DELETE] = [];
+		for(let refresh of this._queued_refreshes)
+		{
+			types[refresh.type] = types[refresh.type].concat(refresh.ids);
+		}
+		this._queued_refreshes = [];
+		for(let type in types)
+		{
+			if(types[type].length > 0)
+			{
+				// Fire each change type once will all changed IDs
+				this.refresh(types[type].filter((v, i, a) => a.indexOf(v) === i), type);
+			}
+		}
 	}
 
 	/**
