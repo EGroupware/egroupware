@@ -4319,6 +4319,7 @@ td.message span.message {
   cursor: pointer;
   background-repeat: repeat-x;
   height: 100%;
+  max-width: 200px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header .notifyTabDiv {
   position: absolute;
@@ -4511,6 +4512,9 @@ td.message span.message {
   color: #000000;
   padding-top: 0;
   line-height: 33px;
+  height: 33px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active:hover {
   background-image: url(../images/reload.png);
