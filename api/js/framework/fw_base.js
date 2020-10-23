@@ -1269,6 +1269,6 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	 */
 	isAnInternalApp: function(_app)
 	{
-		return _app.appName != _app.internalName;
+		return _app && _app.appName != _app.internalName;
 	}
 });}).call(this);
