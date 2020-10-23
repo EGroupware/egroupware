@@ -369,7 +369,7 @@ class addressbook_vcal extends addressbook_bo
 									}
 									// Horde::logMessage("vCalAddressbook $vcardField omitted due to maximum size $size",
 									//		__FILE__, __LINE__, PEAR_LOG_WARNING);
-									continue;
+									continue 2;
 								}
 								$values = array();
 							}
@@ -425,7 +425,7 @@ class addressbook_vcal extends addressbook_bo
 								}
 								// Horde::logMessage("vCalAddressbook $vcardField omitted due to maximum size $size",
 								//		__FILE__, __LINE__, PEAR_LOG_WARNING);
-								continue;
+								continue 2;
 							}
 							// truncate the value to size
 							$cursize = strlen(implode('', $values));
@@ -1003,7 +1003,7 @@ class addressbook_vcal extends addressbook_bo
 								if ($vcardValues[$vcardKey]['params']['ENCODING'] === 'SMIME')
 								{
 									// ignore re-importing of S/Mime pubkey for now, as we might be called for a new contact
-									continue;
+									continue 2;
 								}
 								break;
 
