@@ -1292,7 +1292,7 @@ class Contacts extends Contacts\Storage
 		{
 			if (!empty($shared['shared_by']) && $shared['shared_by'] != $this->user)
 			{
-				$grants = $this->get_grants($user);
+				$grants = $this->get_grants($shared['shared_by']);
 			}
 			else
 			{
