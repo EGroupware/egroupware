@@ -511,12 +511,12 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			'<span class="calendar_calEventLabel">' + this.egw().lang('Time') + '</span>:' + timespan :
 			'<span class="calendar_calEventLabel">' + this.egw().lang('Start') + '</span>:' + start + ' ' +
 			'<span class="calendar_calEventLabel">' + this.egw().lang('End') + '</span>:' + end;
-		let cat_label = '';
+		let cat_label: (string | string[]) = '';
 		if(this.options.value.category)
 		{
 			const cat = et2_createWidget('select-cat', {'readonly': true}, this);
 			cat.set_value(this.options.value.category);
-			let cat_label : (string | string[]) = this.options.value.category.indexOf(',') <= 0 ? cat.span.text() : [];
+			cat_label = this.options.value.category.indexOf(',') <= 0 ? cat.span.text() : [];
 			if(typeof cat_label != 'string')
 			{
 				cat.span.children().each(function() {

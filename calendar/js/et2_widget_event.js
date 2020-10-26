@@ -403,12 +403,12 @@ var et2_calendar_event = /** @class */ (function (_super) {
         if (this.options.value.category) {
             var cat = et2_createWidget('select-cat', { 'readonly': true }, this);
             cat.set_value(this.options.value.category);
-            var cat_label_1 = this.options.value.category.indexOf(',') <= 0 ? cat.span.text() : [];
-            if (typeof cat_label_1 != 'string') {
+            cat_label = this.options.value.category.indexOf(',') <= 0 ? cat.span.text() : [];
+            if (typeof cat_label != 'string') {
                 cat.span.children().each(function () {
-                    cat_label_1.push(jQuery(this).text());
+                    cat_label.push(jQuery(this).text());
                 });
-                cat_label_1 = cat_label_1.join(', ');
+                cat_label = cat_label.join(', ');
             }
             cat.destroy();
         }
