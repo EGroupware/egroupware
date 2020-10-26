@@ -1,6 +1,7 @@
 %1 added	addressbook	de	%1 hinzugefügt
 %1 contact(s) %2	addressbook	de	%1 Kontakt(e) %2
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	de	%1 Kontakt(e) %2, %3 nicht wegen fehlender Rechte !!!
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	de	%1 Kontakt(e) %2, %3 nicht da %4!
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	de	%1 Kontakt(e) %2, %3 nicht wegen fehlender Rechte!
 %1 contacts updated (%2 errors).	addressbook	de	%1 Kontakte aktualisiert (%2 Fehler).
 %1 fields in %2 other organisation member(s) changed	addressbook	de	%1 Felder in %2 Mitglied(ern) der Organisation geändert
 %1 key(s) added to public keyserver "%2".	addressbook	de	%1 Schlüssel wurden dem öffentlichen Schlüsselserver "%2" eingetragen.
@@ -433,7 +434,6 @@ replacements for inserting contacts into documents	addressbook	de	Platzhalter f�
 required fields *	addressbook	de	unbedingt auszufüllende Felder *
 role	addressbook	de	Beruf
 room	addressbook	de	Raum
-schedule a video conference	addressbook	de	Videokonferenz planen
 search letter	addressbook	de	Suche nach Buchstaben
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	de	Wählen Sie ein hochformatiges jpeg Foto. Es wird 60 Pixel breit skaliert.
 select a source address to be used in geolocation routing system	addressbook	de	Legen Sie fest, wie der Startpunkt für die Routenplanung gesetzt wird.

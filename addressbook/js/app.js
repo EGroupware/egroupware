@@ -1235,6 +1235,7 @@ var AddressbookApp = /** @class */ (function (_super) {
         var value = (_a = shared) === null || _a === void 0 ? void 0 : _a.get_value();
         if (value) {
             this.egw.json('addressbook.addressbook_ui.ajax_check_shared', [{
+                    contact: this.et2.getInstanceManager().getValues(this.et2),
                     shared_values: value,
                     shared_writable: this.et2.getInputWidgetById('shared_writable').get_value()
                 }], function (_data) {

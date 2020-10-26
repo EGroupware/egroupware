@@ -606,6 +606,10 @@ abstract class admin_cmd
 					$class = 'EGroupware\\' . $class;
 					$label = $class::name();
 				}
+				else
+				{
+					unset($labels[$class]);
+				}
 			}
 
 			// sort them alphabetic
