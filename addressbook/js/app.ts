@@ -1488,6 +1488,7 @@ class AddressbookApp extends EgwApp
 		if (value)
 		{
 			this.egw.json('addressbook.addressbook_ui.ajax_check_shared', [{
+				contact: this.et2.getInstanceManager().getValues(this.et2),	// for sharing policy
 				shared_values: value,
 				shared_writable: this.et2.getInputWidgetById('shared_writable').get_value()
 			}], _data => {

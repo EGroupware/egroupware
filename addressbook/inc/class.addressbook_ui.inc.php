@@ -162,14 +162,21 @@ class addressbook_ui extends addressbook_bo
 				{
 					$success = $failed = $action_msg = null;
 					if ($this->action($_content['nm']['action'],$_content['nm']['selected'],$_content['nm']['select_all'],
-						$success,$failed,$action_msg,'index',$msg,$_content['nm']['checkboxes']))
+						$success,$failed,$action_msg,'index',$msg,$_content['nm']['checkboxes'], $error_msg))
 					{
 						$msg .= lang('%1 contact(s) %2',$success,$action_msg);
 						Framework::message($msg);
 					}
 					elseif(is_null($msg))
 					{
-						$msg .= lang('%1 contact(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+						if (empty($error_msg))
+						{
+							$msg .= lang('%1 contact(s) %2, %3 failed because of insufficent rights !!!', $success, $action_msg, $failed);
+						}
+						else
+						{
+							$msg .= lang('%1 contact(s) %2, %3 failed because of %4 !!!', $success, $action_msg, $failed, $error_msg);
+						}
 						Framework::message($msg,'error');
 					}
 					$msg = '';
@@ -1213,12 +1220,14 @@ class addressbook_ui extends addressbook_bo
 	 * @param int &$failed number of failed actions (not enought permissions)
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 contacts 'deleted'
 	 * @param string/array $session_name 'index' or array with session-data depending if we are in the main list or the popup
+	 * @param ?string& $error_msg on return optional error-message
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
-	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg, $checkboxes = NULL)
+	function action($action, $checked, $use_all, &$success, &$failed, &$action_msg, $session_name, &$msg, $checkboxes = NULL, &$error_msg=null)
 	{
 		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
+		$error_msg = null;
 		if ($use_all || in_array($action,array('remove_from_list','delete_list','unshare')))
 		{
 			// get the whole selection
@@ -1509,8 +1518,10 @@ class addressbook_ui extends addressbook_bo
 							'shared_at' => new Api\DateTime('now'),
 							// only allow to share writable, if user has edit-rights!
 							'shared_writable' => (int)($checkboxes['writable'] && $this->check_perms(Acl::EDIT, $contact)),
+							'contact_id' => $id,
+							'contact' => $contact,
 						]];
-						if ($this->check_shared_with($new_shared_with))	// returns [] if OK
+						if ($this->check_shared_with($new_shared_with, $error_msg))	// returns [] if OK
 						{
 							$Ok = false;
 						}
@@ -2765,7 +2776,7 @@ class addressbook_ui extends addressbook_bo
 	/**
 	 * Check if user has right to share with / into given AB
 	 *
-	 * @param array $_data values for keys "shared_writable" and "shared_values"
+	 * @param array $_data values for keys "shared_writable", "shared_values" and "contact"
 	 * @return array of entries removed from $shared_with because current user is not allowed to share into
 	 */
 	public function ajax_check_shared(array $_data)
@@ -2787,11 +2798,12 @@ class addressbook_ui extends addressbook_bo
 				{
 					$shared[$value] = array_combine(['shared_id', 'shared_with', 'shared_by', 'shared_writable'], explode(':', $value));
 				}
+				$shared[$value]['contact'] = $_data['contact'];
 			}
-			if (($failed = $this->check_shared_with($shared)))
+			if (($failed = $this->check_shared_with($shared, $error)))
 			{
 				$response->data(array_keys($failed));
-				$response->message(lang('You are not allowed to share into the addressbook of %1',
+				$response->message($error ?: lang('You are not allowed to share into the addressbook of %1',
 					implode(', ', array_map(function ($data) {
 						return Api\Accounts::username($data['shared_with']);
 					}, $failed))), 'error');

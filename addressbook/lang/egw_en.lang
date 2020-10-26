@@ -1,5 +1,6 @@
 %1 added	addressbook	en	%1 added
 %1 contact(s) %2	addressbook	en	%1 contact(s) %2
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	en	%1 contact(s) %2, %3 failed because of %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficient rights!
 %1 contacts updated (%2 errors).	addressbook	en	%1 contacts updated (%2 errors).
 %1 fields in %2 other organisation member(s) changed	addressbook	en	%1 fields in %2 other organization member(s) changed.
@@ -433,7 +434,6 @@ replacements for inserting contacts into documents	addressbook	en	Replacements f
 required fields *	addressbook	en	Required fields *
 role	addressbook	en	Occupation
 room	addressbook	en	Room
-schedule a video conference addressbook	en	Schedule a video conference
 search letter	addressbook	en	Search letter
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	en	Select a portrait format jpeg photo. It will be re-sized to 60 pixel width.
 select a source address to be used in geolocation routing system	addressbook	en	Select a source address to be used in GeoLocation routing system

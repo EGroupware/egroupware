@@ -1283,9 +1283,10 @@ class Contacts extends Contacts\Storage
 	 * Check if user has right to share with / into given AB
 	 *
 	 * @param array[]& $shared_with array of arrays with values for keys "shared_with", "shared_by", ...
+	 * @param ?string& $error on return error-message
 	 * @return array entries removed from $shared_with because current user is not allowed to share into (key is preserved)
 	 */
-	function check_shared_with(array &$shared_with=null)
+	function check_shared_with(array &$shared_with=null, &$error=null)
 	{
 		$removed = [];
 		foreach((array)$shared_with as $key => $shared)
@@ -1304,6 +1305,21 @@ class Contacts extends Contacts\Storage
 				unset($shared_with[$key]);
 			}
 		}
+		// allow apps to modifiy
+		$results = [];
+		foreach(Hooks::process([
+			'location' => 'check_shared_with',
+			'shared_with' => &$shared_with,
+			'removed' => &$removed,
+		], true) as $result)
+		{
+			if ($result)
+			{
+				$results = array_merge($results, $result);
+			}
+		}
+		if ($results) $error = implode("\n", $results);
+
 		return $removed;
 	}
 
