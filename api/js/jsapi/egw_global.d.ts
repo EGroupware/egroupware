@@ -736,6 +736,62 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param _sender is a parameter being passed to the _callback function
 	 */
 	json(_menuaction : string, _parameters? : any[], _callback? : Function, _context? : object, _async? : boolean|"keepalive", _sender?) : JsonRequest;
+
+	/**
+	 * Do an AJAX call and get a javascript promise, which will be resolved with the returned data.
+	 *
+	 * egw.request() returns immediately with a Promise.  The promise will be resolved with just the returned data,
+	 * any other "piggybacked" responses will be handled by registered handlers.  The data will also be passed to
+	 * any registered data handlers (egw.data) before it is passed to your handler.
+	 *
+	 * To use:
+	 * @example
+	 * 	egw.request(
+	 * 		"EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options",
+	 * 		["select-cat"]
+	 * 	)
+	 * 	.then(function(data) {
+	 * 		// Deal with the returned data here.  data may be undefined if no data was returned.
+	 * 		console.log("Here's the categories:",data);
+	 * 	});
+	 *
+	 *
+	 * 	The return is a Promise, so multiple .then() can be chained in the usual ways:
+	 * 	@example
+	 * 	egw.request(...)
+	 * 		.then(function(data) {
+	 * 		  if(debug) console.log("Requested data", data);
+	 * 		}
+	 * 		.then(function(data) {
+	 * 			// Change the data for the rest of the chain
+	 * 		    if(typeof data === "undefined") return [];
+	 * 		}
+	 * 		.then(function(data) {
+	 * 			// data is never undefined now, if it was before it's an empty array now
+	 * 		 	for(let i = 0; i < data.length; i++)
+	 * 			{
+	 * 		 		...
+	 * 			}
+	 * 		}
+	 *
+	 *
+	 * 	You can also fire off multiple requests, and wait for them to all be answered:
+	 * 	@example
+	 * 	let first = egw.request(...);
+	 * 	let second = egw.request(...);
+	 * 	Promise.all([first, second])
+	 * 		.then(function(values) {
+	 * 		 	console.log("First:", values[0], "Second:", values[1]);
+	 * 		}
+	 *
+	 *
+	 * @param {string} _menuaction
+	 * @param {any[]} _parameters
+	 *
+	 * @return Promise
+	 */
+	request(s: string, param2: any[]): Promise<any>;
+	
 	/**
 	 * Registers a new handler plugin.
 	 *
