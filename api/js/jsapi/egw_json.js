@@ -122,7 +122,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				{
 					this.websocket = null;
 					this.openWebSocket(url, tokens, account_id, error, reconnect_time);
-				}
+				}.bind(this);
 				this.websocket.close();	// closing it now, before reopening it, to not end up with multiple connections
 			}.bind(this), max_ping_response_time);
 		}.bind(this);
