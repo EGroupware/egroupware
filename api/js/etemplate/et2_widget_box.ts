@@ -93,7 +93,7 @@ export class et2_box extends et2_baseWidget implements et2_IDetachedDOM
 
 			// Create the new element, if no expansion needed
 			var id = et2_readAttrWithDefault(node, "id", "");
-			if(id.indexOf('$') < 0 || widgetType != 'box')
+			if(id.indexOf('$') < 0 || ['box','grid'].indexOf(widgetType) == -1)
 			{
 				this.createElementFromNode(node);
 				childIndex++;

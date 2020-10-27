@@ -83,7 +83,7 @@ var et2_box = /** @class */ (function (_super) {
             }
             // Create the new element, if no expansion needed
             var id = et2_readAttrWithDefault(node, "id", "");
-            if (id.indexOf('$') < 0 || widgetType != 'box') {
+            if (id.indexOf('$') < 0 || ['box', 'grid'].indexOf(widgetType) == -1) {
                 this.createElementFromNode(node);
                 childIndex++;
             }
