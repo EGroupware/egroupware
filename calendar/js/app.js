@@ -554,6 +554,7 @@ var CalendarApp = /** @class */ (function (_super) {
      */
     CalendarApp.prototype.push_infolog = function (pushData) {
         var _this = this;
+        var _a;
         // check visibility - grants is ID => permission of people we're allowed to see
         var owners = [];
         var infolog_grants = egw.grants(pushData.app);
@@ -589,7 +590,7 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         else {
             // Only care about certain infolog types, or already loaded (type may have changed)
-            var types = egw.preference('calendar_integration', 'infolog').split(",") || [];
+            var types = ((_a = egw.preference('calendar_integration', 'infolog')) === null || _a === void 0 ? void 0 : _a.split(",")) || [];
             var info_uid = this.appname + "::" + pushData.app + pushData.id;
             if (types.indexOf(pushData.acl.info_type) >= 0 || this.egw.dataHasUID(info_uid)) {
                 if (pushData.type === 'delete') {

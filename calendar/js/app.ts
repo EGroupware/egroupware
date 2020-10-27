@@ -536,7 +536,7 @@ class CalendarApp extends EgwApp
 		else
 		{
 			// Only care about certain infolog types, or already loaded (type may have changed)
-			let types = (<string>egw.preference('calendar_integration', 'infolog')).split(",") || [];
+			let types = (<string>egw.preference('calendar_integration', 'infolog'))?.split(",") || [];
 			let info_uid = this.appname + "::" + pushData.app + pushData.id;
 			if(types.indexOf(pushData.acl.info_type) >= 0 || this.egw.dataHasUID(info_uid))
 			{
