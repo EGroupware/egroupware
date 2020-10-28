@@ -79,7 +79,7 @@
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
 					<description for="tel_fax" value="fax"/>
-					<url-phone id="tel_fax" tabindex="24" class="et2_fullWidth" autocomplete="fax" />
+					<url-fax id="tel_fax" tabindex="24" class="et2_fullWidth" autocomplete="fax" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
 					<description for="adr_one_countryname" value="country"/>
 					<vbox  class="city_state_postcode" width="100%">
@@ -112,7 +112,7 @@
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
 					<description for="tel_fax" value="fax"/>
-					<url-phone id="tel_fax" tabindex="24" class="et2_fullWidth" autocomplete="fax" />
+					<url-fax id="tel_fax" tabindex="24" class="et2_fullWidth" autocomplete="fax" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
 					<description for="adr_one_countryname" value="country"/>
 					<vbox width="100%" tabindex="16">
@@ -226,7 +226,7 @@
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
 					<description for="tel_fax_home" value="fax"/>
-					<url-phone id="tel_fax_home" tabindex="29" class="et2_fullWidth" autocomplete="section-two fax tel" />
+					<url-fax id="tel_fax_home" tabindex="29" class="et2_fullWidth" autocomplete="section-two fax tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
 					<description for="adr_two_locality" value="city"/>
 					<hbox class="city_state_postcode">
@@ -258,7 +258,7 @@
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
 					<description for="tel_fax_home" value="fax"/>
-					<url-phone id="tel_fax_home" class="et2_fullWidth" autocomplete="fax tel" />
+					<url-fax id="tel_fax_home" class="et2_fullWidth" autocomplete="fax tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
 					<description value="City"/>
 					<hbox>

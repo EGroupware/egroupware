@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
- * @version $Id$
  */
 
 /*egw:uses
@@ -129,6 +128,7 @@ class et2_url extends et2_textbox
 					this._button.attr("href", _value).attr("target", "_blank").addClass("url");
 					break;
 				case "url-phone":
+				case "url-fax":
 					if(_value) {
 						if(typeof _value == 'function')
 						{
@@ -168,6 +168,14 @@ class et2_url extends et2_textbox
 
 	get_link(type, value) {
 		if(!value) return false;
+		// convert fax numbers to email, if configured
+		if (type === 'url-fax' && this.egw().config('fax_email') &&
+			(value = value.replace('&#9829;','').replace('(0)','').replace(/[^0-9+]/g, '')))
+		{
+			value = value.replace(new RegExp(this.egw().config('fax_email_regexp')||'(.*)'),
+				this.egw().config('fax_email'));
+			type = 'url-email';
+		}
 		switch(type)
 		{
 			case "url":
@@ -175,6 +183,7 @@ class et2_url extends et2_textbox
 				if(value.indexOf("://") == -1) value = "http://"+value;
 				break;
 			case "url-phone":
+			case "url-fax":
 				// Clean number
 				value = value.replace('&#9829;','').replace('(0)','');
 				value = value.replace(/[abc]/gi,2).replace(/[def]/gi,3).replace(/[ghi]/gi,4).replace(/[jkl]/gi,5).replace(/[mno]/gi,6);
@@ -289,7 +298,7 @@ class et2_url extends et2_textbox
 		return res;
 	}
 }
-et2_register_widget(et2_url, ["url", "url-email", "url-phone"]);
+et2_register_widget(et2_url, ["url", "url-email", "url-phone", "url-fax"]);
 
 /**
 * et2_url_ro is the readonly implementation of the url, email & phone.
@@ -363,6 +372,7 @@ class et2_url_ro extends et2_valueWidget
 				this.span.attr("href", link).attr("target", "_blank");
 				break;
 			case "url-phone":
+			case "url-fax":
 				if(typeof link == 'function')
 				{
 					this.span.off('click.et2_url');
@@ -522,5 +532,5 @@ class et2_url_ro extends et2_valueWidget
 		this.span.attr('title',_values.statustext ? _values.statustext : this.options.statustext);
 	}
 }
-et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);
+et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro", "url-fax_ro"]);
 

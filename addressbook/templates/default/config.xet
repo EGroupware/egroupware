@@ -21,6 +21,13 @@
 					<textbox id="newsettings[call_popup]" size="10"/>
 				</row>
 				<row>
+					<description value="Send fax via email by replacing fax number with an email address" label="%s:"/>
+					<hbox>
+						<textbox id="newsettings[fax_email_regexp]" blur="(.*)"/>
+						<textbox id="newsettings[fax_email]" blur="$1@fax.local"/>
+					</hbox>
+				</row>
+				<row>
 					<description value="GeoLocation integration" span="all" class="subHeader"/>
 				</row>
 				<row>
