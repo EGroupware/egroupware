@@ -66,6 +66,7 @@ rm composer-setup.php; \
 exit $RESULT' \
 	# build EGroupware
 	&& cd /usr/share \
+	&& composer.phar self-update 1.8.6 \
 	&& composer.phar create-project --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
 	&& cd egroupware \
 	&& npm install \
