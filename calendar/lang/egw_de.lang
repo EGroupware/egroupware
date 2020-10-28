@@ -622,7 +622,7 @@ update timezones	common	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
 use given criteria:	calendar	de	Kriterien benutzen:
-use quick add or full edit dialog when creating a new event	calendar	de	Wollen Sie den verkürzten Dialog zum schnellen Hinzufügen oder das vollständigen Bearbeiten-Fenster verwenden, wenn Sie ein neues Ereignis erstellen.
+use quick add or full edit dialog when creating a new event	calendar	de	Wollen Sie den verkürzten Dialog zum schnellen Hinzufügen oder das vollständige Bearbeiten-Fenster verwenden, wenn Sie ein neuen Termin erstellen?
 use range-views to optimise calendar queries?	calendar	de	Sollen spezielle Bereichs-Ansichten verwendet werden, um Kalenderabfragen zu optimieren?
 use side menu to filter participants	calendar	de	Zum Filtern von Teilnehmern, bitte Seitenmenu verwenden
 use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Pop-up
