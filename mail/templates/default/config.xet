@@ -84,7 +84,7 @@
 				</row>
 				<row>
                     <description value="Default toolbar actions shown in mail's HTML editor"/>
-                    <taglist id="newsettings[html_toolbar]" allowFreeEntries="false"  autocomplete_url=' '  editModeEnabled="false"/>
+                    <taglist id="newsettings[html_toolbar]" allowFreeEntries="false"  autocomplete_url=''  editModeEnabled="false"/>
                 </row>
 				<row>
 					<vbox>
