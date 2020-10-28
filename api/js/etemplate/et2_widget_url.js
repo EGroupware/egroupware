@@ -8,7 +8,6 @@
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
- * @version $Id$
  */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -93,6 +92,7 @@ var et2_url = /** @class */ (function (_super_1) {
                     this._button.attr("href", _value).attr("target", "_blank").addClass("url");
                     break;
                 case "url-phone":
+                case "url-fax":
                     if (_value) {
                         if (typeof _value == 'function') {
                             this._button.click(this, _value).addClass("phone").show();
@@ -128,6 +128,12 @@ var et2_url = /** @class */ (function (_super_1) {
     et2_url.prototype.get_link = function (type, value) {
         if (!value)
             return false;
+        // convert fax numbers to email, if configured
+        if (type === 'url-fax' && this.egw().config('fax_email') &&
+            (value = value.replace('&#9829;', '').replace('(0)', '').replace(/[^0-9+]/g, ''))) {
+            value = value.replace(new RegExp(this.egw().config('fax_email_regexp') || '(.*)'), this.egw().config('fax_email'));
+            type = 'url-email';
+        }
         switch (type) {
             case "url":
                 // Silently use http if no protocol
@@ -135,6 +141,7 @@ var et2_url = /** @class */ (function (_super_1) {
                     value = "http://" + value;
                 break;
             case "url-phone":
+            case "url-fax":
                 // Clean number
                 value = value.replace('&#9829;', '').replace('(0)', '');
                 value = value.replace(/[abc]/gi, 2).replace(/[def]/gi, 3).replace(/[ghi]/gi, 4).replace(/[jkl]/gi, 5).replace(/[mno]/gi, 6);
@@ -274,7 +281,7 @@ var et2_url = /** @class */ (function (_super_1) {
     et2_url.EMAIL_PREG = new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|"(?:[^"\\]|\\.)*")\s?<)?[^\x00-\x20()\xe2\x80\x8b<>@,;:\042\[\]\x80-\xff]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/i);
     return et2_url;
 }(et2_widget_textbox_1.et2_textbox));
-et2_core_widget_1.et2_register_widget(et2_url, ["url", "url-email", "url-phone"]);
+et2_core_widget_1.et2_register_widget(et2_url, ["url", "url-email", "url-phone", "url-fax"]);
 /**
 * et2_url_ro is the readonly implementation of the url, email & phone.
 * It renders things as links, when possible
@@ -323,6 +330,7 @@ var et2_url_ro = /** @class */ (function (_super_1) {
                 this.span.attr("href", link).attr("target", "_blank");
                 break;
             case "url-phone":
+            case "url-fax":
                 if (typeof link == 'function') {
                     this.span.off('click.et2_url');
                     this.span.on('click.et2_url', link);
@@ -464,5 +472,5 @@ var et2_url_ro = /** @class */ (function (_super_1) {
     et2_url_ro.email_cache = [];
     return et2_url_ro;
 }(et2_core_valueWidget_1.et2_valueWidget));
-et2_core_widget_1.et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);
+et2_core_widget_1.et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro", "url-fax_ro"]);
 //# sourceMappingURL=et2_widget_url.js.map
