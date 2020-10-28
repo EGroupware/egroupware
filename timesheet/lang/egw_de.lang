@@ -95,7 +95,7 @@ permission denied!!!	timesheet	de	Zugriff verweigert!!!
 permissions error - %1 could not %2	timesheet	de	Fehler in den Zugriffsberechtigungen - %1 nicht möglich %2
 prevent deleting	admin	de	Verhindert Löschung
 price	timesheet	de	Preis
-project fields	timesheet	de	Fehler der Projektverwaltung
+project fields	timesheet	de	Felder Projektmanager
 projectmanager integration	admin	de	Integration des Projektmanagers
 quantity	timesheet	de	Menge
 recovered	timesheet	de	wiederhergestellt
@@ -134,7 +134,7 @@ ticket modified by %1 at %2	timesheet	de	Ticket geändert von %1 am %2
 timesheet	common	de	Stundenzettel
 timesheet csv export	timesheet	de	Export des  Stundenzettels als CSV
 timesheet csv import	timesheet	de	Stundenzettels CSV Import
-timesheet fields:	timesheet	de	Felder des Stundenzettels
+timesheet fields:	timesheet	de	Felder Stundenzettel
 timesheet id	timesheet	de	Stundenzettel ID
 timesheet list	timesheet	de	Stundenzettel Liste
 timesheet modified by %1 at %2	timesheet	de	Stundenzettel verändert von %1 am %2

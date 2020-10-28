@@ -123,6 +123,7 @@ date(newest first)	mail	de	Datum (neue zuerst)
 date(oldest first)	mail	de	Datum (alte zuerst)
 deactive	mail	de	Deaktiviert
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
+default toolbar actions shown in mail's html editor	mail	de	Aktivierte Funktionen in der HTML-Editor-Symbolleiste beim E-Mail verfassen
 default value for remembering s/mime passphrase in minutes	mail	de	Standardwert für die Erinnerung an die S/MIME-Passphrase in Minuten
 default your name and email	common	de	z.B. Ihr Name und Ihre E-Mail-Adresse
 defines what to show as identity label on mail folder header	common	de	Definiert, was im Kopf des E-Mail-Postfach angezeigt werden soll.
@@ -314,7 +315,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	de	dienstlich
 junk	mail	de	Spam
 junk folder	mail	de	Ordner für Spam-Nachrichten
-keep a copy of the message in your inbox	mail	de	Eine Kopie der Nachricht in der INBOX behalten
+keep a copy of the message in your inbox	mail	de	Eine Kopie der Nachricht im Posteingang behalten
 kilobytes	mail	de	Kilobyte
 later	mail	de	später
 learning as ham (not spam) failed because of %1	mail	de	Als "gute E-Mail" (kein Spam) lernen fehlgeschlagen, da %1

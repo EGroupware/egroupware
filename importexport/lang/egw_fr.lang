@@ -47,6 +47,7 @@ day of week	importexport	fr	Jour de la semaine
 define imports|exports	common	fr	Définir Imports|Exports
 definition	importexport	fr	Définition
 delete all selected definitions	importexport	fr	Supprimer toutes les définitions sélectionnées
+delete files after import	importexport	fr	Supprimer les fichiers après import
 deleted	importexport	fr	Supprimé.
 delimiter	importexport	fr	Délimiteur
 duplicate name, please choose another.	importexport	fr	Nom en double, veuillez en choisir un autre.

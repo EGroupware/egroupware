@@ -123,6 +123,7 @@ date(newest first)	mail	en	date(newest first)
 date(oldest first)	mail	en	date(oldest first)
 deactive	mail	en	Deactive
 default sorting order	mail	en	Default sorting order
+default toolbar actions shown in mail's html editor	mail	en	Functions enabled in the HTML editor toolbar when composing an email
 default value for remembering s/mime passphrase in minutes	mail	en	Default value for remembering S/MIME passphrase in minutes
 default your name and email	common	en	default your name and email
 defines what to show as identity label on mail folder header	common	en	Defines what to show as identity label on mail folder header
