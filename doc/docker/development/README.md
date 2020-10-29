@@ -46,6 +46,18 @@ docker logs -f egroupware-nginx 2>&1 | sed "s/PHP message/\\$(echo -e '\n\r')PHP
 * permissions of sources and data directory must be readable (sources writable) by your user, as Docker daemon runs as that user!
 * db volume must NOT be a directory, as the networked access from Docker VM to the Mac is to slow!
 
+### Docker Desktop for Windows with WSL2 notes
+* the directory must be in your Linux home directory ```/home/<username>``` or short ```~/``` (you must NOT use ```/mnt/c/Users/<username>```!)
+* until we figure out docker-compose syntax for bind-mounts, you need to replace all mounts using bind-mounts, with explicit mounts, eg:
+```
+service:
+  egroupware:
+    volumes:
+    #- data:/var/lib/egroupware
+    - $PWD/data:/var/lib/egroupware
+```
+* internal volumes (with just names mentioned in volumes section) are fine
+
 ### Docker Desktop for Windows notes
 * you can NOT use $PWD to reference the docker-compose directory, use the full path with forward slashes!
 * directories of volumes must be exported to Docker!
