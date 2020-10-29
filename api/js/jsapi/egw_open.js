@@ -224,6 +224,13 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				url = this.link(url, params);
 			}
 			if (target == '_tab') return {url: url};
+			if (type == 'view'  && params.target == 'tab') {
+				return this.openTab(params[app_registry['view_id']], app, type, params, {
+					id: params[app_registry['view_id']] + '-' + this.appName,
+					icon: params['icon'],
+					displayName: id_data['title'] + " (" + egw.lang(this.appName) + ")",
+				});
+			}
 			return this.open_link(url, target, popup, target_app, _check_popup_blocker);
 		},
 

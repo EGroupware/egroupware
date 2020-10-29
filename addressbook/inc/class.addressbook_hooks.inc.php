@@ -363,7 +363,9 @@ class addressbook_hooks
 			'titles' => 'api.EGroupware\\Api\\Contacts.link_titles',
 			'view' => array(
 				'menuaction' => 'addressbook.addressbook_ui.view',
-				'ajax' => 'true'
+				'ajax' => 'true',
+				'target' => 'tab',
+				'crm_list' => 'infolog'
 			),
 			'view_id' => 'contact_id',
 			'list'	=>	array(
