@@ -79,8 +79,8 @@ class Ads extends Ldap
 	/**
 	 * constructor of the class
 	 *
-	 * @param array $ldap_config =null default use from $GLOBALS['egw_info']['server']
-	 * @param resource $ds =null ldap connection to use
+	 * @param ?array $ldap_config =null default use from $GLOBALS['egw_info']['server']
+	 * @param ?resource $ds =null ldap connection to use
 	 */
 	function __construct(array $ldap_config=null, $ds=null)
 	{
@@ -168,10 +168,10 @@ class Ads extends Ldap
 	}
 
 	/**
-	 * reads contact data
+	 * Reads contact data
 	 *
-	 * @param string/array $_contact_id contact_id or array with values for id or account_id
-	 * @return array/boolean data if row could be retrived else False
+	 * @param string|array $_contact_id contact_id or array with values for id or account_id
+	 * @return array|boolean data if row could be retrived else False
 	*/
 	function read($_contact_id)
 	{
@@ -187,7 +187,12 @@ class Ads extends Ldap
 		$contact_id = !is_array($_contact_id) ? $_contact_id :
 			(isset ($_contact_id['id']) ? $_contact_id['id'] : $_contact_id['uid']);
 
-		$rows = $this->_searchLDAP($this->allContactsDN, $filter=$this->id_filter($contact_id), $this->all_attributes, Ldap::ALL);
+		try {
+			$rows = $this->_searchLDAP($this->allContactsDN, $filter = $this->id_filter($contact_id), $this->all_attributes, Ldap::ALL);
+		}
+		catch (Api\Exception\AssertionFailed $e) {
+			$rows = null;
+		}
 		//error_log(__METHOD__."('$contact_id') _searchLDAP($this->allContactsDN, '$filter',...)=".array2string($rows));
 		return $rows ? $rows[0] : false;
 	}
