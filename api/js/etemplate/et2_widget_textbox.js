@@ -99,8 +99,12 @@ var et2_textbox = /** @class */ (function (_super) {
         _super.prototype.destroy.call(this);
     };
     et2_textbox.prototype.getValue = function () {
-        if (this.options && this.options.blur && this.input.val() == this.options.blur)
+        // only return "" for blur-value, if browser does not support html5 placeholder
+        if (this.options && this.options.blur &&
+            !this.input[0].placeholder &&
+            this.input.val() == this.options.blur) {
             return "";
+        }
         return _super.prototype.getValue.call(this);
     };
     /**
