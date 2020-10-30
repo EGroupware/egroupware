@@ -331,10 +331,6 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			// if there are vars, we add them urlencoded to the url
 			var query = [];
 
-			// If ajax flag is there, it must be the last one
-			var ajax = vars.ajax || false;
-			delete vars.ajax;
-
 			for(var name in vars)
 			{
 				var val = vars[name] || '';	// fix error for eg. null, which is an object!
@@ -351,11 +347,6 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 				}
 			}
 
-			// Add ajax flag at the end
-			if(ajax)
-			{
-				query.push('ajax='+encodeURIComponent(ajax));
-			}
 			return query.length ? _url+'?'+query.join('&') : _url;
 		},
 

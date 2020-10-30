@@ -153,7 +153,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	 *
 	 * @param {egw_fw_class_application} _app
 	 * @param {string} _url optional url, default index page of app
-	 * @param {bool} _hidden specifies, whether the application should be set active
+	 * @param {boolean} _hidden specifies, whether the application should be set active
 	 *   after opening the tab
 	 * @param {int} _pos
 	 * @param {status} _status
@@ -308,7 +308,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 						//Lookup whether this entry was opened before. If no data is
 						//stored about this, use the information we got from the server
-						var opened = egw.preference('jdots_sidebox_'+_data[i].menu_name, _app.appName);
+						var opened = egw.preference('jdots_sidebox_'+_data[i].menu_name, _app.internalName);
 						if (typeof opened == 'undefined')
 						{
 							opened = _data[i].opened;
@@ -446,7 +446,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	 */
 	categoryOpenCloseCallback: function(_opened)
 	{
-		egw.set_preference(this.tag.appName, 'jdots_sidebox_'+this.catName, _opened);
+		if (!framework.isAnInternalApp(this.tag)) egw.set_preference(this.tag.internalName, 'jdots_sidebox_'+this.catName, _opened);
 	},
 
 	categoryAnimationCallback: function()
@@ -492,7 +492,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			_app.tab = this.tabsUi.addTab(_app.icon, this.tabClickCallback, this.tabCloseClickCallback,
 				_app, _pos, _status);
 			_app.tab.setTitle(_app.displayName);
-
+			_app.tab.setHint(_app.hint ? _app.hint : '');
 			//Set the tab closeable if there's more than one tab
 			this.tabsUi.setCloseable(this.tabsUi._isNotTheLastTab());
 			// Do not show tab header if the app is with status 5, means run in background
@@ -563,6 +563,10 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 		//As a new tab might remove a row from the tab header, we have to resize all tab content browsers
 		 this.tag.parentFw.resizeHandler();
+		if (app.isFrameworkTab)
+		{
+			app.destroy();
+		}
 	 },
 
 	/**
@@ -671,6 +675,46 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		}
 	},
 
+	tabLinkHandler: function(_link, _extra)
+	{
+		var app = this.parseAppFromUrl(_link);
+		if (app)
+		{
+			var appname = app.appName+"-"+btoa(_extra.id ? _extra.id : _link);
+			this.applications[appname] = this.getApplicationByName(appname);
+			if (this.applications[appname])
+			{
+				this.setActiveApp(this.applications[appname]);
+				return;
+			}
+			var self = this;
+			// add target flag
+			_link += '&fw_target='+appname;
+			// create an actual clone of existing app object
+			this.applications[appname] = jQuery.extend(true, {}, app);
+			this.applications[appname]['isFrameworkTab'] = true;
+			// merge extra framework app data into the new one
+			this.applications[appname] = jQuery.extend(true, this.applications[appname], _extra);
+			this.applications[appname]['appName'] = appname; // better to control it here
+			this.applications[appname]['indexUrl'] = _link;
+			this.applications[appname]['tab'] = null; // must be rest to create a new tab
+			this.applications[appname]['browser'] = null; // must be rest to create a new browser content
+			this.applications[appname]['sidemenuEntry'] = this.sidemenuUi.addEntry(
+				this.applications[appname].displayName, this.applications[appname].icon,
+				function(){
+					self.applicationTabNavigate(self.applications[appname], _link, false, -1, null);
+				}, this.applications[appname], appname);
+
+
+			this.applicationTabNavigate(this.applications[appname], _link, false, -1, null);
+		}
+		else
+		{
+			egw_alertHandler("No appropriate target application has been found.",
+				"Target link: " + _link);
+		}
+	},
+
 	/**
 	 *
 	 * @param {type} _link
@@ -697,6 +741,19 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 		if (app)
 		{
+			if (_app == '_tab')
+			{
+				// add target flag
+				_link += '&target=_tab';
+				var appname = app.appName+":"+btoa(_link);
+				this.applications[appname] = jQuery.extend(true, {},app);
+				this.applications[appname]['appName'] = appname;
+				this.applications[appname]['indexUrl'] = _link;
+				this.applications[appname]['tab'] = null;
+				this.applications[appname]['browser'] = null;
+				this.applications[appname]['title'] = 'view';
+				app = this.getApplicationByName(appname);
+			}
 			this.applicationTabNavigate(app, _link);
 		}
 		else
@@ -1033,7 +1090,12 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	refresh: function(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
 	{
 		//alert("egw_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
-
+		let app_object = this.getApplicationByName(_app);
+		if (this.isAnInternalApp(app_object) && typeof app_object.refreshCallback == 'function')
+		{
+			app_object.refreshCallback();
+			return;
+		}
 		if (!_app)	// force reload of entire framework, eg. when template-set changes
 		{
 			window.location.href = window.egw_webserverUrl+'/index.php?cd=yes'+(_msg ? '&msg='+encodeURIComponent(_msg) : '');
@@ -1198,5 +1260,15 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				}
 			}
 		});
+	},
+
+	/**
+	 * Check if the app is an internal app object like multitab views
+	 * @param _app app object
+	 * @return {boolean}
+	 */
+	isAnInternalApp: function(_app)
+	{
+		return _app && _app.appName != _app.internalName;
 	}
 });}).call(this);

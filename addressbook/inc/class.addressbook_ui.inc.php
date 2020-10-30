@@ -2742,7 +2742,7 @@ class addressbook_ui extends addressbook_bo
 		if(is_array($content))
 		{
 			$button = key($content['button']);
-			switch ($content['toolbar'] ? $content['toolbar'] : $button)
+			switch ($button)
 			{
 				case 'vcard':
 					Egw::redirect_link('/index.php','menuaction=addressbook.uivcard.out&ab_id=' .$content['id']);
@@ -2844,8 +2844,7 @@ class addressbook_ui extends addressbook_bo
 
 		// make everything not explicit mentioned readonly
 		$readonlys['__ALL__'] = true;
-		$readonlys['photo'] = $readonlys['button[cancel]'] = $readonlys['button[copy]'] =
-			$readonlys['button[ok]'] = $readonlys['button[more]'] = $readonlys['toolbar'] = false;
+		$readonlys['photo']  = $readonlys['button[copy]'] =false;
 
 		foreach(array_keys($this->contact_fields) as $key)
 		{
@@ -2945,40 +2944,6 @@ class addressbook_ui extends addressbook_bo
 		// dont show an app-header
 		$GLOBALS['egw_info']['flags']['app_header'] = '';
 
-		$actions = array(
-			'open' => array(
-				'caption' => 'Open',
-				'toolbarDefault' => true,
-			),
-			'copy' => 'Copy',
-			'delete' => array(
-				'caption' => 'Delete',
-				'confirm' => 'Delete this entry',
-			),
-			'cancel' => array(
-				'caption' => 'Cancel',
-				'toolbarDefault' => true,
-				'icon' => 'close'
-			),
-			'back' => array(
-				'caption' => 'Back',
-				'toolbarDefault' => true,
-			),
-			'next' => array(
-				'caption' => 'Next',
-				'toolbarDefault' => true,
-			),
-		);
-		if (!isset($content['index']) || !$content['index'])
-		{
-			unset($actions['back']);
-		}
-		if (!isset($content['index']) || $content['index'] >= $num_rows-1)
-		{
-			unset($actions['next']);
-		}
-		$this->tmpl->setElementAttribute('toolbar', 'actions', $actions);
-
 		// always show sidebox, as it contains contact-data
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 
@@ -2987,7 +2952,7 @@ class addressbook_ui extends addressbook_bo
 
 		// Load CRM code
 		Framework::includeJS('.','CRM','addressbook');
-
+		$content['view_sidebox'] = addressbook_hooks::getViewDOMID($contact_id, $crm_list);
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array(
 			'id' => $content['id'],
 			'index' => $content['index'],

@@ -112,7 +112,7 @@ export class etemplate2
 	private app_obj: EgwApp;
 	app: string;
 
-	constructor(_container : HTMLElement, _menuaction? : string)
+	constructor(_container : HTMLElement, _menuaction? : string, _uniqueId?: string)
 	{
 		if (typeof _menuaction == "undefined")
 		{
@@ -124,7 +124,7 @@ export class etemplate2
 		this.menuaction = _menuaction;
 
 		// Unique ID to prevent DOM collisions across multiple templates
-		this.uniqueId = _container.getAttribute("id") ? _container.getAttribute("id").replace('.', '-') : '';
+		this.uniqueId = _uniqueId ? _uniqueId : (_container.getAttribute("id") ? _container.getAttribute("id").replace('.', '-') : '');
 
 		/**
 		 * Preset the object variable
@@ -438,8 +438,9 @@ export class etemplate2
 	 * @param {function} _callback called after template is loaded
 	 * @param {object} _app local app object
 	 * @param {boolean} _no_et2_ready true: do not send et2_ready, used by et2_dialog to not overwrite app.js et2 object
+	 * @param {string} _open_target flag of string to distinguishe between tab target and normal app object
 	 */
-	load(_name, _url, _data, _callback?, _app?, _no_et2_ready?)
+	load(_name, _url, _data, _callback?, _app?, _no_et2_ready?, _open_target?)
 	{
 		let app = _app || window.app;
 		this.name = _name;	// store top-level template name to have it available in widgets
@@ -461,7 +462,7 @@ export class etemplate2
 		const appname = _name.split('.')[0];
 		// if no app object provided and template app is not currentapp (eg. infolog CRM view)
 		// create private app object / closure with just classes / prototypes
-		if (!_app && appname && appname != currentapp)
+		if (!_app && appname && appname != currentapp || _open_target)
 		{
 			app = {classes: window.app.classes};
 		}
@@ -1107,10 +1108,22 @@ export class etemplate2
 	static app_refresh (_msg, _app, _id, _type)
 	{
 		let refresh_done = false;
-		const et2 = etemplate2.getByApplication(_app);
+		let app = _app.split('-');
+		const et2 = etemplate2.getByApplication(app[0]);
 		for (let i = 0; i < et2.length; i++)
 		{
-			refresh_done = et2[i].refresh(_msg, _app, _id, _type) || refresh_done;
+			if (app[1])
+			{
+				if (et2[i]['uniqueId'].match(_app))
+				{
+					refresh_done = et2[i].refresh(_msg, app[0], _id, _type) || refresh_done;
+					break;
+				}
+			}
+			else
+			{
+				refresh_done = et2[i].refresh(_msg, app[0], _id, _type) || refresh_done;
+			}
 		}
 		return refresh_done;
 	}
@@ -1279,6 +1292,8 @@ export class etemplate2
 		// handle framework.setSidebox calls
 		if (window.framework && jQuery.isArray(data.setSidebox))
 		{
+			if (data['fw-target']) data.setSidebox[0] = data['fw-target'];
+
 			window.framework.setSidebox.apply(window.framework, data.setSidebox);
 		}
 
@@ -1299,6 +1314,7 @@ export class etemplate2
 			{
 				// Not etemplate
 				const node = document.getElementById(data.DOMNodeID);
+				let uniqueId = data.DOMNodeID;
 				if (node)
 				{
 					if (node.children.length)
@@ -1308,8 +1324,12 @@ export class etemplate2
 						const old = etemplate2.getById(node.id);
 						if (old) old.clear();
 					}
-					const et2 = new etemplate2(node, data.menuaction);
-					et2.load(data.name, data.url, data.data);
+					if (data['open_target'] && !uniqueId.match(data['open_target']))
+					{
+						uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
+					}
+					const et2 = new etemplate2(node, data.menuaction, uniqueId);
+					et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
 					return true;
 				}
 				else

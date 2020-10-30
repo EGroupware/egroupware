@@ -43,7 +43,7 @@
 
 	// Image + Data
 
-	div#addressbook_view_sidebox{
+	div.addressbook_view_sidebox{
 		//img
 		img.photo {
 			width: 68px;
@@ -53,25 +53,25 @@
 			margin-right: 5px;
 		}
 		// name
-		#addressbook-view_n_fn {
+		.addressbook_sidebox_name {
 			.fontsize_xl;
 			font-weight: bold;
 			padding: 2px 0 2px 0;
 			width: 85%;
 		}
 		// org
-		#addressbook-view_org_name {
+		.addressbook_sidebox_org {
 			.fontsize_xl;
 			padding: 2px 0 2px 0;
 			width: 85%;
 		}
 		// Unit
-		#addressbook-view_org_unit {
+		span[id^=addressbook-view-addressbook][id $=_org_unit] {
 			.fontsize_m;
 			padding: 2px 0 2px 0;
 		}
 	   // Ort
-		#addressbook-view_adr_one_locality {
+		span[id^=addressbook-view-addressbook][id $=_adr_one_locality] {
 			.fontsize_m;
 			padding: 2px 0 2px 0;
 		}

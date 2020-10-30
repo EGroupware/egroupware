@@ -90,10 +90,12 @@ var AddressbookApp = /** @class */ (function (_super) {
                 break;
         }
         jQuery('select[id*="adr_one_countrycode"]').each(function () {
-            app.addressbook.show_custom_country(this);
+            if (app.addressbook)
+                app.addressbook.show_custom_country(this);
         });
         jQuery('select[id*="adr_two_countrycode"]').each(function () {
-            app.addressbook.show_custom_country(this);
+            if (app.addressbook)
+                app.addressbook.show_custom_country(this);
         });
     };
     /**
@@ -198,11 +200,27 @@ var AddressbookApp = /** @class */ (function (_super) {
         var extras = {
             index: index
         };
+        var data = egw.dataGetUIDdata(_senders[0].id)['data'];
         // CRM list
         if (_action.id != 'view') {
             extras.crm_list = _action.id.replace('view-', '');
         }
-        this.egw.open(id, 'addressbook', 'view', extras, '_self', 'addressbook');
+        this.egw.openTab(id, 'addressbook', 'view', extras, {
+            displayName: (_action.id.match(/\-organisation/) && data.org_name != "") ? data.org_name
+                : data.n_fn + " (" + egw.lang(extras.crm_list) + ")",
+            icon: data.photo,
+            refreshCallback: this.view_refresh,
+            id: id + '-' + extras.crm_list,
+        });
+    };
+    /**
+     * callback for refreshing relative crm view list
+     */
+    AddressbookApp.prototype.view_refresh = function () {
+        var et2 = etemplate2_1.etemplate2.getById("addressbook-view-" + this.appName);
+        if (et2) {
+            et2.app_obj.addressbook.view_set_list();
+        }
     };
     /**
      * Set link filter for the already open & rendered  list
@@ -222,20 +240,22 @@ var AddressbookApp = /** @class */ (function (_super) {
      *
      * @param {object} _action
      */
-    AddressbookApp.prototype.view_actions = function (_action) {
-        var id = this.et2.getArrayMgr('content').data.id;
-        switch (_action.id) {
-            case 'open':
+    AddressbookApp.prototype.view_actions = function (_action, _widget) {
+        var app_id = _widget.dom_id.split('_');
+        var et2 = etemplate2_1.etemplate2.getById(app_id[0]);
+        var id = et2.widgetContainer.getArrayMgr('content').data.id;
+        switch (_widget.id) {
+            case 'button[edit]':
                 this.egw.open(id, 'addressbook', 'edit');
                 break;
-            case 'copy':
+            case 'button[copy]':
                 this.egw.open(id, 'addressbook', 'edit', { makecp: 1 });
                 break;
-            case 'cancel':
-                this.egw.open(null, 'addressbook', 'list', null, '_self', 'addressbook');
+            case 'button[delete]':
+                et2_dialog.confirm(_widget, egw.lang('Delete this contact?'), egw.lang('Delete'));
                 break;
             default: // submit all other buttons back to server
-                this.et2._inst.submit();
+                et2.widgetContainer._inst.submit();
                 break;
         }
     };
