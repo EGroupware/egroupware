@@ -170,6 +170,7 @@ click <a href="index.php">here</a> to return to setup.	setup	en	Click <a href="i
 click here	setup	en	Click here
 click here to re-run the installation tests	setup	en	Click here to re-run the installation tests
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	en	Comma separated IP addresses or host names, default access to setup from everywhere
+comma-separated provider names or json	setup	en	Comma-separated provider names or JSON
 commercial support	setup	en	Commercial support
 community forum	setup	en	Community forum
 complete path to aspell program	setup	en	Complete path to aspell program
@@ -366,6 +367,7 @@ if using cas (central authentication service):	setup	en	if using cas (Central Au
 if using ldap	setup	en	If using LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage home directory and login shell attributes?
 if using mail authentication	setup	en	If using Mail authentication
+if using multiple authentication providers:	setup	en	If using Multiple authentication providers:
 if using saml 2.0 / shibboleth / simplesamlphp	setup	en	If using SAML 2.0 / Shibboleth / SimpleSAMLphp
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	en	If you can only access the docroot choose <b>Database</b> for where to store the file content AND use same path as for temporary files.
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
@@ -562,7 +564,9 @@ restore failed	setup	en	Restore failed!
 restore finished	setup	en	Restore finished!
 restore started, this might take a few minutes ...	setup	en	Restore started, this might take a few minutes ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	en	Restoring a backup will delete/replace all content in your database. Are you sure?
+result data to add or remove extra membership	setup	en	Result data to add or remove extra membership
 result data to use as username	setup	en	Result data to use as username
+result values (comma-separated) and group-name to add or remove	setup	en	Result values (comma-separated) and group-name to add or remove
 return to setup	setup	en	Return to setup
 root dn	setup	en	Root DN
 root dn password	setup	en	Root DN password

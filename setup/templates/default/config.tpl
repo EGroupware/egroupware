@@ -530,6 +530,25 @@
    </tr>
 
    <tr class="row_on">
+    <td>{lang_Result_data_to_add_or_remove_extra_membership}:</td>
+    <td>
+     <select name="newsettings[saml_affiliation]">
+      <option value="eduPersonAffiliation"{selected_saml_affiliation_eduPersonAffiliation}>eduPersonAffiliation</option>
+      <option value="custom"{selected_saml_affiliation_customOid}>{lang_custom_OID}</option>
+     </select>
+     <input name="newsettings[saml_affiliation_oid]" value="{value_saml_affiliation_oid}" placeholder="urn:oid:x.x.x.x" size="40" />
+    </td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_Result_values_(comma-separated)_and_group-name_to_add_or_remove}:</td>
+    <td>
+     <input name="newsettings[saml_affiliation_values]" value="{value_saml_affiliation_values}" placeholder="staff, ..." size="30" />
+     <input name="newsettings[saml_affiliation_group]" value="{value_saml_affiliation_group}" placeholder="Teachers" size="30" />
+    </td>
+   </tr>
+
+   <tr class="row_on">
     <td>{lang_Allow_SAML_logins_to_join_existing_accounts}:<br/>({lang_Requires_SAML_optional_on_login_page_and_user_to_specify_username_and_password})</td>
     <td>
      <select name="newsettings[saml_join]">

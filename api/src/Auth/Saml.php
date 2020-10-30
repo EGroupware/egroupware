@@ -146,6 +146,10 @@ class Saml implements BackendSSO
 				];
 			}
 		}
+
+		// check affiliation / group to add or remove
+		self::checkAffiliation($username, $attrs, $GLOBALS['auto_create_acct']);
+
 		// return user session
 		return $GLOBALS['egw']->session->create($username, null, null, false, false);
 	}
@@ -528,6 +532,56 @@ class Saml implements BackendSSO
 				return $config['saml_username_oid'] ?: self::emailAddress;
 		}
 		return self::emailAddress;
+	}
+
+	/**
+	 * eduPersonAffiliation attribute
+	 */
+	const eduPersonAffiliation = 'urn:oid:1.3.6.1.4.1.5923.1.1.1.1';
+
+	/**
+	 * Check if a group is specified depending on an affiliation attribute
+	 *
+	 * @param string $username
+	 * @param array $attrs
+	 * @param ?array& $auto_create_acct reference to $GLOBALS['auto_create_acct'] for not existing accounts
+	 * @param array|null $config
+	 * @return mixed|string|null
+	 */
+	private function checkAffiliation($username, array $attrs, array &$auto_create_acct=null, array $config=null)
+	{
+		if (!isset($config)) $config = $GLOBALS['egw_info']['server'];
+
+		// check if affiliation is configured and attribute returned by IdP
+		$attr = $config['saml_affiliation'] === 'eduPersonAffiliation' ? self::eduPersonAffiliation : $config['saml_affiliation_oid'];
+		if (!empty($attr) && !empty($attrs[$attr]) && !empty($config['saml_affiliation_group']) && !empty($config['saml_affiliation_values']) &&
+			($gid = $GLOBALS['egw']->accounts->name2id($config['saml_affiliation_group'], 'account_id', 'g')))
+		{
+			if (!isset($auto_create_acct) && ($accout_id = $GLOBALS['egw']->accounts->name2id($username, 'account_id', 'u')))
+			{
+				$memberships = $GLOBALS['egw']->accounts->memberships($accout_id, true);
+			}
+			// check if attribute matches given values to add the extra membership
+			if (array_intersect($attrs[$attr], preg_split('/, */', $config['saml_affiliation_values'])))
+			{
+				if (isset($auto_create_acct))
+				{
+					$auto_create_acct['add_group'] = $gid;
+				}
+				elseif ($accout_id && !in_array($gid, $memberships))
+				{
+					$memberships[] = $gid;
+					$GLOBALS['egw']->accounts->set_memberships($memberships, $accout_id);
+				}
+			}
+			// remove membership, if it's set
+			elseif ($accout_id && ($key = array_search($gid, $memberships, false)) !== false)
+			{
+				unset($memberships[$key]);
+				$GLOBALS['egw']->accounts->set_memberships($memberships, $accout_id);
+			}
+		}
+		error_log(__METHOD__."('$username', ".json_encode($attrs).", ".json_encode($auto_create_acct).") attr=$attr, gid=$gid --> account_id=$accout_id, memberships=".json_encode($memberships));
 	}
 
 	/**
