@@ -206,7 +206,8 @@ var AddressbookApp = /** @class */ (function (_super) {
             extras.crm_list = _action.id.replace('view-', '');
         }
         this.egw.openTab(id, 'addressbook', 'view', extras, {
-            displayName: data.n_fn + " (" + egw.lang(extras.crm_list) + ")",
+            displayName: (_action.id.match(/\-organisation/) && data.org_name != "") ? data.org_name
+                : data.data.n_fn + " (" + egw.lang(extras.crm_list) + ")",
             icon: data.photo,
             refreshCallback: this.view_refresh,
             id: id + '-' + extras.crm_list,
