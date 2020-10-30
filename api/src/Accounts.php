@@ -1191,6 +1191,12 @@ class Accounts
 		{
 			$memberships[] = $primary_group;
 		}
+		// add a requested addtional group, eg. Teachers for smallpart
+		if (!empty($GLOBALS['auto_create_acct']['add_group']) &&
+			$this->get_type((int)$GLOBALS['auto_create_acct']['add_group']) === 'g')
+		{
+			$memberships[] = (int)$GLOBALS['auto_create_acct']['add_group'];
+		}
 		$data = array(
 			'account_lid'           => $account_lid,
 			'account_type'          => 'u',

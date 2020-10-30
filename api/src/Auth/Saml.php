@@ -555,9 +555,9 @@ class Saml implements BackendSSO
 		// check if affiliation is configured and attribute returned by IdP
 		$attr = $config['saml_affiliation'] === 'eduPersonAffiliation' ? self::eduPersonAffiliation : $config['saml_affiliation_oid'];
 		if (!empty($attr) && !empty($attrs[$attr]) && !empty($config['saml_affiliation_group']) && !empty($config['saml_affiliation_values']) &&
-			($gid = $GLOBALS['egw']->accounts->name2id($config['saml_affiliation_group'], 'account_id', 'g')))
+			($gid = $GLOBALS['egw']->accounts->name2id($config['saml_affiliation_group'], 'account_lid', 'g')))
 		{
-			if (!isset($auto_create_acct) && ($accout_id = $GLOBALS['egw']->accounts->name2id($username, 'account_id', 'u')))
+			if (!isset($auto_create_acct) && ($accout_id = $GLOBALS['egw']->accounts->name2id($username, 'account_lid', 'u')))
 			{
 				$memberships = $GLOBALS['egw']->accounts->memberships($accout_id, true);
 			}
