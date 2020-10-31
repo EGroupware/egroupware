@@ -44,6 +44,8 @@ alarm deleted	calendar	en	Alarm deleted.
 alarm for %1 at %2 in %3	calendar	en	Alarm for %1 at %2 in %3
 alarm management	calendar	en	Alarm management
 alarms	calendar	en	Alarms
+all as one-liners	calendar	en	All as one-liners
+all as one-liners except mine	calendar	en	All as one-liners except mine
 all categories	calendar	en	All categories
 all day	calendar	en	All day
 all events	calendar	en	All events
@@ -165,6 +167,7 @@ delete this series of recurring events	calendar	en	Delete this series of recurri
 deleted	calendar	en	Deleted.
 deny resources reservation for private events	calendar	en	Deny resources reservation for private events
 directory with documents to insert entries	calendar	en	Directory with documents to insert entries
+display behavior of whole-day appointments	calendar	en	Display behavior of whole-day appointments
 display holidays or birthdays as events in dayview	calendar	en	Display holidays or birthdays as events in dayview
 display in header	calendar	en	Display in header
 display status of events	calendar	en	Display status of events
@@ -297,6 +300,7 @@ how many minutes should each interval last?	calendar	en	How many minutes should 
 how many separate calendars to show before merging them together	calendar	en	Minimum number of users for showing a consolidated calendar view, if less user are selected the calendar is displayed separately for week or day view.
 how many weeks should the multiple week view show?	calendar	en	How many weeks should the multiple week view show?
 how much entries to skip	calendar	en	How much entries to skip?
+how should a whole-day appointment be displayed?<br>By default blocking appointments are displayed spanning an entire day, non-blocking appointments are shown as one-liner above the dayview.	calendar	en	How should a whole-day appointment be displayed?<br>By default blocking appointments are displayed spanning an entire day, non-blocking appointments are shown as one-liner above the dayview.
 html link to the current record	calendar	en	HTML link to the current record
 ical	calendar	en	iCal
 ical / rfc2445	calendar	en	iCal / rfc2445
@@ -388,6 +392,7 @@ no response	calendar	en	No response
 no rights to export more than %1 entries!	calendar	en	No rights to export more than %1 entries!
 no, users will need to contact users with direct booking permission	calendar	en	No, users will need to contact users with direct booking permission
 non blocking	calendar	en	Non blocking
+non-blocking as one-liners	calendar	en	Non-blocking as one-liners
 not	calendar	en	Not
 not rejected	calendar	en	Not rejected
 nothing to update, version is already %1.	calendar	en	Nothing to update, version is already %1.

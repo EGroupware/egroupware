@@ -918,7 +918,19 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			}
 			if(!event.start.getUTCHours() && !event.start.getUTCMinutes() && event.end.getUTCHours() == 23 && event.end.getUTCMinutes() == 59)
 			{
-				event.whole_day_on_top = (event.non_blocking && event.non_blocking != '0');
+				var wholeDayBehaviour = egw.preference('whole_day_behaviour', 'calendar');
+				if (wholeDayBehaviour === 'all_appointments')
+				{
+					event.whole_day_on_top = true;
+				}
+				else if (wholeDayBehaviour === 'except_me')
+				{
+					event.whole_day_on_top = (event.creator != egw.user('account_id') && event.owner != egw.user('account_id'));
+				}
+				else
+				{
+					event.whole_day_on_top = (event.non_blocking && event.non_blocking != '0');
+				}
 			}
 			if (!event['whole_day_on_top'])
 			{
