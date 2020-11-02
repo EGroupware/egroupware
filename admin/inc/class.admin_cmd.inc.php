@@ -1340,9 +1340,9 @@ abstract class admin_cmd
 	{
 		static $tpl = null;	// some caching to not instanciate it twice
 
-		if (!isset($tpl))
+		$name = $this->get_etemplate_name();
+		if (!isset($tpl) || $tpl->id !== $name)
 		{
-			$name = $this->get_etemplate_name();
 			if (empty($name))
 			{
 				$tpl = false;
@@ -1363,7 +1363,7 @@ abstract class admin_cmd
 	 */
 	function get_change_labels()
 	{
-		$labels = [];
+ 		$labels = [];
 		$label = null;
 		if (($tpl = $this->get_etemplate()))
 		{
