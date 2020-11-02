@@ -154,7 +154,7 @@
 					<customfields-list id="$row" class="customfields"/>
 					<textbox multiline="true" id="${row}[note]" no_lang="1" readonly="true"/>
 					<description id="${row}[distrib_lists]"/>
-					<select id="${row}[owner]" readonly="true"/>
+					<select-account id="${row}[owner]" readonly="true"/>
 					<description id="${row}[id]" class="contactid"/>
 					<vbox>
 						<link id="${row}[last_link]"/>

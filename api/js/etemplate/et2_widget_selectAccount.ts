@@ -826,8 +826,8 @@ export class et2_selectAccount_ro extends et2_link_string
 			_value = _value.split(',');
 		}
 
-		// Don't bother to lookup if it's not an array, or a number
-		if(typeof _value == 'object' || !isNaN(_value) && _value != "")
+		// pass objects to link widget right away, as following code can't deal with objects
+		if (typeof _value == 'object')
 		{
 			super.set_value(_value);
 			// Don't make it look like a link though
@@ -842,12 +842,14 @@ export class et2_selectAccount_ro extends et2_link_string
 			// No clicks either
 			.off();
 
+		let found = false;
 		if(this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) || this.options.empty_label)
 		{
 			if(!_value)
 			{
 				// Empty label from selectbox
 				this.list.append("<li>"+this.options.empty_label+"</li>");
+				found = true;
 			}
 			else if (typeof _value == 'object')
 			{
@@ -862,6 +864,7 @@ export class et2_selectAccount_ro extends et2_link_string
 					else if (this.options.select_options[_value])
 					{
 						this.list.append("<li>"+this.options.select_options[_value]+"</li>");
+						found = true;
 					}
 				}
 			}
@@ -875,8 +878,6 @@ export class et2_selectAccount_ro extends et2_link_string
 				}
 				for(let j = 0; j < search.length; j++)
 				{
-					var found = false;
-
 					// Not having a value to look up causes an infinite loop
 					if(!search[j]) continue;
 
@@ -885,12 +886,23 @@ export class et2_selectAccount_ro extends et2_link_string
 						if(this.options.select_options[i].value == search[j])
 						{
 							this.list.append("<li>"+this.options.select_options[i].label+"</li>");
+							found = true;
 							break;
 						}
 					}
 
 				}
 			}
+		}
+		// if nothing found in select-options let link widget try
+		if(!found && !isNaN(_value))
+		{
+			super.set_value(_value);
+			// Don't make it look like a link though
+			jQuery('li',this.list).removeClass("et2_link et2_link_string")
+				// No clicks either
+				.off();
+			return;
 		}
 	}
 }

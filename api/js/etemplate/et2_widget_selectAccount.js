@@ -661,8 +661,8 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
         if (typeof _value == 'string' && _value.indexOf(',') > 0) {
             _value = _value.split(',');
         }
-        // Don't bother to lookup if it's not an array, or a number
-        if (typeof _value == 'object' || !isNaN(_value) && _value != "") {
+        // pass objects to link widget right away, as following code can't deal with objects
+        if (typeof _value == 'object') {
             _super.prototype.set_value.call(this, _value);
             // Don't make it look like a link though
             jQuery('li', this.list).removeClass("et2_link et2_link_string")
@@ -674,10 +674,12 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
         jQuery('li', this.list).removeClass("et2_link et2_link_string")
             // No clicks either
             .off();
+        var found = false;
         if (this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) || this.options.empty_label) {
             if (!_value) {
                 // Empty label from selectbox
                 this.list.append("<li>" + this.options.empty_label + "</li>");
+                found = true;
             }
             else if (typeof _value == 'object') {
                 // An array with 0 / empty in it?
@@ -688,6 +690,7 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
                     }
                     else if (this.options.select_options[_value]) {
                         this.list.append("<li>" + this.options.select_options[_value] + "</li>");
+                        found = true;
                     }
                 }
             }
@@ -698,18 +701,27 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
                     search = [_value];
                 }
                 for (var j = 0; j < search.length; j++) {
-                    var found = false;
                     // Not having a value to look up causes an infinite loop
                     if (!search[j])
                         continue;
                     for (var i in this.options.select_options) {
                         if (this.options.select_options[i].value == search[j]) {
                             this.list.append("<li>" + this.options.select_options[i].label + "</li>");
+                            found = true;
                             break;
                         }
                     }
                 }
             }
+        }
+        // if nothing found in select-options let link widget try
+        if (!found && !isNaN(_value)) {
+            _super.prototype.set_value.call(this, _value);
+            // Don't make it look like a link though
+            jQuery('li', this.list).removeClass("et2_link et2_link_string")
+                // No clicks either
+                .off();
+            return;
         }
     };
     et2_selectAccount_ro._attributes = {
