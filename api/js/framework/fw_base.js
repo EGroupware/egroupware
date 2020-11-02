@@ -699,7 +699,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		var app = this.parseAppFromUrl(_link);
 		if (app)
 		{
-			var appname = app.appName+"-"+btoa(_extra.id ? _extra.id : _link);
+			var appname = app.appName+"-"+btoa(_extra.id ? _extra.id : _link).replaceAll('=','');
 			this.applications[appname] = this.getApplicationByName(appname);
 			if (this.applications[appname])
 			{
