@@ -672,7 +672,7 @@ class Sql extends Api\Storage
 		if (($key = array_search('shared_with', $extra_cols)) !== false)
 		{
 			$extra_cols[$key] = '(SELECT '.$this->db->group_concat('DISTINCT shared_with').' FROM '.self::SHARED_TABLE.
-				' WHERE '.self::SHARED_TABLE.'.contact_id='.$this->table_name.'.contact_id) AS shared_with';
+				' WHERE '.self::SHARED_TABLE.'.contact_id='.$this->table_name.'.contact_id AND shared_deleted IS NULL) AS shared_with';
 		}
 		if (!empty($filter['shared_with']))
 		{
@@ -1114,8 +1114,9 @@ class Sql extends Api\Storage
 					}
 				}
 				$this->db->insert(self::SHARED_TABLE, $data,
-					array_intersect_key($data, array_flip(['shared_by','shared_with','contact_id','share_id'])), __LINE__, __FILE__);
-				$data['shared_id'] = $this->db->get_last_insert_id(self::SHARED_TABLE, 'share_id');
+					$where = array_intersect_key($data, array_flip(['shared_by','shared_with','contact_id','share_id'])), __LINE__, __FILE__);
+				// if we resurect a previous deleted share, we dont get the shared_id back, need to query it
+				$data['shared_id'] = $this->db->select(self::SHARED_TABLE, 'shared_id', $where, __LINE__, __FILE__)->fetchColumn();
 			}
 			$ids[] = (int)$data['shared_id'];
 		}
