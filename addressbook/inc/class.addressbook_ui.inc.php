@@ -1906,19 +1906,25 @@ class addressbook_ui extends addressbook_bo
 				unset($query['advanced_search']['meth_select']);
 			}
 
+			$columsel = $this->prefs['nextmatch-addressbook.index.rows'];
+			$columselection = $columsel ? explode(',',$columsel) : array();
+			$extracols = [];
+			if (in_array('owner_shared_with', $columselection))
+			{
+				$extracols[] = 'shared_with';
+			}
+
 			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],$id_only,
-				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
+				$order, $extracols, $wildcard,false, $op,[(int)$query['start'], (int)$query['num_rows']], $query['col_filter']);
 
 			// do we need to read the custom fields, depends on the column is enabled and customfields
-			$columsel = $this->prefs['nextmatch-addressbook.index.rows'];
-			$available_distib_lists=$this->get_lists(Acl::READ);
-			$columselection = $columsel ? explode(',',$columsel) : array();
 			$ids = $calendar_participants = array();
 			if (!$id_only && $rows)
 			{
 				$show_custom_fields = (in_array('customfields',$columselection) || $this->config['index_load_cfs']) && $this->customfields;
 				$show_calendar = $this->config['disable_event_column'] != 'True' && in_array('calendar_calendar',$columselection);
-				$show_distributionlist = in_array('distrib_lists',$columselection) || count($available_distib_lists);
+				$show_distributionlist = in_array('distrib_lists', $columselection) ||
+					is_array($available_distib_lists) && count($available_distib_lists);
 				if ($show_calendar || $show_custom_fields || $show_distributionlist)
 				{
 					foreach($rows as $val)
