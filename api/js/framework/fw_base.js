@@ -571,6 +571,13 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		{
 			app.destroy();
 		}
+
+		this.tag.parentFw.tabApps.forEach((a,i)=>{if (a.name == this.tag.appName)
+		{
+			this.tag.parentFw.tabApps.splice(i,1);
+			return;
+		}});
+		this.tag.parentFw._setTabAppsSession(this.tag.parentFw.tabApps);
 	 },
 
 	/**
@@ -679,6 +686,14 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		}
 	},
 
+	_setTabAppsSession: function(_tabApps)
+	{
+		if (_tabApps)
+		{
+			egw.setSessionItem('api', 'fw_tab_apps', JSON.stringify(_tabApps));
+		}
+	},
+
 	tabLinkHandler: function(_link, _extra)
 	{
 		var app = this.parseAppFromUrl(_link);
@@ -720,7 +735,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				internalName: app.appName
 			}));
 
-			egw.setSessionItem('api', 'fw_tab_apps', JSON.stringify(this.tabApps));
+			this._setTabAppsSession(this.tabApps);
 		}
 		else
 		{
