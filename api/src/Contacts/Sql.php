@@ -510,7 +510,7 @@ class Sql extends Api\Storage
 		else
 		{
 			// SQL to get all shared contacts to be OR-ed into ACL filter
-			$shared_sql = 'contact_id IN (SELECT contact_id FROM '.self::SHARED_TABLE.' WHERE '.
+			$shared_sql = $this->table_name.'.contact_id IN (SELECT contact_id FROM '.self::SHARED_TABLE.' WHERE '.
 				// $filter[tid] === null is used by sync-collection report, in which case we need to return deleted shares, to remove them from devices
 				(array_key_exists('tid', $filter) && !isset($filter['tid']) ? '' : 'shared_deleted IS NULL AND ').
 				$this->db->expression(self::SHARED_TABLE, ['shared_with' => $filter['owner'] ?? array_keys($this->grants)]).')';
@@ -668,6 +668,20 @@ class Sql extends Api\Storage
 				}
 			}
 		}
+		if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
+		if (($key = array_search('shared_with', $extra_cols)) !== false)
+		{
+			$extra_cols[$key] = '(SELECT '.$this->db->group_concat('DISTINCT shared_with').' FROM '.self::SHARED_TABLE.
+				' WHERE '.self::SHARED_TABLE.'.contact_id='.$this->table_name.'.contact_id) AS shared_with';
+		}
+		if (!empty($filter['shared_with']))
+		{
+			$join .= ' JOIN '.self::SHARED_TABLE.' sw ON '.$this->table_name.'.contact_id=sw.contact_id AND sw.'.
+				$this->db->expression(self::SHARED_TABLE, ['shared_with' => $filter['shared_with']]).
+				' AND sw.shared_deleted IS NULL';
+		}
+		unset($filter['shared_with']);
+
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 
 		if ($start === false) $this->total = is_array($rows) ? count($rows) : 0;	// so_sql sets total only for $start !== false!

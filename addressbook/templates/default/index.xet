@@ -85,7 +85,10 @@
 					<nextmatch-customfields id="customfields"/>
 					<nextmatch-header label="Note" id="note"/>
 					<nextmatch-header label="Distribution lists" id="distribution_list"/>
-					<nextmatch-header label="Addressbook" id="owner"/>
+					<vbox>
+						<nextmatch-header label="Addressbook" id="owner"/>
+						<nextmatch-accountfilter empty_label="Shared with" id="shared_with"/>
+					</vbox>
 					<nextmatch-sortheader label="ID" id="contact_id"/>
 					<vbox>
 						<nextmatch-header label="Last date" id="calendar"/>
@@ -154,7 +157,10 @@
 					<customfields-list id="$row" class="customfields"/>
 					<textbox multiline="true" id="${row}[note]" no_lang="1" readonly="true"/>
 					<description id="${row}[distrib_lists]"/>
-					<select-account id="${row}[owner]" readonly="true"/>
+					<vbox>
+						<select-account id="${row}[owner]" readonly="true"/>
+						<select-account id="${row}[shared_with]" readonly="true" multiple="true"/>
+					</vbox>
 					<description id="${row}[id]" class="contactid"/>
 					<vbox>
 						<link id="${row}[last_link]"/>
