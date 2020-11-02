@@ -356,7 +356,7 @@ class addressbook_ui extends addressbook_bo
 	/**
 	 * Get actions / context menu items
 	 *
-	 * @param string $tid_filter =null
+	 * @param ?string $tid_filter =null
 	 * @return array see Etemplate\Widget\Nextmatch::get_actions()
 	 */
 	public function get_actions($tid_filter=null)
@@ -1495,7 +1495,8 @@ class addressbook_ui extends addressbook_bo
 							foreach($contact['shared'] as $key => $shared)
 							{
 								// only unshare contacts shared by current user
-								if ($shared['shared_by'] == $this->user &&
+								if (($shared['shared_by'] == $this->user ||
+									$this->check_perms(ACL::EDIT, $contact)) &&
 									// only unshare from given addressbook, or all
 									(empty($query['filter']) || $shared['shared_with'] == (int)$query['filter']))
 								{
@@ -1967,6 +1968,11 @@ class addressbook_ui extends addressbook_bo
 		}
 		$order = $query['order'];
 
+		$unshare_grants = [];
+		foreach($this->grants as $grantee => $rights)
+		{
+			if ($rights & (ACL::EDIT|self::ACL_SHARED)) $unshare_grants[] = $grantee;
+		}
 		$readonlys = array();
 		foreach($rows as $n => &$row)
 		{
@@ -2076,7 +2082,8 @@ class addressbook_ui extends addressbook_bo
 				$row['cat_id'] = $this->categories->check_list(Acl::READ,$row['cat_id']);
 			}
 
-			if ($query['col_filter']['shared_by'] == $this->user)
+			if ($query['col_filter']['shared_by'] == $this->user || !empty($row['shared_with']) &&
+				array_intersect($unshare_grants, explode(',', $row['shared_with'])))
 			{
 				$row['class'] .= 'unshare_contact ';
 			}
