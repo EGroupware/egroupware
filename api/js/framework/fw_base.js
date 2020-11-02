@@ -39,6 +39,10 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		this.applications = new Object();
 		this.activeApp = null;
 
+		this.apps = null;
+
+		this.tabApps = JSON.parse(egw.getSessionItem('api', 'fw_tab_apps')||null) || [];
+
 		//Register the resize handler
 		jQuery(window).resize(function(){window.framework.resizeHandler();});
 
@@ -70,7 +74,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		//Close all open tabs, remove all applications from the application list
 		this.sidemenuUi.clean();
 		this.tabsUi.clean();
-
+		this.apps = apps = (this.tabApps.length > 0) ? apps.concat(this.tabApps) : apps;
 		var defaultApp = null;
 		var restore = new Object;
 		var restore_count = 0;
@@ -707,6 +711,16 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 
 			this.applicationTabNavigate(this.applications[appname], _link, false, -1, null);
+			this.tabApps.push(jQuery.extend(true, this.apps.filter(a=>{if (a.name == app.appName) return a})[0], {
+				title: _extra.displayName,
+				icon:_extra.icon,
+				name: appname,
+				opened: 1,
+				url: _link,
+				internalName: app.appName
+			}));
+
+			egw.setSessionItem('api', 'fw_tab_apps', JSON.stringify(this.tabApps));
 		}
 		else
 		{
