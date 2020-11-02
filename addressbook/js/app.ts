@@ -227,7 +227,7 @@ class AddressbookApp extends EgwApp
 		{
 			extras.crm_list = _action.id.replace('view-','');
 		}
-
+		if (!extras.crm_list) extras.crm_list = egw.preference('crm_list', 'addressbook');
 		this.egw.openTab(id, 'addressbook', 'view', extras, {
 			displayName: (_action.id.match(/\-organisation/) && data.org_name != "") ? data.org_name
 				: data.n_fn+" ("+egw.lang(extras.crm_list)+")",
