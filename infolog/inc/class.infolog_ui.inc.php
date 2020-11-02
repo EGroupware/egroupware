@@ -1018,8 +1018,6 @@ class infolog_ui
 		else
 		{
 			$values['css'] = '<style type="text/css">@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/infolog/templates/default/app.css);'."</style>";
-			// Avoid DOM conflicts
-			$this->tmpl->set_dom_id("{$this->tmpl->name}-$action-$action_id");
 		}
 		// add scrollbar to long description, if user choose so in his prefs
 		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
