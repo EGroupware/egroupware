@@ -290,6 +290,9 @@ class AddressbookApp extends EgwApp
 			case 'button[delete]':
 				et2_dialog.confirm(_widget, egw.lang('Delete this contact?'), egw.lang('Delete'));
 				break;
+			case 'button[close]':
+				framework.activeApp.tab.closeButton.click();
+				break;
 			default:	// submit all other buttons back to server
 				et2.widgetContainer._inst.submit();
 				break;
