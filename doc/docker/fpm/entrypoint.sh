@@ -46,7 +46,7 @@ max_retries=10
 export try=0
 # EGW_SKIP_INSTALL=true skips initial installation (no header.inc.php yet)
 until [ -n "$EGW_SKIP_INSTALL" -a ! -f /var/lib/egroupware/header.inc.php ] || \
-	php /usr/share/egroupware/doc/rpm-build/post_install.php \
+	sudo -u www-data php /usr/share/egroupware/doc/rpm-build/post_install.php \
 	--start_webserver "" --autostart_webserver "" \
 	--start_db "" --autostart_db "" \
 	--db_type "${EGW_DB_TYPE:-mysqli}" \
