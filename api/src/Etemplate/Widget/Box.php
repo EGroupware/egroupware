@@ -50,7 +50,7 @@ class Box extends Etemplate\Widget
 		$old_expand = $params[1];
 
 		if ($this->id && $this->type != 'groupbox') $cname = self::form_name($cname, $this->id, $params[1]);
-		if ($expand['cname'] !== $cname && $cname)
+		if ($expand['cname'] !== $cname && trim($cname) != '')
 		{
 			$expand['cont'] =& self::get_array(self::$request->content, $cname);
 			$expand['cname'] = $cname;
@@ -73,6 +73,11 @@ class Box extends Etemplate\Widget
 
 		// Expand children
 		$columns_disabled = null;
+		if($this->id && $this->children[0] && strpos($this->children[0]->id, '$') !== false)
+		{
+			// Need to set this so the first child can repeat
+			$expand['row'] = 0;
+		}
 		for($n = 0; ; ++$n)
 		{
 			if (isset($this->children[$n]))
@@ -93,6 +98,8 @@ class Box extends Etemplate\Widget
 				break;
 			}
 			//error_log('Running ' . $method_name . ' on child ' . $n . '(' . $child . ') ['.$expand['row'] . ','.$expand['c'] . ']');
+			$params[0] = $cname;
+			$params[1] = $expand;
 			$disabled = $child->run($method_name, $params, $respect_disabled, $columns_disabled) === false;
 		}
 
