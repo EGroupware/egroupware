@@ -87,7 +87,7 @@
 					<nextmatch-header label="Distribution lists" id="distribution_list"/>
 					<vbox>
 						<nextmatch-header label="Addressbook" id="owner"/>
-						<nextmatch-accountfilter empty_label="Shared with" id="shared_with"/>
+						<nextmatch-accountfilter empty_label="Shared with" id="shared_with" account_type="both"/>
 					</vbox>
 					<nextmatch-sortheader label="ID" id="contact_id"/>
 					<vbox>

@@ -379,6 +379,7 @@ no categories selected	addressbook	en	No categories selected
 no distribution list	addressbook	en	No distribution list
 no fallback	addressbook	en	No fallback
 no vcard	addressbook	en	No vCard
+not shared	addressbook	en	not shared
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
 open %1 crm view	addressbook	en	Open %1 CRM view
@@ -458,6 +459,7 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	en	Set only full name
 share into addressbook	addressbook	en	Share into addressbook
 share writable	addressbook	en	Share writable
+shared	addressbook	en	shared
 shared by me	addressbook	en	Shared by me
 shared into addressbook %1	addressbook	en	shared into addressbook %1
 shared with	addressbook	en	Shared with

@@ -379,6 +379,7 @@ no categories selected	addressbook	de	keine Kategorien ausgewählt
 no distribution list	addressbook	de	Keine Verteilerliste
 no fallback	addressbook	de	Keine Ausweichlösung
 no vcard	addressbook	de	Keine vCard
+not shared	addressbook	de	nicht geteilt
 number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
 open %1 crm view	addressbook	de	Öffnet %1 in der CRM-Ansicht
@@ -458,6 +459,7 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	de	Nur vollen Namen setzen
 share into addressbook	addressbook	de	Teilen in Adressbuch
 share writable	addressbook	de	Bearbeitbar teilen
+shared	addressbook	de	geteilt
 shared by me	addressbook	de	Von mir geteilt
 shared into addressbook %1	addressbook	de	geteilt in Adressbuch %1
 shared with	addressbook	de	Geteilt mit

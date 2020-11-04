@@ -668,17 +668,29 @@ class Sql extends Api\Storage
 				}
 			}
 		}
+		// shared with column and filter
 		if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
+		$shared_with = '(SELECT '.$this->db->group_concat('DISTINCT shared_with').' FROM '.self::SHARED_TABLE.
+			' WHERE '.self::SHARED_TABLE.'.contact_id='.$this->table_name.'.contact_id AND shared_deleted IS NULL)';
 		if (($key = array_search('shared_with', $extra_cols)) !== false)
 		{
-			$extra_cols[$key] = '(SELECT '.$this->db->group_concat('DISTINCT shared_with').' FROM '.self::SHARED_TABLE.
-				' WHERE '.self::SHARED_TABLE.'.contact_id='.$this->table_name.'.contact_id AND shared_deleted IS NULL) AS shared_with';
+			$extra_cols[$key] = "$shared_with AS shared_with";
 		}
-		if (!empty($filter['shared_with']))
+		switch ((string)$filter['shared_with'])
 		{
-			$join .= ' JOIN '.self::SHARED_TABLE.' sw ON '.$this->table_name.'.contact_id=sw.contact_id AND sw.'.
-				$this->db->expression(self::SHARED_TABLE, ['shared_with' => $filter['shared_with']]).
-				' AND sw.shared_deleted IS NULL';
+			case '':	// filter not set
+				break;
+			case 'not':
+				$filter[] = $shared_with.' IS NULL';
+				break;
+			case 'shared':
+				$filter[] = $shared_with.' IS NOT NULL';
+				break;
+			default:
+				$join .= ' JOIN '.self::SHARED_TABLE.' sw ON '.$this->table_name.'.contact_id=sw.contact_id AND sw.'.
+					$this->db->expression(self::SHARED_TABLE, ['shared_with' => $filter['shared_with']]).
+					' AND sw.shared_deleted IS NULL';
+				break;
 		}
 		unset($filter['shared_with']);
 
