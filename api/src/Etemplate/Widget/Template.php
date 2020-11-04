@@ -247,6 +247,10 @@ class Template extends Etemplate\Widget
 		// Check for template from content, and run over it
 		// templates included via template tag have their name to load them from in attribute "template"
 		$expand_name = self::expand_name($this->id ? $this->id : $this->attrs['template'], '','','','',self::$request->content);
+		if(!$expand_name && $this->id && $this->attrs['template'])
+		{
+			$expand_name = $this->attrs['template'];
+		}
 		if($this->original_name)
 		{
 			$expand_name = self::expand_name($this->original_name, '','','','',self::$request->content);
