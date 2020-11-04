@@ -27,12 +27,12 @@ td.addressbook_sidebox_toolbar {
 	height: auto;
 	vertical-align: bottom;
 }
-div.addressbook_view_sidebox button[id$='_button[close]'] {
+div.addressbook_view_sidebox .toolbox button{
 	vertical-align: middle;
 }
 div.addressbook_view_sidebox img[id$='_button[delete]'] {
 	float: right;
-	margin-top: 7px;
+	margin-top: 9px;
 }
 /**
  * new addressbook.edit

@@ -50,7 +50,7 @@
 					<description for="url" value="URL"/>
 					<url id="url" readonly="true"/>
 				</row>
-				<row>
+				<row class="toolbox">
 					<hbox>
 						<button id="button[edit]" label="open" background_image="1" image="edit" onclick="app.addressbook.view_actions"/>
 						<button id="button[copy]" label="copy" background_image="1" image="copy" onclick="app.addressbook.view_actions"/>
