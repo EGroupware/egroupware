@@ -1006,14 +1006,20 @@ abstract class Ajax extends Api\Framework
 		// dont send header and footer
 		self::$header_done = self::$footer_done = true;
 
+		// flag to indicate target of output e.g. _tab
+		if ($_GET['fw_target'])
+		{
+			Api\Cache::unsetSession(__CLASS__,'sidebox_md5');	// sideboxes need to be send again
+			$GLOBALS['egw']->framework->set_extra('fw','target',$_GET['fw_target']);
+		}
+
 		// need to call do_sidebox, as header() with $header_done does NOT!
 		$GLOBALS['egw']->framework->do_sidebox();
 
 		// send Api\Preferences, so we dont need to request them in a second ajax request
 		$GLOBALS['egw']->framework->response->call('egw.set_preferences',
 			(array)$GLOBALS['egw_info']['user']['preferences'][$app], $app);
-		// flag to indicate target of output e.g. _tab
-		if ($_GET['fw_target']) $GLOBALS['egw']->framework->set_extra('fw','target',$_GET['fw_target']);
+
 		// call application menuaction
 		ob_start();
 		$obj->$method();
