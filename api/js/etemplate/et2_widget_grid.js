@@ -714,7 +714,11 @@ var et2_grid = /** @class */ (function (_super) {
             containment: this.options.sortable_containment,
             connectWith: this.options.sortable_connectWith,
             update: function (event, ui) {
-                self.egw().json(sortable, [$node.sortable("toArray"), self.id], null, self, true).sendRequest();
+                self.egw().json(sortable, [
+                    self.getInstanceManager().etemplate_exec_id,
+                    $node.sortable("toArray"),
+                    self.id
+                ], null, self, true).sendRequest();
             },
             receive: function (event, ui) {
                 if (typeof self.sortable_recieveCallback == 'function') {

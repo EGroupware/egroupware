@@ -972,7 +972,10 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			containment: this.options.sortable_containment,
 			connectWith: this.options.sortable_connectWith,
 			update: function(event, ui) {
-				self.egw().json(sortable,[$node.sortable("toArray"), self.id],
+				self.egw().json(sortable,[
+					self.getInstanceManager().etemplate_exec_id,
+					$node.sortable("toArray"),
+					self.id],
 					null,
 					self,
 					true

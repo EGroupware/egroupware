@@ -892,7 +892,7 @@ class mail_sieve
 	 *
 	 * @param {array} $orders
 	 */
-	function ajax_moveRule($orders)
+	function ajax_moveRule($exec_id, $orders)
 	{
 
 		foreach ($orders as $keys => $val)
