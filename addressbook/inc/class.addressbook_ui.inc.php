@@ -2213,7 +2213,7 @@ class addressbook_ui extends addressbook_bo
 			foreach($content['shared'] as $key => $shared)
 			{
 				$shared_value = $shared['shared_id'].':'.$shared['shared_with'].':'.$shared['shared_by'].':'.$shared['shared_writable'];
-				if (($k = array_search($shared_value, $content['shared_values'])) === false)
+				if (($k = array_search($shared_value, (array)$content['shared_values'])) === false)
 				{
 					unset($content['shared'][$key]);
 				}
@@ -2222,9 +2222,11 @@ class addressbook_ui extends addressbook_bo
 					unset($content['shared_values'][$k]);
 				}
 			}
-			foreach($content['shared_values'] as $account_id)
+			foreach((array)$content['shared_values'] as $account_id)
 			{
 				$content['shared'][] = [
+					'contact_id' => $content['id'],
+					'contact' => $content,
 					'shared_with' => $account_id,
 					'shared_by' => $this->user,
 					'shared_at' => new Api\DateTime(),
