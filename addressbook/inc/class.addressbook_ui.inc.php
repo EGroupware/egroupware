@@ -348,6 +348,12 @@ class addressbook_ui extends addressbook_bo
 		}
 		$content['nm']['grouped_view_label'] = $sel_options['grouped_view'][(string) $content['nm']['grouped_view']];
 
+		// allow to also filter by (not) shared contacts
+		$sel_options['shared_with'] = [
+			'not' => lang('not shared'),
+			'shared' => lang('shared'),
+		];
+
 		$this->tmpl->read('addressbook.index');
 		return $this->tmpl->exec('addressbook.addressbook_ui.index',
 			$content,$sel_options,array(),$preserv);
