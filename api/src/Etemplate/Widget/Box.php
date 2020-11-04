@@ -73,7 +73,7 @@ class Box extends Etemplate\Widget
 
 		// Expand children
 		$columns_disabled = null;
-		if($this->children[0] && strpos($this->children[0]->id, '$') !== false)
+		if($this->id && $this->children[0] && strpos($this->children[0]->id, '$') !== false)
 		{
 			// Need to set this so the first child can repeat
 			$expand['row'] = 0;
