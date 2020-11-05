@@ -88,7 +88,7 @@ class Grid extends Box
 			return false;	// return
 		}
 
-		if ($this->id) $cname = self::form_name($cname, $this->id, $expand);
+		if ($this->id && $this->type !== 'row') $cname = self::form_name($cname, $this->id, $expand);
 		if ($expand['cname'] !== $cname && $cname)
 		{
 			$expand['cont'] =& self::get_array(self::$request->content, $cname);
