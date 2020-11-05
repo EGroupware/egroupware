@@ -839,6 +839,53 @@ class resources_bo
 	}
 
 	/**
+	 *
+	 * @param $_res_id
+	 * @param $_starttime
+	 * @param $_endtime
+	 * @return array|null returns array of resource data with calculated useable quantity
+	 */
+	function checkUseable($_res_id, $_starttime, $_endtime)
+	{
+		$resource = $this->read($_res_id);
+		if ($resource && $resource['bookable'])
+		{
+			//get a calendar objet for reservations
+			if ( (!isset($this->bocal)) || !(is_object($this->bocal)))
+			{
+				$this->bocal = new calendar_bo();
+			}
+			$overlapping_events =& $this->bocal->search(array(
+				'start' => $_starttime,
+				'end'   => $_endtime,
+				'users' => ['r'.$_res_id],
+				'ignore_acl' => true,   // otherwise we get only events readable by the user
+				'enum_groups' => false,  // otherwise group-events would not block time
+			));
+
+			foreach($overlapping_events as $event)
+			{
+				if ($event['non_blocking']) continue; // ignore non_blocking events
+				// now we are interested only on resources booked by theses events
+				if (isset($event['participants']) && is_array($event['participants'])){
+					foreach($event['participants'] as $part_key => $part_detail){
+						if ($part_key{0}=='r')
+						{
+							$resource_id=substr($part_key,1);
+							if ($resource_id != $_res_id) continue;
+							$quantity = 1;
+							$this->bocal->so->split_status($part_detail,$quantity);
+							$resource['useable']-=$quantity;
+						}
+					}
+				}
+			}
+		}
+
+		return $resource;
+	}
+
+	/**
 	 * get title for an infolog entry identified by $res_id
 	 *
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
