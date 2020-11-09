@@ -18,6 +18,7 @@ use EGroupware\Api\Egw;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Vfs;
 use EGroupware\Api\Etemplate;
+use EGroupware\Kanban\Hooks;
 
 /**
  * General user interface object of the adressbook
@@ -786,6 +787,10 @@ class addressbook_ui extends addressbook_bo
 				'enableClass' => 'contact_contact',
 				'hideOnMobile' => true
 			);
+		}
+		if ($GLOBALS['egw_info']['user']['apps']['kanban'])
+		{
+			$actions['kanban'] = EGroupware\Kanban\Hooks::get_actions('addressbook', $group);
 		}
 
 		$actions['geolocation'] = array(
