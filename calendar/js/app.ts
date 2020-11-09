@@ -1352,7 +1352,7 @@ class CalendarApp extends EgwApp
 			let end = <et2_date> widget.getRoot().getDOMWidgetById('end');
 			let start_time = new Date(widget.getValue());
 			let end_time = new Date(end.getValue());
-			if(end_time <= start_time)
+			if(end.getValue() && end_time <= start_time)
 			{
 				start_time.setMinutes(start_time.getMinutes() + 1);
 				end.set_value(start_time);
