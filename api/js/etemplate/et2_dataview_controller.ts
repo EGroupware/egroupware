@@ -131,6 +131,8 @@ export class et2_dataview_controller
 				this._parentController = null;
 			}
 		}
+
+		this._grid = null;
 	}
 
 	/**
@@ -186,6 +188,9 @@ export class et2_dataview_controller
 	 */
 	update( clear? : boolean)
 	{
+		// Avoid update after destroy
+		// Happens sometimes if AJAX response comes after etemplate unload
+		if(!this._grid) return;
 
 		// ---------
 

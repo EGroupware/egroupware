@@ -40,6 +40,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var et2_dataview_view_row_1 = require("./et2_dataview_view_row");
 var et2_dataview_view_tile_1 = require("./et2_dataview_view_tile");
+var et2_dataview_controller_1 = require("./et2_dataview_controller");
+var et2_dataview_model_columns_1 = require("./et2_dataview_model_columns");
 /**
  * @augments et2_dataview_controller
  */
@@ -123,6 +125,7 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
             this._objectManager.remove();
             this._actionManager.remove();
         }
+        this._widget = null;
         _super.prototype.destroy.call(this);
     };
     /**
@@ -535,7 +538,7 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
                 col_refresh = true;
                 nm.dataview.columnMgr.getColumnById('col_' + column_index)
                     .set_visibility(nm.getArrayMgr('content').parseBoolExpression(nm.columns[column_index].disabled) ?
-                    et2_dataview_column.ET2_COL_VISIBILITY_DISABLED :
+                    et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_DISABLED :
                     nm.columns[column_index].visible);
             }
         }
@@ -621,6 +624,6 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
     et2_nextmatch_controller.VIEW_ROW = 'row';
     et2_nextmatch_controller.VIEW_TILE = 'tile';
     return et2_nextmatch_controller;
-}(et2_dataview_controller));
+}(et2_dataview_controller_1.et2_dataview_controller));
 exports.et2_nextmatch_controller = et2_nextmatch_controller;
 //# sourceMappingURL=et2_extension_nextmatch_controller.js.map

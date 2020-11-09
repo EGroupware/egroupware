@@ -87,6 +87,7 @@ var et2_dataview_controller = /** @class */ (function () {
                 this._parentController = null;
             }
         }
+        this._grid = null;
     };
     /**
      * @param value is an object implementing the et2_IDataProvider
@@ -124,6 +125,10 @@ var et2_dataview_controller = /** @class */ (function () {
      *		Completely clears the grid and selection.
      */
     et2_dataview_controller.prototype.update = function (clear) {
+        // Avoid update after destroy
+        // Happens sometimes if AJAX response comes after etemplate unload
+        if (!this._grid)
+            return;
         // ---------
         // TODO: Actually stuff here should be done if the server responds that
         // there at all were some changes (needs implementation of "refresh")

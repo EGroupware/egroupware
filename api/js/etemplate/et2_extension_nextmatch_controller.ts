@@ -27,6 +27,9 @@
 import {et2_IDataProvider} from "./et2_dataview_interfaces";
 import {et2_dataview_row} from "./et2_dataview_view_row";
 import {et2_dataview_tile} from "./et2_dataview_view_tile";
+import {et2_nextmatch} from "./et2_extension_nextmatch";
+import {et2_dataview_controller} from "./et2_dataview_controller";
+import {et2_dataview_column} from "./et2_dataview_model_columns";
 
 /**
  * @augments et2_dataview_controller
@@ -36,6 +39,8 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 	// Display constants
 	public static readonly VIEW_ROW : string = 'row';
 	public static readonly VIEW_TILE: string = 'tile';
+
+	private _widget: et2_nextmatch;
 
 	/**
 	 * Initializes the nextmatch controller.
@@ -138,6 +143,8 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 			this._objectManager.remove();
 			this._actionManager.remove();
 		}
+
+		this._widget = null;
 
 		super.destroy();
 	}
