@@ -1292,7 +1292,7 @@ var CalendarApp = /** @class */ (function (_super) {
             var end = widget.getRoot().getDOMWidgetById('end');
             var start_time = new Date(widget.getValue());
             var end_time = new Date(end.getValue());
-            if (end_time <= start_time) {
+            if (end.getValue() && end_time <= start_time) {
                 start_time.setMinutes(start_time.getMinutes() + 1);
                 end.set_value(start_time);
             }
