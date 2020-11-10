@@ -965,7 +965,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		// Set up sortable
 		$node.sortable({
 			// Header does not participate in sorting
-			items: "tr:not(.th)",
+			items: "> tbody > tr:not(.th)",
 			distance: 15,
 			cancel: this.options.sortable_cancel,
 			placeholder: this.options.sortable_placeholder,

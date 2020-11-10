@@ -707,7 +707,7 @@ var et2_grid = /** @class */ (function (_super) {
         // Set up sortable
         $node.sortable({
             // Header does not participate in sorting
-            items: "tr:not(.th)",
+            items: "> tbody > tr:not(.th)",
             distance: 15,
             cancel: this.options.sortable_cancel,
             placeholder: this.options.sortable_placeholder,
