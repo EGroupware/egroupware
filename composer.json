@@ -64,6 +64,7 @@
 		"ext-xml": "*",
 		"ext-xsl": "*",
 		"adldap2/adldap2": "=4.0.4",
+		"bigbluebutton/bigbluebutton-api-php": "^2.0",
 		"bower-asset/cropper": "2.3.*",
 		"bower-asset/diff2html": "^2.7",
 		"bower-asset/fastclick": "1.0.*",
