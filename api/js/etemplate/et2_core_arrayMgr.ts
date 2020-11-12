@@ -125,6 +125,8 @@ export class et2_arrayMgr
 	 * @return {string[]}
 	 */
 	explodeKey(_key: string): string[] {
+		if(!_key || _key.trim() === "") return [];
+
 		// Parse the given key by removing the "]"-chars and splitting at "["
 		let indexes = [_key];
 

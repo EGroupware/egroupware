@@ -121,6 +121,8 @@ var et2_arrayMgr = /** @class */ (function () {
      * @return {string[]}
      */
     et2_arrayMgr.prototype.explodeKey = function (_key) {
+        if (!_key || _key.trim() === "")
+            return [];
         // Parse the given key by removing the "]"-chars and splitting at "["
         var indexes = [_key];
         if (typeof _key === "string") {
