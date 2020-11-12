@@ -255,7 +255,7 @@ class Nextmatch extends Etemplate\Widget
 		if (isset($value['actions']) && !isset($value['actions'][0]))
 		{
 			$value['action_links'] = array();
-			$template_name = isset($value['template']) ? $value['template'] : $this->attrs['options'];
+			$template_name = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?: $this->attrs['options']);
 			if (!is_array($value['action_links'])) $value['action_links'] = array();
 			$value['actions'] = self::egw_actions($value['actions'], $template_name, '', $value['action_links']);
 		}
