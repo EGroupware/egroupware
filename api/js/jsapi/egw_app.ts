@@ -400,6 +400,11 @@ export abstract class EgwApp
 				{
 					_widget.sortBy(state.state.sort.id, state.state.sort.asc,false);
 				}
+				else
+				{
+					// Not using resetSort() to avoid the extra applyFilters() call
+					_widget.sortBy(undefined,undefined,false);
+				}
 				if(state.state && state.state.selectcols)
 				{
 					// Make sure it's a real array, not an object, then set cols
