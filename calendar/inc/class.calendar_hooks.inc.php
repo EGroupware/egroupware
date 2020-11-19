@@ -903,7 +903,8 @@ END:VALARM';
 		// do not set actions for alarm type
 		if ($params['data']['type'] == 6)
 		{
-			if (!empty($params['data']['videoconference']))
+			if (!empty($params['data']['videoconference'])
+				&& $GLOBALS['egw_info']['user']['apps']['status'] && !EGroupware\Status\Hooks::isVideoconferenceDisabled())
 			{
 				return [
 					array(

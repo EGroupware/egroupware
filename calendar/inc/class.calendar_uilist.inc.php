@@ -989,6 +989,7 @@ class calendar_uilist extends calendar_ui
 						'caption' => 'Join',
 						'icon' => 'status/videoconference_join',
 						'onExecute' => 'javaScript:app.calendar.joinVideoConferenceAction',
+						'enabled' => !EGroupware\Status\Hooks::isVideoconferenceDisabled(),
 						'allowOnMultiple' => false,
 					]
 				]
