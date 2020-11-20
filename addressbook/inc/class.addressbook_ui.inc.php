@@ -1403,7 +1403,7 @@ class addressbook_ui extends addressbook_bo
 							));
 							// this does NOT return!
 						}
-						else	// no mass delete of Api\Accounts
+						else	// no mass delete of accounts
 						{
 							$Ok = false;
 						}
@@ -1479,7 +1479,7 @@ class addressbook_ui extends addressbook_bo
 					$action_msg = lang('changed type to %1', lang($this->content_types[$to_type]['name']));
 					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(Acl::EDIT,$contact)))
 					{
-						if (!$contact['owner'])		// no change of Api\Accounts
+						if (!$contact['owner'])		// no change of accounts
 						{
 							$Ok = false;
 						}
@@ -1516,7 +1516,7 @@ class addressbook_ui extends addressbook_bo
 						}
 						break;
 					}
-					$action_msg = lang('shared into addressbook %1', Accounts::username($shared_with));
+					$action_msg = lang('shared into addressbook %1', Api\Accounts::username($shared_with));
 					if (($Ok = !!($contact = $this->read($id))))
 					{
 						$new_shared_with = [[
@@ -2581,10 +2581,10 @@ class addressbook_ui extends addressbook_bo
 		foreach((array)$content['shared'] as $shared)
 		{
 			$content['shared_options'][$shared['shared_id'].':'.$shared['shared_with'].':'.$shared['shared_by'].':'.$shared['shared_writable']] = [
-				'label' => Accounts::username($shared['shared_with']),
+				'label' => Api\Accounts::username($shared['shared_with']),
 				'title' => lang('%1 shared this contact on %2 with %3 %4',
-					Accounts::username($shared['shared_by']), Api\DateTime::to($shared['shared_at']),
-					Accounts::username($shared['shared_with']), $shared['shared_writable'] ? lang('writable') : lang('readonly')),
+					Api\Accounts::username($shared['shared_by']), Api\DateTime::to($shared['shared_at']),
+					Api\Accounts::username($shared['shared_with']), $shared['shared_writable'] ? lang('writable') : lang('readonly')),
 				'icon' => $shared['shared_writable'] ? 'edit' : 'view',
 			];
 		}
