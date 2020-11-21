@@ -486,7 +486,11 @@ class Etemplate extends Etemplate\Widget\Template
 		//error_log(__METHOD__."(,".array2string($content).')');
 		//error_log(' validated='.array2string($validated));
 
-		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
+		ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
+
+		// run egw destructor now explicit, in case a (notification) email is send via Egw::on_shutdown(),
+		// as stream-wrappers used by Horde Smtp fail when PHP is already in destruction
+		$GLOBALS['egw']->__destruct();
 	}
 
 	public $name;
