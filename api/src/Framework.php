@@ -251,6 +251,9 @@ abstract class Framework extends Framework\Extra
 		// commit session (if existing), to fix timing problems sometimes preventing session creation ("Your session can not be verified")
 		if (isset($GLOBALS['egw']->session)) $GLOBALS['egw']->session->commit_session();
 
+		// run egw destructor now explicit, in case a (notification) email is send via Egw::on_shutdown(),
+		// as stream-wrappers used by Horde Smtp fail when PHP is already in destruction
+		$GLOBALS['egw']->__destruct();
 		exit;
 	}
 
