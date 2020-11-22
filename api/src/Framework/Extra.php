@@ -128,6 +128,8 @@ abstract class Extra
 		{
 			$GLOBALS['egw']->framework->render('', false, false);
 		}
+		// run egw destructor now explicit, in case a (notification) email is send via Egw::on_shutdown(),
+		// as stream-wrappers used by Horde Smtp fail when PHP is already in destruction
 		$GLOBALS['egw']->__destruct();
 		exit;
 	}
