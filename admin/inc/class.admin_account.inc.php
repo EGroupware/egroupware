@@ -275,6 +275,10 @@ class admin_account
 			$account[$field] ='';
 			$preserve[$field] = '';
 		}
+		$account['creator'] = $ab_ui->user;
+		$account['created'] = $ab_ui->now_su;
+		$account['modified'] = '';
+		$account['modifier'] = '';
 		$account['link_to']['to_id'] = 0;
 		unset($preserve['old_account']);
 
