@@ -519,6 +519,9 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
                     nm.getParent().getArrayMgr('sel_options').data[id] = _response.rows.sel_options[id];
                 }
             }
+            else if (i === "order") {
+                nm.sortBy(_response.rows[i], undefined, false);
+            }
             else {
                 var mgr = nm.getArrayMgr('content');
                 mgr.data[i] = _response.rows[i];
