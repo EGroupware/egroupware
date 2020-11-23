@@ -636,6 +636,10 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 					nm.getParent().getArrayMgr('sel_options').data[id] = _response.rows.sel_options[id];
 				}
 			}
+			else if (i === "order")
+			{
+				nm.sortBy(_response.rows[i], undefined, false);
+			}
 			else
 			{
 				var mgr = nm.getArrayMgr('content');
