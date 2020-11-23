@@ -58,11 +58,11 @@ if (!$from && !($from = $GLOBALS['egw_info']['server']['auth_type']))
 }
 $to = $from == 'sql' ? 'ldap' : 'sql';
 
-// for Univention: cant check /etc/lsb-release, because it's not in open_basedir!
+/* ToDo: Api\Accounts\Univention::available() no longer exists, nothing inside open_basedir let us detect we running on UCS
 if ($to == 'ldap' && Api\Accounts\Univention::available())
 {
 	$to = 'univention';
-}
+}*/
 $direction = strtoupper($from).' --> '.strtoupper($to);
 
 $GLOBALS['egw_setup']->html->show_header($direction,False,'config',$GLOBALS['egw_setup']->ConfigDomain .
