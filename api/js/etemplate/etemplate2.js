@@ -58,7 +58,7 @@
     et2_widget_barcode;
     et2_widget_itempicker;
     et2_widget_script;
-
+    et2_widget_countdown;
     et2_extension_nextmatch;
     et2_extension_customfields;
 
