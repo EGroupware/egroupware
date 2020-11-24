@@ -35,6 +35,12 @@ export class et2_countdown extends et2_baseWidget {
 			type: "string",
 			default: "s", // s or l
 			description: "Defines display format; s (Initial letter) or l (Complete word) display, default is s."
+		},
+		onFinish: {
+			name: "on finish countdown",
+			type: "js",
+			default: et2_no_init,
+			description: "Callback function to call when the countdown is finished."
 		}
 	};
 
@@ -76,7 +82,11 @@ export class et2_countdown extends et2_baseWidget {
 		this.time.set_value(_time);
 		let self = this;
 		this.timer = setInterval(function(){
-			if (self._updateTimer() <= 0) clearInterval(this.timer);
+			if (self._updateTimer() <= 0)
+			{
+				clearInterval(self.timer);
+				if (typeof self.onFinish == "function") self.onFinish();
+			}
 		}, 1000);
 
 	}
