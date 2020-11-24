@@ -124,8 +124,8 @@ class et2_image extends et2_baseWidget implements et2_IDetachedDOM
 		if (typeof _attrs["src"] != "undefined")
 		{
 			let manager = this.getArrayMgr("content");
-			if(manager) {
-				let src = manager.getEntry(_attrs["src"]);
+			if(manager && _attrs["src"]) {
+				let src = manager.getEntry(_attrs["src"], false, true);
 				if (typeof src != "undefined" && src !== null)
 				{
 					if(typeof src == "object")

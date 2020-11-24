@@ -76,8 +76,8 @@ var et2_image = /** @class */ (function (_super) {
         // Check to expand name
         if (typeof _attrs["src"] != "undefined") {
             var manager = this.getArrayMgr("content");
-            if (manager) {
-                var src = manager.getEntry(_attrs["src"]);
+            if (manager && _attrs["src"]) {
+                var src = manager.getEntry(_attrs["src"], false, true);
                 if (typeof src != "undefined" && src !== null) {
                     if (typeof src == "object") {
                         src = egw().link('/index.php', src);
