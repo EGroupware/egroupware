@@ -4420,16 +4420,15 @@ class CalendarApp extends EgwApp
 	 */
 	public joinVideoConference(videoconference, _data)
 	{
-		let start = new Date(_data.start);
-		let end = new Date(_data.end);
 		return egw.json(
 			"EGroupware\\Status\\Videoconference\\Call::ajax_genMeetingUrl",
 			[videoconference,
 				{
 					name:egw.user('account_fullname'),
 					account_id:egw.user('account_id'),
-					email:egw.user('account_email')
-				}, start.getTime()/1000, end.getTime()/1000], function(_url){
+					email:egw.user('account_email'),
+					cal_id:_data.id
+				}, _data.start, _data.end], function(_url){
 				app.status.openCall(_url);
 			}).sendRequest();
 	}
