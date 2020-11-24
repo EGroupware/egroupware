@@ -3283,3 +3283,13 @@ tr.disableIfNoEPL {
 .colselection.ui-widget-content .et2_selectbox .ui-multiselect-checkboxes {
 	height: calc(100% - 68px) !important;
 }
+.et2_countdown {
+    margin-left: 10px;
+    background: #f1f1f1;
+}
+.et2_countdown > span {
+    margin-right: 10px;
+}
+span.et2_countdown_seconds {
+    margin-right: 0px;
+}

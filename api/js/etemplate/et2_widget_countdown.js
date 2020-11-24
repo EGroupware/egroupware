@@ -70,8 +70,11 @@ var et2_countdown = /** @class */ (function (_super) {
         this.time.set_value(_time);
         var self = this;
         this.timer = setInterval(function () {
-            if (self._updateTimer() <= 0)
-                clearInterval(this.timer);
+            if (self._updateTimer() <= 0) {
+                clearInterval(self.timer);
+                if (typeof self.onFinish == "function")
+                    self.onFinish();
+            }
         }, 1000);
     };
     et2_countdown.prototype._updateTimer = function () {
@@ -102,6 +105,12 @@ var et2_countdown = /** @class */ (function (_super) {
             type: "string",
             default: "s",
             description: "Defines display format; s (Initial letter) or l (Complete word) display, default is s."
+        },
+        onFinish: {
+            name: "on finish countdown",
+            type: "js",
+            default: et2_no_init,
+            description: "Callback function to call when the countdown is finished."
         }
     };
     return et2_countdown;
