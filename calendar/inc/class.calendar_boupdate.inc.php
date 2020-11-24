@@ -1039,7 +1039,14 @@ class calendar_boupdate extends calendar_bo
 
 				// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
 				if (!isset($part_prefs['common']['tz'])) $part_prefs['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
-				$timezone = new DateTimeZone($part_prefs['common']['tz']);
+				try
+				{
+					$timezone = new DateTimeZone($part_prefs['common']['tz']);
+				}
+				catch(Exception $e)
+				{
+					$timezone = new DateTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
+				}
 				$timeformat = $part_prefs['common']['timeformat'];
 				switch($timeformat)
 				{
