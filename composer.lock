@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91f834dc9df2ff546ce040d72ddf9318",
+    "content-hash": "917b16b4edc00f7754459b39bf9441e2",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -954,12 +954,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "77a9f5ad60500bb69d7ad3b7ac71710a88a6ba4e"
+                "reference": "e3498a4fa1ba23b60fc0510874a7f831d0e3c356"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/77a9f5ad60500bb69d7ad3b7ac71710a88a6ba4e",
-                "reference": "77a9f5ad60500bb69d7ad3b7ac71710a88a6ba4e",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/e3498a4fa1ba23b60fc0510874a7f831d0e3c356",
+                "reference": "e3498a4fa1ba23b60fc0510874a7f831d0e3c356",
                 "shasum": ""
             },
             "require": {
@@ -986,7 +986,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-08-19T13:40:53+00:00"
+            "time": "2020-10-20T08:44:36+00:00"
         },
         {
             "name": "egroupware/guzzlestream",
@@ -1088,12 +1088,12 @@
                 {
                     "name": "Chuck Hagenbuch",
                     "email": "chuck@horde.org",
-                    "role": "lead"
+                    "role": "Lead"
                 },
                 {
                     "name": "Jan Schneider",
                     "email": "jan@horde.org",
-                    "role": "lead"
+                    "role": "Lead"
                 },
                 {
                     "name": "Michael J Rubinsky",
@@ -1180,12 +1180,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "4de6d3786b605ae3a1934b3db29aa0289f11174b"
+                "reference": "b17ad22c03c5b5f9b196844ecfd04d3c6a115f91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/4de6d3786b605ae3a1934b3db29aa0289f11174b",
-                "reference": "4de6d3786b605ae3a1934b3db29aa0289f11174b",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/b17ad22c03c5b5f9b196844ecfd04d3c6a115f91",
+                "reference": "b17ad22c03c5b5f9b196844ecfd04d3c6a115f91",
                 "shasum": ""
             },
             "require": {
@@ -1221,7 +1221,7 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-08-10T09:27:55+00:00"
+            "time": "2020-11-20T11:37:42+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -1229,12 +1229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "2e0c1430493422a302d3128e428e527a77fc592f"
+                "reference": "a7fecb2a4039497bd57c333852c801f682f5eef9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/2e0c1430493422a302d3128e428e527a77fc592f",
-                "reference": "2e0c1430493422a302d3128e428e527a77fc592f",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/a7fecb2a4039497bd57c333852c801f682f5eef9",
+                "reference": "a7fecb2a4039497bd57c333852c801f682f5eef9",
                 "shasum": ""
             },
             "require": {
@@ -1262,7 +1262,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-09-01T08:27:35+00:00"
+            "time": "2020-11-19T10:19:35+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -1270,12 +1270,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
-                "reference": "d15928d15ad2ed7b0281c5ca5e13cf06e43cf8e1"
+                "reference": "ce03d26f4212c07b3b0cb1d765b4d630ec6f2ce5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/registration/zipball/d15928d15ad2ed7b0281c5ca5e13cf06e43cf8e1",
-                "reference": "d15928d15ad2ed7b0281c5ca5e13cf06e43cf8e1",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/ce03d26f4212c07b3b0cb1d765b4d630ec6f2ce5",
+                "reference": "ce03d26f4212c07b3b0cb1d765b4d630ec6f2ce5",
                 "shasum": ""
             },
             "require": {
@@ -1311,7 +1311,7 @@
             ],
             "description": "EGroupware app to allow self-registration of users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-06-28T08:13:24+00:00"
+            "time": "2020-10-28T12:52:21+00:00"
         },
         {
             "name": "egroupware/rocketchat",
@@ -1319,12 +1319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "30310ab7010abf4bc10110343ece2c7f61fd8c00"
+                "reference": "4dde8da951b587c39c190ff989ec16e1bcf279d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/30310ab7010abf4bc10110343ece2c7f61fd8c00",
-                "reference": "30310ab7010abf4bc10110343ece2c7f61fd8c00",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/4dde8da951b587c39c190ff989ec16e1bcf279d8",
+                "reference": "4dde8da951b587c39c190ff989ec16e1bcf279d8",
                 "shasum": ""
             },
             "require": {
@@ -1351,7 +1351,7 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-08-24T09:07:05+00:00"
+            "time": "2020-10-26T15:34:56+00:00"
         },
         {
             "name": "egroupware/smallpart",
@@ -1359,12 +1359,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "a6258cab54f53f7f628304352bbe8f1427bbfbe2"
+                "reference": "355d1e862dfd6c64c5e85c95a90376a90c212222"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/a6258cab54f53f7f628304352bbe8f1427bbfbe2",
-                "reference": "a6258cab54f53f7f628304352bbe8f1427bbfbe2",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/355d1e862dfd6c64c5e85c95a90376a90c212222",
+                "reference": "355d1e862dfd6c64c5e85c95a90376a90c212222",
                 "shasum": ""
             },
             "require": {
@@ -1397,7 +1397,7 @@
             ],
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
-            "time": "2020-07-21T20:50:57+00:00"
+            "time": "2020-11-04T12:47:43+00:00"
         },
         {
             "name": "egroupware/status",
@@ -1405,12 +1405,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "bf1ed94aa56f59e1baf75a9dcce6bcd7b3acdcf6"
+                "reference": "52feb9ca39f462c4eea84d0aea41827336097e26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/bf1ed94aa56f59e1baf75a9dcce6bcd7b3acdcf6",
-                "reference": "bf1ed94aa56f59e1baf75a9dcce6bcd7b3acdcf6",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/52feb9ca39f462c4eea84d0aea41827336097e26",
+                "reference": "52feb9ca39f462c4eea84d0aea41827336097e26",
                 "shasum": ""
             },
             "require": {
@@ -1437,7 +1437,7 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-08-25T11:21:58+00:00"
+            "time": "2020-11-25T16:28:41+00:00"
         },
         {
             "name": "egroupware/swoolepush",
@@ -1445,12 +1445,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/swoolepush.git",
-                "reference": "557d1dbee33fbef82caf68b96ba595ede235e712"
+                "reference": "2882e500a1f88fe7e36e16d98f710641afec5df9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/557d1dbee33fbef82caf68b96ba595ede235e712",
-                "reference": "557d1dbee33fbef82caf68b96ba595ede235e712",
+                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/2882e500a1f88fe7e36e16d98f710641afec5df9",
+                "reference": "2882e500a1f88fe7e36e16d98f710641afec5df9",
                 "shasum": ""
             },
             "require": {
@@ -1479,7 +1479,7 @@
             ],
             "description": "EGroupware push server using Swoole",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-08-15T06:14:31+00:00"
+            "time": "2020-10-14T18:01:33+00:00"
         },
         {
             "name": "egroupware/tracker",
@@ -1487,12 +1487,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "43ae33847a31c1841347ac45893c98152bd91a90"
+                "reference": "362ffe97a3d2a9d854fd47421464373832d9d974"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/43ae33847a31c1841347ac45893c98152bd91a90",
-                "reference": "43ae33847a31c1841347ac45893c98152bd91a90",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/362ffe97a3d2a9d854fd47421464373832d9d974",
+                "reference": "362ffe97a3d2a9d854fd47421464373832d9d974",
                 "shasum": ""
             },
             "require": {
@@ -1519,7 +1519,7 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-08-28T17:39:07+00:00"
+            "time": "2020-11-21T18:21:53+00:00"
         },
         {
             "name": "egroupware/webdav",
@@ -2657,7 +2657,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "An API for various compression techniques."
+            "description": "A library to wrap various compression techniques."
         },
         {
             "name": "pear-pear.horde.org/Horde_Crypt",
@@ -2723,7 +2723,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides blowfish encryption/decryption for PHP string data."
+            "description": "A library that provides blowfish encryption/decryption for PHP string data."
         },
         {
             "name": "pear-pear.horde.org/Horde_Date",
@@ -2839,7 +2839,7 @@
             "license": [
                 "BSD-2-Clause"
             ],
-            "description": "Normalized access to various backends providing IDNA (Internationalized Domain Names in Applications) support."
+            "description": "A library that wraps various backends providing IDNA (Internationalized Domain Names in Applications) support."
         },
         {
             "name": "pear-pear.horde.org/Horde_Imap_Client",
@@ -2877,7 +2877,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Interface to access IMAP4rev1 (RFC 3501) mail servers. Also supports connections to POP3 (STD 53/RFC 1939)."
+            "description": "A library to access IMAP4rev1 (RFC 3501) mail servers. Also supports connections to POP3 (STD 53/RFC 1939)."
         },
         {
             "name": "pear-pear.horde.org/Horde_ListHeaders",
@@ -3036,7 +3036,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides methods for dealing with Multipurpose Internet Mail Extensions (MIME) features (RFC 2045/2046/2047)."
+            "description": "A library that provides methods for dealing with Multipurpose Internet Mail Extensions (MIME) features (RFC 2045/2046/2047)."
         },
         {
             "name": "pear-pear.horde.org/Horde_Nls",
@@ -3129,7 +3129,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides interfaces for connecting to a SMTP (RFC 5321) server to send e-mail messages."
+            "description": "A library for connecting to a SMTP (RFC 5321) server to send e-mail messages."
         },
         {
             "name": "pear-pear.horde.org/Horde_Socket_Client",
@@ -3157,7 +3157,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides abstract class for use in creating PHP network socket clients."
+            "description": "A library that provides an abstract PHP network socket client."
         },
         {
             "name": "pear-pear.horde.org/Horde_Stream",
@@ -3298,7 +3298,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "A text-based diff engine and renderers for multiple diff output formats."
+            "description": "A library that provides a text-based diff engine and renderers for multiple diff output formats."
         },
         {
             "name": "pear-pear.horde.org/Horde_Text_Flowed",
@@ -3326,7 +3326,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "The Horde_Text_Flowed:: class provides common methods for manipulating text using the encoding described in RFC 3676 ('flowed' text)."
+            "description": "A library that provides common methods for manipulating text using the encoding described in RFC 3676 ('flowed' text)."
         },
         {
             "name": "pear-pear.horde.org/Horde_Translation",
@@ -3409,20 +3409,20 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "These classes provide functionality useful for all kind of applications."
+            "description": "A library that provides functionality useful for all kind of applications."
         },
         {
             "name": "pear/archive_tar",
-            "version": "1.4.7",
+            "version": "1.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/Archive_Tar.git",
-                "reference": "7e48add6f8edc3027dd98ad15964b1a28fd0c845"
+                "reference": "17d355cb7d3c4ff08e5729f29cd7660145208d9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/7e48add6f8edc3027dd98ad15964b1a28fd0c845",
-                "reference": "7e48add6f8edc3027dd98ad15964b1a28fd0c845",
+                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/17d355cb7d3c4ff08e5729f29cd7660145208d9d",
+                "reference": "17d355cb7d3c4ff08e5729f29cd7660145208d9d",
                 "shasum": ""
             },
             "require": {
@@ -3475,7 +3475,7 @@
                 "archive",
                 "tar"
             ],
-            "time": "2019-04-08T13:15:55+00:00"
+            "time": "2020-11-19T22:10:24+00:00"
         },
         {
             "name": "pear/auth_sasl",
@@ -4096,6 +4096,12 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "funding": [
+                {
+                    "url": "https://github.com/synchro",
+                    "type": "github"
+                }
+            ],
             "time": "2020-05-27T12:24:03+00:00"
         },
         {
@@ -4187,6 +4193,20 @@
                 "twofish",
                 "x.509",
                 "x509"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/terrafrost",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpseclib",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpseclib/phpseclib",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-04-04T23:17:33+00:00"
         },
@@ -6402,6 +6422,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -6459,6 +6493,20 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-10T07:47:39+00:00"
         },
         {
@@ -6532,6 +6580,20 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-30T10:09:30+00:00"
         },
         {
@@ -6589,6 +6651,20 @@
             ],
             "description": "Symfony ErrorHandler Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-17T09:56:45+00:00"
         },
         {
@@ -6659,6 +6735,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-13T14:18:44+00:00"
         },
         {
@@ -6721,6 +6811,20 @@
                 "interoperability",
                 "standards"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-07-06T13:19:58+00:00"
         },
         {
@@ -6771,6 +6875,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -6826,6 +6944,20 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-17T07:39:58+00:00"
         },
         {
@@ -6917,6 +7049,20 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-09-02T08:09:29+00:00"
         },
         {
@@ -6979,6 +7125,20 @@
                 "mime",
                 "mime-type"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-17T09:56:45+00:00"
         },
         {
@@ -7040,6 +7200,20 @@
                 "ctype",
                 "polyfill",
                 "portable"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -7112,6 +7286,20 @@
                 "portable",
                 "shim"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-04T06:02:08+00:00"
         },
         {
@@ -7179,6 +7367,20 @@
                 "portable",
                 "shim"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-07-14T12:35:20+00:00"
         },
         {
@@ -7241,6 +7443,20 @@
                 "polyfill",
                 "portable",
                 "shim"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -7361,6 +7577,20 @@
                 "portable",
                 "shim"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-07-14T12:35:20+00:00"
         },
         {
@@ -7419,6 +7649,20 @@
                 "polyfill",
                 "portable",
                 "shim"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -7481,6 +7725,20 @@
                 "polyfill",
                 "portable",
                 "shim"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -7547,6 +7805,20 @@
                 "polyfill",
                 "portable",
                 "shim"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -7675,6 +7947,20 @@
                 "routing",
                 "uri",
                 "url"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-03-30T11:41:10+00:00"
         },
@@ -7811,6 +8097,20 @@
                 "debug",
                 "dump"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-17T07:31:35+00:00"
         },
         {
@@ -7870,6 +8170,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-30T11:41:10+00:00"
         },
         {
@@ -9902,7 +10216,6 @@
         "egroupware/adodb-php": 20,
         "egroupware/bookmarks": 20,
         "egroupware/collabora": 20,
-        "egroupware/guzzlestream": 20,
         "egroupware/news_admin": 20,
         "egroupware/openid": 20,
         "egroupware/projectmanager": 20,
@@ -9912,6 +10225,7 @@
         "egroupware/status": 20,
         "egroupware/swoolepush": 20,
         "egroupware/tracker": 20,
+        "egroupware/guzzlestream": 20,
         "egroupware/webdav": 20
     },
     "prefer-stable": true,
@@ -9930,5 +10244,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.3"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
