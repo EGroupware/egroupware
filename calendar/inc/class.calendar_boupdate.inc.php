@@ -232,6 +232,25 @@ class calendar_boupdate extends calendar_bo
 				$messages[] = lang('Status of participants set to unknown because of missing category rights');
 			}
 		}
+
+		// generate a video-room-url, if we need one and not already have one
+		if ($event['videoconference'] && empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call')
+			&& !EGroupware\Status\Hooks::isVideoconferenceDisabled())
+		{
+			$event['##videoconference'] = EGroupware\Status\Videoconference\Call::genUniqueRoomID();
+		}
+		elseif (isset($event['videoconference']) && !$event['videoconference'])
+		{
+			$event['##videoconference'] = '';
+		}
+		// update videoconference resource amounts based on number of participants
+		if ($event['videoconference'] && !empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call')
+			&& !EGroupware\Status\Hooks::isVideoconferenceDisabled() && ($videoconferenceResId = \EGroupware\Status\Hooks::getVideoconferenceResourceId()))
+		{
+			$event['participant_types']['r'][$videoconferenceResId] =
+			$event['participants']['r'.$videoconferenceResId] = 'A'.(count($event['participant_types']['u']) + count($event['participant_types']['e']));
+		}
+
 		// check for conflicts only happens !$ignore_conflicts AND if start + end date are given
 		$checked_excluding = null;
 		if (!$ignore_conflicts && !$event['non_blocking'] && isset($event['start']) && isset($event['end']) &&
@@ -247,16 +266,7 @@ class calendar_boupdate extends calendar_bo
 			return $conflicts;
 		}
 
-		// generate a video-room-url, if we need one and not already have one
-		if ($event['videoconference'] && empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call')
-			&& !EGroupware\Status\Hooks::isVideoconferenceDisabled())
-		{
-			$event['##videoconference'] = EGroupware\Status\Videoconference\Call::genUniqueRoomID();
-		}
-		elseif (isset($event['videoconference']) && !$event['videoconference'])
-		{
-			$event['##videoconference'] = '';
-		}
+
 
 		//echo "saving $event[id]="; _debug_array($event);
 		$event2save = $event;
