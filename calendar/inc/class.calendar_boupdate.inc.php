@@ -1116,7 +1116,7 @@ class calendar_boupdate extends calendar_bo
 				switch($msg_type == MSG_ALARM ? 'extended' : $part_prefs['calendar']['update_format'])
 				{
 					case 'ical':
-						if (is_null($ics) || $m_type != $msg_type)	// need different ical for organizer notification
+						if (is_null($ics) || $m_type != $msg_type || $event['##videoconference'])	// need different ical for organizer notification or videoconference join urls
 						{
 							$calendar_ical = new calendar_ical();
 							$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
