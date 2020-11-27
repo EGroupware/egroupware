@@ -253,6 +253,25 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 			// Responsible has to be an array
 			$record['info_responsible'] = $record['info_responsible'] ? explode(',',$record['info_responsible']) : 0;
 
+			// Don't let them import into info_link_id unless it's a number
+			if($record['info_link_id'] && !is_numeric($record['info_link_id']))
+			{
+				// But try to search for it as a contact
+				$record['info_contact'] = $record['info_link_id'];
+				unset($record['info_link_id']);
+			}
+			// If contact is set and not an ID, find it.  Use quotes for exact match.
+			if($record['info_contact'] && !is_numeric($record['info_contact']))
+			{
+				$contacts = Link::query('addressbook','"'.$record['info_contact'].'"');
+				if($contacts)
+				{
+					$record['info_contact'] = array(
+							'id' => array_key_first($contacts),
+							'app' => 'addressbook'
+					);
+				}
+			}
 			// Special values
 			if ($record['addressbook'] && !is_numeric($record['addressbook']))
 			{
