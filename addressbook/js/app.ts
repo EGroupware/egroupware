@@ -748,6 +748,7 @@ class AddressbookApp extends EgwApp
 								id,
 								values.name
 							);
+							action.setDefaultExecute(action.parent.onExecute.fnct);
 							action.updateAction({group: 1});
 						}
 					}

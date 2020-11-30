@@ -629,6 +629,7 @@ var AddressbookApp = /** @class */ (function (_super) {
                     if (addressbook_actions && (dist_lists = addressbook_actions.getActionById('to_list'))) {
                         var id = 'to_list_' + result;
                         var action = dist_lists.addAction('popup', id, values.name);
+                        action.setDefaultExecute(action.parent.onExecute.fnct);
                         action.updateAction({ group: 1 });
                     }
                 }).sendRequest(true);
