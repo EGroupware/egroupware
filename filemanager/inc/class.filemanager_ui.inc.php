@@ -991,6 +991,12 @@ class filemanager_ui
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
 
+			foreach(['mtime','ctime'] as $date_field)
+			{
+				$time = new Api\DateTime($row[$date_field],Api\DateTime::$server_timezone);
+				$time->setUser();
+				$row[$date_field] = $time->format('ts');
+			}
 			$rows[++$n] = $row;
 			$path2n[$path] = $n;
 		}
@@ -1406,6 +1412,14 @@ class filemanager_ui
 				4 => lang('Read access only'),
 				0 => lang('No access'),
 			);
+		}
+
+		// Times are in server time, convert to user timezone
+		foreach(['mtime','ctime'] as $date_field)
+		{
+			$time = new Api\DateTime($content[$date_field],Api\DateTime::$server_timezone);
+			$time->setUser();
+			$content[$date_field] = $time->format('ts');
 		}
 
 		// mergeapp
