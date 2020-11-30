@@ -84,10 +84,29 @@ var et2_countdown = /** @class */ (function (_super) {
         var distance = time.getTime() - now.getTime();
         if (distance < 0)
             return 0;
-        this.days.text(Math.floor(distance / (1000 * 60 * 60 * 24)) + this._getIndicator("days"));
-        this.hours.text(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + this._getIndicator("hours"));
-        this.minutes.text(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) + this._getIndicator("minutes"));
-        this.seconds.text(Math.floor((distance % (1000 * 60)) / 1000) + this._getIndicator("seconds"));
+        var values = {
+            days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+            minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+            secounds: Math.floor((distance % (1000 * 60)) / 1000)
+        };
+        this.days.text(values.days + this._getIndicator("days"));
+        this.hours.text(values.hours + this._getIndicator("hours"));
+        this.minutes.text(values.minutes + this._getIndicator("minutes"));
+        this.seconds.text(values.secounds + this._getIndicator("seconds"));
+        if (this.options.hideEmpties) {
+            if (values.days == 0) {
+                this.days.hide();
+                if (values.hours == 0) {
+                    this.hours.hide();
+                    if (values.minutes == 0) {
+                        this.minutes.hide();
+                        if (values.secounds == 0)
+                            this.seconds.hide();
+                    }
+                }
+            }
+        }
         return distance;
     };
     et2_countdown.prototype._getIndicator = function (_v) {
@@ -111,6 +130,12 @@ var et2_countdown = /** @class */ (function (_super) {
             type: "js",
             default: et2_no_init,
             description: "Callback function to call when the countdown is finished."
+        },
+        hideEmpties: {
+            name: "hide empties",
+            type: "string",
+            default: true,
+            description: "Only displays none empty values."
         }
     };
     return et2_countdown;
