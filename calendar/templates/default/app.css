@@ -188,6 +188,8 @@ div.calendar_conflicts {
 	width: 30%;
 	margin-top: 0px;
 	z-index: 10;
+	bottom: -10px;
+	height: calc(~"100% - 75px");
 }
 
 #calendar-view {
