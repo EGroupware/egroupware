@@ -260,16 +260,19 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 				$record['info_contact'] = $record['info_link_id'];
 				unset($record['info_link_id']);
 			}
-			// If contact is set and not an ID, find it.  Use quotes for exact match.
-			if($record['info_contact'] && !is_numeric($record['info_contact']))
+			// If contact or from is set and not an ID, find it.  Use quotes for exact match.
+			foreach(['info_from','info_contact'] as $field)
 			{
-				$contacts = Link::query('addressbook','"'.$record['info_contact'].'"');
-				if($contacts)
+				if ($record[$field] && is_string($record[$field]))
 				{
-					$record['info_contact'] = array(
-							'id' => array_key_first($contacts),
-							'app' => 'addressbook'
-					);
+					$contacts = Link::query('addressbook', '"' . $record[$field] . '"');
+					if ($contacts)
+					{
+						$record['info_contact'] = array(
+								'id' => array_key_first($contacts),
+								'app' => 'addressbook'
+						);
+					}
 				}
 			}
 			// Special values
