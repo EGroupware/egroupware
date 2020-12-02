@@ -47,7 +47,20 @@ export class et2_countdown extends et2_baseWidget {
 			type: "string",
 			default: true,
 			description: "Only displays none empty values."
+		},
+		alarm: {
+			name: "alarm",
+			type: "any",
+			default: "",
+			description: "Defines an alarm set before the countdown is finished, it should be in seconds"
+		},
+		onAlarm: {
+			name: "alarm callback",
+			type: "js",
+			default: "",
+			description: "Defines a callback to gets called at alarm - timer. This only will work if there's an alarm set."
 		}
+
 	};
 
 	private time : et2_date;
@@ -113,7 +126,10 @@ export class et2_countdown extends et2_baseWidget {
 		let distance = time.getTime() - now.getTime();
 
 		if (distance < 0) return 0;
-
+		if (this.options.alarm > 0 && this.options.alarm == distance/1000 && typeof this.onAlarm == 'function')
+		{
+			this.onAlarm();
+		}
 		let values = {
 			days: Math.floor(distance / (1000 * 60 * 60 * 24)),
 			hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
