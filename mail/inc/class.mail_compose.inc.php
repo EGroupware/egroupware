@@ -3630,10 +3630,18 @@ class mail_compose
 			}
 		}
 
-		if(is_array($contacts)) {
-			foreach($contacts as $contact) {
-				$cf_emails = (array)array_values(array_values($contacts_obj->read_customfields($contact['id'], $cfs_type_email))[0]);
-				foreach(array_merge(array($contact['email'],$contact['email_home']), $cf_emails) as $email) {
+		if (is_array($contacts))
+		{
+			foreach($contacts as $contact)
+			{
+				$cf_emails = [];
+				if ($cfs_type_email && ($cf_emails = $contacts_obj->read_customfields($contact['id'], $cfs_type_email)))
+				{
+					// cf_emails: [$contact['id'] => ['cf1'=>'email','cf2'=>'email2',...]]
+					$cf_emails = array_values(reset($cf_emails));
+				}
+				foreach(array_merge(array($contact['email'],$contact['email_home']), $cf_emails) as $email)
+				{
 					// avoid wrong addresses, if an rfc822 encoded address is in addressbook
 					//$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
 					$rfcAddr = Mail::parseAddressList($email);
