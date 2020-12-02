@@ -3567,8 +3567,13 @@ var CalendarApp = /** @class */ (function (_super) {
                 account_id: egw.user('account_id'),
                 email: egw.user('account_email'),
                 cal_id: _data.id
-            }, _data.start, _data.end], function (_url) {
-            app.status.openCall(_url);
+            }, _data.start, _data.end], function (_value) {
+            if (_value) {
+                if (_value.err)
+                    egw.message(_value.err, 'error');
+                if (_value.url)
+                    app.status.openCall(_value.url);
+            }
         }).sendRequest();
     };
     /**
