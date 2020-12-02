@@ -1,3 +1,20 @@
+egroupware-docker (20.1.20201202) hardy; urgency=low
+
+  * API: call async-services via HTTP to fix diverse caching problems
+  * Tracker: fix empty notification mail, if ticket was opened by following a link in notification mail
+  * Addressbook: allow sharing of individual contacts to make them available to other addressbooks or users
+  * Addressbook: Open CRM views into individual tabs
+  * Addressbook: Fix newly added distribution lists could not be added to with the context menu
+  * EPL/Policy: limit what contact-fields are shared and which are required to share in certain addressbooks
+  * Ads/CardDAV/Addressbook: fix exception / HTTP status 401 when trying to delete an not existing distribution list
+  * Filemanager: Put file creation & modification times in user timezone
+  * Calendar: Fix quick add -> edit would incorrectly set end date
+  * Saml/Shiboleth/SmallPART: allow to use affiliation attribute to sync with Teachers group
+  * Projectmanager: Fix project links no longer get opened in element list view
+  * Status/Videoconference: remove port from room-name, if EGw was setup with a url using a port
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 02 Dec 2020 09:27:40 +0100
+
 egroupware-docker (20.1.20201028) hardy; urgency=low
 
   * Push: fix regression in keep-alive check causing clients sometimes creating a huge number of connections
