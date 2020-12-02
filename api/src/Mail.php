@@ -3851,6 +3851,7 @@ class Mail
 			//error_log(__METHOD__."->NotConnected and forceCheck with profile:".$this->profileID);
 			//return false;
 			//try to connect
+			$folderInfo[$this->profileID] = array();
 		}
 		try
 		{
