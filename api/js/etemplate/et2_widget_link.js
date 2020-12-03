@@ -1109,6 +1109,9 @@ var et2_link = /** @class */ (function (_super) {
         if (_value.id && _value.app) {
             this.link.addClass("et2_link");
             this.link.click(function (e) {
+                // try to fetch value.title if it wasn't fetched during initiation.
+                if (!_value.title)
+                    _value.title = self.egw().link_title(_value.app, _value.id);
                 if (!self.options.target_app) {
                     self.options.target_app = _value.app;
                 }
