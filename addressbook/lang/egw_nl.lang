@@ -3,7 +3,7 @@
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	nl	%1 contact(en) %2, %3 mislukt vanwege onvoldoende rechten !!!
 %1 contacts updated (%2 errors).	addressbook	nl	%1 contacten bijgewerkt (%2 fouten)
 %1 fields in %2 other organisation member(s) changed	addressbook	nl	%1 velden in %2 andere organisatie lid/leden gewijzigd
-%1 not implemented for %2!	addressbook	nl	%1 niet geimplemnteerd voor %2!
+%1 not implemented for %2!	addressbook	nl	%1 niet geimplementeerd voor %2!
 %1 records imported	addressbook	nl	%1 adressen geïmporteerd
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	nl	%1 adressen gelezen (nog niet geïmporteerd, U kunt %2terug%3 gaan en "Test Import" uitzetten)
 %1 starts with '%2'	addressbook	nl	%1 begint met '%2'
@@ -18,7 +18,7 @@ accounts	addressbook	nl	Accounts
 actions	addressbook	nl	Acties
 add %1	addressbook	nl	%1 toevoegen
 add a contact to this organisation	addressbook	nl	Voeg een contact toe aan deze organisatie
-add a customfield to link title	addressbook	nl	Voeg een zelf gedinieerd veld toe om titel te linken
+add a customfield to link title	addressbook	nl	Voeg een zelf gedefinieerd veld toe om titel te linken
 add a new contact	addressbook	nl	Voeg een contact toe
 add a new infolog	addressbook	nl	Voeg een nieuw Infolog record toe
 add a new list	addressbook	nl	Voeg een nieuwe lijst toe
@@ -28,7 +28,7 @@ add business email of whole distribution list?	addressbook	nl	Voeg bedrijfsemail
 add custom field	addressbook	nl	Aangepast veld toevoegen
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	nl	Voeg aangepast veld toe aan links van adresboek, welke zichtbaar is in andere applicaties. De standaard waarde is geen aangepast veld.
 add emails of whole distribution list?	addressbook	nl	Voeg emailadressen van de hele distributie lijst toe?
-add or delete categories	addressbook	nl	Toevoegen of verwijderen categoriën
+add or delete categories	addressbook	nl	Toevoegen of verwijderen van categoriën
 add to bcc	addressbook	nl	Voeg aan BCc toe
 add to cc	addressbook	nl	Voeg aan CC toe
 add to distribution list	addressbook	nl	Voeg toe aan distributie lijst
@@ -59,7 +59,7 @@ addressbook-fieldname	addressbook	nl	Adresboek-veldnaam
 addvcard	addressbook	nl	VCard toevoegen
 advanced search	addressbook	nl	UItgebreid zoeken
 all contacts	addressbook	nl	Alle contacten
-all in one field	addressbook	nl	Alles im 1 veld
+all in one field	addressbook	nl	Alles in 1 veld
 allow members of following groups to edit contact-data of accounts	addressbook	nl	Sta alle leden van de volgende groepen toe alle contact data te wijzigen van accounts
 allow users to maintain their own account-data	admin	nl	Laat gebruikers toe hun eigen accountgegevens te beheren
 alt. csv import	addressbook	nl	Alternatief CSV-bestand importeren
@@ -88,7 +88,7 @@ business zip code	addressbook	nl	Postcode Bedrijf
 calendar fields:	addressbook	nl	Kaldendervelden:
 calendar uri	addressbook	nl	Kalender URI
 can be changed via setup >> configuration	admin	nl	Kan gewijzigd worden via Setup >> Configuratie
-can't create dn %1	addressbook	nl	Kan dn %1 niet maken
+can't create dn %1	addressbook	nl	Kan dn %1 niet aanmaken
 car phone	addressbook	nl	Autotelefoon
 categorie	addressbook	nl	categorie
 categorie added	addressbook	nl	categorie toegevoegd
@@ -166,14 +166,14 @@ default filter	addressbook	nl	Standaard filter
 default format for fileas, eg. for new entries.	addressbook	nl	Standaard formaat voor bestanden, bijvoorbeeld voor nieuwe invoer.
 default is to open email addresses in egroupware email application, if user has access to it.	addressbook	nl	Standaard is om EMail (berichten) adressen te openen in EGroupware  EMail (berichten) applicatie, als de gebruiker er toegang toe heeft.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	nl	Bepaalt welk emailadres (zakelijk of prive) gebruikt moet worden als het voorkeursadres voor distributielijsten in email.
-delete a single entry by passing the id.	addressbook	nl	Verwijder een enkel record door het ID. te geven
+delete a single entry by passing the id.	addressbook	nl	Verwijder een enkel record door het ID te geven.
 delete selected distribution list!	addressbook	nl	Verwijder de geselecteerde distributielijst!
 delete this contact	addressbook	nl	Verwijder deze contact
 delete this organisation including all its contacts	addressbook	nl	Verwijder deze organisatie inclusief ALLE contacten
 deleted	addressbook	nl	verwijderd
 deletes the photo	addressbook	nl	Verwijdert de foto
 department	common	nl	Afdeling
-departments	addressbook	nl	afdelingen
+departments	addressbook	nl	Afdelingen
 directory with documents to insert contacts	addressbook	nl	Directory met documenten om contacten in te voegen
 display contact	addressbook	nl	Contact weergeven
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	nl	Toont een herinnering voor verjaardagen op de voorpagina (de pagina die je te zien krijgt als je EGroupware start of wanneer je op het voorpagina ikoon klikt)
@@ -208,8 +208,8 @@ enable an extra private addressbook	addressbook	nl	Maak een extra persoonlijk ad
 enclosure	addressbook	nl	Bijgesloten
 end	addressbook	nl	Einde
 enter the path to the exported file here	addressbook	nl	Geef folder voor het te exporteren bestand hier aan
-error deleting the contact !!!	addressbook	nl	Fout bij verwijderen van contact !!!
-error saving the contact !!!	addressbook	nl	Fout bij bewaren van contact !!!
+error deleting the contact !!!	addressbook	nl	Fout bij verwijderen van het contact !!!
+error saving the contact !!!	addressbook	nl	Fout bij bewaren van het contact !!!
 error: the entry has been updated since you opened it for editing!	addressbook	nl	Fout: het record is gewijzigd sinds jij bent begonnen met wijzigen!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	nl	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
