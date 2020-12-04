@@ -687,7 +687,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					'name' => Api\Accounts::username($user),
 					'email' => Api\Accounts::id2name($user, 'account_email'),
 					'avatar' => (string)$avatar,
-					'account_id' => $user
+					'account_id' => $user,
+					'cal_id' => $event['id']
 			], [], $event['start_date'], $event['end_date']);
 			$event['description'] = lang('Videoconference').":\n$link\n\n".$event['description'];
 		}

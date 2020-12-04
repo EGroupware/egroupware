@@ -4408,7 +4408,7 @@ class CalendarApp extends EgwApp
 	{
 		let data = egw.dataGetUIDdata(_sender[0].id)['data'];
 
-		return this.joinVideoConference(data['##videoconference']);
+		return this.joinVideoConference(data['##videoconference'], data);
 	}
 
 	/**
@@ -4418,7 +4418,7 @@ class CalendarApp extends EgwApp
 	 *
 	 * @param {string} videoconference
 	 */
-	public joinVideoConference(videoconference)
+	public joinVideoConference(videoconference, _data)
 	{
 		return egw.json(
 			"EGroupware\\Status\\Videoconference\\Call::ajax_genMeetingUrl",
@@ -4426,9 +4426,14 @@ class CalendarApp extends EgwApp
 				{
 					name:egw.user('account_fullname'),
 					account_id:egw.user('account_id'),
-					email:egw.user('account_email')
-				}], function(_url){
-				app.status.openCall(_url);
+					email:egw.user('account_email'),
+					cal_id:_data.id
+				}, _data.start, _data.end], function(_value){
+					if (_value)
+					{
+						if (_value.err) egw.message(_value.err, 'error');
+						if(_value.url) app.status.openCall(_value.url);
+					}
 			}).sendRequest();
 	}
 }
