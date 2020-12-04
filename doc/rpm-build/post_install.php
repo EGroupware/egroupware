@@ -805,6 +805,9 @@ function _ucr_secret($name)
  */
 function check_fix_php_apc_ini()
 {
+	// can only change config as root
+	if (function_exists('posix_getuid') && posix_geteuid()) return;
+
 	if (extension_loaded('apc') || extension_loaded('apcu'))
 	{
 		$shm_size = ini_get('apc.shm_size');
@@ -852,6 +855,9 @@ function check_fix_php_apc_ini()
 function check_fix_open_basedir_certs()
 {
 	global $config;
+
+	// can only change config as root
+	if (function_exists('posix_getuid') && posix_geteuid()) return;
 
 	if (extension_loaded('openssl') && function_exists('openssl_get_cert_locations') &&
 		($locations = openssl_get_cert_locations()) &&
