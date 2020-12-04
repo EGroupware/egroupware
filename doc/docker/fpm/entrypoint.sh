@@ -4,13 +4,11 @@ set -e
 VERSION=${VERSION:-dev-master}
 PHP_VERSION=${PHP_VERSION:-7.3}
 
-# if EGW_APC_SHM_SIZE is set in environment, propagate value to apcu.ini
-test -n "$EGW_APC_SHM_SIZE" && {
-  grep "apc.shm_size" /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini >/dev/null && \
-    sed -e "s/^;\?apc.shm_size.*/apc.shm_size=$EGW_APC_SHM_SIZE/g" \
-      -i /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini || \
-    echo "apc.shm_size=$EGW_APC_SHM_SIZE" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini
-}
+# if EGW_APC_SHM_SIZE is set in environment, propagate value to apcu.ini, otherwise set default of 128M
+grep "apc.shm_size" /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini >/dev/null && \
+  sed -e "s/^;\?apc.shm_size.*/apc.shm_size=${EGW_APC_SHM_SIZE:-128M}/g" \
+    -i /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini || \
+  echo "apc.shm_size=${EGW_APC_SHM_SIZE:-128M}" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini
 
 # if EGW_SESSION_TIMEOUT is set in environment, propagate value to php.ini
 test -n "$EGW_SESSION_TIMEOUT" && test "$EGW_SESSION_TIMEOUT" -ge 1440 && \
@@ -29,9 +27,12 @@ rsync -a --delete /usr/share/egroupware-sources/ /usr/share/egroupware/
 test -d /usr/share/egroupware-extra && \
 	rsync -a --ignore-existing /usr/share/egroupware-extra/ /usr/share/egroupware/
 
-# check and if necessary change ownership of /var/lib/egroupware
+# check and if necessary change ownership of /var/lib/egroupware and our header.inc.php
 test $(stat -c '%U' /var/lib/egroupware) = "www-data" || \
 	chown -R www-data:www-data /var/lib/egroupware
+test -f /var/lib/egroupware/header.inc.php &&
+	chown www-data:www-data /var/lib/egroupware/header.inc.php &&
+	chmod 600 /var/lib/egroupware/header.inc.php
 
 # add private CA so egroupware can validate your certificate to talk to Collabora or Rocket.Chat
 test -f /usr/local/share/ca-certificates/private-ca.crt &&
