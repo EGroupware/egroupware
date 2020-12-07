@@ -309,7 +309,7 @@ class resources_bo
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param array $resource array with key => value of all needed datas
-	 * @return string msg if somthing went wrong; nothing if all right
+	 * @return string|boolean msg if somthing went wrong or false in failure; resource id if all right
 	 */
 	function save($resource)
 	{
