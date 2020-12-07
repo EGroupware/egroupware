@@ -79,7 +79,7 @@ class Taglist extends Etemplate\Widget
 				$links = Api\Accounts::link_query($query, $options);
 			}
 		}
-		else
+		elseif($query) // Only search if there's a query, avoid searching for all
 		{
 			$links = Api\Link::query($app, $query, $options);
 		}
