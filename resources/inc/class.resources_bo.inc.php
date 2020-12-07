@@ -309,11 +309,12 @@ class resources_bo
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param array $resource array with key => value of all needed datas
+	 * @param boolean $ignore_acl ignores acl check if set to true
 	 * @return string|boolean msg if somthing went wrong or false in failure; resource id if all right
 	 */
-	function save($resource)
+	function save($resource, $ignore_acl=false)
 	{
-		if(!$this->acl->is_permitted($resource['cat_id'],Acl::EDIT))
+		if(!$ignore_acl && !$this->acl->is_permitted($resource['cat_id'],Acl::EDIT))
 		{
 			return lang('You are not permitted to edit this resource!');
 		}
