@@ -770,6 +770,11 @@ class Link extends Link\Storage
 	}
 
 	/**
+	 * Default number of returned rows for Link::query()
+	 */
+	const DEFAULT_NUM_ROWS = 100;
+
+	/**
 	 * Searches for a $pattern in the entries of $app
 	 *
 	 * @param string $app app to search
@@ -790,6 +795,8 @@ class Link extends Link\Storage
 			echo "<p>Link::query('$app','$pattern') => '$method'</p>\n";
 			echo "Options: "; _debug_array($options);
 		}
+		// limit number of returned rows by default to 100, if no limit is set
+		if (!isset($options['num_rows'])) $options['num_rows'] = self::DEFAULT_NUM_ROWS;
 
 		$result = self::exec($method, array($pattern, &$options));
 
