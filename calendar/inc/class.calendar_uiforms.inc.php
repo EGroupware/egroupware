@@ -2103,6 +2103,14 @@ class calendar_uiforms extends calendar_ui
 			// convert event from servertime returned by calendar_ical to user-time
 			$this->bo->server2usertime($event);
 
+			// Check if this is an exception
+			if($event['recur_type'] && count($event['recur_exception']) && !$event['recurrence'])
+			{
+				$diff = $event['recur_exception'][0] - $event['start'];
+				$event['start'] += $diff;
+				$event['end'] += $diff;
+			}
+
 			if (($existing_event = $this->bo->read($event['uid'], $event['recurrence'], false, 'ts', null, true)) && // true = read the exception
 				!$existing_event['deleted'])
 			{
