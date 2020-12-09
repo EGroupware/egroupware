@@ -4427,7 +4427,8 @@ class CalendarApp extends EgwApp
 					name:egw.user('account_fullname'),
 					account_id:egw.user('account_id'),
 					email:egw.user('account_email'),
-					cal_id:_data.id
+					cal_id:_data.id,
+					title: _data.title
 				}, _data.start, _data.end], function(_value){
 					if (_value)
 					{
