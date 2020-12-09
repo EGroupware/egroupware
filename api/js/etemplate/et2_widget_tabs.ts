@@ -139,6 +139,8 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 				}
 				tabData.push({
 					"id": index_name,
+					"onclick":  et2_readAttrWithDefault(node, "onclick", ''),
+					"ondblclick":  et2_readAttrWithDefault(node, "ondblclick", ''),
 					"label": this.egw().lang(et2_readAttrWithDefault(node, "label", "Tab")),
 					"widget": null,
 					"widget_options": widget_options,
@@ -365,6 +367,18 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 			}
 			else
 			{
+				if(this.tabData[i]['onclick'])
+				{
+					entry.flagDiv.on("click",function(){
+						et2_compileLegacyJS(this.tab['onclick'], this.widget, this.widget)(this.widget)
+					}.bind({widget:this, tab:this.tabData[i]}));
+				}
+				if(this.tabData[i]['ondblclick'])
+				{
+					entry.flagDiv.on("dblclick",function(){
+						et2_compileLegacyJS(this.tab['ondblclick'], this.widget, this.widget)(this.widget)
+					}.bind({widget:this, tab:this.tabData[i]}));
+				}
 				entry.flagDiv.click({"tabs": this, "idx": i}, function(e) {
 					e.data.tabs.setActiveTab(e.data.idx);
 				});
@@ -587,5 +601,6 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 		}
 		this.setActiveTab(this.get_active_tab());
 	}
+
 }
 et2_register_widget(et2_tabbox, ["tabbox"]);
