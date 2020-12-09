@@ -139,6 +139,8 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 				}
 				tabData.push({
 					"id": index_name,
+					"onclick":  et2_readAttrWithDefault(node, "onclick", ''),
+					"ondblclick":  et2_readAttrWithDefault(node, "ondblclick", ''),
 					"label": this.egw().lang(et2_readAttrWithDefault(node, "label", "Tab")),
 					"widget": null,
 					"widget_options": widget_options,
@@ -361,7 +363,12 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 			else
 			{
 				entry.flagDiv.click({"tabs": this, "idx": i}, function(e) {
+					eval(e.data.tabs.tabData[e.data.idx].onclick);
 					e.data.tabs.setActiveTab(e.data.idx);
+				});
+
+				entry.flagDiv.dblclick({"tabs": this, "idx": i}, function(e) {
+					eval(e.data.tabs.tabData[e.data.idx].ondblclick);
 				});
 			}
 			entry.contentDiv = jQuery(document.createElement("div"))
