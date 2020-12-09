@@ -1003,9 +1003,7 @@ class filemanager_ui
 
 			foreach(['mtime','ctime'] as $date_field)
 			{
-				$time = new Api\DateTime($row[$date_field],Api\DateTime::$server_timezone);
-				$time->setUser();
-				$row[$date_field] = $time->format('ts');
+				$row[$date_field] = Api\DateTime::server2user($row[$date_field]);
 			}
 			$rows[++$n] = $row;
 			$path2n[$path] = $n;
