@@ -1144,7 +1144,11 @@ class calendar_uiforms extends calendar_ui
 					$button == 'save' && $client_updated ? ($content['id'] ? $update_type : 'add') : 'delete'
 				);
 			}
-			Framework::window_close();
+			// Don't try to close quick add, it's not in a popup
+			if($content['template'] !== 'calendar.add')
+			{
+				Framework::window_close();
+			}
 			exit();
 		}
 		unset($event['no_notifications']);
