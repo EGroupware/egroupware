@@ -36,6 +36,7 @@ class HtmlArea extends Etemplate\Widget
 		'helvetica' => 'Helvetica',
 		'impact,chicago' => 'Impact',
 		'Lucida Sans Unicode, Lucida Grande, sans-serif' => 'Lucida Sans Unicode',
+		'Segoe' => 'segoe,segoe ui',
 		'symbol' => 'Symbol',
 		'Tahoma, Geneva, sans-serif' => 'Tahoma',
 		'terminal, "monaco' => 'Terminal',
