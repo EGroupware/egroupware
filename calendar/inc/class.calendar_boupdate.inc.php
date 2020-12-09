@@ -952,8 +952,9 @@ class calendar_boupdate extends calendar_bo
 			calendar_so::split_status($statusid, $quantity, $role);
 			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid ($role)");
 
-			// hack to add videoconference in event description, by allways setting $cleared_event
-			$cleared_event = $this->read($event['id'], null, true, 'server');
+			// hack to add videoconference in event description, by always setting $cleared_event
+			// Can't re-load, if we're notifying of a cancelled recurrence we'll load the next event in the series
+			$cleared_event = $event;
 
 			if (!is_numeric($userid))
 			{
