@@ -24,6 +24,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_menulist = exports.et2_selectbox_ro = exports.et2_selectbox = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     /api/js/jquery/chosen/chosen.jquery.js;
@@ -271,7 +272,11 @@ var et2_selectbox = /** @class */ (function (_super) {
                     .addClass('cat_' + _value);
             }
         }
-        label.append(jQuery("<span>" + _label + "</span>"));
+        //added tooltip to multiselect
+        if (typeof _title == "undefined") {
+            _title = _label;
+        }
+        label.append(jQuery("<span title='" + _title + "'>" + _label + "</span>"));
         var li = jQuery(document.createElement("li")).append(label);
         if (this.options.value_class != '')
             li.addClass(this.options.value_class + _value);

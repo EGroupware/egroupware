@@ -395,7 +395,12 @@ export class et2_selectbox extends et2_inputWidget
 					.addClass('cat_' + _value);
 			}
 		}
-		label.append(jQuery("<span>"+_label+"</span>"));
+		//added tooltip to multiselect
+		if(typeof _title == "undefined")
+		{
+			_title = _label;
+		}
+		label.append(jQuery("<span title='"+_title+"'>"+_label+"</span>"));
 		var li = jQuery(document.createElement("li")).append(label);
 		if (this.options.value_class !='') li.addClass(this.options.value_class+_value);
 		li.appendTo(dom_element || this.multiOptions);
