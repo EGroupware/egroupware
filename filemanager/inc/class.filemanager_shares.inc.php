@@ -108,6 +108,11 @@ class filemanager_shares extends filemanager_ui
 			}
 			$row['share_passwd'] = (boolean)$row['share_passwd'];
 			if ($row['share_with']) $row['share_with'] = preg_replace('/,([^ ])/', ', $1', $row['share_with']);
+
+			foreach(['share_created','share_last_accessed'] as $date_field)
+			{
+				$row[$date_field] = Api\DateTime::server2user($row[$date_field]);
+			}
 		}
 		return $total;
 	}
