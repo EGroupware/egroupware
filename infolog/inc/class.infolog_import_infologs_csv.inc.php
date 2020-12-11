@@ -260,7 +260,6 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 				if(!$record['info_contact'])
 				{
 					$record['info_contact'] = $record['info_link_id'];
-					$record['info_des'] .= "\nTried to import text into info_link_id: " . $record['info_link_id'];
 				}
 				unset($record['info_link_id']);
 			}
@@ -270,14 +269,12 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 				if ($record[$field] && is_string($record[$field]))
 				{
 					$contacts = Link::query('addressbook', '"' . $record[$field] . '"');
-					$record['info_des'] .= "\nImport text into $field: " . $record[$field]."\nMatches:\n".print_r($contacts,true);
 					if ($contacts)
 					{
 						$record['info_contact'] = array(
 								'id' => array_key_first($contacts),
 								'app' => 'addressbook'
 						);
-						$record['info_des'] .= "\ninfo_contact: " .print_r($record['info_contact'],true);
 					}
 				}
 			}
