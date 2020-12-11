@@ -363,12 +363,11 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 			else
 			{
 				entry.flagDiv.click({"tabs": this, "idx": i}, function(e) {
-					eval(e.data.tabs.tabData[e.data.idx].onclick);
+					e.data.tabs.executeFunctionByName(e.data.tabs.tabData[e.data.idx].onclick);
 					e.data.tabs.setActiveTab(e.data.idx);
 				});
-
 				entry.flagDiv.dblclick({"tabs": this, "idx": i}, function(e) {
-					eval(e.data.tabs.tabData[e.data.idx].ondblclick);
+					e.data.tabs.executeFunctionByName(e.data.tabs.tabData[e.data.idx].ondblclick);
 				});
 			}
 			entry.contentDiv = jQuery(document.createElement("div"))
@@ -588,6 +587,17 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 			entry.flagDiv.appendTo(this.flagContainer);
 		}
 		this.setActiveTab(this.get_active_tab());
+	}
+
+	/**
+	 *  Execute function from string
+	 *  used for click and dblclick events of tabs
+	 */
+	executeFunctionByName( functionName ) {
+
+		var tmpFunc = new Function(functionName);
+		tmpFunc();
+
 	}
 }
 et2_register_widget(et2_tabbox, ["tabbox"]);

@@ -287,11 +287,11 @@ var et2_tabbox = /** @class */ (function (_super) {
             }
             else {
                 entry.flagDiv.click({ "tabs": this, "idx": i }, function (e) {
-                    eval(e.data.tabs.tabData[e.data.idx].onclick);
+                    e.data.tabs.executeFunctionByName(e.data.tabs.tabData[e.data.idx].onclick);
                     e.data.tabs.setActiveTab(e.data.idx);
                 });
                 entry.flagDiv.dblclick({ "tabs": this, "idx": i }, function (e) {
-                    eval(e.data.tabs.tabData[e.data.idx].ondblclick);
+                    e.data.tabs.executeFunctionByName(e.data.tabs.tabData[e.data.idx].ondblclick);
                 });
             }
             entry.contentDiv = jQuery(document.createElement("div"))
@@ -462,6 +462,14 @@ var et2_tabbox = /** @class */ (function (_super) {
             entry.flagDiv.appendTo(this.flagContainer);
         }
         this.setActiveTab(this.get_active_tab());
+    };
+    /**
+     *  Execute function from string
+     *  used for click and dblclick events of tabs
+     */
+    et2_tabbox.prototype.executeFunctionByName = function (functionName) {
+        var tmpFunc = new Function(functionName);
+        tmpFunc();
     };
     et2_tabbox._attributes = {
         'tabs': {
