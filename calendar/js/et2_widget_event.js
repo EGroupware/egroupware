@@ -420,7 +420,10 @@ var et2_calendar_event = /** @class */ (function (_super) {
             if (this.options.value['##videoconference']) {
                 // Click handler is set in _bind_videoconference()
                 location += (this.options.value.location.trim() ? '<br />' : '') +
-                    '<span data-videoconference="' + this.options.value['##videoconference'] + '">' + this.egw().lang('Video conference') +
+                    '<span data-videoconference="' + this.options.value['##videoconference'] +
+                    '" data-id="' + this.options.value['id'] + '" data-title="' + this.options.value['title'] +
+                    '" data-start="' + this.options.value['start'].toJSON() + '" data-end="' + this.options.value['end'].toJSON() + '">' +
+                    this.egw().lang('Video conference') +
                     '<img src="' + this.egw().image('videoconference', 'calendar') + '"/></span>';
                 this._bind_videoconference();
             }
@@ -551,7 +554,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
         var vc_event = 'click.calendar_videoconference';
         jQuery('body').off(vc_event)
             .on(vc_event, '[data-videoconference]', function (event) {
-            app.calendar.joinVideoConference(this.dataset.videoconference);
+            app.calendar.joinVideoConference(this.dataset.videoconference, this.dataset);
         });
     };
     /**
