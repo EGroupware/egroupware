@@ -3586,7 +3586,7 @@ class mail_compose
 		$contacts_obj = new Api\Contacts();
 		$results = array();
 
-		// Add up to 10 matching mailing lists, and 10 groups
+		// Add some matching mailing lists, and some groups, limited by config
 		if($include_lists)
 		{
 			$results += static::get_lists($_searchString, $contacts_obj);
@@ -3715,7 +3715,7 @@ class mail_compose
 	/**
 	 * Get list of matching distribution lists when searching for email addresses
 	 *
-	 * The results are limited to 10 each of group lists and normal lists
+	 * The results are limited by config setting.  Default 10 each of group lists and normal lists
 	 *
 	 * @param String $_searchString
 	 * @param Contacts $contacts_obj
@@ -3745,8 +3745,9 @@ class mail_compose
 			);
 			${"${type}_lists"}[] = $list;
 		}
-		$trim = function($list) {
-			$limit = 10;
+		$config = Api\Config::read('mail');
+		$limit = $config['address_list_limit'] ?: 10;
+		$trim = function($list) use ($limit) {
 			if(count($list) <= $limit) return $list;
 			$list[$limit-1]['class'].= ' more_results';
 			$list[$limit-1]['title'] .= '  (' . lang('%1 more', count($list) - $limit) . ')';

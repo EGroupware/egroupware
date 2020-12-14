@@ -83,6 +83,10 @@
 					<description value="Miscellaneous" span="all" class="subHeader"/>
 				</row>
 				<row>
+					<description value="Limit mailing list results when searching for addresses"/>
+					<integer max="100" min="5" id="newsettings[address_list_limit]"/>
+				</row>
+				<row>
                     <description value="Default toolbar actions shown in mail's HTML editor"/>
                     <taglist id="newsettings[html_toolbar]" allowFreeEntries="false"  autocomplete_url=''  editModeEnabled="false"/>
                 </row>
