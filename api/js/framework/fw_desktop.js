@@ -535,6 +535,27 @@
 		execPushBroadcastAppStatus: function(_data)
 		{
 			if (app.status) app.status.mergeContent(_data, true);
+		},
+
+		/**
+		 *
+		 * @param node
+		 */
+		toggle_darkmode: function(node)
+		{
+			let state = node.firstElementChild.classList.contains('darkmode_on');
+			egw.set_preference('common', 'darkmode',state?'0':'1');
+			this._setDarkMode(state?'0':'1');
+			if (state == 1)
+			{
+				node.firstElementChild.classList.remove('darkmode_on');
+				node.firstElementChild.title = egw.lang('light mode');
+			}
+			else
+			{
+				node.firstElementChild.classList.add('darkmode_on');
+				node.firstElementChild.title = egw.lang('dark mode');
+			}
 		}
 	});
 })(window);

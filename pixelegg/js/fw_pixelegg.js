@@ -124,6 +124,7 @@
 			window.framework = new fw_pixelegg("egw_fw_sidemenu", "egw_fw_tabs",
 					window.egw_webserverUrl, egw_setSideboxSize,"egw_fw_splitter", 255, 245);	// should be identical to jdots_framework::(DEFAULT|MIN)_SIDEBAR_WIDTH
 			window.callManual = window.framework.callManual;
+			jQuery('#topmenu_info_darkmode').click(function(){window.framework.toggle_darkmode(this);});
 			jQuery('#topmenu_info_user_avatar').click(function(){window.framework.toggle_avatar_menu();});
 			jQuery('#topmenu_info_print_title').click(function(){window.framework.print();});
 			jQuery('#topmenu_info_logout').click(function(){ window.framework.redirect(this.getAttribute('data-logout-url')); });

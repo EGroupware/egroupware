@@ -178,6 +178,15 @@ class preferences_hooks
 				'admin'  => False,
 				'forced' => file_exists(EGW_SERVER_ROOT.'/pixelegg') ? 'pixelegg' : 'idots',
 			),
+			'darkmode' => array(
+				'type'   => 'select',
+				'label'  => 'Dark mode theme',
+				'name'   => 'darkmode',
+				'values' => array('0' => 'off', '1' => 'on'),
+				'help'   => 'Dark mode theme',
+				'admin'  => False,
+				'default' => '0'
+			),
 			'audio_effect'=> array(
 				'type'   => 'select',
 				'label'  => 'Audio effect',

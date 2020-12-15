@@ -534,6 +534,7 @@ abstract class Framework extends Framework\Extra
 			'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
 			'include_wz_tooltip'=> $include_wz_tooltip,
 			'webserver_url'     => $GLOBALS['egw_info']['server']['webserver_url'],
+			'darkmode'		=> $GLOBALS['egw_info']['user']['preferences']['common']['darkmode']
 		);
 	}
 
@@ -670,6 +671,17 @@ abstract class Framework extends Framework\Extra
 		return '<span title="'.lang("Print current view").'"</span>';
 	}
 
+	/**
+	 * Returns darkmode menu
+	 *
+	 * @return string
+	 */
+	protected static function _darkmode_menu()
+	{
+		$mode = $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == 1?'dark':'light';
+		return '<span title="'.lang("%1 mode", $mode).'" class="'.
+			($mode == 'dark'?'darkmode_on':'').'"> </span>';
+	}
 
 	/**
 	 * Prepare the current users
@@ -1177,7 +1189,8 @@ abstract class Framework extends Framework\Extra
 			'update' => ($update = Framework\Updates::notification()) ? $update : null,
 			'notifications' => ($GLOBALS['egw_info']['user']['apps']['notifications']) ? self::_get_notification_bell() : null,
 			'quick_add' => $vars['quick_add'],
-			'print_title' => $this->_print_menu()
+			'print_title' => $this->_print_menu(),
+			'darkmode' => self::_darkmode_menu()
 		];
 
 		// array of topmenu items (orders of the items matter)

@@ -10,8 +10,23 @@
 @import (reference) "./def_buttons.less";
 /*@import (less) "../../api/templates/default/etemplate2.css";*/
 
+/**
+ * DARK THEME
+ */
+@media all {
+
+	html[data-darkmode='1'] {
+		background: #000;
+		filter: invert(1) hue-rotate(180deg)
+	}
+
+	html[data-darkmode='1'] img {
+		filter: invert(1) hue-rotate(180deg)
+	}
+}
 
 @media all {
+
 
 /**
  * Top level

@@ -108,6 +108,23 @@
 			display: inline-block;
 		}
 	}
+	/*darkmode*/
+	#topmenu_info_darkmode {
+		span {
+			background-image: url(../images/darkmode_off.svg);
+			width: 45px;
+			height: 45px;
+			display: inline-block;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		span.darkmode_on {
+			background-image: url(../images/darkmode_on.svg);
+			filter:invert(1) hue-rotate(180deg);
+		}
+	}
+
 	/*Notification*/
     #topmenu_info_notifications {
 		line-height: 45px;

@@ -63,6 +63,9 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 		// keep track of opened popups
 		this.popups = [];
+
+		// initiate dark mode
+		this._setDarkMode(egw.preference('darkmode', 'common'));
 	},
 
 	/**
@@ -1299,5 +1302,10 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	isAnInternalApp: function(_app)
 	{
 		return _app && _app.appName != _app.internalName;
+	},
+
+	_setDarkMode: function(_state)
+	{
+		jQuery('html').attr('data-darkmode', _state);
 	}
 });}).call(this);

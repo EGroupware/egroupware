@@ -117,6 +117,8 @@ var EgwApp = /** @class */ (function () {
             this._set_Window_title();
         // Highlights the favorite based on initial list state
         this.highlight_favorite();
+        // apply theme mode
+        jQuery('html').attr('data-darkmode', egw.preference('darkmode', 'common'));
     };
     /**
      * Observer method receives update notifications from all applications
