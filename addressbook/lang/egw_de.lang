@@ -157,6 +157,7 @@ country (private)	addressbook	de	Land (Privat)
 country code	addressbook	de	Länderkennung
 country code (private)	addressbook	de	Länderkennung (Privat)
 create new links	addressbook	de	Neue Verknüpfung erstellen
+create new shares writable	addressbook	de	Neue Freigaben beschreibbar erstellen
 created	addressbook	de	Angelegt
 credit	addressbook	de	Darlehen
 crm view list	addressbook	de	CRM Ansicht
