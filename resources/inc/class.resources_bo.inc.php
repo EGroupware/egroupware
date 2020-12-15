@@ -289,15 +289,16 @@ class resources_bo
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int $res_id resource id
+	 * @param bool $_ignore_acl ignores acl check if set to true
 	 * @return array with key => value or false if not found or allowed
 	 */
-	function read($res_id)
+	function read($res_id, $_ignore_acl=false)
 	{
 		if (!($data = $this->so->read(array('res_id' => $res_id))))
 		{
 			return null;	// not found
 		}
-		if (!$this->acl->is_permitted($data['cat_id'],Acl::READ))
+		if (!$_ignore_acl && !$this->acl->is_permitted($data['cat_id'],Acl::READ))
 		{
 			return false;	// permission denied
 		}
@@ -330,7 +331,7 @@ class resources_bo
 		{
 			$resource['res_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
 			$resource['res_modified'] = Api\DateTime::server2user(time(),'ts');
-			$old = $this->read($resource['res_id']);
+			$old = $this->read($resource['res_id'], $ignore_acl);
 		}
 
 		switch ($resource['picture_src'])
@@ -398,7 +399,7 @@ class resources_bo
 				foreach($accessories as $accessory => $name)
 				{
 					Link::unlink(0,'resources',$accessory,'','resources',$resource['res_id']);
-					if (($acc = $this->read($accessory)))
+					if (($acc = $this->read($accessory, $ignore_acl)))
 					{
 						$acc['accessory_of'] = -1;
 						$this->so->save($acc);
@@ -844,11 +845,12 @@ class resources_bo
 	 * @param $_res_id
 	 * @param $_starttime
 	 * @param $_endtime
+	 * @param bool $_ignore_acl ignores acl check if set to true
 	 * @return array|null returns array of resource data with calculated useable quantity
 	 */
-	function checkUseable($_res_id, $_starttime, $_endtime)
+	function checkUseable($_res_id, $_starttime, $_endtime, $_ignore_acl=false)
 	{
-		$resource = $this->read($_res_id);
+		$resource = $this->read($_res_id, $_ignore_acl);
 		if ($resource && $resource['bookable'])
 		{
 			//get a calendar objet for reservations
