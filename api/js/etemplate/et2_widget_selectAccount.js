@@ -670,10 +670,8 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
                 .off();
             return;
         }
-        // Don't make it look like a link
-        jQuery('li', this.list).removeClass("et2_link et2_link_string")
-            // No clicks either
-            .off();
+        // Empty it before we fill it
+        jQuery('li', this.list).remove();
         var found = false;
         if (this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) || this.options.empty_label) {
             if (!_value) {
