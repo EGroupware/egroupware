@@ -273,10 +273,8 @@ class Storage
 			// remove some columns, absolutly not necessary to search in sql
 			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),$this->sql_cols_not_to_search);
 		}
-		if ($this->user)
-		{
-			$this->grants = $this->get_grants($this->user,$contact_app);
-		}
+		$this->grants = $this->get_grants($this->user,$contact_app);
+
 		if ($this->account_repository != 'sql' && $this->contact_repository == 'sql')
 		{
 			if ($this->account_repository != $this->contact_repository)
@@ -389,9 +387,10 @@ class Storage
 				$grants[0] |= Api\Acl::READ|Api\Acl::EDIT;
 			}
 		}
+		// no user, eg. setup or not logged in, allow read access to accounts
 		else
 		{
-			$grants = array();
+			$grants = [0 => Api\Acl::READ];
 		}
 		//error_log(__METHOD__."($user, '$contact_app') returning ".array2string($grants));
 		return $grants;
