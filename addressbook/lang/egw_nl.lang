@@ -115,7 +115,6 @@ company name	addressbook	nl	Bedrijfsnaam
 configuration	common	nl	Instelling
 contact	common	nl	Contact
 contact application	admin	nl	Contactaanvraag
-contact copied	addressbook	nl	Contact gekopieerd
 contact data	addressbook	nl	Contactgegevens
 contact deleted	addressbook	nl	Contact verwijderd
 contact fields to show	addressbook	nl	Contactvelden die getoond moeten worden
@@ -468,7 +467,6 @@ url (business)	addressbook	nl	url (zakelijk)
 url (private)	addressbook	nl	url (prive)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	nl	URL waaraan telefoonnummers gelinkt moeten worden (gebruik %1 = nummer dat je wilt bellen, %u = account naam, %t = account telefoonnummer)
 use addressbooks "own sorting" attribute	addressbook	nl	Gebruik adresboek zijn "eigen sorteer" methode
-use an extra category tab?	addressbook	nl	Een extra categorie tabblad gebruiken?
 use an extra tab for private custom fields?	admin	nl	Een extra categorie tabblad gebruiken voor persoonlijke aangepaste velden?
 use country list	addressbook	nl	Gebruik Landenlijst
 use setup for a full account-migration	admin	nl	gebruik setup voor een volledige accountmigratie

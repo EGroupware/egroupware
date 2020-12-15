@@ -1259,7 +1259,7 @@ setup	common	en	Setup
 setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
 share	common	en	Share
-share as readonly, but allow uploads.  Uploads are hidden, and only accessable by those with an account	common	en	Share as readonly, but allow uploads.  Uploads are hidden, and only accessable by those with an account
+share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	en	Share as readonly, but allow uploads.  Uploads are hidden, and only accessable by those with an account
 share filemanager directory	common	en	Filemanager directory
 share files	common	en	Share files
 share just the associated filemanager directory, not the %1	common	en	Share just the associated filemanager directory, not the %1
