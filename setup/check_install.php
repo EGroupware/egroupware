@@ -204,14 +204,13 @@ $checks = array(
 		'only_if_exists' => true,	// quitens "file does not exist" for doc symlinks in Debian to files outside open_basedir
 		'recursiv' => True
 	),
-	realpath('../header.inc.php') => array(
-		'func' => 'permission_check',
-		'is_world_readable' => False,
-		'only_if_exists' => @$GLOBALS['egw_info']['setup']['stage']['header'] != 10
-	),
 	'ctype' => array(
 		'func' => 'extension_check',
 		'error' => lang("The ctype extension is needed by HTMLpurifier to check content of FCKeditor agains Cross Site Skripting."),
+	),
+	'apcu' => array(
+		'func' => 'extension_check',
+		'warning' => lang('The APCu extension is required by EGroupware for caching.'),
 	),
 	'json' => array(
 		'func' => 'extension_check',
