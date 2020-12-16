@@ -5074,6 +5074,7 @@ td.message span.message {
   right: 0px;
   z-index: 1000;
   background-color: #fbfbfb;
+  /*darkmode*/
   /*Notification*/
   /*Search button*/
   /*current user info*/
@@ -5164,6 +5165,18 @@ td.message span.message {
   width: 45px;
   height: 45px;
   display: inline-block;
+}
+#egw_fw_topmenu_info_items #topmenu_info_darkmode span {
+  background-image: url(../images/darkmode_off.svg);
+  width: 45px;
+  height: 45px;
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#egw_fw_topmenu_info_items #topmenu_info_darkmode span.darkmode_on {
+  background-image: url(../images/darkmode_on.svg);
+  filter: invert(1) hue-rotate(180deg);
 }
 #egw_fw_topmenu_info_items #topmenu_info_notifications {
   line-height: 45px;
