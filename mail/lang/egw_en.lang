@@ -322,6 +322,7 @@ learning as ham (not spam) failed because of %1	mail	en	Learning as ham (not spa
 learning as spam failed because of %1	mail	en	Learning as spam failed because of %1
 less than	mail	en	less than
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. Mail compose save as infolog action)
+limit mailing list results when searching for addresses	mail	en	Limit mailing list results when searching for addresses
 mail	common	en	Mail
 mail acl	mail	en	Mail ACL
 mail filter	mail	en	Mail filter
