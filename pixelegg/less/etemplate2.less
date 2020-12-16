@@ -17,11 +17,10 @@
 
 	html[data-darkmode='1'] {
 		background: #000;
-		filter: invert(1) hue-rotate(180deg)
-	}
-
-	html[data-darkmode='1'] img {
-		filter: invert(1) hue-rotate(180deg)
+		filter: invert(1) hue-rotate(180deg);
+		img, #blueimp-gallery {
+			filter: invert(1) hue-rotate(180deg) !important;
+		}
 	}
 }
 
