@@ -57,7 +57,8 @@
     filter: invert(1) hue-rotate(180deg) !important;
   }
   html[data-darkmode='1'] div.dhtmlxMenu_egw_SubLevelArea_Polygon,
-  html[data-darkmode='1'] .egw_tooltip {
+  html[data-darkmode='1'] .egw_tooltip,
+  html[data-darkmode='1'] body .egw_message_wrapper {
     box-shadow: 0px 0px 2px 2px #666666;
   }
 }
