@@ -22,7 +22,14 @@
 		img, #blueimp-gallery {
 			filter: invert(1) hue-rotate(180deg) !important;
 		}
-		div.dhtmlxMenu_egw_SubLevelArea_Polygon,.egw_tooltip, body .egw_message_wrapper {box-shadow: 0px 0px 2px 2px #666666;}
+		div.dhtmlxMenu_egw_SubLevelArea_Polygon,.egw_tooltip,
+		body .egw_message_wrapper,#egw_fw_header #egw_fw_topmenu,.ui-dialog, .box_shadow
+		{
+			box-shadow: 0px 0px 2px 2px #666666;
+			-moz-box-shadow: 0px 0px 2px 2px #666666;
+			-webkit-box-shadow: 0px 0px 2px 2px #666666;
+			-khtml-box-shadow: 0px 0px 2px 2px #666666;
+		}
 	}
 }
 
