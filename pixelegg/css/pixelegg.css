@@ -49,11 +49,16 @@
 @media all {
   html[data-darkmode='1'] {
     background: #000;
+    position: fixed;
     filter: invert(1) hue-rotate(180deg);
   }
   html[data-darkmode='1'] img,
   html[data-darkmode='1'] #blueimp-gallery {
     filter: invert(1) hue-rotate(180deg) !important;
+  }
+  html[data-darkmode='1'] div.dhtmlxMenu_egw_SubLevelArea_Polygon,
+  html[data-darkmode='1'] .egw_tooltip {
+    box-shadow: 0px 0px 2px 2px #666666;
   }
 }
 @media all {
