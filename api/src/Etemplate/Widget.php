@@ -195,7 +195,7 @@ class Widget
 		$template = $this;
 		while($reader->moveToNextAttribute())
 		{
-			if ($reader->name != 'id' && $template->attr[$reader->name] != $reader->value)
+			if ($reader->name != 'id' && $template->attr[$reader->name] !== $reader->value)
 			{
 				if (!$cloned)
 				{
@@ -209,7 +209,7 @@ class Widget
 				// expand attributes values, otherwise eg. validation can not use attrs referencing to content
 				if ($value[0] == '@' || strpos($value, '$cont') !== false)
 				{
-					$value = self::expand_name($value, null, null, null, null,
+					$template->attrs[$reader->name] = $value = self::expand_name($value, null, null, null, null,
 						isset(self::$cont) ? self::$cont : self::$request->content);
 				}
 

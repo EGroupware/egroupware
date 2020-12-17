@@ -78,6 +78,7 @@ class Customfields extends Transformer
 
 	public function __construct($xml)
 	{
+		$this->attrs['prefix'] = self::$prefix;
 		parent::__construct($xml);
 	}
 
@@ -124,7 +125,7 @@ class Customfields extends Transformer
 			$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
 		}
 
-		if(!$app)
+		if(!$app && !$customfields)
 		{
 			$app =& $this->setElementAttribute(self::GLOBAL_VALS, 'app', $GLOBALS['egw_info']['flags']['currentapp']);
 			if ($this->attrs['sub-app']) $app .= '-'.$this->attrs['sub-app'];
@@ -137,6 +138,10 @@ class Customfields extends Transformer
 		{
 			// app changed
 			$customfields =& Api\Storage\Customfields::get($app);
+		}
+		if($this->attrs['customfields'])
+		{
+			$customfields = $this->attrs['customfields'];
 		}
 		// Filter fields
 		if($this->attrs['field-names'])
@@ -174,20 +179,20 @@ class Customfields extends Transformer
 
 			// Rmove fields for none private cutomfields when name refers to a single custom field
 			$matches = null;
-			if (($pos=strpos($form_name,self::$prefix)) !== false &&
-			preg_match($preg = '/'.self::$prefix.'([^\]]+)/',$form_name,$matches) && !isset($fields[$name=$matches[1]]))
+			if (($pos=strpos($form_name,$this->attrs['prefix'])) !== false &&
+			preg_match($preg = '/'.$this->attrs['prefix'].'([^\]]+)/',$form_name,$matches) && !isset($fields[$name=$matches[1]]))
 			{
 				unset($fields[$key]);
 			}
 		}
 		// check if name refers to a single custom field --> show only that
 		$matches = null;
-		if (($pos=strpos($form_name,self::$prefix)) !== false && // allow the prefixed name to be an array index too
-			preg_match($preg = '/'.self::$prefix.'([^\]]+)/',$form_name,$matches) && isset($fields[$name=$matches[1]]))
+		if (($pos=strpos($form_name,$this->attrs['prefix'])) !== false && // allow the prefixed name to be an array index too
+			preg_match($preg = '/'.$this->attrs['prefix'].'([^\]]+)/',$form_name,$matches) && isset($fields[$name=$matches[1]]))
 		{
 			$fields = array($name => $fields[$name]);
-			$value = array(self::$prefix.$name => $value);
-			$form_name = self::$prefix.$name;
+			$value = array($this->attrs['prefix'].$name => $value);
+			$form_name = $this->attrs['prefix'].$name;
 		}
 
 		if(!is_array($fields)) $fields = array();
@@ -216,7 +221,7 @@ class Customfields extends Transformer
 				{
 					if (!empty($this->attrs['sub-type']) && !empty($field['type2']) &&
 						strpos(','.$field['type2'].',',','.$field['type2'].',') === false) continue;    // not for our content type//
-					if (isset($value[self::$prefix.$lname]) && $value[self::$prefix.$lname] !== '') //break;
+					if (isset($value[$this->attrs['prefix'].$lname]) && $value[$this->attrs['prefix'].$lname] !== '') //break;
 					{
 						$fields_with_vals[]=$lname;
 					}
@@ -400,7 +405,14 @@ class Customfields extends Transformer
 		// if we have no id / use self::GLOBAL_ID, we have to set $value_in in global namespace for regular widgets validation to find
 		if (!$this->id) $content = array_merge($content, $value_in);
 		//error_log(__METHOD__."($cname, ...) form_name=$form_name, use-private={$this->attrs['use-private']}, value_in=".array2string($value_in));
-		$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
+		if($this->getElementAttribute($form_name, 'customfields'))
+		{
+			$customfields =& $this->getElementAttribute($form_name, 'customfields');
+		}
+		else
+		{
+			$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
+		}
 		if(is_array($value_in))
 		{
 			foreach(array_keys($value_in) as $field)

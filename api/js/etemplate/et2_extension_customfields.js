@@ -119,7 +119,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
         if (!this.options || !this.options.customfields)
             return;
         // Already set up - avoid duplicates in nextmatch
-        if (this.getType() == 'customfields-list' && !this.isInTree())
+        if (this.getType() == 'customfields-list' && !this.isInTree() && Object.keys(this.widgets).length > 0)
             return;
         if (!jQuery.isEmptyObject(this.widgets))
             return;
@@ -282,7 +282,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
             // Make sure widget is created, and has the needed function
             if (!this.widgets[field_name] || !this.widgets[field_name].set_value)
                 continue;
-            var value = _value[this.options.prefix + field_name] ? _value[et2_customfields_list.PREFIX + field_name] : null;
+            var value = _value[this.options.prefix + field_name] ? _value[this.options.prefix + field_name] : null;
             // Check if ID was missing
             if (value == null && this.id == et2_customfields_list.DEFAULT_ID && this.getArrayMgr("content").getEntry(this.options.prefix + field_name)) {
                 value = this.getArrayMgr("content").getEntry(this.options.prefix + field_name);
