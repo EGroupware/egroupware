@@ -196,6 +196,15 @@ class admin_hooks
 			'icon' => 'lock',
 		);
 
+		// Clear Credentials
+		$actions[] = array(
+			'id' => 'clear_credentials',
+			'caption' => 'Clear credentials',
+			'icon' => 'password',
+			'onExecute' => 'javaScript:app.admin.clear_credentials_handler',
+			'confirm' => 'Clear credentials'
+		);
+
 		if (!$GLOBALS['egw']->acl->check('current_sessions',1,'admin'))	// no rights to view
 		{
 			$actions[] = array(
