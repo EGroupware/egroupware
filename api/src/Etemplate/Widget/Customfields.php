@@ -417,7 +417,7 @@ class Customfields extends Transformer
 		{
 			foreach(array_keys($value_in) as $field)
 			{
-				$field_settings = $customfields[$fname=substr($field,1)];
+				$field_settings = $customfields[$fname=substr($field,strlen($this->attrs['prefix']))];
 
 				if ((string)$this->attrs['use-private'] !== '' &&	// are only (non-)private fields requested
 					(boolean)$field_settings['private'] != ($this->attrs['use-private'] != '0'))
@@ -437,7 +437,7 @@ class Customfields extends Transformer
 				// widget has no validate method, eg. is only displaying stuff --> nothing to validate
 				if (!method_exists($widget, 'validate')) continue;
 				$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
-				$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id,1)] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
+				$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id,strlen($this->attrs['prefix']))] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
 				$valid =& self::get_array($validated, $field_name, true);
 
 				// Arrays are not valid, but leave filemanager alone, we'll catch it
