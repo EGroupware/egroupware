@@ -1,0 +1,67 @@
+/**
+ * EGroupware: Darkmode theme
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@egroupware.org>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+/**
+ * DARK THEME
+ */
+@media all {
+
+  html[data-darkmode='1']
+  {
+    background: #000;
+    position: fixed; // ATM Firefox doesn't like filter:invert on none fixed html
+    filter: invert(1) hue-rotate(180deg);
+    img, #blueimp-gallery,
+    #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active {
+      filter: invert(1) hue-rotate(180deg) !important;
+    }
+    div.dhtmlxMenu_egw_SubLevelArea_Polygon,.egw_tooltip,
+    body .egw_message_wrapper,#egw_fw_header #egw_fw_topmenu,.ui-dialog, .box_shadow,
+    {
+      box-shadow: 0px 0px 2px 2px #666666;
+      -moz-box-shadow: 0px 0px 2px 2px #666666;
+      -webkit-box-shadow: 0px 0px 2px 2px #666666;
+      -khtml-box-shadow: 0px 0px 2px 2px #666666;
+    }
+    //Calendar
+    #calendar_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,#calendar_sidebox_header {border-color:#ff9dca !important;}
+    #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #calendar-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {border-top-color:#ff9dca !important;}
+    //Addressbook
+    #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,#addressbook_sidebox_header {border-color:#aadaff !important;}
+    #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #addressbook-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {border-top-color:#aadaff !important;}
+    //Infolog
+    #infolog_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,#infolog_sidebox_header {border-color:#ffccff !important;}
+    #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #infolog-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {border-top-color:#ffccff !important;}
+    //Timesheet
+    #timesheet_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,#timesheet_sidebox_header {border-color:#ffdbff !important;}
+    #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #timesheet-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {border-top-color:#ffdbff !important;}
+    //Mail
+    #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,#mail_sidebox_header {border-color:#5db9ec!important;}
+    #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #mail-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {border-top-color:#5db9ec !important;}
+    //ProjectManager
+    #projectmanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,#projectmanager_sidebox_header {border-color:#487b7b !important;}
+    #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #projectmanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {border-top-color:#487b7b !important;}
+    //Resources
+    #resources_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,#resources_sidebox_header {border-color:#aee0e0 !important;}
+    #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #resources-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {border-top-color:#aee0e0 !important;}
+    //Admin
+    #admin_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,#admin_sidebox_header {border-color:#cccccc !important;}
+    #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #admin-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {border-top-color:#cccccc !important;}
+    //Filemamanger
+    #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,#filemanager_sidebox_header {border-color:#ac4500 !important;}
+    #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #filemanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {border-top-color:#ac4500 !important;}
+    //Bookmarks
+    #bookmarks_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,#bookmarks_sidebox_header {border-color:#cc6633 !important;}
+    #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #bookmarks-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {border-top-color:#cc6633 !important;}
+
+  }
+}

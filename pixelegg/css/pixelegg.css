@@ -36,13 +36,16 @@
  * neccesarry settings
  */
 /**
- * Styles for etemplate2 widgets
- * Überschreibt egroupware/etemplate/templates/default/etemplate2.css
+ * EGroupware: Darkmode theme
  *
- * @version: 1
- * Stefan Reinhardt
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@egroupware.org>
+ * @package pixelegg
+ * @version $Id$
  */
-/*@import (less) "../../api/templates/default/etemplate2.css";*/
 /**
  * DARK THEME
  */
@@ -139,6 +142,14 @@
     border-top-color: #cc6633 !important;
   }
 }
+/**
+ * Styles for etemplate2 widgets
+ * Überschreibt egroupware/etemplate/templates/default/etemplate2.css
+ *
+ * @version: 1
+ * Stefan Reinhardt
+ */
+/*@import (less) "../../api/templates/default/etemplate2.css";*/
 @media all {
   /**
  * Top level

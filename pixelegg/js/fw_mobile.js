@@ -1033,6 +1033,28 @@
 			{
 				_widget.header.delete_action.hide();
 			}
+		},
+
+		/**
+		 *
+		 * @param node
+		 */
+		toggle_darkmode: function()
+		{
+			let node = document.getElementById('topmenu_darkmode');
+			let state = node.classList.contains('darkmode_on');
+			egw.set_preference('common', 'darkmode',state?'0':'1');
+			this._setDarkMode(state?'0':'1');
+			if (state == 1)
+			{
+				node.classList.remove('darkmode_on');
+				node.title = egw.lang('light mode');
+			}
+			else
+			{
+				node.classList.add('darkmode_on');
+				node.title = egw.lang('dark mode');
+			}
 		}
 	});
 

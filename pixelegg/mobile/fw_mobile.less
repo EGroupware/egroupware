@@ -9,7 +9,7 @@
  * @package pixelegg
  * @version $Id$
  */
-
+@import "../less/darkmode.less";
 @import "../css/mobile.less";
 @import (reference) "../less/def_mobile.less";
 @import "../less/app_colors.less";
@@ -490,6 +490,14 @@
 							}
 							a#topmenu_search {
 								background-image: url(../images/search.svg);
+							}
+							/*darkmode*/
+							a#topmenu_darkmode {
+								background-image: url(../images/darkmode_off.svg);
+							}
+							a#topmenu_darkmode.darkmode_on {
+								background-image: url(../images/darkmode_on.svg);
+								filter:invert(1) hue-rotate(180deg);
 							}
 						}
 					}

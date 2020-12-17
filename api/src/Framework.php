@@ -1205,7 +1205,7 @@ abstract class Framework extends Framework\Extra
 		}
 
 		// array of topmenu preferences items (orders of the items matter)
-		$topmenu_preferences = ['prefs', 'acl', 'cats', 'security'];
+		$topmenu_preferences = ['darkmode','prefs', 'acl', 'cats', 'security'];
 
 		// set topmenu preferences items
 		if($GLOBALS['egw_info']['user']['apps']['preferences'])
@@ -1236,7 +1236,7 @@ abstract class Framework extends Framework\Extra
 		// set topmenu info items
 		foreach ($topmenu_info_items as $id => $content)
 		{
-			if (!$content || (in_array($id, ['search', 'quick_add', 'update']) && (Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile')))
+			if (!$content || (in_array($id, ['search', 'quick_add', 'update', 'darkmode']) && (Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile')))
 			{
 				continue;
 			}
@@ -1257,6 +1257,9 @@ abstract class Framework extends Framework\Extra
 		static $memberships=null;
 		if (!isset($memberships)) $memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true);
 		static $types = array(
+			'darkmode' => array(
+				'title' => 'Darkmode'
+			),
 			'prefs' => array(
 				'title' => 'Preferences',
 				'hook'  => 'settings',
@@ -1310,7 +1313,17 @@ abstract class Framework extends Framework\Extra
 					));
 				}
 				break;
-
+			case 'darkmode':
+				if ((Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile'))
+				{
+					$this->_add_topmenu_item(array(
+						'id'    => 'darkmode',
+						'name'  => 'preferences',
+						'title' => lang($types[$type]['title']),
+						'url'   => "javascript:framework.toggle_darkmode()",
+					));
+				}
+				break;
 			default:
 				$this->_add_topmenu_item(array(
 					'id' => $type,

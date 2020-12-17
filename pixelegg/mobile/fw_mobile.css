@@ -10,6 +10,113 @@
  * @version $Id$
  */
 /**
+ * EGroupware: Darkmode theme
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@egroupware.org>
+ * @package pixelegg
+ * @version $Id$
+ */
+/**
+ * DARK THEME
+ */
+@media all {
+  html[data-darkmode='1'] {
+    background: #000;
+    position: fixed;
+    filter: invert(1) hue-rotate(180deg);
+  }
+  html[data-darkmode='1'] img,
+  html[data-darkmode='1'] #blueimp-gallery,
+  html[data-darkmode='1'] #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active {
+    filter: invert(1) hue-rotate(180deg) !important;
+  }
+  html[data-darkmode='1'] div.dhtmlxMenu_egw_SubLevelArea_Polygon,
+  html[data-darkmode='1'] .egw_tooltip,
+  html[data-darkmode='1'] body .egw_message_wrapper,
+  html[data-darkmode='1'] #egw_fw_header #egw_fw_topmenu,
+  html[data-darkmode='1'] .ui-dialog,
+  html[data-darkmode='1'] .box_shadow {
+    box-shadow: 0px 0px 2px 2px #666666;
+    -moz-box-shadow: 0px 0px 2px 2px #666666;
+    -webkit-box-shadow: 0px 0px 2px 2px #666666;
+    -khtml-box-shadow: 0px 0px 2px 2px #666666;
+  }
+  html[data-darkmode='1'] #calendar_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
+  html[data-darkmode='1'] #calendar_sidebox_header {
+    border-color: #ff9dca !important;
+  }
+  html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #calendar-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+    border-top-color: #ff9dca !important;
+  }
+  html[data-darkmode='1'] #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
+  html[data-darkmode='1'] #addressbook_sidebox_header {
+    border-color: #aadaff !important;
+  }
+  html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #addressbook-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+    border-top-color: #aadaff !important;
+  }
+  html[data-darkmode='1'] #infolog_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
+  html[data-darkmode='1'] #infolog_sidebox_header {
+    border-color: #ffccff !important;
+  }
+  html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #infolog-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+    border-top-color: #ffccff !important;
+  }
+  html[data-darkmode='1'] #timesheet_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
+  html[data-darkmode='1'] #timesheet_sidebox_header {
+    border-color: #ffdbff !important;
+  }
+  html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #timesheet-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+    border-top-color: #ffdbff !important;
+  }
+  html[data-darkmode='1'] #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
+  html[data-darkmode='1'] #mail_sidebox_header {
+    border-color: #5db9ec !important;
+  }
+  html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #mail-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+    border-top-color: #5db9ec !important;
+  }
+  html[data-darkmode='1'] #projectmanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
+  html[data-darkmode='1'] #projectmanager_sidebox_header {
+    border-color: #487b7b !important;
+  }
+  html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #projectmanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+    border-top-color: #487b7b !important;
+  }
+  html[data-darkmode='1'] #resources_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
+  html[data-darkmode='1'] #resources_sidebox_header {
+    border-color: #aee0e0 !important;
+  }
+  html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #resources-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+    border-top-color: #aee0e0 !important;
+  }
+  html[data-darkmode='1'] #admin_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
+  html[data-darkmode='1'] #admin_sidebox_header {
+    border-color: #cccccc !important;
+  }
+  html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #admin-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+    border-top-color: #cccccc !important;
+  }
+  html[data-darkmode='1'] #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
+  html[data-darkmode='1'] #filemanager_sidebox_header {
+    border-color: #ac4500 !important;
+  }
+  html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #filemanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+    border-top-color: #ac4500 !important;
+  }
+  html[data-darkmode='1'] #bookmarks_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
+  html[data-darkmode='1'] #bookmarks_sidebox_header {
+    border-color: #cc6633 !important;
+  }
+  html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #bookmarks-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+    border-top-color: #cc6633 !important;
+  }
+}
+/**
  * EGroupware: Stylite Pixelegg template - mobile theme
  *
  * Please do NOT change css-files directly, instead change less-files and compile them!
@@ -1373,20 +1480,20 @@ span.ui-icon-search {
   box-shadow: -2px 1px 9px 3px #B4B4B4;
 }
 .ui-dialog .ui-dialog-buttonpane {
-  padding-left: .8em;
-  padding-right: .8em;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
   padding-top: 0.7em;
 }
 .ui-dialog .ui-dialog-titlebar {
-  padding-left: .8em;
-  padding-right: .8em;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
   font-size: 12pt;
   border: none;
   font-weight: normal;
   background: white;
 }
 .ui-dialog .ui-dialog-titlebar-close {
-  right: .8em;
+  right: 0.8em;
 }
 .ui-widget-content {
   border: 1px solid #B4B4B4;
@@ -4330,6 +4437,7 @@ td.message span.message {
   cursor: pointer;
   background-repeat: repeat-x;
   height: 100%;
+  max-width: 200px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header .notifyTabDiv {
   position: absolute;
@@ -4522,6 +4630,14 @@ td.message span.message {
   color: #000000;
   padding-top: 0;
   line-height: 33px;
+  height: 33px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 10px;
+}
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active h1:hover {
+  padding-left: 35px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active:hover {
   background-image: url(../images/reload.png);
@@ -5064,6 +5180,7 @@ td.message span.message {
   right: 0px;
   z-index: 1000;
   background-color: #fbfbfb;
+  /*darkmode*/
   /*Notification*/
   /*Search button*/
   /*current user info*/
@@ -5154,6 +5271,18 @@ td.message span.message {
   width: 45px;
   height: 45px;
   display: inline-block;
+}
+#egw_fw_topmenu_info_items #topmenu_info_darkmode span {
+  background-image: url(../images/darkmode_off.svg);
+  width: 45px;
+  height: 45px;
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#egw_fw_topmenu_info_items #topmenu_info_darkmode span.darkmode_on {
+  background-image: url(../images/darkmode_on.svg);
+  filter: invert(1) hue-rotate(180deg);
 }
 #egw_fw_topmenu_info_items #topmenu_info_notifications {
   line-height: 45px;
@@ -5775,7 +5904,7 @@ table.egwGridView_grid tbody tr.th:hover {
 }
 table.egwGridView_grid tbody tr.selected {
   background-image: none;
-  background-color: rgba(102, 153, 204, 0.7);
+  background-color: rgba(102, 153, 204, 0.7) !important;
 }
 table.egwGridView_grid tbody td {
   border-bottom: 1px solid #E6E6E6;
@@ -6167,7 +6296,7 @@ a.textSidebox {
   }
 }
 .egw-loading-prompt-container::before {
-  opacity: .3;
+  opacity: 0.3;
   content: "";
   background-color: #aaaaaa;
   width: 100%;
@@ -6246,7 +6375,7 @@ a.textSidebox {
   z-index: 999;
   width: 100px;
   border-radius: 5px;
-  border: solid 10px  #679FD2;
+  border: solid 10px #679FD2;
   transform: translate(-50%, -50%);
 }
 /**
@@ -6797,7 +6926,7 @@ span.egw_tutorial_title {
     background-color: #B4B4B4;
   }
   body #egw_fw_sidebar.avatarSubmenu {
-    top: 280px;
+    top: 325px;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu {
     position: absolute;
@@ -7777,6 +7906,9 @@ form[id^="ranking-"] .dialogHeadbar {
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul {
     border-left: 6px solid silver;
   }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li {
+    /*darkmode*/
+  }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_logout {
     background-image: url(../images/logout.svg);
   }
@@ -7797,6 +7929,13 @@ form[id^="ranking-"] .dialogHeadbar {
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_search {
     background-image: url(../images/search.svg);
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_darkmode {
+    background-image: url(../images/darkmode_off.svg);
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_darkmode.darkmode_on {
+    background-image: url(../images/darkmode_on.svg);
+    filter: invert(1) hue-rotate(180deg);
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_menu {
     background-image: url(../images/topmenu_items/mobile/menu_active.svg);
