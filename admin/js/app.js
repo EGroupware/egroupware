@@ -1143,6 +1143,21 @@ var AdminApp = /** @class */ (function (_super) {
         }, this));
     };
     /**
+     * Action handler for clear credentials action
+     *
+     * @param action
+     * @param selected
+     */
+    AdminApp.prototype.clear_credentials_handler = function (action, selected) {
+        var ids = [];
+        debugger;
+        for (var _i = 0, selected_1 = selected; _i < selected_1.length; _i++) {
+            var row = selected_1[_i];
+            ids.push(row.id.split("::").pop());
+        }
+        this.egw.request("admin.admin_passwordreset.ajax_clear_credentials", [ids]);
+    };
+    /**
      * Export content of given field into relevant file
      */
     AdminApp.prototype.smime_exportCert = function () {

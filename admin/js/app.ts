@@ -1383,6 +1383,23 @@ class AdminApp extends EgwApp
 	}
 
 	/**
+	 * Action handler for clear credentials action
+	 *
+	 * @param action
+	 * @param selected
+	 */
+	clear_credentials_handler(action : egwAction, selected: egwActionObject[])
+	{
+		let ids = [];
+		debugger;
+		for(let row of selected)
+		{
+			ids.push(row.id.split("::").pop());
+		}
+		this.egw.request("admin.admin_passwordreset.ajax_clear_credentials", [ids]);
+	}
+
+	/**
 	 * Export content of given field into relevant file
 	 */
 	smime_exportCert()

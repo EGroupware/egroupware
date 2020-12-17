@@ -13,6 +13,7 @@
 include_once(EGW_INCLUDE_ROOT.'/setup/inc/hook_config.inc.php');	// functions to return password hashes
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
 
 /**
  * Reset passwords
@@ -26,6 +27,7 @@ class admin_passwordreset
 	 */
 	public $public_functions = array(
 		'index' => true,
+		'ajax_clear_credentials' => true
 	);
 
 	/**
@@ -283,5 +285,42 @@ class admin_passwordreset
 		$tmpl->exec('admin.admin_passwordreset.index',$content,$sel_options,$readonlys,array(
 			'changed' => $changed,
 		));
+	}
+
+	public function ajax_clear_credentials($account_ids)
+	{
+		$msg = [];
+
+		if($count = Api\Mail\Credentials::delete(0,$account_ids))
+		{
+			$msg[] = lang("%1 mail credentials deleted", $count);
+		}
+
+		$action['action'] = 'delete';
+		$action['selected'] = $account_ids;
+
+		$hook_data = Api\Hooks::process(array('location' => 'preferences_security'), ['openid'], true);
+		foreach($hook_data as $extra_tab)
+		{
+			if($extra_tab['delete'])
+			{
+				$msg[] = call_user_func_array($extra_tab['delete'], [$account_ids]);
+			}
+			else
+			{
+				// Each credential / security option can have its nm as a different ID
+				$content['tabs'] = $extra_tab['name'];
+				foreach($extra_tab['data'] as $id => $datum)
+				{
+					if($datum['get_rows'])
+					{
+						$content[$id] = $action;
+					}
+				}
+				$msg[] = call_user_func_array($extra_tab['save_callback'], [$content]);
+			}
+		}
+		Framework::message(implode("\n",$msg), 'success');
+		Framework::redirect_link('/index.php', 'menuaction=admin.admin_ui.index','admin');
 	}
 }
