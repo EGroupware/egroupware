@@ -1,3 +1,20 @@
+egroupware-docker (20.1.20201217) hardy; urgency=low
+
+  * Status/Videoconference: add support for BigBlueButton videoconferencing, it can be configured via Status app's site-configuration
+  * Collabora: support Collabora Online 6.4
+  * Admin/EMail: display administrative IMAP actions folder ACL and vacation notice in IMAP tab too
+  * Mail: Config setting for how many mailing lists are returned in address search results
+  * Setup: fix no accounts found for SQL instances
+  * Calendar: Fix missing / incorrect recurrence date in cancel notification iCal
+  * Calendar: Show correct event date when notified of a single cancelled recurring event
+  * Calendar: Fix quick add 'Save' button would close the whole window, if it had been opened by a different window
+  * Calendar: Fix todo sizing / scrolling
+  * Addressbook: fix 'undefined' title shown for some contact links opened in CRM view tabs
+  * SmallPART: CSV export of comments for course-owner and students own comments and recording time of comments
+  * SmallPART: fixed not playing uploaded vidoes through egroupware-docker package update (container is not enough!)
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 17 Dec 2020 08:47:29 +0100
+
 egroupware-docker (20.1.20201202) hardy; urgency=low
 
   * API: call async-services via HTTP to fix diverse caching problems
