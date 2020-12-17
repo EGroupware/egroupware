@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
 <overlay>
 	<template id="admin.mailaccount.identity" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -55,13 +54,9 @@
 			<rows>
 				<row class="emailadmin_no_single">
 					<description for="acc_imap_logintype" value="Type"/>
-					<menulist>
-						<menupopup id="acc_imap_type"/>
-					</menulist>
+					<select id="acc_imap_type"/>
 					<description for="acc_imap_logintype" value="Login" class="emailadmin_no_single"/>
-					<menulist>
-						<menupopup class="emailadmin_no_single" statustext="How username get constructed" id="acc_imap_logintype"/>
-					</menulist>
+					<select class="emailadmin_no_single" statustext="How username get constructed" id="acc_imap_logintype"/>
 				</row>
 				<row class="@manual_class">
 					<description for="acc_imap_username" value="Username"/>
@@ -82,9 +77,7 @@
 				<row>
 					<description for="acc_imap_ssl" value="Secure connection"/>
 					<hbox>
-						<menulist>
-							<menupopup class="emailadmin_ssl" id="acc_imap_ssl" needed="1" onchange="app.admin.wizard_imap_ssl_onchange"/>
-						</menulist>
+						<select class="emailadmin_ssl" id="acc_imap_ssl" needed="1" onchange="app.admin.wizard_imap_ssl_onchange"/>
 						<textbox type="integer" label="Port" id="acc_imap_port" needed="1" class="emailadmin_port"/>
 					</hbox>
 					<description/>
@@ -93,7 +86,7 @@
 				<row class="emailadmin_no_single">
 					<groupbox span="all" class="emailadmin_imap_admin">
 						<caption label="IMAP administration"/>
-						<grid>
+						<grid width="100%">
 							<columns>
 								<column width="100"/>
 								<column/>
@@ -106,6 +99,10 @@
 								<row>
 									<description for="acc_imap_admin_password" value="Password"/>
 									<passwd id="acc_imap_admin_password" size="32" maxlength="128" autocomplete="off"/>
+								</row>
+								<row disabled="!@admin_actions">
+									<description value="Administration"/>
+									<toolbar id="admin_actions" default_execute="app.admin.account_edit_action"/>
 								</row>
 							</rows>
 						</grid>
@@ -175,9 +172,7 @@
 			<rows>
 				<row>
 					<description for="acc_sieve_enabled" value="Enable Sieve"/>
-					<menulist>
-						<menupopup type="select-bool" id="acc_sieve_enabled" needed="1"/>
-					</menulist>
+					<select-bool id="acc_sieve_enabled" needed="1"/>
 				</row>
 				<row class="@manual_class">
 					<description for="acc_sieve_host" value="Sieve server"/>
@@ -186,9 +181,7 @@
 				<row class="@manual_class">
 					<description for="acc_sieve_ssl" value="Secure connection"/>
 					<hbox>
-						<menulist>
-							<menupopup class="emailadmin_ssl" id="acc_sieve_ssl" onchange="app.admin.wizard_sieve_ssl_onchange"/>
-						</menulist>
+						<select class="emailadmin_ssl" id="acc_sieve_ssl" onchange="app.admin.wizard_sieve_ssl_onchange"/>
 						<textbox type="integer" label="Port" id="acc_sieve_port" onchange="app.admin.wizard_sieve_onchange" class="emailadmin_port"/>
 					</hbox>
 				</row>
@@ -209,9 +202,7 @@
 			<rows>
 				<row class="emailadmin_no_single">
 					<description for="acc_smtp_type" value="Type"/>
-					<menulist>
-						<menupopup id="acc_smtp_type" onchange="1"/>
-					</menulist>
+					<select id="acc_smtp_type" onchange="1"/>
 				</row>
 				<row class="emailadmin_no_single">
 					<description for="acc_smtp_auth_session" value="Authentication"/>
@@ -235,9 +226,7 @@
 				<row class="@manual_class">
 					<description for="acc_smtp_ssl" value="Secure connection"/>
 					<hbox>
-						<menulist>
-							<menupopup class="emailadmin_ssl" id="acc_smtp_ssl" needed="1" onchange="app.admin.wizard_smtp_ssl_onchange"/>
-						</menulist>
+						<select class="emailadmin_ssl" id="acc_smtp_ssl" needed="1" onchange="app.admin.wizard_smtp_ssl_onchange"/>
 						<textbox type="integer" label="Port" id="acc_smtp_port" needed="1" class="emailadmin_port"/>
 					</hbox>
 				</row>
@@ -334,9 +323,7 @@
 			<rows>
 				<row disabled="!@accounts" class="dialogHeader">
 					<description for="acc_id" value="Mail account"/>
-					<menulist>
-						<menupopup id="acc_id" onchange="app.admin.change_account" class="et2_fullWidth"/>
-					</menulist>
+					<select id="acc_id" onchange="app.admin.change_account" class="et2_fullWidth"/>
 					<description/>
 				</row>
 				<row class="dialogHeader">
