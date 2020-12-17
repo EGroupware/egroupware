@@ -453,7 +453,7 @@ app.classes.mail = AppJS.extend(
 			if (pushData.acl.folder.match(/^(INBOX.)?(Trash|Spam|Junk|Drafts|Sent)$/)) return;
 			// increment notification counter on (closed) mail tab
 			let framework = egw_getFramework();
-			if (framework) framework.notifyAppTab('mail');
+			if (framework && framework.notifyAppTab) framework.notifyAppTab('mail');
 			// check if user wants a new mail notification
 			this.notifyNew(pushData);
 		}
