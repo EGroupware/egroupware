@@ -979,3 +979,6 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 #mail-compose .tox.tox-tinymce .tox-tbtn--bespoke .tox-tbtn__select-label {
 	width: 3em;
 }
+#calendar-meeting table.et2_grid.meetingRequest td {
+	padding-left: 8px !important;
+}
