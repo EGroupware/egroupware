@@ -169,6 +169,9 @@ div.calendar_conflicts {
 #calendar-toolbar {
 	height: 30px;
 }
+#calendar-toolbar button#toolbar-add {
+	margin-right: -3px;
+}
 #calendar-toolbar .egw_fw_ui_app_header_container {
 	border: none;
 	display:flex;

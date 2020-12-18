@@ -188,6 +188,9 @@ div.calendar_conflicts {
 #calendar-toolbar {
   height: 30px;
 }
+#calendar-toolbar button#toolbar-add {
+  margin-right: -3px;
+}
 #calendar-toolbar .egw_fw_ui_app_header_container {
   border: none;
   display: flex;
@@ -208,6 +211,8 @@ div.calendar_conflicts {
   width: 30%;
   margin-top: 0px;
   z-index: 10;
+  bottom: -10px;
+  height: calc(100% - 75px);
 }
 #calendar-view {
   width: 100%;
