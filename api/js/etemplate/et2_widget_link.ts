@@ -14,17 +14,22 @@
 	/vendor/bower-asset/jquery-ui/jquery-ui.js;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
+	et2_widget_selectbox;
+	expose;
 
 	// Include menu system for list context menu
 	egw_action.egw_menu_dhtmlx;
 */
 
-import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_selectbox} from "./et2_widget_selectbox";
 import {et2_button} from "./et2_widget_button";
+import {et2_dialog} from "./et2_widget_dialog";
+import {et2_file} from "./et2_widget_file";
+import {et2_vfsSelect} from "./et2_widget_vfs";
 import {et2_vfs_select} from "./et2_widget_vfs";
 
 /**
@@ -594,11 +599,11 @@ export class et2_link_entry extends et2_inputWidget
 
 	private cache: any = {};
 
-	private div: JQuery;
-	private app_select: JQuery;
-	private search: JQuery;
-	private clear: JQuery;
-	private link_button: JQuery;
+	protected div: JQuery;
+	protected app_select: JQuery;
+	protected search: JQuery;
+	protected clear: JQuery;
+	protected link_button: JQuery;
 	private response: any;
 	private request: any;
 	private last_search: string;
@@ -1923,6 +1928,33 @@ export class et2_link_list extends et2_link_string
 				id: self.value.to_id
 			});
 		});
+
+		// Only allow this option if the entry has been saved, and has a real ID
+		if (self.options.value && self.options.value.to_id && typeof self.options.value.to_id != 'object')
+		{
+			this.context.addItem("copy_to", this.egw().lang("Copy to"), this.egw().image('copy'), function (menu_item)
+			{
+				// Highlight files for nice UI indicating what will be copied
+				jQuery('[id="link_' + self.context.data.link_id+']', this.list).effect('highlight', {}, 2000);
+
+				// Get target
+				var select_attrs: any = {
+					mode: "select-dir",
+					button_caption: '',
+					button_icon: 'copy',
+					button_label: egw.lang("copy"),
+					//extra_buttons: [{text: egw.lang("link"),	id:"link", image: "link"}],
+					dialog_title: egw.lang('Copy to'),
+					method: "EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_copy_to",
+					method_id: self.context.data
+				};
+				let vfs_select = <et2_vfsSelect> et2_createWidget("vfs-select", select_attrs, self);
+
+				// No button, just open it
+				vfs_select.button.hide();
+				vfs_select.click(null);
+			});
+		}
 		this.context.addItem("-", "-");
 		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), function(menu_item)
 		{

@@ -1413,13 +1413,13 @@ export class et2_vfsSelect extends et2_inputWidget
 				self.value = files;
 				if (self.options.method && self.options.method !== 'download')
 				{
-					egw(window).json(
+					egw(window).request(
 						self.options.method,
-						[self.options.method_id, files, submit_button_id, savemode],
-						function(){
+						[self.options.method_id, files, submit_button_id, savemode]
+					).then(function(data){
 							jQuery(self.node).change();
 						}
-					).sendRequest(true);
+					);
 				}
 				else
 				{

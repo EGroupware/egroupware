@@ -286,6 +286,23 @@ class Link extends Etemplate\Widget
 		}
 	}
 
+	/**
+	 * Copy a linked file to somewhere else in the VFS
+	 *
+	 * @param $file Array of file information
+	 * @param $target Target path
+	 * @param $button_id
+	 */
+	public static function ajax_copy_to($file_info, $target, $button_id)
+	{
+		$error_count = 0;
+		$copied = array();
+		Api\Vfs::copy_files([Api\Link::vfs_path($file_info['app2'], $file_info['id2'], $file_info['id'], true)], $target,$error_count,$copied);
+
+		$response = Api\Json\Response::get();
+		$response->message(lang('%1 files copied',count($copied)));
+	}
+
 	public static function ajax_delete($value)
 	{
 		$response = Api\Json\Response::get();

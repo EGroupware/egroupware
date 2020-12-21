@@ -1156,9 +1156,9 @@ var et2_vfsSelect = /** @class */ (function (_super) {
                 et2_vfsSelect._setRecentPaths(submit_value.path);
                 self.value = files;
                 if (self.options.method && self.options.method !== 'download') {
-                    egw(window).json(self.options.method, [self.options.method_id, files, submit_button_id, savemode], function () {
+                    egw(window).request(self.options.method, [self.options.method_id, files, submit_button_id, savemode]).then(function (data) {
                         jQuery(self.node).change();
-                    }).sendRequest(true);
+                    });
                 }
                 else {
                     jQuery(self.node).change();
