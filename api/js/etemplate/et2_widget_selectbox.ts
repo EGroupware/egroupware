@@ -289,6 +289,20 @@ export class et2_selectbox extends et2_inputWidget
 	}
 
 	/**
+	 * Overridden from parent to make sure tooltip handler is bound to the correct element
+	 * if tags is on.
+	 */
+	getTooltipElement(): HTMLElement
+	{
+		if(this.input && (this.options.tags || this.options.search))
+		{
+			return <HTMLElement><unknown>  jQuery(this.input.siblings()).get(0);
+		}
+		return this.getDOMNode(this);
+	}
+
+
+	/**
 	 * Add an option to regular drop-down select
 	 *
 	 * @param {string} _value value attribute of option
@@ -834,6 +848,10 @@ export class et2_selectbox extends et2_inputWidget
 					jQuery(v).addClass(self.options.value_class+v.value);
 				});
 			}
+			this.input.on('liszt:ready', function(evt, params) {
+				debugger;
+		        this.set_statustext(this.statustext);
+		    }.bind(this));
 			this.input.chosen({
 				inherit_select_classes: true,
 				search_contains: true,
@@ -868,7 +886,6 @@ export class et2_selectbox extends et2_inputWidget
 					self.change.call(self, self.input, self, _change);
 				});
 			}
-
 			// multi selection with limited show line of single row
 			if (this.options.multiple && this.options.rows == 1 && this.options.height)
 			{

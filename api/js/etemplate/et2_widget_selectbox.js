@@ -24,7 +24,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_menulist = exports.et2_selectbox_ro = exports.et2_selectbox = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     /api/js/jquery/chosen/chosen.jquery.js;
@@ -184,6 +183,16 @@ var et2_selectbox = /** @class */ (function (_super) {
                 break;
         }
         return valid;
+    };
+    /**
+     * Overridden from parent to make sure tooltip handler is bound to the correct element
+     * if tags is on.
+     */
+    et2_selectbox.prototype.getTooltipElement = function () {
+        if (this.input && (this.options.tags || this.options.search)) {
+            return jQuery(this.input.siblings()).get(0);
+        }
+        return this.getDOMNode(this);
     };
     /**
      * Add an option to regular drop-down select
@@ -617,6 +626,10 @@ var et2_selectbox = /** @class */ (function (_super) {
                     jQuery(v).addClass(self.options.value_class + v.value);
                 });
             }
+            this.input.on('liszt:ready', function (evt, params) {
+                debugger;
+                this.set_statustext(this.statustext);
+            }.bind(this));
             this.input.chosen({
                 inherit_select_classes: true,
                 search_contains: true,
