@@ -40,6 +40,7 @@ var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
 var et2_widget_selectbox_1 = require("./et2_widget_selectbox");
+var et2_widget_dialog_1 = require("./et2_widget_dialog");
 /**
  * UI widgets for Egroupware linking system
  */
@@ -133,7 +134,7 @@ var et2_link_to = /** @class */ (function (_super) {
             select: function () { self.link_button.show(); return true; },
             readonly: this.options.readonly
         };
-        this.link_entry = et2_createWidget("link-entry", link_entry_attrs, this);
+        this.link_entry = et2_core_widget_1.et2_createWidget("link-entry", link_entry_attrs, this);
         // Filemanager select
         var select_attrs = {
             button_label: egw.lang('Link'),
@@ -171,7 +172,7 @@ var et2_link_to = /** @class */ (function (_super) {
             select_attrs.method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
             select_attrs.method_id = self.options.value.to_app + ':' + self.options.value.to_id;
         }
-        this.vfs_select = et2_createWidget("vfs-select", select_attrs, this);
+        this.vfs_select = et2_core_widget_1.et2_createWidget("vfs-select", select_attrs, this);
         this.vfs_select.set_readonly(this.options.readonly);
         // File upload
         var file_attrs = {
@@ -200,7 +201,7 @@ var et2_link_to = /** @class */ (function (_super) {
                 self.createLink(event);
             }
         };
-        this.file_upload = et2_createWidget("file", file_attrs, this);
+        this.file_upload = et2_core_widget_1.et2_createWidget("file", file_attrs, this);
         this.file_upload.set_readonly(this.options.readonly);
         return true;
     };
@@ -1481,8 +1482,8 @@ var et2_link_list = /** @class */ (function (_super) {
         _this.context = new egwMenu();
         _this.context.addItem("comment", _this.egw().lang("Comment"), "", function () {
             var link_id = typeof self.context.data.link_id == 'number' ? self.context.data.link_id : self.context.data.link_id.replace(/[:\.]/g, '_');
-            et2_dialog.show_prompt(function (button, comment) {
-                if (button != et2_dialog.OK_BUTTON)
+            et2_widget_dialog_1.et2_dialog.show_prompt(function (button, comment) {
+                if (button != et2_widget_dialog_1.et2_dialog.OK_BUTTON)
                     return;
                 var remark = jQuery('#link_' + (self.context.data.dom_id ? self.context.data.dom_id : link_id), self.list).children('.remark');
                 if (isNaN(self.context.data.link_id)) // new entry, not yet stored
@@ -1563,11 +1564,33 @@ var et2_link_list = /** @class */ (function (_super) {
                 id: self.value.to_id
             });
         });
+        // Only allow this option if the entry has been saved, and has a real ID
+        if (self.options.value && self.options.value.to_id && typeof self.options.value.to_id != 'object') {
+            _this.context.addItem("copy_to", _this.egw().lang("Copy to"), _this.egw().image('copy'), function (menu_item) {
+                // Highlight files for nice UI indicating what will be copied
+                jQuery('[id="link_' + self.context.data.link_id + ']', this.list).effect('highlight', {}, 2000);
+                // Get target
+                var select_attrs = {
+                    mode: "select-dir",
+                    button_caption: '',
+                    button_icon: 'copy',
+                    button_label: egw.lang("copy"),
+                    //extra_buttons: [{text: egw.lang("link"),	id:"link", image: "link"}],
+                    dialog_title: egw.lang('Copy to'),
+                    method: "EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_copy_to",
+                    method_id: self.context.data
+                };
+                var vfs_select = et2_core_widget_1.et2_createWidget("vfs-select", select_attrs, self);
+                // No button, just open it
+                vfs_select.button.hide();
+                vfs_select.click(null);
+            });
+        }
         _this.context.addItem("-", "-");
         _this.context.addItem("delete", _this.egw().lang("Delete link"), _this.egw().image("delete"), function (menu_item) {
             var link_id = isNaN(self.context.data.link_id) ? self.context.data : self.context.data.link_id;
             var row = jQuery('#link_' + (self.context.data.dom_id ? self.context.data.dom_id : self.context.data.link_id), self.list);
-            et2_dialog.show_dialog(function (button) { if (button == et2_dialog.YES_BUTTON)
+            et2_widget_dialog_1.et2_dialog.show_dialog(function (button) { if (button == et2_widget_dialog_1.et2_dialog.YES_BUTTON)
                 self._delete_link(link_id, row); }, egw.lang('Delete link?'));
         });
         // Native DnD - Doesn't play nice with jQueryUI Sortable
@@ -1639,12 +1662,12 @@ var et2_link_list = /** @class */ (function (_super) {
             .appendTo(row)
             .addClass("icon");
         if (_link_data.icon) {
-            var icon_widget = et2_createWidget("image", {});
+            var icon_widget = et2_core_widget_1.et2_createWidget("image", {});
             var src = '';
             // Creat a mime widget if the link has type
             if (_link_data.type) {
                 // VFS - file
-                var vfs_widget = et2_createWidget('vfs-mime', {});
+                var vfs_widget = et2_core_widget_1.et2_createWidget('vfs-mime', {});
                 vfs_widget.set_value({
                     download_url: _link_data.download_url,
                     name: _link_data.title,
@@ -1719,8 +1742,8 @@ var et2_link_list = /** @class */ (function (_super) {
                 // We don't use ui-icon because it assigns a bg image
                 .addClass("delete icon")
                 .bind('click', function () {
-                et2_dialog.show_dialog(function (button) {
-                    if (button == et2_dialog.YES_BUTTON) {
+                et2_widget_dialog_1.et2_dialog.show_dialog(function (button) {
+                    if (button == et2_widget_dialog_1.et2_dialog.YES_BUTTON) {
                         self._delete_link(self.value && typeof self.value.to_id != 'object' && _link_data.link_id ? _link_data.link_id : _link_data, row);
                     }
                 }, egw.lang('Delete link?'));
@@ -1925,13 +1948,13 @@ var et2_link_add = /** @class */ (function (_super) {
             // Already done
             return false;
         }
-        this.app_select = et2_createWidget("link-apps", jQuery.extend({}, this.options, {
+        this.app_select = et2_core_widget_1.et2_createWidget("link-apps", jQuery.extend({}, this.options, {
             'id': this.options.id + 'app',
             value: this.options.application ? this.options.application : this.options.value && this.options.value.add_app ? this.options.value.add_app : null,
             application_list: this.options.application ? this.options.application : null
         }), this);
         this.div.append(this.app_select.getDOMNode());
-        this.button = et2_createWidget("button", { id: this.options.id + "_add", label: this.egw().lang("add") }, this);
+        this.button = et2_core_widget_1.et2_createWidget("button", { id: this.options.id + "_add", label: this.egw().lang("add") }, this);
         this.button.set_label(this.egw().lang("add"));
         var self = this;
         this.button.click = function () {

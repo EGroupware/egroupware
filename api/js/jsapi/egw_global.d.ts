@@ -790,7 +790,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 *
 	 * @return Promise
 	 */
-	request(s: string, param2: any[]): Promise<any>;
+	request(_menuaction: string, param2: any[]): Promise<any>;
 	
 	/**
 	 * Registers a new handler plugin.
