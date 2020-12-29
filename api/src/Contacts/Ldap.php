@@ -353,6 +353,11 @@ class Ldap
 		$this->all_attributes = array_values(array_unique($this->all_attributes));
 
 		$this->charset = Api\Translation::charset();
+
+		// add ldap_search_filter from admin
+		$accounts_filter = str_replace(['%user','%domain'], ['*', $GLOBALS['egw_info']['user']['domain']],
+			$this->ldap_config['ldap_search_filter'] ?: '(uid=%u)');
+		$this->accountsFilter = "(&$this->accountsFilter$accounts_filter)";
 	}
 
 	/**
