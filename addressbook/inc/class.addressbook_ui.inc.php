@@ -2108,7 +2108,11 @@ class addressbook_ui extends addressbook_bo
 			$rows['no_event_column'] = true;
 		}
 
-		$rows['order'] = $order;
+		// If we've changed the sort order on them, update the display
+		if($order !== $query['order'] )
+		{
+			$rows['order'] = $order;
+		}
 		$rows['call_popup'] = $this->config['call_popup'];
 		$rows['customfields'] = array_values($this->customfields);
 
