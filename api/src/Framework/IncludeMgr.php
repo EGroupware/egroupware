@@ -32,7 +32,9 @@ namespace EGroupware\Api\Framework;
  *    	stylite.filemanager.filemanager; // Loads /stylite/filemanager/filemanager.js
  * 3) Absolute file paths starting with "/". Example:
  *    	/api/js/jquery/jquery-ui.js;
-*
+ * 4) Absolute path with "*"-wildcard
+ *    	/myapp/js/plugins/*.js;
+ *
  * Comments can be started with "//".
  *
  * Complete example of such an uses-clause:
@@ -89,7 +91,6 @@ class IncludeMgr
 		$f = fopen(EGW_SERVER_ROOT.$file, "r");
 		if ($f !== false)
 		{
-
 			// Only read a maximum of 32 lines until the comment occurs.
 			$cnt = 0;
 			$in_uses = false;
@@ -204,7 +205,15 @@ class IncludeMgr
 			{
 				if ($entry[0][0] == "/")
 				{
-					$uses_path = $this->translate_params($entry[0], null, '');
+					if (!($uses_path = $this->translate_params($entry[0], null, '')) &&
+						strpos($entry[0], '*') !== false)
+					{
+						$start = strlen(EGW_SERVER_ROOT);
+						foreach(glob(EGW_SERVER_ROOT.$entry[0]) as $file)
+						{
+							$this->parse_deps(substr($file, $start), $module);
+						}
+					}
 				}
 				else
 				{
