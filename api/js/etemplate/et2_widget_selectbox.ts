@@ -849,7 +849,6 @@ export class et2_selectbox extends et2_inputWidget
 				});
 			}
 			this.input.on('liszt:ready', function(evt, params) {
-				debugger;
 		        this.set_statustext(this.statustext);
 		    }.bind(this));
 			this.input.chosen({

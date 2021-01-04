@@ -178,6 +178,8 @@ var et2_arrayMgr = /** @class */ (function () {
         }
         // Parse the given key by removing the "]"-chars and splitting at "["
         var indexes = this.explodeKey(_key);
+        if (indexes.length == 0 && _skipEmpty)
+            return null;
         var entry = this.data;
         for (var i = 0; i < indexes.length; i++) {
             // Abort if the current entry is not an object (associative array) and

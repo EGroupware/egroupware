@@ -627,7 +627,6 @@ var et2_selectbox = /** @class */ (function (_super) {
                 });
             }
             this.input.on('liszt:ready', function (evt, params) {
-                debugger;
                 this.set_statustext(this.statustext);
             }.bind(this));
             this.input.chosen({

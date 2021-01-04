@@ -190,6 +190,7 @@ export class et2_arrayMgr
 
 		// Parse the given key by removing the "]"-chars and splitting at "["
 		const indexes = this.explodeKey(_key);
+		if(indexes.length == 0 && _skipEmpty) return null;
 
 		let entry = this.data;
 		for (let i = 0; i < indexes.length; i++) {
