@@ -519,7 +519,7 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
                     nm.getParent().getArrayMgr('sel_options').data[id] = _response.rows.sel_options[id];
                 }
             }
-            else if (i === "order") {
+            else if (i === "order" && _response.rows[i] !== nm.activeFilters.order) {
                 nm.sortBy(_response.rows[i], undefined, false);
             }
             else {

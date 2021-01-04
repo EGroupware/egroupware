@@ -636,7 +636,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 					nm.getParent().getArrayMgr('sel_options').data[id] = _response.rows.sel_options[id];
 				}
 			}
-			else if (i === "order")
+			else if (i === "order" && _response.rows[i] !== nm.activeFilters.order)
 			{
 				nm.sortBy(_response.rows[i], undefined, false);
 			}
