@@ -683,13 +683,22 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			$avatar = new Api\Contacts\Photo("account:$user",
 					// disable sharing links currently, as sharing links from a different EGroupware user destroy the session
 					true);
-			$link = EGroupware\Status\Videoconference\Call::genMeetingUrl($event['##videoconference'], [
+
+			// wrap in try and catch in case videoconference throws exceptions. e.g. BBB server exceptions
+			try {
+				$link = EGroupware\Status\Videoconference\Call::genMeetingUrl($event['##videoconference'], [
 					'name' => Api\Accounts::username($user),
 					'email' => Api\Accounts::id2name($user, 'account_email'),
 					'avatar' => (string)$avatar,
 					'account_id' => $user,
 					'cal_id' => $event['id']
-			], [], $event['start_date'], $event['end_date']);
+				], [], $event['start_date'], $event['end_date']);
+			}catch (Exception $e)
+			{
+				//error_log(__METHOD__.'()'.$e->getMessage());
+				// do nothing
+			}
+
 			$event['description'] = lang('Videoconference').":\n$link\n\n".$event['description'];
 		}
 
