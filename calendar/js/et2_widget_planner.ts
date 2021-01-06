@@ -607,7 +607,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				var start = new Date(event.start);
 				start = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
 				var key = sprintf('%04d-%02d', start.getFullYear(), start.getMonth());
-				var label_index = false;
+				var label_index : number|boolean = false;
 				for(var i = 0; i < labels.length; i++)
 				{
 					if(labels[i].id == key)
@@ -616,11 +616,14 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 						break;
 					}
 				}
-				if(typeof rows[label_index] === 'undefined')
+				if(label_index)
 				{
-					rows[label_index] = [];
+					if(typeof rows[label_index] === 'undefined')
+					{
+						rows[label_index] = [];
+					}
+					rows[label_index].push(event);
 				}
-				rows[label_index].push(event);
 
 				// end in a different month?
 				var end = new Date(event.end);
@@ -632,9 +635,9 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 
 				do
 				{
-					var end_label_index = label_index;
+					var end_label_index = typeof label_index == "boolean" ? 0 : label_index;
 
-					for(var i = end_label_index; i < labels.length; i++)
+					for(let i = end_label_index; i < labels.length; i++)
 					{
 						if(labels[i].id == key)
 						{
@@ -648,7 +651,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					}
 					if(end_label_index != label_index)
 					{
-						rows[label_index].push(event);
+						rows[end_label_index].push(event);
 					}
 					if (++month > 11)
 					{
