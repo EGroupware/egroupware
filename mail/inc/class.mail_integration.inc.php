@@ -149,7 +149,7 @@ class mail_integration {
 			$sessionLocation = 'mail';
 			$mailbox = base64_decode($_GET['mailbox']);
 
-			if (!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')&&is_array($_attachments))
+			if (!(in_array($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions'],['text_only','no_attachments']))&&is_array($_attachments))
 			{
 				// initialize mail open connection requirements
 				if (!isset($_icServerID)) $_icServerID =& Api\Cache::getSession($sessionLocation,'activeProfileID');
@@ -236,7 +236,7 @@ class mail_integration {
 			}
 			// this one adds the mail itself (as message/rfc822 (.eml) file) to the app as additional attachment
 			// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
-			if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw' &&
+			if (in_array($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions'],['add_raw','no_attachments']) &&
 				$_rawMail && file_exists($_rawMail))
 			{
 				$subject = Mail::clean_subject_for_filename($_subject);
@@ -295,10 +295,10 @@ class mail_integration {
 				$mo->openConnection();
 				$mo->reopen($mailbox);
 				try {
-					$mailcontent = Mail::get_mailcontent($mo,$uid,'',$mailbox,null,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
+					$mailcontent = Mail::get_mailcontent($mo,$uid,'',$mailbox,null,true,(!(in_array($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions'],['text_only','no_attachments']))));
 					// this one adds the mail itself (as message/rfc822 (.eml) file) to the app as additional attachment
 					// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
-					if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
+					if (in_array($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions'],['add_raw','no_attachments']))
 					{
 						$message = $mo->getMessageRawBody($uid, '',$mailbox);
 						$headers = $mo->getMessageHeader($uid, '',true,false,$mailbox);
