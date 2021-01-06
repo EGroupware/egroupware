@@ -126,6 +126,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_core_valueWidget.js",
 						"api/js/etemplate/et2_core_inputWidget.js",
 						"api/js/etemplate/et2_widget_color.js",
+						"api/js/etemplate/et2_widget_countdown.js",
 						"api/js/jquery/blueimp/js/blueimp-gallery.min.js",
 						"api/js/etemplate/expose.js",
 						"api/js/etemplate/et2_widget_description.js",
