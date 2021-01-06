@@ -224,6 +224,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			resize: false,
 			height: this.options.height,
 			width: this.options.width,
+			end_container_on_empty_block: true,
 			mobile: {
 				theme: 'silver'
 			},

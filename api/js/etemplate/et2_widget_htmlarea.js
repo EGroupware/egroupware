@@ -93,6 +93,7 @@ var et2_htmlarea = /** @class */ (function (_super) {
             resize: false,
             height: this.options.height,
             width: this.options.width,
+            end_container_on_empty_block: true,
             mobile: {
                 theme: 'silver'
             },
