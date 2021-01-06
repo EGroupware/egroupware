@@ -272,10 +272,12 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                             break;
                         }
                     }
-                    if (typeof rows[label_index] === 'undefined') {
-                        rows[label_index] = [];
+                    if (label_index) {
+                        if (typeof rows[label_index] === 'undefined') {
+                            rows[label_index] = [];
+                        }
+                        rows[label_index].push(event);
                     }
-                    rows[label_index].push(event);
                     // end in a different month?
                     var end = new Date(event.end);
                     end = new Date(end.valueOf() + end.getTimezoneOffset() * 60 * 1000);
@@ -284,10 +286,10 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                     var month = start.getMonth();
                     key = sprintf('%04d-%02d', year, month);
                     do {
-                        var end_label_index = label_index;
-                        for (var i = end_label_index; i < labels.length; i++) {
-                            if (labels[i].id == key) {
-                                end_label_index = i;
+                        var end_label_index = typeof label_index == "boolean" ? 0 : label_index;
+                        for (var i_1 = end_label_index; i_1 < labels.length; i_1++) {
+                            if (labels[i_1].id == key) {
+                                end_label_index = i_1;
                                 if (typeof rows[end_label_index] === 'undefined') {
                                     rows[end_label_index] = [];
                                 }
@@ -295,7 +297,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                             }
                         }
                         if (end_label_index != label_index) {
-                            rows[label_index].push(event);
+                            rows[end_label_index].push(event);
                         }
                         if (++month > 11) {
                             ++year;
