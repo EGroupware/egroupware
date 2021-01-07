@@ -338,6 +338,7 @@ var et2_htmlarea = /** @class */ (function (_super) {
      * @param {type} _height excess height which comes from window resize
      */
     et2_htmlarea.prototype.resize = function (_height) {
+        var _a, _b;
         if (_height && this.options.resize_ratio !== '0') {
             // apply the ratio
             _height = (this.options.resize_ratio != '') ? _height * this.options.resize_ratio : _height;
@@ -354,8 +355,7 @@ var et2_htmlarea = /** @class */ (function (_super) {
                         h = this.editor.settings.min_height + _height;
                     }
                     jQuery(this.editor.editorContainer).height(h);
-                    jQuery(this.editor.iframeElement).height(h - (this.editor.editorContainer.getElementsByClassName('tox-toolbar')[0].clientHeight +
-                        this.editor.editorContainer.getElementsByClassName('tox-statusbar')[0].clientHeight));
+                    jQuery(this.editor.iframeElement).height(h - (((_a = this.editor.editorContainer.getElementsByClassName('tox-editor-header')[0]) === null || _a === void 0 ? void 0 : _a.clientHeight) + ((_b = this.editor.editorContainer.getElementsByClassName('tox-statusbar')[0]) === null || _b === void 0 ? void 0 : _b.clientHeight)));
                 }
                 else // No TinyMCE
                  {

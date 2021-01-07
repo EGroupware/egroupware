@@ -531,8 +531,8 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 						h = this.editor.settings.min_height + _height;
 					}
 					jQuery(this.editor.editorContainer).height(h);
-					jQuery(this.editor.iframeElement).height(h - (this.editor.editorContainer.getElementsByClassName('tox-toolbar')[0].clientHeight +
-						this.editor.editorContainer.getElementsByClassName('tox-statusbar')[0].clientHeight));
+					jQuery(this.editor.iframeElement).height(h - (this.editor.editorContainer.getElementsByClassName('tox-editor-header')[0]?.clientHeight +
+						this.editor.editorContainer.getElementsByClassName('tox-statusbar')[0]?.clientHeight));
 				}
 				else // No TinyMCE
 				{
