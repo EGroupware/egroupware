@@ -202,7 +202,19 @@ class admin_hooks
 			'caption' => 'Clear credentials',
 			'icon' => 'password',
 			'onExecute' => 'javaScript:app.admin.clear_credentials_handler',
-			'confirm' => 'Clear credentials'
+			'confirm' => 'Clear credentials',
+			'children' => array (
+				'clear_2fa' => array (
+					'caption'		  => 'Clear security tokens',
+					'icon'			  => 'password',
+					'allowOnMultiple' => true
+				),
+				'clear_mail' => array (
+					'caption'		  => 'Clear mail credentials',
+					'icon'			  => 'mail',
+					'allowOnMultiple' => true
+				)
+			)
 		);
 
 		if (!$GLOBALS['egw']->acl->check('current_sessions',1,'admin'))	// no rights to view
