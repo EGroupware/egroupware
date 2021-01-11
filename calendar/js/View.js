@@ -335,11 +335,12 @@ var planner = /** @class */ (function (_super_1) {
         return (check.indexOf(egw.preference('planner_show_empty_rows', 'calendar') + '') === -1);
     };
     planner.scroll = function (delta) {
-        if (app.calendar.state.planner_view) {
+        if (app.calendar.state.planner_view && !isNaN(delta) && app.calendar.state.sortby !== "month") {
             return app.classes.calendar.views[app.calendar.state.planner_view].scroll(delta);
         }
         var d = new Date(app.calendar.state.date);
         var days = 1;
+        delta = parseInt(delta) || 0;
         // Yearly view, grouped by month - scroll 1 month
         if (app.calendar.state.sortby === 'month') {
             d.setUTCMonth(d.getUTCMonth() + delta);
@@ -351,6 +352,7 @@ var planner = /** @class */ (function (_super_1) {
         // Need to set the day count, or auto date ranging takes over and
         // makes things buggy
         if (app.calendar.state.first && app.calendar.state.last) {
+            //@ts-ignore
             var diff = new Date(app.calendar.state.last) - new Date(app.calendar.state.first);
             days = Math.round(diff / (1000 * 3600 * 24));
         }
