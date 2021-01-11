@@ -4429,7 +4429,9 @@ class CalendarApp extends EgwApp
 					email:egw.user('account_email'),
 					cal_id:_data.id,
 					title: _data.title
-				}, _data.start, _data.end], function(_value){
+				}, _data.start, _data.end, {
+					participants:Object.keys(_data.participants).filter(v => {return v.match(/^[0-9]/)})
+				}], function(_value){
 					if (_value)
 					{
 						if (_value.err) egw.message(_value.err, 'error');
