@@ -25,6 +25,7 @@ add all my aliases	mail	de	Alle Alias-Adressen hinzufügen
 add as new	mail	de	Neues Ticket erstellen
 add files as %1	mail	de	Dateien hinzufügen als %1
 add folder	mail	de	Ordner hinzufügen
+add raw message, ignore mail attachments	mail	de	Konvertiere E-Mail zum Eintrag und füge die original E-Mail an (aber keine Anhänge).
 add this certificate into contact	mail	de	Dieses Zertifikat dem Kontakt hinzufügen
 add to addressbook	mail	de	zum Adressbuch hinzufügen
 add your domain as "%1" in options to list of email providers and enable api.	mail	de	Fügen Sie Ihre Domain als "%1" in Optionen zu der Liste der E-Mail-Anbieter hinzu und schalten sie API ein.
