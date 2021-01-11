@@ -692,7 +692,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					'avatar' => (string)$avatar,
 					'account_id' => $user,
 					'cal_id' => $event['id']
-				], [], $event['start_date'], $event['end_date']);
+				], ['participants' =>array_filter($event['participants'], function($key){return is_numeric($key);}, ARRAY_FILTER_USE_KEY)], $event['start_date'], $event['end_date']);
 			}catch (Exception $e)
 			{
 				//error_log(__METHOD__.'()'.$e->getMessage());

@@ -1098,8 +1098,8 @@ class calendar_boupdate extends calendar_bo
 						'email' => is_numeric($userid) ? Api\Accounts::id2name($userid, 'account_email') : $userid,
 						'avatar' => (string)$avatar,
 						'account_id' => $userid,
-						'cal_id' => $details['id']
-					], [], $startdate, $enddate);
+							'cal_id' => $details['id']
+					], ['participants' =>array_filter($event['participants'], function($key){return is_numeric($key);}, ARRAY_FILTER_USE_KEY)], $startdate, $enddate);
 					$event_arr['videoconference'] = [
 						'field' => lang('Video Conference'),
 						'data'  => $details['videoconference'],
