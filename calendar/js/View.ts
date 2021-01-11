@@ -380,12 +380,13 @@ export class planner extends View
 
 	static scroll(delta)
 	{
-		if(app.calendar.state.planner_view)
+		if(app.calendar.state.planner_view && !isNaN(delta) && app.calendar.state.sortby !== "month")
 		{
 			return app.classes.calendar.views[app.calendar.state.planner_view].scroll(delta);
 		}
-		var d = new Date(app.calendar.state.date);
-		var days = 1;
+		let d = new Date(app.calendar.state.date);
+		let days = 1;
+		delta = parseInt(delta) || 0;
 
 		// Yearly view, grouped by month - scroll 1 month
 		if(app.calendar.state.sortby === 'month')
@@ -400,7 +401,8 @@ export class planner extends View
 		// makes things buggy
 		if(app.calendar.state.first && app.calendar.state.last)
 		{
-			var diff = new Date(app.calendar.state.last) - new Date(app.calendar.state.first);
+			//@ts-ignore
+			let diff = new Date(app.calendar.state.last) - new Date(app.calendar.state.first);
 			days = Math.round(diff / (1000 * 3600 * 24));
 		}
 		d.setUTCDate(d.getUTCDate() + (days * delta));
