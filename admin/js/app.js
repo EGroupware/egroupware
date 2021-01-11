@@ -1150,12 +1150,11 @@ var AdminApp = /** @class */ (function (_super) {
      */
     AdminApp.prototype.clear_credentials_handler = function (action, selected) {
         var ids = [];
-        debugger;
         for (var _i = 0, selected_1 = selected; _i < selected_1.length; _i++) {
             var row = selected_1[_i];
             ids.push(row.id.split("::").pop());
         }
-        this.egw.request("admin.admin_passwordreset.ajax_clear_credentials", [ids]);
+        this.egw.request("admin.admin_passwordreset.ajax_clear_credentials", [action.id, ids]);
     };
     /**
      * Export content of given field into relevant file

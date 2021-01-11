@@ -14,6 +14,9 @@ include_once(EGW_INCLUDE_ROOT.'/setup/inc/hook_config.inc.php');	// functions to
 
 use EGroupware\Api;
 use EGroupware\Api\Framework;
+use EGroupware\Api\Mail\Credentials;
+use EGroupware\OpenID\Repositories\AccessTokenRepository;
+use EGroupware\WebAuthn\PublicKeyCredentialSourceRepository;
 
 /**
  * Reset passwords
@@ -287,19 +290,28 @@ class admin_passwordreset
 		));
 	}
 
-	public function ajax_clear_credentials($account_ids)
+	public function ajax_clear_credentials($action_id, $account_ids)
 	{
 		$msg = [];
 
-		if($count = Api\Mail\Credentials::delete(0,$account_ids))
+		if($action_id == 'clear_mail')
 		{
+			$count = Api\Mail\Credentials::delete(0,$account_ids);
 			$msg[] = lang("%1 mail credentials deleted", $count);
 		}
 
 		$action['action'] = 'delete';
 		$action['selected'] = $account_ids;
+		$hook_data = array();
 
-		$hook_data = Api\Hooks::process(array('location' => 'preferences_security'), ['openid'], true);
+		if($action_id == 'clear_2fa')
+		{
+			if (Credentials::delete(0, $GLOBALS['egw_info']['user']['account_id'], Credentials::TWOFA))
+			{
+				$msg[] = lang('Secret deleted, two factor authentication disabled.');
+			}
+			$hook_data = Api\Hooks::process(array('location' => 'preferences_security'), ['openid'], true);
+		}
 		foreach($hook_data as $extra_tab)
 		{
 			if($extra_tab['delete'])
@@ -308,16 +320,31 @@ class admin_passwordreset
 			}
 			else
 			{
-				// Each credential / security option can have its nm as a different ID
-				$content['tabs'] = $extra_tab['name'];
-				foreach($extra_tab['data'] as $id => $datum)
+				switch ($extra_tab['name'])
 				{
-					if($datum['get_rows'])
-					{
-						$content[$id] = $action;
-					}
+					case 'openid.access_tokens':
+						// We need to get all access tokens, no easy way to delete by account
+						$token_repo = new AccessTokenRepository();
+						$token_repo->revokeAccessToken(['account_id' => $action['selected']]);
+						$count = $GLOBALS['egw']->db->affected_rows();
+						$msg[] = ($count > 1 ? $count.' ' : '') .  lang('Access Token revoked.');
+						break;
+					case 'webauthn.tokens':
+						$token_repo = new PublicKeyCredentialSourceRepository();
+						$count = $token_repo->delete(['account_id' => $action['selected']]);
+						$msg[] = ($count > 1 ? $count.' ' : '') . lang($extra_tab['label']) . ' ' . lang('deleted');
+					default:
+						// Each credential / security option can have its nm as a different ID
+						$content['tabs'] = $extra_tab['name'];
+						foreach($extra_tab['data'] as $id => $datum)
+						{
+							if(is_array($datum) && array_key_exists('get_rows',$datum))
+							{
+								$content[$id] = $action;
+							}
+						}
+					$msg[] = call_user_func_array($extra_tab['save_callback'], [$content]);
 				}
-				$msg[] = call_user_func_array($extra_tab['save_callback'], [$content]);
 			}
 		}
 		Framework::message(implode("\n",$msg), 'success');
