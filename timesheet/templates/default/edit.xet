@@ -105,7 +105,7 @@
 					<date id="ts_start" needed="1" options=",8" class="et2_fullWidth"/>
 					<description/>
 					<description value="Starttime"/>
-					<date-timeonly id="start_time" options="H:i"  class="et2_fullWidth"/>
+					<date-timeonly id="start_time" class="et2_fullWidth"/>
 				</row>
 				<row class="row dialogHeader3">
 					<description value="Duration" for="ts_duration"/>
