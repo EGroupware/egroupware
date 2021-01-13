@@ -475,10 +475,6 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // Make sure we're dealing with arrays
         if (typeof _row_ids == 'string' || typeof _row_ids == 'number')
             _row_ids = [_row_ids];
-        if (!this.div.is(':visible')) // run refresh, once we become visible again
-         {
-            return this._queue_refresh(_row_ids, _type);
-        }
         // Make some changes in what we're doing based on preference
         var update_pref = egw.preference("lazy-update") || 'lazy';
         if (_type == et2_nextmatch.UPDATE && !this.is_sorted_by_modified()) {
@@ -492,6 +488,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
         }
         if (typeof _type == 'undefined')
             _type = et2_nextmatch.EDIT;
+        if (!this.div.is(':visible')) // run refresh, once we become visible again
+         {
+            return this._queue_refresh(_row_ids, _type);
+        }
         if (typeof _row_ids == "undefined" || _row_ids === null) {
             this.applyFilters();
             // Trigger an event so app code can act on it
@@ -697,15 +697,16 @@ var et2_nextmatch = /** @class */ (function (_super) {
         // Maximum number of requests to queue.  50 chosen arbitrarily just to limit things
         var max_queued = 50;
         if (this._queued_refreshes === null) {
-            // Already too many, we'll refresh later
+            // Already too many or an EDIT came, we'll refresh everything later
             return;
         }
         // Cancel any existing listener
         var tab = jQuery(this.getInstanceManager().DOMContainer.parentNode)
             .off('show.et2_nextmatch')
             .one('show.et2_nextmatch', this._queue_refresh_callback.bind(this));
+        // Edit means refresh everything, so no need to keep queueing
         // Too many?  Forget it, we'll refresh everything.
-        if (this._queued_refreshes.length >= max_queued) {
+        if (this._queued_refreshes.length >= max_queued || _type == et2_nextmatch.EDIT || !_type) {
             this._queued_refreshes = null;
             return;
         }

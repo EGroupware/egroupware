@@ -746,11 +746,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Make sure we're dealing with arrays
 		if (typeof _row_ids == 'string' || typeof _row_ids == 'number') _row_ids = [_row_ids];
 
-		if (!this.div.is(':visible'))	// run refresh, once we become visible again
-		{
-			return this._queue_refresh(_row_ids, _type);
-		}
-
 		// Make some changes in what we're doing based on preference
 		let update_pref = egw.preference("lazy-update") || 'lazy';
 		if(_type == et2_nextmatch.UPDATE && !this.is_sorted_by_modified())
@@ -767,6 +762,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 		if (typeof _type == 'undefined') _type = et2_nextmatch.EDIT;
+
+		if (!this.div.is(':visible'))	// run refresh, once we become visible again
+		{
+			return this._queue_refresh(_row_ids, _type);
+		}
+
 		if (typeof _row_ids == "undefined" || _row_ids === null)
 		{
 			this.applyFilters();
@@ -1019,7 +1020,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		if(this._queued_refreshes === null)
 		{
-			// Already too many, we'll refresh later
+			// Already too many or an EDIT came, we'll refresh everything later
 			return;
 		}
 
@@ -1029,8 +1030,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			.one('show.et2_nextmatch', this._queue_refresh_callback.bind(this));
 
 
+		// Edit means refresh everything, so no need to keep queueing
 		// Too many?  Forget it, we'll refresh everything.
-		if(this._queued_refreshes.length >= max_queued)
+		if(this._queued_refreshes.length >= max_queued || _type == et2_nextmatch.EDIT || !_type)
 		{
 			this._queued_refreshes = null;
 			return;
