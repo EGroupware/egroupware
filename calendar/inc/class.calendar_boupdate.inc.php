@@ -947,11 +947,14 @@ class calendar_boupdate extends calendar_bo
 					(isset($to_notify[$user]) ? array($user => $to_notify[$user]) : array());
 			}
 		}
+
+		// Event is passed in user time, make sure that's taken into account for date calculations
 		$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
-		$startdate = new Api\DateTime($event['start']);
-		$enddate = new Api\DateTime($event['end']);
-		$modified = new Api\DateTime($event['modified']);
-		if ($old_event) $olddate = new Api\DateTime($old_event['start']);
+		$startdate = new Api\DateTime($event['start'], new DateTimeZone($user_prefs['common']['tz']));
+		$enddate = new Api\DateTime($event['end'], new DateTimeZone($user_prefs['common']['tz']));
+		$modified = new Api\DateTime($event['modified'], new DateTimeZone($user_prefs['common']['tz']));
+		if ($old_event) $olddate = new Api\DateTime($old_event['start'], new DateTimeZone($user_prefs['common']['tz']));
+
 		//error_log(__METHOD__."() date_default_timezone_get()=".date_default_timezone_get().", user-timezone=".Api\DateTime::$user_timezone->getName().", startdate=".$startdate->format().", enddate=".$enddate->format().", updated=".$modified->format().", olddate=".($olddate ? $olddate->format() : ''));
 		$owner_prefs = $ics = null;
 		foreach($to_notify as $userid => $statusid)
@@ -1078,14 +1081,20 @@ class calendar_boupdate extends calendar_bo
 				}
 				$timeformat = $part_prefs['common']['dateformat'] . ', ' . $timeformat;
 
+				// Set dates:
+				// $details in "preference" format, $cleared_event as DateTime so calendar_ical->exportVCal() gets
+				// the times right, since it assumes a timestamp is in server time
 				$startdate->setTimezone($timezone);
 				$details['startdate'] = $startdate->format($timeformat);
+				$cleared_event['start'] = $startdate;
 
 				$enddate->setTimezone($timezone);
 				$details['enddate'] = $enddate->format($timeformat);
+				$cleared_event['end'] = $enddate;
 
 				$modified->setTimezone($timezone);
 				$details['updated'] = $modified->format($timeformat) . ', ' . Api\Accounts::username($event['modifier']);
+				$cleared_event['updated'] = $modified;
 
 				if ($old_event != False)
 				{
@@ -1131,8 +1140,8 @@ class calendar_boupdate extends calendar_bo
 							$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
 							// we need to pass $event[id] so iCal class reads event again,
 							// as event is in user TZ, but iCal class expects server TZ!
-							$ics = $calendar_ical->exportVCal(array(isset($cleared_event) ? $cleared_event : $event['id']),
-								'2.0', $method, isset($cleared_event) ? $cleared_event['recur_date'] : $event['recur_date'],
+							$ics = $calendar_ical->exportVCal($cleared_event,
+								'2.0', $method, $cleared_event['recur_date'],
 								'', 'utf-8', $method == 'REPLY' ? $user : 0
 							);
 							unset($calendar_ical);
