@@ -194,7 +194,31 @@ export class et2_dialog extends et2_widget {
 			type: "string",
 			description: "Define position of dialog in the main window",
 			default: "center"
-		}
+		},
+	    appendTo: {
+			name: "appendTo",
+			type: "string",
+			description: "Defines the dialog parent context",
+			default: ''
+		},
+	    draggable: {
+		    name: "Draggable",
+		    type: "boolean",
+		    description: "Allow the user to drag the dialog",
+		    default: true
+	    },
+	    closeOnEscape: {
+			name: "close on escape",
+		    type: "boolean",
+		    description: "Allow the user to close the dialog by hiting escape",
+		    default: true
+	    },
+	    dialogClass: {
+		    name: "dialog class",
+		    type: "string",
+		    description: "Add css classed into dialog container",
+		    default: ''
+	    }
 	};
 
     /**
@@ -527,7 +551,11 @@ export class et2_dialog extends et2_widget {
             }, this),
             beforeClose: this.options.beforeClose,
             closeText: this.egw().lang('close'),
-            position: {my: "center", at: "center", of: window}
+            position: {my: "center", at: "center", of: window},
+	        appendTo: this.options.appendTo,
+	        draggable: this.options.draggable,
+	        closeOnEscape: this.options.closeOnEscape,
+	        dialogClass: this.options.dialogClass,
         };
         // Leaving width unset lets it size itself according to contents
         if (this.options.width) {
