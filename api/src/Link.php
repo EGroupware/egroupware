@@ -1125,9 +1125,11 @@ class Link extends Link\Storage
 	 *
 	 * @param string $app app-name
 	 * @param string $name name / key in the registry, eg. 'view'
+	 * @param boolean|array|string|int $url_id format entries like "add", "edit", "view" for actions "url" incl. an ID
+	 *  array to add arbitray parameter eg. ['some_id' => '$id']
 	 * @return boolean|string false if $app is not registered, otherwise string with the value for $name
 	 */
-	static function get_registry($app,$name)
+	static function get_registry($app, $name, $url_id=false)
 	{
 		$reg = self::$app_register[$app];
 
@@ -1155,6 +1157,25 @@ class Link extends Link\Storage
 					}
 					break;
 			}
+		}
+
+		// format as action url
+		if ($url_id && isset($reg[$name]) && is_array($reg[$name]))
+		{
+			$params = $reg[$name];
+			if (isset($reg[$name.'_id']))
+			{
+				$params[$reg[$name.'_id']] = $url_id === true ? '$id' : $url_id;
+			}
+			if (is_array($url_id))
+			{
+				$params += $url_id;
+			}
+			foreach($params as $name => $value)
+			{
+				$str .= (!empty($str) ? '&' : '').$name.'='.$value;
+			}
+			return $str;
 		}
 
 		return isset($reg) ? $reg[$name] : false;
