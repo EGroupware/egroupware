@@ -1,0 +1,45 @@
+List of links from EGroupware sources to www.egroupware.org website
+-------------------------------------------------------------------
+
+Please update this file, if you add (or remove) links, to ease website migration!
+
+www.egroupware.org/currentversion (automatic update check)
+www.egroupware.org/changelog
+www.egroupware.org/usage-statistic --> redirects to community.egroupware.org
+
+www.egroupware.org/videos/tutorials.json (tutorial-videos in sidebox)
+www.egroupware.org/videos/* (diverse videos eg. PGP encryption)
+
+www.egroupware.org/en/contact.html (links from login-page to EN/DE contact form)
+www.egroupware.org/de/kontakt.html
+
+www.egroupware.org/EPL (Infos and Lizenz for EPL version)
+www.egroupware.org/products (VFS versioning in EPL)
+www.egroupware.org/egroupware-support/
+www.egroupware.org/happy-people/partners/
+
+www.egroupware.org/forum --> forum.egroupware.org --> help.egroupware.org
+
+www.egroupware.org/collabora-office/#order (order Collabora licenses / Admin > Apps > Collabora > Site config)
+
+www.egroupware.org/rocketchat/ (Information about Rocket.Chat and it's installation)
+www.egroupware.org/wp-content/uploads/2019/06/Admin-Info.png
+www.egroupware.org/wp-content/uploads/2019/06/Organisation-Info.png
+www.egroupware.org/wp-content/uploads/2019/06/Server-Info.png
+www.egroupware.org/wp-content/uploads/2019/06/Register-Server-Push.png
+www.egroupware.org/wp-content/uploads/2019/06/Setup-Done.png
+www.egroupware.org/wp-content/uploads/2019/06/general-iframe.png
+www.egroupware.org/wp-content/uploads/2019/07/File-Upload.png
+www.egroupware.org/wp-content/uploads/2019/07/OpenID.png
+www.egroupware.org/wp-content/uploads/2019/07/OAuth.png
+www.egroupware.org/wp-content/uploads/2019/07/OAuth2.png
+www.egroupware.org/wp-content/uploads/2019/07/OAuth3.png
+www.egroupware.org/wp-content/uploads/2019/06/Video-Konferenz.png
+www.egroupware.org/wp-content/uploads/2019/06/Account-Settings.png
+www.egroupware.org/wp-content/uploads/2019/06/Create-account.png
+
+www.egroupware.org/start/rss.xml (NewsAdmin RSS feed installed automatic)
+www.egroupware.org/index.php?module=news_admin&cat_id=95,200
+www.egroupware.org/index.php?module=news_admin&cat_id=3,200
+
+www.egroupware.org/smallpart-video-supported-learning-and-teaching/
