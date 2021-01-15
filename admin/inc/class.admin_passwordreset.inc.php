@@ -296,7 +296,7 @@ class admin_passwordreset
 
 		if($action_id == 'clear_mail')
 		{
-			$count = Api\Mail\Credentials::delete(0,$account_ids);
+			$count = Api\Mail\Credentials::delete(0,$account_ids, Credentials::IMAP|Credentials::SMTP|Credentials::SMIME);
 			$msg[] = lang("%1 mail credentials deleted", $count);
 		}
 
@@ -306,7 +306,7 @@ class admin_passwordreset
 
 		if($action_id == 'clear_2fa')
 		{
-			if (Credentials::delete(0, $GLOBALS['egw_info']['user']['account_id'], Credentials::TWOFA))
+			if (Credentials::delete(0, $account_ids, Credentials::TWOFA))
 			{
 				$msg[] = lang('Secret deleted, two factor authentication disabled.');
 			}
@@ -333,6 +333,7 @@ class admin_passwordreset
 						$token_repo = new PublicKeyCredentialSourceRepository();
 						$count = $token_repo->delete(['account_id' => $action['selected']]);
 						$msg[] = ($count > 1 ? $count.' ' : '') . lang($extra_tab['label']) . ' ' . lang('deleted');
+						break;
 					default:
 						// Each credential / security option can have its nm as a different ID
 						$content['tabs'] = $extra_tab['name'];
