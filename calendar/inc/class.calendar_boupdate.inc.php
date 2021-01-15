@@ -247,8 +247,16 @@ class calendar_boupdate extends calendar_bo
 		if ($event['videoconference'] && !empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call')
 			&& !EGroupware\Status\Hooks::isVideoconferenceDisabled() && ($videoconferenceResId = \EGroupware\Status\Hooks::getVideoconferenceResourceId()))
 		{
+			$participant_total = 0;
+			foreach(['u','e','c'] as $p_type)
+			{
+				if(is_array($event['participant_types'][$p_type]))
+				{
+					$participant_total += count($event['participant_types'][$p_type]);
+				}
+			}
 			$event['participant_types']['r'][$videoconferenceResId] =
-			$event['participants']['r'.$videoconferenceResId] = 'A'.(count($event['participant_types']['u']) + count($event['participant_types']['e']) + count($event['participant_types']['c']));
+			$event['participants']['r'.$videoconferenceResId] = 'A'.$participant_total;
 		}
 
 		// check for conflicts only happens !$ignore_conflicts AND if start + end date are given
