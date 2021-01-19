@@ -96,9 +96,10 @@ class Etemplate extends Etemplate\Widget\Template
 	 *	 2 = echo without navbar (eg. for popups)
 	 *	 3 = return eGW independent html site
 	 *	 4 = json response
+	 *	 5 = return Request object
 	 * @param string $ignore_validation if not empty regular expression for validation-errors to ignore
 	 * @param array $changes change made in the last call if looping, only used internaly by process_exec
-	 * @return string html for $output_mode == 1, else nothing
+	 * @return string|Etemplate\Request html for $output_mode == 1, Etemplate\Request for $output_mode == 5, else nothing
 	 */
 	function exec($method,array $content,array $sel_options=null,array $readonlys=null,array $preserv=null,$output_mode=0,$ignore_validation='',array $changes=null)
 	{
@@ -167,6 +168,13 @@ class Etemplate extends Etemplate\Widget\Template
 		if (!$template) throw new Exception\AssertionFailed("Template $this->name not instanciable! Maybe you forgot to rename template id.");
 		$this->children = array($template);
 		$template->run('beforeSendToClient', array('', array('cont'=>$content)));
+
+		if ($output_mode == 5)
+		{
+			$request = self::$request;
+			self::$request = null;
+			return $request;
+		}
 
 		// some apps (eg. InfoLog) set app_header only in get_rows depending on filter settings
 		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
