@@ -954,12 +954,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "e3498a4fa1ba23b60fc0510874a7f831d0e3c356"
+                "reference": "367dcdd474eaa9c77f40440666816c6c9264e48c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/e3498a4fa1ba23b60fc0510874a7f831d0e3c356",
-                "reference": "e3498a4fa1ba23b60fc0510874a7f831d0e3c356",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/367dcdd474eaa9c77f40440666816c6c9264e48c",
+                "reference": "367dcdd474eaa9c77f40440666816c6c9264e48c",
                 "shasum": ""
             },
             "require": {
@@ -986,7 +986,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-10-20T08:44:36+00:00"
+            "time": "2020-12-02T17:55:01+00:00"
         },
         {
             "name": "egroupware/guzzlestream",
@@ -1229,12 +1229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "a7fecb2a4039497bd57c333852c801f682f5eef9"
+                "reference": "8daa734a55cc3bb6d784245a67ab72ebdb09060d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/a7fecb2a4039497bd57c333852c801f682f5eef9",
-                "reference": "a7fecb2a4039497bd57c333852c801f682f5eef9",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/8daa734a55cc3bb6d784245a67ab72ebdb09060d",
+                "reference": "8daa734a55cc3bb6d784245a67ab72ebdb09060d",
                 "shasum": ""
             },
             "require": {
@@ -1262,7 +1262,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-11-19T10:19:35+00:00"
+            "time": "2021-01-18T17:30:06+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -1319,12 +1319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "4dde8da951b587c39c190ff989ec16e1bcf279d8"
+                "reference": "7755524e37c55aa3d296909656a02f44e7cef351"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/4dde8da951b587c39c190ff989ec16e1bcf279d8",
-                "reference": "4dde8da951b587c39c190ff989ec16e1bcf279d8",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/7755524e37c55aa3d296909656a02f44e7cef351",
+                "reference": "7755524e37c55aa3d296909656a02f44e7cef351",
                 "shasum": ""
             },
             "require": {
@@ -1351,7 +1351,7 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-10-26T15:34:56+00:00"
+            "time": "2020-12-17T15:02:38+00:00"
         },
         {
             "name": "egroupware/smallpart",
@@ -1359,12 +1359,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "355d1e862dfd6c64c5e85c95a90376a90c212222"
+                "reference": "4b40445279051f99432eb053bed7f047e3d5823b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/355d1e862dfd6c64c5e85c95a90376a90c212222",
-                "reference": "355d1e862dfd6c64c5e85c95a90376a90c212222",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/4b40445279051f99432eb053bed7f047e3d5823b",
+                "reference": "4b40445279051f99432eb053bed7f047e3d5823b",
                 "shasum": ""
             },
             "require": {
@@ -1397,7 +1397,7 @@
             ],
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
-            "time": "2020-11-04T12:47:43+00:00"
+            "time": "2021-01-18T18:31:14+00:00"
         },
         {
             "name": "egroupware/status",
@@ -1405,12 +1405,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "52feb9ca39f462c4eea84d0aea41827336097e26"
+                "reference": "920903fa5cad8e0e788c071dc19f55b8fa7022ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/52feb9ca39f462c4eea84d0aea41827336097e26",
-                "reference": "52feb9ca39f462c4eea84d0aea41827336097e26",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/920903fa5cad8e0e788c071dc19f55b8fa7022ea",
+                "reference": "920903fa5cad8e0e788c071dc19f55b8fa7022ea",
                 "shasum": ""
             },
             "require": {
@@ -1437,7 +1437,7 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-11-25T16:28:41+00:00"
+            "time": "2021-01-15T13:20:16+00:00"
         },
         {
             "name": "egroupware/swoolepush",
@@ -1487,12 +1487,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "362ffe97a3d2a9d854fd47421464373832d9d974"
+                "reference": "57bd9da6fc156bf0865adee33a3ca200d762dd5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/362ffe97a3d2a9d854fd47421464373832d9d974",
-                "reference": "362ffe97a3d2a9d854fd47421464373832d9d974",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/57bd9da6fc156bf0865adee33a3ca200d762dd5c",
+                "reference": "57bd9da6fc156bf0865adee33a3ca200d762dd5c",
                 "shasum": ""
             },
             "require": {
@@ -1519,7 +1519,7 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-11-21T18:21:53+00:00"
+            "time": "2021-01-08T17:27:12+00:00"
         },
         {
             "name": "egroupware/webdav",
@@ -3413,16 +3413,16 @@
         },
         {
             "name": "pear/archive_tar",
-            "version": "1.4.11",
+            "version": "1.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/Archive_Tar.git",
-                "reference": "17d355cb7d3c4ff08e5729f29cd7660145208d9d"
+                "reference": "19bb8e95490d3e3ad92fcac95500ca80bdcc7495"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/17d355cb7d3c4ff08e5729f29cd7660145208d9d",
-                "reference": "17d355cb7d3c4ff08e5729f29cd7660145208d9d",
+                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/19bb8e95490d3e3ad92fcac95500ca80bdcc7495",
+                "reference": "19bb8e95490d3e3ad92fcac95500ca80bdcc7495",
                 "shasum": ""
             },
             "require": {
@@ -3475,7 +3475,17 @@
                 "archive",
                 "tar"
             ],
-            "time": "2020-11-19T22:10:24+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/mrook",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/michielrook",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2021-01-18T19:32:54+00:00"
         },
         {
             "name": "pear/auth_sasl",
