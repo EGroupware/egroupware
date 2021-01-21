@@ -4432,8 +4432,8 @@ class CalendarApp extends EgwApp
 				},
 			    // Dates are user time, but we told javascript it was UTC.
 			    // Send just the timestamp (as a string) with no timezone
-                _data.start.toJSON().slice(0,-1),
-                _data.end.toJSON().slice(0,-1),
+				( typeof _data.start != "string" ? _data.start.toJSON() : _data.start).slice(0,-1),
+                ( typeof _data.end != "string" ? _data.end.toJSON() : _data.end).slice(0,-1),
 				{
 					participants:Object.keys(_data.participants).filter(v => {return v.match(/^[0-9]/)})
 				}], function(_value){
