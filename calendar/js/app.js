@@ -3568,7 +3568,12 @@ var CalendarApp = /** @class */ (function (_super) {
                 email: egw.user('account_email'),
                 cal_id: _data.id,
                 title: _data.title
-            }, _data.start, _data.end, {
+            },
+            // Dates are user time, but we told javascript it was UTC.
+            // Send just the timestamp (as a string) with no timezone
+            _data.start.toJSON().slice(0, -1),
+            _data.end.toJSON().slice(0, -1),
+            {
                 participants: Object.keys(_data.participants).filter(function (v) { return v.match(/^[0-9]/); })
             }], function (_value) {
             if (_value) {
