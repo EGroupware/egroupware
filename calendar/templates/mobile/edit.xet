@@ -255,6 +255,10 @@
 					</vbox>
 				</row>
 				<row>
+				    <description value="Video Conference"/>
+				    <checkbox id="videoconference" onchange="app.calendar.videoconferenceOnChange"/>
+				</row>
+				<row>
 					<description for="location" value="Location"/>
 					<textbox id="location" maxlength="255" class="et2_fullWidth"/>
 				</row>
