@@ -554,7 +554,8 @@ var et2_calendar_event = /** @class */ (function (_super) {
         var vc_event = 'click.calendar_videoconference';
         jQuery('body').off(vc_event)
             .on(vc_event, '[data-videoconference]', function (event) {
-            app.calendar.joinVideoConference(this.dataset.videoconference, this.dataset);
+            var data = egw.dataGetUIDdata("calendar::" + this.dataset.id);
+            app.calendar.joinVideoConference(this.dataset.videoconference, data.data || this.dataset);
         });
     };
     /**

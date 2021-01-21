@@ -704,7 +704,8 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		let vc_event = 'click.calendar_videoconference';
 		jQuery('body').off(vc_event)
 			.on(vc_event, '[data-videoconference]',function(event) {
-				app.calendar.joinVideoConference(this.dataset.videoconference, this.dataset);
+				let data = egw.dataGetUIDdata("calendar::"+this.dataset.id);
+				app.calendar.joinVideoConference(this.dataset.videoconference, data.data||this.dataset);
 			});
 	}
 	/**
