@@ -231,7 +231,7 @@ class admin_categories
 
 					if ($button == 'save')
 					{
-						Framework::refresh_opener($msg, $this->appname, $content['id'], $change_color ? null : 'update', $refresh_app);
+						Framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? null : 'update', $refresh_app);
 						Framework::window_close();
 					}
 					break;
@@ -254,7 +254,7 @@ class admin_categories
 					break;
 			}
 			// This should probably refresh the application $this->appname in the target tab $refresh_app, but that breaks pretty much everything
-			Framework::refresh_opener($msg, $this->appname, $content['id'], $change_color ? null : 'update', $refresh_app);
+			Framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? null : 'update', $refresh_app);
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;
@@ -637,32 +637,47 @@ class admin_categories
 			if (isset($_GET['cat_id']))
 			{
 				$content = array(
-					'cat_id'=>(int)$_GET['cat_id'],
+					'cat_id'=>strpos($_GET['cat_id'], ',') !== False ? explode(',',$_GET['cat_id']) : [(int)$_GET['cat_id']],
 				);
 			}
 			//error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
 		}
-		$cats = new Categories('', Categories::id2name($content['cat_id'],'appname'));
-		if((!$cats->check_perms(Acl::DELETE, $content['cat_id']) || !self::$acl_delete) &&
-					// Only admins can delete globals
-					$cats->is_global($content['cat_id']) && !$GLOBALS['egw_info']['user']['apps']['admin'])
+		if($_GET['appname'])
+		{
 
+		}
+		$cats = new Categories('', Categories::id2name($content['cat_id'][0],'appname'));
+		foreach($content['cat_id'] as $index => $cat_id)
+		{
+			if ((!$cats->check_perms(Acl::DELETE, $cat_id) || !self::$acl_delete) &&
+					// Only admins can delete globals
+					$cats->is_global($cat_id) && !$GLOBALS['egw_info']['user']['apps']['admin'])
+
+			{
+				unset($content['cat_id'][$index]);
+			}
+		}
+		if(count($content['cat_id']) == 0)
 		{
 			Framework::window_close(lang('Permission denied!!!'));
 		}
 		if ($content['button'])
 		{
-			if($cats->check_perms(Acl::DELETE, $content['cat_id'], (boolean)$GLOBALS['egw_info']['user']['apps']['admin']))
+			$refresh_app = $this->appname == 'preferences' ? $content['appname'] : $this->appname;
+			foreach($content['cat_id'] as $cat_id)
 			{
-				$cmd = new admin_cmd_delete_category(
-					$content['cat_id'],
-					key($content['button']) == 'delete_sub',
-					$content['admin_cmd']
-				);
-				$cmd->run();
-				Framework::refresh_opener(lang('Deleted'), 'admin', $content['cat_id'], 'delete');
-				Framework::window_close();
+				if ($cats->check_perms(Acl::DELETE, $cat_id, (boolean)$GLOBALS['egw_info']['user']['apps']['admin']))
+				{
+					$cmd = new admin_cmd_delete_category(
+							$cat_id,
+							key($content['button']) == 'delete_sub',
+							$content['admin_cmd']
+					);
+					$cmd->run();
+					Framework::refresh_opener(lang('Deleted'), $refresh_app, $cat_id, count($content['cat_id']) > 0 ? 'edit':'delete',$refresh_app);
+				}
 			}
+			Framework::window_close();
 		}
 		$tpl = new Etemplate('admin.categories.delete');
 		$tpl->exec($this->delete_link, $content, array(), array(), $content, 2);
@@ -709,7 +724,7 @@ class admin_categories
 				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
 				'popup' => '450x400',
-				'url' => 'menuaction='.$this->delete_link.'&cat_id=$id',
+				'url' => 'menuaction='.$this->delete_link.'&appname='.($this->appname == 'preferences' ? $appname : $this->appname).'&cat_id=$id',
 			),
 		);
 
