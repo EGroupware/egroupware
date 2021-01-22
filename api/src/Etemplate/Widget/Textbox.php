@@ -156,15 +156,17 @@ class Textbox extends Etemplate\Widget
 				{
 					$value = $this->attrs['type'] == 'integer' ? (int) $value : (float) str_replace(',','.',$value);	// allow for german (and maybe other) format
 
-					if (!(empty($this->attrs['min']) && $this->attrs['min'] !== 0) && $value < $this->attrs['min'])
+					$min = self::expand_name($this->attrs['min'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+					if (!(empty($min) && $min !== 0) && $value < $min)
 					{
-						self::set_validation_error($form_name,lang("Value has to be at least '%1' !!!",$this->attrs['min']),'');
-						$value = $this->attrs['type'] == 'integer' ? (int) $this->attrs['min'] : (float) $this->attrs['min'];
+						self::set_validation_error($form_name, lang("Value has to be at least '%1' !!!", $min),'');
+						$value = $this->attrs['type'] == 'integer' ? (int) $min : (float) $min;
 					}
-					if (!(empty($this->attrs['max'])&& $this->attrs['max'] !== 0) && $value > $this->attrs['max'])
+					$max = self::expand_name($this->attrs['max'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+					if (!(empty($max) && $max !== 0) && $value > $max)
 					{
-						self::set_validation_error($form_name,lang("Value has to be at maximum '%1' !!!",$this->attrs['max']),'');
-						$value = $this->attrs['type'] == 'integer' ? (int) $this->attrs['max'] : (float) $this->attrs['max'];
+						self::set_validation_error($form_name, lang("Value has to be at maximum '%1' !!!", $max),'');
+						$value = $this->attrs['type'] == 'integer' ? (int) $max : (float) $max;
 					}
 				}
 			}

@@ -135,13 +135,13 @@ var et2_number = /** @class */ (function (_super) {
         },
         "min": {
             "name": "Minimum",
-            "type": "integer",
+            "type": "any",
             "default": et2_no_init,
             "description": "Minimum allowed value"
         },
         "max": {
             "name": "Maximum",
-            "type": "integer",
+            "type": "any",
             "default": et2_no_init,
             "description": "Maximum allowed value"
         },
