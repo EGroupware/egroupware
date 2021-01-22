@@ -122,7 +122,7 @@ class Date extends Transformer
 		if($date)
 		{
 			// postfix date-string with "Z" so javascript doesn't add/subtract anything
-			$value = $date->format('Y-m-d\TH:i:s\Z');
+			$value = $date->format(Api\DateTime::ET2);
 		}
 		return $value;
 	}
