@@ -42,6 +42,13 @@ use DateInterval;
  * The constructor itself throws an \Exception in that case (to be precise it does not handle the one thrown by DateTime constructor).
  * Static methods server2user, user2server and to return NULL, if given time could not be parsed.
  *
+ * Please note: EGroupware historically uses timestamps, which are NOT in UTC!
+ * -----------
+ * So in general the following thre are NOT the same value:
+ * a) (new Api\DateTime($time))->getTimestamp() - regular timestamp in UTC like time()
+ * b) (new Api\DateTime($time))->format('ts')   - EGroupware timestamp in user-timezone, UI and BO objects
+ * c) Api\DateTime($time)::user2server('ts')    - EGroupware timestamp in server-timezone, SO / integer in database
+ *
  * @link http://www.php.net/manual/en/class.datetime.php
  * @link http://www.php.net/manual/en/class.datetimezone.php
  */
@@ -348,7 +355,8 @@ class DateTime extends \DateTime
 			case 'ts':
 				// ToDo: Check if PHP5.3 getTimestamp does the same, or always returns UTC timestamp
 				return mktime(parent::format('H'),parent::format('i'),parent::format('s'),parent::format('m'),parent::format('d'),parent::format('Y'));
-
+			case 'utc':	// alias for "U" / timestamp in UTC
+				return $this->getTimestamp();
 			case 'object':
 			case 'datetime':
 			case 'egw_time':
@@ -380,16 +388,6 @@ class DateTime extends \DateTime
 		}
 		// default $type contains string with format
 		return parent::format($type);
-	}
-
-	/**
-	 * Cast object to string
-	 *
-	 * @return string eg. "Wednesday, 2009-11-11 11:11:11 (Europe/Berlin)"
-	 */
-	public function __toString()
-	{
-		return $this->format('l, '.self::DATABASE).' ('.$this->getTimezone()->getName().')';
 	}
 
 	/**
