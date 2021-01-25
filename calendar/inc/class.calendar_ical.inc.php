@@ -608,7 +608,12 @@ class calendar_ical extends calendar_boupdate
 						else
 						{
 							// write start + end of whole day events as dates
-							$event['end-nextday'] = $event['end'] + 12*3600;	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
+							if(!is_object($event['end']))
+							{
+								$event['end'] = new Api\DateTime($event['end']);
+							}
+							$event['end-nextday'] = clone $event['end'];
+							$event['end-nextday']->add("1 day");	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
 							foreach (array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
 							{
 								$time = new Api\DateTime($event[$f],Api\DateTime::$server_timezone);
