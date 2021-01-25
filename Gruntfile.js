@@ -19,7 +19,6 @@
  *		npm install grunt-terser --save-dev
  *		npm install grunt-newer --save-dev
  *		npm install grunt-contrib-cssmin --save-dev
- *		npm install grunt-hub --save-dev
  *
  * Building happens by running in your EGroupware directory:
  *
