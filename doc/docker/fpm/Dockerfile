@@ -22,6 +22,9 @@ RUN apt-get update \
 	&& sed -e 's/^;\?listen \?=.*/listen = 9000/g' \
 		-e '/allowed_clients/d' \
 		-e '/pm.max_children/s/=.*/= 80/' \
+		-e '/pm.start_servers/s/=.*/= 10/' \
+		-e '/pm.min_spare_servers/s/=.*/= 10/' \
+		-e '/pm.max_spare_servers/s/=.*/= 20/' \
 		-e '/catch_workers_output/s/^;/;/' \
 		-e '/error_log/d' \
 		-e 's/^;\?pm.max_requests =.*/pm.max_requests = 30/' \
