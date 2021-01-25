@@ -1,3 +1,22 @@
+egroupware-docker (20.1.20210125) hardy; urgency=low
+
+  * Admin: Context menu action to clear user credentials
+  * Status/Videoconference: fix broken fullscreen mode in BBB client
+  * Calendar: Fix videoconference link in event tooltip
+  * Calendar: Fix event notifications had the wrong times in iCal attachment if user timezone was not server timezone
+  * Calendar: Fix bug where yearly planner would not show events that went outside the displayed time period
+  * All apps: Add context menu action on linked files to copy them somewhere else
+  * Etemplate: Avoid "Uncaught TypeError: Cannot read property ‘length’ of undefined"
+  * Mail: New "Save As" preference option to attach just the mail, no mail attachments
+  * LDAP/Addressbook: use accounts filter from setup for accounts addressbook too
+  * Projectmanager: Fix async notifications were sent out to too many users
+  * Projectmanager: fix some modification dates were stored in user time
+  * Tracker: Fix export filter for groups was allowing non-group accounts as options
+  * Tracker: Add resolution to the fields that escalations can change
+  * FPM/Container: start more php processes by default and keep them running to better cope with high usage
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 25 Jan 2021 09:43:01 +0100
+
 egroupware-docker (20.1.20201217) hardy; urgency=low
 
   * Status/Videoconference: add support for BigBlueButton videoconferencing, it can be configured via Status app's site-configuration
