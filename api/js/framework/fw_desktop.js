@@ -220,6 +220,31 @@
 					egw.message(egw.lang('Browser %1 %2 is not recommended. You may experience issues and not working features. Please use the latest version of Chrome, Firefox or Edge. Thank You!', 'IE',''), 'info', 'browser:ie:warning');
 				}
 			});
+
+			// initiate darkmode
+			let darkmode = egw.preference('darkmode', 'common');
+			if (darkmode == '2')
+			{
+				let prefes_color_scheme = this._get_prefers_color_scheme();
+				if (prefes_color_scheme)
+				{
+
+					window.matchMedia('(prefers-color-scheme: dark)')
+						.addEventListener('change', event => {
+							this.toggle_darkmode(document.getElementById('topmenu_info_darkmode'), event.matches?false:true);
+						});
+					this.toggle_darkmode(document.getElementById('topmenu_info_darkmode'), prefes_color_scheme == 'light');
+				}
+			}
+			else if (egw.getSessionItem('api', 'darkmode') == '1')
+			{
+				this.toggle_darkmode(document.getElementById('topmenu_info_darkmode'), false);
+			}
+			else if(egw.getSessionItem('api', 'darkmode') == '0')
+			{
+				this.toggle_darkmode(document.getElementById('topmenu_info_darkmode'), true);
+			}
+
 		},
 
 		/**
@@ -538,13 +563,30 @@
 		},
 
 		/**
+		 * Get color scheme
+		 * @return {string|null} returns active color scheme mode or null in case browser not supporting it
+		 * @private
+		 */
+		_get_prefers_color_scheme: function ()
+		{
+			if (window.matchMedia('(prefers-color-scheme: light)').matches)
+			{
+				return 'light';
+			}
+			if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+			{
+				return 'dark'
+			}
+			return null;
+		},
+
+		/**
 		 *
 		 * @param node
 		 */
-		toggle_darkmode: function(node)
+		toggle_darkmode: function(node, _state)
 		{
-			let state = node.firstElementChild.classList.contains('darkmode_on');
-			egw.set_preference('common', 'darkmode',state?'0':'1');
+			let state = (typeof _state != 'undefined') ? _state : node.firstElementChild.classList.contains('darkmode_on');
 			this._setDarkMode(state?'0':'1');
 			if (state == 1)
 			{

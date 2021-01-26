@@ -208,7 +208,7 @@ export abstract class EgwApp
 		// Highlights the favorite based on initial list state
 		this.highlight_favorite();
 		// apply theme mode
-		jQuery('html').attr('data-darkmode', <string> egw.preference('darkmode', 'common'));
+		window.framework._setDarkMode(egw.getSessionItem('api', 'darkmode'));
 	}
 
 	/**

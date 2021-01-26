@@ -64,8 +64,17 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		// keep track of opened popups
 		this.popups = [];
 
+
 		// initiate dark mode
-		this._setDarkMode(egw.preference('darkmode', 'common'));
+		let darkmode = egw.getSessionItem('api', 'darkmode');
+		if (darkmode == '0' || darkmode == '1')
+		{
+			this._setDarkMode(darkmode);
+		}
+		else if (egw.preference('darkmode', 'common') !='2')
+		{
+			this._setDarkMode( egw.preference('darkmode', 'common'));
+		}
 	},
 
 	/**
@@ -1304,8 +1313,14 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		return _app && _app.appName != _app.internalName;
 	},
 
+	/**
+	 * set darkmode attribute into html tag
+	 * @param string _state '0' means off and '1' means on
+	 * @private
+	 */
 	_setDarkMode: function(_state)
 	{
 		jQuery('html').attr('data-darkmode', _state);
+		egw.setSessionItem('api', 'darkmode',_state == '0' ?'0':'1');
 	}
 });}).call(this);

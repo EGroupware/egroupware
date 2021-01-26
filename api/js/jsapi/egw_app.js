@@ -118,7 +118,7 @@ var EgwApp = /** @class */ (function () {
         // Highlights the favorite based on initial list state
         this.highlight_favorite();
         // apply theme mode
-        jQuery('html').attr('data-darkmode', egw.preference('darkmode', 'common'));
+        window.framework._setDarkMode(egw.getSessionItem('api', 'darkmode'));
     };
     /**
      * Observer method receives update notifications from all applications

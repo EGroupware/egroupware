@@ -72,6 +72,8 @@ egw_LAB.wait(function()
 			this.form.method = 'get';
 			jQuery(this.form).append('<input type="hidden" name="auth" value="saml"/>');
 		});
+		//cleanup darkmode session value
+		egw.setSessionItem('api', 'darkmode','');
 	});
 });
 

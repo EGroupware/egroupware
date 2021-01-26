@@ -182,7 +182,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Dark mode theme',
 				'name'   => 'darkmode',
-				'values' => array('0' => 'off', '1' => 'on'),
+				'values' => array('0' => 'off', '1' => 'on', '2'=> 'auto'),
 				'help'   => 'Dark mode theme',
 				'admin'  => False,
 				'default' => '0'
