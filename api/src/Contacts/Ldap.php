@@ -346,7 +346,7 @@ class Ldap
 
 		// add ldap_search_filter from admin
 		$accounts_filter = str_replace(['%user','%domain'], ['*', $GLOBALS['egw_info']['user']['domain']],
-			$this->ldap_config['ldap_search_filter'] ?: '(uid=%u)');
+			$this->ldap_config['ldap_search_filter'] ?: '(uid=%user)');
 		$this->accountsFilter = "(&$this->accountsFilter$accounts_filter)";
 	}
 
