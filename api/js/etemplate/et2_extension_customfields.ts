@@ -599,9 +599,17 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	_setup_checkbox( field_name, field, attrs)
 	{
 	 	// Read-only checkbox is just text
-		if(attrs.readonly)
+		if(attrs.readonly && this.getType() !== "customfields")
 		{
 			attrs.ro_true = field.label;
+		}
+		else if (field.hasOwnProperty('ro_true'))
+		{
+			attrs.ro_true = field.ro_true;
+		}
+		if (field.hasOwnProperty('ro_false'))
+		{
+			attrs.ro_false = field.ro_false;
 		}
 		return true;
 	}

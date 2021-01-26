@@ -439,8 +439,14 @@ var et2_customfields_list = /** @class */ (function (_super) {
     };
     et2_customfields_list.prototype._setup_checkbox = function (field_name, field, attrs) {
         // Read-only checkbox is just text
-        if (attrs.readonly) {
+        if (attrs.readonly && this.getType() !== "customfields") {
             attrs.ro_true = field.label;
+        }
+        else if (field.hasOwnProperty('ro_true')) {
+            attrs.ro_true = field.ro_true;
+        }
+        if (field.hasOwnProperty('ro_false')) {
+            attrs.ro_false = field.ro_false;
         }
         return true;
     };
