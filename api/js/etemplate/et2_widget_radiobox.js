@@ -212,7 +212,11 @@ var et2_radiobox_ro = /** @class */ (function (_super) {
         }
     };
     et2_radiobox_ro.prototype.set_label = function (_label) {
-        // no label for ro radio, we show label of checked option as content
+        // no label for ro radio, we show label of checked option as content, unless it's x
+        // then we need the label for things to make sense
+        if (this.options.ro_true == "x") {
+            return _super.prototype.set_label.call(this, _label);
+        }
     };
     /**
      * Code for implementing et2_IDetachedDOM

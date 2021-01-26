@@ -257,7 +257,12 @@ class et2_radiobox_ro extends et2_valueWidget implements et2_IDetachedDOM
 	}
 
 	set_label(_label) {
-		// no label for ro radio, we show label of checked option as content
+		// no label for ro radio, we show label of checked option as content, unless it's x
+		// then we need the label for things to make sense
+		if(this.options.ro_true == "x")
+		{
+			return super.set_label(_label);
+		}
 	}
 
 	/**
