@@ -303,28 +303,39 @@ class DateTime extends \DateTime
 	 * Set user timezone, according to user prefs: converts current time to user time
 	 *
 	 * Does nothing if self::$user_timezone is current timezone!
+	 *
+	 * @return self to allow chaining
 	 */
 	public function setUser()
 	{
 		$this->setTimezone(self::$user_timezone);
+
+		return $this;
 	}
 
 	/**
 	 * Set server timezone: converts current time to server time
 	 *
 	 * Does nothing if self::$server_timezone is current timezone!
+	 *
+	 * @return self to allow chaining
 	 */
 	public function setServer()
 	{
 		$this->setTimezone(self::$server_timezone);
+
+		return $this;
 	}
 
 	/**
 	 * Format DateTime object as a specific type or string
 	 *
+	 * EGroupware's integer timestamp is NOT the usual UTC timestamp, but has a timezone offset applied!
+	 * Use $type === 'utc' or getTimestamp() method to get a regular timestamp in UTC.
+	 *
 	 * @param string $type ='' 'integer'|'ts'=timestamp, 'server'=timestamp in servertime, 'string'='Y-m-d H:i:s', 'object'=DateTime,
 	 * 		'array'=array with values for keys ('year','month','day','hour','minute','second','full','raw') or string with format
-	 * 		true = date only, false = time only as in user prefs, '' = date+time as in user prefs
+	 * 		true = date only, false = time only as in user prefs, '' = date+time as in user prefs, 'utc'=regular timestamp in UTC
 	 * @return int|string|array|datetime see $type
 	 */
 	public function format($type='')
@@ -353,7 +364,7 @@ class DateTime extends \DateTime
 				// fall through
 			case 'integer':
 			case 'ts':
-				// ToDo: Check if PHP5.3 getTimestamp does the same, or always returns UTC timestamp
+				// EGroupware's integer timestamp is NOT the usual UTC timestamp, but has a timezone offset applied!
 				return mktime(parent::format('H'),parent::format('i'),parent::format('s'),parent::format('m'),parent::format('d'),parent::format('Y'));
 			case 'utc':	// alias for "U" / timestamp in UTC
 				return $this->getTimestamp();

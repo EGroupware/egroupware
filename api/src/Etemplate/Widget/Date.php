@@ -107,7 +107,12 @@ class Date extends Transformer
 	{
 		if (!$value) return $value;	// otherwise we will get current date or 1970-01-01 instead of an empty value
 
-		if ($this->attrs['data_format'])
+		// for DateTime objects (regular PHP and Api\DateTime ones), set user timezone
+		if ($value instanceof \DateTime)
+		{
+			$date = Api\DateTime::server2user($value);
+		}
+		elseif ($this->attrs['data_format'] && $this->attrs['data_format'] !== 'object')
 		{
 			$date = Api\DateTime::createFromFormat($this->attrs['data_format'], $value, Api\DateTime::$user_timezone);
 		}
@@ -154,6 +159,7 @@ class Date extends Transformer
 			{
 				try
 				{
+					if (substr($value, -1) === 'Z') $value = substr($value, 0, -1);
 					$date = new Api\DateTime($value);
 				}
 				catch(\Exception $e)

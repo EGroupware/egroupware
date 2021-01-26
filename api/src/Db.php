@@ -1461,10 +1461,10 @@ class Db
 		switch($type)
 		{
 			case 'int':
-				// if DateTime object given, convert it to a unix timestamp (NOT converting the timezone!)
+				// if DateTime object given, set server-timezone and format it as EGroupware timestamp with offset
 				if (is_object($value) && ($value instanceof \DateTime))
 				{
-					return ($value instanceof DateTime) ? $value->format('ts') : DateTime::to($value,'ts');
+					return DateTime::user2server($value,'ts');
 				}
 			case 'auto':
 				// atm. (php5.2) php has only 32bit integers, it converts everything else to float.
@@ -1497,17 +1497,17 @@ class Db
 				}
 				break;	// handled like strings
 			case 'date':
-				// if DateTime object given, convert it (NOT converting the timezone!)
+				// if DateTime object given, set server-timezone and format it as string
 				if (is_object($value) && ($value instanceof \DateTime))
 				{
-					return $this->Link_ID->qstr($value->format('Y-m-d'));
+					return $this->Link_ID->qstr(DateTime::user2server($value,'Y-m-d'));
 				}
 				return $this->Link_ID->DBDate($value);
 			case 'timestamp':
-				// if DateTime object given, convert it (NOT converting the timezone!)
+				// if DateTime object given, set server-timezone and format it as string
 				if (is_object($value) && ($value instanceof \DateTime))
 				{
-					return $this->Link_ID->qstr($value->format('Y-m-d H:i:s'));
+					return $this->Link_ID->qstr(DateTime::user2server($value,'Y-m-d H:i:s'));
 				}
 				return $this->Link_ID->DBTimeStamp($value);
 		}
