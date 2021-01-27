@@ -134,15 +134,15 @@ class timesheet_ui extends timesheet_bo
 			{
 				//$content['ts_start'] += $content['start_time'];
 				$start = new Api\DateTime($content['ts_start']);
-				$start_time = explode(':',$content['start_time']);
-				$start->setTime($start_time[0],$start_time[1]);
+				$start_time = new Api\DateTime($content['start_time']);
+				$start->setTime($start_time->format('H'),$start_time->format('i'));
 				$content['ts_start'] = $start->format('ts');
 			}
 			if (isset($content['end_time']))		// end-time specified
 			{
 				$end = new Api\DateTime($content['ts_start']);
-				$end_time = explode(':',$content['end_time']);
-				$end->setTime($end_time[0],$end_time[1]);
+				$end_time = new Api\DateTime($content['end_time']);
+				$end->setTime($end_time->format('H'),$end_time->format('i'));
 			}
 			if ($end && $start)	// start- & end-time --> calculate the duration
 			{
