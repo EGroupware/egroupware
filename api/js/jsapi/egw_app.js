@@ -113,12 +113,13 @@ var EgwApp = /** @class */ (function () {
         }
         this.et2 = et2.widgetContainer;
         this._fix_iFrameScrolling();
-        if (this.egw && this.egw.is_popup())
+        if (this.egw && this.egw.is_popup()) {
             this._set_Window_title();
+            // apply theme mode
+            jQuery('html').attr('data-darkmode', egw.getSessionItem('api', 'darkmode') == '0' ? '0' : '1');
+        }
         // Highlights the favorite based on initial list state
         this.highlight_favorite();
-        // apply theme mode
-        window.framework._setDarkMode(egw.getSessionItem('api', 'darkmode'));
     };
     /**
      * Observer method receives update notifications from all applications

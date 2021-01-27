@@ -46,6 +46,12 @@
  * @package pixelegg
  * @version $Id$
  */
+@media (prefers-color-scheme: dark) {
+  html[data-darkmode='2'] {
+    background: #000;
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
 /**
  * DARK THEME
  */
