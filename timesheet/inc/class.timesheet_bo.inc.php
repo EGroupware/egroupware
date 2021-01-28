@@ -622,7 +622,7 @@ class timesheet_bo extends Api\Storage
 		}
 		if (!$this->data['ts_created'])
 		{
-			$this->data['ts_created'] = time();
+			$this->data['ts_created'] = Api\DateTime::to('now','ts');
 		}
 		if (isset($old) && !$changed)
 		{
