@@ -534,7 +534,7 @@ abstract class Framework extends Framework\Extra
 			'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
 			'include_wz_tooltip'=> $include_wz_tooltip,
 			'webserver_url'     => $GLOBALS['egw_info']['server']['webserver_url'],
-			'darkmode'		=> $GLOBALS['egw_info']['user']['preferences']['common']['darkmode']
+			'darkmode'		=> $this->isTop()? $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] : ''
 		);
 	}
 
