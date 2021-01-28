@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_countdown = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_baseWidget;
@@ -29,9 +30,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("./et2_core_common");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
+var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 /**
  * Class which implements the "countdown" XET-Tag
+ *
+ * Value for countdown is the expiry date of the counter.
  */
 var et2_countdown = /** @class */ (function (_super) {
     __extends(et2_countdown, _super);
@@ -64,7 +67,7 @@ var et2_countdown = /** @class */ (function (_super) {
         _this.setDOMNode(_this.container[0]);
         return _this;
     }
-    et2_countdown.prototype.set_time = function (_time) {
+    et2_countdown.prototype.set_value = function (_time) {
         if (_time == "")
             return;
         this.time.set_value(_time);
@@ -116,12 +119,6 @@ var et2_countdown = /** @class */ (function (_super) {
         return this.options.format == 's' ? egw.lang(_v).substr(0, 1) : egw.lang(_v);
     };
     et2_countdown._attributes = {
-        time: {
-            name: "time",
-            type: "any",
-            default: "",
-            description: ""
-        },
         format: {
             name: "display format",
             type: "string",
@@ -154,7 +151,7 @@ var et2_countdown = /** @class */ (function (_super) {
         }
     };
     return et2_countdown;
-}(et2_core_baseWidget_1.et2_baseWidget));
+}(et2_core_valueWidget_1.et2_valueWidget));
 exports.et2_countdown = et2_countdown;
 et2_core_widget_1.et2_register_widget(et2_countdown, ["countdown"]);
 //# sourceMappingURL=et2_widget_countdown.js.map
