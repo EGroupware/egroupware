@@ -23,7 +23,9 @@ import {et2_valueWidget} from "./et2_core_valueWidget";
 /**
  * Class which implements the "countdown" XET-Tag
  *
- * Value for countdown is the expiry date of the counter.
+ * Value for countdown is the expiry date of the counter or a numeric timeout in seconds.
+ *
+ * The timeout has the benefit, that it does not depend on the correct set time and timezone of the browser / computer of the user.
  */
 export class et2_countdown extends et2_valueWidget {
 	static readonly _attributes: any = {
@@ -57,7 +59,6 @@ export class et2_countdown extends et2_valueWidget {
 			default: "",
 			description: "Defines a callback to gets called at alarm - timer. This only will work if there's an alarm set."
 		}
-
 	};
 
 	private time : et2_date;
@@ -68,6 +69,7 @@ export class et2_countdown extends et2_valueWidget {
 	private hours : JQuery = null;
 	private minutes : JQuery = null;
 	private seconds : JQuery = null;
+	private offset;
 
 	/**
 	 * Constructor
@@ -90,11 +92,23 @@ export class et2_countdown extends et2_valueWidget {
 		// create a date widget
 		this.time = <et2_date> et2_createWidget('date-time', {});
 		this.setDOMNode(this.container[0]);
+		this.offset = (new Date).getTimezoneOffset();
 	}
 
 	public set_value(_time)
 	{
 		if (_time == "") return;
+		if (!isNaN(_time))
+		{
+			let t = new Date();
+			t.setSeconds(t.getSeconds()+parseInt(_time));
+			_time = t;
+			this.offset = 0;
+		}
+		else
+		{
+			this.offset = (new Date).getTimezoneOffset();
+		}
 		this.time.set_value(_time);
 		let self = this;
 		this.timer = setInterval(function(){
@@ -114,7 +128,7 @@ export class et2_countdown extends et2_valueWidget {
 			tempDate.getMonth(),
 			tempDate.getDate(),
 			tempDate.getHours(),
-			tempDate.getMinutes()-tempDate.getTimezoneOffset(),
+			tempDate.getMinutes()-this.offset,
 			tempDate.getSeconds()
 		);
 

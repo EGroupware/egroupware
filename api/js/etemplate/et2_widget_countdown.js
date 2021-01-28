@@ -34,7 +34,9 @@ var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 /**
  * Class which implements the "countdown" XET-Tag
  *
- * Value for countdown is the expiry date of the counter.
+ * Value for countdown is the expiry date of the counter or a numeric timeout in seconds.
+ *
+ * The timeout has the benefit, that it does not depend on the correct set time and timezone of the browser / computer of the user.
  */
 var et2_countdown = /** @class */ (function (_super) {
     __extends(et2_countdown, _super);
@@ -65,11 +67,21 @@ var et2_countdown = /** @class */ (function (_super) {
         // create a date widget
         _this.time = et2_core_widget_1.et2_createWidget('date-time', {});
         _this.setDOMNode(_this.container[0]);
+        _this.offset = (new Date).getTimezoneOffset();
         return _this;
     }
     et2_countdown.prototype.set_value = function (_time) {
         if (_time == "")
             return;
+        if (!isNaN(_time)) {
+            var t = new Date();
+            t.setSeconds(t.getSeconds() + parseInt(_time));
+            _time = t;
+            this.offset = 0;
+        }
+        else {
+            this.offset = (new Date).getTimezoneOffset();
+        }
         this.time.set_value(_time);
         var self = this;
         this.timer = setInterval(function () {
@@ -82,7 +94,7 @@ var et2_countdown = /** @class */ (function (_super) {
     };
     et2_countdown.prototype._updateTimer = function () {
         var tempDate = new Date();
-        var now = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours(), tempDate.getMinutes() - tempDate.getTimezoneOffset(), tempDate.getSeconds());
+        var now = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours(), tempDate.getMinutes() - this.offset, tempDate.getSeconds());
         var time = new Date(this.time.getValue());
         var distance = time.getTime() - now.getTime();
         if (distance < 0)
