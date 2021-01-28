@@ -18,18 +18,15 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_date} from "./et2_widget_date";
 import {et2_baseWidget} from "./et2_core_baseWidget";
+import {et2_valueWidget} from "./et2_core_valueWidget";
 
 /**
  * Class which implements the "countdown" XET-Tag
+ *
+ * Value for countdown is the expiry date of the counter.
  */
-export class et2_countdown extends et2_baseWidget {
+export class et2_countdown extends et2_valueWidget {
 	static readonly _attributes: any = {
-		time: {
-			name: "time",
-			type: "any",
-			default: "",
-			description: ""
-		},
 		format: {
 			name: "display format",
 			type: "string",
@@ -95,7 +92,7 @@ export class et2_countdown extends et2_baseWidget {
 		this.setDOMNode(this.container[0]);
 	}
 
-	public set_time(_time)
+	public set_value(_time)
 	{
 		if (_time == "") return;
 		this.time.set_value(_time);
@@ -107,7 +104,6 @@ export class et2_countdown extends et2_baseWidget {
 				if (typeof self.onFinish == "function") self.onFinish();
 			}
 		}, 1000);
-
 	}
 
 	private _updateTimer()
