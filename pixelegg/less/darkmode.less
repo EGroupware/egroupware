@@ -13,7 +13,7 @@
 @media (prefers-color-scheme: dark) {
   html[data-darkmode='2'] {
     background: #000;
-    filter: invert(1) hue-rotate(180deg);
+    filter: invert(1) hue-rotate(180deg) brightness(0.7);
     #loginMainDiv {
       filter: invert(1) hue-rotate(180deg) !important;
     }
@@ -29,14 +29,15 @@
   {
     background: #000;
     position: fixed; // ATM Firefox doesn't like filter:invert on none fixed html
-    filter: invert(1) hue-rotate(180deg);
+    filter: invert(1) hue-rotate(180deg) brightness(0.7);
     img, #blueimp-gallery,
     #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active, #loginMainDiv {
       filter: invert(1) hue-rotate(180deg) !important;
     }
     #loginMainDiv div#centerBox{filter: invert(1) hue-rotate(180deg) !important;}
     div.dhtmlxMenu_egw_SubLevelArea_Polygon,.egw_tooltip,
-    body .egw_message_wrapper,#egw_fw_header #egw_fw_topmenu,.ui-dialog, .box_shadow
+    body .egw_message_wrapper,#egw_fw_header #egw_fw_topmenu,.ui-dialog, .box_shadow,
+    #egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded
     {
       box-shadow: 0px 0px 2px 2px #666666;
       -moz-box-shadow: 0px 0px 2px 2px #666666;
