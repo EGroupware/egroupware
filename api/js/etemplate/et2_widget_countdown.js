@@ -34,9 +34,9 @@ var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 /**
  * Class which implements the "countdown" XET-Tag
  *
- * Value for countdown is the expiry date of the counter or a numeric timeout in seconds.
+ * Value for countdown is an integer duration in seconds or a server-side to a duration converted expiry datetime.
  *
- * The timeout has the benefit, that it does not depend on the correct set time and timezone of the browser / computer of the user.
+ * The duration has the benefit, that it does not depend on the correct set time and timezone of the browser / computer of the user.
  */
 var et2_countdown = /** @class */ (function (_super) {
     __extends(et2_countdown, _super);
@@ -64,25 +64,14 @@ var et2_countdown = /** @class */ (function (_super) {
             .addClass("et2_countdown_minutes").appendTo(_this.container);
         _this.seconds = jQuery(document.createElement("span"))
             .addClass("et2_countdown_seconds").appendTo(_this.container);
-        // create a date widget
-        _this.time = et2_core_widget_1.et2_createWidget('date-time', {});
         _this.setDOMNode(_this.container[0]);
-        _this.offset = (new Date).getTimezoneOffset();
         return _this;
     }
     et2_countdown.prototype.set_value = function (_time) {
-        if (_time == "")
+        if (isNaN(_time))
             return;
-        if (!isNaN(_time)) {
-            var t = new Date();
-            t.setSeconds(t.getSeconds() + parseInt(_time));
-            _time = t;
-            this.offset = 0;
-        }
-        else {
-            this.offset = (new Date).getTimezoneOffset();
-        }
-        this.time.set_value(_time);
+        this.time = new Date();
+        this.time.setSeconds(this.time.getSeconds() + parseInt(_time));
         var self = this;
         this.timer = setInterval(function () {
             if (self._updateTimer() <= 0) {
@@ -93,10 +82,8 @@ var et2_countdown = /** @class */ (function (_super) {
         }, 1000);
     };
     et2_countdown.prototype._updateTimer = function () {
-        var tempDate = new Date();
-        var now = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours(), tempDate.getMinutes() - this.offset, tempDate.getSeconds());
-        var time = new Date(this.time.getValue());
-        var distance = time.getTime() - now.getTime();
+        var now = new Date();
+        var distance = this.time.getTime() - now.getTime();
         if (distance < 0)
             return 0;
         if (this.options.alarm > 0 && this.options.alarm == distance / 1000 && typeof this.onAlarm == 'function') {

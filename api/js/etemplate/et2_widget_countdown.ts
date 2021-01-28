@@ -23,9 +23,9 @@ import {et2_valueWidget} from "./et2_core_valueWidget";
 /**
  * Class which implements the "countdown" XET-Tag
  *
- * Value for countdown is the expiry date of the counter or a numeric timeout in seconds.
+ * Value for countdown is an integer duration in seconds or a server-side to a duration converted expiry datetime.
  *
- * The timeout has the benefit, that it does not depend on the correct set time and timezone of the browser / computer of the user.
+ * The duration has the benefit, that it does not depend on the correct set time and timezone of the browser / computer of the user.
  */
 export class et2_countdown extends et2_valueWidget {
 	static readonly _attributes: any = {
@@ -61,7 +61,7 @@ export class et2_countdown extends et2_valueWidget {
 		}
 	};
 
-	private time : et2_date;
+	private time : Date;
 
 	private timer = null;
 	private container : JQuery = null;
@@ -69,7 +69,6 @@ export class et2_countdown extends et2_valueWidget {
 	private hours : JQuery = null;
 	private minutes : JQuery = null;
 	private seconds : JQuery = null;
-	private offset;
 
 	/**
 	 * Constructor
@@ -89,27 +88,16 @@ export class et2_countdown extends et2_valueWidget {
 			.addClass("et2_countdown_minutes").appendTo(this.container);
 		this.seconds = jQuery(document.createElement("span"))
 			.addClass("et2_countdown_seconds").appendTo(this.container);
-		// create a date widget
-		this.time = <et2_date> et2_createWidget('date-time', {});
 		this.setDOMNode(this.container[0]);
-		this.offset = (new Date).getTimezoneOffset();
 	}
 
 	public set_value(_time)
 	{
-		if (_time == "") return;
-		if (!isNaN(_time))
-		{
-			let t = new Date();
-			t.setSeconds(t.getSeconds()+parseInt(_time));
-			_time = t;
-			this.offset = 0;
-		}
-		else
-		{
-			this.offset = (new Date).getTimezoneOffset();
-		}
-		this.time.set_value(_time);
+		if (isNaN(_time)) return;
+
+		this.time = new Date();
+		this.time.setSeconds(this.time.getSeconds() + parseInt(_time));
+
 		let self = this;
 		this.timer = setInterval(function(){
 			if (self._updateTimer() <= 0)
@@ -122,18 +110,8 @@ export class et2_countdown extends et2_valueWidget {
 
 	private _updateTimer()
 	{
-		let tempDate = new Date();
-		let now = new Date(
-			tempDate.getFullYear(),
-			tempDate.getMonth(),
-			tempDate.getDate(),
-			tempDate.getHours(),
-			tempDate.getMinutes()-this.offset,
-			tempDate.getSeconds()
-		);
-
-		let time = new Date (this.time.getValue());
-		let distance = time.getTime() - now.getTime();
+		let now = new Date();
+		let distance = this.time.getTime() - now.getTime();
 
 		if (distance < 0) return 0;
 		if (this.options.alarm > 0 && this.options.alarm == distance/1000 && typeof this.onAlarm == 'function')
