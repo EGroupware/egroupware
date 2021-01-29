@@ -47,6 +47,12 @@ export class et2_countdown extends et2_valueWidget {
 			default: true,
 			description: "Only displays none empty values."
 		},
+		precision: {
+			name: "how many counters to show",
+			type: "integer",
+			default: 0,	// =all
+			description: "Limit number of counters, eg. 2 does not show minutes and seconds, if days are displayed"
+		},
 		alarm: {
 			name: "alarm",
 			type: "any",
@@ -165,6 +171,25 @@ export class et2_countdown extends et2_valueWidget {
 						this.minutes.hide();
 						if(values.secounds == 0) this.seconds.hide();
 					}
+				}
+			}
+		}
+		if (this.options.precision)
+		{
+			const units = ['days','hours','minutes','seconds'];
+			for (let u=0; u < 4; ++u)
+			{
+				if (values[units[u]])
+				{
+					for(let n=u+this.options.precision; n < 4; n++)
+					{
+						this[units[n]].hide();
+					}
+					break;
+				}
+				else
+				{
+					this[units[u]].hide();
 				}
 			}
 		}
