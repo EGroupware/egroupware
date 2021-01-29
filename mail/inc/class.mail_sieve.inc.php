@@ -253,6 +253,7 @@ class mail_sieve
 					case 'reject':
 						$content['action_reject_text'] = $rules['action_arg'];
 				}
+				$content['anyof'] = $rules['anyof'] != 0?1:0;
 			}
 			else // Adding new rule
 			{
