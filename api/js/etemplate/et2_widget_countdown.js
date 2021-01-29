@@ -112,6 +112,20 @@ var et2_countdown = /** @class */ (function (_super) {
                 }
             }
         }
+        if (this.options.precision) {
+            var units = ['days', 'hours', 'minutes', 'seconds'];
+            for (var u = 0; u < 4; ++u) {
+                if (values[units[u]]) {
+                    for (var n = u + this.options.precision; n < 4; n++) {
+                        this[units[n]].hide();
+                    }
+                    break;
+                }
+                else {
+                    this[units[u]].hide();
+                }
+            }
+        }
         return distance;
     };
     et2_countdown.prototype._getIndicator = function (_v) {
@@ -135,6 +149,12 @@ var et2_countdown = /** @class */ (function (_super) {
             type: "string",
             default: true,
             description: "Only displays none empty values."
+        },
+        precision: {
+            name: "how many counters to show",
+            type: "integer",
+            default: 0,
+            description: "Limit number of counters, eg. 2 does not show minutes and seconds, if days are displayed"
         },
         alarm: {
             name: "alarm",
