@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_calendar_daycol = void 0;
 /*egw:uses
     et2_core_valueWidget;
     /calendar/js/et2_widget_event.js;
@@ -165,7 +166,7 @@ var et2_calendar_daycol = /** @class */ (function (_super) {
         get: function () {
             return this._date_helper;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     /**
@@ -744,12 +745,12 @@ var et2_calendar_daycol = /** @class */ (function (_super) {
             if (typeof event_3.end !== 'object') {
                 event_3.end = new Date(event_3.end);
             }
-            event_3['start_m'] = (event_3.start.valueOf() / 1000 - day_start) / 60;
+            event_3['start_m'] = parseInt(String((event_3.start.valueOf() / 1000 - day_start) / 60), 10);
             if (event_3['start_m'] < 0) {
                 event_3['start_m'] = 0;
                 event_3['multiday'] = true;
             }
-            event_3['end_m'] = (event_3.end.valueOf() / 1000 - day_start) / 60;
+            event_3['end_m'] = parseInt(String((event_3.end.valueOf() / 1000 - day_start) / 60), 10);
             if (event_3['end_m'] >= 24 * 60) {
                 event_3['end_m'] = 24 * 60 - 1;
                 event_3['multiday'] = true;
