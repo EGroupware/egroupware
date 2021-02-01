@@ -943,13 +943,13 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			{
 				event.end = new Date(event.end);
 			}
-			event['start_m'] = (event.start.valueOf()/1000 - day_start) / 60;
+			event['start_m'] = parseInt(String((event.start.valueOf() / 1000 - day_start) / 60), 10);
 			if (event['start_m'] < 0)
 			{
 				event['start_m'] = 0;
 				event['multiday'] = true;
 			}
-			event['end_m'] = (event.end.valueOf()/1000 - day_start) / 60;
+			event['end_m'] = parseInt(String((event.end.valueOf() / 1000 - day_start) / 60), 10);
 			if (event['end_m'] >= 24*60)
 			{
 				event['end_m'] = 24*60-1;
