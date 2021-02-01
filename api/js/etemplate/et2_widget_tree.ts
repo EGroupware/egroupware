@@ -32,7 +32,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
  *
  * @augments et2_inputWidget
  */
-class et2_tree extends et2_inputWidget
+export class et2_tree extends et2_inputWidget
 {
 	static readonly _attributes : any = {
 		"multiple": {
@@ -78,7 +78,7 @@ class et2_tree extends et2_inputWidget
 		"image_path": {
 			"name": "Image directory",
 			"type": "string",
-			"default": egw().webserverUrl + "/phpgwapi/templates/default/images/dhtmlxtree/",
+			"default": egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/",
 			"description": "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
 		},
 		"value": {

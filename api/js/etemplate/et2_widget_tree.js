@@ -25,6 +25,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_tree = void 0;
 /*egw:uses
     et2_core_inputWidget;
     /api/js/egw_action/egw_dragdrop_dhtmlx_tree.js;
@@ -805,7 +806,7 @@ var et2_tree = /** @class */ (function (_super) {
         "image_path": {
             "name": "Image directory",
             "type": "string",
-            "default": egw().webserverUrl + "/phpgwapi/templates/default/images/dhtmlxtree/",
+            "default": egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/",
             "description": "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
         },
         "value": {
@@ -845,5 +846,6 @@ var et2_tree = /** @class */ (function (_super) {
     };
     return et2_tree;
 }(et2_core_inputWidget_1.et2_inputWidget));
+exports.et2_tree = et2_tree;
 et2_core_widget_1.et2_register_widget(et2_tree, ["tree", "tree-cat"]);
 //# sourceMappingURL=et2_widget_tree.js.map
