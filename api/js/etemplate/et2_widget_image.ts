@@ -298,7 +298,7 @@ et2_register_widget(et2_image, ["image"]);
 /**
 * Widget displaying an application icon
 */
-class et2_appicon extends et2_image
+export class et2_appicon extends et2_image
 {
 	static readonly _attributes: any = {
 		default_src: {

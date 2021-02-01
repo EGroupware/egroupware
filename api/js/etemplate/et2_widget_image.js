@@ -24,6 +24,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_appicon = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_interfaces;
@@ -277,6 +278,7 @@ var et2_appicon = /** @class */ (function (_super) {
     };
     return et2_appicon;
 }(et2_image));
+exports.et2_appicon = et2_appicon;
 et2_core_widget_1.et2_register_widget(et2_appicon, ["appicon"]);
 /**
 * Avatar widget to display user profile picture or
