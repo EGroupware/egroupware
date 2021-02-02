@@ -148,11 +148,6 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             {
                 source.attr('type', this.options.src_type);
             }
-
-            if (this.options.starttime)
-            {
-                this.seek_video(this.options.starttime);
-            }
         }
     }
 
@@ -233,6 +228,25 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
     public currentTime() : number
     {
         return this.video[0].currentTime;
+    }
+
+    doLoadingFinished(): boolean
+    {
+        super.doLoadingFinished();
+        let self = this;
+
+        this.video[0].addEventListener("loadedmetadata", function(){
+            self.videoLoadnigIsFinished();
+        });
+        return false;
+    }
+
+    public videoLoadnigIsFinished()
+    {
+        if (this.options.starttime)
+        {
+            this.seek_video(this.options.starttime);
+        }
     }
 }
 et2_register_widget(et2_video, ["video"]);

@@ -24,7 +24,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_video = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_interfaces;
@@ -98,9 +97,6 @@ var et2_video = /** @class */ (function (_super) {
             if (this.options.src_type) {
                 source.attr('type', this.options.src_type);
             }
-            if (this.options.starttime) {
-                this.seek_video(this.options.starttime);
-            }
         }
     };
     /**
@@ -163,6 +159,19 @@ var et2_video = /** @class */ (function (_super) {
      */
     et2_video.prototype.currentTime = function () {
         return this.video[0].currentTime;
+    };
+    et2_video.prototype.doLoadingFinished = function () {
+        _super.prototype.doLoadingFinished.call(this);
+        var self = this;
+        this.video[0].addEventListener("loadedmetadata", function () {
+            self.videoLoadnigIsFinished();
+        });
+        return false;
+    };
+    et2_video.prototype.videoLoadnigIsFinished = function () {
+        if (this.options.starttime) {
+            this.seek_video(this.options.starttime);
+        }
     };
     et2_video._attributes = {
         "video_src": {
