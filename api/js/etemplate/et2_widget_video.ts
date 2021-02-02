@@ -69,10 +69,16 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             "description": "Defines that the audio output of the video should be muted"
         },
         "autoplay": {
-            "name": "Autoply",
+            "name": "Autoplay",
             "type": "boolean",
             "default": false,
             "description": "Defines if Video will start playing as soon as it is ready"
+        },
+        starttime: {
+            "name": "Inital position of video",
+            "type": "float",
+            "default": 0,
+            "description": "Set initial position of video"
         },
         "controls": {
             "name": "Control buttons",
@@ -141,6 +147,11 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             if (this.options.src_type)
             {
                 source.attr('type', this.options.src_type);
+            }
+
+            if (this.options.starttime)
+            {
+                this.seek_video(this.options.starttime);
             }
         }
     }

@@ -24,6 +24,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_video = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_interfaces;
@@ -96,6 +97,9 @@ var et2_video = /** @class */ (function (_super) {
                 .appendTo(this.video);
             if (this.options.src_type) {
                 source.attr('type', this.options.src_type);
+            }
+            if (this.options.starttime) {
+                this.seek_video(this.options.starttime);
             }
         }
     };
@@ -178,10 +182,16 @@ var et2_video = /** @class */ (function (_super) {
             "description": "Defines that the audio output of the video should be muted"
         },
         "autoplay": {
-            "name": "Autoply",
+            "name": "Autoplay",
             "type": "boolean",
             "default": false,
             "description": "Defines if Video will start playing as soon as it is ready"
+        },
+        starttime: {
+            "name": "Inital position of video",
+            "type": "float",
+            "default": 0,
+            "description": "Set initial position of video"
         },
         "controls": {
             "name": "Control buttons",
