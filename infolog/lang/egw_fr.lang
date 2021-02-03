@@ -28,6 +28,7 @@
 90%	infolog	fr	90%
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	fr	<b>Attachement de fichiers via des liens symboliques</b> à la place du dépôt de fichiers et récupération via fichier:/chemin pour les clients avec accès réseau direct
 a short subject for the entry	infolog	fr	Un court sujet pour l'entrée
+a whole template based on modifier's town (thorsby or kaiserslautern)	infolog	fr	Un template entier basé sur la ville de son éditeur (Thorsby ou Kaiserslautern)
 abort without deleting	infolog	fr	Annuler sans supprimer
 accept	infolog	fr	Accepte
 action	infolog	fr	Action
@@ -159,7 +160,6 @@ determines the order the fields are displayed	infolog	fr	détermine l´ordre d´
 difference:	infolog	fr	Différence :
 directory with documents to insert entries	infolog	fr	Répertoire avec les documents pour insérer les entrées
 disables a status without deleting it	infolog	fr	désactive un statut sans le supprimer
-do you really want to delete this rule	infolog	fr	Souhaitez vous vraiment SUPPRIMER cette règle
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	fr	Voulez-vous une confirmation du responsable sur: accepter, finir la tâche, ou les deux
 do you want a notification if items owned by groups you are part of get updated ?	infolog	fr	Souhaitez-vous une notification à la mise à jour d'éléments détenus par des groupes dont vous êtes membre ?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	fr	Être notifié si des entrées vous sont assignées ou si des entrées qui vous en été assignées sont mises à jour
@@ -214,6 +214,7 @@ fields to exclude when creating a sub-entry:	infolog	fr	Champs à exclure lors d
 fieldseparator	infolog	fr	Séparateur de champ
 finish	infolog	fr	Terminer
 first argument for preg_replace	infolog	fr	Premier argument pour preg_replace
+first non-empty:	infolog	fr	Premier non-vide :
 for infolog type %1, %2 is required	infolog	fr	Pour un infolog de type %1, %2 est requis
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
 for which types should this field be used	infolog	fr	pour quels types ce champ devrait être utilisé
@@ -264,12 +265,14 @@ infolog id	infolog	fr	Infolog ID
 infolog list	infolog	fr	Liste InfoLog
 infolog preferences	common	fr	Préférences InfoLog
 infolog-fieldname	infolog	fr	InfoLog - Nom du champ
+infolog.entry_test.%s.locality	infolog	fr	infolog.entry_test.%s.locality
 insert	infolog	fr	Insérer
 insert in document	infolog	fr	Insérer dans un document
 insert timestamp into description field	infolog	fr	Insérer une ligne de temps dans le champ description
 invalid filename	infolog	fr	Nom de fichier invalide
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	fr	Id de propriétaire invalide: %1. %2 utilisé à la place.
 invalid status for entry type %1.	infolog	fr	Statut invalide pour l'entrée de type %1.
+kaiserslautern	infolog	fr	KAISERSLAUTERN
 label<br>helptext	infolog	fr	Label<br>Texte d´aide
 last changed	infolog	fr	Dernière modification
 last modified	infolog	fr	Dernière modification
@@ -487,6 +490,7 @@ the name used internaly (<= 10 chars), changeing it makes existing data unavaili
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	fr	le nom est utilisé en interne (<= 20 caractères), si vous le modifiez vous rendez les données indisponibles
 the text displayed to the user	infolog	fr	le texte affiché pour l´utilisateur
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	fr	Ceci est le filtre qu'InfoLog utilise quand vous entrez dans l'application. Les filtres limitent les entrées à montrer dans la  vue actuelle. Il y a des filtres pour montrer seulement ceux temrminés, encore ouverts ou les futures entrées de vous-même ou de tous les utilisateurs.
+thorsby	infolog	fr	THORSBY
 til when should the todo or phonecall be finished	infolog	fr	Quand la tâche ou l'appel téléphonique devrait être terminé
 times	infolog	fr	Heures
 timesheet	infolog	fr	feuille de temps

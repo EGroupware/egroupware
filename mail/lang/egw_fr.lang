@@ -13,6 +13,8 @@
 (select mails by clicking on the line, like a checkbox)	mail	fr	(sélectionner des emails en cliquant sur la ligne, comme pour une case à cocher)
 (with checkbox enforced)	mail	fr	avec les cases à cocher forcées
 ...	mail	fr	...
+/	mail	fr	/
+a	mail	fr	A
 account editable by user	mail	fr	compte modifiable par l'utilisateur
 acl rights retrieved successfully	mail	fr	Droits ACL récupérés avec succès
 action	mail	fr	Action
@@ -50,6 +52,7 @@ allways a new window	mail	fr	toujours une nouvelle fenêtre
 always	mail	fr	Toujours
 always allow external sources from %1	mail	fr	Toujours autoriser les sources externes de  %1
 always show html emails	mail	fr	Toujours afficher les messages HTML
+always show notifiction	mail	fr	Toujours afficher les notifications
 an error happend while trying to remove acl rights from the account %1!	mail	fr	Une erreur est apparue lors de la suppression des ACL depuis le compte %1 !
 and the rule with priority %1, now got the priority %2	mail	fr	Et la règle avec la priorité %1 a maintenant la priorité %2
 any of	mail	fr	un de
@@ -72,20 +75,25 @@ attachments	mail	fr	Pièces jointes
 attachments, ...	mail	fr	pièces jointes...
 authentication	mail	fr	Authentification
 available personal email-accounts/profiles	mail	fr	Profils et comptes emails personnels disponibles
+be aware that all attachments will be sent as %1!	mail	fr	Attention, toutes les pièces jointes seront envoyées comme %1 !
 before reply, visible during compose	mail	fr	Avant la réponse, visible pendant la rédaction
 blacklisted mails are marked as spam	mail	fr	Les mails en liste noire sont marqués comme spam
 but check shared folders	mail	fr	sauf les dossiers partagés sélectionnés
 by date	mail	fr	Par date
+c	mail	fr	C
 can not open imap connection	mail	fr	Ne peut pas ouvrir de connexion IMAP
 can not resolve the winmail.dat attachment!	mail	fr	Impossible de lire le fichier winmail.dat !
 canceled deletion due to user interaction	mail	fr	Suppression annulée par une interaction utilisateur
 certificate details	mail	fr	Détail sur le certificat
 certificate in text	mail	fr	Certificat en texte
+certificate info for email %1	mail	fr	Info de certificat pour l'email %1
 certificate issued by	mail	fr	Certificat émis par
 certificate validity in days	mail	fr	Validité du certificat en jours
 change editor type	mail	fr	changer l'éditeur vers le mode HTML
 changed profile	mail	fr	Profil changé
+changing subject failed because of %1	mail	fr	Changement de l'objet échoué parce que %1
 check message against next rule also	mail	fr	Vérifiez le message avec la prochaine règle également
+check to encrypt the message on send	mail	fr	cocher pôur chiffrer le message lors de l'envoi
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	fr	cocher pour recevoir une notification lorsque le message est lu (note : tous les clients de messagerie ne supportent pas cette fonction et tous les destinataires n'autorisent pas la notification)
 check to save as calendar event on send	mail	fr	cocher pour sauvegarder comme Evénement après l'envoi
 check to save as infolog on send	mail	fr	cocher pour sauvegarder comme Infolog après l'envoi
@@ -118,6 +126,7 @@ create new account	mail	fr	Créer un nouveau compte
 current folder	mail	fr	Dossier actif
 current subject	mail	fr	Sujet actuel
 currently:	mail	fr	Actuellement :
+d	mail	fr	D
 date(newest first)	mail	fr	Date (plus récente d'abord)
 date(oldest first)	mail	fr	Date (plus ancienne d'abord)
 deactive	mail	fr	Désactiver
@@ -139,6 +148,7 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	fr	Désactiver l'
 disabled!	mail	fr	désactivé !
 discard	mail	fr	annuler
 discard message	mail	fr	annuler le message
+display mail subject in notification:	mail	fr	Afficher les objets des message lors de la notification :
 display messages in multiple windows	mail	fr	afficher les messages dans plusieurs fenêtres
 display of html emails	mail	fr	Afficher les messages HTML
 display of identities	admin	fr	Affichage des identités
@@ -171,6 +181,7 @@ download attachments	mail	fr	Télécharger les pièces jointes
 draft folder	mail	fr	dossier brouillon
 drafts	mail	fr	Projets
 drafts folder	mail	fr	Dossier brouillons
+e	mail	fr	E
 edit account	mail	fr	Modifier le compte
 edit account ...	mail	fr	Modifier le compte
 edit folder acl	mail	fr	Modifier le dossier ACL
@@ -210,14 +221,17 @@ esync will fail without a working email configuration!	mail	fr	eSync ne peut fon
 event details follow	mail	fr	Les détails de l'événement suivent
 everyone	mail	fr	Tout le monde
 extended	mail	fr	Etendu.
+external email address:	mail	fr	Adresses email externes
 extra sent folders	mail	fr	Dossiers supplémentaires pour les messages envoyés
 failed to delete %1	mail	fr	Impossible de supprimer %1
 failed to delete %1 ! reason: %2	mail	fr	Impossible de supprimer %1! Motif : %2
 failed to delete %1. server responded:	mail	fr	Impossible de supprimer %1.  Le serveur a retourné :
 failed to move %1 ! reason: %2	mail	fr	Impossible de déplacer %1! Motif : 2%
 failed to rename %1 ! reason: %2	mail	fr	Impossible de renommer %1! Motif : 2%
+failed to rename %1 ! reason: %2 is not allowed!	mail	fr	Impossible de renommer %1! Motif : 2% n'est pas autorisé !
 failed to subscribe folder %1!	mail	fr	Impossible de vous abonner au dossier %1!
 failed to unsubscribe folder %1!	mail	fr	Impossible de vous désabonner du dossier %1!
+fetching content of this message failed	mail	fr	Echec à la récupération du contenu de ce message
 file into	mail	fr	Fichier dans
 file into:	mail	fr	Fichier dans :
 file rejected, no %2. is:%1	mail	fr	Fichier rejeté, pas de %2.  Fichiers permis : %1
@@ -244,6 +258,7 @@ forward messages to:	mail	fr	Transférer les messages à
 forward messages:	mail	fr	Transférer les messages
 forward to	mail	fr	Transférer à
 forward to address (*):	mail	fr	Transférer aux adresses (*)
+forwarding of this message failed	mail	fr	Echec lors du transfert de ce message
 forwards	mail	fr	Transférés
 from	mail	fr	De
 from(a->z)	mail	fr	De (A->Z)
@@ -262,7 +277,9 @@ how should the available information on identities be displayed	admin	fr	Comment
 how to forward messages	mail	fr	Comment les messages doivent-ils être transférés ?
 html	mail	fr	Html
 html mode	mail	fr	mode HTML
+i	mail	fr	I
 identity	mail	fr	Identité
+identity label	mail	fr	Label d'identité
 identity+signature	mail	fr	Identité + signature
 if	mail	fr	SI
 if authentication required	mail	fr	Si identification requise
@@ -290,8 +307,10 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	fr	traité
 junk	mail	fr	Indésirables
 junk folder	mail	fr	Dossier des indésirables
+k	mail	fr	K
 keep a copy of the message in your inbox	mail	fr	Garder une copie du message dans votre boite de réception
 kilobytes	mail	fr	kilo-octets
+l	mail	fr	L
 later	mail	fr	Plus tard
 less than	mail	fr	Moins que
 mail	common	fr	Mail
@@ -299,6 +318,7 @@ mail account	mail	fr	Compte mail
 mail acl	mail	fr	ACL Mail
 mail cleanup	mail	fr	Nettoyage de mail
 mail filter	mail	fr	Filtre de mail
+mail filter rule	mail	fr	Règle de filtrre de message
 mail settings	mail	fr	Réglages email
 mail source	mail	fr	Source des emails
 mail-address	mail	fr	Adresse email
@@ -333,6 +353,8 @@ moving folders from one mailaccount to another is not supported	mail	fr	Déplace
 name of account	mail	fr	Nom du compte
 never display html emails	mail	fr	Ne jamais afficher les messages HTML
 never show	mail	fr	Ne jamais afficher
+never show notification	mail	fr	Ne jamais afficher de notifications
+new mail from %1	mail	fr	Nouveau mail de %1
 new mail notification	mail	fr	Notification pour un nouveau message
 new message type	mail	fr	Type de nouveau message
 new subject	mail	fr	Nouveau sujet
@@ -367,8 +389,11 @@ open in html mode	mail	fr	Ouvrir en mode HTML
 open in text mode	mail	fr	Ouvrir en mode texte
 organisation	admin	fr	organisation
 organization	mail	fr	Entreprise
+original email content	mail	fr	Contenu du mail d'origine
 original message	mail	fr	message d'origine
 outbox	mail	fr	Boîte d'envoi
+p	mail	fr	P
+passphrase	mail	fr	mot de passe
 password protect	mail	fr	protection par mot de passe
 permission denied	mail	fr	Permission refusée
 please configure access to an existing individual imap account.	mail	fr	Veuillez configurer l'accès à un compte IMAP individuel existant.
@@ -390,10 +415,13 @@ quicksearch	mail	fr	Recherche Rapide
 quicksearch (with cc)	mail	fr	Recherche rapide (avec les CC)
 quota not provided by server	mail	fr	Quota non indiqué par le serveur
 quota: %1	mail	fr	Quota : %1
+r	mail	fr	R
 read	mail	fr	Lu
 read / unread	mail	fr	Lu / Non lu
 readable	mail	fr	lisible
 real name	mail	fr	Nom réel
+real name email	mail	fr	Non réel [Email]
+real name organization email	mail	fr	Non réel de l'organisation [Email]
 reason!	mail	fr	motif !
 receive notification	mail	fr	Recevoir une notification
 received	mail	fr	Reçu
@@ -424,6 +452,7 @@ reply to	mail	fr	Répondre à
 replyto	mail	fr	Répondre A
 report as ham	mail	fr	Marqué comme HAM
 report as spam	mail	fr	Marqué comme SPAM
+request for passphrase	mail	fr	Demander le mot de passe
 required pear class mail/mimedecode.php not found.	mail	fr	Classe PEAR class Mail/mimeDecode.php non trouvée.
 resend after how many days?	mail	fr	Ré-envoyer après combien de jours ?
 respond to mail sent to:	mail	fr	Répondre à l'email envoyé à :
@@ -433,6 +462,7 @@ row order style	mail	fr	style d'ordonnancement de ligne
 rule priority position	mail	fr	position des règles
 rule with priority	mail	fr	règle avec la priorité
 rules	mail	fr	règles
+s	mail	fr	S
 save all	mail	fr	Enregistrer tout
 save all attachments to filemanager	mail	fr	Enregistrer toutes les pièces jointes vers le gestionnaire de fichiers
 save as calendar	mail	fr	Enregistrer dans le Calendrier
@@ -461,6 +491,7 @@ saving of message %1 succeeded. check folder %2.	mail	fr	Message %1 enregistré.
 saving the rule failed:	mail	fr	Echec à l'enregistrement de la règle :
 security	mail	fr	Sécurité
 see attachments for content of the orignial mail	mail	fr	Voir les pièces jointes pour le contenu du message d'origine
+select a date	mail	fr	Choisir une date
 select all	mail	fr	Tout sélectionner
 select an item to read	mail	fr	Sélectionner un élément à lire
 select file to attach to message	mail	fr	Sélectionner le fichier à joindre au message
@@ -509,6 +540,7 @@ sneak preview in list	mail	fr	Masquer la prévisualisation
 sort order	mail	fr	Ordre de tri
 source	mail	fr	Source
 sources	mail	fr	Sources
+st.	mail	fr	St.
 start	mail	fr	Début
 start new messages with mime type plain/text or html?	mail	fr	Créer les nouveaux messages au format plain/text ou HTML ?
 status:	mail	fr	Statut :
@@ -526,6 +558,7 @@ subscription folders	mail	fr	Abonnement dossiers
 subscription successfully saved.	mail	fr	Abonnement sauvegardé avec succès
 successfully connected	mail	fr	Connecté avec succès !
 switch off encryption?	mail	fr	Désactiver l'encryption
+t	mail	fr	T
 template folder	mail	fr	Dossier de modèles
 templates	mail	fr	Modèles
 templates folder	mail	fr	Dossier de modèles
@@ -565,6 +598,7 @@ validate addresses on submit:	mail	fr	Valider les adresses à la soumission :
 validate selected addresses on submit:	mail	fr	Valider les adresses sélectionnées à la soumission :
 view full mail source	mail	fr	Voir le code source du message
 view header lines	mail	fr	voir les lignes d'entête
+w	mail	fr	W
 what do do with html email	mail	fr	Que faire avec les emails en HTML
 what order the list columns are in	mail	fr	Quel ordre pour les colonnes de la liste ?
 what to do when you delete a message	mail	fr	Ce qu'il faut faire quand vous supprimez un message
@@ -581,6 +615,7 @@ wizard	mail	fr	Assistant
 writable sharing requires epl version!	mail	fr	Les partages ouverts en écriture nécessitent la version EPL !
 write	mail	fr	Ecrire
 wrote	mail	fr	Ecrivait
+x	mail	fr	X
 yes, but mask all passwords	mail	fr	Oui, mais masquer les mots de passe
 yes, but mask all usernames and passwords	mail	fr	Oui, mais masquer les noms d'utilisateur et mots de passe
 yes, offer copy option	mail	fr	oui, proposer une option de copie
@@ -590,3 +625,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	fr	Vous devez enregistrer votre message comme brouillon avant de pouvoir l'enregistrer dans le VFS
 you will loose current message body, unless you save it to your clipboard!	mail	fr	Vous allez perdre le contenu de votre message, sauf si vous l'avez dans votre presse-papier !
 you've got new mail	mail	fr	Vous avez un nouveau message
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	fr	Votre quota restant %1 est trop bas, vous pourriez ne pas pouvoir envoyer/recevoir des emails.\n Bien que nettoyer des mails dans la corbeille ou le dossier des spam peut aider à récupérer de la place.\n Si cela n'aide pas, veuillez contacter votre administrateur.

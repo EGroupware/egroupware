@@ -2,6 +2,7 @@
 %1 accessories restored	resources	fr	%1 accessoire(s) restauré(s)
 %1 resource(s) %2	resources	fr	%1 ressource(s) %2
 %1 resource(s) %2, %3 failed	resources	fr	%1 ressource(s) %2, %3 en échec
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	fr	%1 ressource(s) %2, %3 en échec, pour cause droits insuffisants !!!
 %1 resource(s) booked	resources	fr	%1 ressource(s) réservée(s)
 %1 resource(s) view calendar	resources	fr	%1 ressource(s) Voir le calendrier
 accessories	resources	fr	Accessoires
@@ -15,6 +16,7 @@ add resource	resources	fr	Ajouter une ressource
 add resources	resources	fr	Ajouter des ressources
 administrator	resources	fr	Administrateur
 all categories	resources	fr	Toutes les catégories
+allow booking requests from any user when creating events?	resources	fr	Permettre les demandes de réservation pour n'importe quel utilisateur créant des événements ?
 allow ignore conflicts	admin	fr	Autoriser le fait d'ignorer les conflits
 book	resources	fr	Réserver
 book resource	resources	fr	Réserver une ressouce
@@ -30,6 +32,7 @@ category admin	resources	fr	Administrateur de catégorie
 category saved.	resources	fr	Catégorie enregistrée.
 category:	resources	fr	Catégorie :
 check all	resources	fr	Tout cocher
+choose category admin	resources	fr	Choisir l'administrateur de la catégorie
 clear selection	resources	fr	Vider la sélection
 configure access permissions	admin	fr	Configurer les droits d'accès
 confirmation email text	resources	fr	Texte de l'email de confirmation
@@ -40,6 +43,7 @@ create new links	resources	fr	Créer de nouveaux liens
 custom etemplate for the contactform	resources	fr	eTemplate personnalisé pour le formulaire contact
 custom fields	resources	fr	Champs personnalisés
 days	resources	fr	jours
+delete accessories of selected resources too?	resources	fr	Supprimer aussi les accessoires des ressources sélectionnées ?
 delete selected resources	resources	fr	Supprimer les ressources selectionnées
 delete this entry	resources	fr	Supprimer cette entrée
 deleted	resources	fr	supprimé
@@ -89,10 +93,14 @@ name of resource	resources	fr	Nom de ressource
 name:	resources	fr	Nom :
 new accessory	resources	fr	Nouveaux accessoires
 new resource	resources	fr	Nouvelle resource
+no - leave them	resources	fr	Non - Les laisser
+no - make them resources	resources	fr	Non - Les transformer en ressources
 no description available	resources	fr	Aucune description disponible
 no matches	resources	fr	pas de résutlat
 no resources selected	resources	fr	Aucune ressource choisie
+no, users will need to contact users with direct booking permission	resources	fr	Non, les utilisateurs devront contacter les utilisateurs ayant les droits de réservation directe
 notify your administrator to correct this situation	resources	fr	Informez votre administrateur afin qu'il corrige cette situation.
+party size	resources	fr	Taille de la partie
 picture	resources	fr	Image
 picture source	resources	fr	Source de l'image
 picture type is not supported, sorry!	resources	fr	Type d'image non supporté, désolé !
@@ -109,6 +117,7 @@ read calendar permissions	resources	fr	Lire les permissions de calendrier
 read permissions	resources	fr	Permissions de lecture
 registration confirmed %1	resources	fr	Réservervation confirmée %1
 related links	resources	fr	Liens relatifs
+remove accessories before changing accessory of	resources	fr	Supprimer les accessoires avant de changer "accessoire de"
 require confirmation	resources	fr	Confirmation requise
 reserve	resources	fr	Reserve
 resource	resources	fr	Ressource
@@ -161,8 +170,9 @@ yes - delete accessories too	resources	fr	Oui, supprimer aussi les accessoires
 yes - un-delete accessories too	resources	fr	Oui, dé-supprimer aussi les accessoires
 yes, all users can ignore conflicts	resources	fr	Oui, tous les utilisateurs peuvent utiliser les conflits
 yes, only admins can purge deleted items	admin	fr	Oui, les administrateurs seuls peuvent purger les éléménts supprimés
-yes, users can purge their deleted items	admin	fr	Oui, les utilisateurs  peuvent purger leurs éléments supprimés
+yes, only users with direct booking permission	resources	fr	Oui, seulement les utilisateurs avec les droits de réservation directe.
+yes, users can purge their deleted items	admin	fr	Oui, les utilisateurs peuvent purger leurs éléments supprimés
 you are not permitted to delete this resource!	resources	fr	Vous n'êtes pas autorisé à supprimer cette ressource !
 you are not permitted to edit this resource!	resources	fr	Vous n'êtes pas autorisé à modifier cette ressource !
 you are not permitted to get information about this resource!	resources	fr	Vous n'êtes pas autorisé à obtenir des informations sur cette ressource !
-you chose more resources than available	resources	fr	Vous avez choisi plus de ressources que disponibles
+you chose more resources than available	resources	fr	Vous avez choisi plus de ressources que disponible
