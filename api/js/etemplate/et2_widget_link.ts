@@ -1322,6 +1322,12 @@ export class et2_link extends et2_valueWidget implements et2_IDetachedDOM
 			"type": "string",
 			"default": null,
 			"description": "Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank"
+		},
+		"break_title": {
+			"name": "break title",
+			"type": "string",
+			"default": null,
+			"description": "Breaks title into multiple lines based on selected delimiter by replacing it with '\r\n'"
 		}
 	};
 	public static readonly legacyOptions = ["only_app"];
@@ -1440,6 +1446,7 @@ export class et2_link extends et2_valueWidget implements et2_IDetachedDOM
 				_value.title = "";
 			}
 		}
+		if (this.options.break_title && _value.title) _value.title = _value.title.replace(this.options.break_title, "\r\n");
 		this.set_title(this.link, _value.title);
 	}
 

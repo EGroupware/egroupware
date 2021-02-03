@@ -24,6 +24,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_link_add = exports.et2_link_list = exports.et2_link_string = exports.et2_link = exports.et2_link_entry = exports.et2_link_apps = exports.et2_link_to = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     /vendor/bower-asset/jquery-ui/jquery-ui.js;
@@ -1143,6 +1144,8 @@ var et2_link = /** @class */ (function (_super) {
                 _value.title = "";
             }
         }
+        if (this.options.break_title && _value.title)
+            _value.title = _value.title.replace(this.options.break_title, "\r\n");
         this.set_title(this.link, _value.title);
     };
     /**
@@ -1226,6 +1229,12 @@ var et2_link = /** @class */ (function (_super) {
             "type": "string",
             "default": null,
             "description": "Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank"
+        },
+        "break_title": {
+            "name": "break title",
+            "type": "string",
+            "default": null,
+            "description": "Breaks title into multiple lines based on selected delimiter by replacing it with '\r\n'"
         }
     };
     et2_link.legacyOptions = ["only_app"];
