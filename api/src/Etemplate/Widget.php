@@ -577,12 +577,20 @@ class Widget
 	 */
 	protected function expand_widget(Widget &$child, array &$expand)
 	{
+		$attrs = $child->attrs;
+		unset($attrs['type']);
+		foreach($attrs as $name => &$value)
+		{
+			$value = self::expand_name($value,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+		}
+		if($attrs['attributes'])
+		{
+			$attrs = array_merge($attrs, $attrs['attributes']);
+		}
 		if(strpos($child->attrs['type'], '@') !== false || strpos($child->attrs['type'], '$') !== false)
 		{
 			$type = self::expand_name($child->attrs['type'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 			$id = self::expand_name($child->id,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
-			$attrs = $child->attrs;
-			unset($attrs['type']);
 			$expanded_child = self::factory($type, false,$id);
 			$expanded_child->id = $id;
 			$expanded_child->type = $type;
