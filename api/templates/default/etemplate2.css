@@ -521,8 +521,9 @@ span.et2_date span {
   text-align: center;
   font-size: 9pt;
 }
-span.et2_date_duration input.et2_date_duration{
-	width: 25%;
+span.et2_date_duration input.et2_date_duration {
+	width: 3em;
+    text-align: right;
 }
 span.et2_date_duration span {
     vertical-align: -webkit-baseline-middle;
@@ -2722,7 +2723,7 @@ span.et2_url_span input.et2_fullWidth {
 	float: left;
 }
 .et2_fullWidth select.et2_date_duration {
-	width: 70%;
+	width: 75%;
 	float: right;
 }
 

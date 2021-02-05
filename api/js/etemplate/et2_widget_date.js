@@ -23,6 +23,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_date_range = exports.et2_date_ro = exports.et2_date_duration_ro = exports.et2_date_duration = exports.et2_date = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     /vendor/bower-asset/jquery-ui/jquery-ui.js;
@@ -593,16 +594,17 @@ var et2_date_duration = /** @class */ (function (_super) {
             _this.options.display_format = _this.options.display_format.replace("%", "");
         }
         // Clean formats
-        _this.options.display_format = _this.options.display_format.replace(/[^dhm]/, '');
+        _this.options.display_format = _this.options.display_format.replace(/[^dhms]/, '');
         if (!_this.options.display_format) {
             // @ts-ignore
             _this.options.display_format = _this.attributes.display_format["default"];
         }
         // Get translations
         _this.time_formats = {
-            "d": _this.options.short_labels ? _this.egw().lang("d") : _this.egw().lang("Days"),
-            "h": _this.options.short_labels ? _this.egw().lang("h") : _this.egw().lang("Hours"),
-            "m": _this.options.short_labels ? _this.egw().lang("m") : _this.egw().lang("Minutes")
+            d: _this.options.short_labels ? _this.egw().lang("d") : _this.egw().lang("Days"),
+            h: _this.options.short_labels ? _this.egw().lang("h") : _this.egw().lang("Hours"),
+            m: _this.options.short_labels ? _this.egw().lang("m") : _this.egw().lang("Minutes"),
+            s: _this.options.short_labels ? _this.egw().lang("s") : _this.egw().lang("Seconds")
         },
             _this.createInputWidget();
         return _this;
@@ -611,9 +613,40 @@ var et2_date_duration = /** @class */ (function (_super) {
         // Create nodes
         this.node = jQuery(document.createElement("span"))
             .addClass('et2_date_duration');
-        this.duration = jQuery(document.createElement("input"))
+        var inputs = [];
+        for (var i = this.options.select_unit ? 1 : this.options.display_format.length; i > 0; --i) {
+            var input = document.createElement("input");
+            inputs.push(input);
+            if (!this.options.select_unit) {
+                var attr = { min: 0 };
+                switch (this.options.display_format[this.options.display_format.length - i]) {
+                    case 's':
+                        attr.max = 60;
+                        attr.title = this.egw().lang('Seconds');
+                        break;
+                    case 'm':
+                        attr.max = 60;
+                        attr.title = this.egw().lang('Minutes');
+                        break;
+                    case 'h':
+                        attr.max = 24;
+                        attr.title = this.egw().lang('Hours');
+                        break;
+                    case 'd':
+                        attr.title = this.egw().lang('Days');
+                        break;
+                }
+                jQuery(input).attr(attr);
+            }
+        }
+        this.duration = jQuery(inputs)
             .addClass('et2_date_duration')
-            .attr({ type: 'number', size: 3, step: this.options.step, lang: this.egw().preference('number_format')[0] === "," ? "en-150" : "en-001" });
+            .attr({
+            type: 'number',
+            size: 3,
+            step: this.options.step,
+            lang: this.egw().preference('number_format')[0] === "," ? "en-150" : "en-001"
+        });
         this.node.append(this.duration);
         var self = this;
         // seems the 'invalid' event doesn't work in all browsers, eg. FF therefore
@@ -672,8 +705,40 @@ var et2_date_duration = /** @class */ (function (_super) {
             }
         }
     };
+    et2_date_duration.prototype._unit2seconds = function (_unit) {
+        switch (_unit) {
+            case 's':
+                return 1;
+            case 'm':
+                return 60;
+            case 'h':
+                return 3600;
+            case 'd':
+                return 3600 * this.options.hours_per_day;
+        }
+    };
+    et2_date_duration.prototype._unit_from_value = function (_value, _unit) {
+        _value *= this._unit2seconds(this.data_format);
+        // get value for given _unit
+        switch (_unit) {
+            case 's':
+                return _value % 60;
+            case 'm':
+                return Math.floor(_value / 60) % 60;
+            case 'h':
+                return Math.floor(_value / 3600) % this.options.hours_per_day;
+            case 'd':
+                return Math.floor(_value / 3600 * this.options.hours_per_day);
+        }
+    };
     et2_date_duration.prototype.set_value = function (_value) {
         this.options.value = _value;
+        if (!this.options.select_unit && this.options.display_format.length > 1) {
+            for (var i = this.options.display_format.length; --i >= 0;) {
+                jQuery(this.duration[i]).val(this._unit_from_value(_value, this.options.display_format[i]));
+            }
+            return;
+        }
         var display = this._convert_to_display(parseFloat(_value));
         // Set display
         if (this.duration[0].nodeName == "INPUT") {
@@ -699,13 +764,18 @@ var et2_date_duration = /** @class */ (function (_super) {
             this.format = null;
         }
         this.options.display_format = format;
-        if ((this.format == null || this.format.is('select')) && (this.options.display_format.length <= 1 || this.options.readonly)) {
+        if ((this.format == null || this.format.is('select')) &&
+            (this.options.display_format.length <= 1 || this.options.readonly || !this.options.select_unit)) {
             if (this.format) {
                 this.format.remove();
             }
             this.format = jQuery(document.createElement('span')).appendTo(this.node);
         }
-        if (this.options.display_format.length > 1 && !this.options.readonly) {
+        if (!this.options.select_unit && this.options.display_format.length > 1) {
+            // no unit selection or display
+            this.format.hide();
+        }
+        else if (this.options.display_format.length > 1 && !this.options.readonly) {
             if (this.format && !this.format.is('select')) {
                 this.format.remove();
                 this.format = null;
@@ -735,6 +805,20 @@ var et2_date_duration = /** @class */ (function (_super) {
      * @return Object {value: Value in display format, unit: unit for display}
      */
     et2_date_duration.prototype._convert_to_display = function (_value) {
+        if (!this.options.select_unit) {
+            var vals = [];
+            for (var i = 0; i < this.options.display_format.length; ++i) {
+                var unit = this.options.display_format[i];
+                var val = this._unit_from_value(_value, unit);
+                if (unit === 's' || unit === 'm' || unit === 'h' && this.options.display_format[0] === 'd') {
+                    vals.push(sprintf('%02d', val));
+                }
+                else {
+                    vals.push(val);
+                }
+            }
+            return { value: vals.join(':'), unit: '' };
+        }
         if (_value) {
             // Put value into minutes for further processing
             switch (this.options.data_format) {
@@ -743,6 +827,9 @@ var et2_date_duration = /** @class */ (function (_super) {
                 // fall-through
                 case 'h':
                     _value *= 60;
+                    break;
+                case 's':
+                    _value /= 60.0;
                     break;
             }
         }
@@ -770,6 +857,16 @@ var et2_date_duration = /** @class */ (function (_super) {
      * Change displayed value into storage value and return
      */
     et2_date_duration.prototype.getValue = function () {
+        if (!this.options.select_unit && this.options.display_format.length > 1) {
+            var value_1 = 0;
+            for (var i = this.options.display_format.length; --i >= 0;) {
+                value_1 += parseInt(jQuery(this.duration[i]).val()) * this._unit2seconds(this.options.display_format[i]);
+            }
+            if (this.options.data_format !== 's') {
+                value_1 /= this._unit2seconds(this.options.data_format);
+            }
+            return this.options.data_format === 'm' ? Math.round(value_1) : value_1;
+        }
         var value = this.duration.val().replace(',', '.');
         if (value === '') {
             return this.options.empty_not_0 ? '' : 0;
@@ -784,13 +881,18 @@ var et2_date_duration = /** @class */ (function (_super) {
                 break;
         }
         // Minutes should be an integer.  Floating point math.
-        value = Math.round(value);
+        if (this.options.data_format !== 's') {
+            value = Math.round(value);
+        }
         switch (this.options.data_format) {
             case 'd':
                 value /= this.options.hours_per_day;
             // fall-through
             case 'h':
                 value /= 60.0;
+                break;
+            case 's':
+                value = Math.round(value * 60.0);
                 break;
         }
         return value;
@@ -800,13 +902,19 @@ var et2_date_duration = /** @class */ (function (_super) {
             "name": "Data format",
             "default": "m",
             "type": "string",
-            "description": "Units to read/store the data.  'd' = days (float), 'h' = hours (float), 'm' = minutes (int)."
+            "description": "Units to read/store the data.  'd' = days (float), 'h' = hours (float), 'm' = minutes (int), 's' = seconds (int)."
         },
         "display_format": {
             "name": "Display format",
             "default": "dhm",
             "type": "string",
-            "description": "Permitted units for displaying the data.  'd' = days, 'h' = hours, 'm' = minutes.  Use combinations to give a choice.  Default is 'dh' = days or hours with selectbox."
+            "description": "Permitted units for displaying the data.  'd' = days, 'h' = hours, 'm' = minutes, 's' = seconds.  Use combinations to give a choice.  Default is 'dh' = days or hours with selectbox."
+        },
+        "select_unit": {
+            "name": "Select unit or input per unit",
+            "default": true,
+            "type": "boolean",
+            "description": "Display a unit-selection for multiple units, or an input field per unit."
         },
         "percent_allowed": {
             "name": "Percent allowed",

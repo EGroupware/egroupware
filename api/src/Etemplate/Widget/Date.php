@@ -155,7 +155,7 @@ class Date extends Transformer
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
 
-			if($value)
+			if ($value && $this->type !== 'date-duration')
 			{
 				try
 				{
@@ -233,7 +233,11 @@ class Date extends Transformer
 					$value = $max;
 				}
 			}
-			if(!$value)
+			if ($this->type == 'date-duration')
+			{
+				$valid = (string)$value === '' ? '' : (int)$value;
+			}
+			elseif(!$value)
 			{
 				// Not null, blank
 				$value = '';

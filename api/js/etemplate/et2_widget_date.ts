@@ -662,13 +662,19 @@ export class et2_date_duration extends et2_date
 			"name": "Data format",
 			"default": "m",
 			"type": "string",
-			"description": "Units to read/store the data.  'd' = days (float), 'h' = hours (float), 'm' = minutes (int)."
+			"description": "Units to read/store the data.  'd' = days (float), 'h' = hours (float), 'm' = minutes (int), 's' = seconds (int)."
 		},
 		"display_format": {
 			"name": "Display format",
 			"default": "dhm",
 			"type": "string",
-			"description": "Permitted units for displaying the data.  'd' = days, 'h' = hours, 'm' = minutes.  Use combinations to give a choice.  Default is 'dh' = days or hours with selectbox."
+			"description": "Permitted units for displaying the data.  'd' = days, 'h' = hours, 'm' = minutes, 's' = seconds.  Use combinations to give a choice.  Default is 'dh' = days or hours with selectbox."
+		},
+		"select_unit": {
+			"name": "Select unit or input per unit",
+			"default": true,
+			"type": "boolean",
+			"description": "Display a unit-selection for multiple units, or an input field per unit."
 		},
 		"percent_allowed": {
 			"name": "Percent allowed",
@@ -704,7 +710,7 @@ export class et2_date_duration extends et2_date
 
 	public static readonly legacyOptions: string[] = ["data_format","display_format", "hours_per_day", "empty_not_0", "short_labels"];
 
-	time_formats: {"d":"d","h":"h","m":"m"};
+	time_formats: {d:"d", h:"h", m:"m", s:"s"};
 
 	// @ts-ignore baseWidget defines node as HTMLElement
 	node: JQuery;
@@ -727,7 +733,7 @@ export class et2_date_duration extends et2_date
 		}
 
 		// Clean formats
-		this.options.display_format = this.options.display_format.replace(/[^dhm]/,'');
+		this.options.display_format = this.options.display_format.replace(/[^dhms]/,'');
 		if(!this.options.display_format)
 		{
 			// @ts-ignore
@@ -736,9 +742,10 @@ export class et2_date_duration extends et2_date
 
 		// Get translations
 		this.time_formats = {
-			"d": this.options.short_labels ? this.egw().lang("d") : this.egw().lang("Days"),
-			"h": this.options.short_labels ? this.egw().lang("h") : this.egw().lang("Hours"),
-			"m": this.options.short_labels ? this.egw().lang("m") : this.egw().lang("Minutes")
+			d: this.options.short_labels ? this.egw().lang("d") : this.egw().lang("Days"),
+			h: this.options.short_labels ? this.egw().lang("h") : this.egw().lang("Hours"),
+			m: this.options.short_labels ? this.egw().lang("m") : this.egw().lang("Minutes"),
+			s: this.options.short_labels ? this.egw().lang("s") : this.egw().lang("Seconds")
 		},
 		this.createInputWidget();
 	}
@@ -748,9 +755,43 @@ export class et2_date_duration extends et2_date
 		// Create nodes
 		this.node = jQuery(document.createElement("span"))
 						.addClass('et2_date_duration');
-		this.duration = jQuery(document.createElement("input"))
+		let inputs = [];
+		for (let i=this.options.select_unit?1:this.options.display_format.length; i > 0; --i)
+		{
+			let input = document.createElement("input");
+			inputs.push(input);
+			if (!this.options.select_unit)
+			{
+				let attr :any = {min : 0};
+				switch(this.options.display_format[this.options.display_format.length-i])
+				{
+					case 's':
+						attr.max = 60;
+						attr.title = this.egw().lang('Seconds');
+						break;
+					case 'm':
+						attr.max = 60;
+						attr.title = this.egw().lang('Minutes');
+						break;
+					case 'h':
+						attr.max = 24;
+						attr.title = this.egw().lang('Hours');
+						break;
+					case 'd':
+						attr.title = this.egw().lang('Days');
+						break;
+				}
+				jQuery(input).attr(attr);
+			}
+		}
+		this.duration = jQuery(inputs)
 						.addClass('et2_date_duration')
-						.attr({type: 'number', size: 3, step:this.options.step, lang: this.egw().preference('number_format')[0] === "," ? "en-150": "en-001"});
+						.attr({
+							type: 'number',
+							size: 3,
+							step:this.options.step,
+							lang: this.egw().preference('number_format')[0] === "," ? "en-150": "en-001"
+						});
 		this.node.append(this.duration);
 
 		var self = this;
@@ -827,9 +868,50 @@ export class et2_date_duration extends et2_date
 		}
 	}
 
+	private _unit2seconds(_unit)
+	{
+		switch(_unit)
+		{
+			case 's':
+				return 1;
+			case 'm':
+				return 60;
+			case 'h':
+				return 3600;
+			case 'd':
+				return 3600 * this.options.hours_per_day;
+		}
+	}
+
+	private _unit_from_value(_value, _unit)
+	{
+		_value *= this._unit2seconds(this.data_format);
+		// get value for given _unit
+		switch(_unit)
+		{
+			case 's':
+				return _value % 60;
+			case 'm':
+				return Math.floor(_value / 60) % 60;
+			case 'h':
+				return Math.floor(_value / 3600) % this.options.hours_per_day;
+			case 'd':
+				return Math.floor(_value / 3600*this.options.hours_per_day);
+		}
+	}
+
 	set_value(_value)
 	{
 		this.options.value = _value;
+
+		if (!this.options.select_unit && this.options.display_format.length > 1)
+		{
+			for (let i = this.options.display_format.length; --i >= 0;)
+			{
+				jQuery(this.duration[i]).val(this._unit_from_value(_value, this.options.display_format[i]));
+			}
+			return;
+		}
 
 		var display = this._convert_to_display(parseFloat(_value));
 
@@ -865,7 +947,8 @@ export class et2_date_duration extends et2_date
             this.format = null;
         }
         this.options.display_format = format;
-        if((this.format == null || this.format.is('select')) && (this.options.display_format.length <= 1 || this.options.readonly))
+        if((this.format == null || this.format.is('select')) &&
+			(this.options.display_format.length <= 1 || this.options.readonly || !this.options.select_unit))
         {
 			if (this.format)
 			{
@@ -873,7 +956,12 @@ export class et2_date_duration extends et2_date
 			}
         	this.format = jQuery(document.createElement('span')).appendTo(this.node);
 		}
-        if(this.options.display_format.length > 1 && !this.options.readonly)
+        if (!this.options.select_unit && this.options.display_format.length > 1)
+		{
+			// no unit selection or display
+			this.format.hide();
+		}
+        else if(this.options.display_format.length > 1 && !this.options.readonly)
 		{
 			if(this.format && !this.format.is('select')) {
 				this.format.remove();
@@ -910,6 +998,24 @@ export class et2_date_duration extends et2_date
 	 */
 	_convert_to_display(_value)
 	{
+		if (!this.options.select_unit)
+		{
+			let vals = [];
+			for (let i=0; i < this.options.display_format.length; ++i)
+			{
+				let unit = this.options.display_format[i];
+				let val = this._unit_from_value(_value, unit);
+				if (unit === 's' || unit === 'm' || unit === 'h' && this.options.display_format[0] === 'd' )
+				{
+					vals.push(sprintf('%02d', val));
+				}
+				else
+				{
+					vals.push(val);
+				}
+			}
+			return {value: vals.join(':'), unit: ''};
+		}
 		if (_value)
 		{
 			// Put value into minutes for further processing
@@ -920,6 +1026,9 @@ export class et2_date_duration extends et2_date
 					// fall-through
 				case 'h':
 					_value *= 60;
+					break;
+				case 's':
+					_value /= 60.0;
 					break;
 			}
 		}
@@ -955,6 +1064,19 @@ export class et2_date_duration extends et2_date
 	 */
 	getValue()
 	{
+		if (!this.options.select_unit && this.options.display_format.length > 1)
+		{
+			let value = 0;
+			for(let i=this.options.display_format.length; --i >= 0; )
+			{
+				value += parseInt(<string>jQuery(this.duration[i]).val()) * this._unit2seconds(this.options.display_format[i]);
+			}
+			if (this.options.data_format !== 's')
+			{
+				value /= this._unit2seconds(this.options.data_format);
+			}
+			return this.options.data_format === 'm' ? Math.round(value) : value;
+		}
 		var value = this.duration.val().replace(',', '.');
 		if(value === '')
 		{
@@ -971,8 +1093,10 @@ export class et2_date_duration extends et2_date
 				break;
 		}
 		// Minutes should be an integer.  Floating point math.
-		value = Math.round(value);
-
+		if (this.options.data_format !== 's')
+		{
+			value = Math.round(value);
+		}
 		switch(this.options.data_format)
 		{
 			case 'd':
@@ -980,6 +1104,9 @@ export class et2_date_duration extends et2_date
 				// fall-through
 			case 'h':
 				value /= 60.0;
+				break;
+			case 's':
+				value = Math.round(value * 60.0);
 				break;
 		}
 		return value;
