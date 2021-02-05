@@ -172,7 +172,7 @@ move into folder	filemanager	nl	Verplaats naar map
 move to	filemanager	nl	Verplaats naar
 moved %1 to %2	filemanager	nl	%1 verplaatst naar %2
 name of current user, all other contact fields are valid too	filemanager	nl	Naam van de huidige gebruiker, alle andere contactvelden zijn ook geldig
-new directory	filemanager	nl	Nieuwe map
+new directory	common	nl	Nieuwe map
 no access	filemanager	nl	Geen toegang
 no files in this directory.	filemanager	nl	Geen bestanden in deze directory.
 no preview available	filemanager	nl	Geen afdrukvoorbeeld beschikbaar

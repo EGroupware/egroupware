@@ -154,7 +154,7 @@ move into folder	filemanager	pt-br	Mover para pasta
 move to	filemanager	pt-br	Mover para
 moved %1 to %2	filemanager	pt-br	%1 movido para %2
 name of current user, all other contact fields are valid too	filemanager	pt-br	Nome do usuário atual, todos outros campos são válidos também
-new directory	filemanager	pt-br	Novo diretório
+new directory	common	pt-br	Novo diretório
 no access	filemanager	pt-br	Sem acesso
 no files in this directory.	filemanager	pt-br	Nenhum arquivo neste diretório
 no preview available	filemanager	pt-br	Pré-visualização indisponível

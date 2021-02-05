@@ -73,7 +73,7 @@ attachments	mail	de	Dateien
 attachments, ...	mail	de	Anhänge, ...
 authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r would you like to proceed?	mail	de	Wenn Sie alle ausgewählten Dateien als %1-Modus hinzufügen, werden auch alle in der Liste vorhandenen Anhänge in den %2-Modus geändert.  \n\r \n\r Wollen Sie fortfahren?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	de	Wenn Sie alle ausgewählten Dateien als %1-Modus hinzufügen, werden auch alle in der Liste vorhandenen Anhänge in den %2-Modus geändert.  \n \n Wollen Sie fortfahren?
 be aware that all attachments will be sent as %1!	mail	de	Beachten Sie, dass alle Anhänge als %1 gesendet werden!
 before reply, visible during compose	mail	de	Vor dem zitierten Text, sichtbar während der Bearbeitung
 blacklisted mails are marked as spam	mail	de	E-Mail-Adressen, die in die Blacklist eingetragen werden, werden als Spam markiert

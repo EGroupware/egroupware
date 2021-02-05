@@ -199,7 +199,7 @@ move into folder	filemanager	fr	Déplacer vers un dossier
 move to	filemanager	fr	Déplacer dans
 moved %1 to %2	filemanager	fr	Déplacé %1 dans %2
 name of current user, all other contact fields are valid too	filemanager	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
-new directory	filemanager	fr	Nouveau répertoire
+new directory	common	fr	Nouveau répertoire
 no access	filemanager	fr	Pas d'accès
 no files in this directory.	filemanager	fr	Pas de fichiers dans ce répertoire.
 no preview available	filemanager	fr	Aucune prévisualisation disponible.

@@ -190,7 +190,7 @@ move into folder	filemanager	bg	Преместване в папка
 move to	filemanager	bg	Премести в
 moved %1 to %2	filemanager	bg	%1 е преместен в %2
 name of current user, all other contact fields are valid too	filemanager	bg	Име на текущия потребител, останалите полета на контакта също са валидни
-new directory	filemanager	bg	Нова директория
+new directory	common	bg	Нова директория
 no access	filemanager	bg	Няма достъп
 no files in this directory.	filemanager	bg	В тази директория няма файлове
 no preview available	filemanager	bg	Няма възможност за преглед

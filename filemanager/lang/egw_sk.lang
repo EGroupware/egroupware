@@ -194,7 +194,7 @@ move into folder	filemanager	sk	Presunúť do priečinka
 move to	filemanager	sk	Presunúť do
 moved %1 to %2	filemanager	sk	Presunuté %1 do %2
 name of current user, all other contact fields are valid too	filemanager	sk	Meno súčasného používateľa, ostatné kontaktné polia sú tiež platné.
-new directory	filemanager	sk	Nový priečinok
+new directory	common	sk	Nový priečinok
 no access	filemanager	sk	Bez prístupu
 no files in this directory.	filemanager	sk	Žiadne súbory v tomto priečinku.
 no preview available	filemanager	sk	Nie je k dispozícii žiadny náhľad

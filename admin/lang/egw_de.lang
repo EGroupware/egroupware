@@ -214,6 +214,9 @@ check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überpr�
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
 children	admin	de	Kinder
 clear cache and register hooks	admin	de	Cache löschen und Hooks registrieren
+clear credentials	admin	de	Anmeldeinformationen löschen
+clear security tokens	admin	de	Sicherheits-Tokens löschen
+clear mail credentials	admin	de	Mail-Anmeldeinformationen löschen
 click to select a color	admin	de	Anklicken um eine Farbe auszuwählen
 color	admin	de	Farbe
 comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	de	Komma getrennte Liste von IP Adressen die nicht blockiert werden (:optional Anzahl Fehlversuche)

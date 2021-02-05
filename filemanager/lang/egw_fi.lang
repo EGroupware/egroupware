@@ -154,7 +154,7 @@ move into folder	filemanager	fi	Siirrä kansioon
 move to	filemanager	fi	Siirrä
 moved %1 to %2	filemanager	fi	%1 siirrettiin %2
 name of current user, all other contact fields are valid too	filemanager	fi	Nykyisen käyttäjän nimi, myös muut yhteystietokentät ovat voimassa.
-new directory	filemanager	fi	Uusi kansio
+new directory	common	fi	Uusi kansio
 no access	filemanager	fi	Ei pääsyä
 no files in this directory.	filemanager	fi	Kansiossa ei ole tiedostoja
 no preview available	filemanager	fi	Esikatselu ei ole käytössä

@@ -902,7 +902,7 @@ app.classes.mail = AppJS.extend(
 							}
 						},
 						this.egw.lang(
-							'Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r Would you like to proceed?',
+							'Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. Would you like to proceed?',
 							filemode_label, filemode_label),
 						this.egw.lang('Add files as %1', filemode_label), '', et2_dialog.BUTTONS_YES_NO, et2_dialog.WARNING_MESSAGE);
 						return;

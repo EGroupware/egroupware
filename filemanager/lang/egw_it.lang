@@ -198,7 +198,7 @@ move into folder	filemanager	it	Sposta nella cartella
 move to	filemanager	it	Sposta in
 moved %1 to %2	filemanager	it	Ho spostato %1 in %2
 name of current user, all other contact fields are valid too	filemanager	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure.
-new directory	filemanager	it	Nuova cartella
+new directory	common	it	Nuova cartella
 no access	filemanager	it	Accesso negato
 no files in this directory.	filemanager	it	Nessun File in questa directory.
 no preview available	filemanager	it	L'anteprima non è disponibile

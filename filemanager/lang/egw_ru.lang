@@ -164,7 +164,7 @@ move	filemanager	ru	Переместить
 move to	filemanager	ru	Переместить в
 moved %1 to %2	filemanager	ru	Перемещено %1 в %2
 name of current user, all other contact fields are valid too	filemanager	ru	Имя текущего пользователя, все остальные поля контакта также верны
-new directory	filemanager	ru	Новый каталог
+new directory	common	ru	Новый каталог
 no access	filemanager	ru	Нет доступа
 no files in this directory.	filemanager	ru	Нет файлов в этом каталоге.
 no preview available	filemanager	ru	Предварительный просмотр невозможен.
