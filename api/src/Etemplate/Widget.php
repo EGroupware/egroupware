@@ -581,6 +581,7 @@ class Widget
 		unset($attrs['type']);
 		foreach($attrs as $name => &$value)
 		{
+			if(!is_string($value)) continue;
 			$value = self::expand_name($value,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 		}
 		if($attrs['attributes'])
