@@ -200,7 +200,7 @@ move into folder	filemanager	es-es	Mover dentro de la carpeta
 move to	filemanager	es-es	Mover a
 moved %1 to %2	filemanager	es-es	Se ha movido %1 a %2
 name of current user, all other contact fields are valid too	filemanager	es-es	Nombre del usuario actual, los demás campos del contacto también son válidos
-new directory	filemanager	es-es	Nuevo directorio
+new directory	common	es-es	Nuevo directorio
 no access	filemanager	es-es	Sin acceso
 no files in this directory.	filemanager	es-es	No hay ficheros en este directorio.
 no preview available	filemanager	es-es	No hay vista previa disponible

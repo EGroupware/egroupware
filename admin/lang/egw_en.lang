@@ -214,6 +214,9 @@ check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
 children	admin	en	Children
 clear cache and register hooks	admin	en	Clear cache and register hooks
+clear credentials	admin	en	Clear credentials
+clear security tokens	admin	en	Clear security tokens
+clear mail credentials	admin	en	Clear mail credentials
 click to select a color	admin	en	Click to select a color
 color	admin	en	Color
 comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	en	Comma-separated IP addresses white-listed from above blocking (:optional number of attempts)

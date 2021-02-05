@@ -213,7 +213,7 @@ move into folder	filemanager	sl	Premakni v mapo
 move to	filemanager	sl	Premakni v
 moved %1 to %2	filemanager	sl	%1 je bilo premaknjeno v %2
 name of current user, all other contact fields are valid too	filemanager	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
-new directory	filemanager	sl	Nva mapa
+new directory	common	sl	Nva mapa
 no	filemanager	sl	Ne
 no access	filemanager	sl	Ni dostopa
 no files in this directory.	filemanager	sl	V tej mapi ni datotek

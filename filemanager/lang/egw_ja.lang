@@ -199,7 +199,7 @@ move into folder	filemanager	ja	フォルダに移動
 move to	filemanager	ja	移動:
 moved %1 to %2	filemanager	ja	%1 を %2 に移動しました。
 name of current user, all other contact fields are valid too	filemanager	ja	現ユーザ名
-new directory	filemanager	ja	新規ディレクトリ
+new directory	common	ja	新規ディレクトリ
 no access	filemanager	ja	アクセス権限無し
 no files in this directory.	filemanager	ja	ファイルがありません。
 no preview available	filemanager	ja	プリビュー無し

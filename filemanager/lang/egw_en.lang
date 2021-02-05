@@ -204,7 +204,7 @@ move into folder	filemanager	en	Move into folder
 move to	filemanager	en	Move to
 moved %1 to %2	filemanager	en	Moved %1 to %2
 name of current user, all other contact fields are valid too	filemanager	en	Name of current user, all other contact fields are valid too
-new directory	filemanager	en	New directory
+new directory	common	en	New directory
 no access	filemanager	en	No access
 no files in this directory.	filemanager	en	No files in this directory.
 no preview available	filemanager	en	No preview available.

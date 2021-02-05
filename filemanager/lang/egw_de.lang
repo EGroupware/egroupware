@@ -204,7 +204,7 @@ move into folder	filemanager	de	Verschieben in Ordner
 move to	filemanager	de	Verschieben nach
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
 name of current user, all other contact fields are valid too	filemanager	de	Name des aktuellen Benutzers, alle anderen Kontakt Felder können Sie hier auch verwenden.
-new directory	filemanager	de	Neues Verzeichnis
+new directory	common	de	Neues Verzeichnis
 no access	filemanager	de	Kein Zugriff
 no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis
 no preview available	filemanager	de	Keine Vorschau verfügbar
