@@ -16,6 +16,7 @@
     egw_action.egw_keymanager;
 */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_dataview_selectionManager = void 0;
 /**
  * The selectioManager is internally used by the et2_dataview_controller class
  * to manage the row selection.
@@ -344,7 +345,7 @@ var et2_dataview_selectionManager = /** @class */ (function () {
                     break;
                 }
             }
-            if (_links) {
+            if (_links.length) {
                 this._attachActionObjectInterface(_entry, null, _entry.uid);
                 this._attachActionObject(_entry, null, _entry.uid, _links, _entry.idx);
             }
