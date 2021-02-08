@@ -1274,6 +1274,18 @@ class Account implements \ArrayAccess
 			Credentials::delete($data['acc_id'], 0, Credentials::ADMIN);
 		}
 
+		// store or delete SpamTitan credentials
+		if ($data['acc_spam_api'] && $data['acc_spam_password'])
+		{
+			Credentials::write($data['acc_id'], $data['acc_spam_api'],
+				$data['acc_spam_password'], Credentials::SPAMTITAN, 0,
+				$data['acc_spam_cred_id']);
+		}
+		else
+		{
+			Credentials::delete($data['acc_id'], 0, Credentials::SPAMTITAN);
+		}
+
 		// store notification folders
 		Notifications::write($data['acc_id'], $data['notify_save_default'] ? 0 :
 			($data['called_for'] ? $data['called_for'] : $GLOBALS['egw_info']['user']['account_id']),

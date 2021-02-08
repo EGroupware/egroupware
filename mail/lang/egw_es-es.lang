@@ -483,8 +483,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	e
 sort order	mail	es-es	Orden en la página
 source	mail	es-es	Fuente
 sources	mail	es-es	Fuentes
-spamtitian api url	mail	es-es	URL del API SpamTitian
-spamtitian integration requires epl version	mail	es-es	La integración de SpamTitan requiere la versión EPL
+spamtitan api url	mail	es-es	URL del API SpamTitan
+spamtitan integration requires epl version	mail	es-es	La integración de SpamTitan requiere la versión EPL
 start new messages with mime type plain/text or html?	mail	es-es	¿Comenzar nuevos mensajes con el tipo MIME plain/text o html?
 step 1: imap - incoming mail	mail	es-es	Paso 1: IMAP - correo entrante
 step 2: folder	mail	es-es	Paso 2: Carpeta

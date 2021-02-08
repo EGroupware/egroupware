@@ -521,8 +521,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	i
 sort order	mail	it	Ordinamento
 source	mail	it	Sorgente
 sources	mail	it	Sorgenti
-spamtitian api url	mail	it	URL della API di spamTitan
-spamtitian integration requires epl version	mail	it	L'integrazione di spamTitan richiede la versione EPL
+spamtitan api url	mail	it	URL della API di spamTitan
+spamtitan integration requires epl version	mail	it	L'integrazione di spamTitan richiede la versione EPL
 start new messages with mime type plain/text or html?	mail	it	Iniziare nuovi messaggi con mime type plain/test o HTML
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	it	Iniziare i messaggi di risposta con mime type plain/text oppure provare a usare il formato mostrato (predefinito)?
 step 1: imap - incoming mail	mail	it	Primo passo: IMAP - posta in arrivo

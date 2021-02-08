@@ -541,8 +541,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	s
 sort order	mail	sk	Usporiadať podľa
 source	mail	sk	Zdroj
 sources	mail	sk	Zdroje
-spamtitian api url	mail	sk	SpamTitan API URL
-spamtitian integration requires epl version	mail	sk	Integrácia so SpamTitan vyžaduje verziu EPL
+spamtitan api url	mail	sk	SpamTitan API URL
+spamtitan integration requires epl version	mail	sk	Integrácia so SpamTitan vyžaduje verziu EPL
 start new messages with mime type plain/text or html?	mail	sk	Vytvárať nové správy pomocou mime typu čistý text, alebo HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	sk	Začínať odpovedacie správy mime typom čistý text alebo html alebo skúsiť použiť zobrazený formát (predvolené)?
 step 1: imap - incoming mail	mail	sk	Krok 1: IMAP - prijatá pošta

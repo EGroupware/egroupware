@@ -579,8 +579,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	e
 sort order	mail	en	Sort order
 source	mail	en	Source
 sources	mail	en	Sources
-spamtitian api url	mail	en	SpamTitian API URL
-spamtitian integration requires epl version	mail	en	SpamTitian integration requires EPL version
+spamtitan api url	mail	en	SpamTitan API URL
+spamtitan integration requires epl version	mail	en	SpamTitan integration requires EPL version
 start new messages with mime type plain/text or html?	mail	en	start new messages with MIME-type plain/text or HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	start reply messages with MIME-type plain/text or HTML or try to use the displayed format (default)?
 step 1: imap - incoming mail	mail	en	Step 1: IMAP - incoming mail

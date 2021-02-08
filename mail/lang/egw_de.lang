@@ -579,8 +579,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	d
 sort order	mail	de	Sortierreihenfolge
 source	mail	de	Quelltext
 sources	mail	de	HTML-Quellcode
-spamtitian api url	mail	de	SpamTitian API URL
-spamtitian integration requires epl version	mail	de	SpamTitian-Integration benötigt die EPL Version
+spamtitan api url	mail	de	SpamTitan API URL
+spamtitan integration requires epl version	mail	de	SpamTitan-Integration benötigt die EPL Version
 start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und Inline-Weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die E-Mail vom Sender ursprünglich verfasst wurde.
 step 1: imap - incoming mail	mail	de	1. Schritt: Posteingang (IMAP) einrichten
