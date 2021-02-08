@@ -1362,7 +1362,7 @@ class admin_mail
 		}
 
 		// If no EPL available, show that in spamtitan blur
-		$content['spamtitan_blur'] = $GLOBALS['egw_info']['user']['apps']['stylite'] ? '' : lang('SpamTitian integration requires EPL version');
+		$content['spamtitan_blur'] = $GLOBALS['egw_info']['user']['apps']['stylite'] ? '' : lang('SpamTitan integration requires EPL version');
 
 		$tpl->exec(static::APP_CLASS.'edit', $content, $sel_options, $readonlys, $content, 2);
 	}

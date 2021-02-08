@@ -234,6 +234,10 @@
 					<description for="acc_spam_api" value="SpamTitan API URL"/>
 					<url id="acc_spam_api" blur="@spamtitan_blur" width="95%" maxlength="128"/>
 				</row>
+				<row>
+					<description for="acc_spam_password" value="API Token"/>
+					<passwd id="acc_spam_password" blur="@spamtitan_blur" width="95%" suggest="24"/>
+				</row>
 			</rows>
 		</grid>
 	</template>

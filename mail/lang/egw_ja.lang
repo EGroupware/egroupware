@@ -539,8 +539,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	j
 sort order	mail	ja	ソート順
 source	mail	ja	メールのソース
 sources	mail	ja	メールのソース
-spamtitian api url	mail	ja	SpamTitian API URL
-spamtitian integration requires epl version	mail	ja	SpamTitian を利用するには EPL 版が必要
+spamtitan api url	mail	ja	SpamTitan API URL
+spamtitan integration requires epl version	mail	ja	SpamTitan を利用するには EPL 版が必要
 start new messages with mime type plain/text or html?	mail	ja	新規メッセージを plain/text で作成しますか？HTMLで作成しますか？
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	ja	返信を plain/text で作成しますか？HTMLで作成しますか？表示中の形式を使用しますか（既定）？
 step 1: imap - incoming mail	mail	ja	ステップ 1: IMAP - 受信メール

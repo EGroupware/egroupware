@@ -75,9 +75,14 @@ class Credentials
 	const COLLABORA = 64;
 
 	/**
+	 * SpamTitan API Token
+	 */
+	const SPAMTITAN = 128;
+
+	/**
 	 * All credentials
 	 */
-	const ALL = self::IMAP|self::SMTP|self::ADMIN|self::SMIME|self::TWOFA;
+	const ALL = self::IMAP|self::SMTP|self::ADMIN|self::SMIME|self::TWOFA|self::SPAMTITAN;
 
 	/**
 	 * Password in cleartext
@@ -126,6 +131,7 @@ class Credentials
 		self::ADMIN => 'acc_imap_admin_',
 		self::SMIME => 'acc_smime_',
 		self::TWOFA => '2fa_',
+		self::SPAMTITAN => 'acc_spam_',
 	);
 
 	/**

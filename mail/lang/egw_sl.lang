@@ -565,8 +565,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	s
 sort order	mail	sl	Način sortiranja
 source	mail	sl	Vir
 sources	mail	sl	Viri
-spamtitian api url	mail	sl	URL za SpamTitian API
-spamtitian integration requires epl version	mail	sl	Integracija SpamTitian zahteva različico EPL
+spamtitan api url	mail	sl	URL za SpamTitan API
+spamtitan integration requires epl version	mail	sl	Integracija SpamTitan zahteva različico EPL
 start new messages with mime type plain/text or html?	mail	sl	Začnem novo sporočilo kot navadno besedilo ali kot HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	sl	začnite odgovarjati s sporočilom mime type plain / text ali html ali poskusite uporabiti prikazano obliko (privzeto)?
 step 1: imap - incoming mail	mail	sl	Korak 1: IMAP - prihajajoča pošta

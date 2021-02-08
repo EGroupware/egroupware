@@ -984,11 +984,23 @@ class mail_ui
 		}
 		if ($GLOBALS['egw_info']['apps']['stylite'] && $this->mail_bo->icServer->acc_spam_api)
 		{
-			stylite_mail_spamtitan::setActionItems($_action, $_items, array(
+			if (strpos($user=$this->mail_bo->icServer->acc_imap_username, '@') === false)
+			{
+				if (!empty($this->mail_bo->icServer->acc_domain))
+				{
+					$user .= '@'.$this->mail_bo->icServer->acc_domain;
+				}
+				else
+				{
+					$user = $this->mail_bo->icServer->ident_email;
+				}
+			}
+			stylite_mail_spamtitan::setActionItems($_action, $_items, $auth=[
+				'user'		=> $user,
 				'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
-				'user'		=> $this->mail_bo->icServer->acc_imap_username,
-				'api_url'	=> $this->mail_bo->icServer->acc_spam_api
-			));
+				'api_url'	=> $this->mail_bo->icServer->acc_spam_api,
+				'api_token'	=> $this->mail_bo->icServer->acc_spam_password,
+			]);
 
 			// sync aliases to SpamTitan when the first spam action in a session is used
 			if (Api\Mail\Account::read($this->mail_bo->profileID)->acc_smtp_type !== 'EGroupware\\Api\\Mail\\Smtp' &&
@@ -996,11 +1008,7 @@ class mail_ui
 			{
 				$data = Api\Mail\Account::read($this->mail_bo->profileID)->smtpServer()->getUserData($GLOBALS['egw_info']['user']['account_id']);
 				if (($m = stylite_mail_spamtitan::setActionItems('sync_aliases',
-					array(array_merge((array)$data['mailLocalAddress'], (array)$data['mailAlternateAddress'])), array(
-					'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
-					'user'		=> $this->mail_bo->icServer->acc_imap_username,
-					'api_url'	=> $this->mail_bo->icServer->acc_spam_api
-				))))
+					array(array_merge((array)$data['mailLocalAddress'], (array)$data['mailAlternateAddress'])), $auth)))
 				{
 					$msg[] = $m;
 				}
