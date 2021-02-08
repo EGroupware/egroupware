@@ -1930,12 +1930,13 @@ class addressbook_ui extends addressbook_bo
 				$order, $extracols, $wildcard,false, $op,[(int)$query['start'], (int)$query['num_rows']], $query['col_filter']);
 
 			// do we need to read the custom fields, depends on the column is enabled and customfields
+			$available_distib_lists=$this->get_lists(Acl::READ);
 			$ids = $calendar_participants = array();
 			if (!$id_only && $rows)
 			{
 				$show_custom_fields = (in_array('customfields',$columselection) || $this->config['index_load_cfs']) && $this->customfields;
 				$show_calendar = $this->config['disable_event_column'] != 'True' && in_array('calendar_calendar',$columselection);
-				$show_distributionlist = in_array('distrib_lists', $columselection) ||
+				$show_distributionlist = in_array('distribution_list', $columselection) ||
 					is_array($available_distib_lists) && count($available_distib_lists);
 				if ($show_calendar || $show_custom_fields || $show_distributionlist)
 				{
