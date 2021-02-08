@@ -462,7 +462,7 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'cred_id' => array('type' => 'auto','nullable' => False),
 			'acc_id' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'into egw_ea_accounts'),
-			'cred_type' => array('type' => 'int','precision' => '1','nullable' => False,'comment' => '&1=imap, &2=smtp, &4=admin'),
+			'cred_type' => array('type' => 'int','precision' => '2','nullable' => False,'comment' => '&1=imap, &2=smtp, &4=admin'),
 			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'account_id or 0=all'),
 			'cred_username' => array('type' => 'varchar','precision' => '80','nullable' => False,'comment' => 'username'),
 			'cred_password' => array('type' => 'varchar','precision' => '16384','comment' => 'password encrypted'),
