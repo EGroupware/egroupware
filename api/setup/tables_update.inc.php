@@ -769,3 +769,16 @@ function api_upgrade20_1_001()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '20.1.002';
 }
+
+function api_upgrade20_1_002()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_credentials','cred_type',array(
+		'type' => 'int',
+		'precision' => '2',
+		'nullable' => False,
+		'comment' => '&1=imap, &2=smtp, &4=admin'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '20.1.003';
+}
+
