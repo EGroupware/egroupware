@@ -500,7 +500,7 @@ export class et2_dataview_selectionManager
 					break;
 				}
 			}
-			if(_links)
+			if(_links.length)
 			{
 				this._attachActionObjectInterface(_entry, null, _entry.uid);
 				this._attachActionObject(_entry, null, _entry.uid, _links, _entry.idx);
