@@ -813,24 +813,30 @@ export class et2_date_duration extends et2_date
 	{
 		var ok = true;
 		// if we have a html5 validation error, show it, as this.input.val() will be empty!
-		if (this.duration && this.duration[0] &&
-			(<HTMLInputElement>this.duration[0]).validationMessage &&
-			!(<HTMLInputElement>this.duration[0]).validity.stepMismatch)
+		for(let i=0; this.duration && i < this.duration.length; ++i)
 		{
-			_messages.push((<HTMLInputElement>this.duration[0]).validationMessage);
-			ok = false;
+			if (this.duration[i] &&
+				(<HTMLInputElement>this.duration[i]).validationMessage &&
+				!(<HTMLInputElement>this.duration[i]).validity.stepMismatch)
+			{
+				_messages.push((<HTMLInputElement>this.duration[i]).validationMessage);
+				ok = false;
+			}
 		}
 		return super.isValid(_messages) && ok;
 	}
 
 	attachToDOM()
 	{
-		var node = this.getInputNode();
-		if (node)
+		if (this.duration)
 		{
-			jQuery(node).bind("change.et2_inputWidget", this, function(e) {
-				e.data.change(this);
-			});
+			for(let i=0; i < this.duration.length; ++i)
+			{
+				let node = this.duration[i];
+				jQuery(node).bind("change.et2_inputWidget", this, function(e) {
+					e.data.change(this);
+				});
+			}
 		}
 		return et2_DOMWidget.prototype.attachToDOM.apply(this, arguments);
 	}

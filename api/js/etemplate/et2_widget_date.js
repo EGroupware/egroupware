@@ -665,20 +665,24 @@ var et2_date_duration = /** @class */ (function (_super) {
     et2_date_duration.prototype.isValid = function (_messages) {
         var ok = true;
         // if we have a html5 validation error, show it, as this.input.val() will be empty!
-        if (this.duration && this.duration[0] &&
-            this.duration[0].validationMessage &&
-            !this.duration[0].validity.stepMismatch) {
-            _messages.push(this.duration[0].validationMessage);
-            ok = false;
+        for (var i = 0; this.duration && i < this.duration.length; ++i) {
+            if (this.duration[i] &&
+                this.duration[i].validationMessage &&
+                !this.duration[i].validity.stepMismatch) {
+                _messages.push(this.duration[i].validationMessage);
+                ok = false;
+            }
         }
         return _super.prototype.isValid.call(this, _messages) && ok;
     };
     et2_date_duration.prototype.attachToDOM = function () {
-        var node = this.getInputNode();
-        if (node) {
-            jQuery(node).bind("change.et2_inputWidget", this, function (e) {
-                e.data.change(this);
-            });
+        if (this.duration) {
+            for (var i = 0; i < this.duration.length; ++i) {
+                var node = this.duration[i];
+                jQuery(node).bind("change.et2_inputWidget", this, function (e) {
+                    e.data.change(this);
+                });
+            }
         }
         return et2_core_DOMWidget_1.et2_DOMWidget.prototype.attachToDOM.apply(this, arguments);
     };
