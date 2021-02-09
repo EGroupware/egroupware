@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_calendar_planner = void 0;
 /*egw:uses
     /calendar/js/et2_widget_view.js;
     /calendar/js/et2_widget_planner_row.js;

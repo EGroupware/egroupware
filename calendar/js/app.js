@@ -1650,9 +1650,10 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         else if (_action.data.url) {
             var url = _action.data.url;
-            url = url.replace(/(\$|%24)app/, app).replace(/(\$|%24)app_id/, app_id)
+            url = url.replace(/(\$|%24)app_id/, app_id)
+                .replace(/(\$|%24)app/, app)
                 .replace(/(\$|%24)id/, id);
-            this.egw.open_link(url);
+            this.egw.open_link(url, _action.data.target, _action.data.popup);
         }
     };
     /**
@@ -3572,8 +3573,7 @@ var CalendarApp = /** @class */ (function (_super) {
             // Dates are user time, but we told javascript it was UTC.
             // Send just the timestamp (as a string) with no timezone
             (typeof _data.start != "string" ? _data.start.toJSON() : _data.start).slice(0, -1),
-            (typeof _data.end != "string" ? _data.end.toJSON() : _data.end).slice(0, -1),
-            {
+            (typeof _data.end != "string" ? _data.end.toJSON() : _data.end).slice(0, -1), {
                 participants: Object.keys(_data.participants).filter(function (v) { return v.match(/^[0-9]/); })
             }], function (_value) {
             if (_value) {
