@@ -851,9 +851,10 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $new_event =null Event after the change
 	 * @param int|string $user =0 User/participant who started the notify, default current user
 	 * @param array $alarm =null values for "offset", "start", etc.
+	 * @parqm boolean $ignore_prefs Ignore the user's preferences about when they want to be notified and send it
 	 * @return bool true/false
 	 */
-	function _send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, array $alarm=null)
+	function _send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, array $alarm=null, $ignore_prefs = false)
 	{
 		//error_log(__METHOD__."($msg_type,".array2string($to_notify).",...) ".array2string($new_event));
 		if (!is_array($to_notify))
@@ -1035,7 +1036,7 @@ class calendar_boupdate extends calendar_bo
 					$fullname = $res_info && !empty($res_info['name']) ? $res_info['name'] : $userid;
 				}
 				$m_type = $msg_type;
-				if (!self::update_requested($userid, $part_prefs, $m_type, $old_event, $new_event, $role,
+				if (!$ignore_prefs && !self::update_requested($userid, $part_prefs, $m_type, $old_event, $new_event, $role,
 					$event['participants'][$GLOBALS['egw_info']['user']['account_id']]))
 				{
 					continue;

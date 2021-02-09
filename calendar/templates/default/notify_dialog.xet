@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<overlay>
+	<template id="calendar.notify_dialog" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="88"/>
+				<column width="130"/>
+				<column width="88"/>
+				<column width="130"/>
+				<column width="130"/>
+			</columns>
+			<rows>
+			<row class="dialogHeader" height="28">
+				<description id="title" class="et2_fullWidth" span="4"/>
+				<hbox>
+					<description font_style="n" id="id"/>
+					<appicon/>
+				</hbox>
+			</row>
+			<row class="dialogHeader2" height="28" >
+				<description for="start" value="Start" width="88"/>
+				<date-time id="start" readonly="true"/>
+				<description for="duration" value="Duration" id="calendar_edit_duration" />
+				<select statustext="Duration of the meeting" class="et2_fullWidth" id="duration" no_lang="1" readonly="true" options="Use end date,,,,,,,false"/>
+				<date-time id="end" readonly="true"/>
+			</row>
+			</rows>
+		</grid>
+		<grid width="100%" id="participants">
+			<columns>
+				<column width="85"/>
+				<column width="350"/>
+				<column width="70"/>
+				<column width="100"/>
+				<column/>
+			</columns>
+			<rows>
+				<row></row>
+				<row></row>
+				<row class="th thb">
+					<description value="Type"/>
+					<description value="Participants"/>
+					<description value="Role"/>
+					<description value="Status"/>
+					<description/>
+				</row>
+				<row valign="top">
+					<description id="${row}[app]"/>
+					<description id="${row}[title]" no_lang="1"/>
+					<description id="${row}[role_label]"/>
+					<select id="${row}[status]" readonly="true"/>
+					<checkbox align="center" label="Notify" id="notify[$row_cont[delete_id]]"/>
+				</row>
+			</rows>
+		</grid>
+		<hbox class="dialogFooterToolbar">
+			<button label="OK" id="button[save]" image="mail" background_image="1"/>
+			<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+		</hbox>
+		<styles>
+			.selectRole select { width: 100%; }
+		</styles>
+	</template>
+</overlay>

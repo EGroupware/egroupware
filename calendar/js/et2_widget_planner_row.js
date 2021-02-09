@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_calendar_planner_row = void 0;
 /*egw:uses
     /calendar/js/et2_widget_view.js;
     /calendar/js/et2_widget_daycol.js;
@@ -372,7 +373,7 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
         get: function () {
             return this._date_helper;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     /**

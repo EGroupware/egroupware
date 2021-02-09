@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_calendar_view = void 0;
 var et2_core_valueWidget_1 = require("../../api/js/etemplate/et2_core_valueWidget");
 var et2_core_inheritance_1 = require("../../api/js/etemplate/et2_core_inheritance");
 /**
@@ -278,7 +279,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
         get: function () {
             return this._date_helper;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     et2_calendar_view.prototype._createNamespace = function () {

@@ -42,6 +42,7 @@ class calendar_uiforms extends calendar_ui
 		'cat_acl' => true,
 		'meeting' => true,
 		'mail_import' => true,
+		'notify' => true
 	);
 
 	/**
@@ -1773,90 +1774,14 @@ class calendar_uiforms extends calendar_ui
 		$content['duration'] = $content['end'] - $content['start'];
 		if (isset($this->durations[$content['duration']])) $content['end'] = '';
 
-		$row = 3;
 		$readonlys = $content['participants'] = $preserv['participants'] = array();
 		// preserve some ui elements, if set eg. under error-conditions
 		foreach(array('quantity','resource','role') as $n)
 		{
 			if (isset($event['participants'][$n])) $content['participants'][$n] = $event['participants'][$n];
 		}
-		foreach($event['participant_types'] as $type => $participants)
-		{
-			$name = 'accounts';
-			if (isset($this->bo->resources[$type]))
-			{
-				$name = $this->bo->resources[$type]['app'];
-			}
-			// sort participants (in there group/app) by title
-			uksort($participants, array($this, 'uid_title_cmp'));
-			foreach($participants as $id => $status)
-			{
-				$uid = $type == 'u' ? $id : $type.$id;
-				$quantity = $role = null;
-				calendar_so::split_status($status,$quantity,$role);
-				$preserv['participants'][$row] = $content['participants'][$row] = array(
-					'app'      => $name == 'accounts' ? ($GLOBALS['egw']->accounts->get_type($id) == 'g' ? 'Group' : 'User') : $name,
-					'uid'      => $uid,
-					'status'   => $status,
-					'old_status' => $status,
-					'quantity' => $quantity > 1 || $uid[0] == 'r' ? $quantity : '',	// only display quantity for resources or if > 1
-					'role'     => $role,
-				);
-				// replace iCal roles with a nicer label and remove regular REQ-PARTICIPANT
-				if (isset($this->bo->roles[$role]))
-				{
-					$content['participants'][$row]['role_label'] = lang($this->bo->roles[$role]);
-				}
-				// allow third party apps to use categories for roles
-				elseif(substr($role,0,6) == 'X-CAT-')
-				{
-					$content['participants'][$row]['role_label'] = $GLOBALS['egw']->categories->id2name(substr($role,6));
-				}
-				else
-				{
-					$content['participants'][$row]['role_label'] = lang(str_replace('X-','',$role));
-				}
-				$content['participants'][$row]['delete_id'] = strpbrk($uid,'"\'<>') !== false ? md5($uid) : $uid;
-				//echo "<p>$uid ($quantity): $role --> {$content['participants'][$row]['role']}</p>\n";
+		$this->setup_participants($event,$content,$readonlys,$preserv,$view);
 
-				if (($no_status = !$this->bo->check_status_perms($uid,$event)) || $view)
-					$readonlys['participants'][$row]['status'] = $no_status;
-				if ($preserv['hide_delete'] || !$this->bo->check_perms(Acl::EDIT,$event))
-					$readonlys['participants']['delete'][$uid] = true;
-				// todo: make the participants available as links with email as title
-				$content['participants'][$row++]['title'] = $this->get_title($uid);
-				// enumerate group-invitations, so people can accept/reject them
-				if ($name == 'accounts' && $GLOBALS['egw']->accounts->get_type($id) == 'g' &&
-					($members = $GLOBALS['egw']->accounts->members($id,true)))
-				{
-					$sel_options['status']['G'] = lang('Select one');
-					// sort members by title
-					usort($members, array($this, 'uid_title_cmp'));
-					foreach($members as $member)
-					{
-						if (!isset($participants[$member]) && $this->bo->check_perms(Acl::READ,0,$member))
-						{
-							$preserv['participants'][$row] = $content['participants'][$row] = array(
-								'app'      => 'Group invitation',
-								'uid'      => $member,
-								'status'   => 'G',
-							);
-							$readonlys['participants'][$row]['quantity'] = $readonlys['participants']['delete'][$member] = true;
-							// read access is enough to invite participants, but you need edit rights to change status
-							$readonlys['participants'][$row]['status'] = !$this->bo->check_perms(Acl::EDIT,0,$member);
-							$content['participants'][$row++]['title'] = Api\Accounts::username($member);
-						}
-					}
-				}
-			}
-			// resouces / apps we shedule, atm. resources and addressbook
-			$content['participants']['cal_resources'] = '';
-			foreach($this->bo->resources as $data)
-			{
-				if ($data['app'] == 'email') continue;	// make no sense, as we cant search for email
-				$content['participants']['cal_resources'] .= ','.$data['app'];
-			}
-		}
 		$content['participants']['status_date'] = $preserv['actual_date'];
 		// set notify_externals in participants from cfs
 		if (!empty($event['##notify_externals']))
@@ -2044,6 +1969,98 @@ class calendar_uiforms extends calendar_ui
 			],$preserved['no_popup'] ? 0 : 2);
 		}
 	}
+
+	/**
+	 * Set up the participants for display in edit dialog
+	 *
+	 * @param $event
+	 * @param $content
+	 * @param $readonlys
+	 * @param $preserv
+	 * @param $view
+	 */
+	protected function setup_participants($event, &$content, &$readonlys, &$preserv, $view)
+	{
+		$row = 3;
+		foreach($event['participant_types'] as $type => $participants)
+		{
+			$name = 'accounts';
+			if (isset($this->bo->resources[$type]))
+			{
+				$name = $this->bo->resources[$type]['app'];
+			}
+			// sort participants (in there group/app) by title
+			uksort($participants, array($this, 'uid_title_cmp'));
+			foreach($participants as $id => $status)
+			{
+				$uid = $type == 'u' ? $id : $type.$id;
+				$quantity = $role = null;
+				calendar_so::split_status($status,$quantity,$role);
+				$preserv['participants'][$row] = $content['participants'][$row] = array(
+						'app'      => $name == 'accounts' ? ($GLOBALS['egw']->accounts->get_type($id) == 'g' ? 'Group' : 'User') : $name,
+						'uid'      => $uid,
+						'status'   => $status,
+						'old_status' => $status,
+						'quantity' => $quantity > 1 || $uid[0] == 'r' ? $quantity : '',	// only display quantity for resources or if > 1
+						'role'     => $role,
+				);
+				// replace iCal roles with a nicer label and remove regular REQ-PARTICIPANT
+				if (isset($this->bo->roles[$role]))
+				{
+					$content['participants'][$row]['role_label'] = lang($this->bo->roles[$role]);
+				}
+				// allow third party apps to use categories for roles
+				elseif(substr($role,0,6) == 'X-CAT-')
+				{
+					$content['participants'][$row]['role_label'] = $GLOBALS['egw']->categories->id2name(substr($role,6));
+				}
+				else
+				{
+					$content['participants'][$row]['role_label'] = lang(str_replace('X-','',$role));
+				}
+				$content['participants'][$row]['delete_id'] = strpbrk($uid,'"\'<>') !== false ? md5($uid) : $uid;
+				//echo "<p>$uid ($quantity): $role --> {$content['participants'][$row]['role']}</p>\n";
+
+				if (($no_status = !$this->bo->check_status_perms($uid,$event)) || $view)
+					$readonlys['participants'][$row]['status'] = $no_status;
+				if ($preserv['hide_delete'] || !$this->bo->check_perms(Acl::EDIT,$event))
+					$readonlys['participants']['delete'][$uid] = true;
+				// todo: make the participants available as links with email as title
+				$content['participants'][$row++]['title'] = $this->get_title($uid);
+				// enumerate group-invitations, so people can accept/reject them
+				if ($name == 'accounts' && $GLOBALS['egw']->accounts->get_type($id) == 'g' &&
+						($members = $GLOBALS['egw']->accounts->members($id,true)))
+				{
+					$sel_options['status']['G'] = lang('Select one');
+					// sort members by title
+					usort($members, array($this, 'uid_title_cmp'));
+					foreach($members as $member)
+					{
+						if (!isset($participants[$member]) && $this->bo->check_perms(Acl::READ,0,$member))
+						{
+							$preserv['participants'][$row] = $content['participants'][$row] = array(
+									'app'      => 'Group invitation',
+									'uid'      => $member,
+									'status'   => 'G',
+							);
+							$readonlys['participants'][$row]['quantity'] = $readonlys['participants']['delete'][$member] = true;
+							// read access is enough to invite participants, but you need edit rights to change status
+							$readonlys['participants'][$row]['status'] = !$this->bo->check_perms(Acl::EDIT,0,$member);
+							$content['participants'][$row++]['title'] = Api\Accounts::username($member);
+						}
+					}
+				}
+			}
+			// resouces / apps we shedule, atm. resources and addressbook
+			$content['participants']['cal_resources'] = '';
+			foreach($this->bo->resources as $data)
+			{
+				if ($data['app'] == 'email') continue;	// make no sense, as we cant search for email
+				$content['participants']['cal_resources'] .= ','.$data['app'];
+			}
+		}
+	}
+
 
 	/**
 	 * Remove (shared) lock via ajax, when edit popup get's closed
@@ -3463,5 +3480,36 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		return $this->process_edit($event);
+	}
+
+	public function notify($content=array())
+	{
+		if(is_array($content) && $content['button'])
+		{
+			$participants = array_filter($content['participants']['notify']);
+			$this->bo->_send_update(MSG_ALARM,$participants,$content,null,0,null,true);
+			Framework::window_close();
+		}
+
+		list($id, $date) = explode(':',$_GET['id']);
+		$content = array();
+		$event = $this->bo->read($id, $date);
+		$this->setup_participants($event, $content, $readonlys,$preserve,true);
+		$content = array_merge($event, $content);
+
+		$sel_options = array(
+				'recur_type' => &$this->bo->recur_types,
+				'status'     => $this->bo->verbose_status,
+				'duration'   => $this->durations,
+				'role'       => $this->bo->roles
+		);
+		$readonlys = [];
+
+
+
+		$etpl = new Etemplate('calendar.notify_dialog');
+		$preserve = $content;
+
+		$etpl->exec('calendar.calendar_uiforms.notify', $content, $sel_options, $readonlys, $preserve,2);
 	}
 }

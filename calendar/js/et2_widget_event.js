@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_calendar_event = void 0;
 /*egw:uses
     /etemplate/js/et2_core_valueWidget;
 */
@@ -722,7 +723,6 @@ var et2_calendar_event = /** @class */ (function (_super) {
      * @private
      */
     et2_calendar_event.prototype._status_check = function (event, filter, owner) {
-        var _a;
         if (!owner || !event) {
             return false;
         }
@@ -756,7 +756,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
                     return element.id == owner;
                 }) || {};
                 var matching_participant = typeof resource.resources == "undefined" ?
-                    resource : (_a = resource) === null || _a === void 0 ? void 0 : _a.resources.filter(function (id) { return typeof event.participants[id] != "undefined"; });
+                    resource : resource === null || resource === void 0 ? void 0 : resource.resources.filter(function (id) { return typeof event.participants[id] != "undefined"; });
                 if (matching_participant.length > 0) {
                     return this._status_check(event, filter, matching_participant);
                 }

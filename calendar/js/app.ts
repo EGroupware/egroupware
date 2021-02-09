@@ -1795,9 +1795,10 @@ class CalendarApp extends EgwApp
 		else if (_action.data.url)
 		{
 			var url = _action.data.url;
-			url = url.replace(/(\$|%24)app/,app).replace(/(\$|%24)app_id/,app_id)
-					.replace(/(\$|%24)id/,id);
-			this.egw.open_link(url);
+			url = url.replace(/(\$|%24)app_id/,app_id)
+			         .replace(/(\$|%24)app/,app)
+			         .replace(/(\$|%24)id/,id);
+			this.egw.open_link(url, _action.data.target, _action.data.popup);
 		}
 	}
 
