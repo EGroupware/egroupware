@@ -226,7 +226,7 @@ class admin_ui
 				'group' => ++$group,
 				'popup' => '615x600',
 				'url' => 'menuaction=admin.admin_account.delete&account_id=$id',
-				'allowOnMultiple' => false,
+				'allowOnMultiple' => true,
 			);
 		}
 		//error_log(__METHOD__."() actions=".array2string($actions));

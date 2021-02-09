@@ -308,24 +308,37 @@ class admin_account
 			}
 			else
 			{
-				$content = array('account_id' => (int)$_GET['account_id']);
+				if (strpos($_GET['account_id'],','))
+				{
+					$content = array('account_id' => array_map(function ($c) { return (int)$c; }, explode(',',$_GET['account_id'])));
+				}
+				else
+				{
+					$content = array('account_id' => (int)$_GET['account_id']);
+				}
 			}
 			//error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
 		}
 		if ($GLOBALS['egw']->acl->check('account_access',32,'admin') ||
-			$GLOBALS['egw_info']['user']['account_id'] == $content['account_id'])
+			$GLOBALS['egw_info']['user']['account_id'] == $content['account_id'] ||
+				(is_array($content['account_id']) && in_array($GLOBALS['egw_info']['user']['account_id'], $content['account_id'])	)
+		)
 		{
 			Framework::window_close(lang('Permission denied!!!'));
 		}
 		if ($content['delete'])
 		{
-			$cmd = new admin_cmd_delete_account(array(
-				'account' => $content['account_id'],
-				'new_user' => $content['new_owner'],
-				'is_user' => $content['account_id'] > 0,
-				'change_apps' => $content['delete_apps']
-			) +  (array)$content['admin_cmd']);
-			$msg = $cmd->run();
+			$msg = '';
+			foreach($content['account_id'] as $account_id)
+			{
+				$cmd = new admin_cmd_delete_account(array(
+								'account' => $account_id,
+								'new_user' => $content['new_owner'],
+								'is_user' => $account_id > 0,
+								'change_apps' => $content['delete_apps']
+						) + (array)$content['admin_cmd']);
+				$msg = $cmd->run() . "\n";
+			}
 			if ($content['contact_id'])
 			{
 				Framework::refresh_opener($msg, 'addressbook', $content['contact_id'], 'delete');
@@ -341,41 +354,50 @@ class admin_account
 		$preserve = $content;
 
 		// Get a count of entries owned by the user
-		$counts = $GLOBALS['egw']->accounts->get_account_entry_counts($content['account_id']);
-		foreach($counts as $app => $counts)
+		if(!is_array($content['account_id']))
+		{
+			$counts = $GLOBALS['egw']->accounts->get_account_entry_counts($content['account_id']);
+		}
+		else
+		{
+			$counts = array_fill_keys(array_keys($GLOBALS['egw_info']['apps']),'-');
+		}
+		foreach ($counts as $app => $counts)
 		{
 			$entry = Api\Link::get_registry($app, 'entries');
-			if(!$entry)
+			if (!$entry)
 			{
 				$entry = lang('Entries');
 			}
-			if($counts['total'] && Api\Hooks::exists('deleteaccount', $app))
+			if ($counts['total'] && Api\Hooks::exists('deleteaccount', $app))
 			{
 				$content['delete_apps'][] = $app;
 				$sel_options['delete_apps'][] = array(
-					'value' => $app,
-					'label' => lang($app) . ': ' . $counts['total'] . ' '.$entry
+						'value' => $app,
+						'label' => lang($app) . (is_array($counts) ? (': ' . $counts['total'] . ' ' . $entry) : '')
 				);
 			}
-			else if ($counts['total'])
+			else if (is_array($counts) && $counts['total'])
 			{
 				// These ones don't support the needed hook
 				$content['counts'][] = array(
-					'app' => $app,
-					'count' => $counts['total'] . ' '.$entry
+						'app' => $app,
+						'count' => $counts['total'] . ' ' . $entry
 				);
 			}
 		}
 		// Add filemanager home directory in as special case, hook is in the API
-		if(Api\Vfs::file_exists('/home/'.$GLOBALS['egw']->accounts->id2name($content['account_id'])))
+		if (Api\Vfs::file_exists('/home/' . $GLOBALS['egw']->accounts->id2name($content['account_id'])))
 		{
 			$app = 'filemanager';
 			$sel_options['delete_apps'][] = array(
-				'value' => $app,
-				'label' => lang($app) . ': /home'
+					'value' => $app,
+					'label' => lang($app) . ': /home'
 			);
 			$content['delete_apps'][] = $app;
 		}
+
+		$content['account_id'] = (array)$content['account_id'];
 
 		$tpl = new Etemplate('admin.account.delete');
 		$tpl->exec('admin_account::delete', $content, $sel_options, array(), $preserve, 2);
