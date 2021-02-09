@@ -66,6 +66,9 @@ div.et2_hbox > * {
   margin-right: 5px;
   display: inline-block;
 }
+div.et2_hbox > select {
+    white-space: pre;
+}
 div.et2_hbox > *:empty {
   margin-right: 0;
 }
