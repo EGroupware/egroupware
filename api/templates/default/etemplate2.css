@@ -524,9 +524,19 @@ span.et2_date span {
   text-align: center;
   font-size: 9pt;
 }
-span.et2_date_duration input.et2_date_duration {
+span.et2_date_duration {
+    border: 1px solid gray;
+    border-radius: 3px;
+    display: inline-block;
+}
+span.et2_date_duration .et2_date_duration {
 	width: 3em;
     text-align: right;
+    border: none;
+    outline: none;
+}
+span.et2_date_duration :not(input:first-child) {
+    border-left: 1px solid #e0e0e0a8;
 }
 span.et2_date_duration span {
     vertical-align: -webkit-baseline-middle;

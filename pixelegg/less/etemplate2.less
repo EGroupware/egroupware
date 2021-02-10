@@ -169,6 +169,12 @@ span.et2_date input.et2_date {
 span.et2_date span {
     color: @gray_0;
 }
+span.et2_date_duration {
+	border: 1px solid @gray_10;
+}
+span.et2_date_duration :not(input:first-child) {
+	border-left: 1px solid @gray_5;
+}
 
 .ui-datepicker .ui-datepicker-buttonpane button[data-handler="today"] {
     background-image: url(../images/bullet.svg);
