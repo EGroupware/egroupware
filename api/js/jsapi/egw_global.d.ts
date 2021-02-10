@@ -980,11 +980,12 @@ declare interface IegwWndLocal extends IegwGlobal
 	 *			onshow: // Callback function dispatches when notification is shown
 	 *			onclose: // Callback function dispateches on notification close
 	 *			onerror: // Callback function dispatches on error, default is a egw.debug log
+	 *		    requireInteraction: // boolean value indicating that a notification should remain active until the user clicks or dismisses it
 	 *		}
 	 *	@return {boolean} false if Notification is not supported by browser
 	 */
-	notification(_title : string, _options : {dir?: "ltr"|"rtl"|"auto", lang: string, body?: string, icon?: string,
-		tag?: string, onclick: Function, onshow?: Function, onclose?: Function, onerror?: Function}) : false|void;
+	notification(_title : string, _options : {dir?: "ltr"|"rtl"|"auto", lang?: string, body?: string, icon?: string,
+		tag?: string, onclick: Function, onshow?: Function, onclose?: Function, onerror?: Function, requireInteraction?: boolean}) : false|void;
 	/**
 	 * Check Notification availability by browser
 	 *

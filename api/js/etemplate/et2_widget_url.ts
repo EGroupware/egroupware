@@ -25,7 +25,7 @@ import {et2_valueWidget} from "./et2_core_valueWidget";
  *
  * @augments et2_textbox
  */
-class et2_url extends et2_textbox
+export class et2_url extends et2_textbox
 {
 	static readonly _attributes : any = {
 		"multiline": {
@@ -306,7 +306,7 @@ et2_register_widget(et2_url, ["url", "url-email", "url-phone", "url-fax"]);
 *
 * @augments et2_valueWidget
 */
-class et2_url_ro extends et2_valueWidget
+export class et2_url_ro extends et2_valueWidget
 {
 	static readonly _attributes : any = {
 		"contact_plus": {

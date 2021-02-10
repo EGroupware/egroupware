@@ -23,6 +23,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_url_ro = exports.et2_url = void 0;
 /*egw:uses
     et2_textbox;
     et2_valueWidget;
@@ -281,6 +282,7 @@ var et2_url = /** @class */ (function (_super_1) {
     et2_url.EMAIL_PREG = new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|"(?:[^"\\]|\\.)*")\s?<)?[^\x00-\x20()\xe2\x80\x8b<>@,;:\042\[\]\x80-\xff]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/i);
     return et2_url;
 }(et2_widget_textbox_1.et2_textbox));
+exports.et2_url = et2_url;
 et2_core_widget_1.et2_register_widget(et2_url, ["url", "url-email", "url-phone", "url-fax"]);
 /**
 * et2_url_ro is the readonly implementation of the url, email & phone.
@@ -472,5 +474,6 @@ var et2_url_ro = /** @class */ (function (_super_1) {
     et2_url_ro.email_cache = [];
     return et2_url_ro;
 }(et2_core_valueWidget_1.et2_valueWidget));
+exports.et2_url_ro = et2_url_ro;
 et2_core_widget_1.et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro", "url-fax_ro"]);
 //# sourceMappingURL=et2_widget_url.js.map
