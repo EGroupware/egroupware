@@ -404,6 +404,16 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				event_ids.splice(i--,1);
 			}
 		}
+
+		if(!this.div.is(":visible"))
+		{
+			// Not visible, defer the layout or it all winds up at the top
+			// Cancel any existing listener & bind
+			jQuery(this.getInstanceManager().DOMContainer.parentNode)
+				.off('show.et2_daycol'+this.id)
+				.one('show.et2_daycol'+this.id, function() {this._update_events(events)}.bind(this));
+			return;
+		}
 		if(!this.getParent().disabled)
 			this._update_events(events);
 	}
