@@ -158,6 +158,10 @@ div.calendar_conflicts {
 	width: 22px;
 	height: 22px;
 }
+.calendar_conflicts table[id*="conflicting_participants"] > tbody > tr.r .et2_label {
+    /* Color for resources */
+    color: blue;
+}
 
 /* Loader - hide sizing behind overlay*/
 #egw-loadin-prompt_calendar::before {

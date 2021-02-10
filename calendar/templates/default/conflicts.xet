@@ -19,7 +19,21 @@
 						<description id="conflicts[$row][time]" no_lang="1"/>
 						<vbox statustext="conflict[$row][tooltip]" statustext_html="true" orient=",0,0">
 							<description id="conflicts[$row][title]" no_lang="1" options="b"/>
-							<description id="conflicts[$row][conflicting_participants]" no_lang="1"/>
+							<grid id="conflicts[$row][conflicting_participants]">
+								<columns>
+									<column width="30"/>
+									<column/>
+								</columns>
+								<rows>
+									<row class="$row_cont[type]">
+										<hbox>
+											<appicon src="$row_cont[app]" disabled="$row_cont[type]=u"/>
+										</hbox>
+										<description value="$row_cont[name]"  no_lang="1"/>
+
+									</row>
+								</rows>
+							</grid>
 						</vbox>
 					</row>
 				</rows>

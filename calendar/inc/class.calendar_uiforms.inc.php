@@ -2420,13 +2420,26 @@ class calendar_uiforms extends calendar_ui
 		{
 			$is_readable = $this->bo->check_perms(Acl::READ,$conflict);
 
+			$conflict_participants = $this->bo->participants(array(
+					'participants' => array_intersect_key((array)$conflict['participants'],$event['participants']),
+				),true,true);// show group invitations too
+			$conflict_participant_list = [];
+			foreach($conflict_participants as $c_id => $c_name)
+			{
+				$res_info = $this->bo->resource_info($c_id);
+
+				$conflict_participant_list[] = array(
+					'id' => $c_id,
+					'name' => $c_name,
+					'app' => $res_info['app'],
+					'type' => $res_info['type']
+				);
+			}
 			$conflicts[$k] += array(
 				'icon_participants' => $is_readable ? (count($conflict['participants']) > 1 ? 'users' : 'single') : 'private',
 				'tooltip_participants' => $is_readable ? implode(', ',$this->bo->participants($conflict)) : '',
 				'time' => $this->bo->long_date($conflict['start'],$conflict['end'],true),
-				'conflicting_participants' => implode(",\n",$this->bo->participants(array(
-					'participants' => array_intersect_key((array)$conflict['participants'],$event['participants']),
-				),true,true)),	// show group invitations too
+				'conflicting_participants' => $conflict_participant_list,
 				'icon_recur' => $conflict['recur_type'] != MCAL_RECUR_NONE ? 'recur' : '',
 				'text_recur' => $conflict['recur_type'] != MCAL_RECUR_NONE ? lang('Recurring event') : ' ',
 			);
