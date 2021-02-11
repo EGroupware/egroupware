@@ -25,6 +25,7 @@ define('MSG_ACCEPTED',5);
 define('MSG_ALARM',6);
 define('MSG_DISINVITE',7);
 define('MSG_DELEGATED',8);
+define('MSG_REQUEST',9);
 
 /**
  * Class to access AND manipulate all calendar data (business object)
@@ -809,6 +810,9 @@ class calendar_boupdate extends calendar_bo
 			case MSG_ALARM:
 				$action = 'Alarm';
 				$pref = 'Alarm';
+				break;
+			case MSG_REQUEST:
+				$method = 'REQUEST';
 				break;
 			default:
 				$method = 'PUBLISH';

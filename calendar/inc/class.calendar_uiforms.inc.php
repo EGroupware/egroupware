@@ -3482,12 +3482,18 @@ class calendar_uiforms extends calendar_ui
 		return $this->process_edit($event);
 	}
 
+	/**
+	 * Immediately send notification to selected users
+	 *
+	 * @param array $content
+	 * @throws Api\Exception\AssertionFailed
+	 */
 	public function notify($content=array())
 	{
 		if(is_array($content) && $content['button'])
 		{
 			$participants = array_filter($content['participants']['notify']);
-			$this->bo->_send_update(MSG_ALARM,$participants,$content,null,0,null,true);
+			$this->bo->send_update(MSG_REQUEST,$participants,$content,null,0,null,true);
 			Framework::window_close();
 		}
 
@@ -3504,8 +3510,6 @@ class calendar_uiforms extends calendar_ui
 				'role'       => $this->bo->roles
 		);
 		$readonlys = [];
-
-
 
 		$etpl = new Etemplate('calendar.notify_dialog');
 		$preserve = $content;

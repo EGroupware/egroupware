@@ -963,15 +963,6 @@ class calendar_uilist extends calendar_ui
 				'hint' => 'Do not notify of these changes',
 				'group' => $group,
 			),
-			'notifications' => array(
-				'caption' => 'Send notifications',
-				'hint' => 'Send notifications to users right now',
-				'url' => 'calendar.calendar_uiforms.notify&id=$app_id',
-				'popup' => Link::get_registry('calendar', 'view_popup'),
-				'allowOnMultiple' => false,
-				'group' => $group,
-				'disableClass' => 'rowNoView',
-			)
 		);
 		$status = array_map('lang',$this->bo->verbose_status);
 		unset($status['G']);
@@ -1051,6 +1042,16 @@ class calendar_uilist extends calendar_ui
 			);
 		}
 
+		$actions['notifications'] = array(
+			'caption' => 'Send notifications',
+			'hint' => 'Send notifications to users right now',
+			'icon' => 'notifications/navbar',
+			'url' => 'calendar.calendar_uiforms.notify&id=$app_id',
+			'popup' => Link::get_registry('calendar', 'view_popup'),
+			'allowOnMultiple' => false,
+			'group' => $group,
+			'disableClass' => 'rowNoView',
+		);
 		if ($GLOBALS['egw_info']['user']['apps']['timesheet'])
 		{
 			$actions['timesheet'] = array(	// interactive add for a single event
