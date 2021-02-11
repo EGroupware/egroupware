@@ -302,7 +302,7 @@ class admin_account
 			if (isset($_GET['contact_id']) && ($account_id = $GLOBALS['egw']->accounts->name2id((int)$_GET['contact_id'], 'person_id')))
 			{
 				$content = array(
-					'account_id' => $account_id,
+					'account_id' => [$account_id],
 					'contact_id' => (int)$_GET['contact_id'],
 				);
 			}
@@ -314,7 +314,7 @@ class admin_account
 				}
 				else
 				{
-					$content = array('account_id' => (int)$_GET['account_id']);
+					$content = array('account_id' => [(int)$_GET['account_id']]);
 				}
 			}
 			//error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
@@ -329,24 +329,24 @@ class admin_account
 		if ($content['delete'])
 		{
 			$msg = '';
-			foreach($content['account_id'] as $account_id)
+			if(count($content['account_id']) == 1)
 			{
-				$cmd = new admin_cmd_delete_account(array(
-								'account' => $account_id,
-								'new_user' => $content['new_owner'],
-								'is_user' => $account_id > 0,
-								'change_apps' => $content['delete_apps']
-						) + (array)$content['admin_cmd']);
-				$msg = $cmd->run() . "\n";
-			}
-			if ($content['contact_id'])
-			{
-				Framework::refresh_opener($msg, 'addressbook', $content['contact_id'], 'delete');
+				self::_deferred_delete($account_id, $content['new_owner'], $content['delete_apps'], $content['admin_cmd']);
+				if ($content['contact_id'])
+				{
+					Framework::refresh_opener($msg, 'addressbook', $content['contact_id'], 'delete');
+				}
 			}
 			else
 			{
-				Framework::refresh_opener($msg, 'admin', $content['account_id'], 'delete');
+				// Defer shutdown until later
+				foreach ($content['account_id'] as $account_id)
+				{
+					Api\Egw::on_shutdown([self::class,'_deferred_delete'], [$account_id, $content['new_owner'], $content['delete_apps'], $content['admin_cmd']]);
+				}
+				Framework::refresh_opener(lang("%1 entries deleted",count($content['account_id'])),'admin');
 			}
+			Api\Accounts::cache_invalidate($content['account_ids']);
 			Framework::window_close();
 		}
 
@@ -354,22 +354,22 @@ class admin_account
 		$preserve = $content;
 
 		// Get a count of entries owned by the user
-		if(!is_array($content['account_id']))
+		if(count($content['account_id']) == 1)
 		{
-			$counts = $GLOBALS['egw']->accounts->get_account_entry_counts($content['account_id']);
+			$_counts = $GLOBALS['egw']->accounts->get_account_entry_counts($content['account_id']);
 		}
 		else
 		{
-			$counts = array_fill_keys(array_keys($GLOBALS['egw_info']['apps']),'-');
+			$_counts = array_fill_keys(array_keys($GLOBALS['egw_info']['apps']),'-');
 		}
-		foreach ($counts as $app => $counts)
+		foreach ($_counts as $app => $counts)
 		{
 			$entry = Api\Link::get_registry($app, 'entries');
 			if (!$entry)
 			{
 				$entry = lang('Entries');
 			}
-			if ($counts['total'] && Api\Hooks::exists('deleteaccount', $app))
+			if (is_array($counts) && $counts['total'] && Api\Hooks::exists('deleteaccount', $app))
 			{
 				$content['delete_apps'][] = $app;
 				$sel_options['delete_apps'][] = array(
@@ -401,6 +401,19 @@ class admin_account
 
 		$tpl = new Etemplate('admin.account.delete');
 		$tpl->exec('admin_account::delete', $content, $sel_options, array(), $preserve, 2);
+	}
+
+	public static function _deferred_delete($account_id, $new_owner, $delete_apps, $documentation)
+	{
+		$cmd = new admin_cmd_delete_account(array(
+				'account' => $account_id,
+				'new_user' => $new_owner,
+				'is_user' => $account_id > 0,
+				'change_apps' => $delete_apps
+		) + (array)$documentation);
+		$msg = $cmd->run();
+
+		Framework::refresh_opener($msg, 'admin', $account_id, 'delete');
 	}
 
 	/**
