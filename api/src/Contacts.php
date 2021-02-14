@@ -2758,9 +2758,9 @@ class Contacts extends Contacts\Storage
 	/**
 	 * Regular expression to search for an exact phone number match instead of regular search
 	 *
-	 * Requires a leading + or 0 and only numbers (ignores /-() and space) plus minimum length of 9 chars
+	 * Requires a leading + or digit and only numbers (ignores /-() and space) plus minimum length of 9 chars
 	 */
-	const PHONE_PREG = '/^(\+|0)[0-9 ()\/-]{8,}$/';
+	const PHONE_PREG = '/^(\+|\d])[0-9 ()\/-]{8,}$/';
 
 	/**
 	 * searches db for rows matching searchcriteria
@@ -2831,7 +2831,12 @@ class Contacts extends Contacts\Storage
 		$rest_without_space = str_replace(' ', '', $rest);
 		foreach([
 					$area.' +'.$rest_without_space,
-					$area.' +'.substr($rest_without_space, 0, -3),	// strip last 3 digits, in case they are written as extension
+					// strip last 4 digits off, in case they are written as extension or formatted like 123 45 67
+					$area.' +'.substr($rest_without_space, 0, -4),
+					// use first 2 digit from rest, in case they are written as extension or formatted like 12 3...
+					$area.' +'.substr($rest_without_space, 0, 2),
+					// try exact match
+					'"'.$criteria.'"',
 				] as $pattern)
 		{
 			$rows = parent::search($pattern, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl) ?: [];
