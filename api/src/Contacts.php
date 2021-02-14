@@ -17,6 +17,7 @@
 namespace EGroupware\Api;
 
 use calendar_bo;  // to_do: do NOT require it, just use if there
+use libphonenumber\PhoneNumberUtil;
 
 /**
  * Business object for contacts
@@ -2752,5 +2753,112 @@ class Contacts extends Contacts\Storage
 			exit();
 		}
 		Egw::redirect(\EGroupware\Api\Image::find('addressbook','photo'));
+	}
+
+	/**
+	 * Regular expression to search for an exact phone number match instead of regular search
+	 *
+	 * Requires a leading + or 0 and only numbers (ignores /-() and space) plus minimum length of 9 chars
+	 */
+	const PHONE_PREG = '/^(\+|0)[0-9 ()\/-]{8,}$/';
+
+	/**
+	 * searches db for rows matching searchcriteria
+	 *
+	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
+	 *
+	 * @param array|string $criteria array of key and data cols, OR string to search over all standard search fields
+	 * @param boolean|string $only_keys =true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param string $order_by ='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
+	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $wildcard ='' appended befor and after each criteria
+	 * @param boolean $empty =false False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param mixed $start =false if != false, return only maxmatch rows begining with start, or array($start,$num)
+	 * @param array $filter =null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 *  $filter['cols_to_search'] limit search columns to given columns, otherwise $this->columns_to_search is used
+	 * @param string $join ='' sql to do a join (only used by sql backend!), eg. " RIGHT JOIN egw_accounts USING(account_id)"
+	 * @param boolean $ignore_acl =false true: no acl check
+	 * @return array of matching rows (the row is an array of the cols) or False
+	 */
+	function &search($criteria, $only_keys = True, $order_by = '', $extra_cols = '', $wildcard = '', $empty = False, $op = 'AND', $start = false, $filter = null, $join = '', $ignore_acl = false)
+	{
+		if (is_string($criteria) && preg_match(self::PHONE_PREG, $criteria))
+		{
+			try {
+				return $this->phone_search($criteria, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl);
+			}
+			catch (\Exception $e) {
+				// try regular search
+			}
+		}
+		return parent::search($criteria, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl);
+	}
+
+	/**
+	 * searches contacts containing a given phone-number
+	 *
+	 * @param string $criteria phone-number
+	 * @param boolean|string $only_keys =true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param string $order_by ='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
+	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $wildcard ='' appended befor and after each criteria
+	 * @param boolean $empty =false False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param mixed $start =false if != false, return only maxmatch rows begining with start, or array($start,$num)
+	 * @param array $filter =null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 *  $filter['cols_to_search'] limit search columns to given columns, otherwise $this->columns_to_search is used
+	 * @param string $join ='' sql to do a join (only used by sql backend!), eg. " RIGHT JOIN egw_accounts USING(account_id)"
+	 * @param boolean $ignore_acl =false true: no acl check
+	 * @return array of matching rows (the row is an array of the cols) or False
+	 * @throws Exception\WrongParameter|\libphonenumber\NumberParseException if $critera is not a string with a valid phone-number
+	 * @throws Exception\NotFound if no contact matches the phone-number in $criteria
+	 */
+	function &phone_search($criteria, $only_keys = True, $order_by = '', $extra_cols = '', $wildcard = '', $empty = False, $op = 'AND', $start = false, $filter = null, $join = '', $ignore_acl = false)
+	{
+		$phoneNumberUtil = PhoneNumberUtil::getInstance();
+		$region = $GLOBALS['egw_info']['user']['preferences']['common']['country'] ?: 'DE';
+		$number = $phoneNumberUtil->parse($criteria, $region);
+		if (!$phoneNumberUtil->isValidNumber($number))
+		{
+			throw new Exception\WrongParameter('Not a valid phone-number!');
+		}
+		if ($only_keys === true) $only_keys = false;
+		$start = false;	// no pagination
+		// search for
+		list($country, $area, $rest) = explode(' ',
+			$phoneNumberUtil->format($number, \libphonenumber\PhoneNumberFormat::INTERNATIONAL), 3);
+		$rest_without_space = str_replace(' ', '', $rest);
+		foreach([
+					$area.' +'.$rest_without_space,
+					$area.' +'.substr($rest_without_space, 0, -3),	// strip last 3 digits, in case they are written as extension
+				] as $pattern)
+		{
+			$rows = parent::search($pattern, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl) ?: [];
+			foreach($rows as $key => $row)
+			{
+				$found = false;
+				foreach($row as $name => $value)
+				{
+					if (substr($name, 0, 4) === 'tel_' && !empty($value))
+					{
+						try {
+							$tel = $phoneNumberUtil->parse($value, $region);
+							if (($found = $tel->equals($number))) break;
+						}
+						catch (\Exception $e) {
+							// ignore broken numbers
+						}
+					}
+				}
+				if (!$found) unset($rows[$key]);
+			}
+			if ($rows)
+			{
+				$this->total = count($rows);
+				return $rows;
+			}
+		}
+		throw new Exception\NotFound("No contacts with phone number '$criteria' found!");
 	}
 }
