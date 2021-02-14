@@ -2760,7 +2760,7 @@ class Contacts extends Contacts\Storage
 	 *
 	 * Requires a leading + or digit and only numbers (ignores ./-() and space) plus minimum length of 9 chars
 	 */
-	const PHONE_PREG = '/^(\+|\d])[0-9 ()\/.-]{8,}$/';
+	const PHONE_PREG = '/^(\+|\d)[0-9 ()\/.-]{8,}$/';
 
 	/**
 	 * searches db for rows matching searchcriteria
