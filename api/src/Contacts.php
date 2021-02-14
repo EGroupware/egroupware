@@ -2758,9 +2758,9 @@ class Contacts extends Contacts\Storage
 	/**
 	 * Regular expression to search for an exact phone number match instead of regular search
 	 *
-	 * Requires a leading + or digit and only numbers (ignores /-() and space) plus minimum length of 9 chars
+	 * Requires a leading + or digit and only numbers (ignores ./-() and space) plus minimum length of 9 chars
 	 */
-	const PHONE_PREG = '/^(\+|\d])[0-9 ()\/-]{8,}$/';
+	const PHONE_PREG = '/^(\+|\d])[0-9 ()\/.-]{8,}$/';
 
 	/**
 	 * searches db for rows matching searchcriteria
@@ -2814,7 +2814,7 @@ class Contacts extends Contacts\Storage
 	 * @throws Exception\WrongParameter|\libphonenumber\NumberParseException if $critera is not a string with a valid phone-number
 	 * @throws Exception\NotFound if no contact matches the phone-number in $criteria
 	 */
-	function &phone_search($criteria, $only_keys = True, $order_by = '', $extra_cols = '', $wildcard = '', $empty = False, $op = 'AND', $start = false, $filter = null, $join = '', $ignore_acl = false)
+	function &phone_search($criteria, $only_keys = false, $order_by = '', $extra_cols = '', $wildcard = '', $empty = False, $op = 'AND', $start = false, $filter = null, $join = '', $ignore_acl = false)
 	{
 		$phoneNumberUtil = PhoneNumberUtil::getInstance();
 		$region = $GLOBALS['egw_info']['user']['preferences']['common']['country'] ?: 'DE';
