@@ -84,32 +84,7 @@ else
 
 try {
 	$contacts = new Api\Contacts();
-	$found = $contacts->phone_search($from);
-	// ToDo: select best match from multiple matches containing the number
-	$contact = $found[0];
-	$push = new Api\Json\Push($account_id);
-	$extras = [
-		//'index': ToDo: what's that used for?
-		'crm_list' => count($found) > 1 && $contact['org_name'] ? 'infolog-organisation' : 'infolog',
-	];
-	$params = [(int)$contact['id'], 'addressbook', 'view', $extras, [
-		'displayName' => count($found) > 1 && $contact['org_name'] ?
-			$contact['org_name'] : $contact['n_fn'].' ('.lang($extras['crm_list']).')',
-		'icon' => $contact['photo'],
-		'refreshCallback' => 'app.addressbook.view_refresh',
-		'id' => $contact['id'].'-'.$extras['crm_list'],
-	]];
-	/* ToDo: allow refreshCallback to be a "app.<appname>.<func>" string resolving also private / non-global apps
-	$push->apply('egw.openTab', $params);
-	*/
-	$params = str_replace('"app.addressbook.view_refresh"', 'function(){
-	let et2 = etemplate2.getById("addressbook-view-"+this.appName);
-	if (et2) et2.app_obj.addressbook.view_set_list();
-}', json_encode($params, JSON_UNESCAPED_SLASHES));
-	$push->script('egw.openTab.apply(egw, '.$params.')');
-	if (!is_string($params)) $params = json_encode($params, JSON_UNESCAPED_SLASHES);
-	error_log("crm.php: calling push($user/#$account_id)->apply('egw.openTab', $params)");
-	die("calling push($user/#$account_id)->apply('egw.openTab', $params)\n");
+	$contacts->openCrmView($from);
 }
 catch (\Exception $e) {
 	error_log("crm.php: No contact for from=$from found!");

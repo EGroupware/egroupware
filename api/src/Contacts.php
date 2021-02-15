@@ -2786,7 +2786,7 @@ class Contacts extends Contacts\Storage
 		if (is_string($criteria) && preg_match(self::PHONE_PREG, $criteria))
 		{
 			try {
-				return $this->phone_search($criteria, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl);
+				return $this->phoneSearch($criteria, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl);
 			}
 			catch (\Exception $e) {
 				// try regular search
@@ -2814,7 +2814,7 @@ class Contacts extends Contacts\Storage
 	 * @throws Exception\WrongParameter|\libphonenumber\NumberParseException if $critera is not a string with a valid phone-number
 	 * @throws Exception\NotFound if no contact matches the phone-number in $criteria
 	 */
-	function &phone_search($criteria, $only_keys = false, $order_by = '', $extra_cols = '', $wildcard = '', $empty = False, $op = 'AND', $start = false, $filter = null, $join = '', $ignore_acl = false)
+	function &phoneSearch($criteria, $only_keys = false, $order_by = '', $extra_cols = '', $wildcard = '', $empty = False, $op = 'AND', $start = false, $filter = null, $join = '', $ignore_acl = false)
 	{
 		$phoneNumberUtil = PhoneNumberUtil::getInstance();
 		$region = $GLOBALS['egw_info']['user']['preferences']['common']['country'] ?: 'DE';
@@ -2848,7 +2848,10 @@ class Contacts extends Contacts\Storage
 					if (substr($name, 0, 4) === 'tel_' && !empty($value))
 					{
 						try {
-							$tel = $phoneNumberUtil->parse($value, $region);
+							$tel = $phoneNumberUtil->parse($value,
+								// prefer region of contact, to eg. be able to parse US numbers starting direct with areacode but no leading 0
+								$row[substr($name, -5) === '_home' ? 'adr_two_countrycode' : 'adr_one_countrycode'] ?:
+								$row['adr_one_countrycode'] ?: $region);
 							if (($found = $tel->equals($number))) break;
 						}
 						catch (\Exception $e) {
@@ -2865,5 +2868,42 @@ class Contacts extends Contacts\Storage
 			}
 		}
 		throw new Exception\NotFound("No contacts with phone number '$criteria' found!");
+	}
+
+	/**
+	 * Open CRM view for a calling number by sending a push requestion to the user
+	 *
+	 * @param $from
+	 * @throws Exception\WrongParameter|\libphonenumber\NumberParseException if $critera is not a string with a valid phone-number
+	 * @throws Exception\NotFound if no contact matches the phone-number in $criteria
+	 */
+	function openCrmView($from)
+	{
+		$found = $this->phoneSearch($from);
+		// ToDo: select best match from multiple matches containing the number
+		$contact = $found[0];
+		$push = new Json\Push($this->user);
+		$extras = [
+			//'index': ToDo: what's that used for?
+			'crm_list' => count($found) > 1 && $contact['org_name'] ? 'infolog-organisation' : 'infolog',
+		];
+		$params = [(int)$contact['id'], 'addressbook', 'view', $extras, [
+			'displayName' => count($found) > 1 && $contact['org_name'] ?
+				$contact['org_name'] : $contact['n_fn'].' ('.lang($extras['crm_list']).')',
+			'icon' => $contact['photo'],
+			'refreshCallback' => 'app.addressbook.view_refresh',
+			'id' => $contact['id'].'-'.$extras['crm_list'],
+		]];
+		/* ToDo: allow refreshCallback to be a "app.<appname>.<func>" string resolving also private / non-global apps
+		$push->apply('egw.openTab', $params);
+		*/
+		$params = str_replace('"app.addressbook.view_refresh"', 'function(){
+	let et2 = etemplate2.getById("addressbook-view-"+this.appName);
+	if (et2) et2.app_obj.addressbook.view_set_list();
+}', json_encode($params, JSON_UNESCAPED_SLASHES));
+		$push->script('egw.openTab.apply(egw, '.$params.')');
+		if (!is_string($params)) $params = json_encode($params, JSON_UNESCAPED_SLASHES);
+		error_log("crm.php: calling push(#$this->user)->apply('egw.openTab', $params)");
+		//echo "calling push(#$this->user)->apply('egw.openTab', $params)\n";
 	}
 }
