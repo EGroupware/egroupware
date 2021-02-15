@@ -2814,7 +2814,7 @@ class Contacts extends Contacts\Storage
 	 * @throws Exception\WrongParameter|\libphonenumber\NumberParseException if $critera is not a string with a valid phone-number
 	 * @throws Exception\NotFound if no contact matches the phone-number in $criteria
 	 */
-	function &phoneSearch($criteria, $only_keys = false, $order_by = '', $extra_cols = '', $wildcard = '', $empty = False, $op = 'AND', $start = false, $filter = null, $join = '', $ignore_acl = false)
+	function &phoneSearch($criteria, $only_keys = false, $order_by = 'contact_modified DESC', $extra_cols = '', $wildcard = '', $empty = False, $op = 'AND', $start = false, $filter = null, $join = '', $ignore_acl = false)
 	{
 		$phoneNumberUtil = PhoneNumberUtil::getInstance();
 		$region = $GLOBALS['egw_info']['user']['preferences']['common']['country'] ?: 'DE';
@@ -2859,11 +2859,14 @@ class Contacts extends Contacts\Storage
 						}
 					}
 				}
+				//if ($found) error_log(__METHOD__."('$criteria') found #$row[id]: $row[n_fn], $name: $value");
 				if (!$found) unset($rows[$key]);
 			}
 			if ($rows)
 			{
 				$this->total = count($rows);
+				$rows = array_values($rows);
+				//error_log(__METHOD__."('$criteria') returning $this->total rows: ".json_encode($rows));
 				return $rows;
 			}
 		}
@@ -2881,7 +2884,7 @@ class Contacts extends Contacts\Storage
 	{
 		$found = $this->phoneSearch($from);
 		// ToDo: select best match from multiple matches containing the number
-		$contact = $found[0];
+		$contact = current($found);
 		$push = new Json\Push($this->user);
 		$extras = [
 			//'index': ToDo: what's that used for?
