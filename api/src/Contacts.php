@@ -2904,6 +2904,6 @@ class Contacts extends Contacts\Storage
 		$push->script('egw.openTab.apply(egw, '.$params.')');
 		if (!is_string($params)) $params = json_encode($params, JSON_UNESCAPED_SLASHES);
 		error_log("crm.php: calling push(#$this->user)->apply('egw.openTab', $params)");
-		//echo "calling push(#$this->user)->apply('egw.openTab', $params)\n";
+		return "calling push(#$this->user)->apply('egw.openTab', $params)";
 	}
 }
