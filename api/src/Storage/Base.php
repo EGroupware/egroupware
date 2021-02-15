@@ -1248,10 +1248,11 @@ class Base
 	 * @param string &$wildcard ='' on return wildcard char to use, if pattern does not already contain wildcards!
 	 * @param string &$op ='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
 	 * @param string $extra_col =null extra column to search
-	 * @param array $search_cols =array() List of columns to search.  If not provided, all columns in $this->db_cols will be considered
+	 * @param array $search_cols =[] List of columns to search.  If not provided, all columns in $this->db_cols will be considered
+	 * @param ?bool $search_cfs =null null: do it only for Api\Storage, false: never do it
 	 * @return array or column => value pairs
 	 */
-	public function search2criteria($_pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols = array())
+	public function search2criteria($_pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols=[],$search_cfs=null)
 	{
 		$pattern = trim($_pattern);
 		// This function can get called multiple times.  Make sure it doesn't re-process.
@@ -1299,6 +1300,11 @@ class Base
 			if ($this->db->Type == 'mysql' && $table_def['fd'][$col_name]['type'] === 'ascii' && preg_match('/[\x80-\xFF]/', $_pattern))
 			{
 				continue;	// will only give sql error
+			}
+			// remove all non-number from phone-numbers
+			if (substr($col, 0, 4) === 'tel_')
+			{
+				$col = $this->db->regexp_replace($col, '[^0-9]', "''");
 			}
 			$columns[] = sprintf($this->db->capabilities[Api\Db::CAPABILITY_CAST_AS_VARCHAR],"COALESCE($col,'')");
 		}
@@ -1370,7 +1376,7 @@ class Base
 				$GLOBALS['egw']->db->quote($search_token);
 
 			// if we have customfields and this is Api\Storage (not Api\Storage\Base)
-			if (is_a($this, __NAMESPACE__))
+			if ($search_cfs ?? is_a($this, __NAMESPACE__))
 			{
 				// add custom-field search: OR id IN (SELECT id FROM extra_table WHERE extra_value LIKE '$search_token')
 				$token_filter .= $this->cf_match($search_token);

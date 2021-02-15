@@ -2825,20 +2825,34 @@ class Contacts extends Contacts\Storage
 		}
 		if ($only_keys === true) $only_keys = false;
 		$start = false;	// no pagination
-		// search for
 		list($country, $area, $rest) = explode(' ',
 			$phoneNumberUtil->format($number, \libphonenumber\PhoneNumberFormat::INTERNATIONAL), 3);
 		$rest_without_space = str_replace(' ', '', $rest);
-		foreach([
-					$area.' +'.$rest_without_space,
-					// strip last 4 digits off, in case they are written as extension or formatted like 123 45 67
-					$area.' +'.substr($rest_without_space, 0, -4),
-					// use first 2 digit from rest, in case they are written as extension or formatted like 12 3...
-					$area.' +'.substr($rest_without_space, 0, 2),
-					// try exact match
-					'"'.$criteria.'"',
-				] as $pattern)
+		/** @var Contacts\Sql */
+		$backend = $this->get_backend(null, $filter['owner']);
+		if (is_a($backend, Contacts\Sql::class) && $this->db->regexp_replace('test', '', '') !== 'test')
 		{
+			$patterns = [$area.$rest_without_space];
+		}
+		else
+		{
+			$patterns = [
+				$area . ' +' . $rest_without_space,
+				// strip last 4 digits off, in case they are written as extension or formatted like 123 45 67
+				$area . ' +' . substr($rest_without_space, 0, -4),
+				// use first 2 digit from rest, in case they are written as extension or formatted like 12 3...
+				$area . ' +' . substr($rest_without_space, 0, 2),
+				'"'.$criteria.'"',	// try exact match
+			];
+		}
+		foreach($patterns as $pattern)
+		{
+			if (is_a($backend, Contacts\Sql::class))
+			{
+				$pattern = $backend->search2criteria($pattern, $wildcard, $op, null,
+					['tel_work', 'tel_cell', 'tel_fax', 'tel_assistent', 'tel_car', 'tel_pager',
+						'tel_home', 'tel_fax_home', 'tel_cell_private', 'tel_other'], false);
+			}
 			$rows = parent::search($pattern, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl) ?: [];
 			foreach($rows as $key => $row)
 			{
@@ -2852,7 +2866,12 @@ class Contacts extends Contacts\Storage
 								// prefer region of contact, to eg. be able to parse US numbers starting direct with areacode but no leading 0
 								$row[substr($name, -5) === '_home' ? 'adr_two_countrycode' : 'adr_one_countrycode'] ?:
 								$row['adr_one_countrycode'] ?: $region);
-							if (($found = $tel->equals($number))) break;
+
+							if (($found = $tel->equals($number)))
+							{
+								$rows[$key]['tel_matching'] = $name;
+								break;
+							}
 						}
 						catch (\Exception $e) {
 							// ignore broken numbers

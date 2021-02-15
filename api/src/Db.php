@@ -1240,6 +1240,30 @@ class Db
 	}
 
 	/**
+	 * Calls REGEXP_REPLACE if available for the DB otherwise returns just $expr
+	 *
+	 * Example: REGEXP_REPLACE('tel_work', '[^0-9]', "''") to remove non-numbers from tel_work column
+	 *
+	 * @param string $expr SQL expression, must be quoted for strings, eg. "'string'"
+	 * @param string $regexp no quotes neccessary will be run through quotes()
+	 * @param string $with SQL expression, must be quoted for strings, eg. "'string'"
+	 * @return string SQL REGEXP_REPLACE() function or $expr, if not supported!
+	 */
+	function regexp_replace($expr, $regexp, $with)
+	{
+		switch($this->Type)
+		{
+			case 'mysqli':
+			case 'mysql':
+				if ((float)$this->ServerInfo['version'] < 8.0) break;	// MySQL 8.0 or MariaDB 10.0 required
+				// fall through
+			case 'pgsql':
+				return 'REGEXP_REPLACE('.$expr.','.$this->quote($regexp).','.$with.')';
+		}
+		return $expr;
+	}
+
+	/**
 	 * SQL returning character (not byte!) positions for $substr in $str
 	 *
 	 * @param string $str
