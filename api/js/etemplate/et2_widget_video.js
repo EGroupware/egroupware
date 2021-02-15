@@ -24,6 +24,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_video = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_interfaces;
@@ -64,6 +65,11 @@ var et2_video = /** @class */ (function (_super) {
     function et2_video(_parent, _attrs, _child) {
         var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {})) || this;
         _this.video = null;
+        /**
+         * keeps internal state of previousTime video played
+         * @private
+         */
+        _this._previousTime = 0;
         //Create Video tag
         _this.video = jQuery(document.createElement("video"));
         if (_this.options.controls) {
@@ -155,10 +161,51 @@ var et2_video = /** @class */ (function (_super) {
         this.video[0].pause();
     };
     /**
-     * Get current video time / position in seconds
+     * play video
+     * ***Internal use and should not be overriden in its extended class***
      */
-    et2_video.prototype.currentTime = function () {
+    et2_video.prototype.play = function () {
+        return this.video[0].play();
+    };
+    /**
+     * Get/set current video time / position in seconds
+     * @return returns currentTime
+     */
+    et2_video.prototype.currentTime = function (_time) {
+        if (_time)
+            this.video[0].currentTime = _time;
         return this.video[0].currentTime;
+    };
+    /**
+     * get duration time
+     * @return returns duration time
+     */
+    et2_video.prototype.duration = function () {
+        return this.video[0].duration;
+    };
+    /**
+     * get pasued
+     * @return returns paused flag
+     */
+    et2_video.prototype.paused = function () {
+        return this.video[0].paused;
+    };
+    /**
+     * get ended
+     * @return returns ended flag
+     */
+    et2_video.prototype.ended = function () {
+        return this.video[0].ended;
+    };
+    /**
+     * get/set priviousTime
+     * @param _time
+     * @return returns time
+     */
+    et2_video.prototype.previousTime = function (_time) {
+        if (_time)
+            this._previousTime = _time;
+        return this._previousTime;
     };
     et2_video.prototype.doLoadingFinished = function () {
         _super.prototype.doLoadingFinished.call(this);

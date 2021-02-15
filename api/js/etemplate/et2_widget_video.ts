@@ -102,6 +102,12 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
 
     video: JQuery<HTMLVideoElement> = null;
 
+    /**
+     * keeps internal state of previousTime video played
+     * @private
+     */
+    private _previousTime: number = 0;
+
     constructor(_parent, _attrs? : WidgetConfig, _child? : object)
     {
         super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {}));
@@ -223,11 +229,60 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
     }
 
     /**
-     * Get current video time / position in seconds
+     * play video
+     * ***Internal use and should not be overriden in its extended class***
      */
-    public currentTime() : number
+    public play() : Promise<void>
     {
+        return this.video[0].play();
+    }
+
+    /**
+     * Get/set current video time / position in seconds
+     * @return returns currentTime
+     */
+    public currentTime(_time?) : number
+    {
+        if (_time) this.video[0].currentTime = _time;
         return this.video[0].currentTime;
+    }
+
+    /**
+     * get duration time
+     * @return returns duration time
+     */
+    public duration() : number
+    {
+        return this.video[0].duration;
+    }
+
+    /**
+     * get pasued
+     * @return returns paused flag
+     */
+    public paused() : boolean
+    {
+        return this.video[0].paused;
+    }
+
+    /**
+     * get ended
+     * @return returns ended flag
+     */
+    public ended() : boolean
+    {
+        return this.video[0].ended;
+    }
+
+    /**
+     * get/set priviousTime
+     * @param _time
+     * @return returns time
+     */
+    public previousTime(_time?) : number
+    {
+        if (_time) this._previousTime = _time;
+        return this._previousTime;
     }
 
     doLoadingFinished(): boolean
