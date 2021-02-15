@@ -18,7 +18,6 @@
 
 import { et2_baseWidget } from './et2_core_baseWidget'
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
 
 /**
@@ -100,7 +99,17 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         }
     };
 
-    video: JQuery<HTMLVideoElement> = null;
+    video: JQuery<HTMLVideoElement|HTMLIFrameElement|HTMLElement> = null;
+
+    youtube: any;
+    private static youtube_player_states = {
+        unstarted: 0,
+        ended: 1,
+        playing: 2,
+        paused: 3,
+        buffering: 4,
+        video_cued: 5
+    };
 
     /**
      * keeps internal state of previousTime video played
@@ -113,12 +122,21 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {}));
 
         //Create Video tag
-		this.video = jQuery(document.createElement("video"));
-        if (this.options.controls)
+		this.video = jQuery(document.createElement(this._isYoutube()?"div":"video"));
+		if (this._isYoutube())
+        {
+            this.video.attr('id', this.id);
+            // 2. This code loads the IFrame Player API code asynchronously.
+            let tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            let firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+        if (!this._isYoutube() && this.options.controls)
         {
             this.video.attr("controls", 1);
         }
-        if (this.options.autoplay)
+        if (!this._isYoutube() && this.options.autoplay)
         {
             this.video.attr("autoplay", 1);
         }
@@ -143,8 +161,8 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      * @param {string} _value url
      */
     set_src(_value: string) {
-
-        if (_value)
+        var self = this;
+        if (_value && !this._isYoutube())
         {
             let source  = jQuery(document.createElement('source'))
                 .attr('src',_value)
@@ -153,6 +171,20 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             if (this.options.src_type)
             {
                 source.attr('type', this.options.src_type);
+            }
+        }
+        else if(_value)
+        {
+            //initiate youtube Api object, it gets called automatically by iframe_api script from the api
+            window.onYouTubeIframeAPIReady = function() {
+                self.youtube = new YT.Player( self.id, {
+                    height: '100%',
+                    width: 'auto',
+                    videoId: '', //TODO get youtube video id
+                    events: {
+                        'onReady': jQuery.proxy(self._onReady, self)
+                    }
+                });
             }
         }
     }
@@ -165,7 +197,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     set_autoplay(_value: string)
     {
-        if (_value)
+        if (_value && !this._isYoutube())
         {
             this.video.attr("autoplay", _value);
         }
@@ -178,7 +210,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     set_controls(_value: string)
     {
-        if (_value)
+        if (_value && !this._isYoutube())
         {
             this.video.attr("controls", _value);
         }
@@ -209,7 +241,14 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     public seek_video(_vtime : number)
     {
-        this.video[0].currentTime = _vtime;
+        if (this._isYoutube())
+        {
+            this.youtube.seekTo(_vtime);
+        }
+        else
+        {
+            (<HTMLVideoElement>this.video[0]).currentTime = _vtime;
+        }
     }
 
     /**
@@ -217,7 +256,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     public play_video() : Promise<void>
     {
-        return this.video[0].play();
+        return this._isYoutube()?this.youtube.playVideo():(<HTMLVideoElement>this.video[0]).play();
     }
 
     /**
@@ -225,7 +264,14 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     public pause_video()
     {
-        this.video[0].pause();
+        if (this._isYoutube())
+        {
+            this.youtube.pauseVideo();
+        }
+        else
+        {
+            (<HTMLVideoElement>this.video[0]).pause();
+        }
     }
 
     /**
@@ -234,7 +280,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     public play() : Promise<void>
     {
-        return this.video[0].play();
+        return this._isYoutube()  && this.youtube?.playVideo ?this.youtube.playVideo():(<HTMLVideoElement>this.video[0]).play();
     }
 
     /**
@@ -243,8 +289,25 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     public currentTime(_time?) : number
     {
-        if (_time) this.video[0].currentTime = _time;
-        return this.video[0].currentTime;
+        if (_time)
+        {
+            if (this._isYoutube())
+            {
+                this.youtube.seekTo(_time);
+            }
+            else
+            {
+                (<HTMLVideoElement>this.video[0]).currentTime = _time;
+            }
+        }
+        if (this._isYoutube())
+        {
+            return this.youtube?.getCurrentTime ?  this.youtube.getCurrentTime() : 0;
+        }
+        else
+        {
+            return (<HTMLVideoElement>this.video[0]).currentTime;
+        }
     }
 
     /**
@@ -253,7 +316,14 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     public duration() : number
     {
-        return this.video[0].duration;
+        if (this._isYoutube())
+        {
+            return this.youtube?.getDuration ? this.youtube.getDuration() : 0;
+        }
+        else
+        {
+            return (<HTMLVideoElement>this.video[0]).duration;
+        }
     }
 
     /**
@@ -262,7 +332,11 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     public paused() : boolean
     {
-        return this.video[0].paused;
+        if (this._isYoutube())
+        {
+            return this.youtube.getPlayerState() == et2_video.youtube_player_states.paused;
+        }
+        return (<HTMLVideoElement>this.video[0]).paused;
     }
 
     /**
@@ -271,7 +345,11 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     public ended() : boolean
     {
-        return this.video[0].ended;
+        if (this._isYoutube())
+        {
+            return this.youtube.getPlayerState() == et2_video.youtube_player_states.ended;
+        }
+        return (<HTMLVideoElement>this.video[0]).ended;
     }
 
     /**
@@ -289,10 +367,12 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
     {
         super.doLoadingFinished();
         let self = this;
-
-        this.video[0].addEventListener("loadedmetadata", function(){
-            self.videoLoadnigIsFinished();
-        });
+        if (!this._isYoutube())
+        {
+            this.video[0].addEventListener("loadedmetadata", function(){
+                self._onReady();
+            });
+        }
         return false;
     }
 
@@ -302,6 +382,23 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         {
             this.seek_video(this.options.starttime);
         }
+    }
+
+    private _onReady()
+    {
+        let event = document.createEvent("Event");
+        event.initEvent('et2_video.onReady.'+this.id, true, true);
+        this.video[0].dispatchEvent(event);
+    }
+
+    /**
+     * check if the video is a youtube type
+     * @return return true if it's a youtube type video
+     * @private
+     */
+    private _isYoutube() : boolean
+    {
+        return !!this.options.src_type.match('youtube');
     }
 }
 et2_register_widget(et2_video, ["video"]);
