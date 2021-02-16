@@ -32,6 +32,16 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 	{
 		parent::tearDown();
 	}
+	/**
+	 * Check that a user with permission to a file can access the file
+	 *
+	 * @depends testSimpleReadWrite
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	public function testWithAccess() : void
+	{
+		$this->markTestSkipped("Filesystem StreamWrapper does not support giving access to a file by changing group permissions");
+	}
 
 	protected function mount(): void
 	{

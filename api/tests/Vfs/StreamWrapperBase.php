@@ -287,7 +287,8 @@ abstract class StreamWrapperBase extends LoggedInTest
 				"Could not write file $file"
 		);
 		$pre = Vfs::stat($this->test_file);
-
+		// Check that it's actually there
+		$this->assertEquals($contents,file_get_contents(Vfs::PREFIX . $file), "Did not write test file");
 
 		// Create another user who has no access to our file
 		$user_b = $this->makeUser();
@@ -307,7 +308,7 @@ abstract class StreamWrapperBase extends LoggedInTest
 
 		// Check the file
 		$post = Vfs::stat($file);
-		$this->assertNotNull($post,
+		$this->assertIsArray($post,
 				"File '$file' was not accessible by another user who had permission"
 		);
 		$this->assertEquals(
