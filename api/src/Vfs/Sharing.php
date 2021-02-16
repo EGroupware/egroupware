@@ -496,7 +496,7 @@ class Sharing extends \EGroupware\Api\Sharing
 				'share_id', 'share_path', 'share_owner'
 		),
 				array(
-						"share_path LIKE '$path'"
+						"share_path LIKE " . $GLOBALS['egw']->db->quote($path)
 				),
 				__LINE__, __FILE__, false) as $share)
 		{
