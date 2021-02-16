@@ -45,7 +45,8 @@ class HistoryLog extends Etemplate\Widget
 				if(!is_array($type))
 				{
 					list($basetype) = explode('-',$type);
-					$widget = @self::factory($basetype, '<?xml version="1.0"?><'.$type.' type="'.$type.'"/>', $key);
+					list($tag) = explode(':', $type);	// xml tags must not include undeclared namespaces like: <link-entry:infolog
+					$widget = @self::factory($basetype, '<?xml version="1.0"?><'.$tag.' type="'.$type.'"/>', $key);
 					$widget->id = $key;
 					$widget->attrs['type'] = $type;
 					$widget->type = $type;

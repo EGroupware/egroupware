@@ -123,7 +123,7 @@ class Widget
 		// read all attributes
 		$this->set_attrs($reader);
 
-		while($reader->read() && $reader->depth > $depth)
+		while(($ok=$reader->read()) && $reader->depth > $depth)
 		{
 			if ($reader->nodeType == XMLReader::ELEMENT && $reader->depth > $depth)
 			{
@@ -134,6 +134,12 @@ class Widget
 			{
 				$this->attrs[(string)$reader->name] = (string)$reader->value;
 			}
+		}
+		// give a clear indication where the template error is
+		if (!$ok && ($error = libxml_get_last_error()))
+		{
+			$file = str_replace([EGW_SERVER_ROOT.'/', '//default/etemplates/'], '', $error->file);
+			throw new \Exception("Error passing XML file '$file' line $error->line: $error->message");
 		}
 
 		// Reset content as we leave
@@ -156,6 +162,7 @@ class Widget
 		}
 		else
 		{
+			libxml_use_internal_errors(true);
 			$reader = new XMLReader();
 			if (!$reader->XML($xml))
 			{
