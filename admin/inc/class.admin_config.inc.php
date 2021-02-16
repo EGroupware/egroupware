@@ -263,12 +263,20 @@ class admin_config
 			'newsettings' => array(),
 		);
 
-		// for security reasons we do not send all config to client-side, but only ones mentioned in templates
-		$matches = null;
-		preg_match_all('/id="newsettings\[([^]]+)\]/', file_get_contents($path), $matches, PREG_PATTERN_ORDER);
-		foreach($matches[1] as $name)
+		// $app.config is looping eg. <select onchange="1"
+		if (!empty($_content['newsettings']) && empty($_content['save']) && empty($_content['apply']))
 		{
-			$content['newsettings'][$name] = isset($config[$name]) ? $config[$name] : '';
+			$content['newsettings'] = $_content['newsettings'];
+		}
+		else
+		{
+			// for security reasons we do not send all config to client-side, but only ones mentioned in templates
+			$matches = null;
+			preg_match_all('/id="newsettings\[([^]]+)\]/', file_get_contents($path), $matches, PREG_PATTERN_ORDER);
+			foreach($matches[1] as $name)
+			{
+				$content['newsettings'][$name] = isset($config[$name]) ? $config[$name] : '';
+			}
 		}
 
 		// make everything readonly and remove save/apply button, if user has not rights to store config
