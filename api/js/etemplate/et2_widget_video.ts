@@ -103,11 +103,11 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
 
     youtube: any;
     private static youtube_player_states = {
-        unstarted: 0,
-        ended: 1,
-        playing: 2,
-        paused: 3,
-        buffering: 4,
+        unstarted: -1,
+        ended: 0,
+        playing: 1,
+        paused: 2,
+        buffering: 3,
         video_cued: 5
     };
 
@@ -116,22 +116,49 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      * @private
      */
     private _previousTime: number = 0;
-
+    /**
+     * keeps the currentTime
+     * @private
+     */
+    private _currentTime : number;
+    /**
+     * interval defined for youtube type to simulate ontimeupdate html5 event
+     * @private
+     */
+    private _youtubeOntimeUpdateIntrv : number;
+    /**
+     * youtube iframe api will replace it with iframe
+     * @protected
+     */
+    protected youtubeFrame : JQuery;
+    /**
+     * prefix id used for addressing youtube player dom
+     * @private
+     */
+    private static youtubePrefixId : string = "frame-";
     constructor(_parent, _attrs? : WidgetConfig, _child? : object)
     {
         super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {}));
 
         //Create Video tag
-		this.video = jQuery(document.createElement(this._isYoutube()?"div":"video"));
+		this.video = jQuery(document.createElement(this._isYoutube()?"div":"video")).addClass('et2_video');
+
 		if (this._isYoutube())
         {
+            // this div will be replaced by youtube iframe api when youtube gets ready
+            this.youtubeFrame = jQuery(document.createElement('div'))
+                .appendTo(this.video)
+                .attr('id', et2_video.youtubePrefixId+this.id);
+
             this.video.attr('id', this.id);
-            // 2. This code loads the IFrame Player API code asynchronously.
+
+            //Load youtube iframe api
             let tag = document.createElement('script');
             tag.src = "https://www.youtube.com/iframe_api";
             let firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
         }
+
         if (!this._isYoutube() && this.options.controls)
         {
             this.video.attr("controls", 1);
@@ -161,7 +188,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      * @param {string} _value url
      */
     set_src(_value: string) {
-        var self = this;
+        let self = this;
         if (_value && !this._isYoutube())
         {
             let source  = jQuery(document.createElement('source'))
@@ -176,13 +203,26 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         else if(_value)
         {
             //initiate youtube Api object, it gets called automatically by iframe_api script from the api
+            // @ts-ignore
             window.onYouTubeIframeAPIReady = function() {
-                self.youtube = new YT.Player( self.id, {
-                    height: '100%',
-                    width: 'auto',
-                    videoId: '', //TODO get youtube video id
+                // @ts-ignore
+                self.youtube = new YT.Player( et2_video.youtubePrefixId+self.id, {
+                    height: '400',
+                    width: '100%',
+                    playerVars: {
+                        'autoplay': 0,
+                        'controls': 0,
+                        'modestbranding': 1,
+                        'fs':0,
+                        'disablekb': 1,
+                        'rel': 0,
+                        'iv_load_policy': 0,
+                        'cc_load_policy': 0
+                    },
+                    videoId: _value.split('v=')[1], //TODO get youtube video id
                     events: {
-                        'onReady': jQuery.proxy(self._onReady, self)
+                        'onReady': jQuery.proxy(self._onReady, self),
+                        'onStateChange': jQuery.proxy(self._onStateChangeYoutube, self)
                     }
                 });
             }
@@ -243,7 +283,11 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
     {
         if (this._isYoutube())
         {
-            this.youtube.seekTo(_vtime);
+            if (this.youtube.seekTo)
+            {
+                this.youtube.seekTo(_vtime, true);
+                this._currentTime = _vtime;
+            }
         }
         else
         {
@@ -256,7 +300,18 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     public play_video() : Promise<void>
     {
-        return this._isYoutube()?this.youtube.playVideo():(<HTMLVideoElement>this.video[0]).play();
+        if (this._isYoutube())
+        {
+            let self = this;
+            return new Promise<void>(function(resolve){
+                if (self.youtube.playVideo)
+                {
+                    self.youtube.playVideo();
+                    resolve();
+                }
+            });
+        }
+        return (<HTMLVideoElement>this.video[0]).play();
     }
 
     /**
@@ -266,7 +321,11 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
     {
         if (this._isYoutube())
         {
-            this.youtube.pauseVideo();
+            if (this.youtube.pauseVideo)
+            {
+                this.youtube.pauseVideo();
+                this.currentTime(this.youtube.getCurrentTime());
+            }
         }
         else
         {
@@ -299,9 +358,14 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             {
                 (<HTMLVideoElement>this.video[0]).currentTime = _time;
             }
+            return this._currentTime = _time;
         }
         if (this._isYoutube())
         {
+            if (typeof this._currentTime != 'undefined')
+            {
+               return this._currentTime;
+            }
             return this.youtube?.getCurrentTime ?  this.youtube.getCurrentTime() : 0;
         }
         else
@@ -372,6 +436,9 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             this.video[0].addEventListener("loadedmetadata", function(){
                 self._onReady();
             });
+            this.video[0].addEventListener("timeupdate", function(){
+                self._onTimeUpdate();
+            });
         }
         return false;
     }
@@ -386,8 +453,20 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
 
     private _onReady()
     {
+        // need to set the video dom to transformed iframe
+        if (this._isYoutube() && this.youtube.getIframe) this.youtubeFrame = jQuery(this.youtube.getIframe());
         let event = document.createEvent("Event");
         event.initEvent('et2_video.onReady.'+this.id, true, true);
+        this.video[0].dispatchEvent(event);
+    }
+
+    private _onTimeUpdate()
+    {
+        // update currentTime manually since youtube currentTime might be updated due to the loading
+        if (this._isYoutube() && this.youtube.getCurrentTime) this._currentTime = this.youtube.getCurrentTime();
+
+        let event = document.createEvent("Event");
+        event.initEvent('et2_video.onTimeUpdate.'+this.id, true, true);
         this.video[0].dispatchEvent(event);
     }
 
@@ -399,6 +478,23 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
     private _isYoutube() : boolean
     {
         return !!this.options.src_type.match('youtube');
+    }
+
+    private _onStateChangeYoutube(_data)
+    {
+        switch (_data.data)
+        {
+            case et2_video.youtube_player_states.unstarted:
+                // do not start the video on initiation
+                this.pause_video();
+                break;
+            case et2_video.youtube_player_states.playing:
+                this._youtubeOntimeUpdateIntrv = window.setInterval(jQuery.proxy(this._onTimeUpdate, this), 100);
+                break;
+            default:
+                window.clearInterval(this._youtubeOntimeUpdateIntrv);
+        }
+        console.log(_data)
     }
 }
 et2_register_widget(et2_video, ["video"]);
