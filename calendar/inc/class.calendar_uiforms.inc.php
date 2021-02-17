@@ -465,7 +465,7 @@ class calendar_uiforms extends calendar_ui
 
 								// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>")
 								$email = array();
-								if(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$participant,$email))
+								if(preg_match('/^(.*<)?([a-z0-9_.+#$%&-]+@[a-z0-9_.-]{5,})>?$/i',$participant,$email))
 								{
 									$status = calendar_so::combine_status('U',$content['participants']['quantity'],$content['participants']['role']);
 									if (($data = $GLOBALS['egw']->accounts->name2id($email[2],'account_email')) && $this->bo->check_acl_invite($data))
@@ -3490,16 +3490,16 @@ class calendar_uiforms extends calendar_ui
 	 */
 	public function notify($content=array())
 	{
+		list($id, $date) = explode(':',$_GET['id']?:$content['id']);
+		$event = $this->bo->read($id, $date);
 		if(is_array($content) && $content['button'])
 		{
 			$participants = array_filter($content['participants']['notify']);
-			$this->bo->send_update(MSG_REQUEST,$participants,$content,null,0,null,true);
+			$this->bo->send_update(MSG_REQUEST,$participants,$event,null,0,null,true);
 			Framework::window_close();
 		}
 
-		list($id, $date) = explode(':',$_GET['id']);
 		$content = array();
-		$event = $this->bo->read($id, $date);
 		$this->setup_participants($event, $content, $readonlys,$preserve,true);
 		$content = array_merge($event, $content);
 
@@ -3513,6 +3513,7 @@ class calendar_uiforms extends calendar_ui
 
 		$etpl = new Etemplate('calendar.notify_dialog');
 		$preserve = $content;
+		$preserve['id'] = $_GET['id'];
 
 		$etpl->exec('calendar.calendar_uiforms.notify', $content, $sel_options, $readonlys, $preserve,2);
 	}
