@@ -434,7 +434,7 @@ class Contacts extends Contacts\Storage
 	private static function is_set($rights, $required, $check_all=true)
 	{
 		$result = $rights & $required;
-		return $check_exact ? $result == $required : $result !== 0;
+		return $check_all ? $result == $required : $result !== 0;
 	}
 
 	/**
@@ -2810,11 +2810,14 @@ class Contacts extends Contacts\Storage
 	 *  $filter['cols_to_search'] limit search columns to given columns, otherwise $this->columns_to_search is used
 	 * @param string $join ='' sql to do a join (only used by sql backend!), eg. " RIGHT JOIN egw_accounts USING(account_id)"
 	 * @param boolean $ignore_acl =false true: no acl check
+	 * @param null|string|array $fields_to_search =null which phone-numbers to search, default all (only honored for Sql backend!)
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 * @throws Exception\WrongParameter|\libphonenumber\NumberParseException if $critera is not a string with a valid phone-number
 	 * @throws Exception\NotFound if no contact matches the phone-number in $criteria
 	 */
-	function &phoneSearch($criteria, $only_keys = false, $order_by = 'contact_modified DESC', $extra_cols = '', $wildcard = '', $empty = False, $op = 'AND', $start = false, $filter = null, $join = '', $ignore_acl = false)
+	function &phoneSearch($criteria, $only_keys = false, $order_by = 'contact_modified DESC', $extra_cols = '',
+		$wildcard = '', $empty = False, $op = 'AND', $start = false, $filter = null, $join = '', $ignore_acl = false,
+		$fields_to_search=null)
 	{
 		$phoneNumberUtil = PhoneNumberUtil::getInstance();
 		$region = $GLOBALS['egw_info']['user']['preferences']['common']['country'] ?: 'DE';
@@ -2845,13 +2848,17 @@ class Contacts extends Contacts\Storage
 				'"'.$criteria.'"',	// try exact match
 			];
 		}
+		if (empty($fields_to_search))
+		{
+			$fields_to_search = ['tel_work', 'tel_cell', 'tel_fax', 'tel_assistent',
+				'tel_car', 'tel_pager', 'tel_home', 'tel_fax_home', 'tel_cell_private', 'tel_other'];
+		}
 		foreach($patterns as $pattern)
 		{
 			if (is_a($backend, Contacts\Sql::class))
 			{
 				$pattern = $backend->search2criteria($pattern, $wildcard, $op, null,
-					['tel_work', 'tel_cell', 'tel_fax', 'tel_assistent', 'tel_car', 'tel_pager',
-						'tel_home', 'tel_fax_home', 'tel_cell_private', 'tel_other'], false);
+					(array)$fields_to_search, false);
 			}
 			$rows = parent::search($pattern, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl) ?: [];
 			foreach($rows as $key => $row)
