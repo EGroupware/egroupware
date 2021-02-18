@@ -312,8 +312,10 @@ var et2_calendar_daycol = /** @class */ (function (_super) {
             // Not visible, defer the layout or it all winds up at the top
             // Cancel any existing listener & bind
             jQuery(this.getInstanceManager().DOMContainer.parentNode)
-                .off('show.et2_daycol' + this.id)
-                .one('show.et2_daycol' + this.id, function () { this._update_events(events); }.bind(this));
+                .off('show.' + CalendarApp._daywise_cache_id(this.options.date, this.options.owner))
+                .one('show.' + CalendarApp._daywise_cache_id(this.options.date, this.options.owner), function () {
+                this._update_events(events);
+            }.bind(this));
             return;
         }
         if (!this.getParent().disabled)
