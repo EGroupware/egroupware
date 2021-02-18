@@ -179,6 +179,10 @@ div.calendar_conflicts {
   width: 22px;
   height: 22px;
 }
+.calendar_conflicts table[id*="conflicting_participants"] > tbody > tr.r .et2_label {
+  /* Color for resources */
+  color: blue;
+}
 /* Loader - hide sizing behind overlay*/
 #egw-loadin-prompt_calendar::before {
   opacity: 1;
@@ -391,13 +395,13 @@ Hide subsequent headers in week view with non-consolidated owners
   top: 2em;
 }
 #calendar-view_view.hideDayColHeader tr:first-of-type .calendar_calGridHeader .calendar_calDayColHeader_spacer {
-  height: calc(33.5em);
+  height: calc(1.5em + 32px);
 }
 #calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > span.et2_label {
   white-space: nowrap;
   display: block;
   position: static;
-  width: calc(42%);
+  width: calc(100% - 58px);
   margin-left: 58px;
   color: white;
   background-color: #2D6393;
@@ -2736,7 +2740,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   filter: none !important;
 }
 #calendar-toolbar_toolbar span.et2_checkbox_slideSwitch {
-  margin: 0px;
   height: 22px;
 }
 #calendar-toolbar_toolbar span.et2_checkbox_slideSwitch span.slideSwitch_container {
