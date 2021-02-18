@@ -509,6 +509,7 @@ select who should get the alarm	calendar	en	Select who should get the alarm
 selected range	calendar	en	Selected range
 selected users/groups	calendar	en	Selected users/groups
 send meetingrequest to all participants after the event is saved	calendar	en	Send meetingrequest to all participants after the event is saved
+send notifications	calendar	en	Send notifications
 series deleted	calendar	en	Series deleted
 set new events to private	calendar	en	Set new events to private
 setting lock time calender	admin	en	Setting data lock time for Calendar (default 1 sec.)

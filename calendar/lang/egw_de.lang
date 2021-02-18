@@ -509,6 +509,7 @@ select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten so
 selected range	calendar	de	Ausgewählter Zeitraum
 selected users/groups	calendar	de	Ausgewählte Benutzer/Gruppen
 send meetingrequest to all participants after the event is saved	calendar	de	Terminanforderung an alle Teilnehmer senden nachdem der Termin gespeichert wurde
+send notifications	calendar	de	Benachrichtigung senden
 series deleted	calendar	de	Serientermin wurde gelöscht
 set new events to private	calendar	de	Neue Termine als private Termine eintragen
 setting lock time calender	admin	de	Zeitintervall für Datensatzlock (Voreinstellung beträgt eine Sekunde)
