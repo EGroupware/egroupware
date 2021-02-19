@@ -72,10 +72,10 @@ tr.mail.label1 td:first-child {
   border-left: 6px solid #ff0080 !important;
 }
 tr.mail.label2 td:first-child {
-  border-left: 6px solid  #ff8000 !important;
+  border-left: 6px solid #ff8000 !important;
 }
 tr.mail.label3 td:first-child {
-  border-left: 6px solid  #008000 !important;
+  border-left: 6px solid #008000 !important;
 }
 tr.mail.label4 td:first-child {
   border-left: 6px solid #0000ff !important;
@@ -472,7 +472,7 @@ div#mail-index_mailPreview > div {
   border: none;
 }
 #mail-compose_composeToolbar > button {
-  padding: .2em .4em;
+  padding: 0.2em 0.4em;
 }
 #mail-compose_composeToolbar > img {
   width: 16px;
@@ -485,7 +485,7 @@ div#mail-index_mailPreview > div {
   height: 16px !important;
 }
 #mail-compose_composeToolbar > button {
-  padding: .2em .4em;
+  padding: 0.2em 0.4em;
 }
 #mail-compose_to div.ms-sel-ctn,
 #mail-compose_cc .ms-sel-ctn,
@@ -493,7 +493,7 @@ div#mail-index_mailPreview > div {
   max-height: 75px;
 }
 #mail-display_toolbar > button > span {
-  padding: .2em .4em;
+  padding: 0.2em 0.4em;
 }
 #mail-display_toolbar > button > span > img {
   width: 16px;
@@ -516,7 +516,7 @@ div#mail-index_mailPreview > div {
   height: 35px;
 }
 #mail-index_toolbar > button > span {
-  padding: .2em .4em;
+  padding: 0.2em 0.4em;
 }
 #mail-index_toolbar > button > span > img {
   width: 16px;
@@ -1896,7 +1896,7 @@ input[type=button] {
   padding: 0px;
 }
 #mail-display_toolbar > button > span {
-  padding: .2em .4em;
+  padding: 0.2em 0.4em;
 }
 #mail-display_toolbar > button > span > img {
   width: 16px;
@@ -2108,7 +2108,7 @@ table#mail-index_previewAttachmentArea::-webkit-scrollbar-thumb:hover {
     text-align: left;
     font-weight: normal;
     padding-left: 20px;
-    background-image: url(../pixelegg/images/mail_send.png);
+    background-image: url(../pixelegg/images/mail_send.svg);
     background-position: left;
     background-repeat: no-repeat;
     background-size: 16px 16px;
@@ -2337,19 +2337,19 @@ table#mail-index_previewAttachmentArea::-webkit-scrollbar-thumb:hover {
     padding: 0 2px 2px 0;
   }
   #mail-index table.egwGridView_outer tbody tr span.deleted.status_img {
-    background-image: url(../pixelegg/images/kmmsgdel.png);
+    background-image: url(../pixelegg/images/kmmsgdel.svg);
   }
   #mail-index table.egwGridView_outer tbody tr span.unseen.status_img {
-    background-image: url(../pixelegg/images/kmmsgunseen.png);
+    background-image: url(../pixelegg/images/kmmsgunseen.svg);
   }
   #mail-index table.egwGridView_outer tbody tr span.flagged_seen.status_img {
-    background-image: url(../pixelegg/images/read_flagged_small.png);
+    background-image: url(../pixelegg/images/read_flagged_small.svg);
   }
   #mail-index table.egwGridView_outer tbody tr span.flagged_unseen.status_img {
-    background-image: url(../pixelegg/images/unread_flagged_small.png);
+    background-image: url(../pixelegg/images/unread_flagged_small.svg);
   }
   #mail-index table.egwGridView_outer tbody tr span.recent.status_img {
-    background-image: url(../pixelegg/images/kmmsgnew.png);
+    background-image: url(../pixelegg/images/kmmsgnew.svg);
   }
   #mail-index table.egwGridView_outer tbody tr span.replied.status_img {
     background-image: url(../pixelegg/images/mail_reply.svg);

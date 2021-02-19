@@ -221,6 +221,7 @@
     background-color: transparent;
     background-size: contain;
     border: none;
+    opacity: 1;
   }
   .ui-datepicker .ui-datepicker-prev:hover,
   .ui-datepicker .ui-datepicker-next:hover {
@@ -1504,6 +1505,7 @@ div#ui-datepicker-div {
 }
 .ui-datepicker div.ui-timepicker-div dt.ui_tpicker_time_label {
   font-size: 0.9em;
+  margin-top: 6px;
 }
 .ui-datepicker div.ui-timepicker-div dd.ui_tpicker_time {
   padding-left: 75px;
@@ -1520,9 +1522,13 @@ div#ui-datepicker-div {
 }
 .ui-datepicker div.ui-timepicker-div div.ui_tpicker_hour_slider span.ui-slider-handle {
   background-color: #0C5DA5;
+  padding: 1px;
+  outline: none;
 }
 .ui-datepicker div.ui-timepicker-div div.ui_tpicker_minute_slider span.ui-slider-handle {
   background-color: #0C5DA5;
+  padding: 1px;
+  outline: none;
 }
 .ui-datepicker div.ui-datepicker-buttonpane {
   background-color: #679FD2;

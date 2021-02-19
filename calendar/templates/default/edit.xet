@@ -37,7 +37,7 @@
 					<menulist>
 						<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
 					</menulist>
-					<button align="center" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"/>
+					<button align="left" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"/>
 				</row>
 			</rows>
 		</grid>
@@ -60,7 +60,7 @@
 					<calendar-owner id="participant" allowFreeEntries="true" span="4" empty_label="Add new participants or resource" onchange="app.calendar.participantOnChange"/>
 					<hbox width="100%">
 						<textbox type="integer" id="quantity" min="1" size="3"/>
-						<select class="selectRole" id="role" align="center"/>
+						<select class="selectRole" id="role"/>
 						<button id="add" align="right" image="add" novalidate="1" statustext="Please first select participants on the left and then use plus button to add them" background_image="1" readonly="true" ro_image="add"/>
 					</hbox>
 				</row>
@@ -80,12 +80,12 @@
 					<menulist>
 						<menupopup id="${row}[status]" onchange="1"/>
 					</menulist>
-					<button align="center" label="Delete" id="delete[$row_cont[delete_id]]" image="delete"/>
+					<button align="left" label="Delete" id="delete[$row_cont[delete_id]]" image="delete"/>
 				</row>
 			</rows>
 		</grid>
 		<styles>
-			.selectRole select { width: 100%; }
+			select#calendar-edit_role { width: 50%; }
 		</styles>
 	</template>
 	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.9.001">
@@ -231,9 +231,8 @@
 					<label for="location" value="Location"/>
 					<hbox span="2">
 						<textbox id="location" maxlength="255" class="et2_fullWidth"/>
-						<checkbox label="Video Conference" id="videoconference" onchange="app.calendar.videoconferenceOnChange"/>
 					</hbox>
-					<description/>
+					<checkbox label="Video Conference" id="videoconference" onchange="app.calendar.videoconferenceOnChange"/>
 					<taglist-cat id="category" height="190" empty_label="Categories" multiple="toggle" class="et2_fullWidth" rows="1" />
 				</row>
 				<row>
