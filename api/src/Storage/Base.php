@@ -640,7 +640,8 @@ class Base
 					}
 					else
 					{
-						$data[$db_col] = (string) $this->data[$col] === '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
+						$data[$db_col] = !is_a($this->data[$col], 'DateTime') && (string)$this->data[$col] === '' &&
+							$this->empty_on_write == 'NULL' ? null : $this->data[$col];
 					}
 				}
 			}
