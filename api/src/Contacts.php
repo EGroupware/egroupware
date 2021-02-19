@@ -2902,19 +2902,28 @@ class Contacts extends Contacts\Storage
 	/**
 	 * Open CRM view for a calling number by sending a push requestion to the user
 	 *
-	 * @param $from
+	 * @param string $from phone-number
+	 * @param ?array& $found =null on return found contacts
 	 * @throws Exception\WrongParameter|\libphonenumber\NumberParseException if $critera is not a string with a valid phone-number
 	 * @throws Exception\NotFound if no contact matches the phone-number in $criteria
 	 */
-	function openCrmView($from)
+	function openCrmView($from, array &$found=null)
 	{
 		$found = $this->phoneSearch($from);
 		// ToDo: select best match from multiple matches containing the number
 		$contact = current($found);
 		$push = new Json\Push($this->user);
+		// check user preference which CRM view to use
+		$prefs = (new Preferences($this->user))->read_repository();
+		$crm_list = $prefs['addressbook']['crm_list'];
+		if (empty($crm_list) || $crm_list === '~edit~') $crm_list = 'infolog';
+		if ($crm_list === 'infolog' && count($found) > 1 && !empty($contact['org_name']))
+		{
+			$crm_list = 'infolog-organisation';
+		}
 		$extras = [
 			//'index': ToDo: what's that used for?
-			'crm_list' => count($found) > 1 && $contact['org_name'] ? 'infolog-organisation' : 'infolog',
+			'crm_list' => $crm_list,
 		];
 		$params = [(int)$contact['id'], 'addressbook', 'view', $extras, [
 			'displayName' => count($found) > 1 && $contact['org_name'] ?
