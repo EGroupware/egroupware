@@ -513,7 +513,7 @@ class Sql extends Api\Storage
 			$shared_sql = $this->table_name.'.contact_id IN (SELECT contact_id FROM '.self::SHARED_TABLE.' WHERE '.
 				// $filter[tid] === null is used by sync-collection report, in which case we need to return deleted shares, to remove them from devices
 				(array_key_exists('tid', $filter) && !isset($filter['tid']) ? '' : 'shared_deleted IS NULL AND ').
-				$this->db->expression(self::SHARED_TABLE, ['shared_with' => $filter['owner'] ?? array_keys($this->grants)]).')';
+				$this->db->expression(self::SHARED_TABLE, ['shared_with' => $filter['owner'] ?? array_keys(is_array($this->grants) ? $this->grants : array())]).')';
 		}
 
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook

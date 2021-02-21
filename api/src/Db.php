@@ -505,7 +505,7 @@ class Db
 				{
 					throw new Db\Exception\Connection("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
 				}
-				if (!isset($GLOBALS['egw']->ADOdb))	// use the global object to store the connection
+				if (isset($GLOBALS['egw']->ADOdb))	// use the global object to store the connection
 				{
 					$this->Link_ID =& $GLOBALS['egw']->ADOdb;
 				}
@@ -1755,9 +1755,6 @@ class Db
 	*/
 	function get_table_definitions($app=False,$table=False)
 	{
-		// ease the transition to api
-		if ($app === 'phpgwapi') $app = 'api';
-
 		if ($app === true && $table)
 		{
 			foreach(self::$all_app_data as $app => &$app_data)
@@ -1798,19 +1795,37 @@ class Db
 		{
 			$app = $this->app ? $this->app : $GLOBALS['egw_info']['flags']['currentapp'];
 		}
-		$app_data =& self::$all_app_data[$app];
-
-		if (!isset($app_data))
+		
+		if ($app === 'api' || $app === 'phpgwapi')
 		{
-			$tables_current = EGW_INCLUDE_ROOT . "/$app/setup/tables_current.inc.php";
-			if (!@file_exists($tables_current))
-			{
-				return $app_data = False;
-			}
-			include($tables_current);
-			$app_data =& $phpgw_baseline;
-			unset($phpgw_baseline);
+			// ease the transition to api
+			$app_list = array('api');
 		}
+		elseif ($app === 'groupdav')
+		{
+			$app_list = array('calendar', 'infolog', 'api');
+		}
+		else
+		{
+			$app_list = array($app, 'api');
+		}
+
+		foreach ($app_list as $app_name)
+		{
+			$app_data =& self::$all_app_data[$app_name];
+			if (!isset($app_data))
+			{
+				$tables_current = EGW_INCLUDE_ROOT . "/$app_name/setup/tables_current.inc.php";
+				if (@file_exists($tables_current))
+				{
+					include($tables_current);
+					$app_data =& $phpgw_baseline;
+					unset($phpgw_baseline);
+				}
+			}
+			if (!$table || (isset($app_data) && isset($app_data[$table]))) break;
+		}
+
 		if ($table && (!$app_data || !isset($app_data[$table])))
 		{
 			if ($this->Debug) echo "<p>!!!get_table_definitions($app,$table) failed!!!</p>\n";

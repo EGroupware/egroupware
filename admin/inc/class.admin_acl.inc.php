@@ -193,7 +193,7 @@ class admin_acl
 							}
 							else
 							{
-								$check = array_diff($memberships, $groups);
+								$check = (is_array($groups) ? array_diff($memberships, $groups) : $memberships);
 								//error_log(__METHOD__."() app=$app, array_diff(memberships=".array2string($memberships).", groups=".array2string($groups).")=".array2string($check));
 								if (!$check) continue;	// would give sql error otherwise!
 							}

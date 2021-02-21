@@ -2745,7 +2745,7 @@ class Contacts extends Contacts\Storage
 				header('Content-length: '.bytes($contact['jpegphoto']));
 				echo $contact['jpegphoto'];
 			}
-			else
+			elseif(!empty($url))
 			{
 				header('Content-length: '.$size);
 				readfile($url);
