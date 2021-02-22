@@ -413,6 +413,7 @@ class admin_account
 		) + (array)$documentation);
 		$msg = $cmd->run();
 
+		Api\Accounts::cache_invalidate($account_id);
 		Framework::refresh_opener($msg, 'admin', $account_id, 'delete');
 	}
 
