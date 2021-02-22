@@ -86,7 +86,7 @@ var InfologApp = /** @class */ (function (_super) {
                 jQuery(_et2.DOMContainer).on('clear', jQuery.proxy(function () { egw.css(this); }, '#' + nm.getDOMNode(nm).id + ' .et2_box.infoDes'));
                 // Enable decrypt on hover
                 if (this.egw.user('apps').stylite) {
-                    this._get_stylite(function () { this.mailvelopeAvailable(function () { app.stylite.decrypt_hover(nm); }); });
+                    this._get_stylite(function () { this.mailvelopeAvailable(function () { var _a; (_a = app.stylite) === null || _a === void 0 ? void 0 : _a.decrypt_hover(nm); }); });
                 }
                 break;
             case 'infolog.edit.print':
