@@ -302,6 +302,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				// Let timegrid always get the drag
 				.droppable('option','greedy',false);
 		}
+		let tooltip = jQuery(this._tooltip()).text();
 		// DOM nodes
 		this.div
 			// Set full day flag
@@ -316,6 +317,9 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			.attr('data-recur_type', event.recur_type)
 			.attr('data-resize', event.whole_day ? 'WD' : '' + (event.recur_type ? 'S':''))
 			.attr('data-priority', event.priority)
+		    // Accessibility
+		    .attr("tabindex",0)
+			.attr("aria-label", tooltip)
 			// Remove any category classes
 			.removeClass(function(index, css) {
 				return (css.match (/(^|\s)cat_\S+/g) || []).join(' ');
@@ -557,7 +561,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		{
 			if(type_name)
 			{
-				participants += '</p><p><span class="calendar_calEventLabel">'+type_name+'</span>:<br />';
+				participants += '</p><p><span class="calendar_calEventLabel">'+type_name+':</span><br />';
 				participants += this.options.value.participant_types[type_name].join("<br />");
 			}
 		}
@@ -565,17 +569,17 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		return '<div class="calendar_calEventTooltip ' + this._status_class() +' '+ this.options.class +
 			'" style="border-color: '+border+'; background-color: '+bg_color+';">'+
 			'<div class="calendar_calEventHeaderSmall">'+
-				'<font style="color:'+header_color+'">'+timespan+'</font>'+
+				'<span style="color:'+header_color+'">'+timespan+'</span>'+
 				this.icons[0].outerHTML+
 			'</div>'+
 			'<div class="calendar_calEventBody">'+
 				'<p style="margin: 0px;">'+
-				'<span class="calendar_calEventTitle">'+egw.htmlspecialchars(this.options.value.title)+'</span><br>'+
+				'<h1 class="calendar_calEventTitle">'+egw.htmlspecialchars(this.options.value.title)+'</h1><br>'+
 				egw.htmlspecialchars(this.options.value.description)+'</p>'+
 				'<p style="margin: 2px 0px;">'+times+'</p>'+
 				location +
-				(cat_label ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Category') + '</span>:' + cat_label +'</p>' : '')+
-				'<p><span class="calendar_calEventLabel">'+this.egw().lang('Participants')+'</span>:<br />'+
+				(cat_label ? '<p><h2 class="calendar_calEventLabel">'+this.egw().lang('Category') + ':</h2>' + cat_label +'</p>' : '')+
+				'<p><h2 class="calendar_calEventLabel">'+this.egw().lang('Participants')+':</h2><br />'+
 					participants + '</p>'+ this._participant_summary(this.options.value.participants) +
 			'</div>'+
 		'</div>';
