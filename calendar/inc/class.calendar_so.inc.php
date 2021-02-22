@@ -1214,12 +1214,18 @@ class calendar_so
 			'filter'=> $filter,
 			'query' => $query,
 		));
-		foreach(self::$integration_data as $data)
+		foreach(self::$integration_data as $app => $data)
 		{
-			if (is_array($data['selects']))
+			foreach(isset($data[1]) ? $data : [$data] as $key => $data)
 			{
-				//echo $app; _debug_array($data);
-				$selects = array_merge($selects,$data['selects']);
+				// create a flat array, if app implementes multiple hooks using given app-name
+				self::$integration_data[$data['selects'][0]['app']] = $data;
+
+				if (is_array($data['selects']))
+				{
+					//echo $app; _debug_array($data);
+					$selects = array_merge($selects,$data['selects']);
+				}
 			}
 		}
 	}

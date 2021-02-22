@@ -1334,7 +1334,23 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						break;
 					case 'series':
 					case 'single':
-						egw.open(edit_id, event_data.app||'calendar', 'edit', extra_params);
+						// ToDo: find a nicer way to open CRM view for calls
+						if (event_data.app === 'stylite')
+						{
+							let contact_id;
+							for(let uid in event_data.participants)
+							{
+								if (typeof uid === 'string' && uid[0] === 'c')
+								{
+									contact_id = parseInt(uid.substr(1));
+								}
+							}
+							if (contact_id) app.calendar.openCRMview({}, contact_id);
+						}
+						else
+						{
+							egw.open(edit_id, event_data.app||'calendar', 'edit', extra_params);
+						}
 						break;
 					case 'cancel':
 					default:

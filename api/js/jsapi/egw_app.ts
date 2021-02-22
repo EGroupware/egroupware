@@ -292,6 +292,47 @@ export abstract class EgwApp
 		egw.open(id_app[1], this.appname);
 	}
 
+	/**
+	 * Open a CRM view for a contact
+	 *
+	 * @param _action
+	 * @param _senders
+	 * @param _contact_id default: use contact_id from data of _senders[0].id
+	 */
+	openCRMview(_action, _senders)
+	{
+		let contact_id = _senders;
+		if (typeof _senders === 'object')
+		{
+			let data = egw.dataGetUIDdata(_senders[0].id);
+			contact_id = data.data.contact_id;
+		}
+		if (typeof contact_id !== 'undefined')
+		{
+			let crm_list = egw.preference('crm_list', 'addressbook');
+			if (!crm_list || crm_list === '~edit~') crm_list = 'infolog';
+			let open = function(_title)
+			{
+				let title = _title || this.egw.link_title('addressbook', contact_id, open);
+				if (title)
+				{
+					this.egw.openTab(contact_id,'addressbook', 'view', {
+						crm_list: crm_list
+					}, {
+						displayName: title,
+						icon: this.egw.link('/api/avatar.php', {
+							contact_id: contact_id,
+							etag: (new Date).valueOf()/86400|0	// cache for a day, better then no invalidation
+						}),
+						refreshCallback: 'app.addressbook.view_refresh',
+						id: contact_id + '-'+crm_list
+					});
+				}
+			}.bind(this);
+			open();
+		}
+	}
+
 	_do_action(action_id : string, selected : [])
 	{
 	}
