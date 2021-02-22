@@ -2774,7 +2774,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 @media all {
   #calendar-toolbar {
     height: 70px;
-    box-shadow: 0px 4px 5px 2px silver;
     width: 100%;
     background: #0c5da5;
     z-index: 1;
