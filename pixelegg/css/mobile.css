@@ -7310,8 +7310,7 @@ img.et2_button_icon[src*="svg"]:hover {
     background-size: 24px 24px;
     display: inline-block;
   }
-  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_home,
-  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_logout {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_home {
     display: none;
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_home {
