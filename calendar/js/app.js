@@ -1668,6 +1668,25 @@ var CalendarApp = /** @class */ (function (_super) {
         }
     };
     /**
+     * Check to see if we know how to convert this entry to the given app
+     *
+     * The current entry may not be an actual calendar event, it may be some other app
+     * that is participating via integration hook.  This is determined by checking the
+     * hooks defined for <appname>_set, indicating that the app knows how to provide
+     * information for that application
+     *
+     * @param {egwAction} _action
+     * @param {egwActionObject[]} _events
+     */
+    CalendarApp.prototype.action_convert_enabled_check = function (_action, _events) {
+        var supported_apps = _action.data.convert_apps || [];
+        var entry = egw.dataGetUIDdata(_events[0].id);
+        if (supported_apps && entry && entry.data) {
+            return supported_apps.length > 0 && supported_apps.indexOf(entry.data.app) >= 0;
+        }
+        return true;
+    };
+    /**
      * Context menu action (on a single event) in non-listview to generate ical
      *
      * Since nextmatch is all ready to handle that, we pass it through
