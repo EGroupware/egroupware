@@ -498,7 +498,8 @@ var et2_calendar_event = /** @class */ (function (_super) {
         }
         else {
             if (this.options.value.app !== 'calendar') {
-                icons.push('<img src="' + this.egw().image('navbar', this.options.value.app) + '" title="' + this.egw().lang(this.options.value.app) + '"/>');
+                var app_icon = "" + (egw.link_get_registry(this.options.value.app, 'icon') || (this.options.value.app + '/navbar'));
+                icons.push('<img src="' + this.egw().image(app_icon) + '" title="' + this.egw().lang(this.options.value.app) + '"/>');
             }
             if (this.options.value.priority == 3) {
                 icons.push('<img src="' + this.egw().image('high', 'calendar') + '" title="' + this.egw().lang('high priority') + '"/>');

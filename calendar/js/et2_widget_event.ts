@@ -633,7 +633,8 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		{
 			if(this.options.value.app !== 'calendar')
 			{
-				icons.push('<img src="'+this.egw().image('navbar',this.options.value.app)+'" title="'+this.egw().lang(this.options.value.app)+'"/>');
+				let app_icon = ""+(egw.link_get_registry(this.options.value.app,'icon') || (this.options.value.app + '/navbar'));
+				icons.push('<img src="'+this.egw().image(app_icon)+'" title="'+this.egw().lang(this.options.value.app)+'"/>');
 			}
 			if(this.options.value.priority == 3)
 			{
