@@ -1696,18 +1696,32 @@ class CalendarApp extends EgwApp
 	 */
 	action_open(_action, _events)
 	{
-		var id = _events[0].id.split('::');
-		var app = id[0];
-		var app_id = id[1];
-		if(app_id && app_id.indexOf(':'))
+		let app, id, app_id;
+		// Try to get better by going straight for the data
+		let data = egw.dataGetUIDdata(_events[0].id);
+		if(data && data.data)
 		{
-			var split = id[1].split(':');
-			id = split[0];
+			app = data.data.app;
+			app_id = data.data.app_id;
+			id = data.data.id;
 		}
 		else
 		{
-			id = app_id;
+			// Try to set some reasonable values from the ID
+			id = _events[0].id.split('::');
+			app = id[0];
+			app_id = id[1];
+			if(app_id && app_id.indexOf(':'))
+			{
+				let split = id[1].split(':');
+				id = split[0];
+			}
+			else
+			{
+				id = app_id;
+			}
 		}
+
 		if(_action.data.open)
 		{
 			var open = JSON.parse(_action.data.open) || {};
