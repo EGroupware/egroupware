@@ -1570,15 +1570,26 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {egwActionObject[]} _events
      */
     CalendarApp.prototype.action_open = function (_action, _events) {
-        var id = _events[0].id.split('::');
-        var app = id[0];
-        var app_id = id[1];
-        if (app_id && app_id.indexOf(':')) {
-            var split = id[1].split(':');
-            id = split[0];
+        var app, id, app_id;
+        // Try to get better by going straight for the data
+        var data = egw.dataGetUIDdata(_events[0].id);
+        if (data && data.data) {
+            app = data.data.app;
+            app_id = data.data.app_id;
+            id = data.data.id;
         }
         else {
-            id = app_id;
+            // Try to set some reasonable values from the ID
+            id = _events[0].id.split('::');
+            app = id[0];
+            app_id = id[1];
+            if (app_id && app_id.indexOf(':')) {
+                var split = id[1].split(':');
+                id = split[0];
+            }
+            else {
+                id = app_id;
+            }
         }
         if (_action.data.open) {
             var open = JSON.parse(_action.data.open) || {};
