@@ -823,10 +823,10 @@
 				background: @mobile-nm-search-bg;
 				margin-top: 0;
 				padding-left: 60px;
-				box-shadow: 0px 4px 5px 2px silver;
 				position: relative;
 				height: 50px;
 				z-index: 1;
+				border-bottom: 1px solid transparent;
 				button {
 					height: @mobile-elem-height;
 					width: @mobile-button-width;
@@ -1519,10 +1519,13 @@
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: 24px 24px;
+				display: inline-block !important;
 			}
 			.flex{
 				width:100%;
 				position: absolute;
+				border: 0;
+				input {border:0}
 			}
 		}
 

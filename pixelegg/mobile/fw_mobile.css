@@ -7321,6 +7321,12 @@ img.et2_button_icon[src*="svg"]:hover {
   body #egw_fw_sidebar.avatarSubmenu {
     top: 325px;
   }
+  body #egw_fw_sidebar #egw_fw_sidemenu::-webkit-scrollbar {
+    width: 1px;
+  }
+  body #egw_fw_sidebar #egw_fw_sidemenu {
+    overflow-y: auto;
+  }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_apps .egw_fw_ui_sidemenu_entry_header {
     margin: 0px 5px 0px 2px;
     padding: 4px 10px 0 0px;
@@ -7345,7 +7351,7 @@ img.et2_button_icon[src*="svg"]:hover {
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_apps .egw_fw_ui_sidemenu_entry_header h1 {
-    margin: 0 0 10px 0;
+    margin: 6px 0 10px 0;
     padding-top: 0.31em;
     padding-left: 3em;
     color: #999999;
@@ -8490,10 +8496,10 @@ form[id^="ranking-"] .dialogHeadbar {
     background: #0c5da5;
     margin-top: 0;
     padding-left: 60px;
-    box-shadow: 0px 4px 5px 2px silver;
     position: relative;
     height: 50px;
     z-index: 1;
+    border-bottom: 1px solid transparent;
   }
   body .et2_nextmatch .nm-mob-header button {
     height: 50px;
@@ -9190,10 +9196,15 @@ form[id^="ranking-"] .dialogHeadbar {
     background-position: center;
     background-repeat: no-repeat;
     background-size: 24px 24px;
+    display: inline-block !important;
   }
   body .et2_searchbox.expanded .flex {
     width: 100%;
     position: absolute;
+    border: 0;
+  }
+  body .et2_searchbox.expanded .flex input {
+    border: 0;
   }
   body img.et2_button_icon[src*="svg"] {
     background: none;
