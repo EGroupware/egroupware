@@ -7277,7 +7277,19 @@ img.et2_button_icon[src*="svg"]:hover {
     display: block;
     padding-top: 50px;
   }
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items select#rc_status_select {
+    width: 100%;
+    height: 40px;
+    box-shadow: none;
+    padding-right: 0;
+    padding-left: 28px;
+    background-size: auto;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+  }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul {
+    border-left: 6px solid silver;
     display: inline-block;
     padding: 0;
     margin: 0;
