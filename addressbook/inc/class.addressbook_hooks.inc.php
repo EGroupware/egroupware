@@ -408,7 +408,8 @@ class addressbook_hooks
 			'owner' => array(
 				'key'    => 'egw_addressbook.contact_id',
 				'column' => 'egw_addressbook.contact_owner'
-			)
+			),
+			'push_data' => ['owner','tid','cat_id']
 		);
 		return $links;
 	}

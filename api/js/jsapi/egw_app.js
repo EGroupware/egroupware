@@ -163,10 +163,107 @@ var EgwApp = /** @class */ (function () {
         // don't care about other apps data, reimplement if your app does care eg. calendar
         if (pushData.app !== this.appname)
             return;
-        // only handle delete by default, for simple case of uid === "$app::$id"
+        // handle delete, for simple case of uid === "$app::$id"
         if (pushData.type === 'delete' && egw.dataHasUID(this.uid(pushData))) {
             egw.refresh('', pushData.app, pushData.id, 'delete');
+            return;
         }
+        // If we know about it and it's an update, just update.
+        // This must be before all ACL checks, as responsible might have changed and entry need to be removed
+        // (server responds then with null / no entry causing the entry to disappear)
+        if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData))) {
+            return this.et2.getInstanceManager().refresh("", pushData.app, pushData.id, pushData.type);
+        }
+        // Check grants to see if we know we aren't supposed to show it
+        if (typeof this.push_grant_fields !== "undefined" && this.push_grant_fields.length > 0
+            && !this._push_grant_check(pushData, this.push_grant_fields)) {
+            return;
+        }
+        // Nextmatch does the hard part of updating.  Try to find one.
+        var nm = this.et2.getDOMWidgetById('nm');
+        if (!nm) {
+            return;
+        }
+        // Filter what's allowed down to those we can see / care about based on nm filters
+        if (typeof this.push_filter_fields !== "undefined" && this.push_filter_fields.length > 0 &&
+            !this._push_field_filter(pushData, nm, this.push_filter_fields)) {
+            return;
+        }
+        // Pass actual refresh on to just nextmatch
+        nm.refresh(pushData.id, pushData.type);
+    };
+    /**
+     * Check grants to see if we can quickly tell if this entry is not for us
+     *
+     * Override this method if the app has non-standard access control.
+     *
+     * @param pushData
+     * @param grant_fields List of fields in pushData.acl with account IDs that might grant access eg: info_responsible
+     */
+    EgwApp.prototype._push_grant_check = function (pushData, grant_fields) {
+        var grants = egw.grants(this.appname);
+        // check user has a grant from owner or something
+        for (var i = 0; i < grant_fields.length; i++) {
+            if (grants && typeof grants[pushData.acl[grant_fields[i]]] !== 'undefined') {
+                // ACL access
+                return true;
+            }
+        }
+        return false;
+    };
+    /**
+     * Check pushData.acl values against a list of fields to see if we care about this entry based on current nextmatch
+     * filter values.  This is not a definitive yes or no (the server will tell us when we ask), we just want to cheaply
+     * avoid a server call if we know it won't be in the list.
+     *
+     * @param pushData
+     * @param filter_fields List of filter field names eg: [owner, cat_id]
+     * @return boolean True if the nextmatch filters might include the entry, false if not
+     */
+    EgwApp.prototype._push_field_filter = function (pushData, nm, filter_fields) {
+        var filters = {};
+        for (var i = 0; i < filter_fields.length; i++) {
+            filters[filter_fields[i]] = {
+                col: filter_fields[i],
+                filter_values: []
+            };
+        }
+        // Get current filter values
+        if (this.et2) {
+            var value = nm.getValue();
+            if (!value || !value.col_filter)
+                return false;
+            for (var _i = 0, _a = Object.values(filters); _i < _a.length; _i++) {
+                var field_filter = _a[_i];
+                if (value.col_filter[field_filter.col]) {
+                    field_filter.filter_values.push(value.col_filter[field_filter.col]);
+                }
+            }
+        }
+        var _loop_1 = function (field_filter) {
+            // no filter set
+            if (field_filter.filter_values.length == 0)
+                return "continue";
+            // acl value is a scalar (not array) --> check contained in filter
+            if (pushData.acl && typeof pushData.acl[field_filter.col] !== 'object') {
+                if (field_filter.filter_values.indexOf(pushData.acl[field_filter.col]) < 0) {
+                    return { value: false };
+                }
+                return "continue";
+            }
+            // acl value is an array (eg. tr_assigned) --> check intersection with filter
+            if (!field_filter.filter_values.filter(function (account) { return pushData.acl[field_filter.col].indexOf(account) >= 0; }).length) {
+                return { value: false };
+            }
+        };
+        // check filters against pushData.acl data
+        for (var _b = 0, _c = Object.values(filters); _b < _c.length; _b++) {
+            var field_filter = _c[_b];
+            var state_1 = _loop_1(field_filter);
+            if (typeof state_1 === "object")
+                return state_1.value;
+        }
+        return true;
     };
     /**
      * Get (possible) app-specific uid

@@ -132,6 +132,22 @@ export abstract class EgwApp
 	static _instances: EgwApp[] = [];
 
 	/**
+	 * If pushData.acl has fields that can help filter based on ACL grants, list them
+	 * here and we can check them and ignore push messages if there is no ACL for that entry
+	 *
+	 * @protected
+	 */
+	protected push_grant_fields: string[];
+
+	/**
+	 * If pushData.acl has fields that can help filter based on current nextmatch filters,
+	 * list them here and we can check and ignore push messages if the nextmatch filters do not exclude them
+	 *
+	 * @protected
+	 */
+	protected push_filter_fields: string[];
+
+	/**
 	 * Initialization and setup goes here, but the etemplate2 object
 	 * is not yet ready.
 	 */
@@ -259,11 +275,129 @@ export abstract class EgwApp
 		// don't care about other apps data, reimplement if your app does care eg. calendar
 		if (pushData.app !== this.appname) return;
 
-		// only handle delete by default, for simple case of uid === "$app::$id"
+		// handle delete, for simple case of uid === "$app::$id"
 		if (pushData.type === 'delete' && egw.dataHasUID(this.uid(pushData)))
 		{
 			egw.refresh('', pushData.app, pushData.id, 'delete');
+			return;
 		}
+
+		// If we know about it and it's an update, just update.
+		// This must be before all ACL checks, as responsible might have changed and entry need to be removed
+		// (server responds then with null / no entry causing the entry to disappear)
+		if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData)))
+		{
+			return this.et2.getInstanceManager().refresh("", pushData.app, pushData.id, pushData.type);
+		}
+
+		// Check grants to see if we know we aren't supposed to show it
+		if(typeof this.push_grant_fields !== "undefined" && this.push_grant_fields.length > 0
+			&& !this._push_grant_check(pushData, this.push_grant_fields)
+		)
+		{
+			return;
+		}
+
+		// Nextmatch does the hard part of updating.  Try to find one.
+		let nm = <et2_nextmatch>this.et2.getDOMWidgetById('nm');
+		if(!nm)
+		{
+			return;
+		}
+
+		// Filter what's allowed down to those we can see / care about based on nm filters
+		if(typeof this.push_filter_fields !== "undefined" && this.push_filter_fields.length > 0 &&
+			!this._push_field_filter(pushData, nm, this.push_filter_fields)
+		)
+		{
+			return;
+		}
+
+		// Pass actual refresh on to just nextmatch
+		nm.refresh(pushData.id, pushData.type);
+	}
+
+	/**
+	 * Check grants to see if we can quickly tell if this entry is not for us
+	 *
+	 * Override this method if the app has non-standard access control.
+	 *
+	 * @param pushData
+	 * @param grant_fields List of fields in pushData.acl with account IDs that might grant access eg: info_responsible
+	 */
+	_push_grant_check(pushData : PushData, grant_fields : string[]) : boolean
+	{
+		let grants = egw.grants(this.appname);
+
+		// check user has a grant from owner or something
+		for(let i = 0; i < grant_fields.length; i++)
+		{
+			if(grants && typeof grants[pushData.acl[grant_fields[i]]] !== 'undefined')
+			{
+				// ACL access
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Check pushData.acl values against a list of fields to see if we care about this entry based on current nextmatch
+	 * filter values.  This is not a definitive yes or no (the server will tell us when we ask), we just want to cheaply
+	 * avoid a server call if we know it won't be in the list.
+	 *
+	 * @param pushData
+	 * @param filter_fields List of filter field names eg: [owner, cat_id]
+	 * @return boolean True if the nextmatch filters might include the entry, false if not
+	 */
+	_push_field_filter(pushData : PushData, nm : et2_nextmatch,  filter_fields: string[]) : boolean
+	{
+		let filters = {};
+		for(let i = 0; i < filter_fields.length; i++)
+		{
+			filters[filter_fields[i]] = {
+				col: filter_fields[i],
+				filter_values: []
+			};
+		}
+
+		// Get current filter values
+		if(this.et2)
+		{
+			let value = nm.getValue();
+			if(!value || !value.col_filter) return false;
+
+			for(let field_filter of Object.values(filters))
+			{
+				if(value.col_filter[field_filter.col])
+				{
+					field_filter.filter_values.push(value.col_filter[field_filter.col]);
+				}
+			}
+		}
+
+		// check filters against pushData.acl data
+		for(let field_filter of Object.values(filters))
+		{
+			// no filter set
+			if (field_filter.filter_values.length == 0) continue;
+
+			// acl value is a scalar (not array) --> check contained in filter
+			if (pushData.acl && typeof pushData.acl[field_filter.col] !== 'object')
+			{
+				if (field_filter.filter_values.indexOf(pushData.acl[field_filter.col]) < 0)
+				{
+					return false;
+				}
+				continue;
+			}
+			// acl value is an array (eg. tr_assigned) --> check intersection with filter
+			if(!field_filter.filter_values.filter(account => pushData.acl[field_filter.col].indexOf(account) >= 0).length)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**

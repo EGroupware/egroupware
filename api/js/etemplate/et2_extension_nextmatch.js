@@ -55,6 +55,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_nextmatch_accountfilterheader = exports.et2_nextmatch_filterheader = exports.et2_nextmatch_sortheader = exports.et2_nextmatch_customfields = exports.et2_nextmatch_header = exports.et2_nextmatch = void 0;
 require("./et2_core_common");
 require("./et2_core_interfaces");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
@@ -1921,11 +1922,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
      * @param {object} target
      */
     et2_nextmatch.prototype.handle_drop = function (event, target) {
-        var _a;
         // Check to see if we can handle the link
         // First, find the UID
         var row = this.controller.getRowByNode(target);
-        var uid = ((_a = row) === null || _a === void 0 ? void 0 : _a.uid) || null;
+        var uid = (row === null || row === void 0 ? void 0 : row.uid) || null;
         // Get the file information
         var files = [];
         if (event.originalEvent && event.originalEvent.dataTransfer &&
@@ -2014,7 +2014,8 @@ var et2_nextmatch = /** @class */ (function (_super) {
             idsArr[i] = idsArr[i].split("::").pop();
         }
         var value = {
-            "selected": idsArr
+            "selected": idsArr,
+            col_filter: {}
         };
         jQuery.extend(value, this.activeFilters, this.value);
         return value;

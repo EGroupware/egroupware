@@ -44,8 +44,13 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @memberOf app.addressbook
      */
     function AddressbookApp() {
+        var _this = 
         // call parent
-        return _super.call(this, 'addressbook') || this;
+        _super.call(this, 'addressbook') || this;
+        // These fields help with push
+        _this.push_grant_fields = ["owner"];
+        _this.push_filter_fields = ["tid", "owner", "cat_id"];
+        return _this;
     }
     /**
      * Destructor
@@ -1231,9 +1236,8 @@ var AddressbookApp = /** @class */ (function (_super) {
      * Remove the entry again, if user is not allowed
      */
     AddressbookApp.prototype.shared_changed = function () {
-        var _a;
         var shared = this.et2.getInputWidgetById('shared_values');
-        var value = (_a = shared) === null || _a === void 0 ? void 0 : _a.get_value();
+        var value = shared === null || shared === void 0 ? void 0 : shared.get_value();
         if (value) {
             this.egw.json('addressbook.addressbook_ui.ajax_check_shared', [{
                     contact: this.et2.getInstanceManager().getValues(this.et2),
