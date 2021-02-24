@@ -206,8 +206,6 @@ export abstract class EgwApp
 		if (this.egw && this.egw.is_popup())
 		{
 			this._set_Window_title();
-			// apply theme mode
-			jQuery('html').attr('data-darkmode', egw.getSessionItem('api', 'darkmode') == '0'?'0':'1');
 		}
 
 		// Highlights the favorite based on initial list state

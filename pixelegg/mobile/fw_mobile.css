@@ -43,6 +43,7 @@
   }
   html[data-darkmode='1'] img,
   html[data-darkmode='1'] #blueimp-gallery,
+  html[data-darkmode='1'] iframe,
   html[data-darkmode='1'] #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active,
   html[data-darkmode='1'] video,
   html[data-darkmode='1'] #loginMainDiv,
@@ -6874,6 +6875,12 @@ span.egw_tutorial_title {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_acl {
   background-image: url(../images/topmenu_items/access.svg);
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_calls {
+  background-image: url(../images/phone.svg);
+  background-repeat: no-repeat;
+  background-size: 18px;
+  background-position-x: -2px;
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {
   background-color: transparent;
