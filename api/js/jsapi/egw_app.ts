@@ -329,13 +329,24 @@ export abstract class EgwApp
 	{
 		let grants = egw.grants(this.appname);
 
+		// No grants known
+		if(!grants) return true;
+
 		// check user has a grant from owner or something
 		for(let i = 0; i < grant_fields.length; i++)
 		{
-			if(grants && typeof grants[pushData.acl[grant_fields[i]]] !== 'undefined')
+			let grant_field = pushData.acl[grant_fields[i]];
+			if(["number","string"].indexOf(typeof grant_field) >=0 && grants[grant_field] !== 'undefined')
 			{
 				// ACL access
 				return true;
+			}
+			else if(!Object.keys(grants).filter(function(grant_account) {
+				return grant_field.indexOf(grant_account) >= 0 ||
+					grant_field.indexOf(parseInt(grant_account)).length
+			}))
+			{
+				return false;
 			}
 		}
 		return false;

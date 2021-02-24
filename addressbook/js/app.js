@@ -48,7 +48,7 @@ var AddressbookApp = /** @class */ (function (_super) {
         // call parent
         _super.call(this, 'addressbook') || this;
         // These fields help with push
-        _this.push_grant_fields = ["owner"];
+        _this.push_grant_fields = ["owner", "shared_with"];
         _this.push_filter_fields = ["tid", "owner", "cat_id"];
         return _this;
     }

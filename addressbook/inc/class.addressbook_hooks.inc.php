@@ -409,9 +409,31 @@ class addressbook_hooks
 				'key'    => 'egw_addressbook.contact_id',
 				'column' => 'egw_addressbook.contact_owner'
 			),
-			'push_data' => ['owner','tid','cat_id']
+			'push_data'  => self::class.'::prepareEntryPush',
 		);
 		return $links;
+	}
+
+	/**
+	 * Prepare entry to be pushed via Link::notify_update()
+	 *
+	 * Add in shared users
+	 *
+	 * @param $entry
+	 * @return array
+	 */
+	static public function prepareEntryPush($entry)
+	{
+		// Add users / groups this contact is shared with
+		$entry['shared_with'] = [];
+		foreach($entry['shared'] as $id => $share)
+		{
+			$entry['shared_with'][] = $share['shared_with'];
+		}
+		$entry['shared_with'] = array_unique($entry['shared_with']);
+
+		$entry = array_intersect_key($entry, array_flip(['owner','tid','cat_id','shared_with']));
+		return $entry;
 	}
 
 	/**

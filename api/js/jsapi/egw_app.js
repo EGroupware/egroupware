@@ -202,12 +202,26 @@ var EgwApp = /** @class */ (function () {
      */
     EgwApp.prototype._push_grant_check = function (pushData, grant_fields) {
         var grants = egw.grants(this.appname);
+        // No grants known
+        if (!grants)
+            return true;
+        var _loop_1 = function (i) {
+            var grant_field = pushData.acl[grant_fields[i]];
+            if (["number", "string"].indexOf(typeof grant_field) >= 0 && grants[grant_field] !== 'undefined') {
+                return { value: true };
+            }
+            else if (!Object.keys(grants).filter(function (grant_account) {
+                return grant_field.indexOf(grant_account) >= 0 ||
+                    grant_field.indexOf(parseInt(grant_account)).length;
+            })) {
+                return { value: false };
+            }
+        };
         // check user has a grant from owner or something
         for (var i = 0; i < grant_fields.length; i++) {
-            if (grants && typeof grants[pushData.acl[grant_fields[i]]] !== 'undefined') {
-                // ACL access
-                return true;
-            }
+            var state_1 = _loop_1(i);
+            if (typeof state_1 === "object")
+                return state_1.value;
         }
         return false;
     };
@@ -240,7 +254,7 @@ var EgwApp = /** @class */ (function () {
                 }
             }
         }
-        var _loop_1 = function (field_filter) {
+        var _loop_2 = function (field_filter) {
             // no filter set
             if (field_filter.filter_values.length == 0)
                 return "continue";
@@ -259,9 +273,9 @@ var EgwApp = /** @class */ (function () {
         // check filters against pushData.acl data
         for (var _b = 0, _c = Object.values(filters); _b < _c.length; _b++) {
             var field_filter = _c[_b];
-            var state_1 = _loop_1(field_filter);
-            if (typeof state_1 === "object")
-                return state_1.value;
+            var state_2 = _loop_2(field_filter);
+            if (typeof state_2 === "object")
+                return state_2.value;
         }
         return true;
     };
