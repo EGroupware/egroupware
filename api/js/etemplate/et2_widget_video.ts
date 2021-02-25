@@ -136,6 +136,9 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      * @private
      */
     private static youtubePrefixId : string = "frame-";
+
+	private static youtubeRegexp: RegExp = new RegExp(/^https:\/\/((www\.|m\.)?youtube(-nocookie)?\.com|youtu\.be)\/.*(?:\/|%3D|v=|vi=)([0-9A-z-_]{11})(?:[%#?&]|$)/m);
+
     constructor(_parent, _attrs? : WidgetConfig, _child? : object)
     {
         super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {}));
@@ -219,7 +222,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
                         'iv_load_policy': 0,
                         'cc_load_policy': 0
                     },
-                    videoId: _value.split('v=')[1], //TODO get youtube video id
+					videoId: _value.match(et2_video.youtubeRegexp)[4],
                     events: {
                         'onReady': jQuery.proxy(self._onReady, self),
                         'onStateChange': jQuery.proxy(self._onStateChangeYoutube, self)

@@ -24,7 +24,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_video = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_interfaces;
@@ -135,7 +134,7 @@ var et2_video = /** @class */ (function (_super) {
                         'iv_load_policy': 0,
                         'cc_load_policy': 0
                     },
-                    videoId: _value.split('v=')[1],
+                    videoId: _value.match(et2_video.youtubeRegexp)[4],
                     events: {
                         'onReady': jQuery.proxy(self._onReady, self),
                         'onStateChange': jQuery.proxy(self._onStateChangeYoutube, self)
@@ -417,6 +416,7 @@ var et2_video = /** @class */ (function (_super) {
      * @private
      */
     et2_video.youtubePrefixId = "frame-";
+    et2_video.youtubeRegexp = new RegExp(/^https:\/\/((www\.|m\.)?youtube(-nocookie)?\.com|youtu\.be)\/.*(?:\/|%3D|v=|vi=)([0-9A-z-_]{11})(?:[%#?&]|$)/m);
     return et2_video;
 }(et2_core_baseWidget_1.et2_baseWidget));
 exports.et2_video = et2_video;
