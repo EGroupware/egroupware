@@ -791,7 +791,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @return Promise
 	 */
 	request(_menuaction: string, param2: any[]): Promise<any>;
-	
+
 	/**
 	 * Registers a new handler plugin.
 	 *
@@ -1295,3 +1295,7 @@ declare function egw_getWindowInnerWidth() : number;
 declare function egw_getWindowInnerHeight() : number;
 declare function egw_getWindowOuterWidth() : number;
 declare function egw_getWindowOuterHeight() : number;
+
+// Youtube API golbal vars
+declare var YT : any;
+declare function onYouTubeIframeAPIReady();

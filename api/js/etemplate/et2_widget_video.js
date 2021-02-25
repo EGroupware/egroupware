@@ -77,11 +77,14 @@ var et2_video = /** @class */ (function (_super) {
                 .appendTo(_this.video)
                 .attr('id', et2_video.youtubePrefixId + _this.id);
             _this.video.attr('id', _this.id);
-            //Load youtube iframe api
-            var tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            if (!document.getElementById('youtube-api-script')) {
+                //Load youtube iframe api
+                var tag = document.createElement('script');
+                tag.id = 'youtube-api-script';
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            }
         }
         if (!_this._isYoutube() && _this.options.controls) {
             _this.video.attr("controls", 1);
@@ -117,30 +120,13 @@ var et2_video = /** @class */ (function (_super) {
             }
         }
         else if (_value) {
-            //initiate youtube Api object, it gets called automatically by iframe_api script from the api
-            // @ts-ignore
-            window.onYouTubeIframeAPIReady = function () {
-                // @ts-ignore
-                self.youtube = new YT.Player(et2_video.youtubePrefixId + self.id, {
-                    height: '400',
-                    width: '100%',
-                    playerVars: {
-                        'autoplay': 0,
-                        'controls': 0,
-                        'modestbranding': 1,
-                        'fs': 0,
-                        'disablekb': 1,
-                        'rel': 0,
-                        'iv_load_policy': 0,
-                        'cc_load_policy': 0
-                    },
-                    videoId: _value.match(et2_video.youtubeRegexp)[4],
-                    events: {
-                        'onReady': jQuery.proxy(self._onReady, self),
-                        'onStateChange': jQuery.proxy(self._onStateChangeYoutube, self)
-                    }
-                });
-            };
+            if (typeof YT == 'undefined') {
+                //initiate youtube Api object, it gets called automatically by iframe_api script from the api
+                window.onYouTubeIframeAPIReady = this._onYoutubeIframeAPIReady;
+            }
+            window.addEventListener('et2_video.onYoutubeIframeAPIReady', function () {
+                self._createYoutubePlayer(self.options.video_src);
+            });
         }
     };
     /**
@@ -310,6 +296,11 @@ var et2_video = /** @class */ (function (_super) {
                 self._onTimeUpdate();
             });
         }
+        else {
+            // need to create the player after the DOM is ready otherwise player won't show up
+            if (window.YT)
+                this._createYoutubePlayer(this.options.video_src);
+        }
         return false;
     };
     et2_video.prototype.videoLoadnigIsFinished = function () {
@@ -354,6 +345,42 @@ var et2_video = /** @class */ (function (_super) {
                 window.clearInterval(this._youtubeOntimeUpdateIntrv);
         }
         console.log(_data);
+    };
+    /**
+     * youtube on IframeAPI ready event
+     */
+    et2_video.prototype._onYoutubeIframeAPIReady = function () {
+        var event = document.createEvent("Event");
+        event.initEvent('et2_video.onYoutubeIframeAPIReady', true, true);
+        window.dispatchEvent(event);
+    };
+    /**
+     * create youtube player
+     *
+     * @param _value
+     */
+    et2_video.prototype._createYoutubePlayer = function (_value) {
+        if (typeof YT != 'undefined') {
+            this.youtube = new YT.Player(et2_video.youtubePrefixId + this.id, {
+                height: this.options.height || '400',
+                width: '100%',
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'modestbranding': 1,
+                    'fs': 0,
+                    'disablekb': 1,
+                    'rel': 0,
+                    'iv_load_policy': 0,
+                    'cc_load_policy': 0
+                },
+                videoId: _value.match(et2_video.youtubeRegexp)[4],
+                events: {
+                    'onReady': jQuery.proxy(this._onReady, this),
+                    'onStateChange': jQuery.proxy(this._onStateChangeYoutube, this)
+                }
+            });
+        }
     };
     et2_video._attributes = {
         "video_src": {
