@@ -243,15 +243,15 @@ var EgwApp = /** @class */ (function () {
             };
         }
         // Get current filter values
-        if (this.et2) {
-            var value = nm.getValue();
-            if (!value || !value.col_filter)
-                return false;
-            for (var _i = 0, _a = Object.values(filters); _i < _a.length; _i++) {
-                var field_filter = _a[_i];
-                if (value.col_filter[field_filter.col]) {
-                    field_filter.filter_values.push(value.col_filter[field_filter.col]);
-                }
+        var value = nm.getValue();
+        if (!value || !value.col_filter)
+            return false;
+        for (var _i = 0, _a = Object.values(filters); _i < _a.length; _i++) {
+            var field_filter = _a[_i];
+            var val = value.col_filter[field_filter.col];
+            if (val && (typeof val == "string" && val.trim().length > 0 ||
+                typeof val == "object" && !jQuery.isEmptyObject(val))) {
+                field_filter.filter_values.push(val);
             }
         }
         var _loop_2 = function (field_filter) {
