@@ -24,6 +24,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_video = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_interfaces;
@@ -335,8 +336,7 @@ var et2_video = /** @class */ (function (_super) {
     et2_video.prototype._onStateChangeYoutube = function (_data) {
         switch (_data.data) {
             case et2_video.youtube_player_states.unstarted:
-                // do not start the video on initiation
-                this.pause_video();
+                // do nothing
                 break;
             case et2_video.youtube_player_states.playing:
                 this._youtubeOntimeUpdateIntrv = window.setInterval(jQuery.proxy(this._onTimeUpdate, this), 100);

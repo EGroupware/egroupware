@@ -480,8 +480,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         switch (_data.data)
         {
             case et2_video.youtube_player_states.unstarted:
-                // do not start the video on initiation
-                this.pause_video();
+                // do nothing
                 break;
             case et2_video.youtube_player_states.playing:
                 this._youtubeOntimeUpdateIntrv = window.setInterval(jQuery.proxy(this._onTimeUpdate, this), 100);
