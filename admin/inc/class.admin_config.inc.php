@@ -184,7 +184,7 @@ class admin_config
 				isset($GLOBALS['egw_info']['server']['found_validation_hook']['final_validation']) &&
 					is_callable($func=$GLOBALS['egw_info']['server']['found_validation_hook']['final_validation']))
 			{
-				if (is_string($err=$func($_content['newsettings'])) || ($err=$GLOBALS['config_error']))
+				if (is_string($err=$func($_content['newsettings'], $c)) || ($err=$GLOBALS['config_error']))
 				{
 					$errors .= lang($err) . "\n";
 					$GLOBALS['config_error'] = False;
@@ -266,8 +266,8 @@ class admin_config
 		$tmpl = new Api\Etemplate($appname.'.config');
 		$path = (parse_url($tmpl->rel_path, PHP_URL_SCHEME) !== 'vfs' ? EGW_SERVER_ROOT : '').$tmpl->rel_path;
 		$content = array(
-			'tabs' => $_content['tabs'],
-			'tabs2' => $_content['tabs2'],
+			'tabs' => $_content['tabs'] ?: $_GET['tab'] ?? '',
+			'tabs2' => $_content['tabs2'] ?: $_GET['tab'] ?? '',
 			'template' => $appname.'.config',
 			'newsettings' => array(),
 		);
