@@ -488,6 +488,7 @@ var et2_selectbox = /** @class */ (function (_super) {
                 }
                 else if (jQuery.isEmptyObject(this.options.select_options)) {
                     this.egw().debug("warn", "Can't set value to '%s', widget has no options set", _value, this);
+                    this.value = null;
                 }
                 else {
                     var debug_value = _value;
@@ -757,12 +758,12 @@ var et2_selectbox = /** @class */ (function (_super) {
             this.input.trigger("liszt:updated");
         }
         // Sometimes value gets set before options
-        if (this.value || (this.options.empty_label && !this.options.multiple) || this.value === '' && this.input && this.input.children('[value=""]').length === 1) {
-            this.set_value(this.value, true); // true = dont try to set_options, to avoid an infinit recursion
-        }
-        else if (this.value === null && this.options.value) {
+        if (this.value === null && this.options.value) {
             // Null means it tried to set the value, and it got stripped by missing options
             this.set_value(this.options.value, true);
+        }
+        else if (this.value || (this.options.empty_label && !this.options.multiple) || this.value === '' && this.input && this.input.children('[value=""]').length === 1) {
+            this.set_value(this.value, true); // true = dont try to set_options, to avoid an infinit recursion
         }
     };
     et2_selectbox.prototype.getValue = function () {
