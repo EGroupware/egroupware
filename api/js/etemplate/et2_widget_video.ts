@@ -443,6 +443,19 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         if (this.options.starttime)
         {
             this.seek_video(this.options.starttime);
+
+			// unfortunately, youtube api autoplays the video after seekTo on initiation
+			// and there's no way to stop that therefore we need to trick it by manually
+			// pausing the video (this would bring up the spinner with the black screen,
+			// in order to avoid that we let the video plays for a second then we pause).
+			// since the youtube timeline is one second advanced we need to seek back to
+			// the original stattime although this time because it was manually paused
+			// we won't have the spinner and black screen instead we get the preview.
+			if (this._isYoutube()) window.setTimeout(function(){
+				this.youtube.pauseVideo();
+				this.youtube.seekTo(this.options.starttime);
+			;}.bind(this), 1000);
+			
         }
     }
 
