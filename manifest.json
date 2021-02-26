@@ -6,14 +6,14 @@
 	"orientation": "landscape-primary",
 	"icons": [
 	  {
-		"src": "api/templates/default/images/logo_192x192.png",
-		"type": "image/png",
-		"sizes": "192x192"
+		"src": "api/templates/default/images/logo164x164.svg",
+		"type": "image/svg",
+		"sizes": "164x164"
 	  },
 	  {
-		"src": "api/templates/default/images/logo_512x512.png",
+		"src": "api/templates/default/images/logo164x164.png",
 		"type": "image/png",
-		"sizes": "512x512"
+		"sizes": "164x164"
 	  }
 	],
 	"start_url": "index.php",
