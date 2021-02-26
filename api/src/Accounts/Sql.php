@@ -613,7 +613,7 @@ class Sql
 					unset($where['account_lid']);
 				}
 		}
-		if ($account_type)
+		if ($account_type && $table !== $this->contacts_table)
 		{
 			$where['account_type'] = $account_type;
 		}
