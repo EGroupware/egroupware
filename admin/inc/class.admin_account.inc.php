@@ -331,7 +331,7 @@ class admin_account
 			$msg = '';
 			if(count($content['account_id']) == 1)
 			{
-				self::_deferred_delete($content['account_id'][0], $content['new_owner'], $content['delete_apps'], $content['admin_cmd']);
+				self::_deferred_delete($account_id, $content['new_owner'], $content['delete_apps'], $content['admin_cmd']);
 				if ($content['contact_id'])
 				{
 					Framework::refresh_opener($msg, 'addressbook', $content['contact_id'], 'delete');
@@ -356,7 +356,7 @@ class admin_account
 		// Get a count of entries owned by the user
 		if(count($content['account_id']) == 1)
 		{
-			$_counts = $GLOBALS['egw']->accounts->get_account_entry_counts($content['account_id'][0]);
+			$_counts = $GLOBALS['egw']->accounts->get_account_entry_counts($content['account_id']);
 		}
 		else
 		{

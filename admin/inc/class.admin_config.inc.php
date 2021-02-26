@@ -144,7 +144,13 @@ class admin_config
 				$this->remove_anon_images(array_diff((array)$c->config_data['login_background_file'], (array)$_content['newsettings']['login_background_file']));
 			}
 
-			/* Load hook file with functions to validate each config (one/none/all) */
+			// "config_validate" hook returns a non-empty string with an error-message (everything else is treated as no error)
+			// The hook can additional set $GLOBALS['egw_info']['server']['found_validation_hook'] with individual validation-functions:
+			// a) regular function names matching the config-name or "final_validation" as values or
+			// b) same key as config-value for a callable eg. $GLOBALS['egw_info']['server']['found_validation_hook'][<name>]='<class-name>::<name>'
+			// The validation-function can return a non-empty string with an error (or deprecated set $GLOBALS['config_error']).
+			// Function signature: ?string function(mixed $value, Api\Config $c) ($c can be used to modify the value to save: $c->config_data[$name]=$val)
+			// Please note: only b) can be implemented in the file of a namespaced class
 			$errors = Api\Hooks::single(array(
 				'location' => 'config_validate',
 			)+(array)$_content['newsettings'], $appname);
@@ -155,12 +161,14 @@ class admin_config
 				if ($config)
 				{
 					$c->config_data[$key] = $config;
-					if (in_array($key, (array)$GLOBALS['egw_info']['server']['found_validation_hook'], true) && function_exists($key))
+					if (in_array($key, (array)$GLOBALS['egw_info']['server']['found_validation_hook'], true) &&
+							function_exists($func=$key) ||
+						isset($GLOBALS['egw_info']['server']['found_validation_hook'][$key]) &&
+							is_callable($func=$GLOBALS['egw_info']['server']['found_validation_hook'][$key]))
 					{
-						call_user_func($key, $config, $c);
-						if($GLOBALS['config_error'])
+						if (is_string($err=$func($config, $c)) || ($err=$GLOBALS['config_error']))
 						{
-							$errors .= lang($GLOBALS['config_error']) . "\n";
+							$errors .= lang($err) . "\n";
 							$GLOBALS['config_error'] = False;
 						}
 					}
@@ -171,17 +179,18 @@ class admin_config
 					unset($c->config_data[$key]);
 				}
 			}
-			if(in_array('final_validation', (array)$GLOBALS['egw_info']['server']['found_validation_hook']) &&
-				function_exists('final_validation'))
+			if (in_array('final_validation', (array)$GLOBALS['egw_info']['server']['found_validation_hook']) &&
+					function_exists($func='final_validation') ||
+				isset($GLOBALS['egw_info']['server']['found_validation_hook']['final_validation']) &&
+					is_callable($func=$GLOBALS['egw_info']['server']['found_validation_hook']['final_validation']))
 			{
-				final_validation($_content['newsettings']);
-				if($GLOBALS['config_error'])
+				if (is_string($err=$func($_content['newsettings'])) || ($err=$GLOBALS['config_error']))
 				{
-					$errors .= lang($GLOBALS['config_error']) . "\n";
+					$errors .= lang($err) . "\n";
 					$GLOBALS['config_error'] = False;
 				}
-				unset($GLOBALS['egw_info']['server']['found_validation_hook']);
 			}
+			unset($GLOBALS['egw_info']['server']['found_validation_hook']);
 
 			// do not allow to save config, if there are errors
 			if (!$errors)
