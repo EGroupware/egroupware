@@ -505,7 +505,11 @@ class Storage
 	*/
 	function delete($contact,$check_etag=null)
 	{
-		if (is_array($contact)) $contact = $contact['id'];
+		if (is_array($contact))
+		{
+			$account_id = $contact['account_id'];
+			$contact = $contact['id'];
+		}
 
 		$where = array('id' => $contact);
 		if ($check_etag) $where['etag'] = $check_etag;
@@ -524,11 +528,11 @@ class Storage
 
 			if ($this->contact_repository == 'sql-ldap')
 			{
-				if ($contact['account_id'])
+				if (!empty($account_id))
 				{
 					// LDAP uses the uid attributes for the contact-id (dn),
 					// which need to be the account_lid for accounts!
-					$contact['id'] = $GLOBALS['egw']->accounts->id2name($contact['account_id']);
+					$contact = $GLOBALS['egw']->accounts->id2name($account_id);
 				}
 				(new Ldap())->delete($contact);
 			}
