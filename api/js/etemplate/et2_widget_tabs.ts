@@ -256,6 +256,9 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 		// Specially process the selected index so it shows up right away
 		this._loadTab(this.selected_index,promises);
 
+		// Avoid reloading if tabs were modified by data
+		if(this.isInTree() && this.isAttached()) return;
+
 		// Apply parent now, which actually puts into the DOM
 		// This has to be before loading the child, so the dom sub-tree is not
 		// disconnected, which causes problems for things like CKEditor
@@ -291,6 +294,10 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 	{
 		var tabData = this.tabData[index];
 		if(!tabData || tabData.loaded) return;
+
+		// Set loaded flag to not do this again, even if not fully done
+		tabData.loaded = true;
+
 		if(tabData.XMLNode != null)
 		{
 			if(tabData.hidden)
@@ -311,8 +318,6 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 			tabData.widget = et2_createWidget('template',tabData.widget_options,this);
 		}
 
-		// Set loaded flag to not do this again, even if not fully done
-		tabData.loaded = true;
 
 		// loadingFinished() will be called either when the promise from doLoadingFinished is resolved,
 		// or during the normal execution

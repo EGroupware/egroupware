@@ -202,6 +202,9 @@ var et2_tabbox = /** @class */ (function (_super) {
         var tabs = this;
         // Specially process the selected index so it shows up right away
         this._loadTab(this.selected_index, promises);
+        // Avoid reloading if tabs were modified by data
+        if (this.isInTree() && this.isAttached())
+            return;
         // Apply parent now, which actually puts into the DOM
         // This has to be before loading the child, so the dom sub-tree is not
         // disconnected, which causes problems for things like CKEditor
@@ -233,6 +236,8 @@ var et2_tabbox = /** @class */ (function (_super) {
         var tabData = this.tabData[index];
         if (!tabData || tabData.loaded)
             return;
+        // Set loaded flag to not do this again, even if not fully done
+        tabData.loaded = true;
         if (tabData.XMLNode != null) {
             if (tabData.hidden) {
                 // Set hidden tab to readonly, so widgets aren't active
@@ -247,8 +252,6 @@ var et2_tabbox = /** @class */ (function (_super) {
         else if (tabData.widget_options) {
             tabData.widget = et2_core_widget_1.et2_createWidget('template', tabData.widget_options, this);
         }
-        // Set loaded flag to not do this again, even if not fully done
-        tabData.loaded = true;
         // loadingFinished() will be called either when the promise from doLoadingFinished is resolved,
         // or during the normal execution
     };
