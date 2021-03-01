@@ -2196,6 +2196,10 @@ class calendar_uiforms extends calendar_ui
 						}
 				}
 				$event['id'] = $existing_event['id'];
+				if($existing_event['##videoconference'])
+				{
+					$event['##videoconference'] = $existing_event['##videoconference'];
+				}
 			}
 			else	// event not in calendar
 			{

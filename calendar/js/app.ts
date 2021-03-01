@@ -1696,18 +1696,32 @@ class CalendarApp extends EgwApp
 	 */
 	action_open(_action, _events)
 	{
-		var id = _events[0].id.split('::');
-		var app = id[0];
-		var app_id = id[1];
-		if(app_id && app_id.indexOf(':'))
+		let app, id, app_id;
+		// Try to get better by going straight for the data
+		let data = egw.dataGetUIDdata(_events[0].id);
+		if(data && data.data)
 		{
-			var split = id[1].split(':');
-			id = split[0];
+			app = data.data.app;
+			app_id = data.data.app_id;
+			id = data.data.id;
 		}
 		else
 		{
-			id = app_id;
+			// Try to set some reasonable values from the ID
+			id = _events[0].id.split('::');
+			app = id[0];
+			app_id = id[1];
+			if(app_id && app_id.indexOf(':'))
+			{
+				let split = id[1].split(':');
+				id = split[0];
+			}
+			else
+			{
+				id = app_id;
+			}
 		}
+
 		if(_action.data.open)
 		{
 			var open = JSON.parse(_action.data.open) || {};
@@ -1800,6 +1814,29 @@ class CalendarApp extends EgwApp
 			         .replace(/(\$|%24)id/,id);
 			this.egw.open_link(url, _action.data.target, _action.data.popup);
 		}
+	}
+
+	/**
+	 * Check to see if we know how to convert this entry to the given app
+	 *
+	 * The current entry may not be an actual calendar event, it may be some other app
+	 * that is participating via integration hook.  This is determined by checking the
+	 * hooks defined for <appname>_set, indicating that the app knows how to provide
+	 * information for that application
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _events
+	 */
+	action_convert_enabled_check(_action, _events) : boolean
+	{
+		let supported_apps = _action.data.convert_apps || [];
+		let entry = egw.dataGetUIDdata(_events[0].id);
+
+		if(supported_apps && entry && entry.data)
+		{
+			return supported_apps.length > 0 && supported_apps.indexOf(entry.data.app) >= 0;
+		}
+		return true;
 	}
 
 	/**
@@ -4441,7 +4478,7 @@ class CalendarApp extends EgwApp
 					if (_value)
 					{
 						if (_value.err) egw.message(_value.err, 'error');
-						if(_value.url) app.status.openCall(_value.url);
+						if(_value.url) egw.top.app.status.openCall(_value.url);
 					}
 			}).sendRequest();
 	}

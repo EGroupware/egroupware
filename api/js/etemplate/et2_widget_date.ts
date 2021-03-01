@@ -889,18 +889,20 @@ export class et2_date_duration extends et2_date
 		}
 	}
 
-	private _unit_from_value(_value, _unit)
+	private _unit_from_value(_value, _unit, _highest)
 	{
 		_value *= this._unit2seconds(this.data_format);
 		// get value for given _unit
 		switch(_unit)
 		{
 			case 's':
-				return _value % 60;
+				return _highest ? _value : _value % 60;
 			case 'm':
-				return Math.floor(_value / 60) % 60;
+				_value = Math.floor(_value / 60);
+				return _highest ? _value : _value % 60;
 			case 'h':
-				return Math.floor(_value / 3600) % this.options.hours_per_day;
+				_value = Math.floor(_value / 3600);
+				return _highest ? _value : _value % this.options.hours_per_day;
 			case 'd':
 				return Math.floor(_value / 3600*this.options.hours_per_day);
 		}
@@ -914,7 +916,8 @@ export class et2_date_duration extends et2_date
 		{
 			for (let i = this.options.display_format.length; --i >= 0;)
 			{
-				jQuery(this.duration[i]).val(this._unit_from_value(_value, this.options.display_format[i]));
+				jQuery(this.duration[i]).val(this._unit_from_value(_value, this.options.display_format[i],
+					i === this.options.display_format.length-1));
 			}
 			return;
 		}
@@ -1010,7 +1013,7 @@ export class et2_date_duration extends et2_date
 			for (let i=0; i < this.options.display_format.length; ++i)
 			{
 				let unit = this.options.display_format[i];
-				let val = this._unit_from_value(_value, unit);
+				let val = this._unit_from_value(_value, unit, i === 0);
 				if (unit === 's' || unit === 'm' || unit === 'h' && this.options.display_format[0] === 'd' )
 				{
 					vals.push(sprintf('%02d', val));

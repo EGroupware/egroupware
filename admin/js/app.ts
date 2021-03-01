@@ -654,7 +654,8 @@ class AdminApp extends EgwApp
 				sel_options.acl_appname = [];
 				for(let app in acl_rights)
 				{
-					sel_options.acl_appname.push({value: app, label: this.egw.lang(app)});
+					sel_options.acl_appname.push({value: app, label: this.egw.lang(
+						<string>this.egw.link_get_registry(app, 'entries') || app)});
 				}
 				// Sort list
 				sel_options.acl_appname.sort(function(a,b) {

@@ -575,7 +575,7 @@ var AdminApp = /** @class */ (function (_super) {
                 // Restrict application selectbox to only apps that support ACL
                 sel_options.acl_appname = [];
                 for (var app_1 in acl_rights) {
-                    sel_options.acl_appname.push({ value: app_1, label: this.egw.lang(app_1) });
+                    sel_options.acl_appname.push({ value: app_1, label: this.egw.lang(this.egw.link_get_registry(app_1, 'entries') || app_1) });
                 }
                 // Sort list
                 sel_options.acl_appname.sort(function (a, b) {

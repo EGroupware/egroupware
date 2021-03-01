@@ -254,6 +254,7 @@ class addressbook_ui extends addressbook_bo
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
 				'row_id'         => 'id',
 				'row_modified'   => 'modified',
+				'add_on_top_sort_field' => 'modified',
 				'is_parent'      => 'group_count',
 				'parent_id'      => 'parent_id',
 				'favorites'      => true,

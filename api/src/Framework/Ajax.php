@@ -732,6 +732,15 @@ abstract class Ajax extends Api\Framework
 	}
 
 	/**
+	 * keep darkmode flag on session
+	 * @param $_mode
+	 */
+	public static function ajax_set_darkmode_flag($_mode)
+	{
+		Api\Cache::setSession('api', 'darkmode', $_mode);
+	}
+
+	/**
 	 * Stores the user defined sorting of the applications inside the preferences
 	 *
 	 * @param array $apps

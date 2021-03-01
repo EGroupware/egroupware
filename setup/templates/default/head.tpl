@@ -19,7 +19,9 @@
 	</head>
 	<body>
 
-<div id="divLogo"><a href="http://www.egroupware.org" target="_blank"><img src="../api/templates/default/images/logo.png" border="0" alt="egroupware" /></a></div>
+<div id="divLogo"><a href="http://www.egroupware.org" target="_blank">
+	<img src="../api/templates/default/images/logo.svg" border="0" alt="egroupware" width="200px"/>
+</a></div>
 
 <div id="divMain">
 	<div id="divAppIconBar">

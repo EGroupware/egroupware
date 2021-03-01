@@ -256,7 +256,7 @@ class admin_acl
 		// Get supporting or all apps for filter2 depending on filter
 		if($query['filter'] == 'run')
 		{
-			$rows['sel_options']['filter2'] = array(
+			$rows['sel_options']['acl_appname'] = $rows['sel_options']['filter2'] = array(
 				'' => lang('All applications'),
 			)+Etemplate\Widget\Select::app_options('enabled');
 		}
@@ -273,12 +273,13 @@ class admin_acl
 			{
 				$rows['sel_options']['filter2'][] = array(
 					'value' => $appname,
-					'label' => lang($appname)
+					'label' => lang(Api\Link::get_registry($appname, 'entries')) ?? lang($appname)
 				);
 			}
 			usort($rows['sel_options']['filter2'], function($a,$b) {
 				return strcasecmp($a['label'], $b['label']);
 			});
+			$rows['sel_options']['acl_appname'] = $rows['sel_options']['filter2'];
 		}
 
 		return $total;

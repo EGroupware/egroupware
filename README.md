@@ -2,7 +2,7 @@
 | Branch | Status | Tools | Usage |
 | ------ | ------ | ----- | ----- |
 | master | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=master)](https://travis-ci.org/EGroupware/egroupware) | <img src="https://travis-ci.com/images/logos/TravisCI-Full-Color.png" width="108" alt="Travis CI"/> | runs unit-tests after each commit |
-| 20.1 | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=20.1)](https://travis-ci.org/EGroupware/egroupware) | [![Scrutinizer CI](https://scrutinizer-ci.com/images/logo.png)](https://scrutinizer-ci.com/g/EGroupware/egroupware/) scrutinizer | runs static analysis on our codebase |
+| 20.1 | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=20.1)](https://travis-ci.org/EGroupware/egroupware) | [![Scrutinizer CI](https://scrutinizer-ci.com/images/logo.png) scrutinizer](https://scrutinizer-ci.com/g/EGroupware/egroupware/) | runs static analysis on our codebase |
 | 19.1 | [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=19.1)](https://travis-ci.org/EGroupware/egroupware) | <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ2scF5HUwLnJVnk2UhYwWpUXHmLQYNXM5yBw&usqp=CAU" width="110" alt="BrowserStack" /> | manual testing with unusual browser versions or platforms |
 
 ### Default and prefered installation method for EGroupware is via your package manager:

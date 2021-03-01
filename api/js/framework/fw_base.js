@@ -708,7 +708,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 	tabLinkHandler: function(_link, _extra)
 	{
-		var app = this.parseAppFromUrl(_link);
+		var app = typeof _extra.appName === 'string' ? _extra : this.parseAppFromUrl(_link);
 		if (app)
 		{
 			var appname = app.appName+"-"+btoa(_extra.id ? _extra.id : _link).replace(/=/g,'i');
@@ -1320,7 +1320,21 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	 */
 	_setDarkMode: function(_state)
 	{
-		jQuery('html').attr('data-darkmode', _state);
-		egw.setSessionItem('api', 'darkmode',_state == '0' ?'0':'1');
+		let state = _state == '0' ?'0':'1';
+		jQuery('html').attr('data-darkmode', state);
+		jQuery('iframe').each((i, frame) =>{
+			try {
+				if (frame && frame.contentWindow && frame.contentWindow.jQuery)
+				{
+					frame.contentWindow.jQuery('html').attr('data-darkmode', _state == 0?'':'1');
+				}
+			}catch(e)
+			{
+
+			}
+
+		})
+		egw.setSessionItem('api', 'darkmode',state);
+		egw.json('EGroupware\\Api\\Framework\\Ajax::ajax_set_darkmode_flag',[state]).sendRequest();
 	}
 });}).call(this);

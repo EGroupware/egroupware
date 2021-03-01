@@ -39,7 +39,7 @@
 					</vbox>
 					<vbox class="resourcesCol2">
 						<hbox>
-							<label value="Usable"/>
+							<label value="Useable"/>
 							<description align="left" id="${row}[useable]" no_lang="1"/>
 						</hbox>
 						<hbox>

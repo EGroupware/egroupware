@@ -534,7 +534,7 @@ abstract class Framework extends Framework\Extra
 			'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
 			'include_wz_tooltip'=> $include_wz_tooltip,
 			'webserver_url'     => $GLOBALS['egw_info']['server']['webserver_url'],
-			'darkmode'		=> $this->isTop()? $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] : ''
+			'darkmode'		=>  !empty(Cache::getSession('api','darkmode')) ?? $GLOBALS['egw_info']['user']['preferences']['common']['darkmode']
 		);
 	}
 
@@ -1185,7 +1185,7 @@ abstract class Framework extends Framework\Extra
 		// array of topmenu info items (orders of the items matter)
 		$topmenu_info_items = [
 			'user_avatar' => $this->_user_avatar_menu(),
-			'logout' => (Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile') ? self::_logout_menu() : null,
+			'logout' => (Header\UserAgent::mobile()) ? self::_logout_menu() : null,
 			'update' => ($update = Framework\Updates::notification()) ? $update : null,
 			'notifications' => ($GLOBALS['egw_info']['user']['apps']['notifications']) ? self::_get_notification_bell() : null,
 			'quick_add' => $vars['quick_add'],

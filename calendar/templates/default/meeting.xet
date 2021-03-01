@@ -57,11 +57,15 @@
 				</row>
 				<row class="row">
 					<description value="Location"/>
-					<description id="location" no_lang="1"/>
+					<hbox>
+						<description id="location" no_lang="1"/>
+						<description class="et2_link" value="Videoconference" disabled="!@##videoconference" onclick="app.calendar.joinVideoConference(widget.getArrayMgr('content').getEntry('##videoconference'), widget.getArrayMgr('content').data);"/>
+						<image src="videoconference" disabled="!@##videoconference"/>
+					</hbox>
 				</row>
 				<row class="row">
 					<description value="Date"/>
-					<hbox options="0,0">
+					<hbox>
 						<date-time id="start" readonly="true"/>
 						<date-time label="-" id="end" readonly="true" class="leftPad5"/>
 					</hbox>

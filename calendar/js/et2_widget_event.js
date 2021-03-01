@@ -237,6 +237,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
                 // Let timegrid always get the drag
                 .droppable('option', 'greedy', false);
         }
+        var tooltip = jQuery(this._tooltip()).text();
         // DOM nodes
         this.div
             // Set full day flag
@@ -250,6 +251,9 @@ var et2_calendar_event = /** @class */ (function (_super) {
             .attr('data-recur_type', event.recur_type)
             .attr('data-resize', event.whole_day ? 'WD' : '' + (event.recur_type ? 'S' : ''))
             .attr('data-priority', event.priority)
+            // Accessibility
+            .attr("tabindex", 0)
+            .attr("aria-label", tooltip)
             // Remove any category classes
             .removeClass(function (index, css) {
             return (css.match(/(^|\s)cat_\S+/g) || []).join(' ');
@@ -437,24 +441,24 @@ var et2_calendar_event = /** @class */ (function (_super) {
         }
         for (var type_name in this.options.value.participant_types) {
             if (type_name) {
-                participants += '</p><p><span class="calendar_calEventLabel">' + type_name + '</span>:<br />';
+                participants += '</p><p><span class="calendar_calEventLabel">' + type_name + ':</span><br />';
                 participants += this.options.value.participant_types[type_name].join("<br />");
             }
         }
         return '<div class="calendar_calEventTooltip ' + this._status_class() + ' ' + this.options.class +
             '" style="border-color: ' + border + '; background-color: ' + bg_color + ';">' +
             '<div class="calendar_calEventHeaderSmall">' +
-            '<font style="color:' + header_color + '">' + timespan + '</font>' +
+            '<span style="color:' + header_color + '">' + timespan + '</span>' +
             this.icons[0].outerHTML +
             '</div>' +
             '<div class="calendar_calEventBody">' +
             '<p style="margin: 0px;">' +
-            '<span class="calendar_calEventTitle">' + egw.htmlspecialchars(this.options.value.title) + '</span><br>' +
+            '<h1 class="calendar_calEventTitle">' + egw.htmlspecialchars(this.options.value.title) + '</h1><br>' +
             egw.htmlspecialchars(this.options.value.description) + '</p>' +
             '<p style="margin: 2px 0px;">' + times + '</p>' +
             location +
-            (cat_label ? '<p><span class="calendar_calEventLabel">' + this.egw().lang('Category') + '</span>:' + cat_label + '</p>' : '') +
-            '<p><span class="calendar_calEventLabel">' + this.egw().lang('Participants') + '</span>:<br />' +
+            (cat_label ? '<p><h2 class="calendar_calEventLabel">' + this.egw().lang('Category') + ':</h2>' + cat_label + '</p>' : '') +
+            '<p><h2 class="calendar_calEventLabel">' + this.egw().lang('Participants') + ':</h2><br />' +
             participants + '</p>' + this._participant_summary(this.options.value.participants) +
             '</div>' +
             '</div>';
@@ -494,7 +498,8 @@ var et2_calendar_event = /** @class */ (function (_super) {
         }
         else {
             if (this.options.value.app !== 'calendar') {
-                icons.push('<img src="' + this.egw().image('navbar', this.options.value.app) + '" title="' + this.egw().lang(this.options.value.app) + '"/>');
+                var app_icon = "" + (egw.link_get_registry(this.options.value.app, 'icon') || (this.options.value.app + '/navbar'));
+                icons.push('<img src="' + this.egw().image(app_icon) + '" title="' + this.egw().lang(this.options.value.app) + '"/>');
             }
             if (this.options.value.priority == 3) {
                 icons.push('<img src="' + this.egw().image('high', 'calendar') + '" title="' + this.egw().lang('high priority') + '"/>');
@@ -1053,7 +1058,20 @@ var et2_calendar_event = /** @class */ (function (_super) {
                         break;
                     case 'series':
                     case 'single':
-                        egw.open(edit_id, event_data.app || 'calendar', 'edit', extra_params);
+                        // ToDo: find a nicer way to open CRM view for calls
+                        if (event_data.app === 'stylite') {
+                            var contact_id = void 0;
+                            for (var uid in event_data.participants) {
+                                if (typeof uid === 'string' && uid[0] === 'c') {
+                                    contact_id = parseInt(uid.substr(1));
+                                }
+                            }
+                            if (contact_id)
+                                app.calendar.openCRMview({}, contact_id);
+                        }
+                        else {
+                            egw.open(edit_id, event_data.app || 'calendar', 'edit', extra_params);
+                        }
                         break;
                     case 'cancel':
                     default:

@@ -2707,7 +2707,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			idsArr[i] = idsArr[i].split("::").pop();
 		}
 		const value = {
-			"selected": idsArr
+			"selected": idsArr,
+			col_filter: {}
 		};
 		jQuery.extend(value, this.activeFilters, this.value);
 		return value;

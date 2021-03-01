@@ -132,6 +132,22 @@ export abstract class EgwApp
 	static _instances: EgwApp[] = [];
 
 	/**
+	 * If pushData.acl has fields that can help filter based on ACL grants, list them
+	 * here and we can check them and ignore push messages if there is no ACL for that entry
+	 *
+	 * @protected
+	 */
+	protected push_grant_fields: string[];
+
+	/**
+	 * If pushData.acl has fields that can help filter based on current nextmatch filters,
+	 * list them here and we can check and ignore push messages if the nextmatch filters do not exclude them
+	 *
+	 * @protected
+	 */
+	protected push_filter_fields: string[];
+
+	/**
 	 * Initialization and setup goes here, but the etemplate2 object
 	 * is not yet ready.
 	 */
@@ -206,8 +222,6 @@ export abstract class EgwApp
 		if (this.egw && this.egw.is_popup())
 		{
 			this._set_Window_title();
-			// apply theme mode
-			jQuery('html').attr('data-darkmode', egw.getSessionItem('api', 'darkmode') == '0'?'0':'1');
 		}
 
 		// Highlights the favorite based on initial list state
@@ -261,11 +275,141 @@ export abstract class EgwApp
 		// don't care about other apps data, reimplement if your app does care eg. calendar
 		if (pushData.app !== this.appname) return;
 
-		// only handle delete by default, for simple case of uid === "$app::$id"
+		// handle delete, for simple case of uid === "$app::$id"
 		if (pushData.type === 'delete' && egw.dataHasUID(this.uid(pushData)))
 		{
 			egw.refresh('', pushData.app, pushData.id, 'delete');
+			return;
 		}
+
+		// If we know about it and it's an update, just update.
+		// This must be before all ACL checks, as responsible might have changed and entry need to be removed
+		// (server responds then with null / no entry causing the entry to disappear)
+		if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData)))
+		{
+			return this.et2.getInstanceManager().refresh("", pushData.app, pushData.id, pushData.type);
+		}
+
+		// Check grants to see if we know we aren't supposed to show it
+		if(typeof this.push_grant_fields !== "undefined" && this.push_grant_fields.length > 0
+			&& !this._push_grant_check(pushData, this.push_grant_fields)
+		)
+		{
+			return;
+		}
+
+		// Nextmatch does the hard part of updating.  Try to find one.
+		let nm = <et2_nextmatch>this.et2.getDOMWidgetById('nm');
+		if(!nm)
+		{
+			return;
+		}
+
+		// Filter what's allowed down to those we can see / care about based on nm filters
+		if(typeof this.push_filter_fields !== "undefined" && this.push_filter_fields.length > 0 &&
+			!this._push_field_filter(pushData, nm, this.push_filter_fields)
+		)
+		{
+			return;
+		}
+
+		// Pass actual refresh on to just nextmatch
+		nm.refresh(pushData.id, pushData.type);
+	}
+
+	/**
+	 * Check grants to see if we can quickly tell if this entry is not for us
+	 *
+	 * Override this method if the app has non-standard access control.
+	 *
+	 * @param pushData
+	 * @param grant_fields List of fields in pushData.acl with account IDs that might grant access eg: info_responsible
+	 */
+	_push_grant_check(pushData : PushData, grant_fields : string[]) : boolean
+	{
+		let grants = egw.grants(this.appname);
+
+		// No grants known
+		if(!grants) return true;
+
+		// check user has a grant from owner or something
+		for(let i = 0; i < grant_fields.length; i++)
+		{
+			let grant_field = pushData.acl[grant_fields[i]];
+			if(["number","string"].indexOf(typeof grant_field) >=0 && grants[grant_field] !== 'undefined')
+			{
+				// ACL access
+				return true;
+			}
+			else if(!Object.keys(grants).filter(function(grant_account) {
+				return grant_field.indexOf(grant_account) >= 0 ||
+					grant_field.indexOf(parseInt(grant_account)).length
+			}))
+			{
+				return false;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Check pushData.acl values against a list of fields to see if we care about this entry based on current nextmatch
+	 * filter values.  This is not a definitive yes or no (the server will tell us when we ask), we just want to cheaply
+	 * avoid a server call if we know it won't be in the list.
+	 *
+	 * @param pushData
+	 * @param filter_fields List of filter field names eg: [owner, cat_id]
+	 * @return boolean True if the nextmatch filters might include the entry, false if not
+	 */
+	_push_field_filter(pushData : PushData, nm : et2_nextmatch,  filter_fields: string[]) : boolean
+	{
+		let filters = {};
+		for(let i = 0; i < filter_fields.length; i++)
+		{
+			filters[filter_fields[i]] = {
+				col: filter_fields[i],
+				filter_values: []
+			};
+		}
+
+		// Get current filter values
+		let value = nm.getValue();
+		if(!value || !value.col_filter) return false;
+
+		for(let field_filter of Object.values(filters))
+		{
+			let val = value.col_filter[field_filter.col];
+			if(val && (
+				typeof val == "string" && val.trim().length > 0 ||
+				typeof val == "object" && !jQuery.isEmptyObject(val)
+			))
+			{
+				field_filter.filter_values.push(val);
+			}
+		}
+
+		// check filters against pushData.acl data
+		for(let field_filter of Object.values(filters))
+		{
+			// no filter set
+			if (field_filter.filter_values.length == 0) continue;
+
+			// acl value is a scalar (not array) --> check contained in filter
+			if (pushData.acl && typeof pushData.acl[field_filter.col] !== 'object')
+			{
+				if (field_filter.filter_values.indexOf(pushData.acl[field_filter.col]) < 0)
+				{
+					return false;
+				}
+				continue;
+			}
+			// acl value is an array (eg. tr_assigned) --> check intersection with filter
+			if(!field_filter.filter_values.filter(account => pushData.acl[field_filter.col].indexOf(account) >= 0).length)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -290,6 +434,47 @@ export abstract class EgwApp
 	open(_action, _senders) {
 		var id_app = _senders[0].id.split('::');
 		egw.open(id_app[1], this.appname);
+	}
+
+	/**
+	 * Open a CRM view for a contact
+	 *
+	 * @param _action
+	 * @param _senders
+	 * @param _contact_id default: use contact_id from data of _senders[0].id
+	 */
+	openCRMview(_action, _senders)
+	{
+		let contact_id = _senders;
+		if (typeof _senders === 'object')
+		{
+			let data = egw.dataGetUIDdata(_senders[0].id);
+			contact_id = data.data.contact_id;
+		}
+		if (typeof contact_id !== 'undefined')
+		{
+			let crm_list = egw.preference('crm_list', 'addressbook');
+			if (!crm_list || crm_list === '~edit~') crm_list = 'infolog';
+			let open = function(_title)
+			{
+				let title = _title || this.egw.link_title('addressbook', contact_id, open);
+				if (title)
+				{
+					this.egw.openTab(contact_id,'addressbook', 'view', {
+						crm_list: crm_list
+					}, {
+						displayName: title,
+						icon: this.egw.link('/api/avatar.php', {
+							contact_id: contact_id,
+							etag: (new Date).valueOf()/86400|0	// cache for a day, better then no invalidation
+						}),
+						refreshCallback: 'app.addressbook.view_refresh',
+						id: contact_id + '-'+crm_list
+					});
+				}
+			}.bind(this);
+			open();
+		}
 	}
 
 	_do_action(action_id : string, selected : [])

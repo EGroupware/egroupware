@@ -791,7 +791,25 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @return Promise
 	 */
 	request(_menuaction: string, param2: any[]): Promise<any>;
-	
+
+	/**
+	 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
+	 *
+	 * @param {string} _func dot-separated function name
+	 * @param {mixed} ...args variable number of arguments
+	 * @returns {mixed|Promise}
+	 */
+	call(_func : string|Function, ...args : any) : Promise<any>|any
+	/**
+	 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
+	 *
+	 * @param {string} _func dot-separated function name
+	 * @param {array} args arguments
+	 * @param {object} _context
+	 * @returns {mixed|Promise}
+	 */
+	apply(_func : string|Function, args : Array<any>, _context : Object)  : Promise<any>|any
+
 	/**
 	 * Registers a new handler plugin.
 	 *
@@ -1295,3 +1313,7 @@ declare function egw_getWindowInnerWidth() : number;
 declare function egw_getWindowInnerHeight() : number;
 declare function egw_getWindowOuterWidth() : number;
 declare function egw_getWindowOuterHeight() : number;
+
+// Youtube API golbal vars
+declare var YT : any;
+declare function onYouTubeIframeAPIReady();

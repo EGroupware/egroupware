@@ -54,234 +54,229 @@
 					cursor: pointer;
 				}
 			}
-            //####################################################
-            // All Tabs
-            // DRAG AND DROP
-            .egw_fw_ui_sidemenu_entry_header {
-				display: block;
-				margin: 0 0;
-				&:hover {
-					background-color: @color_hover_row;
-				}
-				&:active {.box_shadow_standard_light_inset;}
-				h1 {
-					margin: 0 0 10px 0;
-					padding-top: 0.4em;
-					padding-left: 3em;
-					.color_40_gray;
-					/*font-size: 12px;*/
-					.fontsize_l;
-					line-height: 17px;
-				}
-				object {background-color: @gray_0; .dimension_width_height_m;}
-			}
-
-            // ##########################################
-            // ###										#
-            // ###   IMG  |  ADD NAME					#
-            // ###                                      #
-            // ###                                      #
-            //###########################################
-            // aktive APP
-            // aktiver Tab
-            // rounded Corner Left Top
-            .egw_fw_ui_sidemenu_entry_header_active {
-                //
-                cursor: pointer;
-                background-image: url("../images/clear.png");
-                background-position: 95% -3000px;
-                background-repeat: no-repeat;
-                .background_color_0_gray;
-                margin: 0 0 0 0;
-                border-bottom: none;
-                height: 33px;
-                img {padding-left: 9px; padding-top: 7px; height: 18px;}
-                h1 {
-					text-transform: uppercase;
-					font-size: 1.4em;
-					.color_100_gray;
-					padding-top: 0;
-					line-height: 33px;
-					height: 33px;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-					padding-left: 10px;
-					&:hover {padding-left: 35px;}
-				}
-                &:active {}
-				&:hover {
-					background-image: url(../images/reload.png);
-					background-size: 18px;
-					background-position: 9px 6px;
-					background-repeat: no-repeat;
-					img {
-						display: none !important;
-					}
-				}
-                &:focus {
-                    background-image: url("../images/ajax-loader.gif");
-                    background-repeat: no-repeat;
-                    background-position: 90% 50%;
-                    .Complete_Button_active;
-
-                    .background_color_25_gray;
-                }
-
-                object {
-                    margin-left: 14px;
-                    margin-top: 8px;
-                    .rounded (3px;);
-                    .dimension_width_height_s;
-                }
-
-                .egw_fw_ui_ajaxloader {margin-top: -26px;}
-            }
-
-            //####################################################
-            // Rahmen um APP Einstellungen
-            // egw_fw_ui_sidemenu_entry_content
-            // ########################################
-            // ##                                    ##
-            // ##                                    ##
-            // ########################################
-
-            // ########################################
-            // ##                                    ##
-            // ##                                    ##
-            // ########################################
-
-            // ########################################
-            // ##                                    ##
-            // ##                                    ##
-            // ########################################
-
-            // ########################################
-            //  ##        div.egw_fw_ui_category     ##
-            //   ##       &:nth-last-of-type(-n+3)   ##
-            //    #####################################
-
-            .egw_fw_ui_sidemenu_entry_content {
-                display: block;
-                background-image: none;
-                border-color: @gray_30;
-                border-style: solid;
-                border-width: 1px;
-                margin: 0 0 2em 0;
-				border-left: none;
-
-                // rounded Corner on bottom
-                &:nth-last-of-type(-n+3)   {
-                    .background_color_0_gray;
-                    border-color: @gray_30;
-					border-right: 0px;
-					margin-bottom: 10px;
-					border-top-color: white;
-					padding-top: 0px;
-                }
-
-               & > div {}
-
-                //###################################################
-                // *letztes Element   */
-                // has round corners
-                div.egw_fw_ui_category:nth-last-of-type(-n+3) {
-
-                }
-
-                //###################################################
-                // Schaltflächen - Elements
-                // Normal
-                .egw_fw_ui_category {
-                    margin: 4px 5px 5px 5px;
-                    padding: 2px 0 2px 0;
-                    cursor: pointer;
-                    //																												border-top: 7px solid;
-                    border-color: @gray_30;
-                    background-color: @gray_10;
-
-                    /*background-color: @egw_color_2_d;*/
-
-                    h1 {
-                        margin: 5px 0px 3px 5px;
-                        padding: 0px 0px 0px 24px;
-                        line-height: 1em;
-                        .fontsize_l;
-                        background-image:url(../images/arrow_right.svg);
-                        background-repeat:no-repeat;
-                        background-position:left center;
-						background-size: 12px;
-                    }
-
-                    div.egw_fw_ui_category:nth-last-of-type(-n+3) {
-						img.egw_fw_ui_sidemenu_listitem_icon {
-							display: block;
-						}
-                    }
-
-                }
-
-                //#################################
-                // Hover
-                // on Mouse over change color
-                .egw_fw_ui_category:hover {
-                    .background_color_40_gray;
-                }
-
-
-
-                /*######################*/
-                // Active State
-                // change Background color in Blue
-                // See all Elements
-                .egw_fw_ui_category_active {
-                    border-bottom-width: 0px;
-                    margin-top: 4px;
-                    background-color: @egw_color_2_a;
-                    .color_5_gray;
-                    h1 {
-                        background-image:url(../images/arrow_down.svg);
-                        line-height: 1em;
-                        font-size: 12px;
-						background-size: 12px;
-						filter: brightness(3);
-						a {
-							color: #FFF;
-							img {.dimension_width_height_s;}
-							&:hover {
-								padding: 5px 30px 5px 0px;
-								width: 200px;
-								.background_color_10_gray;
-								.color_50_gray;
-								.Complete_Button_hover;
-							}
-						}
-					}
-
-                    &:hover {background-color: @egw_color_2_d; .transition (0.2s, ease-out);}
-                }
-            }
-
-            .egw_fw_ui_sidemenu_entry_content_bottom {
-                border-width: 0px 1px 1px 1px;
-            }
-            .egw_fw_ui_sidemenu_entry_header_bottom {
-
-            }
-
-            .egw_fw_ui_sidemenu_entry_icon {
-				display: inline-block;
-				.dimension_height_m;
-
-				padding-left: 0;
-				padding-right: 0px;
-				float: left;
-
-				/*filter grey*/
-				.img_filter_gray;
-			}
         }
+		//####################################################
+		// All Tabs
+		// DRAG AND DROP
+		.egw_fw_ui_sidemenu_entry_header {
+			display: block;
+			margin: 0 0;
+			&:hover {
+				background-color: @color_hover_row;
+			}
+			&:active {.box_shadow_standard_light_inset;}
+			h1 {
+				margin: 0 0 10px 0;
+				padding-top: 0.4em;
+				padding-left: 3em;
+				.color_40_gray;
+				/*font-size: 12px;*/
+				.fontsize_l;
+				line-height: 17px;
+			}
+			object {background-color: @gray_0; .dimension_width_height_m;}
+		}
 
+		// ##########################################
+		// ###										#
+		// ###   IMG  |  ADD NAME					#
+		// ###                                      #
+		// ###                                      #
+		//###########################################
+		// aktive APP
+		// aktiver Tab
+		// rounded Corner Left Top
+		.egw_fw_ui_sidemenu_entry_header_active {
+			//
+			cursor: pointer;
+			background-image: url("../images/clear.png");
+			background-position: 95% -3000px;
+			background-repeat: no-repeat;
+			.background_color_0_gray;
+			margin: 0 0 0 0;
+			border-bottom: none;
+			height: 33px;
+			img {padding-left: 9px; padding-top: 7px; height: 18px;}
+			h1 {
+				text-transform: uppercase;
+				font-size: 1.4em;
+				.color_100_gray;
+				padding-top: 0;
+				line-height: 33px;
+				height: 33px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				padding-left: 10px;
+				&:hover {padding-left: 35px;}
+			}
+			&:active {}
+			&:hover {
+				background-image: url(../images/reload.png);
+				background-size: 18px;
+				background-position: 9px 6px;
+				background-repeat: no-repeat;
+				img {
+					display: none !important;
+				}
+			}
+			&:focus {
+				background-image: url("../images/ajax-loader.gif");
+				background-repeat: no-repeat;
+				background-position: 90% 50%;
+				.Complete_Button_active;
+
+				.background_color_25_gray;
+			}
+
+			object {
+				margin-left: 14px;
+				margin-top: 8px;
+				.rounded (3px;);
+				.dimension_width_height_s;
+			}
+
+			.egw_fw_ui_ajaxloader {margin-top: -26px;}
+		}
+
+		//####################################################
+		// Rahmen um APP Einstellungen
+		// egw_fw_ui_sidemenu_entry_content
+		// ########################################
+		// ##                                    ##
+		// ##                                    ##
+		// ########################################
+
+		// ########################################
+		// ##                                    ##
+		// ##                                    ##
+		// ########################################
+
+		// ########################################
+		// ##                                    ##
+		// ##                                    ##
+		// ########################################
+
+		// ########################################
+		//  ##        div.egw_fw_ui_category     ##
+		//   ##       &:nth-last-of-type(-n+3)   ##
+		//    #####################################
+
+		.egw_fw_ui_sidemenu_entry_content_bottom {
+			border-width: 0px 1px 1px 1px;
+		}
+
+		.egw_fw_ui_sidemenu_entry_icon {
+			display: inline-block;
+			.dimension_height_m;
+
+			padding-left: 0;
+			padding-right: 0px;
+			float: left;
+
+			/*filter grey*/
+			.img_filter_gray;
+		}
+		.egw_fw_ui_sidemenu_entry_content {
+			display: block;
+			background-image: none;
+			border-color: @gray_30;
+			border-style: solid;
+			border-width: 1px;
+			margin: 0 0 2em 0;
+			border-left: none;
+
+			// rounded Corner on bottom
+			&:nth-last-of-type(-n+3)   {
+				.background_color_0_gray;
+				border-color: @gray_30;
+				border-right: 0px;
+				margin-bottom: 10px;
+				border-top-color: white;
+				padding-top: 0px;
+			}
+
+			& > div {}
+
+			//###################################################
+			// *letztes Element   */
+			// has round corners
+			div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+
+			}
+
+			//###################################################
+			// Schaltflächen - Elements
+			// Normal
+			.egw_fw_ui_category {
+				margin: 4px 5px 5px 5px;
+				padding: 2px 0 2px 0;
+				cursor: pointer;
+				//																												border-top: 7px solid;
+				border-color: @gray_30;
+				background-color: @gray_10;
+
+				/*background-color: @egw_color_2_d;*/
+
+				h1 {
+					margin: 5px 0px 3px 5px;
+					padding: 0px 0px 0px 24px;
+					line-height: 1em;
+					.fontsize_l;
+					background-image:url(../images/arrow_right.svg);
+					background-repeat:no-repeat;
+					background-position:left center;
+					background-size: 12px;
+				}
+
+				div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+					img.egw_fw_ui_sidemenu_listitem_icon {
+						display: block;
+					}
+				}
+
+			}
+
+			//#################################
+			// Hover
+			// on Mouse over change color
+			.egw_fw_ui_category:hover {
+				.background_color_40_gray;
+			}
+
+
+
+			/*######################*/
+			// Active State
+			// change Background color in Blue
+			// See all Elements
+			.egw_fw_ui_category_active {
+				border-bottom-width: 0px;
+				margin-top: 4px;
+				background-color: @egw_color_2_a;
+				.color_5_gray;
+				h1 {
+					background-image:url(../images/arrow_down.svg);
+					line-height: 1em;
+					font-size: 12px;
+					background-size: 12px;
+					filter: brightness(3);
+					a {
+						color: #FFF;
+						img {.dimension_width_height_s;}
+						&:hover {
+							padding: 5px 30px 5px 0px;
+							width: 200px;
+							.background_color_10_gray;
+							.color_50_gray;
+							.Complete_Button_hover;
+						}
+					}
+				}
+
+				&:hover {background-color: @egw_color_2_d; .transition (0.2s, ease-out);}
+			}
+		}
 
     } // SIDEMENU ENDE
 

@@ -27,6 +27,10 @@ import {etemplate2} from "../../api/js/etemplate/etemplate2";
  */
 class AddressbookApp extends EgwApp
 {
+	// These fields help with push
+	protected push_grant_fields = ["owner","shared_with"];
+	protected push_filter_fields = ["tid","owner","cat_id"]
+
 	/**
 	 * Constructor
 	 *

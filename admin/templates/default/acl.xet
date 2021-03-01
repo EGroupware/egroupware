@@ -38,15 +38,9 @@
 				</row>
 				<row class="$row_cont[class]">
 					<appicon align="center" src="$row_cont[acl_appname]" class="admin_aclApp"/>
-					<menulist>
-						<menupopup type="select-app" id="${row}[acl_appname]" readonly="true"/>
-					</menulist>
-					<menulist>
-						<menupopup type="select-account" id="${row}[acl_account]" readonly="true"/>
-					</menulist>
-					<menulist>
-						<menupopup type="select-account" id="${row}[acl_location]" readonly="true"/>
-					</menulist>
+					<select id="${row}[acl_appname]" readonly="true"/>
+					<select-account id="${row}[acl_account]" readonly="true"/>
+					<select-account id="${row}[acl_location]" readonly="true"/>
 					<description id="${row}[acl1]"/>
 					<description id="${row}[acl2]"/>
 					<description id="${row}[acl4]"/>

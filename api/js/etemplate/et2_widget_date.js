@@ -721,16 +721,18 @@ var et2_date_duration = /** @class */ (function (_super) {
                 return 3600 * this.options.hours_per_day;
         }
     };
-    et2_date_duration.prototype._unit_from_value = function (_value, _unit) {
+    et2_date_duration.prototype._unit_from_value = function (_value, _unit, _highest) {
         _value *= this._unit2seconds(this.data_format);
         // get value for given _unit
         switch (_unit) {
             case 's':
-                return _value % 60;
+                return _highest ? _value : _value % 60;
             case 'm':
-                return Math.floor(_value / 60) % 60;
+                _value = Math.floor(_value / 60);
+                return _highest ? _value : _value % 60;
             case 'h':
-                return Math.floor(_value / 3600) % this.options.hours_per_day;
+                _value = Math.floor(_value / 3600);
+                return _highest ? _value : _value % this.options.hours_per_day;
             case 'd':
                 return Math.floor(_value / 3600 * this.options.hours_per_day);
         }
@@ -739,7 +741,7 @@ var et2_date_duration = /** @class */ (function (_super) {
         this.options.value = _value;
         if (!this.options.select_unit && this.options.display_format.length > 1) {
             for (var i = this.options.display_format.length; --i >= 0;) {
-                jQuery(this.duration[i]).val(this._unit_from_value(_value, this.options.display_format[i]));
+                jQuery(this.duration[i]).val(this._unit_from_value(_value, this.options.display_format[i], i === this.options.display_format.length - 1));
             }
             return;
         }
@@ -813,7 +815,7 @@ var et2_date_duration = /** @class */ (function (_super) {
             var vals = [];
             for (var i = 0; i < this.options.display_format.length; ++i) {
                 var unit = this.options.display_format[i];
-                var val = this._unit_from_value(_value, unit);
+                var val = this._unit_from_value(_value, unit, i === 0);
                 if (unit === 's' || unit === 'm' || unit === 'h' && this.options.display_format[0] === 'd') {
                     vals.push(sprintf('%02d', val));
                 }

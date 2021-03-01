@@ -1017,6 +1017,9 @@ class calendar_uilist extends calendar_ui
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=infolog.infolog_ui.edit&type=task&action=calendar&action_id=$id',
 				'popup' => Link::get_registry('infolog', 'add_popup'),
+				// Limit infolog convert to only the apps that support it (some entries may be other apps via integration)
+				'enabled' => 'javaScript:app.calendar.action_convert_enabled_check',
+				'convert_apps' => Api\Hooks::implemented('infolog_set')
 			);
 		}
 		if($GLOBALS['egw_info']['user']['apps']['mail'])
@@ -1063,6 +1066,9 @@ class calendar_uilist extends calendar_ui
 				'onExecute' => 'javaScript:app.calendar.action_open',
 				'open' => '{"app": "timesheet", "type": "add", "extra": "link_app[]=$app&link_id[]=$app_id"}',
 				'popup' => Link::get_registry('timesheet', 'add_popup'),
+				// Limit timesheet convert to only the apps that support it (some entries may be other apps via integration)
+				'enabled' => 'javaScript:app.calendar.action_convert_enabled_check',
+				'convert_apps' => Api\Hooks::implemented('timesheet_set')
 			);
 			$actions['timesheet-add'] = array(	// automatic add for multiple events
 				'icon' => 'timesheet/navbar',
