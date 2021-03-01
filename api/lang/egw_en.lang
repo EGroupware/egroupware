@@ -1163,6 +1163,7 @@ save as zip	common	en	Save as Zip
 save selected columns as default preference for all users.	common	en	Save columns as default preference for all users.
 save the changes made and close the window	common	en	Save changes and close
 save the etemplate under the above keys (name, ...), change them for a saveas	common	en	Save eTemplate under the above keys (name, ...), change them for a SaveAs
+saved column sizes to preferences.	common	en	Saved column sizes to preferences.
 saves changes to tables_current.inc.php	common	en	Saves changes to tables_current.inc.php
 saves the template with given version number and closes the window	common	en	Saves the template with version number and closes the window.
 scale	common	en	Scale

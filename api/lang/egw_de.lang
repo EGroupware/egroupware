@@ -1163,6 +1163,7 @@ save as zip	common	de	Als ZIP-Datei speichern
 save selected columns as default preference for all users.	common	de	Speichert die ausgewählten Spalten als Vorgabe für alle Benutzer.
 save the changes made and close the window	common	de	speichert die Änderungen uns schließt das Fenster
 save the etemplate under the above keys (name, ...), change them for a saveas	common	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
+saved column sizes to preferences.	common	de	Spaltengrößen in den Voreinstellungen gespeichert
 saves changes to tables_current.inc.php	common	de	speichert die Änderungen in tables_current.inc.php
 saves the template with given version number and closes the window	common	de	speichert das Template unter der angegebenen Versionsnummer und schließt das Fenster
 scale	common	de	Scale

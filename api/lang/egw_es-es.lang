@@ -44,7 +44,10 @@
 1 week	common	es-es	1 semana
 13 (ntp)	admin	es-es	13 (ntp)
 15 minutes	common	es-es	15 minutos
+2-factor authentication code required	common	es-es	Se requiere un código de autenticación de 2 factores
 2-factor-authentication	common	es-es	Autenticación de 2 factores
+2-factor-authentication required	common	es-es	Se requiere autenticación de 2 factores
+3 minutes	common	es-es	3 minutos
 30 minutes	common	es-es	30 minutos
 30 seconds	common	es-es	30 segundos
 5 minutes	common	es-es	5 minutos
@@ -118,6 +121,7 @@ all in one	groupdav	es-es	Todo en uno
 all languages	common	es-es	Todos los idiomas
 all operations save the template!	common	es-es	¡Todas las operaciones guardan la plantilla!
 all users	common	es-es	Todos los usuarios
+allow editing the %1	common	es-es	Permitir editar %1
 allowed file type: %1	common	es-es	Tipo de archivo permitido: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	es-es	Permite modificar usuarios responsables de dispositivos que no los soportan, poniendo el correo electrónico de un usuario como categoría
 alt	common	es-es	Alt
@@ -162,6 +166,7 @@ attention: action will be applied to all rows, not only visible ones!	api	es-es	
 august	common	es-es	Agosto
 australia	common	es-es	AUSTRALIA
 austria	common	es-es	AUSTRIA
+authenticate	common	es-es	Autenticar
 author	common	es-es	Autor
 autohide sidebox menu's	common	es-es	Ocultar automáticamente el menú lateral
 autohide sidebox menus	common	es-es	Ocultar automáticamente los menús laterales
@@ -213,6 +218,7 @@ browser %1 %2 is not recommended. you may experience issues and not working feat
 brunei darussalam	common	es-es	BRUNEI DARUSSALAM
 bulgaria	common	es-es	BULGARIA
 bulgarian	common	es-es	Búlgaro
+bullist	common	es-es	Lista de viñetas
 burkina faso	common	es-es	BURKINA FASO
 burundi	common	es-es	BURUNDI
 calendar	common	es-es	Calendario
@@ -322,6 +328,7 @@ cook islands	common	es-es	COOK ISLANDS
 cookies are required to login to this site	login	es-es	Se requieren cookies para iniciar sesión en este sitio
 copy	common	es-es	Copiar
 copy "%1"	common	es-es	Copiar "%1"
+copy to	common	es-es	Copiar a
 copy to clipboard	common	es-es	Copiar al portapapeles
 costa rica	common	es-es	COSTA RICA
 cote d ivoire	common	es-es	COSTA DE MARFIL
@@ -490,6 +497,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	es-es	Ingrese el número de versión nuevo, > old_version, vacío para ningún archivo de actualización
 enter the new version number here (has to be > old_version)	common	es-es	Introduzca el nuevo número de versión aquí (tiene que ser mayor que la versión anterior)
 enter your file name	common	es-es	Ingrese su nombre de archivo
+enter your password	common	es-es	Ingrese su contraseña
 entry has been deleted sucessfully	common	es-es	La entrada ha sido eliminada correctamente
 entry not found!	common	es-es	¡No se encontró la entrada!
 entry saved	common	es-es	La entrada ha sido guardada
@@ -552,6 +560,7 @@ file %1 has no content in physical filesystem %2 --> failed to remove file!	admi
 file %1 has no content in physical filesystem %2 --> file removed!	admin	es-es	El archivo %1 no tiene contenido en el sistema de archivos físico %2 --> ¡archivo eliminado!
 file %1 has no content in physical filesystem %2!	admin	es-es	¡El archivo %1 no tiene contenido en el sistema de archivos físico %2!
 file '%1' not found!	common	es-es	¡No se encontró el archivo '%1'!
+file a file	common	es-es	Archivo a archivo
 file contains more than one etemplate, last one is shown !!!	common	es-es	El archivo contiene más de una plantilla-e, ¡la última se muestra!
 file information	common	es-es	Informacion del archivo
 file is of wrong type (%1 != %2)!	common	es-es	El archivo es de tipo incorrecto (%1 ! = %2)!
@@ -667,7 +676,7 @@ html	common	es-es	Html
 html link to the current record	common	es-es	Enlace HTML al registro actual
 hungary	common	es-es	HUNGRÍA
 iceland	common	es-es	ISLANDIA
-id	common	es-es	Id
+id	common	es-es	ID
 iespell not detected. click ok to go to download page.	common	es-es	No se detectó ieSpell. Pulse Aceptar para ir a la página de descargas.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	es-es	Si el campo está desactivado, se muestra la celda de la tabla vacía, para borrar temporalmente un campo o celda.
 if the clock is enabled would you like it to update it every second or every minute?	common	es-es	Si el reloj está activado, ¿desea actualizarlo cada segundo o cada minuto?
@@ -684,6 +693,7 @@ import an etemplate from a xml-file	common	es-es	Importar una plantilla-e desde 
 import table-definitions from existing db-table	common	es-es	Importar definiciones de tabla de una tabla de una base de datos existente
 import xml	common	es-es	Importar XML
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	es-es	Para copiar al portapapeles, debe permitir Flash Player haciendo clic en el cuadro gris.\nPuede permitir permanentemente Flash Player para EGroupware en la configuración de su navegador.
+include access to any linked files (links tab)	common	es-es	Incluir acceso a cualquier archivo vinculado (pestaña Enlaces)
 increment version to not overwrite the existing template	common	es-es	Incrementar la versión para no sobreescribir la plantilla existente
 indent	common	es-es	Sangrar
 index/name of returned content (name of the template, link / method for image)	common	es-es	Nombre o índice del nombre del contenido devuelto (nombre de la plantilla, enlace o método para una imagen)
@@ -692,6 +702,7 @@ indexoptions	common	es-es	Opciones de indexar
 india	common	es-es	INDIA
 indonesia	common	es-es	INDONESIA
 infolog types to sync	common	es-es	Tipos de InfoLog para sincronizar
+initial	common	es-es	Inicial
 input required	common	es-es	Entrada requerida
 insert a column before	common	es-es	insertar una columna delante
 insert a column behind	common	es-es	insertar una columna detrás
@@ -1527,5 +1538,3 @@ your settings have been updated	common	es-es	Sus preferencias fueron actualizada
 zambia	common	es-es	ZAMBIA
 zimbabwe	common	es-es	ZIMBAWE
 zoom	common	es-es	Escala
-initial	common	es-es	Inicial
-id	common	es-es	ID

@@ -192,7 +192,7 @@ category '%1' deleted	admin	es-es	Categoría '%1' eliminada
 category deleted.	admin	es-es	Se ha borrado la categoría
 category list	admin	es-es	Lista de categorías
 category saved.	admin	es-es	Se ha guardado la categoria
-certificate	admin	es-es	Cartificado
+certificate	admin	es-es	Certificado
 certificate details	admin	es-es	Certificate details
 certificate validation in days	admin	es-es	Validación del certificado en días.
 change account_id	admin	es-es	Cambiar el campo account_id
