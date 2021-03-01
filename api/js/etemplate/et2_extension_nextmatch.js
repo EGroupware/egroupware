@@ -85,7 +85,6 @@ var et2_INextmatchSortable = "et2_INextmatchSortable";
 function implements_et2_INextmatchSortable(obj) {
     return implements_methods(obj, ["setSortmode"]);
 }
-;
 /**
  * Class which implements the "nextmatch" XET-Tag
  *
@@ -2014,7 +2013,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
             idsArr[i] = idsArr[i].split("::").pop();
         }
         var value = {
-            "selected": idsArr,
+            selected: idsArr,
             col_filter: {}
         };
         jQuery.extend(value, this.activeFilters, this.value);

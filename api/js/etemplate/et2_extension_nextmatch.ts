@@ -106,7 +106,18 @@ interface PrintSettings
 	old_height: number,
 	row_selector: string,
 	orientation_style: HTMLStyleElement
-};
+}
+
+interface ActiveFilters
+{
+	search? : string,
+	filter? : any,
+	filter2? : any,
+	col_filter: {[key:string]: any},
+	selectcols?: string[],
+	searchletter?: string,
+	selected? : string[]
+}
 
 /**
  * Class which implements the "nextmatch" XET-Tag
@@ -211,14 +222,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	};
 
 	// Currently active filters
-	activeFilters: {
-		search? : string,
-		filter? : any,
-		filter2? : any,
-		col_filter: {},
-		selectcols?: string[],
-		searchletter?: string
-	};
+	activeFilters : ActiveFilters;
 
 	/**
 	 * Update types
@@ -2696,7 +2700,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	/**
 	 * Get the current 'value' for the nextmatch
 	 */
-	getValue( )
+	getValue( ) : ActiveFilters
 	{
 		const _ids = this.getSelection();
 
@@ -2706,8 +2710,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		{
 			idsArr[i] = idsArr[i].split("::").pop();
 		}
-		const value = {
-			"selected": idsArr,
+		const value : ActiveFilters = {
+			selected: idsArr,
 			col_filter: {}
 		};
 		jQuery.extend(value, this.activeFilters, this.value);
