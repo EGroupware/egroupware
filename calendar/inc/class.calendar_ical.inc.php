@@ -1499,21 +1499,18 @@ class calendar_ical extends calendar_boupdate
 					if (!is_array($event['participants'])) $event['participants'] = array();
 					$event['participants'][$event['owner']] = $status;
 				}
-				else
+				foreach ($event['participants'] as $uid => $status)
 				{
-					foreach ($event['participants'] as $uid => $status)
+					// if the client did not give us a proper status => set default
+					if ($status[0] == 'X')
 					{
-						// if the client did not give us a proper status => set default
-						if ($status[0] == 'X')
+						if ($uid == $event['owner'])
 						{
-							if ($uid == $event['owner'])
-							{
-								$event['participants'][$uid] = calendar_so::combine_status('A', 1, 'CHAIR');
-							}
-							else
-							{
-								$event['participants'][$uid] = calendar_so::combine_status('U');
-							}
+							$event['participants'][$uid] = calendar_so::combine_status('A', 1, 'CHAIR');
+						}
+						else
+						{
+							$event['participants'][$uid] = calendar_so::combine_status('U');
 						}
 					}
 				}
