@@ -41,7 +41,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 		this.apps = null;
 
-		this.tabApps = JSON.parse(egw.getSessionItem('api', 'fw_tab_apps')||null) || [];
+		this.tabApps = JSON.parse(egw.getSessionItem('api', 'fw_tab_apps')||null) || {};
 
 		//Register the resize handler
 		jQuery(window).resize(function(){window.framework.resizeHandler();});
@@ -86,7 +86,12 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		//Close all open tabs, remove all applications from the application list
 		this.sidemenuUi.clean();
 		this.tabsUi.clean();
-		this.apps = apps = (this.tabApps.length > 0) ? apps.concat(this.tabApps) : apps;
+		if (Object.keys(this.tabApps).length > 0)
+		{
+			apps = apps.concat(Object.values(this.tabApps));
+		}
+		this.apps = apps;
+
 		var defaultApp = null;
 		var restore = new Object;
 		var restore_count = 0;
@@ -451,7 +456,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		if (serialized != this.serializedTabState)
 		{
 			this.serializedTabState = serialized;
-
+			if (this.tabApps) this._setTabAppsSession(this.tabApps);
 			egw.jsonq('EGroupware\\Api\\Framework\\Ajax::ajax_tab_changed_state', [data]);
 		}
 	},
@@ -584,11 +589,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			app.destroy();
 		}
 
-		this.tag.parentFw.tabApps.forEach((a,i)=>{if (a.name == this.tag.appName)
-		{
-			this.tag.parentFw.tabApps.splice(i,1);
-			return;
-		}});
+		delete(this.tag.parentFw.tabApps[this.tag.appName]);
 		this.tag.parentFw._setTabAppsSession(this.tag.parentFw.tabApps);
 	 },
 
@@ -738,13 +739,14 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 
 			this.applicationTabNavigate(this.applications[appname], _link, false, -1, null);
-			this.tabApps.push(jQuery.extend(true, this.apps.filter(a=>{if (a.name == app.appName) return a})[0], {
+			this.tabApps[appname] = (jQuery.extend(true, this.apps.filter(a=>{if (a.name == app.appName) return a})[0], {
 				title: _extra.displayName,
 				icon:_extra.icon,
 				name: appname,
-				opened: 1,
+				opened: this.tabsUi.tabs.length+1,
 				url: _link,
-				internalName: app.appName
+				internalName: app.appName,
+				active: true
 			}));
 
 			this._setTabAppsSession(this.tabApps);
@@ -859,7 +861,13 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			if (_app.tab)
 			{
 				this.tabsUi.showTab(_app.tab);
-
+				if (this.tabApps && this.tabApps[_app.appName])
+				{
+					for (let t in this.tabApps)
+					{
+						this.tabApps[t]['active'] = t == _app.appName;
+					}
+				}
 				//Going to a new tab changes the tab state
 				this.notifyTabChange();
 			}
