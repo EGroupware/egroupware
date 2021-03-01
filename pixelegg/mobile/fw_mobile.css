@@ -150,7 +150,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Hadi Nategh <hn@stylite.de>
  * @package pixelegg
- * @version $Id$
  */
 /**
  * EGroupware: pixelegg standard theme
@@ -161,7 +160,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Hadi Nategh <hn@stylite.de>
  * @package pixelegg
- * @version $Id$
  */
 /**
  * EGroupware: Stylite Pixelegg template
@@ -7721,6 +7719,19 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #ranking_sidebox_header {
   border-left: 6px solid #404040 !important;
+}
+img.et2_appicon,
+.et2_appicon img,
+table.egwGridView_grid img.et2_appicon {
+  /*filter grey*/
+  filter: none;
+  -webkit-filter: initial;
+  -moz-filter: initial;
+  -ms-filter: initial;
+  -o-filter: initial;
+  /*filter: url(grayscale.svg);  Firefox 4+ */
+  filter: initial;
+  /* IE 6-9 */
 }
 /********************************/
 /*								*/

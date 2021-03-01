@@ -11,6 +11,7 @@
  * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
  */
 
+@import (reference) "./def_gradient.less";
 
 // Color code for applications
 @addressbook-color: #003366;
@@ -94,3 +95,11 @@ div[id^="ranking-"],form[id^="ranking-"] {
 	.nm_favorites_div .et2_dropdown button:nth-child(2),.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @ranking-color;}
 }
 #ranking_sidebox_header {border-left:6px solid @ranking-color !important;}
+
+// remove gray filter from et2_appicon
+img.et2_appicon,
+.et2_appicon img,
+table.egwGridView_grid img.et2_appicon
+{
+	.img_filter_none;
+}
