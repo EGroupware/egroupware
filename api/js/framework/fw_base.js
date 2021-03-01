@@ -708,7 +708,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 	tabLinkHandler: function(_link, _extra)
 	{
-		var app = this.parseAppFromUrl(_link);
+		var app = typeof _extra.appName === 'string' ? _extra : this.parseAppFromUrl(_link);
 		if (app)
 		{
 			var appname = app.appName+"-"+btoa(_extra.id ? _extra.id : _link).replace(/=/g,'i');

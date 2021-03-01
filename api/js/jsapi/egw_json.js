@@ -482,6 +482,74 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		},
 
 		/**
+		 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
+		 *
+		 * @param {string} _func dot-separated function name
+		 * @param {mixed} ...args variable number of arguments
+		 * @returns {mixed|Promise}
+		 */
+		call: function(_func)
+		{
+			let args = [].slice.call(arguments);	// convert arguments to array
+			let func = args.shift();
+
+			return this.apply(func, args);
+		},
+
+		/**
+		 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
+		 *
+		 * @param {string} _func dot-separated function name
+		 * @param {array} args arguments
+		 * @param {object} _context
+		 * @returns {mixed|Promise}
+		 */
+		apply: function(_func, args, _context)
+		{
+			let parent = _context || window;
+			let func;
+
+			if (typeof _func === 'string')
+			{
+				let parts = _func.split('.');
+				func = parts.pop();
+				for(var i=0; i < parts.length; ++i)
+				{
+					if (typeof parent[parts[i]] !== 'undefined')
+					{
+						parent = parent[parts[i]];
+					}
+					// check if we need a not yet included app.js object --> include it now and return a Promise
+					else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] === 'undefined')
+					{
+						const self = this;
+						return new Promise(function(resolve, reject)
+						{
+							self.includeJS('/'+parts[1]+'/js/app.js', function ()
+							{
+								resolve(self.apply(_func, args));
+							}, self, self.webserverUrl);
+						});
+					}
+					// check if we need a not yet instanciated app.js object --> instanciate it now
+					else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] === 'function')
+					{
+						parent = parent[parts[1]] = new app.classes[parts[1]]();
+					}
+				}
+				if (typeof parent[func] == 'function')
+				{
+					func = parent[func];
+				}
+			}
+			if (typeof func != 'function')
+			{
+				throw _func+" is not a function!";
+			}
+			return func.apply(parent, args);
+		},
+
+		/**
 		 * Registers a new handler plugin.
 		 *
 		 * @param _callback is the callback function which should be called
@@ -645,38 +713,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	json.registerJSONPlugin(function(type, res, req) {
 		if (typeof res.data.func == 'string')
 		{
-			var parts = res.data.func.split('.');
-			var func = parts.pop();
-			var parent = req.egw.window;
-			for(var i=0; i < parts.length; ++i)
-			{
-				if (typeof parent[parts[i]] != 'undefined')
-				{
-					parent = parent[parts[i]];
-				}
-				// check if we need a not yet instanciated app.js object --> instanciate it now
-				else if (i == 1 && parts[0] == 'app' && typeof req.egw.window.app.classes[parts[1]] == 'function')
-				{
-					parent = parent[parts[1]] = new req.egw.window.app.classes[parts[1]]();
-				}
-			}
-			if (typeof parent[func] == 'function')
-			{
-				try
-				{
-					parent[func].apply(parent, res.data.parms);
-				}
-				catch (e)
-				{
-					req.egw.debug('error', e.message, ' in function', res.data.func,
-						'Parameters', res.data.parms);
-				}
-				return true;
-			}
-			else
-			{
-				throw '"' + res.data.func + '" is not a callable function (type is ' + typeof parent[func] + ')';
-			}
+			req.egw.apply(res.data.func, res.data.parms, req.egw.window);
+			return true;
 		}
 		throw 'Invalid parameters';
 	}, null, 'apply');
