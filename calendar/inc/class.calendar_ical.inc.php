@@ -2707,7 +2707,7 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'RRULE':
 					unset($vcardData['recur_type']);	// it wont be set by +=
-					$vcardData += calendar_rrule::parseRrule($attributes['value']);
+					$vcardData += calendar_rrule::parseRrule($attributes['value'], false, $vcardData);
 					if (!empty($vcardData['recur_enddate'])) self::check_fix_endate ($vcardData);
 					break;
 				case 'EXDATE':	// current Horde_Icalendar returns dates, no timestamps
