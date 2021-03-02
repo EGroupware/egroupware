@@ -501,6 +501,22 @@
 			/* active app header*/
 			#egw_fw_sidebar {
 				#egw_fw_sidemenu {
+					bottom: 4px;
+					left: 0;
+					right: 0;
+					overflow-y: auto;
+					-webkit-overflow-scrolling:touch;
+					z-index: 0;
+					font-size: 0.9em;
+					background-color:white;
+					.egw_fw_ui_sidemenu_entry_header {
+						h1 {
+							padding-left:63px;
+						}
+						img {
+							padding-left: 6px;
+						}
+					}
 					.egw_fw_ui_sidemenu_entry_header_active {
 						margin-left:2px;
 						img {
@@ -799,10 +815,10 @@
 				background: @mobile-nm-search-bg;
 				margin-top: 0;
 				padding-left: 60px;
-				box-shadow: 0px 4px 5px 2px silver;
 				position: relative;
 				height: 50px;
 				z-index: 1;
+				border-bottom: 1px solid transparent;
 				button {
 					height: @mobile-elem-height;
 					width: @mobile-button-width;
@@ -1495,10 +1511,13 @@
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: 24px 24px;
+				display: inline-block !important;
 			}
 			.flex{
 				width:100%;
 				position: absolute;
+				border: 0;
+				input {border:0}
 			}
 		}
 
