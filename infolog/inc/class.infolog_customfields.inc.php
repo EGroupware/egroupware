@@ -355,7 +355,7 @@ class infolog_customfields extends admin_customfields
 						array('group_owners' => $config['group_owners']),
 						array('group_owners' => $old)
 				);
-				$cmd->exec();
+				$cmd->run();
 			}
 		}
 
