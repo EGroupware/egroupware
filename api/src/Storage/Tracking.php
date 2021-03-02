@@ -534,7 +534,7 @@ abstract class Tracking
 					}
 				}
 				elseif ($old[$name] == $data[$name] ||
-					is_a($data[$name], \DateTime) ? (new Api\DateTime($old[$name], $data[$name]->getTimezone())) == $data[$name] :
+					is_a($data[$name], \DateTime::class) ? (new Api\DateTime($old[$name], $data[$name]->getTimezone())) == $data[$name] :
 						str_replace("\r", '', $old[$name]) == str_replace("\r", '', $data[$name]))
 				{
 					continue;	// change only in CR (eg. different OS) --> ignore
