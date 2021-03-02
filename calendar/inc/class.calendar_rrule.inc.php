@@ -982,13 +982,13 @@ class calendar_rrule implements Iterator
 	/**
 	 * Parse an iCal recurrence-rule string
 	 *
-	 * @param type $recurence
+	 * @param string $recurence
 	 * @param bool $support_below_daily =false true: support FREQ=HOURLY|MINUTELY
-	 * @return type
+	 * @param array $vcardData =[] already parsed values, specially value for "start" is used if no explicit BYDAY attribute
+	 * @return array
 	 */
-	public static function parseRrule($recurence, $support_below_daily=false)
+	public static function parseRrule($recurence, $support_below_daily=false, array $vcardData=[])
 	{
-		$vcardData = array();
 		$vcardData['recur_interval'] = 1;
 		$matches = null;
 		$type = preg_match('/FREQ=([^;: ]+)/i',$recurence,$matches) ? $matches[1] : $recurence[0];
