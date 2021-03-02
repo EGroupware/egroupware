@@ -795,20 +795,20 @@ declare interface IegwWndLocal extends IegwGlobal
 	/**
 	 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
 	 *
-	 * @param {string} _func dot-separated function name
+	 * @param {string|Function} _func dot-separated function name or function
 	 * @param {mixed} ...args variable number of arguments
 	 * @returns {mixed|Promise}
 	 */
-	call(_func : string|Function, ...args : any) : Promise<any>|any
+	callFunc(_func : string|Function, ...args : any) : Promise<any>|any
 	/**
 	 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
 	 *
-	 * @param {string} _func dot-separated function name
+	 * @param {string|Function} _func dot-separated function name or function
 	 * @param {array} args arguments
 	 * @param {object} _context
 	 * @returns {mixed|Promise}
 	 */
-	apply(_func : string|Function, args : Array<any>, _context : Object)  : Promise<any>|any
+	applyFunc(_func : string|Function, args : Array<any>, _context : Object)  : Promise<any>|any
 
 	/**
 	 * Registers a new handler plugin.

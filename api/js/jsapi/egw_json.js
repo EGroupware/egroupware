@@ -484,30 +484,27 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		/**
 		 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
 		 *
-		 * @param {string} _func dot-separated function name
+		 * @param {string|Function} _func dot-separated function name or function
 		 * @param {mixed} ...args variable number of arguments
 		 * @returns {mixed|Promise}
 		 */
-		call: function(_func)
+		callFunc: function(_func)
 		{
-			let args = [].slice.call(arguments);	// convert arguments to array
-			let func = args.shift();
-
-			return this.apply(func, args);
+			return this.applyFunc(_func, [].slice.call(arguments, 1));
 		},
 
 		/**
 		 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
 		 *
-		 * @param {string} _func dot-separated function name
+		 * @param {string|Function} _func dot-separated function name or function
 		 * @param {array} args arguments
 		 * @param {object} _context
 		 * @returns {mixed|Promise}
 		 */
-		apply: function(_func, args, _context)
+		applyFunc: function(_func, args, _context)
 		{
 			let parent = _context || window;
-			let func;
+			let func = _func;
 
 			if (typeof _func === 'string')
 			{
@@ -713,7 +710,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	json.registerJSONPlugin(function(type, res, req) {
 		if (typeof res.data.func == 'string')
 		{
-			req.egw.apply(res.data.func, res.data.parms, req.egw.window);
+			req.egw.applyFunc(res.data.func, res.data.parms, req.egw.window);
 			return true;
 		}
 		throw 'Invalid parameters';

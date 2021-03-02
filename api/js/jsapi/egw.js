@@ -471,14 +471,12 @@ var exports = {};
 /**
  * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
  *
- * @param {string} _func dot-separated function name
+ * @param {string|Function} _func dot-separated function name
  * @param {mixed} ...args variable number of arguments
  * @returns {Mixed|Promise}
- * @deprecated use egw.call(_func, ...) or egw.apply(_func, args)
+ * @deprecated use egw.callFunc(_func, ...) or egw.applyFunc(_func, args)
  */
 function et2_call(_func)
 {
-	let args = [].slice.call(arguments);	// convert arguments to array
-	let func = args.shift();
-	return egw.apply(func, args, window);
+	return egw.applyFunc(_func, [].slice.call(arguments, 1), this);
 }
