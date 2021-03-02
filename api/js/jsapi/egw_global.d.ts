@@ -1076,8 +1076,9 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param {string} _type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
 	 * @param {object|string} _extra extra url parameters to append as object or string
 	 * @param {object} _framework_app framework app attributes e.g. title or displayName
+	 * @return {string} appname of tab
 	 */
-	openTab(_id, _app, _type, _extra, _framework_app) : void;
+	openTab(_id, _app, _type, _extra, _framework_app) : string|void;
 
 	/**
 	 * Get available height of screen

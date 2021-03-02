@@ -242,6 +242,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * @param {string} _type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
 		 * @param {object|string} _extra extra url parameters to append as object or string
 		 * @param {object} _framework_app framework app attributes e.g. title or displayName
+		 * @return {string} appname of new tab
 		  */
 		openTab: function(_id, _app, _type, _extra, _framework_app)
 		{
@@ -249,7 +250,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			{
 				var data = this.open(_id, _app, _type, _extra, "_tab", false);
 				// Use framework's link handler
-				_wnd.framework.tabLinkHandler(data.url, _framework_app);
+				return _wnd.framework.tabLinkHandler(data.url, _framework_app);
 			}
 			else
 			{
