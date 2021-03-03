@@ -1497,6 +1497,21 @@ img.calendar_print_button, img.calendar_print_appicon {
 	position: absolute;
 	left:44%;
 }
+/* Integration slide switches in toolbar */
+#calendar-toolbar_toolbar span[id^="toolbar-integration_"] {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	filter: grayscale(1) contrast(0.1);
+}
+#calendar-toolbar_toolbar span[id^="toolbar-integration_"].switchOn {
+	filter: none;
+}
+#calendar-toolbar_toolbar span[id^="toolbar-integration_"] span.slideSwitch_container {
+	background: none;
+	min-width: 24px;
+}
+
 #calendar-toolbar_toolbar .et2_toolbar_more {
 	margin-top: 0;
 }

@@ -531,6 +531,7 @@ show birthdays as all day non-blocking events as well as via mouseover of the da
 show birthdays as events	calendar	en	Show as events
 show birthdays from addressbook	admin	en	Show birthdays from address book
 show empty rows in planner	calendar	en	Show empty rows in planner
+show %1 from %2	calendar	en	Show %1 from %2
 show events that have been deleted	calendar	en	Show events that have been deleted
 show list of upcoming events	calendar	en	Show list of upcoming events
 show only accepted events	calendar	en	Show only accepted events

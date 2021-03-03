@@ -383,6 +383,41 @@ class calendar_uiviews extends calendar_ui
 				'toolbarDefault' => true,
 			),
 		);
+
+		// Add integrated app options
+		$integration_data = Api\Hooks::process(array('location' => 'calendar_search_union'));
+		foreach($integration_data as $app => $app_hooks)
+		{
+			foreach ($app_hooks as $data)
+			{
+				// App might have multiple hooks, let it specify something else
+				$app = $data['selects']['app'] ?: $app;
+
+				// Don't add if no access or app already added
+				if (!array_key_exists($app, $GLOBALS['egw_info']['user']['apps']) || array_key_exists($app, $actions['integration']['children']))
+				{
+					continue;
+				}
+				// Don't show infolog if there are no configured types
+				if($app == 'infolog' && empty($GLOBALS['egw_info']['user']['preferences']['infolog']['calendar_integration']))
+				{
+					continue;
+				}
+				$img = self::integration_get_icons($app, null, [])[0];
+				preg_match('/<img src=\"(.*?)\".*\/>/', $img, $results);
+				$actions['integration_'.$app] = array(
+					'caption' => $app,
+					'iconUrl' => $results[1] ?: "$app\navbar",
+					'checkbox' => true,
+					'hint' => lang("show %1 from %2",lang(Link::get_registry($app,'entries') ?: 'entries'),lang(Link::get_registry($app,'name'))),
+					'group' => 'integration',
+					'onExecute' => 'javaScript:app.calendar.toolbar_integration_action',
+					'checked' => in_array($app,$this->cal_prefs['integration_toggle']),
+					'data' => array('toggle_off' => '0', 'toggle_on' => '1')
+				);
+
+			}
+		}
 		if (Api\Header\UserAgent::mobile())
 		{
 			foreach (array_keys($actions) as $key)

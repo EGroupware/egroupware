@@ -770,6 +770,44 @@ class CalendarApp extends EgwApp
 	}
 
 	/**
+	 * Handle integration actions from the toolbar
+	 *
+	 * @param action {egwAction} Integration action from the toolbar
+	 */
+	toolbar_integration_action(action : egwAction)
+	{
+		let app = action.id.replace("integration_","");
+		let integration_preference = <string[]> egw.preference("integration_toggle","calendar");
+		if(typeof integration_preference === "undefined")
+		{
+			integration_preference = [];
+		}
+		if(typeof integration_preference == "string")
+		{
+			integration_preference = integration_preference.split(",");
+		}
+		// Make sure it's an array, not an object
+		integration_preference = jQuery.extend([],integration_preference);
+
+		if(action.checked)
+		{
+			integration_preference.push(app);
+		}
+		else
+		{
+			const index = integration_preference.indexOf(app);
+			if (index > -1) {
+				integration_preference.splice(index, 1);
+			}
+		}
+		egw.set_preference("calendar","integration_toggle",integration_preference);
+
+		// Force redraw to current state with new info, but wait a bit to let preference change get there first
+		this._clear_cache();
+		window.setTimeout(function() {this.setState({state: this.state})}.bind(this),500);
+	}
+
+	/**
 	 * Set the app header
 	 *
 	 * Because the toolbar takes some vertical space and has some horizontal space,

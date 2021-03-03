@@ -1459,6 +1459,20 @@ img.calendar_print_appicon {
   position: absolute;
   left: 44%;
 }
+/* Integration slide switches in toolbar */
+#calendar-toolbar_toolbar span[id^="toolbar-integration_"] {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: grayscale(1) contrast(0.1);
+}
+#calendar-toolbar_toolbar span[id^="toolbar-integration_"].switchOn {
+  filter: none;
+}
+#calendar-toolbar_toolbar span[id^="toolbar-integration_"] span.slideSwitch_container {
+  background: none;
+  min-width: 24px;
+}
 #calendar-toolbar_toolbar .et2_toolbar_more {
   margin-top: 0;
 }
@@ -2737,7 +2751,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   padding: 0px;
 }
 #calendar-toolbar_toolbar span.et2_checkbox_slideSwitch span.slideSwitch_container span.on {
-  background-image: url(../../../pixelegg/images/7_day_view.svg);
   background-size: 18px 18px;
   background-repeat: no-repeat;
   background-position: center;
@@ -2746,7 +2759,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   filter: invert(1);
 }
 #calendar-toolbar_toolbar span.et2_checkbox_slideSwitch span.slideSwitch_container span.off {
-  background-image: url(../../../pixelegg/images/5_day_view.svg);
   background-size: 18px 18px;
   background-repeat: no-repeat;
   background-position: center;
@@ -2758,6 +2770,12 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 }
 #calendar-toolbar_toolbar span.et2_checkbox_slideSwitch span.slideSwitch_container a {
   background: none;
+}
+#calendar-toolbar_toolbar #toolbar-weekend span.slideSwitch_container span.on {
+  background-image: url(../../../pixelegg/images/7_day_view.svg);
+}
+#calendar-toolbar_toolbar #toolbar-weekend span.slideSwitch_container span.off {
+  background-image: url(../../../pixelegg/images/5_day_view.svg);
 }
 /* ########################################################################################
 /* * Calendar END */

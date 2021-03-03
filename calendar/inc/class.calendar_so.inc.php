@@ -1218,6 +1218,11 @@ class calendar_so
 		{
 			foreach(isset($data[1]) ? $data : [$data] as $key => $data)
 			{
+				// Skip if user turned the app off
+				if(!in_array($data['selects'][0]['app'], $GLOBALS['egw_info']['user']['preferences']['calendar']['integration_toggle']))
+				{
+					continue;
+				}
 				// create a flat array, if app implementes multiple hooks using given app-name
 				self::$integration_data[$data['selects'][0]['app']] = $data;
 
